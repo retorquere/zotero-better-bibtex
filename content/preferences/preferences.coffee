@@ -2,6 +2,7 @@ Prefs = require('../preferences.coffee')
 debug = require('../debug.coffee')
 parsePattern = require('../keymanager/formatter.coffee')::parsePattern
 zotero_config = require('../zotero-config.coffee')
+KeyManager = require('../keymanager.coffee')
 
 class PrefPane
   # AutoExport: require('./auto-export.coffee')
@@ -91,6 +92,13 @@ class PrefPane
     styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
     return
+
+  rescanCitekeys: Zotero.Promise.coroutine(->
+    debug('starting manual key rescan')
+    yield KeyManager.rescan()
+    debug('manual key rescan done')
+    return
+  )
 
   display: (id, text) ->
     elt = @global.document.getElementById(id)

@@ -1,10 +1,12 @@
 debug = require('./debug.coffee')
+flash = require('./flash.coffee')
 Prefs = require('./preferences.coffee')
 co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
 getCiteKey = require('./getCiteKey.coffee')
 events = require('./events.coffee')
 Loki = require('./loki.coffee')
+version = require('../gen/version.js')
 
 class KeyManager
   pin: co((id, pin) ->
@@ -52,10 +54,9 @@ class KeyManager
 
     @observerID = Zotero.Notifier.registerObserver(@, ['item'], 'BetterBibTeX.KeyManager', 100)
 
-    if Prefs.get('scanCitekeys')
-      yield @update(yield @unset())
-      Prefs.set('scanCitekeys', false)
-      debug('KeyManager.init: scanning for unset keys finished')
+    if Prefs.get('citekeyScan') != version
+      yield @rescan()
+      Prefs.set('citekeyScan', version)
 
     debug('KeyManager.init: done')
 
@@ -66,6 +67,15 @@ class KeyManager
         co(=> yield @patternChanged())()
       return
     )
+    return
+  )
+
+  rescan: co(->
+    flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while')
+    debug('KeyManager.init: scanning for unset keys')
+    yield @update(yield @unset())
+    debug('KeyManager.init: scanning for unset keys finished')
+    flash('Scanning done', 'All references have citation keys now')
     return
   )
 

@@ -45,7 +45,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.pinCitekeys"              id="pref-better-bibtex-pinCitekeys"             type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables"  id="pref-better-bibtex-preserveBibTeXVariables" type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.rawImports"               id="pref-better-bibtex-rawImports"              type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.scanCitekeys"             id="pref-better-bibtex-scanCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showCitekeys"             id="pref-better-bibtex-showCitekeys"            type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.showItemIDs"              id="pref-better-bibtex-showItemIDs"             type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"       id="pref-better-bibtex-bibtexParticleNoOp"      type="bool"/>
@@ -430,7 +429,7 @@
               If you enable this, the `call number` column in the Zotero reference list (if you have selected it to be
               shown) will display the internal reference ID instead of the call number field. Only useful for debugging.
             -->
-            <checkbox label="&zotero.better-bibtex.rescan-citekeys;" preference="pref-better-bibtex-scanCitekeys"/>
+            <button label="&zotero.better-bibtex.rescan-citekeys;" oncommand="BBTPrefs.rescanCitekeys()"/>
             <!--
               There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having
               `bibtex: <whatever>` in the `extra` field of your reference. I haven't seen this in ages, but enabling this and then restarting

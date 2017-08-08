@@ -127,7 +127,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY zotero.better-bibtex.prefs.advanced.zotFile "Add '&#37;b' to the Zotfile pattern generator (requires restart)">
 
 
-<!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan pinned citekeys after restart">
+<!ENTITY zotero.better-bibtex.rescan-citekeys "Re-scan citekeys">
 
 <!ENTITY zotero.better-bibtex.preferences.debugOutputLogging "Better BibTeX Debug Output">
 <!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">

@@ -18,7 +18,7 @@
   "pinCitekeys": "manual",
   "preserveBibTeXVariables": false,
   "rawImports": false,
-  "scanCitekeys": true,
+  "citekeyScan": "",
   "showCitekeys": false,
   "showItemIDs": false,
   "skipFields": "",

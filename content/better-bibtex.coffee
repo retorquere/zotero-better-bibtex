@@ -65,42 +65,69 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   INIT
 ###
 
-Zotero.Promise.coroutine(->
-  ready = Zotero.Promise.defer()
-  flash('waiting for Zotero to load translators')
-  Zotero.BetterBibTeX.ready = ready.promise
-
+benchmark = Zotero.Promise.coroutine((options, code) ->
   start = new Date()
-  debug('starting...')
 
-  if Prefs.get('testing')
-    Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
-    debug('starting, test support @', (new Date() - start) / 1000.0, 's')
+  debug("waiting for #{options.msg}...")
+  flash("waiting for #{options.msg}...") if options.flash
+
+  if options.async
+    yield options.async
   else
-    debug('starting, skipping test support')
-  debug('starting, test support ready @', (new Date() - start) / 1000.0, 's')
+    options.code()
 
-  yield Translators.init()
-  debug('starting, translators ready @', (new Date() - start) / 1000.0, 's')
-
-  # should be safe to start tests at this point. I hate async.
-  ready.resolve(true)
-  flash('Zotero translators loaded')
-
-  yield Zotero.Schema.schemaUpdatePromise
-  debug('starting, schema ready @', (new Date() - start) / 1000.0, 's')
-
-  Serializer.init()
-  debug('starting, serializer ready @', (new Date() - start) / 1000.0, 's')
-
-  JournalAbbrev.init()
-  debug('starting, journal abbrev ready @', (new Date() - start) / 1000.0, 's')
-
-  # must start after the schemaUpdatePromise
-  yield KeyManager.init()
-  debug('starting, keymanager @', (new Date() - start) / 1000.0, 's')
-
-  debug('starting took', (new Date() - start) / 1000.0, 's')
+  debug("#{options.msg} done in #{(new Date() - start) / 1000.0}s")
+  flash("#{options.msg} done") if options.flash
 
   return
-)()
+)
+do Zotero.Promise.coroutine(->
+  ready = Zotero.Promise.defer()
+  Zotero.BetterBibTeX.ready = ready.promise
+
+  yield benchmark({
+    msg: 'schema'
+    async: Zotero.Schema.schemaUpdatePromise
+    flash: true
+  })
+
+  # must start after the schemaUpdatePromise
+  yield benchmark({
+    msg: 'keymanager'
+    async: KeyManager.init()
+  })
+
+  yield benchmark({
+    msg: 'serializer'
+    code: -> Serializer.init()
+  })
+
+  yield benchmark({
+    msg: 'abbreviater'
+    code: -> JournalAbbrev.init()
+  })
+
+  if Prefs.get('testing')
+    benchmark({
+      msg: 'test support'
+      code: -> Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
+    })
+  else
+    debug('starting, skipping test support')
+
+  benchmark({
+    msg: 'Zotero translators'
+    async: Zotero.Translators.init()
+    flash: true
+  })
+  benchmark({
+    msg: 'Better BibTeX translators'
+    async: Translators.init()
+  })
+
+  # should be safe to start tests at this point. I hate async.
+
+  ready.resolve(true)
+
+  return
+)
