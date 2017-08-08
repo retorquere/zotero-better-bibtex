@@ -85,7 +85,9 @@ module.exports = [
 
   // translators
   _.merge({}, common, {
-    plugins: [ new TranslatorHeaderPlugin() ],
+    plugins: [
+      new TranslatorHeaderPlugin()
+    ],
     context: path.resolve(__dirname, './resource'),
     entry: translators().reduce((entries, f) => {
       var translator = f.replace(/\.json$/, '');

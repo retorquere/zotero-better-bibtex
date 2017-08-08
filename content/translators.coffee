@@ -37,7 +37,6 @@ class Translators
 
   install: (header) ->
     throw new Error('not a translator') unless header.label && header.translatorID
-    @uninstall(header.label, header.translatorID)
 
     try
       code = Zotero.File.getContentsFromURL("resource://zotero-better-bibtex/#{header.label}.js")
@@ -52,14 +51,13 @@ class Translators
       destFile.append(fileName)
 
       existing = Zotero.Translators.get(header.translatorID)
-      if existing and destFile.equals(existing.file) and destFile.exists()
-        msg = "Overwriting translator with same filename '#{fileName}'"
-        debug(msg, header)
-        Components.utils.reportError("#{msg} in Translators.install()")
+      if existing
+        if fileName != Zotero.Translators.getFileNameFromLabel(existing.label, existing.translatorID)
+          msg = "Translator with ID #{header.translatorID} and label '#{header.label}' overwrites translator with label '#{existing.label}'"
+          debug(msg)
+          Components.utils.reportError("#{msg} in Translators.install()")
 
-      existing.file.remove(false) if existing and existing.file.exists()
-
-      debug("Saving translator '#{header.label}'")
+      debug("Saving translator", header.label)
 
       Zotero.File.putContents(destFile, code)
 
@@ -67,6 +65,7 @@ class Translators
 
     catch err
       debug('Translator.load', header, 'failed:', err)
+      @uninstall(header.label, header.translatorID)
 
     return
 
