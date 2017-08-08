@@ -71,7 +71,7 @@ do Bluebird.coroutine(->
     release.builds.assets ||= []
     release.builds.assets.sort((a, b) -> (new Date(b.created_at)).getTime() - (new Date(a.created_at)).getTime())
     for asset, i in release.builds.assets
-      continue if i < 10 && asset.name != xpi
+      continue if i < 5 && asset.name != xpi
       yield github({ method: 'DELETE', uri: "/releases/assets/#{asset.id}" })
 
     console.log("uploading #{xpi} to builds")
