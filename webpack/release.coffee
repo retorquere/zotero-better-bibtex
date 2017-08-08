@@ -14,7 +14,7 @@ if process.env.CIRCLE_TAG && "v#{pkg.version}" != process.env.CIRCLE_TAG
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
-  process.exit(1)
+  process.exit(0)
 
 do Bluebird.coroutine(->
   console.log('finding releases')
