@@ -82,7 +82,8 @@ TranslatorHeaderPlugin.prototype.apply = function(compiler) {
 
         for (let file of chunk.files.filter(ModuleFilenameHelpers.matchObject.bind(undefined, options))) {
           var header = require(__dirname + '/../resource/' + file + 'on')
-          header.lastUpdated = new Date().toISOString().replace('T', ' ').replace(/\..*/, '')
+          header.lastUpdated = new Date().toISOString().replace('T', ' ').replace(/\..*/, '');
+          header.inRepository = false;
           var preferences = require(__dirname + '/../defaults/preferences/defaults.json')
 
           compilation.assets[file] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[file])

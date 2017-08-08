@@ -18,5 +18,5 @@
   "translatorType": 3,
   "browserSupport": "gcsv",
   "priority": 199,
-  "inRepository": true
+  "inRepository": false
 }

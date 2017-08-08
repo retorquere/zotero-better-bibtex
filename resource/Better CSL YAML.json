@@ -14,5 +14,5 @@
     "serializationCache": true
   },
   "priority": 100,
-  "inRepository": true
+  "inRepository": false
 }

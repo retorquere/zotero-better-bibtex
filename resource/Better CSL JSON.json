@@ -13,6 +13,6 @@
   "configOptions": {
     "serializationCache": true
   },
-  "inRepository": true,
+  "inRepository": false,
   "priority": 100
 }

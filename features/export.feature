@@ -242,10 +242,10 @@ Scenario: Date export to Better CSL-JSON #360
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
-#  And I set preference .quickCopyMode to "pandoc"
-#  Then a library export using "Better BibTeX Quick Copy" should match "export/Pandoc Citation.pandoc"
-#  When I set preference .quickCopyMode to "latex"
-#  Then a library export using "Better BibTeX Quick Copy" should match "export/Pandoc Citation.latex"
+  And I set preference .quickCopyMode to "pandoc"
+  Then a library export using "Better BibTeX Citation Key Quick Copy" should match "export/Pandoc Citation.pandoc"
+  When I set preference .quickCopyMode to "latex"
+  Then a library export using "Better BibTeX Citation Key Quick Copy" should match "export/Pandoc Citation.latex"
   And a library export using "Better CSL JSON" should match "export/Pandoc Citation.csl.json"
   And a library export using "Better CSL YAML" should match "export/Pandoc Citation.csl.yml"
 #  And a schomd bibtex request using '[["Berndt1994"],{"translator":"biblatex"}]' should match "export/Pandoc Citation.schomd.json"
