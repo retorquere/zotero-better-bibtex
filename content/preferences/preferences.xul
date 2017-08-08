@@ -39,7 +39,6 @@
         <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"  id="pref-better-bibtex-quickCopyPandocBrackets" type="bool"/>
         <!-- preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat"           type="string"/ -->
         <preference name="extensions.zotero.translators.better-bibtex.citekeyFold"              id="pref-better-bibtex-citekeyFold"             type="bool"/>
-        <preference name="extensions.zotero.translators.better-bibtex.debug"                    id="pref-better-bibtex-debug"                   type="bool"/>
         <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"        id="pref-better-bibtex-keyConflictPolicy"       type="string"/>
         <preference name="extensions.zotero.translators.better-bibtex.langID"                   id="pref-better-bibtex-langID"                  type="string"/>
         <!-- Switches between `babel` and `polyglossia`, except I haven't gotten around to polyglossia yet. -->
@@ -424,11 +423,6 @@
                   onkeypress="setTimeout(function() { BBTPrefs.checkPostscript() }, 1);"/>
             <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
             <hbox>
-              <checkbox label="&zotero.better-bibtex.debug;" preference="pref-better-bibtex-debug"/>
-              <!--
-                This will generate more verbose logs. This really does affect performance, so only enable this if you're
-                trying to diagnose a problem in Better BibTeX.
-              -->
               <button label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
             </hbox>
             <checkbox label="&zotero.better-bibtex.show-item-id;" preference="pref-better-bibtex-showItemIDs"/>
