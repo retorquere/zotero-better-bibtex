@@ -1,8 +1,9 @@
 debug = require('./debug.coffee')
 
 module.exports = (paths...) ->
-  f = Zotero.getZoteroDirectory()
   throw new Error('no path specified') if paths.length == 0
+
+  f = Zotero.File.pathToFile(Zotero.DataDirectory.dir)
 
   paths.unshift('better-bibtex')
   debug('createFile:', paths)

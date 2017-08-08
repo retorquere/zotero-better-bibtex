@@ -45,6 +45,7 @@ Zotero.Item::save = ((original) ->
     Serializer.remove(this.id)
     return original.apply(@, arguments)
 )(Zotero.Item::save)
+Zotero.BetterBibTeX.itemToExportFormat = Zotero.Utilities.Internal.itemToExportFormat # TODO: remove this, only for debugging
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
     try

@@ -7,7 +7,7 @@ for key in ['AWSAccessKeyId', 'AWSSecretAccessKey']
   if !process.env[key]
     console.log("#{key} not set, cannot proceed")
     process.exit(1)
- 
+
 formGenerator = new AwsS3Form({
   accessKeyId: process.env.AWSAccessKeyId,
   secretAccessKey: process.env.AWSSecretAccessKey,
@@ -16,7 +16,7 @@ formGenerator = new AwsS3Form({
   policyExpiration: 6 * 24 * 60 * 60, # 6 days
   acl: 'private',
   useUuid: false
-});
+})
 
 form = formGenerator.create('${filename}')
 
@@ -29,4 +29,5 @@ do Bluebird.coroutine(->
   yield github({ method: 'DELETE', uri: "/releases/assets/#{existing.id}" }) if existing
 
   yield github.upload({release, name: json, body: JSON.stringify(form, null, 2), content_type: 'application/json'})
+  return
 )

@@ -57,7 +57,7 @@ Loki.Collection::update = ((original) ->
     return original.apply(@, arguments)
 )(Loki.Collection::update)
 
-FileStore = new class
+class FileStore
   backups: 3
 
   versioned: (name, id) ->
@@ -65,26 +65,30 @@ FileStore = new class
     return "#{name}.#{id}"
 
   saveDatabase: (name, serialized, callback) ->
+    debug('Loki: saving', name)
+
     try
       db = createFile(name)
       if db.exists()
         for id in [@backups..0]
           db = createFile(@versioned(name, id))
           continue unless db.exists()
-          Zotero.BetterBibTeX.debug("DBStore: backing up #{db.path}")
+          debug("DBStore: backing up #{db.path}")
           db.moveTo(null, name + ".#{id + 1}")
     catch err
       debug('LokiJS.FileStore.saveDatabase: backup failed', err)
 
-    db = createFile(name + '.saving')
-    Zotero.File.putContents(db, serialized)
-    db.moveTo(null, name)
-
-    callback()
+    try
+      db = createFile(name + '.saving')
+      Zotero.File.putContents(db, serialized)
+      db.moveTo(null, name)
+      callback(null)
+    catch err
+      callback(err)
     return
 
   tryDatabase: (name) ->
-    Zotero.BetterBibTeX.debug("LokiJS.FileStore.tryDatabase: trying #{name}")
+    debug("LokiJS.FileStore.tryDatabase: trying #{name}")
     file = createFile(name)
     throw {name: 'NoSuchFile', message: "#{file.path} not found", toString: -> "#{@name}: #{@message}"} unless file.exists()
 
@@ -98,22 +102,27 @@ FileStore = new class
 
   loadDatabase: (name, callback) ->
     data = null
+    error = null
     for id in [0..@backups]
       try
         data = @tryDatabase(@versioned(name, id))
+        error = null
         break
       catch err
-        debug("LokiJS.FileStore.loadDatabase: failed to load #{@versioned(name, id)}", err)
+        error = err unless err.name == 'NoSuchFile'
         data = null
 
-    flash("failed to load #{name}") unless data
+    if error
+      debug("LokiJS.FileStore.loadDatabase: failed to load #{name}", error)
+      flash("failed to load #{name} (#{error})")
+      return callback(error)
 
-    callback(data)
-    return
+    return callback(data || '{}')
 
 module.exports = (name, options = {}) ->
   if options.autosave
-    options.adapter = FileStore
+    # options.adapter = new Loki.LokiPartitioningAdapter(new FileStore())
+    options.adapter = new FileStore()
     options.autosaveInterval ||= 5000
     delete options.persistenceMethod
   else

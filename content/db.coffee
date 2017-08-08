@@ -8,6 +8,11 @@ DB.loadDatabase()
 DB.removeCollection('metadata') if DB.getCollection('metadata')
 DB.removeCollection('keys') if DB.getCollection('keys')
 
+###
+  TODO: schedule save on close
+DB.close()
+###
+
 ### move to autoexports when I get to it
 autoexports = DB.schemaCollection('autoexport', {
   indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],

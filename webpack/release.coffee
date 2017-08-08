@@ -4,7 +4,7 @@ version = require('./version')
 path = require('path')
 
 Bluebird = require('bluebird')
-github = require('./github');
+github = require('./github')
 
 process.exit() if process.env.CI_PULL_REQUEST
 
@@ -81,4 +81,6 @@ do Bluebird.coroutine(->
       path: path.resolve(__dirname, path.join(__dirname, "../xpi/#{xpi}"))
       content_type: 'application/x-xpinstall'
     })
+
+  return
 )

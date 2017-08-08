@@ -191,9 +191,10 @@ module BBT
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   system("npm run build") || raise("Build failed")
-  plugins = File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))
-  Dir[plugins].each{|plugin|
-    puts "Installing #{plugin}"
+  plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
+  plugins += Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../mozrepl*.xpi'))]
+  plugins.each{|plugin|
+    STDOUT.puts "Installing #{plugin}"
     profile.add_extension(plugin)
   }
   
@@ -206,6 +207,8 @@ module BBT
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
+
+  profile['extensions.mozrepl.autoStart'] = true
 
   profile['devtools.source-map.locations.enabled'] = true
   
