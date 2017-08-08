@@ -7,6 +7,10 @@ Zotero.BetterBibTeX.ErrorReport = require('./error-report/error-report.coffee')
 
 Prefs = require('./preferences.coffee') # needs to be here early, initializes the prefs observer
 
+# TODO: remove after beta
+Zotero.Prefs.get('debug.store', true)
+Zotero.Debug.setStore(true)
+
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
 JournalAbbrev = require('./journal-abbrev.coffee')
