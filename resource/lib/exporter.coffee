@@ -22,7 +22,7 @@ class Exporter
     @caching = !BetterBibTeX.options.exportFileData
 
     @collections = collections()
-    @jabref = new JabRef(@collections) if @collections
+    @jabref = new JabRef(@collections)
 
     @context = {
       exportCharset: (BetterBibTeX.options.exportCharset || 'UTF-8').toUpperCase()

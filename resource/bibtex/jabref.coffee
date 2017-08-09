@@ -22,7 +22,7 @@ class JabRef
     return
 
   assignToGroups: (item, collection) ->
-    return unless BetterBibTeX.preferences.jabrefGroups == 4
+    return unless @collections && BetterBibTeX.preferences.jabrefGroups == 4
 
     collection = {items: [], collections: @collections} unless collection
 
