@@ -74,9 +74,9 @@ class PatternFormatter
           delete @month if isNaN(@month)
 
         when 'date'
-          date = date
-          @origyear = date.orig?.year
+          @origyear = date.orig?.year || date.year
           @year = date.year || @origyear
+
           @month = date.month
 
         when 'season'
