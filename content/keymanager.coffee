@@ -10,6 +10,7 @@ version = require('../gen/version.js')
 
 class KeyManager
   pin: co((id, pin) ->
+    debug('KeyManager.pin', id, pin)
     item = yield Zotero.Items.getAsync(id)
     citekey = getCiteKey(item.getField('extra'))
 
@@ -22,18 +23,20 @@ class KeyManager
     return if !!pin == !!citekey.pinned
 
     item.setField('extra', "#{citekey.extra}\nbibtex#{if pin then '' else '*'}:#{citekey.citekey}".trim())
-    debug('KeyManager.pin', pin, id, citekey)
     yield item.saveTx()
+    debug('KeyManager.pin done', pin, id, citekey)
     return
   )
 
   refresh: co((id) ->
+    debug('KeyManager.refresh', id)
     item = yield Zotero.Items.getAsync(id)
     citekey = getCiteKey(item.getField('extra'))
     return if citekey.pinned
     item.setField('extra', citekey.extra)
     debug('KeyManager.refresh', id, citekey)
-    yield item.saveTx() # the save will be picked up by the notifier, no key will be found, and a new one will be assigned
+    yield item.saveTx() # the save will be picked up by the monkey-patched save, no key will be found, and a new one will be assigned
+    debug('KeyManager.refresh done', id, citekey)
     return
   )
 
@@ -55,16 +58,12 @@ class KeyManager
 
     debug('KeyManager.init: done')
 
-    ###
-      TODO: probably needs to go entirely
-
     events.on('preference-changed', (pref) =>
       debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
       return
     )
-    ###
 
     return
   )
@@ -139,8 +138,8 @@ class KeyManager
 
   postfixBaseChar: 'a'.charCodeAt(0) - 1
   postfixRE: {
-    zotero: /^(-[0-9]+)?$/
-    bbt: /^([a-z])?$/
+    numeric: /^(-[0-9]+)?$/
+    alphabetic: /^([a-z])?$/
   }
   findKey: co((item, keys) ->
     item.item ||= yield Zotero.Items.getAsync(item.itemID)
@@ -167,23 +166,35 @@ class KeyManager
   )
 
   generate: co((item) ->
-    keys = yield @scan()
-
     citekey = getCiteKey(item.getField('extra'))
     return false if citekey.pinned
 
     proposed = @formatter.format(item)
+    debug('KeyManager.generate: proposed=', proposed)
 
+    keys = yield @scan()
+    debug('KeyManager.generate: keys=', keys)
+
+    debug("KeyManager.generate: testing whether #{item.id} can keep #{citekey.citekey}")
     # item already has proposed citekey
-    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey &&
-      citekey.citekey.slice(proposed.citekey.length).match(if proposed.postfix == '0' then @postfixRE.zotero else @postfixRE.bbt) &&
-      !keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })
-        return false
+    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
+      re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
+      if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
+        if keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
+          return false
+        else
+          debug("KeyManager.generate: #{item.id}: #{citekey.citekey} is in use by", keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))
+      else
+        debug("KeyManager.generate: #{item.id}: #{citekey.citekey} has wrong postfix for", proposed)
+    else
+      debug("KeyManager.generate: #{item.id}: #{citekey.citekey} does not start with #{proposed.citekey}")
 
+    debug("KeyManager.generate: testing whether #{item.id} can use proposed #{proposed.citekey}")
     # unpostfixed citekey is available
-    if !keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey })
+    if !keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })
       return "#{citekey.extra}\nbibtex*:#{proposed.citekey}".trim()
 
+    debug("KeyManager.generate: generating free citekey from #{item.id} from", proposed.citekey)
     postfix = 1
     while true
       throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26

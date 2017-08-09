@@ -4,7 +4,11 @@ events = require('./events.coffee')
 zotero_config = require('./zotero-config.coffee')
 
 class JournalAbbrev
+  initialized: false
+
   init: ->
+    return if @initialized
+
     events.on('preference-changed', (pref) =>
       return unless pref == 'autoAbbrevStyle'
 
@@ -15,6 +19,8 @@ class JournalAbbrev
 
     @reset()
     debug('JournalAbbrev.init: done')
+
+    @initialized = true
     return
 
   reset: ->

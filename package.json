@@ -58,7 +58,8 @@
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "release": "coffee webpack/release.coffee",
     "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none",
-    "s3form": "coffee webpack/s3form.coffee"
+    "s3form": "coffee webpack/s3form.coffee",
+    "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },
   "repository": {
     "type": "git",

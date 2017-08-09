@@ -207,8 +207,6 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/Square brackets in Publication field (85).json"
   Then a library export using "Better BibTeX" should match "export/Square brackets in Publication field (85).bibtex"
-  And I set preference .citekeyFormat to [year]-updated
-  Then a library export using "Better BibTeX" should match "export/Square brackets in Publication field (85) after pattern change.bibtex"
 
 @86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)

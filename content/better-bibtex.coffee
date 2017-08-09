@@ -13,18 +13,15 @@ Zotero.Debug.setStore(true)
 
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
-JournalAbbrev = require('./journal-abbrev.coffee')
 Serializer = require('./serializer.coffee')
-parseDate = require('./dateparser.coffee')
-citeproc = require('./citeproc.coffee')
-titleCase = require('./title-case.coffee')
-events = require('./events.coffee')
-getCiteKey = require('./getCiteKey.coffee')
 
 ###
   MONKEY PATCHES
 ###
 ### bugger this, I don't want megabytes of shared code in the translators ###
+parseDate = require('./dateparser.coffee')
+CiteProc = require('./citeproc.coffee')
+titleCase = require('./title-case.coffee')
 Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   parseDate: (sandbox, date) -> parseDate(date)
   isEDTF: (sandbox, date) ->
@@ -33,7 +30,7 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
       return true
     catch
       return false
-  parseParticles: (sandbox, name) -> citeproc.parseParticles(name) # && citeproc.parseParticles(name)
+  parseParticles: (sandbox, name) -> CiteProc.parseParticles(name) # && CiteProc.parseParticles(name)
   titleCase: (sandbox, text) -> titleCase(text)
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
@@ -50,19 +47,16 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
 Zotero.Item::save = ((original) ->
   return Zotero.Promise.coroutine(->
     try
+      Serializer.remove(this.id)
+    catch
+      debug('Zotero.Item::save: could not update serializer:', err)
+
+    try
       proposed = yield KeyManager.generate(@)
       @setField('extra', proposed) if proposed
       debug('Zotero.Item::save: cite key set to', proposed)
     catch err
       debug('Zotero.Item::save: could not update cite key:', err)
-
-    ###
-    TODO: caching
-    try
-      Serializer.remove(this.id)
-    catch
-      debug('Zotero.Item::save: could not update serializer:', err)
-    ###
 
     return (yield original.apply(@, arguments))
   )
@@ -70,17 +64,12 @@ Zotero.Item::save = ((original) ->
 
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
-    ###
-      TODO: caching
     try
       return Serializer.fetch(zoteroItem.id, legacy, skipChildItems) || Serializer.store(zoteroItem.id, original.apply(@, arguments), legacy, skipChildItems)
     catch err # fallback for safety for non-BBT
       debug('Zotero.Item::save', err)
-    ###
 
-    serialized = original.apply(@, arguments)
-    serialized.itemID = zoteroItem.id
-    return serialized
+    return original.apply(@, arguments)
 )(Zotero.Utilities.Internal.itemToExportFormat)
 
 ###
@@ -99,9 +88,6 @@ do Zotero.Promise.coroutine(->
 
   yield Zotero.initializationPromise
   bench('Zotero.initializationPromise')
-
-  JournalAbbrev.init()
-  bench('JournalAbbrev.init()')
 
   yield Serializer.init()
   bench('Serializer.init()')
