@@ -65,7 +65,7 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   INIT
 ###
 
-benchmark = Zotero.Promise.coroutine((options, code) ->
+benchmark = Zotero.Promise.coroutine((options) ->
   start = new Date()
 
   debug("waiting for #{options.msg}...")
@@ -86,25 +86,26 @@ do Zotero.Promise.coroutine(->
   Zotero.BetterBibTeX.ready = ready.promise
 
   yield benchmark({
-    msg: 'schema'
-    async: Zotero.Schema.schemaUpdatePromise
+    msg: 'Zotero initialization'
+    async: Zotero.initializationPromise
     flash: true
   })
 
-  # must start after the schemaUpdatePromise
+  # must start after the initializationPromise
   yield benchmark({
     msg: 'keymanager'
     async: KeyManager.init()
   })
 
   yield benchmark({
-    msg: 'serializer'
-    code: -> Serializer.init()
-  })
-
-  yield benchmark({
     msg: 'abbreviater'
     code: -> JournalAbbrev.init()
+  })
+
+  # must start after journal abbrev
+  yield benchmark({
+    msg: 'serializer'
+    code: -> Serializer.init()
   })
 
   if Prefs.get('testing')
