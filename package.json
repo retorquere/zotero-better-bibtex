@@ -49,7 +49,7 @@
     "xml-parser": "^1.2.1"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cucumber --fail-fast",
     "lint": "coffeelint content resource minitests webpack",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",

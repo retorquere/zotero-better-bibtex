@@ -8,7 +8,7 @@ class Translators
     Object.assign(@, require('../gen/translators.json'))
 
     debug('Translator.init: waiting for translators...')
-    yield Zotero.Translators.init()
+    yield Zotero.Promise.all([Zotero.Schema.schemaUpdatePromise, Zotero.Translators.init()])
     debug('Translator.init: translators ready @', (new Date() - start))
 
     if Prefs.get('removeStock')
@@ -20,8 +20,11 @@ class Translators
       debug('Translator.init: installed', header.label, '@', (new Date() - start))
 
     debug('Translator.init: reinit translators...')
-    yield Zotero.Translators.reinit()
-    debug('Translator.init: ready @', (new Date() - start))
+    try
+      yield Zotero.Translators.reinit()
+      debug('Translator.init: reinit ready @', (new Date() - start))
+    catch err
+      debug('Translator.init: reinit failed @', (new Date() - start), err)
     return
   )
 

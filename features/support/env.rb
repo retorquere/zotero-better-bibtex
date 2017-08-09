@@ -227,16 +227,14 @@ module BBT
       begin
         sleep(1)
         result = execute(timeout: 60, script: """
-          if (!Zotero.BetterBibTeX.ready) return false;
+          if (!Zotero.BetterBibTeX.ready) {
+            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            return false;
+          }
 
-          /*
-          Zotero.debug('{better-bibtex:debug bridge}: waiting for Zotero ready...');
-          yield Zotero.Schema.schemaUpdatePromise;
-          Zotero.debug('{better-bibtex:debug bridge}: Zotero ready');
-          */
-
+          Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
           yield Zotero.BetterBibTeX.ready;
-          Zotero.debug('{better-bibtex:debug bridge}: BetterBibTeX ready');
+          Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
           return true;
         """)
         if result

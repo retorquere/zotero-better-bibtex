@@ -19,6 +19,7 @@ parseDate = require('./dateparser.coffee')
 citeproc = require('./citeproc.coffee')
 titleCase = require('./title-case.coffee')
 events = require('./events.coffee')
+getCiteKey = require('./getCiteKey.coffee')
 
 ###
   MONKEY PATCHES
@@ -47,84 +48,83 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   visual changes, and 'clientDateModified' is alwasy empty here (so far). What 'version' does? I have no idea.
 ###
 Zotero.Item::save = ((original) ->
-  return (options) ->
-    Serializer.remove(this.id)
-    return original.apply(@, arguments)
+  return Zotero.Promise.coroutine(->
+    try
+      proposed = yield KeyManager.generate(@)
+      @setField('extra', proposed) if proposed
+      debug('Zotero.Item::save: cite key set to', proposed)
+    catch err
+      debug('Zotero.Item::save: could not update cite key:', err)
+
+    ###
+    TODO: caching
+    try
+      Serializer.remove(this.id)
+    catch
+      debug('Zotero.Item::save: could not update serializer:', err)
+    ###
+
+    return (yield original.apply(@, arguments))
+  )
 )(Zotero.Item::save)
-Zotero.BetterBibTeX.itemToExportFormat = Zotero.Utilities.Internal.itemToExportFormat # TODO: remove this, only for debugging
+
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
+    ###
+      TODO: caching
     try
       return Serializer.fetch(zoteroItem.id, legacy, skipChildItems) || Serializer.store(zoteroItem.id, original.apply(@, arguments), legacy, skipChildItems)
     catch err # fallback for safety for non-BBT
       debug('Zotero.Item::save', err)
-      return original.apply(@, arguments)
+    ###
+
+    serialized = original.apply(@, arguments)
+    serialized.itemID = zoteroItem.id
+    return serialized
 )(Zotero.Utilities.Internal.itemToExportFormat)
 
 ###
   INIT
 ###
 
-benchmark = Zotero.Promise.coroutine((options) ->
-  start = new Date()
-
-  debug("waiting for #{options.msg}...")
-  flash("waiting for #{options.msg}...") if options.flash
-
-  if options.async
-    yield options.async
-  else
-    options.code()
-
-  debug("#{options.msg} done in #{(new Date() - start) / 1000.0}s")
-  flash("#{options.msg} done") if options.flash
-
+bench = (msg) ->
+  now = new Date()
+  debug("startup: #{msg} took #{(now - bench.start) / 1000.0}s")
+  bench.start = now
   return
-)
 do Zotero.Promise.coroutine(->
   ready = Zotero.Promise.defer()
   Zotero.BetterBibTeX.ready = ready.promise
+  bench.start = new Date()
 
-  yield benchmark({
-    msg: 'Zotero initialization'
-    async: Zotero.initializationPromise
-    flash: true
-  })
+  yield Zotero.initializationPromise
+  bench('Zotero.initializationPromise')
 
-  # must start after the initializationPromise
-  yield benchmark({
-    msg: 'keymanager'
-    async: KeyManager.init()
-  })
+  JournalAbbrev.init()
+  bench('JournalAbbrev.init()')
 
-  yield benchmark({
-    msg: 'abbreviater'
-    code: -> JournalAbbrev.init()
-  })
+  yield Serializer.init()
+  bench('Serializer.init()')
 
-  # must start after journal abbrev
-  yield benchmark({
-    msg: 'serializer'
-    code: -> Serializer.init()
-  })
+  yield KeyManager.init()
+  bench('KeyManager.init()')
 
   if Prefs.get('testing')
-    benchmark({
-      msg: 'test support'
-      code: -> Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
-    })
+    Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
+    bench('Zotero.BetterBibTeX.TestSupport')
   else
     debug('starting, skipping test support')
 
-  benchmark({
-    msg: 'Zotero translators'
-    async: Zotero.Translators.init()
-    flash: true
-  })
-  benchmark({
-    msg: 'Better BibTeX translators'
-    async: Translators.init()
-  })
+  flash('waiting for Zotero...')
+  yield Zotero.Schema.schemaUpdatePromise
+  bench('Zotero.Schema.schemaUpdatePromise')
+
+  yield Zotero.Translators.init()
+  bench('Zotero.Translators.init()')
+  flash('Hello Zotero!')
+
+  yield Translators.init()
+  bench('Translators.init()')
 
   # should be safe to start tests at this point. I hate async.
 

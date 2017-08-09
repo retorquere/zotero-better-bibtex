@@ -16,15 +16,14 @@ class KeyManager
     if !citekey.citekey
       item.setField('extra', citekey.extra)
       debug('KeyManager.pin, no citekey found, refreshing', id)
-      # unmarked save will trigger citekey generation
       yield item.saveTx()
       return
 
-    return if pin && citekey.pinned
-    return if !pin && !citekey.pinned
+    return if !!pin == !!citekey.pinned
+
     item.setField('extra', "#{citekey.extra}\nbibtex#{if pin then '' else '*'}:#{citekey.citekey}".trim())
-    debug('KeyManager.pin', pin, id)
-    yield item.saveTx({ notifierData: { BetterBibTeX: true } })
+    debug('KeyManager.pin', pin, id, citekey)
+    yield item.saveTx()
     return
   )
 
@@ -33,7 +32,7 @@ class KeyManager
     citekey = getCiteKey(item.getField('extra'))
     return if citekey.pinned
     item.setField('extra', citekey.extra)
-    debug('KeyManager.refresh', id)
+    debug('KeyManager.refresh', id, citekey)
     yield item.saveTx() # the save will be picked up by the notifier, no key will be found, and a new one will be assigned
     return
   )
@@ -52,46 +51,35 @@ class KeyManager
 
     @formatter = new Formatter(@)
 
-    @observerID = Zotero.Notifier.registerObserver(@, ['item'], 'BetterBibTeX.KeyManager', 100)
-
-    if Prefs.get('citekeyScan') != version
-      yield @rescan()
-      Prefs.set('citekeyScan', version)
+    yield @rescan()
 
     debug('KeyManager.init: done')
+
+    ###
+      TODO: probably needs to go entirely
 
     events.on('preference-changed', (pref) =>
       debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         @formatter.update()
-        co(=> yield @patternChanged())()
       return
     )
+    ###
+
     return
   )
 
   rescan: co(->
     flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while')
     debug('KeyManager.init: scanning for unset keys')
-    yield @update(yield @unset())
+
+    unset = yield @unset()
+    if unset.length
+      for item in yield Zotero.Items.getAsync(unset)
+        item.saveTx()
+
     debug('KeyManager.init: scanning for unset keys finished')
     flash('Scanning done', 'All references have citation keys now')
-    return
-  )
-
-  notify: co((action, type, ids, extraData) ->
-    debug('KeyManager.notify', {action, type, ids, extraData})
-
-    return unless action in ['add', 'modify']
-
-    ## TODO: test for field updates https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/7rM-5IKGBQAJ
-
-    ## skip saves we caused ourselves
-    ids = (id for id in ids when !extraData[id]?.BetterBibTeX)
-    debug('KeyManager.notify', {ids})
-
-    yield @update(ids)
-
     return
   )
 
@@ -110,71 +98,7 @@ class KeyManager
     return unset
   )
 
-  patternChanged: co(->
-    dyn = []
-    items = yield Zotero.DB.queryAsync("""
-      select item.itemID, extra.value as extra
-      from items item
-      join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
-      join itemDataValues extra on extra.valueID = field.valueID
-      where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
-    """)
-    for item in items
-      citekey = getCiteKey(item.extra)
-      dyn.push(item.itemID) if !citekey.pinned || !citekey.citekey
-    debug('KeyManager.patternChanged', dyn)
-    yield @update(dyn)
-    return
-  )
-
-  # update finds all references without citation keys, and all dynamic references that are marked to be overridden -- either
-  # an array of ids, or the string '*' for all dynamic references (only to be used when the pattern changes)
-  update: co((ids = []) ->
-    debug('KeyManager.update', {ids})
-    return unless ids.length
-
-    citekeys = yield @scan(ids)
-
-    save = []
-
-    # update all dynamic keys where necessary
-    for item in citekeys.find({update: true, pinned: false})
-      citekey = yield @findKey(item, citekeys)
-      if citekey != item.citekey
-        debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey, 'using', @formatter.citekeyFormat)
-        item.item.setField('extra', item.extra + "\nbibtex*:" + citekey)
-        save.push(item.item)
-      else
-        debug('KeyManager.update:', item.itemID, 'keeping', item.citekey)
-
-      # not sure if this is necessary anymore?
-      item.update = false
-      item.citekey = citekey
-      citekeys.update(item)
-
-    # find all dynamic conflicts
-    if Prefs.get('keyConflictPolicy') != 'keep'
-      for pinned in citekeys.find({ update: true, pinned: true })
-        for item in citekeys.find({ libraryID: pinned.libraryID, pinned: false, citekey: pinned.citekey })
-          throw new Error('this should have been handled in the loop above!') if item.item
-          citekey = yield @findKey(item, citekeys)
-          throw new Error('this should not have been found') if citekey == item.citekey
-          throw new Error('item not set') unless item.item
-
-          debug('KeyManager.update:', item.itemID, 'changed citation key from', item.citekey, 'to', citekey)
-          item.item.setField('extra', item.extra + "\nbibtex*:" + citekey)
-          save.push(item.item)
-
-    # defer to the end because man I hate async this could potentially cause race conditions
-    for item in save
-      debug('KeyManager.update: saving', item.id)
-      yield item.saveTx({ notifierData: { BetterBibTeX: true } })
-
-    debug('KeyManager.update done')
-    return
-  )
-
-  scan: co((ids) ->
+  scan: co(->
     start = new Date()
     debug('Keymanager.scan: citekey scan start')
 
@@ -187,14 +111,11 @@ class KeyManager
           libraryID: { type: 'integer' }
           citekey: { type: 'string' }
           pinned: { coerce: 'boolean', default: false }
-          update: { coerce: 'boolean', default: false }
           extra: { coerce: 'string', default: '' }
         }
-        required: [ 'itemID', 'libraryID', 'citekey', 'extra', 'update' ]
+        required: [ 'itemID', 'libraryID', 'citekey', 'extra' ]
       }
     })
-
-    update = ids.reduce(((acc, id) -> acc[id] = true; return acc), {})
 
     items = yield Zotero.DB.queryAsync("""
       select item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
@@ -206,7 +127,6 @@ class KeyManager
     """)
     for item in items
       key = keys.insert(Object.assign(getCiteKey(item.extra), {
-        update: update[item.itemID],
         itemID: item.itemID,
         libraryID: item.libraryID,
       }))
@@ -244,6 +164,34 @@ class KeyManager
       postfix += 1
 
     return null
+  )
+
+  generate: co((item) ->
+    keys = yield @scan()
+
+    citekey = getCiteKey(item.getField('extra'))
+    return false if citekey.pinned
+
+    proposed = @formatter.format(item)
+
+    # item already has proposed citekey
+    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey &&
+      citekey.citekey.slice(proposed.citekey.length).match(if proposed.postfix == '0' then @postfixRE.zotero else @postfixRE.bbt) &&
+      !keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })
+        return false
+
+    # unpostfixed citekey is available
+    if !keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey })
+      return "#{citekey.extra}\nbibtex*:#{proposed.citekey}".trim()
+
+    postfix = 1
+    while true
+      throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26
+      postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(@postfixBaseChar + postfix))
+      return "#{citekey.extra}\nbibtex*:#{postfixed}".trim() unless keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
+      postfix += 1
+
+    return false
   )
 
 module.exports = new KeyManager()
