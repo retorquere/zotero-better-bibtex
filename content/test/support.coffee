@@ -3,6 +3,7 @@ debug = require('../debug.coffee')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')
 Translators = require('../translators.coffee')
+getCiteKey = require('../getCiteKey.coffee')
 
 module.exports =
   reset: co(->
@@ -82,12 +83,28 @@ module.exports =
   )
 
   pinCiteKey: co((itemID, action) ->
-    switch action
-      when 'pin', 'unpin'
-        yield KeyManager.pin(itemID, action == 'pin')
-      when 'refresh'
-        yield KeyManager.refresh(itemID)
-      else
-        throw new Error("TestSupport.pinCiteKey: unsupported action #{action}")
+    if typeof itemID == 'number'
+      ids = [itemID]
+    else
+      ids = []
+      items = yield Zotero.DB.queryAsync("""
+        select item.itemID
+        from items item
+        join itemTypes it on item.itemTypeID = it.itemTypeID and it.typeName not in ('note', 'attachment')
+        where item.itemID not in (select itemID from deletedItems)
+      """)
+      for item in items
+        ids.push(item.itemID)
+
+    throw new Error('Nothing to do') unless ids.length
+
+    for itemID in ids
+      switch action
+        when 'pin', 'unpin'
+          yield KeyManager.pin(itemID, action == 'pin')
+        when 'refresh'
+          yield KeyManager.refresh(itemID)
+        else
+          throw new Error("TestSupport.pinCiteKey: unsupported action #{action}")
     return
   )

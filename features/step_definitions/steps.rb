@@ -7,6 +7,7 @@ Before do |scenario|
   execute('yield Zotero.BetterBibTeX.TestSupport.reset()') unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
   @selected = nil
+  @explicitprefs = {}
 end
 
 def preferenceValue(value)
@@ -21,6 +22,7 @@ end
 def setPreferences(prefs)
   args = { prefs: {} }
   prefs.each_pair{|pref, value|
+    @explicitprefs[pref] = true
     pref = "translators.better-bibtex#{pref}" if pref[0] == '.'
     value = preferenceValue(value)
     value = open(File.expand_path(File.join('test/fixtures', value))).read if pref == 'translators.better-bibtex.postscript'
@@ -52,6 +54,10 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
     config = JSON.parse(File.read(source))['config'] || {}
     preferences = config['preferences'] || {}
     @displayOptions = config['options'] || {}
+
+    @explicitprefs.keys.each{|pref|
+      preferences.delete(".#{pref}")
+    }
   else
     @displayOptions = {}
     preferences = nil
@@ -208,10 +214,10 @@ def exportLibrary(translator, library, displayOptions)
   expect(found.strip).to eq(expected.strip)
 end
 Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
-	exportLibrary(translator, library, {})
+  exportLibrary(translator, library, {})
 end
 Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
-	exportLibrary(translator, library, table.rows_hash)
+  exportLibrary(translator, library, table.rows_hash)
 end
 
 When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|
@@ -230,12 +236,43 @@ When(/^I remove the selected item$/) do
   )
 end
 
-When(/^I (pin|unpin|refresh) the citation key?$/) do |action|
-  sleep 3
+When(/^I (pin|unpin|refresh) (the|all) citation key(s)?$/) do |action, which, multiple|
+  raise "'all' must have 'keys'" if which == 'all' && multiple != 's'
+  raise "'the' must have 'key'" if which == 'the' && multiple == 's'
   execute(
-    args: { itemID: @selected, action: action },
+    args: { itemID: which == 'the' ? @selected : nil, action: action },
     script: 'yield Zotero.BetterBibTeX.TestSupport.pinCiteKey(args.itemID, args.action)'
   )
-  sleep 3
 end
 
+When /The following preferences have been set:/ do |table|
+  args = { prefs: {} }
+  table.rows_hash.each_pair{|pref, value|
+    pref = "translators.better-bibtex#{pref}" if pref[0] == '.'
+    value = preferenceValue(value)
+    value = open(File.expand_path(File.join('test/fixtures', value))).read if pref == 'translators.better-bibtex.postscript'
+    args[:prefs][pref] = value
+  }
+  found = execute({
+    args: args,
+    script: %|
+      var errors = [];
+
+      for (var pref in args.prefs) {
+        var expected = args.prefs[pref];
+        try {
+          var found = Zorero.Prefs.get(pref);
+          if (found !== expected) {
+            errors.push(pref + ": expected " + (JSON.stringify(expected)) + ", found " + (JSON.stringify(found)));
+          }
+        } catch (error) {
+          errors.push(pref + " not set");
+        }
+      }
+
+      return errors.join("\\n");
+    |
+  })
+
+  expect(found).to eq('')
+end

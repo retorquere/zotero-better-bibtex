@@ -52,9 +52,10 @@ Zotero.Item::save = ((original) ->
       debug('Zotero.Item::save: could not update serializer:', err)
 
     try
-      proposed = yield KeyManager.generate(@)
-      @setField('extra', proposed) if proposed
-      debug('Zotero.Item::save: cite key set to', proposed)
+      if !(@isAttachment() || @isNote())
+        proposed = yield KeyManager.generate(@)
+        @setField('extra', proposed) if proposed
+        debug('Zotero.Item::save: cite key set to', proposed)
     catch err
       debug('Zotero.Item::save: could not update cite key:', err)
 

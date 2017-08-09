@@ -210,8 +210,8 @@ Scenario: Square brackets in Publication field (85), and non-pinned keys must ch
 
 @86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
-  When I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
-   And I set preference .citekeyFormat to [auth+initials][year]
+  When I set preference .citekeyFormat to [auth+initials][year]
+   And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then a library export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
 @372 @pandoc
@@ -250,21 +250,21 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
 
 @journal-abbrev @bbt
 Scenario: Journal abbreviations
-  Given I import 1 reference with 1 attachment from "export/Better BibTeX.029.json"
-  And I set the following preferences:
+  Given I set the following preferences:
     | .citekeyFormat    | [authors][year][journal]          |
     | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
     | .pinCitekeys      | on-export                         |
+  And I import 1 reference with 1 attachment from "export/Better BibTeX.029.json"
   Then a library export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"
     | useJournalAbbreviation | true |
 
 @81 @bbt
 Scenario: Journal abbreviations exported in bibtex (81)
-  Given I import 1 reference from "export/Journal abbreviations exported in bibtex (81).json"
-  And I set the following preferences:
+  Given I set the following preferences:
     | .citekeyFormat          | [authors2][year][journal:nopunct] |
     | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
     | .pinCitekeys            | on-export                         |
+  And I import 1 reference from "export/Journal abbreviations exported in bibtex (81).json"
   Then a library export using "Better BibTeX" with the following export options should match "export/Journal abbreviations exported in bibtex (81).bibtex"
     | useJournalAbbreviation  | true |
 
@@ -291,6 +291,7 @@ Scenario: Diacritics stripped from keys regardless of ascii or fold filters #266
   Given I import 1 reference from "export/Diacritics stripped from keys regardless of ascii or fold filters #266.json"
   Then a library export using "Better BibLaTeX" should match "export/Diacritics stripped from keys regardless of ascii or fold filters #266-fold.biblatex"
   When I set preference .citekeyFold to false
+  And I refresh all citation keys
   Then a library export using "Better BibLaTeX" should match "export/Diacritics stripped from keys regardless of ascii or fold filters #266-nofold.biblatex"
 
 @384 @bbt @565 @566
