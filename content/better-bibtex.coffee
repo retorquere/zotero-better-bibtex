@@ -102,13 +102,13 @@ do Zotero.Promise.coroutine(->
   else
     debug('starting, skipping test support')
 
-  flash('waiting for Zotero...')
+  flash('waiting for Zotero translators...', 'Better BibTeX needs the translators to be loaded')
   yield Zotero.Schema.schemaUpdatePromise
   bench('Zotero.Schema.schemaUpdatePromise')
 
   yield Zotero.Translators.init()
   bench('Zotero.Translators.init()')
-  flash('Hello Zotero!')
+  flash('Zotero translators loaded', 'Better BibTeX ready for business')
 
   yield Translators.init()
   bench('Translators.init()')

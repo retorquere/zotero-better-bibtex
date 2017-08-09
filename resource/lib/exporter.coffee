@@ -22,7 +22,7 @@ class Exporter
     @caching = !BetterBibTeX.options.exportFileData
 
     @collections = collections()
-    @jabref = new JabRef(@collections)
+    @jabref = new JabRef(@collections) if @collections
 
     @context = {
       exportCharset: (BetterBibTeX.options.exportCharset || 'UTF-8').toUpperCase()
@@ -238,8 +238,9 @@ class Exporter
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
-      debug("Translator: assignGroups: #{item.itemID}")
-      @jabref.assignToGroups(item)
+      if @jabref
+        debug("Translator: assignGroups: #{item.itemID}")
+        @jabref.assignToGroups(item)
       return item
 
     return null
