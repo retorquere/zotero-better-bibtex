@@ -117,7 +117,11 @@ class PatternFormatter
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
   padYear: (year, length) ->
+    return year if typeof year == 'string'
     return '' unless typeof year == 'number'
+
+    # don't pad to pass the tests
+    return '' + year if length != 2
 
     if year < 0
       prefix = '-'

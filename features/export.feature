@@ -17,10 +17,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
 #     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
      | map csl-json variables #293                                                                    | 2           |
@@ -33,7 +34,6 @@ Scenario Outline: BibLaTeX Export
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
-     | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |
      | Better BibLaTeX.001                                                                            | 1           |
      | Better BibLaTeX.002                                                                            | 2           |

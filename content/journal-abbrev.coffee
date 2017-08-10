@@ -50,7 +50,7 @@ class JournalAbbrev
   get: (item) ->
     if item.getField
       try
-        abbrev = item.getField('journalAbbreviation')
+        abbrev = item.getField('journalAbbreviation', false, true)
     else
       abbrev = item.journalAbbreviation
 
@@ -58,20 +58,26 @@ class JournalAbbrev
 
     return null unless (if item.getField then Zotero.ItemTypes.getName(item.itemTypeID) else item.itemType) in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
 
+    debug('JournalAbbrev.get: getting from', if item.getField then 'native' else 'serialised')
     for field in ['publicationTitle', 'reporter', 'code']
       try
-        journal = if item.getField then item.getField(field) else item[field]
-        break if journal
+        debug('JournalAbbrev.get: trying', field)
+        journal = if item.getField then item.getField(field, false, true) else item[field]
+        if journal
+          debug('JournalAbbrev.get: found', field, journal)
+          break
 
     return null unless journal
 
     # don't even try to auto-abbrev arxiv IDs.
     ### TODO: How did the arXiv id's get into the serialized object? ###
-    return null if serialized_item.arXiv?.source == 'publicationTitle'
+    # return null if serialized_item.arXiv?.source == 'publicationTitle'
 
     @abbrevs['default']?['container-title']?[journal] || Zotero.Cite.getAbbreviation(@style, @abbrevs, 'default', 'container-title', journal)
 
     abbr = @abbrevs['default']?['container-title']?[journal]
+
+    debug('JournalAbbrev.get: generated', abbr)
     return null if abbr == journal
     return abbr || journal
 
