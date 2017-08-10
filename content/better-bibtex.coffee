@@ -44,27 +44,35 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   not safe to cache the results based on any field in the item because items are not reliably marked as changed. 'dateModified' is only updated for
   visual changes, and 'clientDateModified' is alwasy empty here (so far). What 'version' does? I have no idea.
 ###
+TESTING = Prefs.get('testing')
+
+ZoteroItemSavePatch = Zotero.Promise.coroutine((item) ->
+  return if item.isAttachment() || item.isNote()
+  debug('Zotero.Item::save: ', item.id)
+
+  Serializer.remove(item.id)
+
+  if extra = yield KeyManager.generate(item)
+    item.setField('extra', extra)
+    debug('Zotero.Item::save: citekey embedded in', extra)
+  else
+    debug('Zotero.Item::save: leave citekey as-is')
+
+  return
+)
 Zotero.Item::save = ((original) ->
   return Zotero.Promise.coroutine(->
     try
-      Serializer.remove(this.id)
-    catch
-      debug('Zotero.Item::save: could not update serializer:', err)
+      yield ZoteroItemSavePatch(@)
+    catch err
+      debug('Zotero.Item::save: citekey embedding failed', err)
 
     try
-      if !(@isAttachment() || @isNote())
-        try
-          proposed = yield KeyManager.generate(@)
-        catch err
-          proposed = false
-          debug('Zotero.Item::save: could not get proposed cite key:', err)
-
-        @setField('extra', proposed) if proposed
-        debug('Zotero.Item::save: cite key set to', proposed)
+      return yield original.apply(@, arguments)
     catch err
-      debug('Zotero.Item::save: could not update cite key:', err)
+      debug('Zotero.Item::save: actual save failed', err)
 
-    return (yield original.apply(@, arguments))
+    return
   )
 )(Zotero.Item::save)
 

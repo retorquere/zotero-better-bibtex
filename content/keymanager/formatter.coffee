@@ -50,12 +50,14 @@ class PatternFormatter
     return str
 
   format: (item) ->
-    @item = Serializer.simplify(Serializer.serialize(item))
+    @item = {
+      item,
+      date: item.getField('date', false, true)
+      title: item.getField('title', false, true)
+      type: Zotero.ItemTypes.getName(item.itemTypeID)
+    }
+    return {} if @item.type in ['attachment', 'note']
 
-    return {} if @item.itemType in ['attachment', 'note']
-
-    delete @year
-    delete @month
     if @item.date
       date = parseDate(@item.date)
       date = (date.from || date.to) if date.type == 'interval'
@@ -66,27 +68,31 @@ class PatternFormatter
           # ours doesn't
           date = Zotero.Date.strToDate(@item.date)
 
-          @year = parseInt(date.year)
-          delete @year if isNaN(@year)
-          @year ?= @item.date
+          @item.year = parseInt(date.year)
+          delete @item.year if isNaN(@item.year)
+          @item.year ?= @item.date
 
-          @month = parseInt(date.month)
-          delete @month if isNaN(@month)
+          @item.month = parseInt(date.month)
+          delete @item.month if isNaN(@item.month)
 
         when 'date'
-          @origyear = date.orig?.year || date.year
-          @year = date.year || @origyear
+          @item.origyear = date.orig?.year || date.year
+          @item.year = date.year || @item.origyear
 
-          @month = date.month
+          @item.month = date.month
 
         when 'season'
-          @year = date.year
+          @item.year = date.year
 
         else
           throw "Unexpected parsed date #{JSON.stringify(date)}"
 
+    debug('PatternFormatter.format: base state =', Object.assign({}, @item, {item: @item.title}))
+
     citekey = @generate()
-    citekey.citekey ||= "zotero-#{@item.itemID}"
+    debug('PatternFormatter.format: generated', Object.assign({}, @item, {citekey, item: @item.title}))
+
+    citekey.citekey ||= "Unknown"
     citekey.citekey = @removeDiacritics(citekey.citekey) if citekey.citekey && @fold
     return citekey
 
@@ -106,6 +112,17 @@ class PatternFormatter
   # LaTeX book.)
   ###
   months: [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
+
+  padYear: (year, length) ->
+    return '' unless typeof year == 'number'
+
+    if year < 0
+      prefix = '-'
+      year = -year
+    else
+      prefix = ''
+
+    return prefix + ('0000' + year).slice(-length)
 
   titleWords: (title, options = {}) ->
     return null unless title
@@ -136,50 +153,51 @@ class PatternFormatter
     return initial
 
   creators: (onlyEditors, options = {}) ->
-    return [] unless @item.creators?.length
+    if !@item.creators
+      types = Zotero.CreatorTypes.getTypesForItemType(@item.item.itemTypeID)
+      types = types.reduce((map, type) -> map[type.name] = type.id; return map)
+      primary = Zotero.CreatorTypes.getPrimaryIDForType(@item.item.itemTypeID)
 
-    creators = {}
-    primaryCreatorType = Zotero.Utilities.getCreatorsForType(@item.itemType)[0]
-    for creator in @item.creators
-      continue if onlyEditors && creator.creatorType not in ['editor', 'seriesEditor']
+      @item.creators = {}
 
-      name = creator.multi?._key?[@language] || creator
+      for creator in @item.item.getCreators()
+        continue if onlyEditors && creator.creatorTypeID not in [types.editor, types.seriesEditor]
 
-      if options.initialOnly
-        name = @initial(creator)
-      else
-        name = @innerText(name.name || name.lastName)
-
-      if name != ''
-        if options.withInitials && creator.firstName
-          initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
-          initials = @removeDiacritics(initials)
-          initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
-          name += initials
-      else
-        name = @innerText(creator.firstName)
-
-      continue if name == ''
-
-      switch creator.creatorType
-        when 'editor', 'seriesEditor'
-          creators.editors ||= []
-          creators.editors.push(name)
-
-        when 'translator'
-          creators.translators ||= []
-          creators.translators.push(name)
-
-        when primaryCreatorType
-          creators.authors ||= []
-          creators.authors.push(name)
-
+        if options.initialOnly
+          name = @initial(creator)
         else
-          creators.collaborators ||= []
-          creators.collaborators.push(name)
+          name = @innerText(creator.lastName)
 
-    return creators.editors || [] if onlyEditors
-    return creators.authors || creators.editors || creators.translators || creators.collaborators || []
+        if name
+          if options.withInitials && creator.firstName
+            initials = Zotero.Utilities.XRegExp.replace(creator.firstName, @re.caseNotUpperTitle, '', 'all')
+            initials = @removeDiacritics(initials)
+            initials = Zotero.Utilities.XRegExp.replace(initials, @re.caseNotUpper, '', 'all')
+            name += initials
+        else
+          name = @innerText(creator.firstName)
+
+        continue unless name
+
+        switch creator.creatorTypeID
+          when types.editor, types.seriesEditor
+            @item.creators.editors ||= []
+            @item.creators.editors.push(name)
+
+          when types.translator
+            @item.creators.translators ||= []
+            @item.creators.translators.push(name)
+
+          when primary
+            @item.creators.authors ||= []
+            @item.creators.authors.push(name)
+
+          else
+            @item.creators.collaborators ||= []
+            @item.creators.collaborators.push(name)
+
+    return @item.creators.editors || [] if onlyEditors
+    return @item.creators.authors || @item.creators.editors || @item.creators.translators || @item.creators.collaborators || []
 
   zotero:
     numberRe: /^[0-9]+/
@@ -187,24 +205,17 @@ class PatternFormatter
     citeKeyConversionsRe: /%([a-zA-Z])/
     citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
 
-  prop: (name) ->
-    # TODO: return stuff from multi if present in order of language preference
-    return @item[name]
-
   methods:
     zotero: ->
       key = ''
 
-      creator = (@item.creators || [])[0]
-      if creator
-        creator = creator.multi?._key?[@language] || creator
-        creator = creator.lastName || creator.name
-        key += creator.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator
+      if creator = (@item.item.getCreators() || [])[0]
+        key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator.lastName
 
       key += '_'
 
-      if @prop('title')
-        key += @prop('title').toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+      if title = @item.title
+        key += title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
 
       key += '_'
 
@@ -217,25 +228,11 @@ class PatternFormatter
       key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
       return key.replace(@zotero.citeKeyCleanRe, '')
 
-    property: (name) -> @innerText(@prop(name) || @prop(name[0].toLowerCase() + name.slice(1)) || '')
-
-    id: -> @item.itemID
+    property: (name) -> @innerText(@item.item.getField(name, false, true) || @item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
 
     library: ->
-      item = Zotero.Items.get(@item.itemID)
-      return '' unless item && item.libraryID
-      return Zotero.Libraries.getName(item.libraryID)
-
-    key: -> @item.key
-
-    attachment: ->
-      return '' if !@item.attachments || !@item.attachments.length
-
-      attachment = @item.attachments[0]
-
-      file = attachment.title || attachment.defaultPath || attachment.localPath || ''
-      file = file.replace(/.*[\\\/]/, '').replace(/\.[^\.]+$/, '')
-      return file || ''
+      return '' if @item.item.libraryID == Zotero.Libraries.userLibraryID
+      return Zotero.Libraries.getName(@item.item.libraryID)
 
     auth: (onlyEditors, withInitials, n, m) ->
       authors = @creators(onlyEditors, {withInitials})
@@ -260,7 +257,7 @@ class PatternFormatter
       return authors[authors.length - 1] ? ''
 
     ### TODO: journal abbrev to module ###
-    journal: -> journalAbbrev.get(@item) || @prop('publicationTitle')
+    journal: -> journalAbbrev.get(@item.item) || @item.item.getField('publicationTitle', false, true)
 
     authors: (onlyEditors, withInitials, n) ->
       authors = @creators(onlyEditors, {withInitials})
@@ -333,46 +330,47 @@ class PatternFormatter
           return (author.substring(0, 1) for author in authors).join('.') + (if authors.length > 3 then '+' else '')
 
     firstpage: ->
+      @item.pages ||= @item.item.getField('pages', false, true)
       return '' unless @item.pages
       firstpage = ''
       @item.pages.replace(/^([0-9]+)/g, (match, fp) -> firstpage = fp)
       return firstpage
 
-    keyword: (n) ->
-      return '' if not @item.tags?[n]
-      return @item.tags[n].tag
-
     lastpage: ->
+      @item.pages ||= @item.item.getField('pages', false, true)
       return '' unless @item.pages
       lastpage = ''
       @item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) -> lastpage = lp)
       return lastpage
 
+    keyword: (n) ->
+      @item.tags ||= (tag.tag for tag in @item.item.getTags())
+      return @item.tags[n] || ''
+
     shorttitle: ->
-      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
+      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return ''  unless words
       return words.slice(0, 3).join('')
 
     veryshorttitle: ->
-      words = @titleWords(@prop('title'), { skipWords: true, asciiOnly: true})
+      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
       return '' unless words
       return words.slice(0, 1).join('')
 
     shortyear: ->
-      return '' unless @year
-      year = @year % 100
-      return "0#{year}"  if year < 10
-      return '' + year
+      return @padYear(@item.year, 2)
 
-    year: -> @year || ''
+    year: ->
+      return @padYear(@item.year, 4)
 
-    origyear: -> @origyear || ''
+    origyear: ->
+      return @padYear(@item.origyear, 4)
 
     month: ->
-      return '' unless @month
-      return @months[@month - 1] ? ''
+      return '' unless @item.month
+      return @months[@item.month - 1] ? ''
 
-    title: -> @titleWords(@prop('title')).join('')
+    title: -> @titleWords(@item.title).join('')
 
   filters:
     ifempty: (value, dflt) ->

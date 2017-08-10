@@ -8,6 +8,10 @@
  * To make a manual change to preferences, you can visit the URL about:config
  */
 
+user_pref("app.update.lastUpdateTime.addon-background-update-timer", 0);
+user_pref("app.update.lastUpdateTime.background-update-timer", 0);
+user_pref("app.update.lastUpdateTime.blocklist-background-update-timer", 0);
+user_pref("app.update.lastUpdateTime.search-engine-update-timer", 1502369293);
 user_pref("app.update.lastUpdateTime.xpi-signature-verification", 0);
 user_pref("browser.cache.disk.filesystem_reported", 1);
 user_pref("extensions.blocklist.pingCountVersion", 0);
@@ -16,12 +20,12 @@ user_pref("extensions.databaseSchema", 19);
 user_pref("extensions.e10s.rollout.hasAddon", false);
 user_pref("extensions.e10sBlockedByAddons", true);
 user_pref("extensions.e10sMultiBlockedByAddons", true);
-user_pref("extensions.enabledAddons", "zoteroOpenOfficeIntegration%40zotero.org:5.0.3.SA.5.0.3");
-user_pref("extensions.lastAppVersion", "5.0.3");
+user_pref("extensions.enabledAddons", "zoteroOpenOfficeIntegration%40zotero.org:5.0.6.SA.5.0.8");
+user_pref("extensions.lastAppVersion", "5.0.8");
 user_pref("extensions.lastPlatformVersion", "54.0");
 user_pref("extensions.pendingOperations", false);
 user_pref("extensions.systemAddonSet", "{\"schema\":1,\"addons\":{}}");
-user_pref("extensions.xpiState", "{\"app-global\":{\"zoteroOpenOfficeIntegration@zotero.org\":{\"d\":\"/home/emile/bin/zotero/extensions/zoteroOpenOfficeIntegration@zotero.org\",\"e\":true,\"v\":\"5.0.3.SA.5.0.3\",\"st\":1499932765000,\"mt\":1499932765000}}}");
+user_pref("extensions.xpiState", "{\"app-global\":{\"zoteroOpenOfficeIntegration@zotero.org\":{\"d\":\"/home/emile/bin/zotero/extensions/zoteroOpenOfficeIntegration@zotero.org\",\"e\":true,\"v\":\"5.0.6.SA.5.0.8\",\"st\":1501940924000,\"mt\":1501940924000}}}");
 user_pref("extensions.zotero.dataDir", "/home/emile/Zotero");
 user_pref("extensions.zotero.firstRun2", false);
 user_pref("extensions.zotero.lastViewedFolder", "L1");
@@ -29,6 +33,7 @@ user_pref("extensions.zotero.pane.persist", "{\"zotero-collections-pane\":{},\"z
 user_pref("extensions.zotero.prefVersion", 2);
 user_pref("extensions.zotero.useDataDir", true);
 user_pref("extensions.zoteroOpenOfficeIntegration.skipInstallation", true);
+user_pref("intl.accept_languages", "en-US, en");
 user_pref("media.gmp.storage.version.observed", 1);
 user_pref("network.cookie.prefsMigrated", true);
 user_pref("signon.importedFromSqlite", true);

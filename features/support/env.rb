@@ -143,7 +143,41 @@ def normalize_library(library, collections=false)
   renum.call({'collections' => library['collections']})
 end
 
+TRANSLATORS = {}
+
+def exportLibrary(translator, displayOptions, library)
+  if translator =~ /^id:(.+)$/
+    translator = $1
+  else
+    translator = TRANSLATORS['byName'][translator]['translatorID']
+  end
+
+  found = execute(
+    args: { translatorID: translator, displayOptions: displayOptions },
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
+  )
+
+	return if library == :ignore
+
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
+  expected = File.read(expected)
+  case File.extname(library)
+  when '.json'
+    options = { wrap: 40, sort: true }
+    found = JSON.neat_generate(JSON.parse(found), options)
+    expected = JSON.neat_generate(JSON.parse(expected), options)
+  when '.yml'
+    found = sort_object(YAML.load(found)).to_yaml
+    expected = sort_object(YAML.load(expected)).to_yaml
+  end
+
+  expect(found.strip).to eq(expected.strip)
+end
+
 module BBT
+  system("npm run build") || raise("Build failed")
+  TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
+
   if OS.linux?
     profiles = File.expand_path('~/.zotero/zotero')
     zotero = File.expand_path('~/bin/zotero/zotero')
@@ -190,7 +224,6 @@ module BBT
   profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile/profile'))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
-  system("npm run build") || raise("Build failed")
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
   plugins += Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../mozrepl*.xpi'))]
   plugins.each{|plugin|
@@ -219,6 +252,25 @@ module BBT
   
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
   pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText > #{logfile.shellescape} 2>&1") }
+
+  at_exit {
+    execute("""
+      var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
+      appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
+    """)
+    stopped = false
+    1.upto(5){
+			sleep(1)
+      begin
+        Process::kill 0, pid
+      rescue Errno::ESRCH
+	      stopped = true
+        break
+        false
+      end
+    }
+    Process.kill("HUP", pid) unless stopped
+  } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
   
   puts Benchmark.measure {
     print "Starting Zotero."
@@ -247,24 +299,9 @@ module BBT
       end
       print '.'
     end
-  }
 
-  at_exit {
-    execute("""
-      var appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-      appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
-    """)
-    stopped = false
-    1.upto(5){
-			sleep(1)
-      begin
-        Process::kill 0, pid
-      rescue Errno::ESRCH
-	      stopped = true
-        break
-        false
-      end
-    }
-    Process.kill("HUP", pid) unless stopped
-  } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
+		# test whether the existing references, if any, have gotten a cite key
+		exportLibrary('Better BibTeX', {}, :ignore)
+  }
 end
+

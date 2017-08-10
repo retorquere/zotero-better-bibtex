@@ -44,7 +44,6 @@ parse_edtf = (date) ->
   try
     parsed = edtf.parse(edtfy(date.replace(/\. /, ' '))) # 8. july 2011
   catch err
-    debug('edtfy failed:', err, {message: err.message})
     throw err unless err.name == 'SyntaxError' || err.token || err.message == 'Invalid year'
     try
       parsed = edtf.parse(date.replace('?~', '~').replace(/u/g, 'X'))

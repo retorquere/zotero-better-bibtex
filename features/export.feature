@@ -17,6 +17,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
@@ -31,7 +32,6 @@ Scenario Outline: BibLaTeX Export
      | transliteration for citekey #580                                                               | 1           |
      | Title case of latex greek text on biblatex export #564                                         | 2           |
      | pre not working in Extra field #559                                                            | 1           |
-     | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | @legislation; map code,container-title to journaltitle #327                                    | 1           |
      | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
      | Be robust against misconfigured journal abbreviator #127                                       | 1           |

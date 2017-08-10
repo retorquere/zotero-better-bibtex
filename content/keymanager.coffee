@@ -73,12 +73,16 @@ class KeyManager
 
     flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
     unset = yield @unset()
-    debug('KeyManager.rescan: scanning for unset keys finished')
+    debug('KeyManager.rescan: scanning for unset keys finished, found', unset)
 
     if unset.length
       flash('Assigning citation keys', "Found #{unset.length} references without a citation key")
-      for item in yield Zotero.Items.getAsync(unset)
-        item.saveTx()
+      yield Zotero.DB.executeTransaction(co(->
+        for item in yield Zotero.Items.getAsync(unset)
+          debug('KeyManager.rescan: saving item', item.id)
+          item.save()
+        return
+      ))
     debug('KeyManager.rescan: done updating citation keys')
 
     return

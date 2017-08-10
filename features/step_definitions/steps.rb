@@ -1,8 +1,6 @@
 require 'fileutils'
 require 'neatjson'
 
-TRANSLATORS = JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json')))
-
 Before do |scenario|
   execute('yield Zotero.BetterBibTeX.TestSupport.reset()') unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
@@ -187,37 +185,11 @@ def normalize_library(library, nocollections=true)
 
   renum.call({'collections' => library['collections']})
 end
-def exportLibrary(translator, library, displayOptions)
-  if translator =~ /^id:(.+)$/
-    translator = $1
-  else
-    translator = TRANSLATORS['byName'][translator]['translatorID']
-  end
-  
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
-  expected = File.read(expected)
-  found = execute(
-    args: { translatorID: translator, displayOptions: @displayOptions.merge(displayOptions) },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
-  )
-
-  case File.extname(library)
-  when '.json'
-    options = { wrap: 40, sort: true }
-    found = JSON.neat_generate(JSON.parse(found), options)
-    expected = JSON.neat_generate(JSON.parse(expected), options)
-  when '.yml'
-    found = sort_object(YAML.load(found)).to_yaml
-    expected = sort_object(YAML.load(expected)).to_yaml
-  end
-
-  expect(found.strip).to eq(expected.strip)
-end
 Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
-  exportLibrary(translator, library, {})
+  exportLibrary(translator, @displayOptions, library)
 end
 Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
-  exportLibrary(translator, library, table.rows_hash)
+  exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
 end
 
 When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|
