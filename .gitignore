@@ -26,7 +26,6 @@ vendor
 .pushbullet
 resource/reports/cacheActivity.txt
 wiki
-*.sqlite
 *.deb
 .DS_Store
 .env
