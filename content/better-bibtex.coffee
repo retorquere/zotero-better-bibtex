@@ -53,7 +53,12 @@ Zotero.Item::save = ((original) ->
 
     try
       if !(@isAttachment() || @isNote())
-        proposed = yield KeyManager.generate(@)
+        try
+          proposed = yield KeyManager.generate(@)
+        catch err
+          proposed = false
+          debug('Zotero.Item::save: could not get proposed cite key:', err)
+
         @setField('extra', proposed) if proposed
         debug('Zotero.Item::save: cite key set to', proposed)
     catch err

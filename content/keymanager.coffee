@@ -76,7 +76,7 @@ class KeyManager
     debug('KeyManager.rescan: scanning for unset keys finished')
 
     if unset.length
-      flash('Assigning citation keys', "Found #{unset.length}" references without a citation key")
+      flash('Assigning citation keys', "Found #{unset.length} references without a citation key")
       for item in yield Zotero.Items.getAsync(unset)
         item.saveTx()
     debug('KeyManager.rescan: done updating citation keys')
