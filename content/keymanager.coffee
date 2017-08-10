@@ -80,7 +80,7 @@ class KeyManager
       yield Zotero.DB.executeTransaction(co(->
         for item in yield Zotero.Items.getAsync(unset)
           debug('KeyManager.rescan: saving item', item.id)
-          item.save()
+          yield item.save()
         return
       ))
     debug('KeyManager.rescan: done updating citation keys')

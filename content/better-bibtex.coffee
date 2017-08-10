@@ -50,9 +50,17 @@ ZoteroItemSavePatch = Zotero.Promise.coroutine((item) ->
   return if item.isAttachment() || item.isNote()
   debug('Zotero.Item::save: ', item.id)
 
-  Serializer.remove(item.id)
+  try
+    Serializer.remove(item.id)
+  catch err
+    throw new Error("Zotero.Item::save: serializer failed: " + err)
 
-  if extra = yield KeyManager.generate(item)
+  try
+    extra = yield KeyManager.generate(item)
+  catch err
+    throw new Error("Zotero.Item::save: could not generate citekey: " + err)
+
+  if extra
     item.setField('extra', extra)
     debug('Zotero.Item::save: citekey embedded in', extra)
   else
@@ -61,16 +69,18 @@ ZoteroItemSavePatch = Zotero.Promise.coroutine((item) ->
   return
 )
 Zotero.Item::save = ((original) ->
-  return Zotero.Promise.coroutine(->
+  return Zotero.Promise.coroutine((options)->
+    Zotero.debug("Zotero.Item::save: pre")
     try
       yield ZoteroItemSavePatch(@)
     catch err
       debug('Zotero.Item::save: citekey embedding failed', err)
 
     try
-      return yield original.apply(@, arguments)
+      Zotero.debug("Zotero.Item::save: native...")
+      return yield original.call(@, options)
     catch err
-      debug('Zotero.Item::save: actual save failed', err)
+      Zotero.debug("Zotero.Item::save: actual save failed: " + err + "\n\n" + err.stack)
 
     return
   )

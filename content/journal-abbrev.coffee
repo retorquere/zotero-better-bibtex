@@ -47,11 +47,22 @@ class JournalAbbrev
     debug('JournalAbbrev.reset:', {style: @style})
     return
 
-  get: (serialized_item) ->
-    return serialized_item.journalAbbreviation if serialized_item.journalAbbreviation
-    return null unless serialized_item.itemType in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
+  get: (item) ->
+    if item.getField
+      try
+        abbrev = item.getField('journalAbbreviation')
+    else
+      abbrev = item.journalAbbreviation
 
-    journal = serialized_item.publicationTitle || serialized_item.reporter || serialized_item.code
+    return abbrev if abbrev
+
+    return null unless (if item.getField then Zotero.ItemTypes.getName(item.itemTypeID) else item.itemType) in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
+
+    for field in ['publicationTitle', 'reporter', 'code']
+      try
+        journal = if item.getField then item.getField(field) else item[field]
+        break if journal
+
     return null unless journal
 
     # don't even try to auto-abbrev arxiv IDs.

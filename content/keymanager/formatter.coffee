@@ -51,12 +51,15 @@ class PatternFormatter
 
   format: (item) ->
     @item = {
-      item,
-      date: item.getField('date', false, true)
-      title: item.getField('title', false, true)
+      item
       type: Zotero.ItemTypes.getName(item.itemTypeID)
     }
     return {} if @item.type in ['attachment', 'note']
+
+    try
+      @item.date = item.getField('date', false, true)
+    try
+      @item.title = item.getField('title', false, true)
 
     if @item.date
       date = parseDate(@item.date)
@@ -228,7 +231,12 @@ class PatternFormatter
       key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
       return key.replace(@zotero.citeKeyCleanRe, '')
 
-    property: (name) -> @innerText(@item.item.getField(name, false, true) || @item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
+    property: (name) ->
+      try
+        return @innerText(@item.item.getField(name, false, true) || '')
+      try
+        return @innerText(@item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
+      return ''
 
     library: ->
       return '' if @item.item.libraryID == Zotero.Libraries.userLibraryID
