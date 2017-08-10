@@ -69,10 +69,15 @@ class KeyManager
   )
 
   rescan: co(->
+    if @scanning
+      flash('Scanning still in progress', "Scan is still running, #{@scanning} items left")
+      return
+
     debug('KeyManager.rescan: scanning for unset keys')
 
     flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
     unset = yield @unset()
+    @scanning = unset.length
     debug('KeyManager.rescan: scanning for unset keys finished, found', unset)
 
     if unset.length
@@ -82,8 +87,10 @@ class KeyManager
           item = yield Zotero.Items.getAsync(id)
           debug('KeyManager.rescan: saving item', item.id)
           yield item.save()
+          @scanning--
           return
         ))
+      @scanning = false
     debug('KeyManager.rescan: done updating citation keys')
 
     return
