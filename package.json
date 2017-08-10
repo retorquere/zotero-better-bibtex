@@ -1,7 +1,20 @@
 {
   "name": "zotero-better-bibtex",
   "version": "5.0.2",
-  "description": "Better BibTeX support for Zotero",
+  "description": "Make Zotero useful for us LaTeX holdouts.",
+  "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
+  "author": {
+    "name": "Emiliano Heyns",
+    "email": "Emiliano.Heyns@iris-advies.com"
+  },
+  "xpi": {
+    "name": "Zotero Better Bib(La)Tex",
+    "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
+    "updateURL": "https://retorquere.github.io/zotero-better-bibtex/update.rdf",
+    "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
+    "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
+    "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html"
+  },
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -65,10 +78,8 @@
     "type": "git",
     "url": "git+https://github.com/retorquere/zotero-better-bibtex.git"
   },
-  "author": "Emiliano Heyns",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
-  },
-  "homepage": "https://github.com/retorquere/zotero-better-bibtex#readme"
+  }
 }

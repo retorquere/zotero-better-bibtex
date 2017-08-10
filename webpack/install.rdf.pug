@@ -1,16 +1,19 @@
 doctype xml
 RDF(xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#")
   Description(about="urn:mozilla:install-manifest")
-    em:name Zotero Better Bib(La)Tex
-    em:id better-bibtex@iris-advies.com
+    em:name= name
+    em:id= id
     em:version= version
-    em:description Make Zotero useful for us LaTeX holdouts.
-    em:homepageURL https://github.com/retorquere/zotero-better-bibtex/wiki
-    em:creator Emiliano Heyns
-    em:iconURL chrome://zotero-better-bibtex/skin/better-bibtex.svg
-    em:updateURL https://retorquere.github.io/zotero-better-bibtex/update.rdf
+    em:description= description
+    em:homepageURL= homepage
+    em:creator= author.name
+    if iconURL
+      em:iconURL= iconURL
+    if updateURL
+      em:updateURL= updateURL
     em:type 2
-    em:optionsURL chrome://zotero/content/preferences/preferences.xul#better-bibtex
+    if optionsURL
+      em:optionsURL= optionsURL
     em:targetApplication
       Description
         em:id zotero@chnm.gmu.edu
