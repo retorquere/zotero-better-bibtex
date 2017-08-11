@@ -2,7 +2,10 @@ require 'fileutils'
 require 'neatjson'
 
 Before do |scenario|
-  execute('yield Zotero.BetterBibTeX.TestSupport.reset()') unless scenario.source_tag_names.include?('@noreset')
+  execute(
+    timeout: 120,
+    script: 'yield Zotero.BetterBibTeX.TestSupport.reset()'
+  ) unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
   @selected = nil
   @explicitprefs = {}

@@ -153,6 +153,7 @@ def exportLibrary(translator, displayOptions, library)
   end
 
   found = execute(
+    timeout: 600,
     args: { translatorID: translator, displayOptions: displayOptions },
     script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
   )
@@ -299,7 +300,7 @@ module BBT
         end
       rescue Errno::ECONNREFUSED, Net::ReadTimeout, HTTPNotFoundError
         attempts += 1
-        raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60
+        raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 1)
       end
       print '.'
     end
