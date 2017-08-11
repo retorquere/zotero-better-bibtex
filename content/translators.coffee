@@ -83,10 +83,12 @@ class Translators
         todo = 'library'
         id = Zotero.Libraries.userLibraryID
       switch todo
-        when 'library' then translation.setLibraryID(items)
-        when 'items' then translation.setItems(items)
-        # TODO: check whether Zotero.Collections.get is async
-        when 'collection' then translation.setCollection(if typeof value == 'number' then Zotero.Collections.get(value) else value)
+        when 'library'
+          translation.setLibraryID(items)
+        when 'items'
+          translation.setItems(items)
+        when 'collection'
+          translation.setCollection(if typeof items == 'number' then Zotero.Collections.get(items) else items)
 
       translation.setLibraryID(Zotero.Libraries.userLibraryID)
       translation.setTranslator(translatorID)

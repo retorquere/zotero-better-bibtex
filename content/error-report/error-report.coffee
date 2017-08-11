@@ -131,22 +131,15 @@ class ErrorReport
 
     pane = Zotero.getActiveZoteroPane()
 
-    switch includeReferences
-      when 'collection'
-        collectionsView = pane?.collectionsView
-        itemGroup = collectionsView?._getItemAtRow(collectionsView.selection?.currentIndex)
-        switch itemGroup?.type
-          when 'collection'
-            items = {collection: collectionsView.getSelectedCollection() }
-          when 'library'
-            items = { }
-          when 'group'
-            items = { collection: Zotero.Groups.get(collectionsView.getSelectedLibraryID()) }
+    switch pane && includeReferences
+      when 'collection', 'library'
+        items = { collection: pane.getSelectedCollection() }
+        items = { library: pane.getSelectedLibraryID() } unless items.collection
 
       when 'items'
         items = { items: pane.getSelectedItems() }
+        items = null unless items.items && items.items.length
 
-    items = null if items && items.items && items.items.length == 0
     params = {wrappedJSObject: { items }}
 
     debug('ErrorReport::start popup', params)

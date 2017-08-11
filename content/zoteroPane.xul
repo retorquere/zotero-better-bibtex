@@ -7,6 +7,7 @@
     <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/better-bibtex.properties"/>
   </stringbundleset -->
 
+  <!-- TODO: move to top level menu -->
   <menupopup id="zotero-tb-actions-popup">
     <menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
     <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
