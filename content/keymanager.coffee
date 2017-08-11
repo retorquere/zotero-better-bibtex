@@ -87,6 +87,7 @@ class KeyManager
     debug('KeyManager.rescan: scanning for unset keys finished, found', unset)
 
     if unset.length
+      start = new Date()
       flash('Assigning citation keys', "Found #{unset.length} references without a citation key")
       for id in unset
         yield Zotero.DB.executeTransaction(co(->
@@ -94,9 +95,12 @@ class KeyManager
           debug('KeyManager.rescan: saving item', item.id)
           yield item.save()
           @scanning--
+          if (@scanning % 100) == 1
+            flash('Assigning citation keys', "Still busy, #{@scanning} remaining...")
           return
         ))
       @scanning = false
+      flash('Assigning citation keys', "#{unset.length} references updated in #{((new Date()) - start) / 1000.0}s")
     debug('KeyManager.rescan: done updating citation keys')
 
     return
@@ -142,7 +146,16 @@ class KeyManager
     return
   )
 
-  postfixBaseChar: 'a'.charCodeAt(0) - 1
+  postfixAlpha: (n) ->
+    postfix = ''
+    a = 1
+    b = 26
+    while (num -= a) >= 0
+      postfix = String.fromCharCode(parseInt(num % b / a) + 97) + postfix
+      a = b
+      b *= 26
+    return postfix
+
   postfixRE: {
     numeric: /^(-[0-9]+)?$/
     alphabetic: /^([a-z])?$/
@@ -163,8 +176,7 @@ class KeyManager
 
     postfix = 1
     while true
-      throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26
-      citekey = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(@postfixBaseChar + postfix))
+      citekey = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else @postfixAlpha(postfix))
       return citekey unless keys.findOne({ libraryID: item.libraryID,  citekey })
       postfix += 1
 
@@ -204,7 +216,6 @@ class KeyManager
     debug("KeyManager.generate: generating free citekey from #{item.id} from", proposed.citekey)
     postfix = 1
     while true
-      throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26
       postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(@postfixBaseChar + postfix))
       debug("KeyManager.generate: trying", postfixed)
       return postfixed unless @keys.findOne({ libraryID: item.libraryID, citekey: postfixed })

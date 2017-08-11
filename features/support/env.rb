@@ -249,7 +249,11 @@ module BBT
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   FileUtils.rm_rf(data_tgt)
   FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_tgt)
-  
+  if ENV['ZOTERO_BIGLY'] == 'true'
+    STDOUT.puts "Testing using bigly database!"
+    FileUtils.cp(File.join(fixtures, 'profile/data/zotero-bigly.sqlite'), File.join(data_tgt, 'zotero.sqlite'))
+  end
+
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
   pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText > #{logfile.shellescape} 2>&1") }
 
