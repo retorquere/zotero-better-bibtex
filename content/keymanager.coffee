@@ -32,6 +32,7 @@ class KeyManager
     debug('KeyManager.refresh', id)
     item = yield Zotero.Items.getAsync(id)
     citekey = Citekey.get(item.getField('extra'))
+    debug('KeyManager.refresh:', id, citekey)
     return if citekey.pinned
     item.setField('extra', citekey.extra)
     debug('KeyManager.refresh', id, citekey)

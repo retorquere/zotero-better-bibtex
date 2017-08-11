@@ -28,7 +28,7 @@ get = (extra) ->
 
   return {extra, citekey, pinned: !!pinned}
 
-set = (extra, citekey) ->
-  return "#{get(extra).extra}\nbibtex: #{citekey}".trim()
+set = (extra, citekey, pinned) ->
+  return "#{get(extra).extra}\nbibtex#{if pinned then '' else '*'}: #{citekey}".trim()
 
 module.exports = { get, set }
