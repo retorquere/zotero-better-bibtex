@@ -8,7 +8,7 @@ class Translators
     Object.assign(@, require('../gen/translators.json'))
 
     debug('Translator.init: waiting for translators...')
-    yield Zotero.Promise.all([Zotero.Schema.schemaUpdatePromise, Zotero.Translators.init()])
+    yield Zotero.Schema.schemaUpdatePromise
     debug('Translator.init: translators ready @', (new Date() - start))
 
     if Prefs.get('removeStock')

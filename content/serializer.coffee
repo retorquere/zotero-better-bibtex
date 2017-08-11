@@ -3,18 +3,7 @@ debug = require('./debug.coffee')
 DB = require('./db.coffee')
 
 class Serializer
-  cache: DB.schemaCollection('serialized', {
-    indices: [ 'itemID', 'legacy', 'skipChildItems' ],
-    schema: {
-      type: 'object'
-      properties: {
-        itemID: { type: 'integer' }
-        legacy: { coerce: 'boolean', default: false }
-        skipChildItems: { coerce: 'boolean', default: false }
-      }
-      required: [ 'itemID', 'legacy', 'skipChildItems' ]
-    }
-  })
+  collection: 'itemToExportFormat'
 
 #  # prune cache on old accessed
 #  prune: Zotero.Promise.coroutine(->
@@ -50,25 +39,14 @@ class Serializer
     debug('Serializer.init: simplify =', simplify)
     @simplify = new Function('item', simplify)
 
-    Zotero.Notifier.registerObserver(@, ['item'], 'BetterBibTeX', 1)
-
     debug('Serializer.init: done')
     return
   )
 
-  notify: (action, type, ids, extraData) ->
-    debug('Serializer.notify', {action, type, ids, extraData})
-
-    if action in ['delete', 'trash']
-      @cache.findAndRemove({ itemID : { $in : ids } })
-
-    return
-
-  remove: (itemID) ->
-    @cache.findAndRemove({ itemID })
-    return
-
   fetch: (itemID, legacy, skipChildItems) ->
+    @cache ||= DB.getCollection(@collection)
+    return null unless @cache
+
     serializedZoteroItem = @cache.findOne({ itemID, legacy: !!legacy, skipChildItems: !!skipChildItems})
     return null unless serializedZoteroItem
     serializedZoteroItem = serializedZoteroItem.item
@@ -76,6 +54,9 @@ class Serializer
     return serializedZoteroItem
 
   store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
+    @cache ||= DB.getCollection(@collection)
+    throw new Error("DB not loaded") unless @cache
+
     serializedZoteroItem.itemID = itemID
     @cache.insert({itemID, legacy, skipChildItems, item: serializedZoteroItem})
 

@@ -119,14 +119,22 @@ class FileStore
 
     return callback(data || '{}')
 
+class NullStore
+  mode: 'reference'
+  exportDatabase: (name, dbref, callback) -> callback(null)
+  loadDatabase: (name, callback) -> callback(null)
+
 module.exports = (name, options = {}) ->
   if options.autosave
     # options.adapter = new Loki.LokiPartitioningAdapter(new FileStore())
     options.adapter = new FileStore()
     options.autosaveInterval ||= 5000
-    delete options.persistenceMethod
   else
-    delete options.adapter
-    options.persistenceMethod = null
-  options.env = 'BROWSER'
+    delete options.autosaveInterval
+    options.adapter = new NullStore()
+
+  delete options.persistenceMethod
+  options.env = 'XUL-CHROME'
+
+  debug('Setting up database', name, 'with options', options)
   return new Loki(name, options)

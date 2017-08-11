@@ -13,7 +13,9 @@ Zotero.Debug.setStore(true)
 
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
+DB = require('./db.coffee')
 Serializer = require('./serializer.coffee')
+Citekey = require('./keymanager/get-set.coffee')
 
 ###
   MONKEY PATCHES
@@ -40,58 +42,91 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
 }
 
-###
-  not safe to cache the results based on any field in the item because items are not reliably marked as changed. 'dateModified' is only updated for
-  visual changes, and 'clientDateModified' is alwasy empty here (so far). What 'version' does? I have no idea.
-###
-TESTING = Prefs.get('testing')
-
-ZoteroItemSavePatch = Zotero.Promise.coroutine((item) ->
-  return if item.isAttachment() || item.isNote()
-  debug('Zotero.Item::save: ', item.id)
-
-  try
-    Serializer.remove(item.id)
-  catch err
-    throw new Error("Zotero.Item::save: serializer failed: " + err)
-
-  try
-    extra = yield KeyManager.generate(item)
-  catch err
-    throw new Error("Zotero.Item::save: could not generate citekey: " + err)
-
-  if extra
-    item.setField('extra', extra)
-    debug('Zotero.Item::save: citekey embedded in', extra)
-  else
-    debug('Zotero.Item::save: leave citekey as-is')
-
-  return
-)
 Zotero.Item::save = ((original) ->
   return Zotero.Promise.coroutine((options)->
-    Zotero.debug("Zotero.Item::save: pre")
+    Zotero.debug("Zotero.Item::save: pre-#{if @deleted then 'delete' else 'save'}")
+
     try
-      yield ZoteroItemSavePatch(@)
+      citekey = KeyManager.generate(@) unless @deleted || @isNote() || @isAttachment()
     catch err
-      debug('Zotero.Item::save: citekey embedding failed', err)
+      throw new Error("Zotero.Item::save: could not generate citekey: " + err + "\n\n" + err.stack)
+
+    if citekey
+      try
+        @setField('extra', Citekey.set(@getField('extra'), citekey))
+        debug('Zotero.Item::save: citekey embedded', citekey)
+      catch err
+        debug('Zotero.Item::save: failed to embed citekey' + err + "\n\n" + err.stack)
+        citekey = false
+    else
+      debug('Zotero.Item::save: leave citekey as-is')
 
     try
       Zotero.debug("Zotero.Item::save: native...")
-      return yield original.call(@, options)
+      result = yield original.call(@, options)
     catch err
-      Zotero.debug("Zotero.Item::save: actual save failed: " + err + "\n\n" + err.stack)
+      Zotero.debug("Zotero.Item::save: native save failed! " + err + "\n\n" + err.stack)
+      throw err
 
-    return
+    Zotero.debug("Zotero.Item::save: native succeeded")
+
+    try
+      keys = DB.getCollection('citekey')
+      keys.findAndRemove({itemID: @id}) if citekey || @deleted
+      keys.insert({itemID: @id, libraryID: @libraryID, citekey}) if citekey
+      DB.getCollection('itemToExportFormat').findAndRemove({itemID: @id})
+    catch err
+      Zotero.debug("Zotero.Item::save: post-native save failed: " + err + "\n\n" + err.stack)
+
+    return result
   )
 )(Zotero.Item::save)
+
+###
+PatchItemRemove = ((original, name) ->
+  return Zotero.Promise.coroutine(->
+    try
+      Zotero.debug("Zotero.Item::#{name}: native...")
+      result = yield original.apply(@, arguments)
+    catch err
+      Zotero.debug("Zotero.Item::#{name}: native #{name} failed! " + err + "\n\n" + err.stack)
+      throw err
+
+    try
+      DB.getCollection('citekey').findAndRemove({itemID: @id})
+      DB.getCollection('itemToExportFormat').findAndRemove({itemID: @id})
+    catch err
+      Zotero.debug("Zotero.Item::#{name}: post-native #{name} failed: " + err + "\n\n" + err.stack)
+
+    return result
+  )
+)
+Zotero.Item::erase = PatchItemRemove(Zotero.Item::erase, 'erase')
+Zotero.Item::trash = PatchItemRemove(Zotero.Item::trash, 'trash')
+
+Must also patch Zotero.Items.trash...
+
+perhaps the notifiers are fast enough
+###
+
+Zotero.Notifier.registerObserver({
+  notify: (action, type, ids, extraData) ->
+    debug('item.notify', {action, type, ids, extraData})
+
+    if action in ['delete', 'trash']
+      DB.getCollection('citekey').findAndRemove({ itemID : { $in : ids } })
+      DB.getCollection('itemToExportFormat').findAndRemove({ itemID : { $in : ids } })
+
+    return
+}, ['item'], 'BetterBibTeX', 1)
+
 
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
     try
       return Serializer.fetch(zoteroItem.id, legacy, skipChildItems) || Serializer.store(zoteroItem.id, original.apply(@, arguments), legacy, skipChildItems)
     catch err # fallback for safety for non-BBT
-      debug('Zotero.Item::save', err)
+      debug('Zotero.Utilities.Internal.itemToExportFormat', err)
 
     return original.apply(@, arguments)
 )(Zotero.Utilities.Internal.itemToExportFormat)
@@ -113,11 +148,14 @@ do Zotero.Promise.coroutine(->
   yield Zotero.initializationPromise
   bench('Zotero.initializationPromise')
 
-  yield Serializer.init()
-  bench('Serializer.init()')
+  yield DB.init()
+  bench('DB.init()')
 
-  yield KeyManager.init()
+  yield KeyManager.init() # inits the key cache by scanning the DB
   bench('KeyManager.init()')
+
+  yield Serializer.init() # creates simplify et al
+  bench('Serializer.init()')
 
   if Prefs.get('testing')
     Zotero.BetterBibTeX.TestSupport = require('./test/support.coffee')
@@ -129,8 +167,6 @@ do Zotero.Promise.coroutine(->
   yield Zotero.Schema.schemaUpdatePromise
   bench('Zotero.Schema.schemaUpdatePromise')
 
-  yield Zotero.Translators.init()
-  bench('Zotero.Translators.init()')
   flash('Zotero translators loaded', 'Better BibTeX ready for business')
 
   yield Translators.init()
