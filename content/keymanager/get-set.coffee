@@ -1,7 +1,7 @@
 bibtex = /(?:^|\s)bibtex(\*?):[^\S\n]*([^\s]*)(?:\s|$)/
 biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^\[\]\s]*)\](?:\s|$)/
 
-module.exports = (extra) ->
+get = (extra) ->
   if extra?
     extra = '' + extra
   else
@@ -27,3 +27,8 @@ module.exports = (extra) ->
   Zotero.debug("getCiteKey after biblatexcitekey: extract " + JSON.stringify({citekey, extra}))
 
   return {extra, citekey, pinned: !!pinned}
+
+set = (extra, citekey, pinned) ->
+  return "#{get(extra).extra}\nbibtex#{if pinned then '' else '*'}: #{citekey}".trim()
+
+module.exports = { get, set }

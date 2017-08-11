@@ -3,16 +3,16 @@ flash = require('./flash.coffee')
 Prefs = require('./preferences.coffee')
 co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
-getCiteKey = require('./getCiteKey.coffee')
+Citekey = require('./keymanager/get-set.coffee')
 events = require('./events.coffee')
-Loki = require('./loki.coffee')
+DB = require('./db.coffee')
 version = require('../gen/version.js')
 
 class KeyManager
   pin: co((id, pin) ->
     debug('KeyManager.pin', id, pin)
     item = yield Zotero.Items.getAsync(id)
-    citekey = getCiteKey(item.getField('extra'))
+    citekey = Citekey.get(item.getField('extra'))
 
     if !citekey.citekey
       item.setField('extra', citekey.extra)
@@ -31,7 +31,8 @@ class KeyManager
   refresh: co((id) ->
     debug('KeyManager.refresh', id)
     item = yield Zotero.Items.getAsync(id)
-    citekey = getCiteKey(item.getField('extra'))
+    citekey = Citekey.get(item.getField('extra'))
+    debug('KeyManager.refresh:', id, citekey)
     return if citekey.pinned
     item.setField('extra', citekey.extra)
     debug('KeyManager.refresh', id, citekey)
@@ -42,6 +43,9 @@ class KeyManager
 
   init: co(->
     debug('KeyManager.init...')
+
+    @keys = DB.getCollection('citekey')
+
     @query = {
       field: {}
       type: {}
@@ -72,6 +76,8 @@ class KeyManager
     if @scanning
       flash('Scanning still in progress', "Scan is still running, #{@scanning} items left")
       return
+
+    @scan()
 
     debug('KeyManager.rescan: scanning for unset keys')
 
@@ -106,7 +112,7 @@ class KeyManager
       where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note}) and item.itemID not in (select itemID from deletedItems)
     """)
     for item in items
-      citekey = getCiteKey(item.extra)
+      citekey = Citekey.get(item.extra)
       unset.push(item.itemID) unless citekey.citekey
     return unset
   )
@@ -115,20 +121,7 @@ class KeyManager
     start = new Date()
     debug('Keymanager.scan: citekey scan start')
 
-    keys = Loki('keys').schemaCollection('keys', {
-      indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
-      schema: {
-        type: 'object'
-        properties: {
-          itemID: { type: 'integer' }
-          libraryID: { type: 'integer' }
-          citekey: { type: 'string' }
-          pinned: { coerce: 'boolean', default: false }
-          extra: { coerce: 'string', default: '' }
-        }
-        required: [ 'itemID', 'libraryID', 'citekey', 'extra' ]
-      }
-    })
+    @keys.removeDataOnly()
 
     items = yield Zotero.DB.queryAsync("""
       select item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
@@ -139,15 +132,14 @@ class KeyManager
         and item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note})
     """)
     for item in items
-      key = keys.insert(Object.assign(getCiteKey(item.extra), {
+      key = @keys.insert(Object.assign(Citekey.get(item.extra), {
         itemID: item.itemID,
         libraryID: item.libraryID,
       }))
       debug('Keymanager.scan: got', {itemID: item.itemID, extra: item.extra, key})
 
     debug('Keymanager.scan: citekey scan complete:', new Date() - start)
-
-    return keys
+    return
   )
 
   postfixBaseChar: 'a'.charCodeAt(0) - 1
@@ -179,25 +171,25 @@ class KeyManager
     return null
   )
 
-  generate: co((item) ->
-    citekey = getCiteKey(item.getField('extra'))
+  generate: (item) ->
+    debug('KeyManager.generate: getting existing key from extra field,if any')
+    citekey = Citekey.get(item.getField('extra'))
+    debug('KeyManager.generate: found key', citekey)
     return false if citekey.pinned
 
+    debug('KeyManager.generate: formatting...', citekey)
     proposed = @formatter.format(item)
     debug('KeyManager.generate: proposed=', proposed)
-
-    keys = yield @scan()
-    debug('KeyManager.generate: keys=', keys)
 
     debug("KeyManager.generate: testing whether #{item.id} can keep #{citekey.citekey}")
     # item already has proposed citekey
     if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
       re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
       if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
-        if keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
+        if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
           return false
         else
-          debug("KeyManager.generate: #{item.id}: #{citekey.citekey} is in use by", keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))
+          debug("KeyManager.generate: #{item.id}: #{citekey.citekey} is in use by", @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))
       else
         debug("KeyManager.generate: #{item.id}: #{citekey.citekey} has wrong postfix for", proposed)
     else
@@ -205,18 +197,21 @@ class KeyManager
 
     debug("KeyManager.generate: testing whether #{item.id} can use proposed #{proposed.citekey}")
     # unpostfixed citekey is available
-    if !keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })
-      return "#{citekey.extra}\nbibtex*:#{proposed.citekey}".trim()
+    if !@keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })
+      debug("KeyManager.generate: #{item.id} can use proposed #{proposed.citekey}")
+      return proposed.citekey
 
     debug("KeyManager.generate: generating free citekey from #{item.id} from", proposed.citekey)
     postfix = 1
     while true
       throw new Error('Postfix out of bounds') if proposed.postfix != '0' && postfix > 26
       postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else String.fromCharCode(@postfixBaseChar + postfix))
-      return "#{citekey.extra}\nbibtex*:#{postfixed}".trim() unless keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
+      debug("KeyManager.generate: trying", postfixed)
+      return postfixed unless @keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
       postfix += 1
 
+    # we should never get here
+    debug("KeyManager.generate: we should not be here!")
     return false
-  )
 
 module.exports = new KeyManager()

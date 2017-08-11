@@ -1,6 +1,6 @@
 Exporter = require('../lib/exporter.coffee')
 debug = require('../lib/debug.coffee')
-getCiteKey = require('../../content/getCiteKey.coffee')
+Citekey = require('../../content/keymanager/get-set.coffee')
 
 ValidCSLTypes = [
   'article'
@@ -88,7 +88,7 @@ class CSLExporter
 #        csl = cached.bibtex
 #      else
       if true
-        citekey = getCiteKey(item.extra)
+        citekey = Citekey.get(item.extra)
         item.extra = citekey.extra
         item.__citekey__ = citekey.citekey
         fields = @Exporter.extractFields(item)

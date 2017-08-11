@@ -3,7 +3,6 @@ debug = require('../debug.coffee')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')
 Translators = require('../translators.coffee')
-getCiteKey = require('../getCiteKey.coffee')
 
 module.exports =
   reset: co(->

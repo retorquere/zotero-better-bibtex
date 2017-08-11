@@ -1,6 +1,6 @@
 debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
-getCiteKey = require('../../content/getCiteKey.coffee')
+Citekey = require('../../content/keymanager/get-set.coffee')
 JabRef = require('../bibtex/jabref.coffee') # not so nice... BibTeX-specific code in general exporter lib
 collections = require('./collections.coffee')
 
@@ -230,7 +230,7 @@ class Exporter
 #          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
 #          continue
 
-      citekey = getCiteKey(item.extra)
+      citekey = Citekey.get(item.extra)
       item.extra = citekey.extra
       @jabref.citekeys[item.itemID] = item.__citekey__ = citekey.citekey
       debug('citation key extracted', item.__citekey__)
