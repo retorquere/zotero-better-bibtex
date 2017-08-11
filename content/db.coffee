@@ -2,7 +2,7 @@ Loki = require('./loki.coffee')
 co = Zotero.Promise.coroutine
 
 # TODO: re-enable when I figure out where I want to save to
-DB = Loki('db.json', { autosave: false })
+DB = Loki('better-bibtex', { autosave: true })
 
 DB.init = co(->
   yield new Zotero.Promise((resolve, reject) ->
