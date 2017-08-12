@@ -5,7 +5,7 @@ co = Zotero.Promise.coroutine
 Formatter = require('./keymanager/formatter.coffee')
 Citekey = require('./keymanager/get-set.coffee')
 events = require('./events.coffee')
-DB = require('./db.coffee')
+DB = require('./db/main.coffee')
 version = require('../gen/version.js')
 
 class KeyManager

@@ -1,9 +1,9 @@
 abbrevs = require('./journal-abbrev.coffee')
 debug = require('./debug.coffee')
-DB = require('./db.coffee')
+CACHE = require('./db/cache.coffee')
 
 class Serializer
-  collection: 'itemToExportFormat'
+  cache: CACHE.getCollection('itemToExportFormat')
 
 #  # prune cache on old accessed
 #  prune: Zotero.Promise.coroutine(->
@@ -44,7 +44,6 @@ class Serializer
   )
 
   fetch: (itemID, legacy, skipChildItems) ->
-    @cache ||= DB.getCollection(@collection)
     return null unless @cache
 
     serializedZoteroItem = @cache.findOne({ itemID, legacy: !!legacy, skipChildItems: !!skipChildItems})

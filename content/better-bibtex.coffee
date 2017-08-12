@@ -13,7 +13,8 @@ Zotero.Debug.setStore(true)
 
 Translators = require('./translators.coffee')
 KeyManager = require('./keymanager.coffee')
-DB = require('./db.coffee')
+DB = require('./db/main.coffee')
+CACHE = require('./db/cache.coffee')
 Serializer = require('./serializer.coffee')
 Citekey = require('./keymanager/get-set.coffee')
 
@@ -74,7 +75,7 @@ Zotero.Item::save = ((original) ->
       keys = DB.getCollection('citekey')
       keys.findAndRemove({itemID: @id}) if citekey || @deleted
       keys.insert({itemID: @id, libraryID: @libraryID, citekey}) if citekey
-      DB.getCollection('itemToExportFormat').findAndRemove({itemID: @id})
+      CACHE.remove(@id)
     catch err
       Zotero.debug("Zotero.Item::save: post-native save failed: " + err + "\n\n" + err.stack)
 
