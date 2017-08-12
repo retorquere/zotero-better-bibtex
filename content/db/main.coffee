@@ -1,13 +1,22 @@
 Loki = require('./loki.coffee')
 co = Zotero.Promise.coroutine
 debug = require('../debug.coffee')
+Prefs = require('../preferences.coffee')
 
 class DBStore
   mode: 'reference'
+  testing: Prefs.get('testing')
+
   loaded: {}
   validName: /^_better_bibtex[_a-zA-Z0-9]*$/
 
   name: (name) -> '_' + name.replace(/[^a-zA-Z]/, '_')
+
+  serialize: (data) ->
+    if @testing
+      return JSON.stringify(data, null, 2)
+    else
+      return JSON.stringify(data)
 
   exportDatabase: (dbname, dbref, callback) ->
     dbname = @name(dbname)
@@ -23,10 +32,10 @@ class DBStore
             if coll.dirty
               name = "#{dbname}.#{coll.name}"
               debug('DBStore.exportDatabase:', name)
-              Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
+              Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, @serialize(coll)])
 
           # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-          Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, JSON.stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
+          Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, @serialize(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
 
           return
         )

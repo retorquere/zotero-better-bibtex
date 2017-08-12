@@ -1,16 +1,24 @@
 createFile = require('../create-file.coffee')
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
+Prefs = require('../preferences.coffee')
 
 class FileStore
   mode: 'reference'
+  testing: Prefs.get('testing')
 
   name: (name) -> name + '.json'
+
+  serialize: (data) ->
+    if @testing
+      return JSON.stringify(data, null, 2)
+    else
+      return JSON.stringify(data)
 
   save: (name, data) ->
     debug('FileStore.save', name)
     db = createFile(name + '.saving')
-    Zotero.File.putContents(db, JSON.stringify(data))
+    Zotero.File.putContents(db, @serialize(data))
     db.moveTo(null, @name(name))
     return
 
@@ -62,9 +70,11 @@ DB = new Loki('cached', {
 
 DB.loadDatabase()
 
-DB.remove = (itemID) ->
+DB.remove = (ids) ->
+  query = if Array.isArray(ids) then { itemID : { $in : ids } } else { itemID: ids }
+
   for coll in @collections
-    coll.findAndRemove({itemID})
+    coll.findAndRemove(query)
   return
 
 DB.schemaCollection('itemToExportFormat', {

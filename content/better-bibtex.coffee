@@ -119,7 +119,7 @@ Zotero.Notifier.registerObserver({
 
     if action in ['delete', 'trash']
       DB.getCollection('citekey').findAndRemove({ itemID : { $in : ids } })
-      DB.getCollection('itemToExportFormat').findAndRemove({ itemID : { $in : ids } })
+      CACHE.remove(ids)
 
     return
 }, ['item'], 'BetterBibTeX', 1)
