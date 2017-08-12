@@ -32,10 +32,10 @@ class KeyManager
     debug('KeyManager.refresh', id)
     item = yield Zotero.Items.getAsync(id)
     citekey = Citekey.get(item.getField('extra'))
-    debug('KeyManager.refresh:', id, citekey)
+    debug('KeyManager.refresh?', id, citekey)
     return if citekey.pinned
     item.setField('extra', citekey.extra)
-    debug('KeyManager.refresh', id, citekey)
+    debug('KeyManager.refresh!', id, citekey)
     yield item.saveTx() # the save will be picked up by the monkey-patched save, no key will be found, and a new one will be assigned
     debug('KeyManager.refresh done', id, citekey)
     return
@@ -187,7 +187,7 @@ class KeyManager
     debug('KeyManager.generate: getting existing key from extra field,if any')
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.generate: found key', citekey)
-    return false if citekey.pinned
+    return citekey if citekey.pinned
 
     debug('KeyManager.generate: formatting...', citekey)
     proposed = @formatter.format(item)
@@ -199,7 +199,7 @@ class KeyManager
       re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
       if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
         if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
-          return false
+          return citekey
         else
           debug("KeyManager.generate: #{item.id}: #{citekey.citekey} is in use by", @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))
       else
@@ -211,7 +211,7 @@ class KeyManager
     # unpostfixed citekey is available
     if !@keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })
       debug("KeyManager.generate: #{item.id} can use proposed #{proposed.citekey}")
-      return proposed.citekey
+      return { citekey: proposed.citekey, changed: true}
 
     debug("KeyManager.generate: generating free citekey from #{item.id} from", proposed.citekey)
     postfix = 1
@@ -219,11 +219,11 @@ class KeyManager
       postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else @postfixAlpha(postfix))
       if !@keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
         debug("KeyManager.generate: found <#{postfixed}>")
-        return postfixed
+        return { citekey: postfixed, changed: true }
       postfix += 1
 
     # we should never get here
     debug("KeyManager.generate: we should not be here!")
-    return false
+    return null
 
 module.exports = new KeyManager()

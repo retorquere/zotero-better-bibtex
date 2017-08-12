@@ -52,9 +52,9 @@ Zotero.Item::save = ((original) ->
     catch err
       throw new Error("Zotero.Item::save: could not generate citekey: " + err + "\n\n" + err.stack)
 
-    if citekey
+    if citekey?.changed
       try
-        @setField('extra', Citekey.set(@getField('extra'), citekey))
+        @setField('extra', Citekey.set(@getField('extra'), citekey.citekey))
         debug('Zotero.Item::save: citekey embedded', citekey)
       catch err
         debug('Zotero.Item::save: failed to embed citekey' + err + "\n\n" + err.stack)
@@ -72,9 +72,12 @@ Zotero.Item::save = ((original) ->
     Zotero.debug("Zotero.Item::save: native succeeded")
 
     try
-      keys = DB.getCollection('citekey')
-      keys.findAndRemove({itemID: @id}) if citekey || @deleted
-      keys.insert({itemID: @id, libraryID: @libraryID, citekey}) if citekey
+      if citekey
+        keys = DB.getCollection('citekey')
+        pinned = !!citekey.pinned
+        if !keys.findOne({ itemID: @id, pinned, citekey: citekey.citekey }) || @deleted
+          keys.findAndRemove({itemID: @id})
+          keys.insert({itemID: @id, libraryID: @libraryID, pinned, citekey: citekey.citekey }) unless @deleted
       CACHE.remove(@id)
     catch err
       Zotero.debug("Zotero.Item::save: post-native save failed: " + err + "\n\n" + err.stack)
