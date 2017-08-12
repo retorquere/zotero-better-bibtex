@@ -2,7 +2,21 @@ Loki = require('./loki.coffee')
 co = Zotero.Promise.coroutine
 
 # TODO: re-enable when I figure out where I want to save to
-DB = Loki('better-bibtex', { autosave: true })
+DB = Loki('better-bibtex', {
+  autosave: true
+  autoexport: {
+    proto: Object,
+    inflate: (src, dest) ->
+      Object.assign(dest, src)
+
+      for date in ['scheduled', 'updated']
+        if dest[date]
+          dest[date] = Date.parse(dest[date])
+          dest[date] = null is isNaN(dest[date])
+        delete dest[date] unless dest[date]
+      return
+  }
+})
 
 DB.init = co(->
   yield new Zotero.Promise((resolve, reject) ->
@@ -72,11 +86,24 @@ DB.removeCollection('metadata') if DB.getCollection('metadata')
 DB.removeCollection('keys') if DB.getCollection('keys')
 ###
 
-###
-TODO: schedule save on close
-DB.close()
-TODO: save on idle
-###
+### auto-saves ###
+Zotero.addShutdownListener(->
+  debug('shutting down')
+  DB.saveDatabase() # and hope for the best. Hoo-boy async is such fun
+  return
+)
+observerService = Components.classes["@mozilla.org/observer-service;1"] .getService(Components.interfaces.nsIObserverService)
+observerService.addObserver({
+  observe: (subject, topic, data) ->
+    DB.saveDatabase() # and hope for the best. Hoo-boy async is such fun
+    return
+}, 'quit-application-requested', false)
+idleService = Components.classes["@mozilla.org/widget/idleservice;1"].getService(Components.interfaces.nsIIdleService)
+idleService.addIdleObserver({
+  observe: (subject, topic, data) ->
+    DB.saveDatabase() # and hope for the best. Hoo-boy async is such fun
+    return
+}, 5)
 
 ### only for json-backed storage
 for ae in autoexports.data()

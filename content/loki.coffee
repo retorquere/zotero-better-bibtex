@@ -136,13 +136,9 @@ class DBStore
 
   name: (name) -> '_' + name.replace(/[^a-zA-Z]/, '_')
 
-  ensureDB: Zotero.Promise.coroutine((dbname) ->
-    yield Zotero.DB.queryAsync("CREATE TABLE IF NOT EXISTS #{dbname} (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
-    return
-  )
-
   exportDatabase: (dbname, dbref, callback) ->
     dbname = @name(dbname)
+    debug('Saving', dbname, 'to DBStore')
 
     throw new Error("Invalid database name '#{dbname}'") unless dbname.match(@validName)
     throw new Error("Database #{dbname} not loaded") unless @loaded[dbname]
@@ -150,19 +146,20 @@ class DBStore
     do Zotero.Promise.coroutine(->
       try
         yield Zotero.DB.executeTransaction(=>
-          yield @ensureDB(dbname)
-
           header = {}
+          dirty = false
           for k, v of dbref
             if k == 'collections'
               for coll in v
                 name = "#{dbname}.#{coll.name}"
-                if coll.dirty || !(yield Zotero.DB.valueQueryAsync("SELECT 1 FROM #{dbname} WHERE name = ?", [name]))
+                if coll.dirty
+                  dirty = true
                   Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
               header[k] = v.map((coll) -> coll.name)
             else
               header[k] = v
 
+          # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
           Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, JSON.stringify(header)])
           return
         )
@@ -176,12 +173,13 @@ class DBStore
   # this assumes Zotero.initializationPromise has resolved, will throw an error if not
   loadDatabase: (dbname, callback) ->
     dbname = @name(dbname)
+    debug('Loading', dbname, 'from DBStore')
     throw new Error("Invalid database name '#{dbname}'") unless dbname.match(@validName)
 
     do Zotero.Promise.coroutine(=>
       try
         yield Zotero.DB.executeTransaction(=>
-          yield @ensureDB(dbname)
+          yield Zotero.DB.queryAsync("CREATE TABLE IF NOT EXISTS #{dbname} (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
 
           data = yield Zotero.DB.queryAsync("SELECT name, data FROM #{dbname}")
 
