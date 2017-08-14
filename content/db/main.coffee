@@ -16,7 +16,7 @@ class DBStore
     conn = @conn[dbname]
     if conn == false
       debug('DBStore: save of', dbname, 'attempted after close')
-      return callback && callback(null)
+      return callback(null)
 
     throw new Error("Database #{dbname} not loaded") unless conn
 
@@ -34,9 +34,9 @@ class DBStore
 
           return
         )
-        return callback && callback(null)
+        return callback(null)
       catch err
-        return callback && callback(err)
+        return callback(err)
     )
 
     return
@@ -69,10 +69,10 @@ class DBStore
 
           db.collections = (collections[coll] for coll in db.collections when collections[coll]) if db
 
-          return callback && callback(db)
+          return callback(db)
         )
       catch err
-        return callback && callback(err)
+        return callback(err)
     )
     return
 
@@ -80,17 +80,19 @@ class DBStore
     dbname = @name(dbname)
     debug('DBStore.close', dbname)
 
-    return callback && callback(null) unless @conn[dbname]
+    return callback(null) unless @conn[dbname]
 
     conn = @conn[dbname]
     @conn[dbname] = false
 
-    conn.closeDatabase(true).then(->
-      debug('DBStore.close OK', dbname)
-      return callback && callback(null)
-    ).catch((err) ->
-      debug('DBStore.close FAILED', dbname, err)
-      return callback && callback(err)
+    do Zotero.Promise.coroutine(->
+      try
+        yield conn.closeDatabase(true)
+        debug('DBStore.close OK', dbname)
+        return callback(null)
+      catch err
+        debug('DBStore.close FAILED', dbname, err)
+        return callback(err)
     )
     return
 

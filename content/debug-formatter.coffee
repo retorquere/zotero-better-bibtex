@@ -8,6 +8,11 @@ module.exports = (prefix, msg) ->
       when m instanceof Error
         err = true
         m = "<Exception: #{m.message || m.name}#{if m.stack then '\n' + m.stack else ''}>"
+
+      when m && typeof m == 'object' && m.stack # mozilla exception, no idea on the actual instance type
+        err = true
+        m = "<Exception: #{m}#\n#{m.stack}>"
+
       when m instanceof String || typeof m == 'string'
         # pass
       else

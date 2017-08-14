@@ -13,6 +13,7 @@ class FileStore
     db = createFile(name + '.saving')
     Zotero.File.putContents(db, JSON.stringify(data))
     db.moveTo(null, @name(name))
+    debug('FileStore.saved', name, 'to', @name(name))
     return
 
   load: (name) ->
@@ -40,7 +41,8 @@ class FileStore
     catch err
       debug('LokiJS.FileStore.exportDatabase: save failed', err)
 
-    return callback && callback(null)
+    debug('LokiJS.FileStore.exportDatabase: save completed', name)
+    return callback(null)
 
   loadDatabase: (name, callback) ->
     debug('FileStore.loadDatabase: loading', name)
@@ -55,7 +57,7 @@ class FileStore
       debug('LokiJS.FileStore.loadDatabase: load failed', err)
       db = null
 
-    return callback && callback(db)
+    return callback(db)
 
 DB = new Loki('cache', {
   autosave: true,

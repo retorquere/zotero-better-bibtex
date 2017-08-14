@@ -117,6 +117,7 @@ Zotero.Notifier.registerObserver({
   notify: (action, type, ids, extraData) ->
     debug('item.notify', {action, type, ids, extraData})
 
+    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     if action in ['delete', 'trash']
       DB.getCollection('citekey').findAndRemove({ itemID : { $in : ids } })
       CACHE.remove(ids)

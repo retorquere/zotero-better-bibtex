@@ -56,24 +56,24 @@ Loki.Collection::update = ((original) ->
 Loki::closeAsync = ->
   return new Zotero.Promise((resolve, reject) =>
     debug('Loki::closeAsync')
-    if typeof @persistenceAdapter?.close == 'function'
-      debug('Loki::closeAsync:', @persistenceAdapter.constructor.name)
-      return @persistenceAdapter.close(@filename, (err) =>
-        debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, err)
-        return reject(err) if err
 
-        return @close((err) =>
-          debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, ': close', err)
+    try
+      return @close((err) =>
+        debug('Loki::closeAsync: close', err)
+        return reject(err) if err
+        return resolve(null) unless @persistenceAdapter && typeof @persistenceAdapter.close == 'function'
+
+        # close adapter after DB, as the DB may need the adapter in 'close'
+        debug('Loki::closeAsync:', @persistenceAdapter.constructor.name)
+        return @persistenceAdapter.close(@filename, (err) =>
+          debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, err)
           return reject(err) if err
           return resolve(null)
         )
       )
-
-    return @close((err) ->
-      debug('Loki::closeAsync: close', err)
-      return reject(err) if err
-      return resolve(null)
-    )
+    catch err
+      debug('Loki::closeAsync??', err)
+      return reject(err)
   )
 
 Loki::saveDatabaseAsync = ->
@@ -87,20 +87,20 @@ Loki::saveDatabaseAsync = ->
 class NullStore
   mode: 'reference'
 
-  exportDatabase: (name, dbref, callback) -> callback && callback(null)
-  loadDatabase: (name, callback) -> callback && callback(null)
+  exportDatabase: (name, dbref, callback) -> callback(null)
+  loadDatabase: (name, callback) -> callback(null)
 
 AutoSaveOnIdle = []
 
 idleService = Components.classes["@mozilla.org/widget/idleservice;1"].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
   observe: (subject, topic, data) ->
-    debug('idle, saving', AutoSaveOnIdle.length)
     do Zotero.Promise.coroutine(->
       for db in AutoSaveOnIdle
+        continue unless db.autosaveDirty()
         debug('idle, saving', db.filename)
         try
-          yield db.saveDatabaseAsync() if db.autosaveDirty()
+          yield db.saveDatabaseAsync()
         catch err
           debug('idle, saving failed', db.filename, err)
       return
@@ -125,12 +125,21 @@ class XULoki extends Loki
       # workaround for https://github.com/techfort/LokiJS/issues/597
       @autosaveDisable()
 
-    AsyncShutdown.profileBeforeChange.addBlocker("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}", Zotero.Promise.coroutine(=>
-      debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}")
-      yield @closeAsync()
-      debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed #{name}")
-      return
-    ))
+    if @persistenceAdapter
+      AsyncShutdown.profileBeforeChange.addBlocker("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}", Zotero.Promise.coroutine(=>
+        debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}")
+
+        # setTimeout is disabled during shutdown and throws errors
+        @throttledSaves = false
+
+        try
+          yield @closeAsync()
+          debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed #{name}")
+        catch err
+          debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close #{name} failed", err)
+
+        return
+      ))
 
   schemaCollection: (name, options) ->
     coll = @getCollection(name) || @addCollection(name, options)
