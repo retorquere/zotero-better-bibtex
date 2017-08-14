@@ -1,47 +1,42 @@
 Loki = require('./loki.coffee')
-co = Zotero.Promise.coroutine
 debug = require('../debug.coffee')
-Prefs = require('../preferences.coffee')
 
 class DBStore
   mode: 'reference'
-  testing: Prefs.get('testing')
 
-  loaded: {}
-  validName: /^_better_bibtex[_a-zA-Z0-9]*$/
+  conn: {}
+  validName: /^better_bibtex[_a-zA-Z0-9]*$/
 
-  name: (name) -> '_' + name.replace(/[^a-zA-Z]/, '_')
-
-  serialize: (data) ->
-    if @testing
-      return JSON.stringify(data, null, 2)
-    else
-      return JSON.stringify(data)
+  name: (name) -> name.replace(/[^a-zA-Z]/, '_')
 
   exportDatabase: (dbname, dbref, callback) ->
     dbname = @name(dbname)
     debug('DBStore.exportDatabase:', dbname)
 
-    throw new Error("Invalid database name '#{dbname}'") unless dbname.match(@validName)
-    throw new Error("Database #{dbname} not loaded") unless @loaded[dbname]
+    conn = @conn[dbname]
+    if conn == false
+      debug('DBStore: save of', dbname, 'attempted after close')
+      return callback && callback(null)
+
+    throw new Error("Database #{dbname} not loaded") unless conn
 
     do Zotero.Promise.coroutine(->
       try
-        yield Zotero.DB.executeTransaction(=>
+        yield conn.executeTransaction(->
           for coll in dbref.collections
             if coll.dirty
               name = "#{dbname}.#{coll.name}"
               debug('DBStore.exportDatabase:', name)
-              Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, @serialize(coll)])
+              conn.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
 
           # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-          Zotero.DB.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, @serialize(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
+          conn.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, JSON.stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
 
           return
         )
-        return callback(null)
+        return callback && callback(null)
       catch err
-        return callback(err)
+        return callback && callback(err)
     )
 
     return
@@ -51,15 +46,19 @@ class DBStore
     dbname = @name(dbname)
     debug('DBStore.loadDatabase:', dbname)
     throw new Error("Invalid database name '#{dbname}'") unless dbname.match(@validName)
+    throw new Error("Database '#{dbname}' already closed") if @conn[dbname] == false
+    throw new Error("Database '#{dbname}' already loaded") if @conn[dbname]
 
-    do Zotero.Promise.coroutine(=>
+    conn = @conn[dbname] = new Zotero.DBConnection(dbname)
+
+    do Zotero.Promise.coroutine(->
       try
-        yield Zotero.DB.executeTransaction(=>
-          yield Zotero.DB.queryAsync("CREATE TABLE IF NOT EXISTS #{dbname} (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
+        yield conn.executeTransaction(->
+          yield conn.queryAsync("CREATE TABLE IF NOT EXISTS #{dbname} (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
 
           db = null
           collections = {}
-          for row in yield Zotero.DB.queryAsync("SELECT name, data FROM #{dbname}")
+          for row in yield conn.queryAsync("SELECT name, data FROM #{dbname}")
             if row.name == dbname
               db = JSON.parse(row.data)
             else
@@ -70,20 +69,35 @@ class DBStore
 
           db.collections = (collections[coll] for coll in db.collections when collections[coll]) if db
 
-          @loaded[dbname] = true
-          return callback(db)
+          return callback && callback(db)
         )
       catch err
-        callback(err)
-      return
+        return callback && callback(err)
+    )
+    return
+
+  close: (dbname, callback) ->
+    dbname = @name(dbname)
+    debug('DBStore.close', dbname)
+
+    return callback && callback(null) unless @conn[dbname]
+
+    conn = @conn[dbname]
+    @conn[dbname] = false
+
+    conn.closeDatabase(true).then(->
+      debug('DBStore.close OK', dbname)
+      return callback && callback(null)
+    ).catch((err) ->
+      debug('DBStore.close FAILED', dbname, err)
+      return callback && callback(err)
     )
     return
 
 DB = new Loki('better-bibtex', {
   autosave: true,
-  autosaveInterval: 500,
+  autosaveInterval: 5000,
   autosaveOnIdle: true,
-  closeOnShutdown: true,
   adapter: new DBStore(),
   autoexport: {
     proto: Object,
@@ -99,7 +113,7 @@ DB = new Loki('better-bibtex', {
   }
 })
 
-DB.init = co(->
+DB.init = Zotero.Promise.coroutine(->
   yield new Zotero.Promise((resolve, reject) ->
     return DB.loadDatabase({}, (err) ->
       if err

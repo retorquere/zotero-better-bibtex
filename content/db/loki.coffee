@@ -1,3 +1,5 @@
+Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
+
 Ajv = require('ajv')
 Loki = require('lokijs')
 debug = require('../debug.coffee')
@@ -50,62 +52,85 @@ Loki.Collection::update = ((original) ->
     return original.apply(@, arguments)
 )(Loki.Collection::update)
 
+# TODO: workaround for https://github.com/techfort/LokiJS/issues/595#issuecomment-322032656
+Loki::closeAsync = ->
+  return new Zotero.Promise((resolve, reject) =>
+    debug('Loki::closeAsync')
+    if typeof @persistenceAdapter?.close == 'function'
+      debug('Loki::closeAsync:', @persistenceAdapter.constructor.name)
+      return @persistenceAdapter.close(@filename, (err) =>
+        debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, err)
+        return reject(err) if err
+
+        return @close((err) =>
+          debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, ': close', err)
+          return reject(err) if err
+          return resolve(null)
+        )
+      )
+
+    return @close((err) ->
+      debug('Loki::closeAsync: close', err)
+      return reject(err) if err
+      return resolve(null)
+    )
+  )
+
+Loki::saveDatabaseAsync = ->
+  return new Zotero.Promise((resolve, reject) =>
+    return @saveDatabase((err) ->
+      return reject(err) if err
+      return resolve(null)
+    )
+  )
+
 class NullStore
   mode: 'reference'
-  exportDatabase: (name, dbref, callback) -> callback(null)
-  loadDatabase: (name, callback) -> callback(null)
 
-AutoSave = {
-  onIdle: []
-  onShutdown: []
-}
+  exportDatabase: (name, dbref, callback) -> callback && callback(null)
+  loadDatabase: (name, callback) -> callback && callback(null)
 
-debug('registering shutdown listeners')
-Zotero.addShutdownListener(->
-  debug('shutdown (Zotero), auto-saving', AutoSave.onShutdown.length)
-  for db in AutoSave.onShutdown
-    debug('shutdown (Zotero), auto-saving', db.filename)
-    try
-      db.close()
-    catch err
-      debug('shutdown (Zotero), auto-saving failed', db.filename, err)
-  return
-)
-#observerService = Components.classes["@mozilla.org/observer-service;1"] .getService(Components.interfaces.nsIObserverService)
-#observerService.addObserver({
-#  observe: (subject, topic, data) ->
-#    debug('shutdown (quit-application), closing', AutoSave.onShutdown.length)
-#    for db in AutoSave.onShutdown
-#      debug('shutdown (quit-application), closing', db.filename)
-#      try
-#        db.close()
-#      catch err
-#        debug('shutdown (quit-application), closing failed', db.filename, err)
-#    return
-#}, 'quit-application', false)
+AutoSaveOnIdle = []
 
 idleService = Components.classes["@mozilla.org/widget/idleservice;1"].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver({
   observe: (subject, topic, data) ->
-    debug('idle, saving', AutoSave.onShutdown.length)
-    for db in AutoSave.onShutdown
-      debug('idle, saving', db.filename)
-      try
-        db.saveDatabase()
-      catch err
-      debug('idle, saving failed', db.filename, err)
+    debug('idle, saving', AutoSaveOnIdle.length)
+    do Zotero.Promise.coroutine(->
+      for db in AutoSaveOnIdle
+        debug('idle, saving', db.filename)
+        try
+          yield db.saveDatabaseAsync() if db.autosaveDirty()
+        catch err
+          debug('idle, saving failed', db.filename, err)
+      return
+    )
     return
 }, 5)
 
 class XULoki extends Loki
   constructor: (name, options = {}) ->
-    AutoSave.onShutdown.push(@) if options.closeOnShutdown
-    AutoSave.onIdle.push(@) if options.autosaveOnIdle
 
-    options.adapter ||= NullStore
+    options.adapter ||= new NullStore()
     options.env = 'XUL-Chrome'
 
+    periodicSave = options.autosaveInterval
+    options.autosave = true if periodicSave
+
     super(name, options)
+
+    if periodicSave
+      AutoSaveOnIdle.push(@)
+    else
+      # workaround for https://github.com/techfort/LokiJS/issues/597
+      @autosaveDisable()
+
+    AsyncShutdown.profileBeforeChange.addBlocker("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}", Zotero.Promise.coroutine(=>
+      debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}")
+      yield @closeAsync()
+      debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed #{name}")
+      return
+    ))
 
   schemaCollection: (name, options) ->
     coll = @getCollection(name) || @addCollection(name, options)

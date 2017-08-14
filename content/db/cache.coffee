@@ -1,24 +1,17 @@
 createFile = require('../create-file.coffee')
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
-Prefs = require('../preferences.coffee')
+Translators = require('../../gen/translators.json')
 
 class FileStore
   mode: 'reference'
-  testing: Prefs.get('testing')
 
   name: (name) -> name + '.json'
-
-  serialize: (data) ->
-    if @testing
-      return JSON.stringify(data, null, 2)
-    else
-      return JSON.stringify(data)
 
   save: (name, data) ->
     debug('FileStore.save', name)
     db = createFile(name + '.saving')
-    Zotero.File.putContents(db, @serialize(data))
+    Zotero.File.putContents(db, JSON.stringify(data))
     db.moveTo(null, @name(name))
     return
 
@@ -36,7 +29,7 @@ class FileStore
     return data
 
   exportDatabase: (name, dbref, callback) ->
-    debug('Loki: saving', name)
+    debug('FileStore.exportDatabase: saving', name)
 
     try
       for coll in dbref.collections
@@ -47,9 +40,10 @@ class FileStore
     catch err
       debug('LokiJS.FileStore.exportDatabase: save failed', err)
 
-    return callback(null)
+    return callback && callback(null)
 
   loadDatabase: (name, callback) ->
+    debug('FileStore.loadDatabase: loading', name)
     try
       db = @load(name)
       collections = []
@@ -61,10 +55,10 @@ class FileStore
       debug('LokiJS.FileStore.loadDatabase: load failed', err)
       db = null
 
-    return callback(db)
+    return callback && callback(db)
 
-DB = new Loki('cached', {
-  closeOnShutdown: true,
+DB = new Loki('cache', {
+  autosave: true,
   adapter: new FileStore()
 })
 
@@ -90,9 +84,28 @@ DB.schemaCollection('itemToExportFormat', {
   }
 })
 
-### old junk, only for json-backed storage
-DB.removeCollection('metadata') if DB.getCollection('metadata')
-DB.removeCollection('keys') if DB.getCollection('keys')
+for translator of Translators.byName
+  DB.schemaCollection(translator, {
+    indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
+    schema: {
+      type: 'object'
+      properties: {
+        itemID: { type: 'integer' }
+        exportNotes: { coerce: 'boolean', default: false }
+        useJournalAbbreviation: { coerce: 'boolean', default: false }
+        reference: { type: 'string' }
+        metadata: { type: 'object', default: {} }
+      }
+      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
+    }
+  })
+
 ###
+  TODO: use preference-changed event to drop the translator caches
+###
+
+# cleanup
+DB.removeCollection('cache') if DB.getCollection('cache')
+DB.removeCollection('serialized') if DB.getCollection('serialized')
 
 module.exports = DB
