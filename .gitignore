@@ -21,7 +21,6 @@ tmp
 *.run
 node_modules
 bin/github-release
-.ruby-version
 vendor
 .pushbullet
 resource/reports/cacheActivity.txt
