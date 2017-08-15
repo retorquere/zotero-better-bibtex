@@ -1,5 +1,11 @@
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
+Prefs = require('../preferences.coffee')
+
+if Prefs.get('testing')
+  stringify = (data) -> JSON.stringify(data, null, 2)
+else
+  stringify = (data) -> JSON.stringify(data)
 
 class DBStore
   mode: 'reference'
@@ -24,10 +30,10 @@ class DBStore
             if coll.dirty
               name = "#{dbname}.#{coll.name}"
               debug('DBStore.exportDatabase:', name)
-              conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
+              conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [name, stringify(coll)])
 
           # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-          conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, JSON.stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
+          conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
 
           return
         )
