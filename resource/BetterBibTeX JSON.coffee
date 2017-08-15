@@ -1,6 +1,7 @@
 debug = require('./lib/debug.coffee')
 collections = require('./lib/collections.coffee')
 
+###
 scrub = (item) ->
   delete item.libraryID
   delete item.key
@@ -38,6 +39,7 @@ scrub = (item) ->
         delete item[attr]
 
   return item
+###
 
 BetterBibTeX.detectImport = ->
   debug('BetterBibTeX JSON.detect: start')
@@ -62,7 +64,8 @@ BetterBibTeX.doImport = ->
 
   for source in data.items
     ### works around https://github.com/Juris-M/zotero/issues/20 ###
-    delete source.multi.main if source.multi
+    #delete source.multi.main if source.multi
+    Zotero.BetterBibTeX.scrubFields(source)
 
     item = new Zotero.Item()
     Object.assign(item, source)
@@ -85,7 +88,7 @@ BetterBibTeX.doExport = ->
   }
 
   while item = Zotero.nextItem()
-    data.items.push(scrub(item))
+    data.items.push(Zotero.BetterBibTeX.scrubFields(item))
 
   Zotero.write(JSON.stringify(data, null, '  '))
   return

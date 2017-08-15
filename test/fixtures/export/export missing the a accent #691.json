@@ -1,0 +1,103 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.6.100",
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": false,
+      "attachmentsNoMetadata": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoAbbrev": false,
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "confirmCacheResetSize": 1000,
+      "itemObserverDelay": 100,
+      "caching": true,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth:lower]_[year][0]_[shorttitle]",
+      "citekeyFold": false,
+      "debug": false,
+      "DOIandURL": "both",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "change",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "scanCitekeys": false,
+      "showCitekeys": false,
+      "showItemIDs": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "tests": "",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": 4,
+      "defaultDateParserLocale": "",
+      "bibtexParticleNoOp": false,
+      "biblatexExtendedNameFormat": false,
+      "biblatexExtendedDateFormat": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": true,
+      "jurismPreferredLanguage": "zh-alalc97",
+      "ZotFile": true,
+      "qualityReport": false,
+      "suppressTitleCase": false
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections": [],
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "tags": [],
+      "relations": {},
+      "url": "https://arc.aiaa.org/doi/pdf/10.2514/1.48168",
+      "volume": "27",
+      "issue": "1",
+      "pages": "246",
+      "publicationTitle": "Journal of Propulsion and Power",
+      "date": "2011",
+      "extra": "00005 \nbibtex: sanjurjo-rivo_2011_EnergyAnalysisBare",
+      "libraryCatalog": "Google Scholar",
+      "title": "Energy Analysis of Bare Electrodynamic Tethers",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Sanjurjo-Rivo",
+          "firstName": "Manuel"
+        },
+        {
+          "creatorType": "author",
+          "lastName": "Peláez",
+          "firstName": "J."
+        }
+      ],
+      "attachments": [
+        {
+          "path": "F:\\zoterobib\\storage\\3XFWI4HC\\Sanjurjo-Rivo_Peláez_2011_Energy Analysis of Bare Electrodynamic Tethers.pdf",
+          "title": "Sanjurjo-Rivo_Peláez_2011_Energy Analysis of Bare Electrodynamic Tethers.pdf",
+          "mimeType": "application/pdf",
+          "url": "http://oa.upm.es/15305/1/sanjurjo.pdf"
+        },
+        {
+          "path": "F:\\zoterobib\\storage\\T43SBW5K\\1.html",
+          "title": "Snapshot",
+          "mimeType": "text/html",
+          "url": "https://arc.aiaa.org/doi/pdf/10.2514/1.48168"
+        }
+      ],
+      "notes": [],
+      "itemID": 209,
+      "seeAlso": [],
+      "__citekey__": "sanjurjo-rivo__EnergyAnalysisBare"
+    }
+  ],
+  "cache": {}
+}

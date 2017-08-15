@@ -36,11 +36,13 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   parseParticles: (sandbox, name) -> CiteProc.parseParticles(name) # && CiteProc.parseParticles(name)
   titleCase: (sandbox, text) -> titleCase(text)
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
+  scrubFields: (sandbox, item) -> Serializer.scrub(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
 }
 Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
+  scrubFields: (sandbox, item) -> Serializer.scrub(item)
 }
 
 Zotero.Item::save = ((original) ->
