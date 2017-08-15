@@ -344,7 +344,6 @@ class MarkupParser
 
       length = text.length
       while text
-        #console.log('todo:', text)
         if m = @re.whitespace.exec(text)
           #console.log('ws')
           @plaintext(m[0], pos + (length - text.length))

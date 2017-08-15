@@ -18,7 +18,6 @@ class Exporter
     @preamble = {DeclarePrefChars: ''}
     @attachmentCounter = 0
 
-    # TODO: disable temporarily because this translator ID doesn't trigger itemID adding
     @caching = !BetterBibTeX.options.exportFileData
 
     @collections = collections()

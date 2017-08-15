@@ -268,7 +268,6 @@ class PatternFormatter
       return '' unless authors?.length
       return authors[authors.length - 1] ? ''
 
-    ### TODO: journal abbrev to module ###
     journal: -> journalAbbrev.get(@item.item) || @item.item.getField('publicationTitle', false, true)
 
     authors: (onlyEditors, withInitials, n) ->

@@ -86,6 +86,12 @@ DB.schemaCollection('itemToExportFormat', {
   }
 })
 
+###
+  TODO: for this to work, an object must be updated when it is fetched
+###
+#             secs  mins  hours days
+ttl:          1000  * 60  * 60  * 24 * 30
+ttlInterval:  1000  * 60  * 60  * 4
 for translator of Translators.byName
   DB.schemaCollection(translator, {
     indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
@@ -99,7 +105,9 @@ for translator of Translators.byName
         metadata: { type: 'object', default: {} }
       }
       required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
-    }
+    },
+    ttl
+    ttlInterval
   })
 
 ###
