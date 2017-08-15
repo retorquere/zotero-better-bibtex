@@ -88,38 +88,18 @@ Zotero.Item::save = ((original) ->
   )
 )(Zotero.Item::save)
 
-###
-PatchItemRemove = ((original, name) ->
-  return Zotero.Promise.coroutine(->
-    try
-      Zotero.debug("Zotero.Item::#{name}: native...")
-      result = yield original.apply(@, arguments)
-    catch err
-      Zotero.debug("Zotero.Item::#{name}: native #{name} failed! " + err + "\n\n" + err.stack)
-      throw err
-
-    try
-      DB.getCollection('citekey').findAndRemove({itemID: @id})
-      DB.getCollection('itemToExportFormat').findAndRemove({itemID: @id})
-    catch err
-      Zotero.debug("Zotero.Item::#{name}: post-native #{name} failed: " + err + "\n\n" + err.stack)
-
-    return result
-  )
-)
-Zotero.Item::erase = PatchItemRemove(Zotero.Item::erase, 'erase')
-Zotero.Item::trash = PatchItemRemove(Zotero.Item::trash, 'trash')
-
-Must also patch Zotero.Items.trash...
-
-perhaps the notifiers are fast enough
-###
-
 Zotero.Notifier.registerObserver({
   notify: (action, type, ids, extraData) ->
     debug('item.notify', {action, type, ids, extraData})
 
     # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+    # items = Zotero.Items.get(ids)
+
+    # not needed as the parents will be signaled themselves
+    # parents = (item.parentID for item in items when item.parentID)
+    # CACHE.remove(parents)
+
     if action in ['delete', 'trash']
       DB.getCollection('citekey').findAndRemove({ itemID : { $in : ids } })
       CACHE.remove(ids)
