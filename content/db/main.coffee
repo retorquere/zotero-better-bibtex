@@ -5,12 +5,9 @@ class DBStore
   mode: 'reference'
 
   conn: {}
-  validName: /^better_bibtex[_a-zA-Z0-9]*$/
-
-  name: (name) -> name.replace(/[^a-zA-Z]/, '_')
+  validName: /^better-bibtex[-_a-zA-Z0-9]*$/
 
   exportDatabase: (dbname, dbref, callback) ->
-    dbname = @name(dbname)
     debug('DBStore.exportDatabase:', dbname)
 
     conn = @conn[dbname]
@@ -27,10 +24,10 @@ class DBStore
             if coll.dirty
               name = "#{dbname}.#{coll.name}"
               debug('DBStore.exportDatabase:', name)
-              conn.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
+              conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [name, JSON.stringify(coll)])
 
           # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-          conn.queryAsync("REPLACE INTO #{dbname} (name, data) VALUES (?, ?)", [dbname, JSON.stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
+          conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, JSON.stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
 
           return
         )
@@ -43,7 +40,6 @@ class DBStore
 
   # this assumes Zotero.initializationPromise has resolved, will throw an error if not
   loadDatabase: (dbname, callback) ->
-    dbname = @name(dbname)
     debug('DBStore.loadDatabase:', dbname)
     throw new Error("Invalid database name '#{dbname}'") unless dbname.match(@validName)
     throw new Error("Database '#{dbname}' already closed") if @conn[dbname] == false
@@ -54,11 +50,11 @@ class DBStore
     do Zotero.Promise.coroutine(->
       try
         yield conn.executeTransaction(->
-          yield conn.queryAsync("CREATE TABLE IF NOT EXISTS #{dbname} (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
+          yield conn.queryAsync("CREATE TABLE IF NOT EXISTS \"#{dbname}\" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)")
 
           db = null
           collections = {}
-          for row in yield conn.queryAsync("SELECT name, data FROM #{dbname}")
+          for row in yield conn.queryAsync("SELECT name, data FROM \"#{dbname}\"")
             if row.name == dbname
               db = JSON.parse(row.data)
             else
@@ -77,7 +73,6 @@ class DBStore
     return
 
   close: (dbname, callback) ->
-    dbname = @name(dbname)
     debug('DBStore.close', dbname)
 
     return callback(null) unless @conn[dbname]
