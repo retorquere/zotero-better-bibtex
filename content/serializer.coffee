@@ -16,7 +16,7 @@ class Serializer
 
     debug('Serializer.init')
     mapping = yield Zotero.DB.queryAsync("""
-      SELECT bf.fieldName as baseName, it.typeName, f.fieldName
+      SELECT bf.fieldName, it.typeName, f.fieldName as fieldAlias
       FROM baseFieldMappingsCombined bfmc
       join fields bf on bf.fieldID = bfmc.baseFieldID
       join fields f on f.fieldID = bfmc.fieldID
@@ -25,14 +25,14 @@ class Serializer
     """)
 
     mapping = mapping.reduce((map, alias) ->
-      map[alias.baseName] ||= {}
-      map[alias.baseName]['item.' + alias.fieldName] = true
+      map[alias.fieldName] ||= {}
+      map[alias.fieldName]['item.' + alias.fieldAlias] = true
       return map
     , {})
 
     simplify = ''
-    for baseName, aliases of mapping
-      simplify += "if (item.#{baseName} == null) { item.#{baseName} = #{Object.keys(aliases).join(' || ')}; }\n"
+    for fieldName, aliases of mapping
+      simplify += "if (item.#{fieldName} == null) { item.#{fieldName} = #{Object.keys(aliases).join(' || ')}; }\n"
     simplify += 'item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];'
     simplify += 'return item;'
 
