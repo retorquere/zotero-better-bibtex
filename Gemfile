@@ -1,3 +1,6 @@
+#ruby=2.4.1
+#ruby-gemset=zotero
+
 source 'https://rubygems.org'
 
 gem 'cucumber'
