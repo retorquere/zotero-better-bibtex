@@ -1,6 +1,7 @@
 debug = require('./debug.coffee')
 flash = require('./flash.coffee')
 edtf = require('edtf')
+events = require('./events.coffee')
 
 Zotero.BetterBibTeX.PrefPane = require('./preferences/preferences.coffee')
 Zotero.BetterBibTeX.ErrorReport = require('./error-report/error-report.coffee')
@@ -100,13 +101,27 @@ Zotero.Notifier.registerObserver({
     # parents = (item.parentID for item in items when item.parentID)
     # CACHE.remove(parents)
 
-    if action in ['delete', 'trash']
-      DB.getCollection('citekey').findAndRemove({ itemID : { $in : ids } })
-      CACHE.remove(ids)
+    CACHE.remove(ids)
+
+    switch action
+      when 'delete', 'trash'
+        KeyManager.remove(ids)
+        events.emit('items-removed', ids) # maybe pass items?
+
+      when 'add', 'modify'
+        # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+        # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+        items = Zotero.Items.get(ids)
+        for item in items
+          continue if item.isNote() || item.isAttachment()
+          KeyManager.update(item)
+        events.emit('items-changed', ids) # maybe pass items?
+
+      else
+        debug('item.notify: unhandled', {action, type, ids, extraData})
 
     return
 }, ['item'], 'BetterBibTeX', 1)
-
 
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->

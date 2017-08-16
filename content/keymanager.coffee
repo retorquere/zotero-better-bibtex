@@ -65,7 +65,7 @@ class KeyManager
 
     debug('KeyManager.init: done')
 
-    events.on('preference-changed', (pref) =>
+    events.on('preference-changed', (pref) ->
       debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
         Formatter.update()
@@ -228,5 +228,71 @@ class KeyManager
     # we should never get here
     debug("KeyManager.generate: we should not be here!")
     return null
+
+  # ------------------------------------------------------
+
+  propose: (item) ->
+    debug('KeyManager.propose: getting existing key from extra field,if any')
+    citekey = Citekey.get(item.getField('extra'))
+    debug('KeyManager.propose: found key', citekey)
+    citekey.pinned = !!citekey.pinned
+
+    return citekey if citekey.pinned
+
+    debug('KeyManager.propose: formatting...', citekey)
+    proposed = Formatter.format(item)
+    debug('KeyManager.propose: proposed=', proposed)
+
+    debug("KeyManager.propose: testing whether #{item.id} can keep #{citekey.citekey}")
+    # item already has proposed citekey
+    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
+      re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
+      if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
+        if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
+          return citekey
+
+    debug("KeyManager.propose: testing whether #{item.id} can use proposed #{proposed.citekey}")
+    # unpostfixed citekey is available
+    if !@keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })
+      debug("KeyManager.propose: #{item.id} can use proposed #{proposed.citekey}")
+      return { citekey: proposed.citekey, pinned: false}
+
+    debug("KeyManager.propose: generating free citekey from #{item.id} from", proposed.citekey)
+    postfix = 1
+    while true
+      postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else @postfixAlpha(postfix))
+      if !@keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
+        debug("KeyManager.propose: found <#{postfixed}>")
+        return { citekey: postfixed, pinned: false }
+      postfix += 1
+
+    # we should never get here
+    debug("KeyManager.propose: we should not be here!")
+    return null
+
+  update: (item, current) ->
+    return if item.isNote() || item.isAttachment()
+
+    current ||= @keys.findOne({ itemID: item.id })
+    proposed = @propose(item)
+
+    return if current && current.pinned == proposed.pinned && current.citekey == proposed.citekey
+
+    if current
+      current.pinned = proposed.pinned
+      current.citekey = proposed.citekey
+      @keys.update(current)
+    else
+      @keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
+
+    return
+
+   remove: (ids) ->
+     ids = [ids] unless Array.isArray(ids)
+     @keys.findAndRemove({ itemID : { $in : ids } })
+     return
+
+  get: (itemID) -> @keys.findOne({ itemID }).citekey
+
 
 module.exports = new KeyManager()
