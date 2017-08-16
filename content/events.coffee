@@ -5,6 +5,8 @@ emitter = new EventEmitter()
 if Zotero.Debug.enabled
   events = [
     'preference-changed'
+    'items-removed'
+    'items-changed'
   ]
 
   emitter.on = ((original) ->

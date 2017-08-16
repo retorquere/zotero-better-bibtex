@@ -110,7 +110,6 @@ class KeyManager
       start = new Date()
       items = yield Zotero.Items.getAsync(@scanning.map((key) -> key.itemID))
       for key, progress in @scanning
-        debug('KeyManager.rescan:', progress, '/', @scanning.length, ':', !!items[progress])
         @update(items[progress], key)
 
         if progress && !(progress % 200)
@@ -214,8 +213,8 @@ class KeyManager
       join itemDataValues extra on extra.valueID = field.valueID
       where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note})
         and item.itemID not in (select itemID from deletedItems)
-        and extra.value like '%bibtex*:%'
-    """)
+        and extra.value like ?
+    """, [ '%bibtex*:%' ])
     for item in items
       citekey = Citekey.get(item.extra, true)
       continue if !citekey.citekey || citekey.pinned

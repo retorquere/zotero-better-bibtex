@@ -50,6 +50,13 @@ Zotero.Notifier.registerObserver({
   notify: (action, type, ids, extraData) ->
     debug('item.notify', {action, type, ids, extraData})
 
+    bench = (msg) ->
+      now = new Date()
+      debug("notify: #{msg} took #{(now - bench.start) / 1000.0}s")
+      bench.start = now
+      return
+    bench.start = new Date()
+
     # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
     # items = Zotero.Items.get(ids)
@@ -59,11 +66,13 @@ Zotero.Notifier.registerObserver({
     # CACHE.remove(parents)
 
     CACHE.remove(ids)
+    bench('cache remove')
 
     switch action
       when 'delete', 'trash'
         KeyManager.remove(ids)
         events.emit('items-removed', ids) # maybe pass items?
+        bench('remove')
 
       when 'add', 'modify'
         # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
@@ -73,6 +82,7 @@ Zotero.Notifier.registerObserver({
           continue if item.isNote() || item.isAttachment()
           KeyManager.update(item)
         events.emit('items-changed', ids) # maybe pass items?
+        bench('change')
 
       else
         debug('item.notify: unhandled', {action, type, ids, extraData})
@@ -99,6 +109,7 @@ bench = (msg) ->
   debug("startup: #{msg} took #{(now - bench.start) / 1000.0}s")
   bench.start = now
   return
+
 do Zotero.Promise.coroutine(->
   ready = Zotero.Promise.defer()
   Zotero.BetterBibTeX.ready = ready.promise
