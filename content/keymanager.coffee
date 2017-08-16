@@ -205,10 +205,26 @@ class KeyManager
 
   get: (itemID) -> @keys.findOne({ itemID }).citekey
 
+  ### TODO: remove after release ###
   cleanupDynamic: co(->
-    yield Zotero.DB.queryAsync("SELECT 'TODO:'")
+    items = yield Zotero.DB.queryAsync("""
+      select item.itemID, extra.value as extra
+      from items item
+      join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
+      join itemDataValues extra on extra.valueID = field.valueID
+      where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note})
+        and item.itemID not in (select itemID from deletedItems)
+        and extra.value like '%bibtex*:%'
+    """)
+    for item in items
+      citekey = Citekey.get(item.extra, true)
+      continue if !citekey.citekey || citekey.pinned
+      item = yield Zotero.Items.getAsync(item.itemID)
+      item.setField('extra', citekey.extra)
+      yield item.saveTx()
     return
   )
+
 
 debug('KeyManager: loaded', Object.keys(Formatter))
 
