@@ -1,6 +1,12 @@
 abbrevs = require('./journal-abbrev.coffee')
 debug = require('./debug.coffee')
+
+debug('Serializer loading...')
+
 CACHE = require('./db/cache.coffee')
+Formatter = require('./keymanager/formatter.coffee')
+debug('Serializer loading...', Object.keys(Formatter))
+KeyManager = require('./keymanager.coffee')
 
 class Serializer
   cache: CACHE.getCollection('itemToExportFormat')
@@ -136,6 +142,7 @@ class Serializer
     return null unless serializedZoteroItem
     serializedZoteroItem = serializedZoteroItem.item
     serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    serializedZoteroItem.citekey = KeyManager.get(itemID)
     return serializedZoteroItem
 
   store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
@@ -146,8 +153,11 @@ class Serializer
     @cache.insert({itemID, legacy, skipChildItems, item: serializedZoteroItem})
 
     serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
+    serializedZoteroItem.citekey = KeyManager.get(itemID)
     return serializedZoteroItem
 
   serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
+
+debug('Serializer loaded')
 
 module.exports = new Serializer()

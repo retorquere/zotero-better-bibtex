@@ -88,9 +88,7 @@ class CSLExporter
 #        csl = cached.bibtex
 #      else
       if true
-        citekey = Citekey.get(item.extra)
-        item.extra = citekey.extra
-        item.__citekey__ = citekey.citekey
+        item.extra = Citekey.get(item.extra).extra
         fields = @Exporter.extractFields(item)
 
         if item.accessDate # WTH is Juris-M doing with those dates?
@@ -143,7 +141,7 @@ class CSLExporter
         for k, v of swap
           [csl[k], csl[v]] = [csl[v], csl[k]]
 
-        citekey = csl.id = item.__citekey__
+        citekey = csl.id = item.citekey
 
         ### Juris-M workarounds to match Zotero as close as possible ###
         for kind in ['author', 'editor', 'director']

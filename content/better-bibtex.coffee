@@ -46,49 +46,6 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
 }
 
-Zotero.Item::save = ((original) ->
-  return Zotero.Promise.coroutine((options)->
-    Zotero.debug("Zotero.Item::save: pre-#{if @deleted then 'delete' else 'save'}")
-
-    try
-      citekey = KeyManager.generate(@) unless @deleted || @isNote() || @isAttachment()
-    catch err
-      throw new Error("Zotero.Item::save: could not generate citekey: " + err + "\n\n" + err.stack)
-
-    if citekey?.changed
-      try
-        @setField('extra', Citekey.set(@getField('extra'), citekey.citekey))
-        debug('Zotero.Item::save: citekey embedded', citekey)
-      catch err
-        debug('Zotero.Item::save: failed to embed citekey' + err + "\n\n" + err.stack)
-        citekey = false
-    else
-      debug('Zotero.Item::save: leave citekey as-is')
-
-    try
-      Zotero.debug("Zotero.Item::save: native...")
-      result = yield original.call(@, options)
-    catch err
-      Zotero.debug("Zotero.Item::save: native save failed! " + err + "\n\n" + err.stack)
-      throw err
-
-    Zotero.debug("Zotero.Item::save: native succeeded")
-
-    try
-      if citekey
-        keys = DB.getCollection('citekey')
-        pinned = !!citekey.pinned
-        if !keys.findOne({ itemID: @id, pinned, citekey: citekey.citekey }) || @deleted
-          keys.findAndRemove({itemID: @id})
-          keys.insert({itemID: @id, libraryID: @libraryID, pinned, citekey: citekey.citekey }) unless @deleted
-      CACHE.remove(@id)
-    catch err
-      Zotero.debug("Zotero.Item::save: post-native save failed: " + err + "\n\n" + err.stack)
-
-    return result
-  )
-)(Zotero.Item::save)
-
 Zotero.Notifier.registerObserver({
   notify: (action, type, ids, extraData) ->
     debug('item.notify', {action, type, ids, extraData})

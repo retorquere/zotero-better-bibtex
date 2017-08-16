@@ -3,12 +3,12 @@ debug = require('./lib/debug.coffee')
 
 Mode =
   gitbook: (items) ->
-    citations = ("{{ \"#{item.__citekey__}\" | cite }}" for item in items)
+    citations = ("{{ \"#{item.citekey}\" | cite }}" for item in items)
     Zotero.write(citations.join(''))
     return
 
   atom: (items) ->
-    keys = (item.__citekey__ for item in items)
+    keys = (item.citekey for item in items)
     if keys.length == 1
       Zotero.write("[](#@#{keys[0]})")
     else
@@ -16,7 +16,7 @@ Mode =
     return
 
   latex: (items) ->
-    keys = (item.__citekey__ for item in items)
+    keys = (item.citekey for item in items)
 
     cmd = "#{BetterBibTeX.preferences.citeCommand}".trim()
     if cmd == ''
@@ -26,12 +26,12 @@ Mode =
     return
 
   citekeys: (items) ->
-    keys = (item.__citekey__ for item in items)
+    keys = (item.citekey for item in items)
     Zotero.write(keys.join(','))
     return
 
   pandoc: (items) ->
-    keys = ("@#{item.__citekey__}" for item in items)
+    keys = ("@#{item.citekey}" for item in items)
     keys = keys.join('; ')
     keys = "[#{keys}]" if BetterBibTeX.preferences.quickCopyPandocBrackets
     Zotero.write(keys)
@@ -54,7 +54,7 @@ Mode =
           throw "Missing groupID in #{item.uri}" unless groupID
           id = "#{groupID}~#{key}"
 
-      Zotero.write("[[zotero://select/items/#{id}][@#{item.__citekey__}]]")
+      Zotero.write("[[zotero://select/items/#{id}][@#{item.citekey}]]")
     return
 
 BetterBibTeX.doExport = ->

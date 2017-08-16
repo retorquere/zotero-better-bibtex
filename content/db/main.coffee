@@ -121,6 +121,7 @@ DB.init = Zotero.Promise.coroutine(->
 
   DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
+    unique: [ 'itemID' ],
     schema: {
       type: 'object'
       properties: {

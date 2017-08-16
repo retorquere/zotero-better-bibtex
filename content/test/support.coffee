@@ -99,8 +99,10 @@ module.exports =
 
     for itemID in ids
       switch action
-        when 'pin', 'unpin'
-          yield KeyManager.pin(itemID, action == 'pin')
+        when 'pin'
+          yield KeyManager.pin(itemID)
+        when 'unpin'
+          yield KeyManager.unpin(itemID)
         when 'refresh'
           yield KeyManager.refresh(itemID)
         else

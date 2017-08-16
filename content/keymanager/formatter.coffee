@@ -1,13 +1,15 @@
 flash = require('../flash.coffee')
 Prefs = require('../preferences.coffee')
+debug = require('../debug.coffee')
+
 parser = require('./formatter.pegjs')
 parseDate = require('../dateparser.coffee')
 transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
 journalAbbrev = require('../journal-abbrev.coffee')
-Serializer = require('../serializer.coffee')
-debug = require('../debug.coffee')
+
+debug('Keymanager.Formatter... loading')
 
 class PatternFormatter
   constructor: ->
@@ -35,7 +37,7 @@ class PatternFormatter
     debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat)
     return
 
-  parsePattern: (pattern) -> parser.parse(pattern, {methods: PatternFormatter::methods, filters: PatternFormatter::filters})
+  parsePattern: (pattern) -> parser.parse(pattern, PatternFormatter::)
 
   re:
     unsafechars: Zotero.Utilities.XRegExp("[^-\\p{L}0-9_!$*+./;?\\[\\]]")
@@ -451,4 +453,5 @@ class PatternFormatter
 #
 #    chars: (text) -> @text += text
 
+debug('Keymanager.Formatter loaded')
 module.exports = new PatternFormatter()

@@ -63,31 +63,6 @@ Loki::close = ((original) ->
     )
 )(Loki::close)
 
-###
-Loki::closeAsync = ->
-  return new Zotero.Promise((resolve, reject) =>
-    debug('Loki::closeAsync')
-
-    try
-      return @close((err) =>
-        debug('Loki::closeAsync: close', err)
-        return reject(err) if err
-        return resolve(null) unless @persistenceAdapter && typeof @persistenceAdapter.close == 'function'
-
-        # close adapter after DB, as the DB may need the adapter in 'close'
-        debug('Loki::closeAsync:', @persistenceAdapter.constructor.name)
-        return @persistenceAdapter.close(@filename, (err) =>
-          debug('Loki::closeAsync:', @persistenceAdapter.constructor.name, err)
-          return reject(err) if err
-          return resolve(null)
-        )
-      )
-    catch err
-      debug('Loki::closeAsync??', err)
-      return reject(err)
-  )
-###
-
 Loki::loadDatabaseAsync = (options) ->
   return new Zotero.Promise((resolve, reject) =>
     return @loadDatabase(options, (err) ->
@@ -139,6 +114,7 @@ idleService.addIdleObserver({
 class XULoki extends Loki
   constructor: (name, options = {}) ->
 
+    nullStore = !options.adapter
     options.adapter ||= new NullStore()
     options.env = 'XUL-Chrome'
 
@@ -153,7 +129,7 @@ class XULoki extends Loki
       # workaround for https://github.com/techfort/LokiJS/issues/597
       @autosaveDisable()
 
-    if @persistenceAdapter
+    if @persistenceAdapter && !nullStore
       AsyncShutdown.profileBeforeChange.addBlocker("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}", Zotero.Promise.coroutine(=>
         debug("Loki.#{@persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing #{name}")
 

@@ -4,7 +4,7 @@ const shell = require('shelljs');
 
 const webpack = require('webpack');
 const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
-// const CommonsPlugin = new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
+const CircularDependencyPlugin = require('circular-dependency-plugin')
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
@@ -67,6 +67,7 @@ module.exports = [
   _.merge({}, common, {
     plugins: [
       // new webpack.DefinePlugin({ global: {} })
+      new CircularDependencyPlugin({ failOnError: true }),
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
@@ -92,6 +93,7 @@ module.exports = [
           require("fs").writeFileSync(path.join(__dirname, "stats.json"), JSON.stringify(stats.toJson()));
         });
       },
+      new CircularDependencyPlugin({ failOnError: true }),
       new TranslatorHeaderPlugin()
     ],
     context: path.resolve(__dirname, './resource'),

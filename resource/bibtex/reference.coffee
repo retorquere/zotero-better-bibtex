@@ -485,7 +485,7 @@ class Reference
       return if Array.isArray(field.value) && field.value.length == 0
 
     @remove(field.name) if field.replace
-    throw "duplicate field '#{field.name}' for #{@item.__citekey__}" if @has[field.name] && !field.allowDuplicates
+    throw "duplicate field '#{field.name}' for #{@item.citekey}" if @has[field.name] && !field.allowDuplicates
 
     if ! field.bibtex
       debug('add:', {
@@ -616,17 +616,17 @@ class Reference
     # sort fields for stable tests
     @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if BetterBibTeX.preferences.testing
 
-    ref = "@#{@referencetype}{#{@item.__citekey__},\n"
+    ref = "@#{@referencetype}{#{@item.citekey},\n"
     ref += ("  #{field.name} = #{field.bibtex}" for field in @fields).join(',\n')
     ref += '\n}\n'
-    ref += "% Quality Report for #{@item.__citekey__}:\n#{qr}\n" if qr = @qualityReport()
+    ref += "% Quality Report for #{@item.citekey}:\n#{qr}\n" if qr = @qualityReport()
     ref += "\n"
     Zotero.write(ref)
 
     @data.DeclarePrefChars = @Exporter.unique_chars(@data.DeclarePrefChars)
 
     ### TODO: caching ###
-    # Zotero.BetterBibTeX.cache.store(@item.itemID, @Exporter.context, @item.__citekey__, ref, @data) if @Exporter.caching
+    # Zotero.BetterBibTeX.cache.store(@item.itemID, @Exporter.context, @item.citekey, ref, @data) if @Exporter.caching
 
     @Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
     debug('item.complete:', {data: @data, preamble: @Exporter.preamble})

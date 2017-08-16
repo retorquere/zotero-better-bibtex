@@ -229,11 +229,9 @@ class Exporter
 #          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
 #          continue
 
-      citekey = Citekey.get(item.extra)
-      item.extra = citekey.extra
-      @jabref.citekeys[item.itemID] = item.__citekey__ = citekey.citekey
-      debug('citation key extracted', item.__citekey__)
-      if !item.__citekey__
+      item.extra = Citekey.get(item.extra).extra
+      @jabref.citekeys[item.itemID] = item.citekey
+      if !item.citekey
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
