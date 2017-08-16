@@ -1,6 +1,6 @@
 Prefs = require('../preferences.coffee')
 debug = require('../debug.coffee')
-parsePattern = require('../keymanager/formatter.coffee')::parsePattern
+Formatter = require('../keymanager/formatter.coffee')
 zotero_config = require('../zotero-config.coffee')
 KeyManager = require('../keymanager.coffee')
 
@@ -52,7 +52,7 @@ class PrefPane
 
     msg = ''
     try
-      parsePattern(keyformat.value)
+      Formatter.parsePattern(keyformat.value)
       msg = ''
     catch err
       msg = '' + err
@@ -64,7 +64,7 @@ class PrefPane
   saveCitekeyFormat: ->
     keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try
-      parsePattern(keyformat.value)
+      Formatter.parsePattern(keyformat.value)
       Prefs.set('citekeyFormat', keyformat.value)
     catch
       @getCitekeyFormat()
@@ -111,7 +111,7 @@ class PrefPane
 
     patternError = null
     try
-      parsePattern(keyformat.value)
+      Formatter.parsePattern(keyformat.value)
     catch err
       patternError = err
 

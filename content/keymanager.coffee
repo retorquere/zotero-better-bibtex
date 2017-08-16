@@ -1,14 +1,17 @@
 debug = require('./debug.coffee')
 flash = require('./flash.coffee')
-Prefs = require('./preferences.coffee')
 co = Zotero.Promise.coroutine
-Formatter = require('./keymanager/formatter.coffee')
+version = require('../gen/version.js')
+
+Prefs = require('./preferences.coffee')
 Citekey = require('./keymanager/get-set.coffee')
 events = require('./events.coffee')
 DB = require('./db/main.coffee')
-version = require('../gen/version.js')
+Formatter = require('./keymanager/formatter.coffee')
 
 class KeyManager
+  formatter: require('./keymanager/formatter.coffee')
+
   pin: co((id, pin) ->
     debug('KeyManager.pin', id, pin)
     item = yield Zotero.Items.getAsync(id)
@@ -56,7 +59,7 @@ class KeyManager
     for type in yield Zotero.DB.queryAsync("select itemTypeID, typeName from itemTypes where typeName in ('note', 'attachment')") # 1, 14
       @query.type[type.typeName] = type.itemTypeID
 
-    @formatter = new Formatter(@)
+    Formatter.update()
 
     yield @rescan()
 
@@ -65,7 +68,7 @@ class KeyManager
     events.on('preference-changed', (pref) =>
       debug('KeyManager.pref changed', pref)
       if pref in ['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords']
-        @formatter.update()
+        Formatter.update()
       return
     )
 
@@ -162,7 +165,7 @@ class KeyManager
   }
   findKey: co((item, keys) ->
     item.item ||= yield Zotero.Items.getAsync(item.itemID)
-    proposed = @formatter.format(item.item)
+    proposed = Formatter.format(item.item)
 
     # item already has proposed citekey
     if item.citekey.slice(0, proposed.citekey.length) == proposed.citekey &&
@@ -190,7 +193,7 @@ class KeyManager
     return citekey if citekey.pinned
 
     debug('KeyManager.generate: formatting...', citekey)
-    proposed = @formatter.format(item)
+    proposed = Formatter.format(item)
     debug('KeyManager.generate: proposed=', proposed)
 
     debug("KeyManager.generate: testing whether #{item.id} can keep #{citekey.citekey}")

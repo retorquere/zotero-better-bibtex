@@ -10,7 +10,8 @@ Serializer = require('../serializer.coffee')
 debug = require('../debug.coffee')
 
 class PatternFormatter
-  constructor: -> @update()
+  constructor: ->
+    @update()
 
   update: ->
     debug('PatternFormatter.update:')
@@ -450,4 +451,4 @@ class PatternFormatter
 #
 #    chars: (text) -> @text += text
 
-module.exports = PatternFormatter
+module.exports = new PatternFormatter()
