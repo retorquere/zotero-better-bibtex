@@ -294,5 +294,10 @@ class KeyManager
 
   get: (itemID) -> @keys.findOne({ itemID }).citekey
 
+  cleanupDynamic: co(->
+    yield Zotero.DB.queryAsync("SELECT 'TODO:'")
+    return
+  )
+
 
 module.exports = new KeyManager()

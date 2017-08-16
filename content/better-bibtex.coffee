@@ -174,6 +174,9 @@ do Zotero.Promise.coroutine(->
   yield Translators.init()
   bench('Translators.init()')
 
+  # TODO: remove before release
+  yield KeyManager.cleanupDynamic()
+
   # should be safe to start tests at this point. I hate async.
 
   ready.resolve(true)
