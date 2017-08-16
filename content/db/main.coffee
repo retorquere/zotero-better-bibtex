@@ -117,14 +117,7 @@ DB = new Loki('better-bibtex', {
 })
 
 DB.init = Zotero.Promise.coroutine(->
-  yield new Zotero.Promise((resolve, reject) ->
-    return DB.loadDatabase({}, (err) ->
-      if err
-        return reject(err)
-      else
-        return resolve(true)
-    )
-  )
+  yield DB.loadDatabaseAsync()
 
   DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],

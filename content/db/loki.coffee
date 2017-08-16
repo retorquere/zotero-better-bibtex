@@ -53,6 +53,17 @@ Loki.Collection::update = ((original) ->
 )(Loki.Collection::update)
 
 # TODO: workaround for https://github.com/techfort/LokiJS/issues/595#issuecomment-322032656
+Loki::close = ((original) ->
+  return (callback) ->
+    return original.call(@, (errClose) =>
+      if @persistenceAdapter && typeof @persistenceAdapter.close == 'function'
+        return @persistenceAdapter.close(@filename, (errCloseAdapter) -> callback(errClose || errCloseAdapter))
+      else
+        return callback(errClose)
+    )
+)(Loki::close)
+
+###
 Loki::closeAsync = ->
   return new Zotero.Promise((resolve, reject) =>
     debug('Loki::closeAsync')
@@ -75,10 +86,27 @@ Loki::closeAsync = ->
       debug('Loki::closeAsync??', err)
       return reject(err)
   )
+###
+
+Loki::loadDatabaseAsync = (options) ->
+  return new Zotero.Promise((resolve, reject) =>
+    return @loadDatabase(options, (err) ->
+      return reject(err) if err
+      return resolve(null)
+    )
+  )
 
 Loki::saveDatabaseAsync = ->
   return new Zotero.Promise((resolve, reject) =>
     return @saveDatabase((err) ->
+      return reject(err) if err
+      return resolve(null)
+    )
+  )
+
+Loki::closeAsync = ->
+  return new Zotero.Promise((resolve, reject) =>
+    return @close((err) ->
       return reject(err) if err
       return resolve(null)
     )
