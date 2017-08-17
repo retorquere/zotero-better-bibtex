@@ -1,5 +1,5 @@
 debug = require('./lib/debug.coffee')
-collections = require('./lib/collections.coffee')
+Collections = require('./lib/collections.coffee')
 
 ###
 scrub = (item) ->
@@ -68,13 +68,27 @@ BetterBibTeX.doImport = ->
     Zotero.BetterBibTeX.scrubFields(source)
 
     item = new Zotero.Item()
-    Object.assign(item, source)
+    Object.assign(item, source, { itemID: source.key })
     for att in item.attachments || []
       delete att.path if att.url
     item.complete()
+
+  collections = Collections(data.collections || [])
+  for key, collection of collections
+    collection.imported = new Zotero.Collection()
+    collection.imported.type = 'collection'
+    collection.imported.name = collection.name
+    collection.imported.children = ({type: 'item', id: key} for key in collection.items)
+  for key, collection of collections
+    collection.imported.children = collection.imported.children.concat((collections[coll.key].imported for coll in collection.collections))
+  for key, collection of collections
+    continue unless collection.root
+    collection.imported.complete()
+
   return
 
 BetterBibTeX.doExport = ->
+  ### just export whatever Zotero gives us and worry about cleanup on import ###
   data = {
     config: {
       id: BetterBibTeX.header.translatorID
@@ -83,12 +97,15 @@ BetterBibTeX.doExport = ->
       preferences: BetterBibTeX.preferences
       options: BetterBibTeX.options
     }
-    collections: collections(),
+    collections: []
     items: []
   }
 
   while item = Zotero.nextItem()
-    data.items.push(Zotero.BetterBibTeX.scrubFields(item))
+    data.items.push(item)
+
+  while Zotero.nextCollection && collection = Zotero.nextCollection()
+    data.collections.push(collection)
 
   Zotero.write(JSON.stringify(data, null, '  '))
   return

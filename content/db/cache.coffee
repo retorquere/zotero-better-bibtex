@@ -25,7 +25,7 @@ class FileStore
 
     # this is intentional. If all is well, the database will be retained in memory until it's saved at
     # shutdown. If all is not well, this will make sure the caches are rebuilt from scratch
-    db.remove()
+    db.remove(true)
 
     return data
 

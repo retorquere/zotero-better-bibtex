@@ -4,7 +4,7 @@ class JabRef
 
   exportGroups: ->
     debug('exportGroups:', @collections)
-    return if @collections.length == 0 || !BetterBibTeX.preferences.jabrefGroups
+    return if Object.keys(@collections).length == 0 || !BetterBibTeX.preferences.jabrefGroups
 
     switch
       when BetterBibTeX.preferences.jabrefGroups == 3
@@ -16,23 +16,12 @@ class JabRef
 
     Zotero.write("@comment{jabref-meta: #{meta};}\n")
     Zotero.write('@comment{jabref-meta: groupstree:\n')
-    Zotero.write(@exportGroup({collections: @collections}))
+    Zotero.write('0 AllEntriesGroup:;\n')
+    for key, collection of @collections
+      continue unless collection.root
+      Zotero.write(@exportGroup(collection, 1))
     Zotero.write(';\n')
     Zotero.write('}\n')
-    return
-
-  assignToGroups: (item, collection) ->
-    return unless @collections && BetterBibTeX.preferences.jabrefGroups == 4
-
-    collection = {items: [], collections: @collections} unless collection
-
-    if item.itemID in collection.items
-      item.groups ||= []
-      item.groups.push(collection.name)
-      item.groups.sort() if BetterBibTeX.preferences.testing
-
-    for coll in collection.collections
-      @assignToGroups(item, coll)
     return
 
   serialize: (list, wrap) ->
@@ -40,17 +29,14 @@ class JabRef
     serialized = (elt.match(/.{1,70}/g).join("\n") for elt in serialized) if wrap
     return serialized.join(if wrap then ";\n" else ';')
 
-  exportGroup: (collection, level = 0) ->
-    if level
-      collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
-      if BetterBibTeX.preferences.jabrefGroups == 3
-        references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
-        references.sort() if BetterBibTeX.preferences.testing
-        collected = collected.concat(references)
-      # what is the meaning of the empty cell at the end, JabRef?
-      collected = collected.concat([''])
-    else
-      collected = ['0 AllEntriesGroup:']
+  exportGroup: (collection, level) ->
+    collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
+    if BetterBibTeX.preferences.jabrefGroups == 3
+      references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
+      references.sort() if BetterBibTeX.preferences.testing
+      collected = collected.concat(references)
+    # what is the meaning of the empty cell at the end, JabRef?
+    collected = collected.concat([''])
 
     collected = [@serialize(collected)]
 

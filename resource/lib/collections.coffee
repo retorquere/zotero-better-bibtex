@@ -1,24 +1,33 @@
-sanitize = (coll) ->
-  sane = {
-    name: coll.name
-    collections: []
-    items: []
-  }
+debug = require('../lib/debug.coffee')
 
-  for c in coll.children || coll.descendents
-    switch c.type
-      when 'item'       then sane.items.push(c.id)
-      when 'collection' then sane.collections.push(sanitize(c))
-      else              throw "Unexpected collection member type '#{c.type}'"
-
-  sane.collections.sort( ( (a, b) -> a.name.localeCompare(b.name) ) ) if BetterBibTeX.preferences.testing
-
-  return sane
+# the zotero collections export object is insane
 
 collections = null
-module.exports = ->
-  if !collections && Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
-    collections = []
+module.exports = (raw) ->
+  return collections if collections
+
+  if raw
+    debug('Collections: was passed', raw.length, 'collections')
+  else if !collections && Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
+    raw = []
     while collection = Zotero.nextCollection()
-      collections.push(sanitize(collection))
+      raw.push(collection)
+    debug('Collections: fetched', raw.length, 'collections from Zotero')
+
+  collections = {}
+  for collection in raw
+    collections[collection.primary.key] = {
+      key: collection.primary.key
+      name: collection.fields.name
+      collections: []
+      items: (item.key for item in (collection.descendents || []) when item.type == 'item')
+      parent: collection.fields.parentKey
+      root: !collection.fields.parentKey
+    }
+
+  for key, collection of collections
+    collections[collection.parent].collections.push(collection) if collection.parent
+    delete collection.parent
+  debug('got collections:', collections)
+
   return collections

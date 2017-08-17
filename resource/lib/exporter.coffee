@@ -230,14 +230,11 @@ class Exporter
 #          continue
 
       item.extra = Citekey.get(item.extra).extra
-      @jabref.citekeys[item.itemID] = item.citekey
+      @jabref.citekeys[item.key] = item.citekey
       if !item.citekey
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
-      if @jabref
-        debug("Translator: assignGroups: #{item.itemID}")
-        @jabref.assignToGroups(item)
       return item
 
     return null

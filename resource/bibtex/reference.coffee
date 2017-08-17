@@ -540,7 +540,10 @@ class Reference
           when 'doi' then @remove('url')
           when 'url' then @remove('doi')
 
-    @add({ groups: @item.groups.join(',') }) if @item.groups
+    if (@item.collections || []).length && BetterBibTeX.preferences.jabrefGroups == 4
+      groups = (@Exporter.collections[key].name for key in @item.collections when @Exporter.collections[key])
+      groups = groups.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
+      @add({ groups: groups.join(',') })
 
     fields = []
     for own name, value of @override
