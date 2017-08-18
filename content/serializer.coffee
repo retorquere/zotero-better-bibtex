@@ -135,26 +135,29 @@ class Serializer
     return
   )
 
-  fetch: (itemID, legacy, skipChildItems) ->
+  fetch: (item, legacy, skipChildItems) ->
     return null unless @cache
 
-    serializedZoteroItem = @cache.findOne({ itemID, legacy: !!legacy, skipChildItems: !!skipChildItems})
-    return null unless serializedZoteroItem
-    serializedZoteroItem = serializedZoteroItem.item
-    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
-    serializedZoteroItem.citekey = KeyManager.get(itemID)
-    return serializedZoteroItem
+    cached = @cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
+    return null unless cached
 
-  store: (itemID, serializedZoteroItem, legacy, skipChildItems) ->
+    serialized = cached.item
+    serialized.journalAbbreviation = abbrevs.get(serialized)
+    serialized.citekey = KeyManager.get(item.id)
+    return serialized
+
+  store: (item, serialized, legacy, skipChildItems) ->
     @cache ||= DB.getCollection(@collection)
     throw new Error("DB not loaded") unless @cache
 
-    serializedZoteroItem.itemID = itemID
-    @cache.insert({itemID, legacy, skipChildItems, item: serializedZoteroItem})
+    # come on -- these are used in the collections export but not provided on the items?!
+    serialized.itemID = item.id
+    serialized.key = item.key
+    @cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
 
-    serializedZoteroItem.journalAbbreviation = abbrevs.get(serializedZoteroItem)
-    serializedZoteroItem.citekey = KeyManager.get(itemID)
-    return serializedZoteroItem
+    serialized.journalAbbreviation = abbrevs.get(serialized)
+    serialized.citekey = KeyManager.get(item.id)
+    return serialized
 
   serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)
 

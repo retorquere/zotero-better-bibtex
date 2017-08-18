@@ -88,12 +88,11 @@ BetterBibTeX.doImport = ->
   return
 
 BetterBibTeX.doExport = ->
-  ### just export whatever Zotero gives us and worry about cleanup on import ###
   data = {
     config: {
       id: BetterBibTeX.header.translatorID
       label: BetterBibTeX.header.label
-      release: BetterBibTeX.version
+      release: Zotero.BetterBibTeX.version()
       preferences: BetterBibTeX.preferences
       options: BetterBibTeX.options
     }
@@ -101,6 +100,7 @@ BetterBibTeX.doExport = ->
     items: []
   }
 
+  ### just export whatever Zotero gives us and worry about cleanup on import ###
   while item = Zotero.nextItem()
     data.items.push(item)
 

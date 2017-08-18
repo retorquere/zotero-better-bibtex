@@ -1,4 +1,3 @@
-zotero_config = require('../zotero-config.coffee')
 getAddons = require('../addons.coffee')
 Prefs = require('../preferences.coffee')
 Translators = require('../translators.coffee')

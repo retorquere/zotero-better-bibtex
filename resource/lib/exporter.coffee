@@ -216,9 +216,10 @@ class Exporter
     return uniq
 
   nextItem: ->
-    while item = Zotero.BetterBibTeX.simplifyFields(Zotero.nextItem())
+    while item = Zotero.nextItem()
       continue if item.itemType in ['note', 'attachment']
       debug('fetched item:', item)
+      Zotero.BetterBibTeX.simplifyFields(item)
 # TODO: caching?
 #      if @caching
 #        cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
@@ -230,6 +231,7 @@ class Exporter
 #          continue
 
       item.extra = Citekey.get(item.extra).extra
+      debug('exporting', item)
       @jabref.citekeys[item.key] = item.citekey
       if !item.citekey
         debug(new Error('No citation key found in'), item)
@@ -240,6 +242,7 @@ class Exporter
     return null
 
   complete: ->
+    debug('Exporter.complete: write JabRef groups')
     @jabref.exportGroups()
 
     preamble = []

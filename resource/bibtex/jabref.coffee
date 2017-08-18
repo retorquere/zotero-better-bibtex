@@ -1,5 +1,8 @@
+debug = require('../lib/debug.coffee')
+
 class JabRef
   constructor: (@collections) ->
+    debug('JabRef:', { collections: @collections })
     @citekeys = {}
 
   exportGroups: ->
@@ -31,6 +34,7 @@ class JabRef
 
   exportGroup: (collection, level) ->
     collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
+    debug('JabRef.exportGroup:', { groups: BetterBibTeX.preferences.jabrefGroups, items: collection.items, citekeys: @citekeys })
     if BetterBibTeX.preferences.jabrefGroups == 3
       references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
       references.sort() if BetterBibTeX.preferences.testing
@@ -43,7 +47,7 @@ class JabRef
     for child in collection.collections || []
       collected = collected.concat(@exportGroup(child, level + 1))
 
-    if level
+    if level > 1
       return collected
     else
       return @serialize(collected, true)

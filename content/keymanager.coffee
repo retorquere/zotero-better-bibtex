@@ -1,7 +1,6 @@
 debug = require('./debug.coffee')
 flash = require('./flash.coffee')
 co = Zotero.Promise.coroutine
-version = require('../gen/version.js')
 events = require('./events.coffee')
 
 Prefs = require('./preferences.coffee')

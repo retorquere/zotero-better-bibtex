@@ -63,7 +63,7 @@
     "xml-parser": "^1.2.1"
   },
   "scripts": {
-    "test": "cucumber --fail-fast",
+    "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "lint": "coffeelint content resource minitests webpack",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",

@@ -2,6 +2,7 @@ debug = require('./debug.coffee')
 flash = require('./flash.coffee')
 edtf = require('edtf')
 events = require('./events.coffee')
+zotero_config = require('./zotero-config.coffee')
 
 Zotero.BetterBibTeX.PrefPane = require('./preferences/preferences.coffee')
 Zotero.BetterBibTeX.ErrorReport = require('./error-report/error-report.coffee')
@@ -39,6 +40,7 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
+  version: (sandbox) -> return { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
 }
 Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
@@ -93,7 +95,7 @@ Zotero.Notifier.registerObserver({
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
     try
-      return Serializer.fetch(zoteroItem.id, legacy, skipChildItems) || Serializer.store(zoteroItem.id, original.apply(@, arguments), legacy, skipChildItems)
+      return Serializer.fetch(zoteroItem, legacy, skipChildItems) || Serializer.store(zoteroItem, original.apply(@, arguments), legacy, skipChildItems)
     catch err # fallback for safety for non-BBT
       debug('Zotero.Utilities.Internal.itemToExportFormat', err)
 
