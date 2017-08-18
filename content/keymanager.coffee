@@ -78,7 +78,11 @@ class KeyManager
 
   rescan: co((clean)->
     if @scanning
-      flash('Scanning still in progress', "Scan is still running, #{@scanning} items left")
+      if Array.isArray(@scanning)
+        left = ", #{@scanning.length} items left"
+      else
+        left = ''
+      flash('Scanning still in progress', "Scan is still running#{left}")
       return
 
     @scanning = true
@@ -109,7 +113,10 @@ class KeyManager
       start = new Date()
       items = yield Zotero.Items.getAsync(@scanning.map((key) -> key.itemID))
       for key, progress in @scanning
-        @update(items[progress], key)
+        try
+          @update(items[progress], key)
+        catch err
+          debug('KeyManager.rescan: update', progress, 'failed:', err)
 
         if progress && !(progress % 200)
           left = (((new Date()) - start) / progress) * (@scanning.length - progress)
