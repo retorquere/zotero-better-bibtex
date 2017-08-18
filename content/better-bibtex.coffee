@@ -19,6 +19,7 @@ DB = require('./db/main.coffee')
 CACHE = require('./db/cache.coffee')
 Serializer = require('./serializer.coffee')
 Citekey = require('./keymanager/get-set.coffee')
+JournalAbbrev = require('./journal-abbrev.coffee')
 
 ###
   MONKEY PATCHES
@@ -138,6 +139,8 @@ do Zotero.Promise.coroutine(->
   flash('waiting for Zotero translators...', 'Better BibTeX needs the translators to be loaded')
   yield Zotero.Schema.schemaUpdatePromise
   bench('Zotero.Schema.schemaUpdatePromise')
+
+  JournalAbbrev.init()
 
   flash('Zotero translators loaded', 'Better BibTeX ready for business')
 
