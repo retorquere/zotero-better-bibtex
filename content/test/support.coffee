@@ -14,12 +14,20 @@ module.exports =
 
     Zotero.Prefs.set(prefix + 'debug', true)
     Zotero.Prefs.set(prefix + 'testing', true)
+
+
+    # Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k references take ~ 50 seconds
+    # to delete.
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
-    yield Zotero.Items.erase(items)
+    while items.length
+      chunk = items.splice(0, 100)
+      yield Zotero.Items.erase(chunk)
+
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    for collection in Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true)
-      yield collection.eraseTx()
+    # ^%&^%@#&^% you can't just loop and erase
+    while (collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length
+      yield collections[0].eraseTx()
 
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     throw new Error('library not empty after reset') if items.length != 0
