@@ -111,10 +111,10 @@ class KeyManager
     if @scanning.length != 0
       flash('Assigning citation keys', "Found #{@scanning.length} references without a citation key")
       start = new Date()
-      items = yield Zotero.Items.getAsync(@scanning.map((key) -> key.itemID))
       for key, progress in @scanning
+        item = yield Zotero.Items.getAsync(key.itemID)
         try
-          @update(items[progress], key)
+          @update(item, key)
         catch err
           debug('KeyManager.rescan: update', progress, 'failed:', err)
 
