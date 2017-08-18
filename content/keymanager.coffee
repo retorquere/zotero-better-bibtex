@@ -113,6 +113,7 @@ class KeyManager
       start = new Date()
       for key, progress in @scanning
         item = yield Zotero.Items.getAsync(key.itemID)
+        debug('KeyManager.rescan: after Zotero.Items.getAsync(', key.itemID, '), loaded =', item._loaded?.itemData)
         try
           @update(item, key)
         catch err
@@ -148,6 +149,7 @@ class KeyManager
   }
 
   propose: (item) ->
+    debug('KeyManager.propose: item loaded =', item._loaded?.itemData)
     debug('KeyManager.propose: getting existing key from extra field,if any')
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
