@@ -59,7 +59,7 @@
     "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
     "uri-templates": "^0.2.0",
-    "webpack": "^3.5.4",
+    "webpack": "^3.5.5",
     "xml-parser": "^1.2.1"
   },
   "scripts": {
