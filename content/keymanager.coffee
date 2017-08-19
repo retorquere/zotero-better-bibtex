@@ -213,7 +213,7 @@ class KeyManager
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
-  get: (itemID) -> @keys.findOne({ itemID }).citekey
+  get: (itemID) -> @keys.findOne({ itemID })
 
   ### TODO: remove after release ###
   cleanupDynamic: co(->

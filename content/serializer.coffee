@@ -143,7 +143,7 @@ class Serializer
 
     serialized = cached.item
     serialized.journalAbbreviation = abbrevs.get(serialized)
-    serialized.citekey = KeyManager.get(item.id)
+    serialized.citekey = KeyManager.get(item.id).citekey
     return serialized
 
   store: (item, serialized, legacy, skipChildItems) ->
@@ -156,7 +156,7 @@ class Serializer
     @cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
 
     serialized.journalAbbreviation = abbrevs.get(serialized)
-    serialized.citekey = KeyManager.get(item.id)
+    serialized.citekey = KeyManager.get(item.id).citekey
     return serialized
 
   serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)

@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/itembox.css" type="text/css"?>
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <vbox id="zotero-item-pane"><!-- anywhere, just needs to be present in the XML -->
+    <row id="zotero-better-bibtex-itempane-citekey-template" hidden="true">
+      <label value="&zotero.better-bibtex.citekey_column;:"/>
+      <!-- label class="better-bibtex-citekey-display" style="-moz-user-select: text; -moz-user-focus: normal;"/ -->
+      <textbox fieldname="citekey" class="better-bibtex-citekey-display plain" readonly="true"/>
+    </row>
+  </vbox>
+
+  <script>
+    window.addEventListener('load', function() {
+      Zotero.debug('{better-bibtex}: itemPane loader start...')
+      new Zotero.BetterBibTeX.ItemPane({
+        document: document,
+        ZoteroItemPane: ZoteroItemPane,
+      })
+      Zotero.debug('{better-bibtex}: itemPane loader done')
+    }, false);
+    Zotero.debug('{better-bibtex}: loaded item pane overlay')
+  </script>
+</overlay>

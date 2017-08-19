@@ -4,10 +4,12 @@ edtf = require('edtf')
 events = require('./events.coffee')
 zotero_config = require('./zotero-config.coffee')
 
+Prefs = require('./preferences.coffee') # needs to be here early, initializes the prefs observer
+
+# Overlay helpers
 Zotero.BetterBibTeX.PrefPane = require('./preferences/preferences.coffee')
 Zotero.BetterBibTeX.ErrorReport = require('./error-report/error-report.coffee')
-
-Prefs = require('./preferences.coffee') # needs to be here early, initializes the prefs observer
+Zotero.BetterBibTeX.ItemPane = require('./itemPane/itemPane.coffee')
 
 # TODO: remove after beta
 Zotero.Prefs.get('debug.store', true)
@@ -24,6 +26,20 @@ JournalAbbrev = require('./journal-abbrev.coffee')
 ###
   MONKEY PATCHES
 ###
+
+# otherwise the display of the citekey in the item pane flames out
+Zotero.ItemFields.isFieldOfBase = ((original) ->
+  return (field, baseField) ->
+    return false if field == 'citekey'
+    return original.apply(@, arguments)
+)(Zotero.ItemFields.isFieldOfBase)
+# because the zotero item editor does not check whether a textbox is read-only. *sigh*
+Zotero.Item::setField = ((original) ->
+  return (field, value, loadIn) ->
+    return false if field == 'citekey'
+    return original.apply(@, arguments)
+)(Zotero.Item::setField)
+
 ### bugger this, I don't want megabytes of shared code in the translators ###
 parseDate = require('./dateparser.coffee')
 CiteProc = require('./citeproc.coffee')
