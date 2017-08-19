@@ -59,20 +59,24 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
   version: (sandbox) -> return { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
 
-  cacheFetch: (sandbox, translator, itemID, options) ->
-    collection = CACHE.getCollection(translator)
-    return false unless collection
+  cacheFetch: (sandbox, itemID, options) ->
+    collection = CACHE.getCollection(sandbox.translator[0].label)
+    if !collection
+      debug('cacheFetch:', sandbox.translator[0].label, 'not found')
+      return false
 
     cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
-    return false unless cached
+    if !cached
+      debug('cacheFetch: cache miss for', sandbox.translator[0].label)
+      return false
 
     collection.update(cached) # touches the cache object
     return cached
 
-  cacheStore: (sandbox, translator, itemID, options, reference, metadata) ->
+  cacheStore: (sandbox, itemID, options, reference, metadata) ->
     metadata ||= {}
 
-    collection = CACHE.getCollection(translator)
+    collection = CACHE.getCollection(sandbox.translator[0].label)
     return false unless collection
 
     cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })

@@ -224,7 +224,7 @@ class Exporter
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
-      if cached = Zotero.BetterBibTeX.cacheFetch(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options)
+      if cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, BetterBibTeX.options)
         Zotero.write(cached.reference)
         if cached.metadata
           @citekeys[cached.itemID] = item.citekey

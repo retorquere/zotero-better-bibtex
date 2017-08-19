@@ -4,6 +4,13 @@ debug = require('../debug.coffee')
 events = require('../events.coffee')
 Translators = require('../../gen/translators.json')
 
+Prefs = require('../preferences.coffee')
+
+if Prefs.get('testing')
+  stringify = (data) -> JSON.stringify(data, null, 2)
+else
+  stringify = (data) -> JSON.stringify(data)
+
 class FileStore
   mode: 'reference'
 
@@ -12,7 +19,7 @@ class FileStore
   save: (name, data) ->
     debug('FileStore.save', name)
     db = createFile(name + '.saving')
-    Zotero.File.putContents(db, JSON.stringify(data))
+    Zotero.File.putContents(db, stringify(data))
     db.moveTo(null, @name(name))
     debug('FileStore.saved', name, 'to', @name(name))
     return
@@ -105,7 +112,7 @@ for translator of Translators.byName
         reference: { type: 'string' }
         metadata: { type: 'object', default: {} }
       }
-      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference', 'citekey' ]
+      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
     },
     ttl
     ttlInterval

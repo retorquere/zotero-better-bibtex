@@ -82,7 +82,7 @@ class CSLExporter
     while item = Zotero.nextItem()
       continue if item.itemType == 'note' || item.itemType == 'attachment'
 
-      if cached = Zotero.BetterBibTeX.cacheFetch(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options)
+      if cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, BetterBibTeX.options)
         items.push(cached.reference)
         continue
 
@@ -154,7 +154,7 @@ class CSLExporter
 
       csl = @serialize(csl)
 
-      Zotero.BetterBibTeX.cacheStore(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options, csl)
+      Zotero.BetterBibTeX.cacheStore(item.itemID, BetterBibTeX.options, csl)
 
       items.push(csl)
 
