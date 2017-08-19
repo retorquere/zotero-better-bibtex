@@ -118,8 +118,9 @@ do Zotero.Promise.coroutine(->
   Zotero.BetterBibTeX.ready = ready.promise
   bench.start = new Date()
 
-  yield Zotero.initializationPromise
-  bench('Zotero.initializationPromise')
+  # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+  yield Zotero.uiReadyPromise
+  bench('Zotero.uiReadyPromise')
 
   yield DB.init()
   bench('DB.init()')

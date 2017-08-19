@@ -2,6 +2,7 @@ debug = require('./debug.coffee')
 flash = require('./flash.coffee')
 co = Zotero.Promise.coroutine
 events = require('./events.coffee')
+getItemsAsync = require('./get-items-async.coffee')
 
 Prefs = require('./preferences.coffee')
 Citekey = require('./keymanager/get-set.coffee')
@@ -13,7 +14,7 @@ debug('KeyManager: loading...', Object.keys(Formatter))
 class KeyManager
   pin: co((id) ->
     debug('KeyManager.pin', id)
-    item = yield Zotero.Items.getAsync(id)
+    item = yield getItemsAsync(id)
     citekey = Citekey.get(item.getField('extra'))
     return if citekey.pinned
 
@@ -25,7 +26,7 @@ class KeyManager
 
   unpin: co((id) ->
     debug('KeyManager.pin', id)
-    item = yield Zotero.Items.getAsync(id)
+    item = yield getItemsAsync(id)
     citekey = Citekey.get(item.getField('extra'))
     return unless citekey.pinned
 
@@ -36,7 +37,7 @@ class KeyManager
 
   refresh: co((id) ->
     debug('KeyManager.refresh', id)
-    item = yield Zotero.Items.getAsync(id)
+    item = yield getItemsAsync(id)
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.refresh?', id, citekey)
     return if citekey.pinned
@@ -112,8 +113,11 @@ class KeyManager
       flash('Assigning citation keys', "Found #{@scanning.length} references without a citation key")
       start = new Date()
       for key, progress in @scanning
-        item = yield Zotero.Items.getAsync(key.itemID)
-        debug('KeyManager.rescan: after Zotero.Items.getAsync(', key.itemID, '), loaded =', item._loaded?.itemData)
+        try
+          item = yield getItemsAsync(key.itemID)
+        catch err
+          debug('KeyManager.rescan: getItemsAsync failed:', err)
+
         try
           @update(item, key)
         catch err
@@ -149,7 +153,6 @@ class KeyManager
   }
 
   propose: (item) ->
-    debug('KeyManager.propose: item loaded =', item._loaded?.itemData)
     debug('KeyManager.propose: getting existing key from extra field,if any')
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
@@ -226,7 +229,7 @@ class KeyManager
     for item in items
       citekey = Citekey.get(item.extra, true)
       continue if !citekey.citekey || citekey.pinned
-      item = yield Zotero.Items.getAsync(item.itemID)
+      item = yield getItemsAsync(item.itemID)
       item.setField('extra', citekey.extra)
       yield item.saveTx()
     return
