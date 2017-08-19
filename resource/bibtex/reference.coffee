@@ -628,8 +628,7 @@ class Reference
 
     @data.DeclarePrefChars = @Exporter.unique_chars(@data.DeclarePrefChars)
 
-    ### TODO: caching ###
-    # Zotero.BetterBibTeX.cache.store(@item.itemID, @Exporter.context, @item.citekey, ref, @data) if @Exporter.caching
+    Zotero.BetterBibTeX.cacheStore(BetterBibTeX.header.label, @item.itemID, BetterBibTeX.options, ref, @data)
 
     @Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
     debug('item.complete:', {data: @data, preamble: @Exporter.preamble})

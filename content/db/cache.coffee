@@ -1,6 +1,7 @@
 createFile = require('../create-file.coffee')
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
+events = require('../events.coffee')
 Translators = require('../../gen/translators.json')
 
 class FileStore
@@ -104,11 +105,18 @@ for translator of Translators.byName
         reference: { type: 'string' }
         metadata: { type: 'object', default: {} }
       }
-      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
+      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference', 'citekey' ]
     },
     ttl
     ttlInterval
   })
+
+# the preferences influence the output way too much, no keeping track of that
+events.on('preference-changed', ->
+  for translator of Translators.byName
+    DB.getCollection(translator).removeDataOnly()
+  return
+)
 
 ###
   TODO: use preference-changed event to drop the translator caches

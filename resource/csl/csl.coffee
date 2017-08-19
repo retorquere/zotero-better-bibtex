@@ -79,85 +79,82 @@ class CSLExporter
 
   doExport: ->
     items = []
-    while item = Zotero.BetterBibTeX.simplifyFields(Zotero.nextItem())
+    while item = Zotero.nextItem()
       continue if item.itemType == 'note' || item.itemType == 'attachment'
 
-      ### TODO: caching ###
-#      cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @Exporter.context)
-#      if cached
-#        csl = cached.bibtex
-#      else
-      if true
-        item.extra = Citekey.get(item.extra).extra
-        fields = @Exporter.extractFields(item)
+      if cached = Zotero.BetterBibTeX.cacheFetch(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options)
+        items.push(cached.reference)
+        continue
 
-        if item.accessDate # WTH is Juris-M doing with those dates?
-          item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
+      Zotero.BetterBibTeX.simplifyFields(item)
+      item.extra = Citekey.get(item.extra).extra
+      fields = @Exporter.extractFields(item)
 
-        csl = Zotero.Utilities.itemToCSLJSON(item)
+      if item.accessDate # WTH is Juris-M doing with those dates?
+        item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
 
-        # 637
-        delete csl['publisher-place']
-        delete csl['archive-place']
-        delete csl['event-place']
-        delete csl['original-publisher-place']
-        delete csl['publisher-place']
-        csl[if item.itemType == 'presentation' then 'event-place' else 'publisher-place'] = item.place if item.place
+      csl = Zotero.Utilities.itemToCSLJSON(item)
 
-        csl.type = item.cslType if item.cslType in ValidCSLTypes
+      # 637
+      delete csl['publisher-place']
+      delete csl['archive-place']
+      delete csl['event-place']
+      delete csl['original-publisher-place']
+      delete csl['publisher-place']
+      csl[if item.itemType == 'presentation' then 'event-place' else 'publisher-place'] = item.place if item.place
 
-        delete csl.authority
-        csl.type = 'motion_picture' if item.__type__ == 'videoRecording' && csl.type == 'video'
+      csl.type = item.cslType if item.cslType in ValidCSLTypes
 
-        csl.issued = parseDate(item.date) if csl.issued && item.date
+      delete csl.authority
+      csl.type = 'motion_picture' if item.__type__ == 'videoRecording' && csl.type == 'video'
 
-        debug('extracted:', fields)
-        for name, value of fields
-          continue unless value.format == 'csl'
+      csl.issued = parseDate(item.date) if csl.issued && item.date
 
-          switch @Exporter.CSLVariables[name].type
-            when 'date'
-              csl[name] = parseDate(value.value)
+      debug('extracted:', fields)
+      for name, value of fields
+        continue unless value.format == 'csl'
 
-            when 'creator'
-              creators = []
-              for creator in value.value
-                creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (if creator.name then 1 else undefined)}
-                Zotero.BetterBibTeX.parseParticles(creator)
-                creators.push(creator)
+        switch @Exporter.CSLVariables[name].type
+          when 'date'
+            csl[name] = parseDate(value.value)
 
-              csl[name] = creators
+          when 'creator'
+            creators = []
+            for creator in value.value
+              creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (if creator.name then 1 else undefined)}
+              Zotero.BetterBibTeX.parseParticles(creator)
+              creators.push(creator)
 
-            else
-              csl[name] = value.value
+            csl[name] = creators
 
-        swap = {
-          shortTitle: 'title-short'
-          journalAbbreviation: 'container-title-short'
-        }
-        ### ham-fisted workaround for #365 ###
-        swap.author = 'director' if csl.type in [ 'motion_picture', 'broadcast']
+          else
+            csl[name] = value.value
 
-        for k, v of swap
-          [csl[k], csl[v]] = [csl[v], csl[k]]
+      swap = {
+        shortTitle: 'title-short'
+        journalAbbreviation: 'container-title-short'
+      }
+      ### ham-fisted workaround for #365 ###
+      swap.author = 'director' if csl.type in [ 'motion_picture', 'broadcast']
 
-        citekey = csl.id = item.citekey
+      for k, v of swap
+        [csl[k], csl[v]] = [csl[v], csl[k]]
 
-        ### Juris-M workarounds to match Zotero as close as possible ###
-        for kind in ['author', 'editor', 'director']
-          for creator in csl[kind] || []
-            delete creator.multi
-        delete csl.multi
-        delete csl.system_id
-        if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
-          csl.accessed = {"date-parts": [[ m[1], parseInt(m[2]), parseInt(m[3]) ]]}
-        delete csl.genre if csl.type == 'broadcast' && csl.genre == 'television broadcast'
+      citekey = csl.id = item.citekey
 
-        csl = @serialize(csl)
-        ###
-        TODO: caching
-        Zotero.BetterBibTeX.cache.store(item.itemID, @Exporter.context, citekey, csl)
-        ###
+      ### Juris-M workarounds to match Zotero as close as possible ###
+      for kind in ['author', 'editor', 'director']
+        for creator in csl[kind] || []
+          delete creator.multi
+      delete csl.multi
+      delete csl.system_id
+      if csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))
+        csl.accessed = {"date-parts": [[ m[1], parseInt(m[2]), parseInt(m[3]) ]]}
+      delete csl.genre if csl.type == 'broadcast' && csl.genre == 'television broadcast'
+
+      csl = @serialize(csl)
+
+      Zotero.BetterBibTeX.cacheStore(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options, csl)
 
       items.push(csl)
 

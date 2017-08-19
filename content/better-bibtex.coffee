@@ -58,6 +58,37 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
   version: (sandbox) -> return { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
+
+  cacheFetch: (sandbox, translator, itemID, options) ->
+    collection = CACHE.getCollection(translator)
+    return false unless collection
+
+    cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
+    return false unless cached
+
+    collection.update(cached) # touches the cache object
+    return cached
+
+  cacheStore: (sandbox, translator, itemID, options, reference, metadata) ->
+    metadata ||= {}
+
+    collection = CACHE.getCollection(translator)
+    return false unless collection
+
+    cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
+    if cached
+      cached.reference = reference
+      cached.metadata = metadata
+      collection.update(cached)
+    else
+      collection.insert({
+        itemID,
+        exportNotes: options.exportNotes,
+        useJournalAbbreviation: options.useJournalAbbreviation,
+        reference,
+        metadata
+      })
+    return true
 }
 Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)

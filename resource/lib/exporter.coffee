@@ -219,23 +219,23 @@ class Exporter
     while item = Zotero.nextItem()
       continue if item.itemType in ['note', 'attachment']
       debug('fetched item:', item)
+
+      if !item.citekey
+        debug(new Error('No citation key found in'), item)
+        throw new Error('No citation key in ' + JSON.stringify(item))
+
+      if cached = Zotero.BetterBibTeX.cacheFetch(BetterBibTeX.header.label, item.itemID, BetterBibTeX.options)
+        Zotero.write(cached.reference)
+        if cached.metadata
+          @citekeys[cached.itemID] = item.citekey
+          @preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars if cached.metadata.DeclarePrefChars
+          continue
+
       Zotero.BetterBibTeX.simplifyFields(item)
-# TODO: caching?
-#      if @caching
-#        cached = Zotero.BetterBibTeX.cache.fetch(item.itemID, @context)
-#        if cached?.citekey
-#          debug('nextItem: cached')
-#          @citekeys[item.itemID] = cached.citekey
-#          Zotero.write(cached.bibtex)
-#          @preamble.DeclarePrefChars += cached.data.DeclarePrefChars if cached.data.DeclarePrefChars
-#          continue
 
       item.extra = Citekey.get(item.extra).extra
       debug('exporting', item)
       @jabref.citekeys[item.key] = item.citekey
-      if !item.citekey
-        debug(new Error('No citation key found in'), item)
-        throw new Error('No citation key in ' + JSON.stringify(item))
 
       return item
 
