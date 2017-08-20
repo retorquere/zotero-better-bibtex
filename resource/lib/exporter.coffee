@@ -23,12 +23,7 @@ class Exporter
     @collections = collections()
     @jabref = new JabRef(@collections)
 
-    @context = {
-      exportCharset: (BetterBibTeX.options.exportCharset || 'UTF-8').toUpperCase()
-      exportNotes: !!BetterBibTeX.options.exportNotes
-      translatorID: BetterBibTeX.header.translatorID
-      useJournalAbbreviation: !!BetterBibTeX.options.useJournalAbbreviation
-    }
+    @citekeys = {}
 
   # candidate for removal
   locale: (language) ->
