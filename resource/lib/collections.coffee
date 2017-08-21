@@ -17,6 +17,7 @@ module.exports = (raw) ->
 
   collections = {}
   for collection in raw
+    debug('found collection', collection.fields.name, 'with parent', collection.fields.parentKey)
     collections[collection.primary.key] = {
       key: collection.primary.key
       name: collection.fields.name
@@ -27,6 +28,9 @@ module.exports = (raw) ->
     }
 
   for key, collection of collections
+    if collection.parent && !collections[collection.parent]
+      debug(collection.name, '/', key, 'has non-existing parent', {parent: collection.parent})
+
     collections[collection.parent].collections.push(collection) if collection.parent
     delete collection.parent
   debug('got collections:', collections)
