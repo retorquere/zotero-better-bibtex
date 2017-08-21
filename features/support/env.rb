@@ -145,6 +145,25 @@ end
 
 TRANSLATORS = {}
 
+def normalizeJSON(lib)
+  lib.delete('collections')
+  lib.delete('config')
+  lib['items'].each{|item|
+    item.delete('itemID')
+    item.delete('dateAdded')
+    item.delete('dateModified')
+    item.delete('uniqueFields')
+    item.delete('key')
+    item.delete('citekey')
+    item.delete('uri')
+    item.keys.each{|k|
+      item.delete(k) if item[k].nil?
+      item.delete(k) if (item[k].is_a?(Hash) || item[k].is_a?(Array)) && item[k].empty?
+    }
+  }
+  return JSON.neat_generate(lib, { wrap: 40, sort: true })
+end
+
 def exportLibrary(translator, displayOptions, library)
   if translator =~ /^id:(.+)$/
     translator = $1
@@ -164,9 +183,8 @@ def exportLibrary(translator, displayOptions, library)
   expected = File.read(expected)
   case File.extname(library)
   when '.json'
-    options = { wrap: 40, sort: true }
-    found = JSON.neat_generate(JSON.parse(found), options)
-    expected = JSON.neat_generate(JSON.parse(expected), options)
+    found = normalizeJSON(JSON.parse(found))
+    expected = normalizeJSON(JSON.parse(expected))
   when '.yml'
     found = sort_object(YAML.load(found)).to_yaml
     expected = sort_object(YAML.load(expected)).to_yaml

@@ -76,7 +76,7 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
       FileUtils.cp(orig, source)
     end
     imported = execute(
-      timeout: 60,
+      timeout: 240,
       args: { filename: source, preferences: preferences, createNewCollection: createNewCollection },
       script: 'return yield Zotero.BetterBibTeX.TestSupport.importFile(args.filename, args.createNewCollection, args.preferences)'
     )
