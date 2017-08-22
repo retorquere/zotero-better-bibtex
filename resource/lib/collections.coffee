@@ -15,25 +15,21 @@ module.exports = (raw) ->
         raw.push(collection)
     debug('Collections: fetched', raw.length, 'collections from Zotero')
 
-  debug('Collections: found', raw.length, 'collections:', raw)
-
   collections = {}
   for collection in raw
-    debug('found collection', collection.fields.name, 'with parent', collection.fields.parentKey)
     collections[collection.primary.key] = {
       key: collection.primary.key
       name: collection.fields.name
       collections: []
       items: (item.key for item in (collection.descendents || []) when item.type == 'item')
       parent: collection.fields.parentKey
-      root: !collection.fields.parentKey
     }
 
   for key, collection of collections
-    if collection.parent && !collections[collection.parent]
-      debug(collection.name, '/', key, 'has non-existing parent', {parent: collection.parent})
-
-    collections[collection.parent].collections.push(collection) if collection.parent
+    if collection.parent && collections[collection.parent]
+      collections[collection.parent].collections.push(collection)
+    else
+      collection.root = true
     delete collection.parent
   debug('got collections:', collections)
 
