@@ -25,7 +25,7 @@ class HTML
     # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
 
     @latex = ''
-    @mapping = (if BetterBibTeX.unicode then Mapping.toLaTeX.unicode else Mapping.toLaTeX.ascii)
+    @mapping = (if BetterBibTeX.unicode then Mapping.unicode else Mapping.ascii)
 
     @stack = []
 
@@ -141,7 +141,7 @@ class HTML
         braced = 0
 
       c = @mapping.math[c] || @mapping.text[c] || c
-      latex += @embrace(c, Mapping.toLaTeX.embrace[c])
+      latex += @embrace(c, Mapping.embrace[c])
 
     # add any missing closing phantom braces
     switch braced

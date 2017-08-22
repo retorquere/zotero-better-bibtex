@@ -15,12 +15,12 @@ Scenario: Better BibTeX Import 2
 #  And the markdown citation for orre2008 should be ''
 #  And the markdown bibliography for orre2008 should be ''
 
-@i2
-Scenario: option to mantain the braces and special commands in titles or all fields #100
-  When I set preference .rawImports to true
-  And I import 1 reference from "import/Better BibTeX.007.bib"
-  Then a library export using "BetterBibTeX JSON" should match "import/Better BibTeX.007.raw.json"
-  And a library export using "Better BibTeX" should match "import/Better BibTeX.007.roundtrip.bib"
+#@i2
+#Scenario: option to mantain the braces and special commands in titles or all fields #100
+#  When I set preference .rawImports to true
+#  And I import 1 reference from "import/Better BibTeX.007.bib"
+#  Then a library export using "BetterBibTeX JSON" should match "import/Better BibTeX.007.raw.json"
+#  And a library export using "Better BibTeX" should match "import/Better BibTeX.007.roundtrip.bib"
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472

@@ -22,17 +22,20 @@ var BetterBibTeX = {
   preferences: <%- JSON.stringify(preferences) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
-  getConfig: function() {
+  getConfig: function(detect) {
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
     this.unicode = true;
 
-    var key;
-    for (key in this.options) {
-      this.options[key] = Zotero.getOption(key)
+    if (detect) {
+      this.options = {}
+    } else {
+      for (var key in this.options) {
+        this.options[key] = Zotero.getOption(key)
+      }
+      // special handling
+      this.options.exportPath = Zotero.getOption('exportPath')
+      this.options.exportFilename = Zotero.getOption('exportFilename')
     }
-    // special handling
-    this.options.exportPath = Zotero.getOption('exportPath')
-    this.options.exportFilename = Zotero.getOption('exportFilename')
 
     for (key in this.preferences) {
       this.preferences[key] = Zotero.getHiddenPref('better-bibtex.' + key)
@@ -61,6 +64,7 @@ var BetterBibTeX = {
 
 <% if (header.translatorType & 1) { /* import */ %>
   function detectImport() {
+    BetterBibTeX.getConfig(true)
     return BetterBibTeX.detectImport()
   }
   function doImport() {
