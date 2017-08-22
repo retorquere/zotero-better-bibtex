@@ -154,6 +154,55 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
     return original.apply(@, arguments)
 )(Zotero.Utilities.Internal.itemToExportFormat)
 
+Zotero.Translate.Export::translate = ((original) ->
+  return ->
+    try
+      do =>
+        debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}", @_displayOptions)
+
+        ### requested translator ###
+        translatorID = @translator?[0]
+        translatorID = translatorID.translatorID if translatorID.translatorID
+        debug('Zotero.Translate.Export::translate: ', translatorID)
+
+        ### regular behavior for non-BBT translators, or if translating to string ###
+        return unless translatorID && @_displayOptions && Translators.byId[translatorID] && @location.path
+
+        if @_displayOptions.exportFileData # export directory selected
+          @_displayOptions.exportPath = @location.path
+        else
+          @_displayOptions.exportPath = @location.parent.path
+        @_displayOptions.exportFilename = @location.leafName
+
+        return unless @_displayOptions?['Keep updated']
+
+        if @_displayOptions.exportFileData
+          flash('Auto-export not registered', 'Auto-export is not supported when file data is exported')
+          return
+
+        switch @_export?.type
+          when 'library'
+            if @_export.id == Zotero.Libraries.userLibraryID
+              name = Zotero.Libraries.getName(@_export.id)
+            else
+              name = 'library ' + Zotero.Libraries.getName(@_export.id)
+
+          when 'collection'
+            name = @_export.collection.name
+
+          else
+            flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
+            return
+
+        ### set up auto-export here ###
+
+        return
+
+    catch err
+      debug('Zotero.Translate.Export::translate error:', err)
+
+    return original.apply(@, arguments)
+)(Zotero.Translate.Export::translate)
 ###
   INIT
 ###
