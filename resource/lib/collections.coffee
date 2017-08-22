@@ -10,10 +10,10 @@ module.exports = (raw) ->
     debug('Collections: was passed', raw.length, 'collections')
   else
     raw = []
-    if Zotero.nextCollection && BetterBibTeX.header.configOptions?.getCollections
+    if BetterBibTeX.header.configOptions?.getCollections && Zotero.nextCollection
       while collection = Zotero.nextCollection()
         raw.push(collection)
-      debug('Collections: fetched', raw.length, 'collections from Zotero')
+    debug('Collections: fetched', raw.length, 'collections from Zotero')
 
   collections = {}
   for collection in raw
@@ -23,11 +23,13 @@ module.exports = (raw) ->
       collections: []
       items: (item.key for item in (collection.descendents || []) when item.type == 'item')
       parent: collection.fields.parentKey
-      root: !collection.fields.parentKey
     }
 
   for key, collection of collections
-    collections[collection.parent].collections.push(collection) if collection.parent
+    if collection.parent && collections[collection.parent]
+      collections[collection.parent].collections.push(collection)
+    else
+      collection.root = true
     delete collection.parent
   debug('got collections:', collections)
 
