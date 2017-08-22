@@ -259,6 +259,7 @@ module BBT
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
 
   profile['extensions.mozrepl.autoStart'] = true
 

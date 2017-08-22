@@ -311,6 +311,7 @@ ZoteroItem::keywordClean = (k) ->
   return k.replace(/^[\s{]+|[}\s]+$/g, '').trim()
 
 ZoteroItem::addToExtra = (str) ->
+  debug('ZoteroItem::addToExtra:', str)
   if @item.extra and @item.extra != ''
     @item.extra += " \n#{str}"
   else
