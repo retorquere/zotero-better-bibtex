@@ -77,6 +77,21 @@ class KeyManager
     return
   )
 
+  remaining: (start, done, total) ->
+    remaining = (total - done) / (done / ((new Date()) - start))
+
+    date = new Date(remaining)
+
+    hh = date.getUTCHours()
+    mm = date.getMinutes()
+    ss = date.getSeconds()
+
+    hh = "0#{hh}" if hh < 10
+    mm = "0#{mm}" if mm < 10
+    ss = "0#{ss}" if ss < 10
+
+    return "#{done} / #{total}, #{hh}:#{mm}:#{ss} remaining"
+
   rescan: co((clean)->
     if @scanning
       if Array.isArray(@scanning)
@@ -111,15 +126,14 @@ class KeyManager
 
     if @scanning.length != 0
       progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-      progressWin.changeHeadline('Assigning citation keys')
-      progressWin.addDescription("Better BibTeX: Found #{@scanning.length} references without a citation key")
+      progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
+      progressWin.addDescription("Found #{@scanning.length} references without a citation key")
       icon = "chrome://zotero/skin/treesource-unfiled#{if Zotero.hiDPI then '@2x' else ''}.png"
       progress = new progressWin.ItemProgress(icon, "Assigning citation keys")
       progressWin.show()
 
-      flash('Assigning citation keys', "Found #{@scanning.length} references without a citation key")
       start = new Date()
-      for key, progress in @scanning
+      for key, done in @scanning
         try
           item = yield getItemsAsync(key.itemID)
         catch err
@@ -128,15 +142,15 @@ class KeyManager
         try
           @update(item, key)
         catch err
-          debug('KeyManager.rescan: update', progress, 'failed:', err)
+          debug('KeyManager.rescan: update', done, 'failed:', err)
 
-        progress.setProgress((progress * 100) / @scanning.length)
-        left = (((new Date()) - start) / progress) * (@scanning.length - progress)
-        left = (new Date(left)).toISOString().replace(/.*T/, '').replace(/Z$/, '')
-        progress.setText("#{@scanning.length - progress} / #{left} remaining...")
+        if done % 10 == 1
+          progress.setProgress((done * 100) / @scanning.length)
+          progress.setText(@remaining(start, done, @scanning.length))
 
-      progress.setProgress 100
-      progressWin.startCloseTimer 5000
+      progress.setProgress(100)
+      progress.setText('Ready')
+      progressWin.startCloseTimer(5000)
 
     @scanning = false
 
