@@ -77,6 +77,21 @@ class KeyManager
     return
   )
 
+  remaining: (start, done, total) ->
+    remaining = (total - done) / (done / ((new Date()) - start))
+
+    date = new Date(remaining)
+
+    hh = date.getUTCHours()
+    mm = date.getMinutes()
+    ss = date.getSeconds()
+
+    hh = "0#{hh}" if hh < 10
+    mm = "0#{mm}" if mm < 10
+    ss = "0#{ss}" if ss < 10
+
+    return "#{done} / #{total}, #{hh}:#{mm}:#{ss} remaining"
+
   rescan: co((clean)->
     if @scanning
       if Array.isArray(@scanning)
@@ -110,9 +125,15 @@ class KeyManager
     @scanning = @keys.find({ citekey: '' })
 
     if @scanning.length != 0
-      flash('Assigning citation keys', "Found #{@scanning.length} references without a citation key")
+      progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+      progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
+      progressWin.addDescription("Found #{@scanning.length} references without a citation key")
+      icon = "chrome://zotero/skin/treesource-unfiled#{if Zotero.hiDPI then '@2x' else ''}.png"
+      progress = new progressWin.ItemProgress(icon, "Assigning citation keys")
+      progressWin.show()
+
       start = new Date()
-      for key, progress in @scanning
+      for key, done in @scanning
         try
           item = yield getItemsAsync(key.itemID)
         catch err
@@ -121,14 +142,15 @@ class KeyManager
         try
           @update(item, key)
         catch err
-          debug('KeyManager.rescan: update', progress, 'failed:', err)
+          debug('KeyManager.rescan: update', done, 'failed:', err)
 
-        if progress && !(progress % 200)
-          left = (((new Date()) - start) / progress) * (@scanning.length - progress)
-          left = (new Date(left)).toISOString().replace(/.*T/, '').replace(/Z$/, '')
-          flash('Assigning citation keys', "Still busy, #{@scanning.length - progress} / #{left} remaining...")
+        if done % 10 == 1
+          progress.setProgress((done * 100) / @scanning.length)
+          progress.setText(@remaining(start, done, @scanning.length))
 
-      flash('Assigning citation keys', "#{@scanning.length} references updated in #{((new Date()) - start) / 1000.0}s")
+      progress.setProgress(100)
+      progress.setText('Ready')
+      progressWin.startCloseTimer(5000)
 
     @scanning = false
 

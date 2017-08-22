@@ -101,11 +101,12 @@ BetterBibTeX.doExport = ->
   }
 
   ### just export whatever Zotero gives us and worry about cleanup on import ###
+  if BetterBibTeX.header.configOptions?.getCollections && Zotero.nextCollection
+    while collection = Zotero.nextCollection()
+      data.collections.push(collection)
+
   while item = Zotero.nextItem()
     data.items.push(item)
-
-  while Zotero.nextCollection && collection = Zotero.nextCollection()
-    data.collections.push(collection)
 
   Zotero.write(JSON.stringify(data, null, '  '))
   return
