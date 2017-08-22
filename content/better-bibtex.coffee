@@ -169,9 +169,16 @@ do Zotero.Promise.coroutine(->
   Zotero.BetterBibTeX.ready = ready.promise
   bench.start = new Date()
 
+  progress = new Zotero.ProgressWindow({ closeOnClick: false })
+
+  progress.changeHeadline('BetterBibTeX: Waiting for Zotero schema')
+  progressWin.show()
+
   # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-  yield Zotero.uiReadyPromise
-  bench('Zotero.uiReadyPromise')
+  yield Zotero.Schema.schemaUpdatePromise
+  bench('Zotero.Schema.schemaUpdatePromise')
+
+  progressWin.changeHeadline('BetterBibTeX: Initializing')
 
   yield DB.init()
   bench('DB.init()')
@@ -188,16 +195,13 @@ do Zotero.Promise.coroutine(->
   else
     debug('starting, skipping test support')
 
-  flash('waiting for Zotero translators...', 'Better BibTeX needs the translators to be loaded')
-  yield Zotero.Schema.schemaUpdatePromise
-  bench('Zotero.Schema.schemaUpdatePromise')
-
   JournalAbbrev.init()
-
-  flash('Zotero translators loaded', 'Better BibTeX ready for business')
 
   yield Translators.init()
   bench('Translators.init()')
+
+  progress.changeHeadline('BetterBibTeX: Ready for business')
+  progress.startCloseTimer(5000)
 
   # TODO: remove before release
   yield KeyManager.cleanupDynamic()

@@ -110,6 +110,13 @@ class KeyManager
     @scanning = @keys.find({ citekey: '' })
 
     if @scanning.length != 0
+      progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+      progressWin.changeHeadline('Assigning citation keys')
+      progressWin.addDescription("Better BibTeX: Found #{@scanning.length} references without a citation key")
+      icon = "chrome://zotero/skin/treesource-unfiled#{if Zotero.hiDPI then '@2x' else ''}.png"
+      progress = new progressWin.ItemProgress(icon, "Assigning citation keys")
+      progressWin.show()
+
       flash('Assigning citation keys', "Found #{@scanning.length} references without a citation key")
       start = new Date()
       for key, progress in @scanning
@@ -123,12 +130,13 @@ class KeyManager
         catch err
           debug('KeyManager.rescan: update', progress, 'failed:', err)
 
-        if progress && !(progress % 200)
-          left = (((new Date()) - start) / progress) * (@scanning.length - progress)
-          left = (new Date(left)).toISOString().replace(/.*T/, '').replace(/Z$/, '')
-          flash('Assigning citation keys', "Still busy, #{@scanning.length - progress} / #{left} remaining...")
+        progress.setProgress((progress * 100) / @scanning.length)
+        left = (((new Date()) - start) / progress) * (@scanning.length - progress)
+        left = (new Date(left)).toISOString().replace(/.*T/, '').replace(/Z$/, '')
+        progress.setText("#{@scanning.length - progress} / #{left} remaining...")
 
-      flash('Assigning citation keys', "#{@scanning.length} references updated in #{((new Date()) - start) / 1000.0}s")
+      progress.setProgress 100
+      progressWin.startCloseTimer 5000
 
     @scanning = false
 
