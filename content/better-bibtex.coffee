@@ -36,9 +36,19 @@ Zotero.ItemFields.isFieldOfBase = ((original) ->
 # because the zotero item editor does not check whether a textbox is read-only. *sigh*
 Zotero.Item::setField = ((original) ->
   return (field, value, loadIn) ->
-    return false if field == 'citekey'
-    return original.apply(@, arguments)
+    return original.apply(@, arguments) unless field == 'citekey'
+    return false
 )(Zotero.Item::setField)
+
+# To show the citekey in the reference list
+Zotero.Item::getField = ((original) ->
+  return (field, unformatted, includeBaseMapped) ->
+    return original.apply(@, arguments) unless field == 'citekey'
+
+    citekey = KeyManager.get(@id)
+    return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+)(Zotero.Item::getField)
+
 
 ### bugger this, I don't want megabytes of shared code in the translators ###
 parseDate = require('./dateparser.coffee')
