@@ -331,7 +331,52 @@ class ZoteroItem
     techreport:     'report'
 
   sup: {
+    0: '\u2070'
+    1: '\u00B9'
     2: '\u00B2'
+    3: '\u00B3'
+    4: '\u2074'
+    5: '\u2075'
+    6: '\u2076'
+    7: '\u2077'
+    8: '\u2078'
+    9: '\u2079'
+    '+': '\u207A'
+    '-': '\u207B'
+    '=': '\u207C'
+    '(': '\u207D'
+    ')': '\u207E'
+    i: '\u2071'
+    n: '\u207F'
+  }
+  sub: {
+    0: '\u2080'
+    1: '\u2081'
+    2: '\u2082'
+    3: '\u2083'
+    4: '\u2084'
+    5: '\u2085'
+    6: '\u2086'
+    7: '\u2087'
+    8: '\u2088'
+    9: '\u2089'
+    '+': '\u208A'
+    '-': '\u208B'
+    '=': '\u208C'
+    '(': '\u208D'
+    ')': '\u208E'
+    a: '\u2090'
+    e: '\u2091'
+    o: '\u2092'
+    x: '\u2093'
+    h: '\u2095'
+    k: '\u2096'
+    l: '\u2097'
+    m: '\u2098'
+    n: '\u2099'
+    p: '\u209A'
+    s: '\u209B'
+    t: '\u209C'
   }
 
   collapse: (node) ->
@@ -345,7 +390,7 @@ class ZoteroItem
       marks = {}
       for mark in node.marks || []
         switch mark.type
-          when 'nocase', 'sup'
+          when 'nocase', 'sup', 'sub'
             marks[mark.type] = true
             throw new Error(JSON.stringify(mark)) unless Object.keys(mark).length == 1
 
@@ -354,10 +399,11 @@ class ZoteroItem
 
       # marks = (node.marks || []).reduce(((acc, mark) -> acc[mark.type] = true; return acc), {})
 
-      if marks.sup
+      if marks.sup || marks.sub
         text = ''
+        mark = if marks.sup then @sup else @sub
         for c in Zotero.Utilities.XRegExp.split(node.text, '')
-          text += @sup[c] || c
+          text += mark[c] || c
       else
         text = node.text
 
