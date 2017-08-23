@@ -86,5 +86,20 @@ do Bluebird.coroutine(->
       content_type: 'application/x-xpinstall'
     })
 
+    branch = process.env.CIRCLE_BRANCH
+    if branch.match(/^[0-9]+$/)
+      issue = branch
+    else if branch == 'master' # TODO: remove after release
+      issue = '555'
+    else
+      issue = null
+
+    if issue
+      release.current = yield github({
+        uri: "issues/#{issue}/comments"
+        method: 'POST'
+        body: { body: "Bleep bloop; this is your friendly neighborhood build bot announcing a [new build](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)" }
+      })
+
   return
 )
