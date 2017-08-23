@@ -18,7 +18,7 @@ Mode =
   latex: (items) ->
     keys = (item.citekey for item in items)
 
-    cmd = "#{BetterBibTeX.preferences.citeCommand}".trim()
+    cmd = "#{Translator.preferences.citeCommand}".trim()
     if cmd == ''
       Zotero.write(keys.join(','))
     else
@@ -33,7 +33,7 @@ Mode =
   pandoc: (items) ->
     keys = ("@#{item.citekey}" for item in items)
     keys = keys.join('; ')
-    keys = "[#{keys}]" if BetterBibTeX.preferences.quickCopyPandocBrackets
+    keys = "[#{keys}]" if Translator.preferences.quickCopyPandocBrackets
     Zotero.write(keys)
     return
 
@@ -57,15 +57,15 @@ Mode =
       Zotero.write("[[zotero://select/items/#{id}][@#{item.citekey}]]")
     return
 
-BetterBibTeX.doExport = ->
+Translator.doExport = ->
   Exporter = new Exporter()
   items = []
   while item = Exporter.nextItem()
     items.push(item)
 
-  mode = Mode["#{BetterBibTeX.options.quickCopyMode}"] || Mode["#{BetterBibTeX.preferences.quickCopyMode}"]
+  mode = Mode["#{Translator.options.quickCopyMode}"] || Mode["#{Translator.preferences.quickCopyMode}"]
   if mode
     mode.call(null, items)
   else
-    throw "Unsupported Quick Copy format '#{BetterBibTeX.options.quickCopyMode || BetterBibTeX.preferences.quickCopyMode}'"
+    throw "Unsupported Quick Copy format '#{Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}'"
   return

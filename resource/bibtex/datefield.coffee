@@ -17,7 +17,7 @@ format = (date) ->
     when date.year                            then  formatted = year(date.year)
     else                                            formatted = ''
 
-  if BetterBibTeX.preferences.biblatexExtendedDateFormat
+  if Translator.preferences.biblatexExtendedDateFormat
     formatted += '?' if date.uncertain
     formatted += '~' if date.approximate
 
@@ -34,7 +34,7 @@ module.exports = (date, formatted_field, verbatim_field) ->
       field = { name: verbatim_field, value: date.verbatim }
 
 # TODO: what happens here?
-#      when date.edtf && BetterBibTeX.preferences.biblatexExtendedDateFormat
+#      when date.edtf && Translator.preferences.biblatexExtendedDateFormat
 #        field = { name: formatted_field, value: date.replace(/~/g, '\u00A0') }
 
     when date.type == 'date'

@@ -10,7 +10,7 @@ module.exports = (raw) ->
     debug('Collections: was passed', raw.length, 'collections')
   else
     raw = []
-    if BetterBibTeX.header.configOptions?.getCollections && Zotero.nextCollection
+    if Translator.header.configOptions?.getCollections && Zotero.nextCollection
       while collection = Zotero.nextCollection()
         raw.push(collection)
     debug('Collections: fetched', raw.length, 'collections from Zotero')

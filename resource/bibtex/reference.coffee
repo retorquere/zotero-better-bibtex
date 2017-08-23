@@ -38,7 +38,7 @@ class Reference
 
     @fields = []
     @has = Object.create(null)
-    @raw = (BetterBibTeX.preferences.rawLaTag in @item.tags)
+    @raw = (Translator.preferences.rawLaTag in @item.tags)
     @data = {DeclarePrefChars: ''}
 
     if !@item.language
@@ -72,7 +72,7 @@ class Reference
       @add({ entrysubtype: @referencetype.subtype }) if @referencetype.subtype
       @referencetype = @referencetype.type
 
-    if BetterBibTeX.preferences.testing
+    if Translator.preferences.testing
       debug('timestamp for testing')
       @add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
     else
@@ -81,7 +81,7 @@ class Reference
     switch
       when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
         @item.arXiv.source = 'publicationTitle'
-        delete @item.publicationTitle if BetterBibTeX.BetterBibLaTeX
+        delete @item.publicationTitle if Translator.BetterBibLaTeX
 
       when @override.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @override.arxiv.value))
         @item.arXiv.source = 'extra'
@@ -181,7 +181,7 @@ class Reference
   ###
   enc_url: (f) ->
     value = @enc_verbatim(f)
-    if BetterBibTeX.BetterBibTeX
+    if Translator.BetterBibTeX
       return "\\url{#{@enc_verbatim(f)}}"
     else
       return value
@@ -203,7 +203,7 @@ class Reference
     # space at end is always OK
     return particle if particle[particle.length - 1] == ' '
 
-    if BetterBibTeX.BetterBibLaTeX
+    if Translator.BetterBibLaTeX
       @data.DeclarePrefChars += particle[particle.length - 1] if XRegExp.test(particle, @punctuationAtEnd)
       # if BBLT, always add a space if it isn't there
       return particle + ' '
@@ -232,7 +232,7 @@ class Reference
 
     initials = (name.given || '').indexOf(@_enc_creators_initials_marker) # zero-width space
 
-    if BetterBibTeX.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])
+    if Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])
       if initials >= 0
         initials = name.given.substring(0, initials)
         initials = new String(initials) if initials.length > 1
@@ -293,7 +293,7 @@ class Reference
     family = @enc_latex({value: family})
     family = @enc_latex({value: @_enc_creators_pad_particle(name['dropping-particle'], true)}) + family if name['dropping-particle']
 
-    if BetterBibTeX.BetterBibTeX && BetterBibTeX.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])
+    if Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])
       family = '{\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}}' + family
       @Exporter.preamble.noopsort = true
 
@@ -329,13 +329,13 @@ class Reference
         when creator.lastName || creator.firstName
           name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          Zotero.BetterBibTeX.parseParticles(name) if BetterBibTeX.preferences.parseParticles
+          Zotero.BetterBibTeX.parseParticles(name) if Translator.preferences.parseParticles
 
-          unless BetterBibTeX.BetterBibLaTeX && BetterBibTeX.preferences.biblatexExtendedNameFormat
+          unless Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedNameFormat
             @useprefix ||= !!name['non-dropping-particle']
             @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
-          if BetterBibTeX.BetterBibTeX
+          if Translator.BetterBibTeX
             name = @_enc_creators_bibtex(name)
           else
             name = @_enc_creators_biblatex(name)
@@ -379,21 +379,21 @@ class Reference
 
     caseConversion = @caseConversion[f.name] || f.caseConversion
     value = text2latex(f.value, {mode: (if f.html then 'html' else 'text'), caseConversion: caseConversion && @english})
-    value = "{#{value}}" if caseConversion && BetterBibTeX.BetterBibTeX && !@english
+    value = "{#{value}}" if caseConversion && Translator.BetterBibTeX && !@english
 
     value = new String("{#{value}}") if f.value instanceof String
     return value
 
   enc_tags: (f) ->
-    tags = (tag for tag in f.value || [] when tag && tag != BetterBibTeX.preferences.rawLaTag)
+    tags = (tag for tag in f.value || [] when tag && tag != Translator.preferences.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests
-    tags.sort() if BetterBibTeX.preferences.testing
+    tags.sort() if Translator.preferences.testing
 
     debug('enc_tags:', tags)
     tags = for tag in tags
-      if BetterBibTeX.BetterBibTeX
+      if Translator.BetterBibTeX
         tag = tag.replace(/([#\\%&])/g, '\\$1')
       else
         tag = tag.replace(/([#%\\])/g, '\\$1')
@@ -429,18 +429,18 @@ class Reference
       #att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      attachment.saveFile(att.path, true) if BetterBibTeX.options.exportFileData && attachment.saveFile && attachment.defaultPath
+      attachment.saveFile(att.path, true) if Translator.options.exportFileData && attachment.saveFile && attachment.defaultPath
 
       att.title ||= att.path.replace(/.*[\\\/]/, '') || 'attachment'
 
       att.mimetype = 'application/pdf' if !att.mimetype && att.path.slice(-4).toLowerCase() == '.pdf'
 
       switch
-        when BetterBibTeX.preferences.testing
+        when Translator.preferences.testing
           @Exporter.attachmentCounter += 1
           att.path = "files/#{@Exporter.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
-        when BetterBibTeX.options.exportPath && att.path.indexOf(BetterBibTeX.options.exportPath) == 0
-          att.path = att.path.slice(BetterBibTeX.options.exportPath.length)
+        when Translator.options.exportPath && att.path.indexOf(Translator.options.exportPath) == 0
+          att.path = att.path.slice(Translator.options.exportPath.length)
 
       attachments.push(att)
 
@@ -454,12 +454,12 @@ class Reference
       return a.path.localeCompare(b.path)
     )
 
-    return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if BetterBibTeX.preferences.attachmentsNoMetadata
+    return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.preferences.attachmentsNoMetadata
     return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
 
   isBibVarRE: /^[a-z][a-z0-9_]*$/i
   isBibVar: (value) ->
-    return BetterBibTeX.preferences.preserveBibTeXVariables && value && typeof value == 'string' && @isBibVarRE.test(value)
+    return Translator.preferences.preserveBibTeXVariables && value && typeof value == 'string' && @isBibVarRE.test(value)
   ###
   # Add a field to the reference field set
   #
@@ -490,7 +490,7 @@ class Reference
     if ! field.bibtex
       debug('add:', {
         field
-        preserve: BetterBibTeX.preferences.preserveBibTeXVariables
+        preserve: Translator.preferences.preserveBibTeXVariables
         match: @isBibVar(field.value)
       })
       if typeof field.value == 'number' || (field.preserveBibTeXVariables && @isBibVar(field.value))
@@ -533,14 +533,14 @@ class Reference
   postscript: (reference, item) ->
 
   complete: ->
-    if BetterBibTeX.preferences.DOIandURL != 'both'
+    if Translator.preferences.DOIandURL != 'both'
       if @has.doi && @has.url
-        debug('removing', BetterBibTeX.preferences.DOIandURL == 'doi' ? 'url' : 'doi')
-        switch BetterBibTeX.preferences.DOIandURL
+        debug('removing', Translator.preferences.DOIandURL == 'doi' ? 'url' : 'doi')
+        switch Translator.preferences.DOIandURL
           when 'doi' then @remove('url')
           when 'url' then @remove('doi')
 
-    if (@item.collections || []).length && BetterBibTeX.preferences.jabrefGroups == 4
+    if (@item.collections || []).length && Translator.preferences.jabrefGroups == 4
       groups = (@Exporter.collections[key].name for key in @item.collections when @Exporter.collections[key])
       groups = groups.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
       @add({ groups: groups.join(',') })
@@ -560,7 +560,7 @@ class Reference
       if value.format == 'csl'
         # CSL names are not in BibTeX format, so only add it if there's a mapping
         cslvar = @Exporter.CSLVariables[name]
-        mapped = cslvar[(if BetterBibTeX.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
+        mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
         mapped = mapped.call(@) if typeof mapped == 'function'
 
         if mapped
@@ -578,13 +578,13 @@ class Reference
           when 'lccn', 'pmcid'
             fields.push({ name: name, value: value.value, raw: value.raw })
           when 'pmid', 'arxiv', 'jstor', 'hdl'
-            if BetterBibTeX.BetterBibLaTeX
+            if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: name.toLowerCase() })
               fields.push({ name: 'eprint', value: value.value, raw: value.raw })
             else
               fields.push({ name, value: value.value, raw: value.raw })
           when 'googlebooksid'
-            if BetterBibTeX.BetterBibLaTeX
+            if Translator.BetterBibLaTeX
               fields.push({ name: 'eprinttype', value: 'googlebooks' })
               fields.push({ name: 'eprint', value: value.value, raw: value.raw })
             else
@@ -613,11 +613,11 @@ class Reference
 
     @postscript(@, @item)
 
-    for name in BetterBibTeX.preferences.skipFields
+    for name in Translator.preferences.skipFields
       @remove(name)
 
     # sort fields for stable tests
-    @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if BetterBibTeX.preferences.testing
+    @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.preferences.testing
 
     ref = "@#{@referencetype}{#{@item.citekey},\n"
     ref += ("  #{field.name} = #{field.bibtex}" for field in @fields).join(',\n')
@@ -628,25 +628,25 @@ class Reference
 
     @data.DeclarePrefChars = @Exporter.unique_chars(@data.DeclarePrefChars)
 
-    Zotero.BetterBibTeX.cacheStore(@item.itemID, BetterBibTeX.options, ref, @data)
+    Zotero.BetterBibTeX.cacheStore(@item.itemID, Translator.options, ref, @data)
 
     @Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
     debug('item.complete:', {data: @data, preamble: @Exporter.preamble})
     return
 
   toVerbatim: (text) ->
-    if BetterBibTeX.BetterBibTeX
+    if Translator.BetterBibTeX
       value = ('' + text).replace(/([#\\%&{}])/g, '\\$1')
     else
       value = ('' + text).replace(/([\\{}])/g, '\\$1')
-    # TODO: @Exporter.unicode -> BetterBibTeX.unicode ?
+    # TODO: @Exporter.unicode -> Translator.unicode ?
     value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not @Exporter.unicode
     return value
 
   hasCreator: (type) -> (@item.creators || []).some((creator) -> creator.creatorType == type)
 
   qualityReport: ->
-    return '' unless BetterBibTeX.preferences.qualityReport
+    return '' unless Translator.preferences.qualityReport
     fields = @requiredFields[@referencetype.toLowerCase()]
     return "% I don't know how to check #{@referencetype}" unless fields
 
@@ -660,7 +660,7 @@ class Reference
       report.push("% Proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
 
     if @referencetype == 'article' && @has.journal
-      report.push("% BibLaTeX uses journaltitle, not journal") if BetterBibTeX.BetterBibLaTeX
+      report.push("% BibLaTeX uses journaltitle, not journal") if Translator.BetterBibLaTeX
       report.push("% ? Abbreviated journal title #{@has.journal.value}") if @has.journal.value.indexOf('.') >= 0
 
     if @referencetype == 'article' && @has.journaltitle
@@ -670,7 +670,7 @@ class Reference
       if ! @has.booktitle.value.match(/:|Proceedings|Companion| '/) || @has.booktitle.value.match(/\.|workshop|conference|symposium/)
         report.push("% ? Unsure about the formatting of the booktitle")
 
-    if @has.title && !BetterBibTeX.preferences.suppressTitleCase
+    if @has.title && !Translator.preferences.suppressTitleCase
       titleCased = Zotero.BetterBibTeX.titleCase(@has.title.value) == @has.title.value
       if @has.title.value.match(/\s/)
         report.push("% ? Title looks like it was stored in title-case in Zotero") if titleCased
@@ -939,7 +939,7 @@ Language.fromPrefix = (langcode) ->
   return @prefix[langcode]
 
 Reference.installPostscript = ->
-  postscript = BetterBibTeX.preferences.postscript
+  postscript = Translator.preferences.postscript
   return unless typeof postscript == 'string' && postscript.trim() != ''
   try
     Reference::postscript = new Function(postscript)
