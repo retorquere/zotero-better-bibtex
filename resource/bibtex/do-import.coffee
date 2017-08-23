@@ -40,7 +40,7 @@ doImport = ->
   bib = parseReferences()
 
   try
-    Zotero.BetterBibTeX.debug('BetterBibTeX.doImport:' + JSON.stringify(bib))
+    Zotero.BetterBibTeX.debug('Translator.doImport:' + JSON.stringify(bib))
 
 #    for coll in bib.collections
 #      JabRef.collect(coll)
@@ -66,8 +66,8 @@ doImport = ->
 #
 #    if bib.errors && bib.errors.length > 0
 #      item = new Zotero.Item('journalArticle')
-#      item.title = "#{BetterBibTeX.header.label} import errors"
-#      item.extra = JSON.stringify({translator: BetterBibTeX.header.translatorID, notimported: bib.errors.join("\n\n")})
+#      item.title = "#{Translator.header.label} import errors"
+#      item.extra = JSON.stringify({translator: Translator.header.translatorID, notimported: bib.errors.join("\n\n")})
 #      item.complete()
 
   catch e
@@ -104,9 +104,9 @@ doImport = ->
 #     @biblatexdata = {}
 #     @item.notes.push({ note: ('The following fields were not imported:<br/>' + @bibtex.__note__).trim(), tags: ['#BBT Import'] }) if @bibtex.__note__
 #     @import()
-#     if BetterBibTeX.preferences.rawImports
+#     if Translator.preferences.rawImports
 #       @item.tags ?= []
-#       @item.tags.push(BetterBibTeX.preferences.rawLaTag)
+#       @item.tags.push(Translator.preferences.rawLaTag)
 #     @item.complete()
 #
 #   typeMap:
@@ -338,9 +338,9 @@ doImport = ->
 #
 #   keys = Object.keys(@biblatexdata)
 #   if keys.length > 0
-#     keys.sort() if BetterBibTeX.preferences.testing
+#     keys.sort() if Translator.preferences.testing
 #     biblatexdata = switch
-#       when @biblatexdatajson && BetterBibTeX.preferences.testing
+#       when @biblatexdatajson && Translator.preferences.testing
 #         'bibtex{' + (for k in keys
 #           o = {}
 #           o[k] = @biblatexdata[k]

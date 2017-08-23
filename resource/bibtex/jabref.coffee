@@ -7,12 +7,12 @@ class JabRef
 
   exportGroups: ->
     debug('exportGroups:', @collections)
-    return if Object.keys(@collections).length == 0 || !BetterBibTeX.preferences.jabrefGroups
+    return if Object.keys(@collections).length == 0 || !Translator.preferences.jabrefGroups
 
     switch
-      when BetterBibTeX.preferences.jabrefGroups == 3
+      when Translator.preferences.jabrefGroups == 3
         meta = 'groupsversion:3'
-      when BetterBibTeX.BetterBibLaTeX
+      when Translator.BetterBibLaTeX
         meta = 'databaseType:biblatex'
       else
         meta = 'databaseType:bibtex'
@@ -34,10 +34,10 @@ class JabRef
 
   exportGroup: (collection, level) ->
     collected = ["#{level} ExplicitGroup:#{collection.name}", '0']
-    debug('JabRef.exportGroup:', { groups: BetterBibTeX.preferences.jabrefGroups, items: collection.items, citekeys: @citekeys })
-    if BetterBibTeX.preferences.jabrefGroups == 3
+    debug('JabRef.exportGroup:', { groups: Translator.preferences.jabrefGroups, items: collection.items, citekeys: @citekeys })
+    if Translator.preferences.jabrefGroups == 3
       references = (@citekeys[id] for id in (collection.items || []) when @citekeys[id])
-      references.sort() if BetterBibTeX.preferences.testing
+      references.sort() if Translator.preferences.testing
       collected = collected.concat(references)
     # what is the meaning of the empty cell at the end, JabRef?
     collected = collected.concat([''])

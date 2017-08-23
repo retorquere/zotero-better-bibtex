@@ -10,7 +10,7 @@ Exporter::serialize = (csl) ->
 
 Exporter::flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
 
-BetterBibTeX.doExport = -> (new Exporter()).doExport()
+Translator.doExport = -> (new Exporter()).doExport()
 
 class HTML
   constructor: (html) ->

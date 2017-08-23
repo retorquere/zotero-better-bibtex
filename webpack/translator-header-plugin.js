@@ -13,7 +13,7 @@ var TranslatorHeaderPlugin = function (options) {
 const Header = `
 <%- JSON.stringify(header, null, 2) %>
 
-var BetterBibTeX = {
+var Translator = {
   initialize: function () {},
   version: <%- JSON.stringify(version) %>,
   <%- header.label.replace(/[^a-z]/ig, '') %>: true,
@@ -53,20 +53,20 @@ var BetterBibTeX = {
 
 <% if (header.translatorType & 2) { /* export */ %>
   function doExport() {
-    BetterBibTeX.getConfig()
-    BetterBibTeX.initialize()
-    BetterBibTeX.doExport()
+    Translator.getConfig()
+    Translator.initialize()
+    Translator.doExport()
   }
 <% } %>
 
 <% if (header.translatorType & 1) { /* import */ %>
   function detectImport() {
-    return BetterBibTeX.detectImport()
+    return Translator.detectImport()
   }
   function doImport() {
-    BetterBibTeX.getConfig()
-    BetterBibTeX.initialize()
-    BetterBibTeX.doImport()
+    Translator.getConfig()
+    Translator.initialize()
+    Translator.doImport()
   }
 <% } %>
 `.trim();
