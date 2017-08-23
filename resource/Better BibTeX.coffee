@@ -387,17 +387,14 @@ class ZoteroItem
     return (@collapse(n) for n in node).join('') if Array.isArray(node)
 
     if node.type == 'text'
-      marks = {}
-      for mark in node.marks || []
-        switch mark.type
-          when 'nocase', 'sup', 'sub'
-            marks[mark.type] = true
-            throw new Error(JSON.stringify(mark)) unless Object.keys(mark).length == 1
-
-          else
-            throw new Error(JSON.stringify(mark))
-
-      # marks = (node.marks || []).reduce(((acc, mark) -> acc[mark.type] = true; return acc), {})
+      # strong
+      # em
+      # smallcaps
+      # enquote
+      # sub
+      # sub
+      # nocase
+      marks = (node.marks || []).reduce(((acc, mark) -> acc[mark.type] = true; return acc), {})
 
       if marks.sup || marks.sub
         text = ''
