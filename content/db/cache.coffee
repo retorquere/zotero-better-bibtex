@@ -2,6 +2,9 @@ createFile = require('../create-file.coffee')
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
 events = require('../events.coffee')
+zotero_config = require('../zotero-config.coffee')
+
+version = require('../../gen/version.js')
 Translators = require('../../gen/translators.json')
 
 Prefs = require('../preferences.coffee')
@@ -73,6 +76,7 @@ DB = new Loki('cache', {
 })
 
 DB.loadDatabase()
+METADATA = 'Better BibTeX metadata'
 
 DB.remove = (ids) ->
   query = if Array.isArray(ids) then { itemID : { $in : ids } } else { itemID: ids }
@@ -81,7 +85,7 @@ DB.remove = (ids) ->
     coll.findAndRemove(query)
   return
 
-DB.schemaCollection('itemToExportFormat', {
+coll = DB.schemaCollection('itemToExportFormat', {
   indices: [ 'itemID', 'legacy', 'skipChildItems' ],
   schema: {
     type: 'object'
@@ -93,6 +97,13 @@ DB.schemaCollection('itemToExportFormat', {
     required: [ 'itemID', 'legacy', 'skipChildItems' ]
   }
 })
+if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zotero_config.Zotero.version
+  debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zotero_config.Zotero.version)
+  coll.removeDataOnly()
+coll.setTransform(METADATA, [{
+  type: METADATA,
+  value : { Zotero: zotero_config.Zotero.version }
+}])
 
 ###
   TODO: for this to work, an object must be updated when it is fetched
@@ -101,7 +112,7 @@ DB.schemaCollection('itemToExportFormat', {
 ttl =         1000  * 60  * 60  * 24 * 30
 ttlInterval = 1000  * 60  * 60  * 4
 for translator of Translators.byName
-  DB.schemaCollection(translator, {
+  coll = DB.schemaCollection(translator, {
     indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
     schema: {
       type: 'object'
@@ -117,6 +128,13 @@ for translator of Translators.byName
     ttl
     ttlInterval
   })
+  if (coll.getTransform(METADATA)?[0].value || {}).BetterBibTeX != version
+    debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
+    coll.removeDataOnly()
+  coll.setTransform(METADATA, [{
+    type: METADATA,
+    value : { BetterBibTeX: version }
+  }])
 
 # the preferences influence the output way too much, no keeping track of that
 events.on('preference-changed', ->

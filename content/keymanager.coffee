@@ -235,7 +235,16 @@ class KeyManager
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
-  get: (itemID) -> @keys.findOne({ itemID })
+  get: (itemID) ->
+    if !@keys
+      Zotero.logError(new Error("KeyManager.get called for #{itemID} before init"))
+      return { citekey: '', pinned: false }
+
+    return key if key = @keys.findOne({ itemID })
+
+    Zotero.logError(new Error("KeyManager.get called for non-existent #{itemID}"))
+    return { citekey: '', pinned: false }
+
 
   ### TODO: remove after release ###
   cleanupDynamic: co(->

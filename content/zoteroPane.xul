@@ -29,6 +29,16 @@
     <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
   </menupopup>
 
+  <treecols id="zotero-items-columns-header">
+    <treecol
+      id="zotero-items-column-citekey" primary="true"
+      label="Citekey"
+      flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"
+      insertafter="zotero-items-column-title"
+    />
+  </treecols>
+
+
   <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
   <script>
