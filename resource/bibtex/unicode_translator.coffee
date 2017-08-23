@@ -25,7 +25,7 @@ class HTML
     # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
 
     @latex = ''
-    @mapping = (if BetterBibTeX.unicode then Mapping.unicode else Mapping.ascii)
+    @mapping = (if Translator.unicode then Mapping.unicode else Mapping.ascii)
 
     @stack = []
 
@@ -82,7 +82,7 @@ class HTML
         latex = "\n\\item ..."
 
       when 'enquote'
-        if BetterBibTeX.BetterBibTeX
+        if Translator.BetterBibTeX
           latex = '\\enquote{...}'
         else
           latex = '\\mkbibquote{...}'
@@ -117,7 +117,7 @@ class HTML
     ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
     ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
     ### https://github.com/plk/biblatex/issues/459 ... oy! ###
-    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || BetterBibTeX.BetterBibTeX)
+    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
     return latex unless @embraced && condition
     return '{' + latex + '}'
 

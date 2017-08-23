@@ -39,7 +39,7 @@
     "archiver": "^2.0.0",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.0",
-    "circular-dependency-plugin": "^3.0.0",
+    "circular-dependency-plugin": "^4.1.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",

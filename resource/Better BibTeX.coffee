@@ -112,14 +112,14 @@ Reference::typeMap =
     thesis          : 'phdthesis'
     webpage         : 'misc'
 
-BetterBibTeX.initialize = ->
+Translator.initialize = ->
   Reference.installPostscript()
-  BetterBibTeX.unicode = !BetterBibTeX.preferences.asciiBibTeX
+  Translator.unicode = !Translator.preferences.asciiBibTeX
   return
 
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-BetterBibTeX.doExport = ->
+Translator.doExport = ->
   Exporter = new Exporter()
 
   Zotero.write('\n')
@@ -147,7 +147,7 @@ BetterBibTeX.doExport = ->
     ref.add({ number: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
     ref.add({ urldate: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    switch BetterBibTeX.preferences.bibtexURL
+    switch Translator.preferences.bibtexURL
       when 'url'
         ref.add({ name: 'url', value: item.url })
       when 'note'
@@ -161,7 +161,7 @@ BetterBibTeX.doExport = ->
       when ref.isBibVar(item.publicationTitle)
         ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
       else
-        ref.add({ name: 'journal', value: (BetterBibTeX.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
+        ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.__type__
       when 'thesis' then ref.add({ school: item.publisher })
@@ -194,7 +194,7 @@ BetterBibTeX.doExport = ->
       pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') unless ref.raw
       ref.add({ pages })
 
-    if item.notes and BetterBibTeX.options.exportNotes
+    if item.notes and Translator.options.exportNotes
       for note in item.notes
         ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
 
@@ -223,14 +223,14 @@ importReferences = (input) ->
     warnings: parser.warnings
   }
 
-BetterBibTeX.detectImport = ->
+Translator.detectImport = ->
   input = Zotero.read(102400)
   bib = importReferences(input)
   found = Object.keys(bib.references).length > 0
   debug("better-bibtex: detect: #{found}")
   return found
 
-BetterBibTeX.doImport = ->
+Translator.doImport = ->
   input = ''
   while (read = Zotero.read(0x100000)) != false
     input += read
@@ -269,8 +269,8 @@ BetterBibTeX.doImport = ->
 #
 #    if bib.errors && bib.errors.length > 0
 #      item = new Zotero.Item('journalArticle')
-#      item.title = "#{BetterBibTeX.header.label} import errors"
-#      item.extra = JSON.stringify({translator: BetterBibTeX.header.translatorID, notimported: bib.errors.join("\n\n")})
+#      item.title = "#{Translator.header.label} import errors"
+#      item.extra = JSON.stringify({translator: Translator.header.translatorID, notimported: bib.errors.join("\n\n")})
 #      item.complete()
 
 #JabRef = JabRef ? {}
@@ -304,9 +304,9 @@ class ZoteroItem
     @biblatexdata = {}
 #    @item.notes.push({ note: ('The following fields were not imported:<br/>' + @bibtex.__note__).trim(), tags: ['#BBT Import'] }) if @bibtex.__note__
     @import()
-#    if BetterBibTeX.preferences.rawImports
+#    if Translator.preferences.rawImports
 #      @item.tags ?= []
-#      @item.tags.push(BetterBibTeX.preferences.rawLaTag)
+#      @item.tags.push(Translator.preferences.rawLaTag)
     debug('saving')
     @item.complete()
 
@@ -427,9 +427,9 @@ class ZoteroItem
 
     keys = Object.keys(@biblatexdata)
     if keys.length > 0
-      keys.sort() if BetterBibTeX.preferences.testing
+      keys.sort() if Translator.preferences.testing
       biblatexdata = switch
-        when @biblatexdatajson && BetterBibTeX.preferences.testing
+        when @biblatexdatajson && Translator.preferences.testing
           'bibtex{' + (for k in keys
             o = {}
             o[k] = @biblatexdata[k]

@@ -1,5 +1,5 @@
 try {
-  if (this.item.itemType === 'webpage' && BetterBibTeX.BetterBibTeX) {
+  if (this.item.itemType === 'webpage' && Translator.BetterBibTeX) {
     if (this.has.urldate) {
       this.add({ name: 'note', value: "(accessed " + this.has.urldate.value + ")" });
     }

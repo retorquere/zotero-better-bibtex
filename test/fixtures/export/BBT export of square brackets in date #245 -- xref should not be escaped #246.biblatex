@@ -7,7 +7,6 @@
   journaltitle = {Journal of the Royal Anthropological Institute},
   keywords = {måske},
   langid = {english},
-  origdate = {2014},
   pages = {129--147},
   rights = {© Royal Anthropological Institute 2014},
   shortjournal = {J R Anthropol Inst},
@@ -17,19 +16,20 @@
   url = {http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract},
   urldate = {2014-12-27},
   volume = {20},
-  xref = {welker_andreas_1999}
+  xref = {welker_andreas_1999},
+  year = {[2014]}
 }
 
 @article{pollard_bicycle_2007,
   author = {Pollard, A. Mark and Bray, Peter},
   journaltitle = {Annu. Rev. Anthropol.},
-  origdate = {2007},
   pages = {245--59},
   shortjournal = {Annu Rev Anthr.},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {A Bicycle Made for Two? {{The}} Integration of Scientific Techniques into Archaeological Interpretation},
   url = {http://www.annualreviews.org/doi/pdf/10.1146/annurev.anthro.36.081406.094354},
-  volume = {36}
+  volume = {36},
+  year = {[2007]}
 }
 
 @jurisdiction{kartinyeri,

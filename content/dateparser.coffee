@@ -118,7 +118,9 @@ parse = (raw) ->
 #    return { type: 'date', year: parseInt(m[1]), approximate: m[2].indexOf('~') >=0, uncertain: m[2].indexOf('?') >= 0 }
 
   if m = /^\[(-?[0-9]+)\]$/.exec(trimmed)
-    return { type: 'date', orig: { type: 'date', year: parseInt(m[1]) } }
+    # 704
+    # return { type: 'date', orig: { type: 'date', year: parseInt(m[1]) } }
+    return { type: 'verbatim', verbatim: raw }
 
   if m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(trimmed)
     return {

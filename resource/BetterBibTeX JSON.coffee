@@ -41,7 +41,7 @@ scrub = (item) ->
   return item
 ###
 
-BetterBibTeX.detectImport = ->
+Translator.detectImport = ->
   debug('BetterBibTeX JSON.detect: start')
   json = ''
   while (str = Zotero.read(0x100000)) != false
@@ -51,11 +51,11 @@ BetterBibTeX.detectImport = ->
   # a failure to parse will throw an error which a) is actually logged, and b) will count as "false"
   data = JSON.parse(json)
 
-  throw "ID mismatch: got #{data.config?.id}, expected #{BetterBibTeX.header.translatorID}" unless data.config?.id == BetterBibTeX.header.translatorID
+  throw "ID mismatch: got #{data.config?.id}, expected #{Translator.header.translatorID}" unless data.config?.id == Translator.header.translatorID
   throw 'No items' unless data.items?.length
   return true
 
-BetterBibTeX.doImport = ->
+Translator.doImport = ->
   json = ''
   while (str = Zotero.read(0x100000)) != false
     json += str
@@ -87,21 +87,21 @@ BetterBibTeX.doImport = ->
 
   return
 
-BetterBibTeX.doExport = ->
+Translator.doExport = ->
   data = {
     config: {
-      id: BetterBibTeX.header.translatorID
-      label: BetterBibTeX.header.label
+      id: Translator.header.translatorID
+      label: Translator.header.label
       release: Zotero.BetterBibTeX.version()
-      preferences: BetterBibTeX.preferences
-      options: BetterBibTeX.options
+      preferences: Translator.preferences
+      options: Translator.options
     }
     collections: []
     items: []
   }
 
   ### just export whatever Zotero gives us and worry about cleanup on import ###
-  if BetterBibTeX.header.configOptions?.getCollections && Zotero.nextCollection
+  if Translator.header.configOptions?.getCollections && Zotero.nextCollection
     while collection = Zotero.nextCollection()
       data.collections.push(collection)
 
