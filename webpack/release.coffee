@@ -101,7 +101,7 @@ do Bluebird.coroutine(->
         yield github({
           uri: "/issues/#{issue}/comments"
           method: 'POST'
-          body: { body: "Bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
+          body: { body: ":pager: bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
         })
 
   return
