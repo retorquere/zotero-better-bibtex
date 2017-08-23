@@ -236,6 +236,11 @@ BetterBibTeX.doImport = ->
     input += read
   bib = importReferences(input)
 
+  if bib.errors.length
+    item = new Zotero.Item('note')
+    item.note = bib.errors.join("\n\n")
+    item.complete()
+
   for id, ref of bib.references
     new ZoteroItem(id, ref)
 
