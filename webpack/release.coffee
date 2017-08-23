@@ -87,7 +87,9 @@ do Bluebird.coroutine(->
     })
 
     branch = process.env.CIRCLE_BRANCH
-    if branch.match(/^[0-9]+$/)
+    if process.env.NIGHTLY == 'true'
+      issue = null
+    else if branch.match(/^[0-9]+$/)
       issue = branch
     else if branch == 'master' # TODO: remove after release
       issue = '555'
