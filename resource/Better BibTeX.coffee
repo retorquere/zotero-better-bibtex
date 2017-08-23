@@ -330,6 +330,10 @@ class ZoteroItem
     conference:     'conferencePaper'
     techreport:     'report'
 
+  sup: {
+    2: '\u00B2'
+  }
+
   collapse: (node) ->
     return null unless node?
 
@@ -338,9 +342,27 @@ class ZoteroItem
     return (@collapse(n) for n in node).join('') if Array.isArray(node)
 
     if node.type == 'text'
-      text = node.text
-      # for mark in node.marks || []
-      #   text = '<span class="nocase">' + text + '</span>' if mark.type == 'nocase'
+      marks = {}
+      for mark in node.marks || []
+        switch mark.type
+          when 'nocase', 'sup'
+            marks[mark.type] = true
+            throw new Error(JSON.stringify(mark)) unless Object.keys(mark).length == 1
+
+          else
+            throw new Error(JSON.stringify(mark))
+
+      # marks = (node.marks || []).reduce(((acc, mark) -> acc[mark.type] = true; return acc), {})
+
+      if marks.sup
+        text = ''
+        for c in Zotero.Utilities.XRegExp.split(node.text, '')
+          text += @sup[c] || c
+      else
+        text = node.text
+
+      # text = '<span class="nocase">' + text + '</span>' if marks.nocase
+
       return text
 
     return node.attrs.variable if node.type == 'variable'
