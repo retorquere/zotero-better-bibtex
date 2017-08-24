@@ -205,7 +205,7 @@ class KeyManager
     while true
       postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else @postfixAlpha(postfix))
       if !@keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
-        debug("KeyManager.propose: found <#{postfixed}>")
+        debug("KeyManager.propose: found <#{postfixed}> for #{item.id}")
         return { citekey: postfixed, pinned: false }
       postfix += 1
 
@@ -232,6 +232,7 @@ class KeyManager
 
    remove: (ids) ->
      ids = [ids] unless Array.isArray(ids)
+     debug('KeyManager.remove:', ids)
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
