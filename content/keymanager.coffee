@@ -50,6 +50,7 @@ class KeyManager
     debug('KeyManager.init...')
 
     @keys = DB.getCollection('citekey')
+    debug('KeyManager.init:', { keys: @keys })
 
     @query = {
       field: {}
@@ -105,7 +106,11 @@ class KeyManager
 
     flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
 
-    @keys.removeDataOnly() if clean
+    if clean
+      @keys.removeDataOnly()
+#    else
+#      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
+    debug('KeyManager.rescan:', {clean, keys: @keys})
 
     items = yield Zotero.DB.queryAsync("""
       SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
@@ -118,13 +123,24 @@ class KeyManager
     for item in items
       # if no citekey is found, it will be '', which will allow it to be found right after this loop
       citekey = Citekey.get(item.extra)
-      @keys.findAndRemove({ itemID: item.itemID }) if !clean && citekey.pinned
-      @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID })) if clean || !@keys.findOne({ itemID: item.itemID })
+      debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
+
+      if !clean && saved = @keys.findOne({ itemID: item.itemID })
+        if citekey.pinned && (citekey.citekey != saved.citekey || !saved.pinned)
+          debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
+          Object.assign(saved, { citekey: citekey.citekey, pinned: true })
+          @keys.update(saved)
+        else
+          debug('KeyManager.rescan: keeping', saved)
+      else
+        debug('KeyManager.rescan: clearing citekey for', item.itemID)
+        @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
 
     # find all references without citekey
     @scanning = @keys.find({ citekey: '' })
 
     if @scanning.length != 0
+      debug("Found #{@scanning.length} references without a citation key")
       progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription("Found #{@scanning.length} references without a citation key")
@@ -238,14 +254,17 @@ class KeyManager
 
   get: (itemID) ->
     if !@keys
-      Zotero.logError(new Error("KeyManager.get called for #{itemID} before init"))
+      err = new Error("KeyManager.get called for #{itemID} before init")
+      # throw err unless softFail
+      Zotero.logError(err)
       return { citekey: '', pinned: false }
 
     return key if key = @keys.findOne({ itemID })
 
-    Zotero.logError(new Error("KeyManager.get called for non-existent #{itemID}"))
+    err = new Error("KeyManager.get called for non-existent #{itemID}")
+    # throw err unless softFail
+    Zotero.logError(err)
     return { citekey: '', pinned: false }
-
 
   ### TODO: remove after release ###
   cleanupDynamic: co(->
