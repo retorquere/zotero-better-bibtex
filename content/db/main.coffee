@@ -61,6 +61,7 @@ class DBStore
           db = null
           collections = {}
           for row in yield conn.queryAsync("SELECT name, data FROM \"#{dbname}\"")
+            debug('DBStore.loadDatabase:', dbname, '.', row.name)
             if row.name == dbname
               db = JSON.parse(row.data)
             else
@@ -74,6 +75,7 @@ class DBStore
           return callback(db)
         )
       catch err
+        debug('DBStore.loadDatabase: error loading', dbname, err)
         return callback(err)
     )
     return

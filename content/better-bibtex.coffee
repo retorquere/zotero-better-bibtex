@@ -30,23 +30,29 @@ JournalAbbrev = require('./journal-abbrev.coffee')
 # otherwise the display of the citekey in the item pane flames out
 Zotero.ItemFields.isFieldOfBase = ((original) ->
   return (field, baseField) ->
-    return false if field == 'citekey'
+    return false if field in ['citekey', 'itemID']
     return original.apply(@, arguments)
 )(Zotero.ItemFields.isFieldOfBase)
 # because the zotero item editor does not check whether a textbox is read-only. *sigh*
 Zotero.Item::setField = ((original) ->
   return (field, value, loadIn) ->
-    return original.apply(@, arguments) unless field == 'citekey'
+    return original.apply(@, arguments) unless field in ['citekey', 'itemID']
     return false
 )(Zotero.Item::setField)
 
 # To show the citekey in the reference list
 Zotero.Item::getField = ((original) ->
   return (field, unformatted, includeBaseMapped) ->
-    return original.apply(@, arguments) unless field == 'citekey'
+    return original.apply(@, arguments) unless field in ['citekey', 'itemID']
 
-    citekey = KeyManager.get(@id)
-    return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+    switch field
+      when 'citekey'
+        citekey = KeyManager.get(@id)
+        return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+      when 'itemID'
+        return '' + @id
+      else
+        return field
 )(Zotero.Item::getField)
 
 
