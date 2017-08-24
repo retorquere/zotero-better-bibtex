@@ -34,30 +34,30 @@
   </script>
 
   <wizardpage label=" ">
-    <description style="white-space: pre-wrap;" class="header">&zotero.better-bibtex.errorReport.review;</description>
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.error-report.review;</description>
     <tabbox flex="1">
       <tabs>
-        <tab label="&zotero.errorReport.context;"/>
-        <tab label="&zotero.errorReport.errors;"/>
-        <tab label="&zotero.errorReport.log;"/>
-        <tab label="&zotero.errorReport.references;" id="better-bibtex-error-tab-references"/>
+        <tab label="&better-bibtex.error-report.context;"/>
+        <tab label="&better-bibtex.error-report.errors;"/>
+        <tab label="&better-bibtex.error-report.log;"/>
+        <tab label="&better-bibtex.error-report.references;" id="better-bibtex-error-tab-references"/>
       </tabs>
 
       <tabpanels>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-context" label="&zotero.errorReport.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-context" label="&better-bibtex.error-report.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-context" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-errors" label="&zotero.errorReport.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-errors" label="&better-bibtex.error-report.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-log" label="&zotero.errorReport.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-log" label="&better-bibtex.error-report.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-log" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-references" label="&zotero.errorReport.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-references" label="&better-bibtex.error-report.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
       </tabpanels>
@@ -75,10 +75,10 @@
     <description>&zotero.errorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>
-        &zotero.better-bibtex.errorReport.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain" readonly="true"/>
+        &better-bibtex.error-report.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain" readonly="true"/>
       </description>
     </description>
-    <description>&zotero.better-bibtex.errorReport.postToGitHub;</description>
-    <description>&zotero.better-bibtex.errorReport.notReviewed;</description>
+    <description>&better-bibtex.error-report.postToGitHub;</description>
+    <description>&better-bibtex.error-report.notReviewed;</description>
   </wizardpage>
 </wizard>

@@ -5,7 +5,7 @@
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <vbox id="zotero-item-pane"><!-- anywhere, just needs to be present in the XML -->
     <row id="zotero-better-bibtex-itempane-citekey-template" hidden="true">
-      <label value="&zotero.better-bibtex.citekey_column;:"/>
+      <label value="&better-bibtex.itemPane.citekey_column;:"/>
       <!-- label class="better-bibtex-citekey-display" style="-moz-user-select: text; -moz-user-focus: normal;"/ -->
       <textbox fieldname="citekey" class="better-bibtex-citekey-display plain" readonly="true"/>
     </row>
