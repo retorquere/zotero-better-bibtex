@@ -280,9 +280,6 @@ do Zotero.Promise.coroutine(->
   progressWin.changeHeadline('BetterBibTeX: Ready for business')
   progressWin.startCloseTimer(5000)
 
-  # TODO: remove before release
-  yield KeyManager.cleanupDynamic()
-
   # should be safe to start tests at this point. I hate async.
 
   ready.resolve(true)
