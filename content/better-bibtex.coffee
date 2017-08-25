@@ -260,6 +260,7 @@ do Zotero.Promise.coroutine(->
   # oh FFS -- datadir is async now
   yield Zotero.uiReadyPromise
   CACHE.init()
+  bench('Zotero.uiReadyPromise')
 
   # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
   yield Zotero.Schema.schemaUpdatePromise
