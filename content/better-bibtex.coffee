@@ -257,6 +257,10 @@ do Zotero.Promise.coroutine(->
   progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
   progressWin.show()
 
+  # oh FFS -- datadir is async now
+  yield Zotero.uiReadyPromise
+  CACHE.init()
+
   # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
   yield Zotero.Schema.schemaUpdatePromise
   bench('Zotero.Schema.schemaUpdatePromise')

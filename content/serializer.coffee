@@ -9,7 +9,7 @@ debug('Serializer loading...', Object.keys(Formatter))
 KeyManager = require('./keymanager.coffee')
 
 class Serializer
-  cache: CACHE.getCollection('itemToExportFormat')
+  collection: 'itemToExportFormat'
 
 #  # prune cache on old accessed
 #  prune: Zotero.Promise.coroutine(->
@@ -147,13 +147,15 @@ class Serializer
     return serialized
 
   store: (item, serialized, legacy, skipChildItems) ->
-    @cache ||= DB.getCollection(@collection)
-    throw new Error("DB not loaded") unless @cache
 
     # come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
     serialized.key = item.key
-    @cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
+
+    if @cache ||= CACHE.getCollection(@collection)
+      @cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
+    else
+      debug('cache store ignored, DB not yet loaded')
 
     serialized.journalAbbreviation = abbrevs.get(serialized)
     serialized.citekey = KeyManager.get(item.id).citekey
