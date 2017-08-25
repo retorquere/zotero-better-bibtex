@@ -16,7 +16,7 @@ module.exports = (prefix, msg) ->
       when m instanceof String || typeof m == 'string'
         # pass
       else
-        m = stringify(m, null, 2)
+        m = stringify(m) # , null, 2)
 
     str += m + ' ' if m
 
