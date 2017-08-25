@@ -93,6 +93,7 @@ class PrefPane
     Prefs.set('autoAbbrevStyle', styleID)
     return
 
+  # TODO: allow clean-scan?
   rescanCitekeys: Zotero.Promise.coroutine(->
     debug('starting manual key rescan')
     yield KeyManager.rescan()
