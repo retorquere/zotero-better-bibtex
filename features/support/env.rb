@@ -148,6 +148,8 @@ TRANSLATORS = {}
 def normalizeJSON(lib)
   lib.delete('collections')
   lib.delete('config')
+  lib.delete('keymanager')
+  lib.delete('cache')
   lib['items'].each{|item|
     item.delete('itemID')
     item.delete('dateAdded')

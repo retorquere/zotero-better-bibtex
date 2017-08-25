@@ -65,6 +65,7 @@
   },
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
+    "import": "cucumber --fail-fast --tags @import",
     "lint": "coffeelint content resource minitests webpack",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",

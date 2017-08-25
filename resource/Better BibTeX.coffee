@@ -2,7 +2,8 @@ Reference = require('./bibtex/reference.coffee')
 Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 JSON5 = require('json5')
-BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
 
 Reference::caseConversion = {
   title: true,
@@ -329,6 +330,7 @@ class ZoteroItem
     inproceedings:  'conferencePaper'
     conference:     'conferencePaper'
     techreport:     'report'
+    report:         'report'
 
   sup: {
     0: '\u2070'
@@ -578,6 +580,14 @@ class ZoteroItem
 
   "$date-modified": -> true
 
+  $number = (value) ->
+    switch @type
+      when 'report'                         then @item.reportNumber = value
+      when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
+      when 'patent'                         then @item.patentNumber = value
+      else                                       @item.issue = value
+    return true
+
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = ZoteroItem::['$added-at'] = ZoteroItem::$timestamp = () -> true
 #
 #ZoteroItem::$type = (value) ->
@@ -629,13 +639,6 @@ class ZoteroItem
 #  @item.publicationTitle = value
 #  return true
 #
-#ZoteroItem::$number = (value) ->
-#  switch @item.__type__
-#    when 'report'                         then @item.reportNumber = value
-#    when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
-#    when 'patent'                         then @item.patentNumber = value
-#    else                             @item.issue = value
-#  return true
 #
 #
 #ZoteroItem::$url = ZoteroItem::$howpublished = (value) ->
