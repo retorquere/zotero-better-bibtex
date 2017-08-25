@@ -57,16 +57,26 @@ class FileStore
 
   loadDatabase: (name, callback) ->
     debug('FileStore.loadDatabase: loading', name)
+
     try
       db = @load(name)
+    catch err
+      if err.name == 'NoSuchFile'
+        debug('LokiJS.FileStore.loadDatabase: new database')
+      else
+        Zotero.logError(err)
+      return callback(null)
+
+    try
       collections = []
       for coll in db.collections
         try
           collections.push(@load("#{name}.#{coll}"))
+        catch err
+          debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
       db.collections = collections
     catch err
       debug('LokiJS.FileStore.loadDatabase: load failed', err)
-      db = null
 
     return callback(db)
 

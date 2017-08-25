@@ -54,7 +54,25 @@ Zotero.Item::getField = ((original) ->
       else
         return field
 )(Zotero.Item::getField)
+Zotero.ItemTreeView::getCellText = ((original) ->
+  return (row, column) ->
+    return original.apply(@, arguments) unless column.id in ['zotero-items-column-citekey']
 
+    obj = this.getRow(row)
+    itemID = obj.id
+    citekey = KeyManager.get(itemID)
+
+    if !citekey.citekey
+      debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
+      Zotero.BetterBibTeX.ready.then(=>
+        debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
+
+        @_treebox.invalidateCell(row, column)
+        return
+      )
+
+    return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+)(Zotero.ItemTreeView::getCellText)
 
 ### bugger this, I don't want megabytes of shared code in the translators ###
 parseDate = require('./dateparser.coffee')
@@ -73,7 +91,7 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
-  version: (sandbox) -> return { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
+  version: (sandbox) -> { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
 
   cacheFetch: (sandbox, itemID, options) ->
     collection = CACHE.getCollection(sandbox.translator[0].label)
@@ -267,9 +285,6 @@ do Zotero.Promise.coroutine(->
 
   progressWin.changeHeadline('BetterBibTeX: Ready for business')
   progressWin.startCloseTimer(500)
-
-  # TODO: remove before release
-  yield KeyManager.cleanupDynamic()
 
   # should be safe to start tests at this point. I hate async.
 
