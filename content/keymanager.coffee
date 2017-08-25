@@ -216,12 +216,12 @@ class KeyManager
         if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
           if !(other = @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })) # noone else is using it
             return citekey
-          else
-            debug('KeyManager.propose: no, because', other, 'is using it')
-        else
-          debug('KeyManager.propose: no, because', citekey.citekey.slice(proposed.citekey.length), 'does not match', '' + re)
-      else
-        debug('KeyManager.propose: no, because', citekey.citekey, 'does not start with', citekey.citekey)
+#          else
+#            debug('KeyManager.propose: no, because', other, 'is using it')
+#        else
+#          debug('KeyManager.propose: no, because', citekey.citekey.slice(proposed.citekey.length), 'does not match', '' + re)
+#      else
+#        debug('KeyManager.propose: no, because', citekey.citekey, 'does not start with', citekey.citekey)
 
     debug("KeyManager.propose: testing whether #{item.id} can use proposed #{proposed.citekey}")
     # unpostfixed citekey is available
