@@ -138,9 +138,9 @@ class KeyManager
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
         @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
 
-    debug('KeyManager.rescan: found', @keys.data().length)
+    debug('KeyManager.rescan: found', @keys.data.length)
     @keys.findAndRemove({ itemID: { $nin: ids } })
-    debug('KeyManager.rescan: purged', @keys.data().length)
+    debug('KeyManager.rescan: purged', @keys.data.length)
 
     # find all references without citekey
     @scanning = @keys.find({ citekey: '' })
@@ -172,7 +172,7 @@ class KeyManager
 
       progress.setProgress(100)
       progress.setText('Ready')
-      progressWin.startCloseTimer(5000)
+      progressWin.startCloseTimer(500)
 
     @scanning = false
 

@@ -266,7 +266,7 @@ do Zotero.Promise.coroutine(->
   bench('Translators.init()')
 
   progressWin.changeHeadline('BetterBibTeX: Ready for business')
-  progressWin.startCloseTimer(5000)
+  progressWin.startCloseTimer(500)
 
   # TODO: remove before release
   yield KeyManager.cleanupDynamic()
