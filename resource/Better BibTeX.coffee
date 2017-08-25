@@ -416,8 +416,9 @@ class ZoteroItem
     @hackyFields = []
 
     for own field, value of Object.assign({}, @bibtex.unknown_fields, @bibtex.fields)
+      field = 'file' if field.match(/^local-zo-url-[0-9]+$/)
       continue if @["$#{field}"]?(value, field)
-      @addToExtraData(field, value)
+      @addToExtraData(field, @collapse(value))
 
     if @type in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
       @item.proceedingsTitle = @item.publicationTitle
@@ -571,6 +572,11 @@ class ZoteroItem
       @item.date = value
     return true
 
+  $file: (value) ->
+    @item.attachments.push(value)
+    return true
+
+  "$date-modified": -> true
 
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = ZoteroItem::['$added-at'] = ZoteroItem::$timestamp = () -> true
 #
@@ -644,11 +650,6 @@ class ZoteroItem
 #
 #ZoteroItem::$annotation = ZoteroItem::$comment = ZoteroItem::$annote = ZoteroItem::$review = ZoteroItem::$notes = (value) ->
 #  @item.notes.push({note: Zotero.Utilities.text2html(value)})
-#  return true
-#
-#ZoteroItem::$file = (value) ->
-#  for att in value
-#    @item.attachments.push(att)
 #  return true
 #
 #ZoteroItem::$eprint = ZoteroItem::$eprinttype = (value, field) ->
