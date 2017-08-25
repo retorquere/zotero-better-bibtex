@@ -62,7 +62,7 @@ Zotero.ItemTreeView::getCellText = ((original) ->
     itemID = obj.id
     citekey = KeyManager.get(itemID)
 
-    if !citekey.citekey
+    if citekey.retry
       debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
       Zotero.BetterBibTeX.ready.then(=>
         debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)

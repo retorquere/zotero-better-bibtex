@@ -264,7 +264,7 @@ class KeyManager
       err = new Error("KeyManager.get called for #{itemID} before init")
       # throw err unless softFail
       Zotero.logError(err)
-      return { citekey: '', pinned: false }
+      return { citekey: '', pinned: false, retry: true }
 
     return key if key = @keys.findOne({ itemID })
 
