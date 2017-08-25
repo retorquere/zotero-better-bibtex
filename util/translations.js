@@ -21,6 +21,33 @@ walk('locale', '.dtd').forEach(function(xul) {
     strings[entity] = string;
   })
 })
+po = `
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\\n"
+"Project-Id-Version: BBT\\n"
+"POT-Creation-Date: \\n"
+"PO-Revision-Date: \\n"
+"Last-Translator: \\n"
+"Language-Team: BBT\\n"
+"MIME-Version: 1.0\\n"
+"Content-Type: text/plain; charset=UTF-8\\n"
+"Content-Transfer-Encoding: 8bit\\n"
+"Language: en\\n"
+`.trim()
+
+for (let entity in strings) {
+  let string = strings[entity];
+  po += "\n\n" + `
+
+msgctxt ${JSON.stringify(entity)}
+msgid ${JSON.stringify(strings[entity])}
+msgstr ${JSON.stringify(strings[entity])}
+
+`.trim() + "\n";
+}
+fs.writeFileSync('bbt.po', po);
+
 // console.log(JSON.stringify(strings, null, 2))
 
 used = {}
