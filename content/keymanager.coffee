@@ -208,13 +208,14 @@ class KeyManager
     proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
-    debug("KeyManager.propose: testing whether #{item.id} can keep #{citekey.citekey}")
-    # item already has proposed citekey
-    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
-      re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
-      if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
-        if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
-          return citekey
+    if citekey = @keys.findOne({ itemID: item.id })
+      # item already has proposed citekey ?
+      debug("KeyManager.propose: testing whether #{item.id} can keep #{citekey.citekey}")
+      if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
+        re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
+        if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
+          if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }) # noone else is using it
+            return citekey
 
     debug("KeyManager.propose: testing whether #{item.id} can use proposed #{proposed.citekey}")
     # unpostfixed citekey is available
