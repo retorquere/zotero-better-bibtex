@@ -248,7 +248,6 @@ module BBT
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
-  plugins += Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../mozrepl*.xpi'))]
   plugins.each{|plugin|
     STDOUT.puts "Installing #{plugin}"
     profile.add_extension(plugin)
@@ -265,7 +264,9 @@ module BBT
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
 
-  profile['extensions.mozrepl.autoStart'] = true
+  profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
+  # speed up startup
+  profile['extensions.zotero.automaticScraperUpdates'] = false
 
   profile['devtools.source-map.locations.enabled'] = true
   

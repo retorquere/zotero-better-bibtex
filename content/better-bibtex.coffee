@@ -30,25 +30,49 @@ JournalAbbrev = require('./journal-abbrev.coffee')
 # otherwise the display of the citekey in the item pane flames out
 Zotero.ItemFields.isFieldOfBase = ((original) ->
   return (field, baseField) ->
-    return false if field == 'citekey'
+    return false if field in ['citekey', 'itemID']
     return original.apply(@, arguments)
 )(Zotero.ItemFields.isFieldOfBase)
 # because the zotero item editor does not check whether a textbox is read-only. *sigh*
 Zotero.Item::setField = ((original) ->
   return (field, value, loadIn) ->
-    return original.apply(@, arguments) unless field == 'citekey'
+    return original.apply(@, arguments) unless field in ['citekey', 'itemID']
     return false
 )(Zotero.Item::setField)
 
 # To show the citekey in the reference list
 Zotero.Item::getField = ((original) ->
   return (field, unformatted, includeBaseMapped) ->
-    return original.apply(@, arguments) unless field == 'citekey'
+    return original.apply(@, arguments) unless field in ['citekey', 'itemID']
 
-    citekey = KeyManager.get(@id)
-    return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+    switch field
+      when 'citekey'
+        citekey = KeyManager.get(@id)
+        return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+      when 'itemID'
+        return '' + @id
+      else
+        return field
 )(Zotero.Item::getField)
+Zotero.ItemTreeView::getCellText = ((original) ->
+  return (row, column) ->
+    return original.apply(@, arguments) unless column.id in ['zotero-items-column-citekey']
 
+    obj = this.getRow(row)
+    itemID = obj.id
+    citekey = KeyManager.get(itemID)
+
+    if citekey.retry
+      debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
+      Zotero.BetterBibTeX.ready.then(=>
+        debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
+
+        @_treebox.invalidateCell(row, column)
+        return
+      )
+
+    return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
+)(Zotero.ItemTreeView::getCellText)
 
 ### bugger this, I don't want megabytes of shared code in the translators ###
 parseDate = require('./dateparser.coffee')
@@ -67,7 +91,7 @@ Zotero.Translate.Export::Sandbox.BetterBibTeX = {
   simplifyFields: (sandbox, item) -> Serializer.simplify(item)
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
-  version: (sandbox) -> return { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
+  version: (sandbox) -> { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
 
   cacheFetch: (sandbox, itemID, options) ->
     collection = CACHE.getCollection(sandbox.translator[0].label)
@@ -233,6 +257,11 @@ do Zotero.Promise.coroutine(->
   progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
   progressWin.show()
 
+  # oh FFS -- datadir is async now
+  yield Zotero.uiReadyPromise
+  CACHE.init()
+  bench('Zotero.uiReadyPromise')
+
   # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
   yield Zotero.Schema.schemaUpdatePromise
   bench('Zotero.Schema.schemaUpdatePromise')
@@ -260,10 +289,7 @@ do Zotero.Promise.coroutine(->
   bench('Translators.init()')
 
   progressWin.changeHeadline('BetterBibTeX: Ready for business')
-  progressWin.startCloseTimer(5000)
-
-  # TODO: remove before release
-  yield KeyManager.cleanupDynamic()
+  progressWin.startCloseTimer(500)
 
   # should be safe to start tests at this point. I hate async.
 

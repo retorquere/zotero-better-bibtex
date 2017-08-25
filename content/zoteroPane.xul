@@ -9,7 +9,7 @@
 
   <!-- TODO: move to top level menu -->
   <menupopup id="zotero-tb-actions-popup">
-    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
+    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
     <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
   </menupopup>
 
@@ -20,22 +20,28 @@
       label="&zotero.better-bibtex.show-collection-key;"
       oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
     / -->
-    <menuitem id="zotero-better-bibtex-report-errors" label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('collection')"/>
+    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
     <!-- menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('set');"/>
     <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/ -->
-    <menuitem label="&zotero.better-bibtex.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
+    <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
   </menupopup>
 
   <treecols id="zotero-items-columns-header">
     <treecol
       id="zotero-items-column-citekey" primary="true"
       label="Citekey"
-      flex="1" zotero-persist="width ordinal hidden sortActive sortDirection"
+      flex="1"
       insertafter="zotero-items-column-title"
     />
+    <!-- treecol
+      id="zotero-items-column-itemID" primary="true"
+      label="ID"
+      flex="1"
+      insertafter="zotero-items-column-title"
+    / -->
   </treecols>
 
 

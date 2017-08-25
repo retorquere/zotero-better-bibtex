@@ -50,6 +50,7 @@ class KeyManager
     debug('KeyManager.init...')
 
     @keys = DB.getCollection('citekey')
+    debug('KeyManager.init:', { keys: @keys })
 
     @query = {
       field: {}
@@ -105,8 +106,13 @@ class KeyManager
 
     flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
 
-    @keys.removeDataOnly() if clean
+    if clean
+      @keys.removeDataOnly()
+#    else
+#      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
+    debug('KeyManager.rescan:', {clean, keys: @keys})
 
+    ids = []
     items = yield Zotero.DB.queryAsync("""
       SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
       FROM items item
@@ -116,15 +122,31 @@ class KeyManager
       AND item.itemTypeID NOT IN (#{@query.type.attachment}, #{@query.type.note})
     """)
     for item in items
+      ids.push(item.itemID)
       # if no citekey is found, it will be '', which will allow it to be found right after this loop
       citekey = Citekey.get(item.extra)
-      @keys.findAndRemove({ itemID: item.itemID }) if !clean && citekey.pinned
-      @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID })) if clean || !@keys.findOne({ itemID: item.itemID })
+      debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
+
+      if !clean && saved = @keys.findOne({ itemID: item.itemID })
+        if citekey.pinned && (citekey.citekey != saved.citekey || !saved.pinned)
+          debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
+          Object.assign(saved, { citekey: citekey.citekey, pinned: true })
+          @keys.update(saved)
+        else
+          debug('KeyManager.rescan: keeping', saved)
+      else
+        debug('KeyManager.rescan: clearing citekey for', item.itemID)
+        @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
+
+    debug('KeyManager.rescan: found', @keys.data.length)
+    @keys.findAndRemove({ itemID: { $nin: ids } })
+    debug('KeyManager.rescan: purged', @keys.data.length)
 
     # find all references without citekey
     @scanning = @keys.find({ citekey: '' })
 
     if @scanning.length != 0
+      debug("Found #{@scanning.length} references without a citation key")
       progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription("Found #{@scanning.length} references without a citation key")
@@ -150,7 +172,7 @@ class KeyManager
 
       progress.setProgress(100)
       progress.setText('Ready')
-      progressWin.startCloseTimer(5000)
+      progressWin.startCloseTimer(500)
 
     @scanning = false
 
@@ -186,13 +208,20 @@ class KeyManager
     proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
-    debug("KeyManager.propose: testing whether #{item.id} can keep #{citekey.citekey}")
-    # item already has proposed citekey
-    if citekey.citekey.slice(0, proposed.citekey.length) == proposed.citekey                                # key begins with proposed sitekey
-      re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
-      if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
-        if @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })  # noone else is using it
-          return citekey
+    if citekey = @keys.findOne({ itemID: item.id })
+      # item already has proposed citekey ?
+      debug("KeyManager.propose: testing whether #{item.id} can keep #{citekey.citekey}")
+      if citekey.citekey.startsWith(proposed.citekey)                                                         # key begins with proposed sitekey
+        re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
+        if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
+          if !(other = @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })) # noone else is using it
+            return citekey
+#          else
+#            debug('KeyManager.propose: no, because', other, 'is using it')
+#        else
+#          debug('KeyManager.propose: no, because', citekey.citekey.slice(proposed.citekey.length), 'does not match', '' + re)
+#      else
+#        debug('KeyManager.propose: no, because', citekey.citekey, 'does not start with', citekey.citekey)
 
     debug("KeyManager.propose: testing whether #{item.id} can use proposed #{proposed.citekey}")
     # unpostfixed citekey is available
@@ -205,7 +234,7 @@ class KeyManager
     while true
       postfixed = proposed.citekey + (if proposed.postfix == '0' then '-' + postfix else @postfixAlpha(postfix))
       if !@keys.findOne({ libraryID: item.libraryID, citekey: postfixed })
-        debug("KeyManager.propose: found <#{postfixed}>")
+        debug("KeyManager.propose: found <#{postfixed}> for #{item.id}")
         return { citekey: postfixed, pinned: false }
       postfix += 1
 
@@ -232,40 +261,23 @@ class KeyManager
 
    remove: (ids) ->
      ids = [ids] unless Array.isArray(ids)
+     debug('KeyManager.remove:', ids)
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
   get: (itemID) ->
     if !@keys
-      Zotero.logError(new Error("KeyManager.get called for #{itemID} before init"))
-      return { citekey: '', pinned: false }
+      err = new Error("KeyManager.get called for #{itemID} before init")
+      # throw err unless softFail
+      Zotero.logError(err)
+      return { citekey: '', pinned: false, retry: true }
 
     return key if key = @keys.findOne({ itemID })
 
-    Zotero.logError(new Error("KeyManager.get called for non-existent #{itemID}"))
+    err = new Error("KeyManager.get called for non-existent #{itemID}")
+    # throw err unless softFail
+    Zotero.logError(err)
     return { citekey: '', pinned: false }
-
-
-  ### TODO: remove after release ###
-  cleanupDynamic: co(->
-    items = yield Zotero.DB.queryAsync("""
-      select item.itemID, extra.value as extra
-      from items item
-      join itemData field on field.fieldID = #{@query.field.extra} and field.itemID = item.itemID
-      join itemDataValues extra on extra.valueID = field.valueID
-      where item.itemTypeID not in (#{@query.type.attachment}, #{@query.type.note})
-        and item.itemID not in (select itemID from deletedItems)
-        and extra.value like ?
-    """, [ '%bibtex*:%' ])
-    for item in items
-      citekey = Citekey.get(item.extra, true)
-      continue if !citekey.citekey || citekey.pinned
-      item = yield getItemsAsync(item.itemID)
-      item.setField('extra', citekey.extra)
-      yield item.saveTx()
-    return
-  )
-
 
 debug('KeyManager: loaded', Object.keys(Formatter))
 

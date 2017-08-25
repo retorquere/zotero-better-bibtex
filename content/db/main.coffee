@@ -33,7 +33,11 @@ class DBStore
               conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [name, stringify(coll)])
 
           # TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-          conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, stringify(Object.assign({}, dbref, {collections: dbref.collections.map((coll) -> coll.name)}))])
+          conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, stringify(Object.assign(
+            {},
+            dbref,
+            {collections: dbref.collections.map((coll) -> "#{dbname}.#{coll.name}")}
+          ))])
 
           return
         )
@@ -60,20 +64,27 @@ class DBStore
 
           db = null
           collections = {}
-          for row in yield conn.queryAsync("SELECT name, data FROM \"#{dbname}\"")
+          for row in yield conn.queryAsync("SELECT name, data FROM \"#{dbname}\" ORDER BY name ASC")
+            debug('DBStore.loadDatabase:', dbname, '.', row.name)
             if row.name == dbname
+              debug("DBStore.loadDatabase: loading #{dbname}")
               db = JSON.parse(row.data)
             else
               try
+                debug("DBStore.loadDatabase: loading #{row.name}")
                 collections[row.name] = JSON.parse(row.data)
+                debug("DBStore.loadDatabase: #{row.name} has", collections[row.name].data.length, 'records')
               catch err
-                debug("DBStore.loadDatabase: failed to parse #{dbname}.#{row.name}")
+                debug("DBStore.loadDatabase: failed to parse #{row.name}")
 
-          db.collections = (collections[coll] for coll in db.collections when collections[coll]) if db
+          if db
+            debug("DBStore.loadDatabase: restoring collections:", db.collections)
+            db.collections = (collections[coll] for coll in db.collections when collections[coll])
 
           return callback(db)
         )
       catch err
+        debug('DBStore.loadDatabase: error loading', dbname, err)
         return callback(err)
     )
     return
@@ -119,6 +130,7 @@ DB = new Loki('better-bibtex', {
 DB.init = Zotero.Promise.coroutine(->
   yield DB.loadDatabaseAsync()
 
+  debug('before DB schemaCollection:', { keys: DB.getCollection('citekey') })
   DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
@@ -134,6 +146,7 @@ DB.init = Zotero.Promise.coroutine(->
       required: [ 'itemID', 'libraryID', 'citekey', 'extra' ]
     }
   })
+  debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
   ###
   DB.schemaCollection('autoexport', {

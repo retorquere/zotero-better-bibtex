@@ -57,16 +57,26 @@ class FileStore
 
   loadDatabase: (name, callback) ->
     debug('FileStore.loadDatabase: loading', name)
+
     try
       db = @load(name)
+    catch err
+      if err.name == 'NoSuchFile'
+        debug('LokiJS.FileStore.loadDatabase: new database')
+      else
+        Zotero.logError(err)
+      return callback(null)
+
+    try
       collections = []
       for coll in db.collections
         try
           collections.push(@load("#{name}.#{coll}"))
+        catch err
+          debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
       db.collections = collections
     catch err
       debug('LokiJS.FileStore.loadDatabase: load failed', err)
-      db = null
 
     return callback(db)
 
@@ -75,7 +85,6 @@ DB = new Loki('cache', {
   adapter: new FileStore()
 })
 
-DB.loadDatabase()
 METADATA = 'Better BibTeX metadata'
 
 DB.remove = (ids) ->
@@ -85,56 +94,60 @@ DB.remove = (ids) ->
     coll.findAndRemove(query)
   return
 
-coll = DB.schemaCollection('itemToExportFormat', {
-  indices: [ 'itemID', 'legacy', 'skipChildItems' ],
-  schema: {
-    type: 'object'
-    properties: {
-      itemID: { type: 'integer' }
-      legacy: { coerce: 'boolean', default: false }
-      skipChildItems: { coerce: 'boolean', default: false }
-    }
-    required: [ 'itemID', 'legacy', 'skipChildItems' ]
-  }
-})
-if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zotero_config.Zotero.version
-  debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zotero_config.Zotero.version)
-  coll.removeDataOnly()
-coll.setTransform(METADATA, [{
-  type: METADATA,
-  value : { Zotero: zotero_config.Zotero.version }
-}])
-
-###
-  TODO: for this to work, an object must be updated when it is fetched
-###
-#             secs  mins  hours days
-ttl =         1000  * 60  * 60  * 24 * 30
-ttlInterval = 1000  * 60  * 60  * 4
-for translator of Translators.byName
-  coll = DB.schemaCollection(translator, {
-    indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
+DB.init = ->
+  DB.loadDatabase()
+  coll = DB.schemaCollection('itemToExportFormat', {
+    indices: [ 'itemID', 'legacy', 'skipChildItems' ],
     schema: {
       type: 'object'
       properties: {
         itemID: { type: 'integer' }
-        exportNotes: { coerce: 'boolean', default: false }
-        useJournalAbbreviation: { coerce: 'boolean', default: false }
-        reference: { type: 'string' }
-        metadata: { type: 'object', default: {} }
+        legacy: { coerce: 'boolean', default: false }
+        skipChildItems: { coerce: 'boolean', default: false }
       }
-      required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
-    },
-    ttl
-    ttlInterval
+      required: [ 'itemID', 'legacy', 'skipChildItems' ]
+    }
   })
-  if (coll.getTransform(METADATA)?[0].value || {}).BetterBibTeX != version
-    debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
+  if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zotero_config.Zotero.version
+    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zotero_config.Zotero.version)
     coll.removeDataOnly()
   coll.setTransform(METADATA, [{
     type: METADATA,
-    value : { BetterBibTeX: version }
+    value : { Zotero: zotero_config.Zotero.version }
   }])
+
+  ###
+    TODO: for this to work, an object must be updated when it is fetched
+  ###
+  #             secs  mins  hours days
+  ttl =         1000  * 60  * 60  * 24 * 30
+  ttlInterval = 1000  * 60  * 60  * 4
+  for translator of Translators.byName
+    coll = DB.schemaCollection(translator, {
+      indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
+      schema: {
+        type: 'object'
+        properties: {
+          itemID: { type: 'integer' }
+          exportNotes: { coerce: 'boolean', default: false }
+          useJournalAbbreviation: { coerce: 'boolean', default: false }
+          reference: { type: 'string' }
+          metadata: { type: 'object', default: {} }
+        }
+        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
+      },
+      ttl
+      ttlInterval
+    })
+    if (coll.getTransform(METADATA)?[0].value || {}).BetterBibTeX != version
+      debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
+      coll.removeDataOnly()
+    coll.setTransform(METADATA, [{
+      type: METADATA,
+      value : { BetterBibTeX: version }
+    }])
+
+  return
 
 # the preferences influence the output way too much, no keeping track of that
 events.on('preference-changed', ->
