@@ -36,7 +36,7 @@ class DBStore
           conn.queryAsync("REPLACE INTO \"#{dbname}\" (name, data) VALUES (?, ?)", [dbname, stringify(Object.assign(
             {},
             dbref,
-            {collections: dbref.collections.map((coll) -> dbname + '.' + coll.name)}
+            {collections: dbref.collections.map((coll) -> "#{dbname}.#{coll.name}")}
           ))])
 
           return
@@ -71,11 +71,11 @@ class DBStore
               db = JSON.parse(row.data)
             else
               try
-                debug("DBStore.loadDatabase: loading #{dbname}.#{row.name}")
+                debug("DBStore.loadDatabase: loading #{row.name}")
                 collections[row.name] = JSON.parse(row.data)
-                debug("DBStore.loadDatabase: #{dbname}.#{row.name} has", collections[row.name].data.length, 'records')
+                debug("DBStore.loadDatabase: #{row.name} has", collections[row.name].data.length, 'records')
               catch err
-                debug("DBStore.loadDatabase: failed to parse #{dbname}.#{row.name}")
+                debug("DBStore.loadDatabase: failed to parse #{row.name}")
 
           if db
             debug("DBStore.loadDatabase: restoring collections:", db.collections)
