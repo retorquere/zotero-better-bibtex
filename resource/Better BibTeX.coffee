@@ -580,7 +580,8 @@ class ZoteroItem
 
   "$date-modified": -> true
 
-  $number = (value) ->
+  $number: (value) ->
+    value = @collapse(value)
     switch @type
       when 'report'                         then @item.reportNumber = value
       when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
