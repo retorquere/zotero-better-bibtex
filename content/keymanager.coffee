@@ -112,6 +112,7 @@ class KeyManager
 #      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
     debug('KeyManager.rescan:', {clean, keys: @keys})
 
+    ids = []
     items = yield Zotero.DB.queryAsync("""
       SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
       FROM items item
@@ -121,6 +122,7 @@ class KeyManager
       AND item.itemTypeID NOT IN (#{@query.type.attachment}, #{@query.type.note})
     """)
     for item in items
+      ids.push(item.itemID)
       # if no citekey is found, it will be '', which will allow it to be found right after this loop
       citekey = Citekey.get(item.extra)
       debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
@@ -135,6 +137,10 @@ class KeyManager
       else
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
         @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
+
+    debug('KeyManager.rescan: found', @keys.data().length)
+    @keys.findAndRemove({ itemID: { $nin: ids } })
+    debug('KeyManager.rescan: purged', @keys.data().length)
 
     # find all references without citekey
     @scanning = @keys.find({ citekey: '' })
