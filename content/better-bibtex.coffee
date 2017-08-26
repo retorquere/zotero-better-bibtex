@@ -137,50 +137,6 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
 }
 
-Zotero.Notifier.registerObserver({
-  notify: (action, type, ids, extraData) ->
-    debug('item.notify', {action, type, ids, extraData})
-
-    bench = (msg) ->
-      now = new Date()
-      debug("notify: #{msg} took #{(now - bench.start) / 1000.0}s")
-      bench.start = now
-      return
-    bench.start = new Date()
-
-    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    # items = Zotero.Items.get(ids)
-
-    # not needed as the parents will be signaled themselves
-    # parents = (item.parentID for item in items when item.parentID)
-    # CACHE.remove(parents)
-
-    CACHE.remove(ids)
-    bench('cache remove')
-
-    switch action
-      when 'delete', 'trash'
-        KeyManager.remove(ids)
-        events.emit('items-removed', ids) # maybe pass items?
-        bench('remove')
-
-      when 'add', 'modify'
-        # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-        # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-        items = Zotero.Items.get(ids)
-        for item in items
-          continue if item.isNote() || item.isAttachment()
-          KeyManager.update(item)
-        events.emit('items-changed', ids) # maybe pass items?
-        bench('change')
-
-      else
-        debug('item.notify: unhandled', {action, type, ids, extraData})
-
-    return
-}, ['item'], 'BetterBibTeX', 1)
-
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
     try
@@ -240,6 +196,85 @@ Zotero.Translate.Export::translate = ((original) ->
 
     return original.apply(@, arguments)
 )(Zotero.Translate.Export::translate)
+
+###
+  EVENTS
+###
+
+Zotero.Notifier.registerObserver({
+  notify: (action, type, ids, extraData) ->
+    debug('item.notify', {action, type, ids, extraData})
+
+    bench = (msg) ->
+      now = new Date()
+      debug("notify: #{msg} took #{(now - bench.start) / 1000.0}s")
+      bench.start = now
+      return
+    bench.start = new Date()
+
+    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+    # items = Zotero.Items.get(ids)
+
+    # not needed as the parents will be signaled themselves
+    # parents = (item.parentID for item in items when item.parentID)
+    # CACHE.remove(parents)
+
+    CACHE.remove(ids)
+    bench('cache remove')
+
+    switch action
+      when 'delete', 'trash'
+        KeyManager.remove(ids)
+        events.emit('items-removed', ids) # maybe pass items?
+        bench('remove')
+
+      when 'add', 'modify'
+        # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+        # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+        collections = {}
+        items = Zotero.Items.get(ids)
+        for item in items
+          continue if item.isNote() || item.isAttachment()
+          KeyManager.update(item)
+          for collectionID in item.getCollections()
+            collections[collectionID] = true
+        events.emit('items-changed', ids) # maybe pass items?
+
+        collections = Object.keys(collections)
+        events.emit('collections-changed', collections) if collections.length
+
+        bench('change')
+
+      else
+        debug('item.notify: unhandled', {action, type, ids, extraData})
+
+    return
+}, ['item'], 'BetterBibTeX', 1)
+
+Zotero.Notifier.registerObserver({
+  notify: (event, type, ids, extraData) ->
+    events.emit('collections-removed', ids) if event == 'delete' && ids.length
+    return
+}, ['collection'], 'BetterBibTeX', 1))
+
+Zotero.Notifier.registerObserver({
+  notify: (event, type, collection_items) ->
+    changed = {}
+
+    for collection_item in collection_items
+      [collectionID, itemID] = collection_item.split('-')
+      changed[collectionID] = true
+
+      collection = Zotero.Collections.get(collectionID)
+      while collection.parent?
+        changed[collection.parent] = true
+        collection = Zotero.Collections.get(collection.parent)
+
+    collections = Object.keys(collections)
+    events.emit('collections-changed', collections) if collections.length
+} , ['collection-item'], 'BetterBibTeX', 1)
+
 ###
   INIT
 ###
