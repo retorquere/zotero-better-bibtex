@@ -63,9 +63,11 @@ class JournalAbbrev
       try
         debug('JournalAbbrev.get: trying', field)
         journal = if item.getField then item.getField(field, false, true) else item[field]
-        if journal
-          debug('JournalAbbrev.get: found', field, journal)
-          break
+        continue unless journal
+        journal = journal.replace(/<\/?(sup|sub|i|b)>/g, '')
+        continue unless journal
+        debug('JournalAbbrev.get: found', field, journal)
+        break
 
     return null unless journal
 
