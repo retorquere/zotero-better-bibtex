@@ -16,7 +16,10 @@ Zotero.Prefs.get('debug.store', true)
 Zotero.Debug.setStore(true)
 
 Translators = require('./translators.coffee')
-KeyManager = require('./keymanager.coffee')
+
+# overlay helper
+Zotero.BetterBibTeX.KeyManager = KeyManager = require('./keymanager.coffee')
+
 DB = require('./db/main.coffee')
 CACHE = require('./db/cache.coffee')
 Serializer = require('./serializer.coffee')

@@ -1,13 +1,6 @@
 @export
 Feature: Export
 
-Background:
-  When I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to 0
-  And I set preference .titleCase to true
-  And I set preference .defaultDateParserLocale to en-GB
-  And I set preference .bibtexURL to "note"
-
 ### BibLaTeX cookie-cutter ###
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590
@@ -149,6 +142,14 @@ Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/BibTeX name escaping has a million inconsistencies #438.json"
   And I set preference .relaxAuthors to true
   Then a library export using "Better BibTeX" should match "export/BibTeX name escaping has a million inconsistencies #438.bibtex"
+
+@708
+Scenario: Citekey generation failure #708
+  When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
+  And I import 6 references from "export/Citekey generation failure #708.json"
+  And I set preference .citekeyFormat to [auth:lower]_[veryshorttitle:lower]_[year]
+  And I import 6 references from "export/Citekey generation failure #708.json"
+  Then a library export using "Better BibLaTeX" should match "export/Citekey generation failure #708.biblatex"
 
 @117
 Scenario: Bibtex key regenerating issue when trashing items #117

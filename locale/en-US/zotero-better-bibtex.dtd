@@ -89,8 +89,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY zotero.better-bibtex.auxScanner "Scan BibTeX AUX file for references...">
 <!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
 <!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
-<!ENTITY zotero.better-bibtex.citekey.clear "Clear BibTeX key">
-<!ENTITY zotero.better-bibtex.citekey.set "Generate BibTeX key">
+<!ENTITY better-bibtex.zoteroPane.citekey.pin "Pin BibTeX key">
+<!ENTITY better-bibtex.zoteroPane.citekey.unpin "Unpin BibTeX key">
+<!ENTITY better-bibtex.zoteroPane.citekey.refresh "Refresh BibTeX key">
 <!ENTITY zotero.better-bibtex.csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">
 <!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
 <!ENTITY zotero.better-bibtex.dragons "Caution -- here be dragons">

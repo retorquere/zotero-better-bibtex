@@ -6,10 +6,12 @@
     "preferences": {
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoAbbrev": true,
       "citekeyFormat": "[auth]_[year]",
       "DOIandURL": "doi",
-      "rawImports": false
+      "rawImports": false,
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

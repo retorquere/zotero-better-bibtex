@@ -24,8 +24,9 @@
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
-    <!-- menuitem id="id-zotero-better-bibtex-set-citekey" label="&zotero.better-bibtex.citekey.set;" oncommand="Zotero.BetterBibTeX.keymanager.selected('set');"/>
-    <menuitem id="id-zotero-better-bibtex-clear-citekey" label="&zotero.better-bibtex.citekey.clear;" oncommand="Zotero.BetterBibTeX.keymanager.selected('reset');"/ -->
+    <menuitem label="&better-bibtex.zoteroPane.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
+    <menuitem label="&better-bibtex.zoteroPane.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
+    <menuitem label="&better-bibtex.zoteroPane.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected');"/>
     <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
   </menupopup>
 

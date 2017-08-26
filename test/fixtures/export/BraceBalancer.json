@@ -7,12 +7,14 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "",
       "langID": "babel",
-      "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "pinCitekeys": "manual",
       "rawImports": false,
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false
+      "attachmentsNoMetadata": false,
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,
