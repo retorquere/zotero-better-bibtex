@@ -104,8 +104,12 @@ DB.init = ->
         itemID: { type: 'integer' }
         legacy: { coerce: 'boolean', default: false }
         skipChildItems: { coerce: 'boolean', default: false }
+        item: { type: 'object' }
+        meta: { type: 'object' }
+        $loki: { type: 'integer' }
       }
-      required: [ 'itemID', 'legacy', 'skipChildItems' ]
+      required: [ 'itemID', 'legacy', 'skipChildItems' ],
+      additionalProperties: !Prefs.get('testing')
     }
   })
   if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zotero_config.Zotero.version
@@ -133,8 +137,11 @@ DB.init = ->
           useJournalAbbreviation: { coerce: 'boolean', default: false }
           reference: { type: 'string' }
           metadata: { type: 'object', default: {} }
+          meta: { type: 'object' }
+          $loki: { type: 'integer' }
         }
-        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ]
+        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ],
+        additionalProperties: !Prefs.get('testing')
       },
       ttl
       ttlInterval

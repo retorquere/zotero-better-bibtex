@@ -25,7 +25,7 @@ class KeyManager
       try
         citekey = @get(item.id).citekey || @update(item)
         item.setField('extra', Citekey.set(parsed.extra, citekey))
-        item.saveTx()
+        item.saveTx() # this should cause an update and key registration
       catch err
         debug('KeyManager.pin', err)
 
@@ -165,7 +165,7 @@ class KeyManager
           debug('KeyManager.rescan: keeping', saved)
       else
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
-        @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
+        @keys.insert({ citekey: citekey.citekey, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID })
 
     debug('KeyManager.rescan: found', @keys.data.length)
     @keys.findAndRemove({ itemID: { $nin: ids } })

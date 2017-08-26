@@ -131,7 +131,7 @@ DB.init = Zotero.Promise.coroutine(->
   yield DB.loadDatabaseAsync()
 
   debug('before DB schemaCollection:', { keys: DB.getCollection('citekey') })
-  DB.schemaCollection('citekey', {
+  coll = DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
     schema: {
@@ -141,12 +141,28 @@ DB.init = Zotero.Promise.coroutine(->
         libraryID: { type: 'integer' }
         citekey: { type: 'string' }
         pinned: { coerce: 'boolean', default: false }
-        extra: { coerce: 'string', default: '' }
+        meta: { type: 'object' }
+        $loki: { type: 'integer' }
       }
-      required: [ 'itemID', 'libraryID', 'citekey', 'extra' ]
+      required: [ 'itemID', 'libraryID', 'citekey' ],
+      additionalProperties: !Prefs.get('testing')
     }
   })
   debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
+
+  if Prefs.get('testing')
+    coll.on('insert', (citekey) ->
+      debug('citekey.insert', citekey)
+      return
+    )
+    coll.on('update', (citekey) ->
+      debug('citekey.update', citekey)
+      return
+    )
+    coll.on('delete', (citekey) ->
+      debug('citekey.delete', citekey)
+      return
+    )
 
   ###
   DB.schemaCollection('autoexport', {
@@ -166,6 +182,7 @@ DB.init = Zotero.Promise.coroutine(->
         path: { type: 'string' }
       }
       required: [ 'type', 'id', 'status', 'path', 'translatorID'],
+      additionalProperties: !Prefs.get('testing')
     }
   })
   ###
