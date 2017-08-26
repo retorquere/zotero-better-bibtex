@@ -56,9 +56,10 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
     preferences = config['preferences'] || {}
     @displayOptions = config['options'] || {}
 
-    @explicitprefs.keys.each{|pref|
-      preferences.delete(".#{pref}")
+    preferences.keys.each{|pref|
+      preferences.delete(pref) if @explicitprefs[".#{pref}"]
     }
+    preferences.delete('testing')
   else
     @displayOptions = {}
     preferences = nil

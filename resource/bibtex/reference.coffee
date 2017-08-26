@@ -73,7 +73,7 @@ class Reference
       @referencetype = @referencetype.type
 
     if Translator.preferences.testing
-      debug('timestamp for testing')
+      debug('ignoring timestamp', @item.dateModified || @item.dateAdded, 'for testing')
       @add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
     else
       @add({name: 'timestamp', value: @item.dateModified || @item.dateAdded})
