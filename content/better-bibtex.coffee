@@ -256,7 +256,7 @@ Zotero.Notifier.registerObserver({
   notify: (event, type, ids, extraData) ->
     events.emit('collections-removed', ids) if event == 'delete' && ids.length
     return
-}, ['collection'], 'BetterBibTeX', 1))
+}, ['collection'], 'BetterBibTeX', 1)
 
 Zotero.Notifier.registerObserver({
   notify: (event, type, collection_items) ->
@@ -273,6 +273,8 @@ Zotero.Notifier.registerObserver({
 
     collections = Object.keys(collections)
     events.emit('collections-changed', collections) if collections.length
+
+    return
 } , ['collection-item'], 'BetterBibTeX', 1)
 
 ###
