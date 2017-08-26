@@ -3,7 +3,7 @@
 
 start
   = patterns:pattern+ {
-      var body = "var loop, citekey, postfix;\n"
+      var body = "var loop, citekey, postfix, chunk;\n"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
 			  body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
@@ -20,16 +20,10 @@ pattern
   = blocks:block+ [\|]? { return blocks.map(function(block) { return '  ' + block}).concat(['']).join(";\n") }
 
 block
-  = '[0]'                                 { return 'postfix = "0"' }
-  / '[>' limit:[0-9]+ ']'                 { return "if (citekey.length <= " + limit.join('') + ") { break }" }
-  / '[' method:method filters:filter* ']' {
-        var block = method.js;
-        filters.forEach(function(filter) { block = filter.pre + block + filter.post });
-        block = 'citekey += ' + block;
-        if (method.postfix) block += '; postfix = ' + JSON.stringify(method.postfix);
-        return block;
-    }
-  / chars:[^\|>\[\]]+                     { return "citekey += " + JSON.stringify(chars.join('')) }
+  = '[0]'                                 { return `postfix = '0'` }
+  / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) { break }` }
+  / '[' method:method filters:filter* ']' { return `${[method].concat(filters).join('; ')}; citekey += chunk`; }
+  / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
 
 method
   = prefix:('auth' / 'Auth' / 'authors' / 'Authors' / 'edtr' / 'Edtr' / 'editors' / 'Editors') name:[\.a-zA-Z]* params:mparams? flag:flag? {
@@ -42,27 +36,31 @@ method
       var withInitials = (flag == 'initials');
 
       var method = creators + name.join('');
-      if (!options.methods[method]) throw new Error("Invalid method '" + method + "' in citekey pattern")
+      var $method = '$' + method.replace(/\./, '_');
 
-      var args = [ '' + !!editorsOnly];
-      if (withInitials || (params && params.length)) args.push('' + withInitials);
-      if (params) args = args.concat(params);
+      if (!options[$method]) throw new Error(`Invalid method '${method}' in citekey pattern`)
 
-      var js = 'this.methods.' + method + '.call(this, ' + args.join(', ') + ')';
-      if (scrub) js = 'this.clean(' + js + ')';
+      var args = [ '' + !!editorsOnly, '' + !!withInitials];
+      if (params) args = args.concat(params); // mparams already are stringified integers
 
-      return {js: js};
+      var chunk = `chunk = this.${$method}(${args.join(', ')})`
+      if (scrub) chunk += '; chunk = this.clean(chunk)';
+
+      return chunk;
     }
   / name:[0\.a-zA-Z]+ params:mparams? {
       name = name.join('');
+      var $method = '$' + name.replace(/\./, '_');
+      var chunk;
 
-      if (options.methods[name]) {
-        params = (params && params.length) ? [''].concat(params) : [];
-        return { js: 'this.methods.' + name + '.call(this' + params.join(', ') + ')', postfix: (name == 'zotero') ? '0' : null }
+      if (options[$method]) {
+        chunk = `chunk = this.${$method}(${(params || []).join(', ')})`
+        if (name == 'zotero') chunk += `; postfix = '0'`
       } else {
-        if (name.charCodeAt(0) < 'A'.charCodeAt(0) || name.charCodeAt(0) > 'Z'.charCodeAt(0)) throw new Error('Property access name "' + name + '" must start with a capital letter');
-        return { js: 'this.methods.property.call(this, ' + JSON.stringify(name) + ')' }
+        if (!name.match(/^[A-Z][A-Za-z]+$/)) throw new Error('Property access name "' + name + '" must start with a capital letter and can only contain letters');
+        chunk = `chunk = this.$property(${JSON.stringify(name)})`
       }
+      return chunk;
     }
 
 mparams
@@ -73,17 +71,17 @@ flag
   = '+' flag:[^_:\]]+                 { return flag.join('') }
 
 filter
-  = ':(' def:[^)]+ ')'                { return { pre: 'this.filters.ifempty.call(this, ', post: ', ' + JSON.stringify(def.join('')) + ')' } }
-  / ':' name:[^:\],]+ params:fparam*  {
-      name = name.join('')
-      if (! options.filters[name]) throw new Error('invalid filter "' + name + '" in pattern');
+  = ':(' def:[^)]+ ')'                {
+      return `chunk = (!chunk ? ${JSON.stringify(def.join(''))} : chunk)`;
+    }
+  / ':' name:[a-z]+ params:fparam*  {
+      name = name.join('');
+      var _filter = '_' + name;
+      if (! options[_filter]) throw new Error(`invalid filter "${name}" in pattern`);
 
-      params = (params && params.length) ? [''].concat(params.map(function(p) { return JSON.stringify(p) })) : [];
+      params = ['chunk'].concat((params || []).map(function(p) { return JSON.stringify(p) }));
 
-      return {
-        pre: 'this.filters.' + name + '.call(this, ',
-        post: params.join(', ') + ')'
-      }
+      return `chunk = this.${_filter}(${params})`
     }
 
 fparam

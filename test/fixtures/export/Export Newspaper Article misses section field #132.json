@@ -6,8 +6,10 @@
     "preferences": {
       "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize]",
       "skipFields": "abstract,note",
-      "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard"
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

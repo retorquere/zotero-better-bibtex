@@ -40,7 +40,8 @@ test:
       gem install bundler
       bundle update
       npm update
-      bundle exec cucumber $CIRCLE_TESTS --format junit --out $CIRCLE_TEST_REPORTS/cucumber/junit.xml
+      echo bundle exec cucumber $CIRCLE_TESTS
+      bundle exec cucumber $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r ~/.BBTZ5TEST.data/better* $CIRCLE_ARTIFACTS
       ls -lh $CIRCLE_ARTIFACTS/*

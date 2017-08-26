@@ -17,7 +17,11 @@
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
-      "asciiBibTeX": true
+      "asciiBibTeX": true,
+      "citekeyFormat": "[auth][year]",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     }
   },
   "collections": [

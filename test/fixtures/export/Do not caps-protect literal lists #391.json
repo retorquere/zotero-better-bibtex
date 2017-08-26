@@ -9,7 +9,7 @@
     },
     "preferences": {
       "skipFields": "timestamp",
-      "jabrefGroups": false,
+      "jabrefGroups": 0,
       "postscript": "",
       "csquotes": "",
       "langID": "babel",
@@ -19,7 +19,9 @@
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "citekeyFormat": "[title:lower]"
+      "citekeyFormat": "[title:lower]",
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     }
   },
   "collections": [

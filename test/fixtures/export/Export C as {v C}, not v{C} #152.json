@@ -6,8 +6,10 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "skipFields": "note,language,file,urldate",
-      "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell"
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

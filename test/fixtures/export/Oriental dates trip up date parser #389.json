@@ -10,15 +10,16 @@
       "jabrefGroups": true,
       "postscript": "",
       "csquotes": "",
-      "preserveCaps": "all",
-      "fancyURLs": false,
       "langID": "babel",
       "rawImports": false,
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
-      "asciiBibTeX": false
+      "asciiBibTeX": false,
+      "citekeyFormat": "[auth][year]",
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     }
   },
   "collections": [

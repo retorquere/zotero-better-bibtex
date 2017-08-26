@@ -34,7 +34,7 @@ class PatternFormatter
       catch err
         debug('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: @citekeyFormat}, err)
 
-    debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat)
+    debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat, '' + @generate)
     return
 
   parsePattern: (pattern) -> parser.parse(pattern, PatternFormatter::)
@@ -215,233 +215,229 @@ class PatternFormatter
     citeKeyConversionsRe: /%([a-zA-Z])/
     citeKeyCleanRe: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g
 
-  methods:
-    zotero: ->
-      key = ''
+  # methods
+  $zotero: ->
+    key = ''
 
-      if creator = (@item.item.getCreators() || [])[0]
-        key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator.lastName
+    if creator = (@item.item.getCreators() || [])[0]
+      key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '') if creator.lastName
 
-      key += '_'
+    key += '_'
 
-      if title = @item.title
-        key += title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
+    if title = @item.title
+      key += title.toLowerCase().replace(@zotero.citeKeyTitleBannedRe, '').split(/\s+/g)[0]
 
-      key += '_'
+    key += '_'
 
-      year = '????'
-      if @item.date
-        date = Zotero.Date.strToDate(@item.date)
-        year = date.year if date.year && @zotero.numberRe.test(date.year)
-      key += year
+    year = '????'
+    if @item.date
+      date = Zotero.Date.strToDate(@item.date)
+      year = date.year if date.year && @zotero.numberRe.test(date.year)
+    key += year
 
-      key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
-      return key.replace(@zotero.citeKeyCleanRe, '')
+    key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
+    return key.replace(@zotero.citeKeyCleanRe, '')
 
-    property: (name) ->
-      try
-        return @innerText(@item.item.getField(name, false, true) || '')
-      try
-        return @innerText(@item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
-      return ''
+  $property: (name) ->
+    try
+      return @innerText(@item.item.getField(name, false, true) || '')
+    try
+      return @innerText(@item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
+    return ''
 
-    library: ->
-      return '' if @item.item.libraryID == Zotero.Libraries.userLibraryID
-      return Zotero.Libraries.getName(@item.item.libraryID)
+  $library: ->
+    return '' if @item.item.libraryID == Zotero.Libraries.userLibraryID
+    return Zotero.Libraries.getName(@item.item.libraryID)
 
-    auth: (onlyEditors, withInitials, n, m) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
-      author = authors[m || 0]
-      author = author.substring(0, n)  if author && n
-      return author ? ''
+  $auth: (onlyEditors, withInitials, n, m) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
+    author = authors[m || 0]
+    author = author.substring(0, n)  if author && n
+    return author ? ''
 
-    authForeIni: (onlyEditors) ->
-      authors = @creators(onlyEditors, {initialOnly: true})
-      return '' unless authors?.length
-      return authors[0]
+  $authForeIni: (onlyEditors) ->
+    authors = @creators(onlyEditors, {initialOnly: true})
+    return '' unless authors?.length
+    return authors[0]
 
-    authorLastForeIni: (onlyEditors) ->
-      authors = @creators(onlyEditors, {initialOnly: true})
-      return '' unless authors?.length
-      return authors[authors.length - 1]
+  $authorLastForeIni: (onlyEditors) ->
+    authors = @creators(onlyEditors, {initialOnly: true})
+    return '' unless authors?.length
+    return authors[authors.length - 1]
 
-    authorLast: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
-      return authors[authors.length - 1] ? ''
+  $authorLast: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
+    return authors[authors.length - 1] ? ''
 
-    journal: -> journalAbbrev.get(@item.item) || @item.item.getField('publicationTitle', false, true)
+  $journal: -> journalAbbrev.get(@item.item) || @item.item.getField('publicationTitle', false, true)
 
-    authors: (onlyEditors, withInitials, n) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
+  $authors: (onlyEditors, withInitials, n) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
 
-      if n
-        etal = (authors.length > n)
-        authors = authors.slice(0, n)
-        authors.push('EtAl') if etal
+    if n
+      etal = (authors.length > n)
+      authors = authors.slice(0, n)
+      authors.push('EtAl') if etal
 
-      authors = authors.join('')
-      return authors
+    authors = authors.join('')
+    return authors
 
-    authorsAlpha: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
+  $authorsAlpha: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
 
-      return switch authors.length
-        when 1
-          return authors[0].substring(0, 3)
+    return switch authors.length
+      when 1
+        return authors[0].substring(0, 3)
 
-        when 2, 3, 4
-          return (author.substring(0, 1) for author in authors).join('')
+      when 2, 3, 4
+        return (author.substring(0, 1) for author in authors).join('')
 
-        else
-          return (author.substring(0, 1) for author in authors.slice(0, 3)).join('') + '+'
+      else
+        return (author.substring(0, 1) for author in authors.slice(0, 3)).join('') + '+'
 
-    authIni: (onlyEditors, withInitials, n) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
-      return (author.substring(0, n) for author in authors).join('.')
+  $authIni: (onlyEditors, withInitials, n) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
+    return (author.substring(0, n) for author in authors).join('.')
 
-    authorIni: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
-      firstAuthor = authors.shift()
-      return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
+  $authorIni: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
+    firstAuthor = authors.shift()
+    return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
 
-    'auth.auth.ea': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
-      return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join('.')
+  $auth_auth_ea: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
+    return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join('.')
 
-    'authEtAl': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
+  $authEtAl: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
 
-      return authors.join('') if authors.length == 2
-      return authors.slice(0, 1).concat((if authors.length > 1 then ['EtAl'] else [])).join('')
+    return authors.join('') if authors.length == 2
+    return authors.slice(0, 1).concat((if authors.length > 1 then ['EtAl'] else [])).join('')
 
-    'auth.etal': (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
+  $auth_etal: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
 
-      return authors.join('.') if authors.length == 2
-      return authors.slice(0, 1).concat((if authors.length > 1 then ['etal'] else [])).join('.')
+    return authors.join('.') if authors.length == 2
+    return authors.slice(0, 1).concat((if authors.length > 1 then ['etal'] else [])).join('.')
 
-    authshort: (onlyEditors, withInitials) ->
-      authors = @creators(onlyEditors, {withInitials})
-      return '' unless authors?.length
+  $authshort: (onlyEditors, withInitials) ->
+    authors = @creators(onlyEditors, {withInitials})
+    return '' unless authors?.length
 
-      switch authors.length
-        when 0
-          return ''
+    switch authors.length
+      when 0
+        return ''
 
-        when 1
-          return authors[0]
+      when 1
+        return authors[0]
 
-        else
-          return (author.substring(0, 1) for author in authors).join('.') + (if authors.length > 3 then '+' else '')
+      else
+        return (author.substring(0, 1) for author in authors).join('.') + (if authors.length > 3 then '+' else '')
 
-    firstpage: ->
-      @item.pages ||= @item.item.getField('pages', false, true)
-      return '' unless @item.pages
-      firstpage = ''
-      @item.pages.replace(/^([0-9]+)/g, (match, fp) -> firstpage = fp)
-      return firstpage
+  $firstpage: ->
+    @item.pages ||= @item.item.getField('pages', false, true)
+    return '' unless @item.pages
+    firstpage = ''
+    @item.pages.replace(/^([0-9]+)/g, (match, fp) -> firstpage = fp)
+    return firstpage
 
-    lastpage: ->
-      @item.pages ||= @item.item.getField('pages', false, true)
-      return '' unless @item.pages
-      lastpage = ''
-      @item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) -> lastpage = lp)
-      return lastpage
+  $lastpage: ->
+    @item.pages ||= @item.item.getField('pages', false, true)
+    return '' unless @item.pages
+    lastpage = ''
+    @item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) -> lastpage = lp)
+    return lastpage
 
-    keyword: (n) ->
-      @item.tags ||= (tag.tag for tag in @item.item.getTags())
-      return @item.tags[n] || ''
+  $keyword: (n) ->
+    @item.tags ||= (tag.tag for tag in @item.item.getTags())
+    return @item.tags[n] || ''
 
-    shorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
-      return ''  unless words
-      return words.slice(0, 3).join('')
+  $shorttitle: ->
+    words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+    return ''  unless words
+    return words.slice(0, 3).join('')
 
-    veryshorttitle: ->
-      words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
-      return '' unless words
-      return words.slice(0, 1).join('')
+  $veryshorttitle: ->
+    words = @titleWords(@item.title, { skipWords: true, asciiOnly: true})
+    return '' unless words
+    return words.slice(0, 1).join('')
 
-    shortyear: ->
-      return @padYear(@item.year, 2)
+  $shortyear: ->
+    return @padYear(@item.year, 2)
 
-    year: ->
-      return @padYear(@item.year, 4)
+  $year: ->
+    return @padYear(@item.year, 4)
 
-    origyear: ->
-      return @padYear(@item.origyear, 4)
+  $origyear: ->
+    return @padYear(@item.origyear, 4)
 
-    month: ->
-      return '' unless @item.month
-      return @months[@item.month - 1] ? ''
+  $month: ->
+    return '' unless @item.month
+    return @months[@item.month - 1] ? ''
 
-    title: -> @titleWords(@item.title).join('')
+  $title: -> @titleWords(@item.title).join('')
 
-  filters:
-    ifempty: (value, dflt) ->
-      return dflt if (value || '') == ''
-      return value
+  # filters
+  _condense: (value, sep) ->
+    sep = '' if typeof sep == 'undefined'
+    return (value || '').replace(/\s/g, sep)
 
-    condense: (value, sep) ->
-      sep = '' if typeof sep == 'undefined'
-      return (value || '').replace(/\s/g, sep)
+  _prefix: (value, prefix) ->
+    value ||= ''
+    return "#{prefix}#{value}" if value != '' && prefix
+    return value
 
-    prefix: (value, prefix) ->
-      value ||= ''
-      return "#{prefix}#{value}" if value != '' && prefix
-      return value
+  _postfix: (value, postfix) ->
+    value ||= ''
+    return value + postfix if value != '' && postfix
+    return value
 
-    postfix: (value, postfix) ->
-      value ||= ''
-      return value + postfix if value != '' && postfix
-      return value
+  _abbr: (value) ->
+    return (word.substring(0, 1) for word in (value || '').split(/\s+/)).join('')
 
-    abbr: (value) ->
-      return (word.substring(0, 1) for word in (value || '').split(/\s+/)).join('')
+  _lower: (value) ->
+    return (value || '').toLowerCase()
 
-    lower: (value) ->
-      return (value || '').toLowerCase()
+  _upper: (value) ->
+    return (value || '').toUpperCase()
 
-    upper: (value) ->
-      return (value || '').toUpperCase()
+  _skipwords: (value) ->
+    return (word for word in (value || '').split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
 
-    skipwords: (value) ->
-      return (word for word in (value || '').split(/\s+/) when @skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+  _select: (value, start, n) ->
+    value = (value || '').split(/\s+/)
+    end = value.length
+    start = 1 if typeof start == 'undefined'
+    start = parseInt(start) - 1
+    end = start + parseInt(n) if typeof n != 'undefined'
+    return value.slice(start, end).join(' ')
 
-    select: (value, start, n) ->
-      value = (value || '').split(/\s+/)
-      end = value.length
-      start = 1 if typeof start == 'undefined'
-      start = parseInt(start) - 1
-      end = start + parseInt(n) if typeof n != 'undefined'
-      return value.slice(start, end).join(' ')
+  _substring: (value, start, n) ->
+    return (value || '').slice(start - 1, start - 1 + n)
 
-    substring: (value, start, n) ->
-      return (value || '').slice(start - 1, start - 1 + n)
+  _ascii: (value) ->
+    return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
 
-    ascii: (value) ->
-      return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
+  _alphanum: (value) ->
+    return Zotero.Utilities.XRegExp.replace(value || '', @re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
 
-    alphanum: (value) ->
-      return Zotero.Utilities.XRegExp.replace(value || '', @re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
+  _fold: (value) ->
+    return @removeDiacritics(value).split(/\s+/).join(' ').trim()
 
-    fold: (value) ->
-      return @removeDiacritics(value).split(/\s+/).join(' ').trim()
+  _capitalize: (value) ->
+    return (value || '').replace(/((^|\s)[a-z])/g, (m) -> m.toUpperCase())
 
-    capitalize: (value) ->
-      return (value || '').replace(/((^|\s)[a-z])/g, (m) -> m.toUpperCase())
-
-    nopunct: (value) ->
-      return Zotero.Utilities.XRegExp.replace(value || '', @re.punct, '', 'all')
+  _nopunct: (value) ->
+    return Zotero.Utilities.XRegExp.replace(value || '', @re.punct, '', 'all')
 
 #  ### TODO: What is this for? ###
 #  HTML: class

@@ -4,7 +4,11 @@
     "label": "BetterBibTeX JSON",
     "release": "0.8.2",
     "preferences": {
-      "attachmentsNoMetadata": true
+      "attachmentsNoMetadata": true,
+      "citekeyFormat": "[auth][year]",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,
