@@ -6,9 +6,11 @@
     "preferences": {
       "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoAbbrev": true,
       "citekeyFormat": "[authors][shortyear]",
-      "skipFields": "file,abstract"
+      "skipFields": "file,abstract",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

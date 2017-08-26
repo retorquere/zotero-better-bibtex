@@ -387,10 +387,6 @@ class PatternFormatter
   $title: -> @titleWords(@item.title).join('')
 
   # filters
-  _ifempty: (value, dflt) ->
-    return dflt if (value || '') == ''
-    return value
-
   _condense: (value, sep) ->
     sep = '' if typeof sep == 'undefined'
     return (value || '').replace(/\s/g, sep)

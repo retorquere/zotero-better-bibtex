@@ -4,6 +4,10 @@
     "label": "BetterBibTeX JSON",
     "release": "0.7.5",
     "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

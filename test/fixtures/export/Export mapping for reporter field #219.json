@@ -7,13 +7,15 @@
       "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
       "skipFields": "",
       "langID": "babel",
-      "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "pinCitekeys": "manual",
       "rawImports": false,
       "DOIandURL": "url",
       "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": false
+      "preserveBibTeXVariables": false,
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

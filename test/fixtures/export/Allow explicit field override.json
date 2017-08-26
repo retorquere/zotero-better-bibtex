@@ -7,12 +7,14 @@
       "citekeyFormat": "[auth:lower][year]",
       "skipFields": "abstract,file",
       "langID": "babel",
-      "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "pinCitekeys": "manual",
       "rawImports": false,
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false
+      "attachmentsNoMetadata": false,
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

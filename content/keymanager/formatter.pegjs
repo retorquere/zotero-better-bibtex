@@ -71,7 +71,9 @@ flag
   = '+' flag:[^_:\]]+                 { return flag.join('') }
 
 filter
-  = ':(' def:[^)]+ ')'                { return { pre: 'this.filters.ifempty.call(this, ', post: ', ' + JSON.stringify(def.join('')) + ')' } }
+  = ':(' def:[^)]+ ')'                {
+      return `chunk = (!chunk ? ${JSON.stringify(def.join(''))} : chunk)`;
+    }
   / ':' name:[a-z]+ params:fparam*  {
       name = name.join('');
       var _filter = '_' + name;

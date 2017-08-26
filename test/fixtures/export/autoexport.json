@@ -5,8 +5,10 @@
     "release": "0.7.1",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association"
+      "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

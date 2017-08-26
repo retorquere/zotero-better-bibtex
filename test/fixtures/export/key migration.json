@@ -4,13 +4,19 @@
     "label": "BetterBibTeX JSON",
     "release": "0.14.14",
     "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,
       "exportNotes": false
     }
   },
-  "collections": [],
+  "collections": [
+
+  ],
   "items": [
     {
       "itemType": "journalArticle",
@@ -19,7 +25,8 @@
         "breadcrust",
         "plinian"
       ],
-      "relations": {},
+      "relations": {
+      },
       "volume": "62",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
@@ -62,10 +69,16 @@
           "firstName": "Kendra"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 1,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekeys__": [
         "adams_physical_2001",
         "Adams2001"
@@ -78,7 +91,8 @@
         "breadcrust",
         "plinian"
       ],
-      "relations": {},
+      "relations": {
+      },
       "volume": "62",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
@@ -116,10 +130,16 @@
           "firstName": "Kendra"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 4058,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekeys__": [
         "adams_physical_2001",
         "Adams2001"

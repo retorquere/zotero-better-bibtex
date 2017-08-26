@@ -10,12 +10,14 @@
       "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
       "csquotes": "",
       "DOIandURL": "doi",
-      "jabrefGroups": false,
+      "jabrefGroups": 0,
       "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "rawImports": false,
-      "skipFields": ""
+      "skipFields": "",
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

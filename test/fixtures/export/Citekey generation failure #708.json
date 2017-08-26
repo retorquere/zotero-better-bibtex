@@ -33,7 +33,9 @@
       "preserveBibTeXVariables": false,
       "rawImports": false,
       "citekeyScan": "",
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "skipWords": [
         "a",
         "ab",
@@ -160,8 +162,8 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefGroups": 4,
-      "defaultDateParserLocale": "",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
@@ -172,8 +174,8 @@
       "suppressTitleCase": false,
       "parseParticles": true,
       "debug": false,
-      "testing": false,
-      "rawLaTag": "#LaTeX"
+      "rawLaTag": "#LaTeX",
+      "citekeyFormat": "[auth][year]"
     },
     "options": {
       "exportNotes": true
@@ -190,7 +192,8 @@
         "name": "Normal",
         "parentKey": false
       },
-      "childCollections": {},
+      "childCollections": {
+      },
       "childItems": [
         9,
         12
@@ -222,7 +225,8 @@
         "name": "Test",
         "parentKey": false
       },
-      "childCollections": {},
+      "childCollections": {
+      },
       "childItems": [
         7
       ],
@@ -261,14 +265,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-08-25 14:25:16",
       "dateModified": "2017-08-25 14:25:16",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/2WXYPAZS",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/3250921",
         "volume": "25",
@@ -287,7 +300,9 @@
       "itemID": 2,
       "key": "2WXYPAZS",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "MIS Q.",
       "citekey": "BhattacherjeeUnderstandingInformationSystems2001"
     },
@@ -318,14 +333,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-08-25 14:43:59",
       "dateModified": "2017-08-25 14:43:59",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/Q7KMJRLF",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/3250922",
         "volume": "25",
@@ -344,7 +368,9 @@
       "itemID": 4,
       "key": "Q7KMJRLF",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "MIS Q.",
       "citekey": "ya2001"
     },
@@ -374,14 +400,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-08-25 14:48:27",
       "dateModified": "2017-08-25 14:48:27",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/2JJBVHLC",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/3250920",
         "volume": "25",
@@ -399,7 +434,9 @@
       "itemID": 6,
       "key": "2JJBVHLC",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "MIS Q.",
       "citekey": "as2001"
     },
@@ -471,7 +508,8 @@
       "collections": [
         "EDWS9NJB"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-08-25 14:53:55",
       "dateModified": "2017-08-25 14:53:55",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/T8U7KGPD",
@@ -486,8 +524,11 @@
           "contentType": "text/html",
           "charset": "utf-8",
           "filename": "07421222.2003.html",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-08-25 14:54:43",
           "dateModified": "2017-08-25 14:55:41",
           "uri": "http://zotero.org/users/local/pTKdCc4P/items/BQNZK3WC",
@@ -502,14 +543,18 @@
           "key": "BQNZK3WC",
           "libraryID": null,
           "sourceItemKey": "T8U7KGPD",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html",
           "journalAbbreviation": null,
           "citekey": "",
           "localPath": "/home/mijalche/Zotero/storage/BQNZK3WC/07421222.2003.html"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://dx.doi.org/10.1080/07421222.2003.11045748",
         "volume": "19",
@@ -528,7 +573,9 @@
       "itemID": 7,
       "key": "T8U7KGPD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "J. Manag. Inf. Syst.",
       "citekey": "dm2003"
     },
@@ -554,11 +601,14 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "VWGRV637"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-08-25 15:18:36",
       "dateModified": "2017-08-25 15:18:36",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/VHHZPZW4",
@@ -573,8 +623,11 @@
           "contentType": "text/html",
           "charset": "utf-8",
           "filename": "mnsc.36.1.html",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-08-25 15:18:43",
           "dateModified": "2017-08-25 15:18:43",
           "uri": "http://zotero.org/users/local/pTKdCc4P/items/BQGKSA42",
@@ -589,14 +642,18 @@
           "key": "BQGKSA42",
           "libraryID": null,
           "sourceItemKey": "VHHZPZW4",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html",
           "journalAbbreviation": null,
           "citekey": "",
           "localPath": "/home/mijalche/Zotero/storage/BQGKSA42/mnsc.36.1.html"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://pubsonline.informs.org/doi/abs/10.1287/mnsc.36.1.76",
         "volume": "36",
@@ -615,7 +672,9 @@
       "itemID": 9,
       "key": "VHHZPZW4",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "mel1990"
     },
     {
@@ -662,7 +721,8 @@
       "collections": [
         "VWGRV637"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-08-25 15:22:45",
       "dateModified": "2017-08-25 15:22:45",
       "uri": "http://zotero.org/users/local/pTKdCc4P/items/N2UZN4G7",
@@ -677,8 +737,11 @@
           "contentType": "text/html",
           "charset": "utf-8",
           "filename": "abstract.html",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-08-25 15:22:51",
           "dateModified": "2017-08-25 15:22:53",
           "uri": "http://zotero.org/users/local/pTKdCc4P/items/AZ282BK8",
@@ -693,14 +756,18 @@
           "key": "AZ282BK8",
           "libraryID": null,
           "sourceItemKey": "N2UZN4G7",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html",
           "journalAbbreviation": null,
           "citekey": "",
           "localPath": "/home/mijalche/Zotero/storage/AZ282BK8/abstract.html"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1365-2575.1995.tb00089.x/abstract",
         "volume": "5",
@@ -720,7 +787,9 @@
       "itemID": 12,
       "key": "N2UZN4G7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Inf. Syst. J.",
       "citekey": ""
     }

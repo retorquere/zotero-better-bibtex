@@ -6,7 +6,7 @@
     "preferences": {
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
       "skipFields": "timestamp",
-      "jabrefGroups": false,
+      "jabrefGroups": 0,
       "postscript": "",
       "csquotes": "",
       "langID": "babel",
@@ -15,7 +15,9 @@
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
-      "asciiBibTeX": true
+      "asciiBibTeX": true,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
     },
     "options": {
       "exportFileData": false,

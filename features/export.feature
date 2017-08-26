@@ -1,13 +1,6 @@
 @export
 Feature: Export
 
-Background:
-  When I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to 0
-  And I set preference .titleCase to true
-  And I set preference .defaultDateParserLocale to en-GB
-  And I set preference .bibtexURL to "note"
-
 ### BibLaTeX cookie-cutter ###
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590
