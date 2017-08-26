@@ -229,9 +229,8 @@ class KeyManager
     debug('KeyManager.propose: getting existing key from extra field,if any')
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
-    citekey.pinned = !!citekey.pinned
 
-    return citekey if citekey.pinned
+    return { citekey: citekey.citekey, pinned: true } if citekey.pinned
 
     debug('KeyManager.propose: formatting...', citekey)
     proposed = Formatter.format(item)
@@ -244,7 +243,7 @@ class KeyManager
         re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
         if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
           if !(other = @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })) # noone else is using it
-            return citekey
+            return { citekey: citekey.citekey, pinned: false }
 #          else
 #            debug('KeyManager.propose: no, because', other, 'is using it')
 #        else
