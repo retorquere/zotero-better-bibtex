@@ -36,12 +36,14 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Literal names                                                               | 1           |
+  | Better BibTeX.010                                                           | 1           |
+  | Better BibTeX.008                                                           | 1           |
+  | Biblatex Annotation Import Bug #613                                         | 1           |
+  | Better BibLaTeX import improvements #549                                    | 9           |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Math formatting lost on import #627                                         | 1           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
-  | Better BibLaTeX import improvements #549                                    | 9           |
-  | Biblatex Annotation Import Bug #613                                         | 1           |
-  | Better BibTeX.008                                                           | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
   | Better BibTeX.001                                                           | 1           |
   | Better BibTeX.003                                                           | 2           |
@@ -49,14 +51,12 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.005                                                           | 1           |
   | Better BibTeX.006                                                           | 1           |
   | Better BibTeX.007                                                           | 1           |
-  | Better BibTeX.009                                                           | 2           |
-  | Better BibTeX.010                                                           | 1           |
+  | Better BibTeX.009                                                           | 3           |
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
   | Better BibTeX.013                                                           | 2           |
   # | Better BibTeX.014                                                           | 1           |
   | Better BibTeX.015                                                           | 1           |
-  | Literal names                                                               | 1           |
   | Author splitter failure                                                     | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |

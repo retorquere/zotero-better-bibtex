@@ -157,10 +157,15 @@ def normalizeJSON(lib)
     item.delete('uniqueFields')
     item.delete('key')
     item.delete('citekey')
+    item.delete('attachments')
     item.delete('__citekey__')
     item.delete('uri')
+
+    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.sort
+
+    item['tags'] = (item['tags'] || []).collect{|tag| tag.is_a?(String) ? tag : tag['tag'] }.sort
+
     item.keys.each{|k|
-      item['tags'] = (item['tags'] || []).collect{|tag| tag.is_a?(String) ? tag : tag['tag'] }
       item.delete(k) if item[k].nil?
       item.delete(k) if (item[k].is_a?(Hash) || item[k].is_a?(Array)) && item[k].empty?
     }
