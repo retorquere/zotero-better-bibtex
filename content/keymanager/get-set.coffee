@@ -1,8 +1,7 @@
-bibtex = /(?:^|\s)bibtex(\*?):[^\S\n]*([^\s]*)(?:\s|$)/
+bibtex = /(?:^|\s)bibtex:[^\S\n]*([^\s]*)(?:\s|$)/
 biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^\[\]\s]*)\](?:\s|$)/
 
-# TODO: remove dunamic and * detection before release
-get = (extra, dynamic) ->
+get = (extra) ->
   if extra?
     extra = '' + extra
   else
@@ -11,9 +10,9 @@ get = (extra, dynamic) ->
   citekey = ''
   pinned = false
 
-  extra = extra.replace(bibtex, (m, _dynamic, _citekey) ->
+  extra = extra.replace(bibtex, (m, _citekey) ->
     citekey = _citekey
-    pinned = !_dynamic && citekey
+    pinned = citekey
     return "\n"
   ).trim()
 
@@ -24,7 +23,6 @@ get = (extra, dynamic) ->
       return "\n"
     ).trim()
 
-  citekey = '' unless pinned || dynamic
   return {extra, citekey, pinned: !!pinned}
 
 set = (extra, citekey) ->
