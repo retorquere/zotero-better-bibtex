@@ -98,7 +98,7 @@ class PatternFormatter
     citekey = @generate()
     debug('PatternFormatter.format: generated', Object.assign({}, @item, {citekey, item: @item.title}))
 
-    citekey.citekey ||= "Unknown"
+    citekey.citekey ||= "zotero-#{item.id}"
     citekey.citekey = @removeDiacritics(citekey.citekey) if citekey.citekey && @fold
     return citekey
 

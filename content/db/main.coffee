@@ -152,15 +152,15 @@ DB.init = Zotero.Promise.coroutine(->
 
   if Prefs.get('testing')
     coll.on('insert', (citekey) ->
-      debug('citekey.insert', citekey)
+      debug('DBStore.citekey.insert', citekey)
       return
     )
     coll.on('update', (citekey) ->
-      debug('citekey.update', citekey)
+      debug('DBStore.citekey.update', citekey)
       return
     )
     coll.on('delete', (citekey) ->
-      debug('citekey.delete', citekey)
+      debug('DBStore.citekey.delete', citekey)
       return
     )
 
