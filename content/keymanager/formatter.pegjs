@@ -41,7 +41,8 @@ method
       if (flag && flag != 'initials') throw new Error("Unsupported flag " + flag + " in pattern")
       var withInitials = (flag == 'initials');
 
-      var method = creators + name.join('');
+      var method = creators + name.join('').replace(/\./, '_');
+
       if (!options.methods[method]) throw new Error("Invalid method '" + method + "' in citekey pattern")
 
       var args = [ '' + !!editorsOnly];

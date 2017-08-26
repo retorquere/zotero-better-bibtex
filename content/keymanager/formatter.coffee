@@ -34,7 +34,7 @@ class PatternFormatter
       catch err
         debug('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: @citekeyFormat}, err)
 
-    debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat)
+    debug('PatternFormatter.update: citekeyFormat=', @citekeyFormat, '' + @generate)
     return
 
   parsePattern: (pattern) -> parser.parse(pattern, PatternFormatter::)
@@ -310,19 +310,19 @@ class PatternFormatter
       firstAuthor = authors.shift()
       return [firstAuthor.substring(0, 5)].concat(((name.substring(0, 1) for name in auth).join('.') for auth in authors)).join('.')
 
-    'auth.auth.ea': (onlyEditors, withInitials) ->
+    auth_auth_ea: (onlyEditors, withInitials) ->
       authors = @creators(onlyEditors, {withInitials})
       return '' unless authors?.length
       return authors.slice(0, 2).concat((if authors.length > 2 then ['ea'] else [])).join('.')
 
-    'authEtAl': (onlyEditors, withInitials) ->
+    authEtAl: (onlyEditors, withInitials) ->
       authors = @creators(onlyEditors, {withInitials})
       return '' unless authors?.length
 
       return authors.join('') if authors.length == 2
       return authors.slice(0, 1).concat((if authors.length > 1 then ['EtAl'] else [])).join('')
 
-    'auth.etal': (onlyEditors, withInitials) ->
+    auth_etal: (onlyEditors, withInitials) ->
       authors = @creators(onlyEditors, {withInitials})
       return '' unless authors?.length
 
