@@ -56,14 +56,14 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
   | Better BibTeX.013                                                           | 2           |
-#  | Better BibTeX.014                                                           | 1           |
+  | Better BibTeX.014                                                           | 1           |
   | Better BibTeX.015                                                           | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
   | Import fails to perform @String substitutions #154                          | 1           |
 
-#@97
-#Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
-#  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
-#  Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
+@97
+Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
+  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
+  Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 

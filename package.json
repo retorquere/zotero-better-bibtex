@@ -20,7 +20,7 @@
     "test": "test"
   },
   "dependencies": {
-    "biblatex-csl-converter": "^0.23.0",
+    "biblatex-csl-converter": "^0.24.0",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
