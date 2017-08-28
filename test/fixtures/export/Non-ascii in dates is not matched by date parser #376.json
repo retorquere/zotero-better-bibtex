@@ -25,9 +25,8 @@
       "preserveBibTeXVariables": true
     }
   },
-  "collections": [
-
-  ],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",

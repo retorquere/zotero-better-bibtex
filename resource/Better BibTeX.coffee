@@ -231,11 +231,11 @@ Translator.detectImport = ->
   debug("better-bibtex: detect: #{found}")
   return found
 
-importGroup = (group, items, root) ->
+importGroup = (group, itemID, root) ->
   collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
-  collection.children = ({type: 'item', id: items[key]} for key in group.references when items[key])
+  collection.children = ({type: 'item', id: itemID[citekey]} for citekey in group.references when itemID[citekey])
   debug('importGroup:', group.name, collection.children)
 
   for subgroup in group.groups || []
@@ -265,13 +265,13 @@ Translator.doImport = ->
     item.note += '</ul>'
     item.complete()
 
-  items = {}
+  itemIDS = {}
   for id, ref of bib.references
-    items[ref.entry_key] = id
+    itemIDS[ref.entry_key] = id
     new ZoteroItem(id, ref, bib.groups)
 
   for group in bib.groups
-    importGroup(group, items, true)
+    importGroup(group, itemIDS, true)
   return
 
 class ZoteroItem

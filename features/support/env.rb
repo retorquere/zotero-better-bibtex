@@ -52,7 +52,11 @@ def execute(options)
   args = options.delete(:args) || {}
   options[:body] = "var args = #{args.to_json};\n" + options.delete(:script)
 
+  #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
+  #STDOUT.flush
   response = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", options)
+  #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
+  #STDOUT.flush
 
   case response.code
     when 200, 201
@@ -158,6 +162,7 @@ def normalizeJSON(lib)
     item.delete('key')
     item.delete('citekey')
     item.delete('attachments')
+    item.delete('collections')
     item.delete('__citekey__')
     item.delete('uri')
 
@@ -170,8 +175,39 @@ def normalizeJSON(lib)
       item.delete(k) if (item[k].is_a?(Hash) || item[k].is_a?(Array)) && item[k].empty?
     }
   }
-  return JSON.neat_generate(lib, { wrap: 40, sort: true })
+  return lib
 end
+
+def compare(found, expected, path='')
+  expect(found.class).to eq(expected.class)
+
+  case found
+    when String, Integer, Float, FalseClass, TrueClass
+      expect("#{path}.#{found}").to eq("#{path}.#{expected}")
+
+    when Array
+      expect("#{path}.#{found.length}").to eq("#{path}.#{expected.length}")
+      found.zip(expected).each_with_index{|e, i| compare(e[0], e[1], "#{path}[#{i}]") }
+    
+    when Hash
+      if found.keys.sort != expected.keys.sort
+        if path == ''
+          expect("#{path}.#{found.keys.sort}").to eq("#{path}.#{expected.keys.sort}")
+        else
+          expect(JSON.neat_generate(found, { wrap: 40, sort: true })).to eq(JSON.neat_generate(expected, { wrap: 40, sort: true }))
+        end
+      end
+      found.keys.each{|k| compare(found[k], expected[k], "#{path}[#{k}]") }
+
+    else
+      throw "Unexpected class #{found.class}"
+  end
+end
+#def compare(found, expected)
+  #found['items'].zip(expected['items']).each{|f, e|
+    #expect(JSON.neat_generate(f, { wrap: 40, sort: true }).to eq(JSON.neat_generate(e, { wrap: 40, sort: true }))
+  #}
+#end
 
 def exportLibrary(translator, displayOptions, library)
   if translator =~ /^id:(.+)$/
@@ -192,17 +228,20 @@ def exportLibrary(translator, displayOptions, library)
   expected = File.read(expected)
 
   if library =~ /\.csl\.json$/
-    found = JSON.neat_generate(JSON.parse(found), { wrap: 40, sort: true })
-    expected = JSON.neat_generate(JSON.parse(expected), { wrap: 40, sort: true })
+    #found = JSON.neat_generate(JSON.parse(found), { wrap: 40, sort: true })
+    #expected = JSON.neat_generate(JSON.parse(expected), { wrap: 40, sort: true })
+    return compare(JSON.parse(found), JSON.parse(expected))
   elsif library =~ /\.json$/
-    found = normalizeJSON(JSON.parse(found))
-    expected = normalizeJSON(JSON.parse(expected))
+    #found = normalizeJSON(JSON.parse(found))
+    #expected = normalizeJSON(JSON.parse(expected))
+    return compare(normalizeJSON(JSON.parse(found)), normalizeJSON(JSON.parse(expected)))
   elsif library =~ /\.yml$/
     found = sort_object(YAML.load(found)).to_yaml
     expected = sort_object(YAML.load(expected)).to_yaml
   end
 
   expect(found.strip).to eq(expected.strip)
+  raise 'got it'
 end
 
 module BBT

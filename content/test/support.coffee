@@ -7,6 +7,7 @@ Translators = require('../translators.coffee')
 module.exports =
   reset: co(->
 
+    debug('TestSupport.reset: start')
     prefix = 'translators.better-bibtex.'
     for pref, value of pref_defaults
       continue if pref in ['debug', 'testing']
@@ -14,20 +15,25 @@ module.exports =
 
     Zotero.Prefs.set(prefix + 'debug', true)
     Zotero.Prefs.set(prefix + 'testing', true)
-
+    debug('TestSupport.reset: preferences reset')
 
     # Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k references take ~ 50 seconds
     # to delete.
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     while items.length
       chunk = items.splice(0, 100)
+      debug('TestSupport.reset: deleting', chunk.length, 'items')
       yield Zotero.Items.erase(chunk)
 
+    debug('TestSupport.reset: empty trash')
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    # ^%&^%@#&^% you can't just loop and erase
+    debug('TestSupport.reset: removing collections')
+    # ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
     while (collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length
       yield collections[0].eraseTx()
+
+    debug('TestSupport.reset: done')
 
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     throw new Error('library not empty after reset') if items.length != 0

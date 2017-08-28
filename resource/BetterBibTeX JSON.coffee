@@ -87,6 +87,7 @@ Translator.doImport = ->
   return
 
 Translator.doExport = ->
+  debug('starting export')
   data = {
     config: {
       id: Translator.header.translatorID
@@ -95,12 +96,16 @@ Translator.doExport = ->
       preferences: Translator.preferences
       options: Translator.options
     }
-    collections: Collections()
+    # collections: Collections()
     items: []
   }
+  debug('header ready')
 
   while item = Zotero.nextItem()
+    debug('adding item', item.itemID)
     data.items.push(item)
+  debug('data ready')
 
   Zotero.write(JSON.stringify(data, null, '  '))
+  debug('export done')
   return
