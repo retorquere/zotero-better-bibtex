@@ -54,7 +54,7 @@ class JournalAbbrev
     else
       abbrev = item.journalAbbreviation
 
-    return abbrev if abbrev
+    return abbrev if abbrev || !Prefs.get('autoAbbrev')
 
     return null unless (if item.getField then Zotero.ItemTypes.getName(item.itemTypeID) else item.itemType) in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
 

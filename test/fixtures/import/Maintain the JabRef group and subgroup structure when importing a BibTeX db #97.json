@@ -16,7 +16,6 @@
       "volume": "93",
       "pages": "613-620",
       "publicationTitle": "Physica Status Solidi (a)",
-      "journalAbbreviation":"Phys. Status Solidi A",
       "date": "1986",
       "extra": "bibtex: Abu-Zeid_1986 \nbibtex[owner=Francesco]",
       "DOI": "10.1002/pssa.2210930226",
@@ -54,7 +53,6 @@
       "issue": "1",
       "pages": "169-179",
       "publicationTitle": "Physica C",
-      "journalAbbreviation":"Phys. C",
       "ISSN": "0921-4534",
       "date": "January 1989",
       "extra": "bibtex: Adachi_1989 \nbibtex[owner=Francesco]",
@@ -282,7 +280,7 @@
       "url": "http://people.ccmr.cornell.edu/~dieck/publi.html",
       "date": "1997",
       "extra": "Journal of Physics and Chemistry of Solids, (revision to be completed) \nbibtex: Aggarwal_1997_unpub \nbibtex[owner=Francesco]",
-      "title": "Contributions of Bulk and Near-Boundary Regions to the Variation of the Oxygen Content in Cu<sub>2-delta</sub>O",
+      "title": "Contributions of Bulk and Near-Boundary Regions to the Variation of the Oxygen Content in Cu₂₋<sub>δ</sub>O",
       "creators": [
         {
           "creatorType": "author",
@@ -440,7 +438,7 @@
       "journalAbbreviation": "Applied Surface Science",
       "DOI": "10.1016/j.apsusc.2010.01.101",
       "abstractNote": "First-principles density functional theory and a periodic-slab model have been utilized to investigate the adsorption of a 2-chlorophenol molecule on a CuO(1�1�1) surface with a vacant Cu surface site, namely Cu2O(1�1�1)-CuCUS. Several vertical and flat orientations have been studied. All of these molecular configurations interact very weakly with the Cu2O(1�1�1)-CuCUS surface, an observation which also holds for clean copper surfaces and the Cu2O(1�1�0):CuO surface. Hydroxyl-bond dissociation assisted by the surface was found to be endoergic by 0.42-1.72�eV, depending predominantly on the position of the isolated H on the surface. In addition, the corresponding adsorbed 2-chlorophenoxy moiety was found to be more stable than a vacuum 2-chlorophenoxy radical by about 0.76�eV. Despite these predicted endoergicities, however, we would predict the formation of 2-chlorophenoxy radicals from gaseous 2-chlorophenol over the copper (I) oxide Cu2O(1�1�1)-CuCUS surface to be a feasible and important process in the formation of PCDD/Fs in the post-flame region where gas-phase routes are negligible.",
-      "title": "Adsorption of 2-chlorophenol on Cu₂O(111)-Cu<sub>m</sub>athrmCUS: A first-principles density functional study",
+      "title": "Adsorption of 2-chlorophenol on Cu₂O(1 1 1)-CuCUS: A first-principles density functional study",
       "creators": [
         {
           "creatorType": "author",

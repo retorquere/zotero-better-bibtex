@@ -2,6 +2,7 @@
   "asciiBibLaTeX": false,
   "asciiBibTeX": true,
   "attachmentsNoMetadata": false,
+  "autoAbbrev": false,
   "autoAbbrevStyle": "",
   "autoExport": "idle",
   "autoExportIdleWait": 10,
