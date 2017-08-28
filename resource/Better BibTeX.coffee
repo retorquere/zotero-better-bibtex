@@ -3,8 +3,7 @@ Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.coffee')
-#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
-BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('biblatex-csl-converter').BibLatexParser
 
 Reference::caseConversion = {
   title: true,
@@ -232,6 +231,19 @@ Translator.detectImport = ->
   debug("better-bibtex: detect: #{found}")
   return found
 
+importGroup = (group, items, root) ->
+  collection = new Zotero.Collection()
+  collection.type = 'collection'
+  collection.name = group.name
+  collection.children = ({type: 'item', id: items[key]} for key in group.references when items[key])
+  debug('importGroup:', group.name, collection.children)
+
+  for subgroup in group.groups || []
+    collection.children.push(importGroup(subgroup, items))
+
+  collection.complete() if root
+  return collection
+
 Translator.doImport = ->
   input = ''
   while (read = Zotero.read(0x100000)) != false
@@ -253,63 +265,21 @@ Translator.doImport = ->
     item.note += '</ul>'
     item.complete()
 
+  items = {}
   for id, ref of bib.references
+    items[ref.entry_key] = id
     new ZoteroItem(id, ref, bib.groups)
 
+  for group in bib.groups
+    importGroup(group, items, true)
   return
-#  for coll in bib.collections
-#    JabRef.collect(coll)
-#
-#  for ref in bib.references
-#    # JabRef groups
-#    if ref.groups
-#      for group in ref.groups.split(',')
-#        group = group.trim()
-#        switch
-#          when group == ''
-#            debug("#{ref.__key__} specifies empty group name")
-#          when !JabRef.collections[group]
-#            debug("#{ref.__key__} specifies non-existant group #{group}")
-#          else
-#            JabRef.collections[group].items.append(ref.__key__)
-#      delete ref.groups
-#
-#    new ZoteroItem(ref)
-#
-#    for coll in bib.collections
-#      JabRef.importGroup(coll)
-#
-#    if bib.errors && bib.errors.length > 0
-#      item = new Zotero.Item('journalArticle')
-#      item.title = "#{Translator.header.label} import errors"
-#      item.extra = JSON.stringify({translator: Translator.header.translatorID, notimported: bib.errors.join("\n\n")})
-#      item.complete()
 
-#JabRef = JabRef ? {}
-#JabRef.importGroup = (group) ->
-#  collection = new Zotero.Collection()
-#  collection.type = 'collection'
-#  collection.name = group.name
-#  collection.children = ({type: 'item', id: key} for key in group.items)
-#
-#  for child in group.collections
-#    collection.children.push(JabRef.importGroup(child))
-#  collection.complete()
-#  return collection
-#
-#JabRef.collections = {}
-#JabRef.collect = (group) ->
-#  JabRef.collections[group.name] = group
-#  for child in group.collections
-#    JabRef.collect(child)
-#  return
-#
 class ZoteroItem
   constructor: (@id, @bibtex, @groups) ->
     @bibtex.bib_type = @bibtex.bib_type.toLowerCase()
     @type = @typeMap[@bibtex.bib_type] || 'journalArticle'
 
-    debug('ZoteroItem: importing', @type, JSON.stringify(@bibtex, null, 2))
+    debug('ZoteroItem: importing', @id, @type, JSON.stringify(@bibtex, null, 2))
 
     @item = new Zotero.Item(@type)
     @item.itemID = @id
@@ -584,12 +554,11 @@ class ZoteroItem
 
   $doi: (value) -> @item.DOI = @collapse(value)
 
-  $abstract: (value) -> @item.abstractNote = @collapse(value).replace(/\n+/g, ' ')
+  $abstract: (value) -> @item.abstractNote = @collapse(value)
 
   $keywords: (value) ->
     @item.tags ||= []
     @item.tags = @item.tags.concat(value)
-    @item.tags = @item.tags.map((tag) -> tag.replace(/\n+/, ' '))
     @item.tags = @item.tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
     return true
   $keyword: @::$keywords

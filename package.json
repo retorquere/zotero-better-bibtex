@@ -20,7 +20,7 @@
     "test": "test"
   },
   "dependencies": {
-    "biblatex-csl-converter": "^0.22.2",
+    "biblatex-csl-converter": "^0.23.0",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@retorquere/parse-xml": "^1.0.0",
-    "archiver": "^2.0.0",
+    "archiver": "^2.0.3",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.0",
     "circular-dependency-plugin": "^4.1.0",
@@ -66,7 +66,7 @@
   },
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
-    "import": "cucumber --fail-fast --tags @import --no-color | tee cucumber.log",
+    "import": "cucumber --fail-fast --tags @97 --no-color | tee cucumber.log",
     "lint": "coffeelint content resource minitests webpack",
     "webpack": "webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
