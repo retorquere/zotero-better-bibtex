@@ -25,7 +25,7 @@ class KeyManager
       try
         citekey = @get(item.id).citekey || @update(item)
         item.setField('extra', Citekey.set(parsed.extra, citekey))
-        item.saveTx()
+        item.saveTx() # this should cause an update and key registration
       catch err
         debug('KeyManager.pin', err)
 
@@ -165,7 +165,7 @@ class KeyManager
           debug('KeyManager.rescan: keeping', saved)
       else
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
-        @keys.insert(Object.assign(citekey, { itemID: item.itemID, libraryID: item.libraryID }))
+        @keys.insert({ citekey: citekey.citekey, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID })
 
     debug('KeyManager.rescan: found', @keys.data.length)
     @keys.findAndRemove({ itemID: { $nin: ids } })
@@ -229,9 +229,8 @@ class KeyManager
     debug('KeyManager.propose: getting existing key from extra field,if any')
     citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
-    citekey.pinned = !!citekey.pinned
 
-    return citekey if citekey.pinned
+    return { citekey: citekey.citekey, pinned: true } if citekey.pinned
 
     debug('KeyManager.propose: formatting...', citekey)
     proposed = Formatter.format(item)
@@ -244,7 +243,7 @@ class KeyManager
         re = (proposed.postfix == '0' && @postfixRE.numeric) || @postfixRE.alphabetic
         if citekey.citekey.slice(proposed.citekey.length).match(re)                                           # rest matches proposed postfix
           if !(other = @keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } })) # noone else is using it
-            return citekey
+            return { citekey: citekey.citekey, pinned: false }
 #          else
 #            debug('KeyManager.propose: no, because', other, 'is using it')
 #        else

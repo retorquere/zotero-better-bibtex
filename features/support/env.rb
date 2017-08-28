@@ -190,11 +190,14 @@ def exportLibrary(translator, displayOptions, library)
 
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
   expected = File.read(expected)
-  case File.extname(library)
-  when '.json'
+
+  if library =~ /\.csl\.json$/
+    found = JSON.neat_generate(JSON.parse(found), { wrap: 40, sort: true })
+    expected = JSON.neat_generate(JSON.parse(expected), { wrap: 40, sort: true })
+  elsif library =~ /\.json$/
     found = normalizeJSON(JSON.parse(found))
     expected = normalizeJSON(JSON.parse(expected))
-  when '.yml'
+  elsif library =~ /\.yml$/
     found = sort_object(YAML.load(found)).to_yaml
     expected = sort_object(YAML.load(expected)).to_yaml
   end

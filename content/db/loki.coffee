@@ -42,13 +42,17 @@ validator.addKeyword('coerce', {
 
 Loki.Collection::insert = ((original) ->
   return (doc) ->
-    throw @validate.errors if @validate && !@validate(doc)
+    if @validate && !@validate(doc)
+      debug('insert: validation failed', @validate.errors)
+      throw new Error("insert: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::insert)
 
 Loki.Collection::update = ((original) ->
   return (doc) ->
-    throw @validate.errors if @validate && !@validate(doc)
+    if @validate && !@validate(doc)
+      debug('update: validation failed', @validate.errors)
+      throw new Error("update: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::update)
 
