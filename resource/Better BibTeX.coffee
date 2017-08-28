@@ -439,12 +439,14 @@ class ZoteroItem
     @hackyFields = []
 
     fields = Object.keys(@bibtex.fields)
+    unexpected = Object.keys(@bibtex.unexpected_fields || {})
     unknown = Object.keys(@bibtex.unknown_fields || {})
     if Translator.preferences.testing
       fields.sort()
+      unexpected.sort()
       unknown.sort()
-    fields = fields.concat(unknown)
-    values = Object.assign({}, @bibtex.unknown_fields || {}, @bibtex.fields)
+    fields = fields.concat(unexpected).concat(unknown)
+    values = Object.assign({}, @bibtex.unknown_fields || {}, @bibtex.unexpected_fields || {}, @bibtex.fields)
 
     for field in fields
       value = values[field]
@@ -454,7 +456,9 @@ class ZoteroItem
       else if field.match(/^bdsk-url-[0-9]+$/)
         continue if @$url(value, field)
 
+      debug('ZoteroItem.import:', field)
       continue if @["$#{field}"]?(value, field)
+      debug('ZoteroItem.import: addtoextra', field)
       @addToExtraData(field, @collapse(value))
 
     if @type in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
@@ -580,11 +584,12 @@ class ZoteroItem
 
   $doi: (value) -> @item.DOI = @collapse(value)
 
-  $abstract: (value) -> @item.abstractNote = @collapse(value)
+  $abstract: (value) -> @item.abstractNote = @collapse(value).replace(/\n+/g, ' ')
 
   $keywords: (value) ->
     @item.tags ||= []
     @item.tags = @item.tags.concat(value)
+    @item.tags = @item.tags.map((tag) -> tag.replace(/\n+/, ' '))
     @item.tags = @item.tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
     return true
   $keyword: @::$keywords
@@ -705,6 +710,19 @@ class ZoteroItem
     @addToExtra(@collapse(value))
     return true
 
+  $language: (value) ->
+    language = @collapse(value)
+    return true unless language
+
+    switch language.toLowerCase()
+      when 'en', 'eng', 'usenglish'
+        language = 'English'
+    @item.language = language
+    return true
+  $langid: @::$language
+
+  $shorttitle: (value) -> @item.shortTitle = @collapse(value)
+
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 #
@@ -718,9 +736,7 @@ class ZoteroItem
 #
 #ZoteroItem::$chapter      = (value) -> @item.section = value
 #ZoteroItem::$copyright    = (value) -> @item.rights = value
-#ZoteroItem::$shorttitle   = (value) -> @item.shortTitle = value
 #ZoteroItem::$nationality  = (value) -> @item.country = value
-#ZoteroItem::$language     = (value) -> @item.language = value
 #ZoteroItem::$assignee     = (value) -> @item.assignee = value
 #ZoteroItem::$issue        = (value) -> @item.issue = value
 #

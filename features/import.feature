@@ -36,6 +36,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Author splitter failure                                                     | 1           |
   | Literal names                                                               | 1           |
   | Better BibTeX.010                                                           | 1           |
   | Better BibTeX.008                                                           | 1           |
@@ -57,7 +58,6 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.013                                                           | 2           |
   # | Better BibTeX.014                                                           | 1           |
   | Better BibTeX.015                                                           | 1           |
-  | Author splitter failure                                                     | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
   | Import fails to perform @String substitutions #154                          | 1           |

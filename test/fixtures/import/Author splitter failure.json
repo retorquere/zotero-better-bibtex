@@ -12,53 +12,34 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "url": "",
-      "rights": "",
-      "series": "",
       "volume": "93",
-      "issue": "",
       "pages": "613-620",
       "publicationTitle": "Physica Status Solidi (a)",
-      "ISSN": "",
+      "journalAbbreviation":"Phys. Status Solidi A",
       "date": "1986",
-      "callNumber": "",
-      "archiveLocation": "",
       "extra": "bibtex: Abu-Zeid_1986",
-      "journalAbbreviation": "",
       "DOI": "10.1002/pssa.2210930226",
-      "accessDate": "",
-      "seriesTitle": "",
-      "seriesText": "",
-      "libraryCatalog": "",
-      "language": "",
-      "abstractNote": "",
-      "title": "Determination of the Thickness and Refractive Index of Cu<sub>2</sub>O Thin Film Using Thermal and Optical Interferometry",
-      "shortTitle": "",
-      "archive": "",
+      "title": "Determination of the Thickness and Refractive Index of Cu₂O Thin Film Using Thermal and Optical Interferometry",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "M. E.",
-          "lastName": "Abu-Zeid",
-          "fieldMode": ""
+          "lastName": "Abu-Zeid"
         },
         {
           "creatorType": "author",
           "firstName": "A. E.",
-          "lastName": "Rakhshani",
-          "fieldMode": ""
+          "lastName": "Rakhshani"
         },
         {
           "creatorType": "author",
           "firstName": "A. A.",
-          "lastName": "Al-Jassar",
-          "fieldMode": ""
+          "lastName": "Al-Jassar"
         },
         {
           "creatorType": "author",
           "firstName": "Y. A.",
-          "lastName": "Youssef",
-          "fieldMode": ""
+          "lastName": "Youssef"
         }
       ],
       "related": [

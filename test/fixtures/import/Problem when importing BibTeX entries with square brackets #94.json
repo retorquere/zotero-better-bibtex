@@ -6,6 +6,7 @@
       "issue": "1",
       "pages": "169-179",
       "publicationTitle": "Physica C",
+      "journalAbbreviation":"Phys. C",
       "ISSN": "0921-4534",
       "date": "January 1989",
       "extra": "bibtex: Adachi_1989 \nbibtex[owner=Francesco]",
@@ -16,14 +17,12 @@
         {
           "creatorType": "author",
           "firstName": "H.",
-          "lastName": "Adachi",
-          "fieldMode": ""
+          "lastName": "Adachi"
         },
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Takano",
-          "fieldMode": ""
+          "lastName": "Takano"
         }
       ],
       "tags": [
@@ -32,7 +31,6 @@
       "itemID": 0
     }
   ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
   "collections": [
     {
       "name": "Problem when importing BibTeX entries with square brackets #94",
