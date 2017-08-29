@@ -179,16 +179,27 @@ def normalizeJSON(lib)
 end
 
 def compare(found, expected, path='')
-  expect(found.class).to eq(expected.class)
+  if found.class != expected.class
+    expect("#{path}.#{found.class}=#{found}").to eq("#{path}.#{expected.class}=#{expected}")
+  end
 
   case found
-    when String, Integer, Float, FalseClass, TrueClass
+    when String, Integer, Float, FalseClass, TrueClass, NilClass
+      if found.is_a?(String) && (found.length > 100 || expected.length > 100)
+        min, max = [found, expected].sort.values_at(0, -1)
+        prefix = min+max =~ /(.).{#{min.length-1}}(?!\1)/m ? $` : min
+        found.slice!(prefix)
+        expected.slice!(prefix)
+      end
       expect("#{path}.#{found}").to eq("#{path}.#{expected}")
 
     when Array
-      expect("#{path}.#{found.length}").to eq("#{path}.#{expected.length}")
-      found.zip(expected).each_with_index{|e, i| compare(e[0], e[1], "#{path}[#{i}]") }
-    
+      found.sort! if found.collect{|f| f.class.to_s}.uniq == ['String']
+      expected.sort! if expected.collect{|f| f.class.to_s}.uniq == ['String']
+      0.upto([found.length, expected.length].max - 1).each{|i|
+        compare(found[i], expected[i], "#{path}.#{i}")
+      }
+
     when Hash
       if found.keys.sort != expected.keys.sort
         if path == ''
@@ -197,7 +208,16 @@ def compare(found, expected, path='')
           expect(JSON.neat_generate(found, { wrap: 40, sort: true })).to eq(JSON.neat_generate(expected, { wrap: 40, sort: true }))
         end
       end
-      found.keys.each{|k| compare(found[k], expected[k], "#{path}[#{k}]") }
+
+      if path == ''
+        found.keys.each{|k| compare(found[k], expected[k], "#{path}.#{k}") }
+      else
+        begin
+          found.keys.each{|k| compare(found[k], expected[k], "#{path}.#{k}") }
+        rescue
+          expect(JSON.neat_generate(found, { wrap: 40, sort: true })).to eq(JSON.neat_generate(expected, { wrap: 40, sort: true }))
+        end
+      end
 
     else
       throw "Unexpected class #{found.class}"

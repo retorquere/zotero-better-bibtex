@@ -210,7 +210,9 @@ importReferences = (input) ->
   parser = new BibTeXParser(input, {
     rawFields: true,
     processUnexpected: true,
-    processUnknown: true
+    processUnknown: {
+      comment: 'f_verbatim'
+    }
   })
 
   ### this must be called before requesting warnings or errors -- this really, really weirds me out ###
@@ -416,10 +418,10 @@ class ZoteroItem
       unexpected.sort()
       unknown.sort()
     fields = fields.concat(unexpected).concat(unknown)
-    values = Object.assign({}, @bibtex.unknown_fields || {}, @bibtex.unexpected_fields || {}, @bibtex.fields)
+    @fields = Object.assign({}, @bibtex.unknown_fields || {}, @bibtex.unexpected_fields || {}, @bibtex.fields)
 
     for field in fields
-      value = values[field]
+      value = @fields[field]
 
       if field.match(/^local-zo-url-[0-9]+$/)
         continue if @$file(value, field)
@@ -521,15 +523,16 @@ class ZoteroItem
 
   $date: (value) -> @item.date = @collapse(value)
 
-  $journaltitle: (value) ->
-    if @item.publicationTitle
-      @item.journalAbbreviation = @collapse(value)
-    else
-      @item.publicationTitle = @collapse(value)
-    return true
-# $journal: @::$journaltitle
-
   $booktitle: (value) -> @item.publicationTitle = @collapse(value)
+
+  $journaltitle: (value) ->
+    value = @collapse(value)
+    if @fields['booktitle']
+      @item.journalAbbreviation = value
+    else
+      @item.publicationTitle = value
+    return true
+  $journal: @::$journaltitle
 
   $pages: (value) ->
     debug('pages:', value)
@@ -692,6 +695,24 @@ class ZoteroItem
 
   $shorttitle: (value) -> @item.shortTitle = @collapse(value)
 
+  $eprint: (value, field) ->
+    ### Support for IDs exported by BibLaTeX ###
+    return false unless @fields['eprinttype']
+
+    eprint = @collapse(value)
+    eprinttype = @collapse(@fields['eprinttype'])
+
+    switch eprinttype.trim().toLowerCase()
+      when 'arxiv' then @hackyFields.push("arXiv: #{eprint}")
+      when 'jstor' then @hackyFields.push("JSTOR: #{eprint}")
+      when 'pubmed' then @hackyFields.push("PMID: #{eprint}")
+      when 'hdl' then @hackyFields.push("HDL: #{eprint}")
+      when 'googlebooks' then @hackyFields.push("GoogleBooksID: #{eprint}")
+      else
+        return false
+    return true
+  $eprinttype: (value) -> @fields['eprint']
+
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 #
@@ -734,19 +755,4 @@ class ZoteroItem
 #
 #
 #
-#
-#ZoteroItem::$eprint = ZoteroItem::$eprinttype = (value, field) ->
-#  ### Support for IDs exported by BibLaTeX ###
-#  @item["_#{field}"] = value
-#
-#  if @item._eprint && @item._eprinttype
-#    switch @item._eprinttype.trim().toLowerCase()
-#      when 'arxiv' then @hackyFields.push("arXiv: #{value}")
-#      when 'jstor' then @hackyFields.push("JSTOR: #{value}")
-#      when 'pubmed' then @hackyFields.push("PMID: #{value}")
-#      when 'hdl' then @hackyFields.push("HDL: #{value}")
-#      when 'googlebooks' then @hackyFields.push("GoogleBooksID: #{value}")
-#    delete @item._eprint
-#    delete @item._eprinttype
-#  return true
 #
