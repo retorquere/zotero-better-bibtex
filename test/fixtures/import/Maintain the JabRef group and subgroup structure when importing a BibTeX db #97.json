@@ -2373,7 +2373,7 @@
       "pages": "C3-32-C3-35",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1967",
-      "extra": "COLLOQUE SUR LES TRANSITIONS ΈLECTRONIQUES DANS LES SOLIDES NON CONDUCTEURS \nbibtex: Brahms_1967 \nbibtex[owner=Francesco]",
+      "extra": "COLLOQUE SUR LES TRANSITIONS ÉLECTRONIQUES DANS LES SOLIDES NON CONDUCTEURS \nbibtex: Brahms_1967 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphyscol:1967306",
       "title": "SUR LA STRUCTURE DE BANDE ET LE SPECTRE D'ABSORPTION DE Cu₂O",
       "creators": [
@@ -2819,7 +2819,7 @@
       "date": "1999",
       "extra": "bibtex: Burlakov_1999 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/S0375-9601(99)00052-3",
-      "title": "On a biphononic origin of the 1125mathrmcm<sup>-1</sup> absorption band in cuprous oxide",
+      "title": "On a biphononic origin of the 1125 cm⁻¹ absorption band in cuprous oxide",
       "creators": [
         {
           "creatorType": "author",
@@ -3084,7 +3084,7 @@
       "extra": "bibtex: Carel_1999 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/S0167-2738(98)00247-1",
       "abstractNote": "Four sets of compositional data with a departure z or [epsilon] from the stoichiometry of tenorite Cu1�zO or CuO1�[epsilon] are re-examined for possible point defects. Correlations z(pO2) at equilibrium solid[left right double arrow]pure di-oxygen - when they can be computed - indicate the presence of either oxygen vacancies or copper interstitials or clusters of them. Some recent data after quenching are in favor of copper interstitials. Few data concerning tenorite prepared by decomposition of a salt, by oxidation of copper and by CVT in sealed tubes have generally been interpreted in the literature as indicating copper deficiency. In those oxides a large departure from the stoichiometry indicates a complex behavior likely due to several point defects possibly ordering at short and/or long range, and including chemical impurities in the case of sealed tube preparation. It is, however, in fact likely that the defect structure of such samples involves the two sub-lattices. Cu3O2- or Cu4O3-like clusters can even be envisaged.",
-      "title": "Re-examination of the non-stoichiometry and defect structure of copper(II) oxide or tenorite, Cu<sub>1pmz</sub>O or CuO<sub>1pmepsilon</sub>: A short review",
+      "title": "Re-examination of the non-stoichiometry and defect structure of copper(II) oxide or tenorite, Cu₁<sub>±z</sub>O or CuO₁<sub>±ε</sub>: A short review",
       "creators": [
         {
           "creatorType": "author",
@@ -3210,7 +3210,7 @@
       "extra": "bibtex: Certier_1964 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01964002504036100",
       "abstractNote": "The Zeeman effect of the exciton n = 1 line of the yellow series of Cu 2O has been studied at 20 °K, with polycrystalline samples and oriented single crystals. In the présence of a magnetic field of 30.5 kilogauss, the line is split into three components. The polarisation of these components is a function of the orientation of the field H, with respect to the symmetry axes of the crystal. The results are in good agreement with Elliott's theory. According to this theory, the irreducible representation of the exciton state is of the type Γ+25. The spectroscopic splitting factor of the line is g = 1.7 ± 0.2.",
-      "title": "Etude de l'effet Zeeman de la raie n = 1 de la série jaune de Cu₂O à 20^circK",
+      "title": "Etude de l'effet Zeeman de la raie n = 1 de la série jaune de Cu₂O à 20 °K",
       "creators": [
         {
           "creatorType": "author",
@@ -3276,7 +3276,7 @@
       "date": "2009",
       "extra": "bibtex: Chang_2009 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.jallcom.2009.03.169",
-      "abstractNote": "Cu2O nanowires were successfully fabricated by a simple liquid reaction in the presence of amphiphilic triblock copolymer (P123). The concentration of copolymer and aging time drastically changed the morphology of Cu2O samples. XPS results show that tiny amount of CuO as well as some absorbed O2 molecules existed on the surface of the Cu2O nanowires. Thermal analysis shows that the triblock copolymer owns a higher decomposition temperature ( 645Â Â°C) than that of pervious research results and this may be the result of strong interaction between P123 and Cu2O. The band gap of Cu2O nanowires was estimated about 2.23Â eV and shifting of the band gap with decreasing of the particle size could also be found. The photoluminance property study reveals that the intrinsic emission peak of Cu2O nanowires can be observed at 546Â nm under the excitation wavelength of 400Â nm (Xe lamp was used as the excitation light source).",
+      "abstractNote": "Cu2O nanowires were successfully fabricated by a simple liquid reaction in the presence of amphiphilic triblock copolymer (P123). The concentration of copolymer and aging time drastically changed the morphology of Cu2O samples. XPS results show that tiny amount of CuO as well as some absorbed O2 molecules existed on the surface of the Cu2O nanowires. Thermal analysis shows that the triblock copolymer owns a higher decomposition temperature ( 645Â Â°C) than that of pervious research results and this may be the result of strong interaction between P123 and Cu2O. The band gap of Cu2O nanowires was estimated about 2.23Â eV and shifting of the band gap with decreasing of the particle size could also be found. The photoluminance property study reveals that the intrinsic emission peak of Cu2O nanowires can be observed at 546Â nm under the excitation wavelength of 400Â nm (Xe lamp was used as the excitation light source).",
       "title": "Fabrication of nanowire-like cuprous oxide in aqueous solutions of a triblock copolymer",
       "creators": [
         {
@@ -3474,7 +3474,7 @@
       "date": "July 2003",
       "extra": "bibtex: Chen_2003 \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2003ApPhL..83..746C;owner=Francesco]",
       "DOI": "10.1063/1.1595156",
-      "abstractNote": "Films of aligned cupric oxide nanobelts have been prepared in an aqueous solution at room temperature. Field-emission characteristics, including emission-current-applied-field plot and emission site distribution, have been studied using the transparent anode technique. In addition, the temperature dependence of the field-emission characteristics has been studied from room temperature to 750 K. The threshold field for obtaining a current density of 10 μA/cm2 is 11 MV/m. This decreases with increasing temperature, and at 700 K it is 6 MV/m. At a fixed field of 10 MV/m, about a three-orders-of-magnitude increase of the emission current level has been observed. The results show that the cupric oxide nanobelt is a promising candidate for cathode material in a thermoelectric conversion device based on field emission.",
+      "abstractNote": "Films of aligned cupric oxide nanobelts have been prepared in an aqueous solution at room temperature. Field-emission characteristics, including emission-current-applied-field plot and emission site distribution, have been studied using the transparent anode technique. In addition, the temperature dependence of the field-emission characteristics has been studied from room temperature to 750 K. The threshold field for obtaining a current density of 10 μA/cm2 is  11 MV/m. This decreases with increasing temperature, and at 700 K it is  6 MV/m. At a fixed field of 10 MV/m, about a three-orders-of-magnitude increase of the emission current level has been observed. The results show that the cupric oxide nanobelt is a promising candidate for cathode material in a thermoelectric conversion device based on field emission.",
       "title": "Temperature dependence of field emission from cupric oxide nanobelt films",
       "creators": [
         {
@@ -3782,9 +3782,9 @@
       "pages": "145601",
       "publicationTitle": "Journal of Physics: Condensed Matter",
       "date": "April 2009",
-      "extra": "bibtex: Chen_2009 \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2009JPCM...21n5601C;archiveprefix=arXiv;eprint=0812.2079;owner=Francesco]",
+      "extra": "bibtex: Chen_2009 \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2009JPCM...21n5601C;owner=Francesco] \narXiv: 0812.2079",
       "DOI": "10.1088/0953-8984/21/14/145601",
-      "abstractNote": "Fine powders of micron- and submicron-sized particles of undoped Cu2O semiconductor, with three different sizes and morphologies, have been synthesized by different chemical processes. These samples include nanospheres 200 nm in diameter, octahedra of size 1 µm and polyhedra of size 800 nm. They exhibit a wide spectrum of magnetic properties. At low temperature, T = 5 K, the octahedron sample is diamagnetic with the magnetic susceptibility χOH = -9.5 × 10-6 emu g-1 Oe-1. The nanosphere is paramagnetic with χNS = 2.2 × 10‑5 emu g‑1 Oe‑1. The other two polyhedron samples synthesized in different runs by the same process are found to show different magnetic properties. One of them exhibits weak ferromagnetism with TC 455 K and saturation magnetization MS 0.19 emu g‑1 at T = 5 K, while the other is paramagnetic with χ = 1.0 × 10‑5 emu g‑1 Oe‑1. The total magnetic moment estimated from the detected impurity concentration of Fe, Co and Ni, is too small to account for the observed magnetism by one to two orders of magnitude. Calculations by density functional theory (DFT) reveal that cation vacancies in the Cu2O lattice are one of the possible causes of induced magnetic moments. The results further predict that the defect-induced magnetic moments favour a ferromagnetically coupled ground state if the local concentration of cation vacancies, nC, exceeds 12.5%. This offers a possible scenario to explain the observed magnetic properties. The limitations of the investigations in the present work, in particular in the theoretical calculations, are discussed and possible areas for further study are suggested.",
+      "abstractNote": "Fine powders of micron- and submicron-sized particles of undoped Cu2O semiconductor, with three different sizes and morphologies, have been synthesized by different chemical processes. These samples include nanospheres 200 nm in diameter, octahedra of size 1 µm and polyhedra of size 800 nm. They exhibit a wide spectrum of magnetic properties. At low temperature, T = 5 K, the octahedron sample is diamagnetic with the magnetic susceptibility χOH = -9.5 × 10-6 emu g-1 Oe-1. The nanosphere is paramagnetic with χNS = 2.2 × 10‑5 emu g‑1 Oe‑1. The other two polyhedron samples synthesized in different runs by the same process are found to show different magnetic properties. One of them exhibits weak ferromagnetism with TC 455 K and saturation magnetization MS 0.19 emu g‑1 at T = 5 K, while the other is paramagnetic with χ = 1.0 × 10‑5 emu g‑1 Oe‑1. The total magnetic moment estimated from the detected impurity concentration of Fe, Co and Ni, is too small to account for the observed magnetism by one to two orders of magnitude. Calculations by density functional theory (DFT) reveal that cation vacancies in the Cu2O lattice are one of the possible causes of induced magnetic moments. The results further predict that the defect-induced magnetic moments favour a ferromagnetically coupled ground state if the local concentration of cation vacancies, nC, exceeds 12.5%. This offers a possible scenario to explain the observed magnetic properties. The limitations of the investigations in the present work, in particular in the theoretical calculations, are discussed and possible areas for further study are suggested.",
       "title": "Magnetic properties of undoped Cu₂O fine powders with magnetic impurities and/or cation vacancies",
       "creators": [
         {
@@ -4084,7 +4084,7 @@
       "extra": "bibtex: Clarke_1975 \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/1975SurSc..49..529C;owner=Francesco]",
       "DOI": "10.1016/0039-6028(75)90368-4",
       "abstractNote": "Not Available",
-      "title": "Optical transmittance and microgravimetric studies of the oxidation of langle100 rangle single crystal films of copper",
+      "title": "Optical transmittance and microgravimetric studies of the oxidation of 〈100 〉 single crystal films of copper",
       "creators": [
         {
           "creatorType": "author",

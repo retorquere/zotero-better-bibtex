@@ -188,6 +188,7 @@ def compare(found, expected, path='')
       if found.is_a?(String) && (found.length > 100 || expected.length > 100)
         min, max = [found, expected].sort.values_at(0, -1)
         prefix = min+max =~ /(.).{#{min.length-1}}(?!\1)/m ? $` : min
+        prefix = prefix[0...-10]
         found.slice!(prefix)
         expected.slice!(prefix)
       end

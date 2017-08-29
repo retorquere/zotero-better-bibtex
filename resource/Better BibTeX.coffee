@@ -3,7 +3,8 @@ Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.coffee')
-BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
 
 Reference::caseConversion = {
   title: true,
@@ -713,6 +714,8 @@ class ZoteroItem
     return true
   $eprinttype: (value) -> @fields['eprint']
 
+  $nationality: (value) -> @item.country = @collapse(value)
+
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 #
@@ -726,7 +729,6 @@ class ZoteroItem
 #
 #ZoteroItem::$chapter      = (value) -> @item.section = value
 #ZoteroItem::$copyright    = (value) -> @item.rights = value
-#ZoteroItem::$nationality  = (value) -> @item.country = value
 #ZoteroItem::$assignee     = (value) -> @item.assignee = value
 #ZoteroItem::$issue        = (value) -> @item.issue = value
 #
