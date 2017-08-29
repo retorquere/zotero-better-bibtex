@@ -438,7 +438,7 @@
       "journalAbbreviation": "Applied Surface Science",
       "DOI": "10.1016/j.apsusc.2010.01.101",
       "abstractNote": "First-principles density functional theory and a periodic-slab model have been utilized to investigate the adsorption of a 2-chlorophenol molecule on a CuO(1�1�1) surface with a vacant Cu surface site, namely Cu2O(1�1�1)-CuCUS. Several vertical and flat orientations have been studied. All of these molecular configurations interact very weakly with the Cu2O(1�1�1)-CuCUS surface, an observation which also holds for clean copper surfaces and the Cu2O(1�1�0):CuO surface. Hydroxyl-bond dissociation assisted by the surface was found to be endoergic by 0.42-1.72�eV, depending predominantly on the position of the isolated H on the surface. In addition, the corresponding adsorbed 2-chlorophenoxy moiety was found to be more stable than a vacuum 2-chlorophenoxy radical by about 0.76�eV. Despite these predicted endoergicities, however, we would predict the formation of 2-chlorophenoxy radicals from gaseous 2-chlorophenol over the copper (I) oxide Cu2O(1�1�1)-CuCUS surface to be a feasible and important process in the formation of PCDD/Fs in the post-flame region where gas-phase routes are negligible.",
-      "title": "Adsorption of 2-chlorophenol on Cu₂O(1 1 1)-CuCUS: A first-principles density functional study",
+      "title": "Adsorption of 2-chlorophenol on Cu₂O(1 1 1)-Cu<sub>CUS</sub>: A first-principles density functional study",
       "creators": [
         {
           "creatorType": "author",
@@ -7351,8 +7351,8 @@
         }
       ],
       "tags": [
-        "Copper",
-        "Copper oxides",
+        "copper",
+        "copper oxides",
         "activation energy",
         "amorphous state",
         "argon",
@@ -7410,8 +7410,8 @@
         "Cu2O",
         "Direct patterning",
         "Soft solution process",
-        "electrodeposition",
-        "thin film"
+        "Electrodeposition",
+        "Thin film"
       ],
       "related": [
 
@@ -7655,8 +7655,8 @@
       "tags": [
         "C-V characteristic",
         "Cuprous oxide",
-        "electrodeposition",
-        "solar cell"
+        "Electrodeposition",
+        "Solar cell"
       ],
       "related": [
 
@@ -7851,7 +7851,7 @@
         "MIEC",
         "Mixed ionic electronic conductor",
         "Solid state device",
-        "semiconductor"
+        "Semiconductor"
       ],
       "related": [
 
@@ -8127,7 +8127,7 @@
       "tags": [
         "Biexcitons",
         "Cuprous oxide",
-        "EXCITONS",
+        "Excitons",
         "Non-equilibrium"
       ],
       "related": [
@@ -8634,7 +8634,7 @@
       "date": "1961",
       "extra": "bibtex: Grun_1961 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0022-3697(61)90028-2",
-      "title": "Έtude Spectrophotométrique des Spectres Continus de Cu₂O a Diverses Temperatures",
+      "title": "Étude Spectrophotométrique des Spectres Continus de Cu₂O a Diverses Temperatures",
       "creators": [
         {
           "creatorType": "author",
@@ -8665,7 +8665,7 @@
       "date": "1961",
       "extra": "bibtex: Grun_1961_B \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0022-3697(61)90221-9",
-      "title": "Έtude de l'absorption et de la réflexion de la cuprite aux très basses températures dans le visible de courtes longueurs d'onde",
+      "title": "Étude de l'absorption et de la réflexion de la cuprite aux très basses températures dans le visible de courtes longueurs d'onde",
       "creators": [
         {
           "creatorType": "author",
@@ -8731,7 +8731,7 @@
       "extra": "bibtex: Grun_1963 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01963002406035500",
       "abstractNote": "The experimental evidence in favour of the interpretation of the yellow and green series of Cu2O as a second class (weakly forbidden) exciton spectra is discussed. The shape of the absorption lines has been studied in detail and compared with Toyozawa's theory. Good agreement has been found with the Lorentzian unsymmétrical type of lines predicted by the theory.",
-      "title": "Έtude de la forme des raies des séries jaune et verte de la cuprite",
+      "title": "Étude de la forme des raies des séries jaune et verte de la cuprite",
       "creators": [
         {
           "creatorType": "author",
@@ -8771,7 +8771,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "Stanislaw",
+          "firstName": "Stanisław",
           "lastName": "Mrowec"
         }
       ],
@@ -9044,7 +9044,7 @@
         "Cuprous oxide",
         "Photovoltaic device",
         "Resistivity",
-        "electrodeposition",
+        "Electrodeposition",
         "p-n homojunction"
       ],
       "related": [
@@ -9084,8 +9084,8 @@
         "Chlorine",
         "Copper oxide",
         "N-type",
-        "doping",
-        "electrodeposition"
+        "Doping",
+        "Electrodeposition"
       ],
       "related": [
 
@@ -9184,7 +9184,7 @@
       "date": "2008",
       "extra": "bibtex: Hao_2008 \nbibtex[owner=Francesco]",
       "DOI": "10.1002/cvde.200706645",
-      "abstractNote": "CuO:In thin films were prepared by plasma-enhanced chemical vapor deposition (CVD) with Cu(acac)2 and In(acac)3 precursors. A unique method or facility in vaporizing solid-state precursors and the transportation to the CVD reactor was described. The structure of the films evolved from nano-crystalline characteristic to amorphous state as the In/Cu atomic ratio of the mixed precursors increased from 0 to 0.25. A dependence of the resistivity of the films on the indium concentration was found. A low room-temperature resistivity of 7.35 OHgr;�cm was achieved for the sample of an In/Cu atomic ratio of 0.08, with an activation energy of 0.14�eV. X-ray photoelectron spectroscopy (XPS) study excluded the possibility that the increased conductivity of the samples came from a reduction of Cu2+ to Cu+. Positive holes (hbull) induced by negatively charged defect complex were assumed to contribute to the increase of conductivity.",
+      "abstractNote": "CuO:In thin films were prepared by plasma-enhanced chemical vapor deposition (CVD) with Cu(acac)2 and In(acac)3 precursors. A unique method or facility in vaporizing solid-state precursors and the transportation to the CVD reactor was described. The structure of the films evolved from nano-crystalline characteristic to amorphous state as the In/Cu atomic ratio of the mixed precursors increased from 0 to 0.25. A dependence of the resistivity of the films on the indium concentration was found. A low room-temperature resistivity of 7.35 &OHgr;�cm was achieved for the sample of an In/Cu atomic ratio of 0.08, with an activation energy of 0.14�eV. X-ray photoelectron spectroscopy (XPS) study excluded the possibility that the increased conductivity of the samples came from a reduction of Cu2+ to Cu+. Positive holes (hbull) induced by negatively charged defect complex were assumed to contribute to the increase of conductivity.",
       "title": "The Influence of In/Cu Ratio on Electrical Properties of CuO:In Thin Films Prepared by Plasma-Enhanced CVD",
       "creators": [
         {
@@ -9213,7 +9213,7 @@
       "date": "1968",
       "extra": "bibtex: Hapase_1968 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0039-6028(68)90165-9",
-      "abstractNote": "A study of the oxygen uptake vs. temperature behaviour of vacuum deposited copper films in the range 50 to 400�C under 70 mm Hg oxygen pressure showed the existence of the phases CuO0.67 and CuO. Isothermal oxidation studies show the CuO0.67 phase to be stable at the lower temperatures (150-200�C) and the CuO at the higher temperatures (>300�C). In the intermediate range ( 210-290�C) the product is also intermediate between the two. The low-temperature data show that a direct logarithmic rate law is obeyed and the activation energy is 5.58 kcal/mole. At 250�C, it is logarithmic as well as inverse logarithmic. At higher temperatures (>300�C) the behaviour is inverse logarithmic, the activation energy corresponding to 5.90 kcal/mole. The reason for the formation of CuO0.67 and CuO has been explained qualitatively.",
+      "abstractNote": "A study of the oxygen uptake vs. temperature behaviour of vacuum deposited copper films in the range 50 to 400�C under 70 mm Hg oxygen pressure showed the existence of the phases CuO0.67 and CuO. Isothermal oxidation studies show the CuO0.67 phase to be stable at the lower temperatures (150-200�C) and the CuO at the higher temperatures (>300�C). In the intermediate range ( 210-290�C) the product is also intermediate between the two. The low-temperature data show that a direct logarithmic rate law is obeyed and the activation energy is 5.58 kcal/mole. At 250�C, it is logarithmic as well as inverse logarithmic. At higher temperatures (>300�C) the behaviour is inverse logarithmic, the activation energy corresponding to 5.90 kcal/mole. The reason for the formation of CuO0.67 and CuO has been explained qualitatively.",
       "title": "The oxidation of vacuum deposited films of copper",
       "creators": [
         {
@@ -9478,8 +9478,8 @@
         }
       ],
       "tags": [
-        "Copper",
-        "Oxidation",
+        "copper",
+        "oxidation",
         "scanning electron microscopy",
         "steam",
         "surface segregation",
@@ -9589,7 +9589,7 @@
         }
       ],
       "tags": [
-        "EXCITONS",
+        "excitons",
         "absorption",
         "doping",
         "silver"
@@ -9767,7 +9767,7 @@
       ],
       "tags": [
         "AUGER ELECTRON SPECTROSCOPY",
-        "Copper oxides",
+        "COPPER OXIDES",
         "DATA",
         "INTERFACES",
         "LAYERS",
@@ -9775,9 +9775,9 @@
         "QUANTITY RATIO",
         "SOAR CELLS",
         "SPACE CHARGE",
-        "Semiconductors",
-        "photovoltaic cells",
-        "stoichiometry"
+        "SEMICONDUCTORS",
+        "PHOTOVOLTAIC CELLS",
+        "STOICHIOMETRY"
       ],
       "related": [
 
@@ -9811,8 +9811,7 @@
         }
       ],
       "tags": [
-        "cells",
-        "solar"
+        "solar cells"
       ],
       "related": [
 
@@ -10066,7 +10065,7 @@
       "extra": "bibtex: Holmes_1989 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0021-9614(89)90136-5",
       "abstractNote": "Oxygen-concentration cells with zirconia solid electrolytes have been used to make equilibrium measurements of the standard molar Gibbs free energy of formation for copper(I) oxide, [Delta]fGmo(Cu2O), over the temperature range from 900 to 1300 K. Compared with previous measurements, systematic errors due to thermal gradients across the zirconia solid electrolyte have been greatly reduced. Measurements with three different types of zirconia solid electrolytes have yielded results that differ by only �40 J�mol-1 (�0.2 mV). This is the best agreement yet achieved between solid electrolytes of different composition. Our recommended value for the standard molar enthalpy of formation, [Delta]fHmo(Cu2O, 298.15 K), is -(170.59�0.08) kJ�mol-1 (po = 1 � 105 Pa).",
-      "title": "Standard molar Gibbs free energy of formation for Cu₂O: high-resolution electrochemical measurements from 900 to 1300mathrmK",
+      "title": "Standard molar Gibbs free energy of formation for Cu₂O: high-resolution electrochemical measurements from 900 to 1300 K",
       "creators": [
         {
           "creatorType": "author",
@@ -10310,9 +10309,9 @@
         }
       ],
       "tags": [
-        "Annealing",
-        "Copper",
-        "Oxidation",
+        "annealing",
+        "copper",
+        "oxidation",
         "Rutherford backscattering",
         "ellipsometry",
         "grain size",
@@ -10416,7 +10415,7 @@
         "Direct current electrodeposition",
         "Morphology",
         "X-ray diffraction",
-        "scanning electron microscopy"
+        "Scanning electron microscopy"
       ],
       "related": [
 
@@ -10574,7 +10573,7 @@
         "Photocatalysis",
         "Photocorrosion",
         "X-ray photoelectron spectroscopy",
-        "surface structure"
+        "Surface structure"
       ],
       "related": [
 
@@ -10687,8 +10686,8 @@
       "tags": [
         "Catalysis",
         "Nanostructured materials",
-        "electroplating",
-        "scanning electron microscopy"
+        "Electroplating",
+        "Scanning electron microscopy"
       ],
       "related": [
 
@@ -10960,7 +10959,7 @@
         }
       ],
       "tags": [
-        "COPPER COMPOUNDS",
+        "copper compounds",
         "electrodeposition",
         "energy gap",
         "nanotechnology",
@@ -11336,7 +11335,7 @@
       "date": "1996",
       "extra": "bibtex: Isobe_1996 \nbibtex[owner=Francesco;refid=10.1143/JPSJ.65.4088]",
       "DOI": "10.1143/JPSJ.65.4088",
-      "title": "Default of the Resonant Conjugation of Photoconductivity of Cu₂O in Low-T<sub>m</sub>athrmc Superconductor Based Optoelectronic Devices",
+      "title": "Default of the Resonant Conjugation of Photoconductivity of Cu₂O in Low-T<sub>c</sub> Superconductor Based Optoelectronic Devices",
       "creators": [
         {
           "creatorType": "author",
@@ -11557,7 +11556,7 @@
       "date": "2007",
       "extra": "bibtex: Itoh_2007 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.vacuum.2006.10.012",
-      "title": "Preferentially oriented thin-film growth of CuO(111) and Cu₂O(001) on MgO(001) substrate by reactive dc-magnetron sputtering",
+      "title": "Preferentially oriented thin-film growth of CuO(1 1 1) and Cu₂O(0 0 1) on MgO(0 0 1) substrate by reactive dc-magnetron sputtering",
       "creators": [
         {
           "creatorType": "author",
@@ -11586,7 +11585,7 @@
       "date": "2007",
       "extra": "bibtex: Itoh_2007_B \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.vacuum.2007.01.061",
-      "title": "Growth process of CuO(111) and Cu₂O(001) thin films on MgO(001) substrate under metal-mode condition by reactive dc-magnetron sputtering",
+      "title": "Growth process of CuO(1 1 1) and Cu₂O(0 0 1) thin films on MgO(0 0 1) substrate under metal-mode condition by reactive dc-magnetron sputtering",
       "creators": [
         {
           "creatorType": "author",
@@ -11746,7 +11745,7 @@
       "extra": "bibtex: Iwanowski_1984 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0379-6787(85)90018-3",
       "abstractNote": "The method of multistep irradiation of a Cu2O substrate by an H+ ion beam has been introduced for the preparation of Cu/Cu2O Schottky barrier solar cells. Cu2O samples were exposed first to an H+ beam with the beam voltage Vb fixed between 150 and 950 V (step I) and subsequently to a radiation dose of low energy H+ ions (Vb = 150 V) (step II). Both dark and illuminated (air mass 1) current-voltage characteristics of the cells were examined at 300 K after each step of the junction formation process. A detailed analysis of the influence of step II of the process on the main solar cell parameters (Voc, Jsc, fill factor and [eta]) and the diode parameters (n and J0) has been performed. The quality of the thin film copper electrode layer obtained by H+-ion-induced surface reduction of Cu2O was found to be better than that obtained by the single-step process. This resulted in an improvement in the conversion efficiency of Cu/Cu2O Schottky barrier solar cells up to [eta] [approximate] 1.5%.",
-      "title": "Cu/Cu₂O Schottky barrier solar cells prepared by multistep irradiation of a Cu₂O substrate by H<sup>+</sup> ions",
+      "title": "Cu/Cu₂O Schottky barrier solar cells prepared by multistep irradiation of a Cu₂O substrate by H⁺ ions",
       "creators": [
         {
           "creatorType": "author",
@@ -11773,8 +11772,8 @@
       "date": "1986",
       "extra": "bibtex: Iwanowski_1986 \nbibtex[owner=Francesco]",
       "DOI": "10.1002/pssa.2210950244",
-      "abstractNote": "A new preparation method of Cu/Cu2O Schottky barrier solarcells is proposed and worked out. It combines resistive evaporation of a thin semitransparent copper electrode on a Cu2O substrate (step I) and exposition of the obtained junction to the H+ ion irradiation (step II). Both, dark and illuminated (AMI) current-voltage characteristics of the cells are recorded at room temperature after each step of the junction formation process. Especially, the influence of H+ ion beam voltage, Ub, on the main solar cell parameters is analysed here. It is proved that low energy H+ ion irradiation (0 &lt; Ub lap; 250 V) provides significant enhancement of the photovoltaic conversion efficiency of the Cu/Cu2O solar cells.",
-      "title": "Enhancement of the photovoltaic conversion efficiency in Cu/Cu₂O Schottky barrier solar cells by H<sup>+</sup> ion irradiation",
+      "abstractNote": "A new preparation method of Cu/Cu2O Schottky barrier solarcells is proposed and worked out. It combines resistive evaporation of a thin semitransparent copper electrode on a Cu2O substrate (step I) and exposition of the obtained junction to the H+ ion irradiation (step II). Both, dark and illuminated (AMI) current-voltage characteristics of the cells are recorded at room temperature after each step of the junction formation process. Especially, the influence of H+ ion beam voltage, Ub, on the main solar cell parameters is analysed here. It is proved that low energy H+ ion irradiation (0 &lt; Ub &lap; 250 V) provides significant enhancement of the photovoltaic conversion efficiency of the Cu/Cu2O solar cells.",
+      "title": "Enhancement of the photovoltaic conversion efficiency in Cu/Cu₂O Schottky barrier solar cells by H⁺ ion irradiation",
       "creators": [
         {
           "creatorType": "author",
@@ -11825,7 +11824,7 @@
         }
       ],
       "tags": [
-        "Copper",
+        "copper",
         "X-ray diffraction",
         "X-ray photoelectron spectra",
         "adhesion",
@@ -11880,7 +11879,7 @@
         }
       ],
       "tags": [
-        "COPPER COMPOUNDS",
+        "copper compounds",
         "II-VI semiconductors",
         "current density",
         "photochemistry",
@@ -12004,7 +12003,7 @@
         "Transmission electron microscopy",
         "UV-VIS-NIR spectroscopy",
         "Zirconium oxychloride octahydrate",
-        "films"
+        "Films"
       ],
       "related": [
 
@@ -12483,8 +12482,8 @@
         "Copper oxide",
         "Zinc oxide",
         "ZnO/Cu2O",
-        "electrodeposition",
-        "photovoltaic cells"
+        "Electrodeposition",
+        "Photovoltaic cells"
       ],
       "related": [
 
@@ -17066,7 +17065,7 @@
       "extra": "bibtex: Merle_1967 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphyscol:1967319",
       "abstractNote": "The n = 1 line of the yellow series of cuprous oxide (Cu2O) was studied between 4.2 °K and 112 °K. The results obtained, combined with previous results, show a strong participation of the optical phonons in the scattering of the exciton by phonons. Morever, at very low temperature, the n = 1 line is very sensitive to crystal imperfections.",
-      "title": "Έtude du profil de la raie excitonique n = 1 de la série jaune de la cuprite en fonction de la température",
+      "title": "Étude du profil de la raie excitonique n = 1 de la série jaune de la cuprite en fonction de la température",
       "creators": [
         {
           "creatorType": "author",
@@ -17099,7 +17098,7 @@
       "extra": "bibtex: Merle_1974 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphyscol:1974305",
       "abstractNote": "High resolution measurements of the 1S yellow exciton quadrupole absorption line of Cu2O have been undertaken in order to study the effects of some physico-chemical parameters (dislocations, impurities and temperature). Below 20 K, an important scattering of the residual line width is observed. A predominant effect of isoelectronic silver is pointed out in this phenomenon : the line broadening is porportional to the silver content up to 400 ppm. In spite of their similar concentrations, an analoguous correlation could not be established for other major trace impurities as Si, Ca and Mg ; nor was it the case for the dislocations. A phenomenological analysis shows that the line shape is given by a Voigt profile, obtained by convolution of a Lorentzian function of width B by a Gaussian function of width A. The variation of B as a function of temperature appears to be independent of the sample, whereas A accounts for the low temperature scattering of the line width. The former results suggest to ascribe the variation of B to an intrinsic effect of phonons and that of A to impurities. This separation is also justified on the basis of a model, developed by Haken. Supporting the previous hypothesis, the thermal variation of B is in quantitative agreement with Toyozawa's theory. The variation of A may be described by the sum of a constant term and an increasing function of temperature. The constant term is directly connected with the Silver content whereas the function describes the effect of a gradual activation of defect centres.",
-      "title": "Έtude du profil d'absorption de la raie quadrupolaire excitonique 1S de la série jaune de Cu₂O en fonction de certains défauts cristallins et de la température",
+      "title": "Étude du profil d'absorption de la raie quadrupolaire excitonique 1S de la série jaune de Cu₂O en fonction de certains défauts cristallins et de la température",
       "creators": [
         {
           "creatorType": "author",
@@ -17806,7 +17805,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Stanislaw",
+          "firstName": "Stanisław",
           "lastName": "Mrowec"
         },
         {
@@ -17831,7 +17830,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Stanislaw",
+          "firstName": "Stanisław",
           "lastName": "Mrowec"
         },
         {
@@ -17861,7 +17860,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Stanislaw",
+          "firstName": "Stanisław",
           "lastName": "Mrowec"
         },
         {
@@ -17890,7 +17889,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Stanislaw",
+          "firstName": "Stanisław",
           "lastName": "Mrowec"
         }
       ],
@@ -18732,7 +18731,7 @@
       "publicationTitle": "Comptes Rendus",
       "date": "1954",
       "extra": "bibtex: Nikitine_1954_B \nbibtex[owner=Francesco]",
-      "title": "Έtude des raies d'absorption de lames de Cu₂O et de HgI₂ aux trés basses températures",
+      "title": "Étude des raies d'absorption de lames de Cu₂O et de HgI₂ aux trés basses températures",
       "creators": [
         {
           "creatorType": "author",
@@ -18801,7 +18800,7 @@
       "extra": "bibtex: Nikitine_1956 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphysrad:01956001708-9081700",
       "abstractNote": "An account is given on the résults obtained in the author's laboratory on the absorption spectra of a number of crystals at very low temperatures. In most cases it has been found that the absorption spectra give evidence of narrow line structure. The breadth of some of these lines does not exceed one Å or even less. Sometimes they form hydrogen like series which are in several compourids accompanied by vibration satellites. In anisotropic crystals the absorption lines are dichroic. These results are believed to give an experimental evidence for the existence of excitons.",
-      "title": "Έtude des spectres de l'exciton aux trés basses températures",
+      "title": "Étude des spectres de l'exciton aux trés basses températures",
       "creators": [
         {
           "creatorType": "author",
@@ -21459,7 +21458,7 @@
       "extra": "bibtex: Perakis_1955 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphysrad:01955001605038701",
       "abstractNote": "Libre d'impuretés ferromagnétiques et de CuO, l'oxyde cuivreux utilisé contenait un excès d'oxygène de 0,9 pour 100 environ, exprimé en vacances cuivre, |Cu +|, dans la formule CU11 |Cu+| O6. Cet édifice lacunaire est un semi-conducteur du type p, la vacance Cu + et la vacance d'électron (trou positif), que nous avons située dans la bande 3d du cuivre, figurant respectivement l'impureté et l'élément conducteur. Étudié entre 80 et 1000° K, l'oxyde possède un paramagnétisme variable, χi, auquel se superpose un faible diamagnétisme, ou paramagnétisme constant χr, dû au reste de la molécule. χr change de valeur et de signe d'une expérience à l'autre, avec le contenu en vacances gelées du reste de la molécule. Au-dessus de 360° K, le paramagnétisme variable est exprimé par la relation de Curie 10-4χ i T = 1,06(± 0,04), la constante 1,06.10-4 mesurant le paramagnétisme de Curie d'un gramme d'oxyde. Excluant toute liaison antiferromagnétique, possible entre ions Cu++, cette relation de Curie semble montrer que, dans le domaine d'impureté, il y a deux porteurs de moment, les ions Cu++ et |Cu+|-, en nombre égal, pour un porteur de charge, la vacance d'électron. Toutefois, le porteur Cu++ , directement lié au trou, est d'origine stoechiométrique. Admettant la validité de la loi de Curie entre 80 et 1000° K, nous avons calculé dans tout cet intervalle de température, à partir de 1/2χi T, le nombre de trous par centimètre cube. Ce nombre, croissant depuis 80° K, ne varie plus au-dessus de Θ ≈ 360°K, sa valeur maximum, 5,1.1020, correspondant à 1/9 de l'excès d'oxygène incorporé. Θ apparaît comme la température à laquelle il faut élever le cristal pour le saturer en centres d'impureté. Il semble que la recombinaison de trous et d'électrons ait lieu à la surface (qui change de couleur) de la masse d'oxyde.",
-      "title": "Έtude de la semi-conductivité de l'oxyde cuivreux d'après son comportement magnétique entre 80 et 1000mathrmK",
+      "title": "Étude de la semi-conductivité de l'oxyde cuivreux d'après son comportement magnétique entre 80 et 1000mathrmK",
       "creators": [
         {
           "creatorType": "author",
@@ -21991,7 +21990,7 @@
       "date": "1972",
       "extra": "bibtex: Prevot_1972 \nbibtex[owner=Francesco]",
       "DOI": "10.1002/pssa.2210100214",
-      "title": "Near Infrared Optical and Photoelectric Properties of Cu₂O. I. Infrared Absorption in Cu₂O after Annealing in Oxygen or He<sup>+</sup> Particles Bombardments",
+      "title": "Near Infrared Optical and Photoelectric Properties of Cu₂O. I. Infrared Absorption in Cu₂O after Annealing in Oxygen or He⁺ Particles Bombardments",
       "creators": [
         {
           "creatorType": "author",
@@ -23761,7 +23760,7 @@
       "extra": "bibtex: Schwab_1964 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01964002504038100",
       "abstractNote": "The absorption spectra of thin samples of silver-doped Cu2O have been studied at 4,2 °K and 77 °K. The concentration range was (0-2) mole %. A shift of both the yellow and green series towards the lower energies is observed. This shift increases with the concentration of silver. Furthermore, the linewidths increase and the continuum overlaps the line spectra with increasing concentration of impurities. The analogy of these phenomena with those found by thermal variation is remarkable, and may suggest an expansion of the crystal lattice, due to the impurities. The spin-orbit coupling separation of the valence band remains practically constant.",
-      "title": "Έtude des séries excitoniques jaune et verte dans des cristaux de Cu₂O, dopés à l'argent",
+      "title": "Étude des séries excitoniques jaune et verte dans des cristaux de Cu₂O, dopés à l'argent",
       "creators": [
         {
           "creatorType": "author",
@@ -23799,7 +23798,7 @@
       "extra": "bibtex: Schwab_1967 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:0196700280109300",
       "abstractNote": "Thin samples of silver-doped Cu2O have been observed at 77 °K by means of a spectrophotometric study. Detailed measurements on the red continuous spectrum and the shape of the n = 2 line of the yellow exciton series have been made. The results have been discussed and compared with the effect of temperature and with Toyozawa's theory of line-shapes of the exciton absorption bands.",
-      "title": "Έtude quantitative du spectre d'absorption continu rouge et de la série excitonique jaune dans Cu₂O dopé à l'argent",
+      "title": "Étude quantitative du spectre d'absorption continu rouge et de la série excitonique jaune dans Cu₂O dopé à l'argent",
       "creators": [
         {
           "creatorType": "author",
@@ -26559,7 +26558,7 @@
       "extra": "bibtex: Togashi_2010 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.matlet.2010.02.003",
       "abstractNote": "N,O-type organic chelates reduced coordinated Cu2+ ions under hydrothermal reaction conditions to produce Cu2O/CuO nanoparticles. Chelates in which the N and O atoms are closely spaced produced smaller amounts of CuO nanoparticles, indicating their higher ability to reduce Cu2+ ions to Cu+ ions. [Cu(Gly)2]2 with the shortest ligand chain length produced only Cu2O nanoparticles and, therefore, can be used as a single molecule precursor for the synthesis of Cu2O nanoparticles.",
-      "title": "Controlled reduction of Cu₂<sup>+</sup> to Cu<sup>+</sup> with an N,O-type chelate under hydrothermal conditions to produce Cu₂O nanoparticles",
+      "title": "Controlled reduction of Cu₂⁺ to Cu⁺ with an N,O-type chelate under hydrothermal conditions to produce Cu₂O nanoparticles",
       "creators": [
         {
           "creatorType": "author",
@@ -30807,7 +30806,7 @@
       "extra": "bibtex: Zielinger_1966 \nbibtex[owner=Francesco;refid=10.1051jphys019660027034016600]",
       "DOI": "10.1051/jphys:01966002703-4016600",
       "abstractNote": "The photo-Hall effect in cuprous oxide at 79 °K was investigated in order to determine the nature of the photoconductivity in the visible (0.4 to 0.63 μ) and infrared (0.8 to 2.5 μ) parts of the spectrum. In the visible part the photoconductivity is bipolar, while in the I. R. part it is essentially p type. Some parameters of the photocarriers (mobility, mean free path, diffusion constant, etc...) have been determined.",
-      "title": "Έtude de l'effet photo-Hall dans la cuprite à 79 °K",
+      "title": "Étude de l'effet photo-Hall dans la cuprite à 79 °K",
       "creators": [
         {
           "creatorType": "author",

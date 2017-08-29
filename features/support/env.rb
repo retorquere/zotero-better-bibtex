@@ -178,50 +178,17 @@ def normalizeJSON(lib)
   return lib
 end
 
-def compare(found, expected, path='')
-  if found.class != expected.class
-    expect("#{path}.#{found.class}=#{found}").to eq("#{path}.#{expected.class}=#{expected}")
-  end
-
-  case found
-    when String, Integer, Float, FalseClass, TrueClass, NilClass
-      if found.is_a?(String) && (found.length > 100 || expected.length > 100)
-        min, max = [found, expected].sort.values_at(0, -1)
-        prefix = min+max =~ /(.).{#{min.length-1}}(?!\1)/m ? $` : min
-        prefix = prefix[0...-10]
-        found.slice!(prefix)
-        expected.slice!(prefix)
-      end
-      expect("#{path}.#{found}").to eq("#{path}.#{expected}")
-
-    when Array
-      found.sort! if found.collect{|f| f.class.to_s}.uniq == ['String']
-      expected.sort! if expected.collect{|f| f.class.to_s}.uniq == ['String']
-      0.upto([found.length, expected.length].max - 1).each{|i|
-        compare(found[i], expected[i], "#{path}.#{i}")
-      }
-
-    when Hash
-      if found.keys.sort != expected.keys.sort
-        if path == ''
-          expect("#{path}.#{found.keys.sort}").to eq("#{path}.#{expected.keys.sort}")
-        else
-          expect(JSON.neat_generate(found, { wrap: 40, sort: true })).to eq(JSON.neat_generate(expected, { wrap: 40, sort: true }))
-        end
-      end
-
-      if path == ''
-        found.keys.each{|k| compare(found[k], expected[k], "#{path}.#{k}") }
-      else
-        begin
-          found.keys.each{|k| compare(found[k], expected[k], "#{path}.#{k}") }
-        rescue
-          expect(JSON.neat_generate(found, { wrap: 40, sort: true })).to eq(JSON.neat_generate(expected, { wrap: 40, sort: true }))
-        end
-      end
-
-    else
-      throw "Unexpected class #{found.class}"
+def serialize(obj)
+  return JSON.neat_generate(obj, { wrap: 40, sort: true })
+end
+def compare(found, expected)
+  size = 30
+  if found.length < size || expected.length < size
+    expect(serialize(found)).to eq(serialize(expected))
+  else
+    (0...[found.length, expected.length].max).step(size){|chunk|
+      expect(serialize(found.slice(chunk, size))).to eq(serialize(expected.slice(chunk, size)))
+    }
   end
 end
 #def compare(found, expected)
@@ -249,13 +216,17 @@ def exportLibrary(translator, displayOptions, library)
   expected = File.read(expected)
 
   if library =~ /\.csl\.json$/
-    #found = JSON.neat_generate(JSON.parse(found), { wrap: 40, sort: true })
-    #expected = JSON.neat_generate(JSON.parse(expected), { wrap: 40, sort: true })
-    return compare(JSON.parse(found), JSON.parse(expected))
+    compare(JSON.parse(found), JSON.parse(expected))
   elsif library =~ /\.json$/
-    #found = normalizeJSON(JSON.parse(found))
-    #expected = normalizeJSON(JSON.parse(expected))
-    return compare(normalizeJSON(JSON.parse(found)), normalizeJSON(JSON.parse(expected)))
+    found = normalizeJSON(JSON.parse(found))
+    expected = normalizeJSON(JSON.parse(expected))
+
+    if found['items'].length < 30 || expected['items'].length < 30
+      expect(JSON.neat_generate(found)).to eq(JSON.neat_generate(expected))
+    else
+      expect(JSON.neat_generate(found.merge({'items' => []}))).to eq(JSON.neat_generate(expected.merge({'items' => []})))
+      compare(found['items'], expected['items'])
+    end
   elsif library =~ /\.yml$/
     found = sort_object(YAML.load(found)).to_yaml
     expected = sort_object(YAML.load(expected)).to_yaml
