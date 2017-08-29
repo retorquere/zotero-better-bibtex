@@ -716,6 +716,8 @@ class ZoteroItem
 
   $nationality: (value) -> @item.country = @collapse(value)
 
+  $chapter: (value) -> @item.section = @collapse(value)
+
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 #
@@ -727,7 +729,6 @@ class ZoteroItem
 #ZoteroItem::$institution  = ZoteroItem::$organization = (value) -> @item.backupPublisher = value
 #ZoteroItem::$school       = ZoteroItem::$institution  = ZoteroItem::$publisher = (value) -> @item.publisher = value
 #
-#ZoteroItem::$chapter      = (value) -> @item.section = value
 #ZoteroItem::$copyright    = (value) -> @item.rights = value
 #ZoteroItem::$assignee     = (value) -> @item.assignee = value
 #ZoteroItem::$issue        = (value) -> @item.issue = value

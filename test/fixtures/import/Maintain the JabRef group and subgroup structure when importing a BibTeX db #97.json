@@ -1951,7 +1951,7 @@
         {
           "creatorType": "author",
           "firstName": "L.",
-          "lastName": "Mart́inez"
+          "lastName": "Martínez"
         },
         {
           "creatorType": "author",
@@ -4125,7 +4125,7 @@
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Rodriguez-Viejo"
+          "lastName": "Rodríguez-Viejo"
         },
         {
           "creatorType": "author",
@@ -4149,7 +4149,7 @@
       "extra": "bibtex: Colacino_2010 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.tet.2010.03.065",
       "abstractNote": "A mild, simple and efficient microwave-enhanced copper-catalyzed protocol for N-arylation using high molecular weight poly(ethylene glycol) (PEG3400) as a solvent is reported. Indole and benzimidazole have been N-arylated in the presence of cuprous oxide, cesium carbonate, and PEG3400, under microwave activation, with no supplementary ligands. Simple treatment by precipitation in Et2O and filtration provided the expected product after evaporation and recovery of the catalytic system as a precipitate. The recovery and one successful re-use of the catalytic system is also described. The formation of copper-based nanoparticles was demonstrated by TEM analysis.",
-      "title": "PEG<sub>3400</sub>--Cu₂O--Cs₂CO<sub>3</sub>: an efficient and recyclable microwave-enhanced catalytic system for ligand-free Ullmann arylation of indole and benzimidazole",
+      "title": "PEG₃₄₀₀--Cu₂O--Cs₂CO₃: an efficient and recyclable microwave-enhanced catalytic system for ligand-free Ullmann arylation of indole and benzimidazole",
       "creators": [
         {
           "creatorType": "author",
@@ -4311,7 +4311,7 @@
       "date": "1999",
       "extra": "bibtex: Condorelli_1999_B \nbibtex[owner=Francesco]",
       "DOI": "10.1002/(SICI)1521-3862(199910)5:5<237::AID-CVDE237>3.0.CO;2-U",
-      "title": "Nucleation and Growth of Copper Oxide Films in MOCVD Processes Using the beta-Ketoiminate Precursor 4,4'-(1,2-Ethanediyldinitrilo)bis(2-pentanonate) Copper(II)",
+      "title": "Nucleation and Growth of Copper Oxide Films in MOCVD Processes Using the β-Ketoiminate Precursor 4,4'-(1,2-Ethanediyldinitrilo)bis(2-pentanonate) Copper(II)",
       "creators": [
         {
           "creatorType": "author",
@@ -4344,7 +4344,7 @@
       "extra": "bibtex: Coret_1963 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01963002408058100",
       "abstractNote": "The photoconductivity of Cu2O at 77 °K has been studied as a function of the wave length of the light. The different series of exciton absorption lines appear in the photoconductivity response curve. However the lines can appear as maxima or as minima of the photoconductivity according to the conditions under which the experiment is carried out. Different properties of the photoconductivity are studied. In particular, a negative effect can be observed with Cu2O. The conditions underwhich these effects are observed have been determined. It is shown that these effects are observed when traps of a special kind are present on the surface of the crystal and on the boundary between grains.",
-      "title": "Έtude et interprétation du spectre de photoconductivité de la cuprite",
+      "title": "Étude et interprétation du spectre de photoconductivité de la cuprite",
       "creators": [
         {
           "creatorType": "author",
@@ -4371,7 +4371,7 @@
       "date": "1966",
       "extra": "bibtex: Czanderna_1966 \nbibtex[owner=Francesco]",
       "DOI": "10.1063/1.1728080",
-      "title": "Magnetic Susceptibility of Cuprous Oxide Single Crystals at 25^circC",
+      "title": "Magnetic Susceptibility of Cuprous Oxide Single Crystals at 25 °C",
       "creators": [
         {
           "creatorType": "author",
@@ -4460,7 +4460,7 @@
         }
       ],
       "tags": [
-        "electrodeposition",
+        "Electrodeposition",
         "electroplating"
       ],
       "related": [
@@ -4789,7 +4789,7 @@
       "date": "1966",
       "extra": "bibtex: Daunois_1966 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01966002703-4014200",
-      "title": "Έtude spectrophotométrique de l'absorption bleue et violette de Cu₂O",
+      "title": "Étude spectrophotométrique de l'absorption bleue et violette de Cu₂O",
       "creators": [
         {
           "creatorType": "author",
@@ -4820,7 +4820,7 @@
       "date": "April 1974",
       "extra": "bibtex: Daunois_1974 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphyscol:1974310",
-      "title": "SPECTROSCOPIE DE MODULATIONLES EFFETS D'EXCITONS DANS LES SPECTRES ΈLECTRO-OPTIQUES",
+      "title": "SPECTROSCOPIE DE MODULATIONLES EFFETS D'EXCITONS DANS LES SPECTRES ÉLECTRO-OPTIQUES",
       "creators": [
         {
           "creatorType": "author",
@@ -4879,7 +4879,7 @@
       "extra": "bibtex: Deiss_1963 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01963002403020600",
       "abstractNote": "wo new lines have been observed in the spectrum of cuprous oxide (Cu 2O). The lines are very weak and situated in the spectrum at : λ 1 = 5 798 Å, λ2 = 5 829 Å. Some evidence has been obtained in favour of the interpretation of the λ1 line as a forbidden transition towards the exciton level 2S of the yellow series. It is suggested that the λ2 line corresponds to a forbidden transition towards the state n = 1 of the green series.",
-      "title": "Observation de deux raies faibles nouvelles dans le spectre de la cuprite à 4,2^circK. Essai d'interprétation",
+      "title": "Observation de deux raies faibles nouvelles dans le spectre de la cuprite à 4,2 °K. Essai d'interprétation",
       "creators": [
         {
           "creatorType": "author",
@@ -5146,7 +5146,7 @@
         }
       ],
       "tags": [
-        "COPPER COMPOUNDS",
+        "copper compounds",
         "cobalt",
         "electrodeposition",
         "elemental semiconductors",
@@ -5167,7 +5167,7 @@
       "publicationTitle": "Journal de Chimie Physique et de Physico-Chimie Biologique",
       "date": "1970",
       "extra": "bibtex: Dellacherie_1970 \nbibtex[owner=Francesco]",
-      "title": "Ionic Conductivity of Cuprous Oxide as a Function of its Composition to 400^circC",
+      "title": "Ionic Conductivity of Cuprous Oxide as a Function of its Composition to 400 °C",
       "creators": [
         {
           "creatorType": "author",
@@ -5527,7 +5527,7 @@
       "date": "1983",
       "extra": "bibtex: Dominguez-Rodriguez_1983 \nbibtex[owner=Francesco]",
       "DOI": "10.1080/00337578308224714",
-      "abstractNote": "A study of high temperature creep properties of non-stoichiometric CU₂O, CoO and NiO has been performed at various temperatures and oxygen activities (<i>Po</i>₂). Creep rates are directly related to point defects responsible for the diffusion of the slowest species. These point defects have been tentatively identified by the <i>P</i>o₂ dependence of creep rate which does not depend on the detailed mechanism of deformation.",
+      "abstractNote": "A study of high temperature creep properties of non-stoichiometric CU<sub>2</sub>O, CoO and NiO has been performed at various temperatures and oxygen activities (<i>Po</i><sub>2</sub>). Creep rates are directly related to point defects responsible for the diffusion of the slowest species. These point defects have been tentatively identified by the <i>P</i>o<sub>2</sub> dependence of creep rate which does not depend on the detailed mechanism of deformation.",
       "title": "Point defect and diffusion properties in oxides from high temperature creep",
       "creators": [
         {
@@ -6160,8 +6160,8 @@
         }
       ],
       "tags": [
-        "Copper",
-        "Oxidation",
+        "copper",
+        "oxidation",
         "X-ray photoelectron spectra",
         "chemical mechanical polishing",
         "grain boundaries",
@@ -6236,8 +6236,7 @@
         }
       ],
       "tags": [
-        "H2",
-        "evolution"
+        "H2 evolution"
       ],
       "related": [
 
@@ -7311,7 +7310,7 @@
       "extra": "bibtex: Fromhold_2004 \nbibtex[owner=Francesco]",
       "DOI": "10.1007/s11085-004-7810-z",
       "abstractNote": "Very-thin-film kinetics data are presented for oxide growth on parent epitaxially formed (100) copper crystals at 25 and 50°C with different oxygen pressures in the range 0.01 torr to 170 torr. The results are interpreted in terms of the model based on electric-field driven ionic diffusion associated with the electrostatic-potential difference created by an electron-tunnel- current-virtual equilibrium.",
-      "title": "Oxidation Kinetics of Epitaxial (100) Copper Films at 25^circC and 50^circC",
+      "title": "Oxidation Kinetics of Epitaxial (100) Copper Films at 25 °C and 50 °C",
       "creators": [
         {
           "creatorType": "author",
@@ -10987,7 +10986,7 @@
       "extra": "bibtex: Ishihara_1998 \nbibtex[owner=Francesco]",
       "DOI": "10.1039/a801595c",
       "abstractNote": "Preparation of CuO thin films by decomposition of self-assembled multibilayer films as a molecular template was investigated. Furthermore, the CO2 sensing property of the resultant CuO thin films on a porous BaTiO3 was investigated as a capacitive type sensor. Self-assembled bilayer films of a few 1000 layers thickness can be readily obtained by casting an aqueous suspension composed of dimethyldihexadecylammoniun bromide (DC1–16), Cu(CH3CO2)2 , hexadecylethylenediamine and poly(vinyl alcohol). Divalent copper ions (Cu2+) which are associated with two hexadecylethylenediamine molecules were arranged in the hydrophobic layer of the multibilayer film. Rapid heating to the combustion temperature of DC1–16 was desirable for removing organic molecules in the multibilayer template. Thin films of CuO can be obtained by calcination at temperatures higher than 573 K. The resultant CuO thin films were porous and consisted of fine particles. The capacitance of CuO thin films prepared from self-assembled multibilayer films as a molecular template on the BaTiO3 porous substrate exhibited a high sensitivity to CO2 , which is twice that of a conventional mixed oxide capacitor of CuO–BaTiO3 . The capacitance of CuO thin films on BaTiO3 increases with increasing CO2 concentration in the range from 100 ppm to 50% at 873 K. Consequently, it is concluded that CuO thin films on BaTiO3 were appropriate capacitive type CO2 sensors.",
-      "title": "Preparation of CuO thin films on porous BaTiO<sub>3</sub> by self-assembled multibilayer film formation and application as a CO₂ sensor",
+      "title": "Preparation of CuO thin films on porous BaTiO₃ by self-assembled multibilayer film formation and application as a CO₂ sensor",
       "creators": [
         {
           "creatorType": "author",
@@ -14628,7 +14627,7 @@
       "extra": "bibtex: Lefez_1994 \nbibtex[owner=Francesco]",
       "DOI": "10.1002/sia.740220196",
       "abstractNote": "The aim of this study is to characterize the compounds grown on copper during the oxidation at low temperature (T &lt; 523 K) by optical methods: photoluminescence and UV-Visible-NIR diffuse reflectance spectroscopy. Two cuprous oxides Cu2O and Cu3O2 have been studied. The absorption of Cu2O films in the range 450-630 nm is mainly due to non-stoichiometry bands associated with copper and oxygen vacancies. Cu3O2 is characterized by an optical band gap greater than that of Cu2O (respectively 2.25 and 1.95 eV) and by an intense luminescence emission at 760-780 nm. Cu3O2 may be considered as a gross defect structure of Cu2O (aCu2O = 0.427 nm, aCu3O2 = 0.431 nm). The experimental approach of the oxidation mechanism reveals that at 423 K Cu2O is the primary product which later on is transformed into Cu3O2. Experimental and calculated optical absorption curves disclose the nucleation of CuO inside the cuprous oxides layer for oxidation in the range 473-523 K.",
-      "title": "Application of reflectance spectrophotometry to the study of copper (I) oxides (Cu₂O and Cu<sub>3</sub>O₂) on metallic substrate",
+      "title": "Application of reflectance spectrophotometry to the study of copper (I) oxides (Cu₂O and Cu₃O₂) on metallic substrate",
       "creators": [
         {
           "creatorType": "author",
@@ -16999,7 +16998,7 @@
       "date": "2004",
       "extra": "bibtex: Mencer_2004 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.vacuum.2004.07.068",
-      "title": "On the surface analysis of copper oxides: the difficulty in detecting Cu<sub>3</sub>O₂",
+      "title": "On the surface analysis of copper oxides: the difficulty in detecting Cu₃O₂",
       "creators": [
         {
           "creatorType": "author",
@@ -17185,7 +17184,7 @@
       "extra": "bibtex: Mimura_2006 \nbibtex[owner=Francesco]",
       "DOI": "10.1007/s11661-006-1074-y",
       "abstractNote": "Abstract&nbsp;&nbsp;Copper’s oxication mechanism and purity effects were elucidated by oxidizing 99.99 pct (4N), 99.9999 pct (6N), and floating zone refined (gt;99.9999 pct) specimens in 0.1 MPa oxygen at 350 �C to 1050 �C. Throughout the temperature range, the oxidation kinetics for all specimens obeys the parabolic oxidation rate law. The Cu2O scale grows predominantly, and the rate-determining step is concluded to be outward diffusion of copper atoms in Cu2O. The activation energy at high temperatures, where the lattice diffusion predominates, is 173 kJ/mol, but it becomes lower at intermediate temperatures and even lower at low temperatures because of the contribution of the grain boundary diffusion. At high temperatures, oxidation kinetics is almost uninfluenced by purity, but the lattice-diffusion temperature range is wider for higher-purity copper. At intermediate temperatures, copper oxidation is enhanced because trace impurities can impede growth of Cu2O grains to facilitate grain boundary diffusion. At low temperatures, grain boundary diffusion is possibly hindered by impurities segregated at grain boundaries.",
-      "title": "Brief review of oxidation kinetics of copper at 350^circC to 1050^circC",
+      "title": "Brief review of oxidation kinetics of copper at 350 °C to 1050 °C",
       "creators": [
         {
           "creatorType": "author",
@@ -18967,7 +18966,7 @@
       "date": "August 1965",
       "extra": "bibtex: Nikitine_1965 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0031-9163(65)90668-2",
-      "title": "Evaluation des parametres des photoporteurs dans la cuprite a 79^circK",
+      "title": "Evaluation des parametres des photoporteurs dans la cuprite a 79 °K",
       "creators": [
         {
           "creatorType": "author",
@@ -19395,7 +19394,7 @@
       "date": "1970",
       "extra": "bibtex: Noguet_1970 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphys:01970003104039300",
-      "title": "Propriétés diélectriques de l'oxyde cuivreux aux audiofréquences entre 150^circK et 320^circK",
+      "title": "Propriétés diélectriques de l'oxyde cuivreux aux audiofréquences entre 150 °K et 320 °K",
       "creators": [
         {
           "creatorType": "author",
@@ -20971,7 +20970,7 @@
       "date": "May 1988",
       "extra": "bibtex: Papadimitriou_1988_B \nbibtex[owner=Francesco]",
       "DOI": "10.1007/BF01730701",
-      "title": "High-temperature phases of YBa₂Cu<sub>3</sub>O<sub>6+x</sub> related to the superconducting transition",
+      "title": "High-temperature phases of YBa₂Cu₃O<sub>6+x</sub> related to the superconducting transition",
       "creators": [
         {
           "creatorType": "author",
@@ -21702,7 +21701,7 @@
       "date": "August 1995",
       "extra": "bibtex: Pinkas_1995 \nbibtex[owner=Francesco]",
       "DOI": "10.1021/cm00056a028",
-      "title": "Mechanistic Role of H₂O and the Ligand in the Chemical Vapor Deposition of Cu, Cu₂O, CuO, and Cu<sub>3</sub>N from Bis(1,1,1,5,5,5-hexafluoropentane-2,4-dionato)copper(II)",
+      "title": "Mechanistic Role of H₂O and the Ligand in the Chemical Vapor Deposition of Cu, Cu₂O, CuO, and Cu₃N from Bis(1,1,1,5,5,5-hexafluoropentane-2,4-dionato)copper(II)",
       "creators": [
         {
           "creatorType": "author",
@@ -22658,7 +22657,7 @@
       "extra": "bibtex: Richthofen_1997 \nbibtex[owner=Francesco]",
       "DOI": "10.1007/s002160050415",
       "abstractNote": "Abstract&nbsp;&nbsp; Cu-O layers were deposited on Si-&lt;100gt; wafers at 90° C by means of reactive magnetron sputtering ion plating (R-MSIP). A Cu-target was sputtered in rf-mode by an oxygen/argon plasma, and the influence of the oxygen partial pressure on composition, structure, texture and morphology of the Cu-O layers was investigated. The analysis with EPMA, XRD, HEED and SEM yielded the following results: with an appropriate setting of the oxygen partial pressure, the oxygen content of the films could be controlled between 0 and 50 at-%. XRD bulk structure analysis shows changes in the crystal structure of the films with increasing oxygen content from the fcc structure of Cu, followed by the sc structure of Cu2O (cuprite), the tetragonal structure of Cu3 2+Cu2 1+O4 (paramelaconite) to the monoclinic structure of CuO (tenorite). As revealed by HEED, the structure of the near-surface region of the latter two is the same as that of the bulk, whereas in the case of the films with fcc bulk structure, due to oxidation by air, the surface has the sc structure of Cu2O, and in the case of the film with the sc structure, a monoclinic surface structure of CuO is observed. SEM analyses detected a disordered columnar growth of all Cu-O films.",
-      "title": "Preparation of cuprite (Cu₂O), paramelaconite (Cu<sub>3</sub><sup>2+</sup>Cu₂<sup>1+</sup>O<sub>4</sub>) and tenorite (CuO) with magnetron sputtering ion plating: characterization by EPMA, XRD, HEED and SEM",
+      "title": "Preparation of cuprite (Cu₂O), paramelaconite (Cu₃<sup>2+</sup>Cu₂<sup>1+</sup>O<sub>4</sub>) and tenorite (CuO) with magnetron sputtering ion plating: characterization by EPMA, XRD, HEED and SEM",
       "creators": [
         {
           "creatorType": "author",
@@ -29199,7 +29198,7 @@
       "extra": "bibtex: Xiao_2007 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/S1001-0521(07)60255-1",
       "abstractNote": "The isothermal phase diagram of the Cu2O-Al2O3-SiO2 ternary system at 1150�C was reported for the samples which were prepared from sol-gel method and quenched by water after being heated at 1150�C for 12 h. Based on the conventional X-ray powder diffraction (XRD) and in situ high-temperature XRD quantitative analysis, in addition to scanning electron microscopy measurement, the phase identification was achieved. Combining the deduction from the component phase diagrams of the binary systems using the phase equilibrium theorem, the primary isothermal phase diagram was plotted over the composition area Cu2O-mullite-SiO2. In this area, the approximate composition areas of two two-phase regions and one three-phase region, (L2 + Cr), (L2 + M), and (L1 + L2 + Tr), were determined. Moreover, the precise composition areas of both of the three-phase regions (L2 + Cr + M) and (L2 + M + A) were determined according to the results of conventional and in situ high-temperature XRD quantitative analysis by Rietveld method.",
-      "title": "Primary study of the isothermal phase diagram of the Cu₂O-Al₂O<sub>3</sub>-SiO₂ ternary system at 1150^circC in air",
+      "title": "Primary study of the isothermal phase diagram of the Cu₂O-Al₂O₃-SiO₂ ternary system at 1150 °C in air",
       "creators": [
         {
           "creatorType": "author",
@@ -30741,7 +30740,7 @@
       "extra": "bibtex: Zhu_2004_C \nbibtex[owner=Francesco]",
       "DOI": "10.1007/s11085-004-7808-6",
       "abstractNote": "To clarify the oxidation mechanism of Cu2O to CuO, Cu2O oxidation was studied at 600–1050 °C under 1atm O2. The Cu2O specimens were prepared through completely oxidizing 99.99999 and 99.5 pure copper at 1000°C in an Ar + 1 O2 atmosphere. The oxidation kinetics of Cu2O specimens prepared from both purity levels followed the logarithmic law, not the parabolic law or the cubic law as reported in the literature. The activation energy for Cu2O oxidation is relatively high in the lower-temperature range, but becomes very small or even negative at higher temperatures. The logarithmic oxidation rate law can be explained by Davies et al.’s model related to grain-boundary diffusion in the oxide layers. The very small or negative activation energies in the higher-temperature range can be attributed to the very small thermodynamic driving force and the fast lateral growth of CuO grains related to a sintering effect. The influence of small amount of impurities is also discussed.",
-      "title": "Oxidation Mechanism of Cu₂O to CuO at 600-1050^circC",
+      "title": "Oxidation Mechanism of Cu₂O to CuO at 600-1050 °C",
       "creators": [
         {
           "creatorType": "author",
@@ -30808,7 +30807,7 @@
       "extra": "bibtex: Zielinger_1966 \nbibtex[owner=Francesco;refid=10.1051jphys019660027034016600]",
       "DOI": "10.1051/jphys:01966002703-4016600",
       "abstractNote": "The photo-Hall effect in cuprous oxide at 79 °K was investigated in order to determine the nature of the photoconductivity in the visible (0.4 to 0.63 μ) and infrared (0.8 to 2.5 μ) parts of the spectrum. In the visible part the photoconductivity is bipolar, while in the I. R. part it is essentially p type. Some parameters of the photocarriers (mobility, mean free path, diffusion constant, etc...) have been determined.",
-      "title": "Έtude de l'effet photo-Hall dans la cuprite à 79^circK",
+      "title": "Έtude de l'effet photo-Hall dans la cuprite à 79 °K",
       "creators": [
         {
           "creatorType": "author",
@@ -30842,7 +30841,7 @@
       "extra": "bibtex: Zielinger_1967 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0375-9601(67)90947-4",
       "abstractNote": "A new rectification effect is found in Cu2O illuminated with strongly absorbed light in crossed electric and magnetic fields. The rectification ratio increases with B and V and reaches a value of 10 for B = 1.9 Wb/m2, V = 300 volt and .",
-      "title": "Photomagnetorectification effect in Cu₂O at 77^circK",
+      "title": "Photomagnetorectification effect in Cu₂O at 77 °K",
       "creators": [
         {
           "creatorType": "author",
