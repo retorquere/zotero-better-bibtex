@@ -12605,7 +12605,7 @@
         {
           "creatorType": "author",
           "firstName": "A.",
-          "lastName": "Dominguez-Rodriguez"
+          "lastName": "Domínguez-Rodríguez"
         },
         {
           "creatorType": "author",
@@ -12849,7 +12849,7 @@
         }
       ],
       "tags": [
-        "COPPER COMPOUNDS",
+        "copper compounds",
         "X-ray diffraction",
         "crystallisation",
         "electrodeposits",
@@ -12955,7 +12955,7 @@
       "date": "2001",
       "extra": "bibtex: Kalingamudali_2001 \nbibtex[owner=Francesco]",
       "abstractNote": "A simple method was developed to fabricate a Cu2O/CuxS p-n junction diode and I-V characteristics of the diode was measured at various temperatures. It was revealed that there are current transport mechanisms at the junction which are leading to high voltage currents. Namely, an oscillatory behaviour of the current with the temperature was observed under reverse bias conditions. This behaviour was interpreted as the thermally enhanced tunneling at the junction due to the existence of defect interface states. We believe that proper surface treatment might reduce the density if interface states and thereby improve the I-V characteristics of the diode.",
-      "title": "Observation of defect interface states at the Cu₂O/Cu<sub>x</sub>S junction using thermally stimulated I--V measurements",
+      "title": "Observation of defect interface states at the Cu₂O/CuₓS junction using thermally stimulated I--V measurements",
       "creators": [
         {
           "creatorType": "author",
@@ -13196,7 +13196,7 @@
       "date": "1988",
       "extra": "bibtex: Kaufman_1988 \nbibtex[owner=Francesco]",
       "DOI": "10.1149/1.2096216",
-      "title": "Luminescence of Polycrystalline Cuprous Oxide Films on Copper Metal at 4mathrmK and the Effects of Stress",
+      "title": "Luminescence of Polycrystalline Cuprous Oxide Films on Copper Metal at 4 K and the Effects of Stress",
       "creators": [
         {
           "creatorType": "author",
@@ -13353,7 +13353,7 @@
       "date": "1978",
       "extra": "bibtex: Kenway_1978 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0022-2313(78)90016-9",
-      "title": "Evidence of a Competitive Phenomenon between the 0.72textrmtextmum and 0.93textrmtextmum Luminescences of Cu₂O",
+      "title": "Evidence of a Competitive Phenomenon between the 0.72 μ m and 0.93 μ m Luminescences of Cu₂O",
       "creators": [
         {
           "creatorType": "author",
@@ -13449,7 +13449,7 @@
       "date": "2004",
       "extra": "bibtex: Kim_2004 \nbibtex[owner=Francesco]",
       "DOI": "10.1088/0953-8984/16/33/008",
-      "abstractNote": "CuO and Cu 2 O powders were reacted by hydrogen to study the reduction mechanism and the ionic states of Cu (Cu 2+ , Cu 1+ and Cu 0 ). The reduction behaviour and the existence of an intermediate state were investigated by using synchrotron-based high-resolution in situ x-ray diffraction (S-XRD) techniques. The results revealed that CuO directly reduces to metallic Cu ( IMG [http://ej.iop.org/images/0953-8984/16/33/008/cm175281ieqn1.gif] mathrmCu<sup>2+</sup> tomathrmCu<sup>0</sup> ), under a normal flow of hydrogen. There was no hint of an intermediate state (Cu 1+ ) during the reduction. In certain conditions, however, an intermediate phase (Cu 2 O) appears under either very small flow of hydrogen (20 °C min −1 ), suggesting that the reduction kinetics strongly depends on reduction conditions.",
+      "abstractNote": "CuO and Cu 2 O powders were reacted by hydrogen to study the reduction mechanism and the ionic states of Cu (Cu 2+ , Cu 1+ and Cu 0 ). The reduction behaviour and the existence of an intermediate state were investigated by using synchrotron-based high-resolution in situ x-ray diffraction (S-XRD) techniques. The results revealed that CuO directly reduces to metallic Cu ( ##IMG## [http://ej.iop.org/images/0953-8984/16/33/008/cm175281ieqn1.gif] Cu²⁺  Cu⁰ ), under a normal flow of hydrogen. There was no hint of an intermediate state (Cu 1+ ) during the reduction. In certain conditions, however, an intermediate phase (Cu 2 O) appears under either very small flow of hydrogen (20 °C min −1 ), suggesting that the reduction kinetics strongly depends on reduction conditions.",
       "title": "Reaction of CuO with hydrogen studied by using synchrotron-based x-ray diffraction",
       "creators": [
         {
@@ -13622,12 +13622,12 @@
         {
           "creatorType": "author",
           "firstName": "R.",
-          "lastName": "Kǔzel"
+          "lastName": "Kǔzel"
         },
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         }
       ],
       "related": [
@@ -13737,7 +13737,7 @@
       "itemID": 412,
       "itemType": "book",
       "publisher": "Academic Press -- New York and London",
-      "ISBN": "0126077657",
+      "ISBN": "0-12-607765-7",
       "date": "1963",
       "extra": "bibtex: Knox_1963_book \nbibtex[owner=Francesco]",
       "title": "Theory of Excitons",
@@ -13801,7 +13801,7 @@
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Ivaňco"
+          "lastName": "Ivaňco"
         },
         {
           "creatorType": "author",
@@ -14209,13 +14209,13 @@
       "date": "January 1958",
       "extra": "bibtex: Kuzel_1958 \nbibtex[owner=Francesco]",
       "DOI": "10.1007/BF01688753",
-      "abstractNote": "????????, ??? ??? ???? ?????? ???????????? ? ???????????? ?? ??????????? 150°? ???? ?????? ?? ?????? ???? ??? ??????????? ????, ?? ? ??????????? ? ?????????? ? ???? ?? ??. ??? ????????? ??-?? ?????? ??????????? ?????? ? ?????? ? ??????????? ? ?????????? ? ?????????? ???? ??? ???? ?????????? ?? ?? ????? ??????????. ??????????????? ??? ??????? ? ?????????? ? ???????????? ????? ? ???????????? ????? ?? ?????? ?? ?? ?????? ??????? ??????????? ?-??. ??????????????? ??? ??????? ??????????? ?? ???????????? ?????????? ??????? ? ?? ? ?????? ????????? ?? ? ?????? ????????? ???????????. ??? ???? ??? ????? ????????? ? ????????????? ?????????? ? ??????? ???? ????????? ???? (? ???????? ???? ????? ????? ????).",
+      "abstractNote": "????????, ??? ??? ???? ?????? ???????????? ? ???????????? ?? ???????????  150°? ???? ?????? ??  ?????? ???? ??? ??????????? ????, ?? ? ??????????? ? ?????????? ? ???? ?? ??. ??? ????????? ??-?? ??????  ??????????? ?????? ? ?????? ? ??????????? ? ?????????? ? ?????????? ???? ??? ???? ?????????? ?? ?? ?????  ??????????. ??????????????? ??? ??????? ? ?????????? ? ???????????? ????? ? ???????????? ????? ?? ?????? ?? ??  ?????? ??????? ??????????? ?-??. ??????????????? ??? ??????? ??????????? ?? ???????????? ?????????? ??????? ? ?? ?  ?????? ????????? ?? ? ?????? ????????? ???????????. ??? ???? ??? ????? ????????? ? ????????????? ?????????? ?  ??????? ???? ????????? ???? (? ???????? ???? ????? ????? ????).",
       "title": "Влияние предварител ьного освещения нa характеристики медн озакисных выпрямите лей",
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -14235,8 +14235,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -14257,8 +14257,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "notes": [
@@ -14279,8 +14279,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -14300,8 +14300,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "notes": [
@@ -14323,8 +14323,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -14341,8 +14341,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -14363,8 +14363,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         },
         {
           "creatorType": "author",
@@ -14389,8 +14389,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         },
         {
           "creatorType": "author",
@@ -14418,8 +14418,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         },
         {
           "creatorType": "author",
@@ -15132,7 +15132,7 @@
       "date": "2005",
       "extra": "bibtex: Liu_2005 \nbibtex[owner=Francesco]",
       "DOI": "10.1063/1.2136349",
-      "title": "Epitaxial, ferromagnetic Cu<sub>2-x</sub>Mn<sub>x</sub>O films on (001) Si by near-room-temperature electrodeposition",
+      "title": "Epitaxial, ferromagnetic Cu<sub>2-x</sub>MnₓO films on (001) Si by near-room-temperature electrodeposition",
       "creators": [
         {
           "creatorType": "author",
@@ -21179,12 +21179,12 @@
         {
           "creatorType": "author",
           "firstName": "Josef",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         },
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -21205,12 +21205,12 @@
         {
           "creatorType": "author",
           "firstName": "Josef",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         },
         {
           "creatorType": "author",
-          "firstName": "Radomir",
-          "lastName": "Kǔzel"
+          "firstName": "Radomír",
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -21230,7 +21230,7 @@
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         }
       ],
       "related": [
@@ -21252,7 +21252,7 @@
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         }
       ],
       "related": [
@@ -21274,7 +21274,7 @@
         {
           "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Pastřnák"
+          "lastName": "Pastřnák"
         }
       ],
       "related": [
@@ -21458,7 +21458,7 @@
       "extra": "bibtex: Perakis_1955 \nbibtex[owner=Francesco]",
       "DOI": "10.1051/jphysrad:01955001605038701",
       "abstractNote": "Libre d'impuretés ferromagnétiques et de CuO, l'oxyde cuivreux utilisé contenait un excès d'oxygène de 0,9 pour 100 environ, exprimé en vacances cuivre, |Cu +|, dans la formule CU11 |Cu+| O6. Cet édifice lacunaire est un semi-conducteur du type p, la vacance Cu + et la vacance d'électron (trou positif), que nous avons située dans la bande 3d du cuivre, figurant respectivement l'impureté et l'élément conducteur. Étudié entre 80 et 1000° K, l'oxyde possède un paramagnétisme variable, χi, auquel se superpose un faible diamagnétisme, ou paramagnétisme constant χr, dû au reste de la molécule. χr change de valeur et de signe d'une expérience à l'autre, avec le contenu en vacances gelées du reste de la molécule. Au-dessus de 360° K, le paramagnétisme variable est exprimé par la relation de Curie 10-4χ i T = 1,06(± 0,04), la constante 1,06.10-4 mesurant le paramagnétisme de Curie d'un gramme d'oxyde. Excluant toute liaison antiferromagnétique, possible entre ions Cu++, cette relation de Curie semble montrer que, dans le domaine d'impureté, il y a deux porteurs de moment, les ions Cu++ et |Cu+|-, en nombre égal, pour un porteur de charge, la vacance d'électron. Toutefois, le porteur Cu++ , directement lié au trou, est d'origine stoechiométrique. Admettant la validité de la loi de Curie entre 80 et 1000° K, nous avons calculé dans tout cet intervalle de température, à partir de 1/2χi T, le nombre de trous par centimètre cube. Ce nombre, croissant depuis 80° K, ne varie plus au-dessus de Θ ≈ 360°K, sa valeur maximum, 5,1.1020, correspondant à 1/9 de l'excès d'oxygène incorporé. Θ apparaît comme la température à laquelle il faut élever le cristal pour le saturer en centres d'impureté. Il semble que la recombinaison de trous et d'électrons ait lieu à la surface (qui change de couleur) de la masse d'oxyde.",
-      "title": "Étude de la semi-conductivité de l'oxyde cuivreux d'après son comportement magnétique entre 80 et 1000mathrmK",
+      "title": "Étude de la semi-conductivité de l'oxyde cuivreux d'après son comportement magnétique entre 80 et 1000 K",
       "creators": [
         {
           "creatorType": "author",
@@ -26477,7 +26477,7 @@
       "extra": "bibtex: Tiano_2003 \nbibtex[owner=Francesco]",
       "DOI": "10.1107/S0021889803020818",
       "abstractNote": "The thermal expansion of two isostructural oxides, Cu2O and Ag2O, has been measured from 10 K to their respective decomposition temperatures by means of high-resolution X-ray powder diffraction. The thermal behaviours of the two oxides are different. Cuprite has a negative thermal expansion up to about 200 K, and above this temperature it becomes positive. Ag2O, on the other hand, has a negative thermal expansion up to its decomposition temperature. A comparison with EXAFS data in the same temperature range shows that the observed difference between the thermal expansion regimes of the two compounds can be ascribed to the vibrational behaviour of the Cu and Ag atoms and, in the ultimate analysis, to the different rigidities of the metal–oxygen bonds.",
-      "title": "Thermal expansion in cuprite-type structures from 10mathrmK to decomposition temperature: Cu₂O and Ag₂O",
+      "title": "Thermal expansion in cuprite-type structures from 10 K to decomposition temperature: Cu₂O and Ag₂O",
       "creators": [
         {
           "creatorType": "author",
@@ -28538,7 +28538,7 @@
         {
           "creatorType": "author",
           "firstName": "R.",
-          "lastName": "Kǔzel"
+          "lastName": "Kǔzel"
         }
       ],
       "related": [
@@ -30641,7 +30641,7 @@
       "date": "2002",
       "extra": "bibtex: Zhu_2002 \nbibtex[owner=Francesco]",
       "abstractNote": "In reviewing the results reported for copper oxidation at intermediate temperatures from 573 to 1173 K, the oxidation mechanism at the lower part of this temperature range and the reason for the change in activation energy with decreasing the temperature remain unclear. To make it clear, copper oxidation is studied at 623-1073 K under 0.1 MPa O2 using a commercial 99.9999% pure copper. The oxidation kinetics is essentially parabolic, and the activation energy decreases from 111 kJ/mol at 873-1073 K to 40 kJ/mol at 623-773 K. The growth of Cu2O is predominant and it obeys the parabolic law at 623-773 K, as well as the case at 873-1073 K. In addition to grain boundary diffusion of copper along the fine and thin columnar Cu2O grains, the non-protective CuO whisker layer, which cannot keep the oxygen potential constant at the Cu2O/CuO interface, should be responsible for the decrease in the activation energy at 623-773 K.",
-      "title": "Oxidation Mechanism of Copper at 623-1073mathrmK",
+      "title": "Oxidation Mechanism of Copper at 623-1073 K",
       "creators": [
         {
           "creatorType": "author",

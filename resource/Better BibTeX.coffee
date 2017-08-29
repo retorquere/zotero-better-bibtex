@@ -511,9 +511,9 @@ class ZoteroItem
   $editor: @::$author
   $translator: @::$author
 
-  $school: (value) -> @item.publisher = @collapse(value)
-  $institution: @::$school
-  $publisher: @::$school
+  $publisher: (value) -> @item.publisher = (@collapse(pub) for pub in value).join(' and ')
+  $institution: @::$publisher
+  $school: @::$publisher
 
   $address: (value) -> @item.place = @collapse(value)
   $location: @::$address
@@ -645,6 +645,7 @@ class ZoteroItem
       url = nil
 
     return false unless url
+
     return (@item.url == url) if @item.url
 
     @item.url = url
