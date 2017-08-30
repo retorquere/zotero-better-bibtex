@@ -3,9 +3,12 @@
 require 'open-uri'
 require 'json'
 
+superscripts = []
 open('http://unicode.org/reports/tr30/datafiles/SuperscriptFolding.txt').readlines.each{|line|
   next unless line =~ /^[0-9A-F]{4};/
   line = line.split
+  next unless line[2] == '#'
+
   line[0].sub!(/;/, '')
 
   next if line[0] > '3192'
@@ -21,6 +24,8 @@ open('http://unicode.org/reports/tr30/datafiles/SuperscriptFolding.txt').readlin
     chr = "'\\u" + line[1] + "'"
   end
 
-  puts "    #{chr}: '\\u#{line[0]}'"
-  puts "    \"-\": '\\u#{line[0]}'" if chr == "'\\u2212'"
+  superscripts << "    #{chr}: '\\u#{line[0]}'"
+  superscripts << "    \"-\": '\\u#{line[0]}'" if chr == "'\\u2212'"
 }
+
+puts superscripts.sort.join("\n")

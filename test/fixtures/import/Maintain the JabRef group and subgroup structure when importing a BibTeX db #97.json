@@ -2370,7 +2370,7 @@
       "itemType": "journalArticle",
       "volume": "28",
       "issue": "C3",
-      "pages": "C3-32-C3-35",
+      "pages": "C3-32--C3-35",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1967",
       "extra": "COLLOQUE SUR LES TRANSITIONS ÉLECTRONIQUES DANS LES SOLIDES NON CONDUCTEURS \nbibtex: Brahms_1967 \nbibtex[owner=Francesco]",
@@ -3831,7 +3831,6 @@
       "itemID": 118,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Journal of Alloys and Compounds",
       "ISSN": "0925-8388",
       "date": "2010",
@@ -4414,7 +4413,7 @@
       "itemID": 135,
       "itemType": "journalArticle",
       "volume": "28",
-      "pages": "C3-31-C3-31",
+      "pages": "C3-31--C3-31",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1967",
       "extra": "bibtex: Dahl_1967 \nbibtex[owner=Francesco]",
@@ -4815,7 +4814,7 @@
       "itemID": 145,
       "itemType": "journalArticle",
       "volume": "35",
-      "pages": "C3-53-C3-66",
+      "pages": "C3-53--C3-66",
       "publicationTitle": "J. Phys. Colloques",
       "date": "April 1974",
       "extra": "bibtex: Daunois_1974 \nbibtex[owner=Francesco]",
@@ -5473,7 +5472,6 @@
       "itemID": 168,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Materials Chemistry and Physics",
       "ISSN": "0254-0584",
       "date": "2010",
@@ -8783,7 +8781,6 @@
       "itemID": 273,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Applied Surface Science",
       "ISSN": "0169-4332",
       "date": "2010",
@@ -9055,7 +9052,6 @@
       "itemID": 280,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Thin Solid Films",
       "ISSN": "0040-6090",
       "date": "2010",
@@ -9603,7 +9599,7 @@
       "itemType": "journalArticle",
       "volume": "41",
       "issue": "C6",
-      "pages": "C6-504-C6-507",
+      "pages": "C6-504--C6-507",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "July 1980",
       "extra": "bibtex: Haydar_1980 \nbibtex[owner=Francesco;refid=10.1051jphyscol19806131]",
@@ -10633,7 +10629,6 @@
       "itemID": 325,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Scripta Materialia",
       "ISSN": "1359-6462",
       "date": "2010",
@@ -13353,7 +13348,7 @@
       "date": "1978",
       "extra": "bibtex: Kenway_1978 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/0022-2313(78)90016-9",
-      "title": "Evidence of a Competitive Phenomenon between the 0.72 μ m and 0.93 μ m Luminescences of Cu₂O",
+      "title": "Evidence of a Competitive Phenomenon between the 0.72 μm and 0.93 μm Luminescences of Cu₂O",
       "creators": [
         {
           "creatorType": "author",
@@ -13545,7 +13540,7 @@
       "date": "October 2001",
       "extra": "bibtex: Kirsch_2001 \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2001JAP....90.4256K;owner=Francesco]",
       "DOI": "10.1063/1.1403675",
-      "abstractNote": "Chemical and thermal reduction of copper oxide thin films ( 20 Å) has been studied with x-ray photoelectron spectroscopy (XPS) and temperature programmed desorption (TPD) for application in microelectronic device interconnects. XPS showed that copper (I) oxide (Cu2O) and copper (II) oxide (CuO) were reduced to copper metal at 400 K within a 30 min exposure to deuterium atoms (D*) and molecules at 1×10-4 Torr. Similarly, XPS showed that Cu2O was reduced to copper metal at 400 K within a 30 min exposure to methyl radicals (CH3*) and acetone molecules at 1×10-4 Torr. After D* exposure, TPD showed O leaves the Cu2O surface as D2O from 400 K to 700 K with a peak desorption temperature of 510 K. After CH3* exposure, TPD showed O leaves the Cu2O surface as CO2 over a range from 400 to 700 K with a peak temperature at 590 K. With carbon impurity below the XPS detection limit, thermal reduction of CuO to Cu2O was verified by XPS near 890 K. TPD experiments showed that O leaves the CuO surface as O2 at 890 K. Without surface C, thermal reduction of Cu2O was not observed up to 1073 K. Reduction of Cu2O without reactive radical species (D* or CH3*) was negligible. These results suggest that thin films of copper oxide can be reduced at 400 K with D* and CH3*.",
+      "abstractNote": "Chemical and thermal reduction of copper oxide thin films ( 20 Å) has been studied with x-ray photoelectron spectroscopy (XPS) and temperature programmed desorption (TPD) for application in microelectronic device interconnects. XPS showed that copper (I) oxide (Cu2O) and copper (II) oxide (CuO) were reduced to copper metal at 400 K within a 30 min exposure to deuterium atoms (D*) and molecules at 1×10-4 Torr. Similarly, XPS showed that Cu2O was reduced to copper metal at 400 K within a 30 min exposure to methyl radicals (CH3*) and acetone molecules at 1×10-4 Torr. After D* exposure, TPD showed O leaves the Cu2O surface as D2O from 400 K to 700 K with a peak desorption temperature of 510 K. After CH3* exposure, TPD showed O leaves the Cu2O surface as CO2 over a range from 400 to 700 K with a peak temperature at 590 K. With carbon impurity below the XPS detection limit, thermal reduction of CuO to Cu2O was verified by XPS near 890 K. TPD experiments showed that O leaves the CuO surface as O2 at 890 K. Without surface C, thermal reduction of Cu2O was not observed up to 1073 K. Reduction of Cu2O without reactive radical species (D* or CH3*) was negligible. These results suggest that thin films of copper oxide can be reduced at 400 K with D* and CH3*.",
       "title": "Chemical and thermal reduction of thin films of copper (II) oxide and copper (I) oxide",
       "creators": [
         {
@@ -13834,7 +13829,7 @@
       "extra": "bibtex: Kobayashi_2007 \nbibtex[owner=Francesco]",
       "DOI": "10.1016/j.matchemphys.2007.06.008",
       "abstractNote": "High-quality Cu2O thin films were grown epitaxially on MgO (1�1�0) substrate by halide chemical vapor deposition under atmospheric pressure (AP-HCVD). The full width at half maximum of X-ray diffraction [omega] rocking measurement of the (2�2�0) plane was 0.1429� and that the of the (1�-1�0) plane was 0.303�.This result showed that the Cu2O films have a high degree of out-of-plane and in-plane crystallinity. Pole-figure and reciprocal space mapping (RSM) of Cu2O films showed Cu2O film is grown without strain. Optical band gap energy of Cu2O film calculated from absorption spectra showed 2.38�eV. These results indicated that AP-HCVD was promising growth method for high-quality Cu2O film.",
-      "title": "Preparation of Cu₂O films on MgO (110) substrate by means of halide chemical vapor deposition under atmospheric pressure",
+      "title": "Preparation of Cu₂O films on MgO (1 1 0) substrate by means of halide chemical vapor deposition under atmospheric pressure",
       "creators": [
         {
           "creatorType": "author",
@@ -13856,7 +13851,7 @@
         "Crystal structure",
         "Thin films",
         "Vapor deposition",
-        "oxide"
+        "Oxide"
       ],
       "related": [
 
@@ -13886,8 +13881,8 @@
         }
       ],
       "tags": [
-        "COPPER COMPOUNDS",
-        "Photoemission",
+        "copper compounds",
+        "photoemission",
         "band structure",
         "ion beam effects",
         "localised states",
@@ -14059,9 +14054,9 @@
         }
       ],
       "tags": [
-        "Copper",
-        "Oxidation",
-        "Thin films",
+        "copper",
+        "oxidation",
+        "thin films",
         "interface phenomena",
         "pressure",
         "reaction kinetics",
@@ -14075,7 +14070,7 @@
       "itemID": 422,
       "itemType": "journalArticle",
       "volume": "42",
-      "pages": "C6-884-C6-886",
+      "pages": "C6-884--C6-886",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "December 1981",
       "extra": "bibtex: Kugel_1981 \nbibtex[owner=Francesco]",
@@ -14133,7 +14128,6 @@
       "itemID": 424,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Nano Today",
       "ISSN": "1748-0132",
       "date": "2010",
@@ -14161,7 +14155,7 @@
         "Nanocrystals",
         "Photodegradation",
         "Surface properties",
-        "electrodeposition"
+        "Electrodeposition"
       ],
       "related": [
 
@@ -14209,7 +14203,7 @@
       "date": "January 1958",
       "extra": "bibtex: Kuzel_1958 \nbibtex[owner=Francesco]",
       "DOI": "10.1007/BF01688753",
-      "abstractNote": "????????, ??? ??? ???? ?????? ???????????? ? ???????????? ?? ???????????  150°? ???? ?????? ??  ?????? ???? ??? ??????????? ????, ?? ? ??????????? ? ?????????? ? ???? ?? ??. ??? ????????? ??-?? ??????  ??????????? ?????? ? ?????? ? ??????????? ? ?????????? ? ?????????? ???? ??? ???? ?????????? ?? ?? ?????  ??????????. ??????????????? ??? ??????? ? ?????????? ? ???????????? ????? ? ???????????? ????? ?? ?????? ?? ??  ?????? ??????? ??????????? ?-??. ??????????????? ??? ??????? ??????????? ?? ???????????? ?????????? ??????? ? ?? ?  ?????? ????????? ?? ? ?????? ????????? ???????????. ??? ???? ??? ????? ????????? ? ????????????? ?????????? ?  ??????? ???? ????????? ???? (? ???????? ???? ????? ????? ????).",
+      "abstractNote":"????????, ??? ??? ???? ?????? ???????????? ? ???????????? ?? ???????????  150°? ???? ?????? ?? ?????? ???? ??? ??????????? ????, ?? ? ??????????? ? ?????????? ? ???? ?? ??. ??? ????????? ??-?? ?????? ??????????? ?????? ? ?????? ? ??????????? ? ?????????? ? ?????????? ???? ??? ???? ?????????? ?? ?? ????? ??????????. ??????????????? ??? ??????? ? ?????????? ? ???????????? ????? ? ???????????? ????? ?? ?????? ?? ?? ?????? ??????? ??????????? ?-??. ??????????????? ??? ??????? ??????????? ?? ???????????? ?????????? ??????? ? ?? ? ?????? ????????? ?? ? ?????? ????????? ???????????. ??? ???? ??? ????? ????????? ? ????????????? ?????????? ? ??????? ???? ????????? ???? (? ???????? ???? ????? ????? ????).",
       "title": "Влияние предварител ьного освещения нa характеристики медн озакисных выпрямите лей",
       "creators": [
         {
@@ -14449,7 +14443,7 @@
       "itemType": "book",
       "url": "http://www.archive.org/details/photoelementsand029896mbp",
       "publisher": "Reinhold, New York",
-      "ISBN": "1406744824",
+      "ISBN": "1-4067-4482-4",
       "date": "1938",
       "extra": "bibtex: Lange_1938_book \nbibtex[owner=Francesco]",
       "title": "Photoelements and their applications",
@@ -14580,7 +14574,7 @@
         "Copper",
         "Reduction",
         "X-ray photoelectron spectroscopy",
-        "oxide"
+        "Oxide"
       ],
       "related": [
 
@@ -14827,13 +14821,13 @@
       ],
       "tags": [
         "ATOM TRANSPORT",
-        "Copper oxides",
+        "COPPER OXIDES",
         "HIGHTC SUPERCONDUCTORS",
-        "Microstructure",
-        "Oxidation",
-        "Reduction",
-        "Thin films",
-        "Transmission electron microscopy"
+        "MICROSTRUCTURE",
+        "OXIDATION",
+        "REDUCTION",
+        "THIN FILMS",
+        "TRANSMISSION ELECTRON MICROSCOPY"
       ],
       "related": [
 
@@ -14863,8 +14857,8 @@
         }
       ],
       "tags": [
-        "Copper",
-        "Oxidation",
+        "copper",
+        "oxidation",
         "integrated circuit interconnections",
         "integrated circuit metallisation",
         "metallic thin films",
@@ -14917,7 +14911,7 @@
         "Photonic stop band",
         "Reduction of oxygen",
         "Visible light",
-        "photoelectrochemistry"
+        "Photoelectrochemistry"
       ],
       "related": [
 
@@ -15092,7 +15086,7 @@
         "Transmission electron microscopy",
         "crystalline orientation and texture",
         "defects and impurities",
-        "electrodeposition",
+        "Electrodeposition",
         "electroplating",
         "segregation",
         "thickness"
@@ -15107,10 +15101,9 @@
       "url": "http://etd.library.pitt.edu/ETD/available/etd-08172004-103051/",
       "date": "2004",
       "extra": "bibtex: Liu_2004_PhDthesis \nbibtex[owner=Francesco;refid=http://www.scientificcommons.org/7576697]",
-      "university": "University of Pittsburgh",
+      "university": "University of Pittsburgh / PIT",
       "abstractNote": "There is a 40-year long history in the search for Bose-Einstein condensation (BEC) of excitons in semiconductors. This thesis presents research directed toward this goal in bulk crystal Cu2O in three dimensions and in GaAs-based coupled quantum wells (CQW) in two dimensions. The Auger recombination process in Cu2O plays a major role in limiting the density of the excitons. We find that the rate for this process increases with applied stress and lattice temperature. We create paraexcitons in Cu2O through a resonant two-photon excitation in a harmonic potential trap with the Auger recombination process as small as possible (at low temperature and low stress), and find that the exciton creation efficiency in the resonant two-photon excitation is greater for one-beam excitation than for two colliding pulses, but the colliding pulse method may be useful for direct creation of a condensate in the ground state. The paraexciton density in this work is about thirty times less than the required density for BEC of paraexcitons. One promising direction for BEC of excitons in Cu2O is that with higher laser power from stronger IR laser sources, or at lower temperature, the critical density can be approached under one-beam two-photon excitation resonant with the paraexciton state. In two dimensions, the CQW structure has been modified with four design strategies: highest possible barriers, introducing into the barriers a superlattice of 60 angstrom GaAs wells, p-i-n doping, and wider quantum wells, which provides indirect excitons low disorder and high mobility. With a cold near-resonant excitation, we conclude that the excitons act as a free gas, travelling distances of hundreds of microns. We also present observations of a narrow beam of emitted light, when the indirect excitons are confined in a two-dimensional harmonic potential trap, in a way quite similar to the first observations of BEC in alkali atoms. A beam-like emission has been suggested as a telltale for BEC of excitons. This opens the door to a whole range of investigations, including attempts to observe coherence of the emitted light, proof of superfludity of the excitons, and other fascinating effects.",
       "title": "Excitons at high density in Cuprous Oxide and coupled quantum wells",
-      "numPages": "--",
       "creators": [
         {
           "creatorType": "author",
@@ -15121,7 +15114,7 @@
       "related": [
 
       ],
-      "publisher": "University of Pittsburgh"
+      "publisher": "University of Pittsburgh / PIT"
     },
     {
       "itemID": 459,
@@ -15132,7 +15125,7 @@
       "date": "2005",
       "extra": "bibtex: Liu_2005 \nbibtex[owner=Francesco]",
       "DOI": "10.1063/1.2136349",
-      "title": "Epitaxial, ferromagnetic Cu<sub>2-x</sub>MnₓO films on (001) Si by near-room-temperature electrodeposition",
+      "title": "Epitaxial, ferromagnetic Cu₂₋ₓMnₓO films on (001) Si by near-room-temperature electrodeposition",
       "creators": [
         {
           "creatorType": "author",
@@ -15543,15 +15536,15 @@
         }
       ],
       "tags": [
-        "Adsorption",
-        "COPPER COMPOUNDS",
-        "Catalysis",
+        "adsorption",
+        "copper compounds",
+        "catalysis",
         "Cu2O nanorods",
-        "Cu₂O",
-        "Nanoparticles",
-        "Oxidation",
-        "Photodegradation",
-        "Visible light",
+        "Cu<sub>2</sub>O",
+        "nanoparticles",
+        "oxidation",
+        "photodegradation",
+        "visible light",
         "large surface area",
         "nanorods",
         "nanotechnology",
@@ -17059,7 +17052,7 @@
       "itemType": "journalArticle",
       "volume": "28",
       "issue": "C3",
-      "pages": "C3-92-C3-94",
+      "pages": "C3-92--C3-94",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1967",
       "extra": "bibtex: Merle_1967 \nbibtex[owner=Francesco]",
@@ -17092,7 +17085,7 @@
       "itemType": "journalArticle",
       "volume": "35",
       "issue": "C3",
-      "pages": "C3-27-C3-32",
+      "pages": "C3-27--C3-32",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1974",
       "extra": "bibtex: Merle_1974 \nbibtex[owner=Francesco]",
@@ -18038,7 +18031,7 @@
       "itemID": 540,
       "itemType": "journalArticle",
       "volume": "41",
-      "pages": "C7-281-C7-294",
+      "pages": "C7-281--C7-294",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "July 1980",
       "extra": "bibtex: Mysyrowicz_1980 \nbibtex[owner=Francesco]",
@@ -19090,7 +19083,7 @@
       "itemID": 572,
       "itemType": "journalArticle",
       "volume": "27",
-      "pages": "C2-107-C2-110",
+      "pages": "C2-107--C2-110",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "November 1966",
       "extra": "bibtex: Nikitine_1966",
@@ -21479,7 +21472,7 @@
       "itemID": 651,
       "itemType": "journalArticle",
       "volume": "41",
-      "pages": "C6-315-C6-318",
+      "pages": "C6-315--C6-318",
       "publicationTitle": "Journal de Physique Colloques",
       "date": "1980",
       "extra": "3rd Europhysics topical conference lattice defects in ionic crystals \nbibtex: Perinet_1980 \nbibtex[owner=Francesco]",
@@ -21543,7 +21536,7 @@
       "pages": "387-397",
       "date": "1989",
       "extra": "ISBN: 0792302257 \nbibtex: Perinet_1989_book \nbibtex[owner=Francesco]",
-      "title": "``Oxygen diffusion in volume and in grain-boundaries of Cu<sub>2-x</sub>O'' in Non Stoichiometric Compounds: Surface, Grain Boundaries and Structural Defects (NATO Science Series C)",
+      "title": "``Oxygen diffusion in volume and in grain-boundaries of Cu₂₋ₓO'' in Non Stoichiometric Compounds: Surface, Grain Boundaries and Structural Defects (NATO Science Series C)",
       "creators": [
         {
           "creatorType": "author",
@@ -29130,7 +29123,6 @@
       "itemID": 896,
       "itemType": "journalArticle",
       "volume": "In Press, Corrected Proof",
-      "pages": "-",
       "publicationTitle": "Electrochimica Acta",
       "ISSN": "0013-4686",
       "date": "2010",

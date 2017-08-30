@@ -379,9 +379,7 @@ class ZoteroItem
     O: '\u1D3C'
     P: '\u1D3E'
     R: '\u1D3F'
-    S: '\u2120'
     T: '\u1D40'
-    T: '\u2122'
     U: '\u1D41'
     W: '\u1D42'
     a: '\u1D43'
@@ -582,7 +580,11 @@ class ZoteroItem
   $editor: @::$author
   $translator: @::$author
 
-  $publisher: (value) -> @item.publisher = (@collapse(pub) for pub in value).join(' and ')
+  $publisher: (value) ->
+    @item.publisher ||= ''
+    @item.publisher += ' / ' if @item.publisher
+    @item.publisher += (@collapse(pub) for pub in value).join(' and ')
+    return true
   $institution: @::$publisher
   $school: @::$publisher
 
@@ -613,10 +615,18 @@ class ZoteroItem
     pages = []
     for range in value
       if range.length == 1
-        pages.push(@collapse(range[0]))
+        p = @collapse(range[0])
+        pages.push(p) if p
       else
-        pages.push(@collapse(range[0]) + '-' + @collapse(range[1]))
+        p0 = @collapse(range[0])
+        p1 = @collapse(range[1])
+        if p0.indexOf('-') >= 0 || p1.indexOf('-') >= 0
+          pages.push("#{p0}--#{p1}")
+        else if p0 || p1
+          pages.push("#{p0}-#{p1}")
     pages = pages.join(', ')
+
+    return true unless pages
 
     if @type in ['book', 'thesis', 'manuscript']
       @item.numPages = pages
