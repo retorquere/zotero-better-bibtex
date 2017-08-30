@@ -4174,7 +4174,7 @@
         }
       ],
       "date":"1934",
-      "extra":"in ``W. L. Severinghaus, Proceedings of the American Physical Society, Minutes of the Washington Meeting, Physical Review, 45 (1934), 739 '' \nbibtex: Brattain_1934 \nbibtex[owner=Francesco]",
+      "extra":"in “W. L. Severinghaus, Proceedings of the American Physical Society, Minutes of the Washington Meeting, Physical Review, 45 (1934), 739 ” \nbibtex: Brattain_1934 \nbibtex[owner=Francesco]",
       "itemID":79,
       "itemType":"journalArticle",
       "pages":"745",
@@ -4584,7 +4584,7 @@
       "pages":"173-176",
       "publisher":"N. B. S. Special publication 296, U.S. Govt. Printing Office",
       "related":[],
-      "title":"``Interdiffusion Coefficients from Conductivity Measurements - Application to Cu₂O'' in Mass Transport in Oxides"
+      "title":"“Interdiffusion Coefficients from Conductivity Measurements - Application to Cu₂O” in Mass Transport in Oxides"
     },
     {
       "creators":[
@@ -4606,7 +4606,7 @@
       "pages":"413-421",
       "publisher":"Plenum Press",
       "related":[],
-      "title":"``Kinetics of Vaporization of Cuprous Oxide'' in Kinetics of Ionic Reactions"
+      "title":"“Kinetics of Vaporization of Cuprous Oxide” in Kinetics of Ionic Reactions"
     },
     {
       "DOI":"10.1021/cg9008637",
@@ -6791,8 +6791,8 @@
       "itemID":159,
       "itemType":"conferencePaper",
       "pages":"301-330",
-      "proceedingsTitle":"``Crystal Growth of Novel Electronic Materials'', Ceramic Transactions",
-      "publicationTitle":"``Crystal Growth of Novel Electronic Materials'', Ceramic Transactions",
+      "proceedingsTitle":"“Crystal Growth of Novel Electronic Materials”, Ceramic Transactions",
+      "publicationTitle":"“Crystal Growth of Novel Electronic Materials”, Ceramic Transactions",
       "related":[],
       "title":"Point Defects and Transport of Matter and Charge in Non-Stoichiometric Oxides",
       "volume":"60"
@@ -6825,8 +6825,8 @@
       "itemID":160,
       "itemType":"conferencePaper",
       "pages":"33-50",
-      "proceedingsTitle":"``Mass and Charge Transport in Ceramics'', Ceramic Transactions",
-      "publicationTitle":"``Mass and Charge Transport in Ceramics'', Ceramic Transactions",
+      "proceedingsTitle":"“Mass and Charge Transport in Ceramics”, Ceramic Transactions",
+      "publicationTitle":"“Mass and Charge Transport in Ceramics”, Ceramic Transactions",
       "related":[],
       "title":"Point Defects and Transport of Matter and Charge in Non-Stoichiometric Oxides (II)",
       "volume":"71"
@@ -7046,7 +7046,7 @@
       "pages":"117-146",
       "publisher":"Springer Verlag",
       "related":[],
-      "title":"``Crystal Structures Involving P and T Layers'' in Structure and Chemistry of Crystalline Solids"
+      "title":"“Crystal Structures Involving P and T Layers” in Structure and Chemistry of Crystalline Solids"
     },
     {
       "creators":[
@@ -14637,7 +14637,7 @@
       "pages":"261-264",
       "publicationTitle":"Physica Status Solidi (b)",
       "related":[],
-      "title":"Response to ``Comment on `Some considerations concerning the detection of excitons by field ionization in a Schottky barrier' ''",
+      "title":"Response to “Comment on `Some considerations concerning the detection of excitons by field ionization in a Schottky barrier' ”",
       "volume":"239"
     },
     {
@@ -18377,7 +18377,7 @@
       "pages":"927",
       "publicationTitle":"The Journal of Chemical Physics",
       "related":[],
-      "title":"Erratum: ``The Diffusion of Copper in Cuprous Oxide''",
+      "title":"Erratum: “The Diffusion of Copper in Cuprous Oxide”",
       "volume":"20"
     },
     {
@@ -18852,7 +18852,7 @@
       "pages":"257-260",
       "publicationTitle":"Physica Status Solidi (b)",
       "related":[],
-      "title":"Comment on ``Some considerations concerning the detection of excitons by field ionization in a Schottky barrier''",
+      "title":"Comment on “Some considerations concerning the detection of excitons by field ionization in a Schottky barrier”",
       "volume":"239"
     },
     {
@@ -19184,7 +19184,7 @@
     },
     {
       "DOI":"10.1063/1.1803541",
-      "abstractNote":"Experiments on deposition of Cu2O films from basic cupper sulfate solution show that copper also deposits. At low, but basic values of pH only copper deposits and at high pH only cuprous oxide deposits. In the intermediate range where both compete the system shows oscillations at ``constant current.'' Linear stability analysis has been conducted for such an electrochemical cell to show that oscillations can take place in the parameter space identified in the experiments. The results are keeping with most of the experimental observations, which are many, but not with all. The physical mechanisms behind the oscillations are explained in terms of competing reactions.",
+      "abstractNote":"Experiments on deposition of Cu2O films from basic cupper sulfate solution show that copper also deposits. At low, but basic values of pH only copper deposits and at high pH only cuprous oxide deposits. In the intermediate range where both compete the system shows oscillations at “constant current.” Linear stability analysis has been conducted for such an electrochemical cell to show that oscillations can take place in the parameter space identified in the experiments. The results are keeping with most of the experimental observations, which are many, but not with all. The physical mechanisms behind the oscillations are explained in terms of competing reactions.",
       "creators":[
         {
           "creatorType":"author",
@@ -19765,7 +19765,7 @@
       "pages":"197",
       "publisher":"Plenum Press",
       "related":[],
-      "title":"``Excitons'' in Optical Properties of Solids"
+      "title":"“Excitons” in Optical Properties of Solids"
     },
     {
       "abstractNote":"Without Abstract",
@@ -19784,7 +19784,7 @@
       "publicationTitle":"Excitons at High Density",
       "publisher":"Springer Verlag",
       "related":[],
-      "title":"``Introduction to exciton spectroscopy'' in Excitons at High Density"
+      "title":"“Introduction to exciton spectroscopy” in Excitons at High Density"
     },
     {
       "DOI":"10.1016/0022-2860(78)87080-X",
@@ -21980,7 +21980,7 @@
       "itemType":"bookSection",
       "pages":"234",
       "related":[],
-      "title":"``Mechanism of Oxygen Self-Diffusion in Cu₂O'' in Synthetic Materials for Electronics (Materials Science Monographs)",
+      "title":"“Mechanism of Oxygen Self-Diffusion in Cu₂O” in Synthetic Materials for Electronics (Materials Science Monographs)",
       "volume":"10"
     },
     {
@@ -22018,7 +22018,7 @@
       "pages":"387-397",
       "publisher":"Kluwer Academic Publishers (Springer)",
       "related":[],
-      "title":"``Oxygen diffusion in volume and in grain-boundaries of Cu₂₋ₓO'' in Non Stoichiometric Compounds: Surface, Grain Boundaries and Structural Defects (NATO Science Series C)"
+      "title":"“Oxygen diffusion in volume and in grain-boundaries of Cu₂₋ₓO” in Non Stoichiometric Compounds: Surface, Grain Boundaries and Structural Defects (NATO Science Series C)"
     },
     {
       "DOI":"10.1016/0022-3697(84)90033-7",

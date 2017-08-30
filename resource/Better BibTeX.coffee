@@ -440,29 +440,36 @@ class ZoteroItem
     sub: {open:'<sub>', close: '</sub>'},
     sup: {open:'<sup>', close: '</sup>'},
     smallcaps: {open:'<span style="font-variant:small-caps;">', close: '</span>'},
-    nocase: {open:'<span class="nocase">', close: '</span>'},
+    nocase: {open:'', close: ''},
     enquote: {open:'“', close: '”'},
     url: {open:'', close: ''},
     'undefined': {open:'[', close: ']'}
    }
   unparse: (text) ->
+    return text if typeof text in ['string', 'number']
+
+    debug('unparse: pre', text)
     # split out sup/sub text that can be unicodified
     chunks = []
-    for chunk in text
+    for node in text
+      if node.type == 'variable'
+        chunks.push({text: node.attrs.variable, marks: []})
+        continue
+
+      if !node.marks
+        chunks.push(node)
+        continue
+
       sup = false
       sub = false
-      nosupb = chunk.marks.filter((mark) ->
+      nosupb = node.marks.filter((mark) ->
         sup ||= mark.type == 'sup'
         sub ||= mark.type == 'sub'
         return mark.type not in ['sup', 'sub']
       )
 
-      if chunk.type == 'variable'
-        chunks.push(chunk)
-        continue
-
-      if (sup || sub ) && !( sup && sub )
-        chunks.push(chunk)
+      if sup == sub # !xor
+        chunks.push(node)
         continue
 
       tr = if sup then @sup else @sub
@@ -473,9 +480,10 @@ class ZoteroItem
           when tr[c]
             chunks[chunks.length - 1].text += tr[c] # can be replaced and appended
           when i == 0 || chunks[chunks.length - 1].unicoded # cannot be replaced and and cannot be appended
-            chunks.push({text: c, marks: chunk.marks})
+            chunks.push({text: c, marks: node.marks})
           else
             chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
+    debug('unparse: post', chunks)
 
     # convert to string
     html = ''
@@ -807,8 +815,12 @@ class ZoteroItem
     @addToExtra(@unparse(value))
     return true
 
-  $language: (value) ->
-    language = @unparse(value)
+  $language: (value, field) ->
+    if field == 'language'
+      language = (@unparse(lang) for lang in value).join(' and ')
+    else
+      language = @unparse(value)
+    debug('$language:', value, language)
     return true unless language
 
     switch language.toLowerCase()
