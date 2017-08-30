@@ -434,48 +434,90 @@ class ZoteroItem
     s: '\u209B'
     t: '\u209C'
   }
+  tags: {
+    strong: {open:'<b>', close: '</b>'},
+    em: {open:'<i>', close: '</i>'},
+    sub: {open:'<sub>', close: '</sub>'},
+    sup: {open:'<sup>', close: '</sup>'},
+    smallcaps: {open:'<span style="font-variant:small-caps;">', close: '</span>'},
+    nocase: {open:'<span class="nocase">', close: '</span>'},
+    enquote: {open:'“', close: '”'},
+    url: {open:'', close: ''},
+    'undefined': {open:'[', close: ']'}
+   }
+  unparse: (text) ->
+    # split out sup/sub text that can be unicodified
+    chunks = []
+    for chunk in text
+      sup = false
+      sub = false
+      nosupb = chunk.marks.filter((mark) ->
+        sup ||= mark.type == 'sup'
+        sub ||= mark.type == 'sub'
+        return mark.type not in ['sup', 'sub']
+      )
 
-  collapse: (node) ->
-    return null unless node?
+      if chunk.type == 'variable'
+        chunks.push(chunk)
+        continue
 
-    return node if typeof node in ['string', 'number']
+      if (sup || sub ) && !( sup && sub )
+        chunks.push(chunk)
+        continue
 
-    return (@collapse(n) for n in node).join('') if Array.isArray(node)
+      tr = if sup then @sup else @sub
+      for c, i in Zotero.Utilities.XRegExp.split(node.text, '')
+        switch
+          when tr[c] && (i == 0 || !chunks[chunks.length - 1].unicoded) # can be replaced but not appended
+            chunks.push({text: tr[c], marks: nosupb, unicoded: true})
+          when tr[c]
+            chunks[chunks.length - 1].text += tr[c] # can be replaced and appended
+          when i == 0 || chunks[chunks.length - 1].unicoded # cannot be replaced and and cannot be appended
+            chunks.push({text: c, marks: chunk.marks})
+          else
+            chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
 
-    if node.type == 'text'
-      marks = (node.marks || []).reduce(((acc, mark) -> acc[mark.type] = true; return acc), {})
+    # convert to string
+    html = ''
+    lastMarks = []
+    for node in chunks
+      if node.type == 'variable'
+        # This is an undefined variable
+        # This should usually not happen, as CSL doesn't know what to
+        # do with these. We'll put them into an unsupported tag.
+        html += '' + @tags.undefined.open + node.attrs.variable + @tags.undefined.close
+        continue
 
-      if marks.sup || marks.sub
-        mark = if marks.sup then @sup else @sub
-        text = []
-        for c in Zotero.Utilities.XRegExp.split(node.text, '')
-          switch
-            when mark[c] && typeof text[0] == 'string'
-              text[0] += mark[c]
-            when mark[c]
-              text.unshift(mark[c])
-            when typeof text[0] == 'object'
-              text[0].text += c
-            else
-              text.unshift({ text: c })
-        mark = if marks.sup then 'sup' else 'sub'
-        text = text.reverse().map((chunk) -> if typeof chunk == 'string' then chunk else "<#{mark}>#{chunk.text}</#{mark}>").join('')
-      else
-        text = node.text
+      newMarks = []
+      if node.marks
+        for mark in node.marks
+          newMarks.push(mark.type)
 
-      # debug('collapse:', {marks, text})
+      # close all tags that are not present in current text node.
+      closing = false
+      closeTags = []
+      for mark, index in lastMarks
+        closing = true if mark != newMarks[index]
+        closeTags.push @tags[mark].close if closing
+      # Add close tags in reverse order to close innermost tags
+      # first.
+      closeTags.reverse()
 
-      # text = '<span class="nocase">' + text + '</span>' if marks.nocase
-      text = "<i>#{text}</i>" if marks.em
-      text = "<b>#{text}</b>" if marks.strong
-      text = "<span style=\"font-variant: small-caps;\">#{text}</span>" if marks.smallcaps
-      text = "\u201C#{text}\u201D" if marks.enquote
+      html += closeTags.join('')
+      # open all new tags that were not present in the last text node.
+      opening = false
+      for mark, index in newMarks
+        opening = true if mark != lastMarks[index]
+        html += @tags[mark].open if opening
 
-      return text
+      html += node.text
+      lastMarks = newMarks
 
-    return node.attrs.variable if node.type == 'variable'
+    # Close all still open tags
+    for mark in lastMarks.slice().reverse()
+      html += @tags[mark].close
 
-    return JSON.stringify(node)
+    return html
 
   import: () ->
     @hackyFields = []
@@ -501,7 +543,7 @@ class ZoteroItem
       debug('ZoteroItem.import:', field)
       continue if @["$#{field}"]?(value, field)
       debug('ZoteroItem.import: addtoextra', field)
-      @addToExtraData(field, @collapse(value))
+      @addToExtraData(field, @unparse(value))
 
     if @type in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
       @item.proceedingsTitle = @item.publicationTitle
@@ -548,15 +590,15 @@ class ZoteroItem
 
   addToExtraData: (key, value) ->
     debug('addToExtraData', { key, value })
-    @biblatexdata[key] = @collapse(value)
+    @biblatexdata[key] = @unparse(value)
     @biblatexdatajson = true if key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)
     return
 
   $title: (value) ->
     if @type == 'encyclopediaArticle'
-      @item.publicationTitle = @collapse(value)
+      @item.publicationTitle = @unparse(value)
     else
-      @item.title = @collapse(value)
+      @item.title = @unparse(value)
     return true
 
   $author: (value, field) ->
@@ -566,13 +608,13 @@ class ZoteroItem
         creatorType: field
       }
       if name.literal
-        creator.lastName = @collapse(name.literal)
+        creator.lastName = @unparse(name.literal)
         creator.fieldMode = 1
       else
-        creator.firstName = @collapse(name.given)
-        creator.lastName = @collapse(name.family)
-        creator.lastName = @collapse(name.prefix) + ' ' + creator.lastName if name.prefix
-        creator.lastName = creator.lastName + ', ' + @collapse(name.suffix) if name.suffix
+        creator.firstName = @unparse(name.given)
+        creator.lastName = @unparse(name.family)
+        creator.lastName = @unparse(name.prefix) + ' ' + creator.lastName if name.prefix
+        creator.lastName = creator.lastName + ', ' + @unparse(name.suffix) if name.suffix
         # creator = Zotero.Utilities.cleanAuthor(creator, field, false)
         creator.fieldMode = 1 if creator.lastName && !creator.firstName
       @item.creators.push(creator)
@@ -583,24 +625,24 @@ class ZoteroItem
   $publisher: (value) ->
     @item.publisher ||= ''
     @item.publisher += ' / ' if @item.publisher
-    @item.publisher += (@collapse(pub) for pub in value).join(' and ')
+    @item.publisher += (@unparse(pub) for pub in value).join(' and ')
     return true
   $institution: @::$publisher
   $school: @::$publisher
 
-  $address: (value) -> @item.place = @collapse(value)
+  $address: (value) -> @item.place = @unparse(value)
   $location: @::$address
 
-  $edition: (value) -> @item.edition = @collapse(value)
+  $edition: (value) -> @item.edition = @unparse(value)
 
-  $isbn: (value) -> @item.ISBN = @collapse(value)
+  $isbn: (value) -> @item.ISBN = @unparse(value)
 
-  $date: (value) -> @item.date = @collapse(value)
+  $date: (value) -> @item.date = @unparse(value)
 
-  $booktitle: (value) -> @item.publicationTitle = @collapse(value)
+  $booktitle: (value) -> @item.publicationTitle = @unparse(value)
 
   $journaltitle: (value) ->
-    value = @collapse(value)
+    value = @unparse(value)
     if @fields['booktitle']
       @item.journalAbbreviation = value
     else
@@ -615,11 +657,11 @@ class ZoteroItem
     pages = []
     for range in value
       if range.length == 1
-        p = @collapse(range[0])
+        p = @unparse(range[0])
         pages.push(p) if p
       else
-        p0 = @collapse(range[0])
-        p1 = @collapse(range[1])
+        p0 = @unparse(range[0])
+        p1 = @unparse(range[1])
         if p0.indexOf('-') >= 0 || p1.indexOf('-') >= 0
           pages.push("#{p0}--#{p1}")
         else if p0 || p1
@@ -635,11 +677,11 @@ class ZoteroItem
 
     return true
 
-  $volume: (value) -> @item.volume = @collapse(value)
+  $volume: (value) -> @item.volume = @unparse(value)
 
-  $doi: (value) -> @item.DOI = @collapse(value)
+  $doi: (value) -> @item.DOI = @unparse(value)
 
-  $abstract: (value) -> @item.abstractNote = @collapse(value)
+  $abstract: (value) -> @item.abstractNote = @unparse(value)
 
   $keywords: (value) ->
     @item.tags ||= []
@@ -649,7 +691,7 @@ class ZoteroItem
   $keyword: @::$keywords
 
   $year: (value) ->
-    value = @collapse(value)
+    value = @unparse(value)
 
     if @item.date
       @item.date += value if @item.date.indexOf(value) < 0
@@ -658,7 +700,7 @@ class ZoteroItem
     return true
 
   $month: (value) ->
-    value = @collapse(value)
+    value = @unparse(value)
 
     month = months.indexOf(value.toLowerCase())
     if month >= 0
@@ -677,7 +719,7 @@ class ZoteroItem
     return true
 
   $file: (value) ->
-    value = @collapse(value)
+    value = @unparse(value)
 
     # :Better BibTeX.001/Users/heatherwright/Documents/Scientific Papers/AVX3W9~F.PDF:PDF
     if m = value.match(/^([^:]*):([^:]+):([^:]*)$/)
@@ -705,7 +747,7 @@ class ZoteroItem
   $timestamp: -> true
 
   $number: (value) ->
-    value = @collapse(value)
+    value = @unparse(value)
     switch @type
       when 'report'                         then @item.reportNumber = value
       when 'book', 'bookSection', 'chapter' then @item.seriesNumber = value
@@ -713,10 +755,10 @@ class ZoteroItem
       else                                       @item.issue = value
     return true
 
-  $issn: (value) -> @item.ISSN = @collapse(value)
+  $issn: (value) -> @item.ISSN = @unparse(value)
 
   $url: (value, field) ->
-    value = @collapse(value)
+    value = @unparse(value)
 
     if m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)
       url = m[2]
@@ -734,39 +776,39 @@ class ZoteroItem
   $howpublished: @::$url
 
   $type: (value) ->
-    @item.sessionType = @item.websiteType = @item.manuscriptType = @item.genre = @item.postType = @item.sessionType = @item.letterType = @item.manuscriptType = @item.mapType = @item.presentationType = @item.regulationType = @item.reportType = @item.thesisType = @item.websiteType = @collapse(value)
+    @item.sessionType = @item.websiteType = @item.manuscriptType = @item.genre = @item.postType = @item.sessionType = @item.letterType = @item.manuscriptType = @item.mapType = @item.presentationType = @item.regulationType = @item.reportType = @item.thesisType = @item.websiteType = @unparse(value)
     return true
 
   $lista: (value) ->
     return false unless @type == 'encyclopediaArticle' && !@item.title
 
-    @item.title = @collapse(value)
+    @item.title = @unparse(value)
     return true
 
   $annotation: (value) ->
-    @item.notes.push(Zotero.Utilities.text2html(@collapse(value)))
+    @item.notes.push(Zotero.Utilities.text2html(@unparse(value)))
     return true
   $comment: @::$annotation
   $annote: @::$annotation
   $review: @::$annotation
   $notes: @::$annotation
 
-  $urldate: (value) -> @item.accessDate = @collapse(value)
+  $urldate: (value) -> @item.accessDate = @unparse(value)
   $lastchecked: @::$urldate
 
-  $series: (value) -> @item.series = @collapse(value)
+  $series: (value) -> @item.series = @unparse(value)
 
   $groups: (value) ->
     return true unless @groups
-    throw new Error(@collapse(value))
+    throw new Error(@unparse(value))
     return
 
   $note: (value) ->
-    @addToExtra(@collapse(value))
+    @addToExtra(@unparse(value))
     return true
 
   $language: (value) ->
-    language = @collapse(value)
+    language = @unparse(value)
     return true unless language
 
     switch language.toLowerCase()
@@ -776,14 +818,14 @@ class ZoteroItem
     return true
   $langid: @::$language
 
-  $shorttitle: (value) -> @item.shortTitle = @collapse(value)
+  $shorttitle: (value) -> @item.shortTitle = @unparse(value)
 
   $eprint: (value, field) ->
     ### Support for IDs exported by BibLaTeX ###
     return false unless @fields['eprinttype']
 
-    eprint = @collapse(value)
-    eprinttype = @collapse(@fields['eprinttype'])
+    eprint = @unparse(value)
+    eprinttype = @unparse(@fields['eprinttype'])
 
     switch eprinttype.trim().toLowerCase()
       when 'arxiv' then @hackyFields.push("arXiv: #{eprint}")
@@ -796,9 +838,9 @@ class ZoteroItem
     return true
   $eprinttype: (value) -> @fields['eprint']
 
-  $nationality: (value) -> @item.country = @collapse(value)
+  $nationality: (value) -> @item.country = @unparse(value)
 
-  $chapter: (value) -> @item.section = @collapse(value)
+  $chapter: (value) -> @item.section = @unparse(value)
 
 #ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
