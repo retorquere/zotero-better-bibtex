@@ -543,6 +543,8 @@ class ZoteroItem
     html = html.replace(/ \u00A0/g, ' ~') # if allowtilde
     html = html.replace(/\u00A0 /g, '~ ') # if allowtilde
     # html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
+    # TODO: workaround for https://github.com/fiduswriter/biblatex-csl-converter/issues/74
+    html = html.replace(/\n\n\n+/g, "\n\n")
     return html
 
   import: () ->

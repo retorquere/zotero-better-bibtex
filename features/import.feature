@@ -64,6 +64,6 @@ Scenario Outline: Better BibTeX Import
 
 @97
 Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
-  When I import 912 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
+  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
   Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 

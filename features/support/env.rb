@@ -216,16 +216,16 @@ def exportLibrary(translator, displayOptions, library)
   expected = File.read(expected)
 
   if library =~ /\.csl\.json$/
-    compare(JSON.parse(found), JSON.parse(expected))
+    return compare(JSON.parse(found), JSON.parse(expected))
   elsif library =~ /\.json$/
     found = normalizeJSON(JSON.parse(found))
     expected = normalizeJSON(JSON.parse(expected))
 
     if found['items'].length < 30 || expected['items'].length < 30
-      expect(JSON.neat_generate(found)).to eq(JSON.neat_generate(expected))
+      return expect(JSON.neat_generate(found)).to eq(JSON.neat_generate(expected))
     else
       expect(JSON.neat_generate(found.merge({'items' => []}))).to eq(JSON.neat_generate(expected.merge({'items' => []})))
-      compare(found['items'], expected['items'])
+      return compare(found['items'], expected['items'])
     end
   elsif library =~ /\.yml$/
     found = sort_object(YAML.load(found)).to_yaml
@@ -233,7 +233,6 @@ def exportLibrary(translator, displayOptions, library)
   end
 
   expect(found.strip).to eq(expected.strip)
-  raise 'got it'
 end
 
 module BBT
