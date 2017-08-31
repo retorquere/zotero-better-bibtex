@@ -87,6 +87,7 @@ do Bluebird.coroutine(->
     })
 
     branch = process.env.CIRCLE_BRANCH
+    console.log('nightly:', Object.keys(process.env), process.env.NIGHTLY)
     if process.env.NIGHTLY == 'true'
       issue = null
     else if branch.match(/^[0-9]+$/)
