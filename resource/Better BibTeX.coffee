@@ -445,7 +445,7 @@ class ZoteroItem
     url: {open:'', close: ''},
     'undefined': {open:'[', close: ']'}
    }
-  unparse: (text) ->
+  unparse: (text, allowtilde) ->
     return text if typeof text in ['string', 'number']
 
     debug('unparse: pre', text)
@@ -473,16 +473,30 @@ class ZoteroItem
         continue
 
       tr = if sup then @sup else @sub
+      unicoded = ''
       for c, i in Zotero.Utilities.XRegExp.split(node.text, '')
-        switch
-          when tr[c] && (i == 0 || !chunks[chunks.length - 1].unicoded) # can be replaced but not appended
-            chunks.push({text: tr[c], marks: nosupb, unicoded: true})
-          when tr[c]
-            chunks[chunks.length - 1].text += tr[c] # can be replaced and appended
-          when i == 0 || chunks[chunks.length - 1].unicoded # cannot be replaced and and cannot be appended
-            chunks.push({text: c, marks: node.marks})
-          else
-            chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
+        debug('unparse:', { sup, sub, c }) if c > '~'
+        if sup && c in [ '\u00B0' ] # spurious mark
+          unicoded += c
+        else if tr[c]
+          unicoded += tr[c]
+        else
+          unicoded = false
+          break
+      if unicoded
+        node.text = unicoded
+        node.marks = nosupb
+      chunks.push(node)
+
+#        switch
+#          when tr[c] && (i == 0 || !chunks[chunks.length - 1].unicoded) # can be replaced but not appended
+#            chunks.push({text: tr[c], marks: nosupb, unicoded: true})
+#          when tr[c]
+#            chunks[chunks.length - 1].text += tr[c] # can be replaced and appended
+#          when i == 0 || chunks[chunks.length - 1].unicoded # cannot be replaced and and cannot be appended
+#            chunks.push({text: c, marks: node.marks})
+#          else
+#            chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
     debug('unparse: post', chunks)
 
     # convert to string
@@ -525,6 +539,9 @@ class ZoteroItem
     for mark in lastMarks.slice().reverse()
       html += @tags[mark].close
 
+    html = html.replace(/ \u00A0/g, ' ~') # if allowtilde
+    html = html.replace(/\u00A0 /g, '~ ') # if allowtilde
+    # html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
     return html
 
   import: () ->
@@ -689,7 +706,7 @@ class ZoteroItem
 
   $doi: (value) -> @item.DOI = @unparse(value)
 
-  $abstract: (value) -> @item.abstractNote = @unparse(value)
+  $abstract: (value) -> @item.abstractNote = @unparse(value, true)
 
   $keywords: (value) ->
     @item.tags ||= []
