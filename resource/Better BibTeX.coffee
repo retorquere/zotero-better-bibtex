@@ -852,10 +852,11 @@ class ZoteroItem
 
   $eprint: (value, field) ->
     ### Support for IDs exported by BibLaTeX ###
-    return false unless @fields['eprinttype']
+    eprinttype = @fields['eprinttype'] ||  @fields['archiveprefix']
+    return false unless eprinttype
 
     eprint = @unparse(value)
-    eprinttype = @unparse(@fields['eprinttype'])
+    eprinttype = @unparse(eprinttype)
 
     switch eprinttype.trim().toLowerCase()
       when 'arxiv' then @hackyFields.push("arXiv: #{eprint}")
@@ -867,6 +868,7 @@ class ZoteroItem
         return false
     return true
   $eprinttype: (value) -> @fields['eprint']
+  $archiveprefix: @::$eprinttype
 
   $nationality: (value) -> @item.country = @unparse(value)
 

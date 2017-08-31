@@ -21334,7 +21334,7 @@
       "pages":"73-80",
       "publicationTitle":"Solar Cells",
       "related":[],
-      "tags":["cells","solar"],
+      "tags":["solar cells"],
       "title":"Heterojunction Solar Cells On Cuprous Oxide",
       "volume":"3"
     },
@@ -21487,7 +21487,7 @@
       "pages":"489-492",
       "publicationTitle":"Journal of Materials Science Letters",
       "related":[],
-      "title":"High-temperature phases of YBa₂Cu₃O<sub>6+x</sub> related to the superconducting transition",
+      "title":"High-temperature phases of YBa₂Cu₃O₆₊ₓ related to the superconducting transition",
       "volume":"7"
     },
     {
@@ -21719,7 +21719,7 @@
       "pages":"374-376",
       "publicationTitle":"Czechoslovak Journal of Physics",
       "related":[],
-      "title":"Refractive index of Cu₂O crystals in region up to 10textmu",
+      "title":"Refractive index of Cu₂O crystals in region up to 10 μ",
       "volume":"11"
     },
     {
@@ -22020,7 +22020,7 @@
     },
     {
       "DOI":"10.1016/0022-3697(84)90033-7",
-      "abstractNote":"The diffusion of64Cu in Cu2O has been measured by a serial-sectioning technique as a function of temperature (700–1153°C) and oxygen partial pressure (10−6−8 × 102x0304; atm). The oxygen-partial-pressure and temperature dependencies of D*Cu suggest that both neutral and singly charged copper vacancies contribute to cation self-diffusion. A defect model involving both neutral and singly charged copper vacancies, electron holes, and singly charged oxygen-interstitial ions is developed and fit to the tracer-diffusion data, the electrical-conductivity data (Maluenda et al.), and the stoichiometry data (O'Keeffe and Moore). The resulting defect data are quantitatively consistent with the chemical-diffusion data (Maluenda et al.) and with a correlation factor . The defect data are also quantitatively consistent with the high-temperature oxidation studies of copper metal (Iguchi et al.) and with the copper vacancy being 10 times more mobile than the oxygen-interstitial ion at 1000†C.",
+      "abstractNote":"The diffusion of64Cu in Cu2O has been measured by a serial-sectioning technique as a function of temperature (700–1153°C) and oxygen partial pressure (10−6−8 × 102&#x0304; atm). The oxygen-partial-pressure and temperature dependencies of D*Cu suggest that both neutral and singly charged copper vacancies contribute to cation self-diffusion. A defect model involving both neutral and singly charged copper vacancies, electron holes, and singly charged oxygen-interstitial ions is developed and fit to the tracer-diffusion data, the electrical-conductivity data (Maluenda et al.), and the stoichiometry data (O'Keeffe and Moore). The resulting defect data are quantitatively consistent with the chemical-diffusion data (Maluenda et al.) and with a correlation factor . The defect data are also quantitatively consistent with the high-temperature oxidation studies of copper metal (Iguchi et al.) and with the copper vacancy being 10 times more mobile than the oxygen-interstitial ion at 1000†C.",
       "creators":[
         {
           "creatorType":"author",
@@ -22200,7 +22200,7 @@
       "pages":"C21-C25",
       "publicationTitle":"Electrochemical and Solid-State Letters",
       "related":[],
-      "tags":["Oxidation"],
+      "tags":["oxidation"],
       "title":"An Electrochemical Method for CuO Thin Film Deposition from Aqueous Solution",
       "volume":"6"
     },
@@ -22350,7 +22350,7 @@
     {
       "DOI":"10.1016/j.materresbull.2006.11.038",
       "ISSN":"0025-5408",
-      "abstractNote":"Uniform spheres of nanocrystallite size cuprous oxide particles have been prepared by a simple polyol process using cupric nitrate as a precursor in ethylene glycol. As synthesized compound was dried at 333Â K in a vacuum oven and characterized by XRD, FT-IR and SEM techniques. The crystallite size of the cuprous oxide calculated from Scherer's formula was found to be 11Â nm.",
+      "abstractNote":"Uniform spheres of nanocrystallite size cuprous oxide particles have been prepared by a simple polyol process using cupric nitrate as a precursor in ethylene glycol. As synthesized compound was dried at 333Â K in a vacuum oven and characterized by XRD, FT-IR and SEM techniques. The crystallite size of the cuprous oxide calculated from Scherer's formula was found to be ~11Â nm.",
       "creators":[
         {
           "creatorType":"author",
@@ -23002,7 +23002,7 @@
     },
     {
       "DOI":"10.1007/s002160050415",
-      "abstractNote":"Abstract&nbsp;&nbsp; Cu-O layers were deposited on Si-&lt;100gt; wafers at 90° C by means of reactive magnetron sputtering ion plating (R-MSIP). A Cu-target was sputtered in rf-mode by an oxygen/argon plasma, and the influence of the oxygen partial pressure on composition, structure, texture and morphology of the Cu-O layers was investigated. The analysis with EPMA, XRD, HEED and SEM yielded the following results: with an appropriate setting of the oxygen partial pressure, the oxygen content of the films could be controlled between 0 and 50 at-%. XRD bulk structure analysis shows changes in the crystal structure of the films with increasing oxygen content from the fcc structure of Cu, followed by the sc structure of Cu2O (cuprite), the tetragonal structure of Cu3 2+Cu2 1+O4 (paramelaconite) to the monoclinic structure of CuO (tenorite). As revealed by HEED, the structure of the near-surface region of the latter two is the same as that of the bulk, whereas in the case of the films with fcc bulk structure, due to oxidation by air, the surface has the sc structure of Cu2O, and in the case of the film with the sc structure, a monoclinic surface structure of CuO is observed. SEM analyses detected a disordered columnar growth of all Cu-O films.",
+      "abstractNote":"Abstract&nbsp;&nbsp; Cu-O layers were deposited on Si-&lt;100&gt; wafers at 90° C by means of reactive magnetron sputtering ion plating (R-MSIP). A Cu-target was sputtered in rf-mode by an oxygen/argon plasma, and the influence of the oxygen partial pressure on composition, structure, texture and morphology of the Cu-O layers was investigated. The analysis with EPMA, XRD, HEED and SEM yielded the following results: with an appropriate setting of the oxygen partial pressure, the oxygen content of the films could be controlled between 0 and 50 at-%. XRD bulk structure analysis shows changes in the crystal structure of the films with increasing oxygen content from the fcc structure of Cu, followed by the sc structure of Cu2O (cuprite), the tetragonal structure of Cu3 2+Cu2 1+O4 (paramelaconite) to the monoclinic structure of CuO (tenorite). As revealed by HEED, the structure of the near-surface region of the latter two is the same as that of the bulk, whereas in the case of the films with fcc bulk structure, due to oxidation by air, the surface has the sc structure of Cu2O, and in the case of the film with the sc structure, a monoclinic surface structure of CuO is observed. SEM analyses detected a disordered columnar growth of all Cu-O films.",
       "creators":[
         {
           "creatorType":"author",
@@ -23028,7 +23028,7 @@
       "pages":"312-315",
       "publicationTitle":"Fresenius' Journal of Analytical Chemistry",
       "related":[],
-      "title":"Preparation of cuprite (Cu₂O), paramelaconite (Cu₃<sup>2+</sup>Cu₂<sup>1+</sup>O<sub>4</sub>) and tenorite (CuO) with magnetron sputtering ion plating: characterization by EPMA, XRD, HEED and SEM",
+      "title":"Preparation of cuprite (Cu₂O), paramelaconite (Cu₃²⁺Cu₂¹⁺O₄) and tenorite (CuO) with magnetron sputtering ion plating: characterization by EPMA, XRD, HEED and SEM",
       "volume":"358"
     },
     {
@@ -23445,9 +23445,9 @@
       "related":[],
       "tags":[
         "heterostructures",
-        "INTERFACES",
+        "Interfaces",
         "Intrinsic properties of excitons",
-        "Nanostructures",
+        "nanostructures",
         "optical absorption spectra"
       ],
       "title":"Hybridized quadrupole-dipole exciton effects in a Cu₂O-organic heterostructure",
@@ -23469,7 +23469,7 @@
         }
       ],
       "date":"September 2007",
-      "extra":"bibtex: Roslyak_2007_B \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2007SSCom.143..487R;archiveprefix=arXiv;eprint=0705.0731;owner=Francesco]",
+      "extra":"bibtex: Roslyak_2007_B \nbibtex[adsnote=Provided by the SAO/NASA Astrophysics Data System;adsurl=http://ads.nao.ac.jp/abs/2007SSCom.143..487R;owner=Francesco] \narXiv: 0705.0731",
       "itemID":707,
       "itemType":"journalArticle",
       "pages":"487-492",
@@ -23844,7 +23844,7 @@
       "pages":"124703",
       "publicationTitle":"The Journal of Chemical Physics",
       "related":[],
-      "tags":["(crystal)","vacancies"],
+      "tags":["vacancies (crystal)"],
       "title":"Modeling the polaronic nature of p-type defects in Cu₂O: The failure of GGA and GGA+U",
       "volume":"131"
     },
@@ -24154,7 +24154,7 @@
     },
     {
       "DOI":"10.1002/pssb.2220600221",
-      "abstractNote":"Experimental results of high resolution absorption measurements of the yellow exciton 1S absorption line of Cu2O single crystals, characterized by chemical and crystallographic analysis are reported. After correction of internal strain effects, a line broadening proportional to the silver content is observed, whereas the oscillator strength remains constant. Finally, these data are discussed in terms of diffusion and radiative recombination life times in order to estimate the possibility of observing the spin-electron resonance of these excitons.",
+      "abstractNote":"Experimental results of high resolution absorption measurements of the yellow exciton 1S absorption line of Cu2O single crystals, characterized by chemical and crystallographic analysis are reported. After correction of internal strain effects, a line broadening proportional to the silver content is observed, whereas the oscillator strength remains constant. Finally, these data are discussed in terms\n\nof diffusion and radiative recombination life times in order to estimate the possibility of observing the spin-electron resonance of these\n\nexcitons.",
       "creators":[
         {
           "creatorType":"author",
@@ -24345,7 +24345,7 @@
       "pages":"437-442",
       "publicationTitle":"Journal of the Physical Society of Japan",
       "related":[],
-      "title":"Magneto-Optical Absorption Spectra of Cu₂O in an Image Map with Fine Structures at Higher Fields up to 25mathrmT",
+      "title":"Magneto-Optical Absorption Spectra of Cu₂O in an Image Map with Fine Structures at Higher Fields up to 25 T",
       "volume":"72"
     },
     {
@@ -24586,7 +24586,7 @@
     },
     {
       "DOI":"10.1143/JPSJ.58.1717",
-      "abstractNote":"Hall mobility of photoexcited holes in the varGamma7+valence band of Cu2O has been measured at low temperatures. On the basis of the theory of carrier-lattice interactions in polyatomic crystals the intrinsic scattering mechanisms of this substance have been clarified, for the first time, in a wide temperature range up to 400 K. From 40 K to 100 K scattering is dominated by the low-frequency LO phonon, ω1. Above 100 K, the effect of the high-frequency LO phonon, ω2, becomes remarkable. Here, ω1=153 cm-1 and ω2=660 cm-1 at 4.2 K. Mobility quenching due to the metastable self-trapping of holes possibly underlies the phenomena above 200 K. Below 40 K, the temperature dependence of mobility can be explained in terms of a combination of the effects of optical, acoustical and neutral impurity scatterings. The magnitude of the deformation potential of the varGamma7+valence band is estimated to be as small as 0.7±0.3 eV.",
+      "abstractNote":"Hall mobility of photoexcited holes in the + valence band of Cu2O has been measured at low temperatures. On the basis of the theory of carrier-lattice interactions in polyatomic crystals the intrinsic scattering mechanisms of this substance have been clarified, for the first time, in a wide temperature range up to 400 K. From 40 K to 100 K scattering is dominated by the low-frequency LO phonon, ω1. Above 100 K, the effect of the high-frequency LO phonon, ω2, becomes remarkable. Here, ω1=153 cm-1 and ω2=660 cm-1 at 4.2 K. Mobility quenching due to the metastable self-trapping of holes possibly underlies the phenomena above 200 K. Below 40 K, the temperature dependence of mobility can be explained in terms of a combination of the effects of optical, acoustical and neutral impurity scatterings. The magnitude of the deformation potential of the varGamma7+valence band is estimated to be as small as 0.7±0.3 eV.",
       "creators":[
         {
           "creatorType":"author",
@@ -24715,7 +24715,7 @@
     },
     {
       "DOI":"10.1002/adma.200400177",
-      "abstractNote":"The growth of Cu2O crystals that are electrochemically deposited as micrometer-size crystals with systematically varying fractions of 100 and 111 faces is reported (the Figure depicts cubic crystals). The methodical and homogeneous shape evolution is achieved by tuning the degree of preferential adsorption of sodium dodecyl sulfate on the 111 faces of growing Cu2O crystals through pH variation. Scale bar: 1�mgr;m.",
+      "abstractNote":"The growth of Cu2O crystals that are electrochemically deposited as micrometer-size crystals with systematically varying fractions of 100 and 111 faces is reported (the Figure depicts cubic crystals). The methodical and homogeneous shape evolution is achieved by tuning the degree of preferential adsorption of sodium dodecyl sulfate on the 111 faces of growing Cu2O crystals through pH variation. Scale bar: 1�&mgr;m.",
       "creators":[
         {
           "creatorType":"author",
@@ -24805,7 +24805,7 @@
       "volume":"31"
     },
     {
-      "abstractNote":"An optical spectrometer may be a tool unfamiliar to an outsider of the optics community. It can be regarded as a natural evolution of the way we perceive the surrounding environment. Light coming from the sun is reflected or transmitted by objects. The human eye, by measuring this reflected or transmitted light, gains some information about the objects themselves, such as their color, brightness, and shape. Using the same principles, an optical spectrometer is designed to gain even more information. It has a source of light used to send light on some objects, and a hi-tech detector to measure the transmitted or reflected light. After the material has been measured, a relation needs to be established between its optical response and its main physical properties. In this thesis we consider the case of solid state materials. These are materials where the atoms are in close proximity to each other, and arranged in repetitive patterns on macroscopic distances, to make a compact structures (a good example is NaCl, kitchen salt). To establish the above mentioned relation the following procedure is followed. First the optical response (transmission, reflectivity, absorption, etc.) at each frequency in the incident light is measured. The result in quantified in terms of the so called dielectric constant of the bulk ε(∞). In a second step, this function is related to the main physical propertied of the measured solid state material, using the knowledge of this particular structure, determined before by different type of measurements, such as for instance X-ray diffraction. Today, optical spectroscopy has become one of the most important standard tools for investigating novel condensed matter materials. The aim of the work presented in this thesis is to investigate the low energy excitation spectra and the (induced) phase transitions in transition metal oxides.",
+      "abstractNote":"An optical spectrometer may be a tool unfamiliar to an outsider of the optics community. It can be regarded as a natural evolution of the way we perceive the surrounding environment. Light coming from the sun is reflected or transmitted by objects. The human eye, by measuring this reflected or transmitted light, gains some information about the objects themselves, such as their color, brightness, and shape. Using the same principles, an optical spectrometer is designed to gain even more information. It has a source of light used to send light on some objects, and a hi-tech detector to measure the transmitted or reflected light. After the material has been measured, a relation needs to be established between its optical response and its main physical properties. In this thesis we consider the case of solid state materials. These are materials where the atoms are in close proximity to each other, and arranged in repetitive patterns on macroscopic distances, to make a compact structures (a good example is NaCl, kitchen salt). To establish the above mentioned relation the following procedure is followed. First the optical response (transmission, reflectivity, absorption, etc.) at each frequency in the incident light is measured. The result in quantified in terms of the so called dielectric constant of the bulk ε(∞). In a second step, this function is related to the main physical propertied of the measured solid state material, using the knowledge of this particular structure, determined before by different type of measurements, such as for instance X-ray diffraction. Today, optical spectroscopy has become one of the most important standard tools for investigating novel condensed matter materials.\n\nThe aim of the work presented in this thesis is to investigate the low energy excitation spectra and the (induced) phase transitions in transition metal oxides.",
       "creators":[
         {
           "creatorType":"author",
@@ -24885,7 +24885,7 @@
       "pages":"251-260",
       "publicationTitle":"Solar Energy Materials and Solar Cells",
       "related":[],
-      "tags":["cells","solar"],
+      "tags":["solar cells"],
       "title":"Study of annealing effects of cuprous oxide grown by electrodeposition technique",
       "volume":"44"
     },
