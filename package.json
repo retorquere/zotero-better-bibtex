@@ -20,7 +20,7 @@
     "test": "test"
   },
   "dependencies": {
-    "biblatex-csl-converter": "^0.24.0",
+    "biblatex-csl-converter": "^0.26.0",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
@@ -40,7 +40,7 @@
     "archiver": "^2.0.3",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.0",
-    "circular-dependency-plugin": "^4.1.0",
+    "circular-dependency-plugin": "^4.2.0",
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.8.0",
     "coffee-script": "^1.12.7",
