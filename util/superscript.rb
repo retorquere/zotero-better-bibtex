@@ -25,7 +25,9 @@ open('http://unicode.org/reports/tr30/datafiles/SuperscriptFolding.txt').readlin
   end
 
   superscripts << "    #{chr}: '\\u#{line[0]}'"
-  superscripts << "    \"-\": '\\u#{line[0]}'" if chr == "'\\u2212'"
+  superscripts << "    '-': '\\u#{line[0]}'" if chr == "'\\u2212'"
 }
+
+superscripts << "    '\\u2218': '\\u00B0'"
 
 puts superscripts.sort.join("\n")

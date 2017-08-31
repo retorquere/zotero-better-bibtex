@@ -2114,7 +2114,7 @@
       "itemID":9,
       "itemType":"manuscript",
       "related":[],
-      "title":"Contributions of Bulk and Near-Boundary Regions to the Variation of the Oxygen Content in Cu₂₋<sub>δ</sub>O",
+      "title":"Contributions of Bulk and Near-Boundary Regions to the Variation of the Oxygen Content in Cu<sub>2-δ</sub>O",
       "url":"http://people.ccmr.cornell.edu/~dieck/publi.html"
     },
     {
@@ -4731,7 +4731,7 @@
         "Point defects",
         "Tenorite"
       ],
-      "title":"Re-examination of the non-stoichiometry and defect structure of copper(II) oxide or tenorite, Cu₁<sub>±z</sub>O or CuO₁<sub>±ε</sub>: A short review",
+      "title":"Re-examination of the non-stoichiometry and defect structure of copper(II) oxide or tenorite, Cu<sub>1±z</sub>O or CuO<sub>1±ε</sub>: A short review",
       "volume":"117"
     },
     {
@@ -5068,7 +5068,7 @@
     },
     {
       "DOI":"10.1063/1.1595156",
-      "abstractNote":"Films of aligned cupric oxide nanobelts have been prepared in an aqueous solution at room temperature. Field-emission characteristics, including emission-current-applied-field plot and emission site distribution, have been studied using the transparent anode technique. In addition, the temperature dependence of the field-emission characteristics has been studied from room temperature to 750 K. The threshold field for obtaining a current density of 10 μA/cm2 is  11 MV/m. This decreases with increasing temperature, and at 700 K it is  6 MV/m. At a fixed field of 10 MV/m, about a three-orders-of-magnitude increase of the emission current level has been observed. The results show that the cupric oxide nanobelt is a promising candidate for cathode material in a thermoelectric conversion device based on field emission.",
+      "abstractNote":"Films of aligned cupric oxide nanobelts have been prepared in an aqueous solution at room temperature. Field-emission characteristics, including emission-current-applied-field plot and emission site distribution, have been studied using the transparent anode technique. In addition, the temperature dependence of the field-emission characteristics has been studied from room temperature to 750 K. The threshold field for obtaining a current density of 10 μA/cm2 is ~11 MV/m. This decreases with increasing temperature, and at 700 K it is ~6 MV/m. At a fixed field of 10 MV/m, about a three-orders-of-magnitude increase of the emission current level has been observed. The results show that the cupric oxide nanobelt is a promising candidate for cathode material in a thermoelectric conversion device based on field emission.",
       "creators":[
         {
           "creatorType":"author",
@@ -15111,7 +15111,6 @@
     },
     {
       "DOI":"10.1007/BF01688753",
-      "abstractNote":"????????, ??? ??? ???? ?????? ???????????? ? ???????????? ?? ???????????  150°? ???? ?????? ?? ?????? ???? ??? ??????????? ????, ?? ? ??????????? ? ?????????? ? ???? ?? ??. ??? ????????? ??-?? ?????? ??????????? ?????? ? ?????? ? ??????????? ? ?????????? ? ?????????? ???? ??? ???? ?????????? ?? ?? ????? ??????????. ??????????????? ??? ??????? ? ?????????? ? ???????????? ????? ? ???????????? ????? ?? ?????? ?? ?? ?????? ??????? ??????????? ?-??. ??????????????? ??? ??????? ??????????? ?? ???????????? ?????????? ??????? ? ?? ? ?????? ????????? ?? ? ?????? ????????? ???????????. ??? ???? ??? ????? ????????? ? ????????????? ?????????? ? ??????? ???? ????????? ???? (? ???????? ???? ????? ????? ????).",
       "creators":[
         {
           "creatorType":"author",
@@ -18491,7 +18490,7 @@
     },
     {
       "DOI":"10.1007/BF00603530",
-      "abstractNote":"The kinetics and mechanism of copper oxidation have been measured over the temperature range 900–1050°C and the pressure range 5×10–3 to 8×10–1 atm. It has been shown that, at the pressures lower than the dissociation pressure of CuO, the oxide scale formed on flat fragments of the copper specimens is compact and composed of a single layer, adhering closely to the metallic base. Growth of the scale proceeds under these conditions by outward diffusion of metal. The rate of the process under the conditions for which single-phase scales are formed increases with increasing oxygen pressure according to the equation: Kp = const p O2 <sup>1/3.9</sup> . the activation energy for oxidation is 24 ± 2 kcal/mole. On the basis of theFueki-Wagner method and the method proposed in the present work, the self-diffusioncoefficients of copper in cuprous oxide were calculated as a functionof oxygen pressure and temperature. It has been shown that distribution of thedefect concentration in the growing layer of the scale is linear.",
+      "abstractNote":"The kinetics and mechanism of copper oxidation have been measured over the temperature range 900–1050°C and the pressure range 5×10–3 to 8×10–1 atm. It has been shown that, at the pressures lower than the dissociation pressure of CuO, the oxide scale formed on flat fragments of the copper specimens is compact and composed of a single layer, adhering closely to the metallic base. Growth of the scale proceeds under these conditions by outward diffusion of metal. The rate of the process under the conditions for which single-phase scales are formed increases with increasing oxygen pressure according to the equation:\n\nKp = const p O2 <sup>1/3.9</sup> . the activation energy for oxidation is 24 ± 2 kcal/mole. On the basis of theFueki-Wagner method and the method proposed in the present work, the self-diffusioncoefficients of copper in cuprous oxide were calculated as a functionof oxygen pressure and temperature. It has been shown that distribution of thedefect concentration in the growing layer of the scale is linear.",
       "creators":[
         {
           "creatorType":"author",
@@ -18501,7 +18500,7 @@
         {
           "creatorType":"author",
           "firstName":"A.",
-          "lastName":"Stoklosa"
+          "lastName":"Stokłosa"
         }
       ],
       "date":"1971",
@@ -18524,7 +18523,7 @@
         {
           "creatorType":"author",
           "firstName":"A.",
-          "lastName":"Stoklosa"
+          "lastName":"Stokłosa"
         },
         {
           "creatorType":"author",
@@ -18543,7 +18542,7 @@
       "volume":"5"
     },
     {
-      "ISBN":"0444997768",
+      "ISBN":"0-444-99776-8",
       "creators":[
         {
           "creatorType":"author",
@@ -18656,7 +18655,7 @@
     },
     {
       "DOI":"10.1103/PhysRevLett.43.1123",
-      "abstractNote":"A lifetime of 13 textmus is measured for the paraexciton in Cu2O at 10 K. The orthoexciton lifetime is shown to be limited by ortho-para transfer rate. A high density of paraexcitons is generated, leading to deviations from classical statistics.",
+      "abstractNote":"A lifetime of 13 μs is measured for the paraexciton in Cu2O at 10 K. The orthoexciton lifetime is shown to be limited by ortho-para transfer rate. A high density of paraexcitons is generated, leading to deviations from classical statistics.",
       "creators":[
         {
           "creatorType":"author",
@@ -18715,7 +18714,7 @@
     },
     {
       "DOI":"10.1051/jphyscol:1980743",
-      "abstractNote":"In a first part, a brief review of some excitonic properties is presented, with the accent put on their relevance with respect to the possibility of Bose-Einstein condensation. In a second part, recent experimental evidence is described, which supports the idea that excitonic particles may form a highly quantum fluid. In Cu20, the analysis of the exciton decay spectrum shows a gradual evolution of the gas from a classical regime at low densities up to a strongly degenerate one at high densities, with a chemical potential µ 0. In CuCl excitons are unstable against formation of molecules (biexcitons). It is possible to generate directly a high density gas of biexcitons with momentum K 0 by giant two-photon absorption. At low excitation, the observed molecular emission is in agreement with Maxwell -Boltzmann statistics. At high densities, strong deviations occur. In particular, the appearance of a sharp emission line is attributed to the presence of a Bose-Einstein condensate of excitonic molecules.",
+      "abstractNote":"In a first part, a brief review of some excitonic properties is presented, with the accent put on their relevance with respect to the possibility of Bose-Einstein condensation. In a second part, recent experimental evidence is described, which supports the idea that excitonic particles may form a highly quantum fluid. In Cu20, the analysis of the exciton decay spectrum shows a gradual evolution of the gas from a classical regime at low densities up to a strongly degenerate one at high densities, with a chemical potential µ ~ 0. In CuCl excitons are unstable against formation of molecules (biexcitons). It is possible to generate directly a high density gas of biexcitons with momentum K ~ 0 by giant two-photon absorption. At low excitation, the observed molecular emission is in agreement with Maxwell -Boltzmann statistics. At high densities, strong deviations occur. In particular, the appearance of a sharp emission line is attributed to the presence of a Bose-Einstein condensate of excitonic molecules.",
       "creators":[
         {
           "creatorType":"author",
@@ -18910,7 +18909,7 @@
     {
       "DOI":"10.1016/S0169-4332(99)00239-1",
       "ISSN":"0169-4332",
-      "abstractNote":"Thin films of copper oxide with thickness ranging from 0.05-0.45 [mu]m were deposited on microscope glass slides by successively dipping them for 20 s each in a solution of 1 M NaOH and then in a solution of copper complex. Temperature of the NaOH solution was varied from 50-90�C, while that of the copper solution was maintained at room temperature. X-ray diffraction patterns showed that the films, as prepared, are of cuprite structure with composition Cu2O. Annealing the films in air at 350�C converts these films to CuO. This conversion is accompanied by a shift in the optical band gap from 2.1 eV (direct) to 1.75 eV (direct). The films show p-type conductivity, 5�10-4 [Omega]-1 cm-1 for a film of thickness 0.15 [mu]m. Electrical conductivity of this film increases by a factor of 3 when illuminated with 1 kW m-2 tungsten halogen radiation. Annealing in a nitrogen atmosphere at temperatures up to 400�C does not change the composition of the films. However, the conductivity in the dark as well as the photoconductivity of the film increases by an order of magnitude. The electrical conductivity of the CuO thin films produced by air annealing at 400�C, is high, 7�10-3 [Omega]-1 cm-1. These films are also photoconductive.",
+      "abstractNote":"Thin films of copper oxide with thickness ranging from 0.05-0.45 [mu]m were deposited on microscope glass slides by successively dipping them for 20 s each in a solution of 1 M NaOH and then in a solution of copper complex. Temperature of the NaOH solution was varied from 50-90�C, while that of the copper solution was maintained at room temperature. X-ray diffraction patterns showed that the films, as prepared, are of cuprite structure with composition Cu2O. Annealing the films in air at 350�C converts these films to CuO. This conversion is accompanied by a shift in the optical band gap from 2.1 eV (direct) to 1.75 eV (direct). The films show p-type conductivity, ~5�10-4 [Omega]-1 cm-1 for a film of thickness 0.15 [mu]m. Electrical conductivity of this film increases by a factor of 3 when illuminated with 1 kW m-2 tungsten halogen radiation. Annealing in a nitrogen atmosphere at temperatures up to 400�C does not change the composition of the films. However, the conductivity in the dark as well as the photoconductivity of the film increases by an order of magnitude. The electrical conductivity of the CuO thin films produced by air annealing at 400�C, is high, 7�10-3 [Omega]-1 cm-1. These films are also photoconductive.",
       "creators":[
         {
           "creatorType":"author",
@@ -18944,7 +18943,7 @@
       "tags":[
         "Chemical deposition",
         "Copper oxide",
-        "thin film"
+        "Thin film"
       ],
       "title":"Chemically deposited copper oxide thin films: structural, optical and electrical characteristics",
       "volume":"150"
@@ -19137,7 +19136,7 @@
       "publicationTitle":"Journal of the Electrochemical Society",
       "related":[],
       "tags":[
-        "COPPER COMPOUNDS",
+        "copper compounds",
         "dark conductivity",
         "electrochemical electrodes",
         "electrodeposition",
@@ -19200,7 +19199,7 @@
       "publicationTitle":"Journal of Chemical Physics",
       "related":[],
       "tags":[
-        "electrodeposition",
+        "Electrodeposition",
         "Electrodeposition and electrodissolution",
         "electroplating",
         "films",
@@ -19839,7 +19838,7 @@
     },
     {
       "DOI":"10.1002/sia.1421",
-      "abstractNote":"Oxide formation on magnetron-sputtered thin copper films (35 nm thickness) was studied by x-ray reflectometry and grazing incidence x-ray diffraction. The films were oxidized in air at temperatures of 175� C, 200� C, 225� C and 250� C. The reflectometry and the diffractometry data indicate the formation of Cu2O. A power-law dependence of the oxide layer thickness was found. The activation energy obtained is weakly time dependent. Copyright � 2002 John Wiley  Sons, Ltd.",
+      "abstractNote":"Oxide formation on magnetron-sputtered thin copper films (35 nm thickness) was studied by x-ray reflectometry and grazing incidence x-ray diffraction. The films were oxidized in air at temperatures of 175� C, 200� C, 225� C and 250� C. The reflectometry and the diffractometry data indicate the formation of Cu2O. A power-law dependence of the oxide layer thickness was found. The activation energy obtained is weakly time dependent. Copyright � 2002 John Wiley & Sons, Ltd.",
       "creators":[
         {
           "creatorType":"author",
@@ -19972,7 +19971,7 @@
       "itemID":581,
       "itemType":"thesis",
       "notes":[
-        "<p>Work published mainly in Noguet&lt;sub&gt;1&lt;/sub&gt;970</p>"
+        "<p>Work published mainly in Noguet_1970</p>"
       ],
       "publisher":"University of Strasbourg",
       "related":[],
@@ -20082,9 +20081,9 @@
       "related":[],
       "tags":[
         "BARRIER LAYERS",
-        "Copper oxides",
+        "COPPER OXIDES",
         "ENERGY CONVERSION EFFICIENCY",
-        "photovoltaic cells",
+        "PHOTOVOLTAIC CELLS",
         "SCHOTTKY DIODES",
         "SEMICONDUCTOR JUNCTIONS",
         "SEMIEMPIRICAL EQUATIONS",
@@ -20244,7 +20243,7 @@
       "itemID":592,
       "itemType":"journalArticle",
       "notes":[
-        "<p>A summary of O&apos;Hara thesis with some more details. Diffusion coefficient of excitons (maybe is wrong) see paper.</p>"
+        "<p>A summary of O&apos;Hara thesis with some more details.</p><p>Diffusion coefficient of excitons (maybe is wrong) see paper.</p>"
       ],
       "pages":"10872-10885",
       "publicationTitle":"Physical Review B",
@@ -20277,7 +20276,7 @@
       "itemID":594,
       "itemType":"journalArticle",
       "notes":[
-        "<p>First retractation of exciton Bose-Einstein condensation (Lin&lt;sub&gt;1&lt;/sub&gt;993)</p>"
+        "<p>First retractation of exciton Bose-Einstein condensation (Lin_1993)</p>"
       ],
       "pages":"10565-10568",
       "publicationTitle":"Physical Review B",
@@ -20358,7 +20357,7 @@
     },
     {
       "DOI":"10.1098/rspa.1962.0115",
-      "abstractNote":"An enclosed magnetic balance has been used to study the changes in magnetic susceptibility which take place during the oxidation of copper and during the treatment of cuprous and cupric oxides in oxygen and in vacuo. Cuprous oxide prepared by high temperature oxidation and cooled in vacuo from 1060 <sup>c</sup>ircC has a gram susceptibility of -0.155 x 10<sup>-6</sup>, independent of temperature in the range 14 to 293 <sup>c</sup>ircK. Cuprous oxide quenched from 1045 <sup>c</sup>ircC in air has a gram susceptibility which varies with temperature from chi<sub>g</sub> = -0.150 x 10<sup>-6</sup> at 293 <sup>c</sup>ircK to chi<sub>g</sub> = -0.127 x 10<sup>-6</sup> at 14 <sup>c</sup>ircK. The paramagnetic component of the susceptibility of the latter oxide is attributed to magnetic centres (cation vacancies and positive holes) arising from the oxygen excess, and its absolute value is compared with that expected from different models for the disorder. It is suggested that single vacancies aggregate on cooling. Cuprous oxide prepared by oxidation at low temperatures (120 to 160 <sup>c</sup>ircC) and low oxygen pressures may be rendered much more paramagnetic than the oxide prepared at high temperatures. A survey of the magnetic properties has been made by carrying out such oxidations in situ on the magnetic balance. It is concluded that beyond the stoichiometric point on the oxygen excess side an extensive metastable non-stoichiometry may be sustained at these temperatures. Further oxidation or, alternatively, a treatment in vacuo at a high temperature causes the oxygen excess to be nucleated and antiferromagnetic cupric oxide is formed. Similar studies with copper supported on silica show that the metastable paramagnetism is associated more especially with the surface. Attention is given to the fact that cupric oxide may be rendered paramagnetic under certain circumstances, but a distinction is drawn between this effect and the paramagnetism of non-stoichiometric cuprous oxide. The significance of the results for the mechanism of the oxidation of copper is discussed. It is suggested that CuO nucleates internally in Cu₂O, and a close analogy then exists between the oxidation of copper to Cu₂O and the oxidation of Cu₂O to CuO. The surface reaction, namely, incorporation of oxygen into cuprous oxide, is the same in both cases. A mechanism is put forward to account for the relative ease of cation vacancy production (and hence non-stoichiometry) in the surface layers during this process.",
+      "abstractNote":"An enclosed magnetic balance has been used to study the changes in magnetic susceptibility which take place during the oxidation of copper and during the treatment of cuprous and cupric oxides in oxygen and in vacuo. Cuprous oxide prepared by high temperature oxidation and cooled in vacuo from 1060 °C has a gram susceptibility of -0.155 x 10⁻⁶, independent of temperature in the range 14 to 293 °K. Cuprous oxide quenched from 1045 °C in air has a gram susceptibility which varies with temperature from χ<sub>g</sub> = -0.150 x 10⁻⁶ at 293 °K to χ<sub>g</sub> = -0.127 x 10⁻⁶ at 14 °K. The paramagnetic component of the susceptibility of the latter oxide is attributed to magnetic centres (cation vacancies and positive holes) arising from the oxygen excess, and its absolute value is compared with that expected from different models for the disorder. It is suggested that single vacancies aggregate on cooling. Cuprous oxide prepared by oxidation at low temperatures (120 to 160 °C) and low oxygen pressures may be rendered much more paramagnetic than the oxide prepared at high temperatures. A survey of the magnetic properties has been made by carrying out such oxidations in situ on the magnetic balance. It is concluded that beyond the stoichiometric point on the oxygen excess side an extensive metastable non-stoichiometry may be sustained at these temperatures. Further oxidation or, alternatively, a treatment in vacuo at a high temperature causes the oxygen excess to be nucleated and antiferromagnetic cupric oxide is formed. Similar studies with copper supported on silica show that the metastable paramagnetism is associated more especially with the surface. Attention is given to the fact that cupric oxide may be rendered paramagnetic under certain circumstances, but a distinction is drawn between this effect and the paramagnetism of non-stoichiometric cuprous oxide. The significance of the results for the mechanism of the oxidation of copper is discussed. It is suggested that CuO nucleates internally in Cu₂O, and a close analogy then exists between the oxidation of copper to Cu₂O and the oxidation of Cu₂O to CuO. The surface reaction, namely, incorporation of oxygen into cuprous oxide, is the same in both cases. A mechanism is put forward to account for the relative ease of cation vacancy production (and hence non-stoichiometry) in the surface layers during this process.",
       "creators":[
         {
           "creatorType":"author",
@@ -20503,7 +20502,7 @@
         {
           "creatorType":"author",
           "firstName":"C.",
-          "lastName":"Ni Dheasuna"
+          "lastName":"Ní Dheasuna"
         },
         {
           "creatorType":"author",
@@ -20601,7 +20600,7 @@
       "pages":"135-143",
       "publicationTitle":"Solid State Ionics",
       "related":[],
-      "title":"Thermodynamic study of point defects in Cu<sub>2-delta</sub>O. Electrical conductivity measurements at low oxygen partial pressures",
+      "title":"Thermodynamic study of point defects in Cu<sub>2-δ</sub>O. Electrical conductivity measurements at low oxygen partial pressures",
       "volume":"12"
     },
     {
@@ -20887,7 +20886,7 @@
         {
           "creatorType":"author",
           "firstName":"Akimoto",
-          "lastName":"K"
+          "lastName":"K."
         }
       ],
       "date":"2003",
@@ -20954,7 +20953,7 @@
       "pages":"1109-1118",
       "publicationTitle":"Physica Status Solidi (b)",
       "related":[],
-      "title":"<sup>63</sup>Cu Nuclear Quadrupole Relaxation in Cu₂O",
+      "title":"⁶³Cu Nuclear Quadrupole Relaxation in Cu₂O",
       "volume":"215"
     },
     {
@@ -21014,11 +21013,11 @@
       "proceedingsTitle":"Proceedings of the 11th IEEE Photovoltaic Specialists Conference",
       "publicationTitle":"Proceedings of the 11th IEEE Photovoltaic Specialists Conference",
       "related":[],
-      "tags":["cells","solar"],
+      "tags":["solar cells"],
       "title":"Experimental and Theoretical Studies of Cu₂O Schottky Barrier Solar Cells"
     },
     {
-      "abstractNote":"Depth-concentration Profiles obtained with Auger electron spectroscopy are reported for Yb/Cu Mg/Cu,O and Au/Cu10 contacts. The profiles for Yb/CuzO and Ng/Cu20 cells indicate that the Cu20 surface is reduced upon metal deposition, and that considerable Interdiffusion occurs at the interface. As a result, a copper- rich layer appearc to exist at the Cu20 interface in these Schottky barriers formed with low work function metals. On the other hand, the Au/Cu20 interface exhibits a'more \"normal\" structure. These results are utilized to explain the rel- atively low barrier heights obtained for Cu20 Schottky barriers, and the apparent \"efficiency plateau\" of 1% for Cu20 solar cells. The results are also compatible with the fact that Au forms essentially an ohmic contact on Cu,O.",
+      "abstractNote":"Depth-concentration Profiles obtained with Auger electron spectroscopy are reported for Yb/Cu& Mg/Cu,O and Au/Cu10 contacts. The profiles for Yb/CuzO and Ng/Cu20 cells indicate that the Cu20 surface is reduced upon metal deposition, and that considerable Interdiffusion occurs at the interface. As a result, a copper- rich layer appearc to exist at the Cu20 interface in these Schottky barriers formed with low work function metals. On the other hand, the Au/Cu20 interface exhibits a'more \"normal\" structure. These results are utilized to explain the rel- atively low barrier heights obtained for Cu20 Schottky barriers, and the apparent \"efficiency plateau\" of 1% for Cu20 solar cells. The results are also compatible with the fact that Au forms essentially an ohmic contact on Cu,O.",
       "creators":[
         {
           "creatorType":"author",
@@ -21076,7 +21075,7 @@
       "volume":"34"
     },
     {
-      "abstractNote":"This paper includes discussion Of an approach used for cuzo substrate fabrication, electrical and optical properties of cu20,photocurrent analysis and experimental results for cuzo Solar cells. An AM1 photocurrent of 8.5 mA/cn? and AM1 efficiency of 1.8% has heen achieved for Cu-Cu MIS cells based on a tentatively identified I-layer of Cum. Studies Of MIS cells fabricated with an evaporated SO2 I-layer are discussed as well as preliminary results for Z S/CUZO and 7.nO/Cu20 heterojunctions.",
+      "abstractNote":"This paper includes discussion Of an approach used for cuzo substrate fabrication, electrical and optical properties of cu20,photocurrent analysis and experimental results for cuzo Solar cells. An AM1 photocurrent of 8.5 mA/cn? and AM1 efficiency of 1.8% has heen achieved for Cu-Cu MIS cells based on a tentatively identified I-layer of Cum. Studies Of MIS cells fabricated with an evaporated SO2 I-layer are discussed as well as preliminary results for Z S/CUZO and 7.nO/Cu20 heterojunctions.",
       "creators":[
         {
           "creatorType":"author",
@@ -21191,7 +21190,7 @@
         {
           "creatorType":"author",
           "firstName":"Martin",
-          "lastName":"Maansson"
+          "lastName":"Månsson"
         },
         {
           "creatorType":"author",
@@ -21638,7 +21637,6 @@
     },
     {
       "DOI":"10.1007/BF01687730",
-      "abstractNote":"? ?????? ????????, ??? ??? ?????????? ????? ??? Cu2O?? ?????-?????? 130–200 °C?? ????????????? ????? ??????????? ?? ????-????????? ??????????? ??????? ?. ??? ?????????? ???? ???????? ????? ?????????????. ?? ??? ??????????? ??????? ??? ? ????????? ?????-??? ????????? f???????? ???????. ?????????? ? ???????????? ????? ??????????, ??? ? ????????? ??????, ?? ???????????????, ??? ??f???? ??????????? ???? ???????, ??????? ?????????? ?????-??? ????????????, ?????? ??? ?????????? ? ???? ??????? ????????? ????? ????????????? ??? ??????????? ? ??? ?????????????? ???-? ????. ??? ????????? ?????? ???? ????????? ????? ??????? ?????-???? ? ??????? ?????????? ?????? ???????. ????? ?????????? ???-????? ? ??????????????? ? ?? ??????? f?????????? ????? ??? ???????.",
       "creators":[
         {
           "creatorType":"author",
