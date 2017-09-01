@@ -276,7 +276,7 @@ Translator.doImport = ->
     itemIDS[ref.entry_key] = id
     new ZoteroItem(id, ref, bib.groups)
 
-  for group in bib.groups
+  for group in bib.groups || []
     importGroup(group, itemIDS, true)
   return
 
@@ -450,6 +450,8 @@ class ZoteroItem
     'undefined': {open:'[', close: ']'}
    }
   unparse: (text, allowtilde) ->
+    return (@unparse(elt) for elt in text).join(' and ') if Array.isArray(text) && Array.isArray(text[0])
+
     return text if typeof text in ['string', 'number']
 
     debug('unparse: pre', text)

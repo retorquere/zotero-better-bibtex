@@ -222,9 +222,9 @@ def exportLibrary(translator, displayOptions, library)
     expected = normalizeJSON(JSON.parse(expected))
 
     if found['items'].length < 30 || expected['items'].length < 30
-      return expect(JSON.neat_generate(found)).to eq(JSON.neat_generate(expected))
+      return expect(serialize(found)).to eq(serialize(expected))
     else
-      expect(JSON.neat_generate(found.merge({'items' => []}))).to eq(JSON.neat_generate(expected.merge({'items' => []})))
+      expect(serialize(found.merge({'items' => []}))).to eq(serialize(expected.merge({'items' => []})))
       return compare(found['items'], expected['items'])
     end
   elsif library =~ /\.yml$/
