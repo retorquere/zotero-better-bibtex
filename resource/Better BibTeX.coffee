@@ -268,6 +268,9 @@ Translator.doImport = ->
     item.note += '</ul>'
     item.complete()
 
+  if Translator.preferences.csquotes
+    ZoteroItem::tags.enquote = {open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
+
   itemIDS = {}
   for id, ref of bib.references
     itemIDS[ref.entry_key] = id

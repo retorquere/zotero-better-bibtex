@@ -46,7 +46,7 @@ module.exports =
       debug("importing references and preferences from #{source}")
       for pref, value of preferences
         debug("#{if typeof pref_defaults[pref] == 'undefined' then 'not ' else ''}setting preference #{pref} to #{value}")
-        continue if typeof pref_defaults[pref] == 'undefined'
+        throw new Error("Unsupported preference #{pref} in test case") if typeof pref_defaults[pref] == 'undefined'
         value = value.join(',') if Array.isArray(value)
         Zotero.Prefs.set("translators.better-bibtex.#{pref}", value)
     else
