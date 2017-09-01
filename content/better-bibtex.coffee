@@ -25,6 +25,7 @@ CACHE = require('./db/cache.coffee')
 Serializer = require('./serializer.coffee')
 Citekey = require('./keymanager/get-set.coffee')
 JournalAbbrev = require('./journal-abbrev.coffee')
+AutoExport = require('./auto-export.coffee')
 
 ###
   MONKEY PATCHES
@@ -327,6 +328,9 @@ do Zotero.Promise.coroutine(->
 
   yield Translators.init()
   bench('Translators.init()')
+
+  AutoExport.init()
+  bench('AutoExport.init()')
 
   progressWin.changeHeadline('BetterBibTeX: Ready for business')
   progressWin.startCloseTimer(500)
