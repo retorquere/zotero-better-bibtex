@@ -26,9 +26,8 @@
       "exportNotes": false
     }
   },
-  "collections": [
-
-  ],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "conferencePaper",

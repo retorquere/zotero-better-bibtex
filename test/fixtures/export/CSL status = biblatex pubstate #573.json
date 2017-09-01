@@ -37,9 +37,8 @@
       "exportNotes": true
     }
   },
-  "collections": [
-
-  ],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "book",

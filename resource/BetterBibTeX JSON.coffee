@@ -73,21 +73,21 @@ Translator.doImport = ->
       delete att.path if att.url
     item.complete()
 
-  collections = Collections(data.collections || [])
-  for key, collection of collections
+  for key, collection of data.collections || {}
     collection.imported = new Zotero.Collection()
     collection.imported.type = 'collection'
     collection.imported.name = collection.name
-    collection.imported.children = ({type: 'item', id: key} for key in collection.items)
-  for key, collection of collections
-    collection.imported.children = collection.imported.children.concat((collections[coll.key].imported for coll in collection.collections))
-  for key, collection of collections
-    continue unless collection.root
+    collection.imported.children = ({type: 'item', id} for id in collection.items)
+  for key, collection of data.collections
+    collection.imported.children = collection.imported.children.concat((data.collections[coll.key].imported for coll in collection.collections))
+  for key, collection of data.collections
+    continue if collection.parent
     collection.imported.complete()
 
   return
 
 Translator.doExport = ->
+  debug('starting export')
   data = {
     config: {
       id: Translator.header.translatorID
@@ -96,17 +96,16 @@ Translator.doExport = ->
       preferences: Translator.preferences
       options: Translator.options
     }
-    collections: []
+    # collections: Collections()
     items: []
   }
-
-  ### just export whatever Zotero gives us and worry about cleanup on import ###
-  if Translator.header.configOptions?.getCollections && Zotero.nextCollection
-    while collection = Zotero.nextCollection()
-      data.collections.push(collection)
+  debug('header ready')
 
   while item = Zotero.nextItem()
+    debug('adding item', item.itemID)
     data.items.push(item)
+  debug('data ready')
 
   Zotero.write(JSON.stringify(data, null, '  '))
+  debug('export done')
   return

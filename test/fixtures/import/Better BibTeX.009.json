@@ -33,6 +33,10 @@
   ],
   "items": [
     {
+      "itemType":"note",
+      "note":"Import errors found: <ul><li>Incomplete reference @emptyreference</li></ul>"
+    },
+    {
       "itemID": 1,
       "itemType": "journalArticle",
       "volume": "62",
@@ -45,44 +49,37 @@
         {
           "creatorType": "author",
           "firstName": "Nancy K",
-          "lastName": "Adams",
-          "fieldMode": ""
+          "lastName": "Adams"
         },
         {
           "creatorType": "author",
           "firstName": "Shanaka L",
-          "lastName": "DeSilva",
-          "fieldMode": ""
+          "lastName": "DeSilva"
         },
         {
           "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Self",
-          "fieldMode": ""
+          "lastName": "Self"
         },
         {
           "creatorType": "author",
           "firstName": "Guido",
-          "lastName": "Salas",
-          "fieldMode": ""
+          "lastName": "Salas"
         },
         {
           "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Schubring",
-          "fieldMode": ""
+          "lastName": "Schubring"
         },
         {
           "creatorType": "author",
           "firstName": "Jason L",
-          "lastName": "Permenter",
-          "fieldMode": ""
+          "lastName": "Permenter"
         },
         {
           "creatorType": "author",
           "firstName": "Kendra",
-          "lastName": "Arbesman",
-          "fieldMode": ""
+          "lastName": "Arbesman"
         }
       ],
       "notes": [
@@ -121,44 +118,37 @@
         {
           "creatorType": "author",
           "firstName": "Nancy K",
-          "lastName": "Adams",
-          "fieldMode": ""
+          "lastName": "Adams"
         },
         {
           "creatorType": "author",
           "firstName": "Shanaka L",
-          "lastName": "DeSilva",
-          "fieldMode": ""
+          "lastName": "DeSilva"
         },
         {
           "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Self",
-          "fieldMode": ""
+          "lastName": "Self"
         },
         {
           "creatorType": "author",
           "firstName": "Guido",
-          "lastName": "Salas",
-          "fieldMode": ""
+          "lastName": "Salas"
         },
         {
           "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Schubring",
-          "fieldMode": ""
+          "lastName": "Schubring"
         },
         {
           "creatorType": "author",
           "firstName": "Jason L",
-          "lastName": "Permenter",
-          "fieldMode": ""
+          "lastName": "Permenter"
         },
         {
           "creatorType": "author",
           "firstName": "Kendra",
-          "lastName": "Arbesman",
-          "fieldMode": ""
+          "lastName": "Arbesman"
         }
       ],
       "notes": [
@@ -181,29 +171,6 @@
 
       ],
       "seeAlso": [
-
-      ]
-    },
-    {
-      "itemID": 6,
-      "itemType": "note",
-      "note": "<html xmlns=\"http://www.w3.org/1999/xhtml\"><div><p><b>Better BibTeX could not import</b></p> <pre>@misc{emptyreference,\n  \n}\n</pre></div></html>",
-      "tags": [
-
-      ],
-      "related": [
-
-      ],
-      "creators": [
-
-      ],
-      "notes": [
-
-      ],
-      "seeAlso": [
-
-      ],
-      "attachments": [
 
       ]
     }

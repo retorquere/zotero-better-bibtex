@@ -96,7 +96,7 @@
       "volume": "1"
     },
     {
-      "bookTitle": "Encyclopedia Iranica",
+      "encyclopediaTitle": "Encyclopedia Iranica",
       "creators": [
         {
           "creatorType": "author",
@@ -106,7 +106,7 @@
       ],
       "date": "1985",
       "extra": "bibtex: Algar1985",
-      "itemType": "bookSection",
+      "itemType": "encyclopediaArticle",
       "pages": "172-4",
       "publicationTitle": "Encyclopedia Iranica",
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
@@ -116,8 +116,8 @@
       "creators": [
         {
           "creatorType": "editor",
-          "firstName": "Anne van",
-          "lastName": "Arsdall"
+          "firstName": "Anne",
+          "lastName": "van Arsdall"
         },
         {
           "creatorType": "editor",

@@ -4,7 +4,6 @@
     "type": "article-journal",
     "title": "The physical volcanology of the 1600 eruption of <b>Huaynaputina</b>, southern Peru",
     "container-title": "Bulletin of Volcanology",
-    "container-title-short":"Bull. Volcanol.",
     "page": "493-518",
     "volume": "62",
     "author": [
@@ -58,7 +57,6 @@
       }
     ],
     "container-title": "Sacris Erudiri",
-    "container-title-short":"Sacris Erud.",
     "id": "Berndt1994",
     "issued": {
       "date-parts": [

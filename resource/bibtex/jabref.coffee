@@ -17,11 +17,13 @@ class JabRef
       else
         meta = 'databaseType:bibtex'
 
+    debug('JabRef.exportGroups', { collections: @collections, citekeys: @citekeys })
+
     Zotero.write("@comment{jabref-meta: #{meta};}\n")
     Zotero.write('@comment{jabref-meta: groupstree:\n')
     Zotero.write('0 AllEntriesGroup:;\n')
     for key, collection of @collections
-      continue unless collection.root
+      continue if collection.parent
       Zotero.write(@exportGroup(collection, 1))
     Zotero.write(';\n')
     Zotero.write('}\n')

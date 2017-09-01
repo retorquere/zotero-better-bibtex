@@ -47,14 +47,14 @@ class JournalAbbrev
     debug('JournalAbbrev.reset:', {style: @style})
     return
 
-  get: (item) ->
+  get: (item, force) ->
     if item.getField
       try
         abbrev = item.getField('journalAbbreviation', false, true)
     else
       abbrev = item.journalAbbreviation
 
-    return abbrev if abbrev
+    return abbrev if abbrev || (!Prefs.get('autoAbbrev') && !force)
 
     return null unless (if item.getField then Zotero.ItemTypes.getName(item.itemTypeID) else item.itemType) in ['conferencePaper', 'journalArticle', 'bill', 'case', 'statute']
 
@@ -66,8 +66,11 @@ class JournalAbbrev
         continue unless journal
         journal = journal.replace(/<\/?(sup|sub|i|b)>/g, '')
         continue unless journal
+
         debug('JournalAbbrev.get: found', field, journal)
         break
+      catch err
+        debug('JournalAbbrev.get: err', err)
 
     return null unless journal
 

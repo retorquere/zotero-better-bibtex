@@ -7,6 +7,8 @@ cd ..
 
 . .env
 
+git pull
+
 npm run --silent s3form
 
 curl \

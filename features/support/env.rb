@@ -52,7 +52,11 @@ def execute(options)
   args = options.delete(:args) || {}
   options[:body] = "var args = #{args.to_json};\n" + options.delete(:script)
 
+  #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
+  #STDOUT.flush
   response = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", options)
+  #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
+  #STDOUT.flush
 
   case response.code
     when 200, 201
@@ -145,6 +149,54 @@ end
 
 TRANSLATORS = {}
 
+def normalizeJSON(lib)
+  lib.delete('collections')
+  lib.delete('config')
+  lib.delete('keymanager')
+  lib.delete('cache')
+  lib['items'].each{|item|
+    item.delete('itemID')
+    item.delete('dateAdded')
+    item.delete('dateModified')
+    item.delete('uniqueFields')
+    item.delete('key')
+    item.delete('citekey')
+    item.delete('attachments')
+    item.delete('collections')
+    item.delete('__citekey__')
+    item.delete('uri')
+
+    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.sort
+
+    item['tags'] = (item['tags'] || []).collect{|tag| tag.is_a?(String) ? tag : tag['tag'] }.sort
+
+    item.keys.each{|k|
+      item.delete(k) if item[k].nil?
+      item.delete(k) if (item[k].is_a?(Hash) || item[k].is_a?(Array)) && item[k].empty?
+    }
+  }
+  return lib
+end
+
+def serialize(obj)
+  return JSON.neat_generate(obj, { wrap: 40, sort: true })
+end
+def compare(found, expected)
+  size = 30
+  if found.length < size || expected.length < size
+    expect(serialize(found)).to eq(serialize(expected))
+  else
+    (0...[found.length, expected.length].max).step(size){|chunk|
+      expect(serialize(found.slice(chunk, size))).to eq(serialize(expected.slice(chunk, size)))
+    }
+  end
+end
+#def compare(found, expected)
+  #found['items'].zip(expected['items']).each{|f, e|
+    #expect(JSON.neat_generate(f, { wrap: 40, sort: true }).to eq(JSON.neat_generate(e, { wrap: 40, sort: true }))
+  #}
+#end
+
 def exportLibrary(translator, displayOptions, library)
   if translator =~ /^id:(.+)$/
     translator = $1
@@ -164,11 +216,17 @@ def exportLibrary(translator, displayOptions, library)
   expected = File.read(expected)
 
   if library =~ /\.csl\.json$/
-    found = JSON.neat_generate(JSON.parse(found), { wrap: 40, sort: true })
-    expected = JSON.neat_generate(JSON.parse(expected), { wrap: 40, sort: true })
+    return compare(JSON.parse(found), JSON.parse(expected))
   elsif library =~ /\.json$/
     found = normalizeJSON(JSON.parse(found))
     expected = normalizeJSON(JSON.parse(expected))
+
+    if found['items'].length < 30 || expected['items'].length < 30
+      return expect(serialize(found)).to eq(serialize(expected))
+    else
+      expect(serialize(found.merge({'items' => []}))).to eq(serialize(expected.merge({'items' => []})))
+      return compare(found['items'], expected['items'])
+    end
   elsif library =~ /\.yml$/
     found = sort_object(YAML.load(found)).to_yaml
     expected = sort_object(YAML.load(expected)).to_yaml
@@ -242,6 +300,7 @@ module BBT
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
 
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
   # speed up startup
