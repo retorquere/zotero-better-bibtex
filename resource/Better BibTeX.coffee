@@ -3,8 +3,8 @@ Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.coffee')
-BibTeXParser = require('biblatex-csl-converter').BibLatexParser
-#BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
+#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
 
 Reference::caseConversion = {
   title: true,
@@ -715,6 +715,7 @@ class ZoteroItem
   $abstract: (value) -> @item.abstractNote = @unparse(value, true)
 
   $keywords: (value) ->
+    value = (@unparse(tag).replace(/\n+/g, ' ') for tag in value)
     @item.tags ||= []
     @item.tags = @item.tags.concat(value)
     @item.tags = @item.tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
