@@ -164,15 +164,13 @@ DB.init = Zotero.Promise.coroutine(->
       return
     )
 
-  ###
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
     schema: {
       type: 'object'
       properties: {
-        status: { enum: ['running', 'done', 'error' ] }
-        scheduled: { coerce: 'date' }
+        status: { enum: ['running', 'scheduled', 'done', 'error' ] }
         updated: { coerce: 'date' }
         type: { enum: ['search', 'collection', 'library' ] }
         id: { type: 'integer' }
@@ -181,11 +179,10 @@ DB.init = Zotero.Promise.coroutine(->
         translatorID: { type: 'string' }
         path: { type: 'string' }
       }
-      required: [ 'type', 'id', 'status', 'path', 'translatorID'],
+      required: [ 'type', 'id', 'status', 'path', 'translatorID '],
       additionalProperties: !Prefs.get('testing')
     }
   })
-  ###
 
   return
 )

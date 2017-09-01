@@ -20,6 +20,7 @@
     "test": "test"
   },
   "dependencies": {
+    "better-queue": "^3.8.5",
     "biblatex-csl-converter": "^0.21.8",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
