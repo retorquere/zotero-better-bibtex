@@ -1,6 +1,7 @@
 debug = require('../debug.coffee')
 
 KeyManager = require('../keymanager.coffee')
+DB = require('../db/main.coffee')
 
 id = 'zotero-better-bibtex-itempane-citekey'
 
@@ -16,17 +17,28 @@ class ItemPane
 
           itemPane.addCitekeyRow(item.id) if index == 0 # details pane
 
-          observer = new MutationObserver((mutations) ->
+          itemPane.DOMobserver = new MutationObserver((mutations) ->
             itemPane.addCitekeyRow(item.id)
             return
           )
-          observer.observe(itemPane.global.document.getElementById('dynamic-fields'), {childList: true})
+          itemPane.DOMobserver.observe(itemPane.global.document.getElementById('dynamic-fields'), {childList: true})
+          itemPane.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
+            itemPane.addCitekeyRow(item.id) if citekey.itemID == item.id
+            return
+          )
 
           return
         )
       )(@global.ZoteroItemPane.viewItem, @)
 
     @addCitekeyRow()
+
+    return
+
+  unload: ->
+    @DOMobserver.disconnect()
+    DB.getCollection('citekey').removeListener(@citekeyObserver)
+    return
 
   addCitekeyRow: (itemID) ->
     if @global.document.getElementById(id)

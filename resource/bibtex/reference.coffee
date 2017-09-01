@@ -611,7 +611,10 @@ class Reference
 
     @add({name: 'type', value: @referencetype}) if @fields.length == 0
 
-    @postscript(@, @item)
+    try
+      @postscript(@, @item)
+    catch err
+      debug('Reference.postscript failed:', err)
 
     for name in Translator.preferences.skipFields
       @remove(name)

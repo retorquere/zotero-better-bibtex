@@ -12,14 +12,17 @@
   </vbox>
 
   <script>
+    var BBTItemPane;
+
     window.addEventListener('load', function() {
-      Zotero.debug('{better-bibtex}: itemPane loader start...')
-      new Zotero.BetterBibTeX.ItemPane({
+      BBTItemPane = new Zotero.BetterBibTeX.ItemPane({
         document: document,
         ZoteroItemPane: ZoteroItemPane,
       })
-      Zotero.debug('{better-bibtex}: itemPane loader done')
     }, false);
+
+    window.addEventListener('unload', function() { BBTItemPane.unload() }, false);
+
     Zotero.debug('{better-bibtex}: loaded item pane overlay')
   </script>
 </overlay>
