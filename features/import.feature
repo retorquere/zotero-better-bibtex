@@ -56,7 +56,7 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
   | Better BibTeX.013                                                           | 2           |
-  | Better BibTeX.014                                                           | 1           |
+  # | Better BibTeX.014                                                           | 1           | # not supported by biblatex-csl-converter
   | Better BibTeX.015                                                           | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |

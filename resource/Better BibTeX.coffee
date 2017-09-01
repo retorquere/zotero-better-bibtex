@@ -3,8 +3,8 @@ Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.coffee')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.coffee')
-#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
-BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+#BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
 
 Reference::caseConversion = {
   title: true,
@@ -231,7 +231,6 @@ Translator.detectImport = ->
   input = Zotero.read(102400)
   bib = importReferences(input)
   found = Object.keys(bib.references).length > 0
-  debug("better-bibtex: detect: #{found}")
   return found
 
 importGroup = (group, itemID, root) ->
@@ -239,7 +238,6 @@ importGroup = (group, itemID, root) ->
   collection.type = 'collection'
   collection.name = group.name
   collection.children = ({type: 'item', id: itemID[citekey]} for citekey in group.references when itemID[citekey])
-  debug('importGroup:', group.name, collection.children)
 
   for subgroup in group.groups || []
     collection.children.push(importGroup(subgroup, items))
@@ -253,10 +251,7 @@ Translator.doImport = ->
     input += read
   bib = importReferences(input)
 
-  debug('doImport: groups', typeof bib.groups)
-
   if bib.errors.length
-    debug('Translator.doImport errors:', bib.errors)
     item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
     for err in bib.errors
@@ -285,18 +280,14 @@ class ZoteroItem
     @bibtex.bib_type = @bibtex.bib_type.toLowerCase()
     @type = @typeMap[@bibtex.bib_type] || 'journalArticle'
 
-    debug('ZoteroItem: importing', @id, @type, JSON.stringify(@bibtex, null, 2))
-
     @item = new Zotero.Item(@type)
     @item.itemID = @id
-    debug("new reference: #{@item.itemID}")
     @biblatexdata = {}
 #    @item.notes.push({ note: ('The following fields were not imported:<br/>' + @bibtex.__note__).trim(), tags: ['#BBT Import'] }) if @bibtex.__note__
     @import()
 #    if Translator.preferences.rawImports
 #      @item.tags ?= []
 #      @item.tags.push(Translator.preferences.rawLaTag)
-    debug('saving')
     @item.complete()
 
   typeMap:
@@ -454,7 +445,6 @@ class ZoteroItem
 
     return text if typeof text in ['string', 'number']
 
-    debug('unparse: pre', text)
     # split out sup/sub text that can be unicodified
     chunks = []
     for node in text
@@ -481,7 +471,6 @@ class ZoteroItem
       tr = if sup then @sup else @sub
       unicoded = ''
       for c, i in Zotero.Utilities.XRegExp.split(node.text, '')
-        debug('unparse:', { sup, sub, c }) if c > '~'
         if sup && c in [ '\u00B0' ] # spurious mark
           unicoded += c
         else if tr[c]
@@ -503,7 +492,6 @@ class ZoteroItem
 #            chunks.push({text: c, marks: node.marks})
 #          else
 #            chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
-    debug('unparse: post', chunks)
 
     # convert to string
     html = ''
@@ -571,9 +559,7 @@ class ZoteroItem
       else if field.match(/^bdsk-url-[0-9]+$/)
         continue if @$url(value, field)
 
-      debug('ZoteroItem.import:', field)
       continue if @["$#{field}"]?(value, field)
-      debug('ZoteroItem.import: addtoextra', field)
       @addToExtraData(field, @unparse(value))
 
     if @type in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
@@ -612,7 +598,6 @@ class ZoteroItem
     return
 
   addToExtra: (str) ->
-    debug('ZoteroItem::addToExtra:', str)
     if @item.extra and @item.extra != ''
       @item.extra += " \n#{str}"
     else
@@ -620,7 +605,6 @@ class ZoteroItem
     return
 
   addToExtraData: (key, value) ->
-    debug('addToExtraData', { key, value })
     @biblatexdata[key] = @unparse(value)
     @biblatexdatajson = true if key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)
     return
@@ -634,7 +618,6 @@ class ZoteroItem
 
   $author: (value, field) ->
     for name in value
-      debug('doImport.$author', name)
       creator = {
         creatorType: field
       }
@@ -682,8 +665,6 @@ class ZoteroItem
   $journal: @::$journaltitle
 
   $pages: (value) ->
-    debug('pages:', value)
-
     # https://github.com/fiduswriter/biblatex-csl-converter/issues/51
     pages = []
     for range in value
@@ -716,6 +697,7 @@ class ZoteroItem
 
   $keywords: (value) ->
     value = (@unparse(tag).replace(/\n+/g, ' ') for tag in value)
+    value = value[0].split(/\s*;\s*/) if value.length == 1 && value[0].indexOf(';') > 0
     @item.tags ||= []
     @item.tags = @item.tags.concat(value)
     @item.tags = @item.tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
@@ -844,7 +826,6 @@ class ZoteroItem
       language = (@unparse(lang) for lang in value).join(' and ')
     else
       language = @unparse(value)
-    debug('$language:', value, language)
     return true unless language
 
     switch language.toLowerCase()
