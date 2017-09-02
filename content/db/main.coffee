@@ -121,7 +121,7 @@ DB = new Loki('better-bibtex', {
       for date in ['updated']
         if dest[date]
           dest[date] = Date.parse(dest[date])
-          dest[date] = null is isNaN(dest[date])
+          dest[date] = null if isNaN(dest[date])
         delete dest[date] unless dest[date]
       return
   }
