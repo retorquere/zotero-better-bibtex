@@ -118,7 +118,7 @@ DB = new Loki('better-bibtex', {
     inflate: (src, dest) ->
       Object.assign(dest, src)
 
-      for date in ['scheduled', 'updated']
+      for date in ['updated']
         if dest[date]
           dest[date] = Date.parse(dest[date])
           dest[date] = null is isNaN(dest[date])

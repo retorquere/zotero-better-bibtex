@@ -5,7 +5,7 @@ DB = require('./db/main.coffee')
 Translators = require('./translators.coffee')
 Prefs = require('./preferences.coffee')
 
-AutoExports = nil
+AutoExports = null
 
 scheduled = new Queue(((task, cb) ->
   do Zotero.Promise.coroutine(->

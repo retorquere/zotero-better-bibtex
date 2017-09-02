@@ -9,7 +9,8 @@ validator = new Ajv({ useDefaults: true, coerceTypes: true })
 validator.addKeyword('coerce', {
   modifying: true,
   compile: (type) ->
-    validateCoerced = validator.compile({ type })
+    validateCoerced = validator.compile({ type }) if type != 'date'
+
     return (data, dataPath, parentData, parentDataProperty) ->
       msg = "Unable to coerce #{typeof data} '#{data}' to #{type}"
 
@@ -43,7 +44,7 @@ validator.addKeyword('coerce', {
 Loki.Collection::insert = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('insert: validation failed', @validate.errors)
+      debug('insert: validation failed for', doc, @validate.errors)
       throw new Error("insert: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::insert)
@@ -51,7 +52,7 @@ Loki.Collection::insert = ((original) ->
 Loki.Collection::update = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('update: validation failed', @validate.errors)
+      debug('update: validation failed for', doc, @validate.errors)
       throw new Error("update: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::update)
