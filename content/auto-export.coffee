@@ -1,4 +1,5 @@
 Queue = require('better-queue')
+MemoryStore = require('better-queue-memory')
 Events = require('./events.coffee')
 DB = require('./db/main.coffee')
 Translators = require('./translators.coffee')
@@ -6,7 +7,7 @@ Prefs = require('./preferences.coffee')
 
 AutoExports = nil
 
-scheduled = new Queue((task, cb) ->
+scheduled = new Queue(((task, cb) ->
   do Zotero.Promise.coroutine(->
     ae = AutoExports.get(task.id)
     if ae
@@ -35,7 +36,7 @@ scheduled = new Queue((task, cb) ->
     return
   )
   return
-)
+), { store: new MemoryStore() })
 scheduled.pause()
 
 scheduler = new Queue(((task, cb) ->
@@ -59,7 +60,7 @@ scheduler = new Queue(((task, cb) ->
   )
 
   return { cancel: -> task.cancelled = true; return }
-), { cancelIfRunning: true })
+), { store: new MemoryStore(), cancelIfRunning: true })
 scheduler.pause()
 
 Events.on('collections-changed', (ids) ->
