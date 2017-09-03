@@ -140,12 +140,14 @@ DB.init = Zotero.Promise.coroutine(->
         itemID: { type: 'integer' }
         libraryID: { type: 'integer' }
         citekey: { type: 'string' }
-        pinned: { coerce: 'boolean', default: false }
+        pinned: { type: 'boolean', default: false }
+
+        # LokiJS
         meta: { type: 'object' }
         $loki: { type: 'integer' }
       }
-      required: [ 'itemID', 'libraryID', 'citekey' ],
-      additionalProperties: !Prefs.get('testing')
+      required: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
+      additionalProperties: false
     }
   })
   debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
@@ -171,18 +173,23 @@ DB.init = Zotero.Promise.coroutine(->
     schema: {
       type: 'object'
       properties: {
-        status: { enum: ['running', 'done', 'error' ] }
-        scheduled: { coerce: 'date' }
-        updated: { coerce: 'date' }
         type: { enum: ['search', 'collection', 'library' ] }
         id: { type: 'integer' }
-        exportNotes: { coerce: 'boolean' }
-        useJournalAbbreviation: { coerce: 'boolean' }
-        translatorID: { type: 'string' }
         path: { type: 'string' }
+        status: { enum: ['running', 'done', 'error' ] }
+        translatorID: { type: 'string' }
+        exportNotes: { type: 'boolean', default: false }
+        useJournalAbbreviation: { type: 'boolean', default: false }
+
+        # optional
+        updated: { instanceof: 'Date' }
+
+        # LokiJS
+        meta: { type: 'object' }
+        $loki: { type: 'integer' }
       }
-      required: [ 'type', 'id', 'status', 'path', 'translatorID'],
-      additionalProperties: !Prefs.get('testing')
+      required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
+      additionalProperties: false
     }
   })
   ###

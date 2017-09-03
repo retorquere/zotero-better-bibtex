@@ -20,6 +20,8 @@
     "test": "test"
   },
   "dependencies": {
+    "ajv": "^5.2.2",
+    "ajv-keywords": "^2.1.0",
     "biblatex-csl-converter": "^0.26.0",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
