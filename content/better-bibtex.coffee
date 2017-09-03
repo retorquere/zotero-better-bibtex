@@ -180,15 +180,28 @@ Zotero.Translate.Export::translate = ((original) ->
               name = Zotero.Libraries.getName(@_export.id)
             else
               name = 'library ' + Zotero.Libraries.getName(@_export.id)
+            id = @_export.id
 
           when 'collection'
             name = @_export.collection.name
+            id = @_export.collection.id
 
           else
             flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
             return
 
         ### set up auto-export here ###
+        ae = DB.getCollection('autoexport')
+        ae.removeWhere({ path: @location.path })
+        ae.insert({
+          type: @_export.type
+          id: id
+          path: @location.path
+          status: 'done'
+          translatorID: translatorID
+          exportNotes: @_displayOptions.exportNotes
+          useJournalAbbreviation: @_displayOptions.useJournalAbbreviation
+        })
 
         return
 
