@@ -4,7 +4,6 @@ references:
   type: article-journal
   title: 'The physical volcanology of the 1600 eruption of **Huaynaputina**, southern Peru'
   container-title: Bulletin of Volcanology
-  container-title-short: Bull. Volcanol.
   page: 493-518
   volume: '62'
   author:
@@ -35,7 +34,6 @@ references:
   type: article-journal
   title: 'Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in der abendländischen Kirche'
   container-title: Sacris Erudiri
-  container-title-short: Sacris Erud.
   page: 5-32
   volume: '34'
   source: MetaPress

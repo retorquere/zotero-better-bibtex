@@ -271,7 +271,7 @@ class PatternFormatter
     return '' unless authors?.length
     return authors[authors.length - 1] ? ''
 
-  $journal: -> journalAbbrev.get(@item.item) || @item.item.getField('publicationTitle', false, true)
+  $journal: -> journalAbbrev.get(@item.item, true) || @item.item.getField('publicationTitle', false, true)
 
   $authors: (onlyEditors, withInitials, n) ->
     authors = @creators(onlyEditors, {withInitials})

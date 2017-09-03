@@ -2,7 +2,7 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "title": "non-braking space:  ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
+      "title": "non-braking space: ~; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
       "extra": "bibtex: test-ticket1661",
       "itemID": 0
     }

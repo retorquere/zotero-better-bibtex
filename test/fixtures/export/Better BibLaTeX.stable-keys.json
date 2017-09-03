@@ -164,7 +164,10 @@
       "citekeyFormat": "[auth][year]",
       "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "autoAbbrev": "true"
     }
+  },
+  "collections": {
   }
 }

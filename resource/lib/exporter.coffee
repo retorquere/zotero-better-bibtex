@@ -2,7 +2,7 @@ debug = require('../lib/debug.coffee')
 JSON5 = require('json5')
 Citekey = require('../../content/keymanager/get-set.coffee')
 JabRef = require('../bibtex/jabref.coffee') # not so nice... BibTeX-specific code in general exporter lib
-collections = require('./collections.coffee')
+Collections = require('./collections.coffee')
 
 class Exporter
   constructor: ->
@@ -20,7 +20,7 @@ class Exporter
 
     @caching = !Translator.options.exportFileData
 
-    @collections = collections()
+    @collections = Collections()
     @jabref = new JabRef(@collections)
 
     @citekeys = {}
@@ -230,7 +230,7 @@ class Exporter
 
       item.extra = Citekey.get(item.extra).extra
       debug('exporting', item)
-      @jabref.citekeys[item.key] = item.citekey
+      @jabref.citekeys[item.itemID] = item.citekey
 
       return item
 

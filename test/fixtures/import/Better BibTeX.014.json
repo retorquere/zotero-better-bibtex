@@ -2,7 +2,7 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "title": "Escaped backslash followed by {}: \n{}",
+      "title": "\\{}: \n",
       "extra": "bibtex: BibTeXEscapeTest1",
       "itemID": 0
     }

@@ -61,5 +61,7 @@
       "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note"
     }
+  },
+  "collections": {
   }
 }

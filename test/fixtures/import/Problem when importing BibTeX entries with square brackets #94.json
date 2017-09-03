@@ -16,14 +16,12 @@
         {
           "creatorType": "author",
           "firstName": "H.",
-          "lastName": "Adachi",
-          "fieldMode": ""
+          "lastName": "Adachi"
         },
         {
           "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Takano",
-          "fieldMode": ""
+          "lastName": "Takano"
         }
       ],
       "tags": [
@@ -32,7 +30,6 @@
       "itemID": 0
     }
   ],
-  "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
   "collections": [
     {
       "name": "Problem when importing BibTeX entries with square brackets #94",

@@ -181,67 +181,33 @@
       "exportNotes": true
     }
   },
-  "collections": [
-    {
-      "primary": {
-        "collectionID": 3,
-        "libraryID": 1,
-        "key": "VWGRV637"
-      },
-      "fields": {
-        "name": "Normal",
-        "parentKey": false
-      },
-      "childCollections": {
-      },
-      "childItems": [
+  "collections": {
+    "VWGRV637": {
+      "id": 3,
+      "key": "VWGRV637",
+      "parent": false,
+      "name": "Normal",
+      "items": [
         9,
         12
       ],
-      "descendents": [
-        {
-          "id": 9,
-          "key": "VHHZPZW4",
-          "type": "item",
-          "parent": 3
-        },
-        {
-          "id": 12,
-          "key": "N2UZN4G7",
-          "type": "item",
-          "parent": 3
-        }
-      ],
-      "id": 3,
-      "name": "Normal"
+      "collections": [
+
+      ]
     },
-    {
-      "primary": {
-        "collectionID": 2,
-        "libraryID": 1,
-        "key": "EDWS9NJB"
-      },
-      "fields": {
-        "name": "Test",
-        "parentKey": false
-      },
-      "childCollections": {
-      },
-      "childItems": [
+    "EDWS9NJB": {
+      "id": 2,
+      "key": "EDWS9NJB",
+      "parent": false,
+      "name": "Test",
+      "items": [
         7
       ],
-      "descendents": [
-        {
-          "id": 7,
-          "key": "T8U7KGPD",
-          "type": "item",
-          "parent": 2
-        }
-      ],
-      "id": 2,
-      "name": "Test"
+      "collections": [
+
+      ]
     }
-  ],
+  },
   "items": [
     {
       "itemType": "journalArticle",
