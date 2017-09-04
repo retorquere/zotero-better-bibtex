@@ -240,8 +240,13 @@ module BBT
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
-    profiles = File.expand_path('~/.zotero/zotero')
-    zotero = File.expand_path('~/bin/zotero/zotero')
+    if ENV['JURISM'] == 'true'
+      profiles = File.expand_path('~/.jurism/jurism')
+      zotero = File.expand_path('~/bin/jurism/jurism')
+    else
+      profiles = File.expand_path('~/.zotero/zotero')
+      zotero = File.expand_path('~/bin/zotero/zotero')
+    end
   elsif OS.mac?
     profiles = File.expand_path('~/Library/Application Support/Zotero')
     zotero = File.expand_path('/Applications/Zotero.app/Contents/MacOS/zotero')
