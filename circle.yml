@@ -13,10 +13,6 @@ dependencies:
   pre:
   - |-
     node -v
-    mkdir -p ~/bin/zotero
-    #if [ ! -x ~/bin/zotero/zotero ]; then
-      ZOTERO_INSTALL=y ZOTERO_INSTALL_DEST=l ZOTERO_INSTALL_VERSION=auto ZOTERO_INSTALL_NUKE_DEST=y ./zotero5_installer.sh
-    #fi;
   cache_directories:
   - citeproc-js
 test:
@@ -25,8 +21,10 @@ test:
       set -e
       case $CIRCLE_NODE_INDEX in
         0|1)  export JURISM=false
+              ./zotero5_installer.py --client zotero --version latest --destination local --replace
               ;;
         *)    export JURISM=true
+              ./zotero5_installer.py --client jurism --version latest --destination local --replace
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
