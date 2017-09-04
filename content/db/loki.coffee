@@ -5,45 +5,12 @@ Loki = require('lokijs')
 debug = require('../debug.coffee')
 
 validator = new Ajv({ useDefaults: true, coerceTypes: true })
-
-validator.addKeyword('coerce', {
-  modifying: true,
-  compile: (type) ->
-    validateCoerced = validator.compile({ type })
-    return (data, dataPath, parentData, parentDataProperty) ->
-      msg = "Unable to coerce #{typeof data} '#{data}' to #{type}"
-
-      switch type
-        when 'float', 'number'
-          data = parseFloat(data || 0)
-          throw new Error(msg) if isNaN(data) || !isFinite(data)
-
-        when 'integer'
-          data = parseInt(data || 0)
-          throw new Error(msg) if isNaN(data) || !isFinite(data)
-
-        when 'boolean'
-          data = !!data
-
-        when 'string'
-          data = if data? then '' + data else ''
-
-        when 'date'
-          if data then data = new Date(data) else data = null
-
-        else
-          throw new Error(msg)
-
-      parentData[parentDataProperty] = data
-
-      return !data || !isNaN(data.getTime()) if type == 'date'
-      return validateCoerced(data)
-})
+require('ajv-keywords')(validator)
 
 Loki.Collection::insert = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('insert: validation failed', @validate.errors)
+      debug('insert: validation failed for', doc, @validate.errors)
       throw new Error("insert: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::insert)
@@ -51,7 +18,7 @@ Loki.Collection::insert = ((original) ->
 Loki.Collection::update = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('update: validation failed', @validate.errors)
+      debug('update: validation failed for', doc, @validate.errors)
       throw new Error("update: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
     return original.apply(@, arguments)
 )(Loki.Collection::update)
