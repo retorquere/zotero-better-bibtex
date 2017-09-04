@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import platform
+import glob
 import argparse
 import re
 import urllib2
@@ -64,8 +65,13 @@ parser.add_argument('-c', '--client', action=ClientAction, required=True)
 parser.add_argument('-v', '--version')
 parser.add_argument('-d', '--destination', action=LocationAction, required=True)
 parser.add_argument('-r', '--replace', action='store_true')
+parser.add_argument('--cache')
 
 args = parser.parse_args()
+
+if args.cache is not None and not os.path.exists(args.cache):
+  print args.cache + ' does not exist'
+  sys.exit(1)
 
 if args.version == 'latest' or args.version is None:
   version = zotero_latest() if args.client == 'zotero' else jurism_latest()
@@ -93,18 +99,30 @@ if args.client == 'zotero':
 else:
   args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
 
-print "Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url
+tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
 
-dl = tempfile.NamedTemporaryFile()
-urllib.urlretrieve (args.url, dl.name)
+if args.cache is None:
+  tarball = tempfile.NamedTemporaryFile().name
+else:
+  tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
+  for junk in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
+    if os.path.basename(junk) != tarball: os.remove(junk)
+  tarball = os.path.join(args.cache, tarball)
+
+if os.path.exists(tarball):
+  print 'Retaining ' + tarball
+else:
+  print "Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url
+  urllib.urlretrieve (args.url, tarball)
+
 extracted = tempfile.mkdtemp()
 
 def shellquote(s):
   return "'" + s.replace("'", "'\\''") + "'"
-os.system('tar --strip 1 -xpf ' + shellquote(dl.name) + ' -C ' + shellquote(extracted))
+os.system('tar --strip 1 -xpf ' + shellquote(tarball) + ' -C ' + shellquote(extracted))
 
 if os.path.exists(installdir): os.system('rm -rf ' + shellquote(installdir))
-os.system('mkdir -p ' + shellquote(os.path(.dirname(installdir)))
+os.system('mkdir -p ' + shellquote(os.path.dirname(installdir)))
 os.system('mv ' + shellquote(extracted) + ' ' + shellquote(installdir))
 
 if not menudir is None:
