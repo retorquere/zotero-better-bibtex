@@ -22,7 +22,7 @@ test:
   - ? |-
       set -e
       case $CIRCLE_NODE_INDEX in
-        2|3)  export JURISM=true
+        .2|.3)  export JURISM=true
               ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
               ;;
         *)    export JURISM=false
