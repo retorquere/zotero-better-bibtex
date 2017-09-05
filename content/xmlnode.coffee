@@ -56,3 +56,5 @@ class XmlNode
           @set(node, attrs)
 
     return
+
+module.exports = XmlNode

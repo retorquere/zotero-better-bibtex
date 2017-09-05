@@ -5,14 +5,12 @@ DB = require('./db/main.coffee')
 Translators = require('./translators.coffee')
 Prefs = require('./preferences.coffee')
 
-AutoExports = null
-
 scheduled = new Queue(((task, cb) ->
   do Zotero.Promise.coroutine(->
-    ae = AutoExports.get(task.id)
+    ae = AutoExport.db.get(task.id)
     if ae
       ae.status = 'running'
-      AutoExports.update(ae)
+      AutoExports.db.update(ae)
 
       try
         switch ae.type
@@ -31,22 +29,22 @@ scheduled = new Queue(((task, cb) ->
 
       ae.status = 'done'
       ae.updated = new Date()
-      AutoExports.update(ae)
+      AutoExports.db.update(ae)
     cb(null)
     return
   )
   return
 ), { store: new MemoryStore() })
-scheduled.pause()
+scheduled.resume()
 
 scheduler = new Queue(((task, cb) ->
   task = Object.assign({}, task)
 
   do Zotero.Promise.coroutine(->
-    ae = AutoExports.get(task.id)
+    ae = AutoExports.db.get(task.id)
     if ae
       ae.status = 'scheduled'
-      AutoExports.update(ae)
+      AutoExports.db.update(ae)
 
       yield Zotero.Promise.delay(1000)
 
@@ -64,16 +62,16 @@ scheduler = new Queue(((task, cb) ->
 scheduler.pause()
 
 Events.on('collections-changed', (ids) ->
-  for ae in AutoExports.find({ type: 'collection', id: { $in: ids } })
+  for ae in AutoExports.db.find({ type: 'collection', id: { $in: ids } })
     scheduler.push({ id: ae.$loki })
   return
 )
 
 Events.on('collections-removed', (ids) ->
-  for ae in AutoExports.find({ type: 'collection', id: { $in: ids } })
+  for ae in AutoExports.db.find({ type: 'collection', id: { $in: ids } })
     scheduled.cancel(ae.$loki)
     scheduler.cancel(ae.$loki)
-    AutoExports.remove(ae)
+    AutoExports.db.remove(ae)
   return
 )
 
@@ -83,11 +81,9 @@ idleObserver = observe: (subject, topic, data) ->
   switch topic
     when 'back', 'active'
       scheduler.pause()
-      scheduled.pause()
 
     when 'idle'
       scheduler.resume()
-      scheduled.resume()
   return
 idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
 idleService.addIdleObserver(idleObserver, Prefs.get('autoExportIdleWait'))
@@ -98,22 +94,25 @@ Events.on('preference-changed', (pref) ->
   switch Prefs.get('autoExport')
     when 'immediate'
       scheduler.resume()
-      scheduled.resume()
     else # / off / idle
       scheduler.pause()
-      scheduled.pause()
   return
 )
 
-class AutoExport
+AutoExport = new class _AutoExport
   init: ->
-    AutoExports = DB.getCollection('autoexport')
-    for ae in AutoExports.find({ status: { $ne: 'done' } })
+    @db = DB.getCollection('autoexport')
+    for ae in @db.find({ status: { $ne: 'done' } })
       scheduler.push({ id: ae.$loki })
 
     if Prefs.get('autoExport') == 'immediate'
-      scheduled.resume()
       scheduler.resume()
     return
 
-module.exports = new AutoExport()
+  run: (ae) ->
+    ae.status = 'scheduled'
+    @db.update(ae)
+    scheduled.push({ id: ae.$loki })
+    return
+
+module.exports = AutoExport

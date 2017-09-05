@@ -395,8 +395,6 @@
                     <splitter class="tree-splitter"/>
                     <treecol id="better-bibtex-preferences-auto-export-translator" label="&better-bibtex.preferences.auto-export.translator;" editable="false" flex="1" persist="width ordinal hidden"/>
                     <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-charset" label="&better-bibtex.preferences.auto-export.charset;" editable="true" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
                     <treecol id="better-bibtex-preferences-auto-export-auto-abbrev" label="&better-bibtex.preferences.auto-export.auto-abbrev;" editable="false" flex="1" persist="width ordinal hidden"/>
                     <splitter class="tree-splitter"/>
                     <treecol id="better-bibtex-preferences-auto-export-notes" label="&better-bibtex.preferences.auto-export.notes;" editable="false" flex="1" persist="width ordinal hidden"/>

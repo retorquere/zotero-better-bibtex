@@ -4,6 +4,7 @@
     var DOMobserver = null;
 
     Zotero.debug('export-options');
+    var reset = true;
 
     function mutex(e) {
       Zotero.debug('clicked ' + e.target.id);
@@ -26,9 +27,12 @@
         var node = document.getElementById(id);
         if (!node) return;
 
-        if (node.getAttribute('better-bibtex')) return;
+        if (reset && id == 'export-option-Keep updated') {
+          node.checked = false;
+          reset = false;
+        }
 
-        if (id == 'export-option-Keep updated') node.checked = false;
+        if (node.getAttribute('better-bibtex')) return;
 
         Zotero.debug('export-options add event handler for ' + id);
         node.setAttribute('better-bibtex', 'true');

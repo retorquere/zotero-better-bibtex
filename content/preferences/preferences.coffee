@@ -5,7 +5,7 @@ zotero_config = require('../zotero-config.coffee')
 KeyManager = require('../keymanager.coffee')
 
 class PrefPane
-  # AutoExport: require('./auto-export.coffee')
+  AutoExport: require('./auto-export.coffee')
 
   constructor: (@global) ->
     debug('PrefPane.new: loading...')
@@ -143,7 +143,7 @@ class PrefPane
         return
       )
 
-    # TODO: @AutoExport.refresh()
+    @AutoExport.refresh()
 
     return
 
