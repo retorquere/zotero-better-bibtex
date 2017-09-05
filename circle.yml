@@ -25,11 +25,8 @@ test:
         0|1)  export JURISM=false
               ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
               ;;
-        X)    export JURISM=true
+        *)    export JURISM=true
               ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
-              ;;
-        *)  export JURISM=false
-              ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
               ;;
       esac
       case $CIRCLE_NODE_INDEX in

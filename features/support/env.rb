@@ -54,7 +54,7 @@ def execute(options)
 
   #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
   #STDOUT.flush
-  port = ENV['JURISM'] == 'true' ? 23116 : 23119
+  port = ENV['JURISM'] == 'true' ? 24119 : 23119
   response = HTTParty.post("http://127.0.0.1:#{port}/debug-bridge/execute", options)
   #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
   #STDOUT.flush
@@ -371,7 +371,7 @@ module BBT
         if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 1)
           raise "Could not connect to Zotero after #{attempts} attempts"
         else
-          STDOUT.puts "#{attempt}: could not connect to Zotero, retrying..."
+          STDOUT.puts "#{attempts}: could not connect to Zotero, retrying..."
           STDOUT.flush
         end
       end
