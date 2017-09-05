@@ -54,7 +54,8 @@ def execute(options)
 
   #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
   #STDOUT.flush
-  response = HTTParty.post("http://127.0.0.1:23119/debug-bridge/execute", options)
+  port = ENV['JURISM'] == 'true' ? 23116 : 23119
+  response = HTTParty.post("http://127.0.0.1:#{port}/debug-bridge/execute", options)
   #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
   #STDOUT.flush
 
@@ -287,7 +288,7 @@ module BBT
   profiles_ini.write_compact
   
   fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
-  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, 'profile/profile'))
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/profile"))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
@@ -316,7 +317,7 @@ module BBT
   FileUtils.rm_rf(profile_tgt)
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   FileUtils.rm_rf(data_tgt)
-  FileUtils.cp_r(File.join(fixtures, 'profile/data'), data_tgt)
+  FileUtils.cp_r(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/data"), data_tgt)
   if ENV['ZOTERO_BIGLY'] == 'true'
     STDOUT.puts "Testing using bigly database!"
     FileUtils.cp(File.join(fixtures, 'profile/data/zotero-bigly.sqlite'), File.join(data_tgt, 'zotero.sqlite'))
@@ -367,7 +368,12 @@ module BBT
         end
       rescue Errno::ECONNREFUSED, Net::ReadTimeout, HTTPNotFoundError
         attempts += 1
-        raise "Could not connect to Zotero after #{attempts} attempts" if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 1)
+        if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 1)
+          raise "Could not connect to Zotero after #{attempts} attempts"
+        else
+          STDOUT.puts "#{attempt}: could not connect to Zotero, retrying..."
+          STDOUT.flush
+        end
       end
       print '.'
     end

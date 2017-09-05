@@ -297,6 +297,7 @@ do Zotero.Promise.coroutine(->
   # should be safe to start tests at this point. I hate async.
 
   ready.resolve(true)
+  bench('ready')
 
   return
 )
