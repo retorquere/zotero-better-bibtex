@@ -1,0 +1,11 @@
+Generated File. Do not edit.
+
+[HEADER]
+Version:0.18t:$
+Arch:x86_64-gcc3:$
+
+[PLUGINS]
+
+[INVALID]
+/usr/lib/mozilla/plugins/libgnome-shell-browser-plugin.so:$
+1494887782000:$

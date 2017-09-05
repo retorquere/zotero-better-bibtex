@@ -24,7 +24,7 @@
     "ajv-keywords": "^2.1.0",
     "better-queue": "^3.8.5",
     "better-queue-memory": "^1.0.2",
-    "biblatex-csl-converter": "^0.26.0",
+    "biblatex-csl-converter": "^1.0.5",
     "edtf": "^2.1.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
