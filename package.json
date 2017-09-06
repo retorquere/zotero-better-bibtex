@@ -23,7 +23,7 @@
     "ajv": "^5.2.2",
     "ajv-keywords": "^2.1.0",
     "biblatex-csl-converter": "^1.0.5",
-    "edtf": "^2.1.0",
+    "edtf": "^2.2.2",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
@@ -58,12 +58,12 @@
     "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
-    "pug": "^2.0.0-rc.3",
+    "pug": "^2.0.0-rc.4",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
     "uri-templates": "^0.2.0",
-    "webpack": "^3.5.5",
+    "webpack": "^3.5.6",
     "xml-parser": "^1.2.1"
   },
   "scripts": {
