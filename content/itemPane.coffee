@@ -15,6 +15,7 @@ class ItemPane
         return Zotero.Promise.coroutine((item, mode, index) ->
           yield original.apply(@, arguments)
 
+          itemPane here needs to be replaced # TODO
           itemPane.addCitekeyRow(item.id) if index == 0 # details pane
 
           itemPane.DOMobserver = new MutationObserver((mutations) ->

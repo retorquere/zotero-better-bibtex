@@ -21,7 +21,8 @@
   width="550" height="450">
 
   <!-- Include the main extension logic -->
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"></script>
+  <script src="chrome://zotero-better-bibtex/content/common.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
 
   <wizardpage label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.error-report.review;</description>

@@ -47,6 +47,6 @@
 
 
   <!-- Include the main extension logic -->
-  <script src="chrome://zotero-better-bibtex/content/common.js"></script>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"></script>
+  <script src="chrome://zotero-better-bibtex/content/common.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
 </overlay>

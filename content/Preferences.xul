@@ -450,5 +450,6 @@
     </prefpane>
   </prefwindow>
 
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.Preferences.js"></script>
+  <script src="chrome://zotero-better-bibtex/content/common.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.Preferences.js"/>
 </overlay>

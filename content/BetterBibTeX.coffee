@@ -7,6 +7,8 @@ if !Zotero.BetterBibTeX
   events = require('./events.coffee')
   zotero_config = require('./zotero-config.coffee')
 
+  debug('Loading Better BibTeX')
+
   Prefs = require('./prefs.coffee') # needs to be here early, initializes the prefs observer
 
   # TODO: remove after beta
@@ -245,7 +247,11 @@ if !Zotero.BetterBibTeX
     bench.start = now
     return
 
+  debug('Loading Better BibTeX: setup done')
+
   load = Zotero.Promise.coroutine(->
+    debug('Loading Better BibTeX: starting...')
+
     ready = Zotero.Promise.defer()
     module.exports.ready = ready.promise
     bench.start = new Date()
