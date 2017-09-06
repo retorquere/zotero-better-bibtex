@@ -1,5 +1,5 @@
 flash = require('../flash.coffee')
-Prefs = require('../preferences.coffee')
+Prefs = require('../prefs.coffee')
 debug = require('../debug.coffee')
 
 parser = require('./formatter.pegjs')

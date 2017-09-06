@@ -1,15 +1,13 @@
-getAddons = require('../addons.coffee')
-Prefs = require('../preferences.coffee')
-Translators = require('../translators.coffee')
-debug = require('../debug.coffee')
+getAddons = require('./addons.coffee')
+Prefs = require('./prefs.coffee')
+Translators = require('./translators.coffee')
+debug = require('./debug.coffee')
 
 class ErrorReport
-  constructor: (@global) ->
-
   init: Zotero.Promise.coroutine(->
-    @params = @global.window.arguments[0].wrappedJSObject
+    @params = window.arguments[0].wrappedJSObject
 
-    wizard = @global.document.getElementById('better-bibtex-error-report')
+    wizard = document.getElementById('better-bibtex-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
@@ -34,11 +32,11 @@ class ErrorReport
       debug('ErrorReport::init references', @errorlog.references)
 
     debug('ErrorReport.init:', Object.keys(@errorlog))
-    @global.document.getElementById('better-bibtex-error-context').value = @errorlog.info
-    @global.document.getElementById('better-bibtex-error-errors').value = @errorlog.errors
-    @global.document.getElementById('better-bibtex-error-log').value = @errorlog.truncated
-    @global.document.getElementById('better-bibtex-error-references').value = @errorlog.references.substring(0, 5000) if @errorlog.references
-    @global.document.getElementById('better-bibtex-error-tab-references').hidden = !@errorlog.references
+    document.getElementById('better-bibtex-error-context').value = @errorlog.info
+    document.getElementById('better-bibtex-error-errors').value = @errorlog.errors
+    document.getElementById('better-bibtex-error-log').value = @errorlog.truncated
+    document.getElementById('better-bibtex-error-references').value = @errorlog.references.substring(0, 5000) if @errorlog.references
+    document.getElementById('better-bibtex-error-tab-references').hidden = !@errorlog.references
 
     continueButton.focus()
     continueButton.disabled = false
@@ -102,7 +100,7 @@ class ErrorReport
     )
 
   sendErrorReport: Zotero.Promise.coroutine(->
-    wizard = @global.document.getElementById('better-bibtex-error-report')
+    wizard = document.getElementById('better-bibtex-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
@@ -115,8 +113,8 @@ class ErrorReport
       wizard.getButton('cancel').disabled = true
       wizard.canRewind = false
 
-      @global.document.getElementById('better-bibtex-report-id').setAttribute('value', @key)
-      @global.document.getElementById('better-bibtex-report-result').hidden = false
+      document.getElementById('better-bibtex-report-id').setAttribute('value', @key)
+      document.getElementById('better-bibtex-report-result').hidden = false
     catch err
       ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
       ps.alert(null, Zotero.getString('general.error'), err)
@@ -149,4 +147,6 @@ class ErrorReport
     return
   )
 
-module.exports = ErrorReport
+module.exports = new ErrorReport()
+
+window.addEventListener('load', (-> module.exports.init()), false)

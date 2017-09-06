@@ -1,6 +1,6 @@
 Loki = require('./loki.coffee')
 debug = require('../debug.coffee')
-Prefs = require('../preferences.coffee')
+Prefs = require('../prefs.coffee')
 
 if Prefs.get('testing')
   stringify = (data) -> JSON.stringify(data, null, 2)

@@ -450,18 +450,5 @@
     </prefpane>
   </prefwindow>
 
-  <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero/content/preferences/preferences.js"/>
-  <script>
-    window.addEventListener('load', function() {
-      Zotero.debug('{better-bibtex}: PrefPane loader start...')
-      BBTPrefs = new Zotero.BetterBibTeX.PrefPane({
-        document: document,
-        Zotero_Preferences: Zotero_Preferences,
-      })
-      Zotero.debug('{better-bibtex}: PrefPane loader done')
-    }, false);
-    Zotero.debug('{better-bibtex}: loaded pref pane')
-    Zotero.debug('{better-bibtex}: PrefPane loader initialized')
-  </script>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.Preferences.js"></script>
 </overlay>

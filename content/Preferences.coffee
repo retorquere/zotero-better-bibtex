@@ -1,24 +1,24 @@
-Prefs = require('../preferences.coffee')
-debug = require('../debug.coffee')
-Formatter = require('../keymanager/formatter.coffee')
-zotero_config = require('../zotero-config.coffee')
-KeyManager = require('../keymanager.coffee')
+Prefs = require('./prefs.coffee')
+debug = require('./debug.coffee')
+Formatter = require('./keymanager/formatter.coffee')
+zotero_config = require('./zotero-config.coffee')
+KeyManager = require('./keymanager.coffee')
 
 class PrefPane
   # AutoExport: require('./auto-export.coffee')
 
-  constructor: (@global) ->
+  load: ->
     debug('PrefPane.new: loading...')
-    return if typeof @global.Zotero_Preferences == 'undefined'
+    return if typeof Zotero_Preferences == 'undefined'
 
-    @global.document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
+    document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
 
-    if !@global.Zotero_Preferences.openHelpLink.BetterBibTeX
-      @global.Zotero_Preferences.openHelpLink.BetterBibTeX = @global.Zotero_Preferences.openHelpLink
-      @global.Zotero_Preferences.openHelpLink = ->
-        helpTopic = @global.document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic
+    if !Zotero_Preferences.openHelpLink.BetterBibTeX
+      Zotero_Preferences.openHelpLink.BetterBibTeX = Zotero_Preferences.openHelpLink
+      Zotero_Preferences.openHelpLink = ->
+        helpTopic = document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic
         if helpTopic == 'BetterBibTeX'
-          id = @global.document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+          id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
           return unless id
           url = 'https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#' + id.replace('better-bibtex-prefs-', '')
           ### Just a temporary fix until https://github.com/zotero/zotero/issues/949 is fixed ###
@@ -27,28 +27,29 @@ class PrefPane
           else
             @openURL(url)
         else
-          @global.Zotero_Preferences.openHelpLink.BetterBibTeX.apply(@, arguments)
+          Zotero_Preferences.openHelpLink.BetterBibTeX.apply(@, arguments)
         return
 
     @getCitekeyFormat()
     @update()
 
-    debug('PrefPane.new loaded @', @global.document.location.hash)
+    debug('PrefPane.new loaded @', document.location.hash)
 
-    if @global.document.location.hash == '#better-bibtex'
+    if document.location.hash == '#better-bibtex'
       ### TODO: runs into the 'TypeError: aId is undefined' problem for some reason. ###
-      setTimeout((-> @global.document.getElementById('zotero-prefs').showPane(@global.document.getElementById('zotero-prefpane-better-bibtex'))), 500)
+      setTimeout((-> document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex'))), 500)
     debug('PrefPane.new: ready')
+    return
 
   getCitekeyFormat: ->
     debug('PrefPane.getCitekeyFormat...')
-    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     keyformat.value = Prefs.get('citekeyFormat')
     debug('PrefPane.getCitekeyFormat got', keyformat.value)
     return
 
   checkCitekeyFormat: ->
-    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
 
     msg = ''
     try
@@ -62,7 +63,7 @@ class PrefPane
     return
 
   saveCitekeyFormat: ->
-    keyformat = @global.document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try
       Formatter.parsePattern(keyformat.value)
       Prefs.set('citekeyFormat', keyformat.value)
@@ -71,7 +72,7 @@ class PrefPane
     return
 
   checkPostscript: ->
-    postscript = @global.document.getElementById('zotero-better-bibtex-postscript')
+    postscript = document.getElementById('zotero-better-bibtex-postscript')
 
     error = false
     try
@@ -87,7 +88,7 @@ class PrefPane
   styleChanged: (index) ->
     return unless zotero_config.isJurisM
 
-    stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
+    stylebox = document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
     styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
@@ -102,7 +103,7 @@ class PrefPane
   )
 
   display: (id, text) ->
-    elt = @global.document.getElementById(id)
+    elt = document.getElementById(id)
     elt.value = text
     elt.setAttribute('tooltiptext', text) if text != ''
     return
@@ -121,13 +122,13 @@ class PrefPane
         styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)
 
-        stylebox = @global.document.getElementById('better-bibtex-abbrev-style')
+        stylebox = document.getElementById('better-bibtex-abbrev-style')
         refill = stylebox.children.length == 0
         selectedStyle = Prefs.get('autoAbbrevStyle')
         selectedIndex = -1
         for style, i in styles
           if refill
-            itemNode = @global.document.createElement('listitem')
+            itemNode = document.createElement('listitem')
             itemNode.setAttribute('value', style.styleID)
             itemNode.setAttribute('label', style.title)
             stylebox.appendChild(itemNode)
@@ -152,4 +153,6 @@ class PrefPane
 #    @cache.reset('user request')
 #    @serialized.reset('user request')
 
-module.exports = PrefPane
+module.exports = new PrefPane()
+
+window.addEventListener('load', (-> module.exports.load()), false)

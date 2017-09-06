@@ -68,20 +68,26 @@ module.exports = [
     plugins: [
       // new webpack.DefinePlugin({ global: {} })
       new CircularDependencyPlugin({ failOnError: true }),
+      new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
-      "better-bibtex": './better-bibtex.coffee',
-      // "preferences/preferences": './preferences/preferences.coffee',
+      BetterBibTeX: './BetterBibTeX.coffee',
+      'BetterBibTeX.Preferences': './Preferences.coffee',
+      'BetterBibTeX.ErrorReport': './ErrorReport.coffee',
+      'BetterBibTeX.itemPane': './itemPane.coffee',
     },
     // devtool: '#source-map',
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
       jsonpFunction: 'WebPackedBetterBibTeX',
+      chunkFilename: "[id].chunk.js",
       devtoolLineToLine: true,
       // sourceMapFilename: "./[name].js.map",
       pathinfo: true,
+      library: "Zotero.[name]",
+      libraryTarget: "assign",
     },
   }),
 

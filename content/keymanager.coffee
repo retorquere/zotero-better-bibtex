@@ -4,7 +4,7 @@ co = Zotero.Promise.coroutine
 events = require('./events.coffee')
 getItemsAsync = require('./get-items-async.coffee')
 
-Prefs = require('./preferences.coffee')
+Prefs = require('./prefs.coffee')
 Citekey = require('./keymanager/get-set.coffee')
 DB = require('./db/main.coffee')
 Formatter = require('./keymanager/formatter.coffee')
