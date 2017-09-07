@@ -1,10 +1,14 @@
 const path = require('path');
 const fs = require('fs');
 const shell = require('shelljs');
+const replace = require('replace');
 
 const webpack = require('webpack');
-const TranslatorHeaderPlugin = require('./webpack/translator-header-plugin');
+
 const CircularDependencyPlugin = require('circular-dependency-plugin')
+
+const AfterBuildPlugin = require('./webpack/plugins/after-build')
+const TranslatorHeaderPlugin = require('./webpack/plugins/translator-header');
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
@@ -49,8 +53,8 @@ var common = {
   },
   resolveLoader: {
     alias: {
-      'pegjs-loader': path.join(__dirname, './webpack/pegjs-loader'),
-      'json-loader': path.join(__dirname, './webpack/json-loader'),
+      'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
+      'json-loader': path.join(__dirname, './webpack/loaders/json'),
     },
   },
   module: {
@@ -68,7 +72,15 @@ module.exports = [
     plugins: [
       // new webpack.DefinePlugin({ global: {} })
       new CircularDependencyPlugin({ failOnError: true }),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' })
+      new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
+      new AfterBuildPlugin(function(stats, options) {
+        var ccp = options.plugins.find(function(plugin) { return plugin instanceof webpack.optimize.CommonsChunkPlugin }).filenameTemplate;
+        replace({
+          regex: `window\\["${options.output.jsonpFunction}"\\]`,
+          replacement: options.output.jsonpFunction,
+          paths: [path.join(options.output.path, ccp)],
+        });
+      }),
     ],
     context: path.resolve(__dirname, './content'),
     entry: {
@@ -81,8 +93,8 @@ module.exports = [
     output: {
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
-      jsonpFunction: 'WebPackedBetterBibTeX',
-      chunkFilename: "[id].chunk.js",
+      jsonpFunction: 'Zotero.WebPackedBetterBibTeX',
+      // chunkFilename: "[id].chunk.js",
       devtoolLineToLine: true,
       // sourceMapFilename: "./[name].js.map",
       pathinfo: true,
@@ -94,11 +106,13 @@ module.exports = [
   // translators
   _.merge({}, common, {
     plugins: [
+      /*
       function() {
         this.plugin("done", function(stats) {
           require("fs").writeFileSync(path.join(__dirname, "stats.json"), JSON.stringify(stats.toJson()));
         });
       },
+      */
       new CircularDependencyPlugin({ failOnError: true }),
       new TranslatorHeaderPlugin()
     ],
@@ -118,6 +132,7 @@ module.exports = [
     },
   }),
 
+  /*
   // minitests
   _.merge({}, common, {
     context: path.resolve(__dirname, './minitests'),
@@ -133,4 +148,5 @@ module.exports = [
       pathinfo: true,
     },
   }),
+  */
 ];
