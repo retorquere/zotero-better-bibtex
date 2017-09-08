@@ -1,12 +1,14 @@
 require('dotenv').config()
-pkg = require('../package.json')
-version = require('./version')
+pkg = require('../../package.json')
+version = require('../version')
 path = require('path')
 
 Bluebird = require('bluebird')
 github = require('./github')
 
 process.exit() if process.env.CI_PULL_REQUEST
+
+build_root = path.join(__dirname, '../../')
 
 if process.env.CIRCLE_TAG && "v#{pkg.version}" != process.env.CIRCLE_TAG
   console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
@@ -54,18 +56,18 @@ do Bluebird.coroutine(->
     yield github.upload({
       release: release.current,
       name: xpi,
-      path: path.resolve(__dirname, path.join(__dirname, "../xpi/#{xpi}"))
+      path: path.resolve(__dirname, path.join(build_root, "xpi/#{xpi}"))
       content_type: 'application/x-xpinstall'
     })
 
     yield github.upload({
       release: release.static,
       name: 'update.rdf',
-      path: path.resolve(__dirname, '../gen/update.rdf')
+      path: path.resolve(__dirname, '../../gen/update.rdf')
       content_type: 'application/rdf+xml'
     })
 
-    # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(__dirname, "../xpi/#{xpi}")))
+    # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(build_root, "xpi/#{xpi}")))
 
   else
     if !release.builds
@@ -82,7 +84,7 @@ do Bluebird.coroutine(->
     yield github.upload({
       release: release.builds,
       name: xpi,
-      path: path.resolve(__dirname, path.join(__dirname, "../xpi/#{xpi}"))
+      path: path.resolve(__dirname, path.join(build_root, "xpi/#{xpi}"))
       content_type: 'application/x-xpinstall'
     })
 
@@ -101,7 +103,7 @@ do Bluebird.coroutine(->
         yield github({
           uri: "/issues/#{issue}/comments"
           method: 'POST'
-          body: { body: ":pager: bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
+          body: { body: ":robot: bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
         })
 
   return

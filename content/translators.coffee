@@ -1,4 +1,4 @@
-Prefs = require('./preferences.coffee')
+Prefs = require('./prefs.coffee')
 debug = require('./debug.coffee')
 
 class Translators

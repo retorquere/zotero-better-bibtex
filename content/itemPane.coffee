@@ -1,35 +1,35 @@
-debug = require('../debug.coffee')
+debug = require('./debug.coffee')
 
-KeyManager = require('../keymanager.coffee')
-DB = require('../db/main.coffee')
+KeyManager = require('./keymanager.coffee')
+DB = require('./db/main.coffee')
 
 id = 'zotero-better-bibtex-itempane-citekey'
 
 class ItemPane
-  constructor: (@global) ->
-    if !@global.ZoteroItemPane.BetterBibTeX
+  load: ->
+    if !ZoteroItemPane.BetterBibTeX
       # prevent multi-patching
-      @global.ZoteroItemPane.BetterBibTeX = true
+      ZoteroItemPane.BetterBibTeX = true
 
-      @global.ZoteroItemPane.viewItem = ((original, itemPane) ->
+      ZoteroItemPane.viewItem = ((original, self) ->
         return Zotero.Promise.coroutine((item, mode, index) ->
           yield original.apply(@, arguments)
 
-          itemPane.addCitekeyRow(item.id) if index == 0 # details pane
+          self.addCitekeyRow(item.id) if index == 0 # details pane
 
-          itemPane.DOMobserver = new MutationObserver((mutations) ->
-            itemPane.addCitekeyRow(item.id)
+          self.DOMobserver = new MutationObserver((mutations) ->
+            self.addCitekeyRow(item.id)
             return
           )
-          itemPane.DOMobserver.observe(itemPane.global.document.getElementById('dynamic-fields'), {childList: true})
-          itemPane.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
-            itemPane.addCitekeyRow(item.id) if citekey.itemID == item.id
+          self.DOMobserver.observe(document.getElementById('dynamic-fields'), {attributes: true, subtree: true, childList: true})
+          self.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
+            self.addCitekeyRow(item.id) if citekey.itemID == item.id
             return
           )
 
           return
         )
-      )(@global.ZoteroItemPane.viewItem, @)
+      )(ZoteroItemPane.viewItem, @)
 
     @addCitekeyRow()
 
@@ -41,19 +41,19 @@ class ItemPane
     return
 
   addCitekeyRow: (itemID) ->
-    if @global.document.getElementById(id)
+    if document.getElementById(id)
       debug('ItemPane: citekey row already present')
       return
 
-    if !(display = @global.document.getElementById(id))
-      template = @global.document.getElementById(id + '-template')
+    if !(display = document.getElementById(id))
+      template = document.getElementById(id + '-template')
       row = template.cloneNode(true)
       row.setAttribute('id', id + '-row')
       row.setAttribute('hidden', false)
       display = row.getElementsByClassName('better-bibtex-citekey-display')[0]
       display.setAttribute('id', id)
 
-      fields = @global.document.getElementById('dynamic-fields')
+      fields = document.getElementById('dynamic-fields')
       if fields.childNodes.length > 1
         fields.insertBefore(row, fields.childNodes[1])
       else
@@ -68,4 +68,7 @@ class ItemPane
 
     return
 
-module.exports = ItemPane
+module.exports = new ItemPane()
+
+window.addEventListener('load', (-> module.exports.load()), false)
+window.addEventListener('unload', (-> module.exports.unload()), false)

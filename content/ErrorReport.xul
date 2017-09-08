@@ -20,18 +20,8 @@
   id="better-bibtex-error-report" title="&zotero.errorReport.title;"
   width="550" height="450">
 
-  <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
-  <script>
-    window.addEventListener('load', function() {
-      BBTErrorReport = new Zotero.BetterBibTeX.ErrorReport({
-        window: window,
-        document: document,
-        Zotero: Zotero,
-      })
-      BBTErrorReport.init()
-    }, false);
-  </script>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
 
   <wizardpage label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.error-report.review;</description>
@@ -67,7 +57,7 @@
     <description id="zotero-advance-message"/ -->
   </wizardpage>
 
-  <wizardpage onpageshow="BBTErrorReport.sendErrorReport()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.send()" label=" ">
     <description>&zotero.errorReport.submissionInProgress;</description>
   </wizardpage>
 

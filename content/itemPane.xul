@@ -11,18 +11,6 @@
     </row>
   </vbox>
 
-  <script>
-    var BBTItemPane;
-
-    window.addEventListener('load', function() {
-      BBTItemPane = new Zotero.BetterBibTeX.ItemPane({
-        document: document,
-        ZoteroItemPane: ZoteroItemPane,
-      })
-    }, false);
-
-    window.addEventListener('unload', function() { BBTItemPane.unload() }, false);
-
-    Zotero.debug('{better-bibtex}: loaded item pane overlay')
-  </script>
+  <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.itemPane.js"/>
 </overlay>

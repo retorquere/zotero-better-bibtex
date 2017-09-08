@@ -779,7 +779,7 @@ class ZoteroItem
     else if field == 'url' || /^(https?:\/\/|mailto:)/i.test(value)
       url = value
     else
-      url = nil
+      url = null
 
     return false unless url
 

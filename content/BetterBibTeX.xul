@@ -9,7 +9,7 @@
 
   <!-- TODO: move to top level menu -->
   <menupopup id="zotero-tb-actions-popup">
-    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
+    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport()"/>
     <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
   </menupopup>
 
@@ -20,14 +20,14 @@
       label="&zotero.better-bibtex.show-collection-key;"
       oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
     / -->
-    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('collection')"/>
+    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
     <menuitem label="&better-bibtex.zoteroPane.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
     <menuitem label="&better-bibtex.zoteroPane.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
     <menuitem label="&better-bibtex.zoteroPane.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected');"/>
-    <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
+    <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('items')"/>
   </menupopup>
 
   <treecols id="zotero-items-columns-header">
@@ -46,26 +46,7 @@
   </treecols>
 
 
-  <!-- Include the main extension logic -->
   <script src="chrome://zotero/content/include.js"/>
-  <script>
-    <![CDATA[
-      Zotero.debug("{better-bibtex}: overlay loaded");
-
-      if (!Zotero.BetterBibTeX) {
-        Zotero.BetterBibTeX = {};
-
-        window.addEventListener('load', function() {
-          try {
-            Zotero.debug("{better-bibtex}: loading better-bibtex.js");
-            var loader = Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader);
-            loader.loadSubScript("chrome://zotero-better-bibtex/content/better-bibtex.js");
-            Zotero.debug("{better-bibtex}: better-bibtex.js loaded");
-          } catch (err) {
-            Zotero.debug("{better-bibtex:ERROR}: better-bibtex.js load failed: " + err + "\n" + err.stack);
-          }
-        }, false)
-      }
-    ]]>
-  </script>
+  <script src="chrome://zotero-better-bibtex/content/common.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
 </overlay>

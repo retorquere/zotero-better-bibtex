@@ -150,10 +150,10 @@
               <hbox>
                 <label>&better-bibtex.preferences.citekey.format;</label>
                 <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" nopreference="pref-better-bibtex-citekeyFormat"
-                  onfocus="BBTPrefs.getCitekeyFormat();"
-                  onblur="BBTPrefs.saveCitekeyFormat();"
-                  oninput="BBTPrefs.checkCitekeyFormat();"
-                  onkeypress="setTimeout(function() { BBTPrefs.checkCitekeyFormat() }, 1);"/>
+                  onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat();"
+                  onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat();"
+                  oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat();"
+                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat() }, 1);"/>
                 <!--
                   Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
                 -->
@@ -193,8 +193,8 @@
                   <row>
                     <label>&better-bibtex.preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" id="id-better-bibtex-preferences-citeCommand" preference="pref-better-bibtex-citeCommand"
-                      onchange="BBTPrefs.update();"
-                      onkeypress="setTimeout(function() { BBTPrefs.update() }, 1);"/>
+                      onchange="Zotero.BetterBibTeX.Preferences.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                     <!--
                       Used for drag-and-drop/quick copy citations. In the Zotero "Export" pane, choose, "Better BibTeX
                       Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation
@@ -258,7 +258,10 @@
                       -->
                   <row>
                     <label>&better-bibtex.preferences.citekey.update.conflict;</label>
-                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy" orient="horizontal" preference="pref-better-bibtex-keyConflictPolicy" oncommand="BBTPrefs.update();">
+                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy"
+                                orient="horizontal"
+                                preference="pref-better-bibtex-keyConflictPolicy"
+                                oncommand="Zotero.BetterBibTeX.Preferences.update();">
                       <!--
                         This determines what happens if you pin a key to a value that is already in use in a different
                         reference but not pinned there. Neither are ideal, you just get to pick your poison. The options are:
@@ -343,8 +346,8 @@
                   <row>
                     <label>&better-bibtex.preferences.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
-                      oninput="BBTPrefs.update();"
-                      onkeypress="setTimeout(function() { BBTPrefs.update() }, 1);"/>
+                      oninput="Zotero.BetterBibTeX.Preferences.update();"
+                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                     <!--
                       If there are some fields you don't want in your bibtex files (such as `note` for example), add a
                       list of them here, separated by comma's.
@@ -363,7 +366,7 @@
               <!--
                 If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
               -->
-              <listbox id="better-bibtex-abbrev-style" docpreference="pref-better-bibtex-autoAbbrevStyle" onselect="BBTPrefs.styleChanged()"/>
+              <listbox id="better-bibtex-abbrev-style" docpreference="pref-better-bibtex-autoAbbrevStyle" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
               <!-- Select the style for auto-abbreviation. -->
             </vbox>
           </tabpanel>
@@ -413,14 +416,14 @@
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
             <label value="&better-bibtex.preferences.postscript;"/>
             <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
-                  onblur="BBTPrefs.checkPostscript();"
-                  oninput="BBTPrefs.checkPostscript();"
-                  onkeypress="setTimeout(function() { BBTPrefs.checkPostscript() }, 1);"/>
+                  onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
+                  oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
+                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
             <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
             <hbox>
               <button label="&better-bibtex.preferences.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
             </hbox>
-            <button label="&better-bibtex.preferences.rescan-citekeys;" oncommand="BBTPrefs.rescanCitekeys()"/>
+            <button label="&better-bibtex.preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
             <!--
               There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having
               `bibtex: <whatever>` in the `extra` field of your reference. I haven't seen this in ages, but enabling this and then restarting
@@ -434,7 +437,7 @@
               you enable this, any BibTeX files you import will retain all the LaTeX commands they have, and marks the
               entry to be exported without any translation.
             -->
-            <button label="&better-bibtex.preferences.resetCache;" oncommand="BBTPrefs.cacheReset()"/>
+            <button label="&better-bibtex.preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
 
             <label>&better-bibtex.preferences.bulkWarning;</label>
             <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
@@ -449,17 +452,5 @@
   </prefwindow>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero/content/preferences/preferences.js"/>
-  <script>
-    window.addEventListener('load', function() {
-      Zotero.debug('{better-bibtex}: PrefPane loader start...')
-      BBTPrefs = new Zotero.BetterBibTeX.PrefPane({
-        document: document,
-        Zotero_Preferences: Zotero_Preferences,
-      })
-      Zotero.debug('{better-bibtex}: PrefPane loader done')
-    }, false);
-    Zotero.debug('{better-bibtex}: loaded pref pane')
-    Zotero.debug('{better-bibtex}: PrefPane loader initialized')
-  </script>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.Preferences.js"/>
 </overlay>

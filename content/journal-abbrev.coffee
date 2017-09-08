@@ -1,4 +1,4 @@
-Prefs = require('./preferences.coffee')
+Prefs = require('./prefs.coffee')
 debug = require('./debug.coffee')
 events = require('./events.coffee')
 zotero_config = require('./zotero-config.coffee')

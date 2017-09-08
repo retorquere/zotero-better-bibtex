@@ -1,12 +1,15 @@
 const fs = require('fs');
 const archiver = require('archiver');
-const version = require('./version');
+const version = require('../version');
+const path = require('path');
 
-const xpi = `${__dirname}/../xpi/${process.argv[3]}-${version}.xpi`;
+const build_root = path.join(__dirname, '../../');
+
+const xpi = `${build_root}/xpi/${process.argv[3]}-${version}.xpi`;
 console.log(`creating ${xpi}`);
 if (fs.existsSync(xpi)) { fs.unlinkSync(xpi); }
 
 const archive = archiver.create('zip', {});
 archive.pipe(fs.createWriteStream(xpi));
-archive.directory(`${__dirname}/../${process.argv[2]}`, false);
+archive.directory(`${build_root}/${process.argv[2]}`, false);
 archive.finalize();
