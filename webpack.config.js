@@ -88,6 +88,7 @@ module.exports = [
       'BetterBibTeX.Preferences': './Preferences.coffee',
       'BetterBibTeX.ErrorReport': './ErrorReport.coffee',
       'BetterBibTeX.itemPane': './itemPane.coffee',
+      'BetterBibTeX.exportOptions': './exportOptions.coffee',
     },
     // devtool: '#source-map',
     output: {

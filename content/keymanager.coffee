@@ -1,7 +1,10 @@
 debug = require('./debug.coffee')
 flash = require('./flash.coffee')
-co = Zotero.Promise.coroutine
 events = require('./events.coffee')
+ETA = require('node-eta')
+
+co = Zotero.Promise.coroutine
+
 getItemsAsync = require('./get-items-async.coffee')
 
 Prefs = require('./prefs.coffee')
@@ -107,21 +110,6 @@ class KeyManager
     return
   )
 
-  remaining: (start, done, total) ->
-    remaining = (total - done) / (done / ((new Date()) - start))
-
-    date = new Date(remaining)
-
-    hh = date.getUTCHours()
-    mm = date.getMinutes()
-    ss = date.getSeconds()
-
-    hh = "0#{hh}" if hh < 10
-    mm = "0#{mm}" if mm < 10
-    ss = "0#{ss}" if ss < 10
-
-    return "#{done} / #{total}, #{hh}:#{mm}:#{ss} remaining"
-
   rescan: co((clean)->
     if @scanning
       if Array.isArray(@scanning)
@@ -183,7 +171,7 @@ class KeyManager
       progress = new progressWin.ItemProgress(icon, "Assigning citation keys")
       progressWin.show()
 
-      start = new Date()
+      eta = new ETA(@scanning.length, { autoStart: true })
       for key, done in @scanning
         try
           item = yield getItemsAsync(key.itemID)
@@ -195,9 +183,11 @@ class KeyManager
         catch err
           debug('KeyManager.rescan: update', done, 'failed:', err)
 
+        eta.iterate()
+
         if done % 10 == 1
-          progress.setProgress((done * 100) / @scanning.length)
-          progress.setText(@remaining(start, done, @scanning.length))
+          progress.setProgress((eta.done * 100) / eta.count)
+          progress.setText(eta.format("#{eta.done} / #{eta.count}, {{etah}} remaining"))
 
       progress.setProgress(100)
       progress.setText('Ready')

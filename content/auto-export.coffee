@@ -3,7 +3,7 @@ MemoryStore = require('better-queue-memory')
 Events = require('./events.coffee')
 DB = require('./db/main.coffee')
 Translators = require('./translators.coffee')
-Prefs = require('./preferences.coffee')
+Prefs = require('./prefs.coffee')
 
 scheduled = new Queue(((task, cb) ->
   do Zotero.Promise.coroutine(->
