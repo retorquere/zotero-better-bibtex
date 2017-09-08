@@ -8,6 +8,24 @@ XmlNode = require('./xmlnode.coffee')
 AutoExport = require('./auto-export.coffee')
 Translators = require('./translators.coffee')
 
+AutoExportName = (ae, full) ->
+  switch ae.type
+    when 'library'
+      name = Zotero.Libraries.getName(ae.id)
+    when 'collection'
+      if full
+        name = AutoExportName.collectionPath(ae.id)
+      else
+        name = Zotero.Collections.get(ae.id).name
+  return name || ae.path
+AutoExportName.collectionPath = (id) ->
+  return '' unless id
+  coll = Zotero.Collections.get(id)
+  return '' unless coll
+
+  return AutoExportName.collectionPath(coll.parent) + '/' + coll.name if coll.parent
+  return coll.name
+
 class AutoExportPrefPane
   remove: ->
     return unless exportlist = document.getElementById('better-bibtex-export-list')
@@ -29,37 +47,22 @@ class AutoExportPrefPane
     @refresh()
     return
 
-  name: (ae, full) ->
-    switch ae.type
-      when 'library'
-        name = Zotero.Libraries.getName(ae.id)
-      when 'collection'
-        if full
-          name = @collectionPath(ae.id)
-        else
-          name = Zotero.Collections.get(ae.id)
-    return name || ae.path
-
-  collectionPath: (id) ->
-    return '' unless id
-    coll = Zotero.Collections.get(id)
-    return '' unless coll
-
-    return @collectionPath(coll.parent) + '/' + coll.name if coll.parent
-    return coll.name
-
   refresh: ->
+    if !AutoExport.db
+      debug('AutoExportPrefPane.refresh: DB not loaded')
+      return
+
     return unless exportlist = document.getElementById('better-bibtex-auto-exports')
     while exportlist.firstChild
       exportlist.removeChild(exportlist.firstChild)
 
     tree = new XUL('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
 
-    for ae in AutoExport.chain().simplesort('path').data()
+    for ae in AutoExport.db.chain().simplesort('path').data()
       debug('refresh:', {id: ae.$loki, status: ae.status})
       tree.treeitem({autoexport: "#{ae.$loki}", '': ->
         return @treerow(->
-          @treecell({editable: 'false', label: "#{ae.type}: #{AutoExportPref.name(ae.collection)}"})
+          @treecell({editable: 'false', label: "#{ae.type}: #{AutoExportName(ae)}"})
           @treecell({editable: 'false', label: "#{ae.status} (#{ae.updated})" })
           @treecell({editable: 'false', label: ae.path})
           @treecell({editable: 'false', label: Translators.byId[ae.translatorID]?.label || '??'})
