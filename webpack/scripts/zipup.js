@@ -1,6 +1,6 @@
 const fs = require('fs');
 const archiver = require('archiver');
-const version = require('../webpack/version');
+const version = require('../version');
 
 const xpi = `${__dirname}/../xpi/${process.argv[3]}-${version}.xpi`;
 console.log(`creating ${xpi}`);

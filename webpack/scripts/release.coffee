@@ -1,6 +1,6 @@
 require('dotenv').config()
-pkg = require('../package.json')
-version = require('../webpack/version')
+pkg = require('../../package.json')
+version = require('../version')
 path = require('path')
 
 Bluebird = require('bluebird')
