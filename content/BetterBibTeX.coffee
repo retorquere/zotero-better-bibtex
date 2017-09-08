@@ -200,7 +200,7 @@ if !Zotero.BetterBibTeX
           debug('Zotero.Translate.Export::translate: ', translatorID)
 
           ### regular behavior for non-BBT translators, or if translating to string ###
-          return unless translatorID && @_displayOptions && Translators.byId[translatorID] && @location.path
+          return unless translatorID && @_displayOptions && Translators.byId[translatorID] && @location?.path
 
           if @_displayOptions.exportFileData # export directory selected
             @_displayOptions.exportPath = @location.path
