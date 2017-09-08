@@ -198,7 +198,7 @@ end
   #}
 #end
 
-def exportLibrary(translator, displayOptions, library)
+def exportLibrary(translator, displayOptions, library, target=nil)
   if translator =~ /^id:(.+)$/
     translator = $1
   else
@@ -207,8 +207,8 @@ def exportLibrary(translator, displayOptions, library)
 
   found = execute(
     timeout: 600,
-    args: { translatorID: translator, displayOptions: displayOptions },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions)'
+    args: { translatorID: translator, displayOptions: displayOptions, path: target },
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions, args.path)'
   )
 
 	return if library == :ignore

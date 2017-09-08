@@ -189,17 +189,18 @@ def normalize_library(library, nocollections=true)
 
   renum.call({'collections' => library['collections']})
 end
-Then /^a library export using "([^"]+)" should match "([^"]+)"$/ do |translator, library|
-  exportLibrary(translator, @displayOptions, library)
+Then /^a library (auto-)?export (?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, target, translator, library|
+  throw "Auto-export needs a destination" if auto && !target
+  exportLibrary(translator, @displayOptions.merge({'Keep updated' => !!auto}), library, target)
 end
 Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
   exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
 end
 Then /^"([^"]+)" should match "([^"]+)"$/ do |found, expected|
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected))
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected)) unless expected[0] == '/'
   expected = File.read(expected)
 
-  found = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', found))
+  found = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', found)) unless found[0] == '/'
   found = File.read(found)
 
   expect(found.strip).to eq(expected.strip)
@@ -262,7 +263,7 @@ When /The following preferences have been set:/ do |table|
   expect(found).to eq('')
 end
 
-When(/^I wait (\d+) seconds$/) do |delay|
+When(/^I wait (\d+) seconds?$/) do |delay|
   sleep(Integer(delay))
 end
 

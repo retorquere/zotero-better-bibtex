@@ -69,8 +69,8 @@ module.exports =
     return (after - before)
   )
 
-  exportLibrary: co((translatorID, displayOptions) ->
-    return yield Translators.translate(translatorID, displayOptions)
+  exportLibrary: co((translatorID, displayOptions, path) ->
+    return yield Translators.translate(translatorID, displayOptions, null, path)
   )
 
   select: co((field, value) ->
