@@ -213,6 +213,8 @@ def exportLibrary(translator, displayOptions, library, target=nil)
 
 	return if library == :ignore
 
+  found = File.read(target) if target
+
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
   expected = File.read(expected)
 

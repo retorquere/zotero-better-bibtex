@@ -93,7 +93,7 @@ class Translators
       translation.setLibraryID(Zotero.Libraries.userLibraryID)
       translation.setTranslator(translatorID)
       translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
-      translation.setLocation(path) if path
+      translation.setLocation(Zotero.File.pathToFile(path)) if path
       translation.setHandler('done', (obj, success) ->
         if success
           return resolve(obj?.string)
