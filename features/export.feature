@@ -321,6 +321,7 @@ Scenario: Sorting and optional particle handling #411
 @test-cluster-1 @ae
 Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/autoexport.json"
+  And I set preference .autoExport to immediate
   Then a library auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/autoexport.before.biblatex"
   When I select the first item where publisher = "IEEE"
   And I remove the selected item

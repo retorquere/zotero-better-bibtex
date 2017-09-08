@@ -126,7 +126,7 @@ DB.init = Zotero.Promise.coroutine(->
   yield DB.loadDatabaseAsync()
 
   debug('before DB schemaCollection:', { keys: DB.getCollection('citekey') })
-  coll = DB.schemaCollection('citekey', {
+  DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
     schema: {
@@ -147,23 +147,10 @@ DB.init = Zotero.Promise.coroutine(->
   })
   debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
-  if Prefs.get('testing')
-    coll.on('insert', (citekey) ->
-      debug('DBStore.citekey.insert', citekey)
-      return
-    )
-    coll.on('update', (citekey) ->
-      debug('DBStore.citekey.update', citekey)
-      return
-    )
-    coll.on('delete', (citekey) ->
-      debug('DBStore.citekey.delete', citekey)
-      return
-    )
-
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
+    logging: true,
     schema: {
       type: 'object'
       properties: {

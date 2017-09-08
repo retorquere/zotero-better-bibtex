@@ -7,8 +7,10 @@ if Zotero.Debug.enabled
     'preference-changed'
     'items-changed'
     'items-removed'
+    'libraries-changed'
     'collections-changed'
     'collections-removed'
+    'libraries-removed'
   ]
 
   emitter.on = ((original) ->
@@ -22,7 +24,7 @@ if Zotero.Debug.enabled
   emitter.emit = ((original) ->
     return ->
       throw new Error("Unsupported event #{arguments[0]}") unless arguments[0] in events
-      debug('events: emitted', arguments[0])
+      debug('events: emitted', Array.prototype.slice.call(arguments))
       original.apply(@, arguments)
       return
   )(emitter.emit)

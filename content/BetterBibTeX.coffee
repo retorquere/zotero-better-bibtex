@@ -21,6 +21,8 @@ if !Zotero.BetterBibTeX
   Serializer = require('./serializer.coffee')
   Citekey = require('./keymanager/get-set.coffee')
   JournalAbbrev = require('./journal-abbrev.coffee')
+  AutoExport = require('./auto-export.coffee')
+
   module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
 
   ###
@@ -156,27 +158,86 @@ if !Zotero.BetterBibTeX
       CACHE.remove(ids)
       bench('cache remove')
 
+      # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+      # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+      items = (item for item in Zotero.Items.get(ids) when !(item.isNote() || item.isAttachment()))
+
       switch action
         when 'delete', 'trash'
+          debug("event.#{type}.#{action}", {ids, extraData})
           KeyManager.remove(ids)
-          events.emit('items-removed', ids) # maybe pass items?
+          events.emit('items-removed', ids)
           bench('remove')
 
         when 'add', 'modify'
-          # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-          # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-          items = Zotero.Items.get(ids)
           for item in items
-            continue if item.isNote() || item.isAttachment()
             KeyManager.update(item)
-          events.emit('items-changed', ids) # maybe pass items?
-          bench('change')
+
+          events.emit('items-changed', ids)
 
         else
           debug('item.notify: unhandled', {action, type, ids, extraData})
+          return
+
+      childCollections = (coll) =>
+        return [] unless coll
+
+        children = [coll.id]
+        for child in coll.getChildCollections()
+          children = children.concat(childCollections(child))
+
+        return children
+
+      collections = {}
+      libraries = {}
+      for item in items
+        libraries[item.libraryID] = true
+
+        for collectionID in item.getCollections()
+          continue if collections[collectionID]
+          for coll in childCollections(Zotero.Collections.get(collectionID))
+            collections[collectionID] = true
+
+
+      collections = Object.keys(collections)
+      events.emit('collections-changed', collections) if collections.length
+
+      libraries = Object.keys(libraries)
+      events.emit('libraries-changed', libraries) if libraries.length
 
       return
   }, ['item'], 'BetterBibTeX', 1)
+
+  Zotero.Notifier.registerObserver({
+    notify: (event, type, ids, extraData) ->
+      events.emit('collections-removed', ids) if event == 'delete' && ids.length
+      return
+  }, ['collection'], 'BetterBibTeX', 1)
+
+  Zotero.Notifier.registerObserver({
+    notify: (event, type, ids, extraData) ->
+      events.emit('libraries-removed', ids) if event == 'delete' && ids.length
+      return
+  }, ['group'], 'BetterBibTeX', 1)
+
+  Zotero.Notifier.registerObserver({
+    notify: (event, type, collection_items) ->
+      changed = {}
+
+      for collection_item in collection_items
+        [collectionID, itemID] = collection_item.split('-')
+        changed[collectionID] = true
+
+        collection = Zotero.Collections.get(collectionID)
+        while collection.parent?
+          changed[collection.parent] = true
+          collection = Zotero.Collections.get(collection.parent)
+
+      collections = Object.keys(collections)
+      events.emit('collections-changed', collections) if collections.length
+
+      return
+  }, ['collection-item'], 'BetterBibTeX', 1)
 
   Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
     return (zoteroItem, legacy, skipChildItems) ->
@@ -210,6 +271,8 @@ if !Zotero.BetterBibTeX
 
           return unless @_displayOptions?['Keep updated']
 
+          debug('Keep updated set -- trying to register auto-export')
+
           if @_displayOptions.exportFileData
             flash('Auto-export not registered', 'Auto-export is not supported when file data is exported')
             return
@@ -217,9 +280,9 @@ if !Zotero.BetterBibTeX
           switch @_export?.type
             when 'library'
               if @_export.id == Zotero.Libraries.userLibraryID
-                name = Zotero.Libraries.getName(@_export.id)
+                name = Zotero.Libraries.get(@_export.id).name
               else
-                name = 'library ' + Zotero.Libraries.getName(@_export.id)
+                name = 'library ' + Zotero.Libraries.get(@_export.id).name
 
             when 'collection'
               name = @_export.collection.name
@@ -228,7 +291,15 @@ if !Zotero.BetterBibTeX
               flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
               return
 
-          ### set up auto-export here ###
+          AutoExport.add({
+            type: @_export.type,
+            id: @_export.id,
+            path: @_displayOptions.exportPath,
+            status: 'done',
+            translatorID,
+            exportNotes: @_displayOptions.exportNotes,
+            useJournalAbbreviation: @_displayOptions.useJournalAbbreviation,
+          })
 
           return
 
@@ -299,6 +370,9 @@ if !Zotero.BetterBibTeX
 
     yield DB.init()
     bench('DB.init()')
+
+    AutoExport.init()
+    bench('AutoExport.init()')
 
     yield KeyManager.init() # inits the key cache by scanning the DB
     bench('KeyManager.init()')

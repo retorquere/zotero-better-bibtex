@@ -3,6 +3,7 @@ Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 Ajv = require('ajv')
 Loki = require('lokijs')
 debug = require('../debug.coffee')
+Prefs = require('../prefs.coffee')
 
 validator = new Ajv({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)
@@ -118,6 +119,12 @@ class XULoki extends Loki
 
   schemaCollection: (name, options) ->
     coll = @getCollection(name) || @addCollection(name, options)
+
+    if options.logging && Prefs.get('testing')
+      coll.on('insert', (data) => debug("DB Event: #{@filename}.#{name}.insert", data))
+      coll.on('delete', (data) => debug("DB Event: #{@filename}.#{name}.delete", data))
+      coll.on('update', (data) => debug("DB Event: #{@filename}.#{name}.update", data))
+
     coll.validate = validator.compile(options.schema)
     return coll
 

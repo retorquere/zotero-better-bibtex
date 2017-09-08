@@ -310,7 +310,6 @@ module BBT
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
 
-  profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
   # speed up startup
   profile['extensions.zotero.automaticScraperUpdates'] = false
 
