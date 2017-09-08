@@ -195,6 +195,15 @@ end
 Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
   exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
 end
+Then /^"([^"]+)" should match "([^"]+)"$/ do |found, expected|
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected))
+  expected = File.read(expected)
+
+  found = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', found))
+  found = File.read(found)
+
+  expect(found.strip).to eq(expected.strip)
+end
 
 When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|
   @selected = execute(
@@ -252,3 +261,8 @@ When /The following preferences have been set:/ do |table|
 
   expect(found).to eq('')
 end
+
+When(/^I wait (\d+) seconds$/) do |delay|
+  sleep(Integer(delay))
+end
+
