@@ -21,7 +21,7 @@ if !Zotero.BetterBibTeX
   Serializer = require('./serializer.coffee')
   Citekey = require('./keymanager/get-set.coffee')
   JournalAbbrev = require('./journal-abbrev.coffee')
-  KeyManager = require('./keymanager.coffee')
+  module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
 
   ###
     MONKEY PATCHES
@@ -246,6 +246,31 @@ if !Zotero.BetterBibTeX
     debug("startup: #{msg} took #{(now - bench.start) / 1000.0}s")
     bench.start = now
     return
+
+  module.exports.ErrorReport = Zotero.Promise.coroutine((includeReferences) ->
+    debug('ErrorReport::start', includeReferences)
+    items = null
+
+    pane = Zotero.getActiveZoteroPane()
+
+    switch pane && includeReferences
+      when 'collection', 'library'
+        items = { collection: pane.getSelectedCollection() }
+        items = { library: pane.getSelectedLibraryID() } unless items.collection
+
+      when 'items'
+        items = { items: pane.getSelectedItems() }
+        items = null unless items.items && items.items.length
+
+    params = {wrappedJSObject: { items }}
+
+    debug('ErrorReport::start popup', params)
+    ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+    debug('ErrorReport::start done')
+
+    return
+  )
 
   debug('Loading Better BibTeX: setup done')
 

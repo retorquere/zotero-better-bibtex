@@ -9,7 +9,7 @@
 
   <!-- TODO: move to top level menu -->
   <menupopup id="zotero-tb-actions-popup">
-    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
+    <menuitem insertafter="zotero-tb-actions-reportErrors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport()"/>
     <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
   </menupopup>
 
@@ -20,14 +20,14 @@
       label="&zotero.better-bibtex.show-collection-key;"
       oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
     / -->
-    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('collection')"/>
+    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
     <menuitem label="&better-bibtex.zoteroPane.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
     <menuitem label="&better-bibtex.zoteroPane.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
     <menuitem label="&better-bibtex.zoteroPane.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected');"/>
-    <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start('items')"/>
+    <menuitem label="&better-bibtex.zoteroPane.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('items')"/>
   </menupopup>
 
   <treecols id="zotero-items-columns-header">

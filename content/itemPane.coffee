@@ -11,20 +11,19 @@ class ItemPane
       # prevent multi-patching
       ZoteroItemPane.BetterBibTeX = true
 
-      ZoteroItemPane.viewItem = ((original, itemPane) ->
+      ZoteroItemPane.viewItem = ((original, self) ->
         return Zotero.Promise.coroutine((item, mode, index) ->
           yield original.apply(@, arguments)
 
-          itemPane here needs to be replaced # TODO
-          itemPane.addCitekeyRow(item.id) if index == 0 # details pane
+          self.addCitekeyRow(item.id) if index == 0 # details pane
 
-          itemPane.DOMobserver = new MutationObserver((mutations) ->
-            itemPane.addCitekeyRow(item.id)
+          self.DOMobserver = new MutationObserver((mutations) ->
+            self.addCitekeyRow(item.id)
             return
           )
-          itemPane.DOMobserver.observe(itemPane.global.document.getElementById('dynamic-fields'), {childList: true})
-          itemPane.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
-            itemPane.addCitekeyRow(item.id) if citekey.itemID == item.id
+          self.DOMobserver.observe(document.getElementById('dynamic-fields'), {attributes: true, subtree: true, childList: true})
+          self.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
+            self.addCitekeyRow(item.id) if citekey.itemID == item.id
             return
           )
 

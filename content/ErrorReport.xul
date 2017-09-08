@@ -57,7 +57,7 @@
     <description id="zotero-advance-message"/ -->
   </wizardpage>
 
-  <wizardpage onpageshow="BBTErrorReport.sendErrorReport()" label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.send()" label=" ">
     <description>&zotero.errorReport.submissionInProgress;</description>
   </wizardpage>
 

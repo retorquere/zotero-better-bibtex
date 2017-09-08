@@ -99,7 +99,7 @@ class ErrorReport
       return
     )
 
-  sendErrorReport: Zotero.Promise.coroutine(->
+  send: Zotero.Promise.coroutine(->
     wizard = document.getElementById('better-bibtex-error-report')
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
@@ -119,31 +119,6 @@ class ErrorReport
       ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
       ps.alert(null, Zotero.getString('general.error'), err)
       wizard.rewind() if wizard.rewind
-    return
-  )
-
-  start: Zotero.Promise.coroutine((includeReferences) ->
-    debug('ErrorReport::start', includeReferences)
-    items = null
-
-    pane = Zotero.getActiveZoteroPane()
-
-    switch pane && includeReferences
-      when 'collection', 'library'
-        items = { collection: pane.getSelectedCollection() }
-        items = { library: pane.getSelectedLibraryID() } unless items.collection
-
-      when 'items'
-        items = { items: pane.getSelectedItems() }
-        items = null unless items.items && items.items.length
-
-    params = {wrappedJSObject: { items }}
-
-    debug('ErrorReport::start popup', params)
-    ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/error-report/error-report.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
-    debug('ErrorReport::start done')
-
     return
   )
 
