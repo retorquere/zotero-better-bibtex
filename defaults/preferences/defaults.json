@@ -4,7 +4,7 @@
   "attachmentsNoMetadata": false,
   "autoAbbrev": false,
   "autoAbbrevStyle": "",
-  "autoExport": "idle",
+  "autoExport": "immediate",
   "autoExportIdleWait": 10,
   "cacheFlushInterval": 5,
   "itemObserverDelay": 100,

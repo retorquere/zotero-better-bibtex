@@ -61,34 +61,8 @@ scheduler = new Queue(((task, cb) ->
 
   return { cancel: -> task.cancelled = true; return }
 ), { store: new MemoryStore(), cancelIfRunning: true })
-scheduler.pause()
 
-Events.on('collections-changed', (ids) ->
-  for ae in AutoExport.db.find({ type: 'collection', id: { $in: ids } })
-    scheduler.push({ id: ae.$loki })
-  return
-)
-Events.on('collections-removed', (ids) ->
-  for ae in AutoExport.db.find({ type: 'collection', id: { $in: ids } })
-    scheduled.cancel(ae.$loki)
-    scheduler.cancel(ae.$loki)
-    AutoExport.db.remove(ae)
-  return
-)
-
-Events.on('libraries-changed', (ids) ->
-  debug('AutoExport.libraries-changed', ids, {state: Prefs.get('autoExport'), scheduler: scheduler._stopped, scheduled: scheduled._stopped})
-  for ae in AutoExport.db.find({ type: 'library', id: { $in: ids } })
-    scheduler.push({ id: ae.$loki })
-  return
-)
-Events.on('libraries-removed', (ids) ->
-  for ae in AutoExport.db.find({ type: 'library', id: { $in: ids } })
-    scheduled.cancel(ae.$loki)
-    scheduler.cancel(ae.$loki)
-    AutoExport.db.remove(ae)
-  return
-)
+scheduler.pause() if Prefs.get('autoExport') != 'immediate'
 
 idleObserver = observe: (subject, topic, data) ->
   debug("AutoExport.idle: #{topic}")
@@ -129,10 +103,28 @@ AutoExport = new class _AutoExport
     @db.insert(ae)
     return
 
+  refresh: (type, ids) ->
+    debug('AutoExport.refresh', type, ids, {state: Prefs.get('autoExport'), scheduler: scheduler._stopped, scheduled: scheduled._stopped})
+    for ae in @db.find({ type: type, id: { $in: ids } })
+      scheduler.push({ id: ae.$loki })
+    return
+
+  remove: (type, ids) ->
+    for ae in @db.find({ type: type, id: { $in: ids } })
+      scheduled.cancel(ae.$loki)
+      scheduler.cancel(ae.$loki)
+      @db.remove(ae)
+    return
+
   run: (ae) ->
     ae.status = 'scheduled'
     @db.update(ae)
     scheduled.push({ id: ae.$loki })
     return
+
+Events.on('libraries-changed', (ids) -> AutoExport.refresh('library', ids))
+Events.on('libraries-removed', (ids) -> AutoExport.remove('library', ids))
+Events.on('collections-changed', (ids) -> AutoExport.refresh('collection', ids))
+Events.on('collections-removed', (ids) -> AutoExport.remove('collection', ids))
 
 module.exports = AutoExport

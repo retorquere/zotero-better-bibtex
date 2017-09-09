@@ -143,7 +143,7 @@ class Serializer
 
     serialized = cached.item
     serialized.journalAbbreviation = abbrevs.get(serialized)
-    serialized.citekey = KeyManager.get(item.id).citekey
+    serialized.citekey = KeyManager.get(item.id).citekey if serialized.itemType not in ['note', 'attachment']
     return serialized
 
   store: (item, serialized, legacy, skipChildItems) ->
@@ -155,10 +155,10 @@ class Serializer
     if @cache ||= CACHE.getCollection(@collection)
       @cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
     else
-      debug('cache store ignored, DB not yet loaded')
+      Zotero.logError(new Error('Serializer.store ignored, DB not yet loaded'))
 
     serialized.journalAbbreviation = abbrevs.get(serialized)
-    serialized.citekey = KeyManager.get(item.id).citekey
+    serialized.citekey = KeyManager.get(item.id).citekey if serialized.itemType not in ['note', 'attachment']
     return serialized
 
   serialize: (item) -> Zotero.Utilities.Internal.itemToExportFormat(item, false, true)

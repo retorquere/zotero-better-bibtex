@@ -29,4 +29,7 @@ if Zotero.Debug.enabled
       return
   )(emitter.emit)
 
+  for event in events
+    do (event) -> emitter.on(event, -> debug("events: got #{event}"))
+
 module.exports = emitter

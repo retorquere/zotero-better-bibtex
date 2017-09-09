@@ -62,7 +62,7 @@ if !Zotero.BetterBibTeX
 
       obj = this.getRow(row)
       itemID = obj.id
-      citekey = KeyManager.get(itemID)
+      citekey = KeyManager.get(itemID, true)
 
       if citekey.retry
         debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
@@ -233,8 +233,8 @@ if !Zotero.BetterBibTeX
           changed[collection.parent] = true
           collection = Zotero.Collections.get(collection.parent)
 
-      collections = Object.keys(collections)
-      events.emit('collections-changed', collections) if collections.length
+      changed = Object.keys(changed)
+      events.emit('collections-changed', changed) if changed.length
 
       return
   }, ['collection-item'], 'BetterBibTeX', 1)

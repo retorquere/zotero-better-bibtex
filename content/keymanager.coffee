@@ -283,12 +283,13 @@ class KeyManager
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
-  get: (itemID) ->
+  get: (itemID, retry) ->
     if !@keys
+      return { citekey: '', pinned: false, retry: true } if retry
+
       err = new Error("KeyManager.get called for #{itemID} before init")
-      # throw err unless softFail
       Zotero.logError(err)
-      return { citekey: '', pinned: false, retry: true }
+      throw err
 
     return key if key = @keys.findOne({ itemID })
 

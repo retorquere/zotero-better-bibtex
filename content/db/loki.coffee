@@ -121,9 +121,8 @@ class XULoki extends Loki
     coll = @getCollection(name) || @addCollection(name, options)
 
     if options.logging && Prefs.get('testing')
-      coll.on('insert', (data) => debug("DB Event: #{@filename}.#{name}.insert", data))
-      coll.on('delete', (data) => debug("DB Event: #{@filename}.#{name}.delete", data))
-      coll.on('update', (data) => debug("DB Event: #{@filename}.#{name}.update", data))
+      for event in ['insert', 'delete', 'update']
+        do (event, name, db = @filename) -> coll.on(event, (data) -> debug("DB Event: #{db}.#{name}.#{event}", data))
 
     coll.validate = validator.compile(options.schema)
     return coll

@@ -3,6 +3,7 @@ debug = require('../debug.coffee')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')
 Translators = require('../translators.coffee')
+AutoExport = require('../auto-export.coffee')
 
 module.exports =
   reset: co(->
@@ -32,6 +33,8 @@ module.exports =
     # ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
     while (collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length
       yield collections[0].eraseTx()
+
+    AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
     debug('TestSupport.reset: done')
 
