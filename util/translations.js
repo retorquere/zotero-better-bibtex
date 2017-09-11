@@ -1,5 +1,5 @@
 const fs = require('fs')
-const parseXML = require('@retorquere/parse-xml')
+const parseXML = require('@rgrove/parse-xml')
 var path = require('path');
 
 var walk = function(dir, ext) {
@@ -56,7 +56,7 @@ walk('content', '.xul').forEach(function(xul) {
   console.log(xul)
 
   parseXML(fs.readFileSync(xul, 'utf8'), {
-    resolveUndefinedEntities: function(entity) {
+    resolveUndefinedEntity: function(entity) {
       if (entity.startsWith('&zotero.') && !entity.startsWith('&zotero.better-bibtex.')) return entity;
 
       if (!entity.startsWith(root)) console.log(`  ${entity} must start with ${root}`);

@@ -24,30 +24,30 @@
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
 
   <wizardpage label=" ">
-    <description style="white-space: pre-wrap;" class="header">&better-bibtex.error-report.review;</description>
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
     <tabbox flex="1">
       <tabs>
-        <tab label="&better-bibtex.error-report.context;"/>
-        <tab label="&better-bibtex.error-report.errors;"/>
-        <tab label="&better-bibtex.error-report.log;"/>
-        <tab label="&better-bibtex.error-report.references;" id="better-bibtex-error-tab-references"/>
+        <tab label="&better-bibtex.ErrorReport.context;"/>
+        <tab label="&better-bibtex.ErrorReport.errors;"/>
+        <tab label="&better-bibtex.ErrorReport.log;"/>
+        <tab label="&better-bibtex.ErrorReport.references;" id="better-bibtex-error-tab-references"/>
       </tabs>
 
       <tabpanels>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-context" label="&better-bibtex.error-report.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-context" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-context" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-errors" label="&better-bibtex.error-report.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-errors" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-log" label="&better-bibtex.error-report.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-log" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-log" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-references" label="&better-bibtex.error-report.include;" checked="true"/ -->
+          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-references" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
       </tabpanels>
@@ -65,10 +65,10 @@
     <description>&zotero.errorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>
-        &better-bibtex.error-report.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain" readonly="true"/>
+        &better-bibtex.ErrorReport.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain" readonly="true"/>
       </description>
     </description>
-    <description>&better-bibtex.error-report.postToGitHub;</description>
-    <description>&better-bibtex.error-report.notReviewed;</description>
+    <description>&better-bibtex.ErrorReport.postToGitHub;</description>
+    <description>&better-bibtex.ErrorReport.notReviewed;</description>
   </wizardpage>
 </wizard>
