@@ -157,7 +157,7 @@ DB.init = Zotero.Promise.coroutine(->
         type: { enum: ['search', 'collection', 'library' ] }
         id: { type: 'integer' }
         path: { type: 'string' }
-        status: { enum: ['running', 'done', 'error' ] }
+        status: { enum: [ 'scheduled', 'running', 'done', 'error' ] }
         translatorID: { type: 'string' }
         exportNotes: { type: 'boolean', default: false }
         useJournalAbbreviation: { type: 'boolean', default: false }

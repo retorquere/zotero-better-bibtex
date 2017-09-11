@@ -1,4 +1,5 @@
 debug = require('./debug.coffee')
+asap = require('asap')
 
 Queue = require('better-queue')
 MemoryStore = require('better-queue-memory')
@@ -37,7 +38,10 @@ scheduled = new Queue(((task, cb) ->
     return
   )
   return
-), { store: new MemoryStore() })
+), {
+  store: new MemoryStore(),
+  setImmediate: asap,
+})
 scheduled.resume()
 
 scheduler = new Queue(((task, cb) ->
@@ -46,12 +50,16 @@ scheduler = new Queue(((task, cb) ->
 
   do Zotero.Promise.coroutine(->
     ae = AutoExport.db.get(task.id)
-    debug('AutoExport.scheduler.task:', task, '->', ae)
+    debug('AutoExport.scheduler.task found:', task, '->', ae, !!ae)
+
     if ae
       ae.status = 'scheduled'
       AutoExport.db.update(ae)
+      debug('AutoExport.scheduler.task scheduled, waiting...', task, ae)
 
       yield Zotero.Promise.delay(1000)
+
+      debug('AutoExport.scheduler.task scheduled, woken', task, ae)
 
       if (task.cancelled)
         debug('AutoExport.canceled export', ae)
@@ -64,7 +72,11 @@ scheduler = new Queue(((task, cb) ->
   )
 
   return { cancel: -> task.cancelled = true; return }
-), { store: new MemoryStore(), cancelIfRunning: true })
+), {
+  store: new MemoryStore(),
+  cancelIfRunning: true,
+  setImmediate: asap,
+})
 
 scheduler.pause() if Prefs.get('autoExport') != 'immediate'
 

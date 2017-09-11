@@ -23,7 +23,7 @@
     "ajv": "^5.2.2",
     "ajv-keywords": "^2.1.0",
     "asap": "^2.0.6",
-    "better-queue": "^3.8.5",
+    "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.0.5",
     "edtf": "^2.2.2",
@@ -31,7 +31,7 @@
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
     "fold-to-ascii": "^4.0.0",
-    "js-yaml": "^3.9.1",
+    "js-yaml": "^3.10.0",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.1",
     "lokijs": "^1.5.0",
@@ -85,8 +85,7 @@
     "release": "coffee webpack/scripts/release.coffee",
     "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none",
     "s3form": "coffee webpack/scripts/s3form.coffee",
-    "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "postinstall": "grasp --in-place --equery 'setImmediate($x)' --replace 'setTimeout({{x}}, 0)' node_modules/better-queue/lib/queue.js"
+    "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },
   "repository": {
     "type": "git",
