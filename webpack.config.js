@@ -9,6 +9,7 @@ const CircularDependencyPlugin = require('circular-dependency-plugin')
 
 const AfterBuildPlugin = require('./webpack/plugins/after-build')
 const TranslatorHeaderPlugin = require('./webpack/plugins/translator-header');
+const WrapperPlugin = require('wrapper-webpack-plugin');
 
 const version = require('./webpack/version');
 const translators = require('./webpack/translators');
@@ -55,11 +56,12 @@ var common = {
     alias: {
       'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
       'json-loader': path.join(__dirname, './webpack/loaders/json'),
+      'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
     },
   },
   module: {
     rules: [
-      { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } } ] },
+      { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } }, 'wrap-loader' ] },
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
     ]
@@ -73,6 +75,13 @@ module.exports = [
       // new webpack.DefinePlugin({ global: {} })
       new CircularDependencyPlugin({ failOnError: true }),
       new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
+      /*
+      new WrapperPlugin({
+        test: /\.js$/, // only wrap output of bundle files with '.js' extension 
+        header: function(filename) { return `Zotero.debug('BBT: loading ${filename}');\n` },
+        footer: function(filename) { return `Zotero.debug('BBT: loaded ${filename}');\n` },
+      }),
+      */
       new AfterBuildPlugin(function(stats, options) {
         var ccp = options.plugins.find(function(plugin) { return plugin instanceof webpack.optimize.CommonsChunkPlugin }).filenameTemplate;
         replace({
@@ -82,6 +91,7 @@ module.exports = [
         });
       }),
     ],
+
     context: path.resolve(__dirname, './content'),
     entry: {
       BetterBibTeX: './BetterBibTeX.coffee',

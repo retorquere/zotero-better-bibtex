@@ -179,31 +179,21 @@ if !Zotero.BetterBibTeX
           debug('item.notify: unhandled', {action, type, ids, extraData})
           return
 
-      childCollections = (coll) =>
-        return [] unless coll
-
-        children = [coll.id]
-        for child in coll.getChildCollections()
-          children = children.concat(childCollections(child))
-
-        return children
-
-      collections = {}
-      libraries = {}
+      changed = {
+        collections: new Set()
+        libraries: new Set()
+      }
       for item in items
-        libraries[item.libraryID] = true
+        changed.libraries.add(item.libraryID)
 
         for collectionID in item.getCollections()
-          continue if collections[collectionID]
-          for coll in childCollections(Zotero.Collections.get(collectionID))
-            collections[collectionID] = true
+          continue if changed.collections.has(collectionID)
+          while collectionID
+            changed.collections.add(collectionID)
+            collectionID = Zotero.Collections.get(collectionID).parentID
 
-
-      collections = Object.keys(collections)
-      events.emit('collections-changed', collections) if collections.length
-
-      libraries = Object.keys(libraries)
-      events.emit('libraries-changed', libraries) if libraries.length
+      events.emit('collections-changed', Array.from(changed.collections)) if changed.collections.size
+      events.emit('libraries-changed', Array.from(changed.libraries)) if changed.libraries.size
 
       return
   }, ['item'], 'BetterBibTeX', 1)
@@ -222,19 +212,16 @@ if !Zotero.BetterBibTeX
 
   Zotero.Notifier.registerObserver({
     notify: (event, type, collection_items) ->
-      changed = {}
+      changed = new Set()
 
       for collection_item in collection_items
-        [collectionID, itemID] = collection_item.split('-')
-        changed[collectionID] = true
+        collectionID = parseInt(collection_item.split('-')[0])
+        continue if changed.has(collectionID)
+        while collectionID
+          changed.add(collectionID)
+          collectionID = Zotero.Collections.get(collectionID).parentID
 
-        collection = Zotero.Collections.get(collectionID)
-        while collection.parent?
-          changed[collection.parent] = true
-          collection = Zotero.Collections.get(collection.parent)
-
-      changed = Object.keys(changed)
-      events.emit('collections-changed', changed) if changed.length
+      events.emit('collections-changed', Array.from(changed)) if changed.size
 
       return
   }, ['collection-item'], 'BetterBibTeX', 1)
@@ -294,7 +281,7 @@ if !Zotero.BetterBibTeX
           AutoExport.add({
             type: @_export.type,
             id: @_export.id,
-            path: @_displayOptions.exportPath,
+            path: @location.path,
             status: 'done',
             translatorID,
             exportNotes: @_displayOptions.exportNotes,

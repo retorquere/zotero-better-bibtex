@@ -44,6 +44,7 @@
     "@retorquere/parse-xml": "^1.0.0",
     "archiver": "^2.0.3",
     "aws-s3-form": "^0.3.5",
+    "jsesc": "^2.5.1",
     "bluebird": "^3.5.0",
     "circular-dependency-plugin": "^4.2.0",
     "clean-webpack-plugin": "^0.1.16",
@@ -57,7 +58,7 @@
     "fs-extra": "^4.0.1",
     "glob": "^7.1.2",
     "ignore-loader": "^0.1.2",
-    "jsesc": "^2.5.1",
+    "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
@@ -68,6 +69,7 @@
     "shelljs": "^0.7.8",
     "uri-templates": "^0.2.0",
     "webpack": "^3.5.6",
+    "wrapper-webpack-plugin": "^1.0.0",
     "xml-parser": "^1.2.1"
   },
   "scripts": {

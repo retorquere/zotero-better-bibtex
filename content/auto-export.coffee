@@ -1,3 +1,5 @@
+debug = require('./debug.coffee')
+
 Queue = require('better-queue')
 MemoryStore = require('better-queue-memory')
 Events = require('./events.coffee')
@@ -40,9 +42,11 @@ scheduled.resume()
 
 scheduler = new Queue(((task, cb) ->
   task = Object.assign({}, task)
+  debug('AutoExport.scheduler.task:', task)
 
   do Zotero.Promise.coroutine(->
     ae = AutoExport.db.get(task.id)
+    debug('AutoExport.scheduler.task:', task, '->', ae)
     if ae
       ae.status = 'scheduled'
       AutoExport.db.update(ae)
@@ -64,6 +68,9 @@ scheduler = new Queue(((task, cb) ->
 
 scheduler.pause() if Prefs.get('autoExport') != 'immediate'
 
+for event in [ 'empty', 'drain', 'task_queued', 'task_accepted', 'task_started', 'task_finish', 'task_failed', 'task_progress', 'batch_finish', 'batch_failed', 'batch_progress' ]
+  do (event) -> scheduler.on(event, -> debug("AutoExport.scheduler.#{event}", Array.prototype.slice.call(arguments)))
+
 idleObserver = observe: (subject, topic, data) ->
   debug("AutoExport.idle: #{topic}")
   return unless Prefs.get('autoExport') == 'idle'
@@ -79,6 +86,8 @@ idleService.addIdleObserver(idleObserver, Prefs.get('autoExportIdleWait'))
 
 Events.on('preference-changed', (pref) ->
   return unless pref == 'autoExport'
+
+  debug('AutoExport: preference changed')
 
   switch Prefs.get('autoExport')
     when 'immediate'
@@ -104,12 +113,14 @@ AutoExport = new class _AutoExport
     return
 
   refresh: (type, ids) ->
-    debug('AutoExport.refresh', type, ids, {state: Prefs.get('autoExport'), scheduler: scheduler._stopped, scheduled: scheduled._stopped})
+    debug('AutoExport.refresh', type, ids, {db: @db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for ae in @db.find({ type: type, id: { $in: ids } })
+      debug('AutoExport.scheduler.push', ae.$loki, typeof setImmediate)
       scheduler.push({ id: ae.$loki })
     return
 
   remove: (type, ids) ->
+    debug('AutoExport.remove', type, ids, {db: @db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for ae in @db.find({ type: type, id: { $in: ids } })
       scheduled.cancel(ae.$loki)
       scheduler.cancel(ae.$loki)
