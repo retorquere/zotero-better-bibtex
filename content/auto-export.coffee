@@ -14,7 +14,7 @@ scheduled = new Queue(((task, cb) ->
     if ae
       debug('AutoExport.starting export', ae)
       ae.status = 'running'
-      AutoExports.db.update(ae)
+      AutoExport.db.update(ae)
 
       try
         switch ae.type
