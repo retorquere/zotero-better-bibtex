@@ -62,9 +62,10 @@ class ItemPane
       debug('ItemPane: citekey row added')
 
     if itemID?
-      citekey = KeyManager.get(itemID)
-      display.value = citekey.citekey
-      display.classList[if citekey.pinned then 'remove' else 'add']('citekey-dynamic')
+      try
+        citekey = KeyManager.get(itemID, true)
+        display.value = citekey.citekey
+        display.classList[if citekey.pinned then 'remove' else 'add']('citekey-dynamic')
 
     return
 
