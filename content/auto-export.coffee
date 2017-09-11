@@ -80,8 +80,10 @@ scheduler = new Queue(((task, cb) ->
 
 scheduler.pause() if Prefs.get('autoExport') != 'immediate'
 
-for event in [ 'empty', 'drain', 'task_queued', 'task_accepted', 'task_started', 'task_finish', 'task_failed', 'task_progress', 'batch_finish', 'batch_failed', 'batch_progress' ]
-  do (event) -> scheduler.on(event, -> debug("AutoExport.scheduler.#{event}", Array.prototype.slice.call(arguments)))
+if Zotero.Debug.enabled
+  for event in [ 'empty', 'drain', 'task_queued', 'task_accepted', 'task_started', 'task_finish', 'task_failed', 'task_progress', 'batch_finish', 'batch_failed', 'batch_progress' ]
+    do (event) -> scheduler.on(event, -> debug("AutoExport.scheduler.#{event}", Array.prototype.slice.call(arguments)))
+    do (event) -> scheduled.on(event, -> debug("AutoExport.scheduled.#{event}", Array.prototype.slice.call(arguments)))
 
 idleObserver = observe: (subject, topic, data) ->
   debug("AutoExport.idle: #{topic}")
