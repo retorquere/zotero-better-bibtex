@@ -24,10 +24,11 @@ test:
       case $CIRCLE_NODE_INDEX in
         .2|.3)  export JURISM=true
               ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
+              DATADIR=~/.BBTZ5TEST/jurism
               ;;
         *)    export JURISM=false
               ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
-              ls -l ~/bin/zotero
+              DATADIR=~/.BBTZ5TEST/zotero
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
@@ -45,7 +46,7 @@ test:
       echo bundle exec cucumber $CIRCLE_TESTS
       bundle exec cucumber $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
-      cp -r ~/.BBTZ5TEST.data/better* $CIRCLE_ARTIFACTS
+      cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
       ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
