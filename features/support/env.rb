@@ -267,8 +267,7 @@ module BBT
   end
   
   profile_name = 'BBTZ5TEST'
-  profile_tgt = File.expand_path("~/.#{profile_name}.profile")
-  data_tgt = File.expand_path("~/.#{profile_name}.data")
+  profile_tgt = File.expand_path("~/.#{profile_name}")
   
   profile_id = nil
   profiles_ini.each{|section, param, val|
@@ -290,7 +289,7 @@ module BBT
   profiles_ini.write_compact
   
   fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
-  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/profile"))
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}"))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
@@ -300,7 +299,7 @@ module BBT
   }
   
   profile['extensions.checkCompatibility.5.0'] = false
-  profile['extensions.zotero.dataDir'] = data_tgt
+  #profile['extensions.zotero.dataDir'] = data_tgt
   profile['extensions.zotero.debug.log'] = true
   profile['extensions.zotero.debug.store'] = true
   profile['extensions.zotero.debug.time'] = true
@@ -317,15 +316,13 @@ module BBT
   
   FileUtils.rm_rf(profile_tgt)
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
-  FileUtils.rm_rf(data_tgt)
-  FileUtils.cp_r(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/data"), data_tgt)
   if ENV['ZOTERO_BIGLY'] == 'true'
     STDOUT.puts "Testing using bigly database!"
-    FileUtils.cp(File.join(fixtures, 'profile/data/zotero-bigly.sqlite'), File.join(data_tgt, 'zotero.sqlite'))
+    FileUtils.cp(File.join(fixtures, 'profile/data/zotero-bigly.sqlite'), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText > #{logfile.shellescape} 2>&1") }
+  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText -datadir profile > #{logfile.shellescape} 2>&1") }
 
   at_exit {
     execute("""
