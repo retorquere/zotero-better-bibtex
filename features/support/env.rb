@@ -202,6 +202,7 @@ def normalizeJSON(lib)
     collections.each_pair{|key, coll|
       coll['key'] = coll['path'].join(' ::: ')
       coll.delete('path')
+      coll.delete('id')
     }
     collections.each_pair{|key, coll|
       coll['parent'] = collections[coll['parent']]['key'] if coll['parent']
