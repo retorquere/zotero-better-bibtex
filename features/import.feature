@@ -36,6 +36,8 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | space after citekey creates confusion #716                                  | 2           |
+  | Endnote should parse                                                        | 1           |
   | Author splitter failure                                                     | 1           |
   | Literal names                                                               | 1           |
   | Better BibTeX.010                                                           | 1           |

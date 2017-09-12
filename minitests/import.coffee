@@ -1,4 +1,5 @@
-BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+#BibTeXParser = require('biblatex-csl-converter').BibLatexParser
+BibTeXParser = require('../../biblatex-csl-converter').BibLatexParser
 fs = require('fs')
 
 importReferences = (input) ->
@@ -21,4 +22,9 @@ importReferences = (input) ->
     warnings: parser.warnings
   }
 
-console.log(JSON.stringify(importReferences(fs.readFileSync(process.argv[2], 'utf8')), null, 2))
+for bib in process.argv.slice(2)
+  try
+    parsed = importReferences(fs.readFileSync(bib, 'utf8'))
+    console.log(JSON.stringify(parsed))
+  catch err
+    console.log(bib, err)

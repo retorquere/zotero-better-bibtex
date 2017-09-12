@@ -1,0 +1,39 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections":{},
+  "items":[
+    {
+      "abstractNote":"There are still no effective treatments to prevent, halt, or reverse Alzheimer's disease, but research advances over the past three decades could change this gloomy picture. Genetic studies demonstrate that the disease has multiple causes. Interdisciplinary approaches combining biochemistry, molecular and cell biology, and transgenic modeling have revealed some of its molecular mechanisms. Progress in chemistry, radiology, and systems biology is beginning to provide useful biomarkers, and the emergence of personalized medicine is poised to transform pharmaceutical development and clinical trials. However, investigative and drug development efforts should be diversified to fully address the multifactoriality of the disease.",
+      "creators":[
+        {
+          "creatorType":"author",
+          "firstName":"Y.",
+          "lastName":"Huang"
+        },
+        {
+          "creatorType":"author",
+          "firstName":"L.",
+          "lastName":"Mucke"
+        }
+      ],
+      "date":"2012",
+      "extra":"Huang, Yadong\tMucke, Lennart\tAG011385/AG/NIA NIH HHS/\tAG022074/AG/NIA NIH HHS/\tCell. 2012 Mar 16;148(6):1204-22.",
+      "issue":"6",
+      "itemID":0,
+      "itemType":"journalArticle",
+      "pages":"1204-22",
+      "publicationTitle":"Cell",
+      "title":"Alzheimer mechanisms and therapeutic strategies",
+      "volume":"148"
+    }
+  ]
+}

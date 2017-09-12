@@ -268,7 +268,7 @@ Translator.doImport = ->
 
   itemIDS = {}
   for id, ref of bib.references
-    itemIDS[ref.entry_key] = id
+    itemIDS[ref.entry_key] = id if ref.entry_key # Endnote has no citation keys
     new ZoteroItem(id, ref, bib.groups)
 
   for group in bib.groups || []
@@ -577,7 +577,7 @@ class ZoteroItem
       @item.proceedingsTitle = @item.publicationTitle
       delete @item.publicationTitle
 
-    @addToExtra("bibtex: #{@bibtex.entry_key}")
+    @addToExtra("bibtex: #{@bibtex.entry_key}") if @bibtex.entry_key # Endnote has no citation keys in their bibtex
 
     keys = Object.keys(@biblatexdata)
     if keys.length > 0
@@ -825,7 +825,7 @@ class ZoteroItem
 
   # the broken JabRef 3.8.1+ groups format
   $groups: (value) ->
-    return true unless @groups
+    return true unless @groups && @bibtex.entry_key # Endnote doesn't add citation keys
     groups = @unparse(value)
     groups = (group.trim() for group in groups.split(',') when group.trim())
 
