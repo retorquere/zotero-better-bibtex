@@ -160,7 +160,10 @@ if !Zotero.BetterBibTeX
 
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-      items = (item for item in Zotero.Items.get(ids) when !(item.isNote() || item.isAttachment()))
+      if action == 'delete'
+        items = (item for item in Zotero.Items.get(ids) when !(item.isNote() || item.isAttachment()))
+      else
+        items = []
 
       switch action
         when 'delete', 'trash'

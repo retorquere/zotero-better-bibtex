@@ -1,0 +1,333 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.17",
+        "platform": "Linux x86_64",
+        "oscpu": "Linux x86_64",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.17"
+      },
+      "BetterBibTeX": "5.0.2.emile.java-cotton"
+    },
+    "preferences": {
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "itemObserverDelay": 100,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFold": true,
+      "DOIandURL": "both",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "langID": "babel",
+      "pinCitekeys": "manual",
+      "preserveBibTeXVariables": false,
+      "rawImports": false,
+      "citekeyScan": "",
+      "skipFields": [],
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefGroups": 4,
+      "defaultDateParserLocale": "",
+      "bibtexParticleNoOp": false,
+      "biblatexExtendedNameFormat": false,
+      "biblatexExtendedDateFormat": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "jurismPreferredLanguage": "zh-alalc97",
+      "qualityReport": false,
+      "suppressTitleCase": false,
+      "parseParticles": true,
+      "debug": false,
+      "testing": true,
+      "rawLaTag": "#LaTeX"
+    },
+    "options": {
+      "exportNotes": true,
+      "exportFileData": false,
+      "exportPath": "/home/emile/github/bbt/better-bibtex",
+      "exportFilename": "My Library.json"
+    }
+  },
+  "collections": {
+    "3JW9MDH9": {
+      "id": 4,
+      "key": "3JW9MDH9",
+      "parent": false,
+      "name": "Jabref groups import does not work #717.2.10",
+      "items": [
+        56,
+        57,
+        58
+      ],
+      "collections": [
+        "7EPAVT3Q"
+      ]
+    },
+    "7EPAVT3Q": {
+      "id": 5,
+      "key": "7EPAVT3Q",
+      "parent": "3JW9MDH9",
+      "name": "my-main-group",
+      "items": [],
+      "collections": [
+        "GMJYS2QC",
+        "H2XXRRKH"
+      ]
+    },
+    "GMJYS2QC": {
+      "id": 7,
+      "key": "GMJYS2QC",
+      "parent": "7EPAVT3Q",
+      "name": "my-other-subgroup",
+      "items": [
+        57
+      ],
+      "collections": []
+    },
+    "H2XXRRKH": {
+      "id": 6,
+      "key": "H2XXRRKH",
+      "parent": "7EPAVT3Q",
+      "name": "my-subgroup",
+      "items": [
+        56
+      ],
+      "collections": []
+    }
+  },
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "date": "2017",
+      "extra": "bibtex: Doe-2017 \nbibtex[owner=klein]",
+      "title": "The paper in subgroup",
+      "creators": [
+        {
+          "firstName": "John",
+          "lastName": "Doe",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "3JW9MDH9",
+        "H2XXRRKH"
+      ],
+      "relations": {},
+      "dateAdded": "2017-09-12 09:24:21",
+      "dateModified": "2017-09-12 09:24:21",
+      "uri": "http://zotero.org/users/local/Nywl04ll/items/EKCXQT96",
+      "attachments": [],
+      "notes": [],
+      "uniqueFields": {
+        "date": "2017",
+        "extra": "bibtex: Doe-2017 \nbibtex[owner=klein]",
+        "title": "The paper in subgroup"
+      },
+      "itemID": 56,
+      "key": "EKCXQT96",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "Doe-2017"
+    },
+    {
+      "itemType": "journalArticle",
+      "extra": "bibtex: Other- \nbibtex[owner=klein]",
+      "title": "The article in my other subgroup",
+      "creators": [
+        {
+          "firstName": "I.",
+          "lastName": "Other",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "3JW9MDH9",
+        "GMJYS2QC"
+      ],
+      "relations": {},
+      "dateAdded": "2017-09-12 09:24:21",
+      "dateModified": "2017-09-12 09:24:21",
+      "uri": "http://zotero.org/users/local/Nywl04ll/items/3HWYJINN",
+      "attachments": [],
+      "notes": [],
+      "uniqueFields": {
+        "extra": "bibtex: Other- \nbibtex[owner=klein]",
+        "title": "The article in my other subgroup"
+      },
+      "itemID": 57,
+      "key": "3HWYJINN",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "Other-"
+    },
+    {
+      "itemType": "journalArticle",
+      "extra": "bibtex: Unkonw- \nbibtex[owner=klein]",
+      "title": "the paper not in a group",
+      "creators": [
+        {
+          "firstName": "I",
+          "lastName": "Unkonw",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "3JW9MDH9"
+      ],
+      "relations": {},
+      "dateAdded": "2017-09-12 09:24:21",
+      "dateModified": "2017-09-12 09:24:21",
+      "uri": "http://zotero.org/users/local/Nywl04ll/items/CXPB8548",
+      "attachments": [],
+      "notes": [],
+      "uniqueFields": {
+        "extra": "bibtex: Unkonw- \nbibtex[owner=klein]",
+        "title": "the paper not in a group"
+      },
+      "itemID": 58,
+      "key": "CXPB8548",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "Unkonw-"
+    }
+  ]
+}

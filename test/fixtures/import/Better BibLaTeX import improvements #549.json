@@ -10,7 +10,8 @@
       ],
       "extra": "bibtex: 1e",
       "itemType": "journalArticle",
-      "title": "Blah <i>emph</i> and “enquote”."
+      "title": "Blah <i>emph</i> and “enquote”.",
+      "itemID": 1
     },
     {
       "creators": [
@@ -22,7 +23,8 @@
       ],
       "extra": "bibtex: 1b",
       "itemType": "journalArticle",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
+      "itemID": 2
     },
     {
       "creators": [
@@ -34,7 +36,8 @@
       ],
       "extra": "bibtex: 2e",
       "itemType": "book",
-      "title": "Blah <i>emph</i> and “enquote”."
+      "title": "Blah <i>emph</i> and “enquote”.",
+      "itemID": 3
     },
     {
       "creators": [
@@ -46,7 +49,8 @@
       ],
       "extra": "bibtex: 2b",
       "itemType": "book",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”."
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
+      "itemID": 4
     },
     {
       "creators": [
@@ -63,7 +67,8 @@
       "thesisType": "Ph.D.",
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D.",
-      "university": "University of London"
+      "university": "University of London",
+      "itemID": 5
     },
     {
       "creators": [
@@ -77,7 +82,8 @@
       "extra": "bibtex: Cooper2013 \nbibtex[crossref=Classen2013]",
       "itemType": "bookSection",
       "pages": "263-87",
-      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries"
+      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries",
+      "itemID": 6
     },
     {
       "creators": [
@@ -93,7 +99,8 @@
       "pages": "1-11",
       "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
       "title": "Die dem Boethius fälschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
-      "volume": "1"
+      "volume": "1",
+      "itemID": 7
     },
     {
       "encyclopediaTitle": "Encyclopedia Iranica",
@@ -110,7 +117,8 @@
       "pages": "172-4",
       "publicationTitle": "Encyclopedia Iranica",
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "volume": "4"
+      "volume": "4",
+      "itemID": 8
     },
     {
       "creators": [
@@ -130,7 +138,8 @@
       "itemType": "book",
       "place": "Burlington, VT",
       "publisher": "Ashgate",
-      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle"
+      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle",
+      "itemID": 9
     }
   ],
   "config": {

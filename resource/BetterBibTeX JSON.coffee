@@ -96,7 +96,7 @@ Translator.doExport = ->
       preferences: Translator.preferences
       options: Translator.options
     }
-    # collections: Collections()
+    collections: Collections()
     items: []
   }
   debug('header ready')

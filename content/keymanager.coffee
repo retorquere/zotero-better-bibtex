@@ -293,9 +293,7 @@ class KeyManager
 
     return key if key = @keys.findOne({ itemID })
 
-    err = new Error("KeyManager.get called for non-existent #{itemID}")
-    # throw err unless softFail
-    Zotero.logError(err)
+    debug("KeyManager.get called for non-existent", itemID)
     return { citekey: '', pinned: false }
 
 debug('KeyManager: loaded', Object.keys(Formatter))

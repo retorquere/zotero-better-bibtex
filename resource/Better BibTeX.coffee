@@ -233,14 +233,14 @@ Translator.detectImport = ->
   found = Object.keys(bib.references).length > 0
   return found
 
-importGroup = (group, itemID, root) ->
+importGroup = (group, itemIDs, root) ->
   collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
-  collection.children = ({type: 'item', id: itemID[citekey]} for citekey in group.references when itemID[citekey])
+  collection.children = ({type: 'item', id: itemIDs[citekey]} for citekey in group.references when itemIDs[citekey])
 
   for subgroup in group.groups || []
-    collection.children.push(importGroup(subgroup, items))
+    collection.children.push(importGroup(subgroup, itemIDs))
 
   collection.complete() if root
   return collection

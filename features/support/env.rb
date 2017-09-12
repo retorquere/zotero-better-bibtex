@@ -151,12 +151,21 @@ end
 TRANSLATORS = {}
 
 def normalizeJSON(lib)
-  lib.delete('collections')
+  itemIDs = {}
+
   lib.delete('config')
+  if lib['config']
+    lib['config'].delete('options')
+    lib['config'].delete('preferences')
+    lib['config'].delete('release')
+  end
+
   lib.delete('keymanager')
   lib.delete('cache')
-  lib['items'].each{|item|
-    item.delete('itemID')
+  lib['items'].each_with_index{|item, itemID|
+    itemIDs[item['itemID']] = itemID
+    item['itemID'] = itemID
+
     item.delete('dateAdded')
     item.delete('dateModified')
     item.delete('uniqueFields')
@@ -176,6 +185,32 @@ def normalizeJSON(lib)
       item.delete(k) if (item[k].is_a?(Hash) || item[k].is_a?(Array)) && item[k].empty?
     }
   }
+
+  if lib['collections']
+    collections = lib['collections']
+    while collections.values.find{|coll| !coll['path'] }
+      collections.values.each{|coll|
+        next if coll['path']
+
+        if !coll['parent']
+          coll['path'] = [ coll['name'] ]
+        elsif collections[coll['parent']]['path']
+          coll['path'] = collections[coll['parent']]['path'] + [ coll['name'] ]
+        end
+      }
+    end
+    collections.each_pair{|key, coll|
+      coll['key'] = coll['path'].join(' ::: ')
+      coll.delete('path')
+    }
+    collections.each_pair{|key, coll|
+      coll['parent'] = collections[coll['parent']]['key'] if coll['parent']
+      coll['collections'] = coll['collections'].collect{|key| collections[key]['key'] }
+      coll['items'] = coll['items'].collect{|itemID| itemIDs[itemID] }
+    }
+    lib['collections'] = Hash[*(collections.values.collect{|coll| [coll['key'], coll] }.flatten)]
+  end
+
   return lib
 end
 

@@ -33,8 +33,9 @@
   ],
   "items": [
     {
-      "itemType":"note",
-      "note":"Import errors found: <ul><li>Incomplete reference @emptyreference</li></ul>"
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>Incomplete reference @emptyreference</li></ul>",
+      "itemID": 4
     },
     {
       "itemID": 1,

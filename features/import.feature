@@ -62,8 +62,12 @@ Scenario Outline: Better BibTeX Import
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
   | Import fails to perform @String substitutions #154                          | 1           |
 
-@97
-Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
-  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
-  Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
+#@97
+#Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
+#  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
+#  Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
+@717
+Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #717
+  When I import 3 references from "import/Jabref groups import does not work #717.2.10.bib" into a new collection
+  Then a library export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.2.10.json"
