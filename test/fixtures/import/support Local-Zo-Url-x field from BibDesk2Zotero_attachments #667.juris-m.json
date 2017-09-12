@@ -54,7 +54,8 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "report",
@@ -63,7 +64,8 @@
         "Markets",
         "Political Economy"
       ],
-      "relations": {},
+      "relations": {
+      },
       "place": "Brussels, Belgium",
       "date": "2007",
       "extra": "bibtex: Abbott-2007-aa \nbibtex[class=States  Markets 2009, Diss Tax  Democracy 2010ff;date-modified=2014-06-14 15:13:01 +0000]",
@@ -75,16 +77,24 @@
           "firstName": "Roderick"
         }
       ],
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 4,
       "publisher": "European Center for International Political Economy",
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "abbott_are_2007"
     }
   ],
   "cache": {
-    "items": []
+    "items": [
+
+    ]
   },
   "keymanager": [
     {

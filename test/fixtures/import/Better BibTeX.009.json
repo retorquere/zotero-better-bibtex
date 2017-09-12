@@ -18,19 +18,8 @@
       "exportFileData": false
     }
   },
-  "collections": [
-    {
-      "name": "Better BibTeX.009",
-      "collections": [
-
-      ],
-      "items": [
-        1,
-        3,
-        6
-      ]
-    }
-  ],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "note",

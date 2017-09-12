@@ -1,34 +1,39 @@
 {
-  "collections":[],
-  "items":[
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": {
+  },
+  "items": [
     {
-      "DOI":"10.1103/physrevlett.109.156404",
-      "creators":[
+      "DOI": "10.1103/physrevlett.109.156404",
+      "creators": [
         {
-          "creatorType":"author",
-          "firstName":"J",
-          "lastName":"Bonča"
+          "creatorType": "author",
+          "firstName": "J",
+          "lastName": "Bonča"
         },
         {
-          "creatorType":"author",
-          "firstName":"M",
-          "lastName":"Mierzejewski"
+          "creatorType": "author",
+          "firstName": "M",
+          "lastName": "Mierzejewski"
         },
         {
-          "creatorType":"author",
-          "firstName":"L",
-          "lastName":"Vidmar"
+          "creatorType": "author",
+          "firstName": "L",
+          "lastName": "Vidmar"
         }
       ],
-      "date":"October 2012",
-      "extra":"bibtex: Bonca:2012in",
-      "issue":"15",
-      "itemID":0,
-      "itemType":"journalArticle",
-      "pages":"156404",
-      "publicationTitle":"Phys. Rev. Lett.",
-      "title":"Nonequilibrium Propagation and Decay of a Bound Pair in Driven t-J Models",
-      "volume":"109"
+      "date": "October 2012",
+      "extra": "bibtex: Bonca:2012in",
+      "issue": "15",
+      "itemID": 0,
+      "itemType": "journalArticle",
+      "pages": "156404",
+      "publicationTitle": "Phys. Rev. Lett.",
+      "title": "Nonequilibrium Propagation and Decay of a Bound Pair in Driven t-J Models",
+      "volume": "109"
     }
   ]
 }

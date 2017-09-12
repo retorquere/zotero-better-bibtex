@@ -47,15 +47,6 @@
       "itemID": 0
     }
   ],
-  "collections": [
-    {
-      "name": "Author splitter failure",
-      "collections": [
-
-      ],
-      "items": [
-        0
-      ]
-    }
-  ]
+  "collections": {
+  }
 }

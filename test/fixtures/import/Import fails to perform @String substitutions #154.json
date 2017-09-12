@@ -11,17 +11,8 @@
       "Export Collections": true
     }
   },
-  "collections": [
-    {
-      "name": "Import fails to perform @String substitutions #154",
-      "collections": [
-
-      ],
-      "items": [
-        1
-      ]
-    }
-  ],
+  "collections": {
+  },
   "items": [
     {
       "itemID": 1,

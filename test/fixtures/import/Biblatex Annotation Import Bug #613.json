@@ -52,12 +52,16 @@
       "exportNotes": true
     }
   },
-  "collections": [],
+  "collections": {
+  },
   "items": [
     {
       "itemType": "book",
-      "tags": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "relations": {
+      },
       "place": "Chicago",
       "publisher": "University of Chicago Press",
       "date": "1984",
@@ -70,12 +74,16 @@
           "firstName": "Otto"
         }
       ],
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         "<p>a &quot;monumental&quot; work on the mosaics of San Marco</p>"
       ],
       "itemID": 1182,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "__citekey__": "Demus1984"
     }
   ]
