@@ -133,8 +133,8 @@ if not menudir is None:
       desktop.write("Name=Zotero\n")
     else:
       desktop.write("Name=Juris-M\n")
-    desktop.write("Comment=Open-source reference manager (standalone version)\n")
-    desktop.write("Exec=" + installdir + '/' + args.client + "\n")
+    desktop.write("Comment=Open-source reference manager\n")
+    desktop.write("Exec=" + installdir + '/' + args.client + " -datadir profile\n")
     desktop.write("Icon=" + installdir + "/chrome/icons/default/default48.png\n")
     desktop.write("Type=Application\n")
     desktop.write("StartupNotify=true")
