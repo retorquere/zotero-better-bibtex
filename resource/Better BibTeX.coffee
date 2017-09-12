@@ -538,6 +538,17 @@ class ZoteroItem
     # html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
     return html
 
+  # for the really "special" jabref groups 4 format
+  findGroup: (name, groups) ->
+    return null unless @groups
+    groups ||= @groups
+
+    for group in groups
+      return group if group.name == name
+      return group if group = @findGroup(name, group.groups || [])
+
+    return null
+
   import: () ->
     @hackyFields = []
 
@@ -812,10 +823,15 @@ class ZoteroItem
 
   $series: (value) -> @item.series = @unparse(value)
 
+  # the broken JabRef 3.8.1+ groups format
   $groups: (value) ->
     return true unless @groups
-    throw new Error(@unparse(value))
-    return
+    groups = @unparse(value)
+    groups = (group.trim() for group in groups.split(',') when group.trim())
+
+    for name in groups
+      group.references.push(@bibtex.entry_key) if group = @findGroup(name)
+    return true
 
   $note: (value) ->
     @addToExtra(@unparse(value))

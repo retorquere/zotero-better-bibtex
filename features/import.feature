@@ -71,3 +71,5 @@ Scenario Outline: Better BibTeX Import
 Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #717
   When I import 3 references from "import/Jabref groups import does not work #717.2.10.bib" into a new collection
   Then a library export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.2.10.json"
+  When I import 4 references from "import/Jabref groups import does not work #717.3.8.bib" into a new collection
+  Then a library export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.3.8.json"
