@@ -20,6 +20,4 @@ module.exports = (prefix, msg) ->
 
     str += m + ' ' if m
 
-  prefix += ' Error:' if err
-
-  return "{#{prefix}} #{str}"
+  return "{#{prefix}} #{if err then 'Error: ' else ''}#{str}"
