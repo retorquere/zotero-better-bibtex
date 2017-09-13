@@ -36,7 +36,7 @@ class ItemPane
     return
 
   unload: ->
-    @DOMobserver.disconnect()
+    @DOMobserver.disconnect() if @DOMobserver
     DB.getCollection('citekey').removeListener(@citekeyObserver)
     return
 
