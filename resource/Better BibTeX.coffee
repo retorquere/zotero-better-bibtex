@@ -823,15 +823,9 @@ class ZoteroItem
 
   $series: (value) -> @item.series = @unparse(value)
 
-  # the broken JabRef 3.8.1+ groups format
-  $groups: (value) ->
-    return true unless @groups && @bibtex.entry_key # Endnote doesn't add citation keys
-    groups = @unparse(value)
-    groups = (group.trim() for group in groups.split(',') when group.trim())
-
-    for name in groups
-      group.references.push(@bibtex.entry_key) if group = @findGroup(name)
-    return true
+  # if the biblatex-csl-converter hasn't already taken care of it it is a remnant of the horribly broken JabRaf 3.8.1
+  # groups format -- shoo, we don't want you
+  $groups: (value) -> true
 
   $note: (value) ->
     @addToExtra(@unparse(value))
