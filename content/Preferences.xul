@@ -420,9 +420,6 @@
                   oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                   onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
             <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
-            <hbox>
-              <button label="&better-bibtex.Preferences.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
-            </hbox>
             <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
             <!--
               There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having
