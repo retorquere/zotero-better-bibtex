@@ -1,4 +1,6 @@
 require('dotenv').config()
+require('../circle')
+
 pkg = require('../../package.json')
 version = require('../version')
 path = require('path')
@@ -6,29 +8,27 @@ path = require('path')
 Bluebird = require('bluebird')
 github = require('./github')
 
+PRERELEASE = true # TODO: remove after release
+
 process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
-PRERELEASE = true # TODO: remove after release
-
-if process.env.CIRCLE_SHA1
-  process.env.CIRCLE_COMMIT_MSG = require('child_process').execSync("git log --format=%B -n 1 #{process.env.CIRCLE_SHA1}").toString().trim()
-
-  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/)
-    if process.env.CIRCLE_COMMIT_MSG == pkg.version && process.env.CIRCLE_BRANCH == 'master'
-      process.env.CIRCLE_RELEASE = pkg.version
-    else
-      console.log("Suggested release #{process.env.CIRCLE_BRANCH}.#{process.env.CIRCLE_COMMIT_MSG} is not master.#{pkg.version}, skipping release")
-      process.exit(1)
+if process.env.CIRCLE_TAG
+  if "v#{pkg.version}" != process.env.CIRCLE_TAG
+    console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
+    process.exit(1)
+  if process.env.CIRCLE_BRANCH != 'master'
+    console.log("Building tag #{process.env.CIRCLE_TAG}, but branch is #{process.env.CIRCLE_BRANCH}")
+    process.exit(1)
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
 announce = Bluebird.coroutine((issue)->
-  if process.env.CIRCLE_RELEASE
-    build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_RELEASE}"
+  if process.env.CIRCLE_TAG
+    build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_TAG}"
     reason = ''
   else
     build = "test build #{process.env.CIRCLE_BUILD_NUM}"
@@ -47,31 +47,25 @@ announce = Bluebird.coroutine((issue)->
   return
 )
 
-for key, value of process.env
-  continue unless value.startsWith('CIRCLE_')
-  console.log(key, value)
-
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
     static: 'static-files',
-    current: process.env.CIRCLE_RELEASE
+    current: "v#{pkg.version}",
     builds: 'builds',
   }
 
   for id, tag of release
-    if tag
-      try
-        release[id] = yield github("/releases/tags/#{tag}")
-        console.log("#{tag} found")
-        continue
-    delete release[id]
+    release[id] = null
+    try
+      release[id] = yield github("/releases/tags/#{tag}")
+      console.log("#{tag} found")
 
   xpi = "zotero-better-bibtex-#{version}.xpi"
 
-  if process.env.CIRCLE_RELEASE
+  if process.env.CIRCLE_TAG
     if release.current
-      console.log("release #{process.env.CIRCLE_RELEASE} exists, bailing")
+      console.log("release #{process.env.CIRCLE_TAG} exists, bailing")
       process.exit(1)
 
     if !release.static
@@ -86,8 +80,8 @@ do Bluebird.coroutine(->
       uri: '/releases'
       method: 'POST'
       body: {
-        tag_name: process.env.CIRCLE_RELEASE
-        prerelease: PRERELEASE
+        tag_name: process.env.CIRCLE_TAG
+        prerelease: !!PRERELEASE
       }
     })
 
