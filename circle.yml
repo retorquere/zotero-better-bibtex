@@ -60,6 +60,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - npm run release:
-      environment:
-        GIT_COMMIT_MSG: $(git log --format=%B -n 1 $CIRCLE_SHA1)
+    - GIT_COMMIT_MSG=$(git log --format=%B -n 1 $CIRCLE_SHA1) npm run release
