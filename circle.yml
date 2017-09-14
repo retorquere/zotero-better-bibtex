@@ -56,6 +56,10 @@ general:
     ignore:
       - gh-pages
 deployment:
+  release:
+    tag: /^v[0-9]+\..*/
+    commands:
+    - npm run release
   all:
     branch: "/.*/"
     commands:
