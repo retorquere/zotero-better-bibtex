@@ -13,36 +13,54 @@ build_root = path.join(__dirname, '../../')
 if process.env.CIRCLE_SHA1
   process.env.CIRCLE_COMMIT_MSG= require('child_process').execSync("git log --format=%B -n 1 #{process.env.CIRCLE_SHA1}").toString().trim()
 
-for key, value of process.env
-  continue unless key.startsWith('CIRCLE_')
-  console.log("#{key}=", value)
-
-if process.env.CIRCLE_TAG && "v#{pkg.version}" != process.env.CIRCLE_TAG
-  console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
-  process.exit(1)
+  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/ && (process.env.CIRCLE_COMMIT_MSG != pkg.version || process.env.CIRCLE_BRANCH != 'master')
+    console.log("Suggested release #{process.env.CIRCLE_BRANCH}.#{process.env.CIRCLE_COMMIT_MSG} is not master.#{pkg.version}, skipping release")
+    process.exit(1)
+  process.env.CIRCLE_RELEASE=pkg.version
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
+announce = Bluebird.coroutine((issue)->
+  if process.env.CIRCLE_RELEASE
+    build = "release #{process.env.CIRCLE_RELEASE}"
+    reason = ''
+  else
+    build = "test build #{process.env.CIRCLE_BUILD_NUM}"
+    reason = ", apparently because #{process.env.CIRCLE_COMMIT_MSG}"
+
+  msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)#{reason}."
+  console.log(msg)
+
+  return
+  try
+    yield github({
+      uri: "/issues/#{issue}/comments"
+      method: 'POST'
+      body: { body: msg }
+    })
+  return
+
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
     static: 'static-files',
-    current: "v#{pkg.version}",
+    current: process.env.CIRCLE_RELEASE
     builds: 'builds',
   }
 
   for id, tag of release
+    continue unless tag
     try
       release[id] = yield github("/releases/tags/#{tag}")
       console.log("#{tag} found")
 
   xpi = "zotero-better-bibtex-#{version}.xpi"
 
-  if process.env.CIRCLE_TAG
+  if process.env.CIRCLE_RELEASE
     if release.current
-      console.log("release #{process.env.CIRCLE_TAG} exists, bailing")
+      console.log("release #{process.env.CIRCLE_RELEASE} exists, bailing")
       process.exit(1)
 
     if !release.static
@@ -56,7 +74,10 @@ do Bluebird.coroutine(->
     release.current = yield github({
       uri: '/releases'
       method: 'POST'
-      body: { tag_name: process.env.CIRCLE_TAG }
+      body: {
+        tag_name: process.env.CIRCLE_RELEASE
+        prerelease: true
+      }
     })
 
     console.log("uploading #{xpi} to #{release.current.name}")
@@ -75,6 +96,8 @@ do Bluebird.coroutine(->
     })
 
     # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(build_root, "xpi/#{xpi}")))
+
+    yield announce(555) # remove after release
 
   else
     if !release.builds
@@ -105,13 +128,7 @@ do Bluebird.coroutine(->
     else
       issue = null
 
-    if false && issue
-      try
-        yield github({
-          uri: "/issues/#{issue}/comments"
-          method: 'POST'
-          body: { body: ":robot: bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
-        })
+    yield announce(issue) if issue
 
   return
 )

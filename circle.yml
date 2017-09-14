@@ -21,7 +21,6 @@ test:
   override:
   - ? |-
       set -e
-      export GIT_COMMIT_MSG=$(git log --format=%B -n 1 $CIRCLE_SHA1)
       case $CIRCLE_NODE_INDEX in
         .2|.3)  export JURISM=true
               ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
@@ -39,16 +38,16 @@ test:
               ;;
       esac
 
-      #export LOGS=$CIRCLE_ARTIFACTS
-      #gem install bundler
-      #bundle update
-      #npm i -g npm
-      #npm install
-      #echo bundle exec cucumber $CIRCLE_TESTS
-      #bundle exec cucumber $CIRCLE_TESTS
-      #cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
-      #cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
-      #ls -lh $CIRCLE_ARTIFACTS/*
+      export LOGS=$CIRCLE_ARTIFACTS
+      gem install bundler
+      bundle update
+      npm i -g npm
+      npm install
+      echo bundle exec cucumber $CIRCLE_TESTS
+      bundle exec cucumber $CIRCLE_TESTS
+      cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
+      cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
+      ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
   artifacts:
@@ -60,4 +59,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - GIT_COMMIT_MSG=$(git log --format=%B -n 1 $CIRCLE_SHA1) npm run release
+    - npm run release
