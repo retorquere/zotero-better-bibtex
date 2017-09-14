@@ -13,7 +13,7 @@ dependencies:
   pre:
   - |-
     mkdir -p ~/downloads
-    git fetch --tags
+    echo "export CIRCLE_COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
   cache_directories:
   - citeproc-js
   - ~/downloads
