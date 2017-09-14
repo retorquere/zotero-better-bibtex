@@ -10,13 +10,16 @@ process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
-if process.env.CIRCLE_SHA1
-  process.env.CIRCLE_COMMIT_MSG= require('child_process').execSync("git log --format=%B -n 1 #{process.env.CIRCLE_SHA1}").toString().trim()
+PRERELEASE = true # TODO: remove after release
 
-  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/ && (process.env.CIRCLE_COMMIT_MSG != pkg.version || process.env.CIRCLE_BRANCH != 'master')
+if process.env.CIRCLE_SHA1
+  process.env.CIRCLE_COMMIT_MSG = require('child_process').execSync("git log --format=%B -n 1 #{process.env.CIRCLE_SHA1}").toString().trim()
+
+  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/) && (process.env.CIRCLE_COMMIT_MSG != pkg.version || process.env.CIRCLE_BRANCH != 'master')
     console.log("Suggested release #{process.env.CIRCLE_BRANCH}.#{process.env.CIRCLE_COMMIT_MSG} is not master.#{pkg.version}, skipping release")
     process.exit(1)
-  process.env.CIRCLE_RELEASE=pkg.version
+
+  process.env.CIRCLE_RELEASE = pkg.version
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
@@ -24,7 +27,7 @@ if process.env.CIRCLE_BRANCH.startsWith('@')
 
 announce = Bluebird.coroutine((issue)->
   if process.env.CIRCLE_RELEASE
-    build = "release #{process.env.CIRCLE_RELEASE}"
+    build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_RELEASE}"
     reason = ''
   else
     build = "test build #{process.env.CIRCLE_BUILD_NUM}"
@@ -41,6 +44,7 @@ announce = Bluebird.coroutine((issue)->
       body: { body: msg }
     })
   return
+)
 
 do Bluebird.coroutine(->
   console.log('finding releases')
@@ -76,7 +80,7 @@ do Bluebird.coroutine(->
       method: 'POST'
       body: {
         tag_name: process.env.CIRCLE_RELEASE
-        prerelease: true
+        prerelease: PRERELEASE
       }
     })
 
@@ -97,7 +101,7 @@ do Bluebird.coroutine(->
 
     # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(build_root, "xpi/#{xpi}")))
 
-    yield announce(555) # remove after release
+    yield announce(555) # TODO: remove after release
 
   else
     if !release.builds
