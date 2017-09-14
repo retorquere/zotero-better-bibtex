@@ -10,6 +10,10 @@ process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
+for key, value of process.env
+  continue unless key.startsWith('CIRCLE_')
+  console.log("#{key}=", value)
+
 if process.env.CIRCLE_TAG && "v#{pkg.version}" != process.env.CIRCLE_TAG
   console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
   process.exit(1)
