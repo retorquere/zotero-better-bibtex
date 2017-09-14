@@ -12,8 +12,8 @@ machine:
 dependencies:
   pre:
   - |-
+    node -v
     mkdir -p ~/downloads
-    echo "export CIRCLE_COMMIT_MESSAGE=\"$(git log --format=oneline -n 1 $CIRCLE_SHA1)\"" >> ~/.bashrc
   cache_directories:
   - citeproc-js
   - ~/downloads
@@ -21,6 +21,7 @@ test:
   override:
   - ? |-
       set -e
+      export GIT_COMMIT_MSG=$(git log --format=%B -n 1 $CIRCLE_SHA1)
       case $CIRCLE_NODE_INDEX in
         .2|.3)  export JURISM=true
               ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
@@ -38,16 +39,16 @@ test:
               ;;
       esac
 
-      # export LOGS=$CIRCLE_ARTIFACTS
-      # gem install bundler
-      # bundle update
-      # npm i -g npm
-      # npm install
-      # echo bundle exec cucumber $CIRCLE_TESTS
-      # bundle exec cucumber $CIRCLE_TESTS
-      # cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
-      # cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
-      # ls -lh $CIRCLE_ARTIFACTS/*
+      #export LOGS=$CIRCLE_ARTIFACTS
+      #gem install bundler
+      #bundle update
+      #npm i -g npm
+      #npm install
+      #echo bundle exec cucumber $CIRCLE_TESTS
+      #bundle exec cucumber $CIRCLE_TESTS
+      #cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
+      #cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
+      #ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
   artifacts:
@@ -56,14 +57,9 @@ general:
     ignore:
       - gh-pages
 deployment:
-  debug:
-    branch: /^[0-9]+$/
-    owner: retorquere
+  all:
+    branch: "/.*/"
     commands:
-    - npm run release -- --build
-  release:
-    branch: master
-    owner: retorquere
-    tag: /v[0-9]+(\.[0-9]+)*/
-    commands:
-    - npm run release -- --release
+    - npm run release:
+      environment:
+        GIT_COMMIT_MSG: $(git log --format=%B -n 1 $CIRCLE_SHA1)
