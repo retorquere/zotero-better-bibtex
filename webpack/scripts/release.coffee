@@ -10,6 +10,9 @@ process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
+if process.env.CIRCLE_SHA1
+  process.env.CIRCLE_COMMIT_MSG= require('child_process').execSync(`git log --format=%B -n 1 ${process.env.CIRCLE_SHA1}`).toString().trim()
+
 for key, value of process.env
   continue unless key.startsWith('CIRCLE_')
   console.log("#{key}=", value)
