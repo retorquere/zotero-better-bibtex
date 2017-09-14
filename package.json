@@ -10,7 +10,7 @@
   "xpi": {
     "name": "Zotero Better Bib(La)Tex",
     "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
-    "updateURL": "https://retorquere.github.io/zotero-better-bibtex/update.rdf",
+    "updateURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/static-files/update.rdf",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
     "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html"
