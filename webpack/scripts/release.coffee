@@ -102,7 +102,7 @@ do Bluebird.coroutine(->
     else
       issue = null
 
-    if issue
+    if false && issue
       try
         yield github({
           uri: "/issues/#{issue}/comments"

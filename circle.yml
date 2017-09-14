@@ -56,11 +56,14 @@ general:
     ignore:
       - gh-pages
 deployment:
+  debug:
+    branch: /^[0-9]+$/
+    owner: retorquere
+    commands:
+    - npm run release -- --build
   release:
-    tag: /^v[0-9]+\..*/
+    branch: master
+    owner: retorquere
+    tag: /v[0-9]+(\.[0-9]+)*/
     commands:
-    - npm run release
-  all:
-    branch: "/.*/"
-    commands:
-    - npm run release
+    - npm run release -- --release
