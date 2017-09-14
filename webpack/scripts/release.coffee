@@ -15,11 +15,12 @@ PRERELEASE = true # TODO: remove after release
 if process.env.CIRCLE_SHA1
   process.env.CIRCLE_COMMIT_MSG = require('child_process').execSync("git log --format=%B -n 1 #{process.env.CIRCLE_SHA1}").toString().trim()
 
-  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/) && (process.env.CIRCLE_COMMIT_MSG != pkg.version || process.env.CIRCLE_BRANCH != 'master')
-    console.log("Suggested release #{process.env.CIRCLE_BRANCH}.#{process.env.CIRCLE_COMMIT_MSG} is not master.#{pkg.version}, skipping release")
-    process.exit(1)
-
-  process.env.CIRCLE_RELEASE = pkg.version
+  if process.env.CIRCLE_COMMIT_MSG.match(/^[0-9]+(\.[0-9]+)+$/)
+    if process.env.CIRCLE_COMMIT_MSG == pkg.version && process.env.CIRCLE_BRANCH == 'master'
+      process.env.CIRCLE_RELEASE = pkg.version
+    else
+      console.log("Suggested release #{process.env.CIRCLE_BRANCH}.#{process.env.CIRCLE_COMMIT_MSG} is not master.#{pkg.version}, skipping release")
+      process.exit(1)
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
