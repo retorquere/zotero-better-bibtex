@@ -47,6 +47,10 @@ announce = Bluebird.coroutine((issue)->
   return
 )
 
+for key, value of process.env
+  continue unless value.startsWith('CIRCLE_')
+  console.log(key, value)
+
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
@@ -56,10 +60,12 @@ do Bluebird.coroutine(->
   }
 
   for id, tag of release
-    continue unless tag
-    try
-      release[id] = yield github("/releases/tags/#{tag}")
-      console.log("#{tag} found")
+    if tag
+      try
+        release[id] = yield github("/releases/tags/#{tag}")
+        console.log("#{tag} found")
+        continue
+    delete release[id]
 
   xpi = "zotero-better-bibtex-#{version}.xpi"
 
