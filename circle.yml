@@ -12,8 +12,8 @@ machine:
 dependencies:
   pre:
   - |-
-    node -v
     mkdir -p ~/downloads
+    git fetch --tags
   cache_directories:
   - citeproc-js
   - ~/downloads
@@ -38,16 +38,16 @@ test:
               ;;
       esac
 
-      export LOGS=$CIRCLE_ARTIFACTS
-      gem install bundler
-      bundle update
-      npm i -g npm
-      npm install
-      echo bundle exec cucumber $CIRCLE_TESTS
-      bundle exec cucumber $CIRCLE_TESTS
-      cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
-      cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
-      ls -lh $CIRCLE_ARTIFACTS/*
+      # export LOGS=$CIRCLE_ARTIFACTS
+      # gem install bundler
+      # bundle update
+      # npm i -g npm
+      # npm install
+      # echo bundle exec cucumber $CIRCLE_TESTS
+      # bundle exec cucumber $CIRCLE_TESTS
+      # cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
+      # cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
+      # ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
   artifacts:
