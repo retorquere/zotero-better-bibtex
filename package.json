@@ -26,6 +26,7 @@
     "release": "coffee webpack/scripts/release.coffee",
     "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none",
     "s3form": "coffee webpack/scripts/s3form.coffee",
+    "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },
   "main": "index.js",
