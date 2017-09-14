@@ -37,7 +37,6 @@ announce = Bluebird.coroutine((issue)->
   msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)#{reason}."
   console.log(msg)
 
-  return
   try
     yield github({
       uri: "/issues/#{issue}/comments"
@@ -85,7 +84,7 @@ do Bluebird.coroutine(->
       }
     })
 
-    console.log("uploading #{xpi} to #{release.current.name}")
+    console.log("uploading #{xpi} to #{release.current.tag_name}")
     yield github.upload({
       release: release.current,
       name: xpi,
@@ -99,8 +98,6 @@ do Bluebird.coroutine(->
       path: path.resolve(__dirname, '../../gen/update.rdf')
       content_type: 'application/rdf+xml'
     })
-
-    # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(build_root, "xpi/#{xpi}")))
 
     yield announce(555) # TODO: remove after release
 
