@@ -189,11 +189,11 @@ def normalize_library(library, nocollections=true)
 
   renum.call({'collections' => library['collections']})
 end
-Then /^a library (auto-)?export (?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, target, translator, library|
+Then /^an (auto-)?export (?:of "([^"]*)" )?(?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, collection, target, translator, library|
   throw "Auto-export needs a destination" if auto && !target
   exportLibrary(translator, @displayOptions.merge({'Keep updated' => !!auto}), library, target)
 end
-Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
+Then /^an export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
   exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
 end
 Then /^"([^"]+)" should match "([^"]+)"$/ do |found, expected|

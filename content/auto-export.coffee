@@ -142,6 +142,8 @@ AutoExport = new class _AutoExport
     return
 
   run: (ae) ->
+    ae = @db.get(ae) if typeof ae == 'number'
+
     ae.status = 'scheduled'
     @db.update(ae)
     scheduled.push({ id: ae.$loki })

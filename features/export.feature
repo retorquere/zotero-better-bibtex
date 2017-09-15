@@ -320,13 +320,15 @@ Scenario: Sorting and optional particle handling #411
 
 @test-cluster-1 @ae
 Scenario: auto-export
-  Given I import 3 references with 2 attachments from "export/autoexport.json"
+  Given I import 3 references with 2 attachments from "export/autoexport.json" into a new collection
   And I set preference .autoExport to immediate
-  Then a library auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/autoexport.before.biblatex"
+  Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/autoexport.before.biblatex"
+  And an auto-export of "/autoexport" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/autoexport.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
   And I remove the selected item
   And I wait 5 seconds
   Then "/tmp/autoexport.bib" should match "export/autoexport.after.biblatex"
+  And "/tmp/autoexport.coll.bib" should match "export/autoexport.after.coll.biblatex"
 
 #@163 # test files missing
 #Scenario: Preserve Bib variable names #163
