@@ -134,7 +134,7 @@ DB.init = Zotero.Promise.coroutine(->
       properties: {
         itemID: { type: 'integer' }
         libraryID: { type: 'integer' }
-        citekey: { type: 'string' }
+        citekey: { type: 'string', minLength: 1 }
         pinned: { type: 'boolean', default: false }
 
         # LokiJS
@@ -148,17 +148,17 @@ DB.init = Zotero.Promise.coroutine(->
   debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
   DB.schemaCollection('autoexport', {
-    indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
+    indices: [ 'collection', 'library', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
     logging: true,
     schema: {
       type: 'object'
       properties: {
-        type: { enum: ['search', 'collection', 'library' ] }
+        type: { enum: [ 'collection', 'library' ] }
         id: { type: 'integer' }
-        path: { type: 'string' }
+        path: { type: 'string', minLength: 1 }
         status: { enum: [ 'scheduled', 'running', 'done', 'error' ] }
-        translatorID: { type: 'string' }
+        translatorID: { type: 'string', minLength: 1 }
         exportNotes: { type: 'boolean', default: false }
         useJournalAbbreviation: { type: 'boolean', default: false }
 
@@ -169,7 +169,14 @@ DB.init = Zotero.Promise.coroutine(->
         meta: { type: 'object' }
         $loki: { type: 'integer' }
       }
-      required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
+      required: [ 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
+
+      oneOf: [
+        { required: ['library'], properties: { library: { type: 'integer' } } },
+        { required: ['collection'], properties: { collection: { type: 'integer' } } },
+        { required: ['collection'], properties: { collection: { type: 'string', minLength: 1 } } },
+      ],
+
       additionalProperties: false
     }
   })
