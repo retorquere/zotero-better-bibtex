@@ -7,7 +7,7 @@
     <em:version>0.1.5</em:version>
     <em:description>Zotero Debug Bridge</em:description>
     <em:creator>emile</em:creator>
-    <em:updateURL>https://github.com/retorquere/zotero-debug-bridge/releases/download/update.rdf/update.rdf</em:updateURL>
+    <em:updateURL>https://github.com/retorquere/zotero-debug-bridge/releases/download/release/update.rdf</em:updateURL>
     <em:type>2</em:type> <!-- type=extension -->
 
     <em:targetApplication>

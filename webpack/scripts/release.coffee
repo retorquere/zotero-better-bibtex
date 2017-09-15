@@ -1,7 +1,7 @@
 require('dotenv').config()
 require('../circle')
 
-pkg = require('../../package.json')
+Package = require('../../package.json')
 version = require('../version')
 path = require('path')
 
@@ -15,8 +15,8 @@ process.exit() if process.env.CI_PULL_REQUEST
 build_root = path.join(__dirname, '../../')
 
 if process.env.CIRCLE_TAG
-  if "v#{pkg.version}" != process.env.CIRCLE_TAG
-    console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
+  if "v#{Package.version}" != process.env.CIRCLE_TAG
+    console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{Package.version}")
     process.exit(1)
   if process.env.CIRCLE_BRANCH != 'master'
     console.log("Building tag #{process.env.CIRCLE_TAG}, but branch is #{process.env.CIRCLE_BRANCH}")
@@ -26,7 +26,7 @@ if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
-announce = Bluebird.coroutine((issue)->
+announce = Bluebird.coroutine((issue, release)->
   if process.env.CIRCLE_TAG
     build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_TAG}"
     reason = ''
@@ -34,7 +34,7 @@ announce = Bluebird.coroutine((issue)->
     build = "test build #{process.env.CIRCLE_BUILD_NUM}"
     reason = ", apparently because #{process.env.CIRCLE_COMMIT_MSG}"
 
-  msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)#{reason}."
+  msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/#{release}/zotero-better-bibtex-#{version}.xpi)#{reason}."
   console.log(msg)
 
   try
@@ -49,12 +49,13 @@ announce = Bluebird.coroutine((issue)->
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
-    static: 'static-files',
-    current: "v#{pkg.version}",
+    static: (path for path in Package.xpi.releaseURL.split('/') when path).reverse()[0]
+    current: "v#{Package.version}",
     builds: 'builds',
   }
 
   for id, tag of release
+    console.log("looking for #{id} release #{tag}")
     release[id] = null
     try
       release[id] = yield github("/releases/tags/#{tag}")
@@ -68,7 +69,7 @@ do Bluebird.coroutine(->
       process.exit(1)
 
     if !release.static
-      console.log("release 'static-files' does not exists, bailing")
+      console.log("No release found to hold release pointers, bailing")
       process.exit(1)
 
     update_rdf = release.static.assets?.find((asset) -> asset.name == 'update.rdf')
@@ -99,7 +100,7 @@ do Bluebird.coroutine(->
       content_type: 'application/rdf+xml'
     })
 
-    yield announce(555) # TODO: remove after release
+    yield announce(555, release.current.tag_name) # TODO: remove after release
 
   else
     if !release.builds
@@ -130,7 +131,7 @@ do Bluebird.coroutine(->
     else
       issue = null
 
-    yield announce(issue) if issue
+    yield announce(issue, 'builds') if issue
 
   return
 )
