@@ -26,6 +26,21 @@ if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
+tags = do ->
+  regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm
+  matches = []
+  while match = regex.exec(process.env.CIRCLE_COMMIT_MSG)
+    matches.push(match[1])
+  return matches
+tags.push(process.env.CIRCLE_BRANCH) if process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)
+tags = tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
+
+if tags.indexOf('norelease') >= 0
+  console.log("Not releasing #{process.env.CIRCLE_BRANCH} because of 'norelease' tag")
+  process.exit(0)
+
+issues = tags.filter((tag) -> !isNaN(parseInt(tag)))
+
 announce = Bluebird.coroutine((issue, release)->
   if process.env.CIRCLE_TAG
     build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_TAG}"
@@ -100,7 +115,10 @@ do Bluebird.coroutine(->
       content_type: 'application/rdf+xml'
     })
 
-    yield announce(555, release.current.tag_name) # TODO: remove after release
+    issues.push('555') # TODO: remove after release
+    issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1]) # TODO: remove after release
+    for issue in issues
+      yield announce(issue, release.current.tag_name)
 
   else
     if !release.builds
@@ -121,17 +139,14 @@ do Bluebird.coroutine(->
       content_type: 'application/x-xpinstall'
     })
 
-    branch = process.env.CIRCLE_BRANCH
     if process.env.NIGHTLY == 'true'
-      issue = null
-    else if branch.match(/^[0-9]+$/)
-      issue = branch
-    else if branch == 'master' # TODO: remove after release
-      issue = '555'
-    else
-      issue = null
+      issues = []
+    else if process.env.CIRCLE_BRANCH == 'master' # TODO: remove after release
+      issues.push('555')
+      issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1]) # TODO: remove after release
 
-    yield announce(issue, 'builds') if issue
+    for issue in issues
+      yield announce(issue, 'builds')
 
   return
 )
