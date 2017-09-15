@@ -406,9 +406,9 @@
                 </tree>
               </hbox>
               <hbox>
-                <button id="auto-export-remove" label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.remove()"/>
-                <button id="auto-export-mark" label="&better-bibtex.Preferences.auto-export.mark;" oncommand="Zotero.BetterBibTeX.Preferences.mark()"/>
-                <button id="auto-export-refresh" label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.refresh()"/>
+                <button id="auto-export-remove" label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.remove()"/>
+                <button id="auto-export-mark" label="&better-bibtex.Preferences.auto-export.mark;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.mark()"/>
+                <button id="auto-export-refresh" label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.refresh()"/>
               </hbox>
             </vbox>
           </tabpanel>

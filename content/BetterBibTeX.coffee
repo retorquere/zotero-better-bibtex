@@ -273,18 +273,19 @@ if !Zotero.BetterBibTeX
                 name = Zotero.Libraries.get(@_export.id).name
               else
                 name = 'library ' + Zotero.Libraries.get(@_export.id).name
+              id = @_export.id
 
             when 'collection'
               name = @_export.collection.name
+              id = @_export.collection.id
 
             else
               flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
               return
 
-          debug('setting up AutoExport:', @_export)
           AutoExport.add({
             type: @_export.type,
-            id: @_export.id,
+            id: id,
             path: @location.path,
             status: 'done',
             translatorID,

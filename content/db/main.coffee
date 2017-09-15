@@ -148,7 +148,7 @@ DB.init = Zotero.Promise.coroutine(->
   debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
   DB.schemaCollection('autoexport', {
-    indices: [ 'collection', 'library', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
+    indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
     logging: true,
     schema: {
@@ -169,13 +169,7 @@ DB.init = Zotero.Promise.coroutine(->
         meta: { type: 'object' }
         $loki: { type: 'integer' }
       }
-      required: [ 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
-
-      oneOf: [
-        { required: ['library'], properties: { library: { type: 'integer' } } },
-        { required: ['collection'], properties: { collection: { type: 'integer' } } },
-        { required: ['collection'], properties: { collection: { type: 'string', minLength: 1 } } },
-      ],
+      required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
 
       additionalProperties: false
     }

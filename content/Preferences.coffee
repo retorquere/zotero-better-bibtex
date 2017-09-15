@@ -32,8 +32,9 @@ class AutoExportPrefPane
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Autoexport.db.remove(id)
+    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
+    debug('AutoExport: removing', { id })
+    AutoExport.db.remove(id)
     @refresh()
     return
 
@@ -42,7 +43,7 @@ class AutoExportPrefPane
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
+    id = parseInt(parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')))
     AutoExport.run(id)
     @refresh()
     return
