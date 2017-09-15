@@ -64,7 +64,7 @@ class AutoExportPrefPane
       tree.treeitem({autoexport: "#{ae.$loki}", '': ->
         return @treerow(->
           @treecell({editable: 'false', label: "#{ae.type}: #{AutoExportName(ae)}"})
-          @treecell({editable: 'false', label: "#{ae.status} (#{ae.updated})" })
+          @treecell({editable: 'false', label: "#{ae.status} (#{ae.updated})", tooltiptext: ae.error })
           @treecell({editable: 'false', label: ae.path})
           @treecell({editable: 'false', label: Translators.byId[ae.translatorID]?.label || '??'})
           @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
