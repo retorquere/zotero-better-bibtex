@@ -36,7 +36,7 @@ announce = Bluebird.coroutine((issue, release)->
     reason = ''
   else
     build = "test build #{process.env.CIRCLE_BUILD_NUM}"
-    reason = ", apparently because #{process.env.CIRCLE_COMMIT_MSG}"
+    reason = " (#{JSON.stringify(reason)})"
 
   msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/#{release}/zotero-better-bibtex-#{version}.xpi)#{reason}."
   console.log(msg)
