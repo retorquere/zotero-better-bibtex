@@ -126,3 +126,6 @@ class ErrorReport
 module.exports = new ErrorReport()
 
 window.addEventListener('load', (-> module.exports.init()), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]

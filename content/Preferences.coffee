@@ -233,3 +233,6 @@ class PrefPane
 module.exports = new PrefPane()
 
 window.addEventListener('load', (-> module.exports.load()), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]

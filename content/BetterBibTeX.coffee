@@ -281,6 +281,7 @@ if !Zotero.BetterBibTeX
               flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
               return
 
+          debug('setting up AutoExport:', @_export)
           AutoExport.add({
             type: @_export.type,
             id: @_export.id,

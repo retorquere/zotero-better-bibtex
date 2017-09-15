@@ -44,3 +44,6 @@ window.addEventListener('unload', (->
   DOMobserver.disconnect()
   return
 ), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]
