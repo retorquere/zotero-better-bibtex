@@ -26,6 +26,10 @@ if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
+if (process.env.CIRCLE_COMMIT_MSG || '').startsWith('@@')
+  console.log("Not releasing #{process.env.CIRCLE_COMMIT_MSG}")
+  process.exit(0)
+
 announce = Bluebird.coroutine((issue, release)->
   if process.env.CIRCLE_TAG
     build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_TAG}"
