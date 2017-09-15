@@ -258,6 +258,8 @@ Translator.doImport = ->
       switch err.type
         when 'cut_off_citation'
           item.note += '<li>' + htmlEscape("Incomplete reference @#{err.entry}") + '</li>'
+        when 'token_mismatch'
+          item.note += "<li>Parse error: found #{htmlEscape(JSON.stringify(err.found))}, expected #{htmlEscape(JSON.stringify(err.expected))}</li>"
         else
           throw(err)
     item.note += '</ul>'

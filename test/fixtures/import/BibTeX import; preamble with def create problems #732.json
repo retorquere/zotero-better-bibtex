@@ -1,0 +1,38 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    }
+  },
+  "collections":{},
+  "items":[
+    {
+      "itemID":0,
+      "itemType":"note",
+      "note":"Import errors found: <ul><li>Parse error: found &quot;1&quot;, expected &quot;}&quot;</li></ul>"
+    },
+    {
+      "creators":[
+        {
+          "creatorType":"author",
+          "firstName":"Jan",
+          "lastName":"Franc"
+        },
+        {
+          "creatorType":"author",
+          "firstName":"Pavel",
+          "lastName":"Kreǰćı"
+        }
+      ],
+      "extra":"bibtex: MR1870153",
+      "itemID":1,
+      "itemType":"bookSection",
+      "title":"Homogenization of scalar wave equation with hysteresis\t\t\t operator"
+    }
+  ]
+}

@@ -36,6 +36,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | BibTeX import; preamble with def create problems #732                       | 2           |
   | space after citekey creates confusion #716                                  | 2           |
   | Endnote should parse                                                        | 1           |
   | Author splitter failure                                                     | 1           |

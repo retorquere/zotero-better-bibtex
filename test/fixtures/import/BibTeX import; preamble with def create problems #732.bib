@@ -1,0 +1,14 @@
+
+@preamble{
+       "\def\ocirc#1{\ifmmode\setbox0=\hbox{$#1$}\dimen0=\ht0
+	       \advance\dimen0 by1pt\rlap{\hbox to\wd0{\hss\raise\dimen0
+		       \hbox{\hskip.2em$\scriptscriptstyle\circ$}\hss}}#1\else
+		           {\accent"17 #1}\fi} "
+			   }
+       @incollection {MR1870153,
+	       AUTHOR = {Franc{\ocirc{u}}, Jan and Krej{\v{c}}{\'{\i}}, Pavel},
+	            TITLE = {Homogenization of scalar wave equation with hysteresis
+			              operator},
+       }
+       		
+
