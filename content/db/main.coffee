@@ -161,6 +161,7 @@ DB.init = Zotero.Promise.coroutine(->
         translatorID: { type: 'string', minLength: 1 }
         exportNotes: { type: 'boolean', default: false }
         useJournalAbbreviation: { type: 'boolean', default: false }
+        error: { type: 'string', default: '' }
 
         # optional
         updated: { instanceof: 'Date' }
