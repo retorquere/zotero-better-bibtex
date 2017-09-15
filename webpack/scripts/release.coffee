@@ -49,7 +49,7 @@ announce = Bluebird.coroutine((issue, release)->
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
-    static: (path for path in Package.xpi.releaseURL.split('/') when path).reverse()[0]
+    static: (name for name in Package.xpi.releaseURL.split('/') when name).reverse()[0]
     current: "v#{Package.version}",
     builds: 'builds',
   }
