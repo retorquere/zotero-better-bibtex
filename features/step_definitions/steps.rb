@@ -199,7 +199,11 @@ Then /^an (auto-)?export (?:of "([^"]*)" )?(?:to "([^"]+)" )?using "([^"]+)" sho
   )
 end
 Then /^an export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
-  exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
+  exportLibrary(
+    translator: translator,
+    displayOptions: @displayOptions.merge(table.rows_hash),
+    expected: library
+  )
 end
 Then /^"([^"]+)" should match "([^"]+)"$/ do |found, expected|
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected)) unless expected[0] == '/'
