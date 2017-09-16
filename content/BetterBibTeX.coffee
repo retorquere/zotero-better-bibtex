@@ -50,6 +50,7 @@ if !Zotero.BetterBibTeX
       switch field
         when 'citekey'
           citekey = KeyManager.get(@id)
+          return '\uFFFD' if citekey.retry
           return citekey.citekey + (if !citekey.citekey || citekey.pinned then '' else ' *')
         when 'itemID'
           return '' + @id
@@ -62,7 +63,7 @@ if !Zotero.BetterBibTeX
 
       obj = this.getRow(row)
       itemID = obj.id
-      citekey = KeyManager.get(itemID, true)
+      citekey = KeyManager.get(itemID)
 
       if citekey.retry
         debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')

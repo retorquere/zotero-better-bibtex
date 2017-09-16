@@ -285,13 +285,10 @@ class KeyManager
      @keys.findAndRemove({ itemID : { $in : ids } })
      return
 
-  get: (itemID, retry) ->
-    if !@keys
-      return { citekey: '', pinned: false, retry: true } if retry
-
-      err = new Error("KeyManager.get called for #{itemID} before init")
-      Zotero.logError(err)
-      throw err
+  get: (itemID) ->
+    # I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
+    # go-ahead to *start(=* my init.
+    return { citekey: '', pinned: false, retry: true } if !@keys
 
     return key if key = @keys.findOne({ itemID })
 
