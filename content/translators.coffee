@@ -73,24 +73,15 @@ class Translators
     return
 
   translate: Zotero.Promise.coroutine((translatorID, displayOptions, items, path) ->
-    items ||= {}
+    items ||= { library: Zotero.Libraries.userLibraryID }
+
     translation = new Zotero.Promise((resolve, reject) ->
       translation = new Zotero.Translate.Export()
 
-      todo = Object.keys(items)[0]
-      items = items[todo]
-      if ! items?
-        todo = 'library'
-        id = Zotero.Libraries.userLibraryID
-      switch todo
-        when 'library'
-          translation.setLibraryID(items)
-        when 'items'
-          translation.setItems(items)
-        when 'collection'
-          translation.setCollection(if typeof items == 'number' then Zotero.Collections.get(items) else items)
+      translation.setLibraryID(items.library) if items.library
+      translation.setItems(items.items) if items.items
+      translation.setCollection(if typeof items.collection == 'number' then Zotero.Collections.get(items.collection) else items.collection) if items.collection
 
-      translation.setLibraryID(Zotero.Libraries.userLibraryID)
       translation.setTranslator(translatorID)
       translation.setDisplayOptions(displayOptions) if displayOptions && Object.keys(displayOptions).length != 0
       translation.setLocation(Zotero.File.pathToFile(path)) if path
