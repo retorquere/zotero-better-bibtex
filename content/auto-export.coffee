@@ -1,5 +1,4 @@
 debug = require('./debug.coffee')
-asap = require('asap')
 
 Queue = require('better-queue')
 MemoryStore = require('better-queue-memory')
@@ -40,13 +39,14 @@ scheduled = new Queue(((task, cb) ->
   return
 ), {
   store: new MemoryStore(),
-  setImmediate: asap,
+  # https://bugs.chromium.org/p/v8/issues/detail?id=4718
+  setImmediate: setTimeout.bind(null),
 })
 scheduled.resume()
 
 scheduler = new Queue(((task, cb) ->
   task = Object.assign({}, task)
-  debug('AutoExport.scheduler.task:', task)
+  debug('AutoExport.scheduler.exec:', task)
 
   do Zotero.Promise.coroutine(->
     ae = AutoExport.db.get(task.id)
@@ -75,7 +75,8 @@ scheduler = new Queue(((task, cb) ->
 ), {
   store: new MemoryStore(),
   cancelIfRunning: true,
-  setImmediate: asap,
+  # https://bugs.chromium.org/p/v8/issues/detail?id=4718
+  setImmediate: setTimeout.bind(null),
 })
 
 scheduler.pause() if Prefs.get('autoExport') != 'immediate'
@@ -122,14 +123,15 @@ AutoExport = new class _AutoExport
     return
 
   add: (ae) ->
+    debug('AutoExport.add', ae)
     @db.removeWhere({ path: ae.path })
     @db.insert(ae)
     return
 
-  refresh: (type, ids) ->
-    debug('AutoExport.refresh', type, ids, {db: @db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+  schedule: (type, ids) ->
+    debug('AutoExport.schedule', type, ids, {db: @db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for ae in @db.find({ type: type, id: { $in: ids } })
-      debug('AutoExport.scheduler.push', ae.$loki, typeof setImmediate)
+      debug('AutoExport.scheduler.push', ae.$loki)
       scheduler.push({ id: ae.$loki })
     return
 
@@ -142,14 +144,16 @@ AutoExport = new class _AutoExport
     return
 
   run: (ae) ->
+    ae = @db.get(ae) if typeof ae == 'number'
+
     ae.status = 'scheduled'
     @db.update(ae)
     scheduled.push({ id: ae.$loki })
     return
 
-Events.on('libraries-changed', (ids) -> AutoExport.refresh('library', ids))
+Events.on('libraries-changed', (ids) -> AutoExport.schedule('library', ids))
 Events.on('libraries-removed', (ids) -> AutoExport.remove('library', ids))
-Events.on('collections-changed', (ids) -> AutoExport.refresh('collection', ids))
+Events.on('collections-changed', (ids) -> AutoExport.schedule('collection', ids))
 Events.on('collections-removed', (ids) -> AutoExport.remove('collection', ids))
 
 module.exports = AutoExport

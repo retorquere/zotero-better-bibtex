@@ -10,7 +10,7 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 
-if !OS.mac? && !(%w{true show}.include?(ENV['KEEP_ZOTERO_RUNNING']))
+if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
   STDOUT.puts "Starting headless..."
   require 'headless'
   $headless ||= false
@@ -71,82 +71,82 @@ def execute(options)
   end
 end
 
-def normalize_library(library, collections=false)
-  library.delete('keymanager')
-  library.delete('cache')
-  library.delete('config')
-  library.delete('id')
-
-  fields = %w{
-    DOI ISBN ISSN abstractNote applicationNumber archive archiveLocation assignee
-    bookTitle callNumber caseName code conferenceName country court creators
-    date dateDecided dateEnacted distributor docketNumber edition encyclopediaTitle episodeNumber
-    extra filingDate firstPage institution issue issueDate issuingAuthority itemID
-    itemType journalAbbreviation jurisdiction key language legalStatus libraryCatalog manuscriptType
-    medium multi nameOfAct network note notes numPages number
-    numberOfVolumes pages patentNumber place priorityNumbers proceedingsTitle programTitle publicLawNumber
-    publicationTitle publisher references related relations reportNumber reportType reporter
-    reporterVolume rights runningTime section seeAlso series seriesNumber seriesText
-    seriesTitle shortTitle status studio tags thesisType title type
-    university url videoRecordingFormat volume websiteTitle websiteType
-  }
-  # item order doesn't matter, but for my tests I need them to be stable
-  library['items'].sort_by!{|item| fields.collect{|field| item[field].to_s } }
-
-  idmap = {}
-  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
-
-  library['collections'] = [] unless collections
-
-  scrubhash = lambda{|hash|
-    hash.keys.each{|k|
-      case hash[k]
-        when Array, Hash
-          hash.delete(k) if hash[k].empty?
-        when String
-          hash.delete(k) if hash[k].strip == ''
-        when NilClass
-          hash.delete(k)
-      end
-    }
-  }
-
-  library['items'].each_with_index{|item, i|
-    item['itemID'] = i
-    item.delete('multi')
-    item.delete('accessDate')
-
-    item['creators'] ||= []
-    item['creators'].each{|creator|
-      creator.delete('creatorID')
-      creator.delete('multi')
-      scrubhash.call(creator)
-    }
-
-    # attachment order doesn't matter
-    item['attachments'] ||= []
-    item['attachments'].each{|att|
-      att.delete('path')
-      scrubhash.call(att)
-    }
-    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
-
-    item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
-    item.delete('__citekey__')
-    item.delete('__citekeys__')
-
-    scrubhash.call(item)
-  }
-
-  renum = lambda{|collection|
-    collection.delete('id')
-    # item order doesn't matter
-    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
-    collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
-  }
-
-  renum.call({'collections' => library['collections']})
-end
+#def normalize_library(library, collections=false)
+#  library.delete('keymanager')
+#  library.delete('cache')
+#  library.delete('config')
+#  library.delete('id')
+#
+#  fields = %w{
+#    DOI ISBN ISSN abstractNote applicationNumber archive archiveLocation assignee
+#    bookTitle callNumber caseName code conferenceName country court creators
+#    date dateDecided dateEnacted distributor docketNumber edition encyclopediaTitle episodeNumber
+#    extra filingDate firstPage institution issue issueDate issuingAuthority itemID
+#    itemType journalAbbreviation jurisdiction key language legalStatus libraryCatalog manuscriptType
+#    medium multi nameOfAct network note notes numPages number
+#    numberOfVolumes pages patentNumber place priorityNumbers proceedingsTitle programTitle publicLawNumber
+#    publicationTitle publisher references related relations reportNumber reportType reporter
+#    reporterVolume rights runningTime section seeAlso series seriesNumber seriesText
+#    seriesTitle shortTitle status studio tags thesisType title type
+#    university url videoRecordingFormat volume websiteTitle websiteType
+#  }
+#  # item order doesn't matter, but for my tests I need them to be stable
+#  library['items'].sort_by!{|item| fields.collect{|field| item[field].to_s } }
+#
+#  idmap = {}
+#  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
+#
+#  library['collections'] = [] unless collections
+#
+#  scrubhash = lambda{|hash|
+#    hash.keys.each{|k|
+#      case hash[k]
+#        when Array, Hash
+#          hash.delete(k) if hash[k].empty?
+#        when String
+#          hash.delete(k) if hash[k].strip == ''
+#        when NilClass
+#          hash.delete(k)
+#      end
+#    }
+#  }
+#
+#  library['items'].each_with_index{|item, i|
+#    item['itemID'] = i
+#    item.delete('multi')
+#    item.delete('accessDate')
+#
+#    item['creators'] ||= []
+#    item['creators'].each{|creator|
+#      creator.delete('creatorID')
+#      creator.delete('multi')
+#      scrubhash.call(creator)
+#    }
+#
+#    # attachment order doesn't matter
+#    item['attachments'] ||= []
+#    item['attachments'].each{|att|
+#      att.delete('path')
+#      scrubhash.call(att)
+#    }
+#    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
+#
+#    item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
+#    item.delete('__citekey__')
+#    item.delete('__citekeys__')
+#
+#    scrubhash.call(item)
+#  }
+#
+#  renum = lambda{|collection|
+#    collection.delete('id')
+#    # item order doesn't matter
+#    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
+#    collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
+#  }
+#
+#  renum.call({'collections' => library['collections']})
+#end
 
 TRANSLATORS = {}
 
@@ -234,7 +234,9 @@ end
   #}
 #end
 
-def exportLibrary(translator, displayOptions, library, target=nil)
+def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
+  throw "Auto-export needs a destination" if displayOptions['Keep updated'] && !output
+    
   if translator =~ /^id:(.+)$/
     translator = $1
   else
@@ -243,32 +245,44 @@ def exportLibrary(translator, displayOptions, library, target=nil)
 
   found = execute(
     timeout: 600,
-    args: { translatorID: translator, displayOptions: displayOptions, path: target },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions, args.path)'
+    args: { translatorID: translator, displayOptions: displayOptions, path: output, collection: collection || nil },
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions, args.path, args.collection)'
   )
 
-	return if library == :ignore
+  return if expected == :ignore
 
-  found = File.read(target) if target
+  found = File.read(output) if output
 
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', library))
+  if expected =~ /\.csl\.json$/
+    expected_type = :csl_json
+  elsif expected =~ /\.json$/
+    expected_type = :bbt_json
+  elsif expected =~ /\.yml$/
+    expected_type = :csl_yaml
+  end
+
+  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected))
   expected = File.read(expected)
 
-  if library =~ /\.csl\.json$/
-    return compare(JSON.parse(found), JSON.parse(expected))
-  elsif library =~ /\.json$/
-    found = normalizeJSON(JSON.parse(found))
-    expected = normalizeJSON(JSON.parse(expected))
+  case expected_type
+    when :csl_json
+      return compare(JSON.parse(found), JSON.parse(expected))
 
-    if found['items'].length < 30 || expected['items'].length < 30
-      return expect(serialize(found)).to eq(serialize(expected))
-    else
-      expect(serialize(found.merge({'items' => []}))).to eq(serialize(expected.merge({'items' => []})))
-      return compare(found['items'], expected['items'])
-    end
-  elsif library =~ /\.yml$/
-    found = sort_object(YAML.load(found)).to_yaml
-    expected = sort_object(YAML.load(expected)).to_yaml
+    when :csl_yaml
+      return compare(YAML.load(found), YAML.load(expected))
+      #found = sort_object(YAML.load(found)).to_yaml
+      #expected = sort_object(YAML.load(expected)).to_yaml
+
+    when :bbt_json
+      found = normalizeJSON(JSON.parse(found))
+      expected = normalizeJSON(JSON.parse(expected))
+
+      if found['items'].length < 30 || expected['items'].length < 30
+        return expect(serialize(found)).to eq(serialize(expected))
+      else
+        expect(serialize(found.merge({'items' => []}))).to eq(serialize(expected.merge({'items' => []})))
+        return compare(found['items'], expected['items'])
+      end
   end
 
   expect(found.strip).to eq(expected.strip)
@@ -367,18 +381,18 @@ module BBT
     """)
     stopped = false
     1.upto(5){
-			sleep(1)
+      sleep(1)
       begin
         Process::kill 0, pid
       rescue Errno::ESRCH
-	      stopped = true
+        stopped = true
         break
         false
       end
     }
     Process.kill("HUP", pid) unless stopped
-  } unless ENV['KEEP_ZOTERO_RUNNING'] == 'true'
-  
+  } if (ENV['KILL'] || 'true') == 'true' || (ENV['HEADLESS'] || 'true') == 'true'
+
   puts Benchmark.measure {
     print "Starting Zotero."
     attempts = 0
@@ -412,8 +426,8 @@ module BBT
       print '.'
     end
 
-		# test whether the existing references, if any, have gotten a cite key
-		exportLibrary('Better BibTeX', {}, :ignore)
+    # test whether the existing references, if any, have gotten a cite key
+    exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore)
   }
 end
 

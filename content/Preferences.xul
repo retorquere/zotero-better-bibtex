@@ -406,9 +406,9 @@
                 </tree>
               </hbox>
               <hbox>
-                <button id="auto-export-remove" label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.remove()"/>
-                <button id="auto-export-mark" label="&better-bibtex.Preferences.auto-export.mark;" oncommand="Zotero.BetterBibTeX.Preferences.mark()"/>
-                <button id="auto-export-refresh" label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.refresh()"/>
+                <button id="auto-export-remove" label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.remove()"/>
+                <button id="auto-export-mark" label="&better-bibtex.Preferences.auto-export.mark;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.mark()"/>
+                <button id="auto-export-refresh" label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.refresh()"/>
               </hbox>
             </vbox>
           </tabpanel>
@@ -420,9 +420,6 @@
                   oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                   onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
             <!-- Snippet of javascript to run [[after each reference generation|Scripting]]. -->
-            <hbox>
-              <button label="&better-bibtex.Preferences.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport.prototype.start()"/>
-            </hbox>
             <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
             <!--
               There have been occasions where Better BibTeX seemed to ignore keys you have specified manually by having

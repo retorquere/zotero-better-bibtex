@@ -9,7 +9,7 @@ Background:
 @i1
 Scenario: Better BibTeX Import 2
   When I import 2 references from "import/Better BibTeX.002.bib"
-  Then a library export using "BetterBibTeX JSON" should match "import/Better BibTeX.002.json"
+  Then an export using "BetterBibTeX JSON" should match "import/Better BibTeX.002.json"
 #  And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
 #  And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
 #  And the markdown citation for orre2008 should be ''
@@ -19,20 +19,20 @@ Scenario: Better BibTeX Import 2
 #Scenario: option to mantain the braces and special commands in titles or all fields #100
 #  When I set preference .rawImports to true
 #  And I import 1 reference from "import/Better BibTeX.007.bib"
-#  Then a library export using "BetterBibTeX JSON" should match "import/Better BibTeX.007.raw.json"
-#  And a library export using "Better BibTeX" should match "import/Better BibTeX.007.roundtrip.bib"
+#  Then an export using "BetterBibTeX JSON" should match "import/Better BibTeX.007.raw.json"
+#  And an export using "Better BibTeX" should match "import/Better BibTeX.007.roundtrip.bib"
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472
   When I import 2 references from "import/Math markup to unicode not always imported correctly #472.bib"
-  Then a library export using "BetterBibTeX JSON" should match "import/Math markup to unicode not always imported correctly #472.json"
+  Then an export using "BetterBibTeX JSON" should match "import/Math markup to unicode not always imported correctly #472.json"
   And I set preference .preserveBibTeXVariables to true
-  And a library export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
+  And an export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
 
 @i3
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
-  Then a library export using "BetterBibTeX JSON" should match "import/<file>.json"
+  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
   Examples:
   | file                                                                        | references  |
@@ -67,11 +67,11 @@ Scenario Outline: Better BibTeX Import
 #@97
 #Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
 #  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
-#  Then a library export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
+#  Then an export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
 @717
 Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #717
   When I import 3 references from "import/Jabref groups import does not work #717.2.10.bib" into a new collection
-  Then a library export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.2.10.json"
+  Then an export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.2.10.json"
   When I import 4 references from "import/Jabref groups import does not work #717.3.8.bib" into a new collection
-  Then a library export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.3.8.json"
+  Then an export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.3.8.json"

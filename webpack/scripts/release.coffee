@@ -1,32 +1,76 @@
 require('dotenv').config()
-pkg = require('../../package.json')
+require('../circle')
+
+Package = require('../../package.json')
 version = require('../version')
 path = require('path')
 
 Bluebird = require('bluebird')
 github = require('./github')
 
+PRERELEASE = true # TODO: remove after release
+
 process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
-if process.env.CIRCLE_TAG && "v#{pkg.version}" != process.env.CIRCLE_TAG
-  console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{pkg.version}")
-  process.exit(1)
+if process.env.CIRCLE_TAG
+  if "v#{Package.version}" != process.env.CIRCLE_TAG
+    console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{Package.version}")
+    process.exit(1)
+  if process.env.CIRCLE_BRANCH != 'master'
+    console.log("Building tag #{process.env.CIRCLE_TAG}, but branch is #{process.env.CIRCLE_BRANCH}")
+    process.exit(1)
 
 if process.env.CIRCLE_BRANCH.startsWith('@')
   console.log("Not releasing #{process.env.CIRCLE_BRANCH}")
   process.exit(0)
 
+tags = []
+regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm
+while tag = regex.exec(process.env.CIRCLE_COMMIT_MSG)
+  tags.push(tag[1])
+tags = tags.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
+
+if tags.indexOf('norelease') >= 0
+  console.log("Not releasing #{process.env.CIRCLE_BRANCH} because of 'norelease' tag")
+  process.exit(0)
+
+issues = tags.filter((tag) -> !isNaN(parseInt(tag)))
+issues.push(process.env.CIRCLE_BRANCH) if process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)
+issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
+
+announce = Bluebird.coroutine((issue, release)->
+  if process.env.CIRCLE_TAG
+    build = "#{if PRERELEASE then 'pre-' else ''}release #{process.env.CIRCLE_TAG}"
+    reason = ''
+  else
+    build = "test build #{process.env.CIRCLE_BUILD_NUM}"
+    reason = " (#{JSON.stringify(process.env.CIRCLE_COMMIT_MSG)})"
+
+  msg = ":robot: bleep bloop; this is your friendly neighborhood build bot announcing [#{build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/#{release}/zotero-better-bibtex-#{version}.xpi)#{reason}."
+  console.log(msg)
+
+  try
+    yield github({
+      uri: "/issues/#{issue}/comments"
+      method: 'POST'
+      body: { body: msg }
+    })
+  return
+)
+
 do Bluebird.coroutine(->
   console.log('finding releases')
   release = {
-    static: 'static-files',
-    current: "v#{pkg.version}",
+    static: (name for name in Package.xpi.releaseURL.split('/') when name).reverse()[0]
+    current: "v#{Package.version}",
     builds: 'builds',
   }
 
   for id, tag of release
+    console.log("looking for #{id} release #{tag}")
+    release[id] = null
     try
       release[id] = yield github("/releases/tags/#{tag}")
       console.log("#{tag} found")
@@ -39,7 +83,7 @@ do Bluebird.coroutine(->
       process.exit(1)
 
     if !release.static
-      console.log("release 'static-files' does not exists, bailing")
+      console.log("No release found to hold release pointers, bailing")
       process.exit(1)
 
     update_rdf = release.static.assets?.find((asset) -> asset.name == 'update.rdf')
@@ -49,10 +93,13 @@ do Bluebird.coroutine(->
     release.current = yield github({
       uri: '/releases'
       method: 'POST'
-      body: { tag_name: process.env.CIRCLE_TAG }
+      body: {
+        tag_name: process.env.CIRCLE_TAG
+        prerelease: !!PRERELEASE
+      }
     })
 
-    console.log("uploading #{xpi} to #{release.current.name}")
+    console.log("uploading #{xpi} to #{release.current.tag_name}")
     yield github.upload({
       release: release.current,
       name: xpi,
@@ -67,7 +114,10 @@ do Bluebird.coroutine(->
       content_type: 'application/rdf+xml'
     })
 
-    # yield release.builds.upload(xpi, 'application/x-xpinstall', fs.readFileSync(path.join(build_root, "xpi/#{xpi}")))
+    issues.push('555') # TODO: remove after release
+    issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1]) # TODO: remove after release
+    for issue in issues
+      yield announce(issue, release.current.tag_name)
 
   else
     if !release.builds
@@ -88,23 +138,14 @@ do Bluebird.coroutine(->
       content_type: 'application/x-xpinstall'
     })
 
-    branch = process.env.CIRCLE_BRANCH
     if process.env.NIGHTLY == 'true'
-      issue = null
-    else if branch.match(/^[0-9]+$/)
-      issue = branch
-    else if branch == 'master' # TODO: remove after release
-      issue = '555'
-    else
-      issue = null
+      issues = []
+    else if process.env.CIRCLE_BRANCH == 'master' # TODO: remove after release
+      issues.push('555')
+      issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1]) # TODO: remove after release
 
-    if issue
-      try
-        yield github({
-          uri: "/issues/#{issue}/comments"
-          method: 'POST'
-          body: { body: ":robot: bleep bloop; this is your friendly neighborhood build bot announcing new test build [#{process.env.CIRCLE_BUILD_NUM}](https://github.com/retorquere/zotero-better-bibtex/releases/download/builds/zotero-better-bibtex-#{version}.xpi)." }
-        })
+    for issue in issues
+      yield announce(issue, 'builds')
 
   return
 )

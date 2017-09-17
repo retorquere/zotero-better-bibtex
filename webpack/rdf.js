@@ -4,19 +4,20 @@ const fs = require('fs');
 const pug = require('pug');
 const path = require('path');
 const uriTemplate = require('uri-templates')
-const pkg = Object.assign({}, require('../package.json'))
+const Package = Object.assign({}, require('../package.json'))
 
-if (!pkg.id) pkg.id = (pkg.name.replace(/^zotero-/, '') + '@' + pkg.author.email.replace(/.*@/, '')).toLowerCase()
-if (pkg.xpi) Object.assign(pkg, pkg.xpi)
+if (!Package.id) Package.id = (Package.name.replace(/^zotero-/, '') + '@' + Package.author.email.replace(/.*@/, '')).toLowerCase()
+if (Package.xpi) Object.assign(Package, Package.xpi)
 
-pkg.version = require('./version')
+Package.version = require('./version')
 
-if (pkg.updateLink) pkg.updateLink = uriTemplate(pkg.updateLink).fill({version: pkg.version})
+if (Package.updateLink) Package.updateLink = uriTemplate(Package.updateLink).fill({version: Package.version});
+Package.updateURL = Package.xpi.releaseURL + 'update.rdf';
 
 module.exports = function() {
   var template;
 
-  var options_and_vars = Object.assign(pkg, { pretty: true})
+  var options_and_vars = Object.assign(Package, { pretty: true, })
 
   console.log('generating install.rdf')
   template = fs.readFileSync(path.join(__dirname, 'install.rdf.pug'), 'utf8')

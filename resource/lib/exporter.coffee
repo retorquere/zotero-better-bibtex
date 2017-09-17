@@ -219,18 +219,17 @@ class Exporter
         debug(new Error('No citation key found in'), item)
         throw new Error('No citation key in ' + JSON.stringify(item))
 
+      @jabref.citekeys[item.itemID] = item.citekey
+
       if cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options)
         Zotero.write(cached.reference)
-        if cached.metadata
-          @citekeys[cached.itemID] = item.citekey
-          @preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars if cached.metadata.DeclarePrefChars
-          continue
+        @preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars if cached.metadata.DeclarePrefChars if cached.metadata
+        continue
 
       Zotero.BetterBibTeX.simplifyFields(item)
 
       item.extra = Citekey.get(item.extra).extra
       debug('exporting', item)
-      @jabref.citekeys[item.itemID] = item.citekey
 
       return item
 

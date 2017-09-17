@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.2",
+  "version": "5.0.16",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -10,22 +10,23 @@
   "xpi": {
     "name": "Zotero Better Bib(La)Tex",
     "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
-    "updateURL": "https://retorquere.github.io/zotero-better-bibtex/update.rdf",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
-    "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html"
+    "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html",
+    "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
-    "import": "KEEP_ZOTERO_RUNNING=show cucumber --fail-fast --tags @import",
+    "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "coffeelint content resource minitests webpack",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -rf xpi/* && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && webpack",
     "postbuild": "node webpack/scripts/zipup.js build zotero-better-bibtex && node webpack/scripts/zipup.js test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "release": "coffee webpack/scripts/release.coffee",
-    "start": "KEEP_ZOTERO_RUNNING=true cucumber --fail-fast --tags @none",
+    "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
     "s3form": "coffee webpack/scripts/s3form.coffee",
+    "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },
   "main": "index.js",
@@ -35,7 +36,6 @@
   "dependencies": {
     "ajv": "^5.2.2",
     "ajv-keywords": "^2.1.0",
-    "asap": "^2.0.6",
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.1.0",
@@ -83,7 +83,7 @@
     "request-promise": "^4.2.1",
     "shelljs": "^0.7.8",
     "uri-templates": "^0.2.0",
-    "webpack": "^3.5.6",
+    "webpack": "^3.6.0",
     "wrapper-webpack-plugin": "^1.0.0",
     "xml-parser": "^1.2.1"
   },

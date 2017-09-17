@@ -2,6 +2,7 @@ require('dotenv').config()
 AwsS3Form = require('aws-s3-form')
 Bluebird = require('bluebird')
 github = require('./github')
+Package = require('../package.json')
 
 for key in ['AWSAccessKeyId', 'AWSSecretAccessKey']
   if !process.env[key]
@@ -23,7 +24,9 @@ form = formGenerator.create('${filename}')
 do Bluebird.coroutine(->
   json = 'error-report.json'
 
-  release = yield github("/releases/tags/static-files")
+  release = (path for path in Package.xpi.releaseURL.split('/') when path).reverse()[0]
+
+  release = yield github("/releases/tags/#{release}")
 
   existing = release.assets?.find((asset) -> asset.name == json)
   yield github({ method: 'DELETE', uri: "/releases/assets/#{existing.id}" }) if existing

@@ -134,7 +134,7 @@ DB.init = Zotero.Promise.coroutine(->
       properties: {
         itemID: { type: 'integer' }
         libraryID: { type: 'integer' }
-        citekey: { type: 'string' }
+        citekey: { type: 'string', minLength: 1 }
         pinned: { type: 'boolean', default: false }
 
         # LokiJS
@@ -154,13 +154,14 @@ DB.init = Zotero.Promise.coroutine(->
     schema: {
       type: 'object'
       properties: {
-        type: { enum: ['search', 'collection', 'library' ] }
+        type: { enum: [ 'collection', 'library' ] }
         id: { type: 'integer' }
-        path: { type: 'string' }
+        path: { type: 'string', minLength: 1 }
         status: { enum: [ 'scheduled', 'running', 'done', 'error' ] }
-        translatorID: { type: 'string' }
+        translatorID: { type: 'string', minLength: 1 }
         exportNotes: { type: 'boolean', default: false }
         useJournalAbbreviation: { type: 'boolean', default: false }
+        error: { type: 'string', default: '' }
 
         # optional
         updated: { instanceof: 'Date' }
@@ -170,6 +171,7 @@ DB.init = Zotero.Promise.coroutine(->
         $loki: { type: 'integer' }
       }
       required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
+
       additionalProperties: false
     }
   })

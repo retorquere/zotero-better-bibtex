@@ -2,6 +2,7 @@ getAddons = require('./addons.coffee')
 Prefs = require('./prefs.coffee')
 Translators = require('./translators.coffee')
 debug = require('./debug.coffee')
+Package = require('../package.json')
 
 class ErrorReport
   init: Zotero.Promise.coroutine(->
@@ -11,7 +12,7 @@ class ErrorReport
     continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    @form = JSON.parse(Zotero.File.getContentsFromURL('https://github.com/retorquere/zotero-better-bibtex/releases/download/static-files/error-report.json'))
+    @form = JSON.parse(Zotero.File.getContentsFromURL(Package.xpi.releaseURL + 'error-report.json'))
     @key = Zotero.Utilities.generateObjectKey()
     @timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
@@ -125,3 +126,6 @@ class ErrorReport
 module.exports = new ErrorReport()
 
 window.addEventListener('load', (-> module.exports.init()), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]

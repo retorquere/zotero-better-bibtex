@@ -36,7 +36,7 @@ class ItemPane
     return
 
   unload: ->
-    @DOMobserver.disconnect()
+    @DOMobserver.disconnect() if @DOMobserver
     DB.getCollection('citekey').removeListener(@citekeyObserver)
     return
 
@@ -73,3 +73,6 @@ module.exports = new ItemPane()
 
 window.addEventListener('load', (-> module.exports.load()), false)
 window.addEventListener('unload', (-> module.exports.unload()), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]

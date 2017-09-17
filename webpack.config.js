@@ -73,13 +73,14 @@ module.exports = [
   _.merge({}, common, {
     plugins: [
       // new webpack.DefinePlugin({ global: {} })
+      new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
       new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
       /*
       new WrapperPlugin({
         test: /\.js$/, // only wrap output of bundle files with '.js' extension 
-        header: function(filename) { return `Zotero.debug('BBT: loading ${filename}');\n` },
-        footer: function(filename) { return `Zotero.debug('BBT: loaded ${filename}');\n` },
+        // header: function(filename) { return `Zotero.debug('BBT: loading ${filename}');\n` },
+        footer: function(filename) { return `Zotero.debug('BBT: after load ${filename}');\n` },
       }),
       */
       new AfterBuildPlugin(function(stats, options) {

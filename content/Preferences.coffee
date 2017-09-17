@@ -32,8 +32,9 @@ class AutoExportPrefPane
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')
-    Autoexport.db.remove(id)
+    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
+    debug('AutoExport: removing', { id })
+    AutoExport.db.remove(id)
     @refresh()
     return
 
@@ -42,7 +43,7 @@ class AutoExportPrefPane
     selected = exportlist.currentIndex
     return if selected < 0
 
-    id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
+    id = parseInt(parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport')))
     AutoExport.run(id)
     @refresh()
     return
@@ -62,8 +63,9 @@ class AutoExportPrefPane
       debug('refresh:', {id: ae.$loki, status: ae.status})
       tree.treeitem({autoexport: "#{ae.$loki}", '': ->
         return @treerow(->
+          updated = if ae.updated then " (#{ae.updated})" else ''
           @treecell({editable: 'false', label: "#{ae.type}: #{AutoExportName(ae)}"})
-          @treecell({editable: 'false', label: "#{ae.status} (#{ae.updated})" })
+          @treecell({editable: 'false', label: "#{ae.status}#{updated}", tooltiptext: ae.error })
           @treecell({editable: 'false', label: ae.path})
           @treecell({editable: 'false', label: Translators.byId[ae.translatorID]?.label || '??'})
           @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
@@ -233,3 +235,6 @@ class PrefPane
 module.exports = new PrefPane()
 
 window.addEventListener('load', (-> module.exports.load()), false)
+
+# otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
+delete require.cache[module.id]

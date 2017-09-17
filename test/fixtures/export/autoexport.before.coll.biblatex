@@ -1,4 +1,17 @@
 
+@inproceedings{CapEA11,
+  author = {Cappello, Franck and Jacquelin, Mathias and Marchal, Loris and Robert, Yves and Snir, Marc},
+  booktitle = {High Performance Computing ({{HiPC}}), 2011 18th International Conference On},
+  date = {2011},
+  doi = {10.1109/HiPC.2011.6152428},
+  keywords = {bdec15,zotero_testcase},
+  pages = {1--10},
+  publisher = {{IEEE}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Comparing Archival Policies for {{Blue Waters}}},
+  url = {http://ieeexplore.ieee.org/xpls/abs_all.jsp?arnumber=6152428},
+  urldate = {2014-10-23}
+}
 
 @inproceedings{CumEA14,
   abstract = {We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.},
@@ -33,8 +46,3 @@
   volume = {93}
 }
 
-@comment{jabref-meta: groupsversion:3;}
-@comment{jabref-meta: groupstree:
-0 AllEntriesGroup:;
-1 ExplicitGroup:autoexport\;0\;CumEA14\;TayEA11\;;
-}
