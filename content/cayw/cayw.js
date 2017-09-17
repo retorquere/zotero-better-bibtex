@@ -38,6 +38,7 @@ var dataListener = {
     </data>`,
 
   data : '',
+  commands: 0,
 
   onStartRequest: function(request, context) {},
   onStopRequest: function(request, context, status) {
@@ -47,9 +48,8 @@ var dataListener = {
   onDataAvailable: function(request, context, inputStream, offset, count){
     this.data += instream.read(count);
 
-    var command = this.command();
-    if (command) {
-      this['$' + command.command](command.args);
+    if (!this.command()) {
+      this.close();
     }
   },
 
@@ -61,19 +61,21 @@ var dataListener = {
   }
 
   command: function() {
-    if (this.data.length < 8) return null;
+    if (this.data.length < 8) return true;
 
     var [ session, length ] = bufferpack.unpack('>II', this.data);
-    if (this.data.length < 8 + length) return null;
+    if (this.data.length < 8 + length) return true;
+
+    this.commands++;
+
+    if (this.closed || this.commands > 10) throw new Error("Runaway CAYW discussion with Zotero");
 
     var data = JSON.parse(this.data.substr(8, length);
     this.data = this.data.substr(8 + length);
 
-    return {
-      session: session,
-      command: data[0],
-      args: data[1],
-    }
+    this.session = session;
+
+    return this['$' + data[0]].apply(this, data[1]);
   },
 
   close: function() {
@@ -87,82 +89,68 @@ var dataListener = {
   },
 
   send: function(payload) {
-    payload = bufferpack.pack('>I', this.session).toString() + JSON.stringify(payload);
+    payload = JSON.stringify(payload);
+    payload = bufferpack.pack('>II', [this.session, payload.length]).toString() + payload;
     outstream.write(payload, payload.length);
+    return true;
   }
 
   $Application_getActiveDocument: function(api) {
-    this.api = api
-    this.send([this.api, this.docID])
+    this.api = api;
+    return this.send([this.api, this.docID]);
   },
 
   $Document_getDocumentData: function() {
-    this.send(this.docData)
+    return this.send(this.docData)
   },
 
   $Document_setDocumentData: function() {
-    this.send(null)
+    return this.send(null)
   }
 
-  $Document_canInsertField: {
-    this.send(true)
+  $Document_canInsertField: function() {
+    return this.send(true)
   },
 
-        when 'Document_cursorInField'
-          send(nil)
+  $Document_cursorInField: function() {
+    return this.send(nil)
+  }
 
-        when 'Document_insertField'
-          #send([@docID, 'ReferenceMark', 0])
-          send([@fieldID, '', 0])
+  $Document_insertField: function() {
+    return this.send([@fieldID, '', 0])
+  }
 
-        when 'Field_setCode'
-          fieldCode = args.last
-          if fieldCode =~ /^ITEM CSL_CITATION ({.*})/
-            @reference = JSON.parse($1)
-            puts JSON.pretty_generate(@reference)
-            @fieldCode = nil
-          else
-            @fieldCode = fieldCode
-          end
-          send(nil)
+  $Field_setCode: function(documentID, fieldID, code) {
+    if (var m = code.match(/^ITEM CSL_CITATION ({.*})/)) {
+      this.reference = JSON.parse(m[1]);
+      this.fieldCode = null;
+    } else {
+      this.fieldCode = code;
+    }
+    return this.send(null);
+  }
 
-        when 'Document_getFields'
-          send([[@fieldID],[@fieldCode],[0]])
+  $Document_getFields: function() {
+    return this.send([[this.fieldID],[this.fieldCode],[0]]);
+  }
 
-        when 'Field_setText'
-          send(nil)
+  $Field_setText: function() {
+    return this.send(null);
+  }
+  
+  $Field_getText: function() {
+    return this.send('[' + this.fieldID + ']')
+  }
 
-        when 'Field_getText'
-          send('[1]')
+  $Document_activate: function() {
+    return this.send(null)
+  }
 
-        when 'Document_activate'
-          send(nil)
-
-        when 'Document_complete'
-          send(nil)
-          @zotero.close
-          break
-
-        else
-          raise cmd
-      end
-    end
-  end
-
-  def send(payload)
-    payload = payload.to_json
-    puts ">> #{payload}"
-    message = ZoteroMsg.new(s: @session, len: payload.length, msg: payload)
-    @zotero.write(message.to_binary_s)
-  end
-
-  def receive
-    response = ZoteroMsg.read(@zotero)
-    @session = response.s
-    puts "<< #{response.msg}"
-    return JSON.parse(response.msg)
-  end
-end
+  $Document_complete: function() {
+    this.send(null)
+    return false; // will close the connection
+  }
+}
 
 zotero = Zotero.new
 };
