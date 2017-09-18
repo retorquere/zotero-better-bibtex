@@ -18,6 +18,12 @@ module.exports =
     Zotero.Prefs.set(prefix + 'testing', true)
     debug('TestSupport.reset: preferences reset')
 
+    debug('TestSupport.reset: removing collections')
+    # remove collections before items to work around https://github.com/zotero/zotero/issues/1317 and https://github.com/zotero/zotero/issues/1314
+    # ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
+    while (collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length
+      yield collections[0].eraseTx()
+
     # Zotero DB access is *really* slow and times out even with chunked transactions. 3.5k references take ~ 50 seconds
     # to delete.
     items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
@@ -28,11 +34,6 @@ module.exports =
 
     debug('TestSupport.reset: empty trash')
     yield Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
-
-    debug('TestSupport.reset: removing collections')
-    # ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
-    while (collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length
-      yield collections[0].eraseTx()
 
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
