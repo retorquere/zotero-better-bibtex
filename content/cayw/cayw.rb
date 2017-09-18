@@ -107,3 +107,76 @@ class Zotero
 end
 
 zotero = Zotero.new
+
+#{
+#  "citationID": "W5117IPo",
+#  "properties": {
+#    "formattedCitation": "{\\rtf pre {\\i{}Citations, Out of the Box}, 12 post; Africa News, \\uc0\\u8220{}Bugreports_YearSuffixInHarvard1,\\uc0\\u8221{} bk. 11.}",
+#    "plainCitation": "[1]"
+#  },
+#  "citationItems": [
+#    {
+#      "id": 6,
+#      "uris": [
+#        "http://zotero.org/users/local/Nywl04ll/items/ICWTSREC"
+#      ],
+#      "uri": [
+#        "http://zotero.org/users/local/Nywl04ll/items/ICWTSREC"
+#      ],
+#      "itemData": {
+#        "id": 6,
+#        "type": "book",
+#        "title": "Citations, Out of the Box",
+#        "publisher": "CreateSpace Independent Publishing Platform",
+#        "publisher-place": "Lexington Kentucky",
+#        "number-of-pages": "137",
+#        "event-place": "Lexington Kentucky",
+#        "abstract": "bibtex*:bennett_citations_2013",
+#        "ISBN": "978-1-4793-4771-1",
+#        "author": [
+#          {
+#            "family": "Bennett",
+#            "given": "Frank G.",
+#            "comma-suffix": true,
+#            "suffix": "Jr."
+#          }
+#        ],
+#        "issued": {
+#          "date-parts": [
+#            [
+#              "2013"
+#            ]
+#          ]
+#        }
+#      },
+#      "locator": "12",
+#      "suppress-author": true,
+#      "prefix": "pre",
+#      "suffix": "post"
+#    },
+#    {
+#      "id": 15,
+#      "uris": [
+#        "http://zotero.org/users/local/Nywl04ll/items/VQ2CP22W"
+#      ],
+#      "uri": [
+#        "http://zotero.org/users/local/Nywl04ll/items/VQ2CP22W"
+#      ],
+#      "itemData": {
+#        "id": 15,
+#        "type": "article-journal",
+#        "title": "bugreports_YearSuffixInHarvard1",
+#        "abstract": "bibtex: bugreports_YearSuffixInHarvard1",
+#        "author": [
+#          {
+#            "literal": "Africa News"
+#          }
+#        ]
+#      },
+#      "locator": "11",
+#      "label": "book"
+#    }
+#  ],
+#  "schema": "https://github.com/citation-style-language/schema/raw/master/csl-citation.json"
+#}
+#
