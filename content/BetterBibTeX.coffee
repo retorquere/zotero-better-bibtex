@@ -34,18 +34,14 @@ if !Zotero.BetterBibTeX
   AddonManager.addAddonListener({
     onUninstalling: (addon, needsRestart) ->
       return unless addon.id == 'better-bibtex@iris-advies.com'
+      debug('uninstall')
 
       for label, metadata of Translators.byName
         try
           Translators.uninstall(label, metadata.translatorID)
 
-      try
-        panePersist = JSON.parse(Zotero.Prefs.get('pane.persist'))
-        if panePersist['zotero-items-column-citekey']
-          delete panePersist['zotero-items-column-citekey']
-          Zotero.Prefs.set('pane.persist', JSON.stringify(panePersist))
-      catch err
-        debug('Could not remove zotero-items-column-citekey:', err)
+      column.removeAttribute('zotero-perist') if column = document.getElementById('zotero-items-column-citekey')
+
       return
 
     onOperationCancelled: (addon, needsRestart) ->
@@ -55,6 +51,8 @@ if !Zotero.BetterBibTeX
       for id, header of Translators.byId
         try
           Translators.install(header)
+
+      column.setAttribute('zotero-perist', 'width ordinal hidden sortActive sortDirection') if column = document.getElementById('zotero-items-column-citekey')
 
       return
   })
