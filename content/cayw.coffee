@@ -29,11 +29,11 @@ class CAYW
 
     @stream = transport.openInputStream(0, 0, 0)
     @instream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream)
-    @instream.init(stream)
+    @instream.init(@stream)
 
     # var str = instream.read(4096);
     # var utf8Converter = Components.classes["@mozilla.org/intl/utf8converterservice;1"].getService(Components.interfaces.nsIUTF8ConverterService);
-    # var data = utf8Converter.convertURISpecToUTF8 (str, "UTF-8"); 
+    # var data = utf8Converter.convertURISpecToUTF8 (str, "UTF-8");
 
     @_ready = Zotero.Promise.defer()
     @ready = @_ready.promise
@@ -70,7 +70,7 @@ class CAYW
 
     throw new Error("Runaway CAYW discussion with Zotero") if @closed || @commands > 10
 
-    data = JSON.parse(@data.substr(8, length)
+    data = JSON.parse(@data.substr(8, length))
     @data = @data.substr(8 + length)
 
     @session = session
@@ -93,7 +93,7 @@ class CAYW
     @outstream.write(payload, payload.length)
     return true
 
-  $Application_getActiveDocument: function(@protocolVersion) -> @send([@protocolVersion, @docID])
+  $Application_getActiveDocument: (protocolVersion) -> @send([protocolVersion, @docID])
 
   $Document_getDocumentData: (documentID) -> @send(@docData)
 
@@ -116,7 +116,7 @@ class CAYW
   $Document_getFields: (documentID, fieldType) -> @send([[@fieldID],[@fieldCode],[0]])
 
   $Field_setText: (documentID, fieldID, text, isRTF) -> @send(null)
-  
+
   $Field_getText: (documentID, fieldID) -> @send("[#{@fieldID}]")
 
   $Document_activate: (documentID) -> @send(null)
