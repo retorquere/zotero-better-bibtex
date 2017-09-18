@@ -39,6 +39,13 @@ if !Zotero.BetterBibTeX
         try
           Translators.uninstall(label, metadata.translatorID)
 
+      try
+        panePersist = JSON.parse(Zotero.Prefs.get('pane.persist'))
+        if panePersist['zotero-items-column-citekey']
+          delete panePersist['zotero-items-column-citekey']
+          Zotero.Prefs.set('pane.persist', JSON.stringify(panePersist))
+      catch err
+        debug('Could not remove zotero-items-column-citekey:', err)
       return
 
     onOperationCancelled: (addon, needsRestart) ->
