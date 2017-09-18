@@ -1,3 +1,5 @@
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
+
 module.exports = Zotero.BetterBibTeX || {}
 
 if !Zotero.BetterBibTeX
@@ -24,6 +26,31 @@ if !Zotero.BetterBibTeX
   AutoExport = require('./auto-export.coffee')
 
   module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
+
+  ###
+    UNINSTALL
+  ###
+
+  AddonManager.addAddonListener({
+    onUninstalling: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+
+      for label, metadata of Translators.byName
+        try
+          Translators.uninstall(label, metadata.translatorID)
+
+      return
+
+    onOperationCancelled: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+      return if addon.pendingOperations & AddonManager.PENDING_UNINSTALL
+
+      for id, header of Translators.byId
+        try
+          Translators.install(header)
+
+      return
+  })
 
   ###
     MONKEY PATCHES
