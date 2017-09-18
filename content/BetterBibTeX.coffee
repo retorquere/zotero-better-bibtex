@@ -40,7 +40,7 @@ if !Zotero.BetterBibTeX
         try
           Translators.uninstall(label, metadata.translatorID)
 
-      column.removeAttribute('zotero-perist') if column = document.getElementById('zotero-items-column-citekey')
+      Zotero.BetterBibTeX.uninstalled = true
 
       return
 
@@ -52,7 +52,7 @@ if !Zotero.BetterBibTeX
         try
           Translators.install(header)
 
-      column.setAttribute('zotero-perist', 'width ordinal hidden sortActive sortDirection') if column = document.getElementById('zotero-items-column-citekey')
+      delete Zotero.BetterBibTeX.uninstalled
 
       return
   })
@@ -60,6 +60,19 @@ if !Zotero.BetterBibTeX
   ###
     MONKEY PATCHES
   ###
+
+  # Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
+  pane = Zotero.getActiveZoteroPane() # can Zotero 5 have more than one pane at all?
+  pane.serializePersist = do (original = pane.serializePersist) ->
+    return ->
+      original.apply(@, arguments)
+
+      if Zotero.BetterBibTeX.uninstalled && persisted = Zotero.Prefs.get('pane.persist')
+        persisted = JSON.parse(persisted)
+        delete persisted['zotero-items-column-citekey']
+        Zotero.Prefs.set('pane.persist', JSON.stringify(persisted))
+
+      return
 
   # otherwise the display of the citekey in the item pane flames out
   Zotero.ItemFields.isFieldOfBase = ((original) ->
