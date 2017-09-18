@@ -136,5 +136,3 @@ module.exports =
           throw new Error("TestSupport.pinCiteKey: unsupported action #{action}")
     return
   )
-
-  bufferpack: require('bufferpack')
