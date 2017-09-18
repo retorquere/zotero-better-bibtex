@@ -95,7 +95,10 @@ else:
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
 
 if args.client == 'zotero':
-  args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
+  if args.version == 'beta':
+    args.url = "https://www.zotero.org/download/client/dl?channel=beta&platform=linux-" + platform.machine()
+  else:
+    args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
   args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
 
