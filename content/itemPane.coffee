@@ -7,6 +7,8 @@ id = 'zotero-better-bibtex-itempane-citekey'
 
 class ItemPane
   load: ->
+    @citekeys = DB.getCollection('citekey')
+
     if !ZoteroItemPane.BetterBibTeX
       # prevent multi-patching
       ZoteroItemPane.BetterBibTeX = true
@@ -22,10 +24,10 @@ class ItemPane
             return
           )
           self.DOMobserver.observe(document.getElementById('dynamic-fields'), {attributes: true, subtree: true, childList: true})
-          self.citekeyObserver = DB.getCollection('citekey').on('update', (citekey) ->
+          self.citekeyObserver = @citekeys.on('update', (citekey) ->
             self.addCitekeyRow(item.id) if citekey.itemID == item.id
             return
-          )
+          ) if @citekeys
 
           return
         )
@@ -37,7 +39,7 @@ class ItemPane
 
   unload: ->
     @DOMobserver.disconnect() if @DOMobserver
-    DB.getCollection('citekey').removeListener(@citekeyObserver)
+    @citekeys.removeListener(@citekeyObserver) if @citekeys
     return
 
   addCitekeyRow: (itemID) ->
@@ -63,7 +65,7 @@ class ItemPane
 
     if itemID?
       try
-        citekey = KeyManager.get(itemID, true)
+        citekey = KeyManager.get(itemID)
         display.value = citekey.citekey
         display.classList[if citekey.pinned then 'remove' else 'add']('citekey-dynamic')
 
