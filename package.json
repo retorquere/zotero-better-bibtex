@@ -39,6 +39,7 @@
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.1.0",
+    "bufferpack": "0.0.6",
     "edtf": "^2.2.2",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
