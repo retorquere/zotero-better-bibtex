@@ -114,7 +114,7 @@ DB = new Loki('better-bibtex', {
   autosaveOnIdle: true,
   adapter: new DBStore(),
   autoexport: {
-    # proto: Object,
+    proto: Object,
     inflate: (src, dest) ->
       Object.assign(dest, src)
       dest.updated = Date.parse(dest.updated) if dest.updated

@@ -11,16 +11,18 @@ require('ajv-keywords')(validator)
 Loki.Collection::insert = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('insert: validation failed for', doc, @validate.errors)
-      throw new Error("insert: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
+      err = new Error("insert: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
+      debug('insert: validation failed for', doc, @validate.errors, err)
+      throw err
     return original.apply(@, arguments)
 )(Loki.Collection::insert)
 
 Loki.Collection::update = ((original) ->
   return (doc) ->
     if @validate && !@validate(doc)
-      debug('update: validation failed for', doc, @validate.errors)
-      throw new Error("update: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
+      err = new Error("update: validation failed for #{JSON.stringify(doc)} (#{JSON.stringify(@validate.errors)})")
+      debug('update: validation failed for', doc, @validate.errors, err)
+      throw err
     return original.apply(@, arguments)
 )(Loki.Collection::update)
 

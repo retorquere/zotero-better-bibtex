@@ -109,92 +109,101 @@ def sort_object(o)
 
   return o
 end
-def normalize_library(library, nocollections=true)
-  library.delete('keymanager')
-  library.delete('cache')
-  library.delete('config')
-  library.delete('id')
-
-  fields = %w{
-    DOI ISBN ISSN abstractNote applicationNumber archive archiveLocation assignee
-    bookTitle callNumber caseName code conferenceName country court creators
-    date dateDecided dateEnacted distributor docketNumber edition encyclopediaTitle episodeNumber
-    extra filingDate firstPage institution issue issueDate issuingAuthority itemID
-    itemType journalAbbreviation jurisdiction key language legalStatus libraryCatalog manuscriptType
-    medium multi nameOfAct network note notes numPages number
-    numberOfVolumes pages patentNumber place priorityNumbers proceedingsTitle programTitle publicLawNumber
-    publicationTitle publisher references related relations reportNumber reportType reporter
-    reporterVolume rights runningTime section seeAlso series seriesNumber seriesText
-    seriesTitle shortTitle status studio tags thesisType title type
-    university url videoRecordingFormat volume websiteTitle websiteType
-  }
-  # item order doesn't matter, but for my tests I need them to be stable
-  STDOUT.puts library.class.to_s
-  STDOUT.puts library['items'].class.to_s
-  library['items'].sort_by!{|item|
-    fields.collect{|field| item[field].to_s }
-  }
-
-  idmap = {}
-  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
-
-  library['collections'] = [] if nocollections
-
-  scrubhash = lambda{|hash|
-    hash.keys.each{|k|
-      case hash[k]
-        when Array, Hash
-          hash.delete(k) if hash[k].empty?
-        when String
-          hash.delete(k) if hash[k].strip == ''
-        when NilClass
-          hash.delete(k)
-      end
-    }
-  }
-
-  library['items'].each_with_index{|item, i|
-    item['itemID'] = i
-    item.delete('multi')
-    item.delete('accessDate')
-
-    item['creators'] ||= []
-    item['creators'].each{|creator|
-      creator.delete('creatorID')
-      creator.delete('multi')
-      scrubhash.call(creator)
-    }
-
-    # attachment order doesn't matter
-    item['attachments'] ||= []
-    item['attachments'].each{|att|
-      att.delete('path')
-      scrubhash.call(att)
-    }
-    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
-
-    item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
-    item.delete('__citekey__')
-    item.delete('__citekeys__')
-
-    scrubhash.call(item)
-  }
-
-  renum = lambda{|collection|
-    collection.delete('id')
-    # item order doesn't matter
-    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
-    collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
-  }
-
-  renum.call({'collections' => library['collections']})
+#def normalize_library(library, nocollections=true)
+#  library.delete('keymanager')
+#  library.delete('cache')
+#  library.delete('config')
+#  library.delete('id')
+#
+#  fields = %w{
+#    DOI ISBN ISSN abstractNote applicationNumber archive archiveLocation assignee
+#    bookTitle callNumber caseName code conferenceName country court creators
+#    date dateDecided dateEnacted distributor docketNumber edition encyclopediaTitle episodeNumber
+#    extra filingDate firstPage institution issue issueDate issuingAuthority itemID
+#    itemType journalAbbreviation jurisdiction key language legalStatus libraryCatalog manuscriptType
+#    medium multi nameOfAct network note notes numPages number
+#    numberOfVolumes pages patentNumber place priorityNumbers proceedingsTitle programTitle publicLawNumber
+#    publicationTitle publisher references related relations reportNumber reportType reporter
+#    reporterVolume rights runningTime section seeAlso series seriesNumber seriesText
+#    seriesTitle shortTitle status studio tags thesisType title type
+#    university url videoRecordingFormat volume websiteTitle websiteType
+#  }
+#  # item order doesn't matter, but for my tests I need them to be stable
+#  STDOUT.puts library.class.to_s
+#  STDOUT.puts library['items'].class.to_s
+#  library['items'].sort_by!{|item|
+#    fields.collect{|field| item[field].to_s }
+#  }
+#
+#  idmap = {}
+#  library['items'].each_with_index{|item, i| idmap[item['itemID']] = i }
+#
+#  library['collections'] = [] if nocollections
+#
+#  scrubhash = lambda{|hash|
+#    hash.keys.each{|k|
+#      case hash[k]
+#        when Array, Hash
+#          hash.delete(k) if hash[k].empty?
+#        when String
+#          hash.delete(k) if hash[k].strip == ''
+#        when NilClass
+#          hash.delete(k)
+#      end
+#    }
+#  }
+#
+#  library['items'].each_with_index{|item, i|
+#    item['itemID'] = i
+#    item.delete('multi')
+#    item.delete('accessDate')
+#
+#    item['creators'] ||= []
+#    item['creators'].each{|creator|
+#      creator.delete('creatorID')
+#      creator.delete('multi')
+#      scrubhash.call(creator)
+#    }
+#
+#    # attachment order doesn't matter
+#    item['attachments'] ||= []
+#    item['attachments'].each{|att|
+#      att.delete('path')
+#      scrubhash.call(att)
+#    }
+#    item['attachments'].sort_by!{|att| %w{title url mimeType}.collect{|field| att[field]} }
+#
+#    item['note'] = Nokogiri::HTML(item['note']).inner_text.gsub(/[\s\n]+/, ' ').strip if item['note']
+#    item.delete('__citekey__')
+#    item.delete('__citekeys__')
+#
+#    scrubhash.call(item)
+#  }
+#
+#  renum = lambda{|collection|
+#    collection.delete('id')
+#    # item order doesn't matter
+#    collection['items'] = collection['items'].collect{|id| idmap[id]}.sort if collection['items']
+#    collection['collections'].each{|sub| renum.call(sub) } if collection['collections']
+#  }
+#
+#  renum.call({'collections' => library['collections']})
+#end
+Then /^an (auto-)?export (?:of "([^"]*)" )?(?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, collection, target, translator, library|
+  exportLibrary(
+    displayOptions: @displayOptions.merge({'Keep updated' => !!auto}),
+    translator: translator,
+    collection: collection || nil,
+    output: target || nil,
+    expected: library
+  )
 end
-Then /^a library (auto-)?export (?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, target, translator, library|
-  throw "Auto-export needs a destination" if auto && !target
-  exportLibrary(translator, @displayOptions.merge({'Keep updated' => !!auto}), library, target)
-end
-Then /^a library export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
-  exportLibrary(translator, @displayOptions.merge(table.rows_hash), library)
+Then /^an export using "([^"]+)" with the following export options should match "([^"]+)"$/ do |translator, library, table|
+  exportLibrary(
+    translator: translator,
+    displayOptions: @displayOptions.merge(table.rows_hash),
+    expected: library
+  )
 end
 Then /^"([^"]+)" should match "([^"]+)"$/ do |found, expected|
   expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected)) unless expected[0] == '/'

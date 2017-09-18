@@ -6,7 +6,7 @@ class JabRef
     @citekeys = {}
 
   exportGroups: ->
-    debug('exportGroups:', @collections)
+    debug('exportGroups:', {collections: @collections, citekeys: @citekeys})
     return if Object.keys(@collections).length == 0 || !Translator.preferences.jabrefGroups
 
     switch

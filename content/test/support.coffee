@@ -72,8 +72,18 @@ module.exports =
     return (after - before)
   )
 
-  exportLibrary: co((translatorID, displayOptions, path) ->
-    return yield Translators.translate(translatorID, displayOptions, null, path)
+  exportLibrary: co((translatorID, displayOptions, path, collection) ->
+    debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
+    if collection
+      name = collection
+      name = name.substring(1) if name[0] == '/' # don't do full path parsing right now
+      for collection in Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)
+        items = { collection: collection.id } if collection.name == name
+      debug('TestSupport.exportLibrary', { name, items })
+      throw new Error("Collection '#{name}' not found") unless items
+    else
+      items = null
+    return yield Translators.translate(translatorID, displayOptions, items, path)
   )
 
   select: co((field, value) ->
