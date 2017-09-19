@@ -48,7 +48,22 @@ class CAYW
     verse: "vrs."
     volume: "vol."
 
-  constructor: (@format, @config) ->
+  constructor: (@options) ->
+    @_ready = Zotero.Promise.defer()
+    @ready = @_ready.promise
+
+    if !@options.format
+      @_ready.reject('no format')
+      return
+
+    if @options.format.startsWith('cite')
+      @options.command = @options.format
+      @options.format = 'latex'
+
+    if !@['$$' + @options.format]
+      @_ready.reject("Unsupported format #{@options.format}")
+      return
+
     @transport = transportService.createTransport(null, 0, @host, @port, null)
     @outstream = transport.openOutputStream(Components.interfaces.nsITransport.OPEN_BLOCKING, 0, 0)
 
@@ -60,14 +75,12 @@ class CAYW
     # var utf8Converter = Components.classes["@mozilla.org/intl/utf8converterservice;1"].getService(Components.interfaces.nsIUTF8ConverterService);
     # var data = utf8Converter.convertURISpecToUTF8 (str, "UTF-8");
 
-    @_ready = Zotero.Promise.defer()
-    @ready = @_ready.promise
 
     @session = 0
 
     @data = ''
     @commands = 0
-    @citation = null
+    @citation = []
 
     @send('addCitation')
 
@@ -111,7 +124,9 @@ class CAYW
     if err
       @_ready.reject(err)
     else
-      @_ready.resolve(@citation || [])
+      for citation in @citations
+        citation.citekey = KeyManager.get(citation.id)
+      @_ready.resolve(@['$$' + @options.format]())
 
     @closed = true
     return
@@ -164,5 +179,57 @@ class CAYW
 
   $$latex: ->
     return '' unless @citation.length
-    @config.command ||= 'cite'
+    @options.command ||= 'cite'
 
+    if @citations.length > 1
+      state = {
+        prefix: 0
+        suffix: 0
+        'suppress-author': 0
+        locator: 0
+        label: 0
+      }
+
+      for citation in @citations
+        for own k of citation
+          state[k] ?= 0
+          state[k]++
+
+      Zotero.BetterBibTeX.debug('citations:', {@citations, state})
+      if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, @citations.length]
+        ### simple case where everything can be put in a single cite ###
+        return "\\#{if @citations[0]['suppress-author'] then 'citeyear' else @options.command}{#{(@citation.citekey for citation in @citations).join(',')}}"
+
+    formatted = ''
+    for citation in @citations
+      formatted += "\\"
+      formatted += if citation['suppress-author'] then 'citeyear' else @options.command
+      formatted += '[' + citation.prefix + ']' if citation.prefix
+
+      Zotero.BetterBibTeX.debug('citation:', citation)
+      switch
+        when citation.locator && citation.suffix
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
+        when citation.locator
+          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          formatted += "[#{label}#{citation.locator}]"
+        when citation.suffix
+          formatted += "[#{citation.suffix}]"
+        when citation.prefix
+          formatted += '[]'
+      formatted += '{' + citation.citekey + '}'
+
+    return formatted.trim()
+
+Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
+	supportedMethods: ['GET']
+
+  init: Zotero.Promise.coroutine((options) ->
+    return [200, 'text/plain', 'ready'] if options.query.probe
+
+    try
+      return [200, 'text/plain', yield (new CAYW(options)).ready]
+    catch
+      return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack];
+  )
