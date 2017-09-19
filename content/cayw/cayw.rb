@@ -85,6 +85,10 @@ class Zotero
           @zotero.close
           break
 
+        when 'Field_delete'
+          # document, fieldID
+          send(nil)
+
         else
           raise cmd
       end

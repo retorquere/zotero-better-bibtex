@@ -8,6 +8,7 @@ class CAYW
   port = 23116
   docID: 1
   fieldID: 2
+
   docData: """<data data-version=\"3\" zotero-version=\"5.0.18\">
       <session id=\"Z9Tp8PjG\"/>
       <style
@@ -23,7 +24,31 @@ class CAYW
       </prefs>
     </data>"""
 
-  constructor: ->
+  shortLocator:
+    article: "art."
+    chapter: "ch."
+    subchapter: "subch."
+    column: "col."
+    figure: "fig."
+    line: "l."
+    note: "n."
+    issue: "no."
+    opus: "op."
+    page: "p."
+    paragraph: "para."
+    subparagraph: "subpara."
+    part: "pt."
+    rule: "r."
+    section: "sec."
+    subsection: "subsec."
+    Section: "Sec."
+    'sub verbo': "sv."
+    schedule: "sch."
+    title: "tit."
+    verse: "vrs."
+    volume: "vol."
+
+  constructor: (@format, @config) ->
     @transport = transportService.createTransport(null, 0, @host, @port, null)
     @outstream = transport.openOutputStream(Components.interfaces.nsITransport.OPEN_BLOCKING, 0, 0)
 
@@ -68,7 +93,7 @@ class CAYW
 
     @commands++
 
-    throw new Error("Runaway CAYW discussion with Zotero") if @closed || @commands > 10
+    return @close("Runaway CAYW discussion with Zotero") if @closed || @commands > 10
 
     data = JSON.parse(@data.substr(8, length))
     @data = @data.substr(8 + length)
@@ -77,12 +102,16 @@ class CAYW
 
     return @['$' + data[0]].apply(@, data[1])
 
-  close: ->
+  close: (err) ->
     return if @closed
 
     @instream.close()
     @outstream.close()
-    @_ready.resolve(@citation)
+
+    if err
+      @_ready.reject(err)
+    else
+      @_ready.resolve(@citation || [])
 
     @closed = true
     return
@@ -107,7 +136,7 @@ class CAYW
 
   $Field_setCode: (documentID, fieldID, code) ->
     if m = code.match(/^ITEM CSL_CITATION ({.*})/)
-      @citation = JSON.parse(m[1])
+      @citation = JSON.parse(m[1]).citationItems
       @fieldCode = null
     else
       @fieldCode = code
@@ -124,4 +153,16 @@ class CAYW
   $Document_complete: (documentID) ->
     @send(null)
     return false # will close the connection
+
+  $Field_delete: (documentID, fieldID) -> @send(null)
+
+  getStyle: (id = 'apa') ->
+    style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
+    style ||= Zotero.Styles.get("http://juris-m.github.io/styles/#{id}")
+    style ||= Zotero.Styles.get(id)
+    return style
+
+  $$latex: ->
+    return '' unless @citation.length
+    @config.command ||= 'cite'
 
