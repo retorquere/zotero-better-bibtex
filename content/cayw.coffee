@@ -1,4 +1,5 @@
 bufferpack = require('bufferpack')
+getItemsAsync = require('./get-items-async.coffee')
 
 transportService = Components.classes["@mozilla.org/network/socket-transport-service;1"].getService(Components.interfaces.nsISocketTransportService)
 # "https://github.com/zotero/zotero-libreoffice-integration/blob/master/components/zoteroOpenOfficeIntegration.js"
@@ -64,6 +65,8 @@ class CAYW
       @_ready.reject("Unsupported format #{@options.format}")
       return
 
+    @options.format = @options.format.replace(/-/g, '_')
+
     @transport = transportService.createTransport(null, 0, @host, @port, null)
     @outstream = transport.openOutputStream(Components.interfaces.nsITransport.OPEN_BLOCKING, 0, 0)
 
@@ -126,7 +129,11 @@ class CAYW
     else
       for citation in @citations
         citation.citekey = KeyManager.get(citation.id)
-      @_ready.resolve(@['$' + @options.format]())
+      result = @['$' + @options.format]()
+      if typeof result == 'object' && typeof result.then == 'function'
+        result.then((v) -> @_ready.resolve(v)).catch((err) -> @_ready.reject(err))
+      else
+        @_ready.resolve(result)
 
     @closed = true
     return
@@ -211,6 +218,136 @@ class CAYW
       formatted += '{' + citation.citekey + '}'
 
     return formatted
+
+  $mmd: ->
+    formatted = []
+    for citation in @citations
+      if citation.prefix
+        formatted.push("[#{citation.prefix}][##{citation.citekey}]")
+      else
+        formatted.push("[##{citation.citekey}][]")
+    return formatted.join('')
+
+  $pandoc: ->
+    formatted = []
+    for citation in @citations
+      cite = ''
+      cite += "#{citation.prefix} " if citation.prefix
+      cite += '-' if citation['suppress-author']
+      cite += "@#{citation.citekey}"
+      cite += ", #{@shortLocator[citation.label]} #{citation.locator}" if citation.locator
+      cite += " #{citation.suffix}" if citation.suffix
+      formatted.push(cite)
+    formatted = formatted.join('; ')
+    formatted = '[' + formatted + ']' if @options.brackets
+    return formatted
+
+  $asciidoctor_bibtex: ->
+    formatted = []
+    for citation in @citations
+      cite = citation.citekey
+      if citation.locator
+        label = citation.locator
+        label = @shortLocator[citation.label] + ' ' + label if citation.label != 'page'
+        cite += '(' + label + ')'
+      formatted.push(cite)
+    formatted = formatted.join(', ')
+    formatted = (@options.cite || 'cite') + ':[' + formatted + ']'
+    return formatted
+
+  $scannable_cite: Zotero.Promise.coroutine(->
+    class Mem
+      constructor: (@isLegal) ->
+        @lst = []
+
+      set: (str, punc, slug) ->
+        punc = '' unless punc
+        switch
+          when str        then @lst.push(str + punc)
+          when !@isLegal  then @lst.push(slug)
+        return
+
+      setlaw: (str, punc) ->
+        punc = '' unless punc
+        @lst.push(str + punc) if str && @isLegal
+        return
+
+      get: -> @lst.join(' ')
+
+    formatted = []
+    for citation in @citations
+      item = yield getItemsAsync(citation.id)
+      isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ]
+
+      key = if Prefs.get('testing') then 'ITEMKEY' else item.key
+      id = switch
+        when item.libraryID then "zg:#{item.libraryID}:#{key}"
+        when Zotero.userID then "zu:#{Zotero.userID}:#{key}"
+        else "zu:0:#{key}"
+      locator = if citation.locator then "#{@shortLocator[citation.label]} #{citation.locator}" else ''
+      citation.prefix ?= ''
+      citation.suffix ?= ''
+
+      title = new Mem(isLegal)
+      title.set(item.firstCreator, ',', 'anon.')
+
+      includeTitle = false
+      ### Prefs.get throws an error if the pref is not found ###
+      try
+        includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
+      if includeTitle || !item.firstCreator
+        title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')
+
+      try
+        title.setlaw(item.getField('authority'), ',')
+      try
+        title.setlaw(item.getField('volume'))
+      try
+        title.setlaw(item.getField('reporter'))
+      title.setlaw(item.getField('pages'))
+
+      year = new Mem(isLegal)
+      try
+        year.setlaw(item.getField('court'), ',')
+      date = Zotero.Date.strToDate(item.getField('date'))
+      year.set((if date.year then date.year else item.getField('date')), '', 'no date')
+
+      label = (title.get() + ' ' + year.get()).trim()
+      label = "-#{label}" if citation['suppress-author']
+
+      formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
+    return formatted.join('')
+  )
+
+  $atom_zotero_citations: ->
+    citekeys = (citation.citekey for citation in @citations)
+    itemIDs = (citation.id for citation in @citations)
+
+    style = @getStyle(@options.style)
+
+    cp = style.getCiteProc()
+    cp.setOutputFormat('markdown')
+    cp.updateItems(itemIDs)
+    label = cp.appendCitationCluster({citationItems: ({ id } for id in itemIDs), properties: {}}, true)[0][1]
+
+    if citekeys.length == 1
+      return "[#{label}](#@#{citekeys.join(',')})"
+    else
+      return "[#{label}](?@#{citekeys.join(',')})"
+
+  $translate: Zotero.Promise.coroutine(->
+    items = yield getItemsAsync((citation.id for citation in @citations))
+
+    @options.translator = 'BetterBibLeTeX' if (@options.translator || 'biblatex') == 'biblatex'
+    @options.translator = Translators.byLabel[@options.translator].translatorID if Translators.byLabel[@options.translator]
+
+    exportOptions = {
+      exportNotes: (@options.exportNotes || '').toLowerCase() in ['yes', 'y', 'true']
+      useJournalAbbreviation: (@options.useJournalAbbreviation || '').toLowerCase() in ['yes', 'y', 'true']
+    }
+
+    return yield Translators.translate(@options.translator, {items: items}, exportOptions)
+  )
 
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
   supportedMethods: ['GET']
