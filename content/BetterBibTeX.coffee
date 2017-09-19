@@ -1,3 +1,5 @@
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
+
 module.exports = Zotero.BetterBibTeX || {}
 
 if !Zotero.BetterBibTeX
@@ -26,8 +28,51 @@ if !Zotero.BetterBibTeX
   module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
 
   ###
+    UNINSTALL
+  ###
+
+  AddonManager.addAddonListener({
+    onUninstalling: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+      debug('uninstall')
+
+      for label, metadata of Translators.byName
+        try
+          Translators.uninstall(label, metadata.translatorID)
+
+      Zotero.BetterBibTeX.uninstalled = true
+
+      return
+
+    onOperationCancelled: (addon, needsRestart) ->
+      return unless addon.id == 'better-bibtex@iris-advies.com'
+      return if addon.pendingOperations & AddonManager.PENDING_UNINSTALL
+
+      for id, header of Translators.byId
+        try
+          Translators.install(header)
+
+      delete Zotero.BetterBibTeX.uninstalled
+
+      return
+  })
+
+  ###
     MONKEY PATCHES
   ###
+
+  # Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
+  pane = Zotero.getActiveZoteroPane() # can Zotero 5 have more than one pane at all?
+  pane.serializePersist = do (original = pane.serializePersist) ->
+    return ->
+      original.apply(@, arguments)
+
+      if Zotero.BetterBibTeX.uninstalled && persisted = Zotero.Prefs.get('pane.persist')
+        persisted = JSON.parse(persisted)
+        delete persisted['zotero-items-column-citekey']
+        Zotero.Prefs.set('pane.persist', JSON.stringify(persisted))
+
+      return
 
   # otherwise the display of the citekey in the item pane flames out
   Zotero.ItemFields.isFieldOfBase = ((original) ->
