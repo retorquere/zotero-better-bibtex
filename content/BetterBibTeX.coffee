@@ -59,7 +59,7 @@ if !Zotero.BetterBibTeX
 
       return
   }
-  uninstaller.onEnabling = uninstaller.onUninstalling
+  uninstaller.onDisabling = uninstaller.onUninstalling
   AddonManager.addAddonListener(uninstaller)
 
   ###
