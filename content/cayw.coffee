@@ -3,6 +3,7 @@ getItemsAsync = require('./get-items-async.coffee')
 
 transportService = Components.classes["@mozilla.org/network/socket-transport-service;1"].getService(Components.interfaces.nsISocketTransportService)
 # "https://github.com/zotero/zotero-libreoffice-integration/blob/master/components/zoteroOpenOfficeIntegration.js"
+# https://kth.instructure.com/courses/11/pages/zotero-integration
 
 class CAYW
   host = '127.0.0.1'
