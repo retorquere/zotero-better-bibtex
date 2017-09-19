@@ -60,7 +60,7 @@ class CAYW
       @options.command = @options.format
       @options.format = 'latex'
 
-    if !@['$$' + @options.format]
+    if !@['$' + @options.format]
       @_ready.reject("Unsupported format #{@options.format}")
       return
 
@@ -113,7 +113,7 @@ class CAYW
 
     @session = session
 
-    return @['$' + data[0]].apply(@, data[1])
+    return @['_' + data[0]].apply(@, data[1])
 
   close: (err) ->
     return if @closed
@@ -126,7 +126,7 @@ class CAYW
     else
       for citation in @citations
         citation.citekey = KeyManager.get(citation.id)
-      @_ready.resolve(@['$$' + @options.format]())
+      @_ready.resolve(@['$' + @options.format]())
 
     @closed = true
     return
@@ -137,19 +137,19 @@ class CAYW
     @outstream.write(payload, payload.length)
     return true
 
-  $Application_getActiveDocument: (protocolVersion) -> @send([protocolVersion, @docID])
+  _Application_getActiveDocument: (protocolVersion) -> @send([protocolVersion, @docID])
 
-  $Document_getDocumentData: (documentID) -> @send(@docData)
+  _Document_getDocumentData: (documentID) -> @send(@docData)
 
-  $Document_setDocumentData: (documentID, dataString) -> @send(null)
+  _Document_setDocumentData: (documentID, dataString) -> @send(null)
 
-  $Document_canInsertField: (documentID) -> @send(true)
+  _Document_canInsertField: (documentID) -> @send(true)
 
-  $Document_cursorInField: (documentID, fieldType) -> @send(null)
+  _Document_cursorInField: (documentID, fieldType) -> @send(null)
 
-  $Document_insertField: (documentID, fieldType, noteType) -> @send([@fieldID, '', 0])
+  _Document_insertField: (documentID, fieldType, noteType) -> @send([@fieldID, '', 0])
 
-  $Field_setCode: (documentID, fieldID, code) ->
+  _Field_setCode: (documentID, fieldID, code) ->
     if m = code.match(/^ITEM CSL_CITATION ({.*})/)
       @citation = JSON.parse(m[1]).citationItems
       @fieldCode = null
@@ -157,19 +157,19 @@ class CAYW
       @fieldCode = code
     return @send(null)
 
-  $Document_getFields: (documentID, fieldType) -> @send([[@fieldID],[@fieldCode],[0]])
+  _Document_getFields: (documentID, fieldType) -> @send([[@fieldID],[@fieldCode],[0]])
 
-  $Field_setText: (documentID, fieldID, text, isRTF) -> @send(null)
+  _Field_setText: (documentID, fieldID, text, isRTF) -> @send(null)
 
-  $Field_getText: (documentID, fieldID) -> @send("[#{@fieldID}]")
+  _Field_getText: (documentID, fieldID) -> @send("[#{@fieldID}]")
 
-  $Document_activate: (documentID) -> @send(null)
+  _Document_activate: (documentID) -> @send(null)
 
-  $Document_complete: (documentID) ->
+  _Document_complete: (documentID) ->
     @send(null)
     return false # will close the connection
 
-  $Field_delete: (documentID, fieldID) -> @send(null)
+  _Field_delete: (documentID, fieldID) -> @send(null)
 
   getStyle: (id = 'apa') ->
     style = Zotero.Styles.get("http://www.zotero.org/styles/#{id}")
@@ -177,28 +177,19 @@ class CAYW
     style ||= Zotero.Styles.get(id)
     return style
 
-  $$latex: ->
+  $latex: ->
     return '' unless @citation.length
     @options.command ||= 'cite'
 
-    if @citations.length > 1
-      state = {
-        prefix: 0
-        suffix: 0
-        'suppress-author': 0
-        locator: 0
-        label: 0
-      }
+    state = @citations.reduce(((acc, cit) ->
+      for k of acc
+        acc[k]++ if cit[k]
+      return
+    ), { prefix: 0, suffix: 0, 'suppress-author': 0, locator: 0, label: 0 })
 
-      for citation in @citations
-        for own k of citation
-          state[k] ?= 0
-          state[k]++
-
-      Zotero.BetterBibTeX.debug('citations:', {@citations, state})
-      if state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, @citations.length]
-        ### simple case where everything can be put in a single cite ###
-        return "\\#{if @citations[0]['suppress-author'] then 'citeyear' else @options.command}{#{(@citation.citekey for citation in @citations).join(',')}}"
+    if @citations.length > 1 && state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, @citations.length]
+      ### simple case where everything can be put in a single cite ###
+      return "\\#{if @citations[0]['suppress-author'] then 'citeyear' else @options.command}{#{(@citation.citekey for citation in @citations).join(',')}}"
 
     formatted = ''
     for citation in @citations
@@ -206,13 +197,12 @@ class CAYW
       formatted += if citation['suppress-author'] then 'citeyear' else @options.command
       formatted += '[' + citation.prefix + ']' if citation.prefix
 
-      Zotero.BetterBibTeX.debug('citation:', citation)
       switch
         when citation.locator && citation.suffix
-          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
           formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
         when citation.locator
-          label = if citation.label == 'page' then '' else Zotero.BetterBibTeX.CAYW.shortLocator[citation.label] + ' '
+          label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
           formatted += "[#{label}#{citation.locator}]"
         when citation.suffix
           formatted += "[#{citation.suffix}]"
@@ -220,10 +210,10 @@ class CAYW
           formatted += '[]'
       formatted += '{' + citation.citekey + '}'
 
-    return formatted.trim()
+    return formatted
 
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
-	supportedMethods: ['GET']
+  supportedMethods: ['GET']
 
   init: Zotero.Promise.coroutine((options) ->
     return [200, 'text/plain', 'ready'] if options.query.probe
@@ -231,5 +221,5 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
     try
       return [200, 'text/plain', yield (new CAYW(options)).ready]
     catch
-      return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack];
+      return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack]
   )
