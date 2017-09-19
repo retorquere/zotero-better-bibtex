@@ -129,11 +129,7 @@ class CAYW
     else
       for citation in @citations
         citation.citekey = KeyManager.get(citation.id)
-      result = @['$' + @options.format]()
-      if typeof result == 'object' && typeof result.then == 'function'
-        result.then((v) -> @_ready.resolve(v)).catch((err) -> @_ready.reject(err))
-      else
-        @_ready.resolve(result)
+      Zotero.Promise.resolve(@['$' + @options.format]()).then((v) -> @_ready.resolve(v)).catch((err) -> @_ready.reject(err))
 
     @closed = true
     return
