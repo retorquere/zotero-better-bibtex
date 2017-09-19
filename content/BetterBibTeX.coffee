@@ -36,7 +36,7 @@ if !Zotero.BetterBibTeX
       return unless addon.id == 'better-bibtex@iris-advies.com'
       debug('uninstall')
 
-      quickCopy = Zotero.Pref.get('export.quickCopy.setting')
+      quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
       for label, metadata of Translators.byName
         Zotero.Prefs.clear('export.quickCopy.setting') if quickCopy == "export=#{metadata.translatorID}"
 

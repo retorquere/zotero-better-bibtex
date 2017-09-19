@@ -368,7 +368,7 @@ module BBT
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   if ENV['ZOTERO_BIGLY'] == 'true'
     STDOUT.puts "Testing using bigly database!"
-    FileUtils.cp(File.join(fixtures, 'profile/data/zotero-bigly.sqlite'), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
+    FileUtils.cp(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
@@ -430,4 +430,3 @@ module BBT
     exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore)
   }
 end
-
