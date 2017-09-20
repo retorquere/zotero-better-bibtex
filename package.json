@@ -63,6 +63,7 @@
     "clean-webpack-plugin": "^0.1.16",
     "coffee-loader": "^0.8.0",
     "coffee-script": "^1.12.7",
+    "coffeescript": "^1.12.7",
     "coffeelint": "^1.16.0",
     "coffeelint-no-implicit-returns": "0.0.6",
     "dotenv": "^4.0.0",
