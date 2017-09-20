@@ -72,6 +72,7 @@
     "glob": "^7.1.2",
     "grasp": "^0.6.0",
     "ignore-loader": "^0.1.2",
+    "indent-string": "^3.2.0",
     "jsesc": "^2.5.1",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
