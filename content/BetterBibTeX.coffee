@@ -388,8 +388,66 @@ if !Zotero.BetterBibTeX
 
   debug('Loading Better BibTeX: setup done')
 
+  class Lock
+    postfix: '-better-bibtex-locked'
+
+    constructor: ->
+      @decks = {}
+      for id in [ 'zotero-items-pane-content', 'zotero-item-pane-content' ]
+        @decks[id] = {
+          element: document.getElementById(id)
+          id: id
+        }
+        @decks[id].selected = @decks[id].element.selectedIndex
+        do (deck = @decks[id]) =>
+          @hide(deck.element)
+          deck.observer = new MutationObserver((mutations) => @hide(deck.element))
+          deck.observer.observe(deck.element, {attributes: true, childList: true})
+          return
+
+      @toggle(true)
+
+    unlock: ->
+      return unless @decks
+
+      for id, deck of @decks
+        deck.observer.disconnect()
+        deck.element.selectedIndex = deck.selected
+        deck.element.removeChild(document.getElementById(id + @postfix))
+      @decks = null
+
+      @toggle(false)
+
+      return
+
+    toggle: (locked) ->
+      for id in ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']
+        document.getElementById(id).hidden = locked
+
+      for id in ['zotero-collections-tree']
+        document.getElementById(id).disabled = locked
+
+      return
+
+    hide: (deck) ->
+      return unless @decks
+
+      id = deck.id
+      lock = id + @postfix
+
+      debug('Lock: re-locking', id, 'with', lock)
+
+      for node, i in deck.childNodes
+        if node.id == lock
+          deck.selectedIndex = i
+          debug('Lock: selected', i, 'for', id)
+          break
+      return
+
   load = Zotero.Promise.coroutine(->
     debug('Loading Better BibTeX: starting...')
+
+    lock = new Lock()
 
     ready = Zotero.Promise.defer()
     module.exports.ready = ready.promise
@@ -441,6 +499,8 @@ if !Zotero.BetterBibTeX
 
     ready.resolve(true)
     bench('ready')
+
+    lock.unlock()
 
     return
   )
