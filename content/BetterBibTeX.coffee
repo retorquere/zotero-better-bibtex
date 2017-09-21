@@ -391,30 +391,45 @@ if !Zotero.BetterBibTeX
   class Lock
     postfix: '-better-bibtex-locked'
 
-    constructor: ->
-      @decks = {}
-      for id in [ 'zotero-items-pane-content', 'zotero-item-pane-content' ]
-        @decks[id] = {
-          element: document.getElementById(id)
-          id: id
-        }
-        @decks[id].selected = @decks[id].element.selectedIndex
-        do (deck = @decks[id]) =>
-          @hide(deck.element)
-          deck.observer = new MutationObserver((mutations) => @hide(deck.element))
-          deck.observer.observe(deck.element, {attributes: true, childList: true})
-          return
+    lock: Zotero.Promise.coroutine((msg)->
+      #@decks = {}
+      #for id in [ 'zotero-items-pane-content', 'zotero-item-pane-content' ]
+      #  @decks[id] = {
+      #    element: document.getElementById(id)
+      #    id: id
+      #  }
+      #  @decks[id].selected = @decks[id].element.selectedIndex
+      #  do (deck = @decks[id]) =>
+      #    @hide(deck.element)
+      #    deck.observer = new MutationObserver((mutations) => @hide(deck.element))
+      #    deck.observer.observe(deck.element, {attributes: true, childList: true})
+      #    return
+
+      yield Zotero.uiReadyPromise
+
+      yield Zotero.unlockPromise if Zotero.locked
+
+      Zotero.showZoteroPaneProgressMeter(msg || 'Initializing Better BibTeX...')
 
       @toggle(true)
 
-    unlock: ->
-      return unless @decks
+      return
+    )
 
-      for id, deck of @decks
-        deck.observer.disconnect()
-        deck.element.selectedIndex = deck.selected
-        deck.element.removeChild(document.getElementById(id + @postfix))
-      @decks = null
+    update: (msg) ->
+      Zotero.showZoteroPaneProgressMeter(msg)
+      return
+
+    unlock: ->
+      #return unless @decks
+
+      #for id, deck of @decks
+      #  deck.observer.disconnect()
+      #  deck.element.selectedIndex = deck.selected
+      #  deck.element.removeChild(document.getElementById(id + @postfix))
+      #@decks = null
+
+      Zotero.hideZoteroPaneOverlays()
 
       @toggle(false)
 
@@ -447,19 +462,20 @@ if !Zotero.BetterBibTeX
   load = Zotero.Promise.coroutine(->
     debug('Loading Better BibTeX: starting...')
 
-    lock = new Lock()
-
     ready = Zotero.Promise.defer()
     module.exports.ready = ready.promise
     bench.start = new Date()
 
-    progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+    # progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
 
-    progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
-    progressWin.show()
+    # progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
+    # progressWin.show()
 
     # oh FFS -- datadir is async now
-    yield Zotero.uiReadyPromise
+
+    lock = new Lock()
+    yield lock.lock('BetterBibTeX: Waiting for Zotero database...')
+
     CACHE.init()
     bench('Zotero.uiReadyPromise')
 
@@ -467,7 +483,8 @@ if !Zotero.BetterBibTeX
     yield Zotero.Schema.schemaUpdatePromise
     bench('Zotero.Schema.schemaUpdatePromise')
 
-    progressWin.changeHeadline('BetterBibTeX: Initializing')
+    # progressWin.changeHeadline('BetterBibTeX: Initializing')
+    lock.update('BetterBibTeX: Initializing...')
 
     yield DB.init()
     bench('DB.init()')
@@ -492,8 +509,8 @@ if !Zotero.BetterBibTeX
     yield Translators.init()
     bench('Translators.init()')
 
-    progressWin.changeHeadline('BetterBibTeX: Ready for business')
-    progressWin.startCloseTimer(500)
+    # progressWin.changeHeadline('BetterBibTeX: Ready for business')
+    # progressWin.startCloseTimer(500)
 
     # should be safe to start tests at this point. I hate async.
 
