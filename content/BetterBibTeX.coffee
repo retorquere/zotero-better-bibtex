@@ -450,28 +450,28 @@ if !Zotero.BetterBibTeX
     # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     yield Zotero.Schema.schemaUpdatePromise
 
-    lock.update('Loading database')
+    lock.update('Loading citation keys')
     yield DB.init()
 
-    lock.update('Starting Auto Export')
+    lock.update('Starting auto-export')
     AutoExport.init()
 
-    lock.update('Starting Key Manager')
+    lock.update('Starting key manager')
     yield KeyManager.init() # inits the key cache by scanning the DB
 
-    lock.update('Starting Serialization Cache')
+    lock.update('Starting serialization cache')
     yield Serializer.init() # creates simplify et al
 
     if Prefs.get('testing')
-      lock.update('Loading Test Support')
+      lock.update('Loading test support')
       module.exports.TestSupport = require('./test/support.coffee')
     else
       debug('starting, skipping test support')
 
-    lock.update('Loading Journal Abbreviator')
+    lock.update('Loading journal abbreviator')
     JournalAbbrev.init()
 
-    lock.update('Loading Translators')
+    lock.update('Installing bundled translators')
     yield Translators.init()
 
     # should be safe to start tests at this point. I hate async.
