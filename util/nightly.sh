@@ -7,11 +7,9 @@ cd ..
 
 . .env
 
-git pull
-
 npm run --silent s3form
 
-curl \
+curl --silent \
   --header "Content-Type: application/json" \
   --data '{"build_parameters": {"NIGHTLY": "true" }}' \
   --request POST \
