@@ -191,13 +191,6 @@ if !Zotero.BetterBibTeX
     notify: (action, type, ids, extraData) ->
       debug('item.notify', {action, type, ids, extraData})
 
-      bench = (msg) ->
-        now = new Date()
-        debug("notify: #{msg} took #{(now - bench.start) / 1000.0}s")
-        bench.start = now
-        return
-      bench.start = new Date()
-
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
       # items = Zotero.Items.get(ids)
@@ -207,7 +200,6 @@ if !Zotero.BetterBibTeX
       # CACHE.remove(parents)
 
       CACHE.remove(ids)
-      bench('cache remove')
 
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
@@ -221,7 +213,6 @@ if !Zotero.BetterBibTeX
           debug("event.#{type}.#{action}", {ids, extraData})
           KeyManager.remove(ids)
           events.emit('items-removed', ids)
-          bench('remove')
 
         when 'add', 'modify'
           for item in items
@@ -355,12 +346,6 @@ if !Zotero.BetterBibTeX
     INIT
   ###
 
-  bench = (msg) ->
-    now = new Date()
-    debug("startup: #{msg} took #{(now - bench.start) / 1000.0}s")
-    bench.start = now
-    return
-
   module.exports.ErrorReport = Zotero.Promise.coroutine((includeReferences) ->
     debug('ErrorReport::start', includeReferences)
     items = null
@@ -391,46 +376,36 @@ if !Zotero.BetterBibTeX
   class Lock
     postfix: '-better-bibtex-locked'
 
-    lock: Zotero.Promise.coroutine((msg)->
-      #@decks = {}
-      #for id in [ 'zotero-items-pane-content', 'zotero-item-pane-content' ]
-      #  @decks[id] = {
-      #    element: document.getElementById(id)
-      #    id: id
-      #  }
-      #  @decks[id].selected = @decks[id].element.selectedIndex
-      #  do (deck = @decks[id]) =>
-      #    @hide(deck.element)
-      #    deck.observer = new MutationObserver((mutations) => @hide(deck.element))
-      #    deck.observer.observe(deck.element, {attributes: true, childList: true})
-      #    return
+    constructor: ->
+      @mark = { ts: new Date() }
 
+    lock: Zotero.Promise.coroutine((msg)->
       yield Zotero.uiReadyPromise
 
       yield Zotero.unlockPromise if Zotero.locked
 
-      Zotero.showZoteroPaneProgressMeter(msg || 'Initializing Better BibTeX...')
+      @update(msg || 'Initializing')
 
       @toggle(true)
 
       return
     )
 
+    bench: (msg) ->
+      ts = new Date()
+      debug('Lock:', @mark.msg, 'took', (ts - @mark.ts) / 1000.0, 's') if @mark.msg
+      @mark = { ts, msg }
+      return
+
     update: (msg) ->
-      Zotero.showZoteroPaneProgressMeter(msg)
+      @bench(msg)
+      Zotero.showZoteroPaneProgressMeter("Better BibTeX: #{msg}...")
       return
 
     unlock: ->
-      #return unless @decks
-
-      #for id, deck of @decks
-      #  deck.observer.disconnect()
-      #  deck.element.selectedIndex = deck.selected
-      #  deck.element.removeChild(document.getElementById(id + @postfix))
-      #@decks = null
+      @bench()
 
       Zotero.hideZoteroPaneOverlays()
-
       @toggle(false)
 
       return
@@ -464,58 +439,44 @@ if !Zotero.BetterBibTeX
 
     ready = Zotero.Promise.defer()
     module.exports.ready = ready.promise
-    bench.start = new Date()
-
-    # progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-
-    # progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
-    # progressWin.show()
 
     # oh FFS -- datadir is async now
 
     lock = new Lock()
-    yield lock.lock('BetterBibTeX: Waiting for Zotero database...')
+    yield lock.lock('Waiting for Zotero database')
 
     CACHE.init()
-    bench('Zotero.uiReadyPromise')
 
     # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     yield Zotero.Schema.schemaUpdatePromise
-    bench('Zotero.Schema.schemaUpdatePromise')
 
-    # progressWin.changeHeadline('BetterBibTeX: Initializing')
-    lock.update('BetterBibTeX: Initializing...')
-
+    lock.update('Loading database')
     yield DB.init()
-    bench('DB.init()')
 
+    lock.update('Starting Auto Export')
     AutoExport.init()
-    bench('AutoExport.init()')
 
+    lock.update('Starting Key Manager')
     yield KeyManager.init() # inits the key cache by scanning the DB
-    bench('KeyManager.init()')
 
+    lock.update('Starting Serialization Cache')
     yield Serializer.init() # creates simplify et al
-    bench('Serializer.init()')
 
     if Prefs.get('testing')
+      lock.update('Loading Test Support')
       module.exports.TestSupport = require('./test/support.coffee')
-      bench('Zotero.BetterBibTeX.TestSupport')
     else
       debug('starting, skipping test support')
 
+    lock.update('Loading Journal Abbreviator')
     JournalAbbrev.init()
 
+    lock.update('Loading Translators')
     yield Translators.init()
-    bench('Translators.init()')
-
-    # progressWin.changeHeadline('BetterBibTeX: Ready for business')
-    # progressWin.startCloseTimer(500)
 
     # should be safe to start tests at this point. I hate async.
 
     ready.resolve(true)
-    bench('ready')
 
     lock.unlock()
 
