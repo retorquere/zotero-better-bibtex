@@ -88,8 +88,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.resetCache "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY zotero.better-bibtex.auxScanner "Scan BibTeX AUX file for references...">
-<!ENTITY zotero.better-bibtex.bulkWarning.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
-<!ENTITY zotero.better-bibtex.bulkWarning.whatever "OK, and don't ask me again">
+<!ENTITY better-bibtex.bulk-keys-confirm.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
+<!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, and don't ask me again">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Refresh BibTeX key">
