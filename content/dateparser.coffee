@@ -37,6 +37,9 @@ normalize_edtf = (date) ->
       throw new Error("Unexpected season #{date.values[1]}") unless 21 <= date.values[1] <= 24
       return { type: 'season', year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - 21] }
 
+    when 'List'
+      return { type: 'list', dates: (normalize_edtf(date) for date in date.values) }
+
     else
       throw new Error(JSON.stringify(date))
 

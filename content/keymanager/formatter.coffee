@@ -66,6 +66,7 @@ class PatternFormatter
 
     if @item.date
       date = parseDate(@item.date)
+      date = date.dates[0] if date.type == 'list'
       date = (date.from || date.to) if date.type == 'interval'
 
       switch date?.type || 'verbatim'
