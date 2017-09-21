@@ -75,7 +75,7 @@ module.exports = [
       // new webpack.DefinePlugin({ global: {} })
       new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
-      new webpack.optimize.CommonsChunkPlugin({ name: 'common', filename: 'common.js' }),
+      new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
       /*
       new WrapperPlugin({
         test: /\.js$/, // only wrap output of bundle files with '.js' extension 
