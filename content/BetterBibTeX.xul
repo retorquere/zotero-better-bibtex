@@ -56,17 +56,6 @@
     / -->
   </treecols>
 
-  <deck id="zotero-items-pane-content">
-    <vbox id="zotero-items-pane-content-better-bibtex-locked" pack="center" align="center">
-      <label>Better BibTeX is loading...</label>
-    </vbox>
-  </deck>
-  <deck id="zotero-item-pane-content">
-    <vbox id="zotero-item-pane-content-better-bibtex-locked" pack="center" align="center">
-      <label>Better BibTeX is loading...</label>
-    </vbox>
-  </deck>
-
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
