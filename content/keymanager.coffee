@@ -52,9 +52,20 @@ class KeyManager
     return
   )
 
-  refresh: co((ids) ->
+  refresh: co((ids, warn) ->
     ids = @expandSelection(ids)
     debug('KeyManager.refresh', ids)
+
+    warn = if warn then Prefs.get('warnBulkModify') else 0
+    if warn > 0 && ids.length > warn
+      affected = @keys.find({ itemID: { $in: ids }, pinned: false }).length
+      if affected > warn
+        params = { treshold: warn, response: null }
+        window.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
+        switch params.response
+          when 'ok'       then
+          when 'whatever' then Prefs.set('warnBulkModify', 0)
+          else            return
 
     for item in yield getItemsAsync(ids)
       continue if item.isNote() || item.isAttachment()

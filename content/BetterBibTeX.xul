@@ -35,7 +35,7 @@
     <menuseparator/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
-    <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected');"/>
+    <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
     <menuseparator/>
     <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('items')"/>
   </menupopup>
