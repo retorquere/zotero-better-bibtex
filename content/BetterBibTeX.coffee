@@ -191,6 +191,9 @@ if !Zotero.BetterBibTeX
     notify: (action, type, ids, extraData) ->
       debug('item.notify', {action, type, ids, extraData})
 
+      # prevents update loop -- see KeyManager.init()
+      ids = (id for id in ids when !extraData[id]?.bbtCitekeyUpdate) if action == 'modify'
+
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
       # items = Zotero.Items.get(ids)

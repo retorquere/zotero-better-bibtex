@@ -118,6 +118,16 @@ class KeyManager
       return
     )
 
+    @keys.on(['insert', 'update'], (citekey) ->
+      extraData = {}
+      # prevents update loop -- see Zotero.Notifier.registerObserver in main
+      extraData[citekey.itemID] = { bbtCitekeyUpdate: true }
+
+      # update display panes
+      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], extraData)
+      return
+    )
+
     return
   )
 
