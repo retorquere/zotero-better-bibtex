@@ -1,48 +1,37 @@
 debug = require('./debug.coffee')
 
 KeyManager = require('./keymanager.coffee')
-DB = require('./db/main.coffee')
 
-id = 'zotero-better-bibtex-itempane-citekey'
+display = (itemID) ->
+  field = document.getElementById('better-bibtex-citekey-display')
+  debug('itemPane.display:', {changed: itemID, field: field.getAttribute('itemID')})
+  return unless field.getAttribute('itemID') == '' + itemID
 
-addCitekeyRow = (itemID) ->
-  if document.getElementById(id)
-    debug('ItemPane: citekey row already present')
-    return
+  citekey = KeyManager.get(itemID)
+  field.value = citekey.citekey
+  return
 
-  if !(display = document.getElementById(id))
-    template = document.getElementById(id + '-template')
-    row = template.cloneNode(true)
-    row.setAttribute('id', id + '-row')
-    row.setAttribute('hidden', false)
-    display = row.getElementsByClassName('better-bibtex-citekey-display')[0]
-    display.setAttribute('id', id)
+observer = null
+init = ->
+  observer ||= KeyManager.keys?.on(['update', 'insert'], (citekey) ->
+    debug('itemPane.update:', citekey)
+    return display(citekey.itemID)
+  )
+  return
 
-    fields = document.getElementById('dynamic-fields')
-    if fields.childNodes.length > 1
-      fields.insertBefore(row, fields.childNodes[1])
-    else
-      fields.appendChild(row)
+load = ->
+  init()
+  itemBox = document.getElementById('zotero-editpane-item-box')
+  citekeyBox = document.getElementById('better-bibtex-editpane-item-box')
 
-    debug('ItemPane: citekey row added')
-
-  if itemID?
-    try
-      citekey = KeyManager.get(itemID)
-      display.value = citekey.citekey
-      display.classList[if citekey.pinned then 'remove' else 'add']('citekey-dynamic')
+  if itemBox.parentNode != citekeyBox.parentNode
+    itemBox.parentNode.appendChild(citekeyBox.parentNode) # move the vbox into the tabbox
+    citekeyBox.parentNode.appendChild(itemBox) # move the itembox into the vbox
 
   return
 
-DOMObserver = null
-citekeys = DB.getCollection('citekey')
-citekeyObserver = null
-
-load = -> addCitekeyRow()
-
 unload = ->
-  DOMObserver.disconnect() if DOMObserver
-  citekeys.removeListener(citekeyObserver) if citekeys && citekeyObserver
+  KeyManager.keys?.removeListener(observer) if observer
   return
 
 if !ZoteroItemPane.BetterBibTeX
@@ -52,12 +41,10 @@ if !ZoteroItemPane.BetterBibTeX
     return Zotero.Promise.coroutine((item, mode, index) ->
       yield original.apply(@, arguments)
 
-      addCitekeyRow(item.id)
+      init()
 
-      DOMObserver.disconnect() if DOMObserver
-      DOMObserver = new MutationObserver((mutations) -> addCitekeyRow(item.id))
-      citekeys.removeListener(citekeyObserver) if citekeys && citekeyObserver
-      citekeyObserver = citekeys.on('update', (citekey) -> addCitekeyRow(item.id) if citekey.itemID == item.id) if citekeys
+      document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', '' + item.id)
+      display(item.id)
       return
     )
 
