@@ -4,11 +4,41 @@ const ConcatSource = require('webpack-sources').ConcatSource;
 const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers');
 const version = require('../version');
 const ejs = require('ejs');
+const fs = require('fs');
 
-var TranslatorHeaderPlugin = function (options) {
-  if (arguments.length > 1) throw new Error('TranslatorHeaderPlugin only takes one argument (pass an options object)')
-  this.options = options || {}
+var TranslatorHeaderPlugin = function (translator) {
+  this.translator = translator;
+  this.lastModified = new Date(0);
+  this.seen = {}
 }
+
+TranslatorHeaderPlugin.prototype.apply = function(compiler) {
+  var self = this;
+
+  compiler.plugin('after-compile', function(compilation, done) {
+    compilation.fileDependencies.forEach(function(dep) {
+      if (!self.seen[dep]) {
+        self.seen[dep] = true;
+        var stats = fs.statSync(dep);
+        if (stats.mtime > self.lastModified) {
+          self.lastModified = stats.mtime;
+        }
+      }
+    })
+    done();
+  });
+
+  compiler.plugin('emit', function(compilation, done) {
+    var header = require(__dirname + '/../../resource/' + self.translator + '.json')
+    header.lastUpdated = self.lastModified.toISOString().replace('T', ' ').replace(/\..*/, '');
+    var preferences = require(__dirname + '/../../defaults/preferences/defaults.json')
+    var asset = self.translator + '.js';
+    compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset])
+    done();
+  })
+}
+
+module.exports = TranslatorHeaderPlugin;
 
 const Header = `
 <%- JSON.stringify(header, null, 2) %>
@@ -74,29 +104,3 @@ var Translator = {
   }
 <% } %>
 `.trim();
-
-TranslatorHeaderPlugin.prototype.apply = function(compiler) {
-  var options = this.options;
-  var self = this;
-
-  compiler.plugin('compilation', function (compilation) {
-    compilation.plugin('optimize-chunk-assets', function (chunks, callback) {
-      for (let chunk of chunks) {
-        if ('isInitial' in chunk && !chunk.isInitial()) continue;
-
-        for (let file of chunk.files.filter(ModuleFilenameHelpers.matchObject.bind(undefined, options))) {
-          var header = require(__dirname + '/../../resource/' + file + 'on')
-          header.lastUpdated = new Date().toISOString().replace('T', ' ').replace(/\..*/, '');
-          header.inRepository = false;
-          var preferences = require(__dirname + '/../../defaults/preferences/defaults.json')
-
-          compilation.assets[file] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[file])
-        }
-      }
-
-      callback();
-    })
-  })
-}
-
-module.exports = TranslatorHeaderPlugin;

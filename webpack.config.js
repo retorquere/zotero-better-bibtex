@@ -29,7 +29,7 @@ if (!fs.existsSync(path.join(__dirname, 'gen'))) {
 
 console.log('generate translator list');
 var tr = {byId: {}, byName: {}, byLabel: {}};
-translators().forEach(header => {
+translators.forEach(header => {
   var header = require(path.join(__dirname, 'resource', header + '.json'));
   tr.byId[header.translatorID] = header;
   tr.byName[header.label] = header;
@@ -68,7 +68,7 @@ var common = {
   },
 }
 
-module.exports = [
+config = [
   // main app logic
   _.merge({}, common, {
     plugins: [
@@ -115,34 +115,6 @@ module.exports = [
     },
   }),
 
-  // translators
-  _.merge({}, common, {
-    plugins: [
-      /*
-      function() {
-        this.plugin("done", function(stats) {
-          require("fs").writeFileSync(path.join(__dirname, "stats.json"), JSON.stringify(stats.toJson()));
-        });
-      },
-      */
-      new CircularDependencyPlugin({ failOnError: true }),
-      new TranslatorHeaderPlugin()
-    ],
-    context: path.resolve(__dirname, './resource'),
-    entry: translators().reduce((entries, f) => {
-      var translator = f.replace(/\.json$/, '');
-      entries[translator] = `./${translator}.coffee`;
-      return entries
-    }, {}),
-    // devtool: '#source-map',
-    output: {
-      path: path.resolve(__dirname, './build/resource'),
-      filename: '[name].js',
-      devtoolLineToLine: true,
-      // sourceMapFilename: "./[name].js.map",
-      pathinfo: true,
-    },
-  }),
 
   /*
   // minitests
@@ -162,3 +134,29 @@ module.exports = [
   }),
   */
 ];
+
+translators.forEach(function(translator) {
+  translator = translator.replace(/\.json$/, '');
+  var entry = {}
+  entry[translator] = `./${translator}.coffee`;
+  config.push(
+    _.merge({}, common, {
+      plugins: [
+        new CircularDependencyPlugin({ failOnError: true }),
+        new TranslatorHeaderPlugin(translator)
+      ],
+      context: path.resolve(__dirname, './resource'),
+      entry: entry,
+
+      output: {
+        path: path.resolve(__dirname, './build/resource'),
+        filename: '[name].js',
+        devtoolLineToLine: true,
+        // sourceMapFilename: "./[name].js.map",
+        pathinfo: true,
+      },
+    }),
+  )
+})
+
+module.exports = config;
