@@ -10,8 +10,8 @@
 
   <tabpanels id="zotero-view-item">
     <tabpanel>
-      <vbox>
-        <grid flex="1" id="better-bibtex-editpane-item-box">
+      <vbox flex="1">
+        <grid id="better-bibtex-editpane-item-box" width="100px">
           <columns>
             <column/>
             <column flex="1"/>
