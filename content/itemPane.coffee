@@ -9,6 +9,9 @@ display = (itemID) ->
 
   citekey = KeyManager.get(itemID)
   field.value = citekey.citekey
+  className = (field.className || '').trim().split(/\s+/).filter((c) -> c != 'citekey-dynamic').join(' ')
+  className = "#{className} citekey-dynamic".trim() unless citekey.pinned
+  field.className = className
   return
 
 observer = null

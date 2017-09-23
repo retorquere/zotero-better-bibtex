@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <?xml-stylesheet href="chrome://zotero/skin/bindings/itembox.css" type="text/css"?>
 <?xml-stylesheet href="chrome://zotero-platform/content/itembox.css" type="text/css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/itembox.css" type="text/css"?>
 <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
