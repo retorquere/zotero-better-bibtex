@@ -34,11 +34,11 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "^5.2.2",
+    "ajv": "^5.2.3",
     "ajv-keywords": "^2.1.0",
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
-    "biblatex-csl-converter": "^1.1.0",
+    "biblatex-csl-converter": "^1.1.1",
     "edtf": "^2.2.2",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
@@ -55,7 +55,7 @@
     "xregexp": "^3.2.0"
   },
   "devDependencies": {
-    "@rgrove/parse-xml": "^1.1.0",
+    "@rgrove/parse-xml": "^1.1.1",
     "archiver": "^2.0.3",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.0",
@@ -81,7 +81,7 @@
     "pug": "^2.0.0-rc.4",
     "replace": "^0.3.0",
     "request": "^2.82.0",
-    "request-promise": "^4.2.1",
+    "request-promise": "^4.2.2",
     "shelljs": "^0.7.8",
     "uri-templates": "^0.2.0",
     "webpack": "^3.6.0",
