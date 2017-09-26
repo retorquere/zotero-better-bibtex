@@ -193,7 +193,7 @@ Translator.doExport = ->
 
     if item.pages
       pages = item.pages
-      pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') unless ref.raw
+      # pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--') unless ref.raw
       ref.add({ pages })
 
     if item.notes and Translator.options.exportNotes
