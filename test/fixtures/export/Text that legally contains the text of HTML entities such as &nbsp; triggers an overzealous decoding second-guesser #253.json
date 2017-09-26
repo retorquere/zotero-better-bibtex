@@ -10,7 +10,6 @@
       "langID": "babel",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "pinCitekeys": "on-change",
-      "rawImports": false,
       "DOIandURL": "doi",
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
