@@ -8,7 +8,6 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[auth]_[year]",
       "DOIandURL": "doi",
-      "rawImports": false,
       "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note"

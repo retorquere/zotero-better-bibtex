@@ -38,7 +38,7 @@ class Reference
 
     @fields = []
     @has = Object.create(null)
-    @raw = (Translator.preferences.rawLaTag in @item.tags)
+    @raw = Translator.preferences.rawLaTag == '*' || (Translator.preferences.rawLaTag in @item.tags)
     @data = {DeclarePrefChars: ''}
 
     if !@item.language

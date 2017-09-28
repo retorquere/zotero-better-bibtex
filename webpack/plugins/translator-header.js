@@ -73,7 +73,7 @@ var Translator = {
     // special handling
     this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\\s*,\\s*/).filter(function(s) { return s })
     this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\\s*,\\s*/).filter(function(s) { return s })
-    this.preferences.rawLaTag = '#LaTeX'
+    if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
     if (this.preferences.csquotes) {
       var i, csquotes = { open: '', close: '' }
       for (i = 0; i < this.preferences.csquotes.length; i++) {
