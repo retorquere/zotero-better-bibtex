@@ -48,7 +48,15 @@ When /^I set preference ([^\s]+) to (.*)$/ do |pref, value|
   setPreferences(prefs)
 end
 
-When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?: into (a new collection|"([^"]+)"))?$/ do |references, attachments, source, createNewCollection, collectionName|
+When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?: into (a new collection|"[^"]+"))?$/ do |references, attachments, source, collection|
+  if !collection
+    # pass
+  elsif collection[0] == '"'
+    collection = collection[1...-1]
+  else
+    collection = :new
+  end
+
   source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', source))
 
   if source =~ /\.json$/i
@@ -70,15 +78,14 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
 
   imported = nil
   Dir.mktmpdir{|dir|
-    createNewCollection = !!(createNewCollection || collectionName)
-    if collectionName
+    if collection.is_a?(String)
       orig = source
-      source = File.expand_path(File.join(dir, collectionName))
+      source = File.expand_path(File.join(dir, collection))
       FileUtils.cp(orig, source)
     end
     imported = execute(
       timeout: 240,
-      args: { filename: source, preferences: preferences, createNewCollection: createNewCollection },
+      args: { filename: source, preferences: preferences, createNewCollection: !!collection },
       script: 'return yield Zotero.BetterBibTeX.TestSupport.importFile(args.filename, args.createNewCollection, args.preferences)'
     )
   }
