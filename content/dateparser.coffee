@@ -45,16 +45,11 @@ normalize_edtf = (date) ->
 
 parse_edtf = (date) ->
   try
-    parsed = edtf.parse(edtfy(date.replace(/\. /, ' '))) # 8. july 2011
-  catch err
-    throw err unless err.name == 'SyntaxError' || err.token || err.message == 'Invalid year'
-    try
-      parsed = edtf.parse(date.replace('?~', '~').replace(/u/g, 'X'))
-    catch err
-      throw err unless err.name == 'SyntaxError' || err.token
-      return false
+    return normalize_edtf(edtf.parse(edtfy(date.replace(/\. /, ' ')))) # 8. july 2011
+  try
+    return normalize_edtf(edtf.parse(date.replace('?~', '~').replace(/u/g, 'X')))
 
-  return normalize_edtf(parsed)
+  return false
 
 parse = (raw) ->
   debug('dateparser: parsing', raw)
@@ -91,6 +86,12 @@ parse = (raw) ->
 #    month = months.english.indexOf(m[1]) + 1
 #    month += 8 if month > 12
 #    return { type: 'date', year, month }
+
+  if m = /^(-?[0-9]{3,})-([0-9]{2})-([0-9]{2})T/.exec(trimmed)
+    year = parseInt(m[1])
+    month = parseInt(m[2])
+    day = parseInt(m[3])
+    return { type: 'date', year, month, day }
 
   if m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)
     year = parseInt(m[1])
