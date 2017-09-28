@@ -116,8 +116,14 @@ DB = new Loki('better-bibtex', {
   autoexport: {
     proto: Object,
     inflate: (src, dest) ->
+      debug('AutoExport: inflating', src)
       Object.assign(dest, src)
-      dest.updated = new Date(updated) if !isNaN(updated = Date.parse(dest.updated))
+      updated = Date.parse(dest.updated)
+      if isNaN(updated)
+        delete dest.updated
+      else
+        dest.updated = new Date(updated)
+      debug('AutoExport: inflated', dest)
       return
   }
 })
