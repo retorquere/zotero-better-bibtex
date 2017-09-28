@@ -117,7 +117,7 @@ DB = new Loki('better-bibtex', {
     proto: Object,
     inflate: (src, dest) ->
       Object.assign(dest, src)
-      dest.updated = Date.parse(dest.updated) if dest.updated
+      dest.updated = new Date(updated) if !isNaN(updated = Date.parse(dest.updated))
       return
   }
 })
