@@ -120,19 +120,16 @@ DB.init = Zotero.Promise.coroutine(->
     autoexport: {
       inflate: (src, dest) ->
         dest ||= {}
-        debug('AutoExport: inflating', src, 'to', dest)
         Object.assign(dest, src)
         updated = Date.parse(dest.updated)
         if isNaN(updated)
           delete dest.updated
         else
           dest.updated = new Date(updated)
-        debug('AutoExport: inflated', dest)
         return dest
     }
   })
 
-  debug('before DB schemaCollection:', { keys: DB.getCollection('citekey') })
   DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
@@ -152,7 +149,6 @@ DB.init = Zotero.Promise.coroutine(->
       additionalProperties: false
     }
   })
-  debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
