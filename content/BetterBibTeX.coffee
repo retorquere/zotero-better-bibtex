@@ -361,7 +361,12 @@ if !Zotero.BetterBibTeX
         items = { library: pane.getSelectedLibraryID() } unless items.collection
 
       when 'items'
-        items = { items: pane.getSelectedItems() }
+        try
+          items = { items: pane.getSelectedItems() }
+        catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+          debug('Could not get selected items:', err)
+          items = {}
+
         items = null unless items.items && items.items.length
 
     params = {wrappedJSObject: { items }}

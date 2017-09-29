@@ -83,8 +83,11 @@ class KeyManager
     return ids if Array.isArray(ids)
 
     if ids == 'selected'
-      pane = Zotero.getActiveZoteroPane()
-      items = pane.getSelectedItems()
+      try
+        items = Zotero.getActiveZoteroPane().getSelectedItems(true)
+      catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        items = []
       return (item.id for item in (items || []))
 
     return [ids]
@@ -141,8 +144,6 @@ class KeyManager
       return
 
     @scanning = true
-
-    flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
 
     if clean
       @keys.removeDataOnly()
