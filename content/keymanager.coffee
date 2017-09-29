@@ -142,8 +142,6 @@ class KeyManager
 
     @scanning = true
 
-    flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
-
     if clean
       @keys.removeDataOnly()
 #    else
