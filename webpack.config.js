@@ -64,6 +64,8 @@ var common = {
       { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } }, 'wrap-loader' ] },
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
+      // { enforce: 'pre', test: /\.ts$/, exclude: /node_modules/, use: 'tslint-loader' },
+      { test: /\.ts$/, exclude: [ /node_modules/ ], use: 'ts-loader' }
     ]
   },
 }

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+		"disableSizeLimit": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": false,
+    "sourceMap": false,
+		"downlevelIteration": true
+  }
+}

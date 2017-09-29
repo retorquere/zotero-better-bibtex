@@ -8,6 +8,7 @@ function include(file) {
   switch (path.extname(file).toLowerCase()) {
     case '.json':
     case '.coffee':
+    case '.ts':
     case '.pegjs':
       return false;
   }
