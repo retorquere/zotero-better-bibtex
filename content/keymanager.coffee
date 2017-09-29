@@ -84,11 +84,10 @@ class KeyManager
 
     if ids == 'selected'
       try
-        items = Zotero.getActiveZoteroPane().getSelectedItems(true)
+        return Zotero.getActiveZoteroPane().getSelectedItems(true)
       catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
         debug('Could not get selected items:', err)
-        items = []
-      return (item.id for item in (items || []))
+        return []
 
     return [ids]
 
