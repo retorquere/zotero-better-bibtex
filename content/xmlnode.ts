@@ -4,12 +4,9 @@ const serializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].
 const nsiDocument = Components.classes['@mozilla.org/xul/xul-document;1'].getService(Components.interfaces.nsIDOMDocument);
 
 class XmlNode {
-  namespace: string;
-  root: any;
-  doc: any;
-  Node: any;
+  private Node: any;
 
-  constructor(namespace, root, doc) {
+  constructor(private namespace: string, private root: any, private doc: any) {
     this.namespace = namespace;
     this.root = root;
     this.doc = doc;
@@ -23,7 +20,7 @@ class XmlNode {
 
   alias(names) {
     for (let name of names) {
-      this.Node.prototype[name] = (name => function(...v) { return XmlNode.prototype.add.apply(this, [{[name]: v[0]}].concat(v.slice(1))); })(name);
+      this.Node.prototype[name] = ((name) => function(...v) { return XmlNode.prototype.add.apply(this, [{[name]: v[0]}].concat(v.slice(1))); })(name);
     }
   }
 
@@ -54,7 +51,7 @@ class XmlNode {
         attrs = content[0][name];
         if (name === '') { continue; }
         // @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
-        node = this.doc['createElementNS'](this.namespace, name);
+        node = this.doc.createElementNS(this.namespace, name);
         this.root.appendChild(node);
         content = [attrs].concat(content.slice(1));
         break;

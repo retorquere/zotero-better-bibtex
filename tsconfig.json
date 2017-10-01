@@ -1,11 +1,21 @@
 {
   "compilerOptions": {
-		"disableSizeLimit": true,
+    "disableSizeLimit": true,
     "module": "commonjs",
     "noImplicitAny": false,
     "removeComments": false,
     "preserveConstEnums": false,
     "sourceMap": false,
-		"downlevelIteration": true
-  }
+    "downlevelIteration": true
+  },
+  "include": [
+    "content/**/*",
+    "resource/**/*",
+    "minitests/**/*",
+    "webpack/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

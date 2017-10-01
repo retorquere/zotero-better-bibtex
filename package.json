@@ -18,7 +18,7 @@
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
-    "lint": "coffeelint content resource minitests webpack",
+    "lint": "coffeelint content resource minitests webpack && tslint --project .",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && webpack",
     "postbuild": "node webpack/scripts/zipup.js build zotero-better-bibtex && node webpack/scripts/zipup.js test/fixtures/debug-bridge debug-bridge",
@@ -84,6 +84,8 @@
     "request-promise": "^4.2.2",
     "shelljs": "^0.7.8",
     "ts-loader": "^2.3.7",
+    "tslint": "^5.7.0",
+    "tslint-loader": "^3.5.3",
     "typescript": "^2.5.3",
     "uri-templates": "^0.2.0",
     "webpack": "^3.6.0",
