@@ -1,0 +1,43 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+      "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+      "max-line-length": [true, 240],
+      "prefer-const": [true, {"destructuring": "all"}],
+      "member-ordering": "statics-first",
+      "no-magic-numbers": true,
+      "prefer-for-of": true,
+      "no-duplicate-variable": true,
+      "no-string-throw": true,
+      "no-unused-variable": [true, {"ignore-pattern": "^_"}],
+      "no-use-before-declare": true,
+      "no-var-keyword": true,
+      "prefer-object-spread": true,
+      "triple-equals": [true, "allow-undefined-check", "allow-null-check"],
+      "typeof-compare": true,
+      "indent": [true, "spaces", 2],
+      "linebreak-style": [true, "LF"],
+      "eofline": true,
+      "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
+      "arrow-parens": [true, "ban-single-arg-parens"],
+      "arrow-return-shorthand": true,
+      "binary-expression-operand-order": true,
+      "class-name": true,
+      "no-irregular-whitespace": true,
+      "no-trailing-whitespace": [true, "ignore-jsdoc", "ignore-template-strings"],
+      "no-unnecessary-callback-wrapper": true,
+      "object-literal-key-quotes": [true, "as-needed"],
+      "object-literal-shorthand": true,
+      "one-line": [true, "check-catch", "check-finally", "check-else", "check-open-brace"],
+      "prefer-template": [true, "allow-single-concat"],
+      "semicolon": [true, "never"],
+      "space-before-function-paren": [true, "never"],
+      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ]
+    },
+    "rulesDirectory": [],
+    "doc": "https://palantir.github.io/tslint/rules/"
+}

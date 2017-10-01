@@ -16,18 +16,17 @@ class XmlNode {
     }
   }
 
-  serialize() { return serializer.serializeToString(this.doc); }
+  public serialize() { return serializer.serializeToString(this.doc); }
 
-  alias(names) {
-    for (let name of names) {
-      this.Node.prototype[name] = ((name) => function(...v) { return XmlNode.prototype.add.apply(this, [{[name]: v[0]}].concat(v.slice(1))); })(name);
+  public alias(names) {
+    for (const name of names) {
+      this.Node.prototype[name] = (n => function(...v) { return XmlNode.prototype.add.apply(this, [{[n]: v[0]}].concat(v.slice(1))); })(name);
     }
   }
 
-  set(node, ...attrs) {
-    for (let attr of attrs) {
-      for (let name in attr) {
-        const value = attr[name];
+  private set(node, ...attrs) {
+    for (const attr of attrs) {
+      for (const [name, value] of attr) {
         switch (false) {
           case typeof value !== 'function':
             value.call(new this.Node(this.namespace, node, this.doc));
@@ -44,14 +43,12 @@ class XmlNode {
     }
   }
 
-  add(...content) {
-    let attrs, node;
+  private add(...content) {
     if (typeof content[0] === 'object') {
-      for (let name of Object.keys(content[0])) {
-        attrs = content[0][name];
+      for (const [name, attrs] of content[0]) {
         if (name === '') { continue; }
         // @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
-        node = this.doc.createElementNS(this.namespace, name);
+        const node = this.doc.createElementNS(this.namespace, name);
         this.root.appendChild(node);
         content = [attrs].concat(content.slice(1));
         break;
@@ -59,7 +56,7 @@ class XmlNode {
     }
     if (!node) { node = this.root; }
 
-    content = content.filter((c) => (typeof c === 'number') || c);
+    content = content.filter(c => (typeof c === 'number') || c);
 
     for (attrs of content) {
       switch (false) {

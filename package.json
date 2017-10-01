@@ -18,7 +18,9 @@
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
-    "lint": "coffeelint content resource minitests webpack && tslint --project .",
+    "coffeelint": "coffeelint content resource minitests webpack",
+    "tslint": "tslint -t stylish --project .",
+    "lint" : "npm run coffeelint && npm run tslint",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && webpack",
     "postbuild": "node webpack/scripts/zipup.js build zotero-better-bibtex && node webpack/scripts/zipup.js test/fixtures/debug-bridge debug-bridge",
