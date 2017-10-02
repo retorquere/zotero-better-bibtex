@@ -79,7 +79,7 @@ class XUL extends XmlNode
   constructor: (@namespace, @root, @doc) ->
     super(@namespace, @root, @doc)
 
-  Node: XUL
+  NODE: XUL
 
   XUL::alias(['treerow', 'treeitem', 'treecell', 'treechildren', 'listitem'])
 

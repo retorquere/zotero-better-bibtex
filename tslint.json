@@ -36,7 +36,8 @@
       "prefer-template": [true, "allow-single-concat"],
       "semicolon": [true, "never"],
       "space-before-function-paren": [true, "never"],
-      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ]
+      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ],
+      "curly": [true, "ignore-same-line"]
     },
     "rulesDirectory": [],
     "doc": "https://palantir.github.io/tslint/rules/"
