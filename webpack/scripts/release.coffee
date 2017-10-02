@@ -80,7 +80,10 @@ do Bluebird.coroutine(->
   if process.env.CIRCLE_TAG
     if release.current
       console.log("release #{process.env.CIRCLE_TAG} exists, bailing")
-      process.exit(1)
+      if process.env.NIGHTLY == 'true'
+        process.exit(0)
+      else
+        process.exit(1)
 
     if !release.static
       console.log("No release found to hold release pointers, bailing")
