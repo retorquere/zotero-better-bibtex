@@ -4,7 +4,6 @@ zotero_config = require('./zotero-config.coffee')
 Prefs = require('./prefs.coffee')
 Formatter = require('./keymanager/formatter.coffee')
 KeyManager = require('./keymanager.coffee')
-XmlNode = require('./xmlnode.ts')
 AutoExport = require('./auto-export.coffee')
 Translators = require('./translators.coffee')
 
@@ -57,31 +56,27 @@ class AutoExportPrefPane
     while exportlist.firstChild
       exportlist.removeChild(exportlist.firstChild)
 
-    tree = new XUL('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', exportlist, document)
-
+    ns = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     for ae in AutoExport.db.chain().simplesort('path').data()
-      debug('refresh:', {id: ae.$loki, status: ae.status})
-      tree.treeitem({autoexport: "#{ae.$loki}", '': ->
-        return @treerow(->
-          updated = if ae.updated then " (#{ae.updated})" else ''
-          @treecell({editable: 'false', label: "#{ae.type}: #{AutoExportName(ae)}"})
-          @treecell({editable: 'false', label: "#{ae.status}#{updated}", tooltiptext: ae.error })
-          @treecell({editable: 'false', label: ae.path})
-          @treecell({editable: 'false', label: Translators.byId[ae.translatorID]?.label || '??'})
-          @treecell({editable: 'false', label: '' + ae.useJournalAbbreviation})
-          @treecell({editable: 'false', label: '' + ae.exportNotes})
-          return
-        )
-      })
+      treeitem = exportlist.appendChild(document.createElementNS(ns, 'treeitem'))
+      treeitem.setAttribute('autoexport', "#{ae.$loki}")
+
+      cells = [
+        { label: "#{ae.type}: #{AutoExportName(ae)}" }
+        { label: ae.status + (if ae.updated then " (#{ae.updated})" else ''), tooltip: ae.error }
+        { label: ae.path.replace(/.*[\\\/]/, ''), tooltip: ae.path }
+        { label: Translators.byId[ae.translatorID]?.label || '??' }
+        { label: '' + ae.useJournalAbbreviation }
+        { label: '' + ae.exportNotes }
+      ]
+      debug('Preferences.AutoExport.refresh:', cells)
+      for cell in cells
+        treecell = treeitem.appendChild(document.createElementNS(ns, 'treecell'))
+        treecell.setAttribute('editable', 'false')
+        treecell.setAttribute('label', cell.label)
+        treecell.setAttribute('tooltiptext', cell.tooltip) if cell.tooltip
+
     return
-
-class XUL extends XmlNode
-  constructor: (@namespace, @root, @doc) ->
-    super(@namespace, @root, @doc)
-
-  NODE: XUL
-
-  XUL::alias(['treerow', 'treeitem', 'treecell', 'treechildren', 'listitem'])
 
 class PrefPane
   load: ->
