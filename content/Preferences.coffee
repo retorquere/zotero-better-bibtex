@@ -53,14 +53,14 @@ class AutoExportPrefPane
       return
 
     return unless exportlist = document.getElementById('better-bibtex-auto-exports')
-    while exportlist.firstChild
+    while exportlist.hasChildNodes()
       exportlist.removeChild(exportlist.firstChild)
 
-    ns = 'http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul'
     for ae in AutoExport.db.chain().simplesort('path').data()
-      treeitem = exportlist.appendChild(document.createElementNS(ns, 'treeitem'))
+      treeitem = exportlist.appendChild(document.createElement('treeitem'))
       treeitem.setAttribute('autoexport', "#{ae.$loki}")
 
+      treerow = treeitem.appendChild(document.createElement('treerow'))
       cells = [
         { label: "#{ae.type}: #{AutoExportName(ae)}" }
         { label: ae.status + (if ae.updated then " (#{ae.updated})" else ''), tooltip: ae.error }
@@ -69,9 +69,9 @@ class AutoExportPrefPane
         { label: '' + ae.useJournalAbbreviation }
         { label: '' + ae.exportNotes }
       ]
-      debug('Preferences.AutoExport.refresh:', cells)
       for cell in cells
-        treecell = treeitem.appendChild(document.createElementNS(ns, 'treecell'))
+        debug('Preferences.AutoExport.refresh:', cell)
+        treecell = treerow.appendChild(document.createElement('treecell'))
         treecell.setAttribute('editable', 'false')
         treecell.setAttribute('label', cell.label)
         treecell.setAttribute('tooltiptext', cell.tooltip) if cell.tooltip
