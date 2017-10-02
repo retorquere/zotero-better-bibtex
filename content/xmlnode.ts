@@ -29,7 +29,7 @@ class XmlNode {
       for (const [name, value] of attr) {
         switch (false) {
           case typeof value !== 'function':
-            value.call(new this.Node(this.namespace, node, this.doc))
+            value.call(new this.NODE(this.namespace, node, this.doc))
             break
 
           case name !== '':
@@ -45,12 +45,14 @@ class XmlNode {
   }
 
   private add(...content) {
+    let node
+
     if (typeof content[0] === 'object') {
       for (const [name, attrs] of content[0]) {
         if (name === '') continue
 
         // @doc['createElementNS'] rather than @doc.createElementNS because someone thinks there's a relevant difference
-        const node = this.doc.createElementNS(this.namespace, name)
+        node = this.doc.createElementNS(this.namespace, name)
         this.root.appendChild(node)
         content = [attrs].concat(content.slice(1))
         break
@@ -60,14 +62,14 @@ class XmlNode {
 
     content = content.filter(c => (typeof c === 'number') || c)
 
-    for (attrs of content) {
+    for (const attrs of content) {
       switch (false) {
         case typeof attrs !== 'string':
           node.appendChild(this.doc.createTextNode(attrs))
           break
 
         case typeof attrs !== 'function':
-          attrs.call(new this.Node(this.namespace, node, this.doc))
+          attrs.call(new this.NODE(this.namespace, node, this.doc))
           break
 
         case !attrs.appendChild:
