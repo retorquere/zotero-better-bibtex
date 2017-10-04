@@ -5,7 +5,7 @@ ETA = require('node-eta')
 
 co = Zotero.Promise.coroutine
 
-getItemsAsync = require('./get-items-async.coffee')
+getItemsAsync = require('./get-items-async.ts')
 
 Prefs = require('./prefs.coffee')
 Citekey = require('./keymanager/get-set.coffee')

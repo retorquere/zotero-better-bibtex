@@ -6,7 +6,8 @@
     "removeComments": false,
     "preserveConstEnums": false,
     "sourceMap": false,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "lib": [ "es2015" ]
   },
   "include": [
     "content/**/*",
