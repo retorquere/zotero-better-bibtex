@@ -1,5 +1,5 @@
 stringify = require('json-stringify-safe')
-format = require('../../content/debug-formatter.coffee')
+format = require('../../content/debug-formatter.ts')
 
 module.exports = (msg...) ->
   return unless Translator.debugEnabled || Translator.preferences.testing

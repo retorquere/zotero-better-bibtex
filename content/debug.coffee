@@ -1,5 +1,5 @@
 stringify = require('json-stringify-safe')
-format = require('./debug-formatter.coffee')
+format = require('./debug-formatter.ts')
 
 module.exports = (msg...) ->
   return unless Zotero.Debug.enabled
