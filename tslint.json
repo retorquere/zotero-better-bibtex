@@ -23,7 +23,7 @@
       "linebreak-style": [true, "LF"],
       "eofline": true,
       "trailing-comma": [true, {"multiline": "always", "singleline": "never"}],
-      "arrow-parens": [true, "ban-single-arg-parens"],
+      "arrow-parens": [true],
       "arrow-return-shorthand": true,
       "binary-expression-operand-order": true,
       "class-name": true,
@@ -37,7 +37,8 @@
       "semicolon": [true, "never"],
       "space-before-function-paren": [true, "never"],
       "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ],
-      "curly": [true, "ignore-same-line"]
+      "curly": [true, "ignore-same-line"],
+      "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"]
     },
     "rulesDirectory": [],
     "doc": "https://palantir.github.io/tslint/rules/"
