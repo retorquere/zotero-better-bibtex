@@ -1,5 +1,5 @@
 abbrevs = require('./journal-abbrev.coffee')
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 debug('Serializer loading...')
 

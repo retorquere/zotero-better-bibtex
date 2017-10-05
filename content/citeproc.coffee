@@ -1,5 +1,5 @@
 citeproc = require('../citeproc-js/citeproc').CSL
-citeproc.debug = require('./debug.coffee')
+citeproc.debug = require('./debug.ts')
 
 #locales = require('../gen/csl-locales.json')
 #for _, months of locales.months

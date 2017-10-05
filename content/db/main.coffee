@@ -1,5 +1,5 @@
 Loki = require('./loki.coffee')
-debug = require('../debug.coffee')
+debug = require('../debug.ts')
 Prefs = require('../prefs.coffee')
 
 if Prefs.get('testing')

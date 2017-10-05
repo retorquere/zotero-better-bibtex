@@ -3,7 +3,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 module.exports = Zotero.BetterBibTeX || {}
 
 if !Zotero.BetterBibTeX
-  debug = require('./debug.coffee')
+  debug = require('./debug.ts')
   flash = require('./flash.coffee')
   edtf = require('edtf')
   events = require('./events.coffee')

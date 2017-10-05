@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 Queue = require('better-queue')
 MemoryStore = require('better-queue-memory')

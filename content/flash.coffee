@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 module.exports = (title, body, timeout = 8) ->
   try

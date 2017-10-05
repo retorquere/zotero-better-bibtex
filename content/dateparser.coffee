@@ -1,6 +1,6 @@
 edtf = require('edtf')
 edtfy = require('edtfy')
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 escapeStringRegexp = require('escape-string-regexp')
 
 months = require('../gen/dateparser-data.json')

@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 Components.utils.import("resource://gre/modules/Services.jsm")
 

@@ -1,6 +1,6 @@
 flash = require('../flash.coffee')
 Prefs = require('../prefs.coffee')
-debug = require('../debug.coffee')
+debug = require('../debug.ts')
 
 parser = require('./formatter.pegjs')
 parseDate = require('../dateparser.coffee')

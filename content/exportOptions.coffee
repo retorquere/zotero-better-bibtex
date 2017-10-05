@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 DOMobserver = null
 reset = true

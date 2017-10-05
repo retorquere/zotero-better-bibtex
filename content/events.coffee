@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 EventEmitter = require('eventemitter4')
 emitter = new EventEmitter()
 

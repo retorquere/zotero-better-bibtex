@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 flash = require('./flash.coffee')
 events = require('./events.coffee')
 ETA = require('node-eta')

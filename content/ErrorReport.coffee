@@ -1,7 +1,7 @@
 getAddons = require('./addons.coffee')
 Prefs = require('./prefs.coffee')
 Translators = require('./translators.coffee')
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 Package = require('../package.json')
 
 class ErrorReport

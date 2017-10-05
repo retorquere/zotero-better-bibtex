@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 
 module.exports = (paths...) ->
   throw new Error('no path specified') if paths.length == 0

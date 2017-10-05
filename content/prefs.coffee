@@ -1,4 +1,4 @@
-debug = require('./debug.coffee')
+debug = require('./debug.ts')
 events = require('./events.coffee')
 zotero_config = require('./zotero-config.coffee')
 
