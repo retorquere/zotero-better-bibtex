@@ -130,7 +130,7 @@ if !Zotero.BetterBibTeX
   ### bugger this, I don't want megabytes of shared code in the translators ###
   parseDate = require('./dateparser.ts')
   CiteProc = require('./citeproc.ts')
-  titleCase = require('./title-case.coffee')
+  titleCase = require('./title-case.ts')
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {
     parseDate: (sandbox, date) -> parseDate(date)
     isEDTF: (sandbox, date) ->
