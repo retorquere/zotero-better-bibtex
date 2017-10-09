@@ -23,7 +23,7 @@ if !Zotero.BetterBibTeX
   Serializer = require('./serializer.coffee')
   Citekey = require('./keymanager/get-set.coffee')
   JournalAbbrev = require('./journal-abbrev.coffee')
-  AutoExport = require('./auto-export.coffee')
+  AutoExport = require('./auto-export.ts')
 
   module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
 

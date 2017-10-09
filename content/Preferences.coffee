@@ -4,7 +4,7 @@ zotero_config = require('./zotero-config.coffee')
 Prefs = require('./prefs.coffee')
 Formatter = require('./keymanager/formatter.coffee')
 KeyManager = require('./keymanager.coffee')
-AutoExport = require('./auto-export.coffee')
+AutoExport = require('./auto-export.ts')
 Translators = require('./translators.coffee')
 
 AutoExportName = (ae, full) ->

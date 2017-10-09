@@ -3,7 +3,7 @@ debug = require('../debug.ts')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')
 Translators = require('../translators.coffee')
-AutoExport = require('../auto-export.coffee')
+AutoExport = require('../auto-export.ts')
 
 module.exports =
   reset: co(->
