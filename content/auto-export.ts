@@ -39,10 +39,10 @@ const scheduled = new Queue(
         let items
         switch (ae.type) {
           case 'collection':
-            items = { collection: ae.  id }
+            items = { collection: ae.id }
             break
           case 'library':
-            items = { library: ae.  id }
+            items = { library: ae.id }
             break
           default:
             items = null
