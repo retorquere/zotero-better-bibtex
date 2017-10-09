@@ -35,7 +35,7 @@
       "object-literal-shorthand": true,
       "one-line": [true, "check-catch", "check-finally", "check-else", "check-open-brace"],
       "prefer-template": [true, "allow-single-concat"],
-      "semicolon": [true, "always"],
+      "semicolon": [true, "never"],
       "space-before-function-paren": [true, "never"],
       "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ],
       "curly": [true, "ignore-same-line"],
