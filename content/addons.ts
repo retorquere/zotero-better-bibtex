@@ -13,7 +13,7 @@ const types = {
   256:  'WebExtension experiment',
 }
 
-module.exports = function getAddons() {
+export = function getAddons() {
   return new Promise((resolve, reject) => {
     AddonManager.getAllAddons(addons => {
       try {

@@ -1,4 +1,5 @@
 declare const Zotero: any
+declare const Components: any
 
 const debug = require('./debug.ts')
 
@@ -199,4 +200,4 @@ class AutoExport {
   }
 }
 
-module.exports = new AutoExport()
+export = new AutoExport()

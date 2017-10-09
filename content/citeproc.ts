@@ -7,4 +7,4 @@ for _, months of locales.months
   citeproc.DateParser.addDateParserMonths(months)
 */
 
-module.exports = citeproc
+export = citeproc
