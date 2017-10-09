@@ -1,4 +1,4 @@
-getAddons = require('./addons.coffee')
+getAddons = require('./addons.ts')
 Prefs = require('./prefs.coffee')
 Translators = require('./translators.coffee')
 debug = require('./debug.ts')
