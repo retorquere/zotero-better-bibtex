@@ -5,18 +5,22 @@ checkout:
     - git submodule sync
     - git submodule update --init --recursive
 machine:
+  environment:
+    PATH: "${PATH}:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
   ruby:
     version: '2.4.1'
   node:
     version: '8.2.1'
 dependencies:
+  override:
+    - yarn
   pre:
   - |-
-    node -v
     mkdir -p ~/downloads
   cache_directories:
   - citeproc-js
   - ~/downloads
+  - ~/.cache/yarn
 test:
   override:
   - ? |-
@@ -41,8 +45,7 @@ test:
       export LOGS=$CIRCLE_ARTIFACTS
       gem install bundler
       bundle update
-      npm i -g npm
-      npm install
+      yarn install
       bundle exec cucumber --strict $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
@@ -58,4 +61,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - npm run release
+    - yarn run release

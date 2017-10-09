@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "importHelpers": true,
     "target": "es5",
     "disableSizeLimit": true,
     "module": "commonjs",
@@ -8,7 +9,7 @@
     "preserveConstEnums": false,
     "sourceMap": false,
     "downlevelIteration": true,
-    "lib": [ "es2015" ]
+    "lib": [ "es7" ]
   },
   "include": [
     "content/**/*",

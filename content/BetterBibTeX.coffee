@@ -128,7 +128,7 @@ if !Zotero.BetterBibTeX
   )(Zotero.ItemTreeView::getCellText)
 
   ### bugger this, I don't want megabytes of shared code in the translators ###
-  parseDate = require('./dateparser.coffee')
+  parseDate = require('./dateparser.ts')
   CiteProc = require('./citeproc.coffee')
   titleCase = require('./title-case.coffee')
   Zotero.Translate.Export::Sandbox.BetterBibTeX = {

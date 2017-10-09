@@ -3,7 +3,7 @@ Prefs = require('../prefs.coffee')
 debug = require('../debug.ts')
 
 parser = require('./formatter.pegjs')
-parseDate = require('../dateparser.coffee')
+parseDate = require('../dateparser.ts')
 transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
