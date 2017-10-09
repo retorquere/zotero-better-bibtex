@@ -14,6 +14,7 @@ machine:
 dependencies:
   override:
     - yarn
+    - yarn install
   pre:
   - |-
     mkdir -p ~/downloads
