@@ -11,7 +11,7 @@ if !Zotero.BetterBibTeX
 
   debug('Loading Better BibTeX')
 
-  Prefs = require('./prefs.coffee') # needs to be here early, initializes the prefs observer
+  Prefs = require('./prefs.ts') # needs to be here early, initializes the prefs observer
 
   # TODO: remove after beta
   Zotero.Prefs.get('debug.store', true)

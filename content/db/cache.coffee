@@ -7,7 +7,7 @@ zotero_config = require('../zotero-config.coffee')
 version = require('../../gen/version.js')
 Translators = require('../../gen/translators.json')
 
-Prefs = require('../prefs.coffee')
+Prefs = require('../prefs.ts')
 
 if Prefs.get('testing')
   stringify = (data) -> JSON.stringify(data, null, 2)

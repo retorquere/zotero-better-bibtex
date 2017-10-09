@@ -3,7 +3,7 @@ Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 Ajv = require('ajv')
 Loki = require('lokijs')
 debug = require('../debug.ts')
-Prefs = require('../prefs.coffee')
+Prefs = require('../prefs.ts')
 
 validator = new Ajv({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)
