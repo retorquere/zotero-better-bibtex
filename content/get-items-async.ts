@@ -1,16 +1,16 @@
-declare const Zotero: any
+declare const Zotero: any;
 
 // TODO: change to export default
 export = async function getItemsAsync(ids) {
-  let returnSingle
+  let returnSingle;
   if (Array.isArray(ids)) {
-    returnSingle = false
+    returnSingle = false;
   } else {
-    returnSingle = true
-    ids = [ids]
+    returnSingle = true;
+    ids = [ids];
   }
 
-  let items = await Zotero.Items.getAsync(ids)
+  let items = await Zotero.Items.getAsync(ids);
 
   /*
     because getAsync isn't "same as get but asynchronously" but "sort
@@ -22,9 +22,9 @@ export = async function getItemsAsync(ids) {
     https://groups.google.com/d/msg/zotero-dev/naAxXIbpDhU/iSLpXo-UBQAJ
   */
   for (const item of items) {
-    await item.loadAllData()
+    await item.loadAllData();
   }
 
-  if (returnSingle) items = items[0]
-  return items
-}
+  if (returnSingle) items = items[0];
+  return items;
+};
