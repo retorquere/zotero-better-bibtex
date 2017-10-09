@@ -2,7 +2,7 @@ declare const Components: any
 declare const Zotero: any
 
 const debug = require('./debug.ts')
-const events = require('./events.coffee')
+const events = require('./events.ts')
 const zoteroCconfig = require('./zotero-config.ts')
 
 class Preferences {

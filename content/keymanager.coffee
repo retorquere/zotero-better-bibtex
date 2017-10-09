@@ -1,6 +1,6 @@
 debug = require('./debug.ts')
 flash = require('./flash.ts')
-events = require('./events.coffee')
+events = require('./events.ts')
 ETA = require('node-eta')
 
 co = Zotero.Promise.coroutine

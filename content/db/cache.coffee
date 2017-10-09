@@ -1,7 +1,7 @@
 createFile = require('../create-file.ts')
 Loki = require('./loki.coffee')
 debug = require('../debug.ts')
-events = require('../events.coffee')
+events = require('../events.ts')
 zoteroCconfig = require('../zotero-config.ts')
 
 version = require('../../gen/version.js')

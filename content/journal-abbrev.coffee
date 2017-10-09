@@ -1,6 +1,6 @@
 Prefs = require('./prefs.ts')
 debug = require('./debug.ts')
-events = require('./events.coffee')
+events = require('./events.ts')
 zoteroCconfig = require('./zotero-config.ts')
 
 class JournalAbbrev

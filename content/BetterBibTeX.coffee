@@ -6,7 +6,7 @@ if !Zotero.BetterBibTeX
   debug = require('./debug.ts')
   flash = require('./flash.ts')
   edtf = require('edtf')
-  events = require('./events.coffee')
+  events = require('./events.ts')
   zoteroCconfig = require('./zotero-config.ts')
 
   debug('Loading Better BibTeX')
