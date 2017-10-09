@@ -1,4 +1,4 @@
-flash = require('../flash.coffee')
+flash = require('../flash.ts')
 Prefs = require('../prefs.ts')
 debug = require('../debug.ts')
 

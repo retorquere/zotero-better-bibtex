@@ -4,7 +4,7 @@ module.exports = Zotero.BetterBibTeX || {}
 
 if !Zotero.BetterBibTeX
   debug = require('./debug.ts')
-  flash = require('./flash.coffee')
+  flash = require('./flash.ts')
   edtf = require('edtf')
   events = require('./events.coffee')
   zoteroCconfig = require('./zotero-config.ts')
