@@ -1,4 +1,4 @@
-citeproc = require('./citeproc.coffee')
+citeproc = require('./citeproc.ts')
 
 state = {
   opt: { lang: 'en' },
