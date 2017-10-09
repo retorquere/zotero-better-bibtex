@@ -7,7 +7,7 @@ if !Zotero.BetterBibTeX
   flash = require('./flash.coffee')
   edtf = require('edtf')
   events = require('./events.coffee')
-  zotero_config = require('./zotero-config.coffee')
+  zoteroCconfig = require('./zotero-config.ts')
 
   debug('Loading Better BibTeX')
 
@@ -144,7 +144,7 @@ if !Zotero.BetterBibTeX
     simplifyFields: (sandbox, item) -> Serializer.simplify(item)
     scrubFields: (sandbox, item) -> Serializer.scrub(item)
     debugEnabled: (sandbox) -> Zotero.Debug.enabled
-    version: (sandbox) -> { Zotero: zotero_config.Zotero, BetterBibTeX: require('../gen/version.js') }
+    version: (sandbox) -> { Zotero: zoteroCconfig.Zotero, BetterBibTeX: require('../gen/version.js') }
 
     cacheFetch: (sandbox, itemID, options) ->
       collection = CACHE.getCollection(sandbox.translator[0].label)

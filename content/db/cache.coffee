@@ -1,8 +1,8 @@
-createFile = require('../create-file.coffee')
+createFile = require('../create-file.ts')
 Loki = require('./loki.coffee')
 debug = require('../debug.ts')
 events = require('../events.coffee')
-zotero_config = require('../zotero-config.coffee')
+zoteroCconfig = require('../zotero-config.ts')
 
 version = require('../../gen/version.js')
 Translators = require('../../gen/translators.json')
@@ -114,12 +114,12 @@ DB.init = ->
       additionalProperties: false
     }
   })
-  if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zotero_config.Zotero.version
-    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zotero_config.Zotero.version)
+  if (coll.getTransform(METADATA)?[0].value || {}).Zotero != zoteroCconfig.Zotero.version
+    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zoteroCconfig.Zotero.version)
     coll.removeDataOnly()
   coll.setTransform(METADATA, [{
     type: METADATA,
-    value : { Zotero: zotero_config.Zotero.version }
+    value : { Zotero: zoteroCconfig.Zotero.version }
   }])
 
   ###

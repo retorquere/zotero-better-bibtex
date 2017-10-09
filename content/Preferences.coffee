@@ -1,5 +1,5 @@
 debug = require('./debug.ts')
-zotero_config = require('./zotero-config.coffee')
+zoteroCconfig = require('./zotero-config.ts')
 
 Prefs = require('./prefs.ts')
 Formatter = require('./keymanager/formatter.coffee')
@@ -85,8 +85,8 @@ class PrefPane
 
     @AutoExport = new AutoExportPrefPane()
 
-    # document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !zotero_config.isJurisM)
+    # document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zoteroCconfig.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !zoteroCconfig.isJurisM)
 
     if !Zotero_Preferences.openHelpLink.BetterBibTeX
       Zotero_Preferences.openHelpLink.BetterBibTeX = Zotero_Preferences.openHelpLink
@@ -161,7 +161,7 @@ class PrefPane
     return
 
   styleChanged: (index) ->
-    return unless zotero_config.isJurisM
+    return unless zoteroCconfig.isJurisM
 
     stylebox = document.getElementById('better-bibtex-abbrev-style')
     selectedItem = if typeof index != 'undefined' then stylebox.getItemAtIndex(index) else stylebox.selectedItem
@@ -192,7 +192,7 @@ class PrefPane
     catch err
       patternError = err
 
-    if zotero_config.isJurisM
+    if zoteroCconfig.isJurisM
       Zotero.Styles.init().then(=>
         styles = (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)

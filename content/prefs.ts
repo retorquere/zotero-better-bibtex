@@ -3,7 +3,7 @@ declare const Zotero: any
 
 const debug = require('./debug.ts')
 const events = require('./events.coffee')
-const zotero_config = require('./zotero-config.coffee')
+const zoteroCconfig = require('./zotero-config.ts')
 
 class Preferences {
   private static prefix = 'translators.better-bibtex'
@@ -11,7 +11,7 @@ class Preferences {
 
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
-    this.branch = prefService.getBranch(`${zotero_config.PREF_BRANCH}${Preferences.prefix}.`)
+    this.branch = prefService.getBranch(`${zoteroCconfig.PREF_BRANCH}${Preferences.prefix}.`)
     this.branch.addObserver('', this, false)
   }
 

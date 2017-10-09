@@ -1,7 +1,7 @@
 Prefs = require('./prefs.ts')
 debug = require('./debug.ts')
 events = require('./events.coffee')
-zotero_config = require('./zotero-config.coffee')
+zoteroCconfig = require('./zotero-config.ts')
 
 class JournalAbbrev
   initialized: false
@@ -26,7 +26,7 @@ class JournalAbbrev
   reset: ->
     debug('JournalAbbrev.reset')
     @style = Prefs.get('autoAbbrevStyle')
-    @style ||= (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if zotero_config.isJurisM
+    @style ||= (style for style in Zotero.Styles.getVisible() when style.usesAbbreviation)[0].styleID if zoteroCconfig.isJurisM
 
     @abbrevs = {
       default: {
