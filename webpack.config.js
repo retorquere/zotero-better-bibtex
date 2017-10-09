@@ -101,7 +101,7 @@ config = [
       'BetterBibTeX.Preferences': './Preferences.coffee',
       'BetterBibTeX.ErrorReport': './ErrorReport.coffee',
       'BetterBibTeX.itemPane': './itemPane.coffee',
-      'BetterBibTeX.exportOptions': './exportOptions.coffee',
+      'BetterBibTeX.exportOptions': './exportOptions.ts',
     },
     // devtool: '#source-map',
     output: {
