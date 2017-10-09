@@ -7,7 +7,7 @@ parseDate = require('../dateparser.ts')
 transliterate = require('transliteration').transliterate
 fold2ascii = require('fold-to-ascii').fold
 punycode = require('punycode')
-journalAbbrev = require('../journal-abbrev.coffee')
+journalAbbrev = require('../journal-abbrev.ts')
 
 debug('Keymanager.Formatter... loading')
 
