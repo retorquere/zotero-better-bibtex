@@ -5,6 +5,7 @@ const debug = require('./debug.ts')
 
 const CACHE = require('./db/cache.coffee')
 const KEYMANAGER = require('./keymanager.coffee')
+const ZOTERODB = require('./db/zotero.ts')
 
 class Serializer {
   private static collection = 'itemToExportFormat'
@@ -21,7 +22,7 @@ class Serializer {
     abbrevs.init()
 
     debug('Serializer.init')
-    const fieldsWithAliases = await Zotero.DB.queryAsync(`
+    const fieldsWithAliases = await ZOTERODB.queryAsync(`
       SELECT it.typeName, f.fieldName, a.fieldName as fieldAlias
       FROM baseFieldMappingsCombined bfmc
       JOIN fields f ON f.fieldID = bfmc.baseFieldID
@@ -53,7 +54,7 @@ class Serializer {
     this.simplify = new Function('item', simplify)
 
     /* SCRUB */
-    const fields = await Zotero.DB.queryAsync(`
+    const fields = await ZOTERODB.queryAsync(`
       SELECT it.typeName, f.fieldName
       FROM itemTypes it
       JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
