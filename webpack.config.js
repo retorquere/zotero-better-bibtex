@@ -83,10 +83,12 @@ function BailPlugin() {
       }
     }
 
+    /*
     for (var error of (stats.compilation.errors || [])) {
       error.severity = 'error';
       errors.push(errors);
     }
+    */
 
     if (errors.length) {
       process.on('beforeExit', function() {
@@ -125,7 +127,7 @@ config = [
       BetterBibTeX: './BetterBibTeX.coffee',
       'BetterBibTeX.Preferences': './Preferences.coffee',
       'BetterBibTeX.ErrorReport': './ErrorReport.coffee',
-      'BetterBibTeX.itemPane': './itemPane.coffee',
+      'BetterBibTeX.itemPane': './itemPane.ts',
       'BetterBibTeX.exportOptions': './exportOptions.ts',
     },
     // devtool: '#source-map',

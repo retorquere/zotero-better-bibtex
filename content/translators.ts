@@ -17,7 +17,7 @@ class Translators {
 
     let reinit = false
     // tslint:disable-next-line:no-unused-variable
-    for (const [id, header] of this.byId) {
+    for (const [id, header] of Object.entries(this.byId)) {
       if (this.install(header)) {
         reinit = true
         debug('Translators.init: installed', header.label, '@', (new Date()).valueOf() - start)
