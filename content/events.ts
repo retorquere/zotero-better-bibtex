@@ -1,10 +1,9 @@
 declare const Zotero: any
 
-// tslint:disable-next-line:variable-name
-const EventEmitter = require('eventemitter4')
+const EVENTEMITTER = require('eventemitter4')
 
 const debug = require('./debug.ts')
-const emitter = new EventEmitter()
+const emitter = new EVENTEMITTER()
 
 if (Zotero.Debug.enabled) {
   const events = [

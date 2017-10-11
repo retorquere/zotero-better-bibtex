@@ -6,15 +6,14 @@ declare const Zotero: any
 const debug = require('./debug.ts')
 const $patch$ = require('./monkey-patch.ts')
 
-// tslint:disable-next-line:variable-name
-const KeyManager = require('./keymanager.coffee')
+const KEYMANAGER = require('./keymanager.coffee')
 
 function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')
   debug('itemPane.display:', {changed: itemID, field: field.getAttribute('itemID')})
   if (field.getAttribute('itemID') !== `${itemID}`) return
 
-  const citekey = KeyManager.get(itemID)
+  const citekey = KEYMANAGER.get(itemID)
   field.value = citekey.citekey
   let className = (field.className || '').trim().split(/\s+/).filter(c => c !== 'citekey-dynamic').join(' ')
   if (!citekey.pinned) className = `${className} citekey-dynamic`.trim()
@@ -23,9 +22,9 @@ function display(itemID) {
 
 let observer = null
 function init() {
-  if (observer || !KeyManager.keys) return
+  if (observer || !KEYMANAGER.keys) return
 
-  observer = KeyManager.keys.on(['update', 'insert'], citekey => {
+  observer = KEYMANAGER.keys.on(['update', 'insert'], citekey => {
     debug('itemPane.update:', citekey)
     display(citekey.itemID)
   })
@@ -43,8 +42,8 @@ function load() {
 }
 
 function unload() {
-  if (KeyManager.keys && observer) {
-    KeyManager.keys.removeListener(observer)
+  if (KEYMANAGER.keys && observer) {
+    KEYMANAGER.keys.removeListener(observer)
   }
 }
 

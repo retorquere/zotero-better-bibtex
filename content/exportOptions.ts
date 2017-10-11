@@ -4,8 +4,7 @@ declare const MutationObserver: any
 
 const debug = require('./debug.ts')
 
-// tslint:disable-next-line:variable-name
-let DOMobserver = null
+let DOM_OBSERVER = null
 let reset = true
 
 function mutex(e) {
@@ -43,12 +42,12 @@ function addEventHandlers() {
 }
 
 window.addEventListener('load', () => {
-  DOMobserver = new MutationObserver(addEventHandlers)
-  DOMobserver.observe(document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
+  DOM_OBSERVER = new MutationObserver(addEventHandlers)
+  DOM_OBSERVER.observe(document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
 }, false)
 
 window.addEventListener('unload', () => {
-  DOMobserver.disconnect()
+  DOM_OBSERVER.disconnect()
 }, false)
 
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156

@@ -20,7 +20,7 @@ if !Zotero.BetterBibTeX
   Translators = require('./translators.ts')
   DB = require('./db/main.coffee')
   CACHE = require('./db/cache.coffee')
-  Serializer = require('./serializer.coffee')
+  Serializer = require('./serializer.ts')
   Citekey = require('./keymanager/get-set.coffee')
   JournalAbbrev = require('./journal-abbrev.ts')
   AutoExport = require('./auto-export.ts')
