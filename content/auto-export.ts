@@ -8,7 +8,7 @@ const Queue = require('better-queue')
 const MemoryStore = require('better-queue-memory')
 const Events = require('./events.ts')
 const DB = require('./db/main.coffee')
-const Translators = require('./translators.coffee')
+const Translators = require('./translators.ts')
 const Prefs = require('./prefs.ts')
 // tslint:enable:variable-name
 

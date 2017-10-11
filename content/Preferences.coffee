@@ -5,7 +5,7 @@ Prefs = require('./prefs.ts')
 Formatter = require('./keymanager/formatter.coffee')
 KeyManager = require('./keymanager.coffee')
 AutoExport = require('./auto-export.ts')
-Translators = require('./translators.coffee')
+Translators = require('./translators.ts')
 
 AutoExportName = (ae, full) ->
   switch ae.type

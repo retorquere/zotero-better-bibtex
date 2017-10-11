@@ -70,21 +70,45 @@ var common = {
   },
 }
 
+function BailPlugin() {
+  this.plugin('done', function(stats) {
+    var errors = [];
+
+    for (var warning of (stats.compilation.warnings || [])) {
+      switch (warning.name) {
+        case 'ModuleNotFoundError':
+          warning.severity = 'warning';
+          errors.push(warning);
+          break;
+      }
+    }
+
+    for (var error of (stats.compilation.errors || [])) {
+      error.severity = 'error';
+      errors.push(errors);
+    }
+
+    if (errors.length) {
+      process.on('beforeExit', function() {
+        console.log('-------')
+        for (var error of errors) {
+          // console.log('-------')
+          console.log(error.severity, error.module.resource, error.name, error.message);
+          // for (var key in error) { console.log(`error.${key}`, error[key]); }
+        }
+        process.exit(1);
+      });
+    }
+  });
+};
+
 config = [
   // main app logic
   _.merge({}, common, {
     plugins: [
-      // new webpack.DefinePlugin({ global: {} })
       new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
       new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
-      /*
-      new WrapperPlugin({
-        test: /\.js$/, // only wrap output of bundle files with '.js' extension 
-        // header: function(filename) { return `Zotero.debug('BBT: loading ${filename}');\n` },
-        footer: function(filename) { return `Zotero.debug('BBT: after load ${filename}');\n` },
-      }),
-      */
       new AfterBuildPlugin(function(stats, options) {
         var ccp = options.plugins.find(function(plugin) { return plugin instanceof webpack.optimize.CommonsChunkPlugin }).filenameTemplate;
         replace({
@@ -93,6 +117,7 @@ config = [
           paths: [path.join(options.output.path, ccp)],
         });
       }),
+			BailPlugin,
     ],
 
     context: path.resolve(__dirname, './content'),
@@ -145,7 +170,8 @@ translators.forEach(function(translator) {
     _.merge({}, common, {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
-        new TranslatorHeaderPlugin(translator)
+        new TranslatorHeaderPlugin(translator),
+				BailPlugin,
       ],
       context: path.resolve(__dirname, './resource'),
       entry: entry,

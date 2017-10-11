@@ -17,7 +17,7 @@ if !Zotero.BetterBibTeX
   Zotero.Prefs.get('debug.store', true)
   Zotero.Debug.setStore(true)
 
-  Translators = require('./translators.coffee')
+  Translators = require('./translators.ts')
   DB = require('./db/main.coffee')
   CACHE = require('./db/cache.coffee')
   Serializer = require('./serializer.coffee')

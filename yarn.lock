@@ -2811,9 +2811,9 @@ uid-number@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/uid-number/-/uid-number-0.0.6.tgz#0ea10e8035e8eb5b8e4449f06da1c730663baa81"
 
-"underscore@git://github.com/jashkenas/underscore":
+underscore@jashkenas/underscore:
   version "1.8.3"
-  resolved "git://github.com/jashkenas/underscore#20e7c6e164085e832b6140acc690d6f66f7f6c63"
+  resolved "https://codeload.github.com/jashkenas/underscore/tar.gz/20e7c6e164085e832b6140acc690d6f66f7f6c63"
 
 underscore@~1.4.4:
   version "1.4.4"
