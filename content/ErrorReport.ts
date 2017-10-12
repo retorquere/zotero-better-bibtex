@@ -11,7 +11,7 @@ const TRANSLATORS = require('./translators.ts')
 const debug = require('./debug.ts')
 const PACKAGE = require('../package.json')
 
-class ErrorReport {
+export = new class ErrorReport {
   public static max_log_lines = 5000
   public static max_line_length = 80
 
@@ -42,7 +42,11 @@ class ErrorReport {
     }
   } = { }
 
-  public async init() {
+  constructor() {
+    window.addEventListener('load', () => this.init(), false)
+  }
+
+  private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
     const wizard = document.getElementById('better-bibtex-error-report')
@@ -174,9 +178,5 @@ class ErrorReport {
   }
 }
 
-window.addEventListener('load', (() => module.exports.init()), false)
-
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
 delete require.cache[module.id]
-
-export = new ErrorReport()

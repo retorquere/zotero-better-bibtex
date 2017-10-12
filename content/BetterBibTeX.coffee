@@ -349,8 +349,9 @@ if !Zotero.BetterBibTeX
     INIT
   ###
 
-  module.exports.ErrorReport = Zotero.Promise.coroutine((includeReferences) ->
+  module.exports.ErrorReport = (includeReferences) ->
     debug('ErrorReport::start', includeReferences)
+
     items = null
 
     pane = Zotero.getActiveZoteroPane()
@@ -377,7 +378,6 @@ if !Zotero.BetterBibTeX
     debug('ErrorReport::start done')
 
     return
-  )
 
   debug('Loading Better BibTeX: setup done')
 
