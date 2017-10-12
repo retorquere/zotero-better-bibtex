@@ -51,7 +51,9 @@ export = {
     if (items.length !== 0) throw new Error('library not empty after reset')
   },
 
-  async importFile(source, createNewCollection, preferences = {}) {
+  async importFile(source, createNewCollection, preferences) {
+    preferences = preferences || {}
+
     if (Object.keys(preferences).length) {
       debug(`importing references and preferences from ${source}`)
       for (let [pref, value] of Object.entries(preferences)) {
