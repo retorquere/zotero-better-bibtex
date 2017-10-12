@@ -10,7 +10,7 @@ const ZOTERODB = require('./db/zotero.ts')
 const getItemsAsync = require('./get-items-async.ts')
 
 const PREFS = require('./prefs.ts')
-const CITEKEY = require('./keymanager/get-set.coffee')
+const CITEKEY = require('./keymanager/get-set.ts')
 const DB = require('./db/main.coffee')
 const FORMATTER = require('./keymanager/formatter.coffee')
 
