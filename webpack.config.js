@@ -126,7 +126,7 @@ config = [
     entry: {
       BetterBibTeX: './BetterBibTeX.coffee',
       'BetterBibTeX.Preferences': './Preferences.coffee',
-      'BetterBibTeX.ErrorReport': './ErrorReport.coffee',
+      'BetterBibTeX.ErrorReport': './ErrorReport.ts',
       'BetterBibTeX.itemPane': './itemPane.ts',
       'BetterBibTeX.exportOptions': './exportOptions.ts',
     },
