@@ -311,14 +311,12 @@ class KeyManager {
     }
 
     debug(`KeyManager.propose: generating free citekey from ${item.id} from`, proposed.citekey)
-    let postfix = 1
-    while (true) {
-      const postfixed = proposed.citekey + (proposed.postfix === '0' ? `-${postfix}` : this.postfixAlpha(postfix))
+    for (let postfix = 0; true; postfix += 1) {
+      const postfixed = proposed.citekey + (proposed.postfix === '0' ? `-${postfix + 1}` : this.postfixAlpha(postfix))
       if (!this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed })) {
         debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
         return { citekey: postfixed, pinned: false }
       }
-      postfix += 1
     }
   }
 

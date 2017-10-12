@@ -472,5 +472,5 @@ module.exports = {
   KeyManager
   errorReport
   ready: ready.promise
-  TestSupport: if Prefs.get('testing') then require('./test/support.coffee') else undefined
+  TestSupport: if Prefs.get('testing') then require('./test/support.ts') else undefined
 }
