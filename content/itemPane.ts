@@ -6,7 +6,7 @@ declare const Zotero: any
 const debug = require('./debug.ts')
 const $patch$ = require('./monkey-patch.ts')
 
-const KEYMANAGER = require('./keymanager.coffee')
+const KEYMANAGER = require('./keymanager.ts')
 
 function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')

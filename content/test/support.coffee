@@ -1,4 +1,4 @@
-KeyManager = require('../keymanager.coffee')
+KeyManager = require('../keymanager.ts')
 debug = require('../debug.ts')
 co = Zotero.Promise.coroutine
 pref_defaults = require('../../defaults/preferences/defaults.json')

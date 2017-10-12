@@ -4,7 +4,7 @@ const abbrevs = require('./journal-abbrev.ts')
 const debug = require('./debug.ts')
 
 const CACHE = require('./db/cache.coffee')
-const KEYMANAGER = require('./keymanager.coffee')
+const KEYMANAGER = require('./keymanager.ts')
 const ZOTERODB = require('./db/zotero.ts')
 
 class Serializer {

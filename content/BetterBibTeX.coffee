@@ -25,7 +25,7 @@ if !Zotero.BetterBibTeX
   JournalAbbrev = require('./journal-abbrev.ts')
   AutoExport = require('./auto-export.ts')
 
-  module.exports.KeyManager = KeyManager = require('./keymanager.coffee')
+  module.exports.KeyManager = KeyManager = require('./keymanager.ts')
 
   ###
     UNINSTALL
