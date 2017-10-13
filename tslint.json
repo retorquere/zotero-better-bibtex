@@ -16,6 +16,7 @@
           ["Symbol", "Avoid using the `Symbol` type.  Did you mean `symbol`?"]
         ]
       },
+      "max-classes-per-file": [true, 3],
       "new-parens": false,
       "no-var-requires": false,
       "quotemark": [true, "single", "avoid-escape", "avoid-template"],
