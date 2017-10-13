@@ -2,7 +2,7 @@ debug = require('./debug.ts')
 zoteroCconfig = require('./zotero-config.ts')
 
 Prefs = require('./prefs.ts')
-Formatter = require('./keymanager/formatter.coffee')
+Formatter = require('./keymanager/formatter.ts')
 KeyManager = require('./keymanager.ts')
 AutoExport = require('./auto-export.ts')
 Translators = require('./translators.ts')
