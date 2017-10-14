@@ -15,7 +15,7 @@ Zotero.Prefs.get('debug.store', true)
 Zotero.Debug.setStore(true)
 
 Translators = require('./translators.ts')
-DB = require('./db/main.coffee')
+DB = require('./db/main.ts')
 CACHE = require('./db/cache.ts')
 Serializer = require('./serializer.ts')
 Citekey = require('./keymanager/get-set.ts')

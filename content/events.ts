@@ -3,6 +3,7 @@ declare const Zotero: any
 const EVENTEMITTER = require('eventemitter4')
 
 const debug = require('./debug.ts')
+const $patch$ = require('./monkey-patch.ts')
 const emitter = new EVENTEMITTER()
 
 if (Zotero.Debug.enabled) {
@@ -16,21 +17,17 @@ if (Zotero.Debug.enabled) {
     'libraries-removed',
   ]
 
-  emitter.on = (original =>
-    function() {
-      if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-      debug('events: handler registered for', arguments[0])
-      original.apply(this, arguments)
-    }
-  )(emitter.on)
+  $patch$(emitter, 'on', original => function() {
+    if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
+    debug('events: handler registered for', arguments[0])
+    original.apply(this, arguments)
+  })
 
-  emitter.emit = (original =>
-    function() {
-      if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
-      debug('events: emitted', Array.prototype.slice.call(arguments))
-      original.apply(this, arguments)
-    }
-  )(emitter.emit)
+  $patch$(emitter, 'emit', original => function() {
+    if (!events.includes(arguments[0])) throw new Error(`Unsupported event ${arguments[0]}`)
+    debug('events: emitted', Array.prototype.slice.call(arguments))
+    original.apply(this, arguments)
+  })
 
   for (const event of events) {
     (e => emitter.on(e, () => debug(`events: got ${e}`)))(event)

@@ -11,7 +11,7 @@ const getItemsAsync = require('./get-items-async.ts')
 
 const PREFS = require('./prefs.ts')
 const CITEKEY = require('./keymanager/get-set.ts')
-const DB = require('./db/main.coffee')
+const DB = require('./db/main.ts')
 const FORMATTER = require('./keymanager/formatter.ts')
 
 class KeyManager {

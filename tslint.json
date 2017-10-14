@@ -49,7 +49,7 @@
       "one-line": [true, "check-catch", "check-finally", "check-else", "check-open-brace"],
       "prefer-template": [true, "allow-single-concat"],
       "semicolon": [true, "never"],
-      "space-before-function-paren": [true, "never"],
+      "space-before-function-paren": [true, {"anonymous": "never", "method": "never", "constructor": "never", "named": "never", "asyncArrow": "always"}],
       "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ],
       "curly": [true, "ignore-same-line"],
       "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],

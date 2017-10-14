@@ -6,7 +6,7 @@ const debug = require('./debug.ts')
 const QUEUE = require('better-queue')
 const MEMORYSTORE = require('better-queue-memory')
 const EVENTS = require('./events.ts')
-const DB = require('./db/main.coffee')
+const DB = require('./db/main.ts')
 const TRANSLATORS = require('./translators.ts')
 const PREFS = require('./prefs.ts')
 
