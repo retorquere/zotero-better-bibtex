@@ -135,7 +135,7 @@ DB.init = () => {
     },
   })
 
-  if ((coll.getTransform(METADATA) || [{value: {}}]).value.Zotero !== zoteroConfig.Zotero.version) {
+  if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.Zotero !== zoteroConfig.Zotero.version) {
     debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zoteroConfig.Zotero.version)
     coll.removeDataOnly()
   }
@@ -175,7 +175,7 @@ DB.init = () => {
       ttlInterval,
     })
 
-    if ((coll.getTransform(METADATA) || [{value: {}}]).value.BetterBibTeX !== version) {
+    if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.BetterBibTeX !== version) {
       debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
       coll.removeDataOnly()
     }
