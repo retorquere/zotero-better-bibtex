@@ -7,7 +7,7 @@ class Translators {
   public byId: any
 
   public async init() {
-    const start = new Date().valueOf()
+    const start = (new Date()).valueOf()
     Object.assign(this, require('../gen/translators.json'))
 
     if (prefs.get('removeStock')) {
@@ -22,7 +22,7 @@ class Translators {
         reinit = true
         debug('Translators.init: installed', header.label, '@', (new Date()).valueOf() - start)
       } else {
-        debug('Translators.init: retained', header.label, '@', (new Date().valueOf()) - start)
+        debug('Translators.init: retained', header.label, '@', (new Date()).valueOf() - start)
       }
     }
 

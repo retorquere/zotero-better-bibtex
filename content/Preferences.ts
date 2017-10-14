@@ -76,6 +76,7 @@ class AutoExportPrefPane {
 
       const treerow = treeitem.appendChild(document.createElement('treerow'))
       // TODO: https://github.com/Microsoft/TypeScript/issues/19186
+      // TODO: https://github.com/Microsoft/TypeScript/issues/1260
       const cells: Array<{label: string, tooltip?: string}> = [
         { label: `${ae.type}: ${autoExportName(ae)}` },
         { label: ae.status + (ae.updated ? ` (${ae.updated})` : ''), tooltip: ae.error },
