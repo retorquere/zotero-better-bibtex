@@ -47,20 +47,16 @@ function unload() {
   }
 }
 
-if (!ZoteroItemPane.BetterBibTeX) {
-  ZoteroItemPane.BetterBibTeX = true
+$patch$(ZoteroItemPane, 'viewItem', original => {
+  // don't use async here because I don't know What Zotero does with the result
+  return Zotero.Promise.coroutine(function*(item, mode, index) {
+    yield original.call(this, item, mode, index)
+    init()
 
-  $patch$(ZoteroItemPane, 'viewItem', original => {
-    // don't use async here because I don't know What Zotero does with the result
-    return Zotero.Promise.coroutine(function*(item, mode, index) {
-      yield original.call(this, item, mode, index)
-      init()
-
-      document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
-      display(item.id)
-    })
+    document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
+    display(item.id)
   })
-}
+})
 
 window.addEventListener('load', load, false)
 window.addEventListener('unload', unload, false)

@@ -3,7 +3,7 @@ declare const Zotero: any
 const prefs = require('./prefs.ts')
 const debug = require('./debug.ts')
 const events = require('./events.ts')
-const zoteroCconfig = require('./zotero-config.ts')
+const zoteroConfig = require('./zotero-config.ts')
 
 class JournalAbbrev {
   private initialized: boolean
@@ -33,7 +33,7 @@ class JournalAbbrev {
     debug('JournalAbbrev.reset')
 
     this.style = prefs.get('autoAbbrevStyle')
-    if (zoteroCconfig.isJurisM && !this.style) {
+    if (zoteroConfig.isJurisM && !this.style) {
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 
