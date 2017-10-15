@@ -8,8 +8,9 @@ const debug = require('../debug.ts')
 const pref_defaults = require('../../defaults/preferences/defaults.json')
 const TRANSLATORS = require('../translators.ts')
 const AUTOEXPORT = require('../auto-export.ts')
+const prefs = require('../prefs.ts')
 
-export = {
+export = prefs.get('testing') && {
   async reset() {
     let collections
     debug('TestSupport.reset: start')

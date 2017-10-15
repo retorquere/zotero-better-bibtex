@@ -59,4 +59,6 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
 </overlay>
