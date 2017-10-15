@@ -101,7 +101,7 @@ export = class XULoki extends (Loki as { new(name, options): any }) {
     }
 
     if (this.persistenceAdapter && !nullStore) {
-      AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async function() {
+      AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
         debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`)
 
         // setTimeout is disabled during shutdown and throws errors
