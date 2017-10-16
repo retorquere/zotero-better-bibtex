@@ -57,7 +57,6 @@ var common = {
       'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
       'json-loader': path.join(__dirname, './webpack/loaders/json'),
       'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
-      'guard-loader': path.join(__dirname, './webpack/loaders/module_exports'),
     },
   },
   module: {
@@ -66,7 +65,7 @@ var common = {
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
       // { enforce: 'pre', test: /\.ts$/, exclude: /node_modules/, loader: 'tslint-loader?' + JSON.stringify({ emitErrors: true, failOnHint: true }) },
-      { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader', 'guard-loader' ] }
+      { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader' ] }
     ]
   },
 }
