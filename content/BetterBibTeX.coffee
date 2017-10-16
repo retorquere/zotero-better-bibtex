@@ -1,3 +1,5 @@
+Prefs = require('./prefs.ts') # needs to be here early, initializes the prefs observer
+
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 debug = require('./debug.ts')
@@ -7,8 +9,6 @@ events = require('./events.ts')
 zoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
-
-Prefs = require('./prefs.ts') # needs to be here early, initializes the prefs observer
 
 # TODO: remove after beta
 Zotero.Prefs.get('debug.store', true)
@@ -23,7 +23,7 @@ JournalAbbrev = require('./journal-abbrev.ts')
 AutoExport = require('./auto-export.ts')
 KeyManager = require('./keymanager.ts')
 
-ready = Zotero.Promise.defer()
+bbtReady = Zotero.Promise.defer()
 
 ###
   UNINSTALL
@@ -115,7 +115,7 @@ Zotero.ItemTreeView::getCellText = ((original) ->
 
     if citekey.retry
       debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
-      ready.promise.then(=>
+      bbtReady.promise.then(=>
         debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
 
         @_treebox.invalidateCell(row, column)
@@ -184,93 +184,6 @@ Zotero.Translate.Import::Sandbox.BetterBibTeX = {
   debugEnabled: (sandbox) -> Zotero.Debug.enabled
   scrubFields: (sandbox, item) -> Serializer.scrub(item)
 }
-
-Zotero.Notifier.registerObserver({
-  notify: (action, type, ids, extraData) ->
-    debug('item.notify', {action, type, ids, extraData})
-
-    # prevents update loop -- see KeyManager.init()
-    ids = (id for id in ids when !extraData[id]?.bbtCitekeyUpdate) if action == 'modify'
-
-    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    # items = Zotero.Items.get(ids)
-
-    # not needed as the parents will be signaled themselves
-    # parents = (item.parentID for item in items when item.parentID)
-    # CACHE.remove(parents)
-
-    CACHE.remove(ids)
-
-    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    if action == 'delete'
-      items = []
-    else
-      items = (item for item in Zotero.Items.get(ids) when !(item.isNote() || item.isAttachment()))
-
-    switch action
-      when 'delete', 'trash'
-        debug("event.#{type}.#{action}", {ids, extraData})
-        KeyManager.remove(ids)
-        events.emit('items-removed', ids)
-
-      when 'add', 'modify'
-        for item in items
-          KeyManager.update(item)
-
-        events.emit('items-changed', ids)
-
-      else
-        debug('item.notify: unhandled', {action, type, ids, extraData})
-        return
-
-    changed = {
-      collections: new Set()
-      libraries: new Set()
-    }
-    for item in items
-      changed.libraries.add(item.libraryID)
-
-      for collectionID in item.getCollections()
-        continue if changed.collections.has(collectionID)
-        while collectionID
-          changed.collections.add(collectionID)
-          collectionID = Zotero.Collections.get(collectionID).parentID
-
-    events.emit('collections-changed', Array.from(changed.collections)) if changed.collections.size
-    events.emit('libraries-changed', Array.from(changed.libraries)) if changed.libraries.size
-
-    return
-}, ['item'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify: (event, type, ids, extraData) ->
-    events.emit('collections-removed', ids) if event == 'delete' && ids.length
-    return
-}, ['collection'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify: (event, type, ids, extraData) ->
-    events.emit('libraries-removed', ids) if event == 'delete' && ids.length
-    return
-}, ['group'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify: (event, type, collection_items) ->
-    changed = new Set()
-
-    for collection_item in collection_items
-      collectionID = parseInt(collection_item.split('-')[0])
-      continue if changed.has(collectionID)
-      while collectionID
-        changed.add(collectionID)
-        collectionID = Zotero.Collections.get(collectionID).parentID
-
-    events.emit('collections-changed', Array.from(changed)) if changed.size
-
-    return
-}, ['collection-item'], 'BetterBibTeX', 1)
 
 Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
   return (zoteroItem, legacy, skipChildItems) ->
@@ -343,39 +256,94 @@ Zotero.Translate.Export::translate = ((original) ->
 
     return original.apply(@, arguments)
 )(Zotero.Translate.Export::translate)
+
+###
+  EVENTS
+###
+Zotero.Notifier.registerObserver({
+  notify: (action, type, ids, extraData) ->
+    debug('item.notify', {action, type, ids, extraData})
+
+    # prevents update loop -- see KeyManager.init()
+    ids = (id for id in ids when !extraData[id]?.bbtCitekeyUpdate) if action == 'modify'
+
+    # not needed as the parents will be signaled themselves
+    # parents = (item.parentID for item in items when item.parentID)
+    # CACHE.remove(parents)
+
+    CACHE.remove(ids)
+
+    # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+    # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+    items = if action == 'delete' then [] else Zotero.Items.get(ids).filter((item) => !(item.isNote() || item.isAttachment()))
+
+    switch action
+      when 'delete', 'trash'
+        debug("event.#{type}.#{action}", {ids, extraData})
+        KeyManager.remove(ids)
+        events.emit('items-removed', ids)
+
+      when 'add', 'modify'
+        for item in items
+          KeyManager.update(item)
+
+        events.emit('items-changed', ids)
+
+      else
+        debug('item.notify: unhandled', {action, type, ids, extraData})
+        return
+
+    changed = {
+      collections: new Set()
+      libraries: new Set()
+    }
+    for item in items
+      changed.libraries.add(item.libraryID)
+
+      for collectionID in item.getCollections()
+        continue if changed.collections.has(collectionID)
+        while collectionID
+          changed.collections.add(collectionID)
+          collectionID = Zotero.Collections.get(collectionID).parentID
+
+    events.emit('collections-changed', Array.from(changed.collections)) if changed.collections.size
+    events.emit('libraries-changed', Array.from(changed.libraries)) if changed.libraries.size
+
+    return
+}, ['item'], 'BetterBibTeX', 1)
+
+Zotero.Notifier.registerObserver({
+  notify: (event, type, ids, extraData) ->
+    events.emit('collections-removed', ids) if event == 'delete' && ids.length
+    return
+}, ['collection'], 'BetterBibTeX', 1)
+
+Zotero.Notifier.registerObserver({
+  notify: (event, type, ids, extraData) ->
+    events.emit('libraries-removed', ids) if event == 'delete' && ids.length
+    return
+}, ['group'], 'BetterBibTeX', 1)
+
+Zotero.Notifier.registerObserver({
+  notify: (event, type, collection_items) ->
+    changed = new Set()
+
+    for collection_item in collection_items
+      collectionID = parseInt(collection_item.split('-')[0])
+      continue if changed.has(collectionID)
+      while collectionID
+        changed.add(collectionID)
+        collectionID = Zotero.Collections.get(collectionID).parentID
+
+    events.emit('collections-changed', Array.from(changed)) if changed.size
+
+    return
+}, ['collection-item'], 'BetterBibTeX', 1)
+
 ###
   INIT
 ###
 
-errorReport = (includeReferences) ->
-  debug('ErrorReport::start', includeReferences)
-
-  items = null
-
-  pane = Zotero.getActiveZoteroPane()
-
-  switch pane && includeReferences
-    when 'collection', 'library'
-      items = { collection: pane.getSelectedCollection() }
-      items = { library: pane.getSelectedLibraryID() } unless items.collection
-
-    when 'items'
-      try
-        items = { items: pane.getSelectedItems() }
-      catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-        debug('Could not get selected items:', err)
-        items = {}
-
-      items = null unless items.items && items.items.length
-
-  params = {wrappedJSObject: { items }}
-
-  debug('ErrorReport::start popup', params)
-  ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-  ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
-  debug('ErrorReport::start done')
-
-  return
 
 debug('Loading Better BibTeX: setup done')
 
@@ -425,50 +393,77 @@ class Lock
 
     return
 
-load = Zotero.Promise.coroutine(->
-  debug('Loading Better BibTeX: starting...')
+module.exports = new class BetterBibTeX
+  constructor: ->
+    @ready = bbtReady.promise
+    window.addEventListener('load', this.load, false)
 
-  # oh FFS -- datadir is async now
+  load: Zotero.Promise.coroutine(->
+    debug('Loading Better BibTeX: starting...')
 
-  lock = new Lock()
-  yield lock.lock('Waiting for Zotero database')
+    # oh FFS -- datadir is async now
 
-  CACHE.init()
+    lock = new Lock()
+    yield lock.lock('Waiting for Zotero database')
 
-  # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-  yield Zotero.Schema.schemaUpdatePromise
+    CACHE.init()
 
-  lock.update('Loading citation keys')
-  yield DB.init()
+    # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
+    yield Zotero.Schema.schemaUpdatePromise
 
-  lock.update('Starting auto-export')
-  AutoExport.init()
+    lock.update('Loading citation keys')
+    yield DB.init()
 
-  lock.update('Starting key manager')
-  yield KeyManager.init() # inits the key cache by scanning the DB
+    lock.update('Starting auto-export')
+    AutoExport.init()
 
-  lock.update('Starting serialization cache')
-  yield Serializer.init() # creates simplify et al
+    lock.update('Starting key manager')
+    yield KeyManager.init() # inits the key cache by scanning the DB
 
-  lock.update('Loading journal abbreviator')
-  JournalAbbrev.init()
+    lock.update('Starting serialization cache')
+    yield Serializer.init() # creates simplify et al
 
-  lock.update('Installing bundled translators')
-  yield Translators.init()
+    lock.update('Loading journal abbreviator')
+    JournalAbbrev.init()
 
-  # should be safe to start tests at this point. I hate async.
+    lock.update('Installing bundled translators')
+    yield Translators.init()
 
-  ready.resolve(true)
+    # should be safe to start tests at this point. I hate async.
 
-  lock.unlock()
+    bbtReady.resolve(true)
 
-  return
-)
+    lock.unlock()
 
-# actual start
-window.addEventListener('load', load, false)
+    return
+  )
 
-module.exports = {
-  errorReport
-  ready: ready.promise
-}
+  errorReport: (includeReferences) ->
+    debug('ErrorReport::start', includeReferences)
+
+    items = null
+
+    pane = Zotero.getActiveZoteroPane()
+
+    switch pane && includeReferences
+      when 'collection', 'library'
+        items = { collection: pane.getSelectedCollection() }
+        items = { library: pane.getSelectedLibraryID() } unless items.collection
+
+      when 'items'
+        try
+          items = { items: pane.getSelectedItems() }
+        catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+          debug('Could not get selected items:', err)
+          items = {}
+
+        items = null unless items.items && items.items.length
+
+    params = {wrappedJSObject: { items }}
+
+    debug('ErrorReport::start popup', params)
+    ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+    debug('ErrorReport::start done')
+
+    return
