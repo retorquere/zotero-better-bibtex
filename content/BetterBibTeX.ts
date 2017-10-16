@@ -411,7 +411,7 @@ class Lock {
   }
 }
 
-module.exports = new class {
+export = new class {
   public ready: any
 
   constructor() {
