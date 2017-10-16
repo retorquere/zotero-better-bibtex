@@ -198,58 +198,43 @@ Zotero.Utilities.Internal.itemToExportFormat = ((original) ->
 Zotero.Translate.Export::translate = ((original) ->
   return ->
     try
-      do =>
-        debug("Zotero.Translate.Export::translate: #{if @_export then Object.keys(@_export) else 'no @_export'}", @_displayOptions)
+      ### requested translator ###
+      translatorID = @translator[0]
+      translatorID = translatorID.translatorID if translatorID.translatorID
+      debug('Zotero.Translate.Export::translate: ', translatorID)
 
-        ### requested translator ###
-        translatorID = @translator?[0]
-        translatorID = translatorID.translatorID if translatorID.translatorID
-        debug('Zotero.Translate.Export::translate: ', translatorID)
+      capture = @_displayOptions && @_displayOptions['Keep updated']
 
-        ### regular behavior for non-BBT translators, or if translating to string ###
-        return unless translatorID && @_displayOptions && Translators.byId[translatorID] && @location?.path
+      if capture
+        # this should never occur -- 'Keep updated' should only be settable if you do a file export
+        if !@location || !@location.path
+          flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
+          capture = false
 
-        if @_displayOptions.exportFileData # export directory selected
-          @_displayOptions.exportPath = @location.path
-        else
-          @_displayOptions.exportPath = @location.parent.path
-        @_displayOptions.exportFilename = @location.leafName
+        # this should never occur -- 'Keep updated' should only be set by BBT translators
+        if !Translators.byId[translatorID]
+          flash('Auto-export not registered', 'Auto-export only supported for Better BibTeX translators -- please report this, you should not have seen this message')
+          capture = false
 
-        return unless @_displayOptions?['Keep updated']
-
-        debug('Keep updated set -- trying to register auto-export')
-
+        # this should never occur -- the JS in exportOptions.ts should prevent it
         if @_displayOptions.exportFileData
-          flash('Auto-export not registered', 'Auto-export is not supported when file data is exported')
-          return
+          flash('Auto-export not registered', 'Auto-export does not support file data export -- please report this, you should not have seen this message')
+          capture = false
 
-        switch @_export?.type
-          when 'library'
-            if @_export.id == Zotero.Libraries.userLibraryID
-              name = Zotero.Libraries.get(@_export.id).name
-            else
-              name = 'library ' + Zotero.Libraries.get(@_export.id).name
-            id = @_export.id
+        if !@_export || !(@_export.type in ['library', 'collection'])
+          flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
+          capture = false
 
-          when 'collection'
-            name = @_export.collection.name
-            id = @_export.collection.id
-
-          else
-            flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
-            return
-
+      if capture
         AutoExport.add({
           type: @_export.type,
-          id: id,
+          id: if @_export.type == 'library' then @_export.id else @_export.collection.id,
           path: @location.path,
           status: 'done',
           translatorID,
           exportNotes: @_displayOptions.exportNotes,
           useJournalAbbreviation: @_displayOptions.useJournalAbbreviation,
         })
-
-        return
 
     catch err
       debug('Zotero.Translate.Export::translate error:', err)
@@ -265,7 +250,7 @@ Zotero.Notifier.registerObserver({
     debug('item.notify', {action, type, ids, extraData})
 
     # prevents update loop -- see KeyManager.init()
-    ids = ids.filter(id => !!extraData[id] || !extraData[id].bbtCitekeyUpdate) if action == 'modify'
+    ids = ids.filter((id) -> !extraData[id] || !extraData[id].bbtCitekeyUpdate) if action == 'modify'
 
     # not needed as the parents will be signaled themselves
     # parents = (item.parentID for item in items when item.parentID)
@@ -275,7 +260,7 @@ Zotero.Notifier.registerObserver({
 
     # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    items = if action == 'delete' then [] else Zotero.Items.get(ids).filter((item) => !(item.isNote() || item.isAttachment()))
+    items = if action == 'delete' then [] else Zotero.Items.get(ids).filter((item) -> !(item.isNote() || item.isAttachment()))
 
     switch action
       when 'delete', 'trash'
