@@ -19,7 +19,7 @@
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "coffeelint": "coffeelint content resource minitests webpack",
-    "tslint": "tslint -t stylish --project .",
+    "tslint": "tsc --lib es6 webpack/tslint/noModuleExportsRule.ts && tslint -t stylish --project . --rules-dir ./webpack/tslint",
     "lint": "npm run coffeelint && npm run tslint",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
     "build": "npm run lint && webpack",
@@ -29,7 +29,8 @@
     "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
     "s3form": "coffee webpack/scripts/s3form.coffee",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
-    "running": "ps auxw | grep -i zotero | grep -v grep || true"
+    "running": "ps auxw | grep -i zotero | grep -v grep || true",
+    "cs": "find resource -name '*.coffee' -exec wc -l {} \\;"
   },
   "main": "index.js",
   "directories": {
