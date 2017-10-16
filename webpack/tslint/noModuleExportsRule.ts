@@ -1,23 +1,25 @@
+// http://astexplorer.net
 import * as Lint from 'tslint'
+import { isBinaryExpression, isIdentifier, isPropertyAccessExpression } from 'tsutils'
 import * as ts from 'typescript'
 
-// The walker takes care of all the work.
-class NoModuleExportsWalker extends Lint.RuleWalker {
-  public visitPropertyAssignment(node: ts.PropertyAssignment) {
-    // create a failure at the current position
-    // this.addFailure(this.createFailure(node.getStart(), node.getWidth(), Rule.FAILURE_STRING))
+function walk(ctx: Lint.WalkContext<void>) {
+  return ts.forEachChild(ctx.sourceFile, function cb(node): void {
+    if (
+      isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && // only interested in assignments
+      isPropertyAccessExpression(node.left) && node.left.name.text === 'exports' && // where the assignment target is a property named `exports`
+      isIdentifier(node.left.expression) && node.left.expression.text === 'module'  // on an object named `module`
+    ) {
+      // add the failure to the WalkContext
+      ctx.addFailureAtNode(node, "module.exports is forbidden, use 'export =' instead")
+    }
 
-    // console.log(node) // tslint:disable-line:no-console
-
-    // call the base version of this visitor to actually parse this node
-    super.visitPropertyAssignment(node)
-  }
+    return ts.forEachChild(node, cb)
+  })
 }
 
 export class Rule extends Lint.Rules.AbstractRule {
-  public static FAILURE_STRING = 'module.exports forbidden'
-
   public apply(sourceFile: ts.SourceFile): Lint.RuleFailure[] {
-    return this.applyWithWalker(new NoModuleExportsWalker(sourceFile, this.getOptions()))
+    return this.applyWithFunction(sourceFile, walk)
   }
 }
