@@ -1,5 +1,5 @@
 Exporter = require('../lib/exporter.coffee')
-debug = require('../lib/debug.coffee')
+debug = require('../lib/debug.ts')
 Citekey = require('../../content/keymanager/get-set.ts')
 
 ValidCSLTypes = [

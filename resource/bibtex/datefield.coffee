@@ -1,4 +1,4 @@
-debug = require('../lib/debug.coffee')
+debug = require('../lib/debug.ts')
 
 pad = (v, pad) ->
   return v if v.length >= pad.length

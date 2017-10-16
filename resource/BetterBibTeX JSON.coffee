@@ -1,4 +1,4 @@
-debug = require('./lib/debug.coffee')
+debug = require('./lib/debug.ts')
 Collections = require('./lib/collections.coffee')
 
 ###

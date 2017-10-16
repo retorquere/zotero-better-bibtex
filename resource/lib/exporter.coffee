@@ -1,4 +1,4 @@
-debug = require('../lib/debug.coffee')
+debug = require('../lib/debug.ts')
 JSON5 = require('json5')
 Citekey = require('../../content/keymanager/get-set.ts')
 JabRef = require('../bibtex/jabref.coffee') # not so nice... BibTeX-specific code in general exporter lib

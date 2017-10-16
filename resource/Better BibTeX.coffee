@@ -1,6 +1,6 @@
 Reference = require('./bibtex/reference.coffee')
 Exporter = require('./lib/exporter.coffee')
-debug = require('./lib/debug.coffee')
+debug = require('./lib/debug.ts')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.ts')
 BibTeXParser = require('biblatex-csl-converter').BibLatexParser

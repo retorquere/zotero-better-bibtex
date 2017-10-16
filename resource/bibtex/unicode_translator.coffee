@@ -1,5 +1,5 @@
 MarkupParser = require('../lib/markupparser.coffee')
-debug = require('../lib/debug.coffee')
+debug = require('../lib/debug.ts')
 Mapping = require('./unicode_translator.json')
 
 ### XRegExp = require('xregexp') ###

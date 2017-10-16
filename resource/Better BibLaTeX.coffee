@@ -1,6 +1,6 @@
 Reference = require('./bibtex/reference.coffee')
 Exporter = require('./lib/exporter.coffee')
-debug = require('./lib/debug.coffee')
+debug = require('./lib/debug.ts')
 datefield = require('./bibtex/datefield.coffee')
 
 Reference::fieldEncoding = {
