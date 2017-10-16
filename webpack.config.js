@@ -124,7 +124,7 @@ config = [
 
     context: path.resolve(__dirname, './content'),
     entry: {
-      BetterBibTeX: './BetterBibTeX.coffee',
+      BetterBibTeX: './BetterBibTeX.ts',
       'BetterBibTeX.KeyManager': './keymanager.ts',
       'BetterBibTeX.TestSupport': './test/support.ts',
       'BetterBibTeX.Preferences': './Preferences.ts',
