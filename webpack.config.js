@@ -29,12 +29,12 @@ if (!fs.existsSync(path.join(__dirname, 'gen'))) {
 
 console.log('generate translator list');
 var tr = {byId: {}, byName: {}, byLabel: {}};
-translators.forEach(header => {
-  var header = require(path.join(__dirname, 'resource', header + '.json'));
+for (let label of Object.keys(translators)) {
+  var header = require(path.join(__dirname, 'resource', label + '.json'));
   tr.byId[header.translatorID] = header;
   tr.byName[header.label] = header;
   tr.byLabel[header.label.replace(/[^a-zA-Z]/g, '')] = header;
-});
+}
 fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr, null, 2));
 
 console.log('update citeproc');
@@ -104,7 +104,9 @@ function BailPlugin() {
   });
 };
 
-config = [
+config = [];
+
+config.push(
   // main app logic
   _.merge({}, common, {
     plugins: [
@@ -144,10 +146,33 @@ config = [
       library: "Zotero.[name]",
       libraryTarget: "assign",
     },
-  }),
+  })
+);
 
+for (let [label, source] of Object.entries(translators)) {
+  config.push(
+    _.merge({}, common, {
+      plugins: [
+        new CircularDependencyPlugin({ failOnError: true }),
+        new TranslatorHeaderPlugin(label),
+				BailPlugin,
+      ],
+      context: path.resolve(__dirname, './resource'),
+      entry: { [label]: `./${source}` },
 
-  /*
+      output: {
+        path: path.resolve(__dirname, './build/resource'),
+        filename: '[name].js',
+        devtoolLineToLine: true,
+        // sourceMapFilename: "./[name].js.map",
+        pathinfo: true,
+      },
+    }),
+  )
+}
+
+/*
+config.push(
   // minitests
   _.merge({}, common, {
     context: path.resolve(__dirname, './minitests'),
@@ -162,33 +187,8 @@ config = [
       devtoolLineToLine: true,
       pathinfo: true,
     },
-  }),
-  */
-];
-
-translators.forEach(function(translator) {
-  translator = translator.replace(/\.json$/, '');
-  var entry = {}
-  entry[translator] = `./${translator}.coffee`;
-  config.push(
-    _.merge({}, common, {
-      plugins: [
-        new CircularDependencyPlugin({ failOnError: true }),
-        new TranslatorHeaderPlugin(translator),
-				BailPlugin,
-      ],
-      context: path.resolve(__dirname, './resource'),
-      entry: entry,
-
-      output: {
-        path: path.resolve(__dirname, './build/resource'),
-        filename: '[name].js',
-        devtoolLineToLine: true,
-        // sourceMapFilename: "./[name].js.map",
-        pathinfo: true,
-      },
-    }),
-  )
-})
+  })
+);
+*/
 
 module.exports = config;

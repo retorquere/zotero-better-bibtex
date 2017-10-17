@@ -1,5 +1,5 @@
 debug = require('./lib/debug.ts')
-Collections = require('./lib/collections.coffee')
+Collections = require('./lib/collections.ts')
 
 ###
 scrub = (item) ->
