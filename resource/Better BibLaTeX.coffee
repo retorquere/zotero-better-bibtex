@@ -1,7 +1,7 @@
 Reference = require('./bibtex/reference.coffee')
 Exporter = require('./lib/exporter.coffee')
 debug = require('./lib/debug.ts')
-datefield = require('./bibtex/datefield.coffee')
+datefield = require('./bibtex/datefield.ts')
 
 Reference::fieldEncoding = {
   url: 'url'
