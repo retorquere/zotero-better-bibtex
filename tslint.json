@@ -21,10 +21,13 @@
       "new-parens": false,
       "no-var-requires": false,
       "quotemark": [true, "single", "avoid-escape", "avoid-template"],
-      "max-line-length": [true, 240],
+      "max-line-length": {
+        "severity": "warning",
+        "options": [240]
+      },
       "prefer-const": [true, {"destructuring": "all"}],
       "member-ordering": "statics-first",
-      "no-magic-numbers": true,
+      "no-magic-numbers": [true, -1, 0, 1, 2],
       "prefer-for-of": true,
       "no-duplicate-variable": true,
       "no-string-throw": true,

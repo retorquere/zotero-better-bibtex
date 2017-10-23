@@ -1,6 +1,6 @@
 YAML = require('js-yaml')
 Exporter = require('./csl/csl.ts')
-MarkupParser = require('./lib/markupparser.coffee')
+MarkupParser = require('./lib/markupparser.ts')
 debug = require('./lib/debug.ts')
 
 Exporter::serialize = (csl) ->

@@ -1,4 +1,4 @@
-MarkupParser = require('../lib/markupparser.coffee')
+MarkupParser = require('../lib/markupparser.ts')
 debug = require('../lib/debug.ts')
 Mapping = require('./unicode_translator.json')
 
