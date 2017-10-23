@@ -80,13 +80,12 @@ class Reference
     else
       @add({name: 'timestamp', value: @item.dateModified || @item.dateAdded})
 
-    switch
-      when (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
-        @item.arXiv.source = 'publicationTitle'
-        delete @item.publicationTitle if Translator.BetterBibLaTeX
+    if (@item.libraryCatalog || '').toLowerCase() in ['arxiv.org', 'arxiv'] && (@item.arXiv = @arXiv.parse(@item.publicationTitle))
+      @item.arXiv.source = 'publicationTitle'
+      delete @item.publicationTitle if Translator.BetterBibLaTeX
 
-      when @item.extraFields.kv.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @item.extraFields.kv.arxiv))
-        @item.arXiv.source = 'extra'
+    else if @item.extraFields.kv.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @item.extraFields.kv.arxiv))
+      @item.arXiv.source = 'extra'
 
     if @item.arXiv
       @add({ archivePrefix: 'arXiv'} )
@@ -223,9 +222,6 @@ class Reference
     # otherwise, add a space
     return particle + ' '
 
-  _enc_creators_quote_separators: (value) ->
-    return ((if i % 2 == 0 then n else new String(n)) for n, i in value.split(/(\s+and\s+|,)/i))
-
   _enc_creators_biblatex: (name) ->
     if name.family.length > 1 && name.family[0] == '"' && name.family[name.family.length - 1] == '"'
       family = new String(name.family.slice(1, -1))
@@ -321,29 +317,28 @@ class Reference
 
     encoded = []
     for creator in f.value
-      switch
-        when creator.name || (creator.lastName && creator.fieldMode == 1)
-          name = if raw then "{#{creator.name || creator.lastName}}" else @enc_latex({value: new String(creator.name || creator.lastName)})
+      if creator.name || (creator.lastName && creator.fieldMode == 1)
+        name = if raw then "{#{creator.name || creator.lastName}}" else @enc_latex({value: new String(creator.name || creator.lastName)})
 
-        when raw
-          name = [creator.lastName || '', creator.firstName || ''].join(', ')
+      else if raw
+        name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
-        when creator.lastName || creator.firstName
-          name = {family: creator.lastName || '', given: creator.firstName || ''}
+      else if creator.lastName || creator.firstName
+        name = {family: creator.lastName || '', given: creator.firstName || ''}
 
-          Zotero.BetterBibTeX.parseParticles(name) if Translator.preferences.parseParticles
+        Zotero.BetterBibTeX.parseParticles(name) if Translator.preferences.parseParticles
 
-          unless Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedNameFormat
-            @useprefix ||= !!name['non-dropping-particle']
-            @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
+        unless Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedNameFormat
+          @useprefix ||= !!name['non-dropping-particle']
+          @juniorcomma ||= (f.juniorcomma && name['comma-suffix'])
 
-          if Translator.BetterBibTeX
-            name = @_enc_creators_bibtex(name)
-          else
-            name = @_enc_creators_biblatex(name)
-
+        if Translator.BetterBibTeX
+          name = @_enc_creators_bibtex(name)
         else
-          continue
+          name = @_enc_creators_biblatex(name)
+
+      else
+        continue
 
       encoded.push(name.trim())
 
@@ -375,7 +370,7 @@ class Reference
 
     if Array.isArray(f.value)
       return null if f.value.length == 0
-      return (@enc_latex(@clone(f, word), raw) for word in f.value).join(f.sep || '')
+      return f.value.map((word) -> @enc_latex(@clone(f, word), raw)).join(f.sep || '')
 
     return f.value if f.raw || raw
 
@@ -387,7 +382,7 @@ class Reference
     return value
 
   enc_tags: (f) ->
-    tags = (tag for tag in f.value || [] when tag && tag != Translator.preferences.rawLaTag)
+    tags = f.value.filter((tag) -> tag != Translator.preferences.rawLaTag)
     return null if tags.length == 0
 
     # sort tags for stable tests
@@ -437,12 +432,11 @@ class Reference
 
       att.mimetype = 'application/pdf' if !att.mimetype && att.path.slice(-4).toLowerCase() == '.pdf'
 
-      switch
-        when Translator.preferences.testing
-          Exporter.attachmentCounter += 1
-          att.path = "files/#{Exporter.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
-        when Translator.options.exportPath && att.path.indexOf(Translator.options.exportPath) == 0
-          att.path = att.path.slice(Translator.options.exportPath.length)
+      if Translator.preferences.testing
+        Exporter.attachmentCounter += 1
+        att.path = "files/#{Exporter.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
+      else if Translator.options.exportPath && att.path.indexOf(Translator.options.exportPath) == 0
+        att.path = att.path.slice(Translator.options.exportPath.length)
 
       attachments.push(att)
 
@@ -456,8 +450,8 @@ class Reference
       return a.path.localeCompare(b.path)
     )
 
-    return (att.path.replace(/([\\{};])/g, "\\$1") for att in attachments).join(';') if Translator.preferences.attachmentsNoMetadata
-    return ((part.replace(/([\\{}:;])/g, "\\$1") for part in [att.title, att.path, att.mimetype]).join(':') for att in attachments).join(';')
+    return attachments.map((att) -> att.path.replace(/([\\{};])/g, "\\$1")).join(';') if Translator.preferences.attachmentsNoMetadata
+    return attachments.map((att) -> [att.title, att.path, att.mimetype].map((part) -> part.replace(/([\\{}:;])/g, "\\$1")).join(':')).join(';')
 
   isBibVarRE: /^[a-z][a-z0-9_]*$/i
   isBibVar: (value) ->
@@ -527,7 +521,7 @@ class Reference
     debug('remove field', name)
     removed = @has[name]
     delete @has[name]
-    @fields = (field for field in @fields when field.name != name)
+    @fields = @fields.filter((field) -> field.name != name)
     return removed
 
   normalize: (typeof (''.normalize) == 'function')
@@ -543,7 +537,7 @@ class Reference
           when 'url' then @remove('doi')
 
     if (@item.collections || []).length && Translator.preferences.jabrefGroups == 4
-      groups = (Translator.collections[key].name for key in @item.collections when Translator.collections[key])
+      groups = @item.collections.filter((key) -> Translator.collections[key]).map((key) -> Translator.collections[key].name)
       groups = groups.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
       @add({ groups: groups.join(',') })
 
@@ -668,7 +662,7 @@ class Reference
     @fields.sort((a, b) -> ("#{a.name} = #{a.value}").localeCompare(("#{b.name} = #{b.value}"))) if Translator.preferences.testing
 
     ref = "@#{@referencetype}{#{@item.citekey},\n"
-    ref += ("  #{field.name} = #{field.bibtex}" for field in @fields).join(',\n')
+    ref += @fields.map((field) -> "  #{field.name} = #{field.bibtex}").join(',\n')
     ref += '\n}\n'
     ref += "% Quality Report for #{@item.citekey}:\n#{qr}\n" if qr = @qualityReport()
     ref += "\n"
@@ -701,7 +695,7 @@ class Reference
     report = []
     for field in fields
       options = field.split('/')
-      if (option for option in options when @has[option]).length == 0
+      if options.filter((option) => @has[option]).length == 0
         report.push("% Missing required field #{field}")
 
     if @referencetype == 'proceedings' && @has.pages
@@ -934,7 +928,7 @@ Language = new class
 
 Language.get_bigrams = (string) ->
   s = string.toLowerCase()
-  s = (s.slice(i, i + 2) for i in [0 ... s.length])
+  s = [0 ... s.length].map((i) -> s.slice(i, i + 2))
   s.sort()
   return s
 
