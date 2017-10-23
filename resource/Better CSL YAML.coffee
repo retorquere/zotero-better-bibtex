@@ -1,5 +1,5 @@
 YAML = require('js-yaml')
-Exporter = require('./csl/csl.coffee')
+Exporter = require('./csl/csl.ts')
 MarkupParser = require('./lib/markupparser.coffee')
 debug = require('./lib/debug.ts')
 

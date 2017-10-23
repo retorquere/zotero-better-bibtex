@@ -1,4 +1,4 @@
-Exporter = require('./csl/csl.coffee')
+Exporter = require('./csl/csl.ts')
 
 Exporter::serialize = (csl) -> JSON.stringify(csl)
 
