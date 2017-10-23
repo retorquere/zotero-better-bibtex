@@ -1,4 +1,4 @@
-Exporter = require('./lib/exporter.coffee')
+Exporter = require('./lib/exporter.ts')
 debug = require('./lib/debug.ts')
 
 Mode =
@@ -58,7 +58,6 @@ Mode =
     return
 
 Translator.doExport = ->
-  Exporter = new Exporter()
   items = []
   while item = Exporter.nextItem()
     items.push(item)

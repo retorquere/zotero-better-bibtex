@@ -1,5 +1,5 @@
 Reference = require('./bibtex/reference.coffee')
-Exporter = require('./lib/exporter.coffee')
+Exporter = require('./lib/exporter.ts')
 debug = require('./lib/debug.ts')
 JSON5 = require('json5')
 htmlEscape = require('./lib/html-escape.ts')
@@ -122,8 +122,6 @@ Translator.initialize = ->
 months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 Translator.doExport = ->
-  Exporter = new Exporter()
-
   Zotero.write('\n')
   while item = Exporter.nextItem()
     ref = new Reference(item)

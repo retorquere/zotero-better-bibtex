@@ -1,7 +1,7 @@
 ### XRegExp = require('xregexp') ###
 XRegExp = Zotero.Utilities.XRegExp
 debug = require('../lib/debug.ts')
-Exporter = require('../lib/exporter.coffee')
+Exporter = require('../lib/exporter.ts')
 text2latex = require('./unicode_translator.coffee').text2latex
 
 ###
@@ -33,9 +33,6 @@ text2latex = require('./unicode_translator.coffee').text2latex
 ###
 class Reference
   constructor: (@item) ->
-    # has to be constructed at runtime here because a static version would be cached by the Zotero translation framework
-    Reference::Exporter ||= new Exporter()
-
     @fields = []
     @has = Object.create(null)
     @raw = Translator.preferences.rawLaTag == '*' || (Translator.preferences.rawLaTag in @item.tags)
@@ -62,10 +59,15 @@ class Reference
       @english = @language in ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'USenglish', 'UKenglish']
       debug('detected language:', {language: @language, english: @english})
 
-    @override = @Exporter.extractFields(@item)
+    if @item.extraFields.csl.type
+      @item.cslType = @item.extraFields.csl.type.value
+
+    if @item.extraFields.csl['volume-title'] # should just have been mapped by Zotero
+      @item.volumeTitle = @item.extraFields.csl['volume-title'].value
+      delete @item.extraFields.csl['volume-title']
+
     @item.__type__ = @item.cslType || @item.itemType
     debug('postextract: item:', @item)
-    debug('postextract: overrides:', @override)
 
     @referencetype = @typeMap.csl[@item.cslType] || @typeMap.zotero[@item.itemType] || 'misc'
     if @referencetype.type
@@ -83,7 +85,7 @@ class Reference
         @item.arXiv.source = 'publicationTitle'
         delete @item.publicationTitle if Translator.BetterBibLaTeX
 
-      when @override.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @override.arxiv.value))
+      when @item.extraFields.kv.arxiv && (@item.arXiv = @arXiv.parse('arxiv:' + @item.extraFields.kv.arxiv))
         @item.arXiv.source = 'extra'
 
     if @item.arXiv
@@ -91,7 +93,7 @@ class Reference
       @add({ eprinttype: 'arxiv'})
       @add({ eprint: @item.arXiv.eprint })
       @add({ primaryClass: @item.arXiv.primaryClass }) if @item.arXiv.primaryClass
-      delete @override.arxiv
+      delete @item.extraFields.kv.arxiv
 
   arXiv:
     # new-style IDs
@@ -295,7 +297,7 @@ class Reference
 
     if Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])
       family = '{\\noopsort{' + @enc_latex({value: name.family.toLowerCase()}) + '}}' + family
-      @Exporter.preamble.noopsort = true
+      Exporter.preamble.noopsort = true
 
     name.given = @enc_latex({value: name.given}) if name.given
     name.suffix = @enc_latex({value: name.suffix}) if name.suffix
@@ -437,8 +439,8 @@ class Reference
 
       switch
         when Translator.preferences.testing
-          @Exporter.attachmentCounter += 1
-          att.path = "files/#{@Exporter.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
+          Exporter.attachmentCounter += 1
+          att.path = "files/#{Exporter.attachmentCounter}/#{att.path.replace(/.*[\/\\]/, '')}"
         when Translator.options.exportPath && att.path.indexOf(Translator.options.exportPath) == 0
           att.path = att.path.slice(Translator.options.exportPath.length)
 
@@ -541,60 +543,103 @@ class Reference
           when 'url' then @remove('doi')
 
     if (@item.collections || []).length && Translator.preferences.jabrefGroups == 4
-      groups = (@Exporter.collections[key].name for key in @item.collections when @Exporter.collections[key])
+      groups = (Translator.collections[key].name for key in @item.collections when Translator.collections[key])
       groups = groups.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1])
       @add({ groups: groups.join(',') })
 
     fields = []
-    for own name, value of @override
-      # psuedo-var, sets the reference type
-      if name == 'referencetype'
-        @referencetype = value.value
-        continue
+    for cslName, field of @item.extraFields.csl
+      { type, value } = field
 
       # these are handled just like 'arxiv' and 'lccn', respectively
-      if name in ['PMID', 'PMCID']
-        value.format = 'key-value'
-        name = name.toLowerCase()
+      if cslName in ['pmid', 'pmcid']
+        @item.extraFields.kv[cslName] = field
+        delete @item.extraFields.csl[cslName]
+        continue
 
-      if value.format == 'csl'
-        # CSL names are not in BibTeX format, so only add it if there's a mapping
-        cslvar = @Exporter.CSLVariables[name]
-        mapped = cslvar[(if Translator.BetterBibLaTeX then 'BibLaTeX' else 'BibTeX')]
-        mapped = mapped.call(@) if typeof mapped == 'function'
+      name = null
+      switch type
+        when 'string' then enc = null
+        when 'creator' then enc = 'creators'
+        else enc = type
 
-        if mapped
-          fields.push({ name: mapped, value: value.value, raw: false, enc: (if cslvar.type == 'creator' then 'creators' else cslvar.type) })
+      switch cslName
+        when 'doi', 'isbn', 'issn' then name = cslName
+
+      # CSL names are not in BibTeX format, so only add it if there's a mapping
+      if !name && Translator.BetterBibLaTeX
+        switch cslName
+          when 'authority' then name = 'institution'
+          when 'status' then name = 'pubstate'
+
+          when 'title'
+            name = if @referencetype == 'book' then 'maintitle' else null
+
+          when 'container-title'
+            switch @item.__type__
+              when 'film', 'tvBroadcast', 'videoRecording', 'motion_picture' then name = 'booktitle'
+              when 'bookSection', 'chapter' then name = 'maintitle'
+              else name = 'journaltitle'
+
+          when 'original-publisher'
+            name = 'origpublisher'
+            enc = 'literal'
+          when 'original-publisher-place'
+            name = 'origlocation'
+            enc = 'literal'
+          when 'original-title' then name = 'origtitle'
+          when 'original-date' then name = 'origdate'
+
+          when 'publisher-place'
+            name = 'location'
+            enc = 'literal'
+
+          when 'issued' then name = 'date'
+
+          when 'number', 'volume', 'author', 'director', 'editor' then name = cslName
+
+      if !name && Translator.BetterBibTeX
+        switch cslName
+          when 'call-number' then name = 'lccn'
+
+      if name
+        fields.push({ name, value, enc })
+      else
+        debug('Unmapped CSL field', cslName, '=', value)
+
+    for name, field of @item.extraFields.bibtex
+      # psuedo-var, sets the reference type
+      if name == 'referencetype'
+        @referencetype = field.value
+        continue
+
+      fields.push({ name, value: field.value, raw: field.raw })
+
+    for name, field of @item.extraFields.kv
+      switch name
+        when 'mr'
+          fields.push({ name: 'mrnumber', value: field.value, raw: field.raw })
+        when 'zbl'
+          fields.push({ name: 'zmnumber', value: field.value, raw: field.raw })
+        when 'lccn', 'pmcid'
+          fields.push({ name: name, value: field.value, raw: field.raw })
+        when 'pmid', 'arxiv', 'jstor', 'hdl'
+          if Translator.BetterBibLaTeX
+            fields.push({ name: 'eprinttype', value: name })
+            fields.push({ name: 'eprint', value: field.value, raw: field.raw })
+          else
+            fields.push({ name, value: field.value, raw: field.raw })
+        when 'googlebooksid'
+          if Translator.BetterBibLaTeX
+            fields.push({ name: 'eprinttype', value: 'googlebooks' })
+            fields.push({ name: 'eprint', value: field.value, raw: field.raw })
+          else
+            fields.push({ name: 'googlebooks', value: field.value, raw: field.raw })
+        when 'xref'
+          fields.push({ name, value: field.value, raw: field.raw })
 
         else
-          debug('Unmapped CSL field', name, '=', value.value)
-
-      else
-        switch name
-          when 'mr'
-            fields.push({ name: 'mrnumber', value: value.value, raw: value.raw })
-          when 'zbl'
-            fields.push({ name: 'zmnumber', value: value.value, raw: value.raw })
-          when 'lccn', 'pmcid'
-            fields.push({ name: name, value: value.value, raw: value.raw })
-          when 'pmid', 'arxiv', 'jstor', 'hdl'
-            if Translator.BetterBibLaTeX
-              fields.push({ name: 'eprinttype', value: name.toLowerCase() })
-              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
-            else
-              fields.push({ name, value: value.value, raw: value.raw })
-          when 'googlebooksid'
-            if Translator.BetterBibLaTeX
-              fields.push({ name: 'eprinttype', value: 'googlebooks' })
-              fields.push({ name: 'eprint', value: value.value, raw: value.raw })
-            else
-              fields.push({ name: 'googlebooks', value: value.value, raw: value.raw })
-          when 'xref'
-            fields.push({ name, value: value.value, raw: value.raw })
-
-          else
-            debug('fields.push', { name, value: value.value, raw: value.raw })
-            fields.push({ name, value: value.value, raw: value.raw })
+          debug('unexpected KV field', name, field)
 
     for field in fields
       name = field.name.split('.')
@@ -629,12 +674,12 @@ class Reference
     ref += "\n"
     Zotero.write(ref)
 
-    @data.DeclarePrefChars = @Exporter.unique_chars(@data.DeclarePrefChars)
+    @data.DeclarePrefChars = Exporter.unique_chars(@data.DeclarePrefChars)
 
     Zotero.BetterBibTeX.cacheStore(@item.itemID, Translator.options, ref, @data)
 
-    @Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
-    debug('item.complete:', {data: @data, preamble: @Exporter.preamble})
+    Exporter.preamble.DeclarePrefChars += @data.DeclarePrefChars if @data.DeclarePrefChars
+    debug('item.complete:', {data: @data, preamble: Exporter.preamble})
     return
 
   toVerbatim: (text) ->
@@ -642,8 +687,8 @@ class Reference
       value = ('' + text).replace(/([#\\%&{}])/g, '\\$1')
     else
       value = ('' + text).replace(/([\\{}])/g, '\\$1')
-    # TODO: @Exporter.unicode -> Translator.unicode ?
-    value = value.replace(/[^\x21-\x7E]/g, ((chr) -> "\\%#{'00' + chr.charCodeAt(0).toString(16).slice(-2)}" )) if not @Exporter.unicode
+    # TODO: Exporter.unicode -> Translator.unicode ?
+    value = value.replace(/[^\x21-\x7E]/g, ((chr) -> "\\%#{'00' + chr.charCodeAt(0).toString(16).slice(-2)}" )) if not Exporter.unicode
     return value
 
   hasCreator: (type) -> (@item.creators || []).some((creator) -> creator.creatorType == type)

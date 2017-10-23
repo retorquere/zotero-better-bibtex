@@ -1,4 +1,4 @@
-Exporter = require('../lib/exporter.coffee')
+Exporter = require('../lib/exporter.ts')
 debug = require('../lib/debug.ts')
 Citekey = require('../../content/keymanager/get-set.ts')
 
@@ -74,9 +74,6 @@ parseDate = (date) ->
   return
 
 class CSLExporter
-  constructor: ->
-    @Exporter = new Exporter()
-
   doExport: ->
     items = []
     while item = Zotero.nextItem()
@@ -87,8 +84,7 @@ class CSLExporter
         continue
 
       Zotero.BetterBibTeX.simplifyFields(item)
-      item.extra = Citekey.get(item.extra).extra
-      fields = @Exporter.extractFields(item)
+      Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
 
       if item.accessDate # WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
@@ -103,24 +99,26 @@ class CSLExporter
       delete csl['publisher-place']
       csl[if item.itemType == 'presentation' then 'event-place' else 'publisher-place'] = item.place if item.place
 
-      csl.type = item.cslType if item.cslType in ValidCSLTypes
-
       delete csl.authority
       csl.type = 'motion_picture' if item.__type__ == 'videoRecording' && csl.type == 'video'
 
       csl.issued = parseDate(item.date) if csl.issued && item.date
 
-      debug('extracted:', fields)
-      for name, value of fields
-        continue unless value.format == 'csl'
+      debug('extracted:', item.extraFields)
+      for name, field of item.extraFields.csl
+        { type, value } = field
 
-        switch @Exporter.CSLVariables[name].type
+        if name == 'type'
+          csl.type = value if value in ValidCSLTypes
+          continue
+
+        switch type
           when 'date'
-            csl[name] = parseDate(value.value)
+            csl[name] = parseDate(value)
 
           when 'creator'
             creators = []
-            for creator in value.value
+            for creator in value
               creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (if creator.name then 1 else undefined)}
               Zotero.BetterBibTeX.parseParticles(creator)
               creators.push(creator)
@@ -128,7 +126,7 @@ class CSLExporter
             csl[name] = creators
 
           else
-            csl[name] = value.value
+            csl[name] = value
 
       swap = {
         shortTitle: 'title-short'

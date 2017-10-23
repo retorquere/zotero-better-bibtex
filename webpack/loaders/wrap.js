@@ -9,7 +9,7 @@ module.exports = function (source) {
   var loading = `Zotero.debug('BBT: loading ${src}')`;
   var loaded = `Zotero.debug('BBT: loaded ${src}')`;
   var errvar = '$wrap_loader_catcher_' + src.replace(/[^a-zA-Z0-9]/g, '_');
-  var failed = `Zotero.debug('Error: BBT: load of ${src} failed:' + ${errvar})`;
+  var failed = `Zotero.debug('Error: BBT: load of ${src} failed:' + ${errvar} + '::' + ${errvar}.stack)`;
 
   switch (src.split('.').pop()) {
     case 'coffee':

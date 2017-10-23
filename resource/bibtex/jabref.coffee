@@ -1,13 +1,13 @@
 debug = require('../lib/debug.ts')
 
 class JabRef
-  constructor: (@collections) ->
-    debug('JabRef:', { collections: @collections })
+  constructor: () ->
+    debug('JabRef:', { collections: Translator.collections })
     @citekeys = {}
 
   exportGroups: ->
-    debug('exportGroups:', {collections: @collections, citekeys: @citekeys})
-    return if Object.keys(@collections).length == 0 || !Translator.preferences.jabrefGroups
+    debug('exportGroups:', {collections: Translator.collections, citekeys: @citekeys})
+    return if Object.keys(Translator.collections).length == 0 || !Translator.preferences.jabrefGroups
 
     switch
       when Translator.preferences.jabrefGroups == 3
@@ -17,12 +17,12 @@ class JabRef
       else
         meta = 'databaseType:bibtex'
 
-    debug('JabRef.exportGroups', { collections: @collections, citekeys: @citekeys })
+    debug('JabRef.exportGroups', { collections: Translator.collections, citekeys: @citekeys })
 
     Zotero.write("@comment{jabref-meta: #{meta};}\n")
     Zotero.write('@comment{jabref-meta: groupstree:\n')
     Zotero.write('0 AllEntriesGroup:;\n')
-    for key, collection of @collections
+    for key, collection of Translator.collections
       continue if collection.parent
       Zotero.write(@exportGroup(collection, 1))
     Zotero.write(';\n')

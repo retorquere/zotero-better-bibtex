@@ -1,5 +1,5 @@
 Reference = require('./bibtex/reference.coffee')
-Exporter = require('./lib/exporter.coffee')
+Exporter = require('./lib/exporter.ts')
 debug = require('./lib/debug.ts')
 datefield = require('./bibtex/datefield.ts')
 
@@ -204,8 +204,6 @@ Translator.initialize = ->
 
 Translator.doExport = ->
   debug('Translation started with prefs', Translator.preferences)
-
-  Exporter = new Exporter()
 
   Zotero.write('\n')
   while item = Exporter.nextItem()

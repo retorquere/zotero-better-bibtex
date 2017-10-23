@@ -152,6 +152,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return serializer.simplify(item) },
   scrubFields(sandbox, item) { return serializer.scrub(item) },
+  extractFields(sandbox, item) { return require('./var-extract.ts')(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   version(sandbox) { return { Zotero: zoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 
@@ -363,7 +364,6 @@ Zotero.Notifier.registerObserver({
 debug('Loading Better BibTeX: setup done')
 
 class Lock {
-  public ready: any
   private mark: { ts: number, msg: string }
 
   constructor() {
@@ -378,6 +378,7 @@ class Lock {
     this.update(msg || 'Initializing')
 
     this.toggle(true)
+    debug('Lock: locked')
   }
 
   private bench(msg) {
@@ -397,6 +398,7 @@ class Lock {
 
     Zotero.hideZoteroPaneOverlays()
     this.toggle(false)
+    debug('Lock: unlocked')
   }
 
   private toggle(locked) {

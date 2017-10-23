@@ -1,5 +1,4 @@
 debug = require('./lib/debug.ts')
-Collections = require('./lib/collections.ts')
 
 ###
 scrub = (item) ->
@@ -96,7 +95,7 @@ Translator.doExport = ->
       preferences: Translator.preferences
       options: Translator.options
     }
-    collections: Collections()
+    collections: Translator.collections
     items: []
   }
   debug('header ready')
