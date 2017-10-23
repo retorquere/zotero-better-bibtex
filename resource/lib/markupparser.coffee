@@ -85,54 +85,45 @@ class MarkupParser
     while html
       chars = true
 
-      switch
-        when @lastTag == 'pre'
-          html = html.replace(@re.pre, (all, text) =>
-            @handler.pre(text.replace(/[\x0E\x0F]/g, '')) if @handler.pre
-            return ''
-          )
-          chars = false
-          @parseEndTag('', @lastTag)
+      if @lastTag == 'pre'
+        html = html.replace(@re.pre, (all, text) =>
+          @handler.pre(text.replace(/[\x0E\x0F]/g, '')) if @handler.pre
+          return ''
+        )
+        chars = false
+        @parseEndTag('', @lastTag)
 
-        when html.substring(0, 2) == '</' || html[0] == "\x0F"
-          if html[0] == '<'
-            match = html.match(@re.endTag)
-            switch
-              when !match then # pass
-              when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0][match[1].length + 2] == '>' then # pass
-              else match = null
-          else
-            match = [html[0], 'enquote']
+      else if html.substring(0, 2) == '</' || html[0] == "\x0F"
+        if html[0] == '<'
+          match = html.match(@re.endTag)
+          match = null if match && !htmlMode && match[1] != 'span' && (!@minimal[match[1]] || match[0][match[1].length + 2] != '>')
+        else
+          match = [html[0], 'enquote']
 
-          if match
-            html = html.substring(match[0].length)
-            @parseEndTag.apply(@, match)
-          else
-            #ignore the angle bracket
-            @handler.chars('<', length - html.length) if @handler.chars
-            html = html.substring(1)
-          chars = false
+        if match
+          html = html.substring(match[0].length)
+          @parseEndTag.apply(@, match)
+        else
+          #ignore the angle bracket
+          @handler.chars('<', length - html.length) if @handler.chars
+          html = html.substring(1)
+        chars = false
 
-        when html[0] == '<' || html[0] == "\x0E"
-          if html[0] == '<'
-            match = html.match(@re.startTag)
-            switch
-              when !match then # pass
-              when htmlMode || match[1] == 'span' then # pass
-              when @minimal[match[1]] && match[0].substr(match[1].length + 1, 2) in ['/>', '>'] then # pass
-              else match = null
-          else
-            match = [html[0], 'enquote', '', '']
+      else if html[0] == '<' || html[0] == "\x0E"
+        if html[0] == '<'
+          match = html.match(@re.startTag)
+          match = null if match && !htmlMode && match[1] != 'span' && !(@minimal[match[1]] || match[0].substr(match[1].length + 1, 2) in ['/>', '>'])
+        else
+          match = [html[0], 'enquote', '', '']
 
-          if match
-            html = html.substring(match[0].length)
-            @parseStartTag.apply(@, match)
-          else
-            #ignore the angle bracket
-            @handler.chars('<', length - html.length) if @handler.chars
-            html = html.substring(1)
-          chars = false
+        if match
+          html = html.substring(match[0].length)
+          @parseStartTag.apply(@, match)
+        else
+          #ignore the angle bracket
+          @handler.chars('<', length - html.length) if @handler.chars
+          html = html.substring(1)
+        chars = false
 
       if chars
         index = html.search(/[<\x0E\x0F]/)
@@ -174,12 +165,13 @@ class MarkupParser
       else
         for child in node.children
           text = @innerText(child, text)
+
     return text
 
   unwrapNocase: (node) ->
     return node if node.name == '#text'
 
-    children = (@unwrapNocase(child) for child in node.children)
+    children = node.children.map(@unwrapNocase)
     node.children = [].concat(children...)
 
     expand = false
@@ -194,18 +186,17 @@ class MarkupParser
     for child in node.children
       clone = JSON.parse(JSON.stringify(node))
 
-      switch
-        when child.nocase
-          clone.children = child.children
-          child.children = [clone]
-          expanded.push(child)
-          last = null
-        when last && !last.nocase
-          last.children.push(child)
-        else
-          clone.children = [child]
-          expanded.push(clone)
-          last = clone
+      if child.nocase
+        clone.children = child.children
+        child.children = [clone]
+        expanded.push(child)
+        last = null
+      else if last && !last.nocase
+        last.children.push(child)
+      else
+        clone.children = [child]
+        expanded.push(clone)
+        last = clone
 
     return expanded
 
@@ -358,26 +349,26 @@ class MarkupParser
           continue
 
         @sentenceStart = false
-        switch
-          when m = @re.protectedWords.exec(text)
-            #console.log('pw:', m[0])
-            @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
-            text = text.substring(m[0].length)
 
-          when m = @re.url.exec(text)
-            #console.log('url:', m[0])
-            @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
-            text = text.substring(m[0].length)
+        if m = @re.protectedWords.exec(text)
+          #console.log('pw:', m[0])
+          @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
+          text = text.substring(m[0].length)
 
-          when m = @re.unprotectedWord.exec(text)
-            #console.log('uw:', m[0])
-            @plaintext(m[0], pos + (length - text.length))
-            text = text.substring(m[0].length)
+        else if m = @re.url.exec(text)
+          #console.log('url:', m[0])
+          @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
+          text = text.substring(m[0].length)
 
-          else
-            #console.log('char:', text[0])
-            @plaintext(text[0], pos + (length - text.length))
-            text = text.substring(1)
+        else if m = @re.unprotectedWord.exec(text)
+          #console.log('uw:', m[0])
+          @plaintext(m[0], pos + (length - text.length))
+          text = text.substring(m[0].length)
+
+        else
+          #console.log('char:', text[0])
+          @plaintext(text[0], pos + (length - text.length))
+          text = text.substring(1)
 
       return
 
