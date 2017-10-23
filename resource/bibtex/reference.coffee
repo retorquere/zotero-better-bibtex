@@ -2,7 +2,7 @@
 XRegExp = Zotero.Utilities.XRegExp
 debug = require('../lib/debug.ts')
 Exporter = require('../lib/exporter.ts')
-text2latex = require('./unicode_translator.coffee').text2latex
+text2latex = require('./unicode_translator.ts').text2latex
 
 ###
 # h1 Global object: Translator
