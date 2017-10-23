@@ -171,7 +171,7 @@ class MarkupParser
   unwrapNocase: (node) ->
     return node if node.name == '#text'
 
-    children = node.children.map(@unwrapNocase)
+    children = node.children.map((node) => @unwrapNocase(node))
     node.children = [].concat(children...)
 
     expand = false
