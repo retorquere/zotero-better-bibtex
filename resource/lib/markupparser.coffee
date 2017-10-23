@@ -58,9 +58,9 @@ class AST
     if tag.attr['class']
       for cls in tag.attr['class'].split(/\s+/)
         tag['class'][cls] = true
-    tag.smallcaps = true if name == 'sc' || tag['class'].smallcaps || tag.attr.smallcaps? || (tag.attr.style || '').match(/small-caps/i)
-    tag.nocase = true if tag.attr.nocase? || tag['class'].nocase || name == 'nc'
-    tag.relax = true if tag.attr.relax? || tag['class'].relax
+    tag.smallcaps = true if name == 'sc' || tag['class'].smallcaps || tag.attr.smallcaps || (tag.attr.style || '').match(/small-caps/i)
+    tag.nocase = true if tag.attr.nocase || tag['class'].nocase || name == 'nc'
+    tag.relax = true if tag.attr.relax || tag['class'].relax
 
     @elems[0].children.push(tag)
     @elems.unshift(tag)
@@ -285,7 +285,7 @@ class MarkupParser
       when '#text'
         # the Array construct makes sure that the text is placed at the exact position it has in the origin string,
         # adding spaces as necessary
-        text += Array((node.pos - text.length) + 1).join(' ') + node.text if node.pos?
+        text += Array((node.pos - text.length) + 1).join(' ') + node.text if typeof node.pos == 'number'
       when 'pre'
         # don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
         # the CSL title caser would consider last words in a title that actually have a following <pre> block the last
@@ -355,8 +355,8 @@ class MarkupParser
   titleCase: (node) ->
     if node.name == '#text'
       # https://github.com/Juris-M/citeproc-js/issues/30
-      # node.text = @titleCased.substr(node.pos, node.text.length) if node.pos?
-      if node.pos?
+      # node.text = @titleCased.substr(node.pos, node.text.length) if typeof node.pos == 'number'
+      if typeof node.pos == 'number'
         spaces = '\u2003\u2004\u205F\u2009\u00A0'.split('')
         recased = ''
         for char, i in @titleCased.substr(node.pos, node.text.length).split('')
