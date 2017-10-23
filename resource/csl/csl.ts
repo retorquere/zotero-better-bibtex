@@ -66,7 +66,7 @@ function parseDate(date) {
     case 'date':
       return {
         'date-parts': [ date2csl(parsed) ],
-        circa: !!parsed.approximate,
+        circa: parsed.approximate ? true : undefined,
       }
 
     case 'interval':
@@ -150,6 +150,8 @@ export = class CSLExporter {
 
       /* ham-fisted workaround for #365 */
       if (csl.type === 'motion_picture' || csl.type === 'broadcast') [csl.author, csl.director] = [csl.director, csl.author]
+
+      csl.id = item.citekey
 
       /* Juris-M workarounds to match Zotero as close as possible */
       for (const kind of ['author', 'editor', 'director']) {
