@@ -80,7 +80,7 @@ function parseDate(date) {
   }
 }
 
-export = class CSLExporter {
+export = new class CSLExporter {
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
 

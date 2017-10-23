@@ -3,14 +3,14 @@ Exporter = require('./csl/csl.ts')
 MarkupParser = require('./lib/markupparser.ts')
 debug = require('./lib/debug.ts')
 
-Exporter::serialize = (csl) ->
+Exporter.serialize = (csl) ->
   for k, v of csl
     csl[k] = (new HTML(v)).markdown if typeof v == 'string' && v.indexOf('<') >= 0
   return YAML.safeDump([csl], {skipInvalid: true})
 
-Exporter::flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
+Exporter.flush = (items) -> "---\nreferences:\n" + items.join("\n") + "...\n"
 
-Translator.doExport = -> (new Exporter()).doExport()
+Translator.doExport = -> Exporter.doExport()
 
 class HTML
   constructor: (html) ->
