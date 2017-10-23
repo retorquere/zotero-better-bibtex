@@ -10,6 +10,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
@@ -92,7 +93,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.011                                                                            | 1           |
      | Better BibLaTeX.010                                                                            | 1           |
      | Malformed HTML                                                                                 | 1           |
-     | Better BibLaTeX.stable-keys                                                                    | 6           |
      | Allow explicit field override                                                                  | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
 

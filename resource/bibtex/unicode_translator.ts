@@ -13,6 +13,7 @@ const htmlConverter = new class HTMLConverter {
   private embraced: boolean
 
   public convert(html, options) {
+    this.embraced = false
     this.options = options
     this.latex = ''
     this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
@@ -132,7 +133,7 @@ const htmlConverter = new class HTMLConverter {
     /* holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane */
     /* https://github.com/retorquere/zotero-better-bibtex/issues/541 */
     /* https://github.com/plk/biblatex/issues/459 ... oy! */
-    if (this.embraced == null) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || Translator.BetterBibTeX)
+    if (!this.embraced) this.embraced = this.options.caseConversion && (((this.latex || latex)[0] !== '\\') || Translator.BetterBibTeX)
     if (!this.embraced || !condition) return latex
     return `{${latex}}`
   }

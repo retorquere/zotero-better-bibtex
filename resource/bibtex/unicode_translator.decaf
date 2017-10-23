@@ -100,7 +100,8 @@ class HTML
     ### holy mother of %^$#^%$@ the bib(la)tex case conversion rules are insane ###
     ### https://github.com/retorquere/zotero-better-bibtex/issues/541 ###
     ### https://github.com/plk/biblatex/issues/459 ... oy! ###
-    @embraced ?= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
+    @embraced ||= @options.caseConversion && (((@latex || latex)[0] != '\\') || Translator.BetterBibTeX)
+    debug('embrace:', { embraced: @embraced, caseConversion: @options.caseConversion, '@latex': @latex, latex, condition })
     return latex unless @embraced && condition
     return '{' + latex + '}'
 
