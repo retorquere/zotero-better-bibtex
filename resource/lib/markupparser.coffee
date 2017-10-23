@@ -48,19 +48,19 @@ re.whitespace = ///^[#{re.whitespace}]+///
 
 class AST
   constructor: (@caseConversion) ->
-    @root = {name: 'span', children: [], attr: {}, klass: {}}
+    @root = {name: 'span', children: [], attr: {}, 'class': {}}
     @elems = [@root]
     @sentenceStart = true
     return
 
   start: (name, attr, unary) ->
-    tag = {name, attr, klass: {}, children: []}
-    if tag.attr.klass
-      for cls in tag.attr.klass.split(/\s+/)
-        tag.klass[cls] = true
-    tag.smallcaps = true if name == 'sc' || tag.klass.smallcaps || tag.attr.smallcaps? || (tag.attr.style || '').match(/small-caps/i)
-    tag.nocase = true if tag.attr.nocase? || tag.klass.nocase || name == 'nc'
-    tag.relax = true if tag.attr.relax? || tag.klass.relax
+    tag = {name, attr, 'class': {}, children: []}
+    if tag.attr['class']
+      for cls in tag.attr['class'].split(/\s+/)
+        tag['class'][cls] = true
+    tag.smallcaps = true if name == 'sc' || tag['class'].smallcaps || tag.attr.smallcaps? || (tag.attr.style || '').match(/small-caps/i)
+    tag.nocase = true if tag.attr.nocase? || tag['class'].nocase || name == 'nc'
+    tag.relax = true if tag.attr.relax? || tag['class'].relax
 
     @elems[0].children.push(tag)
     @elems.unshift(tag)
@@ -110,12 +110,12 @@ class AST
 
       if m = re.protectedWords.exec(text)
         #console.log('pw:', m[0])
-        @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, klass: {}})
+        @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, 'class': {}})
         text = text.substring(m[0].length)
 
       else if m = re.url.exec(text)
         #console.log('url:', m[0])
-        @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, klass: {}})
+        @elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, 'class': {}})
         text = text.substring(m[0].length)
 
       else if m = re.unprotectedWord.exec(text)
@@ -166,7 +166,6 @@ class MarkupParser
       while match = rest.match(@re.attr)
         rest = rest.substr(match[0].length)
         name = match[1]
-        name = 'klass' if name == 'class'
         value = match[2] || match[3] || match[4] || ''
         attrs[name] = value
       @handler.start(tagName, attrs)
