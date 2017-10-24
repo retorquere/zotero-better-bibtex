@@ -30,7 +30,7 @@
     "s3form": "coffee webpack/scripts/s3form.coffee",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "cs": "find resource -name '*.coffee' -exec wc -l {} \\;"
+    "cs": "find content resource minitests webpack -name '*.coffee' -exec wc -l {} \\;"
   },
   "main": "index.js",
   "directories": {
