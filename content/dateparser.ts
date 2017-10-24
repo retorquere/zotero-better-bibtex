@@ -1,4 +1,4 @@
-import edtf = require('edtf')
+import EDTF = require('edtf')
 import edtfy = require('edtfy')
 import debug = require('./debug.ts')
 // import escapeStringRegexp = require('escape-string-regexp')
@@ -49,11 +49,11 @@ function normalize_edtf(date) {
 
 function parse_edtf(date) {
   try {
-    return normalize_edtf(edtf.parse(edtfy(date.replace(/\. /, ' ')))) // 8. july 2011
+    return normalize_edtf(EDTF.parse(edtfy(date.replace(/\. /, ' ')))) // 8. july 2011
   } catch (err) {}
 
   try {
-    return normalize_edtf(edtf.parse(date.replace('?~', '~').replace(/u/g, 'X')))
+    return normalize_edtf(EDTF.parse(date.replace('?~', '~').replace(/u/g, 'X')))
   } catch (err) {}
 
   return false

@@ -10,7 +10,7 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 import debug = require('./debug.ts')
 import flash = require('./flash.ts')
-const edtf = require('edtf')
+import EDTF = require('edtf')
 import Events = require('./events.ts')
 import ZoteroConfig = require('./zotero-config.ts')
 
@@ -142,7 +142,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return parseDate(date) },
   isEDTF(sandbox, date) {
     try {
-      edtf.parse(date)
+      EDTF.parse(date)
       return true
     } catch (error) {
       return false

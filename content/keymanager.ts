@@ -4,7 +4,7 @@ declare const window: any
 import debug = require('./debug.ts')
 import flash = require('./flash.ts')
 import Events = require('./events.ts')
-const ETA = require('node-eta')
+import ETA = require('node-eta')
 import ZoteroDB = require('./db/zotero.ts')
 
 import getItemsAsync = require('./get-items-async.ts')

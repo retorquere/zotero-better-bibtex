@@ -1,10 +1,10 @@
 declare const Zotero: any
 
-const EVENTEMITTER = require('eventemitter4')
+import EventEmitter = require('eventemitter4')
 
 import debug = require('./debug.ts')
 import $patch$ = require('./monkey-patch.ts')
-const emitter = new EVENTEMITTER()
+const emitter = new EventEmitter()
 
 if (Zotero.Debug.enabled) {
   const events = [

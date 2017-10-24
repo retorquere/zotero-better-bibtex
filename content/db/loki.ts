@@ -4,12 +4,12 @@ declare const AsyncShutdown: any
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 import $patch$ = require('../monkey-patch.ts')
 
-const AJV = require('ajv')
+import AJV = require('ajv')
 import debug = require('../debug.ts')
 import Prefs = require('../prefs.ts')
 
 // tslint:disable-next-line:variable-name
-const Loki = require('lokijs')
+import Loki = require('lokijs')
 
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)

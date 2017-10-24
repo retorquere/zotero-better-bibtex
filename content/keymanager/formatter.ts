@@ -10,7 +10,7 @@ const parser = require('./formatter.pegjs')
 import parseDate = require('../dateparser.ts')
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
-const punycode = require('punycode')
+import PunyCode = require('punycode')
 import JournalAbbrev = require('../journal-abbrev.ts')
 
 export = new class PatternFormatter {
@@ -179,7 +179,7 @@ export = new class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0 && punycode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0 && PunyCode.ucs2.decode(word).length > 1)
     if (words.length === 0) return null
     return words
   }

@@ -1,6 +1,6 @@
 declare const Translator: any
 
-const YAML = require('js-yaml')
+import YAML = require('js-yaml')
 
 import Exporter = require('./csl/csl.ts')
 import debug = require('./lib/debug.ts')

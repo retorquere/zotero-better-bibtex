@@ -1,5 +1,5 @@
 import debug = require('./debug.ts')
-const JSON5 = require('json5')
+import JSON5 = require('json5')
 
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 const cslVariables = require('./csl-vars.json')

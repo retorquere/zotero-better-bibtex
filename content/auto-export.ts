@@ -3,8 +3,8 @@ declare const Components: any
 
 import debug = require('./debug.ts')
 
-const QUEUE = require('better-queue')
-const MEMORYSTORE = require('better-queue-memory')
+import Queue = require('better-queue')
+import MemoryStore = require('better-queue-memory')
 import Events = require('./events.ts')
 import DB = require('./db/main.ts')
 import Translators = require('./translators.ts')
@@ -23,7 +23,7 @@ function queueHandler(handler) {
   }
 }
 
-const scheduled = new QUEUE(
+const scheduled = new Queue(
   queueHandler(
     async task => {
       const db = DB.getCollection('autoexport')
@@ -61,7 +61,7 @@ const scheduled = new QUEUE(
   ),
 
   {
-    store: new MEMORYSTORE(),
+    store: new MemoryStore(),
     // https://bugs.chromium.org/p/v8/issues/detail?id=4718
     setImmediate: setTimeout.bind(null),
   }
@@ -69,7 +69,7 @@ const scheduled = new QUEUE(
 scheduled.resume()
 
 const debounce_delay = 1000
-const scheduler = new QUEUE(
+const scheduler = new Queue(
   queueHandler(
     async task => {
       task = {...task}
@@ -98,7 +98,7 @@ const scheduler = new QUEUE(
   ),
 
   {
-    store: new MEMORYSTORE(),
+    store: new MemoryStore(),
     cancelIfRunning: true,
     // https://bugs.chromium.org/p/v8/issues/detail?id=4718
     setImmediate: setTimeout.bind(null),
