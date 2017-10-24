@@ -155,13 +155,12 @@ Translator.doExport = ->
       else
         ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url }) if item.__type__ in ['webpage', 'post', 'post-weblog']
 
-    switch
-      when item.__type__ in ['bookSection', 'conferencePaper', 'chapter']
-        ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-      when ref.isBibVar(item.publicationTitle)
-        ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
-      else
-        ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
+    if item.__type__ in ['bookSection', 'conferencePaper', 'chapter']
+      ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+    else if ref.isBibVar(item.publicationTitle)
+      ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
+    else
+      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
 
     switch item.__type__
       when 'thesis' then ref.add({ school: item.publisher })
@@ -176,12 +175,12 @@ Translator.doExport = ->
 
     if item.date
       date = Zotero.BetterBibTeX.parseDate(item.date)
-      switch date?.type || 'verbatim'
+      switch (date || {}).type || 'verbatim'
         when 'verbatim', 'interval'
           ref.add({ year: item.date })
         when 'date'
           ref.add({ name: 'month', value: months[date.month - 1], bare: true }) if date.month
-          if date.orig?.type == 'date'
+          if (date.orig || {}).type == 'date'
             ref.add({ year: "[#{date.orig.year}] #{date.year}" })
           else
             ref.add({ year: '' + date.year })
@@ -235,7 +234,7 @@ importGroup = (group, itemIDs, root) ->
   collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
-  collection.children = ({type: 'item', id: itemIDs[citekey]} for citekey in group.references when itemIDs[citekey])
+  collection.children = group.references.filter((citekey) -> itemIDs[citekey]).map((citekey) -> {type: 'item', id: itemIDs[citekey]})
 
   for subgroup in group.groups || []
     collection.children.push(importGroup(subgroup, itemIDs))
@@ -439,9 +438,9 @@ class ZoteroItem
     enquote: {open:'“', close: '”'},
     url: {open:'', close: ''},
     'undefined': {open:'[', close: ']'}
-   }
+  }
   unparse: (text, allowtilde) ->
-    return (@unparse(elt) for elt in text).join(' and ') if Array.isArray(text) && Array.isArray(text[0])
+    return text.map(@unparse).join(' and ') if Array.isArray(text) && Array.isArray(text[0])
 
     return text if typeof text in ['string', 'number']
 
@@ -570,7 +569,7 @@ class ZoteroItem
       else if field.match(/^bdsk-url-[0-9]+$/)
         continue if @$url(value, field)
 
-      continue if @["$#{field}"]?(value, field)
+      continue if @["$#{field}"] && @["$#{field}"](value, field)
       @addToExtraData(field, @unparse(value))
 
     if @type in ['conferencePaper', 'paper-conference'] and @item.publicationTitle and not @item.proceedingsTitle
@@ -582,19 +581,14 @@ class ZoteroItem
     keys = Object.keys(@biblatexdata)
     if keys.length > 0
       keys.sort() if Translator.preferences.testing
-      biblatexdata = switch
-        when @biblatexdatajson && Translator.preferences.testing
-          'bibtex{' + (for k in keys
-            o = {}
-            o[k] = @biblatexdata[k]
-            JSON5.stringify(o).slice(1, -1)
-          ) + '}'
+      if @biblatexdatajson && Translator.preferences.testing
+        biblatexdata = 'bibtex{' + keys.map((k) -> o = {}; o[k] = @biblatexdata[k]; return JSON5.stringify(o).slice(1, -1)) + '}'
 
-        when @biblatexdatajson
-          "bibtex#{JSON5.stringify(@biblatexdata)}"
+      else if @biblatexdatajson
+        biblatexdata = "bibtex#{JSON5.stringify(@biblatexdata)}"
 
-        else
-          biblatexdata = 'bibtex[' + ("#{key}=#{@biblatexdata[key]}" for key in keys).join(';') + ']'
+      else
+        biblatexdata = 'bibtex[' + keys.map((key) => "#{key}=#{@biblatexdata[key]}").join(';') + ']'
 
       @addToExtra(biblatexdata)
 
@@ -650,7 +644,7 @@ class ZoteroItem
   $publisher: (value) ->
     @item.publisher ||= ''
     @item.publisher += ' / ' if @item.publisher
-    @item.publisher += (@unparse(pub) for pub in value).join(' and ')
+    @item.publisher += value.map(@unparse).join(' and ')
     return true
   $institution: @::$publisher
   $school: @::$publisher
@@ -707,7 +701,7 @@ class ZoteroItem
   $abstract: (value) -> @item.abstractNote = @unparse(value, true)
 
   $keywords: (value) ->
-    value = (@unparse(tag).replace(/\n+/g, ' ') for tag in value)
+    value = value.map((tag) => @unparse(tag).replace(/\n+/g, ' '))
     value = value[0].split(/\s*;\s*/) if value.length == 1 && value[0].indexOf(';') > 0
     @item.tags ||= []
     @item.tags = @item.tags.concat(value)
@@ -833,7 +827,7 @@ class ZoteroItem
 
   $language: (value, field) ->
     if field == 'language'
-      language = (@unparse(lang) for lang in value).join(' and ')
+      language = value.map(@unparse).join(' and ')
     else
       language = @unparse(value)
     return true unless language
