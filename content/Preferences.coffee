@@ -90,7 +90,8 @@ class PrefPane
 
     @AutoExport = new AutoExportPrefPane()
 
-    document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
+    # document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zotero_config.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !zotero_config.isJurisM)
 
     if !Zotero_Preferences.openHelpLink.BetterBibTeX
       Zotero_Preferences.openHelpLink.BetterBibTeX = Zotero_Preferences.openHelpLink

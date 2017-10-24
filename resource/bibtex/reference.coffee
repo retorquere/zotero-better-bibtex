@@ -38,7 +38,7 @@ class Reference
 
     @fields = []
     @has = Object.create(null)
-    @raw = (Translator.preferences.rawLaTag in @item.tags)
+    @raw = Translator.preferences.rawLaTag == '*' || (Translator.preferences.rawLaTag in @item.tags)
     @data = {DeclarePrefChars: ''}
 
     if !@item.language
@@ -643,7 +643,7 @@ class Reference
     else
       value = ('' + text).replace(/([\\{}])/g, '\\$1')
     # TODO: @Exporter.unicode -> Translator.unicode ?
-    value = value.replace(/[^\x21-\x7E]/g, ((chr) -> '\\%' + ('00' + chr.charCodeAt(0).toString(16).slice(-2)))) if not @Exporter.unicode
+    value = value.replace(/[^\x21-\x7E]/g, ((chr) -> "\\%#{'00' + chr.charCodeAt(0).toString(16).slice(-2)}" )) if not @Exporter.unicode
     return value
 
   hasCreator: (type) -> (@item.creators || []).some((creator) -> creator.creatorType == type)

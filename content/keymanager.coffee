@@ -52,9 +52,20 @@ class KeyManager
     return
   )
 
-  refresh: co((ids) ->
+  refresh: co((ids, warn) ->
     ids = @expandSelection(ids)
     debug('KeyManager.refresh', ids)
+
+    warn = if warn then Prefs.get('warnBulkModify') else 0
+    if warn > 0 && ids.length > warn
+      affected = @keys.find({ itemID: { $in: ids }, pinned: false }).length
+      if affected > warn
+        params = { treshold: warn, response: null }
+        window.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
+        switch params.response
+          when 'ok'       then
+          when 'whatever' then Prefs.set('warnBulkModify', 0)
+          else            return
 
     for item in yield getItemsAsync(ids)
       continue if item.isNote() || item.isAttachment()
@@ -72,9 +83,11 @@ class KeyManager
     return ids if Array.isArray(ids)
 
     if ids == 'selected'
-      pane = Zotero.getActiveZoteroPane()
-      items = pane.getSelectedItems()
-      return (item.id for item in (items || []))
+      try
+        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+      catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        return []
 
     return [ids]
 
@@ -107,6 +120,16 @@ class KeyManager
       return
     )
 
+    @keys.on(['insert', 'update'], (citekey) ->
+      extraData = {}
+      # prevents update loop -- see Zotero.Notifier.registerObserver in main
+      extraData[citekey.itemID] = { bbtCitekeyUpdate: true }
+
+      # update display panes
+      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], extraData)
+      return
+    )
+
     return
   )
 
@@ -120,8 +143,6 @@ class KeyManager
       return
 
     @scanning = true
-
-    flash('Scanning', 'Scanning for references without citation keys. If you have a large library, this may take a while', 1)
 
     if clean
       @keys.removeDataOnly()

@@ -113,19 +113,23 @@ DB = new Loki('better-bibtex', {
   autosaveInterval: 5000,
   autosaveOnIdle: true,
   adapter: new DBStore(),
-  autoexport: {
-    proto: Object,
-    inflate: (src, dest) ->
-      Object.assign(dest, src)
-      dest.updated = Date.parse(dest.updated) if dest.updated
-      return
-  }
 })
 
 DB.init = Zotero.Promise.coroutine(->
-  yield DB.loadDatabaseAsync()
+  yield DB.loadDatabaseAsync({
+    autoexport: {
+      inflate: (src, dest) ->
+        dest ||= {}
+        Object.assign(dest, src)
+        updated = Date.parse(dest.updated)
+        if isNaN(updated)
+          delete dest.updated
+        else
+          dest.updated = new Date(updated)
+        return dest
+    }
+  })
 
-  debug('before DB schemaCollection:', { keys: DB.getCollection('citekey') })
   DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
@@ -145,7 +149,6 @@ DB.init = Zotero.Promise.coroutine(->
       additionalProperties: false
     }
   })
-  debug('after DB schemaCollection:', { keys: DB.getCollection('citekey') })
 
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],

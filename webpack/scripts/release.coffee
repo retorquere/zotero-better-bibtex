@@ -14,6 +14,10 @@ process.exit() if process.env.CI_PULL_REQUEST
 
 build_root = path.join(__dirname, '../../')
 
+if process.env.NIGHTLY == 'true'
+  console.log("Not releasing on nightly, bailing")
+  process.exit(0)
+
 if process.env.CIRCLE_TAG
   if "v#{Package.version}" != process.env.CIRCLE_TAG
     console.log("Building tag #{process.env.CIRCLE_TAG}, but package version is #{Package.version}")
@@ -138,9 +142,7 @@ do Bluebird.coroutine(->
       content_type: 'application/x-xpinstall'
     })
 
-    if process.env.NIGHTLY == 'true'
-      issues = []
-    else if process.env.CIRCLE_BRANCH == 'master' # TODO: remove after release
+    if process.env.CIRCLE_BRANCH == 'master' # TODO: remove after release
       issues.push('555')
       issues = issues.sort().filter((item, pos, ary) -> !pos || item != ary[pos - 1]) # TODO: remove after release
 

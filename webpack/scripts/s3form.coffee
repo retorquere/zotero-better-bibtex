@@ -2,7 +2,7 @@ require('dotenv').config()
 AwsS3Form = require('aws-s3-form')
 Bluebird = require('bluebird')
 github = require('./github')
-Package = require('../package.json')
+Package = require('../../package.json')
 
 for key in ['AWSAccessKeyId', 'AWSSecretAccessKey']
   if !process.env[key]

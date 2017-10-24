@@ -14,7 +14,6 @@
       "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
-      "rawImports": false,
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate",
       "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note"

@@ -9,8 +9,7 @@ Prefs = require('./prefs.coffee')
 
 scheduled = new Queue(((task, cb) ->
   do Zotero.Promise.coroutine(->
-    ae = AutoExport.db.get(task.id)
-    if ae
+    if ae = AutoExport.db.get(task.id)
       debug('AutoExport.starting export', ae)
       ae.status = 'running'
       AutoExport.db.update(ae)
@@ -49,10 +48,8 @@ scheduler = new Queue(((task, cb) ->
   debug('AutoExport.scheduler.exec:', task)
 
   do Zotero.Promise.coroutine(->
-    ae = AutoExport.db.get(task.id)
-    debug('AutoExport.scheduler.task found:', task, '->', ae, !!ae)
-
-    if ae
+    if ae = AutoExport.db.get(task.id)
+      debug('AutoExport.scheduler.task found:', task, '->', ae, !!ae)
       ae.status = 'scheduled'
       AutoExport.db.update(ae)
       debug('AutoExport.scheduler.task scheduled, waiting...', task, ae)
@@ -118,8 +115,7 @@ AutoExport = new class _AutoExport
     for ae in @db.find({ status: { $ne: 'done' } })
       scheduler.push({ id: ae.$loki })
 
-    if Prefs.get('autoExport') == 'immediate'
-      scheduler.resume()
+    scheduler.resume() if Prefs.get('autoExport') == 'immediate'
     return
 
   add: (ae) ->
@@ -146,6 +142,7 @@ AutoExport = new class _AutoExport
   run: (ae) ->
     ae = @db.get(ae) if typeof ae == 'number'
 
+    debug('Autoexport.run:', ae)
     ae.status = 'scheduled'
     @db.update(ae)
     scheduled.push({ id: ae.$loki })

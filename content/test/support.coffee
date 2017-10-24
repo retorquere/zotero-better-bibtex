@@ -101,7 +101,12 @@ module.exports =
       zoteroPane.show()
       continue if (yield zoteroPane.selectItem(id, true))
 
-      selected = zoteroPane.getSelectedItems(true)
+      try
+        selected = zoteroPane.getSelectedItems(true)
+      catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        selected = []
+
       debug('selected items = ', selected)
       return id if selected.length == 1 && id == selected[0]
       debug("select: expected #{id}, got #{selected}")

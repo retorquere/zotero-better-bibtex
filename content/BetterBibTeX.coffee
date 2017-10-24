@@ -191,12 +191,8 @@ if !Zotero.BetterBibTeX
     notify: (action, type, ids, extraData) ->
       debug('item.notify', {action, type, ids, extraData})
 
-      bench = (msg) ->
-        now = new Date()
-        debug("notify: #{msg} took #{(now - bench.start) / 1000.0}s")
-        bench.start = now
-        return
-      bench.start = new Date()
+      # prevents update loop -- see KeyManager.init()
+      ids = (id for id in ids when !extraData[id]?.bbtCitekeyUpdate) if action == 'modify'
 
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
@@ -207,7 +203,6 @@ if !Zotero.BetterBibTeX
       # CACHE.remove(parents)
 
       CACHE.remove(ids)
-      bench('cache remove')
 
       # safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
       # https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
@@ -221,7 +216,6 @@ if !Zotero.BetterBibTeX
           debug("event.#{type}.#{action}", {ids, extraData})
           KeyManager.remove(ids)
           events.emit('items-removed', ids)
-          bench('remove')
 
         when 'add', 'modify'
           for item in items
@@ -355,12 +349,6 @@ if !Zotero.BetterBibTeX
     INIT
   ###
 
-  bench = (msg) ->
-    now = new Date()
-    debug("startup: #{msg} took #{(now - bench.start) / 1000.0}s")
-    bench.start = now
-    return
-
   module.exports.ErrorReport = Zotero.Promise.coroutine((includeReferences) ->
     debug('ErrorReport::start', includeReferences)
     items = null
@@ -373,7 +361,12 @@ if !Zotero.BetterBibTeX
         items = { library: pane.getSelectedLibraryID() } unless items.collection
 
       when 'items'
-        items = { items: pane.getSelectedItems() }
+        try
+          items = { items: pane.getSelectedItems() }
+        catch err # zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+          debug('Could not get selected items:', err)
+          items = {}
+
         items = null unless items.items && items.items.length
 
     params = {wrappedJSObject: { items }}
@@ -388,59 +381,112 @@ if !Zotero.BetterBibTeX
 
   debug('Loading Better BibTeX: setup done')
 
+  class Lock
+    postfix: '-better-bibtex-locked'
+
+    constructor: ->
+      @mark = { ts: new Date() }
+
+    lock: Zotero.Promise.coroutine((msg)->
+      yield Zotero.uiReadyPromise
+
+      yield Zotero.unlockPromise if Zotero.locked
+
+      @update(msg || 'Initializing')
+
+      @toggle(true)
+
+      return
+    )
+
+    bench: (msg) ->
+      ts = new Date()
+      debug('Lock:', @mark.msg, 'took', (ts - @mark.ts) / 1000.0, 's') if @mark.msg
+      @mark = { ts, msg }
+      return
+
+    update: (msg) ->
+      @bench(msg)
+      Zotero.showZoteroPaneProgressMeter("Better BibTeX: #{msg}...")
+      return
+
+    unlock: ->
+      @bench()
+
+      Zotero.hideZoteroPaneOverlays()
+      @toggle(false)
+
+      return
+
+    toggle: (locked) ->
+      for id in ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']
+        document.getElementById(id).hidden = locked
+
+      for id in ['zotero-collections-tree']
+        document.getElementById(id).disabled = locked
+
+      return
+
+    hide: (deck) ->
+      return unless @decks
+
+      id = deck.id
+      lock = id + @postfix
+
+      debug('Lock: re-locking', id, 'with', lock)
+
+      for node, i in deck.childNodes
+        if node.id == lock
+          deck.selectedIndex = i
+          debug('Lock: selected', i, 'for', id)
+          break
+      return
+
   load = Zotero.Promise.coroutine(->
     debug('Loading Better BibTeX: starting...')
 
     ready = Zotero.Promise.defer()
     module.exports.ready = ready.promise
-    bench.start = new Date()
-
-    progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
-
-    progressWin.changeHeadline('BetterBibTeX: Waiting for Zotero database')
-    progressWin.show()
 
     # oh FFS -- datadir is async now
-    yield Zotero.uiReadyPromise
+
+    lock = new Lock()
+    yield lock.lock('Waiting for Zotero database')
+
     CACHE.init()
-    bench('Zotero.uiReadyPromise')
 
     # Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     yield Zotero.Schema.schemaUpdatePromise
-    bench('Zotero.Schema.schemaUpdatePromise')
 
-    progressWin.changeHeadline('BetterBibTeX: Initializing')
-
+    lock.update('Loading citation keys')
     yield DB.init()
-    bench('DB.init()')
 
+    lock.update('Starting auto-export')
     AutoExport.init()
-    bench('AutoExport.init()')
 
+    lock.update('Starting key manager')
     yield KeyManager.init() # inits the key cache by scanning the DB
-    bench('KeyManager.init()')
 
+    lock.update('Starting serialization cache')
     yield Serializer.init() # creates simplify et al
-    bench('Serializer.init()')
 
     if Prefs.get('testing')
+      lock.update('Loading test support')
       module.exports.TestSupport = require('./test/support.coffee')
-      bench('Zotero.BetterBibTeX.TestSupport')
     else
       debug('starting, skipping test support')
 
+    lock.update('Loading journal abbreviator')
     JournalAbbrev.init()
 
+    lock.update('Installing bundled translators')
     yield Translators.init()
-    bench('Translators.init()')
-
-    progressWin.changeHeadline('BetterBibTeX: Ready for business')
-    progressWin.startCloseTimer(500)
 
     # should be safe to start tests at this point. I hate async.
 
     ready.resolve(true)
-    bench('ready')
+
+    lock.unlock()
 
     return
   )
