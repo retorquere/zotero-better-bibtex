@@ -171,24 +171,4 @@ for (let [label, source] of Object.entries(translators)) {
   )
 }
 
-/*
-config.push(
-  // minitests
-  _.merge({}, common, {
-    context: path.resolve(__dirname, './minitests'),
-    entry: {
-      'pfunc': './pfunc.coffee',
-      'dateparser': './dateparser.coffee',
-      'text2latex': './text2latex.coffee',
-    },
-    output: {
-      path: path.resolve(__dirname, './minitests/build'),
-      filename: '[name].js',
-      devtoolLineToLine: true,
-      pathinfo: true,
-    },
-  })
-);
-*/
-
 module.exports = config;

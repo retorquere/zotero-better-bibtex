@@ -1,7 +1,7 @@
 // tslint:disable:no-console
 
 const edtf = require('edtf')
-global.Zotero = {
+const Zotero = {
   Debug: {
     enabled: true,
   },

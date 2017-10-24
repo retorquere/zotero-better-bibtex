@@ -1,6 +1,6 @@
 // tslint:disable:no-console
 
-global.Zotero = {
+const Zotero = { // tslint:disable-line:variable-name
   Debug: {
     enabled: true,
   },
@@ -13,7 +13,7 @@ global.Zotero = {
   },
 }
 
-global.BetterBibTeX = {
+const BetterBibTeX = { // tslint:disable-line:variable-name
   preferences: {},
 }
 
