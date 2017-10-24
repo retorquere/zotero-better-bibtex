@@ -1,6 +1,6 @@
 declare const Translator: any
 
-const Exporter = require('./csl/csl.ts') // tslint:disable-line:variable-name
+import Exporter = require('./csl/csl.ts')
 
 Exporter.serialize = csl => JSON.stringify(csl)
 
