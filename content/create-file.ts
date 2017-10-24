@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Components: any
 
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 
 const a_rwx = 0o777
 

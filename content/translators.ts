@@ -1,16 +1,18 @@
 declare const Zotero: any
 
-const prefs = require('./prefs.ts')
-const debug = require('./debug.ts')
+import Prefs = require('./prefs.ts')
+import debug = require('./debug.ts')
 
 class Translators {
   public byId: any
+  public byName: any
+  public byLabel: any
 
   public async init() {
     const start = (new Date()).valueOf()
     Object.assign(this, require('../gen/translators.json'))
 
-    if (prefs.get('removeStock')) {
+    if (Prefs.get('removeStock')) {
       this.uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')
       this.uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')
     }
@@ -37,11 +39,11 @@ class Translators {
     }
   }
 
-  public async translate(translatorID, displayOptions, items, path) {
-    if (!items) items = { library: Zotero.Libraries.userLibraryID }
-
-    const translationPromise = new Promise((resolve, reject) => {
+  public translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null): Promise<string> {
+    return new Promise((resolve, reject) => {
       const translation = new Zotero.Translate.Export()
+
+      if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
       if (items.library) translation.setLibraryID(items.library)
       if (items.items) translation.setItems(items.items)
@@ -59,8 +61,6 @@ class Translators {
       })
       translation.translate()
     })
-
-    return await translationPromise
   }
 
   public uninstall(label, id) {

@@ -2,7 +2,7 @@ declare const window: any
 declare const document: any
 declare const MutationObserver: any
 
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 
 let DOM_OBSERVER = null
 let reset = true

@@ -1,17 +1,17 @@
 declare const Components: any
 declare const Zotero: any
 
-const debug = require('./debug.ts')
-const events = require('./events.ts')
-const zoteroConfig = require('./zotero-config.ts')
+import debug = require('./debug.ts')
+import Events = require('./events.ts')
+import ZoteroConfig = require('./zotero-config.ts')
 
 class Preferences {
   private static prefix = 'translators.better-bibtex'
-  private branch: any
+  public branch: any
 
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
-    this.branch = prefService.getBranch(`${zoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
+    this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
     this.branch.addObserver('', this, false)
   }
 
@@ -42,7 +42,7 @@ class Preferences {
   // tslint:disable-next-line:no-unused-variable
   private observe(branch, topic, pref) {
     debug('preference', pref, 'changed to', this.get(pref))
-    events.emit('preference-changed', pref)
+    Events.emit('preference-changed', pref)
   }
 }
 

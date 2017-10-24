@@ -1,11 +1,11 @@
 declare const Zotero: any
 
-const Loki = require('./loki.ts') // tslint:disable-line:variable-name
-const debug = require('../debug.ts')
-const prefs = require('../prefs.ts')
+import Loki = require('./loki.ts')
+import debug = require('../debug.ts')
+import Prefs = require('../prefs.ts')
 
 // tslint:disable-next-line:no-magic-numbers
-const stringify = prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
+const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
 
 class DBStore {
   public mode = 'reference'

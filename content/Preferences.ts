@@ -3,15 +3,15 @@ declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
 
-const debug = require('./debug.ts')
-const zoteroConfig = require('./zotero-config.ts')
-const $patch$ = require('./monkey-patch.ts')
+import debug = require('./debug.ts')
+import ZoteroConfig = require('./zotero-config.ts')
+import $patch$ = require('./monkey-patch.ts')
 
-const prefs = require('./prefs.ts')
-const formatter = require('./keymanager/formatter.ts')
-const keymanager = require('./keymanager.ts')
-const autoExport = require('./auto-export.ts')
-const translators = require('./translators.ts')
+import Prefs = require('./prefs.ts')
+import Formatter = require('./keymanager/formatter.ts')
+import KeyManager = require('./keymanager.ts')
+import AutoExport = require('./auto-export.ts')
+import Translators = require('./translators.ts')
 
 function autoExportNameCollectionPath(id) {
   if (!id) return ''
@@ -43,7 +43,7 @@ class AutoExportPrefPane {
 
     const id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
     debug('AutoExport: removing', { id })
-    autoExport.db.remove(id)
+    AutoExport.db.remove(id)
     this.refresh()
   }
 
@@ -54,12 +54,12 @@ class AutoExportPrefPane {
     if (selected < 0) return
 
     const id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
-    autoExport.run(id)
+    AutoExport.run(id)
     this.refresh()
   }
 
   public refresh() {
-    if (!autoExport.db) {
+    if (!AutoExport.db) {
       debug('AutoExportPrefPane.refresh: DB not loaded')
       return
     }
@@ -70,7 +70,7 @@ class AutoExportPrefPane {
       exportlist.removeChild(exportlist.firstChild)
     }
 
-    for (const ae of autoExport.db.chain().simplesort('path').data()) {
+    for (const ae of AutoExport.db.chain().simplesort('path').data()) {
       const treeitem = exportlist.appendChild(document.createElement('treeitem'))
       treeitem.setAttribute('autoexport', `${ae.$loki}`)
 
@@ -81,7 +81,7 @@ class AutoExportPrefPane {
         { label: `${ae.type}: ${autoExportName(ae)}` },
         { label: ae.status + (ae.updated ? ` (${ae.updated})` : ''), tooltip: ae.error },
         { label: ae.path.replace(/.*[\\\/]/, ''), tooltip: ae.path },
-        { label: (translators.byId[ae.translatorID] ? translators.byId[ae.translatorID].label : undefined) || '??' },
+        { label: (Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : undefined) || '??' },
         { label: `${ae.useJournalAbbreviation}` },
         { label: `${ae.exportNotes}` },
       ]
@@ -110,8 +110,8 @@ export = new class PrefPane {
 
     this.AutoExport = new AutoExportPrefPane()
 
-    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !zoteroConfig.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !zoteroConfig.isJurisM)
+    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
@@ -138,7 +138,7 @@ export = new class PrefPane {
   public getCitekeyFormat() {
     debug('PrefPane.getCitekeyFormat...')
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    keyformat.value = prefs.get('citekeyFormat')
+    keyformat.value = Prefs.get('citekeyFormat')
     debug('PrefPane.getCitekeyFormat got', keyformat.value)
   }
 
@@ -147,7 +147,7 @@ export = new class PrefPane {
 
     let msg
     try {
-      formatter.parsePattern(keyformat.value)
+      Formatter.parsePattern(keyformat.value)
       msg = ''
     } catch (err) {
       msg = `${err}`
@@ -160,8 +160,8 @@ export = new class PrefPane {
   public saveCitekeyFormat() {
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try {
-      formatter.parsePattern(keyformat.value)
-      prefs.set('citekeyFormat', keyformat.value)
+      Formatter.parsePattern(keyformat.value)
+      Prefs.set('citekeyFormat', keyformat.value)
     } catch (error) {
       this.getCitekeyFormat()
     }
@@ -184,17 +184,17 @@ export = new class PrefPane {
   }
 
   private styleChanged(index) {
-    if (!zoteroConfig.isJurisM) return
+    if (!ZoteroConfig.isJurisM) return
 
     const stylebox = document.getElementById('better-bibtex-abbrev-style')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
-    prefs.set('autoAbbrevStyle', styleID)
+    Prefs.set('autoAbbrevStyle', styleID)
   }
 
   public async rescanCitekeys() {
     debug('starting manual key rescan')
-    await keymanager.rescan()
+    await KeyManager.rescan()
     debug('manual key rescan done')
   }
 
@@ -209,14 +209,14 @@ export = new class PrefPane {
   public update() {
     this.checkCitekeyFormat()
 
-    if (zoteroConfig.isJurisM) {
+    if (ZoteroConfig.isJurisM) {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)
 
         const stylebox = document.getElementById('better-bibtex-abbrev-style')
         const refill = stylebox.children.length === 0
-        const selectedStyle = prefs.get('autoAbbrevStyle')
+        const selectedStyle = Prefs.get('autoAbbrevStyle')
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {

@@ -1,18 +1,18 @@
 declare const Zotero: any
 
-const createFile = require('../create-file.ts')
-const Loki = require('./loki.ts') // tslint:disable-line:variable-name
-const debug = require('../debug.ts')
-const events = require('../events.ts')
-const zoteroConfig = require('../zotero-config.ts')
+import createFile = require('../create-file.ts')
+import Loki = require('./loki.ts')
+import debug = require('../debug.ts')
+import Events = require('../events.ts')
+import ZoteroConfig = require('../zotero-config.ts')
 
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
 
-const prefs = require('../prefs.ts')
+import Prefs = require('../prefs.ts')
 
 // tslint:disable-next-line:no-magic-numbers
-const stringify = prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
+const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
 
 class NoSuchFileError extends Error {
   public name = 'NoSuchFile'
@@ -135,13 +135,13 @@ DB.init = () => {
     },
   })
 
-  if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.Zotero !== zoteroConfig.Zotero.version) {
-    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', zoteroConfig.Zotero.version)
+  if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.Zotero !== ZoteroConfig.Zotero.version) {
+    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', ZoteroConfig.Zotero.version)
     coll.removeDataOnly()
   }
   coll.setTransform(METADATA, [{
     type: METADATA,
-    value : { Zotero: zoteroConfig.Zotero.version },
+    value : { Zotero: ZoteroConfig.Zotero.version },
   }])
 
   /*
@@ -188,7 +188,7 @@ DB.init = () => {
 }
 
 // the preferences influence the output way too much, no keeping track of that
-events.on('preference-changed', () => {
+Events.on('preference-changed', () => {
   for (const translator of Object.keys(translators.byName)) {
     DB.getCollection(translator).removeDataOnly()
   }

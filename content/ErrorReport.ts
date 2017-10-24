@@ -5,10 +5,10 @@ declare const Zotero: any
 declare const FormData: any
 declare const Blob: any
 
-const getAddons = require('./addons.ts')
-const PREFS = require('./prefs.ts')
-const TRANSLATORS = require('./translators.ts')
-const debug = require('./debug.ts')
+import getAddons = require('./addons.ts')
+import Prefs = require('./prefs.ts')
+import Translators = require('./translators.ts')
+import debug = require('./debug.ts')
 const PACKAGE = require('../package.json')
 
 export = new class ErrorReport {
@@ -70,7 +70,7 @@ export = new class ErrorReport {
     if (this.params.items) {
       debug('ErrorReport::init items', this.params.items)
       await Zotero.BetterBibTeX.ready // because we need the translators to have been loaded
-      this.errorlog.references = await TRANSLATORS.translate(TRANSLATORS.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
+      this.errorlog.references = await Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
       debug('ErrorReport::init references', this.errorlog.references)
     }
 
@@ -110,12 +110,12 @@ export = new class ErrorReport {
 
     info += 'Settings:\n'
     const prefs = []
-    for (const key of PREFS.branch.getChildList('')) {
+    for (const key of Prefs.branch.getChildList('')) {
       prefs.push(key)
     }
     prefs.sort()
     for (const key of prefs) {
-      info += `  ${key} = ${JSON.stringify(PREFS.get(key))}\n`
+      info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
     }
 
     return info

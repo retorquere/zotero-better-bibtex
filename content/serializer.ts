@@ -1,11 +1,11 @@
 declare const Zotero: any
 
-const abbrevs = require('./journal-abbrev.ts')
-const debug = require('./debug.ts')
+import Abbrevs = require('./journal-abbrev.ts')
+import debug = require('./debug.ts')
 
-const CACHE = require('./db/cache.ts')
-const KEYMANAGER = require('./keymanager.ts')
-const ZOTERODB = require('./db/zotero.ts')
+import Cache = require('./db/cache.ts')
+import KeyManager = require('./keymanager.ts')
+import ZoteroDB = require('./db/zotero.ts')
 
 class Serializer {
   private static collection = 'itemToExportFormat'
@@ -19,10 +19,10 @@ class Serializer {
 //      delete cache[id] if entry.accessed
 
   public async init() {
-    abbrevs.init()
+    Abbrevs.init()
 
     debug('Serializer.init')
-    const fieldsWithAliases = await ZOTERODB.queryAsync(`
+    const fieldsWithAliases = await ZoteroDB.queryAsync(`
       SELECT it.typeName, f.fieldName, a.fieldName as fieldAlias
       FROM baseFieldMappingsCombined bfmc
       JOIN fields f ON f.fieldID = bfmc.baseFieldID
@@ -54,7 +54,7 @@ class Serializer {
     this.simplify = new Function('item', simplify)
 
     /* SCRUB */
-    const fields = await ZOTERODB.queryAsync(`
+    const fields = await ZoteroDB.queryAsync(`
       SELECT it.typeName, f.fieldName
       FROM itemTypes it
       JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
@@ -141,20 +141,20 @@ class Serializer {
   }
 
   public fetch(item, legacy, skipChildItems) {
-    const cache = CACHE.getCollection(Serializer.collection)
+    const cache = Cache.getCollection(Serializer.collection)
     if (cache) return null
 
     const cached = cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
     if (!cached) return null
 
     const serialized = cached.item
-    serialized.journalAbbreviation = abbrevs.get(serialized)
-    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KEYMANAGER.get(item.id).citekey
+    serialized.journalAbbreviation = Abbrevs.get(serialized)
+    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KeyManager.get(item.id).citekey
     return serialized
   }
 
   public store(item, serialized, legacy, skipChildItems) {
-    const cache = CACHE.getCollection(Serializer.collection)
+    const cache = Cache.getCollection(Serializer.collection)
 
     // come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
@@ -166,8 +166,8 @@ class Serializer {
       Zotero.logError(new Error('Serializer.store ignored, DB not yet loaded'))
     }
 
-    serialized.journalAbbreviation = abbrevs.get(serialized)
-    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KEYMANAGER.get(item.id).citekey
+    serialized.journalAbbreviation = Abbrevs.get(serialized)
+    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KeyManager.get(item.id).citekey
     return serialized
   }
 

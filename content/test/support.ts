@@ -2,15 +2,16 @@ declare const Zotero: any
 declare const Zotero_File_Interface: any
 declare const Components: any
 
-const ZOTERODB = require('../db/zotero.ts')
-const KEYMANAGER = require('../keymanager.ts')
-const debug = require('../debug.ts')
-const pref_defaults = require('../../defaults/preferences/defaults.json')
-const TRANSLATORS = require('../translators.ts')
-const AUTOEXPORT = require('../auto-export.ts')
-const prefs = require('../prefs.ts')
+import AutoExport = require('../auto-export.ts')
+import ZoteroDB = require('../db/zotero.ts')
+import debug = require('../debug.ts')
+import KeyManager = require('../keymanager.ts')
+import Prefs = require('../prefs.ts')
+import Translators = require('../translators.ts')
 
-export = prefs.get('testing') && {
+const pref_defaults = require('../../defaults/preferences/defaults.json')
+
+export = Prefs.get('testing') && {
   async reset() {
     let collections
     debug('TestSupport.reset: start')
@@ -44,7 +45,7 @@ export = prefs.get('testing') && {
     debug('TestSupport.reset: empty trash')
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
-    AUTOEXPORT.db.findAndRemove({ type: { $ne: '' } })
+    AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
     debug('TestSupport.reset: done')
 
@@ -98,7 +99,7 @@ export = prefs.get('testing') && {
     } else {
       items = null
     }
-    return await TRANSLATORS.translate(translatorID, displayOptions, items, path)
+    return await Translators.translate(translatorID, displayOptions, items, path)
   },
 
   async select(field, value) {
@@ -137,7 +138,7 @@ export = prefs.get('testing') && {
       ids = [itemID]
     } else {
       ids = []
-      const items = await ZOTERODB.queryAsync(`
+      const items = await ZoteroDB.queryAsync(`
         SELECT item.itemID
         FROM items item
         JOIN itemTypes it ON item.itemTypeID = it.itemTypeID AND it.typeName NOT IN ('note', 'attachment')
@@ -154,13 +155,13 @@ export = prefs.get('testing') && {
     for (itemID of ids) {
       switch (action) {
         case 'pin':
-          await KEYMANAGER.pin(itemID)
+          await KeyManager.pin(itemID)
           break
         case 'unpin':
-          await KEYMANAGER.unpin(itemID)
+          await KeyManager.unpin(itemID)
           break
         case 'refresh':
-          await KEYMANAGER.refresh(itemID)
+          await KeyManager.refresh(itemID)
           break
         default:
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${action}`)

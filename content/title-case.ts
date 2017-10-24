@@ -1,4 +1,4 @@
-const citeproc = require('./citeproc.ts')
+import Citeproc = require('./citeproc.ts')
 
 const state = {
   opt: { lang: 'en' },
@@ -6,11 +6,11 @@ const state = {
   locale: {
     en: {
       opts: {
-        'skip-words': citeproc.SKIP_WORDS,
-        'skip-words-regexp': new RegExp(`(?:(?:[?!:]*\\s+|-|^)(?:${citeproc.SKIP_WORDS.slice().join('|')})(?=[!?:]*\\s+|-|$))`, 'g'),
+        'skip-words': Citeproc.SKIP_WORDS,
+        'skip-words-regexp': new RegExp(`(?:(?:[?!:]*\\s+|-|^)(?:${Citeproc.SKIP_WORDS.slice().join('|')})(?=[!?:]*\\s+|-|$))`, 'g'),
       },
     },
   },
 }
 
-export = text => citeproc.Output.Formatters.title(state, text)
+export = text => Citeproc.Output.Formatters.title(state, text)

@@ -2,11 +2,11 @@ declare const Components: any
 declare const AsyncShutdown: any
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
-const $patch$ = require('../monkey-patch.ts')
+import $patch$ = require('../monkey-patch.ts')
 
 const AJV = require('ajv')
-const debug = require('../debug.ts')
-const PREFS = require('../prefs.ts')
+import debug = require('../debug.ts')
+import Prefs = require('../prefs.ts')
 
 // tslint:disable-next-line:variable-name
 const Loki = require('lokijs')
@@ -120,7 +120,7 @@ export = class XULoki extends (Loki as { new(name, options): any }) {
   public schemaCollection(name, options) {
     const coll = this.getCollection(name) || this.addCollection(name, options)
 
-    if (options.logging && PREFS.get('testing')) {
+    if (options.logging && Prefs.get('testing')) {
       for (const event of ['insert', 'delete', 'update']) {
         ((e, n, db) => coll.on(e, data => debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
       }

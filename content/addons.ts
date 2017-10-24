@@ -13,7 +13,14 @@ const types = {
   256:  'WebExtension experiment',
 }
 
-export = function getAddons() {
+interface IAddonInfo {
+  version: string
+  info: string
+  name: string
+  guid: string
+}
+
+export = function getAddons(): Promise<{ active: IAddonInfo[], inactive: IAddonInfo[] }> {
   return new Promise((resolve, reject) => {
     AddonManager.getAllAddons(addons => {
       try {

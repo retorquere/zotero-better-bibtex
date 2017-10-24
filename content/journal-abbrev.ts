@@ -1,9 +1,9 @@
 declare const Zotero: any
 
-const prefs = require('./prefs.ts')
-const debug = require('./debug.ts')
-const events = require('./events.ts')
-const zoteroConfig = require('./zotero-config.ts')
+import Prefs = require('./prefs.ts')
+import debug = require('./debug.ts')
+import Events = require('./events.ts')
+import ZoteroConfig = require('./zotero-config.ts')
 
 class JournalAbbrev {
   private initialized: boolean
@@ -18,7 +18,7 @@ class JournalAbbrev {
     if (this.initialized) return
     this.initialized = true
 
-    events.on('preference-changed', pref => {
+    Events.on('preference-changed', pref => {
       if (pref !== 'autoAbbrevStyle') return
 
       debug('JournalAbbrev.preference-changed:', {pref})
@@ -32,8 +32,8 @@ class JournalAbbrev {
   public reset() {
     debug('JournalAbbrev.reset')
 
-    this.style = prefs.get('autoAbbrevStyle')
-    if (zoteroConfig.isJurisM && !this.style) {
+    this.style = Prefs.get('autoAbbrevStyle')
+    if (ZoteroConfig.isJurisM && !this.style) {
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 
@@ -57,7 +57,7 @@ class JournalAbbrev {
     debug('JournalAbbrev.reset:', {style: this.style})
   }
 
-  public get(item, force) {
+  public get(item, force = false) {
     let abbrev, journal
 
     if (item.getField) {
@@ -68,7 +68,7 @@ class JournalAbbrev {
       abbrev = item.journalAbbreviation
     }
 
-    if (abbrev || (!prefs.get('autoAbbrev') && !force)) return abbrev
+    if (abbrev || (!Prefs.get('autoAbbrev') && !force)) return abbrev
 
     if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(item.getField ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
 

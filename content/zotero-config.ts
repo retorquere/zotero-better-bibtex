@@ -3,7 +3,7 @@ declare const Zotero: any
 declare const ZOTERO_CONFIG: any
 declare const Services: any
 
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 
 Components.utils.import('resource://zotero/config.js')
 Components.utils.import('resource://gre/modules/Services.jsm')

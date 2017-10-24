@@ -1,9 +1,9 @@
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 const JSON5 = require('json5')
 
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 const cslVariables = require('./csl-vars.json')
-const citekeyExtract = require('./keymanager/get-set.ts')
+import Citekey = require('./keymanager/get-set.ts')
 
 function cslCreator(value) {
   const creator = value.split(/\s*\|\|\s*/)
@@ -24,7 +24,7 @@ export = function extract(item) {
     citekey: { citekey: '', pinned: false },
   }
 
-  const citekey = citekeyExtract.get(extra)
+  const citekey = Citekey.get(extra)
   extraFields.citekey = { citekey: citekey.citekey, pinned: citekey.pinned }
   extra = citekey.extra
 

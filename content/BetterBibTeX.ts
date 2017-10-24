@@ -8,11 +8,11 @@ require('./prefs.ts') // needs to be here early, initializes the prefs observer
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-const debug = require('./debug.ts')
-const flash = require('./flash.ts')
+import debug = require('./debug.ts')
+import flash = require('./flash.ts')
 const edtf = require('edtf')
-const events = require('./events.ts')
-const zoteroConfig = require('./zotero-config.ts')
+import Events = require('./events.ts')
+import ZoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
 
@@ -20,15 +20,15 @@ debug('Loading Better BibTeX')
 Zotero.Prefs.set('debug.store', true)
 Zotero.Debug.setStore(true)
 
-const translators = require('./translators.ts')
-const DB = require('./db/main.ts')
-const CACHE = require('./db/cache.ts')
-const serializer = require('./serializer.ts')
-const journalAbbrev = require('./journal-abbrev.ts')
-const autoExport = require('./auto-export.ts')
-const keyManager = require('./keymanager.ts')
+import Translators = require('./translators.ts')
+import DB = require('./db/main.ts')
+import Cache = require('./db/cache.ts')
+import Serializer = require('./serializer.ts')
+import JournalAbbrev = require('./journal-abbrev.ts')
+import AutoExport = require('./auto-export.ts')
+import KeyManager = require('./keymanager.ts')
 
-const $patch$ = require('./monkey-patch.ts')
+import $patch$ = require('./monkey-patch.ts')
 
 const bbtReady = Zotero.Promise.defer()
 const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
@@ -43,11 +43,11 @@ AddonManager.addAddonListener({
     debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    for (const [label, metadata] of Object.entries(translators.byName)) {
+    for (const [label, metadata] of Object.entries(Translators.byName)) {
       if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
 
       try {
-        translators.uninstall(label, metadata.translatorID)
+        Translators.uninstall(label, metadata.translatorID)
       } catch (error) {}
     }
 
@@ -62,9 +62,9 @@ AddonManager.addAddonListener({
     if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return
 
     // tslint:disable-next-line:no-unused-variable
-    for (const [id, header] of Object.entries(translators.byId)) {
+    for (const [id, header] of Object.entries(Translators.byId)) {
       try {
-        translators.install(header)
+        Translators.install(header)
       } catch (error) {}
     }
 
@@ -104,7 +104,7 @@ $patch$(Zotero.Item.prototype, 'setField', original => function(field, value, lo
 $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatted, includeBaseMapped) {
   switch (field) {
     case 'citekey':
-      const citekey = keyManager.get(this.id)
+      const citekey = KeyManager.get(this.id)
       if (citekey.retry) return '\uFFFD'
       return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 
@@ -120,7 +120,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
 
   const obj = this.getRow(row)
   const itemID = obj.id
-  const citekey = keyManager.get(itemID)
+  const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
     debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
@@ -135,9 +135,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
 })
 
 /* bugger this, I don't want megabytes of shared code in the translators */
-const parseDate = require('./dateparser.ts')
-const citeProc = require('./citeproc.ts')
-const titleCase = require('./title-case.ts')
+import parseDate = require('./dateparser.ts')
+import CiteProc = require('./citeproc.ts')
+import titleCase = require('./title-case.ts')
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return parseDate(date) },
   isEDTF(sandbox, date) {
@@ -148,16 +148,16 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
   },
-  parseParticles(sandbox, name) { return citeProc.parseParticles(name) /* && citeProc.parseParticles(name) */ },
+  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
   titleCase(sandbox, text) { return titleCase(text) },
-  simplifyFields(sandbox, item) { return serializer.simplify(item) },
-  scrubFields(sandbox, item) { return serializer.scrub(item) },
+  simplifyFields(sandbox, item) { return Serializer.simplify(item) },
+  scrubFields(sandbox, item) { return Serializer.scrub(item) },
   extractFields(sandbox, item) { return require('./var-extract.ts')(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  version(sandbox) { return { Zotero: zoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
+  version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 
   cacheFetch(sandbox, itemID, options) {
-    const collection = CACHE.getCollection(sandbox.translator[0].label)
+    const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) {
       debug('cacheFetch:', sandbox.translator[0].label, 'not found')
       return false
@@ -177,7 +177,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   cacheStore(sandbox, itemID, options, reference, metadata) {
     if (!metadata) metadata = {}
 
-    const collection = CACHE.getCollection(sandbox.translator[0].label)
+    const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
 
     const cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
@@ -199,14 +199,14 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
 }
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  simplifyFields(sandbox, item) { return serializer.simplify(item) },
+  simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  scrubFields(sandbox, item) { return serializer.scrub(item) },
+  scrubFields(sandbox, item) { return Serializer.scrub(item) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
   try {
-    return serializer.fetch(zoteroItem, legacy, skipChildItems) || serializer.store(zoteroItem, original.apply(this, arguments), legacy, skipChildItems)
+    return Serializer.fetch(zoteroItem, legacy, skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), legacy, skipChildItems)
   } catch (err) { // fallback for safety for non-BBT
     debug('Zotero.Utilities.Internal.itemToExportFormat', err)
   }
@@ -231,7 +231,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
       }
 
       // this should never occur -- 'Keep updated' should only be set by BBT translators
-      if (!translators.byId[translatorID]) {
+      if (!Translators.byId[translatorID]) {
         flash('Auto-export not registered', 'Auto-export only supported for Better BibTeX translators -- please report this, you should not have seen this message')
         capture = false
       }
@@ -249,7 +249,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     }
 
     if (capture) {
-      autoExport.add({
+      AutoExport.add({
         type: this._export.type,
         id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
         path: this.location.path,
@@ -274,14 +274,14 @@ Zotero.Notifier.registerObserver({
   notify(action, type, ids, extraData) {
     debug('item.notify', {action, type, ids, extraData})
 
-    // prevents update loop -- see keyManager.init()
+    // prevents update loop -- see KeyManager.init()
     if (action === 'modify') ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
 
     // not needed as the parents will be signaled themselves
     // parents = (item.parentID for item in items when item.parentID)
-    // CACHE.remove(parents)
+    // Cache.remove(parents)
 
-    CACHE.remove(ids)
+    Cache.remove(ids)
 
     // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
@@ -290,16 +290,16 @@ Zotero.Notifier.registerObserver({
     switch (action) {
       case 'delete': case 'trash':
         debug(`event.${type}.${action}`, {ids, extraData})
-        keyManager.remove(ids)
-        events.emit('items-removed', ids)
+        KeyManager.remove(ids)
+        Events.emit('items-removed', ids)
         break
 
       case 'add': case 'modify':
         for (const item of items) {
-          keyManager.update(item)
+          KeyManager.update(item)
         }
 
-        events.emit('items-changed', ids)
+        Events.emit('items-changed', ids)
         break
 
       default:
@@ -323,20 +323,20 @@ Zotero.Notifier.registerObserver({
       }
     }
 
-    if (changed.collections.size) events.emit('collections-changed', Array.from(changed.collections))
-    if (changed.libraries.size) events.emit('libraries-changed', Array.from(changed.libraries))
+    if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
+    if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
   },
 }, ['item'], 'BetterBibTeX', 1)
 
 Zotero.Notifier.registerObserver({
   notify(event, type, ids, extraData) {
-    if ((event === 'delete') && ids.length) events.emit('collections-removed', ids)
+    if ((event === 'delete') && ids.length) Events.emit('collections-removed', ids)
   },
 }, ['collection'], 'BetterBibTeX', 1)
 
 Zotero.Notifier.registerObserver({
   notify(event, type, ids, extraData) {
-    if ((event === 'delete') && ids.length) events.emit('libraries-removed', ids)
+    if ((event === 'delete') && ids.length) Events.emit('libraries-removed', ids)
   },
 }, ['group'], 'BetterBibTeX', 1)
 
@@ -353,7 +353,7 @@ Zotero.Notifier.registerObserver({
       }
     }
 
-    if (changed.size) events.emit('collections-changed', Array.from(changed))
+    if (changed.size) Events.emit('collections-changed', Array.from(changed))
   },
 }, ['collection-item'], 'BetterBibTeX', 1)
 
@@ -428,7 +428,7 @@ export = new class {
     const lock = new Lock()
     await lock.lock('Waiting for Zotero database')
 
-    CACHE.init()
+    Cache.init()
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
@@ -437,19 +437,19 @@ export = new class {
     await DB.init()
 
     lock.update('Starting auto-export')
-    autoExport.init()
+    AutoExport.init()
 
     lock.update('Starting key manager')
-    await keyManager.init() // inits the key cache by scanning the DB
+    await KeyManager.init() // inits the key cache by scanning the DB
 
     lock.update('Starting serialization cache')
-    await serializer.init() // creates simplify et al
+    await Serializer.init() // creates simplify et al
 
     lock.update('Loading journal abbreviator')
-    journalAbbrev.init()
+    JournalAbbrev.init()
 
     lock.update('Installing bundled translators')
-    await translators.init()
+    await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
 

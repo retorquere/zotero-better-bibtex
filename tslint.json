@@ -25,6 +25,7 @@
         "severity": "warning",
         "options": [240]
       },
+      "ordered-imports": false,
       "prefer-const": [true, {"destructuring": "all"}],
       "member-ordering": "statics-first",
       "no-magic-numbers": [true, -1, 0, 1, 2],

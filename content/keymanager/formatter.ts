@@ -2,16 +2,16 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
-const flash = require('../flash.ts')
-const PREFS = require('../prefs.ts')
-const debug = require('../debug.ts')
+import flash = require('../flash.ts')
+import Prefs = require('../prefs.ts')
+import debug = require('../debug.ts')
 
 const parser = require('./formatter.pegjs')
-const parseDate = require('../dateparser.ts')
+import parseDate = require('../dateparser.ts')
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 const punycode = require('punycode')
-const journalAbbrev = require('../journal-abbrev.ts')
+import JournalAbbrev = require('../journal-abbrev.ts')
 
 export = new class PatternFormatter {
   private re = {
@@ -54,16 +54,16 @@ export = new class PatternFormatter {
 
   public update() {
     debug('PatternFormatter.update:')
-    this.skipWords = PREFS.get('skipWords').split(',').map(word => word.trim()).filter(word => word)
-    this.fold = PREFS.get('citekeyFold')
+    this.skipWords = Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word)
+    this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'reset']) {
       if (attempt === 'reset') {
         debug(`PatternFormatter.update: malformed citekeyFormat '${this.citekeyFormat}', resetting to default`)
         flash(`Malformed citation pattern '${this.citekeyFormat}', resetting to default`)
-        PREFS.clear('citekeyFormat')
+        Prefs.clear('citekeyFormat')
       }
-      this.citekeyFormat = PREFS.get('citekeyFormat')
+      this.citekeyFormat = Prefs.get('citekeyFormat')
 
       try {
         debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
@@ -326,7 +326,7 @@ export = new class PatternFormatter {
     return authors[authors.length - 1]
   }
 
-  public $journal() { return journalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
+  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
   public $authors(onlyEditors, withInitials, n) {
     let authors = this.creators(onlyEditors, {withInitials})

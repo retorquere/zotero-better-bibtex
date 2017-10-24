@@ -1,26 +1,25 @@
 declare const Zotero: any
 declare const window: any
 
-const debug = require('./debug.ts')
-const flash = require('./flash.ts')
-const events = require('./events.ts')
+import debug = require('./debug.ts')
+import flash = require('./flash.ts')
+import Events = require('./events.ts')
 const ETA = require('node-eta')
-const ZOTERODB = require('./db/zotero.ts')
+import ZoteroDB = require('./db/zotero.ts')
 
-const getItemsAsync = require('./get-items-async.ts')
+import getItemsAsync = require('./get-items-async.ts')
 
-const PREFS = require('./prefs.ts')
-const CITEKEY = require('./keymanager/get-set.ts')
-const DB = require('./db/main.ts')
-const FORMATTER = require('./keymanager/formatter.ts')
+import Prefs = require('./prefs.ts')
+import Citekey = require('./keymanager/get-set.ts')
+import DB = require('./db/main.ts')
+import Formatter = require('./keymanager/formatter.ts')
 
 class KeyManager {
-  public static postfixRE = {
+  private static postfixRE = {
     numeric: /^(-[0-9]+)?$/,
     alphabetic: /^([a-z])?$/,
   }
 
-  private keys: any
   private scanning: any[]
   private query: {
     field: { extra?: number }
@@ -30,6 +29,8 @@ class KeyManager {
     }
   }
 
+  public keys: any
+
   public async pin(ids) {
     ids = this.expandSelection(ids)
     debug('KeyManager.pin', ids)
@@ -37,12 +38,12 @@ class KeyManager {
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      const parsed = CITEKEY.get(item.getField('extra'))
+      const parsed = Citekey.get(item.getField('extra'))
       if (parsed.pinned) continue
 
       try {
         const citekey = this.get(item.id).citekey || this.update(item)
-        item.setField('extra', CITEKEY.set(parsed.extra, citekey))
+        item.setField('extra', Citekey.set(parsed.extra, citekey))
         await item.saveTx() // this should cause an update and key registration
       } catch (err) {
         debug('KeyManager.pin', err)
@@ -57,7 +58,7 @@ class KeyManager {
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      const parsed = CITEKEY.get(item.getField('extra'))
+      const parsed = Citekey.get(item.getField('extra'))
       if (!parsed.pinned) continue
 
       debug('KeyManager.unpin', item.id)
@@ -67,21 +68,21 @@ class KeyManager {
 
   }
 
-  public async refresh(ids, warn) {
+  public async refresh(ids, warn = false) {
     ids = this.expandSelection(ids)
     debug('KeyManager.refresh', ids)
 
-    warn = warn ? PREFS.get('warnBulkModify') : 0
-    if ((warn > 0) && (ids.length > warn)) {
+    const warnAt = warn ? Prefs.get('warnBulkModify') : 0
+    if (warnAt > 0 && ids.length > warnAt) {
       const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
-      if (affected > warn) {
-        const params = { treshold: warn, response: null }
+      if (affected > warnAt) {
+        const params = { treshold: warnAt, response: null }
         window.openDialog('chrome://zotero-better-bibtex/content/bulk-keys-confirm.xul', '', 'chrome,dialog,centerscreen,modal', params)
         switch (params.response) {
           case 'ok':
             break
           case 'whatever':
-            PREFS.set('warnBulkModify', 0)
+            Prefs.set('warnBulkModify', 0)
             break
           default:
             return
@@ -92,7 +93,7 @@ class KeyManager {
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      const parsed = CITEKEY.get(item.getField('extra'))
+      const parsed = Citekey.get(item.getField('extra'))
       debug('KeyManager.refresh?', item.id, parsed)
       if (parsed.pinned) continue
 
@@ -127,23 +128,23 @@ class KeyManager {
       type: {},
     }
 
-    for (const field of await ZOTERODB.queryAsync("select fieldID, fieldName from fields where fieldName in ('extra')")) {
+    for (const field of await ZoteroDB.queryAsync("select fieldID, fieldName from fields where fieldName in ('extra')")) {
       this.query.field[field.fieldName] = field.fieldID
     }
-    for (const type of await ZOTERODB.queryAsync("select itemTypeID, typeName from itemTypes where typeName in ('note', 'attachment')")) { // 1, 14
+    for (const type of await ZoteroDB.queryAsync("select itemTypeID, typeName from itemTypes where typeName in ('note', 'attachment')")) { // 1, 14
       this.query.type[type.typeName] = type.itemTypeID
     }
 
-    FORMATTER.update()
+    Formatter.update()
 
     await this.rescan()
 
     debug('KeyManager.init: done')
 
-    events.on('preference-changed', pref => {
+    Events.on('preference-changed', pref => {
       debug('KeyManager.pref changed', pref)
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
-        FORMATTER.update()
+        Formatter.update()
       }
     })
 
@@ -182,7 +183,7 @@ class KeyManager {
     const marker = '\uFFFD'
 
     const ids = []
-    const items = await ZOTERODB.queryAsync(`
+    const items = await ZoteroDB.queryAsync(`
       SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
@@ -193,7 +194,7 @@ class KeyManager {
     for (const item of items) {
       ids.push(item.itemID)
       // if no citekey is found, it will be '', which will allow it to be found right after this loop
-      const citekey = CITEKEY.get(item.extra)
+      const citekey = Citekey.get(item.extra)
       debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
 
       const saved = clean ? null : this.keys.findOne({ itemID: item.itemID })
@@ -274,20 +275,20 @@ class KeyManager {
 
   private propose(item) {
     debug('KeyManager.propose: getting existing key from extra field,if any')
-    let citekey = CITEKEY.get(item.getField('extra'))
+    let citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
 
     if (citekey.pinned) return { citekey: citekey.citekey, pinned: true }
 
     debug('KeyManager.propose: formatting...', citekey)
-    const proposed = FORMATTER.format(item)
+    const proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
     if (citekey = this.keys.findOne({ itemID: item.id })) {
       // item already has proposed citekey ?
       debug(`KeyManager.propose: testing whether ${item.id} can keep ${citekey.citekey}`)
       if (citekey.citekey.startsWith(proposed.citekey)) {                                                         // key begins with proposed sitekey
-        const re = ((proposed.postfix === '0') && KeyManager.postfixRE.numeric) || KeyManager.postfixRE.alphabetic
+        const re = proposed.postfix === '0' ? KeyManager.postfixRE.numeric : KeyManager.postfixRE.alphabetic
         if (citekey.citekey.slice(proposed.citekey.length).match(re)) {                                           // rest matches proposed postfix
           let other
           if (!(other = this.keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))) { // noone else is using it

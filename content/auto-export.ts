@@ -1,14 +1,14 @@
 declare const Zotero: any
 declare const Components: any
 
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 
 const QUEUE = require('better-queue')
 const MEMORYSTORE = require('better-queue-memory')
-const EVENTS = require('./events.ts')
-const DB = require('./db/main.ts')
-const TRANSLATORS = require('./translators.ts')
-const PREFS = require('./prefs.ts')
+import Events = require('./events.ts')
+import DB = require('./db/main.ts')
+import Translators = require('./translators.ts')
+import Prefs = require('./prefs.ts')
 
 function queueHandler(handler) {
   return (task, cb) => {
@@ -47,7 +47,7 @@ const scheduled = new QUEUE(
             items = null
         }
 
-        await TRANSLATORS.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
+        await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
         ae.error = ''
       } catch (err) {
         debug('AutoExport.scheduled failed for', ae, err)
@@ -105,7 +105,7 @@ const scheduler = new QUEUE(
   }
 )
 
-if (PREFS.get('autoExport') !== 'immediate') { scheduler.pause() }
+if (Prefs.get('autoExport') !== 'immediate') { scheduler.pause() }
 
 if (Zotero.Debug.enabled) {
   for (const event of [ 'empty', 'drain', 'task_queued', 'task_accepted', 'task_started', 'task_finish', 'task_failed', 'task_progress', 'batch_finish', 'batch_failed', 'batch_progress' ]) {
@@ -117,7 +117,7 @@ if (Zotero.Debug.enabled) {
 const idleObserver = {
   observe(subject, topic, data) {
     debug(`AutoExport.idle: ${topic}`)
-    if (PREFS.get('autoExport') !== 'idle') { return }
+    if (Prefs.get('autoExport') !== 'idle') { return }
     switch (topic) {
       case 'back': case 'active':
         scheduler.pause()
@@ -130,14 +130,14 @@ const idleObserver = {
   },
 }
 const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
-idleService.addIdleObserver(idleObserver, PREFS.get('autoExportIdleWait'))
+idleService.addIdleObserver(idleObserver, Prefs.get('autoExportIdleWait'))
 
-EVENTS.on('preference-changed', pref => {
+Events.on('preference-changed', pref => {
   if (pref !== 'autoExport') { return }
 
   debug('AutoExport: preference changed')
 
-  switch (PREFS.get('autoExport')) {
+  switch (Prefs.get('autoExport')) {
     case 'immediate':
       scheduler.resume()
       break
@@ -147,13 +147,13 @@ EVENTS.on('preference-changed', pref => {
 })
 
 class AutoExport {
-  private db: any
+  public db: any
 
   constructor() {
-    EVENTS.on('libraries-changed', ids => this.schedule('library', ids))
-    EVENTS.on('libraries-removed', ids => this.remove('library', ids))
-    EVENTS.on('collections-changed', ids => this.schedule('collection', ids))
-    EVENTS.on('collections-removed', ids => this.remove('collection', ids))
+    Events.on('libraries-changed', ids => this.schedule('library', ids))
+    Events.on('libraries-removed', ids => this.remove('library', ids))
+    Events.on('collections-changed', ids => this.schedule('collection', ids))
+    Events.on('collections-removed', ids => this.remove('collection', ids))
   }
 
   public init() {
@@ -162,7 +162,7 @@ class AutoExport {
       scheduler.push({ id: ae.$loki })
     }
 
-    if (PREFS.get('autoExport') === 'immediate') { scheduler.resume() }
+    if (Prefs.get('autoExport') === 'immediate') { scheduler.resume() }
   }
 
   public add(ae) {
@@ -172,7 +172,7 @@ class AutoExport {
   }
 
   public schedule(type, ids) {
-    debug('AutoExport.schedule', type, ids, {db: this.db.data, state: PREFS.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    debug('AutoExport.schedule', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
       debug('AutoExport.scheduler.push', ae.$loki)
       scheduler.push({ id: ae.$loki })
@@ -180,7 +180,7 @@ class AutoExport {
   }
 
   public remove(type, ids) {
-    debug('AutoExport.remove', type, ids, {db: this.db.data, state: PREFS.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    debug('AutoExport.remove', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
       scheduled.cancel(ae.$loki)
       scheduler.cancel(ae.$loki)

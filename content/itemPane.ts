@@ -3,17 +3,17 @@ declare const document: any
 declare const ZoteroItemPane: any
 declare const Zotero: any
 
-const debug = require('./debug.ts')
-const $patch$ = require('./monkey-patch.ts')
+import debug = require('./debug.ts')
+import $patch$ = require('./monkey-patch.ts')
 
-const KEYMANAGER = require('./keymanager.ts')
+import KeyManager = require('./keymanager.ts')
 
 function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')
   debug('itemPane.display:', {changed: itemID, field: field.getAttribute('itemID')})
   if (field.getAttribute('itemID') !== `${itemID}`) return
 
-  const citekey = KEYMANAGER.get(itemID)
+  const citekey = KeyManager.get(itemID)
   field.value = citekey.citekey
   let className = (field.className || '').trim().split(/\s+/).filter(c => c !== 'citekey-dynamic').join(' ')
   if (!citekey.pinned) className = `${className} citekey-dynamic`.trim()
@@ -22,9 +22,9 @@ function display(itemID) {
 
 let observer = null
 function init() {
-  if (observer || !KEYMANAGER.keys) return
+  if (observer || !KeyManager.keys) return
 
-  observer = KEYMANAGER.keys.on(['update', 'insert'], citekey => {
+  observer = KeyManager.keys.on(['update', 'insert'], citekey => {
     debug('itemPane.update:', citekey)
     display(citekey.itemID)
   })
@@ -42,8 +42,8 @@ function load() {
 }
 
 function unload() {
-  if (KEYMANAGER.keys && observer) {
-    KEYMANAGER.keys.removeListener(observer)
+  if (KeyManager.keys && observer) {
+    KeyManager.keys.removeListener(observer)
   }
 }
 
