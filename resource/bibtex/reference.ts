@@ -282,7 +282,6 @@ export = class Reference {
 
   // actual fields
   private fields: any[]
-  private raw: boolean
   private data: { DeclarePrefChars: string }
   private juniorcomma: boolean
 
@@ -292,6 +291,7 @@ export = class Reference {
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
 
+  public raw: boolean
   public has: { [key: string]: any }
   public item: any
   public referencetype: string
