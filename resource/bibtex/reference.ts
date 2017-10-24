@@ -1,9 +1,9 @@
 declare const Zotero: any
 declare const Translator: any
 
-const debug = require('../lib/debug.ts')
-const Exporter = require('../lib/exporter.ts') // tslint:disable-line:variable-name
-const text2latex = require('./unicode_translator.ts').text2latex
+import debug = require('../lib/debug.ts')
+import Exporter = require('../lib/exporter.ts')
+import { text2latex } from './unicode_translator.ts'
 
 const arXiv = new class {
   // new-style IDs
@@ -654,7 +654,7 @@ export = class Reference {
     if (f.raw || raw) return f.value
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
-    let value = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    let value: String | string = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
 
     if (f.value instanceof String) value = new String(`{${value}}`) // tslint:disable-line:no-construct
@@ -1018,8 +1018,7 @@ export = class Reference {
     } else {
       value = (`${text}`).replace(/([\\{}])/g, '\\$1')
     }
-    // TODO: Exporter.unicode -> Translator.unicode ?
-    if (!Exporter.unicode) value = value.replace(/[^\x21-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
+    if (!Translator.unicode) value = value.replace(/[^\x21-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
     return value
   }
 

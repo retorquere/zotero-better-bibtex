@@ -1,7 +1,7 @@
 declare const Translator: any
 declare const Zotero: any
 
-const format = require('../../content/debug-formatter.ts')
+import format = require('../../content/debug-formatter.ts')
 
 export = (...msg) => {
   if (!Translator.debugEnabled && !Translator.preferences.testing) return

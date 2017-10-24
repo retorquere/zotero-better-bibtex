@@ -1,6 +1,6 @@
 declare const Translator: any
 
-const debug = require('../lib/debug.ts')
+import debug = require('../lib/debug.ts')
 
 function pad(v, padding) {
   if (v.length >= padding.length) return v

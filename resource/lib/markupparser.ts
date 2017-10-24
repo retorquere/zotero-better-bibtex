@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Translator: any
 
-const debug = require('./debug.ts')
+import debug = require('./debug.ts')
 
 /* From https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js */
 

@@ -54,7 +54,7 @@ var Translator = {
 
   configure: function(stage) {
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
-    this.unicode = true;
+    this.unicode = true; // set by Better Bib(La)TeX later
 
     if (stage == 'detectImport') {
       this.options = {}

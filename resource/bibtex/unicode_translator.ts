@@ -1,8 +1,8 @@
 declare const Translator: any
 declare const Zotero: any
 
-const markupParser = require('../lib/markupparser.ts')
-const debug = require('../lib/debug.ts')
+import debug = require('../lib/debug.ts')
+import MarkupParser = require('../lib/markupparser.ts')
 const unicodeMapping = require('./unicode_translator.json')
 
 const htmlConverter = new class HTMLConverter {
@@ -20,7 +20,7 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    this.walk(markupParser.parse(html, this.options))
+    this.walk(MarkupParser.parse(html, this.options))
 
     return this.latex
   }
@@ -182,7 +182,7 @@ const htmlConverter = new class HTMLConverter {
   }
 }
 
-function html2latex(html, options) {
+export function html2latex(html, options) {
   if (!options.mode) options.mode = 'html'
   let latex = htmlConverter.convert(html, options)
   latex = latex.replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
@@ -191,12 +191,7 @@ function html2latex(html, options) {
   return latex
 }
 
-function text2latex(text, options: { mode?: string } = {}) {
+export function text2latex(text, options: { caseConversion?: boolean, mode?: string } = {}) {
   if (!options.mode) options.mode = 'text'
   return html2latex(text, options)
-}
-
-export = {
-  html2latex,
-  text2latex,
 }

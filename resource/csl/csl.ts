@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Translator: any
 
-const debug = require('../lib/debug.ts')
+import debug = require('../lib/debug.ts')
 
 const validCSLTypes = [
   'article',

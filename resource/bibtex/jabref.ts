@@ -1,7 +1,7 @@
 declare const Translator: any
 declare const Zotero: any
 
-const debug = require('../lib/debug.ts')
+import debug = require('../lib/debug.ts')
 
 export = class JabRef {
   public citekeys: any

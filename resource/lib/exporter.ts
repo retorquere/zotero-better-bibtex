@@ -1,8 +1,8 @@
 declare const Zotero: any
 declare const Translator: any
 
-const debug = require('../lib/debug.ts')
-const jabRef = require('../bibtex/jabref.ts') // not so nice... BibTeX-specific code in general exporter lib
+import JabRef = require('../bibtex/jabref.ts') // not so nice... BibTeX-specific code in general exporter lib
+import debug = require('../lib/debug.ts')
 debug('exporter: so far so good')
 
 export = new class Exporter {
@@ -17,7 +17,7 @@ export = new class Exporter {
 
     this.caching = !Translator.options.exportFileData
 
-    this.jabref = new jabRef()
+    this.jabref = new JabRef()
 
     this.citekeys = {}
   }
