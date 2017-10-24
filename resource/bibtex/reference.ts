@@ -284,20 +284,20 @@ export = class Reference {
   private fields: any[]
   private raw: boolean
   private data: { DeclarePrefChars: string }
-  private english: boolean
-  private language: string
   private juniorcomma: boolean
-  private useprefix: boolean
 
   // patched in by the Bib(La)TeX translators
-  private requiredFields: { [key: string]: string[] }
-  private fieldEncoding: { [key: string]: string }
-  private caseConversion: { [key: string]: boolean }
-  private typeMap: { csl: { [key: string]: string }, zotero: { [key: string]: string } }
+  public requiredFields: { [key: string]: string[] }
+  public fieldEncoding: { [key: string]: string }
+  public caseConversion: { [key: string]: boolean }
+  public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
 
   public has: { [key: string]: any }
   public item: any
   public referencetype: string
+  public useprefix: boolean
+  public language: string
+  public english: boolean
 
   constructor(item) {
     this.item = item
@@ -741,9 +741,11 @@ export = class Reference {
     if (Translator.preferences.attachmentsNoMetadata) return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
     return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
   }
-  private isBibVar(value) {
+
+  public isBibVar(value) {
     return Translator.preferences.preserveBibTeXVariables && value && (typeof value === 'string') && this.isBibVarRE.test(value)
   }
+
   /*
    * Add a field to the reference field set
    *
@@ -752,7 +754,7 @@ export = class Reference {
    *   'enc' means 'enc_latex'. If you pass both 'bibtex' and 'latex', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  private add(field) {
+  public add(field) {
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
@@ -815,7 +817,7 @@ export = class Reference {
    * @param {name} field to remove.
    * @return {Object} the removed field, if present
    */
-  private remove(name) {
+  public remove(name) {
     if (!this.has[name]) return
     debug('remove field', name)
     const removed = this.has[name]
