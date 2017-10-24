@@ -1,4 +1,4 @@
-Reference = require('./bibtex/reference.coffee')
+Reference = require('./bibtex/reference.ts')
 Exporter = require('./lib/exporter.ts')
 debug = require('./lib/debug.ts')
 JSON5 = require('json5')

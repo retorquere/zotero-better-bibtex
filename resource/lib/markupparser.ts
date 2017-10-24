@@ -104,7 +104,7 @@ class AST {
   }
 
   public end(tagName) {
-    debug('markupparser: Error:', tagName, '<->', this.elems[0])
+    if (tagName !== this.elems[0].name) debug('markupparser: Error:', tagName, '<->', this.elems[0])
     this.elems.shift()
   }
 
