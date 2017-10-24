@@ -80,6 +80,7 @@
     "jsesc": "^2.5.1",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
+    "moment": "^2.19.1",
     "node-archiver": "^0.3.0",
     "pretty-data": "^0.40.0",
     "pug": "^2.0.0-rc.4",
