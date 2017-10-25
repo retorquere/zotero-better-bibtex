@@ -68,8 +68,18 @@ export = function parse(raw) {
   if (raw.trim() === '') return {type: 'open'}
 
   let m
-  if (m = raw.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+),?\s*([0-9]+)$/)) {
+  // 747
+  if (m = raw.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/)) {
     const [ , month, day1, day2, year ] = m
+
+    const from = parse(`${month} ${day1} ${year}`)
+    const to = parse(`${month} ${day2} ${year}`) // tslint:disable-line:no-magic-numbers
+
+    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+  }
+  // 746
+  if (m = raw.match(/^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/)) {
+    const [ , day1, day2, month, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`)
     const to = parse(`${month} ${day2} ${year}`) // tslint:disable-line:no-magic-numbers
