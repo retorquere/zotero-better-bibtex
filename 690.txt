@@ -1,0 +1,29 @@
++  # http://svn.code.sf.net/p/texstudio/code/trunk/utilities/usermanual_en.html#SECTION38
++  # https://stackoverflow.com/questions/6477818/using-firefox-to-launch-an-external-program-found-in-the-system-path
++  https://discourse.mozilla.org/t/how-to-run-an-app-with-arguments-in-mac-os-x-using-firefox-addon-sdk-javascript/7688/6
++  module.exports.toTeXStudio = Zotero.Promise.coroutine(->
++    debug('toTeXStudio')
++    pane = Zotero.getActiveZoteroPane()
++    items = pane.getSelectedItems()
++    ids = (item.id for item in (items || []))
++    debug('toTeXStudio', ids)
+ 
+-    hide: (deck) ->
+-      return unless @decks
++    keys = (key.citekey for key in KeyManager.keys.find({ itemID: { $in: ids } })).join(',')
++    debug('toTeXStudio', ids, keys)
++    return unless keys
++    debug('toTeXStudio', ids, keys)
+ 
+-      id = deck.id
+-      lock = id + @postfix
++    try
++      debug('sending', keys, 'to TexStudio')
++      yield Zotero.Utilities.Internal.exec('texstudio', ['--insert-cite', keys])
++    catch err
++      debug('no luck sending', keys, 'to TexStudio:', err)
+ 
+-      debug('Lock: re-locking', id, 'with', lock)
++    return
++  )
+
