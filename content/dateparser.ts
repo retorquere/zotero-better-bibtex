@@ -127,9 +127,11 @@ export = function parse(raw) {
     return { type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined }
   }
 
-  if (m = /^([0-9]{1,2})([-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
-    let [ , day, sep, month, year ] = m
-    if (sep === '/') [day, month] = [month, day] // silly yanks
+  // this assumes a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
+  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
+  if (m = /^([0-9]{1,2})(?[-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
+    let [ , day, month, year ] = m
+    // you can be detectably wrong though
     if (parseInt(month) > december && parseInt(day) < december) [day, month] = [month, day]
     return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
   }
