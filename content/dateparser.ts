@@ -1,7 +1,6 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 import debug = require('./debug.ts')
-import Citeproc = require('./citeproc.ts')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -62,22 +61,28 @@ function parse_edtf(date) {
 }
 
 export = function parse(raw) {
-  let day, m, month, year
   const december = 12
 
   debug('dateparser: parsing', raw)
 
-  debug('dateparser.csl:', Citeproc.DateParser.parseDateToObject(raw))
-
   if (raw.trim() === '') return {type: 'open'}
 
-  for (const sep of ['--', '-', '/', '_']) {
-    // tslint:disable-next-line:no-magic-numbers
+  let m
+  if (m = raw.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+),?\s*([0-9]+)$/)) {
+    const [ , month, day1, day2, year ] = m
+
+    const from = parse(`${month} ${day1} ${year}`)
+    const to = parse(`${month} ${day2} ${year}`) // tslint:disable-line:no-magic-numbers
+
+    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+  }
+
+  for (const sep of ['--', '-', '/', '_', '–']) {
     if ((m = raw.split(sep)).length === 2) { // potential range
-      // tslint:disable-next-line:no-magic-numbers
-      if (((m[0].length > 2) || ((sep === '/') && (m[0].length === 0))) && ((m[1].length > 2) || ((sep === '/') && (m[1].length === 0)))) {
-        const from = parse(m[0]) // tslint:disable-line:no-magic-numbers
-        const to = parse(m[1])   // tslint:disable-line:no-magic-numbers
+      const [ _from, _to ] = m
+      if ((_from.length > 2 || (sep === '/' && _from.length === 0)) && (_to.length > 2 || (sep === '/' && _to.length === 0))) {
+        const from = parse(_from) // tslint:disable-line:no-magic-numbers
+        const to = parse(_to)   // tslint:disable-line:no-magic-numbers
         if (['date', 'open'].includes(from.type) && ['date', 'open'].includes(to.type)) return { type: 'interval', from, to }
       }
     }
@@ -109,39 +114,34 @@ export = function parse(raw) {
 //    return { type: 'date', year, month }
 
   if (m = /^(-?[0-9]{3,})-([0-9]{2})-([0-9]{2})T/.exec(trimmed)) {
-    year = parseInt(m[1])  // tslint:disable-line:no-magic-numbers
-    month = parseInt(m[2]) // tslint:disable-line:no-magic-numbers
-    day = parseInt(m[3])   // tslint:disable-line:no-magic-numbers
-    return { type: 'date', year, month, day }
+    const [ , year, month, day ] = m
+    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
   }
 
   if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)) {
+    let [ , year, , month, , day ] = m
     year = parseInt(m[1])                    // tslint:disable-line:no-magic-numbers
     month = parseInt(m[3])                   // tslint:disable-line:no-magic-numbers
     day = m[5] ? parseInt(m[5]) : undefined  // tslint:disable-line:no-magic-numbers
     if (day && (month > december) && (day < december)) [day, month] = [month, day]
-    return { type: 'date', year, month, day }
+    return { type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined }
   }
 
-  if (m = /^([0-9]{1,2})([-\/\. ])([0-9]{1,2})([-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
-    year = parseInt(m[5])  // tslint:disable-line:no-magic-numbers
-    month = parseInt(m[3]) // tslint:disable-line:no-magic-numbers
-    day = parseInt(m[1])   // tslint:disable-line:no-magic-numbers
-    if (m[1] === '/') [day, month] = [month, day] // silly yanks
-    if ((month > december) && (day < december)) [day, month] = [month, day]
-    return { type: 'date', year, month, day }
+  if (m = /^([0-9]{1,2})([-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
+    let [ , day, sep, month, year ] = m
+    if (sep === '/') [day, month] = [month, day] // silly yanks
+    if (parseInt(month) > december && parseInt(day) < december) [day, month] = [month, day]
+    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
   }
 
   if (m = /^([0-9]{1,2})[-\/\.]([0-9]{3,})$/.exec(trimmed)) {
-    year = parseInt(m[2])   // tslint:disable-line:no-magic-numbers
-    month = parseInt(m[1])  // tslint:disable-line:no-magic-numbers
-    return { type: 'date', year, month }
+    const [ , month, year ] = m
+    return { type: 'date', year: parseInt(year), month: parseInt(month) }
   }
 
   if (m = /^([0-9]{3,})[-\/\.]([0-9]{1,2})$/.exec(trimmed)) {
-    year = parseInt(m[1])   // tslint:disable-line:no-magic-numbers
-    month = parseInt(m[2])  // tslint:disable-line:no-magic-numbers
-    return { type: 'date', year, month }
+    const [ , year, month ] = m
+    return { type: 'date', year: parseInt(year), month: parseInt(month) }
   }
 
 //  if m = /^(-?[0-9]{3,})([?~]*)$/.exec(trimmed)
@@ -154,19 +154,13 @@ export = function parse(raw) {
   }
 
   if (m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(trimmed)) {
-    return {
-      type: 'date',
-      year: parseInt(m[2]),                         // tslint:disable-line:no-magic-numbers
-      orig: { type: 'date', year: parseInt(m[1]) }, // tslint:disable-line:no-magic-numbers
-    }
+    const [ , orig, year ] = m
+    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
   }
 
   if (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(trimmed)) {
-    return {
-      type: 'date',
-      year: parseInt(m[1]),
-      orig: { type: 'date', year: parseInt(m[2]) }, // tslint:disable-line:no-magic-numbers
-    }
+    const [ , year, orig ] = m
+    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
   }
 
   const parsed = parse_edtf(cleaned)
