@@ -118,18 +118,14 @@ export = function parse(raw) {
     return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
   }
 
+  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
+  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
   if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)) {
     let [ , year, , month, , day ] = m
-    year = parseInt(m[1])                    // tslint:disable-line:no-magic-numbers
-    month = parseInt(m[3])                   // tslint:disable-line:no-magic-numbers
-    day = m[5] ? parseInt(m[5]) : undefined  // tslint:disable-line:no-magic-numbers
-    if (day && (month > december) && (day < december)) [day, month] = [month, day]
+    if (day && (parseInt(month) > december) && (parseInt(day) < december)) [day, month] = [month, day]
     return { type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined }
   }
-
-  // this assumes a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
-  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^([0-9]{1,2})(?[-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
+  if (m = /^([0-9]{1,2})(?:[-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
     let [ , day, month, year ] = m
     // you can be detectably wrong though
     if (parseInt(month) > december && parseInt(day) < december) [day, month] = [month, day]

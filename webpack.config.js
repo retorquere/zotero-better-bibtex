@@ -73,34 +73,8 @@ var common = {
 
 function BailPlugin() {
   this.plugin('done', function(stats) {
-    var errors = [];
-
-    for (var warning of (stats.compilation.warnings || [])) {
-      switch (warning.name) {
-        case 'ModuleNotFoundError':
-          warning.severity = 'warning';
-          errors.push(warning);
-          break;
-      }
-    }
-
-    /*
-    for (var error of (stats.compilation.errors || [])) {
-      error.severity = 'error';
-      errors.push(errors);
-    }
-    */
-
-    if (errors.length) {
-      process.on('beforeExit', function() {
-        console.log('-------')
-        for (var error of errors) {
-          // console.log('-------')
-          console.log(error.severity, error.module.resource, error.name, error.message);
-          // for (var key in error) { console.log(`error.${key}`, error[key]); }
-        }
-        process.exit(1);
-      });
+    while (stats.compilation.warnings.length) {
+      stats.compilation.errors.push(stats.compilation.warnings.pop())
     }
   });
 };
