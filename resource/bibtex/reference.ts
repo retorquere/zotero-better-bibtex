@@ -258,10 +258,10 @@ export = class Reference {
   public english: boolean
 
   // patched in by the Bib(La)TeX translators
-  protected requiredFields: { [key: string]: string[] }
-  protected fieldEncoding: { [key: string]: string }
-  protected caseConversion: { [key: string]: boolean }
-  protected typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
+  public requiredFields: { [key: string]: string[] }
+  public fieldEncoding: { [key: string]: string }
+  public caseConversion: { [key: string]: boolean }
+  public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -453,7 +453,7 @@ export = class Reference {
 
   public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
-  protected complete() {
+  public complete() {
     if (Translator.preferences.DOIandURL !== 'both') {
       if (this.has.doi && this.has.url) {
         debug('removing', Translator.preferences.DOIandURL === 'doi' ? 'url' : 'doi')

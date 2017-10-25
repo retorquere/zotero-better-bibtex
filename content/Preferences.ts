@@ -100,6 +100,8 @@ class AutoExportPrefPane {
 }
 
 export = new class PrefPane {
+  private AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
+
   constructor() {
     window.addEventListener('load', () => this.load(), false)
   }
