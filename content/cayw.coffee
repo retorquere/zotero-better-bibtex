@@ -357,3 +357,29 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
     catch
       return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack]
   )
+
+=====
+Components.utils.import("resource://gre/modules/NetUtil.jsm");
+
+var pump = Components.classes["@mozilla.org/network/input-stream-pump;1"]
+                     .createInstance(Components.interfaces.nsIInputStreamPump);
+pump.init(poolRawInputStream, -1, -1, 0, 0, true);
+
+var listener = {
+  onStartRequest: function(request, context) {},
+  onDataAvailable: function(request, context, stream, offset, count)
+  {
+    var data = NetUtil.readInputStreamToString(stream, count);
+    ...
+  },
+  onStopRequest: function(request, context, result)
+  {
+    if (!Components.isSuccessCode(result))
+    {
+      // Error handling here
+    }
+  }
+};
+
+pump.asyncRead(listener, null);
+=====

@@ -33,43 +33,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.requiredFields = {
-  article: ['author', 'title', 'journaltitle', 'year/date'],
-  book: ['author', 'title', 'year/date'],
-  mvbook: ['book'],
-  inbook: ['author', 'title', 'booktitle', 'year/date'],
-  bookinbook: ['inbook'],
-  suppbook: ['inbook'],
-  booklet: ['author/editor', 'title', 'year/date'],
-  collection: ['editor', 'title', 'year/date'],
-  mvcollection: ['collection'],
-  incollection: ['author', 'title', 'booktitle', 'year/date'],
-  suppcollection: ['incollection'],
-  manual: ['author/editor', 'title', 'year/date'],
-  misc: ['author/editor', 'title', 'year/date'],
-  online: ['author/editor', 'title', 'year/date', 'url'],
-  patent: ['author', 'title', 'number', 'year/date'],
-  periodical: ['editor', 'title', 'year/date'],
-  suppperiodical: ['article'],
-  proceedings: ['title', 'year/date'],
-  mvproceedings: ['proceedings'],
-  inproceedings: ['author', 'title', 'booktitle', 'year/date'],
-  reference: ['editor', 'title', 'year/date' ],
-  mvreference: ['collection'],
-  inreference: ['author', 'title', 'booktitle', 'year/date'],
-  report: ['author', 'title', 'type', 'institution', 'year/date'],
-  thesis: ['author', 'title', 'type', 'institution', 'year/date'],
-  unpublished: ['author', 'title', 'year/date'],
-
-  // semi aliases (differing fields)
-  mastersthesis: ['author', 'title', 'institution', 'year/date'],
-  techreport: ['author', 'title', 'institution', 'year/date'],
-}
-
-Reference.prototype.requiredFields.conference = Reference.prototype.requiredFields.inproceedings
-Reference.prototype.requiredFields.electronic = Reference.prototype.requiredFields.online
-Reference.prototype.requiredFields.phdthesis = Reference.prototype.requiredFields.mastersthesis
-Reference.prototype.requiredFields.www = Reference.prototype.requiredFields.online
+Reference.installEntryTypes(require('./bibtex/biblatex.entry-types.json'))
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return

@@ -258,7 +258,6 @@ export = class Reference {
   public english: boolean
 
   // patched in by the Bib(La)TeX translators
-  public requiredFields: { [key: string]: string[] }
   public fieldEncoding: { [key: string]: string }
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
@@ -267,6 +266,18 @@ export = class Reference {
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
   private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
   private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
+
+  private entryTypes: { [key: string]: { required: string[][], allowed: string[] } }
+
+  public static installEntryTypes(config) {
+    Reference.prototype.entryTypes = {}
+    for (const [type, fields] of Object.entries(config)) {
+      Reference.prototype.entryTypes[type] = {
+        required: fields.required.map(field => field.split('/')),
+        allowed: fields.optional ? fields.required.join('/').split('/').concat(fields.optional) : null,
+      }
+    }
+  }
 
   public static installPostscript() {
     const postscript = Translator.preferences.postscript
@@ -1024,19 +1035,25 @@ export = class Reference {
 
   private qualityReport() {
     if (!Translator.preferences.qualityReport) return ''
-    const fields = this.requiredFields[this.referencetype.toLowerCase()]
+    const fields = this.entryTypes[this.referencetype.toLowerCase()]
     if (!fields) return `% I don't know how to check ${this.referencetype}`
 
     const report = []
-    for (const field of fields) {
-      const options = field.split('/')
-      if (options.filter(option => this.has[option]).length === 0) {
-        report.push(`% Missing required field ${field}`)
+    for (const required of fields.required) {
+      if (!required.find(field => this.has[field])) {
+        report.push(`% Missing required field ${required[0]}`)
+      }
+    }
+    if (fields.allowed) {
+      for (const field of Object.keys(this.has)) {
+        if (!fields.allowed.includes(field)) {
+          report.push(`% Unexpected field ${field}`)
+        }
       }
     }
 
     if ((this.referencetype === 'proceedings') && this.has.pages) {
-      report.push("% Proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
+      report.push("% ? Proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
     }
 
     if ((this.referencetype === 'article') && this.has.journal) {
