@@ -14,6 +14,8 @@ import PunyCode = require('punycode')
 import JournalAbbrev = require('../journal-abbrev.ts')
 
 export = new class PatternFormatter {
+  public generate: Function
+
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;?\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
@@ -46,8 +48,6 @@ export = new class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  public generate: Function
-
   constructor() {
     this.update()
   }
@@ -78,12 +78,6 @@ export = new class PatternFormatter {
   }
 
   public parsePattern(pattern) { return parser.parse(pattern, PatternFormatter.prototype) }
-
-  private removeDiacritics(str) {
-    str = transliterate(str || '')
-    str = fold2ascii(str)
-    return str
-  }
 
   public format(item) {
     this.item = {
@@ -141,6 +135,296 @@ export = new class PatternFormatter {
     return citekey
   }
 
+  // methods
+  protected $zotero() {
+    let key = ''
+    const creator = (this.item.item.getCreators() || [])[0]
+
+    if (creator && creator.lastName) key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+
+    key += '_'
+
+    if (this.item.title) {
+      key += this.item.title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
+    }
+
+    key += '_'
+
+    let year = '????'
+    if (this.item.date) {
+      const date = Zotero.Date.strToDate(this.item.date)
+      if (date.year && this.re.zotero.number.test(date.year)) year = date.year
+    }
+    key += year
+
+    key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
+    return key.replace(this.re.zotero.citeKeyClean, '')
+  }
+
+  protected $property(name) {
+    try {
+      return this.innerText(this.item.item.getField(name, false, true) || '')
+    } catch (err) {}
+
+    try {
+      return this.innerText(this.item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
+    } catch (err) {}
+
+    return ''
+  }
+
+  protected $library() {
+    if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
+    return Zotero.Libraries.getName(this.item.item.libraryID)
+  }
+
+  protected $auth(onlyEditors, withInitials, n, m) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+    let author = authors[m || 0]
+    if (author && n) author = author.substring(0, n)
+    return author || ''
+  }
+
+  protected $authForeIni(onlyEditors) {
+    const authors = this.creators(onlyEditors, {initialOnly: true})
+    if (!authors || !authors.length) return ''
+    return authors[0]
+  }
+
+  protected $authorLastForeIni(onlyEditors) {
+    const authors = this.creators(onlyEditors, {initialOnly: true})
+    if (!authors || !authors.length) return ''
+    return authors[authors.length - 1]
+  }
+
+  protected $authorLast(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+    return authors[authors.length - 1]
+  }
+
+  protected $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
+
+  protected $authors(onlyEditors, withInitials, n) {
+    let authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    if (n) {
+      const etal = authors.length > n
+      authors = authors.slice(0, n)
+      if (etal) authors.push('EtAl')
+    }
+
+    return authors.join('')
+  }
+
+  protected $authorsAlpha(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    switch (authors.length) {
+      case 1: // tslint:disable-line:no-magic-numbers
+        return authors[0].substring(0, 3) // tslint:disable-line:no-magic-numbers
+
+      case 2: // tslint:disable-line:no-magic-numbers
+      case 3: // tslint:disable-line:no-magic-numbers
+      case 4: // tslint:disable-line:no-magic-numbers
+        return authors.map(author => author.substring(0, 1)).join('')
+
+      default:
+        // tslint:disable-next-line:no-magic-numbers
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('') + '+'
+    }
+  }
+
+  protected $authIni(onlyEditors, withInitials, n) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+    return authors.map(author => author.substring(0, n)).join('.')
+  }
+
+  protected $authorIni(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+    const firstAuthor = authors.shift()
+
+    // tslint:disable-next-line:no-magic-numbers
+    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
+  }
+
+  protected $auth_auth_ea(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    // tslint:disable-next-line:no-magic-numbers
+    return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
+  }
+
+  protected $authEtAl(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    // tslint:disable-next-line:no-magic-numbers
+    if (authors.length === 2) return authors.join('')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
+  }
+
+  protected $auth_etal(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    // tslint:disable-next-line:no-magic-numbers
+    if (authors.length === 2) return authors.join('.')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
+  }
+
+  protected $authshort(onlyEditors, withInitials) {
+    const authors = this.creators(onlyEditors, {withInitials})
+    if (!authors || !authors.length) return ''
+
+    switch (authors.length) {
+      case 0:
+        return ''
+
+      case 1:
+        return authors[0]
+
+      default:
+        // tslint:disable-next-line:no-magic-numbers
+        return authors.map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
+    }
+  }
+
+  protected $firstpage() {
+    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
+    if (!this.item.pages) return ''
+    let firstpage = ''
+    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => firstpage = fp)
+    return firstpage
+  }
+
+  protected $lastpage() {
+    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
+    if (!this.item.pages) return ''
+    let lastpage = ''
+    this.item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) => lastpage = lp)
+    return lastpage
+  }
+
+  protected $keyword(n) {
+    this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
+    return this.item.tags[n] || ''
+  }
+
+  protected $shorttitle() {
+    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
+    if (!words) return ''
+
+    // tslint:disable-next-line:no-magic-numbers
+    return words.slice(0, 3).join('')
+  }
+
+  protected $veryshorttitle() {
+    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
+    if (!words) return ''
+    return words.slice(0, 1).join('')
+  }
+
+  protected $shortyear() {
+    // tslint:disable-next-line:no-magic-numbers
+    return this.padYear(this.item.year, 2)
+  }
+
+  protected $year() {
+    // tslint:disable-next-line:no-magic-numbers
+    return this.padYear(this.item.year, 4)
+  }
+
+  protected $origyear() {
+    // tslint:disable-next-line:no-magic-numbers
+    return this.padYear(this.item.origyear, 4)
+  }
+
+  protected $month() {
+    if (!this.item.month) return ''
+    return this.months[this.item.month - 1] || ''
+  }
+
+  protected $title() { return this.titleWords(this.item.title).join('') }
+
+  // filters
+  protected _condense(value, sep) {
+    return (value || '').replace(/\s/g, sep || '')
+  }
+
+  protected _prefix(value, prefix) {
+    value = value || ''
+    if (value && prefix) return `${prefix}${value}`
+    return value
+  }
+
+  protected _postfix(value, postfix) {
+    value = value || ''
+    if (value && postfix) return `${value}${postfix}`
+    return value
+  }
+
+  protected _abbr(value) {
+    return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
+  }
+
+  protected _lower(value) {
+    return (value || '').toLowerCase()
+  }
+
+  protected _upper(value) {
+    return (value || '').toUpperCase()
+  }
+
+  protected _skipwords(value) {
+    return (value || '').split(/\s+/).filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+  }
+
+  protected _select(value, start, n) {
+    value = (value || '').split(/\s+/)
+    let end = value.length
+
+    if (typeof start === 'undefined') start = 1
+    start = parseInt(start) - 1
+    if (typeof n !== 'undefined') end = start + parseInt(n)
+    return value.slice(start, end).join(' ')
+  }
+
+  protected _substring(value, start, n) {
+    return (value || '').slice(start - 1, (start - 1) + n)
+  }
+
+  protected _ascii(value) {
+    return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
+  }
+
+  protected _alphanum(value) {
+    return Zotero.Utilities.XRegExp.replace(value || '', this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
+  }
+
+  protected _fold(value) {
+    return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
+  }
+
+  protected _capitalize(value) {
+    return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
+  }
+
+  protected _nopunct(value) {
+    return Zotero.Utilities.XRegExp.replace(value || '', this.re.punct, '', 'all')
+  }
+
+  private removeDiacritics(str) {
+    str = transliterate(str || '')
+    str = fold2ascii(str)
+    return str
+  }
   private clean(str) {
     return this.safechars(this.removeDiacritics(str)).trim()
   }
@@ -255,290 +539,5 @@ export = new class PatternFormatter {
 
     if (onlyEditors) return this.item.creators.editors || []
     return this.item.creators.authors || this.item.creators.editors || this.item.creators.translators || this.item.creators.collaborators || []
-  }
-
-  // methods
-  public $zotero() {
-    let key = ''
-    const creator = (this.item.item.getCreators() || [])[0]
-
-    if (creator && creator.lastName) key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
-
-    key += '_'
-
-    if (this.item.title) {
-      key += this.item.title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
-    }
-
-    key += '_'
-
-    let year = '????'
-    if (this.item.date) {
-      const date = Zotero.Date.strToDate(this.item.date)
-      if (date.year && this.re.zotero.number.test(date.year)) year = date.year
-    }
-    key += year
-
-    key = Zotero.Utilities.removeDiacritics(key.toLowerCase(), true)
-    return key.replace(this.re.zotero.citeKeyClean, '')
-  }
-
-  public $property(name) {
-    try {
-      return this.innerText(this.item.item.getField(name, false, true) || '')
-    } catch (err) {}
-
-    try {
-      return this.innerText(this.item.item.getField(name[0].toLowerCase() + name.slice(1), false, true) || '')
-    } catch (err) {}
-
-    return ''
-  }
-
-  public $library() {
-    if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
-    return Zotero.Libraries.getName(this.item.item.libraryID)
-  }
-
-  public $auth(onlyEditors, withInitials, n, m) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-    let author = authors[m || 0]
-    if (author && n) author = author.substring(0, n)
-    return author || ''
-  }
-
-  public $authForeIni(onlyEditors) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
-    if (!authors || !authors.length) return ''
-    return authors[0]
-  }
-
-  public $authorLastForeIni(onlyEditors) {
-    const authors = this.creators(onlyEditors, {initialOnly: true})
-    if (!authors || !authors.length) return ''
-    return authors[authors.length - 1]
-  }
-
-  public $authorLast(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-    return authors[authors.length - 1]
-  }
-
-  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
-
-  public $authors(onlyEditors, withInitials, n) {
-    let authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    if (n) {
-      const etal = authors.length > n
-      authors = authors.slice(0, n)
-      if (etal) authors.push('EtAl')
-    }
-
-    return authors.join('')
-  }
-
-  public $authorsAlpha(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    switch (authors.length) {
-      case 1: // tslint:disable-line:no-magic-numbers
-        return authors[0].substring(0, 3) // tslint:disable-line:no-magic-numbers
-
-      case 2: // tslint:disable-line:no-magic-numbers
-      case 3: // tslint:disable-line:no-magic-numbers
-      case 4: // tslint:disable-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join('')
-
-      default:
-        // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('') + '+'
-    }
-  }
-
-  public $authIni(onlyEditors, withInitials, n) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-    return authors.map(author => author.substring(0, n)).join('.')
-  }
-
-  public $authorIni(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-    const firstAuthor = authors.shift()
-
-    // tslint:disable-next-line:no-magic-numbers
-    return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
-  }
-
-  public $auth_auth_ea(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    // tslint:disable-next-line:no-magic-numbers
-    return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
-  }
-
-  public $authEtAl(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join('')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
-  }
-
-  public $auth_etal(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join('.')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
-  }
-
-  public $authshort(onlyEditors, withInitials) {
-    const authors = this.creators(onlyEditors, {withInitials})
-    if (!authors || !authors.length) return ''
-
-    switch (authors.length) {
-      case 0:
-        return ''
-
-      case 1:
-        return authors[0]
-
-      default:
-        // tslint:disable-next-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
-    }
-  }
-
-  public $firstpage() {
-    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
-    if (!this.item.pages) return ''
-    let firstpage = ''
-    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => firstpage = fp)
-    return firstpage
-  }
-
-  public $lastpage() {
-    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
-    if (!this.item.pages) return ''
-    let lastpage = ''
-    this.item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) => lastpage = lp)
-    return lastpage
-  }
-
-  public $keyword(n) {
-    this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
-    return this.item.tags[n] || ''
-  }
-
-  public $shorttitle() {
-    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
-    if (!words) return ''
-
-    // tslint:disable-next-line:no-magic-numbers
-    return words.slice(0, 3).join('')
-  }
-
-  public $veryshorttitle() {
-    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
-    if (!words) return ''
-    return words.slice(0, 1).join('')
-  }
-
-  public $shortyear() {
-    // tslint:disable-next-line:no-magic-numbers
-    return this.padYear(this.item.year, 2)
-  }
-
-  public $year() {
-    // tslint:disable-next-line:no-magic-numbers
-    return this.padYear(this.item.year, 4)
-  }
-
-  public $origyear() {
-    // tslint:disable-next-line:no-magic-numbers
-    return this.padYear(this.item.origyear, 4)
-  }
-
-  public $month() {
-    if (!this.item.month) return ''
-    return this.months[this.item.month - 1] || ''
-  }
-
-  public $title() { return this.titleWords(this.item.title).join('') }
-
-  // filters
-  private _condense(value, sep) {
-    return (value || '').replace(/\s/g, sep || '')
-  }
-
-  private _prefix(value, prefix) {
-    value = value || ''
-    if (value && prefix) return `${prefix}${value}`
-    return value
-  }
-
-  private _postfix(value, postfix) {
-    value = value || ''
-    if (value && postfix) return `${value}${postfix}`
-    return value
-  }
-
-  private _abbr(value) {
-    return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
-  }
-
-  private _lower(value) {
-    return (value || '').toLowerCase()
-  }
-
-  private _upper(value) {
-    return (value || '').toUpperCase()
-  }
-
-  private _skipwords(value) {
-    return (value || '').split(/\s+/).filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
-  }
-
-  private _select(value, start, n) {
-    value = (value || '').split(/\s+/)
-    let end = value.length
-
-    if (typeof start === 'undefined') start = 1
-    start = parseInt(start) - 1
-    if (typeof n !== 'undefined') end = start + parseInt(n)
-    return value.slice(start, end).join(' ')
-  }
-
-  private _substring(value, start, n) {
-    return (value || '').slice(start - 1, (start - 1) + n)
-  }
-
-  private _ascii(value) {
-    return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
-  }
-
-  private _alphanum(value) {
-    return Zotero.Utilities.XRegExp.replace(value || '', this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
-  }
-
-  private _fold(value) {
-    return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
-  }
-
-  private _capitalize(value) {
-    return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
-  }
-
-  private _nopunct(value) {
-    return Zotero.Utilities.XRegExp.replace(value || '', this.re.punct, '', 'all')
   }
 }

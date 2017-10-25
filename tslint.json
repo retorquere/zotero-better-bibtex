@@ -27,7 +27,20 @@
       },
       "ordered-imports": false,
       "prefer-const": [true, {"destructuring": "all"}],
-      "member-ordering": "statics-first",
+      "member-ordering": [true, {
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-static-field",
+          "private-instance-field",
+          "public-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-constructor",
+          "private-instance-method"
+        ]
+      }],
       "no-magic-numbers": [true, -1, 0, 1, 2],
       "prefer-for-of": true,
       "no-duplicate-variable": true,

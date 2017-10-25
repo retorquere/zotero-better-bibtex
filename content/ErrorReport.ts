@@ -46,6 +46,29 @@ export = new class ErrorReport {
     window.addEventListener('load', () => this.init(), false)
   }
 
+  public async send() {
+    const wizard = document.getElementById('better-bibtex-error-report')
+    const continueButton = wizard.getButton('next')
+    continueButton.disabled = true
+
+    const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
+
+    try {
+      await this.submit('errorlog.txt', errorlog)
+      if (this.errorlog.references) await this.submit('references.json', this.errorlog.references)
+      wizard.advance()
+      wizard.getButton('cancel').disabled = true
+      wizard.canRewind = false
+
+      document.getElementById('better-bibtex-report-id').setAttribute('value', this.key)
+      document.getElementById('better-bibtex-report-result').hidden = false
+    } catch (err) {
+      const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+      ps.alert(null, Zotero.getString('general.error'), err)
+      if (wizard.rewind) wizard.rewind()
+    }
+  }
+
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
@@ -152,29 +175,6 @@ export = new class ErrorReport {
 
       request.send(fd)
     })
-  }
-
-  public async send() {
-    const wizard = document.getElementById('better-bibtex-error-report')
-    const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
-
-    const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
-
-    try {
-      await this.submit('errorlog.txt', errorlog)
-      if (this.errorlog.references) await this.submit('references.json', this.errorlog.references)
-      wizard.advance()
-      wizard.getButton('cancel').disabled = true
-      wizard.canRewind = false
-
-      document.getElementById('better-bibtex-report-id').setAttribute('value', this.key)
-      document.getElementById('better-bibtex-report-result').hidden = false
-    } catch (err) {
-      const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), err)
-      if (wizard.rewind) wizard.rewind()
-    }
   }
 }
 

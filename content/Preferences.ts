@@ -35,6 +35,8 @@ function autoExportName(ae, full = false) {
 }
 
 class AutoExportPrefPane {
+  protected AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
+
   public remove() {
     const exportlist = document.getElementById('better-bibtex-export-list')
     if (!exportlist) return
@@ -98,41 +100,8 @@ class AutoExportPrefPane {
 }
 
 export = new class PrefPane {
-  private AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
-
   constructor() {
     window.addEventListener('load', () => this.load(), false)
-  }
-
-  private load() {
-    debug('PrefPane.new: loading...')
-    if (typeof Zotero_Preferences === 'undefined') return
-
-    this.AutoExport = new AutoExportPrefPane()
-
-    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
-
-    $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
-      if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
-        const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
-        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
-      } else {
-        original.apply(this, arguments)
-      }
-    })
-
-    this.getCitekeyFormat()
-    this.update()
-
-    debug('PrefPane.new loaded @', document.location.hash)
-
-    if (document.location.hash === '#better-bibtex') {
-      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-      // tslint:disable-next-line:no-magic-numbers
-      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
-    }
-    debug('PrefPane.new: ready')
   }
 
   public getCitekeyFormat() {
@@ -183,28 +152,11 @@ export = new class PrefPane {
     postscript.setAttribute('tooltiptext', error)
   }
 
-  private styleChanged(index) {
-    if (!ZoteroConfig.isJurisM) return
-
-    const stylebox = document.getElementById('better-bibtex-abbrev-style')
-    const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
-    const styleID = selectedItem.getAttribute('value')
-    Prefs.set('autoAbbrevStyle', styleID)
-  }
-
   public async rescanCitekeys() {
     debug('starting manual key rescan')
     await KeyManager.rescan()
     debug('manual key rescan done')
   }
-
-  /* Unused?
-  private display(id, text) {
-    const elt = document.getElementById(id)
-    elt.value = text
-    if (text !== '') elt.setAttribute('tooltiptext', text)
-  }
-  */
 
   public update() {
     this.checkCitekeyFormat()
@@ -236,6 +188,54 @@ export = new class PrefPane {
 
     this.AutoExport.refresh()
   }
+
+  private load() {
+    debug('PrefPane.new: loading...')
+    if (typeof Zotero_Preferences === 'undefined') return
+
+    this.AutoExport = new AutoExportPrefPane()
+
+    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
+
+    $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
+      if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
+        const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
+      } else {
+        original.apply(this, arguments)
+      }
+    })
+
+    this.getCitekeyFormat()
+    this.update()
+
+    debug('PrefPane.new loaded @', document.location.hash)
+
+    if (document.location.hash === '#better-bibtex') {
+      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
+      // tslint:disable-next-line:no-magic-numbers
+      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
+    }
+    debug('PrefPane.new: ready')
+  }
+
+  private styleChanged(index) {
+    if (!ZoteroConfig.isJurisM) return
+
+    const stylebox = document.getElementById('better-bibtex-abbrev-style')
+    const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
+    const styleID = selectedItem.getAttribute('value')
+    Prefs.set('autoAbbrevStyle', styleID)
+  }
+
+  /* Unused?
+  private display(id, text) {
+    const elt = document.getElementById(id)
+    elt.value = text
+    if (text !== '') elt.setAttribute('tooltiptext', text)
+  }
+  */
 }
 
 // TODO: caching

@@ -265,6 +265,20 @@ function importGroup(group, itemIDs, root = null) {
 }
 
 class ZoteroItem {
+  public tags = {
+    strong: { open: '<b>', close: '</b>' },
+    em: { open: '<i>', close: '</i>' },
+    sub: { open: '<sub>', close: '</sub>' },
+    sup: { open: '<sup>', close: '</sup>' },
+    smallcaps: { open: '<span style="font-variant:small-caps;">', close: '</span>' },
+    nocase: { open: '', close: '' },
+    enquote: { open: '“', close: '”' },
+    url: { open: '', close: '' },
+    undefined: { open: '[', close: ']' },
+  }
+
+  protected item: any
+
   private typeMap = {
     book:           'book',
     booklet:        'book',
@@ -406,20 +420,6 @@ class ZoteroItem {
     t: '\u209C',
   }
 
-  public tags = {
-    strong: { open: '<b>', close: '</b>' },
-    em: { open: '<i>', close: '</i>' },
-    sub: { open: '<sub>', close: '</sub>' },
-    sup: { open: '<sup>', close: '</sup>' },
-    smallcaps: { open: '<span style="font-variant:small-caps;">', close: '</span>' },
-    nocase: { open: '', close: '' },
-    enquote: { open: '“', close: '”' },
-    url: { open: '', close: '' },
-    undefined: { open: '[', close: ']' },
-  }
-
-  public item: any
-
   private id: string
   private bibtex: any // comes from biblatex parser
   private groups: any // comes from biblatex parser
@@ -446,6 +446,290 @@ class ZoteroItem {
 //      @item.tags.push(Translator.preferences.rawLaTag)
     this.item.complete()
   }
+
+  protected $title(value) {
+    if (this.type === 'encyclopediaArticle') {
+      this.item.publicationTitle = this.unparse(value)
+    } else {
+      this.item.title = this.unparse(value)
+    }
+    return true
+  }
+
+  protected $author(value, field) {
+    for (const name of value) {
+      const creator: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType: field }
+
+      if (name.literal) {
+        creator.lastName = this.unparse(name.literal)
+        creator.fieldMode = 1
+      } else {
+        creator.firstName = this.unparse(name.given)
+        creator.lastName = this.unparse(name.family)
+        if (name.prefix) creator.lastName = `${this.unparse(name.prefix)} ${creator.lastName}`
+        if (name.suffix) creator.lastName = `${creator.lastName}, ${this.unparse(name.suffix)}`
+        // creator = Zotero.Utilities.cleanAuthor(creator, field, false)
+        if (creator.lastName && !creator.firstName) creator.fieldMode = 1
+      }
+      this.item.creators.push(creator)
+    }
+    return true
+  }
+  protected $editor(value, field) { return this.$author(value, field) }
+  protected $translator(value, field) { return this.$author(value, field) }
+
+  protected $publisher(value) {
+    if (!this.item.publisher) this.item.publisher = ''
+    if (this.item.publisher) this.item.publisher += ' / '
+    this.item.publisher += value.map(this.unparse).join(' and ')
+    return true
+  }
+  protected $institution(value) { return this.$publisher(value) }
+  protected $school(value) { return this.$publisher(value) }
+
+  protected $address(value) { return this.item.place = this.unparse(value) }
+  protected $location(value) { return this.$address(value) }
+
+  protected $edition(value) { return this.item.edition = this.unparse(value) }
+
+  protected $isbn(value) { return this.item.ISBN = this.unparse(value) }
+
+  protected $date(value) { return this.item.date = this.unparse(value) }
+
+  protected $booktitle(value) { return this.item.publicationTitle = this.unparse(value) }
+
+  protected $journaltitle(value) {
+    value = this.unparse(value)
+    if (this.fields.booktitle) {
+      this.item.journalAbbreviation = value
+    } else {
+      this.item.publicationTitle = value
+    }
+    return true
+  }
+  protected $journal(value) { return this.$journaltitle(value) }
+
+  protected $pages(value) {
+    // https://github.com/fiduswriter/biblatex-csl-converter/issues/51
+    const pages = []
+    for (const range of value) {
+      if (range.length === 1) {
+        const p = this.unparse(range[0])
+        if (p) pages.push(p)
+      } else {
+        const p0 = this.unparse(range[0])
+        const p1 = this.unparse(range[1])
+        if (p0.indexOf('-') >= 0 || p1.indexOf('-') >= 0) {
+          pages.push(`${p0}--${p1}`)
+        } else if (p0 || p1) {
+          pages.push(`${p0}-${p1}`)
+        }
+      }
+    }
+
+    if (!pages.length) return true
+
+    if (['book', 'thesis', 'manuscript'].includes(this.type)) {
+      this.item.numPages = pages.join(', ')
+    } else {
+      this.item.pages = pages.join(', ')
+    }
+
+    return true
+  }
+
+  protected $volume(value) { return this.item.volume = this.unparse(value) }
+
+  protected $doi(value) { return this.item.DOI = this.unparse(value) }
+
+  protected $abstract(value) { return this.item.abstractNote = this.unparse(value, true) }
+
+  protected $keywords(value) {
+    value = value.map(tag => this.unparse(tag).replace(/\n+/g, ' '))
+    if (value.length === 1 && value[0].indexOf(';') > 0) value = value[0].split(/\s*;\s*/)
+    if (!this.item.tags) this.item.tags = []
+    this.item.tags = this.item.tags.concat(value)
+    this.item.tags = this.item.tags.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+    return true
+  }
+  protected $keyword(value) { return this.$keywords(value) }
+
+  protected $year(value) {
+    value = this.unparse(value)
+
+    if (this.item.date) {
+      if (this.item.date.indexOf(value) < 0) this.item.date += value
+    } else {
+      this.item.date = value
+    }
+    return true
+  }
+
+  protected $month(value) {
+    value = this.unparse(value)
+
+    const month = months.indexOf(value.toLowerCase())
+    if (month >= 0) {
+      value = Zotero.Utilities.formatDate({month})
+    } else {
+      value += ' '
+    }
+
+    if (this.item.date) {
+      if (value.indexOf(this.item.date) >= 0) {
+        /* value contains year and more */
+        this.item.date = value
+      } else {
+        this.item.date = value + this.item.date
+      }
+    } else {
+      this.item.date = value
+    }
+    return true
+  }
+
+  protected $file(value) {
+    let m, mimeType, path, title
+    value = this.unparse(value)
+
+    // :Better BibTeX.001/Users/heatherwright/Documents/Scientific Papers/AVX3W9~F.PDF:PDF
+    if (m = value.match(/^([^:]*):([^:]+):([^:]*)$/)) {
+      title = m[1]
+      path = m[2]
+      mimeType = m[3] // tslint:disable-line:no-magic-numbers
+    } else {
+      path = value
+    }
+
+    mimeType = (mimeType || '').toLowerCase()
+    if (!mimeType && path.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf'
+    if (mimeType.toLowerCase() === 'pdf') mimeType = 'application/pdf'
+    if (!mimeType) mimeType = undefined
+
+    this.item.attachments.push({ title, path, mimeType })
+    return true
+  }
+
+  protected '$date-modified'() { return true }
+  protected '$date-added'() { return true }
+  protected '$added-at'() { return true }
+  protected $timestamp() { return true }
+
+  protected $number(value) {
+    value = this.unparse(value)
+    switch (this.type) {
+      case 'report':                                    this.item.reportNumber = value; break
+      case 'book': case 'bookSection': case 'chapter':  this.item.seriesNumber = value; break
+      case 'patent':                                    this.item.patentNumber = value; break
+      default:                                          this.item.issue = value
+    }
+    return true
+  }
+
+  protected $issn(value) { return this.item.ISSN = this.unparse(value) }
+
+  protected $url(value, field) {
+    let m, url
+    value = this.unparse(value)
+
+    if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
+      url = m[2]
+    } else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
+      url = value
+    } else {
+      url = null
+    }
+
+    if (!url) return false
+
+    if (this.item.url) return (this.item.url === url)
+
+    this.item.url = url
+    return true
+  }
+  protected $howpublished(value, field) { return this.$url(value, field) }
+
+  protected $type(value) {
+    this.item.sessionType = (this.item.websiteType = (this.item.manuscriptType = (this.item.genre = (this.item.postType = (this.item.sessionType = (this.item.letterType = (this.item.manuscriptType = (this.item.mapType = (this.item.presentationType = (this.item.regulationType = (this.item.reportType = (this.item.thesisType = (this.item.websiteType = this.unparse(value))))))))))))))
+    return true
+  }
+
+  protected $lista(value) {
+    if (this.type !== 'encyclopediaArticle' || !!this.item.title) return false
+
+    this.item.title = this.unparse(value)
+    return true
+  }
+
+  protected $annotation(value) {
+    this.item.notes.push(Zotero.Utilities.text2html(this.unparse(value)))
+    return true
+  }
+  protected $comment(value) { return this.$annotation(value) }
+  protected $annote(value) { return this.$annotation(value) }
+  protected $review(value) { return this.$annotation(value) }
+  protected $notes(value) { return this.$annotation(value) }
+
+  protected $urldate(value) { return this.item.accessDate = this.unparse(value) }
+  protected $lastchecked(value) { return this.$urldate(value) }
+
+  protected $series(value) { return this.item.series = this.unparse(value) }
+
+  // if the biblatex-csl-converter hasn't already taken care of it it is a remnant of the horribly broken JabRaf 3.8.1
+  // groups format -- shoo, we don't want you
+  protected $groups(value) { return true }
+
+  protected $note(value) {
+    this.addToExtra(this.unparse(value))
+    return true
+  }
+
+  protected $language(value, field) {
+    let language
+    if (field === 'language') {
+      language = value.map(this.unparse).join(' and ')
+    } else {
+      language = this.unparse(value)
+    }
+    if (!language) return true
+
+    switch (language.toLowerCase()) {
+      case 'en': case 'eng': case 'usenglish':
+        language = 'English'
+        break
+    }
+    this.item.language = language
+    return true
+  }
+  protected $langid(value, field) { return this.$language(value, field) }
+
+  protected $shorttitle(value) { return this.item.shortTitle = this.unparse(value) }
+
+  protected $eprint(value, field) {
+    /* Support for IDs exported by BibLaTeX */
+    let eprinttype = this.fields.eprinttype ||  this.fields.archiveprefix
+    if (!eprinttype) return false
+
+    const eprint = this.unparse(value)
+    eprinttype = this.unparse(eprinttype)
+
+    switch (eprinttype.trim().toLowerCase()) {
+      case 'arxiv': this.hackyFields.push(`arXiv: ${eprint}`); break
+      case 'jstor': this.hackyFields.push(`JSTOR: ${eprint}`); break
+      case 'pubmed': this.hackyFields.push(`PMID: ${eprint}`); break
+      case 'hdl': this.hackyFields.push(`HDL: ${eprint}`); break
+      case 'googlebooks': this.hackyFields.push(`GoogleBooksID: ${eprint}`); break
+      default:
+        return false
+    }
+    return true
+  }
+  protected $eprinttype(value) { return this.fields.eprint }
+  protected $archiveprefix(value) { return this.$eprinttype(value) }
+
+  protected $nationality(value) { return this.item.country = this.unparse(value) }
+
+  protected $chapter(value) { return this.item.section = this.unparse(value) }
 
   private unparse(text, allowtilde = false): string {
     if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
@@ -651,290 +935,6 @@ class ZoteroItem {
     this.biblatexdata[key] = this.unparse(value)
     if (key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)) this.biblatexdatajson = true
   }
-
-  public $title(value) {
-    if (this.type === 'encyclopediaArticle') {
-      this.item.publicationTitle = this.unparse(value)
-    } else {
-      this.item.title = this.unparse(value)
-    }
-    return true
-  }
-
-  public $author(value, field) {
-    for (const name of value) {
-      const creator: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType: field }
-
-      if (name.literal) {
-        creator.lastName = this.unparse(name.literal)
-        creator.fieldMode = 1
-      } else {
-        creator.firstName = this.unparse(name.given)
-        creator.lastName = this.unparse(name.family)
-        if (name.prefix) creator.lastName = `${this.unparse(name.prefix)} ${creator.lastName}`
-        if (name.suffix) creator.lastName = `${creator.lastName}, ${this.unparse(name.suffix)}`
-        // creator = Zotero.Utilities.cleanAuthor(creator, field, false)
-        if (creator.lastName && !creator.firstName) creator.fieldMode = 1
-      }
-      this.item.creators.push(creator)
-    }
-    return true
-  }
-  public $editor(value, field) { return this.$author(value, field) }
-  public $translator(value, field) { return this.$author(value, field) }
-
-  public $publisher(value) {
-    if (!this.item.publisher) this.item.publisher = ''
-    if (this.item.publisher) this.item.publisher += ' / '
-    this.item.publisher += value.map(this.unparse).join(' and ')
-    return true
-  }
-  public $institution(value) { return this.$publisher(value) }
-  public $school(value) { return this.$publisher(value) }
-
-  public $address(value) { return this.item.place = this.unparse(value) }
-  public $location(value) { return this.$address(value) }
-
-  public $edition(value) { return this.item.edition = this.unparse(value) }
-
-  public $isbn(value) { return this.item.ISBN = this.unparse(value) }
-
-  public $date(value) { return this.item.date = this.unparse(value) }
-
-  public $booktitle(value) { return this.item.publicationTitle = this.unparse(value) }
-
-  public $journaltitle(value) {
-    value = this.unparse(value)
-    if (this.fields.booktitle) {
-      this.item.journalAbbreviation = value
-    } else {
-      this.item.publicationTitle = value
-    }
-    return true
-  }
-  public $journal(value) { return this.$journaltitle(value) }
-
-  public $pages(value) {
-    // https://github.com/fiduswriter/biblatex-csl-converter/issues/51
-    const pages = []
-    for (const range of value) {
-      if (range.length === 1) {
-        const p = this.unparse(range[0])
-        if (p) pages.push(p)
-      } else {
-        const p0 = this.unparse(range[0])
-        const p1 = this.unparse(range[1])
-        if (p0.indexOf('-') >= 0 || p1.indexOf('-') >= 0) {
-          pages.push(`${p0}--${p1}`)
-        } else if (p0 || p1) {
-          pages.push(`${p0}-${p1}`)
-        }
-      }
-    }
-
-    if (!pages.length) return true
-
-    if (['book', 'thesis', 'manuscript'].includes(this.type)) {
-      this.item.numPages = pages.join(', ')
-    } else {
-      this.item.pages = pages.join(', ')
-    }
-
-    return true
-  }
-
-  public $volume(value) { return this.item.volume = this.unparse(value) }
-
-  public $doi(value) { return this.item.DOI = this.unparse(value) }
-
-  public $abstract(value) { return this.item.abstractNote = this.unparse(value, true) }
-
-  public $keywords(value) {
-    value = value.map(tag => this.unparse(tag).replace(/\n+/g, ' '))
-    if (value.length === 1 && value[0].indexOf(';') > 0) value = value[0].split(/\s*;\s*/)
-    if (!this.item.tags) this.item.tags = []
-    this.item.tags = this.item.tags.concat(value)
-    this.item.tags = this.item.tags.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
-    return true
-  }
-  public $keyword(value) { return this.$keywords(value) }
-
-  public $year(value) {
-    value = this.unparse(value)
-
-    if (this.item.date) {
-      if (this.item.date.indexOf(value) < 0) this.item.date += value
-    } else {
-      this.item.date = value
-    }
-    return true
-  }
-
-  public $month(value) {
-    value = this.unparse(value)
-
-    const month = months.indexOf(value.toLowerCase())
-    if (month >= 0) {
-      value = Zotero.Utilities.formatDate({month})
-    } else {
-      value += ' '
-    }
-
-    if (this.item.date) {
-      if (value.indexOf(this.item.date) >= 0) {
-        /* value contains year and more */
-        this.item.date = value
-      } else {
-        this.item.date = value + this.item.date
-      }
-    } else {
-      this.item.date = value
-    }
-    return true
-  }
-
-  public $file(value) {
-    let m, mimeType, path, title
-    value = this.unparse(value)
-
-    // :Better BibTeX.001/Users/heatherwright/Documents/Scientific Papers/AVX3W9~F.PDF:PDF
-    if (m = value.match(/^([^:]*):([^:]+):([^:]*)$/)) {
-      title = m[1]
-      path = m[2]
-      mimeType = m[3] // tslint:disable-line:no-magic-numbers
-    } else {
-      path = value
-    }
-
-    mimeType = (mimeType || '').toLowerCase()
-    if (!mimeType && path.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf'
-    if (mimeType.toLowerCase() === 'pdf') mimeType = 'application/pdf'
-    if (!mimeType) mimeType = undefined
-
-    this.item.attachments.push({ title, path, mimeType })
-    return true
-  }
-
-  public '$date-modified'() { return true }
-  public '$date-added'() { return true }
-  public '$added-at'() { return true }
-  public $timestamp() { return true }
-
-  public $number(value) {
-    value = this.unparse(value)
-    switch (this.type) {
-      case 'report':                                    this.item.reportNumber = value; break
-      case 'book': case 'bookSection': case 'chapter':  this.item.seriesNumber = value; break
-      case 'patent':                                    this.item.patentNumber = value; break
-      default:                                          this.item.issue = value
-    }
-    return true
-  }
-
-  public $issn(value) { return this.item.ISSN = this.unparse(value) }
-
-  public $url(value, field) {
-    let m, url
-    value = this.unparse(value)
-
-    if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
-      url = m[2]
-    } else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
-      url = value
-    } else {
-      url = null
-    }
-
-    if (!url) return false
-
-    if (this.item.url) return (this.item.url === url)
-
-    this.item.url = url
-    return true
-  }
-  public $howpublished(value, field) { return this.$url(value, field) }
-
-  public $type(value) {
-    this.item.sessionType = (this.item.websiteType = (this.item.manuscriptType = (this.item.genre = (this.item.postType = (this.item.sessionType = (this.item.letterType = (this.item.manuscriptType = (this.item.mapType = (this.item.presentationType = (this.item.regulationType = (this.item.reportType = (this.item.thesisType = (this.item.websiteType = this.unparse(value))))))))))))))
-    return true
-  }
-
-  public $lista(value) {
-    if (this.type !== 'encyclopediaArticle' || !!this.item.title) return false
-
-    this.item.title = this.unparse(value)
-    return true
-  }
-
-  public $annotation(value) {
-    this.item.notes.push(Zotero.Utilities.text2html(this.unparse(value)))
-    return true
-  }
-  public $comment(value) { return this.$annotation(value) }
-  public $annote(value) { return this.$annotation(value) }
-  public $review(value) { return this.$annotation(value) }
-  public $notes(value) { return this.$annotation(value) }
-
-  public $urldate(value) { return this.item.accessDate = this.unparse(value) }
-  public $lastchecked(value) { return this.$urldate(value) }
-
-  public $series(value) { return this.item.series = this.unparse(value) }
-
-  // if the biblatex-csl-converter hasn't already taken care of it it is a remnant of the horribly broken JabRaf 3.8.1
-  // groups format -- shoo, we don't want you
-  public $groups(value) { return true }
-
-  public $note(value) {
-    this.addToExtra(this.unparse(value))
-    return true
-  }
-
-  public $language(value, field) {
-    let language
-    if (field === 'language') {
-      language = value.map(this.unparse).join(' and ')
-    } else {
-      language = this.unparse(value)
-    }
-    if (!language) return true
-
-    switch (language.toLowerCase()) {
-      case 'en': case 'eng': case 'usenglish':
-        language = 'English'
-        break
-    }
-    this.item.language = language
-    return true
-  }
-  public $langid(value, field) { return this.$language(value, field) }
-
-  public $shorttitle(value) { return this.item.shortTitle = this.unparse(value) }
-
-  public $eprint(value, field) {
-    /* Support for IDs exported by BibLaTeX */
-    let eprinttype = this.fields.eprinttype ||  this.fields.archiveprefix
-    if (!eprinttype) return false
-
-    const eprint = this.unparse(value)
-    eprinttype = this.unparse(eprinttype)
-
-    switch (eprinttype.trim().toLowerCase()) {
-      case 'arxiv': this.hackyFields.push(`arXiv: ${eprint}`); break
-      case 'jstor': this.hackyFields.push(`JSTOR: ${eprint}`); break
-      case 'pubmed': this.hackyFields.push(`PMID: ${eprint}`); break
-      case 'hdl': this.hackyFields.push(`HDL: ${eprint}`); break
-      case 'googlebooks': this.hackyFields.push(`GoogleBooksID: ${eprint}`); break
-      default:
-        return false
-    }
-    return true
-  }
-  public $eprinttype(value) { return this.fields.eprint }
-  public $archiveprefix(value) { return this.$eprinttype(value) }
-
-  public $nationality(value) { return this.item.country = this.unparse(value) }
-
-  public $chapter(value) { return this.item.section = this.unparse(value) }
 }
 
 // ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true

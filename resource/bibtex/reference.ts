@@ -153,37 +153,6 @@ const Language = new class { // tslint:disable-line:variable-name
     this.prefix = {}
   }
 
-  private get_bigrams(str) {
-    const s = str.toLowerCase()
-    const bigrams = [...Array(s.length).keys()].map(i => s.slice(i, i + 2))
-    bigrams.sort()
-    return bigrams
-  }
-
-  private string_similarity(str1, str2) {
-    const pairs1 = this.get_bigrams(str1)
-    const pairs2 = this.get_bigrams(str2)
-    const union = pairs1.length + pairs2.length
-    let hit_count = 0
-
-    while ((pairs1.length > 0) && (pairs2.length > 0)) {
-      if (pairs1[0] === pairs2[0]) {
-        hit_count++
-        pairs1.shift()
-        pairs2.shift()
-        continue
-      }
-
-      if (pairs1[0] < pairs2[0]) {
-        pairs1.shift()
-      } else {
-        pairs2.shift()
-      }
-    }
-
-    return (hit_count * 2) / union
-  }
-
   public lookup(langcode) {
     if (!this.cache[langcode]) {
       this.cache[langcode] = []
@@ -219,6 +188,37 @@ const Language = new class { // tslint:disable-line:variable-name
 
     return this.prefix[langcode]
   }
+
+  private get_bigrams(str) {
+    const s = str.toLowerCase()
+    const bigrams = [...Array(s.length).keys()].map(i => s.slice(i, i + 2))
+    bigrams.sort()
+    return bigrams
+  }
+
+  private string_similarity(str1, str2) {
+    const pairs1 = this.get_bigrams(str1)
+    const pairs2 = this.get_bigrams(str2)
+    const union = pairs1.length + pairs2.length
+    let hit_count = 0
+
+    while ((pairs1.length > 0) && (pairs2.length > 0)) {
+      if (pairs1[0] === pairs2[0]) {
+        hit_count++
+        pairs1.shift()
+        pairs2.shift()
+        continue
+      }
+
+      if (pairs1[0] < pairs2[0]) {
+        pairs1.shift()
+      } else {
+        pairs2.shift()
+      }
+    }
+
+    return (hit_count * 2) / union
+  }
 }
 
 /*
@@ -249,6 +249,20 @@ const Language = new class { // tslint:disable-line:variable-name
  *   * enc: the encoding to use for the field
  */
 export = class Reference {
+  public raw: boolean
+  public has: { [key: string]: any }
+  public item: any
+  public referencetype: string
+  public useprefix: boolean
+  public language: string
+  public english: boolean
+
+  // patched in by the Bib(La)TeX translators
+  protected requiredFields: { [key: string]: string[] }
+  protected fieldEncoding: { [key: string]: string }
+  protected caseConversion: { [key: string]: boolean }
+  protected typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
+
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
   private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
@@ -267,37 +281,13 @@ export = class Reference {
     }
   }
 
-  /*
-   * Encode creators to author-style field
-   *
-   * @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
-   * @return {String} field.value encoded as author-style value
-   */
   private _enc_creators_initials_marker = '\u0097'
   private _enc_creators_relax_marker = '\u200C'
 
   private isBibVarRE = /^[a-z][a-z0-9_]*$/i
-
-  // private normalize = (typeof (''.normalize) === 'function')
-
-  // actual fields
   private fields: any[]
   private data: { DeclarePrefChars: string }
   private juniorcomma: boolean
-
-  // patched in by the Bib(La)TeX translators
-  public requiredFields: { [key: string]: string[] }
-  public fieldEncoding: { [key: string]: string }
-  public caseConversion: { [key: string]: boolean }
-  public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
-
-  public raw: boolean
-  public has: { [key: string]: any }
-  public item: any
-  public referencetype: string
-  public useprefix: boolean
-  public language: string
-  public english: boolean
 
   constructor(item) {
     this.item = item
@@ -375,375 +365,6 @@ export = class Reference {
       if (this.item.arXiv.primaryClass) this.add({ primaryClass: this.item.arXiv.primaryClass })
       delete this.item.extraFields.kv.arxiv
     }
-  }
-
-  /*
-   * Return a copy of the given `field` with a new value
-   *
-   * @param {field} field to be cloned
-   * @param {value} value to be assigned
-   * @return {Object} copy of field settings with new value
-   */
-  private clone(f, value) {
-    const clone = JSON.parse(JSON.stringify(f))
-    delete clone.bibtex
-    clone.value = value
-    return clone
-  }
-
-  /*
-   * 'Encode' to raw LaTeX value
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  public enc_raw(f) {
-    return f.value
-  }
-
-  /*
-   * Encode to date
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  private isodate(date) {
-    if (!date || !date.year || !['date', 'season'].includes(date.type)) return null
-
-    let iso = `${date.year}`
-    if (date.month) {
-      iso += `-${(`0${date.month}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-      if (date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-    }
-    return iso
-  }
-
-  public enc_date(f) {
-    let parsed
-    if (!f.value) return null
-
-    const { value } = f
-    if (typeof f.value === 'string') parsed = Zotero.BetterBibTeX.parseDate(value, this.item.language)
-
-    if (parsed.type === 'verbatim') {
-      if (f.value === 'n.d.') return '\\bibstring{nodate}'
-      return this.enc_latex(this.clone(f, f.value))
-    }
-
-    let date = this.isodate(parsed.from || parsed)
-    if (!date) return null
-
-    if (parsed.to) {
-      const enddate = this.isodate(parsed.to)
-      if (enddate) date += `/${enddate}`
-    }
-
-    return this.enc_latex({value: date})
-  }
-
-  /*
-   * Encode to LaTeX url
-   *
-   * @param {field} field to encode
-   * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
-   */
-  public enc_url(f) {
-    const value = this.enc_verbatim(f)
-    if (Translator.BetterBibTeX) {
-      return `\\url{${this.enc_verbatim(f)}}`
-    } else {
-      return value
-    }
-  }
-
-  /*
-   * Encode to verbatim LaTeX
-   *
-   * @param {field} field to encode
-   * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
-   */
-  public enc_verbatim(f) {
-    return this.toVerbatim(f.value)
-  }
-  private _enc_creators_pad_particle(particle, relax = false) {
-    // space at end is always OK
-    if (particle[particle.length - 1] === ' ') return particle
-
-    if (Translator.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.data.DeclarePrefChars += particle[particle.length - 1]
-      // if BBLT, always add a space if it isn't there
-      return particle + ' '
-    }
-
-    // otherwise, we're in BBT.
-
-    // If the particle ends in a period, add a space
-    if (particle[particle.length - 1] === '.') return particle + ' '
-
-    // if it ends in any other punctuation, it's probably something like d'Medici -- no space
-    if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) {
-      if (relax) return `${particle}${this._enc_creators_relax_marker} `
-      return particle
-    }
-
-    // otherwise, add a space
-    return particle + ' '
-  }
-
-  private _enc_creators_biblatex(name) {
-    let family, latex
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
-      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
-    } else {
-      ({ family } = name)
-    }
-
-    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // zero-width space
-
-    if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
-      if (initials >= 0) {
-        initials = name.given.substring(0, initials)
-        if (initials.length > 1) initials = new String(initials) // tslint:disable-line:no-construct
-        name.given = name.given.replace(this._enc_creators_initials_marker, '')
-      } else {
-        initials = ''
-      }
-
-      latex = []
-      if (family) latex.push(`family=${this.enc_latex({value: family})}`)
-      if (name.given) latex.push(`given=${this.enc_latex({value: name.given})}`)
-      if (initials) latex.push(`given-i=${this.enc_latex({value: initials})}`)
-      if (name.suffix) latex.push(`suffix=${this.enc_latex({value: name.suffix})}`)
-      if (name['dropping-particle'] || name['non-dropping-particle']) {
-        latex.push(`prefix=${this.enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']})}`)
-        latex.push(`useprefix=${!!name['non-dropping-particle']}`)
-      }
-      if (name['comma-suffix']) latex.push('juniorcomma=true')
-      return latex.join(', ')
-    }
-
-    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // tslint:disable-line:no-construct
-
-    if (family) family = this.enc_latex({value: family})
-
-    if (initials >= 0) name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
-
-    latex = ''
-    if (name['dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'])})
-    if (name['non-dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['non-dropping-particle'])})
-    if (family) latex += family
-    if (name.suffix) latex += `, ${this.enc_latex({value: name.suffix})}`
-    if (name.given) latex += `, ${this.enc_latex({value: name.given})}`
-
-    return latex
-  }
-
-  private _enc_creators_bibtex(name) {
-    let family
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
-      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
-    } else {
-      ({ family } = name)
-    }
-
-    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) { // zero-width space
-      name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
-    }
-
-    /*
-      TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
-
-      My advice is never using the alpha style; it's a relic of the past, when numbering citations was very difficult
-      because one didn't know the full citation list when writing a paper. In order to have the bibliography in
-      alphabetical order, such tricks were devised. The alternative was listing the citation in order of appearance.
-      Your document gains nothing with something like XYZ88 as citation key.
-
-      The “van” problem should be left to the bibliographic style. Some styles consider “van” as part of the name, some
-      don't. In any case, you'll have a kludge, mostly unportable. However, if you want van Gogh to be realized as vGo
-      in the label, use {\relax van} Gogh or something like this.
-    */
-
-    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // tslint:disable-line:no-construct
-    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
-    family = this.enc_latex({value: family})
-    if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}) + family
-
-    if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
-      family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()})}}}${family}`
-      Exporter.preamble.noopsort = true
-    }
-
-    if (name.given) name.given = this.enc_latex({value: name.given})
-    if (name.suffix) name.suffix = this.enc_latex({value: name.suffix})
-
-    let latex = family
-    if (name.suffix) latex += `, ${name.suffix}`
-    if (name.given) latex += `, ${name.given}`
-
-    return latex
-  }
-
-  public enc_creators(f, raw) {
-    if (f.value.length === 0) return null
-
-    const encoded = []
-    for (const creator of f.value) {
-      let name
-      if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
-        name = raw ? `{${creator.name || creator.lastName}}` : this.enc_latex({value: new String(creator.name || creator.lastName)}) // tslint:disable-line:no-construct
-
-      } else if (raw) {
-        name = [creator.lastName || '', creator.firstName || ''].join(', ')
-
-      } else if (creator.lastName || creator.firstName) {
-        name = {family: creator.lastName || '', given: creator.firstName || ''}
-
-        if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
-
-        if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
-          if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
-          if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
-        }
-
-        if (Translator.BetterBibTeX) {
-          name = this._enc_creators_bibtex(name)
-        } else {
-          name = this._enc_creators_biblatex(name)
-        }
-
-      } else {
-        continue
-      }
-
-      encoded.push(name.trim())
-    }
-
-    return encoded.join(' and ')
-  }
-
-  /*
-   * Encode text to LaTeX literal list (double-braced)
-   *
-   * This encoding supports simple HTML markup.
-   *
-   * @param {field} field to encode.
-   * @return {String} field.value encoded as author-style value
-   */
-  public enc_literal(f) {
-    return this.enc_latex({value: new String(f.value)}) // tslint:disable-line:no-construct
-  }
-
-  /*
-   * Encode text to LaTeX
-   *
-   * This encoding supports simple HTML markup.
-   *
-   * @param {field} field to encode.
-   * @return {String} field.value encoded as author-style value
-   */
-  public enc_latex(f, raw = false) {
-    debug('enc_latex:', {f, raw, english: this.english})
-    if (typeof f.value === 'number') return f.value
-    if (!f.value) return null
-
-    if (Array.isArray(f.value)) {
-      if (f.value.length === 0) return null
-      return f.value.map(function(word) { return this.enc_latex(this.clone(f, word), raw) }).join(f.sep || '')
-    }
-
-    if (f.raw || raw) return f.value
-
-    const caseConversion = this.caseConversion[f.name] || f.caseConversion
-    let value: String | string = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
-    if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
-
-    if (f.value instanceof String) value = new String(`{${value}}`) // tslint:disable-line:no-construct
-    return value
-  }
-
-  public enc_tags(f) {
-    let tags = f.value.filter(tag => tag !== Translator.preferences.rawLaTag)
-    if (tags.length === 0) return null
-
-    // sort tags for stable tests
-    if (Translator.preferences.testing) tags.sort()
-
-    debug('enc_tags:', tags)
-    tags = tags.map(tag => {
-      if (Translator.BetterBibTeX) {
-        tag = tag.replace(/([#\\%&])/g, '\\$1')
-      } else {
-        tag = tag.replace(/([#%\\])/g, '\\$1')
-      }
-
-      // the , -> ; is unfortunate, but I see no other way
-      tag = tag.replace(/,/g, ';')
-
-      // verbatim fields require balanced braces -- please just don't use braces in your tags
-      let balanced = 0
-      for (const ch of tag) {
-        switch (ch) {
-          case '{': balanced += 1; break
-          case '}': balanced -= 1; break
-        }
-        if (balanced < 0) break
-      }
-      if (balanced !== 0) tag = tag.replace(/{/g, '(').replace(/}/g, ')')
-
-      return tag
-    })
-
-    return tags.join(',')
-  }
-
-  public enc_attachments(f) {
-    if (!f.value || (f.value.length === 0)) return null
-    const attachments = []
-    const errors = []
-
-    for (const attachment of f.value) {
-      const att = {
-        title: attachment.title,
-        mimetype: attachment.contentType || '',
-        path: attachment.defaultPath || attachment.localPath,
-      }
-
-      if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
-      // att.path = att.path.replace(/^storage:/, '')
-      att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
-
-      if (Translator.options.exportFileData && attachment.saveFile && attachment.defaultPath) attachment.saveFile(att.path, true)
-
-      if (!att.title) att.title = att.path.replace(/.*[\\\/]/, '') || 'attachment'
-
-      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // tslint:disable-line:no-magic-numbers
-
-      if (Translator.preferences.testing) {
-        Exporter.attachmentCounter += 1
-        att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.options.exportPath && (att.path.indexOf(Translator.options.exportPath) === 0)) {
-        att.path = att.path.slice(Translator.options.exportPath.length)
-      }
-
-      attachments.push(att)
-    }
-
-    if (errors.length !== 0) f.errors = errors
-    if (attachments.length === 0) return null
-
-    // sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
-    attachments.sort((a, b) => {
-      if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
-      if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return a.path.localeCompare(b.path)
-    })
-
-    if (Translator.preferences.attachmentsNoMetadata) return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
-    return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
-  }
-
-  public isBibVar(value) {
-    return Translator.preferences.preserveBibTeXVariables && value && (typeof value === 'string') && this.isBibVarRE.test(value)
   }
 
   /*
@@ -826,9 +447,13 @@ export = class Reference {
     return removed
   }
 
-  private postscript(reference, item) {} // tslint:disable-line:no-empty
+  public isBibVar(value) {
+    return Translator.preferences.preserveBibTeXVariables && value && (typeof value === 'string') && this.isBibVarRE.test(value)
+  }
 
-  public complete() {
+  public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
+
+  protected complete() {
     if (Translator.preferences.DOIandURL !== 'both') {
       if (this.has.doi && this.has.url) {
         debug('removing', Translator.preferences.DOIandURL === 'doi' ? 'url' : 'doi')
@@ -1013,6 +638,379 @@ export = class Reference {
     debug('item.complete:', {data: this.data, preamble: Exporter.preamble})
   }
 
+  /*
+   * 'Encode' to raw LaTeX value
+   *
+   * @param {field} field to encode
+   * @return {String} unmodified `field.value`
+   */
+  protected enc_raw(f) {
+    return f.value
+  }
+
+  /*
+   * Encode to date
+   *
+   * @param {field} field to encode
+   * @return {String} unmodified `field.value`
+   */
+  protected enc_date(f) {
+    let parsed
+    if (!f.value) return null
+
+    const { value } = f
+    if (typeof f.value === 'string') parsed = Zotero.BetterBibTeX.parseDate(value, this.item.language)
+
+    if (parsed.type === 'verbatim') {
+      if (f.value === 'n.d.') return '\\bibstring{nodate}'
+      return this.enc_latex(this.clone(f, f.value))
+    }
+
+    let date = this.isodate(parsed.from || parsed)
+    if (!date) return null
+
+    if (parsed.to) {
+      const enddate = this.isodate(parsed.to)
+      if (enddate) date += `/${enddate}`
+    }
+
+    return this.enc_latex({value: date})
+  }
+
+  /*
+   * Encode to LaTeX url
+   *
+   * @param {field} field to encode
+   * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping). If in Better BibTeX, wraps return value in `\url{string}`
+   */
+  protected enc_url(f) {
+    const value = this.enc_verbatim(f)
+    if (Translator.BetterBibTeX) {
+      return `\\url{${this.enc_verbatim(f)}}`
+    } else {
+      return value
+    }
+  }
+
+  /*
+   * Encode to verbatim LaTeX
+   *
+   * @param {field} field to encode
+   * @return {String} field.value encoded as verbatim LaTeX string (minimal escaping).
+   */
+  protected enc_verbatim(f) {
+    return this.toVerbatim(f.value)
+  }
+  /*
+   * Encode creators to author-style field
+   *
+   * @param {field} field to encode. The 'value' must be an array of Zotero-serialized `creator` objects.
+   * @return {String} field.value encoded as author-style value
+   */
+  protected enc_creators(f, raw) {
+    if (f.value.length === 0) return null
+
+    const encoded = []
+    for (const creator of f.value) {
+      let name
+      if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
+        name = raw ? `{${creator.name || creator.lastName}}` : this.enc_latex({value: new String(creator.name || creator.lastName)}) // tslint:disable-line:no-construct
+
+      } else if (raw) {
+        name = [creator.lastName || '', creator.firstName || ''].join(', ')
+
+      } else if (creator.lastName || creator.firstName) {
+        name = {family: creator.lastName || '', given: creator.firstName || ''}
+
+        if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
+
+        if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
+          if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
+          if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
+        }
+
+        if (Translator.BetterBibTeX) {
+          name = this._enc_creators_bibtex(name)
+        } else {
+          name = this._enc_creators_biblatex(name)
+        }
+
+      } else {
+        continue
+      }
+
+      encoded.push(name.trim())
+    }
+
+    return encoded.join(' and ')
+  }
+
+  /*
+   * Encode text to LaTeX literal list (double-braced)
+   *
+   * This encoding supports simple HTML markup.
+   *
+   * @param {field} field to encode.
+   * @return {String} field.value encoded as author-style value
+   */
+  protected enc_literal(f) {
+    return this.enc_latex({value: new String(f.value)}) // tslint:disable-line:no-construct
+  }
+
+  /*
+   * Encode text to LaTeX
+   *
+   * This encoding supports simple HTML markup.
+   *
+   * @param {field} field to encode.
+   * @return {String} field.value encoded as author-style value
+   */
+  protected enc_latex(f, raw = false) {
+    debug('enc_latex:', {f, raw, english: this.english})
+    if (typeof f.value === 'number') return f.value
+    if (!f.value) return null
+
+    if (Array.isArray(f.value)) {
+      if (f.value.length === 0) return null
+      return f.value.map(function(word) { return this.enc_latex(this.clone(f, word), raw) }).join(f.sep || '')
+    }
+
+    if (f.raw || raw) return f.value
+
+    const caseConversion = this.caseConversion[f.name] || f.caseConversion
+    let value: String | string = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
+
+    if (f.value instanceof String) value = new String(`{${value}}`) // tslint:disable-line:no-construct
+    return value
+  }
+
+  protected enc_tags(f) {
+    let tags = f.value.filter(tag => tag !== Translator.preferences.rawLaTag)
+    if (tags.length === 0) return null
+
+    // sort tags for stable tests
+    if (Translator.preferences.testing) tags.sort()
+
+    debug('enc_tags:', tags)
+    tags = tags.map(tag => {
+      if (Translator.BetterBibTeX) {
+        tag = tag.replace(/([#\\%&])/g, '\\$1')
+      } else {
+        tag = tag.replace(/([#%\\])/g, '\\$1')
+      }
+
+      // the , -> ; is unfortunate, but I see no other way
+      tag = tag.replace(/,/g, ';')
+
+      // verbatim fields require balanced braces -- please just don't use braces in your tags
+      let balanced = 0
+      for (const ch of tag) {
+        switch (ch) {
+          case '{': balanced += 1; break
+          case '}': balanced -= 1; break
+        }
+        if (balanced < 0) break
+      }
+      if (balanced !== 0) tag = tag.replace(/{/g, '(').replace(/}/g, ')')
+
+      return tag
+    })
+
+    return tags.join(',')
+  }
+
+  protected enc_attachments(f) {
+    if (!f.value || (f.value.length === 0)) return null
+    const attachments = []
+    const errors = []
+
+    for (const attachment of f.value) {
+      const att = {
+        title: attachment.title,
+        mimetype: attachment.contentType || '',
+        path: attachment.defaultPath || attachment.localPath,
+      }
+
+      if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
+      // att.path = att.path.replace(/^storage:/, '')
+      att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
+
+      if (Translator.options.exportFileData && attachment.saveFile && attachment.defaultPath) attachment.saveFile(att.path, true)
+
+      if (!att.title) att.title = att.path.replace(/.*[\\\/]/, '') || 'attachment'
+
+      if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // tslint:disable-line:no-magic-numbers
+
+      if (Translator.preferences.testing) {
+        Exporter.attachmentCounter += 1
+        att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
+      } else if (Translator.options.exportPath && (att.path.indexOf(Translator.options.exportPath) === 0)) {
+        att.path = att.path.slice(Translator.options.exportPath.length)
+      }
+
+      attachments.push(att)
+    }
+
+    if (errors.length !== 0) f.errors = errors
+    if (attachments.length === 0) return null
+
+    // sort attachments for stable tests, and to make non-snapshots the default for JabRef to open (#355)
+    attachments.sort((a, b) => {
+      if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
+      if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
+      return a.path.localeCompare(b.path)
+    })
+
+    if (Translator.preferences.attachmentsNoMetadata) return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
+    return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
+  }
+
+  /*
+   * Return a copy of the given `field` with a new value
+   *
+   * @param {field} field to be cloned
+   * @param {value} value to be assigned
+   * @return {Object} copy of field settings with new value
+   */
+  private clone(f, value) {
+    const clone = JSON.parse(JSON.stringify(f))
+    delete clone.bibtex
+    clone.value = value
+    return clone
+  }
+
+  private _enc_creators_pad_particle(particle, relax = false) {
+    // space at end is always OK
+    if (particle[particle.length - 1] === ' ') return particle
+
+    if (Translator.BetterBibLaTeX) {
+      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.data.DeclarePrefChars += particle[particle.length - 1]
+      // if BBLT, always add a space if it isn't there
+      return particle + ' '
+    }
+
+    // otherwise, we're in BBT.
+
+    // If the particle ends in a period, add a space
+    if (particle[particle.length - 1] === '.') return particle + ' '
+
+    // if it ends in any other punctuation, it's probably something like d'Medici -- no space
+    if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) {
+      if (relax) return `${particle}${this._enc_creators_relax_marker} `
+      return particle
+    }
+
+    // otherwise, add a space
+    return particle + ' '
+  }
+
+  private _enc_creators_biblatex(name) {
+    let family, latex
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
+      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
+    } else {
+      ({ family } = name)
+    }
+
+    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // zero-width space
+
+    if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
+      if (initials >= 0) {
+        initials = name.given.substring(0, initials)
+        if (initials.length > 1) initials = new String(initials) // tslint:disable-line:no-construct
+        name.given = name.given.replace(this._enc_creators_initials_marker, '')
+      } else {
+        initials = ''
+      }
+
+      latex = []
+      if (family) latex.push(`family=${this.enc_latex({value: family})}`)
+      if (name.given) latex.push(`given=${this.enc_latex({value: name.given})}`)
+      if (initials) latex.push(`given-i=${this.enc_latex({value: initials})}`)
+      if (name.suffix) latex.push(`suffix=${this.enc_latex({value: name.suffix})}`)
+      if (name['dropping-particle'] || name['non-dropping-particle']) {
+        latex.push(`prefix=${this.enc_latex({value: name['dropping-particle'] || name['non-dropping-particle']})}`)
+        latex.push(`useprefix=${!!name['non-dropping-particle']}`)
+      }
+      if (name['comma-suffix']) latex.push('juniorcomma=true')
+      return latex.join(', ')
+    }
+
+    if (family && Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase)) family = new String(family) // tslint:disable-line:no-construct
+
+    if (family) family = this.enc_latex({value: family})
+
+    if (initials >= 0) name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+
+    latex = ''
+    if (name['dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'])})
+    if (name['non-dropping-particle']) latex += this.enc_latex({value: this._enc_creators_pad_particle(name['non-dropping-particle'])})
+    if (family) latex += family
+    if (name.suffix) latex += `, ${this.enc_latex({value: name.suffix})}`
+    if (name.given) latex += `, ${this.enc_latex({value: name.given})}`
+
+    return latex
+  }
+
+  private _enc_creators_bibtex(name) {
+    let family
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
+      family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
+    } else {
+      ({ family } = name)
+    }
+
+    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) { // zero-width space
+      name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
+    }
+
+    /*
+      TODO: http://chat.stackexchange.com/rooms/34705/discussion-between-retorquere-and-egreg
+
+      My advice is never using the alpha style; it's a relic of the past, when numbering citations was very difficult
+      because one didn't know the full citation list when writing a paper. In order to have the bibliography in
+      alphabetical order, such tricks were devised. The alternative was listing the citation in order of appearance.
+      Your document gains nothing with something like XYZ88 as citation key.
+
+      The “van” problem should be left to the bibliographic style. Some styles consider “van” as part of the name, some
+      don't. In any case, you'll have a kludge, mostly unportable. However, if you want van Gogh to be realized as vGo
+      in the label, use {\relax van} Gogh or something like this.
+    */
+
+    if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // tslint:disable-line:no-construct
+    if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
+    family = this.enc_latex({value: family})
+    if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}) + family
+
+    if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
+      family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()})}}}${family}`
+      Exporter.preamble.noopsort = true
+    }
+
+    if (name.given) name.given = this.enc_latex({value: name.given})
+    if (name.suffix) name.suffix = this.enc_latex({value: name.suffix})
+
+    let latex = family
+    if (name.suffix) latex += `, ${name.suffix}`
+    if (name.given) latex += `, ${name.given}`
+
+    return latex
+  }
+
+  private isodate(date) {
+    if (!date || !date.year || !['date', 'season'].includes(date.type)) return null
+
+    let iso = `${date.year}`
+    if (date.month) {
+      iso += `-${(`0${date.month}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
+      if (date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
+    }
+    return iso
+  }
+
+  private postscript(reference, item) {} // tslint:disable-line:no-empty
+
   private toVerbatim(text) {
     let value
     if (Translator.BetterBibTeX) {
@@ -1023,8 +1021,6 @@ export = class Reference {
     if (!Translator.unicode) value = value.replace(/[^\x21-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
     return value
   }
-
-  public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
   private qualityReport() {
     if (!Translator.preferences.qualityReport) return ''

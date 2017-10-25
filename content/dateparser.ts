@@ -1,6 +1,8 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 import debug = require('./debug.ts')
+import Citeproc = require('./citeproc.ts')
+
 // import escapeStringRegexp = require('escape-string-regexp')
 
 const months = require('../gen/dateparser-data.json')
@@ -64,6 +66,8 @@ export = function parse(raw) {
   const december = 12
 
   debug('dateparser: parsing', raw)
+
+  debug('dateparser.csl:', Citeproc.DateParser.parseDateToObject(raw))
 
   if (raw.trim() === '') return {type: 'open'}
 
