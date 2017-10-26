@@ -1030,13 +1030,13 @@ export = class Reference {
     const report = []
     for (const required of fields.required) {
       if (!required.find(field => this.has[field])) {
-        report.push(`% Missing required field ${required[0]}`)
+        report.push(`% Missing required field '${required[0]}'`)
       }
     }
     if (fields.allowed) {
       for (const field of Object.keys(this.has)) {
         if (!fields.allowed.includes(field)) {
-          report.push(`% Unexpected field ${field}`)
+          report.push(`% Unexpected field '${field}'`)
         }
       }
     }

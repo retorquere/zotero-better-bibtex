@@ -39,13 +39,11 @@ module.exports = function (source) {
     if (allowed.length) {
       allowed = allowed.concat(fields.required.join('/').split('/'))
     } else {
-      allowed = null
+      allowed = undefined
     }
 
-		config[type] = {
-	    required: fields.required.map(field => field.split('/')),
-      allowed: allowed
-		}
+    config[type] = { required: fields.required.map(field => field.split('/')) }
+    if (allowed) { config[type].allowed = allowed }
   }
 
   config = jsesc(normalize(config), {
