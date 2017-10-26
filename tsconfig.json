@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "importHelpers": true,
-    "target": "es2017",
+    "target": "es6",
     "disableSizeLimit": true,
     "module": "commonjs",
     "noImplicitAny": false,
