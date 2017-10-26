@@ -1,13 +1,13 @@
 {
   "article": {
-    "required": [ "author", "title", "journaltitle", "year/date" ],
+    "required": [ "author", "title", "journaltitle/journal", "year/date" ],
     "optional": [
       "translator", "annotator", "commentator", "subtitle",
       "titleaddon", "editor", "editora", "editorb", "editorc",
       "journalsubtitle", "issuetitle", "issuesubtitle", "language",
       "origlanguage", "series", "volume", "number", "eid", "issue",
       "month", "pages", "version", "note", "issn", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -19,8 +19,8 @@
       "afterword", "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "language", "origlanguage", "volume", "part",
       "edition", "volumes", "series", "number", "note", "publisher",
-      "location", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "location/address", "isbn", "chapter", "pages", "pagetotal", "addendum",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -31,8 +31,8 @@
       "annotator", "commentator", "introduction", "foreword",
       "afterword", "subtitle", "titleaddon", "language", "origlanguage",
       "edition", "volumes", "series", "number", "note", "publisher",
-      "location", "isbn", "pagetotal", "addendum", "pubstate",
-      "doi", "eprint", "eprintclass", "eprinttype", "url", "urldate"
+      "location/address", "isbn", "pagetotal", "addendum", "pubstate",
+      "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "inbook": {
@@ -43,9 +43,9 @@
       "foreword", "afterword", "subtitle", "titleaddon", "maintitle",
       "mainsubtitle", "maintitleaddon", "booksubtitle", "booktitleaddon",
       "language", "origlanguage", "volume", "part", "edition",
-      "volumes", "series", "number", "note", "publisher", "location",
+      "volumes", "series", "number", "note", "publisher", "location/address",
       "isbn", "chapter", "pages", "addendum", "pubstate", "doi",
-      "eprint", "eprintclass", "eprinttype", "url", "urldate"
+      "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "bookinbook": {
@@ -56,9 +56,9 @@
       "foreword", "afterword", "subtitle", "titleaddon", "maintitle",
       "mainsubtitle", "maintitleaddon", "booksubtitle", "booktitleaddon",
       "language", "origlanguage", "volume", "part", "edition",
-      "volumes", "series", "number", "note", "publisher", "location",
+      "volumes", "series", "number", "note", "publisher", "location/address",
       "isbn", "chapter", "pages", "addendum", "pubstate", "doi",
-      "eprint", "eprintclass", "eprinttype", "url", "urldate"
+      "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "suppbook": {
@@ -69,17 +69,17 @@
       "foreword", "afterword", "subtitle", "titleaddon", "maintitle",
       "mainsubtitle", "maintitleaddon", "booksubtitle", "booktitleaddon",
       "language", "origlanguage", "volume", "part", "edition",
-      "volumes", "series", "number", "note", "publisher", "location",
+      "volumes", "series", "number", "note", "publisher", "location/address",
       "isbn", "chapter", "pages", "addendum", "pubstate", "doi",
-      "eprint", "eprintclass", "eprinttype", "url", "urldate"
+      "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "booklet": {
     "required": [ "author/editor", "title", "year/date" ],
     "optional": [
       "subtitle", "titleaddon", "language", "howpublished", "type",
-      "note", "location", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "note", "location/address", "chapter", "pages", "pagetotal", "addendum",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -91,8 +91,8 @@
       "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "language", "origlanguage", "volume", "part",
       "edition", "volumes", "series", "number", "note", "publisher",
-      "location", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "location/address", "isbn", "chapter", "pages", "pagetotal", "addendum",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -102,9 +102,9 @@
       "editora", "editorb", "editorc", "translator", "annotator",
       "commentator", "introduction", "foreword", "afterword",
       "subtitle", "titleaddon", "language", "origlanguage", "edition",
-      "volumes", "series", "number", "note", "publisher", "location",
+      "volumes", "series", "number", "note", "publisher", "location/address",
       "isbn", "pagetotal", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "incollection": {
@@ -115,9 +115,9 @@
       "afterword", "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "booksubtitle", "booktitleaddon", "language",
       "origlanguage", "volume", "part", "edition", "volumes",
-      "series", "number", "note", "publisher", "location", "isbn",
+      "series", "number", "note", "publisher", "location/address", "isbn",
       "chapter", "pages", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "suppcollection": {
@@ -128,9 +128,9 @@
       "afterword", "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "booksubtitle", "booktitleaddon", "language",
       "origlanguage", "volume", "part", "edition", "volumes",
-      "series", "number", "note", "publisher", "location", "isbn",
+      "series", "number", "note", "publisher", "location/address", "isbn",
       "chapter", "pages", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "manual": {
@@ -138,18 +138,18 @@
     "optional": [
       "subtitle", "titleaddon", "language", "edition", "type",
       "series", "number", "version", "note", "organization",
-      "publisher", "location", "isbn", "chapter", "pages", "pagetotal",
-      "addendum", "pubstate", "doi", "eprint", "eprintclass",
-      "eprinttype", "url", "urldate"
+      "publisher", "location/address", "isbn", "chapter", "pages", "pagetotal",
+      "addendum", "pubstate", "doi", "eprint", "eprintclass/primaryclass",
+      "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "misc": {
     "required": [ "author/editor", "title", "year/date" ],
     "optional": [
       "subtitle", "titleaddon", "language", "howpublished", "type",
-      "version", "note", "organization", "location", "date", "month",
-      "year", "addendum", "pubstate", "doi", "eprint", "eprintclass",
-      "eprinttype", "url", "urldate"
+      "version", "note", "organization", "location/address", "date", "month",
+      "year", "addendum", "pubstate", "doi", "eprint", "eprintclass/primaryclass",
+      "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "online": {
@@ -164,8 +164,8 @@
     "required": [ "author", "title", "number", "year/date" ],
     "optional": [
       "holder", "subtitle", "titleaddon", "type", "version",
-      "location", "note", "date", "month", "year", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "location/address", "note", "date", "month", "year", "addendum",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -175,19 +175,19 @@
       "editora", "editorb", "editorc", "subtitle", "issuetitle",
       "issuesubtitle", "language", "series", "volume", "number",
       "issue", "date", "month", "year", "note", "issn", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
   "suppperiodical": {
-    "required": [ "author", "title", "journaltitle", "year/date" ],
+    "required": [ "author", "title", "journaltitle/journal", "year/date" ],
     "optional": [
       "translator", "annotator", "commentator", "subtitle",
       "titleaddon", "editor", "editora", "editorb", "editorc",
       "journalsubtitle", "issuetitle", "issuesubtitle", "language",
       "origlanguage", "series", "volume", "number", "eid", "issue",
       "month", "pages", "version", "note", "issn", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -197,9 +197,9 @@
       "editor", "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "eventtitle", "eventtitleaddon", "eventdate",
       "venue", "language", "volume", "part", "volumes", "series",
-      "number", "note", "organization", "publisher", "location",
+      "number", "note", "organization", "publisher", "location/address",
       "month", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -208,9 +208,9 @@
     "optional": [
       "editor", "subtitle", "titleaddon", "eventtitle", "eventtitleaddon",
       "eventdate", "venue", "language", "volumes", "series", "number",
-      "note", "organization", "publisher", "location", "month",
+      "note", "organization", "publisher", "location/address", "month",
       "isbn", "pagetotal", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "inproceedings": {
@@ -220,9 +220,9 @@
       "maintitleaddon", "booksubtitle", "booktitleaddon", "eventtitle",
       "eventtitleaddon", "eventdate", "venue", "language", "volume",
       "part", "volumes", "series", "number", "note", "organization",
-      "publisher", "location", "month", "isbn", "chapter", "pages",
-      "addendum", "pubstate", "doi", "eprint", "eprintclass",
-      "eprinttype", "url", "urldate"
+      "publisher", "location/address", "month", "isbn", "chapter", "pages",
+      "addendum", "pubstate", "doi", "eprint", "eprintclass/primaryclass",
+      "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "reference": {
@@ -233,8 +233,8 @@
       "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "language", "origlanguage", "volume", "part",
       "edition", "volumes", "series", "number", "note", "publisher",
-      "location", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "location/address", "isbn", "chapter", "pages", "pagetotal", "addendum",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -244,9 +244,9 @@
       "editora", "editorb", "editorc", "translator", "annotator",
       "commentator", "introduction", "foreword", "afterword",
       "subtitle", "titleaddon", "language", "origlanguage", "edition",
-      "volumes", "series", "number", "note", "publisher", "location",
+      "volumes", "series", "number", "note", "publisher", "location/address",
       "isbn", "pagetotal", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "inreference": {
@@ -257,26 +257,26 @@
       "afterword", "subtitle", "titleaddon", "maintitle", "mainsubtitle",
       "maintitleaddon", "booksubtitle", "booktitleaddon", "language",
       "origlanguage", "volume", "part", "edition", "volumes",
-      "series", "number", "note", "publisher", "location", "isbn",
+      "series", "number", "note", "publisher", "location/address", "isbn",
       "chapter", "pages", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "report": {
-    "required": [ "author", "title", "type", "institution", "year/date" ],
+    "required": [ "author", "title", "type", "institution/school", "year/date" ],
     "optional": [
       "subtitle", "titleaddon", "language", "number", "version",
-      "note", "location", "month", "isrn", "chapter", "pages",
+      "note", "location/address", "month", "isrn", "chapter", "pages",
       "pagetotal", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "thesis": {
-    "required": [ "author", "title", "type", "institution", "year/date" ],
+    "required": [ "author", "title", "type", "institution/school", "year/date" ],
     "optional": [
-      "subtitle", "titleaddon", "language", "note", "location",
+      "subtitle", "titleaddon", "language", "note", "location/address",
       "month", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
@@ -284,7 +284,7 @@
     "required": [ "author", "title", "year/date" ],
     "optional": [
       "subtitle", "titleaddon", "language", "howpublished", "note",
-      "location", "isbn", "date", "month", "year", "addendum",
+      "location/address", "isbn", "date", "month", "year", "addendum",
       "pubstate", "url", "urldate"
     ]
   },
@@ -296,9 +296,9 @@
       "maintitleaddon", "booksubtitle", "booktitleaddon", "eventtitle",
       "eventtitleaddon", "eventdate", "venue", "language", "volume",
       "part", "volumes", "series", "number", "note", "organization",
-      "publisher", "location", "month", "isbn", "chapter", "pages",
-      "addendum", "pubstate", "doi", "eprint", "eprintclass",
-      "eprinttype", "url", "urldate"
+      "publisher", "location/address", "month", "isbn", "chapter", "pages",
+      "addendum", "pubstate", "doi", "eprint", "eprintclass/primaryclass",
+      "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "electronic": {
@@ -310,30 +310,30 @@
     ]
   },
   "mastersthesis": {
-    "required": [ "author", "title", "institution", "year/date" ],
+    "required": [ "author", "title", "institution/school", "year/date" ],
     "optional": [
-      "type", "subtitle", "titleaddon", "language", "note", "location",
+      "type", "subtitle", "titleaddon", "language", "note", "location/address",
       "month", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
   "phdthesis": {
-    "required": [ "author", "title", "institution", "year/date" ],
+    "required": [ "author", "title", "institution/school", "year/date" ],
     "optional": [
-      "type", "subtitle", "titleaddon", "language", "note", "location",
+      "type", "subtitle", "titleaddon", "language", "note", "location/address",
       "month", "isbn", "chapter", "pages", "pagetotal", "addendum",
-      "pubstate", "doi", "eprint", "eprintclass", "eprinttype",
+      "pubstate", "doi", "eprint", "eprintclass/primaryclass", "eprinttype/archiveprefix",
       "url", "urldate"
     ]
   },
   "techreport": {
-    "required": [ "author", "title", "institution", "year/date" ],
+    "required": [ "author", "title", "institution/school", "year/date" ],
     "optional": [
       "type", "subtitle", "titleaddon", "language", "number",
-      "version", "note", "location", "month", "isrn", "chapter",
+      "version", "note", "location/address", "month", "isrn", "chapter",
       "pages", "pagetotal", "addendum", "pubstate", "doi", "eprint",
-      "eprintclass", "eprinttype", "url", "urldate"
+      "eprintclass/primaryclass", "eprinttype/archiveprefix", "url", "urldate"
     ]
   },
   "www": {
@@ -342,6 +342,23 @@
       "subtitle", "titleaddon", "language", "version", "note",
       "organization", "date", "month", "year", "addendum", "pubstate",
       "urldate"
+    ]
+  },
+
+  "*": {
+    "optional": [
+      "abstract", "annotation/annote", "label", "shorthand", "crossref",
+      "entryset", "execute", "gender", "langid", "hyphenation",
+      "langidopts", "ids", "indexsorttitle", "keywords", "options",
+      "presort", "related", "relatedoptions", "relatedtype",
+      "relatedstring", "sortkey/key", "sortname", "sortshorthand",
+      "sorttitle", "sortyear", "xdata", "xref",
+      "namea", "nameb", "namec",
+      "nameatype", "namebtype", "namectype",
+      "lista", "listb", "listc", "listd", "liste", "listf",
+      "usera", "userb", "userc", "userd", "usere", "userf",
+      "verba", "verbb", "verbc",
+      "file/pdf"
     ]
   }
 }

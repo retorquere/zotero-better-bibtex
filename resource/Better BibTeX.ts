@@ -22,7 +22,7 @@ Reference.prototype.fieldEncoding = {
   publisher: 'literal',
 }
 
-Reference.installEntryTypes(require('./bibtex/bibtex.entry-types.json'))
+Reference.prototype.entryTypes = require('!bibtex-config-loader!./bibtex/bibtex.entry-types.json')
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return

@@ -261,23 +261,12 @@ export = class Reference {
   public fieldEncoding: { [key: string]: string }
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
+  public entryTypes: { [key: string]: { required: string[][], allowed: string[] } }
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
   private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
   private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
-
-  private entryTypes: { [key: string]: { required: string[][], allowed: string[] } }
-
-  public static installEntryTypes(config) {
-    Reference.prototype.entryTypes = {}
-    for (const [type, fields] of Object.entries(config)) {
-      Reference.prototype.entryTypes[type] = {
-        required: fields.required.map(field => field.split('/')),
-        allowed: fields.optional ? fields.required.join('/').split('/').concat(fields.optional) : null,
-      }
-    }
-  }
 
   public static installPostscript() {
     const postscript = Translator.preferences.postscript

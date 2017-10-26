@@ -33,7 +33,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.installEntryTypes(require('./bibtex/biblatex.entry-types.json'))
+Reference.prototype.entryTypes = require('!bibtex-config-loader!./bibtex/biblatex.entry-types.json')
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return
