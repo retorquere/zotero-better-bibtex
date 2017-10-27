@@ -117,10 +117,6 @@ async function main() {
       contentType: 'application/rdf+xml',
     })
 
-    if (PRERELEASE) {
-      issues.push('555')
-      issues = dedup(issues.sort())
-    }
     for (const issue of issues) {
       await announce(issue, release.current.tag_name)
     }
@@ -146,9 +142,6 @@ async function main() {
 
     if (process.env.NIGHTLY === 'true') {
       issues = []
-    } else if (process.env.CIRCLE_BRANCH === 'master' && PRERELEASE) {
-      issues.push('555')
-      issues = dedup(issues)
     }
 
     for (const issue of issues) {
