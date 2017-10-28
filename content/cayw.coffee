@@ -5,9 +5,28 @@ transportService = Components.classes["@mozilla.org/network/socket-transport-ser
 # "https://github.com/zotero/zotero-libreoffice-integration/blob/master/components/zoteroOpenOfficeIntegration.js"
 # https://kth.instructure.com/courses/11/pages/zotero-integration
 
+class ScannableCiteMem
+  constructor: (@isLegal) ->
+    @lst = []
+
+  set: (str, punc, slug) ->
+    punc = '' unless punc
+    if str
+      @lst.push(str + punc)
+    else if !@isLegal
+      @lst.push(slug)
+    return
+
+  setlaw: (str, punc) ->
+    punc = '' unless punc
+    @lst.push(str + punc) if str && @isLegal
+    return
+
+  get: -> @lst.join(' ')
+
 class CAYW
-  host = '127.0.0.1'
-  port = 23116
+  host: '127.0.0.1'
+  port: 23116
   docID: 1
   fieldID: 2
 
@@ -193,7 +212,7 @@ class CAYW
 
     if @citations.length > 1 && state.suffix == 0 && state.prefix == 0 && state.locator == 0 && state['suppress-author'] in [0, @citations.length]
       ### simple case where everything can be put in a single cite ###
-      return "\\#{if @citations[0]['suppress-author'] then 'citeyear' else @options.command}{#{(@citation.citekey for citation in @citations).join(',')}}"
+      return "\\#{if @citations[0]['suppress-author'] then 'citeyear' else @options.command}{#{@citations.map((citation) -> citation.citekey).join(',')}}"
 
     formatted = ''
     for citation in @citations
@@ -201,17 +220,16 @@ class CAYW
       formatted += if citation['suppress-author'] then 'citeyear' else @options.command
       formatted += '[' + citation.prefix + ']' if citation.prefix
 
-      switch
-        when citation.locator && citation.suffix
-          label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
-          formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
-        when citation.locator
-          label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
-          formatted += "[#{label}#{citation.locator}]"
-        when citation.suffix
-          formatted += "[#{citation.suffix}]"
-        when citation.prefix
-          formatted += '[]'
+      if citation.locator && citation.suffix
+        label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
+        formatted += "[#{label}#{citation.locator}, #{citation.suffix}]"
+      else if citation.locator
+        label = if citation.label == 'page' then '' else @shortLocator[citation.label] + ' '
+        formatted += "[#{label}#{citation.locator}]"
+      else if citation.suffix
+        formatted += "[#{citation.suffix}]"
+      else if citation.prefix
+        formatted += '[]'
       formatted += '{' + citation.citekey + '}'
 
     return formatted
@@ -252,40 +270,27 @@ class CAYW
     formatted = (@options.cite || 'cite') + ':[' + formatted + ']'
     return formatted
 
-  $scannable_cite: Zotero.Promise.coroutine(->
-    class Mem
-      constructor: (@isLegal) ->
-        @lst = []
-
-      set: (str, punc, slug) ->
-        punc = '' unless punc
-        switch
-          when str        then @lst.push(str + punc)
-          when !@isLegal  then @lst.push(slug)
-        return
-
-      setlaw: (str, punc) ->
-        punc = '' unless punc
-        @lst.push(str + punc) if str && @isLegal
-        return
-
-      get: -> @lst.join(' ')
-
+  # async
+  $scannable_cite: ->
     formatted = []
     for citation in @citations
       item = yield getItemsAsync(citation.id)
       isLegal = Zotero.ItemTypes.getName(item.itemTypeID) in [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ]
 
       key = if Prefs.get('testing') then 'ITEMKEY' else item.key
-      id = switch
-        when item.libraryID then "zg:#{item.libraryID}:#{key}"
-        when Zotero.userID then "zu:#{Zotero.userID}:#{key}"
-        else "zu:0:#{key}"
-      locator = if citation.locator then "#{@shortLocator[citation.label]} #{citation.locator}" else ''
-      citation.prefix ?= ''
-      citation.suffix ?= ''
 
-      title = new Mem(isLegal)
+      if item.libraryID
+        id = "zg:#{item.libraryID}:#{key}"
+      else if Zotero.userID
+        id = "zu:#{Zotero.userID}:#{key}"
+      else
+        id = "zu:0:#{key}"
+
+      locator = if citation.locator then "#{@shortLocator[citation.label]} #{citation.locator}" else ''
+      citation.prefix ||= ''
+      citation.suffix ||= ''
+
+      title = new ScannableCiteMem(isLegal)
       title.set(item.firstCreator, ',', 'anon.')
 
       includeTitle = false
@@ -303,7 +308,7 @@ class CAYW
         title.setlaw(item.getField('reporter'))
       title.setlaw(item.getField('pages'))
 
-      year = new Mem(isLegal)
+      year = new ScannableCiteMem(isLegal)
       try
         year.setlaw(item.getField('court'), ',')
       date = Zotero.Date.strToDate(item.getField('date'))
@@ -314,26 +319,26 @@ class CAYW
 
       formatted.push("{#{citation.prefix}|#{label}|#{locator}|#{citation.suffix}|#{id}}")
     return formatted.join('')
-  )
 
   $atom_zotero_citations: ->
-    citekeys = (citation.citekey for citation in @citations)
-    itemIDs = (citation.id for citation in @citations)
+    citekeys = @citations.map((citation) -> citation.citekey)
+    itemIDs = @citations.map((citation) -> citation.id)
 
     style = @getStyle(@options.style)
 
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
     cp.updateItems(itemIDs)
-    label = cp.appendCitationCluster({citationItems: ({ id } for id in itemIDs), properties: {}}, true)[0][1]
+    label = cp.appendCitationCluster({citationItems: itemIDs.map((id) -> { id }), properties: {}}, true)[0][1]
 
     if citekeys.length == 1
       return "[#{label}](#@#{citekeys.join(',')})"
     else
       return "[#{label}](?@#{citekeys.join(',')})"
 
-  $translate: Zotero.Promise.coroutine(->
-    items = yield getItemsAsync((citation.id for citation in @citations))
+  # async
+  $translate: ->
+    items = yield getItemsAsync(@citations.map((citation) -> citation.id))
 
     @options.translator = 'BetterBibLeTeX' if (@options.translator || 'biblatex') == 'biblatex'
     @options.translator = Translators.byLabel[@options.translator].translatorID if Translators.byLabel[@options.translator]
@@ -344,42 +349,69 @@ class CAYW
     }
 
     return yield Translators.translate(@options.translator, {items: items}, exportOptions)
-  )
 
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class
   supportedMethods: ['GET']
 
-  init: Zotero.Promise.coroutine((options) ->
+  # async
+  init: (options) ->
     return [200, 'text/plain', 'ready'] if options.query.probe
 
     try
       return [200, 'text/plain', yield (new CAYW(options)).ready]
     catch
       return [500, "application/text", 'debug-bridge failed: ' + err + "\n" + err.stack]
-  )
 
-=====
-Components.utils.import("resource://gre/modules/NetUtil.jsm");
-
-var pump = Components.classes["@mozilla.org/network/input-stream-pump;1"]
-                     .createInstance(Components.interfaces.nsIInputStreamPump);
-pump.init(poolRawInputStream, -1, -1, 0, 0, true);
-
-var listener = {
-  onStartRequest: function(request, context) {},
-  onDataAvailable: function(request, context, stream, offset, count)
-  {
-    var data = NetUtil.readInputStreamToString(stream, count);
-    ...
-  },
-  onStopRequest: function(request, context, result)
-  {
-    if (!Components.isSuccessCode(result))
-    {
-      // Error handling here
-    }
-  }
-};
-
-pump.asyncRead(listener, null);
-=====
+#=======
+#function main()
+#{
+#  var host = "192.168.1.2";
+#  var port = 9999;
+#  var delay = new Array();
+#  var lung_pkt = 288;
+#  var num_pkg = 100;
+#  var num_str = 12;
+#  var nPkg = 0;
+#
+#  try {
+#    window.open("http://"+host+"/socket_server.php","Socket","width=500,height=400");
+#
+#    var transportService = Components.classes["@mozilla.org/network/socket-transport-service;1"].getService(Components.interfaces.nsISocketTransportService);
+#    var transport = transportService.createTransport(null, 0,host,port,null);
+#
+#    var stream = transport.openInputStream(0,0,0);
+#    var instream = Components.classes["@mozilla.org/scriptableinputstream;1"].createInstance(Components.interfaces.nsIScriptableInputStream);
+#    instream.init(stream);
+#
+#    var dataListener = {
+#      onStartRequest: function(request, context){},
+#      onStopRequest: function(request, context, status) {
+#        instream.close();
+#        outstream.close();
+#        var stampa="";
+#        var i=0;
+#        for(i=0; i<delay.length; i++) {
+#          stampa+=(delay[i].toString()+"\n");
+#        }
+#        alert(stampa);
+#
+#      },
+#      onDataAvailable: function(request, context, inputStream, offset, count) {
+#        var ora = new Date();
+#        var partenza = parseInt(instream.read(lung_pkt).substring(0,13));
+#        var arrivo = ora.getTime();
+#        var d = arrivo - partenza;
+#        delay.push(d);
+#      },
+#    };
+#
+#    var pump = Components.classes["@mozilla.org/network/input-stream-pump;1"].createInstance(Components.interfaces.nsIInputStreamPump);
+#    pump.init(stream, -1, -1, 0, 0, false);
+#    pump.asyncRead(dataListener,null);
+#  } catch (ex){
+#    alert(ex);
+#  }
+#  return null;
+#}
+#
+#====
