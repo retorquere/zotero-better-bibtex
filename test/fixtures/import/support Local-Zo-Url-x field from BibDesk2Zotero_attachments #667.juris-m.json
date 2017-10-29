@@ -35,7 +35,6 @@
       "tests": "",
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefGroups": 4,
       "defaultDateParserLocale": "",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
@@ -45,7 +44,8 @@
       "jurismPreferredLanguage": "zh-alalc97",
       "ZotFile": true,
       "qualityReport": false,
-      "suppressTitleCase": false
+      "suppressTitleCase": false,
+      "jabrefFormat": 4
     },
     "options": {
       "exportPath": "/Users/emile/Desktop/Exported Items.json",

@@ -343,11 +343,13 @@ export = class Reference {
       this.referencetype = referencetype.type
     }
 
-    if (Translator.preferences.testing) {
-      debug('ignoring timestamp', this.item.dateModified || this.item.dateAdded, 'for testing')
-      this.add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
-    } else {
-      this.add({name: 'timestamp', value: this.item.dateModified || this.item.dateAdded})
+    if (Translator.preferences.jabrefFormat) {
+      if (Translator.preferences.testing) {
+        debug('ignoring timestamp', this.item.dateModified || this.item.dateAdded, 'for testing')
+        this.add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
+      } else {
+        this.add({name: 'timestamp', value: this.item.dateModified || this.item.dateAdded})
+      }
     }
 
     if (['arxiv.org', 'arxiv'].includes((this.item.libraryCatalog || '').toLowerCase()) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle))) {
@@ -464,7 +466,7 @@ export = class Reference {
       }
     }
 
-    if ((this.item.collections || []).length && (Translator.preferences.jabrefGroups === 4)) { // tslint:disable-line:no-magic-numbers
+    if ((this.item.collections || []).length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
       let groups = this.item.collections.filter(key => Translator.collections[key]).map(key => Translator.collections[key].name)
       groups = groups.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
       this.add({ groups: groups.join(',') })
@@ -626,7 +628,7 @@ export = class Reference {
     ref += this.fields.map(field => `  ${field.name} = ${field.bibtex}`).join(',\n')
     ref += '\n}\n'
     let qr
-    if (qr = this.qualityReport()) ref += `% Quality Report for ${this.item.citekey}:\n${qr}\n`
+    if (qr = this.qualityReport()) ref += `% ${Translator.BetterBibTex ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:\n${qr}\n`
     ref += '\n'
     Zotero.write(ref)
 
@@ -1035,8 +1037,14 @@ export = class Reference {
     }
     if (fields.allowed) {
       for (const field of Object.keys(this.has)) {
-        if (!fields.allowed.includes(field)) {
-          report.push(`% Unexpected field '${field}'`)
+        switch (typeof fields.allowed[field]) {
+          case 'undefined':
+            report.push(`% Unexpected field '${field}'`)
+            break
+
+          case 'string':
+            report.push(`% Unexpected field '${field}' (${fields.allowed[field]})`)
+            break
         }
       }
     }

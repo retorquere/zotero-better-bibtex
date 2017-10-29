@@ -8,9 +8,9 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[authors][shortyear]",
       "skipFields": "file,abstract",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

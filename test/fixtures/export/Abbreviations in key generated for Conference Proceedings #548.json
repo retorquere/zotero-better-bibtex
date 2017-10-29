@@ -29,7 +29,7 @@
       "defaultDateParserLocale": "en-GB",
       "quickCopyMode": "latex",
       "jurismPreferredLanguage": "zh-alalc97",
-      "jabrefGroups": 0
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

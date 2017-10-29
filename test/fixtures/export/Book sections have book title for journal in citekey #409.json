@@ -10,13 +10,13 @@
       "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
       "csquotes": "",
       "DOIandURL": "doi",
-      "jabrefGroups": 0,
       "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "",
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

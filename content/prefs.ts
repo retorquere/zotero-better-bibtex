@@ -13,6 +13,17 @@ class Preferences {
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
     this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
+
+    // preference upgrades
+    for (const pref of this.branch.getChildList('')) {
+      switch (pref) {
+        case 'jabrefGroups':
+          debug('Preferences: jabrefGroups -> jabrefFormat')
+          this.set('jabrefFormat', this.get(pref))
+          this.clear(pref)
+      }
+    }
+
     this.branch.addObserver('', this, false)
   }
 

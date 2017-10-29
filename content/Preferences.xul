@@ -88,8 +88,8 @@
         <preference name="extensions.zotero.translators.better-bibtex.tests"                    id="pref-better-bibtex-tests"                   type="string"/>
         <!-- Unit tests to run -->
 
-        <preference name="extensions.zotero.translators.better-bibtex.jabrefGroups" id="pref-better-bibtex-jabrefGroups"                        type="int"/>
-        <!-- Export JabRef groups for collections. zero means disable, "3" means format 3, which is (IMO) opinion better
+        <preference name="extensions.zotero.translators.better-bibtex.jabrefFormat" id="pref-better-bibtex-jabrefFormat"                        type="int"/>
+        <!-- Export JabRef-specific information such as groups for collections and timestamps. zero means disable, "3" means format 3, which is (IMO) opinion better
              but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
         -->
 

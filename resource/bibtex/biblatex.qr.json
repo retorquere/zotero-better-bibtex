@@ -358,7 +358,7 @@
       "lista", "listb", "listc", "listd", "liste", "listf",
       "usera", "userb", "userc", "userd", "usere", "userf",
       "verba", "verbb", "verbc",
-      "file/pdf", "timestamp"
+      "file/pdf", "timestamp:JabRef-specific", "origdate"
     ]
   }
 }
