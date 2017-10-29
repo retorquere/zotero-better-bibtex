@@ -1,0 +1,82 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+      "ban-types": {
+        "severity": "warning",
+        "options": [
+          ["Object", "Avoid using the `Object` type. Did you mean `object`?"],
+          ["Function", "Avoid using the `Function` type. Prefer a specific function type, like `() => void`."],
+          ["Boolean", "Avoid using the `Boolean` type. Did you mean `boolean`?"],
+          ["Number", "Avoid using the `Number` type. Did you mean `number`?"],
+          ["String", "Avoid using the `String` type. Did you mean `string`?"],
+          ["Symbol", "Avoid using the `Symbol` type.  Did you mean `symbol`?"]
+        ]
+      },
+      "no-module-exports": true,
+      "max-classes-per-file": [true, 3],
+      "new-parens": false,
+      "no-var-requires": false,
+      "quotemark": [true, "single", "avoid-escape", "avoid-template"],
+      "max-line-length": {
+        "severity": "warning",
+        "options": [240]
+      },
+      "ordered-imports": false,
+      "prefer-const": [true, {"destructuring": "all"}],
+      "member-ordering": [true, {
+        "order": [
+          "public-static-field",
+          "public-instance-field",
+          "protected-instance-field",
+          "private-static-field",
+          "private-instance-field",
+          "public-constructor",
+          "public-instance-method",
+          "protected-instance-method",
+          "private-constructor",
+          "private-instance-method"
+        ]
+      }],
+      "no-magic-numbers": [true, -1, 0, 1, 2],
+      "prefer-for-of": true,
+      "no-duplicate-variable": true,
+      "no-string-throw": true,
+      "no-unused-variable": [true, {"ignore-pattern": "^_"}],
+      "no-use-before-declare": true,
+      "no-var-keyword": true,
+      "prefer-object-spread": true,
+      "triple-equals": [true, "allow-undefined-check", "allow-null-check"],
+      "typeof-compare": true,
+      "indent": [true, "spaces", 2],
+      "linebreak-style": [true, "LF"],
+      "eofline": true,
+      "trailing-comma": [true, {"singleline": "never", "multiline": {"objects": "always", "arrays": "always", "functions": "never", "typeLiterals": "ignore"}}],
+      "arrow-parens": [true, "ban-single-arg-parens"],
+      "arrow-return-shorthand": true,
+      "binary-expression-operand-order": true,
+      "class-name": true,
+      "no-irregular-whitespace": true,
+      "no-trailing-whitespace": [true, "ignore-jsdoc", "ignore-template-strings"],
+      "no-unnecessary-callback-wrapper": true,
+      "object-literal-key-quotes": [true, "as-needed"],
+      "object-literal-shorthand": true,
+      "one-line": [true, "check-catch", "check-finally", "check-else", "check-open-brace"],
+      "prefer-template": [true, "allow-single-concat"],
+      "semicolon": [true, "never"],
+      "space-before-function-paren": [true, {"anonymous": "never", "method": "never", "constructor": "never", "named": "never", "asyncArrow": "always"}],
+      "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore", "allow-snake-case" ],
+      "curly": [true, "ignore-same-line"],
+      "only-arrow-functions": [true, "allow-declarations", "allow-named-functions"],
+      "radix": false,
+      "object-literal-sort-keys": false,
+      "no-empty": [true, "allow-empty-catch"],
+      "no-conditional-assignment": false,
+      "one-variable-per-declaration": false
+    },
+    "rulesDirectory": [],
+    "doc": "https://palantir.github.io/tslint/rules/"
+}

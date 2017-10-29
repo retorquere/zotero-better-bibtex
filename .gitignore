@@ -28,3 +28,4 @@ wiki
 *.deb
 .DS_Store
 .env
+webpack/tslint/noModuleExportsRule.js

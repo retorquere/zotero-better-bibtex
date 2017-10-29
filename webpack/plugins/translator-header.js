@@ -52,11 +52,11 @@ var Translator = {
   preferences: <%- JSON.stringify(preferences) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
-  getConfig: function(detect) {
+  configure: function(stage) {
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
-    this.unicode = true;
+    this.unicode = true; // set by Better Bib(La)TeX later
 
-    if (detect) {
+    if (stage == 'detectImport') {
       this.options = {}
     } else {
       for (var key in this.options) {
@@ -81,12 +81,38 @@ var Translator = {
       }
       this.preferences.csquotes = csquotes
     }
+
+    this.collections = {}
+    if (stage == 'doExport' && this.header.configOptions && this.header.configOptions.getCollections && Zotero.nextCollection) {
+      let collection
+      while (collection = Zotero.nextCollection()) {
+        let children = collection.children || collection.descendents || []
+        let key = (collection.primary ? collection.primary : collection).key
+
+        this.collections[key] = {
+          id: collection.id,
+          key: key,
+          parent: collection.fields.parentKey,
+          name: collection.name,
+          items: collection.childItems,
+          collections: children.filter(function(coll) { return coll.type === 'collection'}).map(function(coll) { return coll.key}),
+          // items: (item.itemID for item in children when item.type != 'collection')
+          // descendents: undefined
+          // children: undefined
+          // childCollections: undefined
+          // primary: undefined
+          // fields: undefined
+          // type: undefined
+          // level: undefined
+        }
+      }
+    }
   }
 };
 
 <% if (header.translatorType & 2) { /* export */ %>
   function doExport() {
-    Translator.getConfig()
+    Translator.configure('doExport')
     Translator.initialize()
     Translator.doExport()
   }
@@ -94,11 +120,11 @@ var Translator = {
 
 <% if (header.translatorType & 1) { /* import */ %>
   function detectImport() {
-    Translator.getConfig(true)
+    Translator.configure('detectImport')
     return Translator.detectImport()
   }
   function doImport() {
-    Translator.getConfig()
+    Translator.configure('doImport')
     Translator.initialize()
     Translator.doImport()
   }

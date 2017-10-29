@@ -11,14 +11,14 @@
     <menuitem
       insertafter="zotero-tb-actions-reportErrors"
       label="&better-bibtex.BetterBibTeX.reportErrors;"
-      oncommand="Zotero.BetterBibTeX.ErrorReport()"/>
+      oncommand="Zotero.BetterBibTeX.errorReport()"/>
       <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem
       insertafter="reportErrors"
       label="&better-bibtex.BetterBibTeX.reportErrors;"
-      oncommand="Zotero.BetterBibTeX.ErrorReport()"/>
+      oncommand="Zotero.BetterBibTeX.errorReport()"/>
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
@@ -28,7 +28,7 @@
       label="&zotero.better-bibtex.show-collection-key;"
       oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
     / -->
-    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('collection')"/>
+    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
@@ -37,7 +37,7 @@
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
     <menuseparator/>
-    <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ErrorReport('items')"/>
+    <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('items')"/>
   </menupopup>
 
   <treecols id="zotero-items-columns-header">
@@ -59,4 +59,6 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
 </overlay>

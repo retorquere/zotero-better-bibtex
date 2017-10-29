@@ -10,6 +10,11 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | date ranges #747+#746                                                                          | 2           |
+     | Better BibLaTeX.stable-keys                                                                    | 6           |
+     | remove the field if the override is empty #303                                                 | 1           |
+     | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
+     | Spaces not stripped from citation keys #294                                                    | 1           |
      | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
@@ -46,7 +51,6 @@ Scenario Outline: BibLaTeX Export
      | Dollar sign in title not properly escaped #485                                                 | 1           |
      | Export error for items without publicationTitle and Preserve BibTeX variables enabled #201     | 1           |
      | Export mapping for reporter field #219                                                         | 1           |
-     | Spaces not stripped from citation keys #294                                                    | 1           |
      | Text that legally contains the text of HTML entities such as &nbsp; triggers an overzealous decoding second-guesser #253 | 1 |
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
@@ -55,14 +59,12 @@ Scenario Outline: BibLaTeX Export
      | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |
-     | Extra semicolon in biblatexadata causes export failure #133                                    | 2           |
      | Ignore HTML tags when generating citation key #264                                             | 1           |
      | Export Forthcoming as Forthcoming                                                              | 1           |
      | CSL variables only recognized when in lowercase #408                                           | 1           |
      | date and year are switched #406                                                                | 4           |
      | Do not caps-protect literal lists #391                                                         | 3           |
      | biblatex; Language tag xx is exported, xx-XX is not #380                                       | 1           |
-     | remove the field if the override is empty #303                                                 | 1           |
      | markup small-caps, superscript, italics #301                                                   | 2           |
      | don't escape entry key fields for #296                                                         | 1           |
      | typo stature-statute (zotero item type) #284                                                   | 1           |
@@ -92,7 +94,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.011                                                                            | 1           |
      | Better BibLaTeX.010                                                                            | 1           |
      | Malformed HTML                                                                                 | 1           |
-     | Better BibLaTeX.stable-keys                                                                    | 6           |
      | Allow explicit field override                                                                  | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
 

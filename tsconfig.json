@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "target": "es2017",
+    "disableSizeLimit": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": false,
+    "sourceMap": false,
+    "downlevelIteration": true,
+    "lib": [ "es2017" ]
+  },
+  "include": [
+    "content/**/*",
+    "resource/**/*",
+    "webpack/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
+}
