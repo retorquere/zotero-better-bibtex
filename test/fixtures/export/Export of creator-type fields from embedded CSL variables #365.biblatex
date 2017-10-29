@@ -56,5 +56,5 @@
 
 @inreference{emptybook,
   editor = {{Xxx}},
-  note = {\{:X-genre: xxx\}},
+  note = {\{:X-genre: xxx\}}
 }
