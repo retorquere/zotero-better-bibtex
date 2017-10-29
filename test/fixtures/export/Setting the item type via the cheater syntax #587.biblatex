@@ -4,14 +4,12 @@
   date = {1957},
   location = {{Mesopotamia, OH}},
   publisher = {{Trumbull County Historical Society}},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Mesopotamia: Between Two Rivers}
 }
 
 @data{_object_????,
   abstract = {Example from CMoS, 16e, 14.272},
   journaltitle = {NASA/IPAC Extragalactic Database},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Object Name {{IRAS F00400}}+4059},
   url = {http://nedwww.ipac.caltech.edu/},
   urldate = {2009-10-06}
@@ -27,7 +25,6 @@ Broder”},
   editor = {Broder, Nathan},
   location = {{Bryn Mawr, PA}},
   publisher = {{Theodore Presser}},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Sonatas and Fantasies for the Piano}
 }
 
@@ -46,7 +43,6 @@ Example from CMoS, 16e, 14.125},
   journaltitle = {Lingua Franca},
   langid = {american},
   pages = {B13--B14},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
   volume = {9}
 }
@@ -58,7 +54,6 @@ Example from CMoS, 16e, 14.125},
   editora = {Pollan, Michael},
   editoratype = {collaborator},
   langid = {american},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Deconstructing Dinner},
   url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.}
 }
