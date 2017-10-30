@@ -17,7 +17,7 @@
         ]
       },
       "no-module-exports": true,
-      "max-classes-per-file": [true, 3],
+      "max-classes-per-file": [true, 4],
       "new-parens": false,
       "no-var-requires": false,
       "quotemark": [true, "single", "avoid-escape", "avoid-template"],
