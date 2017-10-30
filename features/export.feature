@@ -106,6 +106,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
+     | date ranges #747+#746                                                              | 3          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | veryshorttitle and compound words #551                                             | 4          |
