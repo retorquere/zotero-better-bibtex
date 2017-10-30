@@ -88,7 +88,9 @@
     "uri-templates": "^0.2.0",
     "webpack": "^3.6.0",
     "wrapper-webpack-plugin": "^1.0.0",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.24"
   },
   "repository": {
     "type": "git",

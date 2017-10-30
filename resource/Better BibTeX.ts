@@ -22,7 +22,7 @@ Reference.prototype.fieldEncoding = {
   publisher: 'literal',
 }
 
-Reference.prototype.entryTypes = require('!bibtex-quality-report-loader!./bibtex/bibtex.qr.json')
+Reference.prototype.entryTypes = require('./bibtex/bibtex.qr.json')
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return

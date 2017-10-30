@@ -1,13 +1,231 @@
 {
-  "inproceedings": { "required": [ "author", "booktitle", "pages", "publisher", "title", "year" ] },
-  "article": { "required": [ "author", "journal", "number", "pages", "title", "volume", "year" ] },
-  "techreport": { "required": [ "author", "institution", "title", "year" ] },
-  "incollection": { "required": [ "author", "booktitle", "pages", "publisher", "title", "year" ] },
-  "book": { "required": [ "author", "publisher", "title", "year" ] },
-  "inbook": { "required": [ "author", "booktitle", "pages", "publisher", "title", "year" ] },
-  "proceedings": { "required": [ "editor", "publisher", "title", "year" ] },
-  "phdthesis": { "required": [ "author", "school", "title", "year" ] },
-  "mastersthesis": { "required": [ "author", "school", "title", "year" ] },
-  "electronic": { "required": [ "author", "title", "url", "year" ] },
-  "misc": { "required": [ "author", "howpublished", "title", "year" ] }
+  "inproceedings": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "booktitle"
+      ],
+      [
+        "pages"
+      ],
+      [
+        "publisher"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "article": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "journal"
+      ],
+      [
+        "number"
+      ],
+      [
+        "pages"
+      ],
+      [
+        "title"
+      ],
+      [
+        "volume"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "techreport": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "institution"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "incollection": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "booktitle"
+      ],
+      [
+        "pages"
+      ],
+      [
+        "publisher"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "book": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "publisher"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "inbook": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "booktitle"
+      ],
+      [
+        "pages"
+      ],
+      [
+        "publisher"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "proceedings": {
+    "required": [
+      [
+        "editor"
+      ],
+      [
+        "publisher"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "phdthesis": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "school"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "mastersthesis": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "school"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "electronic": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "title"
+      ],
+      [
+        "url"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "misc": {
+    "required": [
+      [
+        "author"
+      ],
+      [
+        "howpublished"
+      ],
+      [
+        "title"
+      ],
+      [
+        "year"
+      ]
+    ],
+    "allowed": {
+    }
+  },
+  "*": {
+    "allowed": {
+    }
+  }
 }
