@@ -532,6 +532,216 @@
 
       ],
       "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "book",
+      "date": "199u",
+      "extra": "bibtex: simpson_cool_book_0110",
+      "title": "Cool book 0110",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:37",
+      "dateModified": "2016-10-29 10:31:01",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/D5CI8RP8",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "199u",
+        "extra": "bibtex: simpson_cool_book_0110",
+        "title": "Cool book 0110"
+      },
+      "itemID": 448,
+      "key": "D5CI8RP8",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0110"
+    },
+    {
+      "itemType": "book",
+      "date": "19uu",
+      "extra": "bibtex: simpson_cool_book_0120",
+      "title": "Cool book 0120",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:39",
+      "dateModified": "2016-10-29 10:31:17",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/WUDPIEQ8",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "19uu",
+        "extra": "bibtex: simpson_cool_book_0120",
+        "title": "Cool book 0120"
+      },
+      "itemID": 449,
+      "key": "WUDPIEQ8",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0120"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-uu",
+      "extra": "bibtex: simpson_cool_book_0130",
+      "title": "Cool book 0130",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:31",
+      "dateModified": "2016-10-29 10:31:33",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/HRKKMR9H",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-uu",
+        "extra": "bibtex: simpson_cool_book_0130",
+        "title": "Cool book 0130"
+      },
+      "itemID": 445,
+      "key": "HRKKMR9H",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0130"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-01-uu",
+      "extra": "bibtex: simpson_cool_book_0140",
+      "title": "Cool book 0140",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:34:00",
+      "dateModified": "2016-10-29 10:31:47",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/D85WDZ74",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-01-uu",
+        "extra": "bibtex: simpson_cool_book_0140",
+        "title": "Cool book 0140"
+      },
+      "itemID": 443,
+      "key": "D85WDZ74",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0140"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-uu-uu",
+      "extra": "bibtex: simpson_cool_book_0150",
+      "title": "Cool book 0150",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:28",
+      "dateModified": "2016-10-29 10:32:07",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/7ERVM4WU",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-uu-uu",
+        "extra": "bibtex: simpson_cool_book_0150",
+        "title": "Cool book 0150"
+      },
+      "itemID": 444,
+      "key": "7ERVM4WU",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0150"
     }
   ],
   "cache": {
