@@ -6,17 +6,26 @@ var xml = fs.readFileSync('resource/bibtex/biblatex.qr.bcf', 'utf8')
 var doc = new dom().parseFromString(xml)
 var select = xpath.useNamespaces({"bcf": "https://sourceforge.net/projects/biblatex"});
 
-const schemas = {}
+const EntryTypes = {}
+const EntryFields = {}
 var all = null
 
-for (const type of select("//bcf:entrytype", doc)) {
-  schemas[type.textContent] = {
-    type: 'object',
-    additionalProperties: false
-  }
+for (const type of select("//bcf:entrytypes/bcf:entrytype", doc)) {
+  EntryTypes[type.textContent] = { entryfields: null };
 }
 
 for (const node of select("//bcf:entryfields", doc)) {
+  var entrytypes = select('./bcf:entrytype', node).map(type => type.textContent)
+
+  var name = entrytypes.join('-')
+  name = name || '*'
+
+  EntryFields[name] = select('./bcf:field', node).map(field => field.textContent)
+
+  for (const entrytype of entrytypes) {
+    if EntryTypes
+  }
+
   var isAll = true;
   var allowed = select('./bcf:field', node).map(field => field.textContent)
 
