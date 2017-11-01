@@ -10,7 +10,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | EDTF dates in BibLaTeX #590                                                                    | 19          |
+     | EDTF dates in BibLaTeX #590                                                                    | 22          |
      | date ranges #747+#746                                                                          | 3           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
