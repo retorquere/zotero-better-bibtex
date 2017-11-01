@@ -105,7 +105,11 @@ var template = `
 const fieldSet = ${jsesc(BCF.fieldSet, { compact: false, indent: '  ' })};
 const allowed = {
 <%_ for (const [type, sets] of Object.entries(allowed)) { -%>
-  <%= type -%>: [ <%- sets.map(name => "fieldSet." + name).join(', ') -%> ],
+  <%= type -%>: [
+    <%_ for (const set of sets) { -%>
+      fieldSet.<%= set -%>,
+    <%_ }; -%>
+  ],
 <%_ }; -%>
 };
 const required = [
