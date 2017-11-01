@@ -23,7 +23,7 @@ module.exports = function(source) {
   
   // get all the possible entrytypes and apply the generic fields
   for (const type of select("//bcf:entrytypes/bcf:entrytype", doc)) {
-    BCF.allowed[type.textContent] = ['optional']
+    BCF.allowed[type.textContent] = ['optional', 'required']
   }
   
   // gather the fieldsets
@@ -47,6 +47,23 @@ module.exports = function(source) {
   }
   
   for (const node of select('.//bcf:constraints', doc)) {
+    var types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
+    var setname = types.length == 0 ? 'required' : 'required_' + types.join('_');
+
+    if (BCF.fieldSet[setname] || BCF.required[setname]) throw new Error(`constraint set ${setname} exists`);
+
+    // find all the field names allowed by this set
+    BCF.fieldSet[setname] = new Set(select('.//bcf:field', node).map(field => field.textContent))
+
+    // allow the fields that are required
+    for (const type of types) {
+      if (!BCF.allowed[type]) {
+        throw new Error(`Unknown reference type ${type}`)
+      } else {
+        BCF.allowed[type] = _.uniq(BCF.allowed[type].concat(setname))
+      }
+    }
+  
     var mandatory = select(".//bcf:constraint[@type='mandatory']", node);
     switch (mandatory.length) {
       case 0:
@@ -56,24 +73,6 @@ module.exports = function(source) {
         break
       default:
         throw new Error(`found ${mandatory.length} constraints, expected 1`)
-    }
-  
-    var types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
-    if (!types.length) throw new Error(`constraint has no types`)
-  
-    var setname = 'required_' + types.join('_')
-    if (BCF.fieldSet[setname] || BCF.required[setname]) throw new Error(`constraint set ${setname} exists`);
-  
-    // find all the field names allowed by this set
-    BCF.fieldSet[setname] = new Set(select('.//bcf:field', node).map(field => field.textContent))
-  
-    // allow the fields that are required
-    for (const type of types) {
-      if (!BCF.allowed[type]) {
-        throw new Error(`Unknown reference type ${type}`)
-      } else {
-        BCF.allowed[type] = _.uniq(BCF.allowed[type].concat(setname))
-      }
     }
   
     BCF.required[setname] = { types, fields: []}
