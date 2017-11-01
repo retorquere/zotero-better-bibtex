@@ -782,6 +782,7 @@
       <bcf:entrytype>standard</bcf:entrytype>
       <bcf:entrytype>suppbook</bcf:entrytype>
       <bcf:entrytype>suppcollection</bcf:entrytype>
+      <bcf:entrytype>suppperiodical</bcf:entrytype>
       <bcf:entrytype>thesis</bcf:entrytype>
       <bcf:entrytype>unpublished</bcf:entrytype>
       <bcf:entrytype>video</bcf:entrytype>
