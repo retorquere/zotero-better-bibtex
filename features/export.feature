@@ -10,6 +10,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | EDTF dates in BibLaTeX #590                                                                    | 19          |
      | date ranges #747+#746                                                                          | 3           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
@@ -55,7 +56,6 @@ Scenario Outline: BibLaTeX Export
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
-     | EDTF dates in BibLaTeX #590                                                                    | 14          |
      | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |

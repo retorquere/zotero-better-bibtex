@@ -136,7 +136,7 @@
 @article{barker10_1990_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker10, Anne},
-  date = {1990~},
+  date = {199u},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -151,7 +151,7 @@
 @article{barker11_1900_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker11, Anne},
-  date = {1900~},
+  date = {19uu},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -166,7 +166,7 @@
 @article{barker12_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker12, Anne},
-  date = {1999-01~},
+  date = {1999-uu},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -181,7 +181,7 @@
 @article{barker13_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker13, Anne},
-  date = {1999-01-01~},
+  date = {1999-01-uu},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -196,7 +196,7 @@
 @article{barker14_1999_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker14, Anne},
-  date = {1999-01-01~},
+  date = {1999-uu-uu},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -207,3 +207,39 @@
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24}
 }
+
+@book{simpson_cool_book_0110,
+  author = {Simpson, Lisa},
+  date = {199u},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Cool Book 0110}
+}
+
+@book{simpson_cool_book_0120,
+  author = {Simpson, Lisa},
+  date = {19uu},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Cool Book 0120}
+}
+
+@book{simpson_cool_book_0130,
+  author = {Simpson, Lisa},
+  date = {1999-uu},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Cool Book 0130}
+}
+
+@book{simpson_cool_book_0140,
+  author = {Simpson, Lisa},
+  date = {1999-01-uu},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Cool Book 0140}
+}
+
+@book{simpson_cool_book_0150,
+  author = {Simpson, Lisa},
+  date = {1999-uu-uu},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {Cool Book 0150}
+}
+
