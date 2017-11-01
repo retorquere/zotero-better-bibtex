@@ -4,7 +4,7 @@ const fs = require('fs')
 const jsesc = require('jsesc');
 const _ = require('lodash');
 const ejs = require('ejs');
-const dedent = require('dedent-hs');
+const dedent = require('dedent-js');
 
 module.exports = function(source) {
   var doc = new dom().parseFromString(source)
@@ -100,8 +100,6 @@ module.exports = function(source) {
     }
   }
   
-  fs.writeFileSync('biblatex.schema.json', JSON.stringify(BCF, null, 2));
-  
   var template = dedent(`
     const fieldSet = ${jsesc(BCF.fieldSet, { compact: false, indent: '  ' })};
     const allowed = {
@@ -132,16 +130,16 @@ module.exports = function(source) {
       <%_ } -%>
     ];
     
-    module.exports = function(ref) {
-      var type = ref.referencetype.toLowerCase();
+    module.exports = function(explanation) {
+      var type = this.referencetype.toLowerCase();
     
-      if (!allowed[type]) return ["I don't know how to type-check " + type];
+      if (!allowed[type]) return;
     
-      var unexpected = Object.keys(ref.has).filter(field => !allowed[type].find(set => set.has(field)));
-      var report = unexpected.map(field => "Unexpected field '" + field + "'")
+      var unexpected = Object.keys(this.has).filter(field => !allowed[type].find(set => set.has(field)));
+      var report = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
     
       for (const test of required) {
-        if (test.types.has(type)) test.check(ref, report)
+        if (test.types.has(type)) test.check(this, report)
       }
     
       return report;

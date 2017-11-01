@@ -66,6 +66,7 @@ var common = {
       { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } }, 'wrap-loader' ] },
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
+      { test: /\.bcf$/, use: [ 'bcf-loader' ] },
       // { enforce: 'pre', test: /\.ts$/, exclude: /node_modules/, loader: 'tslint-loader?' + JSON.stringify({ emitErrors: true, failOnHint: true }) },
       { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader' ] }
     ]

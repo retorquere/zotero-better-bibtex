@@ -261,7 +261,7 @@ export = class Reference {
   public fieldEncoding: { [key: string]: string }
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
-  public entryTypes: { [key: string]: { required: string[][], allowed: string[] } }
+  public lint: Function
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -627,8 +627,7 @@ export = class Reference {
     let ref = `@${this.referencetype}{${this.item.citekey},\n`
     ref += this.fields.map(field => `  ${field.name} = ${field.bibtex}`).join(',\n')
     ref += '\n}\n'
-    let qr
-    if (qr = this.qualityReport()) ref += `% ${Translator.BetterBibTex ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:\n${qr}\n`
+    ref += this.qualityReport()
     ref += '\n'
     Zotero.write(ref)
 
@@ -1026,58 +1025,38 @@ export = class Reference {
 
   private qualityReport() {
     if (!Translator.preferences.qualityReport) return ''
-    const fields = this.entryTypes[this.referencetype.toLowerCase()]
-    if (!fields) return `% I don't know how to check ${this.referencetype}`
 
-    const report = []
-    for (const required of fields.required) {
-      if (!required.find(field => this.has[field])) {
-        report.push(`% Missing required field '${required[0]}'`)
-      }
-    }
-    if (fields.allowed) {
-      for (const field of Object.keys(this.has)) {
-        switch (typeof fields.allowed[field]) {
-          case 'undefined':
-            report.push(`% Unexpected field '${field}'`)
-            break
+    let report = this.lint({
+      timestamp: `added because JabRef format is set to ${Translator.preferences.jabrefFormat || '?'}`,
+    })
 
-          case 'string':
-            report.push(`% Unexpected field '${field}' (${fields.allowed[field]})`)
-            break
+    if (report) {
+      if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
+      if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
+
+      if (this.referencetype === 'inproceedings' && this.has.booktitle) {
+        if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
+          report.push('? Unsure about the formatting of the booktitle')
         }
       }
-    }
 
-    if ((this.referencetype === 'proceedings') && this.has.pages) {
-      report.push("% ? Proceedings with page numbers -- maybe his reference should be an 'inproceedings'")
-    }
-
-    if ((this.referencetype === 'article') && this.has.journal) {
-      if (Translator.BetterBibLaTeX) report.push('% BibLaTeX uses journaltitle, not journal')
-      if (this.has.journal.value.indexOf('.') >= 0) report.push(`% ? Abbreviated journal title ${this.has.journal.value}`)
-    }
-
-    if ((this.referencetype === 'article') && this.has.journaltitle) {
-      if (this.has.journaltitle.value.indexOf('.') >= 0) report.push(`% ? Abbreviated journal title ${this.has.journaltitle.value}`)
-    }
-
-    if ((this.referencetype === 'inproceedings') && this.has.booktitle) {
-      if (!this.has.booktitle.value.match(/:|Proceedings|Companion| '/) || this.has.booktitle.value.match(/\.|workshop|conference|symposium/)) {
-        report.push('% ? Unsure about the formatting of the booktitle')
+      if (this.has.title && !Translator.preferences.suppressTitleCase) {
+        const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
+        if (this.has.title.value.match(/\s/)) {
+          if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')
+        } else {
+          if (!titleCased) report.push('? Title looks like it was stored in lower-case in Zotero')
+        }
       }
+    } else {
+      report = [`I don't know how to quality-check ${this.referencetype} references`]
     }
 
-    if (this.has.title && !Translator.preferences.suppressTitleCase) {
-      const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
-      if (this.has.title.value.match(/\s/)) {
-        if (titleCased) report.push('% ? Title looks like it was stored in title-case in Zotero')
-      } else {
-        if (!titleCased) report.push('% ? Title looks like it was stored in lower-case in Zotero')
-      }
-    }
+    if (!report.length) return ''
 
-    return report.join('\n')
+    report.unshift(`== ${Translator.BetterBibTex ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:`)
+
+    return report.map(line => `% ${line}\n`).join('')
   }
 }
 

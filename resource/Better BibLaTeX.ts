@@ -33,7 +33,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.entryTypes = require('!bibtex-quality-report-loader!./bibtex/biblatex.qr.json')
+Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return
