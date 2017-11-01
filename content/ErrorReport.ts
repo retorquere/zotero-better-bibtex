@@ -101,7 +101,7 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
     document.getElementById('better-bibtex-error-log').value = this.errorlog.truncated
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines)
+    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines) + '...'
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     continueButton.focus()
