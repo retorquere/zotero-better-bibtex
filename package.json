@@ -62,6 +62,7 @@
     "bluebird": "^3.5.0",
     "circular-dependency-plugin": "^4.2.1",
     "clean-webpack-plugin": "^0.1.16",
+    "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "fs-extra": "^4.0.2",

@@ -58,7 +58,7 @@ var common = {
       'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
       'json-loader': path.join(__dirname, './webpack/loaders/json'),
       'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
-      'bibtex-quality-report-loader': path.join(__dirname, './webpack/loaders/bibtex-quality-report'),
+      'bcf-loader': path.join(__dirname, './webpack/loaders/bcf'),
     },
   },
   module: {
