@@ -211,12 +211,8 @@ Translator.doExport = () => {
           break
 
         case 'interval':
-          if (date.from.year === date.to.year && date.from.month === date.to.month) {
-            if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
-            ref.add({ year: `${date.from.year}` })
-          } else {
-            ref.add({ year: item.date })
-          }
+          if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
+          ref.add({ year: `${date.from.year}` })
           break
 
         case 'date':
