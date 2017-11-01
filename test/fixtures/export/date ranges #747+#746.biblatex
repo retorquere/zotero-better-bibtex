@@ -23,3 +23,18 @@
   volume = {62}
 }
 
+@inproceedings{Winograd1986,
+  abstract = {In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.},
+  author = {Winograd, Terry},
+  booktitle = {Proceedings of the 1986 {{ACM Conference}} on {{Computer}}-Supported {{Cooperative Work}} ({{CSCW}} '86)},
+  date = {1986-12-03/1986-12-05},
+  doi = {10.1145/637069.637096},
+  location = {{Austin, TX}},
+  pages = {203--220},
+  publisher = {{ACM}},
+  timestamp = {2015-02-24 12:14:36 +0100},
+  title = {A Language/Action Perspective on the Design of Cooperative Work},
+  url = {http://doi.acm.org/10.1145/637069.637096},
+  urldate = {2017-10-20}
+}
+
