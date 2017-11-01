@@ -136,7 +136,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
 
 import CAYW = require('./cayw.ts')
 $patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
-  if (agent === 'BetterBibTeX') return new CAYW
+  if (agent === 'BetterBibTeX') return CAYW
   return original.apply(this, arguments)
 })
 

@@ -2,6 +2,8 @@ declare const Components: any
 declare const XPCOMUtils: any
 declare const Zotero: any
 
+import Loki = require('./loki.ts')
+
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
 class FieldEnumerator {
@@ -100,9 +102,11 @@ class Field {
 class Document {
   public fields: Field[]
   public data: any
+  public id: string
 
-  constructor() {
+  constructor(id) {
     this.fields = []
+    this.id = id
 
     const data = new Zotero.Integration.DocumentData()
     data.prefs = {
@@ -213,33 +217,67 @@ class Document {
    * Informs the document processor that the operation is complete
    */
   public complete() { return 0 }
+
+  /**
+   * Gets the citation
+   */
+  public citation() {
+    if (!this.fields.length) return []
+
+    return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
+      return {
+        id: item.id,
+        locator: item.locator,
+        suppressAuthor: item['suppress-author'],
+        prefix: item.prefix,
+        suffix: item.suffix,
+        label: item.label
+      }
+    })
+  }
 }
 
 /**
  * The Application class corresponds to a word processing application.
  */
-export = class Application {
+export = new class Application {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
-  public doc: Document
   public fields: any[]
 
+  private docs: any
+
   constructor() {
-    this.doc = new Document()
-    this.fields = []
+    this.fields = [] // what does this do?
+
+    const db = new Loki('cayw', {
+      ttl: 60 * 1000, // tslint:disable-line:no-magic-numbers
+      ttlInterval: 5 * 60 * 1000, // tslint:disable-line:no-magic-numbers
+    })
+    this.docs = db.getCollection('cayw')
   }
 
   /**
    * Gets the active document.
    * @returns {Document}
    */
-  public getActiveDocument() { return this.doc }
+  public getActiveDocument() { return null } // { return this.doc }
 
   /**
    * Gets the document by some app-specific identifier.
    * @param {String|Number} docID
    */
-  public getDocument(docID) { return this.doc }
+  public getDocument(docID) { return this.docs.find(docID) }
 
   public QueryInterface() { return this }
+
+  public createDocument() {
+    const doc = new Document(docID)
+    this.docs.insert(doc)
+    return doc.$loki
+  }
+
+  public closeDocument(doc) {
+    this.findAndRemove(doc.$loki)
+  }
 }
