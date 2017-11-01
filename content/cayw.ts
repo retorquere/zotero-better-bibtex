@@ -1,5 +1,6 @@
 declare const Components: any
 declare const XPCOMUtils: any
+declare const Zotero: any
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -100,7 +101,19 @@ class Document {
   public fields: Field[]
   public data: any
 
-  constructor() { this.fields = [] }
+  constructor() {
+    this.fields = []
+
+    const data = new Zotero.Integration.DocumentData()
+    data.prefs = {
+      noteType: 0,
+      fieldType: 'Field',
+      automaticJournalAbbreviations: true,
+    }
+    data.style = {styleID: 'http://www.zotero.org/styles/cell', locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
+    data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
+    this.setDocumentData(data.serialize())
+  }
 
   /**
    * Displays a dialog in the word processing application

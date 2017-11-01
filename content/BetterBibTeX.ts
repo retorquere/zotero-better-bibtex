@@ -134,8 +134,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
+import CAYW = require('./cayw.ts')
 $patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
-  if (agent === 'BetterBibTeX') return require('./cayw.ts')
+  if (agent === 'BetterBibTeX') return new CAYW
   return original.apply(this, arguments)
 })
 
