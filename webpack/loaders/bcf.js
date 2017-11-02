@@ -9,33 +9,57 @@ const dedent = require('dedent-js');
 module.exports = function(source) {
   var doc = new dom().parseFromString(source)
   var select = xpath.useNamespaces({"bcf": "https://sourceforge.net/projects/biblatex"});
-  
+
   var BCF = {
     // combinations fo allowed fields
     fieldSet: {},
-  
+
     // per type, array of fieldset names that make up the allowed fields for this type
     allowed: {},
-  
+
     // combinations of required fields and the types they apply to
     required: {}
   };
-  
+
   // get all the possible entrytypes and apply the generic fields
   for (const type of select("//bcf:entrytypes/bcf:entrytype", doc)) {
-    BCF.allowed[type.textContent] = ['optional', 'required']
+    BCF.allowed[type.textContent] = ['optional']
   }
-  
+
+  const dateprefix = '^('
+    + select('//bcf:fields/bcf:field[@fieldtype="field" and @datatype="date"]', doc)
+        .map(field => field.textContent.replace(/date$/, ''))
+        .filter(field => field)
+        .join('|')
+    + ')?'
+  const dateprefixRE = new RegExp(dateprefix)
+
+  const datefieldRE = new RegExp(dateprefix.toString() + '(' + Array.from(new Set(
+    select('//bcf:fields/bcf:field[@fieldtype="field" and @datatype="datepart"]', doc)
+      .map(field => field.textContent.replace(dateprefixRE, ''))
+      .filter(field => field)
+  )).join('|') + ')$')
+
   // gather the fieldsets
   for (const node of select("//bcf:entryfields", doc)) {
     var types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
-  
+
     var setname = types.length == 0 ? 'optional' : 'optional_' + types.join('_');
     if (BCF.fieldSet[setname]) throw new Error(`field set ${setname} exists`);
-  
+
     // find all the field names allowed by this set
-    BCF.fieldSet[setname] = new Set(select('./bcf:field', node).map(field => field.textContent))
-  
+    BCF.fieldSet[setname] = []
+    for (const { textContent: field } of select('./bcf:field', node)) {
+      const m = datefieldRE.exec(field)
+      if (m) {
+        BCF.fieldSet[setname].push(`${m[1] || ''}date`)
+        if (field === 'month' || field === 'year') BCF.fieldSet[setname].push(field)
+      } else {
+        BCF.fieldSet[setname].push(field)
+      }
+    }
+    BCF.fieldSet[setname] = new Set(BCF.fieldSet[setname])
+
     // assign the fieldset to the types it applies to
     for (const type of types) {
       if (!BCF.allowed[type]) {
@@ -45,17 +69,17 @@ module.exports = function(source) {
       }
     }
   }
-  
+
   for (const node of select('.//bcf:constraints', doc)) {
     var types = select('./bcf:entrytype', node).map(type => type.textContent).sort()
     var setname = types.length == 0 ? 'required' : 'required_' + types.join('_');
 
     if (BCF.fieldSet[setname] || BCF.required[setname]) throw new Error(`constraint set ${setname} exists`);
 
+    /*
     // find all the field names allowed by this set
     BCF.fieldSet[setname] = new Set(select('.//bcf:field', node).map(field => field.textContent))
 
-    // allow the fields that are required
     for (const type of types) {
       if (!BCF.allowed[type]) {
         throw new Error(`Unknown reference type ${type}`)
@@ -63,7 +87,8 @@ module.exports = function(source) {
         BCF.allowed[type] = _.uniq(BCF.allowed[type].concat(setname))
       }
     }
-  
+    */
+
     var mandatory = select(".//bcf:constraint[@type='mandatory']", node);
     switch (mandatory.length) {
       case 0:
@@ -74,31 +99,31 @@ module.exports = function(source) {
       default:
         throw new Error(`found ${mandatory.length} constraints, expected 1`)
     }
-  
+
     BCF.required[setname] = { types, fields: []}
-  
+
     for (const constraint of Array.from(mandatory.childNodes)) {
       switch (constraint.localName || '#text') {
         case '#text':
           break
-  
+
         case 'field':
           BCF.required[setname].fields.push(constraint.textContent)
           break
-  
+
         case 'fieldor':
         case 'fieldxor':
           BCF.required[setname].fields.push({
             [constraint.localName.replace('field', '')]: select('./bcf:field', constraint).map(field => field.textContent)
           })
           break
-  
+
         default:
           throw new Error(`Unexpected constraint type ${constraint.localName}`)
       }
     }
   }
-  
+
   var template = dedent(`
     const fieldSet = ${jsesc(BCF.fieldSet, { compact: false, indent: '  ' })};
     const allowed = {
@@ -128,22 +153,22 @@ module.exports = function(source) {
         },
       <%_ } -%>
     ];
-    
+
     module.exports = function(explanation) {
       var type = this.referencetype.toLowerCase();
-    
+
       if (!allowed[type]) return;
-    
+
       var unexpected = Object.keys(this.has).filter(field => !allowed[type].find(set => set.has(field)));
       var report = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
-    
+
       for (const test of required) {
         if (test.types.has(type)) test.check(this, report)
       }
-    
+
       return report;
     }
   `);
-  
+
   return ejs.render(template, BCF);
 }
