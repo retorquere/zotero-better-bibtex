@@ -7,6 +7,8 @@ import KeyManager = require('./keymanager.ts')
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
+// tslint:disable:max-classes-per-file
+
 class FieldEnumerator {
   // tslint:disable-next-line:variable-name
   public QueryInterface = XPCOMUtils.generateQI([Components.interfaces.nsISupports, Components.interfaces.nsISimpleEnumerator])
@@ -286,19 +288,23 @@ const application = new class Application {
 
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
+  public OK = 200
+  public SERVER_ERROR = 500
 
-  async init(options) {
-    if (options.query.probe) return [200, 'text/plain', 'ready']
+  public async init(options) {
+    if (options.query.probe) return [this.OK, 'text/plain', 'ready']
 
     try {
       const doc = application.createDocument()
-      await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id);
+      await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
       const citation = doc.citation()
       application.closeDocument(doc)
+      
+      clipboard stuff here
 
-      return [200, 'text/plain', ''];
+      return [this.OK, 'text/plain', '']
     } catch (error) {
-      return [500, "application/text", `CAYW failed: ${err}\n${err.stack}`];
+      return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
     }
   }
 }
