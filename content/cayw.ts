@@ -4,6 +4,7 @@ declare const Zotero: any
 
 import Loki = require('./db/loki.ts')
 import KeyManager = require('./keymanager.ts')
+import Formatter = require('./cayw/formatter.ts')
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -105,11 +106,14 @@ class Field {
 class Document {
   public fields: Field[]
   public data: any
-  public id: string
+  public $loki: number
 
-  constructor(id) {
+  constructor(options) {
     this.fields = []
-    this.id = id
+
+    options.style = options.style || 'apa'
+    const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
+    options.style = style ? style.uri : 'http://www.zotero.org/styles/apa'
 
     const data = new Zotero.Integration.DocumentData()
     data.prefs = {
@@ -117,7 +121,7 @@ class Document {
       fieldType: 'Field',
       automaticJournalAbbreviations: true,
     }
-    data.style = {styleID: 'http://www.zotero.org/styles/cell', locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
+    data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
     data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
     this.setDocumentData(data.serialize())
   }
@@ -230,11 +234,11 @@ class Document {
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
       return {
         id: item.id,
-        locator: item.locator,
-        suppressAuthor: item['suppress-author'],
-        prefix: item.prefix,
-        suffix: item.suffix,
-        label: item.label,
+        locator: item.locator || '',
+        suppressAuthor: !!item['suppress-author'],
+        prefix: item.prefix || '',
+        suffix: item.suffix || '',
+        label: item.label || '',
         citekey: KeyManager.get(item.id).citekey,
       }
     })
@@ -275,14 +279,14 @@ const application = new class Application {
 
   public QueryInterface() { return this }
 
-  public createDocument() {
-    const doc = new Document(docID)
+  public createDocument(options) {
+    const doc = new Document(options)
     this.docs.insert(doc)
-    return doc.$loki
+    return doc
   }
 
   public closeDocument(doc) {
-    this.findAndRemove(doc.$loki)
+    this.docs.findAndRemove(doc.$loki)
   }
 }
 
@@ -291,19 +295,31 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public OK = 200
   public SERVER_ERROR = 500
 
-  public async init(options) {
-    if (options.query.probe) return [this.OK, 'text/plain', 'ready']
+  public async init(request) {
+    const options = request.query || {}
+
+    if (options.probe) return [this.OK, 'text/plain', 'ready']
 
     try {
-      const doc = application.createDocument()
+      const doc = application.createDocument(options)
       await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
-      const citation = doc.citation()
-      application.closeDocument(doc)
-      
-      clipboard stuff here
 
-      return [this.OK, 'text/plain', '']
-    } catch (error) {
+      const citation = await Formatter[options.format || 'playground'](doc.citation(), options)
+      application.closeDocument(doc)
+
+      if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)
+
+      if (options.minimize) {
+        const wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
+        const windows = wm.getEnumerator(null)
+        while (windows.hasMoreElements()) {
+          const win = windows.getNext().QueryInterface(Components.interfaces.nsIDOMChromeWindow)
+          win.minimize()
+        }
+      }
+
+      return [this.OK, 'text/plain', citation]
+    } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
     }
   }

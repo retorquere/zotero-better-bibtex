@@ -1,3 +1,9 @@
+declare const Zotero: any
+
+import Translators = require('../translators.ts')
+import debug = require('../debug.ts')
+import getItemsAsync = require('../get-items-async.ts')
+
 /*
     @config.citeprefix ||= ''
     @config.citepostfix ||= ''
@@ -38,9 +44,14 @@ const shortLocator = {
   }
 
 export = new class Formatter {
+  public async playground(citations, options) {
+    const formatted = citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
+    return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''
+  }
+
   public async cite(citations, options) { return this.latex(citations, options) }
 
-  public async latex(citations, options = {}) {
+  public async latex(citations, options) {
     if (!options.command) options.command = 'cite'
 
     if (citations.length === 0) return ''
@@ -55,7 +66,7 @@ export = new class Formatter {
         label: 0,
       }
 
-      for (const citation of this.citations) {
+      for (const citation of citations) {
         for (const k of Object.keys(state)) {
           if (citation[k]) state[k]++
         }
@@ -68,7 +79,7 @@ export = new class Formatter {
     }
 
     let formatted = ''
-    for (citation of citations) {
+    for (const citation of citations) {
       formatted += '\\'
       formatted += citation.suppressAuthor ? 'citeyear' : options.command
       if (citation.prefix) formatted += `[${citation.prefix}]`
@@ -95,7 +106,7 @@ export = new class Formatter {
     return formatted
   }
 
-  public async mmd(citations, options = {}) {
+  public async mmd(citations, options) {
     const formatted = []
 
     for (const citation of citations) {
@@ -108,8 +119,8 @@ export = new class Formatter {
     return formatted.join('')
   }
 
-  public async pandoc(citations, options = {}) {
-    let formatted = []
+  public async pandoc(citations, options) {
+    const formatted = []
     for (const citation of citations) {
       let cite = ''
       if (citation.prefix) cite += `${citation.prefix} `
@@ -119,18 +130,14 @@ export = new class Formatter {
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
-    formatted = formatted.join('; ')
 
-    if (this.brackets) formatted = `[${formatted}]`
-
-    return formatted
+    return `${options.brackets ? '[' : ''}${formatted.join('; ')}${options.brackets ? ']' : ''}`
   }
 
-  public async 'asciidoctor-bibtex'(citations, options = {}) {
-    let cite
-    let formatted = []
+  public async 'asciidoctor-bibtex'(citations, options) {
+    const formatted = []
     for (const citation of citations) {
-      cite = citation.citekey
+      let cite = citation.citekey
       if (citation.locator) {
         let label = citation.locator
         if (citation.label !== 'page') label = `${shortLocator[citation.label]} ${label}`
@@ -138,16 +145,17 @@ export = new class Formatter {
       }
       formatted.push(cite)
     }
-    formatted = formatted.join(', ')
-    formatted = `${this.cite || 'cite'}:[${formatted}]`
-    return formatted
+
+    return `${options.cite || 'cite'}:[${formatted.join(', ')}]`
   }
 
   public async 'scannable-cite'(citations) {
-
     class Mem {
-      constructor(isLegal1) {
-        this.isLegal = isLegal1
+      private lst: string[]
+      private isLegal: boolean
+
+      constructor(isLegal) {
+        this.isLegal = isLegal
         this.lst = []
       }
 
@@ -159,7 +167,7 @@ export = new class Formatter {
         }
       }
 
-      public setlaw(str, punc) {
+      public setlaw(str, punc = null) {
         if (!punc) punc = ''
         if (str && this.isLegal) return this.lst.push(str + punc)
       }
@@ -218,14 +226,14 @@ export = new class Formatter {
       let label = `${title.get()} ${year.get()}`.trim()
       if (citation.suppressAuthor) label = `-${label}`
 
-      formatted.push(`{${citation.prefix}|${label}|${locator}|${citation.suffix}|${id}}`)
+      formatted.push(`{${citation.prefix}|${citation.label}|${citation.locator}|${citation.suffix}|${id}}`)
     }
 
     return formatted.join('')
   }
 
   /*
-  'atom-zotero-citations': (citations, options = {}) ->
+  'atom-zotero-citations': (citations, options) ->
     citekeys = citations.map(citation -> citation.citekey)
     options.style = options.style || 'apa'
 
@@ -245,18 +253,19 @@ export = new class Formatter {
       return "[#{label}](?@#{citekeys.join(',')})"
   */
 
-  public async translate(citations, options = {}) {
-    const items = await getItemsAsync(citations.map(citation(() => citation.id)))
+  public async translate(citations, options) {
+    const items = await getItemsAsync(citations.map(citation => citation.id))
 
-    let translator = options.translator || 'biblatex'
-    translator = Zotero.BetterBibTeX.Translators.getID(translator) || translator
-    Zotero.BetterBibTeX.debug('cayw.translate:', {requested: options, got: translator})
+    const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
+    const translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
+
+    debug('cayw.translate:', {requested: options, got: translator})
 
     const exportOptions = {
-      exportNotes: ['yes', 'y', 'true'].includes((options.exportNotes || '').toLowerCase())
+      exportNotes: ['yes', 'y', 'true'].includes((options.exportNotes || '').toLowerCase()),
       useJournalAbbreviation: ['yes', 'y', 'true'].includes((options.useJournalAbbreviation || '').toLowerCase()),
     }
 
-    return Zotero.BetterBibTeX.Translators.translate(translator, {items}, exportOptions)
+    return await Translators.translate(translator, exportOptions, items)
   }
 }
