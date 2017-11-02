@@ -37,13 +37,6 @@ const shortLocator = {
     volume: 'vol.',
   }
 
-function getStyle(id = 'apa') {
-  let style = Zotero.Styles.get(`http://www.zotero.org/styles/${id}`)
-  if (!style) style = Zotero.Styles.get(`http://juris-m.github.io/styles/${id}`)
-  if (!style) style = Zotero.Styles.get(id)
-  return style
-}
-
 export = new class Formatter {
   public async cite(citations, options) { return this.latex(citations, options) }
 
@@ -234,9 +227,12 @@ export = new class Formatter {
   /*
   'atom-zotero-citations': (citations, options = {}) ->
     citekeys = citations.map(citation -> citation.citekey)
+    options.style = options.style || 'apa'
 
     itemIDs = citekeys.map(citekey -> KeyManager.keys.findOne({ citekey })).map(citekey -> if citekey then citekey.itemID else null)
     style = getStyle(options.style)
+
+    let style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${id}`) || Zotero.Styles.get(id)
 
     cp = style.getCiteProc()
     cp.setOutputFormat('markdown')
