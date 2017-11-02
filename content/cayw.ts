@@ -5,6 +5,7 @@ declare const Zotero: any
 import Loki = require('./db/loki.ts')
 import KeyManager = require('./keymanager.ts')
 import Formatter = require('./cayw/formatter.ts')
+import debug = require('./debug.ts')
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -113,7 +114,8 @@ class Document {
 
     options.style = options.style || 'apa'
     const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
-    options.style = style ? style.uri : 'http://www.zotero.org/styles/apa'
+    debug('CAYW.document:', style)
+    options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
     const data = new Zotero.Integration.DocumentData()
     data.prefs = {
@@ -123,6 +125,7 @@ class Document {
     }
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
     data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
+    debug('CAYW.document:', data)
     this.setDocumentData(data.serialize())
   }
 
@@ -232,13 +235,14 @@ class Document {
     if (!this.fields.length) return []
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
+      debug('CAYW.citation:', item)
       return {
         id: item.id,
         locator: item.locator || '',
         suppressAuthor: !!item['suppress-author'],
         prefix: item.prefix || '',
         suffix: item.suffix || '',
-        label: item.label || '',
+        label: item.locator ? (item.label || 'page') : '',
         citekey: KeyManager.get(item.id).citekey,
       }
     })
@@ -254,6 +258,7 @@ const application = new class Application {
   public fields: any[]
 
   private docs: any
+  private active: Document
 
   constructor() {
     this.fields = [] // what does this do?
@@ -262,27 +267,33 @@ const application = new class Application {
       ttl: 60 * 1000, // tslint:disable-line:no-magic-numbers
       ttlInterval: 5 * 60 * 1000, // tslint:disable-line:no-magic-numbers
     })
-    this.docs = db.getCollection('cayw')
+    this.docs = db.addCollection('cayw', {
+      ttl: 60 * 1000, // tslint:disable-line:no-magic-numbers
+      ttlInterval: 5 * 60 * 1000, // tslint:disable-line:no-magic-numbers
+    })
   }
 
   /**
    * Gets the active document.
    * @returns {Document}
    */
-  public getActiveDocument() { return null } // { return this.doc }
+  public getActiveDocument() { return this.active }
 
   /**
    * Gets the document by some app-specific identifier.
-   * @param {String|Number} docID
+   * @param {String|Number} id
    */
-  public getDocument(docID) { return this.docs.find(docID) }
+  public getDocument(id) {
+    debug('CAYW.getDocument', { id }, this.docs.findOne(id))
+    return this.docs.findOne(id)
+  }
 
   public QueryInterface() { return this }
 
   public createDocument(options) {
-    const doc = new Document(options)
-    this.docs.insert(doc)
-    return doc
+    this.active = new Document(options)
+    this.docs.insert(this.active)
+    return this.active
   }
 
   public closeDocument(doc) {
