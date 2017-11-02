@@ -283,6 +283,8 @@ class ZoteroItem {
     undefined: { open: '[', close: ']' },
   }
 
+  public groups: any // comes from biblatex parser
+
   protected item: any
 
   private typeMap = {
@@ -428,7 +430,6 @@ class ZoteroItem {
 
   private id: string
   private bibtex: any // comes from biblatex parser
-  private groups: any // comes from biblatex parser
   private fields: any // comes from biblatex parser
   private type: string
   private hackyFields: string[]
@@ -850,19 +851,6 @@ class ZoteroItem {
     html = html.replace(/\u00A0 /g, '~ ') // if allowtilde
     // html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
     return html
-  }
-
-  // for the really "special" jabref groups 4 format
-  private findGroup(name, groups) {
-    if (!this.groups) return null
-    if (!groups) groups = this.groups
-
-    for (let group of groups) {
-      if (group.name === name) return group
-      if (group = this.findGroup(name, group.groups || [])) return group
-    }
-
-    return null
   }
 
   private import() {

@@ -134,6 +134,12 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
+import CAYW = require('./cayw.ts')
+$patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
+  if (agent === 'BetterBibTeX') return CAYW
+  return original.apply(this, arguments)
+})
+
 /* bugger this, I don't want megabytes of shared code in the translators */
 import parseDate = require('./dateparser.ts')
 import CiteProc = require('./citeproc.ts')
