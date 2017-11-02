@@ -2,7 +2,8 @@ declare const Components: any
 declare const XPCOMUtils: any
 declare const Zotero: any
 
-import Loki = require('./loki.ts')
+import Loki = require('./db/loki.ts')
+import KeyManager = require('./keymanager.ts')
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -231,7 +232,8 @@ class Document {
         suppressAuthor: item['suppress-author'],
         prefix: item.prefix,
         suffix: item.suffix,
-        label: item.label
+        label: item.label,
+        citekey: KeyManager.get(item.id).citekey,
       }
     })
   }
@@ -240,7 +242,7 @@ class Document {
 /**
  * The Application class corresponds to a word processing application.
  */
-export = new class Application {
+const application = new class Application {
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[]
@@ -281,3 +283,24 @@ export = new class Application {
     this.findAndRemove(doc.$loki)
   }
 }
+
+Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
+  public supportedMethods = ['GET']
+
+  async init(options) {
+    if (options.query.probe) return [200, 'text/plain', 'ready']
+
+    try {
+      const doc = application.createDocument()
+      await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id);
+      const citation = doc.citation()
+      application.closeDocument(doc)
+
+      return [200, 'text/plain', ''];
+    } catch (error) {
+      return [500, "application/text", `CAYW failed: ${err}\n${err.stack}`];
+    }
+  }
+}
+
+export = application
