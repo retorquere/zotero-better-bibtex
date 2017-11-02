@@ -142,7 +142,14 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return parseDate(date) },
   isEDTF(sandbox, date) {
     try {
-      EDTF.parse(date.replace(/u/g, 'X'))
+      // https://github.com/inukshuk/edtf.js/issues/5
+      EDTF.parse(date
+        .replace(/u/g, 'X')
+        .replace(/(\?~)|(~\?)/g, '%')
+        .replace(/unknown/g, '*')
+        .replace(/open/g, '')
+        .replace(/y/g, 'Y')
+      )
       return true
     } catch (error) {
       return false

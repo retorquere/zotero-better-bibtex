@@ -47,9 +47,13 @@ export = (date, formatted_field, verbatim_field) => {
   if (date.type === 'verbatim') {
     field = { name: verbatim_field, value: date.verbatim }
 
-// TODO: what happens here?
-//      when date.edtf && Translator.preferences.biblatexExtendedDateFormat
-//        field = { name: formatted_field, value: date.replace(/~/g, '\u00A0') }
+  // well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
+  // NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
+  // guess what that gets translated to!
+  /*
+  else if (date.edtf && Translator.preferences.biblatexExtendedDateFormat) {
+    field = { name: formatted_field, value: date.replace(/~/g, '\u00A0') }
+  */
 
   } else if (date.type === 'date') {
     field = { name: formatted_field, value: format(date) }
@@ -64,12 +68,11 @@ export = (date, formatted_field, verbatim_field) => {
     field = {}
   }
 
+  if (!field.name || !field.value) return {}
+
   // well this is fairly dense... the date field is not an verbatim field, so the 'circa' symbol ('~') ought to mean a
   // NBSP... but some magic happens in that field (always with the magic, BibLaTeX...). But hey, if I insert an NBSP,
   // guess what that gets translated to!
-
-  if (!field.name || !field.value) return {}
-
   if (field.value) field.value = field.value.replace(/~/g, '\u00A0')
 
   return field

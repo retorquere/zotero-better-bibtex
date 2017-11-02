@@ -54,7 +54,14 @@ function parse_edtf(date) {
   } catch (err) {}
 
   try {
-    return normalize_edtf(EDTF.parse(date.replace('?~', '~').replace(/u/g, 'X')))
+    // https://github.com/inukshuk/edtf.js/issues/5
+    return normalize_edtf(EDTF.parse(date
+      .replace(/u/g, 'X')
+      .replace(/(\?~)|(~\?)/g, '%')
+      .replace(/unknown/g, '*')
+      .replace(/open/g, '')
+      .replace(/y/g, 'Y')
+    ))
   } catch (err) {}
 
   return false

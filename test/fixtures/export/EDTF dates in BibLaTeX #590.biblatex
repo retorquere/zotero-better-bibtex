@@ -91,7 +91,7 @@
 @article{barker7_1723_turkey,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker7, Anne},
-  date = {1723~},
+  date = {1723?~},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -261,6 +261,7 @@
 @article{barker13_y-51234_20171101,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker13, Anne},
+  date = {y-51234},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -269,13 +270,13 @@
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {2017-11-01 19:41:03 +0100-2},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
-  urldate = {2016-07-24},
-  year = {y-51234}
+  urldate = {2016-07-24}
 }
 
 @article{barker4_y52000_20171101,
   abstract = {Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.},
   author = {Barker4, Anne},
+  date = {y52000},
   entrysubtype = {newspaper},
   journaltitle = {ABC News},
   langid = {australian},
@@ -284,7 +285,6 @@
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {2017-11-01 19:41:03 +0100-3},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
-  urldate = {2016-07-24},
-  year = {y52000}
+  urldate = {2016-07-24}
 }
 
