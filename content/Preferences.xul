@@ -185,6 +185,7 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.citekeys;" value="citekeys"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.pandoc;" value="pandoc"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode;" value="orgmode"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgRef;" value="orgRef"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.atom;" value="atom"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
                       </menupopup>

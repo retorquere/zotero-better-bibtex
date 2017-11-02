@@ -42,6 +42,10 @@ const Mode = { // tslint:disable-line:variable-name
     Zotero.write(keys)
   },
 
+  orgRef(items) {
+    Zotero.write(items.map(item => `cite:${item.citekey}`).join(' '))
+  },
+
   orgmode(items) {
     for (const item of items) {
       let id
