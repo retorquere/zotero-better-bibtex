@@ -108,16 +108,6 @@ class AST {
     this.elems.shift()
   }
 
-  private plaintext(text, pos) {
-    const l = this.elems[0].children.length
-    if ((l === 0) || (this.elems[0].children[l - 1].name !== '#text')) {
-      this.elems[0].children.push({pos, name: '#text', text})
-    } else {
-      this.elems[0].children[l - 1].text += text
-    }
-
-  }
-
   public pre(text) {
     if (this.elems[0].name !== 'pre') throw new Error(`Expected 'pre' tag, found '${this.elems[0].name}'`)
     if (this.elems[0].text) throw new Error('Text already set on pre tag')
@@ -167,6 +157,16 @@ class AST {
       }
     }
   }
+
+  private plaintext(text, pos) {
+    const l = this.elems[0].children.length
+    if ((l === 0) || (this.elems[0].children[l - 1].name !== '#text')) {
+      this.elems[0].children.push({pos, name: '#text', text})
+    } else {
+      this.elems[0].children[l - 1].text += text
+    }
+
+  }
 }
 
 function makeMap(elts) {
@@ -191,59 +191,6 @@ export = new class MarkupParser {
   private minimal = makeMap('em italic i strong b nc sc enquote pre span sub sup')
   private closeSelf = makeMap('colgroup dd dt li options p td tfoot th thead tr')
   private empty = makeMap('area base basefont br col frame hr img input link meta param embed command keygen source track wbr')
-
-  private parseStartTag(tag, tagName, rest, unary) {
-    tagName = tagName.toLowerCase()
-
-    // TODO: In addition to lastTag === tagName, also check special case for th, td, tfoot, tbody, thead
-    if (this.closeSelf[tagName] && (this.lastTag === tagName)) this.parseEndTag(tagName)
-
-    unary = this.empty[tagName] || !!unary
-
-    if (!unary) {
-      this.stack.push(tagName)
-      this.lastTag = tagName
-    }
-
-    if (this.handler.start) {
-      let match
-      const attrs = {}
-      while ((match = rest.match(this.re.attr))) {
-        rest = rest.substr(match[0].length)
-        const name = match[1]
-        const value = match[2] || match[3] || match[4] || '' // tslint:disable-line:no-magic-numbers
-        attrs[name] = value
-      }
-      this.handler.start(tagName, attrs)
-    }
-  }
-
-  private parseEndTag(tagName) {
-    // If no tag name is provided, clean shop
-    let pos
-    if (!tagName) {
-      pos = 0
-    } else {
-      pos = this.stack.length - 1
-      while (pos >= 0) {
-        if (this.stack[pos] === tagName) {
-          break
-        }
-        pos -= 1
-      }
-    }
-    if (pos >= 0) {
-      // Close all the open elements, up the stack
-      let i = this.stack.length - 1
-      while (i >= pos) {
-        if (this.handler.end) this.handler.end(this.stack[i])
-        i -= 1
-      }
-      // Remove the open elements from the stack
-      this.stack.length = pos
-      this.lastTag = this.stack[pos - 1]
-    }
-  }
 
   public parse(html, options: { caseConversion?: boolean, mode?: string } = {}) {
     html = `${html}`
@@ -346,6 +293,59 @@ export = new class MarkupParser {
     }
 
     return this.handler.root
+  }
+
+  private parseStartTag(tag, tagName, rest, unary) {
+    tagName = tagName.toLowerCase()
+
+    // TODO: In addition to lastTag === tagName, also check special case for th, td, tfoot, tbody, thead
+    if (this.closeSelf[tagName] && (this.lastTag === tagName)) this.parseEndTag(tagName)
+
+    unary = this.empty[tagName] || !!unary
+
+    if (!unary) {
+      this.stack.push(tagName)
+      this.lastTag = tagName
+    }
+
+    if (this.handler.start) {
+      let match
+      const attrs = {}
+      while ((match = rest.match(this.re.attr))) {
+        rest = rest.substr(match[0].length)
+        const name = match[1]
+        const value = match[2] || match[3] || match[4] || '' // tslint:disable-line:no-magic-numbers
+        attrs[name] = value
+      }
+      this.handler.start(tagName, attrs)
+    }
+  }
+
+  private parseEndTag(tagName) {
+    // If no tag name is provided, clean shop
+    let pos
+    if (!tagName) {
+      pos = 0
+    } else {
+      pos = this.stack.length - 1
+      while (pos >= 0) {
+        if (this.stack[pos] === tagName) {
+          break
+        }
+        pos -= 1
+      }
+    }
+    if (pos >= 0) {
+      // Close all the open elements, up the stack
+      let i = this.stack.length - 1
+      while (i >= pos) {
+        if (this.handler.end) this.handler.end(this.stack[i])
+        i -= 1
+      }
+      // Remove the open elements from the stack
+      this.stack.length = pos
+      this.lastTag = this.stack[pos - 1]
+    }
   }
 
   private innerText(node, text = '') {

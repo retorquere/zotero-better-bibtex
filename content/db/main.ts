@@ -9,6 +9,7 @@ const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) :
 
 class DBStore {
   public mode = 'reference'
+
   private conn: any = {}
   private validName = /^better-bibtex[-_a-zA-Z0-9]*$/
 

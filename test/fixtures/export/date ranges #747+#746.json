@@ -1,0 +1,270 @@
+{
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Self",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "attachments": [
+        {
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "mimeType": "application/pdf",
+          "title": "Attachment"
+        }
+      ],
+      "publicationTitle": "Bulletin of Volcanology",
+      "pages": "493-518",
+      "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62",
+      "date": "June 18–23, 2017"
+    },
+    {
+      "itemType": "journalArticle",
+      "creators": [
+        {
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Self",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "attachments": [
+        {
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "mimeType": "application/pdf",
+          "title": "Attachment"
+        }
+      ],
+      "publicationTitle": "Bulletin of Volcanology",
+      "pages": "493-518",
+      "title": "746: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62",
+      "date": "22-26 June 2015"
+    },
+    {
+      "itemType": "conferencePaper",
+      "url": "http://doi.acm.org/10.1145/637069.637096",
+      "place": "Austin, TX",
+      "publisher": "ACM",
+      "pages": "203–220",
+      "date": "December 3-5, 1986",
+      "DOI": "10.1145/637069.637096",
+      "accessDate": "2017-10-20 19:37:10",
+      "libraryCatalog": "ACM Digital Library",
+      "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
+      "title": "A language/action perspective on the design of cooperative work",
+      "proceedingsTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
+      "creators": [
+        {
+          "firstName": "Terry",
+          "lastName": "Winograd",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "5JMPFPKZ"
+      ],
+      "relations": {},
+      "dateAdded": "2017-10-20 19:37:10",
+      "dateModified": "2017-10-20 19:37:59",
+      "uri": "http://zotero.org/users/10604/items/NBDZHC39",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+          "accessDate": "2017-10-20 19:47:23",
+          "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+          "parentItem": "NBDZHC39",
+          "linkMode": 1,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2017-10-20 19:47:23",
+          "dateModified": "2017-10-20 19:47:24",
+          "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
+          "uniqueFields": {
+            "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+            "accessDate": "2017-10-20 19:47:23",
+            "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+            "linkMode": 1,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 12104,
+          "key": "4AKSDDN5",
+          "libraryID": null,
+          "sourceItemKey": "NBDZHC39",
+          "seeAlso": [],
+          "mimeType": "application/pdf",
+          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "url": "https://hci.stanford.edu/winograd/papers/language-action.html",
+          "accessDate": "2017-10-20 19:46:16",
+          "title": "Language/Action Perspective",
+          "parentItem": "NBDZHC39",
+          "linkMode": 3,
+          "contentType": "text/html",
+          "charset": "windows-1252",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2017-10-20 19:46:16",
+          "dateModified": "2017-10-20 19:46:16",
+          "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
+          "uniqueFields": {
+            "url": "https://hci.stanford.edu/winograd/papers/language-action.html",
+            "accessDate": "2017-10-20 19:46:16",
+            "title": "Language/Action Perspective",
+            "linkMode": 3,
+            "mimeType": "text/html"
+          },
+          "itemID": 12105,
+          "key": "DJPHEG7J",
+          "libraryID": null,
+          "sourceItemKey": "NBDZHC39",
+          "seeAlso": [],
+          "mimeType": "text/html"
+        },
+        {
+          "itemType": "attachment",
+          "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72",
+          "accessDate": "2017-10-20 19:38:08",
+          "title": "p203-winograd.pdf",
+          "parentItem": "NBDZHC39",
+          "linkMode": 1,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "p203-winograd.pdf",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2017-10-20 19:38:08",
+          "dateModified": "2017-10-20 19:38:09",
+          "uri": "http://zotero.org/users/10604/items/U7EAP63X",
+          "uniqueFields": {
+            "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72",
+            "accessDate": "2017-10-20 19:38:08",
+            "title": "p203-winograd.pdf",
+            "linkMode": 1,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 12106,
+          "key": "U7EAP63X",
+          "libraryID": null,
+          "sourceItemKey": "NBDZHC39",
+          "seeAlso": [],
+          "mimeType": "application/pdf",
+          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf"
+        }
+      ],
+      "notes": [],
+      "uniqueFields": {
+        "url": "http://doi.acm.org/10.1145/637069.637096",
+        "place": "Austin, TX",
+        "publisher": "ACM",
+        "pages": "203–220",
+        "date": "December 3-5, 1986",
+        "DOI": "10.1145/637069.637096",
+        "accessDate": "2017-10-20 19:37:10",
+        "libraryCatalog": "ACM Digital Library",
+        "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
+        "title": "A language/action perspective on the design of cooperative work",
+        "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)"
+      },
+      "itemID": 12093,
+      "key": "NBDZHC39",
+      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "winograd86language"
+    }
+  ],
+  "config": {
+    "label": "BetterBibTeX JSON",
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "preferences": {
+      "citekeyFormat": "[auth][year]",
+      "jabrefGroups": 0,
+      "defaultDateParserLocale": "en-GB",
+      "bibtexURL": "note"
+    }
+  },
+  "collections": {
+  }
+}
+

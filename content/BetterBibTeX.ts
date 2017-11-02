@@ -134,6 +134,12 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
+import CAYW = require('./cayw.ts')
+$patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
+  if (agent === 'BetterBibTeX') return CAYW
+  return original.apply(this, arguments)
+})
+
 /* bugger this, I don't want megabytes of shared code in the translators */
 import parseDate = require('./dateparser.ts')
 import CiteProc = require('./citeproc.ts')
@@ -364,13 +370,6 @@ class Lock {
     debug('Lock: locked')
   }
 
-  private bench(msg) {
-    const ts = (new Date()).valueOf()
-    // tslint:disable-next-line:no-magic-numbers
-    if (this.mark.msg) debug('Lock:', this.mark.msg, 'took', (ts - this.mark.ts) / 1000.0, 's')
-    this.mark = { ts, msg }
-  }
-
   public update(msg) {
     this.bench(msg)
     Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
@@ -382,6 +381,13 @@ class Lock {
     Zotero.hideZoteroPaneOverlays()
     this.toggle(false)
     debug('Lock: unlocked')
+  }
+
+  private bench(msg) {
+    const ts = (new Date()).valueOf()
+    // tslint:disable-next-line:no-magic-numbers
+    if (this.mark.msg) debug('Lock:', this.mark.msg, 'took', (ts - this.mark.ts) / 1000.0, 's')
+    this.mark = { ts, msg }
   }
 
   private toggle(locked) {
@@ -401,6 +407,37 @@ export = new class {
   constructor() {
     this.ready = bbtReady.promise
     window.addEventListener('load', this.load, false)
+  }
+
+  public errorReport(includeReferences) {
+    debug('ErrorReport::start', includeReferences)
+
+    let items = null
+
+    switch (pane && includeReferences) {
+      case 'collection': case 'library':
+        items = { collection: pane.getSelectedCollection() }
+        if (!items.collection) items = { library: pane.getSelectedLibraryID() }
+        break
+
+      case 'items':
+        try {
+          items = { items: pane.getSelectedItems() }
+        } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+          debug('Could not get selected items:', err)
+          items = {}
+        }
+
+        if (!items.items || !items.items.length) items = null
+        break
+    }
+
+    const params = {wrappedJSObject: { items }}
+
+    debug('ErrorReport::start popup', params)
+    const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
+    debug('ErrorReport::start done')
   }
 
   private async load() {
@@ -439,38 +476,6 @@ export = new class {
     bbtReady.resolve(true)
 
     lock.unlock()
-
-  }
-
-  public errorReport(includeReferences) {
-    debug('ErrorReport::start', includeReferences)
-
-    let items = null
-
-    switch (pane && includeReferences) {
-      case 'collection': case 'library':
-        items = { collection: pane.getSelectedCollection() }
-        if (!items.collection) items = { library: pane.getSelectedLibraryID() }
-        break
-
-      case 'items':
-        try {
-          items = { items: pane.getSelectedItems() }
-        } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-          debug('Could not get selected items:', err)
-          items = {}
-        }
-
-        if (!items.items || !items.items.length) items = null
-        break
-    }
-
-    const params = {wrappedJSObject: { items }}
-
-    debug('ErrorReport::start popup', params)
-    const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-    ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
-    debug('ErrorReport::start done')
 
   }
 }

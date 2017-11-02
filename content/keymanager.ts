@@ -16,6 +16,9 @@ import Formatter = require('./keymanager/formatter.ts')
 import AutoExport = require('./auto-export.ts')
 
 class KeyManager {
+
+  public keys: any
+
   private static postfixRE = {
     numeric: /^(-[0-9]+)?$/,
     alphabetic: /^([a-z])?$/,
@@ -29,8 +32,6 @@ class KeyManager {
       attachment?: number
     }
   }
-
-  public keys: any
 
   public async pin(ids) {
     ids = this.expandSelection(ids)
@@ -104,21 +105,6 @@ class KeyManager {
     }
 
     if (manual) AutoExport.changed(updates)
-  }
-
-  private expandSelection(ids) {
-    if (Array.isArray(ids)) return ids
-
-    if (ids === 'selected') {
-      try {
-        return Zotero.getActiveZoteroPane().getSelectedItems(true)
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-        debug('Could not get selected items:', err)
-        return []
-      }
-    }
-
-    return [ids]
   }
 
   public async init() {
@@ -264,6 +250,58 @@ class KeyManager {
     debug('KeyManager.rescan: done updating citation keys')
   }
 
+  public update(item, current?) {
+    if (item.isNote() || item.isAttachment()) return
+
+    current = current || this.keys.findOne({ itemID: item.id })
+    const proposed = this.propose(item)
+
+    if (current && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
+
+    if (current) {
+      current.pinned = proposed.pinned
+      current.citekey = proposed.citekey
+      this.keys.update(current)
+    } else {
+      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
+    }
+
+    return proposed.citekey
+  }
+
+  public remove(ids) {
+     if (!Array.isArray(ids)) ids = [ids]
+     debug('KeyManager.remove:', ids)
+     this.keys.findAndRemove({ itemID : { $in : ids } })
+   }
+
+  public get(itemID) {
+    // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
+    // go-ahead to *start* my init.
+    if (!this.keys) return { citekey: '', pinned: false, retry: true }
+
+    const key = this.keys.findOne({ itemID })
+    if (key) return key
+
+    debug('KeyManager.get called for non-existent', itemID)
+    return { citekey: '', pinned: false }
+  }
+
+  private expandSelection(ids) {
+    if (Array.isArray(ids)) return ids
+
+    if (ids === 'selected') {
+      try {
+        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        return []
+      }
+    }
+
+    return [ids]
+  }
+
   private postfixAlpha(n) {
     const ordA = 'a'.charCodeAt(0)
     const ordZ = 'z'.charCodeAt(0)
@@ -323,43 +361,6 @@ class KeyManager {
         return { citekey: postfixed, pinned: false }
       }
     }
-  }
-
-  public update(item, current?) {
-    if (item.isNote() || item.isAttachment()) return
-
-    current = current || this.keys.findOne({ itemID: item.id })
-    const proposed = this.propose(item)
-
-    if (current && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
-
-    if (current) {
-      current.pinned = proposed.pinned
-      current.citekey = proposed.citekey
-      this.keys.update(current)
-    } else {
-      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
-    }
-
-    return proposed.citekey
-  }
-
-  public remove(ids) {
-     if (!Array.isArray(ids)) ids = [ids]
-     debug('KeyManager.remove:', ids)
-     this.keys.findAndRemove({ itemID : { $in : ids } })
-   }
-
-  public get(itemID) {
-    // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
-    // go-ahead to *start* my init.
-    if (!this.keys) return { citekey: '', pinned: false, retry: true }
-
-    const key = this.keys.findOne({ itemID })
-    if (key) return key
-
-    debug('KeyManager.get called for non-existent', itemID)
-    return { citekey: '', pinned: false }
   }
 }
 
