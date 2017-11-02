@@ -56,7 +56,7 @@ async function announce(issue, release) {
     reason = ` (${JSON.stringify(process.env.CIRCLE_COMMIT_MSG)})`
   }
 
-  const msg = `:robot: bleep bloop; this is your friendly neighborhood build bot announcing [${build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/${release}/zotero-better-bibtex-${version}.xpi)${reason}.`
+  const msg = `:robot: this is your friendly neighborhood build bot announcing [${build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/${release}/zotero-better-bibtex-${version}.xpi)${reason}.`
 
   try {
     await github.request({
@@ -117,10 +117,6 @@ async function main() {
       contentType: 'application/rdf+xml',
     })
 
-    if (PRERELEASE) {
-      issues.push('555')
-      issues = dedup(issues.sort())
-    }
     for (const issue of issues) {
       await announce(issue, release.current.tag_name)
     }
@@ -146,9 +142,6 @@ async function main() {
 
     if (process.env.NIGHTLY === 'true') {
       issues = []
-    } else if (process.env.CIRCLE_BRANCH === 'master' && PRERELEASE) {
-      issues.push('555')
-      issues = dedup(issues)
     }
 
     for (const issue of issues) {

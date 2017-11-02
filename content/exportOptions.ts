@@ -44,6 +44,7 @@ function addEventHandlers() {
 window.addEventListener('load', () => {
   DOM_OBSERVER = new MutationObserver(addEventHandlers)
   DOM_OBSERVER.observe(document.getElementById('translator-options'), { attributes: true, subtree: true, childList: true })
+  addEventHandlers()
 }, false)
 
 window.addEventListener('unload', () => {
