@@ -134,11 +134,14 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "5JMPFPKZ"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-10-20 19:37:10",
       "dateModified": "2017-10-20 19:37:59",
       "uri": "http://zotero.org/users/10604/items/NBDZHC39",
@@ -153,8 +156,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:47:23",
           "dateModified": "2017-10-20 19:47:24",
           "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
@@ -169,7 +175,9 @@
           "key": "4AKSDDN5",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf"
         },
@@ -182,8 +190,11 @@
           "linkMode": 3,
           "contentType": "text/html",
           "charset": "windows-1252",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:46:16",
           "dateModified": "2017-10-20 19:46:16",
           "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
@@ -198,7 +209,9 @@
           "key": "DJPHEG7J",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html"
         },
         {
@@ -211,8 +224,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "p203-winograd.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:38:08",
           "dateModified": "2017-10-20 19:38:09",
           "uri": "http://zotero.org/users/10604/items/U7EAP63X",
@@ -227,12 +243,16 @@
           "key": "U7EAP63X",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://doi.acm.org/10.1145/637069.637096",
         "place": "Austin, TX",
@@ -250,7 +270,9 @@
       "key": "NBDZHC39",
       "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "winograd86language"
     }
   ],
@@ -259,12 +281,11 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     }
   },
   "collections": {
   }
 }
-

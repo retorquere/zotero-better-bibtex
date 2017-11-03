@@ -18,9 +18,9 @@
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     }
   },
   "collections": {

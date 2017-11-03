@@ -7,9 +7,9 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "keywords,abstract,file",
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

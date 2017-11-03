@@ -171,6 +171,29 @@ class AutoExport {
     this.db.insert(ae)
   }
 
+  public changed(items) {
+    const changed = {
+      collections: new Set,
+      libraries: new Set,
+    }
+
+    for (const item of items) {
+      changed.libraries.add(item.libraryID)
+
+      for (let collectionID of item.getCollections()) {
+        if (changed.collections.has(collectionID)) continue
+
+        while (collectionID) {
+          changed.collections.add(collectionID)
+          collectionID = Zotero.Collections.get(collectionID).parentID
+        }
+      }
+    }
+
+    if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
+    if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
+  }
+
   public schedule(type, ids) {
     debug('AutoExport.schedule', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
