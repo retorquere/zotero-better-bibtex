@@ -197,35 +197,30 @@
 @book{simpson_cool_book_0110,
   author = {Simpson, Lisa},
   date = {199u},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Cool Book 0110}
 }
 
 @book{simpson_cool_book_0120,
   author = {Simpson, Lisa},
   date = {19uu},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Cool Book 0120}
 }
 
 @book{simpson_cool_book_0130,
   author = {Simpson, Lisa},
   date = {1999-uu},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Cool Book 0130}
 }
 
 @book{simpson_cool_book_0140,
   author = {Simpson, Lisa},
   date = {1999-01-uu},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Cool Book 0140}
 }
 
 @book{simpson_cool_book_0150,
   author = {Simpson, Lisa},
   date = {1999-uu-uu},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Cool Book 0150}
 }
 
@@ -238,7 +233,6 @@
   langid = {australian},
   note = {Actual: 2016-07-18T20:26:06+10:00},
   rights = {http://www.abc.net.au/conditions.htm\#UseOfContent},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {2017-11-01 19:41:03 +0100-1},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24}
@@ -253,7 +247,6 @@
   langid = {australian},
   note = {Actual: 2016-07-18T20:26:06+10:00},
   rights = {http://www.abc.net.au/conditions.htm\#UseOfContent},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {2017-11-01 19:41:03 +0100-2},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24}
@@ -268,7 +261,6 @@
   langid = {australian},
   note = {Actual: 2016-07-18T20:26:06+10:00},
   rights = {http://www.abc.net.au/conditions.htm\#UseOfContent},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {2017-11-01 19:41:03 +0100-3},
   url = {http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292},
   urldate = {2016-07-24}
