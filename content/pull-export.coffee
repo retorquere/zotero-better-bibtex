@@ -5,21 +5,28 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    let collection
+    let path
     try {
-      collection = url.query['']
+      path = url.query['']
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no path']
-      collection = null
     }
 
     try {
-      const path = collection.split('.')
+      let [ , path, translator ] = path.match(/(.*)\.([a-zA-Z]+)$/)
 
-      if (path.length == 1) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no format in extension']
-
-      const translator = path.pop.toLowerCase()
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
+      if (path[0] !== '/') path = `/0/${path}`
+
+      let [ , lib, path ] = path.match(/\/([0-9]+)\/(.*)/)
+      libID = parseInt(lib)
+
+      let collection = Zotero.Collections.getByLibraryAndKey(libID, path)
+      if (!collection) {
+        for (const subcol of path.split('/')) {
+          if (!subcol) continue
+        }
+      }
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
