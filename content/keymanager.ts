@@ -13,6 +13,7 @@ import Prefs = require('./prefs.ts')
 import Citekey = require('./keymanager/get-set.ts')
 import DB = require('./db/main.ts')
 import Formatter = require('./keymanager/formatter.ts')
+import AutoExport = require('./auto-export.ts')
 
 class KeyManager {
 
@@ -69,11 +70,11 @@ class KeyManager {
 
   }
 
-  public async refresh(ids, warn = false) {
+  public async refresh(ids, manual = false) {
     ids = this.expandSelection(ids)
     debug('KeyManager.refresh', ids)
 
-    const warnAt = warn ? Prefs.get('warnBulkModify') : 0
+    const warnAt = manual ? Prefs.get('warnBulkModify') : 0
     if (warnAt > 0 && ids.length > warnAt) {
       const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
       if (affected > warnAt) {
@@ -91,6 +92,7 @@ class KeyManager {
       }
     }
 
+    const updates = []
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
@@ -99,8 +101,10 @@ class KeyManager {
       if (parsed.pinned) continue
 
       this.update(item)
+      if (manual) updates.push(item)
     }
 
+    if (manual) AutoExport.changed(updates)
   }
 
   public async init() {
