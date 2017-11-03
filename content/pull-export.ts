@@ -1,3 +1,5 @@
+declare const Zotero: any
+
 const OK = 200
 const SERVER_ERROR = 500
 
@@ -18,11 +20,10 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    let path = request.query ? request.query[''] : null
-    if (!path) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no path']
+    if (!request.query || !request.query['']) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no path']
 
     try {
-      let [ , path, translator ] = path.match(/(.*)\.([a-zA-Z]+)$/)
+      let [ , path, translator ] = request.query[''].match(/(.*)\.([a-zA-Z]+)$/)
 
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
       if (path[0] !== '/') path = `/0/${path}`
@@ -46,7 +47,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
         }
       }
 
-      return [OK, 'text/plain', yield Translators.translate(translator, { collection }, displayOptions(request)) ]
+      return [OK, 'text/plain', await Translators.translate(translator, { collection }, displayOptions(request)) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -58,12 +59,12 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
   public supportedMethods = ['GET']
 
   public async init(request) {
-    let library = request.query ? request.query[''] : null
+    const library = request.query ? request.query[''] : null
     if (!library) return [SERVER_ERROR, 'text/plain', 'Could not export library: no path']
 
     try {
       let [ , libID, translator ] = /^\/?([0-9]+)?\/?library.(.+)$/.exec(library)
-  
+
       if (libID && !Zotero.Libraries.exists(libID)) {
         return [SERVER_ERROR, 'text/plain', `Could not export bibliography: library '${library}' does not exist`]
       }
@@ -73,8 +74,8 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
       }
 
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
-  
-      return [OK, 'text/plain', yield Translators.translate(translator, { library: parseInt(libID) }, displayOptions(request)) ]
+
+      return [OK, 'text/plain', await Translators.translate(translator, { library: parseInt(libID) }, displayOptions(request)) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -87,18 +88,16 @@ Zotero.Server.Endpoints['/better-bibtex/select'] = class {
 
   public async init(request) {
     let translator = request.query ? request.query[''] : null
-  
-    if (!translator) {
-      return [SERVER_ERROR, 'text/plain', `Could not export bibliography: no format` ]
-    }
+
+    if (!translator) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no format' ]
 
     try {
-      zoteroPane = Zotero.getActiveZoteroPane()
-      items = getItemsAsync(zoteroPane.getSelectedItems().map(item -> item.id))
-  
+      const items = Zotero.getActiveZoteroPane().getSelectedItems()
+      if (!items.length) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no selection' ]
+
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
 
-      return [OK, 'text/plain', yield Translators.translate(translator, { items }, displayOptions(request)) ]
+      return [OK, 'text/plain', await Translators.translate(translator, { items }, displayOptions(request)) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
     }
