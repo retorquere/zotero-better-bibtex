@@ -7,12 +7,12 @@ import Translators = require('./translators.ts')
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])
-  const { exportCharset, exportNotes, useJournalAbbreviation } = request.query || {}
+  const query = request.query || {}
 
   return {
-    exportCharset,
-    exportNotes: isTrue.has(exportNotes),
-    useJournalAbbreviation: isTrue.has(useJournalAbbreviation),
+    exportCharset: query.exportCharset || 'utf8',
+    exportNotes: isTrue.has(query.exportNotes),
+    useJournalAbbreviation: isTrue.has(query.useJournalAbbreviation),
   }
 }
 
@@ -23,18 +23,15 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
     if (!request.query || !request.query['']) return [SERVER_ERROR, 'text/plain', 'Could not export bibliography: no path']
 
     try {
-      let [ , path, translator ] = request.query[''].match(/(.*)\.([a-zA-Z]+)$/)
+      let [ , lib, path, translator ] = request.query[''].match(/\/([0-9]+)\/(.*)\.([a-zA-Z]+)$/)
 
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
-      if (path[0] !== '/') path = `/0/${path}`
-
-      let [ , lib, path ] = path.match(/\/([0-9]+)\/(.*)/)
-      libID = parseInt(lib)
+      const libID = parseInt(lib)
 
       let collection = Zotero.Collections.getByLibraryAndKey(libID, path)
       if (!collection) {
-        for (const subcol of path.toLOwerCase().split('/')) {
-          if (!subcol) continue
+        for (const name of path.toLOwerCase().split('/')) {
+          if (!name) continue
 
           const children = Zotero.getCollections(collection ? collection.id : null, false, libID)
           for (const child of children) {
@@ -47,7 +44,15 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
         }
       }
 
-      return [OK, 'text/plain', await Translators.translate(translator, { collection }, displayOptions(request)) ]
+      return [
+        OK,
+        'text/plain',
+        await Translators.translate(
+          translator,
+          { collection },
+          displayOptions(request)
+        ),
+      ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -69,7 +74,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
         return [SERVER_ERROR, 'text/plain', `Could not export bibliography: library '${library}' does not exist`]
       }
 
-      if (!format) {
+      if (!translator) {
         return [SERVER_ERROR, 'text/plain', `Could not export bibliography '${library}': no format specified` ]
       }
 
