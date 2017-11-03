@@ -313,24 +313,7 @@ Zotero.Notifier.registerObserver({
         return
     }
 
-    const changed = {
-      collections: new Set(),
-      libraries: new Set(),
-    }
-    for (const item of items) {
-      changed.libraries.add(item.libraryID)
-
-      for (let collectionID of item.getCollections()) {
-        if (changed.collections.has(collectionID)) continue
-        while (collectionID) {
-          changed.collections.add(collectionID)
-          collectionID = Zotero.Collections.get(collectionID).parentID
-        }
-      }
-    }
-
-    if (changed.collections.size) Events.emit('collections-changed', Array.from(changed.collections))
-    if (changed.libraries.size) Events.emit('libraries-changed', Array.from(changed.libraries))
+    AutoExport.changed(items)
   },
 }, ['item'], 'BetterBibTeX', 1)
 
@@ -475,6 +458,9 @@ export = new class {
 
     lock.update('Starting auto-export')
     AutoExport.init()
+
+    // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
+    // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
 
     lock.update('Starting key manager')
     await KeyManager.init() // inits the key cache by scanning the DB

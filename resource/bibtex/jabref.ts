@@ -13,9 +13,9 @@ export = class JabRef {
   public exportGroups() {
     let meta
     debug('exportGroups:', {collections: Translator.collections, citekeys: this.citekeys})
-    if ((Object.keys(Translator.collections).length === 0) || !Translator.preferences.jabrefGroups) return
+    if ((Object.keys(Translator.collections).length === 0) || !Translator.preferences.jabrefFormat) return
 
-    if (Translator.preferences.jabrefGroups === 3) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
       meta = 'groupsversion:3'
     } else if (Translator.BetterBibLaTeX) {
       meta = 'databaseType:biblatex'
@@ -45,9 +45,9 @@ export = class JabRef {
 
   private exportGroup(collection, level) {
     let collected = [`${level} ExplicitGroup:${collection.name}`, '0']
-    debug('JabRef.exportGroup:', { groups: Translator.preferences.jabrefGroups, items: collection.items, citekeys: this.citekeys })
+    debug('JabRef.exportGroup:', { groups: Translator.preferences.jabrefFormat, items: collection.items, citekeys: this.citekeys })
 
-    if (Translator.preferences.jabrefGroups === 3) { // tslint:disable-line:no-magic-numbers
+    if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
       const references = ((collection.items || []).filter(id => this.citekeys[id]).map(id => this.citekeys[id]))
       if (Translator.preferences.testing) references.sort()
       collected = collected.concat(references)

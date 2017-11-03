@@ -33,8 +33,8 @@
       "tests": "",
       "warnBulkModify": 10,
       "postscript": "this.add({ name: 'x-audience', value: 'international' });\nthis.add({ name: 'x-popularlevel', value: 'no' });\nthis.add({ name: 'x-peereviewing', value: 'yes' });\nthis.add({ name: 'x-proceedings', value: 'yes' });\nthis.add({ name: 'x-invitedcommunication', value: 'yes' });\nif (this.has.language) {\n  this.has.language.name = 'x-language';\n}\nif (this.item.itemType = 'report' && this.has.type) {\n  this.has.type.name = 'x-reporttype';\n}\n",
-      "jabrefGroups": true,
-      "defaultDateParserLocale": ""
+      "defaultDateParserLocale": "",
+      "jabrefFormat": true
     },
     "options": {
       "exportPath": "/Users/emile/Downloads",

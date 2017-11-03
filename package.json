@@ -20,6 +20,7 @@
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "tsc --lib es6 webpack/tslint/noModuleExportsRule.ts && tslint -t stylish --project . --rules-dir ./webpack/tslint",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
+    "webpack": "webpack",
     "build": "npm run lint && webpack",
     "postbuild": "node webpack/scripts/zipup.js build zotero-better-bibtex && node webpack/scripts/zipup.js test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
@@ -62,6 +63,7 @@
     "bluebird": "^3.5.1",
     "circular-dependency-plugin": "^4.2.1",
     "clean-webpack-plugin": "^0.1.17",
+    "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "fs-extra": "^4.0.2",
@@ -88,7 +90,9 @@
     "uri-templates": "^0.2.0",
     "webpack": "^3.8.1",
     "wrapper-webpack-plugin": "^1.0.0",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.24"
   },
   "repository": {
     "type": "git",

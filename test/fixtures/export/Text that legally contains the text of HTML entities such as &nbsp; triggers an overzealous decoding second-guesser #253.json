@@ -13,9 +13,9 @@
       "DOIandURL": "doi",
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

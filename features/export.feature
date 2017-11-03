@@ -130,9 +130,9 @@ Scenario Outline: BibTeX Export
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/Omit URL export when DOI present. #131.json" into a new collection
   And I set preference .DOIandURL to both
-  And I set preference .jabrefGroups to 3
+  And I set preference .jabrefFormat to 3
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.groups3.biblatex"
-  And I set preference .jabrefGroups to 4
+  And I set preference .jabrefFormat to 4
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.default.biblatex"
   And I set preference .DOIandURL to doi
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.prefer-DOI.biblatex"
@@ -324,7 +324,7 @@ Scenario: Sorting and optional particle handling #411
 Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/autoexport.json" into a new collection
   And I set preference .autoExport to immediate
-  And I set preference .jabrefGroups to 3
+  And I set preference .jabrefFormat to 3
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/autoexport.before.biblatex"
   And an auto-export of "/autoexport" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/autoexport.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
