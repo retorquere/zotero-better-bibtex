@@ -43,7 +43,8 @@ const Mode = { // tslint:disable-line:variable-name
   },
 
   orgRef(items) {
-    Zotero.write(items.map(item => `cite:${item.citekey}`).join(' '))
+    if (!items.length) return  ''
+    Zotero.write(`cite:${items.map(item => item.citekey).join(',')}`)
   },
 
   orgmode(items) {
