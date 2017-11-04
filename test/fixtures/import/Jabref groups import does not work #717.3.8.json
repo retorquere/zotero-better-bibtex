@@ -35,7 +35,9 @@
       "preserveBibTeXVariables": false,
       "rawImports": false,
       "citekeyScan": "",
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "skipWords": [
         "a",
         "ab",
@@ -162,7 +164,6 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
@@ -175,7 +176,8 @@
       "parseParticles": true,
       "debug": true,
       "testing": true,
-      "rawLaTag": "#LaTeX"
+      "rawLaTag": "#LaTeX",
+      "jabrefFormat": 0
     },
     "options": {
       "exportNotes": true,
@@ -204,7 +206,9 @@
       "key": "CA87DDNZ",
       "parent": "SQJ3ALNX",
       "name": "my-main-group-2",
-      "items": [],
+      "items": [
+
+      ],
       "collections": [
         "8XRBZUBF",
         "GY9DL87J"
@@ -218,7 +222,9 @@
       "items": [
         57
       ],
-      "collections": []
+      "collections": [
+
+      ]
     },
     "GY9DL87J": {
       "id": 6,
@@ -228,7 +234,9 @@
       "items": [
         56
       ],
-      "collections": []
+      "collections": [
+
+      ]
     },
     "NTSU7GBL": {
       "id": 8,
@@ -267,7 +275,9 @@
         60,
         61
       ],
-      "collections": []
+      "collections": [
+
+      ]
     },
     "XQ2MPNZP": {
       "id": 10,
@@ -287,8 +297,12 @@
       "key": "2IREJN7H",
       "parent": "XQ2MPNZP",
       "name": "sub-sub-group-3",
-      "items": [],
-      "collections": []
+      "items": [
+
+      ],
+      "collections": [
+
+      ]
     }
   },
   "items": [
@@ -304,17 +318,24 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "SQJ3ALNX",
         "GY9DL87J"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:16",
       "dateModified": "2017-09-12 11:36:16",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/8SEXRS4Q",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "2017",
         "extra": "bibtex: Doe-2017 \nbibtex[owner=klein]",
@@ -323,7 +344,9 @@
       "itemID": 56,
       "key": "8SEXRS4Q",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Doe-2017"
     },
     {
@@ -337,17 +360,24 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "SQJ3ALNX",
         "8XRBZUBF"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:16",
       "dateModified": "2017-09-12 11:36:16",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/H8CDLL9X",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "extra": "bibtex: Other- \nbibtex[owner=klein]",
         "title": "The article in my other subgroup"
@@ -355,7 +385,9 @@
       "itemID": 57,
       "key": "H8CDLL9X",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Other-"
     },
     {
@@ -369,16 +401,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "SQJ3ALNX"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:16",
       "dateModified": "2017-09-12 11:36:16",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/N9Z3TDK9",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "extra": "bibtex: Unkonw- \nbibtex[owner=klein]",
         "title": "the paper not in a group"
@@ -386,7 +425,9 @@
       "itemID": 58,
       "key": "N9Z3TDK9",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Unkonw-"
     },
     {
@@ -401,17 +442,24 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "NTSU7GBL",
         "XQ2MPNZP"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:17",
       "dateModified": "2017-09-12 11:36:17",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/KN9Q8D6G",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "2017",
         "extra": "bibtex: Doe-2017 \nbibtex[owner=klein]",
@@ -420,7 +468,9 @@
       "itemID": 59,
       "key": "KN9Q8D6G",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Doe-2017"
     },
     {
@@ -434,17 +484,24 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "NTSU7GBL",
         "J7ELSATK"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:17",
       "dateModified": "2017-09-12 11:36:17",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LV7WHSD5",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "extra": "bibtex: Other- \nbibtex[owner=klein]",
         "title": "The article in my other subgroup"
@@ -452,7 +509,9 @@
       "itemID": 60,
       "key": "LV7WHSD5",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Other-"
     },
     {
@@ -466,18 +525,25 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "NTSU7GBL",
         "XQ2MPNZP",
         "J7ELSATK"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:17",
       "dateModified": "2017-09-12 11:36:17",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/PWLQZTZB",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "extra": "bibtex: Unkonw- \nbibtex[owner=klein]",
         "title": "the paper in two groups"
@@ -485,7 +551,9 @@
       "itemID": 61,
       "key": "PWLQZTZB",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Unkonw-"
     },
     {
@@ -499,17 +567,24 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "NTSU7GBL",
         "CUG6FGJ3"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-09-12 11:36:17",
       "dateModified": "2017-09-12 11:36:17",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/7N3TPD2D",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "extra": "bibtex: Unkonw \nbibtex[owner=klein]",
         "title": "the paper not in a group"
@@ -517,7 +592,9 @@
       "itemID": 62,
       "key": "7N3TPD2D",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Unkonw"
     }
   ]

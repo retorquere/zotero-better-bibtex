@@ -10,13 +10,13 @@
       "citekeyFormat": "[authorsAlpha:lower][year]",
       "csquotes": "",
       "DOIandURL": "both",
-      "jabrefGroups": 0,
       "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate",
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

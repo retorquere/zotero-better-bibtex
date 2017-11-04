@@ -459,6 +459,9 @@ export = new class {
     lock.update('Starting auto-export')
     AutoExport.init()
 
+    // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
+    // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
+
     lock.update('Starting key manager')
     await KeyManager.init() // inits the key cache by scanning the DB
 

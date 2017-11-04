@@ -161,7 +161,6 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
@@ -174,7 +173,8 @@
       "parseParticles": true,
       "debug": false,
       "rawLaTag": "#LaTeX",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
     },
     "options": {
       "exportNotes": true
