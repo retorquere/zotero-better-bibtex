@@ -44,15 +44,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
         }
       }
 
-      return [
-        OK,
-        'text/plain',
-        await Translators.translate(
-          translator,
-          { collection },
-          displayOptions(request)
-        ),
-      ]
+      return [ OK, 'text/plain', await Translators.translate(translator, displayOptions(request), { collection }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -80,7 +72,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
 
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
 
-      return [OK, 'text/plain', await Translators.translate(translator, { library: parseInt(libID) }, displayOptions(request)) ]
+      return [OK, 'text/plain', await Translators.translate(translator, displayOptions(request), { library: parseInt(libID) }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -102,7 +94,7 @@ Zotero.Server.Endpoints['/better-bibtex/select'] = class {
 
       translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === translator) || translator
 
-      return [OK, 'text/plain', await Translators.translate(translator, { items }, displayOptions(request)) ]
+      return [OK, 'text/plain', await Translators.translate(translator, displayOptions(request), { items }) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
     }
