@@ -22,12 +22,11 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <!-- menuseparator id="zotero-better-bibtex-collectionmenu-separator"/>
+    <menuseparator/>
     <menuitem
-      id="zotero-better-bibtex-show-export-url"
       label="&zotero.better-bibtex.show-collection-key;"
-      oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
-    / -->
+      oncommand="alert(Zotero.BetterBibTeX.pullExport() || '&zotero.better-bibtex.server.disabled;')"
+    />
     <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
   </menupopup>
 

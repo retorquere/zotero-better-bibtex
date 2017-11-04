@@ -409,6 +409,41 @@ export = new class {
     window.addEventListener('load', this.load, false)
   }
 
+	public pullExport() {
+    serverURL: (extension) ->
+      if (!pane.collectionsView || !pane.collectionsView.selection) return ''
+
+      const itemGroup = pane.collectionsView._getItemAtRow(pane.collectionsView.selection.currentIndex)
+
+      if (!itemGroup) return ''
+
+      const serverPort = Zotero.Prefs.get('httpServer.port')
+
+      if (itemGroup.isCollection())
+        let collection = pane.collectionsView.getSelectedCollection()
+        const url = `collection?/${collection.libraryID || 0}/${collection.key}.biblatex`
+
+        const path = [encodeURIComponent(collection.name)]
+        while (collection.parent) {
+          collection = Zotero.Collections.get(collection.parent)
+          path.unshift(encodeURIComponent(collection.name))
+        }
+        path = "collection?/#{collection.libraryID || 0}/" + path.join('/') + extension
+
+      } else if (itemGroup.isLibrary(true)) {
+        libid = collectionsView.getSelectedLibraryID()
+        url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
+        path = null
+      }
+
+      if (!url) return ''
+
+      root = "http://localhost:#{serverPort}/better-bibtex/"
+      url = root + url
+      url += "\nor\n#{root}#{path}" if path
+      return url
+	}
+
   public errorReport(includeReferences) {
     debug('ErrorReport::start', includeReferences)
 
