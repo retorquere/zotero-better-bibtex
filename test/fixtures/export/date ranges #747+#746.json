@@ -1,6 +1,75 @@
 {
   "items": [
     {
+      "itemType": "conferencePaper",
+      "place": "San Diego, California, USA",
+      "publisher": "USENIX",
+      "pages": "287–304",
+      "date": "January 30–February 3, 1989",
+      "title": "A tour of the worm",
+      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "creators": [
+        {
+          "firstName": "Donn",
+          "lastName": "Seeley",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": {},
+      "dateAdded": "2017-10-30 19:04:48",
+      "dateModified": "2017-11-03 19:06:17",
+      "uri": "http://zotero.org/users/10604/items/FSB6XCJF",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
+          "accessDate": "2017-10-30 19:05:54",
+          "title": "A Tour of the Worm",
+          "parentItem": "FSB6XCJF",
+          "linkMode": 1,
+          "contentType": "text/html",
+          "charset": "utf-8",
+          "filename": "seely-RTMworm-89.html",
+          "tags": [],
+          "relations": {},
+          "dateAdded": "2017-10-30 19:05:54",
+          "dateModified": "2017-10-30 19:05:54",
+          "uri": "http://zotero.org/users/10604/items/I9DDEA67",
+          "uniqueFields": {
+            "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
+            "accessDate": "2017-10-30 19:05:54",
+            "title": "A Tour of the Worm",
+            "linkMode": 1,
+            "mimeType": "text/html"
+          },
+          "itemID": 12198,
+          "key": "I9DDEA67",
+          "libraryID": null,
+          "sourceItemKey": "FSB6XCJF",
+          "seeAlso": [],
+          "mimeType": "text/html",
+          "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html"
+        }
+      ],
+      "notes": [],
+      "uniqueFields": {
+        "place": "San Diego, California, USA",
+        "publisher": "USENIX",
+        "pages": "287–304",
+        "date": "January 30–February 3, 1989",
+        "title": "A tour of the worm",
+        "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference"
+      },
+      "itemID": 12181,
+      "key": "FSB6XCJF",
+      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "seeley30tour"
+    },
+    {
       "itemType": "journalArticle",
       "creators": [
         {
