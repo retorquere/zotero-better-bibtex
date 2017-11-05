@@ -144,9 +144,7 @@ DB.init = () => {
     value : { Zotero: ZoteroConfig.Zotero.version },
   }])
 
-  /*
-    TODO: for this to work, an object must be updated when it is fetched
-  */
+  // this reaps unused cache entries -- make sure that cacheFetchs updates the object
   //                  secs    mins  hours days
   const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
@@ -193,10 +191,6 @@ Events.on('preference-changed', () => {
     DB.getCollection(translator).removeDataOnly()
   }
 })
-
-/*
-  TODO: use preference-changed event to drop the translator caches
-*/
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }

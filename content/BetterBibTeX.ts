@@ -5,6 +5,7 @@ declare const Zotero: any
 declare const AddonManager: any
 
 require('./prefs.ts') // needs to be here early, initializes the prefs observer
+require('./pull-export.ts') // just require, initializes the pull-export end points
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
@@ -175,7 +176,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    collection.update(cached) // touches the cache object
+    collection.update(cached) // touches the cache object so it isn't reaped too early
 
     return cached
   },
@@ -407,6 +408,37 @@ export = new class {
   constructor() {
     this.ready = bbtReady.promise
     window.addEventListener('load', this.load, false)
+  }
+
+  public pullExport() {
+    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return ''
+
+    const translator = 'biblatex'
+    const row = pane.collectionsView.selectedTreeRow
+
+    const root = `http://localhost:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
+
+    if (row.isCollection()) {
+      let collection = pane.getSelectedCollection()
+      const short = `collection?/${collection.libraryID || 0}/${collection.key}.${translator}`
+
+      const path = [encodeURIComponent(collection.name)]
+      while (collection.parent) {
+        collection = Zotero.Collections.get(collection.parent)
+        path.unshift(encodeURIComponent(collection.name))
+      }
+      const long = `collection?/${collection.libraryID || 0}/${path.join('/')}.${translator}`
+
+      return `${root}${short}\nor\n${root}${long}`
+    }
+
+    if (row.isLibrary(true)) {
+      const libId = pane.getSelectedLibraryID()
+      const short = libId ? `library?/${libId}/library.${translator}` : `library?library.${translator}`
+      return `${root}${short}`
+    }
+
+    return ''
   }
 
   public errorReport(includeReferences) {
