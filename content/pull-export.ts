@@ -30,13 +30,13 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
 
       let collection = Zotero.Collections.getByLibraryAndKey(libID, path)
       if (!collection) {
-        for (const name of path.toLOwerCase().split('/')) {
+        for (const name of path.toLowerCase().split('/')) {
           if (!name) continue
 
-          const children = Zotero.getCollections(collection ? collection.id : null, false, libID)
-          for (const child of children) {
-            if (child.name.toLowerCase() === name) {
-              collection = child
+          const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(libID)
+          for (const candidate of collections) {
+            if (candidate.name.toLowerCase() === name) {
+              collection = candidate
               break
             }
           }

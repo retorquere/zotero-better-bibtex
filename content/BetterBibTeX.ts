@@ -5,6 +5,7 @@ declare const Zotero: any
 declare const AddonManager: any
 
 require('./prefs.ts') // needs to be here early, initializes the prefs observer
+require('./pull-export.ts') // just require, initializes the pull-export end points
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
@@ -409,40 +410,36 @@ export = new class {
     window.addEventListener('load', this.load, false)
   }
 
-	public pullExport() {
-    serverURL: (extension) ->
-      if (!pane.collectionsView || !pane.collectionsView.selection) return ''
+  public pullExport() {
+    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return ''
 
-      const itemGroup = pane.collectionsView._getItemAtRow(pane.collectionsView.selection.currentIndex)
+    const translator = 'biblatex'
+    const row = pane.collectionsView.selectedTreeRow
 
-      if (!itemGroup) return ''
+    const root = `http://localhost:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
 
-      const serverPort = Zotero.Prefs.get('httpServer.port')
+    if (row.isCollection()) {
+      let collection = pane.getSelectedCollection()
+      const short = `collection?/${collection.libraryID || 0}/${collection.key}.${translator}`
 
-      if (itemGroup.isCollection())
-        let collection = pane.collectionsView.getSelectedCollection()
-        const url = `collection?/${collection.libraryID || 0}/${collection.key}.biblatex`
-
-        const path = [encodeURIComponent(collection.name)]
-        while (collection.parent) {
-          collection = Zotero.Collections.get(collection.parent)
-          path.unshift(encodeURIComponent(collection.name))
-        }
-        path = "collection?/#{collection.libraryID || 0}/" + path.join('/') + extension
-
-      } else if (itemGroup.isLibrary(true)) {
-        libid = collectionsView.getSelectedLibraryID()
-        url = if libid then "library?/#{libid}/library#{extension}" else "library?library#{extension}"
-        path = null
+      const path = [encodeURIComponent(collection.name)]
+      while (collection.parent) {
+        collection = Zotero.Collections.get(collection.parent)
+        path.unshift(encodeURIComponent(collection.name))
       }
+      const long = `collection?/${collection.libraryID || 0}/${path.join('/')}.${translator}`
 
-      if (!url) return ''
+      return `${root}${short}\nor\n${root}${long}`
+    }
 
-      root = "http://localhost:#{serverPort}/better-bibtex/"
-      url = root + url
-      url += "\nor\n#{root}#{path}" if path
-      return url
-	}
+    if (row.isLibrary(true)) {
+      const libId = pane.getSelectedLibraryID()
+      const short = libId ? `library?/${libId}/library.${translator}` : `library?library.${translator}`
+      return `${root}${short}`
+    }
+
+    return ''
+  }
 
   public errorReport(includeReferences) {
     debug('ErrorReport::start', includeReferences)
