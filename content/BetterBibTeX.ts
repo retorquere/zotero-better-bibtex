@@ -176,7 +176,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    collection.update(cached) // touches the cache object
+    collection.update(cached) // touches the cache object so it isn't reaped too early
 
     return cached
   },

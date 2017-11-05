@@ -240,10 +240,5 @@ export = new class PrefPane {
   */
 }
 
-// TODO: caching
-//  cacheReset: ->
-//    @cache.reset('user request')
-//    @serialized.reset('user request')
-
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
 delete require.cache[module.id]
