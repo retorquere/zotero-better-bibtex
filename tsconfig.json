@@ -9,7 +9,7 @@
     "preserveConstEnums": false,
     "sourceMap": false,
     "downlevelIteration": true,
-    "lib": [ "es2017" ]
+    "lib": [ "es2017", "dom" ]
   },
   "include": [
     "content/**/*",
