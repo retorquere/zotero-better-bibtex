@@ -77,6 +77,22 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
+/* monkey-patch Zotero.Search::search to allow searching for citekey */
+$patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
+  const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
+  if (!searchText.length) return yield original.apply(this, arguments)
+
+  let ids = yield original.call(this, false) || []
+
+  debug('search: looking for', searchText, 'to add to', ids)
+
+  ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
+
+  if (!ids.length) return false
+  if (asTempTable) return yield Zotero.Search.idsToTempTable(ids)
+  return ids
+}))
+
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
   original.apply(this, arguments)
