@@ -50,6 +50,7 @@ test:
       bundle exec cucumber --strict $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
+      ls -lh ~/downloads
       ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
