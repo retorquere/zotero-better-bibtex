@@ -15,24 +15,23 @@ dependencies:
   override:
     - yarn
     - yarn install
-  pre:
-  - |-
-    set -e
+    - |-
+      set -e
 
-    mkdir -p ~/downloads
+      mkdir -p ~/downloads
 
-    ls -lh ~/downloads
+      ls -lh ~/downloads
 
-    case $CIRCLE_NODE_INDEX in
-      .2|.3)  export JURISM=true
-            ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
-            ;;
-      *)    export JURISM=false
-            ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
-            ;;
-    esac
+      case $CIRCLE_NODE_INDEX in
+        .2|.3)  export JURISM=true
+              ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
+              ;;
+        *)    export JURISM=false
+              ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
+              ;;
+      esac
 
-    ls -lh ~/downloads
+      ls -lh ~/downloads
   cache_directories:
   - citeproc-js
   - ~/downloads
