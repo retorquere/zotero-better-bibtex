@@ -17,10 +17,6 @@ import ZoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
 
-// TODO: remove after beta
-Zotero.Prefs.set('debug.store', true)
-Zotero.Debug.setStore(true)
-
 import Translators = require('./translators.ts')
 import DB = require('./db/main.ts')
 import Cache = require('./db/cache.ts')
