@@ -13,7 +13,7 @@ import tempfile
 import urllib
 
 def zotero_latest():
-  response = urllib2.urlopen('https://zotero.org/download/')
+  response = urllib2.urlopen('https://www.zotero.org/download/')
   for line in response.read().split('\n'):
     if not '"standaloneVersions"' in line: continue
     line = re.sub(r'.*Downloads,', '', line)
