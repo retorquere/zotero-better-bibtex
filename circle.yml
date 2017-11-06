@@ -17,7 +17,22 @@ dependencies:
     - yarn install
   pre:
   - |-
+    set -e
+
     mkdir -p ~/downloads
+
+    ls -lh ~/downloads
+
+    case $CIRCLE_NODE_INDEX in
+      .2|.3)  export JURISM=true
+            ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
+            ;;
+      *)    export JURISM=false
+            ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
+            ;;
+    esac
+
+    ls -lh ~/downloads
   cache_directories:
   - citeproc-js
   - ~/downloads
@@ -27,15 +42,11 @@ test:
   - ? |-
       set -e
 
-      ls -lh ~/downloads
-
       case $CIRCLE_NODE_INDEX in
         .2|.3)  export JURISM=true
-              ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
               DATADIR=~/.BBTZ5TEST/jurism
               ;;
         *)    export JURISM=false
-              ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
               DATADIR=~/.BBTZ5TEST/zotero
               ;;
       esac
@@ -53,7 +64,6 @@ test:
       bundle exec cucumber --strict $CIRCLE_TESTS
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
-      ls -lh ~/downloads
       ls -lh $CIRCLE_ARTIFACTS/*
     : parallel: true
 general:
