@@ -266,3 +266,17 @@
   urldate = {2016-07-24}
 }
 
+@book{simpson_cool_book_0396,
+  addendum = {From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval},
+  author = {Simpson, Lisa},
+  date = {2004-01-01/..},
+  title = {Cool Book 0396}
+}
+
+@book{simpson_cool_book_0397,
+  addendum = {From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval},
+  author = {Simpson, Lisa},
+  date = {../2004-01-01},
+  title = {Cool Book 0397}
+}
+
