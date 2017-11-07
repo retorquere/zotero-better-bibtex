@@ -58,7 +58,7 @@
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^8.0.47",
+    "@types/node": "^8.0.50",
     "archiver": "^2.1.0",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",

@@ -75,7 +75,14 @@ export = Prefs.get('testing') && {
     const before = items.length
 
     debug(`starting import at ${new Date()}`)
-    await Zotero_File_Interface.importFile(file, !!createNewCollection)
+
+    if (source.endsWith('.aux')) {
+      await Zotero.BetterBibTeX.scanAUX(file)
+      // for some reason, the imported collection shows up as empty right after the import >:
+      await new Promise(resolve => setTimeout(resolve, 1500)) // tslint:disable-line:no-magic-numbers
+    } else {
+      await Zotero_File_Interface.importFile(file, !!createNewCollection)
+    }
     debug(`import finished at ${new Date()}`)
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)

@@ -27,7 +27,13 @@ Scenario: Math markup to unicode not always imported correctly #472
   When I import 2 references from "import/Math markup to unicode not always imported correctly #472.bib"
   Then an export using "BetterBibTeX JSON" should match "import/Math markup to unicode not always imported correctly #472.json"
   And I set preference .preserveBibTeXVariables to true
-  And an export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
+  Then an export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
+
+@758 @aux
+Scenario: AUX scanner
+  When I import 149 references from "import/AUX scanner-pre.json"
+  And I import 1 reference from "import/AUX scanner.aux"
+  Then an export using "BetterBibTeX JSON" should match "import/AUX scanner-post.json"
 
 @i3
 Scenario Outline: Better BibTeX Import

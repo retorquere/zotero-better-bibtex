@@ -485,8 +485,8 @@ export = new class {
     debug('ErrorReport::start done')
   }
 
-  public auxScanner() {
-    (new AUXScanner).scan()
+  public scanAUX(path = null) {
+    (new AUXScanner).scan(path)
   }
 
   private async load() {
