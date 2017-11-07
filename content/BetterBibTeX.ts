@@ -24,6 +24,7 @@ import Serializer = require('./serializer.ts')
 import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
+import AUXScanner = require('./aux-scanner.ts')
 
 import $patch$ = require('./monkey-patch.ts')
 
@@ -482,6 +483,10 @@ export = new class {
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
     debug('ErrorReport::start done')
+  }
+
+  public auxScanner() {
+    (new AUXScanner).scan()
   }
 
   private async load() {
