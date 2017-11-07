@@ -167,6 +167,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
         .replace(/(\?~)|(~\?)/g, '%')
         .replace(/unknown/g, '*')
         .replace(/open/g, '')
+        .replace(/\.\./g, '')
         .replace(/y/g, 'Y')
       )
       return true

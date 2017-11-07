@@ -60,6 +60,7 @@ function parse_edtf(date) {
       .replace(/(\?~)|(~\?)/g, '%')
       .replace(/unknown/g, '*')
       .replace(/open/g, '')
+      .replace(/\.\./g, '')
       .replace(/y/g, 'Y')
     ))
   } catch (err) {}

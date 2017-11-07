@@ -4,14 +4,14 @@ Feature: Export
 ### BibLaTeX cookie-cutter ###
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747
+@573 @590 @747 @edtf
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
-     | EDTF dates in BibLaTeX #590                                                                    | 22          |
+     | EDTF dates in BibLaTeX #590                                                                    | 24          |
      | date ranges #747+#746                                                                          | 4           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
