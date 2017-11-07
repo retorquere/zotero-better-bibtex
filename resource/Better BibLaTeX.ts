@@ -222,51 +222,7 @@ Translator.doExport = () => {
       ref.remove('url')
     }
 
-    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
-      if (ref.has[eprinttype]) {
-        if (!ref.has.eprinttype) {
-          ref.add({ eprinttype})
-          ref.add({ eprint: ref.has[eprinttype].value })
-        }
-        ref.remove(eprinttype)
-      }
-    }
-
-    if (item.archive && item.archiveLocation) {
-      let archive = true
-      switch (item.archive.toLowerCase()) {
-        case 'arxiv':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'arxiv' })
-          ref.add({ eprintclass: item.callNumber })
-          break
-
-        case 'jstor':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'jstor' })
-          break
-
-        case 'pubmed':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'pubmed' })
-          break
-
-        case 'hdl':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'hdl' })
-          break
-
-        case 'googlebooks': case 'google books':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'googlebooks' })
-          break
-
-        default:
-          archive = false
-      }
-
-      if (archive) {
-        if (!ref.has.eprint) ref.add({ eprint: item.archiveLocation })
-      }
-    }
-
     ref.add({ langid: ref.language })
-
     ref.add({ location: item.place })
     ref.add({ chapter: item.chapter })
     ref.add({ edition: item.edition })
@@ -314,10 +270,6 @@ Translator.doExport = () => {
           } else {
             if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {
               ref.add({ name: 'journaltitle', value: item.journalAbbreviation, preserveBibTeXVariables: true })
-            // TODO: what's going on here?
-            // else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
-            //  ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-            //  ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
             } else {
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
@@ -455,6 +407,49 @@ Translator.doExport = () => {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
+      }
+    }
+
+    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
+      if (ref.has[eprinttype]) {
+        if (!ref.has.eprinttype) {
+          ref.add({ eprinttype})
+          ref.add({ eprint: ref.has[eprinttype].value })
+        }
+        ref.remove(eprinttype)
+      }
+    }
+
+    if (item.archive && item.archiveLocation) {
+      let archive = true
+      switch (item.archive.toLowerCase()) {
+        case 'arxiv':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'arxiv' })
+          ref.add({ eprintclass: item.callNumber })
+          break
+
+        case 'jstor':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'jstor' })
+          break
+
+        case 'pubmed':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'pubmed' })
+          break
+
+        case 'hdl':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'hdl' })
+          break
+
+        case 'googlebooks': case 'google books':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'googlebooks' })
+          break
+
+        default:
+          archive = false
+      }
+
+      if (archive) {
+        if (!ref.has.eprint) ref.add({ eprint: item.archiveLocation })
       }
     }
 

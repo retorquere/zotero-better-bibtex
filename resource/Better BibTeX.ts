@@ -213,9 +213,15 @@ Translator.doExport = () => {
     if (item.date) {
       const date = Zotero.BetterBibTeX.parseDate(item.date)
       switch ((date || {}).type || 'verbatim') {
-        case 'verbatim': case 'interval':
+        case 'verbatim':
           ref.add({ year: item.date })
           break
+
+        case 'interval':
+          if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
+          ref.add({ year: `${date.from.year}` })
+          break
+
         case 'date':
           if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
           if ((date.orig || {}).type === 'date') {

@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.28",
+  "version": "5.0.31",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -27,6 +27,7 @@
     "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
     "s3form": "ts-node webpack/scripts/s3form.ts",
     "release": "ts-node webpack/scripts/release.ts",
+    "branches": "ts-node webpack/scripts/branches.ts",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },

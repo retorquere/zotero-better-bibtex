@@ -3,7 +3,8 @@ Feature: Export
 
 ### BibLaTeX cookie-cutter ###
 
-@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590
+@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
+@573 @590 @747
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
@@ -11,7 +12,7 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                                           | references  |
      | EDTF dates in BibLaTeX #590                                                                    | 22          |
-     | date ranges #747+#746                                                                          | 3           |
+     | date ranges #747+#746                                                                          | 4           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
@@ -99,13 +100,14 @@ Scenario Outline: BibLaTeX Export
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @300 @565 @551 @558
+@441 @439 @bbt @300 @565 @551 @558 @747
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | date ranges #747+#746                                                              | 4          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | veryshorttitle and compound words #551                                             | 4          |

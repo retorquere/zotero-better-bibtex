@@ -5,6 +5,7 @@ declare const Zotero: any
 declare const AddonManager: any
 
 require('./prefs.ts') // needs to be here early, initializes the prefs observer
+require('./pull-export.ts') // just require, initializes the pull-export end points
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
@@ -15,10 +16,6 @@ import Events = require('./events.ts')
 import ZoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
-
-// TODO: remove after beta
-Zotero.Prefs.set('debug.store', true)
-Zotero.Debug.setStore(true)
 
 import Translators = require('./translators.ts')
 import DB = require('./db/main.ts')
@@ -75,6 +72,22 @@ AddonManager.addAddonListener({
 /*
   MONKEY PATCHES
 */
+
+/* monkey-patch Zotero.Search::search to allow searching for citekey */
+$patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
+  const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
+  if (!searchText.length) return yield original.apply(this, arguments)
+
+  let ids = yield original.call(this, false) || []
+
+  debug('search: looking for', searchText, 'to add to', ids)
+
+  ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
+
+  if (!ids.length) return false
+  if (asTempTable) return yield Zotero.Search.idsToTempTable(ids)
+  return ids
+}))
 
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
@@ -182,7 +195,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    collection.update(cached) // touches the cache object
+    collection.update(cached) // touches the cache object so it isn't reaped too early
 
     return cached
   },
@@ -414,6 +427,37 @@ export = new class {
   constructor() {
     this.ready = bbtReady.promise
     window.addEventListener('load', this.load, false)
+  }
+
+  public pullExport() {
+    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return ''
+
+    const translator = 'biblatex'
+    const row = pane.collectionsView.selectedTreeRow
+
+    const root = `http://localhost:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
+
+    if (row.isCollection()) {
+      let collection = pane.getSelectedCollection()
+      const short = `collection?/${collection.libraryID || 0}/${collection.key}.${translator}`
+
+      const path = [encodeURIComponent(collection.name)]
+      while (collection.parent) {
+        collection = Zotero.Collections.get(collection.parent)
+        path.unshift(encodeURIComponent(collection.name))
+      }
+      const long = `collection?/${collection.libraryID || 0}/${path.join('/')}.${translator}`
+
+      return `${root}${short}\nor\n${root}${long}`
+    }
+
+    if (row.isLibrary(true)) {
+      const libId = pane.getSelectedLibraryID()
+      const short = libId ? `library?/${libId}/library.${translator}` : `library?library.${translator}`
+      return `${root}${short}`
+    }
+
+    return ''
   }
 
   public errorReport(includeReferences) {

@@ -80,16 +80,27 @@ export = function parse(raw) {
     const [ , month, day1, day2, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`)
-    const to = parse(`${month} ${day2} ${year}`) // tslint:disable-line:no-magic-numbers
+    const to = parse(`${month} ${day2} ${year}`)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
+
+  // 747, January 30–February 3, 1989
+  if (m = raw.match(/^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/)) {
+    const [ , date1, date2, year ] = m
+
+    const from = parse(`${date1} ${year}`)
+    const to = parse(`${date2} ${year}`)
+
+    if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
+  }
+
   // 746
   if (m = raw.match(/^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/)) {
     const [ , day1, day2, month, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`)
-    const to = parse(`${month} ${day2} ${year}`) // tslint:disable-line:no-magic-numbers
+    const to = parse(`${month} ${day2} ${year}`)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }

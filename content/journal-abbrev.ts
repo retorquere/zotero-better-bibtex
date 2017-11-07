@@ -91,10 +91,6 @@ class JournalAbbrev {
 
     if (!journal) return null
 
-    // don't even try to auto-abbrev arxiv IDs.
-    /* TODO: How did the arXiv id's get into the serialized object? */
-    // return null if serialized_item.arXiv?.source == 'publicationTitle'
-
     if (!this.abbrevs.default['container-title'][journal]) {
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
