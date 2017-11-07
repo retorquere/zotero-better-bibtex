@@ -847,6 +847,90 @@
 
       ],
       "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "book",
+      "date": "2004-01-01/..",
+      "extra": "biblatexcitekey[simpson_cool_book_0396]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+      "title": "Cool book 0396",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "P6KQB4QM"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-05 07:36:28",
+      "dateModified": "2017-11-05 07:57:50",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/N4YHFC5A",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2004-01-01/..",
+        "extra": "biblatexcitekey[simpson_cool_book_0396]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+        "title": "Cool book 0396"
+      },
+      "itemID": 710,
+      "key": "N4YHFC5A",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0396"
+    },
+    {
+      "itemType": "book",
+      "date": "../2004-01-01",
+      "extra": "biblatexcitekey[simpson_cool_book_0397]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+      "title": "Cool book 0397",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "P6KQB4QM"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-05 07:53:09",
+      "dateModified": "2017-11-05 07:58:00",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/75QPNVGU",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "../2004-01-01",
+        "extra": "biblatexcitekey[simpson_cool_book_0397]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+        "title": "Cool book 0397"
+      },
+      "itemID": 711,
+      "key": "75QPNVGU",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0397"
     }
   ],
   "cache": {
