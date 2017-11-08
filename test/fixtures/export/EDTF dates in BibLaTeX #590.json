@@ -532,6 +532,524 @@
 
       ],
       "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "book",
+      "date": "199u",
+      "extra": "bibtex: simpson_cool_book_0110",
+      "title": "Cool book 0110",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:37",
+      "dateModified": "2016-10-29 10:31:01",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/D5CI8RP8",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "199u",
+        "extra": "bibtex: simpson_cool_book_0110",
+        "title": "Cool book 0110"
+      },
+      "itemID": 448,
+      "key": "D5CI8RP8",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0110"
+    },
+    {
+      "itemType": "book",
+      "date": "19uu",
+      "extra": "bibtex: simpson_cool_book_0120",
+      "title": "Cool book 0120",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:39",
+      "dateModified": "2016-10-29 10:31:17",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/WUDPIEQ8",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "19uu",
+        "extra": "bibtex: simpson_cool_book_0120",
+        "title": "Cool book 0120"
+      },
+      "itemID": 449,
+      "key": "WUDPIEQ8",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0120"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-uu",
+      "extra": "bibtex: simpson_cool_book_0130",
+      "title": "Cool book 0130",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:31",
+      "dateModified": "2016-10-29 10:31:33",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/HRKKMR9H",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-uu",
+        "extra": "bibtex: simpson_cool_book_0130",
+        "title": "Cool book 0130"
+      },
+      "itemID": 445,
+      "key": "HRKKMR9H",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0130"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-01-uu",
+      "extra": "bibtex: simpson_cool_book_0140",
+      "title": "Cool book 0140",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:34:00",
+      "dateModified": "2016-10-29 10:31:47",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/D85WDZ74",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-01-uu",
+        "extra": "bibtex: simpson_cool_book_0140",
+        "title": "Cool book 0140"
+      },
+      "itemID": 443,
+      "key": "D85WDZ74",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0140"
+    },
+    {
+      "itemType": "book",
+      "date": "1999-uu-uu",
+      "extra": "bibtex: simpson_cool_book_0150",
+      "title": "Cool book 0150",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "Y8XQZ55A"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:28",
+      "dateModified": "2016-10-29 10:32:07",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/7ERVM4WU",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "1999-uu-uu",
+        "extra": "bibtex: simpson_cool_book_0150",
+        "title": "Cool book 0150"
+      },
+      "itemID": 444,
+      "key": "7ERVM4WU",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0150"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "1273?~",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "2017-11-01 19:41:03 +0100-1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker11",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "y-51234",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "2017-11-01 19:41:03 +0100-2",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker13",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "y52000",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "2017-11-01 19:41:03 +0100-3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker4",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
+    },
+    {
+      "itemType": "book",
+      "date": "2004-01-01/..",
+      "extra": "biblatexcitekey[simpson_cool_book_0396]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+      "title": "Cool book 0396",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "P6KQB4QM"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-05 07:36:28",
+      "dateModified": "2017-11-05 07:57:50",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/N4YHFC5A",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2004-01-01/..",
+        "extra": "biblatexcitekey[simpson_cool_book_0396]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+        "title": "Cool book 0396"
+      },
+      "itemID": 710,
+      "key": "N4YHFC5A",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0396"
+    },
+    {
+      "itemType": "book",
+      "date": "../2004-01-01",
+      "extra": "biblatexcitekey[simpson_cool_book_0397]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+      "title": "Cool book 0397",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "P6KQB4QM"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-05 07:53:09",
+      "dateModified": "2017-11-05 07:58:00",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/75QPNVGU",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "../2004-01-01",
+        "extra": "biblatexcitekey[simpson_cool_book_0397]\nbibtex[addendum=From ISO/DIS 8601-2:2016(e) Section 4.4 Enhanced time interval]",
+        "title": "Cool book 0397"
+      },
+      "itemID": 711,
+      "key": "75QPNVGU",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0397"
+    },
+    {
+      "itemType": "book",
+      "date": "unknown/2006",
+      "extra": "bibtex: simpson_cool_book_0092",
+      "title": "Cool book 0092",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "6UWMMP7U"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:33",
+      "dateModified": "2016-10-31 05:55:17",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/EJN2FM2W",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "unknown/2006",
+        "extra": "bibtex: simpson_cool_book_0092",
+        "title": "Cool book 0092"
+      },
+      "itemID": 446,
+      "key": "EJN2FM2W",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0092"
+    },
+    {
+      "itemType": "book",
+      "date": "2004-06-01/unknown",
+      "extra": "bibtex: simpson_cool_book_0093",
+      "title": "Cool book 0093",
+      "creators": [
+        {
+          "firstName": "Lisa",
+          "lastName": "Simpson",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "6UWMMP7U"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2016-10-27 04:36:35",
+      "dateModified": "2016-10-31 05:55:37",
+      "uri": "http://zotero.org/users/local/p4lUolMH/items/FKMUX7XB",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2004-06-01/unknown",
+        "extra": "bibtex: simpson_cool_book_0093",
+        "title": "Cool book 0093"
+      },
+      "itemID": 447,
+      "key": "FKMUX7XB",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "simpson_cool_book_0093"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "2017-10-28T04:44",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "2017-11-08 13:00:44 +0100-1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker8",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
     }
   ],
   "cache": {

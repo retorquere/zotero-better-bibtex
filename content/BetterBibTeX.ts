@@ -11,7 +11,6 @@ Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 import debug = require('./debug.ts')
 import flash = require('./flash.ts')
-import EDTF = require('edtf')
 import Events = require('./events.ts')
 import ZoteroConfig = require('./zotero-config.ts')
 
@@ -154,20 +153,15 @@ $patch$(Zotero.Integration, 'getApplication', original => function(agent, comman
 })
 
 /* bugger this, I don't want megabytes of shared code in the translators */
-import parseDate = require('./dateparser.ts')
+import DateParser = require('./dateparser.ts')
 import CiteProc = require('./citeproc.ts')
 import titleCase = require('./title-case.ts')
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  parseDate(sandbox, date) { return parseDate(date) },
-  isEDTF(sandbox, date) {
-    try {
-      EDTF.parse(date)
-      return true
-    } catch (error) {
-      return false
-    }
-  },
   qrCheck(sandbox, value, test, params = null) { return require('./qr-check.ts')(value, test, params) },
+
+  parseDate(sandbox, date) { return DateParser.parse(date) },
+  isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
+
   parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },

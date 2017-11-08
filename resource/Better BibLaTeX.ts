@@ -359,7 +359,7 @@ Translator.doExport = () => {
     if (item.accessDate && item.url) ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) })
 
     if (item.date) {
-      if (Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date)) {
+      if (Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date, true)) {
         ref.add({ name: 'date', value: item.date, enc: 'verbatim' })
       } else {
         const date = Zotero.BetterBibTeX.parseDate(item.date)
