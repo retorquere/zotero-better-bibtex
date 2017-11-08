@@ -18,7 +18,10 @@ module.exports = function(source) {
     allowed: {},
 
     // combinations of required fields and the types they apply to
-    required: {}
+    required: {},
+
+    // content checks
+    data: [],
   };
 
   // get all the possible entrytypes and apply the generic fields
@@ -92,35 +95,48 @@ module.exports = function(source) {
     var mandatory = select(".//bcf:constraint[@type='mandatory']", node);
     switch (mandatory.length) {
       case 0:
-        continue
+        break;
+
       case 1:
         mandatory = mandatory[0]
+        BCF.required[setname] = { types, fields: []}
+
+        for (const constraint of Array.from(mandatory.childNodes)) {
+          switch (constraint.localName || '#text') {
+            case '#text':
+              break
+
+            case 'field':
+              BCF.required[setname].fields.push(constraint.textContent)
+              break
+
+            case 'fieldor':
+            case 'fieldxor':
+              BCF.required[setname].fields.push({
+                [constraint.localName.replace('field', '')]: select('./bcf:field', constraint).map(field => field.textContent)
+              })
+              break
+
+            default:
+              throw new Error(`Unexpected constraint type ${constraint.localName}`)
+          }
+        }
         break
+
       default:
         throw new Error(`found ${mandatory.length} constraints, expected 1`)
     }
 
-    BCF.required[setname] = { types, fields: []}
+    for (const constraint of select(".//bcf:constraint[@type='data']", node)) {
+      if (types.length) throw new Error('Did not expect types for data constraints')
+      if (!constraint.localName) continue
 
-    for (const constraint of Array.from(mandatory.childNodes)) {
-      switch (constraint.localName || '#text') {
-        case '#text':
-          break
-
-        case 'field':
-          BCF.required[setname].fields.push(constraint.textContent)
-          break
-
-        case 'fieldor':
-        case 'fieldxor':
-          BCF.required[setname].fields.push({
-            [constraint.localName.replace('field', '')]: select('./bcf:field', constraint).map(field => field.textContent)
-          })
-          break
-
-        default:
-          throw new Error(`Unexpected constraint type ${constraint.localName}`)
+      const test = {
+        test: constraint.getAttribute('datatype'),
+        fields: Array.from(select('./bcf:field', constraint)).map(field => field.textContent),
       }
+      if (test.test === 'pattern') test.params = constraint.getAttribute('pattern')
+      BCF.data.push(test)
     }
   }
 
@@ -165,6 +181,15 @@ module.exports = function(source) {
       for (const test of required) {
         if (test.types.has(type)) test.check(this, report)
       }
+
+      <%_ for (const [, {test, fields, params}] of Object.entries(data)) { -%>
+        for (const field of <%- JSON.stringify(fields) -%>) {
+          if (this.has[field]) {
+            const warning = Zotero.BetterBibTeX.qrCheck(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>);
+            if (warning) report.push("'" + field + "': " + warning);
+          }
+        }
+      <%_ } -%>
 
       return report;
     }
