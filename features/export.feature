@@ -11,7 +11,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | EDTF dates in BibLaTeX #590                                                                    | 26          |
+     | EDTF dates in BibLaTeX #590                                                                    | 27          |
      | date ranges #747+#746                                                                          | 4           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
