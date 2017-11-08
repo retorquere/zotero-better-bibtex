@@ -280,3 +280,15 @@
   title = {Cool Book 0397}
 }
 
+@book{simpson_cool_book_0092,
+  author = {Simpson, Lisa},
+  date = {unknown/2006},
+  title = {Cool Book 0092}
+}
+
+@book{simpson_cool_book_0093,
+  author = {Simpson, Lisa},
+  date = {2004-06-01/unknown},
+  title = {Cool Book 0093}
+}
+

@@ -50,9 +50,9 @@ function normalize_edtf(date) {
 
 function upgrade_edtf(date) {
   return date
+    .replace(/unknown/g, '*')
     .replace(/u/g, 'X')
     .replace(/(\?~)|(~\?)/g, '%')
-    .replace(/unknown/g, '*')
     .replace(/open/g, '')
     .replace(/\.\./g, '')
     .replace(/y/g, 'Y')
@@ -198,12 +198,20 @@ function parse(value) {
 }
 
 export = {
-  isEDTF(value) {
-    try {
-      return !!EDTF.parse(upgrade_edtf(value))
-    } catch (err) {
-      return false
+  isEDTF(value, minuteLevelPrecision = false) {
+    value = upgrade_edtf(value)
+
+    for (const postfix of ['', minuteLevelPrecision ? ':00' : undefined]) {
+      try {
+        debug('isEDTF', value + postfix)
+        return !!EDTF.parse(value + postfix)
+      } catch (err) {
+        debug('isEDTF', value + postfix, ': no')
+      }
     }
+
+    debug('isEDTF', value, ': definately no')
+    return false
   },
 
   parse,

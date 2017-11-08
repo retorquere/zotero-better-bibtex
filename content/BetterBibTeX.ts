@@ -158,7 +158,7 @@ import CiteProc = require('./citeproc.ts')
 import titleCase = require('./title-case.ts')
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return DateParser.parse(date) },
-  isEDTF(sandbox, date) { return DateParser.isEDTF(date) },
+  isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
   parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
   titleCase(sandbox, text) { return titleCase(text) },
