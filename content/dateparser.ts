@@ -48,6 +48,16 @@ function normalize_edtf(date) {
   }
 }
 
+function upgrade_edtf(date) {
+  return date
+    .replace(/u/g, 'X')
+    .replace(/(\?~)|(~\?)/g, '%')
+    .replace(/unknown/g, '*')
+    .replace(/open/g, '')
+    .replace(/\.\./g, '')
+    .replace(/y/g, 'Y')
+}
+
 function parse_edtf(date) {
   try {
     return normalize_edtf(EDTF.parse(edtfy(date.replace(/\. /, ' ')))) // 8. july 2011
@@ -55,29 +65,22 @@ function parse_edtf(date) {
 
   try {
     // https://github.com/inukshuk/edtf.js/issues/5
-    return normalize_edtf(EDTF.parse(date
-      .replace(/u/g, 'X')
-      .replace(/(\?~)|(~\?)/g, '%')
-      .replace(/unknown/g, '*')
-      .replace(/open/g, '')
-      .replace(/\.\./g, '')
-      .replace(/y/g, 'Y')
-    ))
+    return normalize_edtf(EDTF.parse(upgrade_edtf(date)))
   } catch (err) {}
 
   return false
 }
 
-export = function parse(raw) {
+function parse(value) {
   const december = 12
 
-  debug('dateparser: parsing', raw)
+  debug('dateparser: parsing', value)
 
-  if (raw.trim() === '') return {type: 'open'}
+  if (value.trim() === '') return {type: 'open'}
 
   let m
   // 747
-  if (m = raw.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/)) {
+  if (m = value.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/)) {
     const [ , month, day1, day2, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`)
@@ -87,7 +90,7 @@ export = function parse(raw) {
   }
 
   // 747, January 30–February 3, 1989
-  if (m = raw.match(/^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/)) {
+  if (m = value.match(/^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/)) {
     const [ , date1, date2, year ] = m
 
     const from = parse(`${date1} ${year}`)
@@ -97,7 +100,7 @@ export = function parse(raw) {
   }
 
   // 746
-  if (m = raw.match(/^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/)) {
+  if (m = value.match(/^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/)) {
     const [ , day1, day2, month, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`)
@@ -107,7 +110,7 @@ export = function parse(raw) {
   }
 
   for (const sep of ['--', '-', '/', '_', '–']) {
-    if ((m = raw.split(sep)).length === 2) { // potential range
+    if ((m = value.split(sep)).length === 2) { // potential range
       const [ _from, _to ] = m
       if ((_from.length > 2 || (sep === '/' && _from.length === 0)) && (_to.length > 2 || (sep === '/' && _to.length === 0))) {
         const from = parse(_from) // tslint:disable-line:no-magic-numbers
@@ -117,8 +120,8 @@ export = function parse(raw) {
     }
   }
 
-  const cleaned = raw.normalize('NFC').replace(months_re, (_ => months[_.toLowerCase()]))
-  debug('dateparser:', raw, 'cleaned up to', cleaned)
+  const cleaned = value.normalize('NFC').replace(months_re, (_ => months[_.toLowerCase()]))
+  debug('dateparser:', value, 'cleaned up to', cleaned)
 
   const trimmed = cleaned.trim().replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '').toLowerCase()
 
@@ -177,7 +180,7 @@ export = function parse(raw) {
   if (m = /^\[(-?[0-9]+)\]$/.exec(trimmed)) {
     // 704
     // return { type: 'date', orig: { type: 'date', year: parseInt(m[1]) } }
-    return { type: 'verbatim', verbatim: raw }
+    return { type: 'verbatim', verbatim: value }
   }
 
   if (m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(trimmed)) {
@@ -191,5 +194,17 @@ export = function parse(raw) {
   }
 
   const parsed = parse_edtf(cleaned)
-  return parsed || { type: 'verbatim', verbatim: raw }
+  return parsed || { type: 'verbatim', verbatim: value }
+}
+
+export = {
+  isEDTF(value) {
+    try {
+      return !!EDTF.parse(upgrade_edtf(value))
+    } catch (err) {
+      return false
+    }
+  },
+
+  parse,
 }

@@ -7,7 +7,7 @@ import Prefs = require('../prefs.ts')
 import debug = require('../debug.ts')
 
 const parser = require('./formatter.pegjs')
-import parseDate = require('../dateparser.ts')
+import DateParser = require('../dateparser.ts')
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
@@ -94,7 +94,7 @@ export = new class PatternFormatter {
     } catch (error1) {}
 
     if (this.item.date) {
-      let date = parseDate(this.item.date)
+      let date = DateParser.parse(this.item.date)
       if (date.type === 'list') date = date.dates[0]
       if (date.type === 'interval') date = date.from || date.to
 
