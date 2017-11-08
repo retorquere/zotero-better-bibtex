@@ -38,6 +38,7 @@
   "dependencies": {
     "ajv": "^5.3.0",
     "ajv-keywords": "^2.1.1",
+    "barcoder": "^2.0.1",
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.2.0",
@@ -46,6 +47,8 @@
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
     "fold-to-ascii": "^4.0.0",
+    "isbnjs": "^0.2.2",
+    "issn": "^1.0.5",
     "js-yaml": "^3.10.0",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.1",
