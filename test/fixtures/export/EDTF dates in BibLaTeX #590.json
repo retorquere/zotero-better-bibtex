@@ -1015,6 +1015,41 @@
 
       ],
       "citekey": "simpson_cool_book_0093"
+    },
+    {
+      "itemType": "newspaperArticle",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "url": "http://www.abc.net.au/news/2016-07-18/turkey-coup-attempt-shows-division-over-wish-for-islamist-rule/7639292",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "publicationTitle": "ABC News",
+      "date": "2017-10-28T04:44",
+      "extra": "Actual: 2016-07-18T20:26:06+10:00",
+      "accessDate": "2016-07-24 12:35:37",
+      "language": "en-AU",
+      "abstractNote": "Religious fundamentalism is a powerful force in Turkey where the military has a long history of intervening in politics to ensure the nation remains secular.",
+      "title": "2017-11-08 13:00:44 +0100-1",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Barker8",
+          "firstName": "Anne"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 377,
+      "seeAlso": [
+
+      ],
+      "__citekey__": "barker_2016_turkey"
     }
   ],
   "cache": {
