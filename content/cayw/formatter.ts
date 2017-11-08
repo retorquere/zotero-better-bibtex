@@ -3,6 +3,7 @@ declare const Zotero: any
 import Translators = require('../translators.ts')
 import debug = require('../debug.ts')
 import getItemsAsync = require('../get-items-async.ts')
+import Prefs = require('../prefs.ts')
 
 /*
     @config.citeprefix ||= ''
@@ -18,7 +19,7 @@ import getItemsAsync = require('../get-items-async.ts')
     @config.useJournalAbbreviation
 */
 
-const shortLocator = {
+const shortLabel = {
     article: 'art.',
     chapter: 'ch.',
     subchapter: 'subch.',
@@ -86,11 +87,11 @@ export = new class Formatter {
 
       debug('citation:', citation)
       if (citation.locator && citation.suffix) {
-        const label = citation.label === 'page' ? '' : shortLocator[citation.label] + ' '
+        const label = citation.label === 'page' ? '' : shortLabel[citation.label] + ' '
         formatted += `[${label}${citation.locator}, ${citation.suffix}]`
 
       } else if (citation.locator) {
-        const label = citation.label === 'page' ? '' : shortLocator[citation.label] + ' '
+        const label = citation.label === 'page' ? '' : shortLabel[citation.label] + ' '
         formatted += `[${label}${citation.locator}]`
 
       } else if (citation.suffix) {
@@ -126,7 +127,7 @@ export = new class Formatter {
       if (citation.prefix) cite += `${citation.prefix} `
       if (citation['suppress-author']) cite += '-'
       cite += `@${citation.citekey}`
-      if (citation.locator) cite += `, ${shortLocator[citation.label]} ${citation.locator}`
+      if (citation.locator) cite += `, ${shortLabel[citation.label]} ${citation.locator}`
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
@@ -140,7 +141,7 @@ export = new class Formatter {
       let cite = citation.citekey
       if (citation.locator) {
         let label = citation.locator
-        if (citation.label !== 'page') label = `${shortLocator[citation.label]} ${label}`
+        if (citation.label !== 'page') label = `${shortLabel[citation.label]} ${label}`
         cite += `(${label})`
       }
       formatted.push(cite)
@@ -150,86 +151,82 @@ export = new class Formatter {
   }
 
   public async 'scannable-cite'(citations) {
+    // I have it on good authority that legal types are weird
+    const LEGAL_TYPES = new Set(['bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty'])
     class Mem {
       private lst: string[]
       private isLegal: boolean
 
-      constructor(isLegal) {
-        this.isLegal = isLegal
+      constructor(item) {
         this.lst = []
+        this.isLegal = LEGAL_TYPES.has(item.itemType)
       }
 
-      public set(str, punc, slug) {
-        if (!punc) punc = ''
-        switch (false) {
-          case !str:        return this.lst.push(str + punc)
-          case !!this.isLegal:  return this.lst.push(slug)
-        }
+      public set(str, punc = '', slug = null) {
+        if (str) this.lst.push(str + punc)
+        else if (!this.isLegal) this.lst.push(slug)
       }
 
-      public setlaw(str, punc = null) {
-        if (!punc) punc = ''
-        if (str && this.isLegal) return this.lst.push(str + punc)
+      public setlaw(str, punc = '') {
+        if (str && this.isLegal) this.lst.push(str + punc)
       }
 
-      public get() { return this.lst.join(' ') }
+      public get() {
+        return this.lst.join(' ')
+      }
     }
 
-    const formatted = []
+    const testing = Prefs.get('testing')
+
     for (const citation of citations) {
-      const item = Zotero.Items.get(citation.id)
-      const isLegal = [ 'bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty' ].includes(Zotero.ItemTypes.getName(item.itemTypeID))
-
-      const key = Zotero.BetterBibTeX.Pref.get('tests') ? 'ITEMKEY' : item.key
-
-      let id
-      if (item.libraryID) {
-        id = `zg:${item.libraryID}:${key}`
-      } else if (Zotero.userID) {
-        id = `zu:${Zotero.userID}:${key}`
-      } else {
-        id = `zu:0:${key}`
-      }
-      if (!citation.prefix) citation.prefix = ''
-      if (!citation.suffix) citation.suffix = ''
-
-      const title = new Mem(isLegal)
-      title.set(item.firstCreator, ',', 'anon.')
-
-      let includeTitle = false
-      /* Prefs.get throws an error if the pref is not found */
-      try {
-        includeTitle = Zotero.Prefs.get('translators.ODFScan.includeTitle')
-      } catch (error) {}
-      if (includeTitle || !item.firstCreator) {
-        title.set(item.getField('shortTitle') || item.getField('title'), ',', '(no title)')
-      }
-
-      try {
-        title.setlaw(item.getField('authority'), ',')
-      } catch (err) {}
-      try {
-        title.setlaw(item.getField('volume'))
-      } catch (err) {}
-      try {
-        title.setlaw(item.getField('reporter'))
-      } catch (err) {}
-      title.setlaw(item.getField('pages'))
-
-      const year = new Mem(isLegal)
-      try {
-        year.setlaw(item.getField('court'), ',')
-      } catch (err) {}
-      const date = Zotero.Date.strToDate(item.getField('date'))
-      year.set(date.year ? date.year : item.getField('date'), '', 'no date')
-
-      let label = `${title.get()} ${year.get()}`.trim()
-      if (citation.suppressAuthor) label = `-${label}`
-
-      formatted.push(`{${citation.prefix}|${citation.label}|${citation.locator}|${citation.suffix}|${id}}`)
+      citation.z = await getItemsAsync(citation.id)
     }
 
-    return formatted.join('')
+    return citations.map(item => {
+      const mem = new Mem(item)
+      const memdate = new Mem(item)
+
+      const fields = []
+
+      // 1: prefix
+      fields.push(item.prefix)
+
+      // 2: text
+      const creators = item.z.getCreators() || []
+      if (creators.length) {
+        mem.set(creators[0].lastName, ',')
+        if (creators.length > 2) mem.set('et al.', ',')
+        else if (creators.length === 2) mem.set('& ' + creators[1].lastName, ',')
+      } else {
+        mem.set(false, ',', 'anon.')
+      }
+
+      if (item.title) mem.set(item.title, ',', '(no title)')
+
+      mem.setlaw(item.authority, ',')
+      mem.setlaw(item.volume)
+      mem.setlaw(item.reporter)
+      mem.setlaw(item.pages)
+      memdate.setlaw(item.court, ',')
+
+      const date = Zotero.Date.strToDate(item.z.getField('date'))
+      memdate.set((date.year) ? date.year : item.z.getField('date'), '', 'no date')
+
+      fields.push(`${mem.get()} ${memdate.get()}`.trim())
+
+      // 3: locator
+      fields.push(item.locator ? `${shortLabel[item.label]} ${item.locator}` : '')
+
+      // 4: suffix
+      fields.push(item.suffix)
+
+      // 5: id
+      const prefix = item.z.libraryID === Zotero.Libraries.userLibraryID ? 'zu' : 'zg'
+      const lib = item.z.libraryID === Zotero.Libraries.userLibraryID ? 0 : item.z.libraryID
+      fields.push(`${prefix}${lib}:${testing ?  'ITEMKEY' : item.z.key}`)
+
+      return `{ ${fields.join(' | ').trim()} }`
+    }).join('')
   }
 
   /*
