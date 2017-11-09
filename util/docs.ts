@@ -90,12 +90,12 @@ class DocFinder {
       case 'element':
         switch (node.name) {
           case 'preference':
-            this.preferences[node.attributes.id] = {
+            this.preference = node.attributes.id || `#${node.attributes.name}`
+            this.preferences[this.preference] = {
               id: node.attributes.id,
               type: node.attributes.type,
               preference: node.attributes.name,
             }
-            this.preference = node.attributes.id
             break
 
           case 'tab':
