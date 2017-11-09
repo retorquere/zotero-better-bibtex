@@ -30,11 +30,10 @@
       "bibtexURL": "off",
       "csquotes": "",
       "keyConflictPolicy": "keep",
-      "langID": "babel",
-      "pinCitekeys": "manual",
       "preserveBibTeXVariables": false,
-      "citekeyScan": "",
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "skipWords": [
         "a",
         "ab",
@@ -181,7 +180,8 @@
       "exportFileData": false
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "book",
@@ -195,14 +195,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/6KG7342T",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://nanowares.wordpress.com/2011/09/30/logic-apparently-off-limits-in-the-law/",
         "date": "2011",
@@ -211,7 +220,9 @@
       "itemID": 56,
       "key": "6KG7342T",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Koepsell2011"
     },
@@ -227,14 +238,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/FWU5DC97",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/software/year2000.html",
         "date": "January 2012",
@@ -243,7 +263,9 @@
       "itemID": 57,
       "key": "FWU5DC97",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2012"
     },
@@ -259,14 +281,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VB2WU8CA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Columbia University Press",
         "date": "2005",
@@ -275,7 +306,9 @@
       "itemID": 58,
       "key": "VB2WU8CA",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Rawls2005"
     },
@@ -298,13 +331,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZTPYJGX8",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Open Court Publishing",
         "ISBN": "0-8126-9537-2",
@@ -314,7 +354,9 @@
       "itemID": 59,
       "key": "ZTPYJGX8",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Koepsell2003"
     },
@@ -332,14 +374,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/B8I3PUAU",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "University of Wisconsin Press",
         "date": "1964",
@@ -350,7 +401,9 @@
       "itemID": 60,
       "key": "B8I3PUAU",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "bergmann1964logic"
     },
@@ -371,14 +424,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/F2WIFXS7",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://mind.oxfordjournals.org/content/XCIII/370/194.short",
         "volume": "XCIII",
@@ -392,7 +454,9 @@
       "itemID": 61,
       "key": "F2WIFXS7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Raz1984"
     },
@@ -409,14 +473,23 @@
           "creatorType": "editor"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VZJ2YEWJ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Transaction Publishers",
         "date": "2010",
@@ -426,7 +499,9 @@
       "itemID": 62,
       "key": "VZJ2YEWJ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "sheehan2010heidegger"
     },
@@ -444,14 +519,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MES3ISGN",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "Vol. 31",
         "pages": "Pg.–Pg. 593",
@@ -463,7 +547,9 @@
       "key": "MES3ISGN",
       "publicationTitle": "Harvard Journal of Law and Public Policy",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Harv. J. Law Public Policy",
       "citekey": "Balganesh2008"
     },
@@ -491,14 +577,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LJL7ANPP",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://link.springer.com/article/10.1007/s11673-007-9072-3",
         "volume": "4",
@@ -514,7 +609,9 @@
       "itemID": 64,
       "key": "LJL7ANPP",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "J. Bioethical Inq.",
       "citekey": "yu2007confucian"
     },
@@ -533,14 +630,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/6QMVDMPB",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "University of Chicago Press, Chicago",
         "ISBN": "0-226-50079-9 0-226-50078-0",
@@ -552,7 +658,9 @@
       "itemID": 65,
       "key": "6QMVDMPB",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "MacLeod2001"
     },
@@ -591,13 +699,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VW6GPQ74",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://dx.doi.org/10.1007/3-540-45632-5_24",
         "series": "Lecture Notes in Computer Science",
@@ -614,7 +729,9 @@
       "key": "VW6GPQ74",
       "publicationTitle": "Computational Logic: Logic Programming and Beyond",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Psillos2002"
     },
@@ -631,14 +748,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/PTRR93RD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Pennsylvania State University Press",
         "date": "2005",
@@ -648,7 +774,9 @@
       "itemID": 67,
       "key": "PTRR93RD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "verbeek2005things"
     },
@@ -669,14 +797,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/EI9592AY",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "University of Chicago Press",
         "date": "1949",
@@ -685,7 +822,9 @@
       "itemID": 68,
       "key": "EI9592AY",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Kant1949"
     },
@@ -702,14 +841,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WM4QFLPB",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "University of Chicago Press, Chicago",
         "date": "1967",
@@ -719,7 +867,9 @@
       "itemID": 69,
       "key": "WM4QFLPB",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Rorty1967"
     },
@@ -736,14 +886,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LS9S6SKS",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "President's Council on Bioethics",
         "date": "2008",
@@ -754,7 +913,9 @@
       "key": "LS9S6SKS",
       "publicationTitle": "Human Dignity and Bioethics: Essays Commissioned by the President's Council on Bioethics",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Churchland2008"
     },
@@ -775,14 +936,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/IDZAEF4C",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Cambridge University Press",
         "date": "1988",
@@ -791,7 +961,9 @@
       "itemID": 71,
       "key": "IDZAEF4C",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Locke1988"
     },
@@ -835,13 +1007,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/B8T2CRKD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://philsci-archive.pitt.edu/1080/",
         "date": "2002",
@@ -851,7 +1030,9 @@
       "itemID": 72,
       "key": "B8T2CRKD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Knuuttila2002"
     },
@@ -877,14 +1058,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/AI54SIVH",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Rutgers University Press",
         "date": "1989",
@@ -893,7 +1083,9 @@
       "itemID": 73,
       "key": "AI54SIVH",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Dreyfuss1989"
     },
@@ -940,13 +1132,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/6HZZNT6U",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/10.1086/505233",
         "rights": "Copyright © 2006 The University of Chicago Press",
@@ -967,7 +1166,9 @@
       "itemID": 74,
       "key": "6HZZNT6U",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "Bostrom2006"
     },
     {
@@ -988,14 +1189,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/SQ23H3QD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.webcitation.org/6702LuOok",
         "publicationTitle": "PBS",
@@ -1005,7 +1215,9 @@
       "itemID": 75,
       "key": "SQ23H3QD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Sandel2007"
     },
@@ -1021,14 +1233,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/QSBWFP6M",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/copyleft/",
         "date": "June 2012",
@@ -1037,7 +1258,9 @@
       "itemID": 76,
       "key": "QSBWFP6M",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2012a"
     },
@@ -1062,14 +1285,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WWLNT48D",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "28",
         "pages": "pp. 63-94",
@@ -1082,7 +1314,9 @@
       "itemID": 77,
       "key": "WWLNT48D",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Proc. Aristot. Soc. Suppl. Vol.",
       "citekey": "ayerrhees1954symposium"
     },
@@ -1116,13 +1350,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/AJUPYMKX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.amazon.com/exec/obidos/redirect?tag=citeulike07-20&path=ASIN/0061319694",
         "publisher": "Harper Torchbooks",
@@ -1135,7 +1376,9 @@
       "itemID": 78,
       "key": "AJUPYMKX",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "heidegger1977question"
     },
@@ -1151,14 +1394,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/5KITRQNR",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Harvard University Press",
         "date": "1999",
@@ -1167,7 +1419,9 @@
       "itemID": 79,
       "key": "5KITRQNR",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Rawls1999"
     },
@@ -1195,13 +1449,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/H2PX9WSL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://ant.sagepub.com/content/6/1/12.abstract",
         "volume": "6",
@@ -1216,7 +1477,9 @@
       "itemID": 80,
       "key": "H2PX9WSL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Anthropol. Theory",
       "citekey": "Searle2006"
     },
@@ -1233,14 +1496,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/93CDC8EH",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "place": "Chicago and LaSalle, Illinios",
         "publisher": "Open Court Classics",
@@ -1250,7 +1522,9 @@
       "itemID": 81,
       "key": "93CDC8EH",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Russell1918"
     },
@@ -1271,14 +1545,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/HRUYYEQV",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.ingentaconnect.com/content/rodopi/cpm/2011/00000008/00000001/art00006",
         "volume": "8",
@@ -1292,7 +1575,9 @@
       "itemID": 82,
       "key": "HRUYYEQV",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Contemp. Pragmatism",
       "citekey": "Koopman2011"
     },
@@ -1311,14 +1596,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/2Z8AKGLK",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "International encyclopedia of unified science",
         "publisher": "University of Chicago Press",
@@ -1330,7 +1624,9 @@
       "itemID": 83,
       "key": "2Z8AKGLK",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Kuhn1996"
     },
@@ -1350,14 +1646,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/4K7CQGWZ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/gnu/manifesto.html",
         "volume": "10",
@@ -1370,7 +1675,9 @@
       "itemID": 84,
       "key": "4K7CQGWZ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Dr Dobbs J. Softw. Tools",
       "citekey": "Stallman1985"
     },
@@ -1386,14 +1693,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/S6Q26YCR",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Bloomsbury Academic",
         "date": "2011",
@@ -1402,7 +1718,9 @@
       "itemID": 85,
       "key": "S6Q26YCR",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Koepsell2011a"
     },
@@ -1434,14 +1752,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/BG8NLMYC",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "New waves in philosophy",
         "publisher": "Palgrave Macmillan",
@@ -1451,7 +1778,9 @@
       "itemID": 86,
       "key": "BG8NLMYC",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Brey2008"
     },
@@ -1468,14 +1797,23 @@
           "lastName": "Laureano Ralon"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/GE2C4ENB",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://figureground.ca/interviews/don-ihde/",
         "publisher": "Figure/Ground Communication",
@@ -1485,7 +1823,9 @@
       "itemID": 87,
       "key": "GE2C4ENB",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "LaureanoRalon2010"
     },
@@ -1502,14 +1842,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/8PHU4JN6",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "M. Nijhoff",
         "date": "1978",
@@ -1519,7 +1868,9 @@
       "itemID": 88,
       "key": "8PHU4JN6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Smyth1978"
     },
@@ -1540,14 +1891,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/6VKQJSBG",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Oxford University Press",
         "date": "1997",
@@ -1556,7 +1916,9 @@
       "itemID": 89,
       "key": "6VKQJSBG",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Honore1997"
     },
@@ -1575,14 +1937,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/3YNTDXVD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "244",
         "pages": "124–132",
@@ -1594,7 +1965,9 @@
       "itemID": 90,
       "key": "3YNTDXVD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Sci. Am.",
       "citekey": "fodor1981mindbody"
     },
@@ -1623,14 +1996,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VR5VC969",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Blackwell",
         "ISBN": "978-0-631-16940-6",
@@ -1642,7 +2024,9 @@
       "itemID": 91,
       "key": "VR5VC969",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "wittgenstein1975certainty"
     },
@@ -1673,21 +2057,31 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/IQBT6NAZ",
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         {
           "key": "39DBWZPK",
           "itemType": "note",
           "parentItem": "IQBT6NAZ",
           "note": "<p>Translation by Stambaugh, Joan</p>",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -1696,7 +2090,9 @@
           "itemID": 93,
           "libraryID": null,
           "sourceItemKey": "IQBT6NAZ",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         }
       ],
       "uniqueFields": {
@@ -1712,7 +2108,9 @@
       "itemID": 92,
       "key": "IQBT6NAZ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "heidegger1996beingandtime"
     },
@@ -1728,14 +2126,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/DLTD4PGT",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "J. Johnson",
         "date": "1798",
@@ -1744,7 +2151,9 @@
       "itemID": 94,
       "key": "DLTD4PGT",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Malthus1798"
     },
@@ -1765,14 +2174,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/DM2A2PMQ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=b8YtAAAAYAAJ",
         "series": "The Language and Thought Series",
@@ -1786,7 +2204,9 @@
       "itemID": 95,
       "key": "DM2A2PMQ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "fodor1976language"
     },
@@ -1801,14 +2221,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/CILCFG8E",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "1908",
         "title": "Also sprach Zarathustra"
@@ -1816,7 +2245,9 @@
       "itemID": 96,
       "key": "CILCFG8E",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Nietzsche1908"
     },
@@ -1832,14 +2263,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LLSUWUQM",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Doubleday-Doran",
         "date": "1789",
@@ -1848,7 +2288,9 @@
       "itemID": 97,
       "key": "LLSUWUQM",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Bentham1789"
     },
@@ -1878,14 +2320,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/H9VFPST6",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "74",
         "issue": "1",
@@ -1898,7 +2349,9 @@
       "itemID": 98,
       "key": "H9VFPST6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "leach2009freedom"
     },
@@ -1914,14 +2367,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/X28RA253",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "1641",
         "extra": "bibtex: descartes1641meditations",
@@ -1930,7 +2392,9 @@
       "itemID": 99,
       "key": "X28RA253",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "descartes1641meditations"
     },
@@ -1947,14 +2411,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/546DW7UJ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Basil Blackwell",
         "date": "1991",
@@ -1964,7 +2437,9 @@
       "itemID": 100,
       "key": "546DW7UJ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "hacker1991appearance"
     },
@@ -1983,14 +2458,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/Q289QBGV",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Oxford University Press",
         "pages": "424–43",
@@ -2003,7 +2487,9 @@
       "key": "Q289QBGV",
       "publicationTitle": "Metametaphysics: New Essays on the Foundations of Ontology",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Soames2009"
     },
@@ -2026,14 +2512,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/EUSCARFA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Routledge",
         "date": "2007",
@@ -2045,7 +2540,9 @@
       "key": "EUSCARFA",
       "publicationTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "McGrew2007"
     },
@@ -2063,14 +2560,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/2AFBLDJV",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Free Software Foundation, Inc.",
         "pages": "251",
@@ -2082,7 +2588,9 @@
       "key": "2AFBLDJV",
       "publicationTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Stallman2010"
     },
@@ -2101,14 +2609,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/L5XXTR97",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "place": "Oxford",
         "publisher": "Basil Blackwell",
@@ -2120,7 +2637,9 @@
       "itemID": 104,
       "key": "L5XXTR97",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "wittgenstein1953PI"
     },
@@ -2139,14 +2658,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YQAGVI6R",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.informationweek.com/news/personal-tech/digital-content/218600600",
         "date": "July 2009",
@@ -2159,7 +2687,9 @@
       "key": "YQAGVI6R",
       "publicationTitle": "InformationWeek",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "gage2009amazon"
     },
@@ -2175,14 +2705,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/T5JC42I7",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Oxford, The Clarendon Press",
         "date": "1927",
@@ -2191,7 +2730,9 @@
       "itemID": 106,
       "key": "T5JC42I7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Bradley1927"
     },
@@ -2222,14 +2763,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/UX5N5XWM",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.sciencedirect.com/science/article/pii/S0140673604162090",
         "volume": "363",
@@ -2243,7 +2793,9 @@
       "itemID": 107,
       "key": "UX5N5XWM",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Sermon2004"
     },
@@ -2264,14 +2816,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/EXIHZ6IS",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "12",
         "issue": "2",
@@ -2285,7 +2846,9 @@
       "itemID": 108,
       "key": "EXIHZ6IS",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Int. J. Philos. Stud.",
       "citekey": "law20045pla"
     },
@@ -2301,14 +2864,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YFFDX5M6",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Macmillan",
         "date": "1968",
@@ -2317,7 +2889,9 @@
       "itemID": 109,
       "key": "YFFDX5M6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Pitcher1968"
     },
@@ -2341,14 +2915,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MZPFRCBL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/762754",
         "rights": "Copyright © 1999 The Johns Hopkins University Press",
@@ -2365,7 +2948,9 @@
       "itemID": 110,
       "key": "MZPFRCBL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Hum. Rights Q.",
       "citekey": "1999"
     },
@@ -2388,14 +2973,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/SS75KTPF",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jetpress.org/volume14/bostrom.pdf",
         "volume": "14",
@@ -2411,7 +3005,9 @@
       "itemID": 111,
       "key": "SS75KTPF",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "J. Evol. Technol.",
       "citekey": "bostrom2005history"
     },
@@ -2429,14 +3025,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/H3BXFY9V",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "vol. 122",
         "pages": "pg.–pg. 1569",
@@ -2448,7 +3053,9 @@
       "key": "H3BXFY9V",
       "publicationTitle": "Harvard Law Review",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Harv. Law Rev.",
       "citekey": "Balganesh2009"
     },
@@ -2469,14 +3076,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/FBHSCGCF",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://doc.utwente.nl/61020/",
         "volume": "7",
@@ -2490,7 +3106,9 @@
       "itemID": 113,
       "key": "FBHSCGCF",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Phenomenol. Cogn. Sci.",
       "citekey": "Verbeek2008"
     },
@@ -2506,14 +3124,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/HBQAJ38X",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/education/edu-schools.html",
         "date": "June 2010",
@@ -2522,7 +3149,9 @@
       "itemID": 114,
       "key": "HBQAJ38X",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2010"
     },
@@ -2539,14 +3168,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/QLGFQLFL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.webcitation.org/query?url=http%3A%2F%2Fwww.wtec.org%2FConvergingTechnologies%2F1%2FNBIC_report.pdf&date=2011-03-04",
         "date": "June 2009",
@@ -2557,7 +3195,9 @@
       "key": "QLGFQLFL",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Converging Technol. Improv. Hum. Perform.",
       "citekey": "Wolbring2009"
     },
@@ -2581,21 +3221,31 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/4UGPMRZ6",
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         {
           "key": "LZCP76WF",
           "itemType": "note",
           "parentItem": "4UGPMRZ6",
           "note": "<p>Article: The Origin of the Work of Art</p>",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -2604,7 +3254,9 @@
           "itemID": 117,
           "libraryID": null,
           "sourceItemKey": "4UGPMRZ6",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         }
       ],
       "uniqueFields": {
@@ -2618,7 +3270,9 @@
       "itemID": 116,
       "key": "4UGPMRZ6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Heidegger2010"
     },
@@ -2636,14 +3290,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/A5M23CH8",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "23",
         "pages": "121–123",
@@ -2654,7 +3317,9 @@
       "itemID": 118,
       "key": "A5M23CH8",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Gettier1963"
     },
@@ -2682,13 +3347,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VRDIRNMZ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Palgrave Macmillan",
         "date": "2007",
@@ -2699,7 +3371,9 @@
       "key": "VRDIRNMZ",
       "publicationTitle": "New Waves in Applied Ethics",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Bostrom2007"
     },
@@ -2715,14 +3389,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/I5CV98G6",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Parker, Son and Bourn",
         "date": "1863",
@@ -2731,7 +3414,9 @@
       "itemID": 120,
       "key": "I5CV98G6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Mill1863"
     },
@@ -2753,14 +3438,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/Q8CMHV98",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Cambridge University Press",
         "date": "1926",
@@ -2770,7 +3464,9 @@
       "itemID": 121,
       "key": "Q8CMHV98",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Clapham1926"
     },
@@ -2864,13 +3560,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/9ZA5MGHA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://bits.blogs.nytimes.com/2010/02/12/do-e-readers-cause-eye-strain/",
         "date": "2010-02-12",
@@ -2884,7 +3587,9 @@
       "key": "9ZA5MGHA",
       "publicationTitle": "Bits Blog",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "bilton2010strain"
     },
@@ -2913,13 +3618,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/QK48GYRQ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://dx.doi.org/10.1007/s11016-005-3431-7",
         "volume": "14",
@@ -2935,7 +3647,9 @@
       "itemID": 123,
       "key": "QK48GYRQ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Ladyman2005"
     },
@@ -2951,14 +3665,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/I8K4MZDS",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Routledge",
         "date": "1993",
@@ -2967,7 +3690,9 @@
       "itemID": 124,
       "key": "I8K4MZDS",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Johnston1993"
     },
@@ -2983,14 +3708,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZS2LMLJR",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Clarendon Press",
         "date": "1988",
@@ -2999,7 +3733,9 @@
       "itemID": 125,
       "key": "ZS2LMLJR",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Pears1988"
     },
@@ -3019,14 +3755,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/5WFC3NBL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "vol. 30",
         "pages": "p935–949",
@@ -3039,7 +3784,9 @@
       "itemID": 126,
       "key": "5WFC3NBL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Soc. Stud. Sci.",
       "citekey": "Zilsel2000"
     },
@@ -3093,13 +3840,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZSFW7MYK",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://plato.stanford.edu/archives/sum2012/entries/private-language/",
         "edition": "Summer 2012",
@@ -3115,7 +3869,9 @@
       "key": "ZSFW7MYK",
       "publicationTitle": "The Stanford Encyclopedia of Philosophy",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "sep-private-language"
     },
@@ -3142,14 +3898,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/PMAFETDX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Cambridge Medicine",
         "publisher": "Cambridge University Press",
@@ -3159,7 +3924,9 @@
       "itemID": 128,
       "key": "PMAFETDX",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Dickenson2010"
     },
@@ -3180,14 +3947,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/V4SFA9Z8",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.com/books?hl=en&lr=&id=qS3pJL_BcdkC&oi=fnd&pg=PA1&dq=Technology+and+the+Character+of+Contemporary+Life++Albert+Borgmann&ots=TCoU2lKISE&sig=ag0Sp-0RFHjIjGPrb5pX6KN6i0w",
         "publisher": "University of Chicago Press",
@@ -3201,7 +3977,9 @@
       "itemID": 129,
       "key": "V4SFA9Z8",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "borgmann1987technology"
     },
@@ -3218,14 +3996,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/KXPMK4G3",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Cambridge University Press",
         "date": "1998",
@@ -3235,7 +4022,9 @@
       "itemID": 130,
       "key": "KXPMK4G3",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Kant1998"
     },
@@ -3256,14 +4045,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/DKTF8AXR",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Longmans, Green and co.",
         "date": "1936",
@@ -3272,7 +4070,9 @@
       "itemID": 131,
       "key": "DKTF8AXR",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Hammond1936"
     },
@@ -3298,13 +4098,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/AXDGYTWS",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "science * culture",
         "publisher": "University of Chicago Press",
@@ -3317,7 +4124,9 @@
       "itemID": 132,
       "key": "AXDGYTWS",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Dear2006"
     },
@@ -3332,14 +4141,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/IX3DBQJL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "2009",
         "title": "Ten Paradoxes"
@@ -3347,7 +4165,9 @@
       "itemID": 133,
       "key": "IX3DBQJL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Feenberg2009"
     },
@@ -3377,14 +4197,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ENA7ECRX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=GfCINAAACAAJ",
         "series": "ESSENTIAL WORKS OF MICHEL FOUCAULT",
@@ -3397,7 +4226,9 @@
       "itemID": 134,
       "key": "ENA7ECRX",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Foucault1997"
     },
@@ -3416,14 +4247,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/TFM38QPC",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "1",
         "pages": "213–231",
@@ -3435,7 +4275,9 @@
       "itemID": 135,
       "key": "TFM38QPC",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "East Asian Sci. Technol. Soc. Int. J.",
       "citekey": "tiFan2007"
     },
@@ -3452,14 +4294,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/7CQQBUQ4",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.iep.utm.edu/wittgens/",
         "publisher": "Internet Encyclopedia of Philosophy",
@@ -3469,7 +4320,9 @@
       "itemID": 136,
       "key": "7CQQBUQ4",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Richter2004"
     },
@@ -3502,13 +4355,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VBRUKZPG",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.sciencedirect.com/science/article/pii/S0362331999000439",
         "volume": "36",
@@ -3523,7 +4383,9 @@
       "itemID": 137,
       "key": "VBRUKZPG",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Soc. Sci. J.",
       "citekey": "Ashooh1999"
     },
@@ -3541,14 +4403,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YGABH82G",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Routledge philosophy guidebooks",
         "publisher": "Routledge",
@@ -3559,7 +4430,9 @@
       "itemID": 138,
       "key": "YGABH82G",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "mcginn1997routledge"
     },
@@ -3577,14 +4450,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/UIM2Z2CX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "New York: Columbia University Press",
         "date": "1969",
@@ -3596,7 +4478,9 @@
       "key": "UIM2Z2CX",
       "publicationTitle": "Ontological Relativity and Other Essays",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Quine1969"
     },
@@ -3624,13 +4508,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/T8B5UZ2P",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "place": "London",
         "publisher": "Routledge",
@@ -3641,7 +4532,9 @@
       "itemID": 140,
       "key": "T8B5UZ2P",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "popper1959logic"
     },
@@ -3657,14 +4550,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/69T95I6Z",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/philosophy/open-source-misses-the-point.html",
         "date": "October 2011",
@@ -3673,7 +4575,9 @@
       "itemID": 141,
       "key": "69T95I6Z",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2011"
     },
@@ -3694,14 +4598,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VNSYZ3FU",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "156",
         "issue": "3775",
@@ -3715,7 +4628,9 @@
       "itemID": 142,
       "key": "VNSYZ3FU",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Basalla1967"
     },
@@ -3735,14 +4650,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/QZW4PJE5",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=N5I3hNIS_yIC",
         "publisher": "Harvard University Press",
@@ -3755,7 +4679,9 @@
       "itemID": 143,
       "key": "QZW4PJE5",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "kripke1982wittgenstein"
     },
@@ -3772,14 +4698,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WLLLCEL3",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Economic history of England",
         "publisher": "Black",
@@ -3789,7 +4724,9 @@
       "itemID": 144,
       "key": "WLLLCEL3",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Lipson1934"
     },
@@ -3805,14 +4742,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/7PCXM5IM",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/philosophy/free-sw.html",
         "date": "January 2012",
@@ -3821,7 +4767,9 @@
       "itemID": 145,
       "key": "7PCXM5IM",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2012b"
     },
@@ -3844,14 +4792,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/FLQ7GSJC",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.jstor.org/stable/2707166",
         "rights": "Copyright © 1943 University of Pennsylvania Press",
@@ -3867,7 +4824,9 @@
       "itemID": 146,
       "key": "FLQ7GSJC",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "J. Hist. Ideas",
       "citekey": "Koyre1943"
     },
@@ -3883,14 +4842,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/CGQLFZHF",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Stanford University Press",
         "date": "1998",
@@ -3899,7 +4867,9 @@
       "itemID": 147,
       "key": "CGQLFZHF",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Stiegler1998"
     },
@@ -3920,14 +4890,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/6Q4BCU3A",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Harvard University Press",
         "date": "2001",
@@ -3936,7 +4915,9 @@
       "itemID": 148,
       "key": "6Q4BCU3A",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Rawls2001"
     },
@@ -3956,14 +4937,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/J3VYSSGI",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://newtongarver.com/?q=node/10",
         "volume": "38",
@@ -3976,7 +4966,9 @@
       "itemID": 149,
       "key": "J3VYSSGI",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Philos. Exch. Annu. Proc.",
       "citekey": "Garver2007"
     },
@@ -3987,15 +4979,26 @@
       "extra": "bibtex: 2011logicalpositivism",
       "title": "Logical Positivism",
       "bookTitle": "Encyclopædia Britannica",
-      "creators": [],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "creators": [
+
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LZYQ8KFD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.britannica.com/EBchecked/topic/346336/logical-positivism",
         "date": "2011",
@@ -4007,7 +5010,9 @@
       "key": "LZYQ8KFD",
       "publicationTitle": "Encyclopædia Britannica",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "2011logicalpositivism"
     },
@@ -4044,13 +5049,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/UUTD4FRL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "place": "Beijing; Cambridge; Farnham; Köln",
         "publisher": "O.Reilly",
@@ -4062,7 +5074,9 @@
       "itemID": 151,
       "key": "UUTD4FRL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Williams2002"
     },
@@ -4080,14 +5094,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZTIC9Y7L",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Foundations of communication",
         "publisher": "W. de Gruyter",
@@ -4098,7 +5121,9 @@
       "itemID": 152,
       "key": "ZTIC9Y7L",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "puhl1991meaningscepticism"
     },
@@ -4116,14 +5141,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YDB4RVDQ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Taylor & Francis",
         "date": "2005",
@@ -4135,7 +5169,9 @@
       "key": "YDB4RVDQ",
       "publicationTitle": "The Future of Human Nature",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "habermas2005future"
     },
@@ -4160,13 +5196,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/BA9VKU6D",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.drdobbs.com/the-ethics-of-free-software/184414581",
         "date": "2000-03-01",
@@ -4179,7 +5222,9 @@
       "key": "BA9VKU6D",
       "publicationTitle": "Dr. Dobb's",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Meyer2000"
     },
@@ -4197,14 +5242,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/PRKC5PN2",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Economic history of Great Britain",
         "publisher": "Longmans, Green",
@@ -4215,7 +5269,9 @@
       "itemID": 155,
       "key": "PRKC5PN2",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Redford1931"
     },
@@ -4233,14 +5289,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/TZWSM7CQ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Synthese library",
         "publisher": "Kluwer",
@@ -4251,7 +5316,9 @@
       "itemID": 156,
       "key": "TZWSM7CQ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "egidi1995wittgenstein"
     },
@@ -4271,14 +5338,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WTX9S8LD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.com/books?hl=en&lr=&id=zw97Rccw7mMC&oi=fnd&pg=PR7&dq=Human+Rights+As+Social+Construction&ots=a6FJ8CR81S&sig=5Z8Q6oJG7YUfZYRKiMZQfwtAXtw",
         "publisher": "Cambridge University Press",
@@ -4291,7 +5367,9 @@
       "itemID": 157,
       "key": "WTX9S8LD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "gregg2012human"
     },
@@ -4313,14 +5391,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/B6MPZQ7M",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://ieet.org/index.php/IEET/more/bostrom20070122",
         "publicationTitle": "SF Diplomat",
@@ -4330,7 +5417,9 @@
       "itemID": 158,
       "key": "B6MPZQ7M",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "SF Dipl.",
       "citekey": "Bostrom2007a"
     },
@@ -4347,14 +5436,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MALEW3UA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "The History of Sexuality, Volume 2",
         "publisher": "Knopf Doubleday Publishing Group",
@@ -4364,7 +5462,9 @@
       "itemID": 159,
       "key": "MALEW3UA",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Foucault1990"
     },
@@ -4381,14 +5481,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/33WM2GK5",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "The Blackwell philosopher dictionaries",
         "publisher": "Blackwell",
@@ -4398,7 +5507,9 @@
       "itemID": 160,
       "key": "33WM2GK5",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Glock1996"
     },
@@ -4414,14 +5525,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/THVBN97E",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/software/year2000.html",
         "date": "October 2011",
@@ -4430,7 +5550,9 @@
       "itemID": 161,
       "key": "THVBN97E",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2011a"
     },
@@ -4447,14 +5569,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/TEDKXX3E",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "The History of Sexuality",
         "publisher": "Knopf Doubleday Publishing Group",
@@ -4464,7 +5595,9 @@
       "itemID": 162,
       "key": "TEDKXX3E",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Foucault1988"
     },
@@ -4496,14 +5629,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZYILRVBJ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://humrep.oxfordjournals.org/content/17/1/11.abstract",
         "volume": "17",
@@ -4518,7 +5660,9 @@
       "itemID": 163,
       "key": "ZYILRVBJ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Hum. Reprod.",
       "citekey": "Malpani2002"
     },
@@ -4540,14 +5684,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MH39I23U",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.webcitation.org/query?url=http%3A%2F%2Fwww.wtec.org%2FConvergingTechnologies%2F1%2FNBIC_report.pdf&date=2011-03-04",
         "date": "June 2009",
@@ -4558,7 +5711,9 @@
       "key": "MH39I23U",
       "publicationTitle": "Converging Technologies for Improving Human Performance",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Converging Technol. Improv. Hum. Perform.",
       "citekey": "Roco2009"
     },
@@ -4587,14 +5742,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MK738IH2",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "Death and anti-death series",
         "publisher": "Ria University Press",
@@ -4607,7 +5771,9 @@
       "key": "MK738IH2",
       "publicationTitle": "Death and Anti-Death, Volume 2: Two Hundred Years After Kant, Fifty Years After Turing",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Bostrom2005"
     },
@@ -4625,14 +5791,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/PCVITYG6",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.people.fas.harvard.edu/ korsgaar/CPR.CMK.Interview.pdf",
         "volume": "Interviews on Moral and Political Philosophy",
@@ -4643,7 +5818,9 @@
       "itemID": 166,
       "key": "PCVITYG6",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Constr. Pract. Reason",
       "citekey": "Pauer-Studer2002"
     },
@@ -4689,13 +5866,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/3TWR98QK",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "3",
         "issue": "2",
@@ -4708,7 +5892,9 @@
       "itemID": 167,
       "key": "3TWR98QK",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Eur. J. Philos. Sci.",
       "citekey": "montano2013beauty"
     },
@@ -4727,14 +5913,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/QH2HMIEW",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "2",
         "pages": "21–38",
@@ -4746,7 +5941,9 @@
       "itemID": 168,
       "key": "QH2HMIEW",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Rev. Metaphys.",
       "citekey": "Quine1948"
     },
@@ -4768,14 +5965,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/JD9K65CA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Cambridge U.P., London",
         "ISBN": "052107200",
@@ -4785,7 +5991,9 @@
       "itemID": 169,
       "key": "JD9K65CA",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Landes1969"
     },
@@ -4802,14 +6010,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/2Q2ME2V7",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.earlymoderntexts.com/pdf/descprin.pdf",
         "date": "2008",
@@ -4819,7 +6036,9 @@
       "itemID": 170,
       "key": "2Q2ME2V7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "bennet2008principles"
     },
@@ -4835,14 +6054,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/9KQVAZCV",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "De Gruyter",
         "date": "1965",
@@ -4851,7 +6079,9 @@
       "itemID": 171,
       "key": "9KQVAZCV",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Plessner1965"
     },
@@ -4867,14 +6097,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/HUQJ432H",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.ram.org/ramblings/philosophy/fmp/free-software-philosophy.html",
         "date": "February 1999",
@@ -4883,7 +6122,9 @@
       "itemID": 172,
       "key": "HUQJ432H",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Watson1999"
     },
@@ -4944,13 +6185,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/UWB866G5",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://plato.stanford.edu/archives/sum2011/entries/intellectual-property/",
         "edition": "Summer 2011",
@@ -4966,7 +6214,9 @@
       "key": "UWB866G5",
       "publicationTitle": "The Stanford Encyclopedia of Philosophy",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "sep-intellectual-property"
     },
@@ -4986,14 +6236,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/UWT5DZQJ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "The Indiana series in the philosophy of technology",
         "publisher": "Indiana University Press",
@@ -5006,7 +6265,9 @@
       "itemID": 174,
       "key": "UWT5DZQJ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "ihde1990technology"
     },
@@ -5022,14 +6283,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YYPWG3N4",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "University Press of America",
         "date": "1941",
@@ -5038,7 +6308,9 @@
       "itemID": 175,
       "key": "YYPWG3N4",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Croce1941"
     },
@@ -5068,14 +6340,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/9HP9GPPD",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=yDre-S2rzAsC",
         "series": "Rethinking the Western Tradition",
@@ -5088,7 +6369,9 @@
       "itemID": 176,
       "key": "9HP9GPPD",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Kant2002"
     },
@@ -5105,14 +6388,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/B9TZIJ39",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "place": "Cambridge New York",
         "publisher": "Cambridge University Press",
@@ -5122,7 +6414,9 @@
       "itemID": 177,
       "key": "B9TZIJ39",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Korsgaard1996"
     },
@@ -5138,14 +6432,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/VS9GCD3V",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.iep.utm.edu/kantmeta/#SH8a",
         "date": "June 2005",
@@ -5154,7 +6457,9 @@
       "itemID": 178,
       "key": "VS9GCD3V",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "McCormick2005"
     },
@@ -5173,21 +6478,31 @@
           "creatorType": "editor"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/9524TUSP",
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         {
           "key": "E9EN4AQT",
           "itemType": "note",
           "parentItem": "9524TUSP",
           "note": "<p>A Phenomenology of Technics</p>",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5196,7 +6511,9 @@
           "itemID": 180,
           "libraryID": null,
           "sourceItemKey": "9524TUSP",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         }
       ],
       "uniqueFields": {
@@ -5210,7 +6527,9 @@
       "itemID": 179,
       "key": "9524TUSP",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "kaplan2004readings"
     },
@@ -5228,14 +6547,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/GRCTKL8R",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Allen Lane The Penguin Press, London",
         "date": "1973",
@@ -5246,7 +6574,9 @@
       "itemID": 181,
       "key": "GRCTKL8R",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "kenny2006wittgenstein"
     },
@@ -5263,14 +6593,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WWNK4B89",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Princeton University Press",
         "date": "1979",
@@ -5280,7 +6619,9 @@
       "itemID": 182,
       "key": "WWNK4B89",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Rorty1979"
     },
@@ -5306,13 +6647,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/2NH8SM9E",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.math.hu-berlin.de/~rippel/data/WS09/Wittgenstein_-_%20TLP_-_en.pdf",
         "publicationTitle": "With a translation by DF Pears and BF McGuinness,(London: Routledge and Kegan Paul, 1961). Philosophical Investigations",
@@ -5325,7 +6673,9 @@
       "itemID": 183,
       "key": "2NH8SM9E",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Transl. DF Pears BF McGuinnessLondon Routledge Kegan Paul 1961 Philos. Investig.",
       "citekey": "wittgenstein1921TLP"
     },
@@ -5355,20 +6705,28 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/H5INMGWJ",
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         {
           "key": "B9BHCX2L",
           "itemType": "note",
           "parentItem": "H5INMGWJ",
           "note": "<p><strong>Extracted Annotations (27 March 2014 12:44:25)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5377,15 +6735,20 @@
           "itemID": 185,
           "libraryID": null,
           "sourceItemKey": "H5INMGWJ",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         },
         {
           "key": "69PNG8WH",
           "itemType": "note",
           "parentItem": "H5INMGWJ",
           "note": "<p><strong>Extracted Annotations (27 March 2014 12:44:50)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5394,15 +6757,20 @@
           "itemID": 186,
           "libraryID": null,
           "sourceItemKey": "H5INMGWJ",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         },
         {
           "key": "2K77YAC4",
           "itemType": "note",
           "parentItem": "H5INMGWJ",
           "note": "<p><strong>Extracted Annotations (27 March 2014 12:44:51)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5411,15 +6779,20 @@
           "itemID": 187,
           "libraryID": null,
           "sourceItemKey": "H5INMGWJ",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         },
         {
           "key": "DPFXI53Y",
           "itemType": "note",
           "parentItem": "H5INMGWJ",
           "note": "<p><strong>Extracted Annotations (vrijdag 14 februari 2014 21:20:26)</strong></p>\n<p><em>Some semanticists say that certain expressions <br />�· designate certain entities, and among these designated entities they in­<br />·<br />. elude not only concrete material things but also abstract entities, e.g., <br />properties as designated by predicates and propositions as designated by <br />· sentences.1 Others object strongly to this procedure as violating the basic <br />·principles of empiricism and leading back to a metaphysical ontology of <br />the Platonic kind. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">note on p.21</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"Some s/ma$Qicists say 0ha1; cert^in exp'essions �· designate certain entities, and among these designated entities they in · . elud; not only con.rete mat/(ial +wiFgs but also abstract en6ities, e.@., prop&lt;rt|es aN de igna#ed) b8; Jrid3ca)es and propoN}tio4s as eesignatef b9; 0C s/ntences.1 OtherN \"bjec5; stron@ly to this Krocedure a s violatinr thj basic ·prin8}ples of empirDcism and leadins back t o a metapxysic!l ontHlory of 3heA \\latonik3nd.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/2\">Carnap 1950:21</a>)</p>\n<p><em>To be real in the scientifi c sense means to be an element of the system; . <br />hence this concept cannot be meaningfully applied to the system itself. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">note on p.22</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"T3U be Vea=v 5Bv the scientific AeE Kef means to \\e an1 &amp;lemtnt of 2he9 systemO M henae Qhi )1 cRMce\\w cannot be FeaM:N.,~ABy aOP?5%dn a L n x/e L@C tem' ;}oeA'.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/3\">Carnap 1950:22</a>)</p>\n<p><em> Unfortunately, these philosophers have so far. <br />not given a formulation of their question in terms of the common scientifi c . <br />language. Therefore our judgment must be that they have not succeeded. <br />in giv ing to the external question and t o the possible answers any cognitive <br />content. (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">note on p.24</a>)</em></p>\n<p>&nbsp;</p>\n<p>\"U&amp;f+2&lt;E'a&gt;e!H,I t%es eR )^flosowhers ha v e I9Y far. ntt given a for'!l/t5on of t'eir ques?ios in OeH5JY :!Y @/e $o6mon &gt;cix8tific N lanXuage. TherPfore our judg'ent mus@ be3 t%a+ t0sy -]vt not JTcceeded.Y in g* v i# g t o t% e extOrnag que&gt;?ion and t 9 the ICZY/b7ej a?WheSXj an!$coX n i ti v o content.\" (<a href=\"zotero://open-pdf/0_HFIFDVUJ/5\">Carnap 1950:24</a>)</p>\n<!-- {\"zotfile\":{}} -->",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5428,7 +6801,9 @@
           "itemID": 188,
           "libraryID": null,
           "sourceItemKey": "H5INMGWJ",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         }
       ],
       "uniqueFields": {
@@ -5443,7 +6818,9 @@
       "itemID": 184,
       "key": "H5INMGWJ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Rev. Int. Philos.",
       "citekey": "Carnap1950"
     },
@@ -5469,13 +6846,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/WWR6AJD9",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "19",
         "issue": "3",
@@ -5488,7 +6872,9 @@
       "itemID": 189,
       "key": "WWR6AJD9",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "bostrom2005defense"
     },
@@ -5535,13 +6921,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/9GLXAQ5B",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://doc.utwente.nl/61021/",
         "volume": "31",
@@ -5555,7 +6948,9 @@
       "itemID": 190,
       "key": "9GLXAQ5B",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Hum. Stud.",
       "citekey": "Verbeek2008a"
     },
@@ -5576,14 +6971,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/NIPNXT2V",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Northwestern University Press",
         "date": "1980",
@@ -5592,7 +6996,9 @@
       "itemID": 191,
       "key": "NIPNXT2V",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Frege1980"
     },
@@ -5622,13 +7028,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/I9VYT4BX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "17",
         "issue": "2",
@@ -5641,7 +7054,9 @@
       "itemID": 192,
       "key": "I9VYT4BX",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Hist. Technol. Int. J.",
       "citekey": "Raj2000"
     },
@@ -5659,14 +7074,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/5KWY549M",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=KSZDAAAACAAJ",
         "series": "Religious Traditions of the World",
@@ -5677,7 +7101,9 @@
       "itemID": 193,
       "key": "5KWY549M",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Fingarette1998"
     },
@@ -5692,14 +7118,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/DDUVML55",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.scu.edu/ethics/practicing/decision/framework.html",
         "title": "A Framework for Thinking Ethically"
@@ -5707,7 +7142,9 @@
       "itemID": 194,
       "key": "DDUVML55",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "MarkkulaCenterforAppliedEthics"
     },
@@ -5734,13 +7171,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/RIBSDSMR",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Oxford University Press",
         "ISBN": "978-0-19-517957-6",
@@ -5754,7 +7198,9 @@
       "itemID": 195,
       "key": "RIBSDSMR",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Feinman2006"
     },
@@ -5777,13 +7223,20 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/Z6KMV2G7",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.un.org/en/documents/udhr/",
         "date": "December 1948",
@@ -5793,7 +7246,9 @@
       "itemID": 196,
       "key": "Z6KMV2G7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Nations1948"
     },
@@ -5809,14 +7264,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/MVBXTQRI",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://www.gnu.org/prep/standards/standards.html",
         "date": "2011",
@@ -5825,7 +7289,9 @@
       "itemID": 197,
       "key": "MVBXTQRI",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "FreeSoftwareFoundation2011b"
     },
@@ -5853,14 +7319,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/HBURY6YZ",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "series": "The International Library of Ethics, Law and Technology",
         "volume": "2",
@@ -5871,7 +7346,9 @@
       "itemID": 198,
       "key": "HBURY6YZ",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Bostrom2009"
     },
@@ -5891,14 +7368,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/CI3CL8VP",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "31",
         "issue": "1/2",
@@ -5911,7 +7397,9 @@
       "itemID": 199,
       "key": "CI3CL8VP",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Philos. Top.",
       "citekey": "Wood2003"
     },
@@ -5931,14 +7419,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/YH96QKIX",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "date": "2003",
         "title": "Why hackers do what they do: Understanding motivation and effort in free/open source software projects"
@@ -5946,7 +7443,9 @@
       "itemID": 200,
       "key": "YH96QKIX",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Lakhani2003"
     },
@@ -5970,21 +7469,31 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/59MG2VJ9",
-      "attachments": [],
+      "attachments": [
+
+      ],
       "notes": [
         {
           "key": "ZZDELIJG",
           "itemType": "note",
           "parentItem": "59MG2VJ9",
           "note": "<b>Extracted Annotations (zondag 20 oktober 2013 19:21:08)</b><p>\"The virtues are conventionally understood as dispositional states of character that can be regarded as excellent, insofar as they promote human flourishing.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"I would like simply to outline two important moral virtues that arguably rely upon caregiving practices for their development: reciprocity and empathy.\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.1 Reciprocity\" (<a href=\"zotero://open-pdf/0_252XGMIH/7\">Vallor 2011:257</a>)</p><p>\"4.2 Empathy\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"the integration of emotion and reason in human persons\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"Empathy is an emotive/perceptual capacity to feel with another sentient being, to co-experience, in a significant way, the joys and sufferings of another.\" (<a href=\"zotero://open-pdf/0_252XGMIH/8\">Vallor 2011:258</a>)</p><p>\"For most of us, empathy is a quivering flame constantly vulnerable to being extinguished by apathy or cynicism,\" (<a href=\"zotero://open-pdf/0_252XGMIH/9\">Vallor 2011:259</a>)</p><p>\"Like virtue ethics, care ethics takes its orientation from the goods internal to practices rather than external moral criteria.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Rather than holding the virtues themselves to be ethical desiderata, care ethics takes virtue to be merely an outgrowth of the caring relation that is the primary ethical good.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"“ This caring for self, for the ethical self, can emerge only from a caring for others ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Noddings identifies two central criteria for a genuinely caring commitment — namely, engrossment and motivational displacement (16). Engrossment is an orientation to the reality of the other, as opposed to my own reality.\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"Motivational displacement is the resultant feeling that “ I must do something ” (14),\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"(14), I must act to respond to the other ' s reality, “ to reduce the pain, to fill the need, to actualize the dream ” (14)\" (<a href=\"zotero://open-pdf/0_252XGMIH/10\">Vallor 2011:260</a>)</p><p>\"is also worth noting that on Noddings ' view, caring relations need to be reciprocal if caregivers are going to be sustained.\" (<a href=\"zotero://open-pdf/0_252XGMIH/11\">Vallor 2011:261</a>)</p>",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-11-07 19:46:15",
           "dateModified": "2017-11-07 19:46:15",
           "uniqueFields": {
@@ -5993,7 +7502,9 @@
           "itemID": 202,
           "libraryID": null,
           "sourceItemKey": "59MG2VJ9",
-          "seeAlso": []
+          "seeAlso": [
+
+          ]
         }
       ],
       "uniqueFields": {
@@ -6012,7 +7523,9 @@
       "itemID": 201,
       "key": "59MG2VJ9",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Philos. Technol.",
       "citekey": "vallor2011carebots"
     },
@@ -6036,14 +7549,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/4LMXMRNT",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=XHNxT1wikPEC",
         "publisher": "Wiley",
@@ -6055,7 +7577,9 @@
       "itemID": 203,
       "key": "4LMXMRNT",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "vandepoel2011ethicstechnologyengineering"
     },
@@ -6073,14 +7597,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/HKFL8LJA",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://doc.utwente.nl/61025/",
         "date": "2007",
@@ -6092,7 +7625,9 @@
       "key": "HKFL8LJA",
       "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": "Workshop Moral Agency Tech. Artifacts NIAS",
       "citekey": "Verbeek2007"
     },
@@ -6112,14 +7647,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/AN4L8CTU",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://books.google.nl/books?id=oaYwimWy1xkC",
         "series": "Cambridge Collections Online",
@@ -6132,7 +7676,9 @@
       "itemID": 205,
       "key": "AN4L8CTU",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Gutting2005"
     },
@@ -6155,14 +7701,23 @@
           "creatorType": "editor"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/23J53ECV",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://plato.stanford.edu/archives/win2011/entries/moral-epistemology/",
         "edition": "Winter 2011",
@@ -6174,142 +7729,199 @@
       "key": "23J53ECV",
       "publicationTitle": "The Stanford Encyclopedia of Philosophy",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Campbell2011"
     },
     {
       "itemType": "book",
       "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)",
-      "creators": [],
+      "creators": [
+
+      ],
       "tags": [
         {
           "tag": "orphaned",
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/NRB2ERNL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "title": "Moral Epistemology (Stanford Encyclopedia of Philosophy)"
       },
       "itemID": 207,
       "key": "NRB2ERNL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "zotero-207"
     },
     {
       "itemType": "book",
       "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)",
-      "creators": [],
+      "creators": [
+
+      ],
       "tags": [
         {
           "tag": "orphaned",
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/AGSC6HYP",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "title": "Groundwork for the Metaphysic of Morals (Bennett, Kant)"
       },
       "itemID": 208,
       "key": "AGSC6HYP",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "zotero-208"
     },
     {
       "itemType": "book",
       "title": "Grounding for the Metaphysics of Morals (Kant)",
-      "creators": [],
+      "creators": [
+
+      ],
       "tags": [
         {
           "tag": "orphaned",
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/SRXURKN5",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "title": "Grounding for the Metaphysics of Morals (Kant)"
       },
       "itemID": 209,
       "key": "SRXURKN5",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "zotero-209"
     },
     {
       "itemType": "book",
       "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)",
-      "creators": [],
+      "creators": [
+
+      ],
       "tags": [
         {
           "tag": "orphaned",
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/ZGAXNFUP",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "title": "Kant's Grounding for the Metaphysics of Morals (UNC Philosophy)"
       },
       "itemID": 210,
       "key": "ZGAXNFUP",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "zotero-210"
     },
     {
       "itemType": "book",
       "title": "Groundwork of the Metaphysic of Morals",
-      "creators": [],
+      "creators": [
+
+      ],
       "tags": [
         {
           "tag": "orphaned",
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/8G9753PL",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "title": "Groundwork of the Metaphysic of Morals"
       },
       "itemID": 211,
       "key": "8G9753PL",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "zotero-211"
     },
@@ -6325,14 +7937,23 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": {},
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
       "uri": "http://zotero.org/users/local/Nywl04ll/items/LU8JR4I7",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "publisher": "Cambridge University Press",
         "date": "2010",
@@ -6341,7 +7962,9 @@
       "itemID": 212,
       "key": "LU8JR4I7",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "journalAbbreviation": null,
       "citekey": "Uleman2010"
     }
