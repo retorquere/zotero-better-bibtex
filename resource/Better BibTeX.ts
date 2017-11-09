@@ -1,5 +1,7 @@
+import { ITranslator } from '../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
-declare const Translator: any
 
 import Reference = require('./bibtex/reference.ts')
 import Exporter = require('./lib/exporter.ts')

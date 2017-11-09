@@ -6,8 +6,7 @@
   "minVersion": "3.0b3",
   "maxVersion": "",
   "configOptions": {
-    "getCollections": true,
-    "serializationCache": true
+    "getCollections": true
   },
   "displayOptions": {
     "exportNotes": true,

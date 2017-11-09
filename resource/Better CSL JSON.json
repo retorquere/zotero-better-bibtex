@@ -10,9 +10,6 @@
   },
   "translatorType": 2,
   "browserSupport": "gcsv",
-  "configOptions": {
-    "serializationCache": true
-  },
   "inRepository": false,
   "priority": 100
 }

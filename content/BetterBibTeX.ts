@@ -168,7 +168,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
   },
-  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
+  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   scrubFields(sandbox, item) { return Serializer.scrub(item) },

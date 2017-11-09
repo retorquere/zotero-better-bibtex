@@ -322,6 +322,13 @@
           the number of microseconds BBT should wait after being notified before acting on the changed references.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.parseParticles"
+          type="bool"/>
+        <!--!
+          Name particle handling
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">

@@ -1,4 +1,5 @@
-declare const Translator: any
+import { ITranslator } from '../gen/translator'
+declare const Translator: ITranslator
 
 import Exporter = require('./csl/csl.ts')
 
