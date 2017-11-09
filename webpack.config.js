@@ -37,9 +37,11 @@ for (let label of Object.keys(translators)) {
 }
 fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr, null, 2));
 
-console.log('update citeproc');
-if (shell.exec('cd citeproc-js && git checkout master').code != 0) throw 'Citeproc update failed';
-if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
+for (const submodule of ['citeproc-js', 'wiki']) {
+  console.log(`update ${submodule}`);
+  if (shell.exec(`cd ${submodule} && git checkout master`).code != 0) throw `${submodule} update failed`;
+  if (shell.exec(`git submodule update --depth 1 -- ${submodule}`).code != 0) throw `${submodule} update failed`;
+}
 
 dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser-data.json'));
 rdf();
