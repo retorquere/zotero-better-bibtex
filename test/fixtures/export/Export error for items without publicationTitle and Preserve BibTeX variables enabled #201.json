@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "skipFields": "file,keywords,abstract,copyright,language,timestamp",
-      "langID": "babel",
       "autoAbbrevStyle": "http://www.zotero.org/styles/physical-review-d",
       "pinCitekeys": "manual",
       "DOIandURL": "url",

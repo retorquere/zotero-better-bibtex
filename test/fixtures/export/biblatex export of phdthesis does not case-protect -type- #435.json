@@ -18,7 +18,6 @@
       "DOIandURL": "doi",
       "csquotes": "",
       "keyConflictPolicy": "change",
-      "langID": "babel",
       "pinCitekeys": "on-change",
       "preserveBibTeXVariables": false,
       "skipFields": "",

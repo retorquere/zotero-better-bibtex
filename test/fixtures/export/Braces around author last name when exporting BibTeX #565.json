@@ -19,7 +19,6 @@
       "bibtexURL": "off",
       "csquotes": "",
       "keyConflictPolicy": "change",
-      "langID": "babel",
       "pinCitekeys": "on-change",
       "preserveBibTeXVariables": false,
       "skipFields": "keywords,file,URL",

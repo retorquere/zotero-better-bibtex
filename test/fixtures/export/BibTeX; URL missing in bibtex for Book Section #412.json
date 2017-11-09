@@ -10,7 +10,6 @@
       "citekeyFormat": "[authorsAlpha:lower][year]",
       "csquotes": "",
       "DOIandURL": "both",
-      "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate",
