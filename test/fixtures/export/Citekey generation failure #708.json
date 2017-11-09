@@ -28,9 +28,7 @@
       "bibtexURL": "off",
       "csquotes": "",
       "keyConflictPolicy": "keep",
-      "pinCitekeys": "manual",
       "preserveBibTeXVariables": false,
-      "citekeyScan": "",
       "skipFields": [
 
       ],
@@ -169,7 +167,6 @@
       "jurismPreferredLanguage": "zh-alalc97",
       "qualityReport": false,
       "suppressTitleCase": false,
-      "parseParticles": true,
       "debug": false,
       "rawLaTag": "#LaTeX",
       "citekeyFormat": "[auth][year]",

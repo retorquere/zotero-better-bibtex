@@ -7,7 +7,6 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "",
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
-      "pinCitekeys": "manual",
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
       "defaultDateParserLocale": "en-GB",
