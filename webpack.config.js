@@ -37,7 +37,7 @@ for (let label of Object.keys(translators)) {
 }
 fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr, null, 2));
 
-for (const submodule of ['citeproc-js', 'wiki']) {
+for (const submodule of ['citeproc-js']) {
   console.log(`update ${submodule}`);
   if (shell.exec(`cd ${submodule} && git checkout master`).code != 0) throw `${submodule} update failed`;
   if (shell.exec(`git submodule update --depth 1 -- ${submodule}`).code != 0) throw `${submodule} update failed`;
