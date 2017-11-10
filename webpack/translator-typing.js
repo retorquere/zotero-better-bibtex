@@ -1,4 +1,4 @@
-const preferences = require('../defaults/preferences/defaults.json')
+const preferences = require('../gen/defaults.json')
 const translators = require('./translators');
 const fs = require('fs')
 const path = require('path')

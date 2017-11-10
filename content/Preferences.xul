@@ -35,7 +35,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.DOIandURL"
           id="pref-better-bibtex-DOIandURL"
-          type="string"/>
+          type="string"
+          default="both"/>
         <!--!
           Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
         -->
@@ -43,7 +44,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"
           id="pref-better-bibtex-asciiBibLaTeX"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
           simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
@@ -52,7 +54,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.asciiBibTeX"
           id="pref-better-bibtex-asciiBibTeX"
-          type="bool"/>
+          type="bool"
+          default="true"/>
         <!--!
           BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
         -->
@@ -60,7 +63,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.attachmentsNoMetadata"
           id="pref-better-bibtex-attachmentsNoMetadata"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           By default, Better BibTeX will export attachments including a title and their mimetype, in a format supported by JabRef.
           Many but not all BibTeX managers support this format, but if yours (like emacs ebib) doesn't, enable this to export only the filename.
@@ -69,7 +73,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.autoExport"
           id="pref-better-bibtex-autoExport"
-          type="string"/>
+          type="string"
+          default="immediate"/>
         <!--!
           Determines when [[automatic exports|Push-and-Pull-Export]] are kicked off:
 
@@ -81,7 +86,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.citeCommand"
           id="pref-better-bibtex-citeCommand"
-          type="string"/>
+          type="string"
+          default="cite"/>
         <!--!
           Used for drag-and-drop/quick copy citations. In the Zotero "Export" pane, choose, "Better BibTeX
           Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation
@@ -92,7 +98,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"
           id="pref-better-bibtex-quickCopyPandocBrackets"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           Surround pandoc citations with brackets.
         -->
@@ -100,7 +107,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.citekeyFormat"
           id="pref-better-bibtex-citekeyFormat"
-          type="string"/>
+          type="string"
+          default="[auth][shorttitle][year]"/>
         <!--!
           Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
         -->
@@ -108,7 +116,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.citekeyFold"
           id="pref-better-bibtex-citekeyFold"
-          type="bool"/>
+          type="bool"
+          default="true"/>
         <!--!
           If you have deviated from the default citation key format pattern by [[specifying your own|Citation-Keys]], you may
           wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
@@ -118,7 +127,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"
           id="pref-better-bibtex-keyConflictPolicy"
-          type="string"/>
+          type="string"
+          default="keep"/>
         <!--!
           This determines what happens if you pin a key to a value that is already in use in a different
           reference but not pinned there. Neither are ideal, you just get to pick your poison. The options are:
@@ -136,7 +146,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.preserveBibTeXVariables"
           id="pref-better-bibtex-preserveBibTeXVariables"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           When enabled, single-word strings will be assumed to be externally-defined @string vars, and thus not
           surrounded by braces. If you don't know what this means, leave it off.
@@ -145,7 +156,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"
           id="pref-better-bibtex-bibtexParticleNoOp"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has
           really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT
@@ -155,7 +167,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.skipFields"
           id="pref-better-bibtex-skipFields"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
         -->
@@ -163,7 +176,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.bibtexURL"
           id="pref-better-bibtex-bibtexURL"
-          type="string"/>
+          type="string"
+          default="off"/>
         <!--!
           BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
           omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
@@ -174,7 +188,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.warnBulkModify"
           id="pref-better-bibtex-warnBulkModify"
-          type="int"/>
+          type="int"
+          default="10"/>
         <!--!
           For those who are curious about what the "Clear/Generate BibTeX key" right-click options do, this will warn
           you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
@@ -184,7 +199,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.postscript"
           id="pref-better-bibtex-postscript"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           Snippet of javascript to run [[after each reference generation|Scripting]].
         -->
@@ -192,7 +208,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.quickCopyMode"
           id="pref-better-bibtex-quickCopyMode"
-          type="string"/>
+          type="string"
+          default="latex"/>
         <!--!
           Used for drag-and-drop/quick copy citations. You can select the output format here: LaTeX (in
           combination with the Citation command preference), Pandoc, or Org-mode
@@ -201,7 +218,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.autoAbbrev"
           id="pref-better-bibtex-autoAbbrev"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
         -->
@@ -209,7 +227,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"
           id="pref-better-bibtex-autoAbbrevStyle"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           Select the style for auto-abbreviation.
         -->
@@ -217,7 +236,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"
           id="pref-better-bibtex-autoExportIdleWait"
-          type="int"/>
+          type="int"
+          default="10"/>
         <!--!
           Number of seconds to wait after your system goes idle before kicking off auto-exports.
         -->
@@ -225,7 +245,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"
           id="pref-better-bibtex-cacheFlushInterval"
-          type="int"/>
+          type="int"
+          default="5"/>
         <!--!
           How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
           your database is always saved when your computer goes idle, or when you exit Zotero.
@@ -234,7 +255,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.csquotes"
           id="pref-better-bibtex-csquotes"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           Enables [csquotes](Unnecessarily-complicated-BibTeX-output%3F#hidden-features) support.
         -->
@@ -242,7 +264,9 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.skipWords"
           id="pref-better-bibtex-skipWords"
-          type="string"/>
+          type="string"
+          default="a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
+        />
         <!--!
           list of words to skip in title when generating citation keys
         -->
@@ -250,7 +274,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.jabrefFormat"
           id="pref-better-bibtex-jabrefFormat"
-          type="int"/>
+          type="int"
+          default="4"/>
         <!--!
           Export JabRef-specific information such as groups for collections and timestamps. zero means disable, "3" means format 3, which is (IMO) opinion better
              but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
@@ -259,7 +284,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"
           id="pref-better-bibtex-defaultDateParserLocale"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           The Better BibTeX date parser uses locale hints when provided with ambiguous dates such as 1/2/2008 (which is
           either 1st of February, or 2nd of Januari). Better BibTeX will first look at the language specified in your reference and
@@ -271,7 +297,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"
           id="pref-better-bibtex-jurismPreferredLanguage"
-          type="string"/>
+          type="string"
+          default=""/>
         <!--!
           When language alternates are present in Juris-M, this is the language BBT will pick.
         -->
@@ -279,7 +306,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.qualityReport"
           id="pref-better-bibtex-qualityReport"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           Generate quality reports for exported references. 
         -->
@@ -287,7 +315,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat"
           id="pref-better-bibtex-biblatexExtendedDateFormat"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           Support for ambiguous dates
         -->
@@ -295,7 +324,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat"
           id="pref-better-bibtex-biblatexExtendedNameFormat"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
           This biblatex has a new (less ambiguous) way to store creator names. It's technically
@@ -306,7 +336,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.suppressTitleCase"
           id="pref-better-bibtex-suppressTitleCase"
-          type="bool"/>
+          type="bool"
+          default="false"/>
         <!--!
           If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
           casing, set this preference to "true" to suppress [title casing for English references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
@@ -315,7 +346,8 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.itemObserverDelay"
           id="pref-better-bibtex-itemObserverDelay"
-          type="int"/>
+          type="int"
+          default="100"/>
         <!--!
           I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
           retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
@@ -324,7 +356,8 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.parseParticles"
-          type="bool"/>
+          type="bool"
+          default="true"/>
         <!--!
           Name particle handling
         -->
