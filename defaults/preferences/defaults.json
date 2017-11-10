@@ -32,5 +32,6 @@
   "suppressTitleCase": false,
   "debug": false,
   "testing": false,
-  "rawLaTag": "#LaTeX"
+  "rawLaTag": "#LaTeX",
+  "parseParticles": true
 }

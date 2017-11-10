@@ -9,6 +9,7 @@ require 'httparty'
 require 'shellwords'
 require 'benchmark'
 require 'json'
+require 'reverse_markdown'
 
 if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
   STDOUT.puts "Starting headless..."
@@ -176,7 +177,9 @@ def normalizeJSON(lib)
     item.delete('__citekey__')
     item.delete('uri')
 
-    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.sort
+    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.collect{|note| ReverseMarkdown.convert(note) }.sort
+
+    item['note']  = ReverseMarkdown.convert(item['note']) if item['note']
 
     item['tags'] = (item['tags'] || []).collect{|tag| tag.is_a?(String) ? tag : tag['tag'] }.sort
 

@@ -1,5 +1,6 @@
+import { ITranslator } from '../../gen/translator'
+declare const Translator: ITranslator
 declare const Zotero: any
-declare const Translator: any
 
 import debug = require('../lib/debug.ts')
 import Exporter = require('../lib/exporter.ts')
@@ -846,8 +847,6 @@ export = class Reference {
       if (Translator.preferences.testing) {
         Exporter.attachmentCounter += 1
         att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.options.exportPath && (att.path.indexOf(Translator.options.exportPath) === 0)) {
-        att.path = att.path.slice(Translator.options.exportPath.length)
       }
 
       attachments.push(att)
@@ -1054,7 +1053,7 @@ export = class Reference {
 
     if (!report.length) return ''
 
-    report.unshift(`== ${Translator.BetterBibTex ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:`)
+    report.unshift(`== ${Translator.BetterBibTeX ? 'BibTeX' : 'BibLateX'} quality report for ${this.item.citekey}:`)
 
     return report.map(line => `% ${line}\n`).join('')
   }

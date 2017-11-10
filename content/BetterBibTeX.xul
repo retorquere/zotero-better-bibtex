@@ -12,7 +12,7 @@
       insertafter="zotero-tb-actions-reportErrors"
       label="&better-bibtex.BetterBibTeX.reportErrors;"
       oncommand="Zotero.BetterBibTeX.errorReport()"/>
-      <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
+      <menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.scanAUX()"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem

@@ -23,6 +23,7 @@ import Serializer = require('./serializer.ts')
 import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
+import AUXScanner = require('./aux-scanner.ts')
 
 import $patch$ = require('./monkey-patch.ts')
 
@@ -162,7 +163,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
-  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
+  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   scrubFields(sandbox, item) { return Serializer.scrub(item) },
@@ -477,6 +478,10 @@ export = new class {
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
     debug('ErrorReport::start done')
+  }
+
+  public scanAUX(path = null) {
+    (new AUXScanner).scan(path)
   }
 
   private async load() {

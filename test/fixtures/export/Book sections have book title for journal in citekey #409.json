@@ -10,7 +10,6 @@
       "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
       "csquotes": "",
       "DOIandURL": "doi",
-      "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "",

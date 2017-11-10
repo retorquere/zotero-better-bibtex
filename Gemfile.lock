@@ -1,7 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
-    backports (3.9.1)
+    backports (3.10.3)
     builder (3.2.3)
     childprocess (0.8.0)
       ffi (~> 1.0, >= 1.0.11)
@@ -28,24 +28,29 @@ GEM
     httparty (0.15.6)
       multi_xml (>= 0.5.2)
     inifile (3.0.0)
+    mini_portile2 (2.3.0)
     multi_json (1.12.2)
     multi_test (0.1.2)
     multi_xml (0.6.0)
     neatjson (0.8.3)
+    nokogiri (1.8.1)
+      mini_portile2 (~> 2.3.0)
     os (1.0.0)
-    rspec (3.6.0)
-      rspec-core (~> 3.6.0)
-      rspec-expectations (~> 3.6.0)
-      rspec-mocks (~> 3.6.0)
-    rspec-core (3.6.0)
-      rspec-support (~> 3.6.0)
-    rspec-expectations (3.6.0)
+    reverse_markdown (1.0.3)
+      nokogiri
+    rspec (3.7.0)
+      rspec-core (~> 3.7.0)
+      rspec-expectations (~> 3.7.0)
+      rspec-mocks (~> 3.7.0)
+    rspec-core (3.7.0)
+      rspec-support (~> 3.7.0)
+    rspec-expectations (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-mocks (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-mocks (3.7.0)
       diff-lcs (>= 1.2.0, < 2.0)
-      rspec-support (~> 3.6.0)
-    rspec-support (3.6.0)
+      rspec-support (~> 3.7.0)
+    rspec-support (3.7.0)
     rubyzip (1.2.1)
     selenium-webdriver (2.53.4)
       childprocess (~> 0.5)
@@ -63,6 +68,7 @@ DEPENDENCIES
   inifile
   neatjson
   os
+  reverse_markdown
   rspec
   selenium-webdriver (= 2.53.4)
 
