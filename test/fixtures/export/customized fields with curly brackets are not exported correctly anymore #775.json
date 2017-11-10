@@ -187,7 +187,7 @@
       "place": "[Marburg]",
       "publisher": "Krieger",
       "date": "1789",
-      "extra": "bibtex[options={pseudoauthor=true}] \nbibtex: knoblauch_dialogen_1789",
+      "extra": "bibtex[options=pseudoauthor=true] \nbibtex: knoblauch_dialogen_1789-1",
       "language": "german",
       "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie",
       "shortTitle": "Dialogen",
@@ -265,16 +265,6 @@
       "notes": [
 
       ],
-      "uniqueFields": {
-        "place": "[Marburg]",
-        "publisher": "Krieger",
-        "date": "1789",
-        "extra": "bibtex[options={pseudoauthor=true}] \nbibtex: knoblauch_dialogen_1789",
-        "language": "german",
-        "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie",
-        "shortTitle": "Dialogen",
-        "numPages": "72"
-      },
       "itemID": 423,
       "key": "CWRTF2J8",
       "libraryID": null,

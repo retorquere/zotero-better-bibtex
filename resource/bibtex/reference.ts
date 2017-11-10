@@ -346,7 +346,6 @@ export = class Reference {
 
     if (Translator.preferences.jabrefFormat) {
       if (Translator.preferences.testing) {
-        debug('ignoring timestamp', this.item.dateModified || this.item.dateAdded, 'for testing')
         this.add({name: 'timestamp', value: '2015-02-24 12:14:36 +0100'})
       } else {
         this.add({name: 'timestamp', value: this.item.dateModified || this.item.dateAdded})
@@ -406,12 +405,6 @@ export = class Reference {
     if (!field.bibtex) {
       let value
 
-      debug('add:', {
-        field,
-        preserve: Translator.preferences.preserveBibTeXVariables,
-        match: this.isBibVar(field.value),
-      })
-
       if ((typeof field.value === 'number') || (field.preserveBibTeXVariables && this.isBibVar(field.value))) {
         value = `${field.value}`
       } else {
@@ -420,7 +413,7 @@ export = class Reference {
 
         if (!value) return
 
-        if (!field.bare || !!field.value.match(/\s/)) value = `{${value}}`
+        if (!field.bare || field.value.match(/\s/)) value = `{${value}}`
       }
 
       // separation protection at end unnecesary
@@ -432,7 +425,6 @@ export = class Reference {
     // field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     this.fields.push(field)
     this.has[field.name] = field
-    debug('added:', field)
   }
 
   /*
@@ -555,7 +547,7 @@ export = class Reference {
         continue
       }
 
-      fields.push({ name, value: field.value, raw: field.raw })
+      fields.push(field)
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
@@ -637,7 +629,6 @@ export = class Reference {
     Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, ref, this.data)
 
     if (this.data.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.data.DeclarePrefChars
-    debug('item.complete:', {data: this.data, preamble: Exporter.preamble})
   }
 
   /*
@@ -768,7 +759,6 @@ export = class Reference {
    * @return {String} field.value encoded as author-style value
    */
   protected enc_latex(f, raw = false) {
-    debug('enc_latex:', {f, raw, english: this.english})
     if (typeof f.value === 'number') return f.value
     if (!f.value) return null
 
@@ -794,7 +784,6 @@ export = class Reference {
     // sort tags for stable tests
     if (Translator.preferences.testing) tags.sort()
 
-    debug('enc_tags:', tags)
     tags = tags.map(tag => {
       if (Translator.BetterBibTeX) {
         tag = tag.replace(/([#\\%&])/g, '\\$1')
