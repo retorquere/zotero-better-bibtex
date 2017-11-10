@@ -72,16 +72,20 @@ export = new class ErrorReport {
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
+    const enabled = Zotero.Debug.enabled || !!this.params.items
+
     for (const elt of [...document.getElementsByClassName('debug-off')]) {
-      elt.hidden = Zotero.Debug.enabled
+      elt.hidden = enabled
     }
     for (const elt of [...document.getElementsByClassName('debug-on')]) {
-      elt.hidden = !Zotero.Debug.enabled
+      elt.hidden = !enabled
     }
 
     const wizard = document.getElementById('better-bibtex-error-report')
     const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
+    continueButton.disabled = !enabled
+
+    if (!enabled) return
 
     this.form = JSON.parse(Zotero.File.getContentsFromURL(PACKAGE.xpi.releaseURL + 'error-report.json'))
     this.key = Zotero.Utilities.generateObjectKey()

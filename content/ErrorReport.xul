@@ -10,12 +10,9 @@
 <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
 
 <!DOCTYPE window [
-  <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd">
-  %ZoteroDTD;
-  <!ENTITY % ZStandaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd">
-  %ZStandalonDTD;
-  <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
-  %BBTDTD;
+  <!ENTITY % ZoteroDTD SYSTEM "chrome://zotero/locale/zotero.dtd"> %ZoteroDTD;
+  <!ENTITY % BBTDTD SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd"> %BBTDTD;
+  <!ENTITY % standaloneDTD SYSTEM "chrome://zotero/locale/standalone.dtd"> %standaloneDTD;
 ]>
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
