@@ -72,6 +72,13 @@ export = new class ErrorReport {
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
+    for (const elt of [...document.getElementsByClassName('debug-off')]) {
+      elt.hidden = Zotero.Debug.enabled
+    }
+    for (const elt of [...document.getElementsByClassName('debug-on')]) {
+      elt.hidden = !Zotero.Debug.enabled
+    }
+
     const wizard = document.getElementById('better-bibtex-error-report')
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true

@@ -1,3 +1,4 @@
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging needs to be enabled:">
 <!ENTITY better-bibtex.ErrorReport.context "Application context">
 <!ENTITY better-bibtex.ErrorReport.errors "Errors">
 <!ENTITY better-bibtex.ErrorReport.log "Debug log">
