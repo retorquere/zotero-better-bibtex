@@ -1,3 +1,4 @@
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero doit être activé :">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.log "Journal de débogage">
@@ -29,7 +30,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
-<!ENTITY better-bibtex.Preferences.auto-export.translator "Traducteur">
+<!ENTITY better-bibtex.Preferences.auto-export.translator "Convertisseur">
 <!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir lors d'un changement de clés de citation par lot">
 <!ENTITY better-bibtex.Preferences.citekey "Citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
@@ -86,7 +87,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.reportErrors "Signaler les erreurs Better BibTeX...">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scanner les clés de citation">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Signaler les erreurs Better BibTeX...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Rapport d'erreurs Better BibTeX...">
 <!ENTITY zotero.better-bibtex.auxScanner "Scannez le fichier BibTeX AUX pour les références ...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de #{TRESHOLD} éléments en une seule fois. Êtes-vous certain de vouloir faire cela ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
@@ -94,7 +95,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé BibTeX">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé BibTeX">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
-<!ENTITY zotero.better-bibtex.debug "Journalisation de débogage étendu Better BibTex. Redémarrez Zotero pour l'activer et pensez à la désactiver quand vous en avez terminé car cela affecte les performances.">
+<!ENTITY zotero.better-bibtex.debug "Journal de débogage étendu Better BibTex. Redémarrez Zotero pour l'activer et pensez à la désactiver quand vous en avez terminé car cela affecte les performances.">
 <!ENTITY zotero.better-bibtex.dragons "Attention : dragons !">
 <!ENTITY zotero.better-bibtex.exportGroup	"Export group...">
 <!ENTITY zotero.better-bibtex.format-unique-warning "Attention : la valeur par défaut garantit que chaque pièce jointe ait un nom de fichier unique. Si vous changez la valeur par défaut, assurez-vous que les noms de fichiers résultants restent uniques !">
