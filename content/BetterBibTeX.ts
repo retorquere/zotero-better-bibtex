@@ -292,24 +292,31 @@ Zotero.Notifier.registerObserver({
     // prevents update loop -- see KeyManager.init()
     if (action === 'modify') ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
 
-    // not needed as the parents will be signaled themselves
-    // parents = (item.parentID for item in items when item.parentID)
-    // Cache.remove(parents)
-
     Cache.remove(ids)
 
     // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
     // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter(item => !(item.isNote() || item.isAttachment()))
+    const parents = []
+    const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter(item => {
+      if (item.isNote() || item.isAttachment()) {
+        parents.push(item.parentID)
+        return false
+      }
+
+      return true
+    })
+    if (parents.length) Cache.remove(parents)
 
     switch (action) {
-      case 'delete': case 'trash':
+      case 'delete':
+      case 'trash':
         debug(`event.${type}.${action}`, {ids, extraData})
         KeyManager.remove(ids)
         Events.emit('items-removed', ids)
         break
 
-      case 'add': case 'modify':
+      case 'add':
+      case 'modify':
         for (const item of items) {
           KeyManager.update(item)
         }
