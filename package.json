@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.28",
+  "version": "5.0.32",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -20,12 +20,15 @@
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "tsc --lib es6 webpack/tslint/noModuleExportsRule.ts && tslint -t stylish --project . --rules-dir ./webpack/tslint",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
-    "build": "npm run lint && webpack",
+    "webpack": "npm run docs && webpack",
+    "build": "npm run lint && npm run webpack",
     "postbuild": "node webpack/scripts/zipup.js build zotero-better-bibtex && node webpack/scripts/zipup.js test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
     "s3form": "ts-node webpack/scripts/s3form.ts",
     "release": "ts-node webpack/scripts/release.ts",
+    "branches": "ts-node webpack/scripts/branches.ts",
+    "docs": "ts-node util/docs.ts",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true"
   },
@@ -36,6 +39,7 @@
   "dependencies": {
     "ajv": "^5.3.0",
     "ajv-keywords": "^2.1.1",
+    "barcoder": "^2.0.1",
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.2.0",
@@ -44,6 +48,8 @@
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
     "fold-to-ascii": "^4.0.0",
+    "isbnjs": "^0.2.2",
+    "issn": "^1.0.5",
     "js-yaml": "^3.10.0",
     "json-stringify-safe": "^5.0.1",
     "json5": "^0.5.1",
@@ -56,12 +62,13 @@
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^8.0.47",
+    "@types/node": "^8.0.50",
     "archiver": "^2.1.0",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
     "circular-dependency-plugin": "^4.2.1",
     "clean-webpack-plugin": "^0.1.17",
+    "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "fs-extra": "^4.0.2",
@@ -88,7 +95,9 @@
     "uri-templates": "^0.2.0",
     "webpack": "^3.8.1",
     "wrapper-webpack-plugin": "^1.0.0",
-    "xml-parser": "^1.2.1"
+    "xml-parser": "^1.2.1",
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.24"
   },
   "repository": {
     "type": "git",

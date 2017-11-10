@@ -24,8 +24,8 @@ bin/github-release
 vendor
 .pushbullet
 resource/reports/cacheActivity.txt
-wiki
 *.deb
 .DS_Store
 .env
 webpack/tslint/noModuleExportsRule.js
+wiki

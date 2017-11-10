@@ -1,6 +1,89 @@
 {
   "items": [
     {
+      "itemType": "conferencePaper",
+      "place": "San Diego, California, USA",
+      "publisher": "USENIX",
+      "pages": "287–304",
+      "date": "January 30–February 3, 1989",
+      "title": "A tour of the worm",
+      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "creators": [
+        {
+          "firstName": "Donn",
+          "lastName": "Seeley",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-10-30 19:04:48",
+      "dateModified": "2017-11-03 19:06:17",
+      "uri": "http://zotero.org/users/10604/items/FSB6XCJF",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
+          "accessDate": "2017-10-30 19:05:54",
+          "title": "A Tour of the Worm",
+          "parentItem": "FSB6XCJF",
+          "linkMode": 1,
+          "contentType": "text/html",
+          "charset": "utf-8",
+          "filename": "seely-RTMworm-89.html",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2017-10-30 19:05:54",
+          "dateModified": "2017-10-30 19:05:54",
+          "uri": "http://zotero.org/users/10604/items/I9DDEA67",
+          "uniqueFields": {
+            "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
+            "accessDate": "2017-10-30 19:05:54",
+            "title": "A Tour of the Worm",
+            "linkMode": 1,
+            "mimeType": "text/html"
+          },
+          "itemID": 12198,
+          "key": "I9DDEA67",
+          "libraryID": null,
+          "sourceItemKey": "FSB6XCJF",
+          "seeAlso": [
+
+          ],
+          "mimeType": "text/html",
+          "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html"
+        }
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "place": "San Diego, California, USA",
+        "publisher": "USENIX",
+        "pages": "287–304",
+        "date": "January 30–February 3, 1989",
+        "title": "A tour of the worm",
+        "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference"
+      },
+      "itemID": 12181,
+      "key": "FSB6XCJF",
+      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "seeley30tour"
+    },
+    {
       "itemType": "journalArticle",
       "creators": [
         {
@@ -134,11 +217,14 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "collections": [
         "5JMPFPKZ"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-10-20 19:37:10",
       "dateModified": "2017-10-20 19:37:59",
       "uri": "http://zotero.org/users/10604/items/NBDZHC39",
@@ -153,8 +239,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:47:23",
           "dateModified": "2017-10-20 19:47:24",
           "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
@@ -169,7 +258,9 @@
           "key": "4AKSDDN5",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf"
         },
@@ -182,8 +273,11 @@
           "linkMode": 3,
           "contentType": "text/html",
           "charset": "windows-1252",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:46:16",
           "dateModified": "2017-10-20 19:46:16",
           "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
@@ -198,7 +292,9 @@
           "key": "DJPHEG7J",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html"
         },
         {
@@ -211,8 +307,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "p203-winograd.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-10-20 19:38:08",
           "dateModified": "2017-10-20 19:38:09",
           "uri": "http://zotero.org/users/10604/items/U7EAP63X",
@@ -227,12 +326,16 @@
           "key": "U7EAP63X",
           "libraryID": null,
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "url": "http://doi.acm.org/10.1145/637069.637096",
         "place": "Austin, TX",
@@ -250,7 +353,9 @@
       "key": "NBDZHC39",
       "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "winograd86language"
     }
   ],
@@ -259,12 +364,11 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     }
   },
   "collections": {
   }
 }
-

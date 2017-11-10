@@ -287,6 +287,23 @@ class KeyManager {
     return { citekey: '', pinned: false }
   }
 
+  public async removeBibTeXStar() {
+    const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
+    const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
+    const items = await getItemsAsync(itemIDs)
+    for (const item of items) {
+      const extra = item.getField('extra')
+      if (!extra) continue
+
+      const clean = extra.replace(re, '\n').trim()
+
+      if (clean === extra) continue
+
+      item.setField('extra', clean)
+      await item.saveTx()
+    }
+  }
+
   private expandSelection(ids) {
     if (Array.isArray(ids)) return ids
 

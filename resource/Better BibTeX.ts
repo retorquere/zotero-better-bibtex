@@ -1,5 +1,7 @@
+import { ITranslator } from '../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
-declare const Translator: any
 
 import Reference = require('./bibtex/reference.ts')
 import Exporter = require('./lib/exporter.ts')
@@ -22,18 +24,25 @@ Reference.prototype.fieldEncoding = {
   publisher: 'literal',
 }
 
-Reference.prototype.requiredFields = {
-  inproceedings: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-  article: [ 'author', 'journal', 'number', 'pages', 'title', 'volume', 'year' ],
-  techreport: [ 'author', 'institution', 'title', 'year' ],
-  incollection: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-  book: [ 'author', 'publisher', 'title', 'year' ],
-  inbook: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
-  proceedings: [ 'editor', 'publisher', 'title', 'year' ],
-  phdthesis: [ 'author', 'school', 'title', 'year' ],
-  mastersthesis: [ 'author', 'school', 'title', 'year' ],
-  electronic: [ 'author', 'title', 'url', 'year' ],
-  misc: [ 'author', 'howpublished', 'title', 'year' ],
+Reference.prototype.lint = explanation => {
+  const required = {
+    inproceedings: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
+    article: [ 'author', 'journal', 'number', 'pages', 'title', 'volume', 'year' ],
+    techreport: [ 'author', 'institution', 'title', 'year' ],
+    incollection: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
+    book: [ 'author', 'publisher', 'title', 'year' ],
+    inbook: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
+    proceedings: [ 'editor', 'publisher', 'title', 'year' ],
+    phdthesis: [ 'author', 'school', 'title', 'year' ],
+    mastersthesis: [ 'author', 'school', 'title', 'year' ],
+    electronic: [ 'author', 'title', 'url', 'year' ],
+    misc: [ 'author', 'howpublished', 'title', 'year' ],
+  }
+
+  const fields = required[this.referencetype.toLowerCase()]
+  if (!fields) return
+
+  return fields.map(field => this.has[field] ? '' : `Missing required field '${field}'`).filter(msg => msg)
 }
 
 function addCreators(ref) {
@@ -206,9 +215,15 @@ Translator.doExport = () => {
     if (item.date) {
       const date = Zotero.BetterBibTeX.parseDate(item.date)
       switch ((date || {}).type || 'verbatim') {
-        case 'verbatim': case 'interval':
+        case 'verbatim':
           ref.add({ year: item.date })
           break
+
+        case 'interval':
+          if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
+          ref.add({ year: `${date.from.year}` })
+          break
+
         case 'date':
           if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
           if ((date.orig || {}).type === 'date') {

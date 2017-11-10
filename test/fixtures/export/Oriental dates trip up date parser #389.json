@@ -7,10 +7,8 @@
       "skipFields": [
         ""
       ],
-      "jabrefGroups": true,
       "postscript": "",
       "csquotes": "",
-      "langID": "babel",
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
@@ -18,7 +16,8 @@
       "asciiBibTeX": false,
       "citekeyFormat": "[auth][year]",
       "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": true
     }
   },
   "collections": {

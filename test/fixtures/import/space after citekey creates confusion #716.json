@@ -9,33 +9,34 @@
       "exportNotes": true
     }
   },
-  "collections":{},
-  "items":[
+  "collections": {
+  },
+  "items": [
     {
-      "creators":[
+      "creators": [
         {
-          "creatorType":"author",
-          "fieldMode":1,
-          "lastName":"Hoffmann"
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Hoffmann"
         }
       ],
-      "extra":"bibtex: HoSp-87",
-      "itemID":0,
-      "itemType":"journalArticle",
-      "title":"Phase transitions"
+      "extra": "bibtex: HoSp-87",
+      "itemID": 0,
+      "itemType": "journalArticle",
+      "title": "Phase transitions"
     },
     {
-      "creators":[
+      "creators": [
         {
-          "creatorType":"editor",
-          "fieldMode":1,
-          "lastName":"Sprekels"
+          "creatorType": "editor",
+          "fieldMode": 1,
+          "lastName": "Sprekels"
         }
       ],
-      "extra":"bibtex: HoSp-90",
-      "itemID":1,
-      "itemType":"book",
-      "title":"Free Boundary Problems"
+      "extra": "bibtex: HoSp-90",
+      "itemID": 1,
+      "itemType": "book",
+      "title": "Free Boundary Problems"
     }
   ]
 }

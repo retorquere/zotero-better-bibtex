@@ -5,20 +5,16 @@ declare const Zotero: any
 declare const AddonManager: any
 
 require('./prefs.ts') // needs to be here early, initializes the prefs observer
+require('./pull-export.ts') // just require, initializes the pull-export end points
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 import debug = require('./debug.ts')
 import flash = require('./flash.ts')
-import EDTF = require('edtf')
 import Events = require('./events.ts')
 import ZoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
-
-// TODO: remove after beta
-Zotero.Prefs.set('debug.store', true)
-Zotero.Debug.setStore(true)
 
 import Translators = require('./translators.ts')
 import DB = require('./db/main.ts')
@@ -27,6 +23,7 @@ import Serializer = require('./serializer.ts')
 import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
+import AUXScanner = require('./aux-scanner.ts')
 
 import $patch$ = require('./monkey-patch.ts')
 
@@ -75,6 +72,22 @@ AddonManager.addAddonListener({
 /*
   MONKEY PATCHES
 */
+
+/* monkey-patch Zotero.Search::search to allow searching for citekey */
+$patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
+  const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
+  if (!searchText.length) return yield original.apply(this, arguments)
+
+  let ids = yield original.call(this, false) || []
+
+  debug('search: looking for', searchText, 'to add to', ids)
+
+  ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
+
+  if (!ids.length) return false
+  if (asTempTable) return yield Zotero.Search.idsToTempTable(ids)
+  return ids
+}))
 
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
@@ -141,20 +154,16 @@ $patch$(Zotero.Integration, 'getApplication', original => function(agent, comman
 })
 
 /* bugger this, I don't want megabytes of shared code in the translators */
-import parseDate = require('./dateparser.ts')
+import DateParser = require('./dateparser.ts')
 import CiteProc = require('./citeproc.ts')
 import titleCase = require('./title-case.ts')
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  parseDate(sandbox, date) { return parseDate(date) },
-  isEDTF(sandbox, date) {
-    try {
-      EDTF.parse(date)
-      return true
-    } catch (error) {
-      return false
-    }
-  },
-  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) /* && CiteProc.parseParticles(name) */ },
+  qrCheck(sandbox, value, test, params = null) { return require('./qr-check.ts')(value, test, params) },
+
+  parseDate(sandbox, date) { return DateParser.parse(date) },
+  isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
+
+  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   scrubFields(sandbox, item) { return Serializer.scrub(item) },
@@ -175,7 +184,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    collection.update(cached) // touches the cache object
+    collection.update(cached) // touches the cache object so it isn't reaped too early
 
     return cached
   },
@@ -409,6 +418,37 @@ export = new class {
     window.addEventListener('load', this.load, false)
   }
 
+  public pullExport() {
+    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return ''
+
+    const translator = 'biblatex'
+    const row = pane.collectionsView.selectedTreeRow
+
+    const root = `http://localhost:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
+
+    if (row.isCollection()) {
+      let collection = pane.getSelectedCollection()
+      const short = `collection?/${collection.libraryID || 0}/${collection.key}.${translator}`
+
+      const path = [encodeURIComponent(collection.name)]
+      while (collection.parent) {
+        collection = Zotero.Collections.get(collection.parent)
+        path.unshift(encodeURIComponent(collection.name))
+      }
+      const long = `collection?/${collection.libraryID || 0}/${path.join('/')}.${translator}`
+
+      return `${root}${short}\nor\n${root}${long}`
+    }
+
+    if (row.isLibrary(true)) {
+      const libId = pane.getSelectedLibraryID()
+      const short = libId ? `library?/${libId}/library.${translator}` : `library?library.${translator}`
+      return `${root}${short}`
+    }
+
+    return ''
+  }
+
   public errorReport(includeReferences) {
     debug('ErrorReport::start', includeReferences)
 
@@ -440,6 +480,10 @@ export = new class {
     debug('ErrorReport::start done')
   }
 
+  public scanAUX(path = null) {
+    (new AUXScanner).scan(path)
+  }
+
   private async load() {
     debug('Loading Better BibTeX: starting...')
 
@@ -458,6 +502,9 @@ export = new class {
 
     lock.update('Starting auto-export')
     AutoExport.init()
+
+    // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
+    // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
 
     lock.update('Starting key manager')
     await KeyManager.init() // inits the key cache by scanning the DB

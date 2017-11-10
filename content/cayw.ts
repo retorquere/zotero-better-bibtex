@@ -244,6 +244,10 @@ class Document {
         suffix: item.suffix || '',
         label: item.locator ? (item.label || 'page') : '',
         citekey: KeyManager.get(item.id).citekey,
+
+        uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
+        itemType: item.itemData ? item.itemData.type : undefined,
+        title: item.itemData ? item.itemData.title : undefined,
       }
     })
   }

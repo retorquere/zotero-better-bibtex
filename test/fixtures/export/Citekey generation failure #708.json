@@ -28,10 +28,7 @@
       "bibtexURL": "off",
       "csquotes": "",
       "keyConflictPolicy": "keep",
-      "langID": "babel",
-      "pinCitekeys": "manual",
       "preserveBibTeXVariables": false,
-      "citekeyScan": "",
       "skipFields": [
 
       ],
@@ -161,7 +158,6 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefGroups": 0,
       "defaultDateParserLocale": "en-GB",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
@@ -171,10 +167,10 @@
       "jurismPreferredLanguage": "zh-alalc97",
       "qualityReport": false,
       "suppressTitleCase": false,
-      "parseParticles": true,
       "debug": false,
       "rawLaTag": "#LaTeX",
-      "citekeyFormat": "[auth][year]"
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
     },
     "options": {
       "exportNotes": true

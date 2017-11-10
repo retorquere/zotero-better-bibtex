@@ -1,4 +1,6 @@
-declare const Translator: any
+import { ITranslator } from '../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
 
 import Reference = require('./bibtex/reference.ts')
@@ -33,43 +35,7 @@ Reference.prototype.caseConversion = {
   eventtitle: true,
 }
 
-Reference.prototype.requiredFields = {
-  article: ['author', 'title', 'journaltitle', 'year/date'],
-  book: ['author', 'title', 'year/date'],
-  mvbook: ['book'],
-  inbook: ['author', 'title', 'booktitle', 'year/date'],
-  bookinbook: ['inbook'],
-  suppbook: ['inbook'],
-  booklet: ['author/editor', 'title', 'year/date'],
-  collection: ['editor', 'title', 'year/date'],
-  mvcollection: ['collection'],
-  incollection: ['author', 'title', 'booktitle', 'year/date'],
-  suppcollection: ['incollection'],
-  manual: ['author/editor', 'title', 'year/date'],
-  misc: ['author/editor', 'title', 'year/date'],
-  online: ['author/editor', 'title', 'year/date', 'url'],
-  patent: ['author', 'title', 'number', 'year/date'],
-  periodical: ['editor', 'title', 'year/date'],
-  suppperiodical: ['article'],
-  proceedings: ['title', 'year/date'],
-  mvproceedings: ['proceedings'],
-  inproceedings: ['author', 'title', 'booktitle', 'year/date'],
-  reference: ['collection'],
-  mvreference: ['collection'],
-  inreference: ['incollection'],
-  report: ['author', 'title', 'type', 'institution', 'year/date'],
-  thesis: ['author', 'title', 'type', 'institution', 'year/date'],
-  unpublished: ['author', 'title', 'year/date'],
-
-  // semi aliases (differing fields)
-  mastersthesis: ['author', 'title', 'institution', 'year/date'],
-  techreport: ['author', 'title', 'institution', 'year/date'],
-}
-
-Reference.prototype.requiredFields.conference = Reference.prototype.requiredFields.inproceedings
-Reference.prototype.requiredFields.electronic = Reference.prototype.requiredFields.online
-Reference.prototype.requiredFields.phdthesis = Reference.prototype.requiredFields.mastersthesis
-Reference.prototype.requiredFields.www = Reference.prototype.requiredFields.online
+Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
 function addCreators(ref) {
   if (!ref.item.creators || !ref.item.creators.length) return
@@ -258,51 +224,7 @@ Translator.doExport = () => {
       ref.remove('url')
     }
 
-    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
-      if (ref.has[eprinttype]) {
-        if (!ref.has.eprinttype) {
-          ref.add({ eprinttype})
-          ref.add({ eprint: ref.has[eprinttype].value })
-        }
-        ref.remove(eprinttype)
-      }
-    }
-
-    if (item.archive && item.archiveLocation) {
-      let archive = true
-      switch (item.archive.toLowerCase()) {
-        case 'arxiv':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'arxiv' })
-          ref.add({ eprintclass: item.callNumber })
-          break
-
-        case 'jstor':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'jstor' })
-          break
-
-        case 'pubmed':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'pubmed' })
-          break
-
-        case 'hdl':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'hdl' })
-          break
-
-        case 'googlebooks': case 'google books':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'googlebooks' })
-          break
-
-        default:
-          archive = false
-      }
-
-      if (archive) {
-        if (!ref.has.eprint) ref.add({ eprint: item.archiveLocation })
-      }
-    }
-
     ref.add({ langid: ref.language })
-
     ref.add({ location: item.place })
     ref.add({ chapter: item.chapter })
     ref.add({ edition: item.edition })
@@ -350,10 +272,6 @@ Translator.doExport = () => {
           } else {
             if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {
               ref.add({ name: 'journaltitle', value: item.journalAbbreviation, preserveBibTeXVariables: true })
-            // TODO: what's going on here?
-            // else if Translator.BetterBibLaTeX && item.publicationTitle.match(/arxiv:/i)
-            //  ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-            //  ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
             } else {
               ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
               ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
@@ -443,7 +361,7 @@ Translator.doExport = () => {
     if (item.accessDate && item.url) ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) })
 
     if (item.date) {
-      if (Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date)) {
+      if (Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date, true)) {
         ref.add({ name: 'date', value: item.date, enc: 'verbatim' })
       } else {
         const date = Zotero.BetterBibTeX.parseDate(item.date)
@@ -491,6 +409,49 @@ Translator.doExport = () => {
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
+      }
+    }
+
+    for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
+      if (ref.has[eprinttype]) {
+        if (!ref.has.eprinttype) {
+          ref.add({ eprinttype})
+          ref.add({ eprint: ref.has[eprinttype].value })
+        }
+        ref.remove(eprinttype)
+      }
+    }
+
+    if (item.archive && item.archiveLocation) {
+      let archive = true
+      switch (item.archive.toLowerCase()) {
+        case 'arxiv':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'arxiv' })
+          ref.add({ eprintclass: item.callNumber })
+          break
+
+        case 'jstor':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'jstor' })
+          break
+
+        case 'pubmed':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'pubmed' })
+          break
+
+        case 'hdl':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'hdl' })
+          break
+
+        case 'googlebooks': case 'google books':
+          if (!ref.has.eprinttype) ref.add({ eprinttype: 'googlebooks' })
+          break
+
+        default:
+          archive = false
+      }
+
+      if (archive) {
+        if (!ref.has.eprint) ref.add({ eprint: item.archiveLocation })
       }
     }
 

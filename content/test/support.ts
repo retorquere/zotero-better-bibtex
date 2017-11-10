@@ -8,8 +8,9 @@ import debug = require('../debug.ts')
 import KeyManager = require('../keymanager.ts')
 import Prefs = require('../prefs.ts')
 import Translators = require('../translators.ts')
+import CAYWFormatter = require('../cayw/formatter.ts')
 
-const pref_defaults = require('../../defaults/preferences/defaults.json')
+const pref_defaults = require('../../gen/defaults.json')
 
 export = Prefs.get('testing') && {
   async reset() {
@@ -75,7 +76,14 @@ export = Prefs.get('testing') && {
     const before = items.length
 
     debug(`starting import at ${new Date()}`)
-    await Zotero_File_Interface.importFile(file, !!createNewCollection)
+
+    if (source.endsWith('.aux')) {
+      await Zotero.BetterBibTeX.scanAUX(file)
+      // for some reason, the imported collection shows up as empty right after the import >:
+      await new Promise(resolve => setTimeout(resolve, 1500)) // tslint:disable-line:no-magic-numbers
+    } else {
+      await Zotero_File_Interface.importFile(file, !!createNewCollection)
+    }
     debug(`import finished at ${new Date()}`)
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
@@ -130,6 +138,22 @@ export = Prefs.get('testing') && {
       debug(`select: expected ${id}, got ${selected}`)
     }
     throw new Error(`failed to select ${id}`)
+  },
+
+  async find(title) {
+    const s = new Zotero.Search()
+    s.addCondition('field', 'is', title) // field not used?
+    const ids = await s.search()
+    if (!ids || ids.length !== 1) throw new Error(`No item found with title '${title}'`)
+
+    return ids[0]
+  },
+
+  async pick(format, citations) {
+    for (const citation of citations) {
+      citation.citekey = KeyManager.get(citation.id).citekey
+    }
+    return await CAYWFormatter[format](citations, {})
   },
 
   async pinCiteKey(itemID, action) {
