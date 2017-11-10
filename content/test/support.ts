@@ -10,7 +10,7 @@ import Prefs = require('../prefs.ts')
 import Translators = require('../translators.ts')
 import CAYWFormatter = require('../cayw/formatter.ts')
 
-const pref_defaults = require('../../defaults/preferences/defaults.json')
+const pref_defaults = require('../../gen/defaults.json')
 
 export = Prefs.get('testing') && {
   async reset() {

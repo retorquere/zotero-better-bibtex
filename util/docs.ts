@@ -3,8 +3,6 @@ import parseXML = require('@rgrove/parse-xml')
 import dedent = require('dedent-js')
 import path = require('path')
 
-const defaults = JSON.parse(fs.readFileSync('defaults/preferences/defaults.json', 'utf8'))
-
 class DocFinder {
   private strings: { [key: string]: string }
   private tab: number
@@ -18,10 +16,12 @@ class DocFinder {
       tab?: string
       label?: string
       description?: string
+      default?: any
     }
   }
   private header: string
   private errors: number
+  private defaults: { [key: string]: any }
 
   constructor() {
     this.strings = {}
@@ -32,6 +32,11 @@ class DocFinder {
     this.tabs = []
     this.tab = -1
     this.errors = 0
+    this.defaults = {
+      debug: false,
+      rawLaTag: '#LaTeX',
+      testing: false,
+    }
 
     const prefsPane = parseXML(fs.readFileSync('content/Preferences.xul', 'utf8'), {
       resolveUndefinedEntity: entity => this.strings[entity] || entity,
@@ -40,32 +45,19 @@ class DocFinder {
 
     this.walk(prefsPane)
 
-    const supported = {}
-    const ignore = new Set(['rawLaTag', 'debug', 'testing'])
-    for (const [id, dflt] of Object.entries(defaults)) {
-      if (ignore.has(id)) continue
-      supported[`extensions.zotero.translators.better-bibtex.${id}`] = typeof dflt
-    }
-    const documented = {}
     for (const [id, pref] of Object.entries(this.preferences)) {
-      documented[pref.preference] = {bool: 'boolean', int: 'number'}[pref.type] || pref.type
+      this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
       if (!pref.description) this.report(`${pref.preference} has no description`)
     }
 
-    for (const [pref, type] of Object.entries(supported)) { if (!documented[pref]) this.report(`Undocumented preference ${pref}`)}
-    for (const [pref, type] of Object.entries(documented)) {
-      if (supported[pref]) {
-        if (supported[pref] !== type) this.report(`Preference ${pref} has unexpected type ${type}`)
-      } else this.report(`Unsupported preference ${pref}`)
-    }
-    for (const [pref, type] of Object.entries(documented)) { if (!documented[pref]) this.report(`Undocumented preference ${pref}`)}
-
     if (this.errors) process.exit(1)
+
+    fs.writeFileSync(path.join(__dirname, '../gen/defaults.json'), JSON.stringify(this.defaults, null, 2))
   }
 
   private walk(node) {
-    let label, pref
+    let label, pref, type, dflt;
 
     switch (node.type) {
       case 'document':
@@ -90,12 +82,43 @@ class DocFinder {
       case 'element':
         switch (node.name) {
           case 'preference':
-            this.preference = node.attributes.id || `#${node.attributes.name}`
+            this.preference = node.attributes.id || `#${node.attributes.name}`;
+            type = ({bool: 'boolean', int: 'number'}[node.attributes.type]) || node.attributes.type;
+            if (typeof node.attributes.default === 'undefined') throw new Error(`No default value for ${this.preference}`)
+            switch (type) {
+              case 'boolean':
+                switch (node.attributes.default) {
+                  case 'true':
+                    dflt = true;
+                    break
+                  case 'false':
+                    dflt = false;
+                    break
+                  default:
+                    throw new Error(`Unexpected boolean value ${node.attributes.default} for ${this.preference}`)
+                }
+                break;
+
+              case 'number':
+                dflt = parseInt(node.attributes.default);
+                if (isNaN(dflt)) throw new Error(`Unexpected int value ${node.attributes.default} for ${this.preference}`)
+                break;
+
+              case 'string':
+                dflt = node.attributes.default;
+                break;
+
+              default:
+                throw new Error(`Unexpected ${type} value ${node.attributes.default} for ${this.preference}`)
+            }
+
             this.preferences[this.preference] = {
               id: node.attributes.id,
-              type: node.attributes.type,
+              type: type,
               preference: node.attributes.name,
+              default: dflt
             }
+
             break
 
           case 'tab':

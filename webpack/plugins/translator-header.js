@@ -31,7 +31,7 @@ TranslatorHeaderPlugin.prototype.apply = function(compiler) {
   compiler.plugin('emit', function(compilation, done) {
     var header = require(__dirname + '/../../resource/' + self.translator + '.json')
     header.lastUpdated = self.lastModified.toISOString().replace('T', ' ').replace(/\..*/, '');
-    var preferences = require(__dirname + '/../../defaults/preferences/defaults.json')
+    var preferences = require(__dirname + '/../../gen/defaults.json')
     var asset = self.translator + '.js';
     compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset])
     done();
