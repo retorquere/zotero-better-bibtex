@@ -18,6 +18,7 @@ import AutoExport = require('./auto-export.ts')
 class KeyManager {
 
   public keys: any
+  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
 
   private static postfixRE = {
     numeric: /^(-[0-9]+)?$/,
@@ -145,7 +146,7 @@ class KeyManager {
       setTimeout(() => {
         // update display panes
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
-      }, 50) // tslint:disable-line:no-magic-numbers
+      }, this.itemObserverDelay)
     })
   }
 
