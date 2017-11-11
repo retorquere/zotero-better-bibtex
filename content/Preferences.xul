@@ -30,7 +30,7 @@
 
         **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a
         really large library, but you can read about what is involved [[here|Performance]].
-      <-->
+      -->
       <preferences id="zotero-preferences-cite">
         <preference
           name="extensions.zotero.translators.better-bibtex.DOIandURL"
@@ -425,8 +425,8 @@
                                 orient="horizontal"
                                 preference="pref-better-bibtex-keyConflictPolicy"
                                 oncommand="Zotero.BetterBibTeX.Preferences.update();">
-                      <radio id="id-better-bibtex-preferences-key-conflict-policy-change" label="&better-bibtex.Preferences.citekey.update.conflict.change;" value="change"/>
-                      <radio id="id-better-bibtex-preferences-key-conflict-policy-keep" label="&better-bibtex.Preferences.citekey.update.conflict.keep;" value="keep"/>
+                      <radio label="&better-bibtex.Preferences.citekey.update.conflict.change;" value="change"/>
+                      <radio label="&better-bibtex.Preferences.citekey.update.conflict.keep;" value="keep"/>
                     </radiogroup>
                   </row>
                 </rows>
@@ -496,9 +496,9 @@
               <hbox>
                 <label forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
                 <radiogroup id="id-better-bibtex-preferences-auto-export" orient="horizontal" preference="pref-better-bibtex-autoExport">
-                  <radio id="id-better-bibtex-preferences-auto-export-off" label="&better-bibtex.Preferences.auto-export.off;" value="off"/>
-                  <radio id="id-better-bibtex-preferences-auto-export-immediate" label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"/>
-                  <radio id="id-better-bibtex-preferences-auto-export-idle" label="&better-bibtex.Preferences.auto-export.idle;" value="idle"/>
+                  <radio label="&better-bibtex.Preferences.auto-export.off;" value="off"/>
+                  <radio label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"/>
+                  <radio label="&better-bibtex.Preferences.auto-export.idle;" value="idle"/>
                 </radiogroup>
               </hbox>
               <hbox>
