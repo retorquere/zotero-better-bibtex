@@ -49,11 +49,14 @@ class DocFinder {
       this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
       if (!pref.description) this.report(`${pref.preference} has no description`)
+      if (!pref.tab && pref.id) this.report(`${pref.preference} should be hidden`)
     }
 
     if (this.errors) process.exit(1)
 
     fs.writeFileSync(path.join(__dirname, '../gen/defaults.json'), JSON.stringify(this.defaults, null, 2))
+
+    console.log(this.preferences)
   }
 
   private walk(node) {

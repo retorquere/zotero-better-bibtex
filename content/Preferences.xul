@@ -226,7 +226,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"
-          id="pref-better-bibtex-autoAbbrevStyle"
           type="string"
           default=""/>
         <!--!
@@ -235,7 +234,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"
-          id="pref-better-bibtex-autoExportIdleWait"
           type="int"
           default="10"/>
         <!--!
@@ -244,7 +242,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"
-          id="pref-better-bibtex-cacheFlushInterval"
           type="int"
           default="5"/>
         <!--!
@@ -254,7 +251,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.csquotes"
-          id="pref-better-bibtex-csquotes"
           type="string"
           default=""/>
         <!--!
@@ -263,7 +259,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.skipWords"
-          id="pref-better-bibtex-skipWords"
           type="string"
           default="a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
         />
@@ -273,7 +268,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.jabrefFormat"
-          id="pref-better-bibtex-jabrefFormat"
           type="int"
           default="4"/>
         <!--!
@@ -283,7 +277,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"
-          id="pref-better-bibtex-defaultDateParserLocale"
           type="string"
           default=""/>
         <!--!
@@ -296,7 +289,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"
-          id="pref-better-bibtex-jurismPreferredLanguage"
           type="string"
           default=""/>
         <!--!
@@ -305,7 +297,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.qualityReport"
-          id="pref-better-bibtex-qualityReport"
           type="bool"
           default="false"/>
         <!--!
@@ -314,7 +305,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat"
-          id="pref-better-bibtex-biblatexExtendedDateFormat"
           type="bool"
           default="false"/>
         <!--!
@@ -335,7 +325,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.suppressTitleCase"
-          id="pref-better-bibtex-suppressTitleCase"
           type="bool"
           default="false"/>
         <!--!
@@ -345,7 +334,6 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.itemObserverDelay"
-          id="pref-better-bibtex-itemObserverDelay"
           type="int"
           default="100"/>
         <!--!
