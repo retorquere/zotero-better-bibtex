@@ -69,6 +69,11 @@ class DocFinder {
         docs.push(pref.label)
       }
     }
+    docs.push(`## Hidden preferences`)
+    for (const [id, pref] of Object.entries(this.preferences)) {
+      if (pref.tab) continue
+      docs.push(pref.preference)
+    }
 
     console.log(this.preferences)
     console.log(docs.join('\n'))
