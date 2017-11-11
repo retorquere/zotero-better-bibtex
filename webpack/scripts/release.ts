@@ -10,7 +10,7 @@ const build_root = path.join(__dirname, '../../')
 
 import * as github from './github'
 
-const PRERELEASE = true // TODO: remove after release
+const PRERELEASE = false
 const KEEP_BUILDS = 10
 
 function bail(msg, status = 1) {
