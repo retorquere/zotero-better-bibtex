@@ -147,9 +147,11 @@ export = new class ErrorReport {
     for (const key of Prefs.branch.getChildList('')) {
       prefs.push(key)
     }
-    prefs.sort()
-    for (const key of prefs) {
+    for (const key of prefs.sort()) {
       info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
+    }
+    for (const key of ['export.quickCopy.setting']) {
+      info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
     return info
