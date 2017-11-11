@@ -8,10 +8,10 @@ import KeyManager = require('./keymanager.ts')
 import ZoteroDB = require('./db/zotero.ts')
 
 class Serializer {
+  private static collection = 'itemToExportFormat'
+
   public simplify: Function
   public scrub: Function
-
-  private static collection = 'itemToExportFormat'
 
 //  # prune cache on old accessed
 //  prune: Zotero.Promise.coroutine(->

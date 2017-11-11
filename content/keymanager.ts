@@ -16,14 +16,13 @@ import Formatter = require('./keymanager/formatter.ts')
 import AutoExport = require('./auto-export.ts')
 
 class KeyManager {
-
-  public keys: any
-  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
-
   private static postfixRE = {
     numeric: /^(-[0-9]+)?$/,
     alphabetic: /^([a-z])?$/,
   }
+
+  public keys: any
+  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
 
   private scanning: any[]
   private query: {

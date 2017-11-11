@@ -6,9 +6,9 @@ import Events = require('./events.ts')
 import ZoteroConfig = require('./zotero-config.ts')
 
 class Preferences {
-  public branch: any
-
   private static prefix = 'translators.better-bibtex'
+
+  public branch: any
 
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
