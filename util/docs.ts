@@ -26,7 +26,7 @@ class DocFinder {
   constructor() {
     this.strings = {}
     const dtd = fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf8')
-    dtd.replace(/<!ENTITY\s+([^\s]+)\s+"([^"]+)"\s*/g, (decl, entity, str) => { this.strings[entity] = str; return '' })
+    dtd.replace(/<!ENTITY\s+([^\s]+)\s+"([^"]+)"\s*/g, (decl, entity, str) => { this.strings[`&${entity};`] = str; return '' })
 
     this.preferences = {}
     this.tabs = []
@@ -47,7 +47,11 @@ class DocFinder {
 
     for (const [id, pref] of Object.entries(this.preferences)) {
       this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
+
+      if (pref.label) pref.label = pref.label.trim()
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
+
+      if (pref.description) pref.description = pref.description.trim()
       if (!pref.description) this.report(`${pref.preference} has no description`)
       if (!pref.tab && pref.id) this.report(`${pref.preference} should be hidden`)
     }
@@ -56,7 +60,18 @@ class DocFinder {
 
     fs.writeFileSync(path.join(__dirname, '../gen/defaults.json'), JSON.stringify(this.defaults, null, 2))
 
+    const docs = [this.header]
+
+    for (const tab of this.tabs) {
+      docs.push(`## ${tab}`)
+      for (const [id, pref] of Object.entries(this.preferences)) {
+        if (pref.tab != tab) continue
+        docs.push(pref.label)
+      }
+    }
+
     console.log(this.preferences)
+    console.log(docs.join('\n'))
   }
 
   private walk(node) {
@@ -134,12 +149,16 @@ class DocFinder {
 
           default:
             if (pref = node.attributes.preference || node.attributes.forpreference) {
-              if (!this.preferences[pref]) throw new Error(`There's an UI element for non-existent preference ${pref}`)
-              this.preferences[pref].tab = this.tabs[this.tab]
+              if (node.attributes.label) label = node.attributes.label.trim()
+              else if (node.attributes.value) label = node.attributes.value.trim()
+              else if (label = node.children.find(child => child.type === 'text')) label = label.text.trim()
 
-              if (node.attributes.label) this.preferences[pref].label = node.attributes.label
-              else if (node.attributes.value) this.preferences[pref].label = node.attributes.value
-              else if (label = node.children.find(child => child.type === 'text')) this.preferences[pref].label = label.text
+              if (label) {
+                if (!this.preferences[pref]) throw new Error(`There's an UI element for non-existent preference ${pref}`)
+                this.preferences[pref].label = label
+
+                this.preferences[pref].tab = this.tabs[this.tab]
+              }
             }
             break
         }
