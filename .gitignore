@@ -28,4 +28,3 @@ resource/reports/cacheActivity.txt
 .DS_Store
 .env
 webpack/tslint/noModuleExportsRule.js
-wiki

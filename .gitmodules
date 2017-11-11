@@ -1,3 +1,6 @@
 [submodule "citeproc-js"]
 	path = citeproc-js
 	url = https://github.com/Juris-M/citeproc-js.git
+[submodule "wiki"]
+	path = wiki
+	url = https://github.com/retorquere/zotero-better-bibtex.wiki.git
