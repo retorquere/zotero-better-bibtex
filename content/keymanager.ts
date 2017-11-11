@@ -139,14 +139,14 @@ class KeyManager {
     })
 
     this.keys.on(['insert', 'update'], citekey => {
-      const extraData = {}
-      // prevents update loop -- see Zotero.Notifier.registerObserver in main
-      extraData[citekey.itemID] = { bbtCitekeyUpdate: true }
-
-      // update display panes
-      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], extraData)
+      // async is just a heap of fun. Who doesn't enjoy a good race condition?
+      // https://github.com/retorquere/zotero-better-bibtex/issues/774
+      // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
+      setTimeout(() => {
+        // update display panes
+        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      }, 50) // tslint:disable-line:no-magic-numbers
     })
-
   }
 
   public async rescan(clean?: boolean) {
@@ -254,6 +254,7 @@ class KeyManager {
     if (item.isNote() || item.isAttachment()) return
 
     current = current || this.keys.findOne({ itemID: item.id })
+
     const proposed = this.propose(item)
 
     if (current && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey

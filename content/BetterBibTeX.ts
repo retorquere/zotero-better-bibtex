@@ -290,7 +290,10 @@ Zotero.Notifier.registerObserver({
     debug('item.notify', {action, type, ids, extraData})
 
     // prevents update loop -- see KeyManager.init()
-    if (action === 'modify') ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
+    if (action === 'modify') {
+      ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
+      if (!ids.length) return
+    }
 
     Cache.remove(ids)
 
