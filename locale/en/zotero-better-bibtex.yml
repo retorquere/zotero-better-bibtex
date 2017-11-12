@@ -7,7 +7,7 @@ en:
     Error reports can not reviewed unless referred to in the Better BibTeX GitHub issue
     tracker.
   better-bibtex.ErrorReport.postToGitHub: >-
-    Please post a message to the issue tracker
+    Please post a message to the Better BibTeX issue tracker
     (https://github.com/retorquere/zotero-better-bibtex/issues) with this Report
     ID, a description of the problem, and any steps necessary to reproduce it.
   better-bibtex.ErrorReport.references: References
