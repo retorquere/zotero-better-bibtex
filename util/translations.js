@@ -1,6 +1,7 @@
 const fs = require('fs')
 const parseXML = require('@rgrove/parse-xml')
-var path = require('path');
+const path = require('path');
+const YAML = require('js-yaml')
 
 var walk = function(dir, ext) {
     var results = []
@@ -15,7 +16,7 @@ var walk = function(dir, ext) {
 }
 
 strings = {}
-walk('locale', '.dtd').forEach(function(xul) {
+walk('locale/en-US', '.dtd').forEach(function(xul) {
   var dtd = fs.readFileSync(xul, 'utf8')
   dtd.replace(/<!ENTITY\s+([^\s]+)\s+"([^"]+)"\s*/g, function(decl, entity, string) {
     strings[entity] = string;
@@ -47,6 +48,7 @@ msgstr ${JSON.stringify(strings[entity])}
 `.trim() + "\n";
 }
 fs.writeFileSync('bbt.po', po);
+fs.writeFileSync('bbt.yml', YAML.safeDump({ en: strings }));
 
 // console.log(JSON.stringify(strings, null, 2))
 
@@ -73,3 +75,5 @@ for (entity in strings) {
   if (used[entity]) continue;
   console.log(`Unused: ${entity}`)
 }
+
+

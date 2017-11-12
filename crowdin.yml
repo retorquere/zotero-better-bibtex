@@ -1,3 +1,4 @@
 files:
   - source: /locale/en-US/*.dtd
     translation: /locale/%locale%/%original_file_name%
+update_option : update_as_unapproved
