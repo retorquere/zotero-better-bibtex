@@ -73,7 +73,20 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-/* monkey-patch Zotero.Search::search to allow searching for citekey */
+// https://github.com/retorquere/zotero-better-bibtex/issues/769
+$patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKeyHash(id) {
+  const m = id.match(/^bbt:(?:{([0-9]+)})(.+)/)
+  if (m) {
+    let [ , libraryID, citekey ] = m
+    libraryID = parseInt(libraryID)
+    const item = KeyManager.keys.findOne({ libraryID: libraryID || Zotero.Libraries.userLibraryID, citekey})
+    if (item) return { libraryID, key: item.itemKey }
+  }
+
+  return original.apply(this, arguments)
+})
+
+// monkey-patch Zotero.Search::search to allow searching for citekey
 $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
   const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
   if (!searchText.length) return yield original.apply(this, arguments)

@@ -163,11 +163,10 @@ class KeyManager {
 
     this.scanning = []
 
-    if (clean) {
-      this.keys.removeDataOnly()
-    }
-//    else
-//      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
+    // if (this.keys.findOne({ itemKey: $undefinedin: { .... } )) clean = true
+    if (this.keys.where(item => !item.itemKey).length) clean = true
+    if (clean) this.keys.removeDataOnly()
+
     debug('KeyManager.rescan:', {clean, keys: this.keys})
 
     const marker = '\uFFFD'
@@ -198,7 +197,7 @@ class KeyManager {
         }
       } else {
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
-        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID })
+        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
       }
     }
 
@@ -264,7 +263,7 @@ class KeyManager {
       current.citekey = proposed.citekey
       this.keys.update(current)
     } else {
-      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
+      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
     }
 
     return proposed.citekey
