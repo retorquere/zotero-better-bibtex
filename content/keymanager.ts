@@ -163,8 +163,6 @@ class KeyManager {
 
     this.scanning = []
 
-    // if (this.keys.findOne({ itemKey: $undefinedin: { .... } )) clean = true
-    if (this.keys.where(item => !item.itemKey).length) clean = true
     if (clean) this.keys.removeDataOnly()
 
     debug('KeyManager.rescan:', {clean, keys: this.keys})
@@ -173,7 +171,7 @@ class KeyManager {
 
     const ids = []
     const items = await ZoteroDB.queryAsync(`
-      SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
+      SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
@@ -190,9 +188,11 @@ class KeyManager {
       if (saved) {
         if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
           debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
-          Object.assign(saved, { citekey: citekey.citekey, pinned: true })
-          this.keys.update(saved)
+          // tslint:disable-next-line:prefer-object-spread
+          this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
         } else {
+          // tslint:disable-next-line:prefer-object-spread
+          if (!item.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
           debug('KeyManager.rescan: keeping', saved)
         }
       } else {
