@@ -6,6 +6,7 @@ declare const AddonManager: any
 
 require('./prefs.ts') // needs to be here early, initializes the prefs observer
 require('./pull-export.ts') // just require, initializes the pull-export end points
+require('./scholmd.ts') // just require, initializes the scholmd end point
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
