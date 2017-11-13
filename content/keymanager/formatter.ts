@@ -43,7 +43,7 @@ export = new class PatternFormatter {
 
   private item: any
 
-  private skipWords: string[]
+  private skipWords: Set<string>
 
   private fold: boolean
   private citekeyFormat: string
@@ -54,7 +54,7 @@ export = new class PatternFormatter {
 
   public update() {
     debug('PatternFormatter.update:')
-    this.skipWords = Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word)
+    this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'reset']) {
@@ -383,7 +383,7 @@ export = new class PatternFormatter {
   }
 
   protected _skipwords(value) {
-    return (value || '').split(/\s+/).filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+    return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
   protected _select(value, start, n) {
@@ -463,7 +463,7 @@ export = new class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0 && PunyCode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && PunyCode.ucs2.decode(word).length > 1)
     if (words.length === 0) return null
     return words
   }
