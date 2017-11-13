@@ -17,12 +17,15 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export.auto-abbrev "Auto-abbreviate">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-export.charset "Character encoding">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
+<!ENTITY better-bibtex.Preferences.auto-export.config "Export Configuration">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
 <!ENTITY better-bibtex.Preferences.auto-export.mark "Export">
 <!ENTITY better-bibtex.Preferences.auto-export.notes "Export Notes">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
+<!ENTITY better-bibtex.Preferences.auto-export.preserveBibTeXVariables "Preserve BibTeX variables">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
@@ -43,11 +46,19 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Quick copy/drag-and-drop citations">
+<!ENTITY better-bibtex.Preferences.citekey.show "Show citekey instead of 'extra' field in reference list">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "postfixed (causes key changes)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "kept (causes key duplicates)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "On conflict, non-pinned keys will be">
+<!ENTITY better-bibtex.Preferences.citekey.update.pin "Auto-pin citation keys">
+<!ENTITY better-bibtex.Preferences.citekey.update.pin.description "Better BibTeX supports 'pinning' the citation key, which means that even if your reference changes, the citation key stays the same. You can choose to have this pinning done automatically, either when a reference changes for the first time, or at the first time a reference is exported to Bib(La)TeX. Note that pinning 'on-change' only affects references that have no pinned citation key -- after the initial pinning on creation or change, further changes will not be incorporated. Auto-pinning will only pin the references if Zotero Sync is either off, or on automatic.">
+<!ENTITY better-bibtex.Preferences.citekey.update.pin.manual "Manual">
+<!ENTITY better-bibtex.Preferences.citekey.update.pin.on-change "On item change">
+<!ENTITY better-bibtex.Preferences.citekey.update.pin.on-export "On item export">
 <!ENTITY better-bibtex.Preferences.citekey.update "Updating Citation Keys">
 <!ENTITY better-bibtex.Preferences.debug "Advanced">
+<!ENTITY better-bibtex.Preferences.debugOutputLogging "Better BibTeX Debug Output">
+<!ENTITY better-bibtex.Preferences.disabled "Better BibTeX has been disabled">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export BibLaTeX as ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
@@ -67,18 +78,40 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields "Fields">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
+<!ENTITY better-bibtex.Preferences.export.recursiveCollections "Export subcollections">
+<!ENTITY better-bibtex.Preferences.export.server.enabled "Enable export by HTTP">
+<!ENTITY better-bibtex.Preferences.export.server.warning "BibTeX http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL http facilities in zotero -- including the non-Firefox plugins">
 <!ENTITY better-bibtex.Preferences.journal-abbrev "Journal abbreviations">
 <!ENTITY better-bibtex.Preferences.postscript "Postscript">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
+<!ENTITY better-bibtex.Preferences.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan citekeys">
 <!ENTITY better-bibtex.Preferences.resetCache "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Report Better BibTeX Errors...">
-<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX file for references...">
+<!ENTITY zotero.better-bibtex.auxScanner "Scan BibTeX AUX file for references...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, and don't ask me again">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Refresh BibTeX key">
 <!ENTITY zotero.better-bibtex.csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">
-<!ENTITY better-bibtex.BetterBibTeX.server.disabled "Export by HTTP disabled">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "BibLaTeX url">
+<!ENTITY zotero.better-bibtex.debug "Better BibTeX extended debug logging. Restart Firefox/Zotero to activate, persists over reboots. Affects performance, so turn off when done.">
+<!ENTITY zotero.better-bibtex.dragons "Caution -- here be dragons">
+<!ENTITY zotero.better-bibtex.exportGroup	"Export group...">
+<!ENTITY zotero.better-bibtex.format-unique-warning "Caution: the default guarantees that each attachment has a unique filename. If you change the default, make sure the resulting filenames remain unique!">
+<!ENTITY zotero.better-bibtex.langid.babel "Babel">
+<!ENTITY zotero.better-bibtex.langid.polyglossia "Polyglossia">
+<!ENTITY zotero.better-bibtex.langid "When exporting language information, use the conventions from">
+<!ENTITY zotero.better-bibtex.menu.better-bibtex "Better BibTeX">
+<!ENTITY zotero.better-bibtex.preserveCaps.all "All words with capitals">
+<!ENTITY zotero.better-bibtex.preserveCaps.inner "Only words with 'iNNer' capitals">
+<!ENTITY zotero.better-bibtex.preserveCaps.no "No">
+<!ENTITY zotero.better-bibtex.preserveCaps "Preserve capitalization">
+<!ENTITY zotero.better-bibtex.raw-imports "Retain LaTeX markup on BibTeX import">
+<!ENTITY zotero.better-bibtex.restart-required "Restart Required">
+<!ENTITY zotero.better-bibtex.server.address "Bibliography export at ">
+<!ENTITY zotero.better-bibtex.server.disabled "Export by HTTP disabled">
+<!ENTITY zotero.better-bibtex.show-collection-key "BibLaTeX url">
+<!ENTITY zotero.better-bibtex.show-item-id "Show reference ID instead of 'call number' field in reference list (requires restart)">
+
+<!ENTITY unused.better-bibtex.error-report.include "Include in error report">
