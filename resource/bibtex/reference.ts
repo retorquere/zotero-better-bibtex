@@ -483,15 +483,16 @@ export = class Reference {
         default: enc = field.type
       }
 
-      switch (cslName) {
-        case 'doi': case 'isbn': case 'issn': name = cslName; break
-      }
-
       // CSL names are not in BibTeX format, so only add it if there's a mapping
       if (!name && Translator.BetterBibLaTeX) {
         switch (cslName) {
-          case 'authority': name = 'institution'; break
-          case 'status': name = 'pubstate'; break
+          case 'authority':
+            name = 'institution'
+            break
+
+          case 'status':
+            name = 'pubstate'
+            break
 
           case 'title':
             name = this.referencetype === 'book' ? 'maintitle' : null
@@ -513,17 +514,39 @@ export = class Reference {
             name = 'origlocation'
             enc = 'literal'
             break
-          case 'original-title': name = 'origtitle'; break
-          case 'original-date': name = 'origdate'; break
+
+          case 'original-title':
+            name = 'origtitle'
+            break
+
+          case 'original-date':
+            name = 'origdate'
+            break
 
           case 'publisher-place':
             name = 'location'
             enc = 'literal'
             break
 
-          case 'issued': name = 'date'; break
+          case 'issued':
+            name = 'date'
+            break
 
-          case 'number': case 'volume': case 'author': case 'director': case 'editor': name = cslName; break
+          // https://github.com/retorquere/zotero-better-bibtex/issues/644
+          case 'event-place':
+            name = 'venue'
+            break
+
+          case 'number':
+          case 'volume':
+          case 'author':
+          case 'director':
+          case 'editor':
+          case 'doi':
+          case 'isbn':
+          case 'issn':
+            name = cslName
+            break
         }
       }
 
