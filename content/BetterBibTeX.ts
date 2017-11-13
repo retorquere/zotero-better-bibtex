@@ -75,11 +75,13 @@ AddonManager.addAddonListener({
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKeyHash(id) {
-  const m = id.match(/^bbt:(?:{([0-9]+)})(.+)/)
+  const m = id.match(/^bbt:(?:{([0-9]+)})?(.+)/)
+  debug('parseLibraryKeyHash:', id, m)
   if (m) {
     let [ , libraryID, citekey ] = m
-    libraryID = parseInt(libraryID)
+    libraryID = libraryID ? parseInt(libraryID) : 0
     const item = KeyManager.keys.findOne({ libraryID: libraryID || Zotero.Libraries.userLibraryID, citekey})
+    debug('parseLibraryKeyHash:', libraryID, citekey, item)
     if (item) return { libraryID, key: item.itemKey }
   }
 
