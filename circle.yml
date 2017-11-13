@@ -52,9 +52,9 @@ test:
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
-        0|2)  export CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1"
+        0|2)  export CIRCLE_TESTS="--tags 'not @noci and @test-cluster-1'"
               ;;
-        *)    export CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1"
+        *)    export CIRCLE_TESTS="--tags 'not @noci and not @test-cluster-1'"
               ;;
       esac
 
