@@ -59,7 +59,7 @@ test:
       esac
 
       export LOGS=$CIRCLE_ARTIFACTS
-      bundle exec cucumber --strict $CIRCLE_TESTS --tags "$CIRCLE_TESTS"
+      bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
       ls -lh $CIRCLE_ARTIFACTS/*
