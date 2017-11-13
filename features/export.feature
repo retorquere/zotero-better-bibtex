@@ -23,7 +23,7 @@ Scenario Outline: BibLaTeX Export
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
-#     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
+     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
      | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
@@ -334,11 +334,6 @@ Scenario: auto-export
   And I wait 5 seconds
   Then "/tmp/autoexport.bib" should match "export/autoexport.after.biblatex"
   And "/tmp/autoexport.coll.bib" should match "export/autoexport.after.coll.biblatex"
-
-#@163 # test files missing
-#Scenario: Preserve Bib variable names #163
-#  When I import 1 reference from "export/Preserve Bib variable names #163.json"
-#  Then an export using "Better BibLaTeX" should match "export/Preserve Bib variable names #163.biblatex"
 
 @313 @bblt
 Scenario: (non-)dropping particle handling #313
