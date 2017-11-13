@@ -192,7 +192,7 @@ class KeyManager {
           this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
         } else {
           // tslint:disable-next-line:prefer-object-spread
-          if (!item.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
+          if (!saved.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
           debug('KeyManager.rescan: keeping', saved)
         }
       } else {
