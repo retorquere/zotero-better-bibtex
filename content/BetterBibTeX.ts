@@ -80,8 +80,9 @@ $patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKe
     const m = id.match(/^bbt:(?:{([0-9]+)})?(.+)/)
     debug('parseLibraryKeyHash:', id, m)
     if (m) {
-      const [ , libraryID, citekey ] = m
-      const item = KeyManager.keys.findOne({ libraryID: (libraryID ? parseInt(libraryID) : 0) || Zotero.Libraries.userLibraryID, citekey})
+      const [ , lib, citekey ] = m
+      const libraryID = (lib ? parseInt(lib) : 0) || Zotero.Libraries.userLibraryID
+      const item = KeyManager.keys.findOne({ libraryID, citekey})
       debug('parseLibraryKeyHash:', libraryID, citekey, item)
       if (item) return { libraryID, key: item.itemKey }
     }
