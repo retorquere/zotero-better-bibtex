@@ -12,6 +12,7 @@ Scenario Outline: BibLaTeX Export
   Examples:
      | file                                                                                           | references  |
      | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           |
+     | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
      | EDTF dates in BibLaTeX #590                                                                    | 27          |
      | date ranges #747+#746                                                                          | 4           |

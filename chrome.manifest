@@ -1,5 +1,6 @@
 content   zotero-better-bibtex          content/
 locale    zotero-better-bibtex  en-US   locale/en-US/
+locale    zotero-better-bibtex  fr-FR   locale/fr-FR/
 skin      zotero-better-bibtex  default skin/
 resource  zotero-better-bibtex          resource/
 

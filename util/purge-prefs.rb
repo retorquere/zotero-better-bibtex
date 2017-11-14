@@ -3,7 +3,7 @@
 require 'json'
 
 root = File.join(File.dirname(__FILE__), '..')
-supported = JSON.parse(File.read(File.join(root, 'gen/defaults.json'))).keys
+supported = JSON.parse(File.read(File.join(root, 'gen/preferences.json'))).keys
 
 Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
   next if lib =~ /\.csl.json$/
