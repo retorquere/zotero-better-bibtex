@@ -19,7 +19,8 @@ export = new class PatternFormatter {
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;?\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
-    punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
@@ -43,7 +44,7 @@ export = new class PatternFormatter {
 
   private item: any
 
-  private skipWords: string[]
+  private skipWords: Set<string>
 
   private fold: boolean
   private citekeyFormat: string
@@ -54,7 +55,7 @@ export = new class PatternFormatter {
 
   public update() {
     debug('PatternFormatter.update:')
-    this.skipWords = Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word)
+    this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'reset']) {
@@ -383,7 +384,7 @@ export = new class PatternFormatter {
   }
 
   protected _skipwords(value) {
-    return (value || '').split(/\s+/).filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+    return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
   protected _select(value, start, n) {
@@ -417,7 +418,10 @@ export = new class PatternFormatter {
   }
 
   protected _nopunct(value) {
-    return Zotero.Utilities.XRegExp.replace(value || '', this.re.punct, '', 'all')
+    value = value || ''
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '-', 'all')
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
+    return value
   }
 
   private removeDiacritics(str) {
@@ -463,7 +467,7 @@ export = new class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0 && PunyCode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && PunyCode.ucs2.decode(word).length > 1)
     if (words.length === 0) return null
     return words
   }

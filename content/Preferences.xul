@@ -11,9 +11,7 @@
 
 <overlay id="zotero-better-bibtex-preferences"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  xmlns:html="http://www.w3.org/1999/xhtml"
-  xmlns:bbt="https://github.com/retorquere/zotero-better-bibtex"
-  >
+  xmlns:html="http://www.w3.org/1999/xhtml">
 
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
