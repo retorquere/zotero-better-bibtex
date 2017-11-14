@@ -19,7 +19,8 @@ export = new class PatternFormatter {
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;?\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
-    punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
@@ -417,7 +418,10 @@ export = new class PatternFormatter {
   }
 
   protected _nopunct(value) {
-    return Zotero.Utilities.XRegExp.replace(value || '', this.re.punct, '', 'all')
+    value = value || ''
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '-', 'all')
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
+    return value
   }
 
   private removeDiacritics(str) {
