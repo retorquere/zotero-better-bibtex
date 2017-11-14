@@ -1,9 +1,4 @@
 <!--
-REGARDING ZOTERO 5: I am aware that the latest BBT release does not work in Zotero 5. Please see issue #555
-
-DO NOT OPEN NEW ISSUES about Z5 compatibility, but add your comments on #555. Thank you. The current state of affairs
-can be found at https://trello.com/b/OpJQyVTP/better-bibtex-for-zotero-5
-
 If your bug report/feature request/question concerns problems with
 exporting references, please specify whether you're exporting BibTeX
 or BibLaTeX.
@@ -22,4 +17,7 @@ report ID (shown in red after you submit) here.
 If you wish to report a combination of feature requests, bug reports
 and general usage questions, please file a separate report for each of
 these. It is easier for me to manage them separately. Thank you.
+
+DO NOT CLOSE ISSUES unless you've opened it by accident. After the problem is resolved I need to still make sure the fix
+gets into the release, and open issues remind me of that.
 -->
