@@ -22,7 +22,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.mark "Exporter">
 <!ENTITY better-bibtex.Preferences.auto-export.notes "Notes">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Désactivé">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Désactivée">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Rafraichir">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
