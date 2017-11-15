@@ -5,6 +5,7 @@ declare const Zotero: any
 
 import Exporter = require('./lib/exporter.ts')
 import debug = require('./lib/debug.ts')
+import format = require('string-template')
 
 const Mode = { // tslint:disable-line:variable-name
   gitbook(items) {
@@ -66,6 +67,15 @@ const Mode = { // tslint:disable-line:variable-name
       }
 
       Zotero.write(`[[zotero://select/items/${id}][@${item.citekey}]]`)
+    }
+  },
+
+  'string-template'(items) {
+    try {
+      const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
+      Zotero.write(format(citation, { citation: items.map(i => format(item, { item: i })).join(sep) }))
+    } catch (err) {
+      Zotero.write(`${err}`)
     }
   },
 }
