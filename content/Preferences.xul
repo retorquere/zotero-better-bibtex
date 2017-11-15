@@ -351,10 +351,10 @@
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
-          <tab label="&better-bibtex.Preferences.citekey;"/>
-          <tab label="&better-bibtex.Preferences.export;"/>
-          <tab id="better-bibtex-prefs-tab-journal-abbrev" label="&better-bibtex.Preferences.journal-abbrev;"/>
-          <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.auto-export;"/>
+          <tab label="&better-bibtex.Preferences.tab.citekey;"/>
+          <tab label="&better-bibtex.Preferences.tab.export;"/>
+          <tab id="better-bibtex-prefs-tab-journal-abbrev" label="&better-bibtex.Preferences.tab.journal-abbrev;"/>
+          <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.tab.auto-export;"/>
           <tab label="&better-bibtex.Preferences.debug;"/>
         </tabs>
 
