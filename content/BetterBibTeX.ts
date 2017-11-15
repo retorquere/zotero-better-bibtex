@@ -24,6 +24,7 @@ import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
 import AUXScanner = require('./aux-scanner.ts')
+import format = require('string-template')
 
 import $patch$ = require('./monkey-patch.ts')
 
@@ -440,12 +441,13 @@ class Lock {
   }
 }
 
-export = new class {
+export = new class BetterBibTeX {
   public ready: any
+  private strings: any
 
   constructor() {
     this.ready = bbtReady.promise
-    window.addEventListener('load', this.load, false)
+    window.addEventListener('load', this.load.bind(this), false)
   }
 
   public pullExport() {
@@ -514,38 +516,44 @@ export = new class {
     (new AUXScanner).scan(path)
   }
 
+  public getString(id, params = null) {
+    return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+  }
+
   private async load() {
     debug('Loading Better BibTeX: starting...')
+
+    this.strings = document.getElementById('zotero-better-bibtex-strings')
 
     // oh FFS -- datadir is async now
 
     const lock = new Lock()
-    await lock.lock('Waiting for Zotero database')
+    await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     Cache.init()
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
-    lock.update('Loading citation keys')
+    lock.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await DB.init()
 
-    lock.update('Starting auto-export')
+    lock.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
 
     // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
     // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
 
-    lock.update('Starting key manager')
+    lock.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 
-    lock.update('Starting serialization cache')
+    lock.update(this.getString('BetterBibTeX.startup.serializationCache'))
     await Serializer.init() // creates simplify et al
 
-    lock.update('Loading journal abbreviator')
+    lock.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
 
-    lock.update('Installing bundled translators')
+    lock.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
@@ -553,6 +561,5 @@ export = new class {
     bbtReady.resolve(true)
 
     lock.unlock()
-
   }
 }

@@ -57,6 +57,7 @@
     "node-eta": "^0.9.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.0",
+    "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
     "xregexp": "^3.2.0"
   },
