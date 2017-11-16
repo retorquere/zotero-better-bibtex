@@ -77,9 +77,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scannez le fichier BibTeX AUX pour les références ...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé BibTeX">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé BibTeX">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé de citation">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">
