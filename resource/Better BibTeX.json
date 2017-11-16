@@ -12,7 +12,7 @@
     "exportNotes": true,
     "exportFileData": false,
     "useJournalAbbreviation": false,
-    "Keep updated": false
+    "keepUpdated": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",

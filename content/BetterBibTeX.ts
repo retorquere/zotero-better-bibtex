@@ -255,18 +255,19 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     /* requested translator */
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
-    debug('Zotero.Translate.Export::translate: ', translatorID)
 
-    let capture = this._displayOptions && this._displayOptions['Keep updated']
+    let capture = this._displayOptions && this._displayOptions.keepUpdated
+
+    debug('Zotero.Translate.Export::translate: ', translatorID, this._displayOptions, capture)
 
     if (capture) {
-      // this should never occur -- 'Keep updated' should only be settable if you do a file export
+      // this should never occur -- keepUpdated should only be settable if you do a file export
       if (!this.location || !this.location.path) {
         flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
         capture = false
       }
 
-      // this should never occur -- 'Keep updated' should only be set by BBT translators
+      // this should never occur -- keepUpdated should only be set by BBT translators
       if (!Translators.byId[translatorID]) {
         flash('Auto-export not registered', 'Auto-export only supported for Better BibTeX translators -- please report this, you should not have seen this message')
         capture = false
