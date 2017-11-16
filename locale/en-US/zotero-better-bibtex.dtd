@@ -43,6 +43,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode "Org-mode">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Surround Pandoc citations with brackets">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink "Select link">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Quick copy/drag-and-drop citations">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "postfixed (causes key changes)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "kept (causes key duplicates)">

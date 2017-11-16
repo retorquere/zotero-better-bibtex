@@ -390,6 +390,7 @@
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.orgmode;" value="orgmode"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.atom;" value="atom"/>
                         <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.gitbook;" value="gitbook"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.quickCopy.selectLink;" value="selectLink"/>
                       </menupopup>
                     </menulist>
                   </row>

@@ -7,6 +7,27 @@ import Exporter = require('./lib/exporter.ts')
 import debug = require('./lib/debug.ts')
 import format = require('string-template')
 
+function select_link(item) {
+  const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
+  if (!m) throw new Error(`Malformed item uri ${item.uri}`)
+
+  const [ , type, groupId, key ] = m
+
+  let id
+  switch (type) {
+    case 'users':
+      if (groupId.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
+      id = `0_${key}`
+      break
+    case 'groups':
+      if (!groupId) throw new Error(`Missing groupId in ${item.uri}`)
+      id = `${groupId}_${key}`
+      break
+  }
+
+  return `zotero://select/items/${id}`
+}
+
 const Mode = { // tslint:disable-line:variable-name
   gitbook(items) {
     const citations = items.map(item => `{{ \"${item.citekey}\" | cite }}`)
@@ -47,27 +68,12 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgmode(items) {
     for (const item of items) {
-      let id
-      const m = item.uri.match(/\/(users|groups)\/([0-9]+|(local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
-      if (!m) throw new Error(`Malformed item uri ${item.uri}`)
-
-      const type = m[1]
-      const groupID = m[2]
-      const key = m[4] // tslint:disable-line:no-magic-numbers
-
-      switch (type) {
-        case 'users':
-          if (groupID.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-          id = `0_${key}`
-          break
-        case 'groups':
-          if (!groupID) throw new Error(`Missing groupID in ${item.uri}`)
-          id = `${groupID}~${key}`
-          break
-      }
-
-      Zotero.write(`[[zotero://select/items/${id}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_link(item)}][@${item.citekey}]]`)
     }
+  },
+
+  selectLink(items) {
+    Zotero.write(items.map(select_link).join(''))
   },
 
   'string-template'(items) {
