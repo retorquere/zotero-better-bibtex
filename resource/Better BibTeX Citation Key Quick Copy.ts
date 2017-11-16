@@ -73,7 +73,7 @@ const Mode = { // tslint:disable-line:variable-name
   'string-template'(items) {
     try {
       const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
-      Zotero.write(format(citation, { citation: items.map(i => format(item, { item: i })).join(sep) }))
+      Zotero.write(format(citation || '{citation}', { citation: items.map(i => format(item || '{item}', { item: i })).join(sep || '') }))
     } catch (err) {
       Zotero.write(`${err}`)
     }
