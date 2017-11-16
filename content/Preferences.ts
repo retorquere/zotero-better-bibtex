@@ -60,6 +60,7 @@ class AutoExportPrefPane {
     const on = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.on')
     const off = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.off')
     const status = {}
+    const type = {}
 
     for (const ae of AutoExport.db.chain().simplesort('path').data()) {
       const treeitem = exportlist.appendChild(document.createElement('treeitem'))
@@ -76,7 +77,8 @@ class AutoExportPrefPane {
 
         switch (column) {
           case 'collection':
-            treecell.setAttribute('label', `${ae.type}: ${this.autoExportName(ae)}`)
+            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.type.${ae.type}`) || ae.type
+            treecell.setAttribute('label', `${type[ae.type]}: ${this.autoExportName(ae)}`)
             break
 
           case 'status':

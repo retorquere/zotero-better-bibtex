@@ -1,6 +1,7 @@
 declare const window: any
 declare const document: any
 declare const MutationObserver: any
+declare const Zotero: any
 
 import debug = require('./debug.ts')
 
@@ -10,7 +11,7 @@ let reset = true
 function mutex(e) {
   debug('clicked', e.target.id)
   const exportFileData = document.getElementById('export-option-exportFileData')
-  const keepUpdated = document.getElementById('export-option-Keep updated')
+  const keepUpdated = document.getElementById('export-option-keepUpdated')
 
   if (!exportFileData || !keepUpdated) return
 
@@ -24,13 +25,15 @@ function mutex(e) {
 }
 
 function addEventHandlers() {
-  for (const id of [ 'export-option-exportFileData', 'export-option-Keep updated' ]) {
+  for (const id of [ 'export-option-exportFileData', 'export-option-keepUpdated' ]) {
     const node = document.getElementById(id)
     if (!node) break
 
-    if (reset && (id === 'export-option-Keep updated')) {
+    if (reset && (id === 'export-option-keepUpdated')) {
       node.checked = false
       reset = false
+
+      node.setAttribute('label', Zotero.BetterBibTeX.getString('exportOptions.keepUpdated'))
     }
 
     if (node.getAttribute('better-bibtex')) return
