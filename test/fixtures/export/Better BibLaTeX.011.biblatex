@@ -5,7 +5,7 @@
   booktitle = {{{CATA}}},
   crossref = {DBLP:conf/cata/2010},
   date = {2010},
-  file = {Klassen2010.pdf:files/1/Klassen2010.pdf:application/pdf},
+  file = {files/1/Klassen2010.pdf},
   groups = {klasyfikacja},
   note = {svm liniowe najlepsze},
   owner = {sstudent},

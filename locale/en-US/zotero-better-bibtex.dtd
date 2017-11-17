@@ -16,6 +16,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
 <!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export.auto-abbrev "Auto-abbreviate">
+<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
@@ -29,7 +30,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Translator">
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
-<!ENTITY better-bibtex.Preferences.citekey "Citation keys">
+<!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to ASCII">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key format">
@@ -48,6 +49,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "On conflict, non-pinned keys will be">
 <!ENTITY better-bibtex.Preferences.citekey.update "Updating Citation Keys">
 <!ENTITY better-bibtex.Preferences.debug "Advanced">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export BibLaTeX as ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
@@ -57,8 +63,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in a note field">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "no">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in an url field">
-<!ENTITY better-bibtex.Preferences.export "Export">
-<!ENTITY better-bibtex.Preferences.export.fields.attachmentsNoMetadata "Omit title and mimetype for attachments">
+<!ENTITY better-bibtex.Preferences.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "both">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
@@ -67,14 +72,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields "Fields">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
-<!ENTITY better-bibtex.Preferences.journal-abbrev "Journal abbreviations">
+<!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journal abbreviations">
 <!ENTITY better-bibtex.Preferences.postscript "Postscript">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan citekeys">
 <!ENTITY better-bibtex.Preferences.resetCache "Reset cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Report Better BibTeX Errors...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scan BibTeX AUX file for references...">
-<!ENTITY better-bibtex.bulk-keys-confirm.message "You are changing more than #{TRESHOLD} items in one go. Are you sure?">
+<!ENTITY better-bibtex.bulk-keys-confirm.message "You are changing more than {treshold} items in one go. Are you sure?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, and don't ask me again">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">

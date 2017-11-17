@@ -3,9 +3,9 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <!-- stringbundleset id="stringbundleset">
-    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/better-bibtex.properties"/>
-  </stringbundleset -->
+  <stringbundleset>
+    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
+  </stringbundleset>
 
   <menupopup id="zotero-tb-actions-popup">
     <menuitem

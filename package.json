@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.37",
+  "version": "5.0.41",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -42,7 +42,7 @@
     "barcoder": "^2.0.1",
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
-    "biblatex-csl-converter": "^1.2.0",
+    "biblatex-csl-converter": "^1.2.2",
     "edtf": "^2.2.2",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
@@ -57,12 +57,13 @@
     "node-eta": "^0.9.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.0",
+    "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
     "xregexp": "^3.2.0"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^8.0.50",
+    "@types/node": "^8.0.53",
     "archiver": "^2.1.0",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
@@ -79,8 +80,9 @@
     "jsesc": "^2.5.1",
     "loader-utils": "^1.1.0",
     "lodash": "^4.17.4",
-    "moment": "^2.19.1",
+    "moment": "^2.19.2",
     "node-archiver": "^0.3.0",
+    "npm-check-updates": "^2.13.0",
     "pretty-data": "^0.40.0",
     "pug": "^2.0.0-rc.4",
     "replace": "^0.3.0",

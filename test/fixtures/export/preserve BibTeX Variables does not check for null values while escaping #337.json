@@ -10,9 +10,7 @@
       "skipFields": "",
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-geophysical-union",
       "DOIandURL": "doi",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": true,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

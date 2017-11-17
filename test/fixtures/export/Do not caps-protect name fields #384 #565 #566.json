@@ -13,11 +13,9 @@
       "postscript": "",
       "csquotes": "",
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     }
