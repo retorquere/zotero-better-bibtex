@@ -24,6 +24,10 @@ dependencies:
     - |-
       set -e
 
+      if [ "$NIGHTLY" = "true" ]; then
+        npm run s3form
+      fi
+
       mkdir -p ~/downloads
 
       ls -lh ~/downloads
