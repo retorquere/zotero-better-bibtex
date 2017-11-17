@@ -134,12 +134,13 @@ DB.init = async () => {
   })
 
   DB.schemaCollection('citekey', {
-    indices: [ 'itemID', 'libraryID', 'citekey', 'pinned' ],
+    indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
     schema: {
       type: 'object',
       properties: {
         itemID: { type: 'integer' },
+        itemKey: { type: 'string' },
         libraryID: { type: 'integer' },
         citekey: { type: 'string', minLength: 1 },
         pinned: { type: 'boolean', default: false },

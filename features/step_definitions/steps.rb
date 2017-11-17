@@ -199,7 +199,7 @@ end
 #end
 Then /^an (auto-)?export (?:of "([^"]*)" )?(?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, collection, target, translator, library|
   exportLibrary(
-    displayOptions: @displayOptions.merge({'Keep updated' => !!auto}),
+    displayOptions: @displayOptions.merge({'keepUpdated' => !!auto}),
     translator: translator,
     collection: collection || nil,
     output: target || nil,

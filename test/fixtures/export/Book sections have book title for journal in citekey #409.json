@@ -6,14 +6,12 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "attachmentsNoMetadata": false,
       "citekeyFormat": "[auth:nopunct:condense,_][year][journal:abbr][0]",
       "csquotes": "",
       "DOIandURL": "doi",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

@@ -16,20 +16,21 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
 <!ENTITY better-bibtex.Preferences.auto-export.add "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option 'Keep updated' (Garder à jour).">
 <!ENTITY better-bibtex.Preferences.auto-export.auto-abbrev "Abréviation automatique">
-<!ENTITY better-bibtex.Preferences.auto-export "Synchronisation">
+<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique : ">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "En arrière plan">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.mark "Exporter">
 <!ENTITY better-bibtex.Preferences.auto-export.notes "Notes">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Désactivé">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Désactivée">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Rafraichir">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Convertisseur">
-<!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir lors d'un changement par lot de clés de citation">
-<!ENTITY better-bibtex.Preferences.citekey "Citation">
+<!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot concerne plus de X éléments (où X = le nb. à indiquer ci-dessous) :">
+<!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer l'encodage des clés de citation en ASCII">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
@@ -43,42 +44,46 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "fixées (risque de changements de clé)">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "conservées (risque de doublons)">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "Modifiées">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "Conservées (risque de doublons)">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront : ">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "oui, dans un champ 'note'">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "non">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation : ">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, en tant que note">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "oui, dans un champ 'URL'">
-<!ENTITY better-bibtex.Preferences.export "Exportation">
-<!ENTITY better-bibtex.Preferences.export.fields.attachmentsNoMetadata "Omettre le titre et le type MIME pour les pièces jointes">
+<!ENTITY better-bibtex.Preferences.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "Les deux">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "le DOI seulement">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter : ">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules)">
-<!ENTITY better-bibtex.Preferences.journal-abbrev "Journaux d'exportation">
+<!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journaux d'exportation">
 <!ENTITY better-bibtex.Preferences.postscript "PostScript">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scanner les clés de citation">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Rapport d'erreurs Better BibTeX...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scannez le fichier BibTeX AUX pour les références ...">
-<!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de #{TRESHOLD} éléments en une seule fois. Êtes-vous certain de vouloir faire cela ?">
+<!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé BibTeX">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé BibTeX">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé de citation">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">

@@ -14,7 +14,7 @@
     function onLoad() {
       window.arguments[0].response = null;
       message = document.getElementById('message');
-      message.value = message.value.replace('#{TRESHOLD}', window.arguments[0].treshold);
+      message.value = message.value.replace('{treshold}', window.arguments[0].treshold);
     }
     function onCancel() {
       window.arguments[0].response = null;

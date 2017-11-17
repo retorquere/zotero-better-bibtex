@@ -5,7 +5,6 @@
     "release": "0.14.14",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

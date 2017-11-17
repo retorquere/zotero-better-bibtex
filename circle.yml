@@ -12,13 +12,21 @@ machine:
   node:
     version: '8.2.1'
 dependencies:
+  pre:
+  - gem install bundler
+  - gem update bundler
   override:
     - yarn
     - yarn install
-    - gem install bundler
-    - bundle update
+    - bundle config
+    - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3:
+        timeout: 180
     - |-
       set -e
+
+      if [ "$NIGHTLY" = "true" ]; then
+        npm run s3form
+      fi
 
       mkdir -p ~/downloads
 

@@ -90,6 +90,10 @@ class DocFinder {
 
           md.push(`default: \`${pref.default}\``)
           md.push(pref.description)
+
+          if (Object.keys(pref.options || {}).length) {
+            md.push('Options:\n' + Object.values(pref.options).map(option => `* ${option}`).join('\n'))
+          }
         }
       }
 
@@ -191,6 +195,12 @@ class DocFinder {
               this.preferences[pref].options = {}
               if (node.name === 'radiogroup') {
                 for (const option of node.children.filter(child => child.name === 'radio'))  {
+                  this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
+                }
+              }
+              if (node.name === 'menulist') {
+                const menupopup = node.children.find(child => child.name === 'menupopup')
+                for (const option of menupopup.children.filter(child => child.name === 'menuitem'))  {
                   this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
                 }
               }
