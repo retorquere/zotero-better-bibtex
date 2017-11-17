@@ -11,6 +11,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
      | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
      | EDTF dates in BibLaTeX #590                                                                    | 27          |
