@@ -84,6 +84,7 @@
     "node-archiver": "^0.3.0",
     "npm-check-updates": "^2.13.0",
     "pretty-data": "^0.40.0",
+    "properties-reader": "^0.0.16",
     "pug": "^2.0.0-rc.4",
     "replace": "^0.3.0",
     "request": "^2.83.0",
