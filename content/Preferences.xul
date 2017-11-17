@@ -64,11 +64,11 @@
           type="string"
           default="immediate"/>
         <!--!
-          Determines when [[automatic exports|Push-and-Pull-Export]] are kicked off:
-
-          * disable automatic exports (but still marks them when changes occur)
-          * export whenever a reference in the export changes/is added/is removed
-          * export marked collections when your computer is idle. You mostly want this if your computer is performance-constrained (aka slow)
+          Determines when [[automatic exports|Push-and-Pull-Export]] are kicked off. Having it disabled still marks
+          auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
+          happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
+          `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
+          idle. You mostly want this if your computer is performance-constrained (aka slow).
         -->
 
         <preference
@@ -89,7 +89,7 @@
           type="bool"
           default="false"/>
         <!--!
-          Surround pandoc citations with brackets.
+          Surround pandoc quick-copy citations with brackets.
         -->
 
         <preference
@@ -118,11 +118,7 @@
           type="string"
           default="keep"/>
         <!--!
-          This determines what happens if you pin a key to a value that is already in use in a different
-          reference but not pinned there. Neither are ideal, you just get to pick your poison. The options are:
-
-          * Change the non-pinned key by adding a postfix character. This means the citation key changes which could be problematic for existing papers.
-          * Keep the non-pinned key as-is. This means your library now has duplicate keys.
+          This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers.  if you keep the non-pinned key as-is, your library now has duplicate keys.
         -->
 
         <!-- preference
@@ -199,8 +195,7 @@
           type="string"
           default="latex"/>
         <!--!
-          Used for drag-and-drop/quick copy citations. You can select the output format here: LaTeX (in
-          combination with the Citation command preference), Pandoc, or Org-mode
+          Used for drag-and-drop/quick copy citations. You can select the output format here.
         -->
 
         <preference
@@ -261,8 +256,7 @@
           type="int"
           default="0"/>
         <!--!
-          Export JabRef-specific information such as groups for collections and timestamps. zero means disable, "3" means format 3, which is (IMO) opinion better
-             but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
+          Export JabRef-specific information fields; timetamps and groups for collections.
         -->
 
         <preference
