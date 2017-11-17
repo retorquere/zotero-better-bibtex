@@ -57,6 +57,11 @@ class AutoExportPrefPane {
       col => (col as Element).getAttribute('id').replace(/^better-bibtex-preferences-auto-export-/, '')
     )
 
+    const on = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.on')
+    const off = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.off')
+    const status = {}
+    const type = {}
+
     for (const ae of AutoExport.db.chain().simplesort('path').data()) {
       const treeitem = exportlist.appendChild(document.createElement('treeitem'))
       treeitem.setAttribute('autoexport', `${ae.$loki}`)
@@ -72,11 +77,13 @@ class AutoExportPrefPane {
 
         switch (column) {
           case 'collection':
-            treecell.setAttribute('label', `${ae.type}: ${this.autoExportName(ae)}`)
+            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.type.${ae.type}`) || ae.type
+            treecell.setAttribute('label', `${type[ae.type]}: ${this.autoExportName(ae)}`)
             break
 
           case 'status':
-            treecell.setAttribute('label', (ae.status + (ae.updated ? ` (${ae.updated})` : '')) + (ae.error ? `: ${ae.error}` : ''))
+            status[ae.status] = status[ae.status] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.status.${ae.status}`) || ae.status
+            treecell.setAttribute('label', (status[ae.status] + (ae.updated ? ` (${ae.updated})` : '')) + (ae.error ? `: ${ae.error}` : ''))
             break
 
           case 'target':
@@ -88,11 +95,11 @@ class AutoExportPrefPane {
             break
 
           case 'auto-abbrev':
-            treecell.setAttribute('label', `${ae.useJournalAbbreviation}`)
+            treecell.setAttribute('label', ae.useJournalAbbreviation ? on : off)
             break
 
           case 'notes':
-            treecell.setAttribute('label', `${ae.exportNotes}`)
+            treecell.setAttribute('label', ae.exportNotes ? on : off)
             break
 
           default:
