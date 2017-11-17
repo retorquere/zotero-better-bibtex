@@ -467,7 +467,6 @@ export = class Reference {
 
     const fields = []
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
-
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
         this.item.extraFields.kv[cslName] = field
@@ -478,13 +477,18 @@ export = class Reference {
       let name = null
       let enc
       switch (field.type) {
-        case 'string': enc = null; break
-        case 'creator': enc = 'creators'; break
-        default: enc = field.type
+        case 'string':
+          enc = null
+          break
+        case 'creator':
+          enc = 'creators'
+          break
+        default:
+          enc = field.type
       }
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
-      if (!name && Translator.BetterBibLaTeX) {
+      if (Translator.BetterBibLaTeX) {
         switch (cslName) {
           case 'authority':
             name = 'institution'
@@ -550,9 +554,15 @@ export = class Reference {
         }
       }
 
-      if (!name && Translator.BetterBibTeX) {
+      if (Translator.BetterBibTeX) {
         switch (cslName) {
-          case 'call-number': name = 'lccn'; break
+          case 'call-number':
+            name = 'lccn'
+            break
+
+          case 'doi':
+            name = cslName
+            break
         }
       }
 
