@@ -11,11 +11,15 @@ const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
 const scholmd = new class ScholMD {
+  public async $libraries() {
+    return Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
+  }
+
   public async handle(request, allowArray = true) {
     if (allowArray && Array.isArray(request)) {
       const response = []
       for (const subreq of request) {
-        response.push(await this.handle(subreq))
+        response.push(await this.handle(subreq, false))
       }
       return response
     }
@@ -35,10 +39,6 @@ const scholmd = new class ScholMD {
     }
   }
 
-  public async $libraries() {
-    return [0]
-  }
-
   private validRequest(req) {
     if (typeof req !== 'object') return false
     if (req.jsonrpc !== '2.0') return false
@@ -53,15 +53,13 @@ Zotero.Server.Endpoints['/better-bibtex/scholmd'] = class {
   public permitBookmarklet = false
 
   public async init(options) {
+    if (typeof options.data === 'string') options.data = JSON.parse(options.data)
     debug('ScholMD: execute', options.data)
 
-    let request
     try {
-      request = JSON.parse(options.data)
+      return [OK, 'application/json', JSON.stringify(await scholmd.handle(options.data))]
     } catch (err) {
-      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: 'Parse error'}, id: null})]
+      return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${options.data}`}, id: null})]
     }
-
-    return [OK, 'application/json', JSON.stringify(await scholmd.handle(request))]
   }
 }
