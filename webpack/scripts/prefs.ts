@@ -194,6 +194,12 @@ class DocFinder {
                   this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
                 }
               }
+              if (node.name === 'menulist') {
+                const menupopup = node.children.find(child => child.name === 'menupopup')
+                for (const option of menupopup.children.filter(child => child.name === 'menuitem'))  {
+                  this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
+                }
+              }
 
               if (node.attributes.label) label = node.attributes.label.trim()
               else if (node.attributes.value) label = node.attributes.value.trim()

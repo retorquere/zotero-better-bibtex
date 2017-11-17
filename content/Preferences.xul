@@ -217,7 +217,8 @@
           type="string"
           default=""/>
         <!--!
-          Select the style for auto-abbreviation.
+          Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
+          abbreviation is not configurable.
         -->
 
         <preference
@@ -256,23 +257,12 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.jabrefFormat"
+          id="pref-better-bibtex-jabrefFormat"
           type="int"
-          default="4"/>
+          default="0"/>
         <!--!
           Export JabRef-specific information such as groups for collections and timestamps. zero means disable, "3" means format 3, which is (IMO) opinion better
              but depracated (but JabRef will read it for the foreseeable future), "4" means the new format.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.defaultDateParserLocale"
-          type="string"
-          default=""/>
-        <!--!
-          The Better BibTeX date parser uses locale hints when provided with ambiguous dates such as 1/2/2008 (which is
-          either 1st of February, or 2nd of Januari). Better BibTeX will first look at the language specified in your reference and
-          fall back to your system locale otherwise, but if you add a language code here, this will be used as a fallback. I use
-          `en-GB` here myself as I generally prefer the en-US locale for my systems, but not the wacky idea of date formatting
-          that comes with it.
         -->
 
         <preference
@@ -285,6 +275,7 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.qualityReport"
+          id="pref-better-bibtex-qualityReport"
           type="bool"
           default="false"/>
         <!--!
@@ -414,13 +405,12 @@
                 <rows>
                   <row>
                     <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.update.conflict;</label>
-                    <radiogroup id="id-better-bibtex-preferences-key-conflict-policy"
-                                orient="horizontal"
-                                preference="pref-better-bibtex-keyConflictPolicy"
-                                oncommand="Zotero.BetterBibTeX.Preferences.update();">
-                      <radio label="&better-bibtex.Preferences.citekey.update.conflict.change;" value="change"/>
-                      <radio label="&better-bibtex.Preferences.citekey.update.conflict.keep;" value="keep"/>
-                    </radiogroup>
+                    <menulist preference="pref-better-bibtex-keyConflictPolicy">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.update.conflict.change;" value="change"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.update.conflict.keep;" value="keep"/>
+                      </menupopup>
+                    </menulist>
                   </row>
                 </rows>
               </grid>
@@ -434,11 +424,13 @@
               <checkbox preference="pref-better-bibtex-bibtexParticleNoOp" label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;"/>
               <hbox>
                 <label forpreference="pref-better-bibtex-bibtexURL">&better-bibtex.Preferences.export.bibtex.URLs;</label>
-                <radiogroup preference="pref-better-bibtex-bibtexURL" orient="horizontal">
-                  <radio label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
-                  <radio label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
-                  <radio label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"/>
-                </radiogroup>
+                <menulist preference="pref-better-bibtex-bibtexURL">
+                  <menupopup>
+                    <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
+                    <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
+                    <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"/>
+                  </menupopup>
+                </menulist>
               </hbox>
             </groupbox>
 
@@ -456,11 +448,13 @@
                 <rows>
                   <row>
                     <label forpreference="pref-better-bibtex-DOIandURL">&better-bibtex.Preferences.export.fields.doi-and-url;</label>
-                    <radiogroup orient="horizontal" preference="pref-better-bibtex-DOIandURL">
-                      <radio label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
-                      <radio label="&better-bibtex.Preferences.export.fields.doi-and-url.DOI;" value="doi"/>
-                      <radio label="&better-bibtex.Preferences.export.fields.doi-and-url.URL;" value="url"/>
-                    </radiogroup>
+                    <menulist preference="pref-better-bibtex-DOIandURL" preference-editable="true">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
+                        <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.DOI;" value="doi"/>
+                        <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.URL;" value="url"/>
+                      </menupopup>
+                    </menulist>
                   </row>
                   <row>
                     <label forpreference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
@@ -468,8 +462,20 @@
                       oninput="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
+                  <row>
+                    <label
+                    forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
+                    <menulist preference="pref-better-bibtex-jabrefFormat" preference-editable="true">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
+                        <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.3;" value="3"/>
+                        <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.4;" value="4"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
                 </rows>
               </grid>
+              <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
             </groupbox>
 
           </tabpanel>
@@ -487,11 +493,13 @@
               <label>&better-bibtex.Preferences.auto-export.add;</label>
               <hbox>
                 <label forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
-                <radiogroup id="id-better-bibtex-preferences-auto-export" orient="horizontal" preference="pref-better-bibtex-autoExport">
-                  <radio label="&better-bibtex.Preferences.auto-export.off;" value="off"/>
-                  <radio label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"/>
-                  <radio label="&better-bibtex.Preferences.auto-export.idle;" value="idle"/>
-                </radiogroup>
+                <menulist preference="pref-better-bibtex-autoExport">
+                  <menupopup>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.off;" value="off"/>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.immediate;" value="immediate"/>
+                    <menuitem label="&better-bibtex.Preferences.auto-export.idle;" value="idle"/>
+                  </menupopup>
+                </menulist>
               </hbox>
               <hbox>
                 <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false">

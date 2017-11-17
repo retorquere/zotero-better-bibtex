@@ -16,7 +16,6 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "attachmentsNoMetadata": false,
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
@@ -161,7 +160,6 @@
       "warnBulkModify": 10,
       "postscript": "",
       "jabrefFormat": 4,
-      "defaultDateParserLocale": "en-GB",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
