@@ -45,8 +45,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "Modifiées">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "Conservées (risque de doublons)">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront : ">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "conservées (risque de doublons)">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires sur les problèmes potentiels avec les références ">
