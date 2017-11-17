@@ -163,18 +163,15 @@ class KeyManager {
 
     this.scanning = []
 
-    if (clean) {
-      this.keys.removeDataOnly()
-    }
-//    else
-//      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
+    if (clean) this.keys.removeDataOnly()
+
     debug('KeyManager.rescan:', {clean, keys: this.keys})
 
     const marker = '\uFFFD'
 
     const ids = []
     const items = await ZoteroDB.queryAsync(`
-      SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
+      SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
@@ -191,14 +188,16 @@ class KeyManager {
       if (saved) {
         if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
           debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
-          Object.assign(saved, { citekey: citekey.citekey, pinned: true })
-          this.keys.update(saved)
+          // tslint:disable-next-line:prefer-object-spread
+          this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
         } else {
+          // tslint:disable-next-line:prefer-object-spread
+          if (!saved.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
           debug('KeyManager.rescan: keeping', saved)
         }
       } else {
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
-        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID })
+        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
       }
     }
 
@@ -264,7 +263,7 @@ class KeyManager {
       current.citekey = proposed.citekey
       this.keys.update(current)
     } else {
-      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
+      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
     }
 
     return proposed.citekey

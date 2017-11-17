@@ -13,7 +13,7 @@
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
-    "Keep updated": false
+    "keepUpdated": false
   },
   "priority": 50,
   "inRepository": false

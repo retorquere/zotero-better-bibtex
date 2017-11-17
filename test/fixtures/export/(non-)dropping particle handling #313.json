@@ -10,9 +10,7 @@
       "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
       "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

@@ -25,6 +25,7 @@ import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
 import AUXScanner = require('./aux-scanner.ts')
+import format = require('string-template')
 
 import $patch$ = require('./monkey-patch.ts')
 
@@ -74,7 +75,27 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
-/* monkey-patch Zotero.Search::search to allow searching for citekey */
+// https://github.com/retorquere/zotero-better-bibtex/issues/769
+$patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKeyHash(id) {
+  try {
+    id = decodeURIComponent(id)
+    const m = id.match(/^bbt:(?:{([0-9]+)})?(.+)/)
+    debug('parseLibraryKeyHash:', id, m)
+    if (m) {
+      const [ , lib, citekey ] = m
+      const libraryID = (lib ? parseInt(lib) : 0) || Zotero.Libraries.userLibraryID
+      const item = KeyManager.keys.findOne({ libraryID, citekey})
+      debug('parseLibraryKeyHash:', libraryID, citekey, item)
+      if (item) return { libraryID, key: item.itemKey }
+    }
+  } catch (err) {
+    debug('parseLibraryKeyHash:', id, err)
+  }
+
+  return original.apply(this, arguments)
+})
+
+// monkey-patch Zotero.Search::search to allow searching for citekey
 $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
   const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
   if (!searchText.length) return yield original.apply(this, arguments)
@@ -235,18 +256,19 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     /* requested translator */
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
-    debug('Zotero.Translate.Export::translate: ', translatorID)
 
-    let capture = this._displayOptions && this._displayOptions['Keep updated']
+    let capture = this._displayOptions && this._displayOptions.keepUpdated
+
+    debug('Zotero.Translate.Export::translate: ', translatorID, this._displayOptions, capture)
 
     if (capture) {
-      // this should never occur -- 'Keep updated' should only be settable if you do a file export
+      // this should never occur -- keepUpdated should only be settable if you do a file export
       if (!this.location || !this.location.path) {
         flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
         capture = false
       }
 
-      // this should never occur -- 'Keep updated' should only be set by BBT translators
+      // this should never occur -- keepUpdated should only be set by BBT translators
       if (!Translators.byId[translatorID]) {
         flash('Auto-export not registered', 'Auto-export only supported for Better BibTeX translators -- please report this, you should not have seen this message')
         capture = false
@@ -421,12 +443,17 @@ class Lock {
   }
 }
 
-export = new class {
+export = new class BetterBibTeX {
   public ready: any
+  private strings: any
 
   constructor() {
-    this.ready = bbtReady.promise
-    window.addEventListener('load', this.load, false)
+    if (Zotero.BetterBibTeX) {
+      debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
+    } else {
+      this.ready = bbtReady.promise
+      window.addEventListener('load', this.load.bind(this), false)
+    }
   }
 
   public pullExport() {
@@ -495,38 +522,44 @@ export = new class {
     (new AUXScanner).scan(path)
   }
 
+  public getString(id, params = null) {
+    return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+  }
+
   private async load() {
     debug('Loading Better BibTeX: starting...')
+
+    this.strings = document.getElementById('zotero-better-bibtex-strings')
 
     // oh FFS -- datadir is async now
 
     const lock = new Lock()
-    await lock.lock('Waiting for Zotero database')
+    await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     Cache.init()
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
-    lock.update('Loading citation keys')
+    lock.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await DB.init()
 
-    lock.update('Starting auto-export')
+    lock.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
 
     // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
     // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
 
-    lock.update('Starting key manager')
+    lock.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 
-    lock.update('Starting serialization cache')
+    lock.update(this.getString('BetterBibTeX.startup.serializationCache'))
     await Serializer.init() // creates simplify et al
 
-    lock.update('Loading journal abbreviator')
+    lock.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
 
-    lock.update('Installing bundled translators')
+    lock.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
@@ -534,6 +567,5 @@ export = new class {
     bbtReady.resolve(true)
 
     lock.unlock()
-
   }
 }

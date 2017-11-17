@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

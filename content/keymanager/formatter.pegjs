@@ -72,7 +72,7 @@ flag
 
 filter
   = ':(' def:[^)]+ ')'                {
-      return `chunk = (!chunk ? ${JSON.stringify(def.join(''))} : chunk)`;
+      return `chunk = chunk || ${JSON.stringify(def.join(''))}`;
     }
   / ':' name:[a-z]+ params:fparam*  {
       name = name.join('');
@@ -81,6 +81,7 @@ filter
 
       params = ['chunk'].concat((params || []).map(function(p) { return JSON.stringify(p) }));
 
+      // return `chunk = this.${_filter}(${params}); Zotero.debug("after ${name}: " + chunk)`
       return `chunk = this.${_filter}(${params})`
     }
 
