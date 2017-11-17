@@ -90,7 +90,7 @@ class DocFinder {
 
           md.push(`default: \`${pref.default}\``)
           md.push(pref.description)
-          
+
           if (Object.keys(pref.options || {}).length) {
             md.push('Options:\n' + Object.values(pref.options).map(option => `* ${option}`).join('\n'))
           }
