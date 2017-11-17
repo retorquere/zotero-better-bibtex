@@ -6,7 +6,7 @@
   "minVersion": "4.0.27",
   "maxVersion": "",
   "displayOptions": {
-    "Keep updated": false
+    "keepUpdated": false
   },
   "translatorType": 2,
   "browserSupport": "gcsv",

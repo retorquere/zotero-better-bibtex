@@ -49,6 +49,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "On conflict, non-pinned keys will be">
 <!ENTITY better-bibtex.Preferences.citekey.update "Updating Citation Keys">
 <!ENTITY better-bibtex.Preferences.debug "Advanced">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export BibLaTeX as ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
@@ -59,7 +64,6 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "no">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in an url field">
 <!ENTITY better-bibtex.Preferences.tab.export "Export">
-<!ENTITY better-bibtex.Preferences.export.fields.attachmentsNoMetadata "Omit title and mimetype for attachments">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "both">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">

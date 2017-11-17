@@ -851,8 +851,8 @@ export = class Reference {
       return a.path.localeCompare(b.path)
     })
 
-    if (Translator.preferences.attachmentsNoMetadata) return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
-    return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
+    if (Translator.preferences.jabrefFormat) return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
+    return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
   }
 
   /*

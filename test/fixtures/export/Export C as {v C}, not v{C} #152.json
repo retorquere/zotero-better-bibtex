@@ -7,7 +7,6 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "note,language,file,urldate",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

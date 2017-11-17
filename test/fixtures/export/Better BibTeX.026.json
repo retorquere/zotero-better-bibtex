@@ -24,7 +24,6 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "[auth:lower][year:(ND)][shorttitle:lower]",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     }

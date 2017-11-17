@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth][year]",
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-medical-association",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

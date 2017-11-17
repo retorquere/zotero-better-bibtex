@@ -238,7 +238,7 @@ end
 #end
 
 def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
-  throw "Auto-export needs a destination" if displayOptions['Keep updated'] && !output
+  throw "Auto-export needs a destination" if displayOptions['keepUpdated'] && !output
     
   if translator =~ /^id:(.+)$/
     translator = $1
