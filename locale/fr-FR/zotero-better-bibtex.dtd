@@ -60,7 +60,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, en tant que note">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "dans un champ 'note'">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "oui, dans un champ 'URL'">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
