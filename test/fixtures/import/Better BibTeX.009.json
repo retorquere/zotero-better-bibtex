@@ -8,8 +8,7 @@
       "skipFields": "",
       "autoAbbrev": true,
       "autoAbbrevStyle": "",
-      "DOIandURL": "both",
-      "attachmentsNoMetadata": false
+      "DOIandURL": "both"
     },
     "options": {
       "exportFileData": false

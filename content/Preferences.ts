@@ -221,6 +221,12 @@ export = new class PrefPane {
       })
     }
 
+    const quickCopyNode = document.getElementById('id-better-bibtex-preferences-quickCopyMode').selectedItem
+    const quickCopyMode = quickCopyNode ? quickCopyNode.getAttribute('value') : ''
+    for (const [row, enabledFor] of [['citeCommand', 'latex'], ['quickCopyPandocBrackets', 'pandoc']]) {
+      document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
+    }
+
     this.AutoExport.refresh()
   }
 

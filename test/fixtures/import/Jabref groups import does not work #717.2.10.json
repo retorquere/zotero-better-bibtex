@@ -16,7 +16,6 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "attachmentsNoMetadata": false,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
@@ -160,7 +159,6 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "defaultDateParserLocale": "",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,

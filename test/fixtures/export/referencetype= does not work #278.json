@@ -9,9 +9,7 @@
       "skipFields": "file,abstract,pagetotal,keywords,notes,langid,volumes,timestamp,isbn,issn,doi",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": true,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

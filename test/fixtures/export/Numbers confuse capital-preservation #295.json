@@ -9,9 +9,7 @@
       "skipFields": "",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

@@ -4,7 +4,6 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "[authors3+initials]",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },
