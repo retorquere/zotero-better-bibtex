@@ -49,11 +49,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront : ">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires sur les problèmes potentiels avec les références ">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques JabRef : ">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "non">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "pour JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "pour JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
