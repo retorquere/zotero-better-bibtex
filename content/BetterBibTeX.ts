@@ -447,8 +447,12 @@ export = new class BetterBibTeX {
   private strings: any
 
   constructor() {
-    this.ready = bbtReady.promise
-    window.addEventListener('load', this.load.bind(this), false)
+    if (Zotero.BetterBibTeX) {
+      debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
+    } else {
+      this.ready = bbtReady.promise
+      window.addEventListener('load', this.load.bind(this), false)
+    }
   }
 
   public pullExport() {
