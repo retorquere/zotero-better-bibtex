@@ -20,10 +20,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique : ">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "En arrière plan">
-<!ENTITY better-bibtex.Preferences.auto-export.immediate "Au changement">
+<!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.mark "Exporter">
 <!ENTITY better-bibtex.Preferences.auto-export.notes "Notes">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Désactivée">
+<!ENTITY better-bibtex.Preferences.auto-export.off "désactivée">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Rafraichir">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
@@ -50,7 +50,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires sur les problèmes potentiels avec les références ">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques JabRef : ">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques JabRef">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "pour JabRef 4">
