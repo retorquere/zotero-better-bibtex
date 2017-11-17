@@ -45,10 +45,6 @@ if (tags.indexOf('norelease') >= 0) bail(`Not releasing ${process.env.CIRCLE_BRA
 let issues = tags.filter(tag => !isNaN(parseInt(tag)))
 
 if (process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)) issues.push(process.env.CIRCLE_BRANCH)
-if (process.env.CIRCLE_BRANCH === 'l10n_master') {
-  const translations = await github.request({ uri: '/issues?state=open&labels=translation' })
-  issues = issues.concat(translations.map(issue => issue.number))
-}
 issues = dedup(issues)
 
 async function announce(issue, release) {
@@ -86,6 +82,12 @@ async function main() {
       release[id] = null
     }
   }
+
+  if (process.env.CIRCLE_BRANCH === 'l10n_master') {
+    const translations = await github.request({ uri: '/issues?state=open&labels=translation' })
+    issues = issues.concat(translations.map(issue => issue.number))
+  }
+  issues = dedup(issues)
 
   const xpi = `zotero-better-bibtex-${version}.xpi`
 
