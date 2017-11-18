@@ -770,10 +770,11 @@ export = class Reference {
     if (f.raw || raw) return f.value
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
-    let value: String | string = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    const latex = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    let value: String | string = latex.latex
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
 
-    if (f.value instanceof String) value = new String(`{${value}}`) // tslint:disable-line:no-construct
+    if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
     return value
   }
 

@@ -3202,6 +3202,12 @@ promzard@^0.3.0:
   dependencies:
     read "1"
 
+properties-reader@^0.0.16:
+  version "0.0.16"
+  resolved "https://registry.yarnpkg.com/properties-reader/-/properties-reader-0.0.16.tgz#a2cc0db9cdd7b81d977d0a59c1dc10c6d1d6ab98"
+  dependencies:
+    mkdirp "~0.5.1"
+
 proto-list@~1.2.1:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/proto-list/-/proto-list-1.2.4.tgz#212d5bfe1318306a420f6402b8e26ff39647a849"
