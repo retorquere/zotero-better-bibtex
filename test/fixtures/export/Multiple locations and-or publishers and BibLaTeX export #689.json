@@ -32,7 +32,7 @@
       "jurismPreferredLanguage": "zh-alalc97",
       "qualityReport": false,
       "suppressTitleCase": false,
-      "jabrefFormat": 4
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

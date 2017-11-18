@@ -60,14 +60,14 @@ test:
               ;;
       esac
       case $CIRCLE_NODE_INDEX in
-        0|2)  export CIRCLE_TESTS="--tag ~@noci --tag @test-cluster-1"
+        0|2)  export CIRCLE_TESTS="not @noci and @test-cluster-1"
               ;;
-        *)    export CIRCLE_TESTS="--tag ~@noci --tag ~@test-cluster-1"
+        *)    export CIRCLE_TESTS="not @noci and not @test-cluster-1"
               ;;
       esac
 
       export LOGS=$CIRCLE_ARTIFACTS
-      bundle exec cucumber --strict $CIRCLE_TESTS
+      bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
       ls -lh $CIRCLE_ARTIFACTS/*
