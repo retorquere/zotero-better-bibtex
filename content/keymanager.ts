@@ -151,7 +151,7 @@ class KeyManager {
 
   public async rescan(clean?: boolean) {
     if (Prefs.get('scrubDatabase')) {
-      for (const item of this.keys.where(i => i.extra)) { // 799
+      for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
         item.delete('extra')
         this.keys.update(item)
       }
