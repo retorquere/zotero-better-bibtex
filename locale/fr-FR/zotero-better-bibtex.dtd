@@ -49,11 +49,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires sur les problèmes potentiels avec les références ">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques JabRef">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "pour JabRef 3">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "pour JabRef 4">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
@@ -71,7 +71,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
-<!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules)">
+<!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journaux d'exportation">
 <!ENTITY better-bibtex.Preferences.postscript "PostScript">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
