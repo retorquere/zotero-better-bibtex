@@ -185,6 +185,7 @@ class KeyManager {
       debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
 
       const saved = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      debug('KeyManager.rescan:', {saved})
       if (saved) {
         if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
           debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
