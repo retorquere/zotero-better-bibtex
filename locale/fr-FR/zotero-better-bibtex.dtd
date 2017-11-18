@@ -44,7 +44,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "modifiées (risque de changements de clé)">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "conservées (risque de doublons)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
@@ -59,7 +59,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "dans un champ 'note'">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "non">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "oui, dans un champ 'URL'">
