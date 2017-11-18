@@ -17,9 +17,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.add "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option 'Keep updated' (Garder à jour).">
 <!ENTITY better-bibtex.Preferences.auto-export.auto-abbrev "Abréviation automatique">
 <!ENTITY better-bibtex.Preferences.tab.auto-export "Synchronisation">
-<!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique : ">
+<!ENTITY better-bibtex.Preferences.auto-export "Exportation automatique">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
-<!ENTITY better-bibtex.Preferences.auto-export.idle "En arrière plan">
+<!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.mark "Exporter">
 <!ENTITY better-bibtex.Preferences.auto-export.notes "Notes">
@@ -29,7 +29,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Convertisseur">
-<!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à indiquer ci-dessous) :">
+<!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Forcer l'encodage des clés de citation en ASCII">
