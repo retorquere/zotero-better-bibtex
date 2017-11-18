@@ -549,9 +549,6 @@ export = new class BetterBibTeX {
     lock.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
 
-    // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
-    // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
-
     lock.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 

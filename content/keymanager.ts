@@ -150,6 +150,13 @@ class KeyManager {
   }
 
   public async rescan(clean?: boolean) {
+    if (Prefs.get('scrubDatabase')) {
+      for (const item of this.keys.where(i => i.extra)) { // 799
+        item.delete('extra')
+        this.keys.update(item)
+      }
+    }
+
     if (Array.isArray(this.scanning)) {
       let left
       if (this.scanning.length) {
@@ -286,23 +293,6 @@ class KeyManager {
 
     debug('KeyManager.get called for non-existent', itemID)
     return { citekey: '', pinned: false }
-  }
-
-  public async removeBibTeXStar() {
-    const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
-    const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
-    const items = await getItemsAsync(itemIDs)
-    for (const item of items) {
-      const extra = item.getField('extra')
-      if (!extra) continue
-
-      const clean = extra.replace(re, '\n').trim()
-
-      if (clean === extra) continue
-
-      item.setField('extra', clean)
-      await item.saveTx()
-    }
   }
 
   private expandSelection(ids) {
