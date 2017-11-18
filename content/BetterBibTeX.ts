@@ -94,6 +94,7 @@ $patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKe
   return original.apply(this, arguments)
 })
 
+/*
 // monkey-patch Zotero.Search::search to allow searching for citekey
 $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(function *(asTempTable) {
   const searchText = Object.values(this._conditions).filter(c => c && c.condition === 'field').map(c => c.value.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'))
@@ -101,7 +102,7 @@ $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(
 
   let ids = yield original.call(this, false) || []
 
-  debug('search: looking for', searchText, 'to add to', ids)
+  debug('search: looking for', searchText, 'from', this._conditions, 'to add to', ids)
 
   ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
 
@@ -109,6 +110,7 @@ $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(
   if (asTempTable) return yield Zotero.Search.idsToTempTable(ids)
   return ids
 }))
+*/
 
 // Monkey patch because of https://groups.google.com/forum/#!topic/zotero-dev/zy2fSO1b0aQ
 $patch$(pane, 'serializePersist', original => function() {
