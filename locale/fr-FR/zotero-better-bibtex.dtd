@@ -44,14 +44,14 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "modifiées (risque de changements de clé)">
+<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "conservées (risque de doublons)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.update "Mises à jour des clés de citation">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires sur les problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques JabRef">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "non">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "pour JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en ASCII">
@@ -59,9 +59,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTeX en ASCII">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "dans un champ 'note'">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "non">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "oui, dans un champ 'URL'">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">

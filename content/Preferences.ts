@@ -77,12 +77,12 @@ class AutoExportPrefPane {
 
         switch (column) {
           case 'collection':
-            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.type.${ae.type}`) || ae.type
+            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) || ae.type
             treecell.setAttribute('label', `${type[ae.type]}: ${this.autoExportName(ae)}`)
             break
 
           case 'status':
-            status[ae.status] = status[ae.status] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.status.${ae.status}`) || ae.status
+            status[ae.status] = status[ae.status] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${ae.status}`) || ae.status
             treecell.setAttribute('label', (status[ae.status] + (ae.updated ? ` (${ae.updated})` : '')) + (ae.error ? `: ${ae.error}` : ''))
             break
 

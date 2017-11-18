@@ -292,7 +292,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  system("yarn run build") || raise("Build failed")
+  system("npm run build") || raise("Build failed")
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?

@@ -525,7 +525,12 @@ export = new class BetterBibTeX {
   }
 
   public getString(id, params = null) {
-    return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+    try {
+      return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+    } catch (err) {
+      debug('getString', id, err)
+      return id
+    }
   }
 
   private async load() {
