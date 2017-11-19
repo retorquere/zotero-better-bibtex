@@ -11,7 +11,7 @@ const build_root = path.join(__dirname, '../../')
 import * as github from './github'
 
 const PRERELEASE = false
-const KEEP_BUILDS = 10
+const KEEP_BUILDS = 20
 
 function bail(msg, status = 1) {
   console.log(msg)
@@ -43,6 +43,7 @@ tags = dedup(tags)
 if (tags.indexOf('norelease') >= 0) bail(`Not releasing ${process.env.CIRCLE_BRANCH} because of 'norelease' tag`, 0)
 
 let issues = tags.filter(tag => !isNaN(parseInt(tag)))
+
 if (process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)) issues.push(process.env.CIRCLE_BRANCH)
 issues = dedup(issues)
 
@@ -81,6 +82,12 @@ async function main() {
       release[id] = null
     }
   }
+
+  if (process.env.CIRCLE_BRANCH === 'l10n_master') {
+    const translations = await github.request({ uri: '/issues?state=open&labels=translation' })
+    issues = issues.concat(translations.map(issue => issue.number))
+  }
+  issues = dedup(issues)
 
   const xpi = `zotero-better-bibtex-${version}.xpi`
 

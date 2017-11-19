@@ -6,7 +6,6 @@
     "preferences": {
       "citekeyFormat": "[auth:lower][year]",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

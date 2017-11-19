@@ -294,7 +294,12 @@ export = new class MarkupParser {
       this.unwrapNocase(this.handler.root)
     }
 
-    return this.handler.root
+    let root = this.handler.root
+    if (root.name !== 'span') throw new Error(`markupparser: Unexpected root node ${root.name}`)
+    // spurious wrapping span
+    if (!Object.keys(root.attr).length && root.children.length === 1) root = root.children[0]
+    debug('markupparser:', root)
+    return root
   }
 
   private parseStartTag(tag, tagName, rest, unary) {

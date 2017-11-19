@@ -6,7 +6,7 @@ Background:
   And I set preference .jabrefGroups to 0
   And I set preference .defaultDateParserLocale to en-GB
 
-@i1
+@i1 @schomd
 Scenario: Better BibTeX Import 2
   When I import 2 references from "import/Better BibTeX.002.bib"
   Then an export using "BetterBibTeX JSON" should match "import/Better BibTeX.002.json"
@@ -14,13 +14,6 @@ Scenario: Better BibTeX Import 2
 #  And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
 #  And the markdown citation for orre2008 should be ''
 #  And the markdown bibliography for orre2008 should be ''
-
-#@i2
-#Scenario: option to mantain the braces and special commands in titles or all fields #100
-#  When I set preference .rawImports to true
-#  And I import 1 reference from "import/Better BibTeX.007.bib"
-#  Then an export using "BetterBibTeX JSON" should match "import/Better BibTeX.007.raw.json"
-#  And an export using "Better BibTeX" should match "import/Better BibTeX.007.roundtrip.bib"
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472
@@ -71,10 +64,10 @@ Scenario Outline: Better BibTeX Import
   | Problem when importing BibTeX entries with percent sign #95 or preamble #96 | 1           |
   | Import fails to perform @String substitutions #154                          | 1           |
 
-#@97
-#Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
-#  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
-#  Then an export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
+@97
+Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
+  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
+  Then an export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
 @717
 Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #717

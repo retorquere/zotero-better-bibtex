@@ -4,11 +4,9 @@
     "label": "BetterBibTeX JSON",
     "release": "0.8.7",
     "preferences": {
-      "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[authors][shortyear]",
       "skipFields": "file,abstract",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

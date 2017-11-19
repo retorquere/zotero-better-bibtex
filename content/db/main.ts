@@ -3,6 +3,7 @@ declare const Zotero: any
 import Loki = require('./loki.ts')
 import debug = require('../debug.ts')
 import Prefs = require('../prefs.ts')
+import getItemsAsync = require('../get-items-async.ts')
 
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
@@ -182,6 +183,23 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
+
+  if (Prefs.get('scrubDatabase')) {
+    const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
+    const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
+    const items = await getItemsAsync(itemIDs)
+    for (const item of items) {
+      const extra = item.getField('extra')
+      if (!extra) continue
+
+      const clean = extra.replace(re, '\n').trim()
+
+      if (clean === extra) continue
+
+      item.setField('extra', clean)
+      await item.saveTx()
+    }
+  }
 }
 
 /* old junk, only for json-backed storage

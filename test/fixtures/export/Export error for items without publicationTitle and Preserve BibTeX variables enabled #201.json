@@ -8,8 +8,6 @@
       "skipFields": "file,keywords,abstract,copyright,language,timestamp",
       "autoAbbrevStyle": "http://www.zotero.org/styles/physical-review-d",
       "DOIandURL": "url",
-      "attachmentsNoMetadata": false,
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     },

@@ -56,7 +56,6 @@
     "label": "BetterBibTeX JSON",
     "preferences": {
       "citekeyFormat": "[shorttitle]",
-      "defaultDateParserLocale": "en-GB",
       "bibtexURL": "note",
       "jabrefFormat": 0
     }

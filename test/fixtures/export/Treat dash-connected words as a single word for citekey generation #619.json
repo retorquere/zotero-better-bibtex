@@ -16,7 +16,6 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "attachmentsNoMetadata": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
@@ -43,7 +42,6 @@
       "warnBulkModify": 10,
       "postscript": "if (this.item.DOI) {\n  var doi = this.item.DOI;\n  if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }\n  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });\n}",
       "jabrefFormat": 4,
-      "defaultDateParserLocale": "",
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
