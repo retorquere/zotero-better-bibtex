@@ -11,7 +11,7 @@ const build_root = path.join(__dirname, '../../')
 import * as github from './github'
 
 const PRERELEASE = false
-const KEEP_BUILDS = 10
+const KEEP_BUILDS = 20
 
 function bail(msg, status = 1) {
   console.log(msg)
