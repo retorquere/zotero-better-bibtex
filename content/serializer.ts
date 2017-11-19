@@ -148,10 +148,17 @@ class Serializer {
     const cached = cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
     if (!cached) return null
 
-    const serialized = cached.item
-    serialized.journalAbbreviation = Abbrevs.get(serialized)
-    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KeyManager.get(item.id).citekey
-    return serialized
+    switch (cached.item.itemType) {
+      case 'note':
+      case 'attachment':
+        break
+
+      default:
+        cached.item.citekey = KeyManager.get(item.id).citekey
+        cached.item.journalAbbreviation = Abbrevs.get(cached.item)
+        break
+    }
+    return cached.item
   }
 
   public store(item, serialized, legacy, skipChildItems) {
@@ -167,8 +174,16 @@ class Serializer {
       Zotero.logError(new Error('Serializer.store ignored, DB not yet loaded'))
     }
 
-    serialized.journalAbbreviation = Abbrevs.get(serialized)
-    if (!['note', 'attachment'].includes(serialized.itemType)) serialized.citekey = KeyManager.get(item.id).citekey
+    switch (serialized.itemType) {
+      case 'note':
+      case 'attachment':
+        break
+
+      default:
+        serialized.citekey = KeyManager.get(item.id).citekey
+        serialized.journalAbbreviation = Abbrevs.get(serialized)
+        break
+    }
     return serialized
   }
 
