@@ -32,7 +32,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to ASCII">
+<!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key format">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Cite Keys">
@@ -54,10 +54,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "for JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "for JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export BibLaTeX as ASCII">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Export unicode as plain-text latex commands">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Use BibLaTeX extended name format (requires biblatex 3.5)">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Export BibTeX as ASCII">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Export unicode as plain-text latex commands (recommended)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Add URLs to BibTeX export">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in a note field">
