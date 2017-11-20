@@ -232,7 +232,7 @@ class Document {
    * Gets the citation
    */
   public citation() {
-    if (!this.fields.length) return []
+    if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
       debug('CAYW.citation:', item)
