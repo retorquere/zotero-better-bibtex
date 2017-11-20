@@ -153,7 +153,7 @@ export = new class Formatter {
   public async 'scannable-cite'(citations) {
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
-    const scIDs = items.map(item => item.libraryID === Zotero.Libraries.userLibraryID ? `zu:0:${testing ? 'ITEMKEY' : item.key}` : `zg:${item.libraryID}:${item.key}`)
+    const scIDs = items.map(item => item.libraryID === Zotero.Libraries.userLibraryID ? `zu:0:${item.key}` : `zg:${item.libraryID}:${item.key}`)
     const scannable_cites = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items } )).split(/[{}]+/).filter(cite => cite)
 
     if (citations.length !== scIDs.length || citations.length !== scannable_cites.length) {
@@ -176,7 +176,7 @@ export = new class Formatter {
         `${picked.suppressAuthor ? '-' : ''}${text}`,
         picked.locator ? `${shortLabel[picked.label] || picked.label} ${picked.locator}` : '',
         picked.suffix || '',
-        id,
+        testing ? 'zu:0:ITEMKEY' : id
       ].join(' | ')
 
       citation += `{ ${enriched.trim()} }`
