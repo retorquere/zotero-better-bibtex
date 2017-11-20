@@ -176,7 +176,7 @@ export = new class Formatter {
         `${picked.suppressAuthor ? '-' : ''}${text}`,
         picked.locator ? `${shortLabel[picked.label] || picked.label} ${picked.locator}` : '',
         picked.suffix || '',
-        testing ? 'zu:0:ITEMKEY' : id
+        testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ')
 
       citation += `{ ${enriched.trim()} }`
