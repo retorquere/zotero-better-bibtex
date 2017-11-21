@@ -229,26 +229,15 @@ export = new class Formatter {
     }).join('')
   }
 
-  /*
-  'atom-zotero-citations': (citations, options) ->
-    citekeys = citations.map(citation -> citation.citekey)
-    options.style = options.style || 'apa'
+  public async 'formatted-citations'(citations) {
+    const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    itemIDs = citekeys.map(citekey -> KeyManager.keys.findOne({ citekey })).map(citekey -> if citekey then citekey.itemID else null)
-    style = getStyle(options.style)
+    if (Zotero.QuickCopy.unserializeSetting(format).format !== 'bibliography') throw new Error('formatted-citations requires quick-copy to be set to a bibliography format')
 
-    let style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${id}`) || Zotero.Styles.get(id)
+    const items = await getItemsAsync(citations.map(item => item.id))
 
-    cp = style.getCiteProc()
-    cp.setOutputFormat('markdown')
-    cp.updateItems(itemIDs)
-    label = cp.appendCitationCluster({ citationItems: itemIDs.map(id -> { return { id } }), properties:{} }, true)[0][1]
-
-    if citekeys.length == 1
-      return "[#{label}](#@#{citekeys.join(',')})"
-    else
-      return "[#{label}](?@#{citekeys.join(',')})"
-  */
+    return Zotero.QuickCopy.getContentFromItems(items, format, null, true).text
+  }
 
   public async translate(citations, options) {
     const items = await getItemsAsync(citations.map(citation => citation.id))
