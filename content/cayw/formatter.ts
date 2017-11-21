@@ -1,5 +1,3 @@
-declare const Zotero: any
-
 import Translators = require('../translators.ts')
 import debug = require('../debug.ts')
 import getItemsAsync = require('../get-items-async.ts')
@@ -153,24 +151,21 @@ export = new class Formatter {
   public async 'scannable-cite'(citations) {
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
-    const scIDs = items.map(item => item.libraryID === Zotero.Libraries.userLibraryID ? `zu:0:${item.key}` : `zg:${item.libraryID}:${item.key}`)
     const scannable_cites = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items } )).split(/[{}]+/).filter(cite => cite)
 
-    if (citations.length !== scIDs.length || citations.length !== scannable_cites.length) {
-      throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${scIDs.length}, generated ${scannable_cites.length}`)
-    }
+    if (citations.length !== scannable_cites.length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${scannable_cites.length}`)
 
     let citation = ''
     for (let i = 0; i < citations.length; i++) {
-      const scID = scIDs[i]
       const scannable = scannable_cites[i]
       const picked = citations[i]
 
       const [ , text, , , id ] = scannable.split('|').map(v => v.trim())
 
-      if (id !== scID) throw new Error(`Expected ${scID}, found ${id}`)
+      const [ , kind, lib, key ] = picked.uri.match(/http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/)
+      const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib === 'local' ? '0' : lib}:${key}`
+      if (id !== pickedID) throw new Error(`Expected ${pickedID}, found ${id}`)
 
-      debug('scannable-cite', picked, shortLabel[picked.label])
       const enriched = [
         picked.prefix || '',
         `${picked.suppressAuthor ? '-' : ''}${text}`,
