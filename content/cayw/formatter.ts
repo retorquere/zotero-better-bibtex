@@ -229,14 +229,26 @@ export = new class Formatter {
     }).join('')
   }
 
-  public async 'formatted-citations'(citations) {
+  public async 'formatted-citation'(citations) {
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    if (Zotero.QuickCopy.unserializeSetting(format).format !== 'bibliography') throw new Error('formatted-citations requires quick-copy to be set to a bibliography format')
+    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
 
     const items = await getItemsAsync(citations.map(item => item.id))
 
     return Zotero.QuickCopy.getContentFromItems(items, format, null, true).text
+  }
+
+  public async 'formatted-bibliography'(citations) {
+    const format = Zotero.Prefs.get('export.quickCopy.setting')
+
+    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+
+    const items = await getItemsAsync(citations.map(item => item.id))
+
+    return Zotero.QuickCopy.getContentFromItems(items, format, null, false).text
   }
 
   public async translate(citations, options) {
