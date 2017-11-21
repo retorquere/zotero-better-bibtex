@@ -1,3 +1,5 @@
+declare const Zotero: any
+
 import Translators = require('../translators.ts')
 import debug = require('../debug.ts')
 import getItemsAsync = require('../get-items-async.ts')
