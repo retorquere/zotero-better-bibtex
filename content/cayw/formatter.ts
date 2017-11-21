@@ -149,6 +149,7 @@ export = new class Formatter {
   }
 
   public async 'scannable-cite'(citations) {
+    debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
     const scannable_cites = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items } )).split(/[{}]+/).filter(cite => cite)
@@ -162,7 +163,7 @@ export = new class Formatter {
 
       const [ , text, , , id ] = scannable.split('|').map(v => v.trim())
 
-      const [ , kind, lib, key ] = picked.uri.match(/http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/)
+      const [ , kind, lib, key ] = picked.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/)
       const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib === 'local' ? '0' : lib}:${key}`
       if (id !== pickedID) throw new Error(`Expected ${pickedID}, found ${id}`)
 

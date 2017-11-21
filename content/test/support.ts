@@ -9,6 +9,7 @@ import KeyManager = require('../keymanager.ts')
 import Prefs = require('../prefs.ts')
 import Translators = require('../translators.ts')
 import CAYWFormatter = require('../cayw/formatter.ts')
+import getItemsAsync = require('../get-items-async.ts')
 
 const pref_defaults = require('../../gen/preferences.json')
 
@@ -152,6 +153,7 @@ export = Prefs.get('testing') && {
   async pick(format, citations) {
     for (const citation of citations) {
       citation.citekey = KeyManager.get(citation.id).citekey
+      citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id))
     }
     return await CAYWFormatter[format](citations, {})
   },
