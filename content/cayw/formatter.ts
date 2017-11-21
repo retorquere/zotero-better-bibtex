@@ -163,8 +163,8 @@ export = new class Formatter {
 
       const [ , text, , , id ] = scannable.split('|').map(v => v.trim())
 
-      const [ , kind, lib, key ] = picked.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/)
-      const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib === 'local' ? '0' : lib}:${key}`
+      const [ , kind, lib, key ] = picked.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
       if (id !== pickedID) throw new Error(`Expected ${pickedID}, found ${id}`)
 
       const enriched = [
