@@ -97,6 +97,6 @@ Translator.doExport = () => {
   if (mode) {
     mode.call(null, items)
   } else {
-    throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}'`)
+    throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}', I only know about: ${Object.keys(Mode).join(', ')}`)
   }
 }
