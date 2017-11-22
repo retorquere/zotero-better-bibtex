@@ -1,8 +1,8 @@
 # Submitting an issue to the BBT bug tracker
 
-If you wish to report a combination of feature requests, bug reports and general usage questions, please file a separate report for each of these. It is easier for me to manage them separately. Thank you.
-
-DO NOT CLOSE ISSUES unless you've opened it by accident. After the problem is resolved I need to still make sure the fix gets into the release, and open issues remind me of that.
+* If you wish to report a combination of feature requests, bug reports and general usage questions, please file a separate report for each of these. It is easier for me to manage them separately. Thank you.
+* Please use a descriptive subject for the issue you are experiencing
+* DO NOT CLOSE ISSUES unless you've opened it by accident. After the problem is resolved I need to still make sure the fix gets into the release, and open issues remind me of that.
 
 # Bug classification
 

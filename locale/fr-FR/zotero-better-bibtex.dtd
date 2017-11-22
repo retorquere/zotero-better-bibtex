@@ -32,7 +32,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Clés de citation">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Clés de citation">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Forcer l'encodage des clés de citation en ASCII">
+<!ENTITY better-bibtex.Preferences.citekey.fold "Forcer le formatage des clés de citation en texte brut">
 <!ENTITY better-bibtex.Preferences.citekey.format "Format de clé">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Clés de citation">
@@ -54,10 +54,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en ASCII">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en texte brut Unicode">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTeX en ASCII">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTex en texte brut Unicode (recommandé)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">

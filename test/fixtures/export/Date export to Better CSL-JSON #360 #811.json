@@ -193,6 +193,88 @@
 
       ],
       "extra": "bibtex: t6"
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "http://www.jstor.org/stable/1225428",
+      "volume": "24",
+      "issue": "3",
+      "pages": "4-23",
+      "publicationTitle": "Cinema Journal",
+      "date": "printemps 1985",
+      "accessDate": "2015-04-30",
+      "title": "The Politics of Film Canons",
+      "creators": [
+        {
+          "firstName": "Janet",
+          "lastName": "Staiger",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TGVC5SPQ"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2015-05-05 11:13:05",
+      "dateModified": "2015-07-03 12:39:41",
+      "uri": "http://zotero.org/users/1123677/items/MFRFINAT",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Staiger-Canons.pdf",
+          "parentItem": "MFRFINAT",
+          "linkMode": 0,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "Staiger-Canons.pdf",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2015-05-05 11:15:23",
+          "dateModified": "2015-05-05 11:15:23",
+          "uri": "http://zotero.org/users/1123677/items/X9HF3G83",
+          "uniqueFields": {
+            "title": "Staiger-Canons.pdf",
+            "linkMode": 0,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 377,
+          "key": "X9HF3G83",
+          "libraryID": null,
+          "sourceItemKey": "MFRFINAT",
+          "seeAlso": [
+
+          ],
+          "mimeType": "application/pdf",
+          "localPath": "/home/dm/Zotero/storage/X9HF3G83/Staiger-Canons.pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "url": "http://www.jstor.org/stable/1225428",
+        "volume": "24",
+        "issue": "3",
+        "pages": "4-23",
+        "publicationTitle": "Cinema Journal",
+        "date": "printemps 1985",
+        "accessDate": "2015-04-30",
+        "title": "The Politics of Film Canons"
+      },
+      "itemID": 153,
+      "key": "MFRFINAT",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "staiger_politics_1985"
     }
   ]
 }
