@@ -15,14 +15,23 @@ regex = {
 }
 */
 
+const SPRING = 21
+const WINTER = 24
+
+function seasonize(date) {
+  if (date.type === 'date' && typeof date.month === 'number' && date.month >= SPRING && date.month <= WINTER && !date.day) {
+    return { type: 'season', year: date.year, season: (date.month - SPRING) + 1 }
+  }
+  return date
+}
+
 function normalize_edtf(date) {
-  const spring = 21
-  const winter = 24
+  let year, month, day
+
   switch (date.type) {
     case 'Date':
-      const year = date.values[0]
-      const month = typeof date.values[1] === 'number' ? date.values[1] + 1 : undefined
-      const day = date.values[2] // tslint:disable-line:no-magic-numbers
+      [ year, month, day ] = date.values
+      if (typeof month === 'number') month += 1
       return { type: 'date', year, month, day, approximate: date.approximate || !!date.unspecified, uncertain: date.uncertain }
 
 //    when 'Set'
@@ -37,9 +46,9 @@ function normalize_edtf(date) {
       return { type: 'interval', from, to }
 
     case 'Season':
-      if (date.values[1] < spring || date.values[1] > winter) throw new Error(`Unexpected season ${date.values[1]}`)
-      // return { type: 'season', year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - spring] }
-      return { type: 'season', year: date.values[0], season: (date.values[1] - spring) + 1 }
+      [ year, month ] = date.values
+      if (month < SPRING || month > WINTER) throw new Error(`Unexpected season ${month}`)
+      return seasonize({ type: 'date', year, month })
 
     case 'List':
       return { type: 'list', dates: date.values.map(normalize_edtf) }
@@ -156,7 +165,7 @@ function parse(value) {
   if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)) {
     let [ , year, , month, , day ] = m
     if (day && (parseInt(month) > december) && (parseInt(day) < december)) [day, month] = [month, day]
-    return { type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined }
+    return seasonize({ type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined })
   }
   if (m = /^([0-9]{1,2})(?:[-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
     let [ , day, month, year ] = m
@@ -171,8 +180,11 @@ function parse(value) {
   }
 
   if (m = /^([0-9]{3,})[-\/\.]([0-9]{1,2})$/.exec(trimmed)) {
-    const [ , year, month ] = m
-    return { type: 'date', year: parseInt(year), month: parseInt(month) }
+    const [ , _year, _month ] = m
+    const year = parseInt(_year)
+    const month = parseInt(_month)
+
+    return seasonize({ type: 'date', year, month })
   }
 
 //  if m = /^(-?[0-9]{3,})([?~]*)$/.exec(trimmed)
