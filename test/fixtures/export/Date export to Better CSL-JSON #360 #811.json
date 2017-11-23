@@ -275,6 +275,46 @@
 
       ],
       "citekey": "staiger_politics_1985"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2017-23",
+      "title": "Title",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-23 21:51:33",
+      "dateModified": "2017-11-23 21:57:40",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/Q4D26GUK",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2017-23",
+        "title": "Title"
+      },
+      "itemID": 2,
+      "key": "Q4D26GUK",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorTitle2017"
     }
   ]
 }
