@@ -20,7 +20,9 @@ const WINTER = 24
 
 function seasonize(date) {
   if (date.type === 'date' && typeof date.month === 'number' && date.month >= SPRING && date.month <= WINTER && !date.day) {
-    return { type: 'season', year: date.year, season: (date.month - SPRING) + 1 }
+    date.type = 'season'
+    date.season = (date.month - SPRING) + 1
+    delete date.month
   }
   return date
 }
@@ -68,27 +70,42 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function parse_edtf(date) {
-  try {
-    return normalize_edtf(EDTF.parse(edtfy(date.replace(/\. /, ' ')))) // 8. july 2011
-  } catch (err) {}
-
-  try {
-    // https://github.com/inukshuk/edtf.js/issues/5
-    return normalize_edtf(EDTF.parse(upgrade_edtf(date)))
-  } catch (err) {}
-
-  return false
-}
-
 function parse(value) {
   const december = 12
+  let parsed, m
 
   debug('dateparser: parsing', value)
 
-  if (value.trim() === '') return {type: 'open'}
+  if (m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(value)) {
+    const [ , orig, year ] = m
+    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
+  }
 
-  let m
+  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
+  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
+  if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(value)) {
+    const [ , _year, , _month, , _day ] = m
+    const year = parseInt(_year)
+    let month = parseInt(_month)
+    let day = _day ? parseInt(_day) : undefined
+    if (day && month > december && day < december) [day, month] = [month, day]
+    return seasonize({ type: 'date', year, month, day })
+  }
+
+  if (m = /^(-?[0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(value)) {
+    const [ , _day, , _month, , _year ] = m
+    const year = parseInt(_year)
+    let month = parseInt(_month)
+    let day = parseInt(_day)
+    if (day && month > december && day < december) [day, month] = [month, day]
+    return seasonize({ type: 'date', year, month, day })
+  }
+
+  if (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value)) {
+    const [ , year, orig ] = m
+    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
+  }
+
   // 747
   if (m = value.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/)) {
     const [ , month, day1, day2, year ] = m
@@ -119,6 +136,39 @@ function parse(value) {
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
+  if (value.match(/^[0-9]+$/)) {
+    return { type: 'date', year: parseInt(value) }
+  }
+
+  try {
+    // https://github.com/inukshuk/edtf.js/issues/5
+    parsed = normalize_edtf(EDTF.parse(upgrade_edtf(value
+      .replace(/_|--/, '/')
+      .replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '')
+    )))
+  } catch (err) {
+    parsed = null
+  }
+
+  if (!parsed) {
+    try {
+      parsed = normalize_edtf(EDTF.parse(edtfy(value
+        .normalize('NFC')
+        .replace(/\. /, ' ') // 8. july 2011
+        .replace(months_re, _ => months[_.toLowerCase()] || _)
+      )))
+    } catch (err) {
+      parsed = null
+    }
+  }
+
+  debug('parseDate:', value, parsed)
+
+  return parsed || { type: 'verbatim', verbatim: value }
+
+/*
+  if (value.trim() === '') return {type: 'open'}
+
   for (const sep of ['--', '-', '/', '_', '–']) {
     if ((m = value.split(sep)).length === 2) { // potential range
       const [ _from, _to ] = m
@@ -133,7 +183,13 @@ function parse(value) {
   const cleaned = value.normalize('NFC').replace(months_re, (_ => months[_.toLowerCase()]))
   debug('dateparser:', value, 'cleaned up to', cleaned)
 
-  const trimmed = cleaned.trim().replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '').toLowerCase()
+  let approximate = false
+  let uncertain = false
+  const trimmed = cleaned.trim().replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '').toLowerCase().replace(/[~?]+$/, match => {
+    approximate = match.indexOf('~') >= 0
+    uncertain = match.indexOf('?') >= 0
+    return ''
+  })
 
 //  if m = regex.dMy.exec(trimmed)
 //    year = parseInt(m[3])
@@ -157,26 +213,19 @@ function parse(value) {
 
   if (m = /^(-?[0-9]{3,})-([0-9]{2})-([0-9]{2})T/.exec(trimmed)) {
     const [ , year, month, day ] = m
-    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
+    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day), approximate, uncertain }
   }
 
-  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
-  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(trimmed)) {
-    let [ , year, , month, , day ] = m
-    if (day && (parseInt(month) > december) && (parseInt(day) < december)) [day, month] = [month, day]
-    return seasonize({ type: 'date', year: parseInt(year), month: parseInt(month), day: day ? parseInt(day) : undefined })
-  }
   if (m = /^([0-9]{1,2})(?:[-\/\. ])([0-9]{1,2})(?:[-\/\. ])([0-9]{3,})$/.exec(trimmed)) {
     let [ , day, month, year ] = m
     // you can be detectably wrong though
     if (parseInt(month) > december && parseInt(day) < december) [day, month] = [month, day]
-    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day) }
+    return { type: 'date', year: parseInt(year), month: parseInt(month), day: parseInt(day), approximate, uncertain }
   }
 
   if (m = /^([0-9]{1,2})[-\/\.]([0-9]{3,})$/.exec(trimmed)) {
     const [ , month, year ] = m
-    return { type: 'date', year: parseInt(year), month: parseInt(month) }
+    return { type: 'date', year: parseInt(year), month: parseInt(month), approximate, uncertain }
   }
 
   if (m = /^([0-9]{3,})[-\/\.]([0-9]{1,2})$/.exec(trimmed)) {
@@ -184,7 +233,7 @@ function parse(value) {
     const year = parseInt(_year)
     const month = parseInt(_month)
 
-    return seasonize({ type: 'date', year, month })
+    return seasonize({ type: 'date', year, month, approximate, uncertain })
   }
 
 //  if m = /^(-?[0-9]{3,})([?~]*)$/.exec(trimmed)
@@ -196,18 +245,9 @@ function parse(value) {
     return { type: 'verbatim', verbatim: value }
   }
 
-  if (m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(trimmed)) {
-    const [ , orig, year ] = m
-    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
-  }
-
-  if (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(trimmed)) {
-    const [ , year, orig ] = m
-    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
-  }
-
   const parsed = parse_edtf(cleaned)
   return parsed || { type: 'verbatim', verbatim: value }
+  */
 }
 
 export = {

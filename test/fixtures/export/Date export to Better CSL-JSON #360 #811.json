@@ -315,6 +315,166 @@
 
       ],
       "citekey": "AuthorTitle2017"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25~/2012-06-26",
+      "title": "EDTF date range, circa begin",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-23 21:51:33",
+      "dateModified": "2017-11-24 10:30:03",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/Q4D26GUK",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25~/2012-06-26",
+        "title": "EDTF date range, circa begin"
+      },
+      "itemID": 2,
+      "key": "Q4D26GUK",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011b"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25~/2012-06-26~",
+      "title": "EDTF date range, circa begin & end",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:26:29",
+      "dateModified": "2017-11-24 10:36:54",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/H5TVD7LC",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25~/2012-06-26~",
+        "title": "EDTF date range, circa begin & end"
+      },
+      "itemID": 4,
+      "key": "H5TVD7LC",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25/2012-06-26~",
+      "title": "EDTF date range, circa end",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:28:02",
+      "dateModified": "2017-11-24 10:29:59",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/26XIYZ3M",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25/2012-06-26~",
+        "title": "EDTF date range, circa end"
+      },
+      "itemID": 5,
+      "key": "26XIYZ3M",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011a"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05~",
+      "title": "EDTF date YYYY-MM~ [month precision & circa]",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:28:27",
+      "dateModified": "2017-11-24 10:37:08",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/LI499VWN",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05~",
+        "title": "EDTF date YYYY-MM~ [month precision & circa]"
+      },
+      "itemID": 6,
+      "key": "LI499VWN",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdateYYYYMM2011"
     }
   ]
 }

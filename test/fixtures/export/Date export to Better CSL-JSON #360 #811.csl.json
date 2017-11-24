@@ -81,5 +81,33 @@
     "issued":{"date-parts":[[2017]],"season":3},
     "title":"Title",
     "type":"webpage"
+	},
+  {
+    "author":[{"literal":"Author"}],
+    "id":"Author2011",
+    "title":"EDTF date range, circa begin",
+    "type":"webpage",
+    "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
+  },
+  {
+    "author":[{"literal":"Author"}],
+    "id":"Author2011a",
+    "title":"EDTF date range, circa begin & end",
+    "type":"webpage",
+    "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
+  },
+  {
+    "author":[{"literal":"Author"}],
+    "id":"Author2011b",
+    "title":"EDTF date range, circa end",
+    "type":"webpage",
+    "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
+  },
+  {
+    "author":[{"literal":"Author"}],
+    "id":"Author2011c",
+    "title":"EDTF date YYYY-MM~ [month precision & circa]",
+    "type":"webpage",
+    "issued":{ "circa":true, "date-parts":[[2011,5]] }
 	}
 ]

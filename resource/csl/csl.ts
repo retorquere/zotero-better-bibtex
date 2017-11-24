@@ -64,6 +64,7 @@ function date2csl(date) {
 
 function parseDate(date) {
   const parsed = Zotero.BetterBibTeX.parseDate(date)
+  debug('parseDate', date, parsed)
   switch (parsed.type) {
     case 'date':
       return {
@@ -72,7 +73,10 @@ function parseDate(date) {
       }
 
     case 'interval':
-      return { 'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ] }
+      return {
+        'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ],
+        circa: (parsed.from.approximate || parsed.to.approximate) ? true : undefined,
+      }
 
     case 'verbatim':
       return { literal: parsed.verbatim }
