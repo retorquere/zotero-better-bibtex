@@ -314,7 +314,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
-      bbtReady.then(() => handler.apply(null, args))
+      bbtReady.promise.then(() => handler.apply(null, args))
     },
   }, [event], 'BetterBibTeX', 1)
 }
