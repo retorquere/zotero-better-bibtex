@@ -69,23 +69,23 @@ export = new class ErrorReport {
     }
   }
 
+  public show() {
+    const wizard = document.getElementById('better-bibtex-error-report')
+
+    if (wizard.onLastPage) wizard.canRewind = false
+    else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
+    else wizard.canRewind = true
+  }
+
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
-    const enabled = Zotero.Debug.enabled || !!this.params.items
-
-    for (const elt of [...document.getElementsByClassName('debug-off')]) {
-      elt.hidden = enabled
-    }
-    for (const elt of [...document.getElementsByClassName('debug-on')]) {
-      elt.hidden = !enabled
-    }
-
     const wizard = document.getElementById('better-bibtex-error-report')
-    const continueButton = wizard.getButton('next')
-    continueButton.disabled = !enabled
 
-    if (!enabled) return
+    if (Zotero.Debug.enabled) wizard.pageIndex = 1
+
+    const continueButton = wizard.getButton('next')
+    continueButton.disabled = false
 
     this.form = JSON.parse(Zotero.File.getContentsFromURL(PACKAGE.xpi.releaseURL + 'error-report.json'))
     this.key = Zotero.Utilities.generateObjectKey()
