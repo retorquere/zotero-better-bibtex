@@ -4,12 +4,15 @@ declare const Components: any
 declare const Zotero: any
 declare const FormData: any
 declare const Blob: any
+declare const Services: any
 
 import getAddons = require('./addons.ts')
 import Prefs = require('./prefs.ts')
 import Translators = require('./translators.ts')
 import debug = require('./debug.ts')
 const PACKAGE = require('../package.json')
+
+Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
   public static max_log_lines = 5000
@@ -73,8 +76,28 @@ export = new class ErrorReport {
     const wizard = document.getElementById('better-bibtex-error-report')
 
     if (wizard.onLastPage) wizard.canRewind = false
+    else if (wizard.pageIndex === 0) wizard.canRewind = false
     else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
     else wizard.canRewind = true
+  }
+
+  public restartWithDebugEnabled() {
+    const ps = Services.prompt
+    const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
+        + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
+        + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING
+    const index = ps.confirmEx(
+      null,
+      Zotero.getString('zotero.debugOutputLogging'),
+      Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
+      buttonFlags,
+      Zotero.getString('general.restartNow'),
+      null, Zotero.getString('general.restartLater'), null, {}
+    )
+
+    if (index !== 1) Zotero.Prefs.set('debug.store', true)
+
+    if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
   private async init() {

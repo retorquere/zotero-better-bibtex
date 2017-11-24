@@ -24,7 +24,7 @@
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
-    <button label="&debugOutputLogging.restartWithLoggingEnabled;" oncommand="ZoteroStandalone.DebugOutput.restartEnabled()"/>
+    <button label="&debugOutputLogging.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
   </wizardpage>
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
