@@ -377,8 +377,6 @@ module BBT
   profile["browser.usedOnWindows10.introURL"] = "about:blank"
   profile["datareporting.healthreport.logging.consoleEnabled"] = false
   profile["extensions.logging.enabled"] = true
-  profile["extensions.zotero.debug.log"] = true
-  profile["extensions.zotero.debug.time"] = true
   profile["extensions.zotero.firstRunGuidance"] = false
   profile["datareporting.healthreport.service.firstRun"] = false
   profile["datareporting.healthreport.uploadEnabled"] = false
@@ -393,6 +391,12 @@ module BBT
   profile["extensions.blocklist.enabled"] = false
   profile["extensions.blocklist.pingCountVersion"] = -1
 
+  if ENV['DEBUG'] != 'false'
+    profile["extensions.zotero.debug.log"] = true
+    profile["extensions.zotero.debug.time"] = true
+    profile['extensions.zotero.debug.store'] = true
+  end
+
   if ENV['ZOTERO_LOCALE'] == 'fr'
     profile["intl.locale.matchOS"] = false
     profile["general.useragent.locale"] = 'fr'
@@ -400,9 +404,6 @@ module BBT
   end
 
   #profile['extensions.zotero.dataDir'] = data_tgt
-  profile['extensions.zotero.debug.log'] = true
-  profile['extensions.zotero.debug.store'] = true
-  profile['extensions.zotero.debug.time'] = true
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
@@ -422,7 +423,7 @@ module BBT
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText -datadir profile > #{logfile.shellescape} 2>&1") }
+  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1") }
 
   at_exit {
     execute("""

@@ -319,7 +319,9 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
       const doc = application.createDocument(options)
       await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
 
-      const citation = await Formatter[options.format || 'playground'](doc.citation(), options)
+      const picked = doc.citation()
+
+      const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
       application.closeDocument(doc)
 
       if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)

@@ -38,7 +38,8 @@ function normalize_edtf(date) {
 
     case 'Season':
       if (date.values[1] < spring || date.values[1] > winter) throw new Error(`Unexpected season ${date.values[1]}`)
-      return { type: 'season', year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - spring] }
+      // return { type: 'season', year: date.values[0], season: ['spring', 'summer', 'autumn', 'winter'][date.values[1] - spring] }
+      return { type: 'season', year: date.values[0], season: (date.values[1] - spring) + 1 }
 
     case 'List':
       return { type: 'list', dates: date.values.map(normalize_edtf) }

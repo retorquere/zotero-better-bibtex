@@ -22,13 +22,13 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
 
-  <wizardpage label=" ">
-    <description hidden="true" style="white-space: pre-wrap;" class="header debug-off">
-      &better-bibtex.ErrorReport.enableDebug;
-      &helpMenu.label; -- &debugOutputLogging.label; -- &debugOutputLogging.restartWithLoggingEnabled;
-    </description>
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
+    <button label="&debugOutputLogging.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
+  </wizardpage>
 
-    <description style="white-space: pre-wrap;" class="header debug-on">&better-bibtex.ErrorReport.review;</description>
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
+    <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
     <tabbox flex="1" class="debug-on">
       <tabs>
         <tab label="&better-bibtex.ErrorReport.context;"/>
@@ -65,7 +65,7 @@
     <description>&zotero.errorReport.submissionInProgress;</description>
   </wizardpage>
 
-  <wizardpage label=" ">
+  <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description>&zotero.errorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>
