@@ -20,17 +20,23 @@ function year(y) {
 
 function format(date) {
   let formatted
+
   if (date.year && date.month && date.day) {
     formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
-  } else if (date.year && date.month) {
-    formatted = `${year(date.year)}-${pad(date.month, '00')}`
+
+  } else if (date.year && (date.month || date.season)) {
+    // tslint:disable-next-line:no-magic-numbers
+    formatted = `${year(date.year)}-${pad((date.month || (date.season + 20)), '00')}`
+
   } else if (date.year) {
     formatted = year(date.year)
+
   } else {
     formatted = ''
+
   }
 
-  if (Translator.preferences.biblatexExtendedDateFormat) {
+  if (formatted && Translator.preferences.biblatexExtendedDateFormat) {
     if (date.uncertain) formatted += '?'
     if (date.approximate) formatted += '~'
   }
@@ -48,7 +54,7 @@ export = (date, formatted_field, verbatim_field) => {
   if (date.type === 'verbatim') {
     field = { name: verbatim_field, value: date.verbatim }
 
-  } else if (date.type === 'date') {
+  } else if (date.type === 'date' || date.type === 'season') {
     field = { name: formatted_field, value: format(date) }
 
   } else if (date.type === 'interval') {

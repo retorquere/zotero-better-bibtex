@@ -4,8 +4,8 @@
     "label": "BetterBibTeX JSON",
     "release": "1.4.7",
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "bibtexURL": "note",
+      "biblatexExtendedDateFormat": true,
       "jabrefFormat": 0
     },
     "options": {
@@ -40,7 +40,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe1",
           "firstName": "John"
         }
       ],
@@ -67,7 +67,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe2",
           "firstName": "John"
         }
       ],
@@ -94,7 +94,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe3",
           "firstName": "John"
         }
       ],
@@ -122,7 +122,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe4",
           "firstName": "John"
         }
       ],
@@ -151,7 +151,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe5",
           "firstName": "John"
         }
       ],
@@ -178,7 +178,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Doe",
+          "lastName": "Doe6",
           "firstName": "John"
         }
       ],
@@ -206,9 +206,9 @@
       "title": "The Politics of Film Canons: printemps 1985",
       "creators": [
         {
-          "firstName": "Janet",
-          "lastName": "Staiger",
-          "creatorType": "author"
+          "creatorType": "author",
+          "lastName": "Doe7",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -283,8 +283,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe8",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -323,8 +323,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe9",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -363,8 +363,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe10",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -403,8 +403,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe11",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -443,8 +443,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe12",
+          "firstName": "John"
         }
       ],
       "tags": [
@@ -483,8 +483,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Author"
+          "lastName": "Doe13",
+          "firstName": "John"
         }
       ],
       "tags": [
