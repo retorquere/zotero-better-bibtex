@@ -5,6 +5,7 @@ declare const Zotero: any
 import debug = require('../lib/debug.ts')
 import Exporter = require('../lib/exporter.ts')
 import { text2latex } from './unicode_translator.ts'
+import datefield = require('./datefield.ts')
 
 const arXiv = new class {
   // new-style IDs
@@ -378,6 +379,30 @@ export = class Reference {
    *   ignored)
    */
   public add(field) {
+    debug('add field', field)
+
+    if (field.enc === 'date') {
+      if (!field.value) return
+
+      if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
+        return this.add({ name: field.name, value: field.value, enc: 'verbatim' })
+      }
+
+      const date = Zotero.BetterBibTeX.parseDate(field.value)
+
+      this.add(datefield(date, field))
+
+      this.add(datefield(date.orig, {
+        ...field,
+        ...{
+          name: typeof field.orig === 'boolean' ? `orig${field.name}` : (field.orig && field.orig.name),
+          verbatim: (typeof field.orig === 'boolean' && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
+        },
+      }))
+
+      return
+    }
+
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
@@ -422,7 +447,6 @@ export = class Reference {
       field.bibtex = `${value}`
     }
 
-    // field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     this.fields.push(field)
     this.has[field.name] = field
   }
@@ -575,7 +599,7 @@ export = class Reference {
       }
 
       if (name) {
-        fields.push({ name, value: field.value, enc })
+        fields.push({ name, verbatim: name, orig: true, value: field.value, enc, replace: true })
       } else {
         debug('Unmapped CSL field', cslName, '=', field.value)
       }

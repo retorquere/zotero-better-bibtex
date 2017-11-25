@@ -6,7 +6,6 @@ declare const Zotero: any
 import Reference = require('./bibtex/reference.ts')
 import Exporter = require('./lib/exporter.ts')
 import debug = require('./lib/debug.ts')
-import datefield = require('./bibtex/datefield.ts')
 
 Reference.prototype.fieldEncoding = {
   url: 'url',
@@ -358,17 +357,9 @@ Translator.doExport = () => {
 
     addCreators(ref)
 
-    if (item.accessDate && item.url) ref.add({ urldate: Zotero.Utilities.strToISO(item.accessDate) })
+    if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate), enc: 'date' })
 
-    if (item.date) {
-      if (Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(item.date, true)) {
-        ref.add({ name: 'date', value: item.date, enc: 'verbatim' })
-      } else {
-        const date = Zotero.BetterBibTeX.parseDate(item.date)
-        ref.add(datefield(date, 'date', 'year'))
-        ref.add(datefield(date.orig, 'origdate', 'origdate'))
-      }
-    }
+    ref.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
 
     if (item.pages) {
       ref.add({ pages: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
