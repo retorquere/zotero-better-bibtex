@@ -75,46 +75,29 @@ class Translators {
   }
 
   public install(header) {
-    let code
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
     try {
-      code = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
+      let installed = Zotero.Translators.get(header.translatorID)
+      installed = installed && installed.configOptions
+      installed = installed && installed.configOptions.BetterBibTeX === header.configOptions.BetterBibTeX
+      if (installed) return false
     } catch (err) {
-      debug('Translators.install: ', header, 'could not be loaded:', err)
-      throw err
+      debug('Translators.install', header, err)
     }
 
-    debug('Translators.install header:', header)
+    debug('Translators.install: saving translator', header.label)
+
     try {
-      let existing
       const fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
       const destFile = Zotero.getTranslatorsDirectory()
       destFile.append(fileName)
 
-      if (existing = Zotero.Translators.get(header.translatorID)) {
-        const end_of_json = '\n}'
-        let newHeader = code.substring(0, code.indexOf(end_of_json) + end_of_json.length)
-        debug('Translators.install: existing:', existing, 'new', newHeader)
-        try {
-          newHeader = JSON.parse(newHeader)
-          if (newHeader.lastUpdated === existing.lastUpdated) return false
-        } catch (err) {
-          debug('Translators.install: failed to parse new header:', err, newHeader)
-        }
-
-      } else {
-        debug('Translators.install: no existing:', header.translatorID)
-      }
-
-      debug('Translators.install: saving translator', header.label)
-
-      Zotero.File.putContents(destFile, code)
+      Zotero.File.putContents(destFile, Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`))
 
       debug('Translator.install', header, 'succeeded')
-
     } catch (err) {
-      debug('Translator.load', header, 'failed:', err)
+      debug('Translator.install', header, 'failed:', err)
       this.uninstall(header.label, header.translatorID)
     }
 

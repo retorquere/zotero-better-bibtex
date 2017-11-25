@@ -7,6 +7,6 @@ if (process.env.CIRCLE_BUILD_NUM && !process.env.CIRCLE_TAG) {
   if (branch.match(/^[0-9]+$/)) branch = 'issue-' + branch;
   version += [ '', process.env.CIRCLE_BUILD_NUM, branch].join('.')
 } else if (process.env.CIRCLECI != 'true') {
-  version += [ '', os.userInfo().username, os.hostname() ].join('.')
+  version += [ '', os.userInfo().username, os.hostname(), '' + Date.now() ].join('.')
 }
 module.exports = version;

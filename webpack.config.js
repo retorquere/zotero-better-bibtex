@@ -31,6 +31,8 @@ console.log('generate translator list');
 var tr = {byId: {}, byName: {}, byLabel: {}};
 for (let label of Object.keys(translators)) {
   var header = require(path.join(__dirname, 'resource', label + '.json'));
+  header.configOptions = header.configOptions || {}
+  header.configOptions.BetterBibTeX = version
   tr.byId[header.translatorID] = header;
   tr.byName[header.label] = header;
   tr.byLabel[header.label.replace(/[^a-zA-Z]/g, '')] = header;
