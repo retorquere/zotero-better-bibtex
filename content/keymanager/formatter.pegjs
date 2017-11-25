@@ -36,7 +36,7 @@ method
       var withInitials = (flag == 'initials');
 
       var method = creators + name.join('');
-      var $method = '$' + method.replace(/\./, '_');
+      var $method = '$' + method.replace(/\./g, '_');
 
       if (!options[$method]) throw new Error(`Invalid method '${method}' in citekey pattern`)
 
@@ -50,7 +50,7 @@ method
     }
   / name:[0\.a-zA-Z]+ params:mparams? {
       name = name.join('');
-      var $method = '$' + name.replace(/\./, '_');
+      var $method = '$' + name.replace(/\./g, '_');
       var chunk;
 
       if (options[$method]) {
