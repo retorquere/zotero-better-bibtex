@@ -36,7 +36,7 @@
       },
       "date": "2014-12-31/2015-01-01",
       "extra": "bibtex: t1\naccessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
-      "title": "A manuscript",
+      "title": "A manuscript: 2014-12-31/2015-01-01",
       "creators": [
         {
           "creatorType": "author",
@@ -90,7 +90,7 @@
       "relations": {
       },
       "date": "2014-12-31/",
-      "title": "open-ended date range test",
+      "title": "open-ended date range test: 2014-12-31/",
       "creators": [
         {
           "creatorType": "author",
@@ -118,7 +118,7 @@
       "relations": {
       },
       "date": "2014-12-31",
-      "title": "single date test",
+      "title": "single date test: 2014-12-31",
       "creators": [
         {
           "creatorType": "author",
@@ -147,7 +147,7 @@
       },
       "date": "-0333",
       "extra": "bibtex: t5\naccessed: -0332-11-05\noriginal-date: -0333/-0332\ncontainer: -0062-09-23/0014-08-19\nevent-date: 0000\nsubmitted:-0001",
-      "title": "BC tests",
+      "title": "BC tests: -0333",
       "creators": [
         {
           "creatorType": "author",
@@ -174,7 +174,7 @@
       "relations": {
       },
       "date": "-0099-07-12/-0043-03-15",
-      "title": "BC tests 2",
+      "title": "BC tests 2: -0099-07-12/-0043-03-15",
       "creators": [
         {
           "creatorType": "author",
@@ -203,7 +203,7 @@
       "publicationTitle": "Cinema Journal",
       "date": "printemps 1985",
       "accessDate": "2015-04-30",
-      "title": "The Politics of Film Canons",
+      "title": "The Politics of Film Canons: printemps 1985",
       "creators": [
         {
           "firstName": "Janet",
@@ -279,7 +279,7 @@
     {
       "itemType": "webpage",
       "date": "2017-23",
-      "title": "Title",
+      "title": "Title: 2017-23",
       "creators": [
         {
           "creatorType": "author",
@@ -319,7 +319,7 @@
     {
       "itemType": "webpage",
       "date": "2011-05-25~/2012-06-26",
-      "title": "EDTF date range, circa begin",
+      "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26",
       "creators": [
         {
           "creatorType": "author",
@@ -359,7 +359,7 @@
     {
       "itemType": "webpage",
       "date": "2011-05-25~/2012-06-26~",
-      "title": "EDTF date range, circa begin & end",
+      "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
       "creators": [
         {
           "creatorType": "author",
@@ -399,7 +399,7 @@
     {
       "itemType": "webpage",
       "date": "2011-05-25/2012-06-26~",
-      "title": "EDTF date range, circa end",
+      "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~",
       "creators": [
         {
           "creatorType": "author",
@@ -439,7 +439,7 @@
     {
       "itemType": "webpage",
       "date": "2011-05~",
-      "title": "EDTF date YYYY-MM~ [month precision & circa]",
+      "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
       "creators": [
         {
           "creatorType": "author",
@@ -479,7 +479,7 @@
     {
       "itemType": "webpage",
       "date": "2017-24~",
-      "title": "2017-11-25 13:01:34 +0100-1",
+      "title": "Season circa: : 2017-24~",
       "creators": [
         {
           "creatorType": "author",

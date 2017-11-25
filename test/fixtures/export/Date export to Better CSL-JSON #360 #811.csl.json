@@ -1,7 +1,7 @@
 [
    {
       "author" : [ { "given" : "John", "family" : "Doe" } ],
-      "title" : "A manuscript",
+      "title" : "A manuscript: 2014-12-31/2015-01-01",
       "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 2015, 1, 1 ] ] },
       "original-date" : { "date-parts" : [ [ 1777, 7, 27 ], [ 1888, 8, 28 ] ] },
       "id" : "t1",
@@ -24,13 +24,13 @@
    {
       "id": "t3",
       "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 0 ] ] },
-      "title" : "open-ended date range test",
+      "title" : "open-ended date range test: 2014-12-31/",
       "author" : [ { "given" : "John", "family" : "Doe" } ],
       "type" : "book"
    },
    {
       "issued" : { "date-parts" : [ [ 2014, 12, 31 ] ] },
-      "title" : "single date test",
+      "title" : "single date test: 2014-12-31",
       "author" : [ { "family" : "Doe", "given" : "John" } ],
       "id" : "t4",
       "type" : "book"
@@ -44,14 +44,14 @@
     "issued": { "date-parts": [ [ -334 ] ] },
     "original-date": { "date-parts": [ [ -334 ], [ -333 ] ] },
     "submitted": { "date-parts": [ [ -2 ] ] },
-    "title": "BC tests",
+    "title": "BC tests: -0333",
     "type": "book"
   },
   {
     "author": [ { "family": "Doe", "given": "John" } ],
     "id": "t6",
     "issued": { "date-parts": [ [-100,7,12],[-44,3,15] ] },
-    "title": "BC tests 2",
+    "title": "BC tests 2: -0099-07-12/-0043-03-15",
     "type": "book"
   },
   {
@@ -71,7 +71,7 @@
       "season": 1
     },
     "page":"4-23",
-    "title":"The Politics of Film Canons",
+    "title":"The Politics of Film Canons: printemps 1985",
     "type":"article-journal",
     "volume":"24"
 	},
@@ -79,34 +79,34 @@
     "author":[{"literal":"Author"}],
     "id":"Author2017",
     "issued":{"date-parts":[[2017]],"season":3},
-    "title":"Title",
+    "title":"Title: 2017-23",
     "type":"webpage"
 	},
   {
     "author":[{"literal":"Author"}],
     "id":"Author2011",
-    "title":"EDTF date range, circa begin",
+    "title":"EDTF date range, circa begin: 2011-05-25~/2012-06-26",
     "type":"webpage",
     "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
   },
   {
     "author":[{"literal":"Author"}],
     "id":"Author2011a",
-    "title":"EDTF date range, circa begin & end",
+    "title":"EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
     "type":"webpage",
     "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
   },
   {
     "author":[{"literal":"Author"}],
     "id":"Author2011b",
-    "title":"EDTF date range, circa end",
+    "title":"EDTF date range, circa end: 2011-05-25/2012-06-26~",
     "type":"webpage",
     "issued":{ "date-parts":[[2011,5,25],[2012,6,26]], "circa": true }
   },
   {
     "author":[{"literal":"Author"}],
     "id":"Author2011c",
-    "title":"EDTF date YYYY-MM~ [month precision & circa]",
+    "title":"EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
     "type":"webpage",
     "issued":{ "circa":true, "date-parts":[[2011,5]] }
 	},
@@ -114,7 +114,7 @@
     "author":[{"literal":"Author"}],
     "id":"Author2017a",
     "issued":{"date-parts":[[2017]],"season":4, "circa": true },
-    "title":"2017-11-25 13:01:34 +0100-1",
+    "title":"Season circa: : 2017-24~",
     "type":"webpage"
   }
 ]
