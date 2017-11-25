@@ -25,6 +25,8 @@ class NoSuchFileError extends Error {
 class FileStore {
   public mode = 'reference'
 
+  private collectionsMissing = false
+
   public name(name) { return name + '.json' }
 
   public save(name, data) {
@@ -54,10 +56,11 @@ class FileStore {
 
     try {
       for (const coll of dbref.collections) {
-        if (coll.dirty) this.save(`${name}.${coll.name}`, coll)
+        if (coll.dirty || this.collectionsMissing) this.save(`${name}.${coll.name}`, coll)
       }
       // save header last for sort-of-transaction
       this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}})
+      this.collectionsMissing = false
     } catch (err) {
       debug('LokiJS.FileStore.exportDatabase: save failed', err)
     }
@@ -87,6 +90,7 @@ class FileStore {
         try {
           collections.push(this.load(`${name}.${coll}`))
         } catch (err) {
+          this.collectionsMissing = true
           debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
         }
       }

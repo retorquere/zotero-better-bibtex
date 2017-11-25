@@ -87,11 +87,11 @@ export = new class Formatter {
 
       debug('citation:', citation)
       if (citation.locator && citation.suffix) {
-        const label = citation.label === 'page' ? '' : shortLabel[citation.label] + ' '
+        const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
         formatted += `[${label}${citation.locator}, ${citation.suffix}]`
 
       } else if (citation.locator) {
-        const label = citation.label === 'page' ? '' : shortLabel[citation.label] + ' '
+        const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
         formatted += `[${label}${citation.locator}]`
 
       } else if (citation.suffix) {
@@ -127,7 +127,7 @@ export = new class Formatter {
       if (citation.prefix) cite += `${citation.prefix} `
       if (citation['suppress-author']) cite += '-'
       cite += `@${citation.citekey}`
-      if (citation.locator) cite += `, ${shortLabel[citation.label]} ${citation.locator}`
+      if (citation.locator) cite += `, ${shortLabel[citation.label] || citation.label} ${citation.locator}`
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
@@ -141,7 +141,7 @@ export = new class Formatter {
       let cite = citation.citekey
       if (citation.locator) {
         let label = citation.locator
-        if (citation.label !== 'page') label = `${shortLabel[citation.label]} ${label}`
+        if (citation.label !== 'page') label = `${shortLabel[citation.label] || citation.label} ${label}`
         cite += `(${label})`
       }
       formatted.push(cite)
@@ -151,104 +151,58 @@ export = new class Formatter {
   }
 
   public async 'scannable-cite'(citations) {
-    // I have it on good authority that legal types are weird
-    const LEGAL_TYPES = new Set(['bill', 'case', 'gazette', 'hearing', 'patent', 'regulation', 'statute', 'treaty'])
-    class Mem {
-      private lst: string[]
-      private isLegal: boolean
-
-      constructor(item) {
-        this.lst = []
-        this.isLegal = LEGAL_TYPES.has(item.itemType)
-      }
-
-      public set(str, punc = '', slug = null) {
-        if (str) this.lst.push(str + punc)
-        else if (!this.isLegal) this.lst.push(slug)
-      }
-
-      public setlaw(str, punc = '') {
-        if (str && this.isLegal) this.lst.push(str + punc)
-      }
-
-      public get() {
-        return this.lst.join(' ')
-      }
-    }
-
+    debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
+    const items = await getItemsAsync(citations.map(picked => picked.id))
+    const scannable_cites = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items } )).split(/[{}]+/).filter(cite => cite)
 
-    for (const citation of citations) {
-      citation.z = await getItemsAsync(citation.id)
+    if (citations.length !== scannable_cites.length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${scannable_cites.length}`)
+
+    let citation = ''
+    for (let i = 0; i < citations.length; i++) {
+      const scannable = scannable_cites[i]
+      const picked = citations[i]
+
+      const [ , text, , , id ] = scannable.split('|').map(v => v.trim())
+
+      const [ , kind, lib, key ] = picked.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
+      if (id !== pickedID) throw new Error(`Expected ${pickedID}, found ${id}`)
+
+      const enriched = [
+        picked.prefix || '',
+        `${picked.suppressAuthor ? '-' : ''}${text}`,
+        picked.locator ? `${shortLabel[picked.label] || picked.label} ${picked.locator}` : '',
+        picked.suffix || '',
+        testing ? 'zu:0:ITEMKEY' : id,
+      ].join(' | ')
+
+      citation += `{ ${enriched.trim()} }`
     }
-
-    return citations.map(item => {
-      const mem = new Mem(item)
-      const memdate = new Mem(item)
-
-      const fields = []
-
-      // 1: prefix
-      fields.push(item.prefix)
-
-      // 2: text
-      const creators = item.z.getCreators() || []
-      if (creators.length) {
-        mem.set(creators[0].lastName, ',')
-        if (creators.length > 2) mem.set('et al.', ',')
-        else if (creators.length === 2) mem.set('& ' + creators[1].lastName, ',')
-      } else {
-        mem.set(false, ',', 'anon.')
-      }
-
-      if (item.title) mem.set(item.title, ',', '(no title)')
-
-      mem.setlaw(item.authority, ',')
-      mem.setlaw(item.volume)
-      mem.setlaw(item.reporter)
-      mem.setlaw(item.pages)
-      memdate.setlaw(item.court, ',')
-
-      const date = Zotero.Date.strToDate(item.z.getField('date'))
-      memdate.set((date.year) ? date.year : item.z.getField('date'), '', 'no date')
-
-      fields.push(`${mem.get()} ${memdate.get()}`.trim())
-
-      // 3: locator
-      fields.push(item.locator ? `${shortLabel[item.label]} ${item.locator}` : '')
-
-      // 4: suffix
-      fields.push(item.suffix)
-
-      // 5: id
-      const prefix = item.z.libraryID === Zotero.Libraries.userLibraryID ? 'zu' : 'zg'
-      const lib = item.z.libraryID === Zotero.Libraries.userLibraryID ? 0 : item.z.libraryID
-      fields.push(`${prefix}${lib}:${testing ?  'ITEMKEY' : item.z.key}`)
-
-      return `{ ${fields.join(' | ').trim()} }`
-    }).join('')
+    return citation
   }
 
-  /*
-  'atom-zotero-citations': (citations, options) ->
-    citekeys = citations.map(citation -> citation.citekey)
-    options.style = options.style || 'apa'
+  public async 'formatted-citation'(citations) {
+    const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    itemIDs = citekeys.map(citekey -> KeyManager.keys.findOne({ citekey })).map(citekey -> if citekey then citekey.itemID else null)
-    style = getStyle(options.style)
+    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
 
-    let style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${id}`) || Zotero.Styles.get(id)
+    const items = await getItemsAsync(citations.map(item => item.id))
 
-    cp = style.getCiteProc()
-    cp.setOutputFormat('markdown')
-    cp.updateItems(itemIDs)
-    label = cp.appendCitationCluster({ citationItems: itemIDs.map(id -> { return { id } }), properties:{} }, true)[0][1]
+    return Zotero.QuickCopy.getContentFromItems(items, format, null, true).text
+  }
 
-    if citekeys.length == 1
-      return "[#{label}](#@#{citekeys.join(',')})"
-    else
-      return "[#{label}](?@#{citekeys.join(',')})"
-  */
+  public async 'formatted-bibliography'(citations) {
+    const format = Zotero.Prefs.get('export.quickCopy.setting')
+
+    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+
+    const items = await getItemsAsync(citations.map(item => item.id))
+
+    return Zotero.QuickCopy.getContentFromItems(items, format, null, false).text
+  }
 
   public async translate(citations, options) {
     const items = await getItemsAsync(citations.map(citation => citation.id))

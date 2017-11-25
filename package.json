@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.42",
+  "version": "5.0.49",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -48,6 +48,7 @@
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
     "fold-to-ascii": "^4.0.0",
+    "global": "^4.3.2",
     "isbnjs": "^0.2.2",
     "issn": "^1.0.5",
     "js-yaml": "^3.10.0",
@@ -82,7 +83,6 @@
     "lodash": "^4.17.4",
     "moment": "^2.19.2",
     "node-archiver": "^0.3.0",
-    "npm-check-updates": "^2.13.0",
     "pretty-data": "^0.40.0",
     "properties-reader": "^0.0.16",
     "pug": "^2.0.0-rc.4",

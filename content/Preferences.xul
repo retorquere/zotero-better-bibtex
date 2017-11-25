@@ -323,6 +323,14 @@
           Name particle handling
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.scrubDatabase"
+          type="bool"
+          default="false"/>
+        <!--!
+          Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't unable this unless explicitly asked to.
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">

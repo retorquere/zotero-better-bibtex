@@ -53,5 +53,26 @@
     "issued": { "date-parts": [ [-100,7,12],[-44,3,15] ] },
     "title": "BC tests 2",
     "type": "book"
-  }
+  },
+  {
+    "URL":"http://www.jstor.org/stable/1225428",
+    "accessed":{"date-parts":[["2015",4,30]]},
+    "author":[
+      {
+        "family":"Staiger",
+        "given":"Janet"
+      }
+    ],
+    "container-title":"Cinema Journal",
+    "id":"Staiger1985",
+    "issue":"3",
+    "issued":{
+      "date-parts":[[1985]],
+      "season": 1
+    },
+    "page":"4-23",
+    "title":"The Politics of Film Canons",
+    "type":"article-journal",
+    "volume":"24"
+	}
 ]

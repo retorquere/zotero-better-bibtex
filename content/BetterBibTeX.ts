@@ -525,7 +525,12 @@ export = new class BetterBibTeX {
   }
 
   public getString(id, params = null) {
-    return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+    try {
+      return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+    } catch (err) {
+      debug('getString', id, err)
+      return id
+    }
   }
 
   private async load() {
@@ -548,9 +553,6 @@ export = new class BetterBibTeX {
 
     lock.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
-
-    // lock.update('Scrubbing experimental dynamic keys -- THIS SHOULD NOT BE IN PRODUCTION')
-    // await KeyManager.removeBibTeXStar() // scans and removes bibtex*:
 
     lock.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB

@@ -187,7 +187,7 @@ Scenario: CAYW picker
   Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
   And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
   And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
-  And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 |  | zu0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 |  | zu0:ITEMKEY }"
+  And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 |  | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 |  | zu:0:ITEMKEY }"
   And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]"
 
 @307 @bbt
@@ -239,10 +239,10 @@ Scenario: Setting the item type via the cheater syntax #587
   And an export using "Better BibTeX" should match "export/Setting the item type via the cheater syntax #587.bibtex"
   And an export using "Better CSL JSON" should match "export/Setting the item type via the cheater syntax #587.csl.json"
 
-@360 @pandoc
-Scenario: Date export to Better CSL-JSON #360
-  When I import 6 references from "export/Date export to Better CSL-JSON #360.json"
-  And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360.csl.json"
+@360 @811 @pandoc
+Scenario: Date export to Better CSL-JSON #360 #811
+  When I import 7 references from "export/Date export to Better CSL-JSON #360 #811.json"
+  And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360 #811.csl.json"
 
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
