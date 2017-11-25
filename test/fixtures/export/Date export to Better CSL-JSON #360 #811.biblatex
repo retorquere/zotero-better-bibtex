@@ -1,17 +1,17 @@
 @unpublished{t1,
   author = {Doe1, John},
   date = {2014-12-31/2015-01-01},
-  origdate = {1777-07-27/1888-08-28},
   eventdate = {1888-08-28},
-  urldate = {2014-12-31~},
-  title = {A Manuscript: 2014-12-31/2015-01-01}
+  origdate = {1777-07-27/1888-08-28},
+  title = {A Manuscript: 2014-12-31/2015-01-01},
+  urldate = {2014-12-31~}
 }
 
 @book{t2,
   author = {Doe2, John},
   eventdate = {1800-01-01/1800-12-31},
-  urldate = {13th cent},
-  title = {Container, Event-Date, and Submitted Test}
+  title = {Container, Event-Date, and Submitted Test},
+  urldate = {13th cent}
 }
 
 @book{t3,

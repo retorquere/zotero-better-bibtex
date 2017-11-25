@@ -14,7 +14,7 @@ function year(y) {
     return `${y}`
   } else {
     // tslint:disable-next-line:no-magic-numbers
-    return (y < 0 ? '-' : '-') + (`000${Math.abs(y)}`).slice(-4)
+    return (y < 0 ? '-' : '') + (`000${Math.abs(y)}`).slice(-4)
   }
 }
 
@@ -36,7 +36,7 @@ function format(date) {
 
   }
 
-  if (formatted && Translator.preferences.biblatexExtendedDateFormat) {
+  if (formatted && Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat) {
     if (date.uncertain) formatted += '?'
     if (date.approximate) formatted += '~'
   }

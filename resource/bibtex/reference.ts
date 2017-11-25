@@ -541,6 +541,14 @@ export = class Reference {
             name = 'venue'
             break
 
+          case 'event-date':
+            name = 'eventdate'
+            break
+
+          case 'accessed':
+            name = 'urldate'
+            break
+
           case 'number':
           case 'volume':
           case 'author':
@@ -1025,9 +1033,9 @@ export = class Reference {
     if (!date || !date.year || !['date', 'season'].includes(date.type)) return null
 
     let iso = `${date.year}`
-    if (date.month) {
-      iso += `-${(`0${date.month}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-      if (date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
+    if (date.month || date.season) {
+      iso += `-${(`0${date.month || (date.season + 20)}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
+      if (date.month && date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
     }
     return iso
   }
