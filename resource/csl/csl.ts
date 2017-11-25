@@ -82,7 +82,11 @@ function parseDate(date) {
       return { literal: parsed.verbatim }
 
     case 'season':
-      return { 'date-parts': [ [ parsed.year ] ], season: parsed.season }
+      return {
+        'date-parts': [ [ parsed.year ] ],
+        season: parsed.season,
+        circa: parsed.approximate ? true : undefined,
+      }
 
     default:
       throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)

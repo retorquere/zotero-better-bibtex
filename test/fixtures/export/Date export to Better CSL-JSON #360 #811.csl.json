@@ -109,5 +109,12 @@
     "title":"EDTF date YYYY-MM~ [month precision & circa]",
     "type":"webpage",
     "issued":{ "circa":true, "date-parts":[[2011,5]] }
-	}
+	},
+	{
+    "author":[{"literal":"Author"}],
+    "id":"Author2017a",
+    "issued":{"date-parts":[[2017]],"season":4, "circa": true },
+    "title":"2017-11-25 13:01:34 +0100-1",
+    "type":"webpage"
+  }
 ]

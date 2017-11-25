@@ -27,6 +27,12 @@ function seasonize(date) {
   return date
 }
 
+function doubt(date, state) {
+  if (state.uncertain) date.uncertain = true
+  if (state.approximate) date.approximate = true
+  return date
+}
+
 function normalize_edtf(date) {
   let year, month, day
 
@@ -34,7 +40,7 @@ function normalize_edtf(date) {
     case 'Date':
       [ year, month, day ] = date.values
       if (typeof month === 'number') month += 1
-      return { type: 'date', year, month, day, approximate: date.approximate || !!date.unspecified, uncertain: date.uncertain }
+      return doubt({ type: 'date', year, month, day}, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
 
 //    when 'Set'
 //      if date.values.length == 1
@@ -70,74 +76,88 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function parse(value) {
+function parse(value, descend = true) {
+  value = value.trim()
+
   const december = 12
   let parsed, m
 
   debug('dateparser: parsing', value)
 
-  if (m = /^\[(-?[0-9]+)\]\s*(-?[0-9]+)$/.exec(value)) {
-    const [ , orig, year ] = m
-    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
+  if (descend && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+    const [ , _orig, _year ] = m
+    const year = parse(_year, false)
+    const orig = parse(_orig, false)
+    if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
-  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
-  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(value)) {
-    const [ , _year, , _month, , _day ] = m
-    const year = parseInt(_year)
-    let month = parseInt(_month)
-    let day = _day ? parseInt(_day) : undefined
-    if (day && month > december && day < december) [day, month] = [month, day]
-    return seasonize({ type: 'date', year, month, day })
-  }
-
-  if (m = /^(-?[0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(value)) {
-    const [ , _day, , _month, , _year ] = m
-    const year = parseInt(_year)
-    let month = parseInt(_month)
-    let day = parseInt(_day)
-    if (day && month > december && day < december) [day, month] = [month, day]
-    return seasonize({ type: 'date', year, month, day })
-  }
-
-  if (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value)) {
-    const [ , year, orig ] = m
-    return { type: 'date', year: parseInt(year), orig: { type: 'date', year: parseInt(orig) } }
+  if (descend && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
+    const [ , _year, _orig ] = m
+    const year = parse(_year, false)
+    const orig = parse(_orig, false)
+    if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
   // 747
-  if (m = value.match(/^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/)) {
+  if (descend && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
-    const from = parse(`${month} ${day1} ${year}`)
-    const to = parse(`${month} ${day2} ${year}`)
+    const from = parse(`${month} ${day1} ${year}`, false)
+    const to = parse(`${month} ${day2} ${year}`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 747, January 30–February 3, 1989
-  if (m = value.match(/^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/)) {
+  if (descend && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
-    const from = parse(`${date1} ${year}`)
-    const to = parse(`${date2} ${year}`)
+    const from = parse(`${date1} ${year}`, false)
+    const to = parse(`${date2} ${year}`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
   // 746
-  if (m = value.match(/^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/)) {
+  if (descend && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, day2, month, year ] = m
 
-    const from = parse(`${month} ${day1} ${year}`)
-    const to = parse(`${month} ${day2} ${year}`)
+    const from = parse(`${month} ${day1} ${year}`, false)
+    const to = parse(`${month} ${day2} ${year}`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
-  if (value.match(/^[0-9]+$/)) {
-    return { type: 'date', year: parseInt(value) }
+  const state = {approximate: false, uncertain: false}
+  const exactish = value.replace(/[~?]+$/, match => {
+    state.approximate = match.indexOf('~') >= 0
+    state.uncertain = match.indexOf('?') >= 0
+    return ''
+  })
+
+  // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
+  // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
+  if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
+    const [ , _year, , _month, , _day ] = m
+    const year = parseInt(_year)
+    let month = parseInt(_month)
+    let day = _day ? parseInt(_day) : undefined
+    if (day && month > december && day < december) [day, month] = [month, day]
+    debug('parseDate:', value, exactish, state)
+    return seasonize(doubt({ type: 'date', year, month, day }, state))
+  }
+
+  if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
+    const [ , _day, , _month, , _year ] = m
+    const year = parseInt(_year)
+    let month = parseInt(_month)
+    let day = parseInt(_day)
+    if (day && month > december && day < december) [day, month] = [month, day]
+    return seasonize(doubt({ type: 'date', year, month, day }, state))
+  }
+
+  if (exactish.match(/^-?[0-9]+$/)) {
+    return doubt({ type: 'date', year: parseInt(exactish) }, state)
   }
 
   try {

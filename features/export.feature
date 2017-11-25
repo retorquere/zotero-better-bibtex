@@ -241,8 +241,9 @@ Scenario: Setting the item type via the cheater syntax #587
 
 @360 @811 @pandoc
 Scenario: Date export to Better CSL-JSON #360 #811
-  When I import 12 references from "export/Date export to Better CSL-JSON #360 #811.json"
+  When I import 13 references from "export/Date export to Better CSL-JSON #360 #811.json"
   And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360 #811.csl.json"
+  # And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export

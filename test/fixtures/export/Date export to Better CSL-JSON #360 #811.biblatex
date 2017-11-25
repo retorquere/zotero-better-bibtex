@@ -1,0 +1,86 @@
+@unpublished{t1,
+  author = {Doe, John},
+  date = {2014-12-31/2015-01-01},
+  origdate = {1777-07-27/1888-08-28},
+  title = {A Manuscript}
+}
+
+@book{t2,
+  author = {Doe, John},
+  title = {Container, Event-Date, and Submitted Test}
+}
+
+@book{t3,
+  author = {Doe, John},
+  date = {2014-12-31/},
+  title = {Open-Ended Date Range Test}
+}
+
+@book{t4,
+  author = {Doe, John},
+  date = {2014-12-31},
+  title = {Single Date Test}
+}
+
+@book{t5,
+  author = {Doe, John},
+  date = {-0333},
+  origdate = {-333/-332},
+  title = {{{BC}} Tests}
+}
+
+@book{t6,
+  author = {Doe, John},
+  date = {-0099-07-12/-0043-03-15},
+  title = {{{BC}} Tests 2}
+}
+
+@article{Staiger1985,
+  author = {Staiger, Janet},
+  date = {1985},
+  eprint = {1225428},
+  eprinttype = {jstor},
+  journaltitle = {Cinema Journal},
+  number = {3},
+  pages = {4--23},
+  title = {The {{Politics}} of {{Film Canons}}},
+  volume = {24}
+}
+
+@online{Author2017,
+  author = {{Author}},
+  date = {2017},
+  title = {Title}
+}
+
+@online{Author2011,
+  author = {{Author}},
+  date = {2011-05-25/2012-06-26},
+  title = {{{EDTF}} Date Range, circa Begin}
+}
+
+@online{Author2011a,
+  author = {{Author}},
+  date = {2011-05-25/2012-06-26},
+  title = {{{EDTF}} Date Range, circa Begin \& End}
+}
+
+@online{Author2011b,
+  author = {{Author}},
+  date = {2011-05-25/2012-06-26},
+  title = {{{EDTF}} Date Range, circa End}
+}
+
+@online{Author2011c,
+  author = {{Author}},
+  date = {2011-05},
+  title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& Circa]}
+}
+
+@online{Author2017a,
+  author = {{Author}},
+  date = {2017},
+  title = {2017-11-25 13:01:34 +0100-1}
+}
+
+CIRCA/SEASON FAILURES
