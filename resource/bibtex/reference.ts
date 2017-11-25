@@ -467,7 +467,6 @@ export = class Reference {
 
     const fields = []
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
-
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
         this.item.extraFields.kv[cslName] = field
@@ -478,20 +477,26 @@ export = class Reference {
       let name = null
       let enc
       switch (field.type) {
-        case 'string': enc = null; break
-        case 'creator': enc = 'creators'; break
-        default: enc = field.type
-      }
-
-      switch (cslName) {
-        case 'doi': case 'isbn': case 'issn': name = cslName; break
+        case 'string':
+          enc = null
+          break
+        case 'creator':
+          enc = 'creators'
+          break
+        default:
+          enc = field.type
       }
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
-      if (!name && Translator.BetterBibLaTeX) {
+      if (Translator.BetterBibLaTeX) {
         switch (cslName) {
-          case 'authority': name = 'institution'; break
-          case 'status': name = 'pubstate'; break
+          case 'authority':
+            name = 'institution'
+            break
+
+          case 'status':
+            name = 'pubstate'
+            break
 
           case 'title':
             name = this.referencetype === 'book' ? 'maintitle' : null
@@ -513,23 +518,51 @@ export = class Reference {
             name = 'origlocation'
             enc = 'literal'
             break
-          case 'original-title': name = 'origtitle'; break
-          case 'original-date': name = 'origdate'; break
+
+          case 'original-title':
+            name = 'origtitle'
+            break
+
+          case 'original-date':
+            name = 'origdate'
+            break
 
           case 'publisher-place':
             name = 'location'
             enc = 'literal'
             break
 
-          case 'issued': name = 'date'; break
+          case 'issued':
+            name = 'date'
+            break
 
-          case 'number': case 'volume': case 'author': case 'director': case 'editor': name = cslName; break
+          // https://github.com/retorquere/zotero-better-bibtex/issues/644
+          case 'event-place':
+            name = 'venue'
+            break
+
+          case 'number':
+          case 'volume':
+          case 'author':
+          case 'director':
+          case 'editor':
+          case 'doi':
+          case 'isbn':
+          case 'issn':
+            name = cslName
+            break
         }
       }
 
-      if (!name && Translator.BetterBibTeX) {
+      if (Translator.BetterBibTeX) {
         switch (cslName) {
-          case 'call-number': name = 'lccn'; break
+          case 'call-number':
+            name = 'lccn'
+            break
+
+          case 'doi':
+            name = cslName
+            break
         }
       }
 
@@ -770,10 +803,11 @@ export = class Reference {
     if (f.raw || raw) return f.value
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
-    let value: String | string = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    const latex = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    let value: String | string = latex.latex
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
 
-    if (f.value instanceof String) value = new String(`{${value}}`) // tslint:disable-line:no-construct
+    if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
     return value
   }
 

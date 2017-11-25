@@ -4,13 +4,15 @@ Feature: Export
 ### BibLaTeX cookie-cutter ###
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf
+@573 @590 @747 @edtf @689
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
+     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           |
      | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
      | EDTF dates in BibLaTeX #590                                                                    | 27          |
@@ -24,7 +26,6 @@ Scenario Outline: BibLaTeX Export
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
-#     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
      | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
@@ -335,11 +336,6 @@ Scenario: auto-export
   And I wait 5 seconds
   Then "/tmp/autoexport.bib" should match "export/autoexport.after.biblatex"
   And "/tmp/autoexport.coll.bib" should match "export/autoexport.after.coll.biblatex"
-
-#@163 # test files missing
-#Scenario: Preserve Bib variable names #163
-#  When I import 1 reference from "export/Preserve Bib variable names #163.json"
-#  Then an export using "Better BibLaTeX" should match "export/Preserve Bib variable names #163.biblatex"
 
 @313 @bblt
 Scenario: (non-)dropping particle handling #313

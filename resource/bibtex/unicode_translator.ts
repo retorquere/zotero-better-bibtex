@@ -22,9 +22,9 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    this.walk(MarkupParser.parse(html, this.options))
-
-    return this.latex
+    const ast = MarkupParser.parse(html, this.options)
+    this.walk(ast)
+    return { latex: this.latex, raw: ast.name === 'pre' }
   }
 
   private walk(tag) {
@@ -186,10 +186,11 @@ const htmlConverter = new class HTMLConverter {
 
 export function html2latex(html, options) {
   if (!options.mode) options.mode = 'html'
-  let latex = htmlConverter.convert(html, options)
-  latex = latex.replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
-  latex = latex.replace(/\n\n\n+/g, '\n\n')
-  latex = latex.replace(/{}([}])/g, '$1')
+  const latex = htmlConverter.convert(html, options)
+  latex.latex = latex.latex
+    .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
+    .replace(/\n\n\n+/g, '\n\n')
+    .replace(/{}([}])/g, '$1')
   return latex
 }
 
