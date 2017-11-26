@@ -491,6 +491,8 @@ export = class Reference {
 
     const fields = []
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
+      debug('extraFields: csl', cslName, field)
+
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
         this.item.extraFields.kv[cslName] = field
@@ -606,16 +608,21 @@ export = class Reference {
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.bibtex)) {
+      debug('extraFields: bibtex', name, field)
+
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
         this.referencetype = field.value
         continue
       }
 
+      debug('extraFields: bibtex')
       fields.push(field)
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
+      debug('extraFields: kv', name, field)
+
       switch (name) {
         case 'mr':
           fields.push({ name: 'mrnumber', value: field.value, raw: field.raw })
