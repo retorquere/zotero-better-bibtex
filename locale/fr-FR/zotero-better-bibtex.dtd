@@ -1,4 +1,4 @@
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de débogage de Zotero doit être activé :">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.log "Journal de débogage">
