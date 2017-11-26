@@ -285,6 +285,14 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.dateOrigHack"
+          type="bool"
+          default="true"/>
+        <!--!
+          Parse `[<date>]` out of date fields as an `origdate`. This is slated for deprecation; please use `original-date: <date>` in the extra field.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat"
           id="pref-better-bibtex-biblatexExtendedNameFormat"
           type="bool"

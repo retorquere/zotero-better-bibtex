@@ -1,6 +1,7 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 import debug = require('./debug.ts')
+import Prefs = require('./prefs.ts')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -96,6 +97,12 @@ function parse(value, descend = true) {
     const year = parse(_year, false)
     const orig = parse(_orig, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
+  }
+
+  if (descend && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
+    const [ , _orig ] = m
+    const orig = parse(_orig, false)
+    if (orig.type === 'date') return { ...{ orig } }
   }
 
   // 747
@@ -270,21 +277,20 @@ function parse(value, descend = true) {
   */
 }
 
+function testEDTF(value) {
+  try {
+    const date = EDTF.parse(value)
+    return date && (date.type !== 'Set' || !Prefs.get('dateOrigHack'))
+  } catch (err) {
+    return false
+  }
+}
+
 export = {
   isEDTF(value, minuteLevelPrecision = false) {
     value = upgrade_edtf(value)
 
-    for (const postfix of ['', minuteLevelPrecision ? ':00' : undefined]) {
-      try {
-        debug('isEDTF', value + postfix)
-        return !!EDTF.parse(value + postfix)
-      } catch (err) {
-        debug('isEDTF', value + postfix, ': no')
-      }
-    }
-
-    debug('isEDTF', value, ': definately no')
-    return false
+    return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
   },
 
   parse,

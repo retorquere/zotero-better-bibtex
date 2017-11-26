@@ -48,7 +48,8 @@ export = (date, field) => {
   debug('formatting date', date, field)
 
   if (!date) return {}
-  if (!date.type) throw new Error(`Failed to parse ${date}: ${JSON.stringify(date)}`)
+  if (date && !date.type && date.orig) return {}
+  if (!date.type) throw new Error(`Failed to parse ${JSON.stringify(date)}`)
 
   field = { ...field, enc: 'latex', value: '' }
 
