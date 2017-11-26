@@ -279,9 +279,9 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat"
           type="bool"
-          default="false"/>
+          default="true"/>
         <!--!
-          Support for ambiguous dates
+          Support for EDTF dates in biblatex
         -->
 
         <preference
