@@ -707,35 +707,6 @@ export = class Reference {
   }
 
   /*
-   * Encode to date
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  protected enc_date(f) {
-    let parsed
-    if (!f.value) return null
-
-    const { value } = f
-    if (typeof f.value === 'string') parsed = Zotero.BetterBibTeX.parseDate(value, this.item.language)
-
-    if (parsed.type === 'verbatim') {
-      if (f.value === 'n.d.') return '\\bibstring{nodate}'
-      return this.enc_latex(this.clone(f, f.value))
-    }
-
-    let date = this.isodate(parsed.from || parsed)
-    if (!date) return null
-
-    if (parsed.to) {
-      const enddate = this.isodate(parsed.to)
-      if (enddate) date += `/${enddate}`
-    }
-
-    return this.enc_latex({value: date})
-  }
-
-  /*
    * Encode to LaTeX url
    *
    * @param {field} field to encode
@@ -829,7 +800,7 @@ export = class Reference {
 
     if (Array.isArray(f.value)) {
       if (f.value.length === 0) return null
-      return f.value.map(function(word) { return this.enc_latex(this.clone(f, word), raw) }).join(f.sep || '')
+      return f.value.map(word => this.enc_latex(this.clone(f, word), raw)).join(f.sep || '')
     }
 
     if (f.raw || raw) return f.value
@@ -1051,17 +1022,6 @@ export = class Reference {
     if (name.given) latex += `, ${name.given}`
 
     return latex
-  }
-
-  private isodate(date) {
-    if (!date || !date.year || !['date', 'season'].includes(date.type)) return null
-
-    let iso = `${date.year}`
-    if (date.month || date.season) {
-      iso += `-${(`0${date.month || (date.season + 20)}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-      if (date.month && date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-    }
-    return iso
   }
 
   private postscript(reference, item) {} // tslint:disable-line:no-empty

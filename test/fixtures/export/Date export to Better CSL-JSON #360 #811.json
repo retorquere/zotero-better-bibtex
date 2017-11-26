@@ -515,6 +515,48 @@
 
       ],
       "citekey": "AuthorTitle2017"
+    },
+    {
+      "itemType": "book",
+      "date": "2010",
+      "extra": "issued:2011",
+      "title": "Date=2010 & Extra=issued:2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Doe14"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 16:16:20",
+      "dateModified": "2017-11-26 15:07:51",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/X2I7HXV5",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2010",
+        "extra": "issued:2011",
+        "title": "Date=2010 & Extra=issued:2011"
+      },
+      "itemID": 10,
+      "key": "X2I7HXV5",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorDate2010Extra2010"
     }
   ]
 }

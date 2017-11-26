@@ -108,5 +108,12 @@
     "title": "Season circa: : 2017-24~",
     "author": [ { "family": "Doe13", "given": "John" } ],
     "issued": { "date-parts": [ [ 2017 ] ], "season": 4, "circa": true }
+  },
+	{
+  	"author":[{"literal":"Doe14"}],
+  	"id":"Doe14Date2010Extra2010",
+  	"issued":{"date-parts":[[2011]]},
+  	"title":"Date=2010 & Extra=issued:2011",
+    "type":"book"
   }
 ]

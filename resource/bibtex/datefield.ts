@@ -54,7 +54,12 @@ export = (date, field) => {
 
   if (date.type === 'verbatim') {
     field.name = field.verbatim
-    field.value = date.verbatim
+
+    if (date.verbatim === 'n.d.') {
+      field.value = '<pre>\\bibstring{nodate}</pre>'
+    } else {
+      field.value = date.verbatim
+    }
 
   } else if (date.type === 'date' || date.type === 'season') {
     field.value = format(date)
