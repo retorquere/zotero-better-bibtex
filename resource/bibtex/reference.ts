@@ -385,7 +385,10 @@ export = class Reference {
       if (!field.value) return
 
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
-        return this.add({ name: field.name, value: field.value, enc: 'verbatim' })
+        return this.add({
+          ...field,
+          enc: 'verbatim',
+        })
       }
 
       const date = Zotero.BetterBibTeX.parseDate(field.value)
@@ -394,10 +397,8 @@ export = class Reference {
 
       this.add(datefield(date.orig, {
         ...field,
-        ...{
-          name: typeof field.orig === 'boolean' ? `orig${field.name}` : (field.orig && field.orig.name),
-          verbatim: (typeof field.orig === 'boolean' && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
-        },
+        name: typeof field.orig === 'boolean' ? `orig${field.name}` : (field.orig && field.orig.name),
+        verbatim: (typeof field.orig === 'boolean' && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
       }))
 
       return

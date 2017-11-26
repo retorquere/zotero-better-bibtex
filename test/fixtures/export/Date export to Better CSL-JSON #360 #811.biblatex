@@ -88,3 +88,9 @@
   date = {2017-24~},
   title = {Season circa: : 2017-24\textasciitilde{}}
 }
+
+@book{Doe14Date2010Extra2010,
+  author = {{Doe14}},
+  date = {2011},
+  title = {Date=2010 \& {{Extra}}=issued:2011}
+}
