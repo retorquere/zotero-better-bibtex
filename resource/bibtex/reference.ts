@@ -923,7 +923,7 @@ export = class Reference {
       return
     }
 
-    this.add(field)
+    this.add({ ...field, mode: field.mode || 'replace' })
   }
 
   /*
