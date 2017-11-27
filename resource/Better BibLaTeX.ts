@@ -203,46 +203,46 @@ Translator.doExport = () => {
 
     let m
     if (item.url && (m = item.url.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
-      ref.add({ eprinttype: 'jstor'})
-      ref.add({ eprint: m[1] })
+      ref.add({ name: 'eprinttype', value: 'jstor'})
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
     }
 
     if (item.url && (m = item.url.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i))) {
-      ref.add({ eprinttype: 'googlebooks'})
-      ref.add({ eprint: m[1] })
+      ref.add({ name: 'eprinttype', value: 'googlebooks'})
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
     }
 
     if (item.url && (m = item.url.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
-      ref.add({ eprinttype: 'pubmed'})
-      ref.add({ eprint: m[1] })
+      ref.add({ name: 'eprinttype', value: 'pubmed'})
+      ref.add({ name: 'eprint', value: m[1] })
       delete item.url
       ref.remove('url')
     }
 
-    ref.add({ langid: ref.language })
-    ref.add({ location: item.place })
-    ref.add({ chapter: item.chapter })
-    ref.add({ edition: item.edition })
+    ref.add({ name: 'langid', value: ref.language })
+    ref.add({ name: 'location', value: item.place })
+    ref.add({ name: 'chapter', value: item.chapter })
+    ref.add({ name: 'edition', value: item.edition })
     ref.add({ name: 'title', value: item.title })
-    ref.add({ volume: item.volume })
-    ref.add({ rights: item.rights })
-    ref.add({ isbn: item.ISBN })
-    ref.add({ issn: item.ISSN })
-    ref.add({ url: item.url })
-    ref.add({ doi: item.DOI })
-    ref.add({ shorttitle: item.shortTitle })
-    ref.add({ abstract: item.abstractNote })
-    ref.add({ volumes: item.numberOfVolumes })
-    ref.add({ version: item.versionNumber })
-    ref.add({ eventtitle: item.conferenceName })
-    ref.add({ pagetotal: item.numPages })
-    ref.add({ type: item.type })
+    ref.add({ name: 'volume', value: item.volume })
+    ref.add({ name: 'rights', value: item.rights })
+    ref.add({ name: 'isbn', value: item.ISBN })
+    ref.add({ name: 'issn', value: item.ISSN })
+    ref.add({ name: 'url', value: item.url })
+    ref.add({ name: 'doi', value: item.DOI })
+    ref.add({ name: 'shorttitle', value: item.shortTitle })
+    ref.add({ name: 'abstract', value: item.abstractNote })
+    ref.add({ name: 'volumes', value: item.numberOfVolumes })
+    ref.add({ name: 'version', value: item.versionNumber })
+    ref.add({ name: 'eventtitle', value: item.conferenceName })
+    ref.add({ name: 'pagetotal', value: item.numPages })
+    ref.add({ name: 'type', value: item.type })
 
-    ref.add({ number: item.seriesNumber || item.number || item.docketNumber })
+    ref.add({ name: 'number', value: item.seriesNumber || item.number || item.docketNumber })
     ref.add({ name: (isNaN(parseInt(item.issue)) || (`${parseInt(item.issue)}` !== `${item.issue}`)  ? 'issue' : 'number'), value: item.issue })
 
     switch (item.__type__) {
@@ -262,7 +262,7 @@ Translator.doExport = () => {
 
         case 'magazineArticle': case 'newspaperArticle': case 'article-magazine': case 'article-newspaper':
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
-          if (['newspaperArticle', 'article-newspaper'].includes(item.__type__)) ref.add({ journalsubtitle: item.section })
+          if (['newspaperArticle', 'article-newspaper'].includes(item.__type__)) ref.add({ name: 'journalsubtitle', value: item.section })
           break
 
         case 'journalArticle': case 'article': case 'article-journal':
@@ -279,7 +279,7 @@ Translator.doExport = () => {
           break
 
         default:
-          if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ journaltitle: item.publicationTitle})
+          if (!ref.has.journaltitle && (item.publicationTitle !== item.title)) ref.add({ name: 'journaltitle', value: item.publicationTitle })
       }
     }
 
@@ -305,28 +305,28 @@ Translator.doExport = () => {
       }
     }
 
-    ref.add({ series: item.seriesTitle || item.series })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series })
 
     switch (item.__type__) {
       case 'report': case 'thesis':
-        ref.add({ institution: item.institution || item.publisher || item.university })
+        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university })
         break
 
       case 'case': case 'hearing': case 'legal_case':
-        ref.add({ institution: item.court })
+        ref.add({ name: 'institution', value: item.court })
         break
 
       default:
-        ref.add({ publisher: item.publisher })
+        ref.add({ name: 'publisher', value: item.publisher })
     }
 
     switch (item.__type__) {
       case 'letter': case 'personal_communication':
-        ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
+        ref.add({ name: 'type', value: item.letterType || 'Letter', mode: 'replace' })
         break
 
       case 'email':
-        ref.add({ name: 'type', value: 'E-mail', replace: true })
+        ref.add({ name: 'type', value: 'E-mail', mode: 'replace' })
         break
 
       case 'thesis':
@@ -335,7 +335,7 @@ Translator.doExport = () => {
           ref.referencetype = thesistype
           ref.remove('type')
         } else {
-          ref.add({ name: 'type', value: item.thesisType, replace: true })
+          ref.add({ name: 'type', value: item.thesisType, mode: 'replace' })
         }
         break
 
@@ -343,15 +343,15 @@ Translator.doExport = () => {
         if ((item.type || '').toLowerCase().trim() === 'techreport') {
           ref.referencetype = 'techreport'
         } else {
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.type, mode: 'replace' })
         }
         break
 
       default:
-        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, replace: true })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, mode: 'replace' })
     }
 
-    ref.add({ howpublished: item.presentationType || item.manuscriptType })
+    ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
@@ -362,11 +362,11 @@ Translator.doExport = () => {
     ref.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
 
     if (item.pages) {
-      ref.add({ pages: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
+      ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
     } else if (item.firstPage && item.lastPage) {
-      ref.add({ pages: `${item.firstPage}--${item.lastPage}` })
+      ref.add({ name: 'pages', value: `${item.firstPage}--${item.lastPage}` })
     } else if (item.firstPage) {
-      ref.add({ pages: `${item.firstPage}` })
+      ref.add({ name: 'pages', value: `${item.firstPage}` })
     }
 
     ref.add({ name: (ref.has.note ? 'annotation' : 'note'), value: item.extra, allowDuplicates: true })
@@ -382,7 +382,7 @@ Translator.doExport = () => {
      * 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
      *ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
      */
-    if (ref.useprefix) ref.add({ options: 'useprefix=true' })
+    if (ref.useprefix) ref.add({ name: 'options', value: 'useprefix=true' })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
@@ -406,8 +406,8 @@ Translator.doExport = () => {
     for (const eprinttype of ['pmid', 'arxiv', 'jstor', 'hdl', 'googlebooks']) {
       if (ref.has[eprinttype]) {
         if (!ref.has.eprinttype) {
-          ref.add({ eprinttype})
-          ref.add({ eprint: ref.has[eprinttype].value })
+          ref.add({ name: 'eprinttype', value: eprinttype})
+          ref.add({ name: 'eprint', value: ref.has[eprinttype].value })
         }
         ref.remove(eprinttype)
       }
@@ -417,24 +417,24 @@ Translator.doExport = () => {
       let archive = true
       switch (item.archive.toLowerCase()) {
         case 'arxiv':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'arxiv' })
-          ref.add({ eprintclass: item.callNumber })
+          if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'arxiv' })
+          ref.add({ name: 'eprintclass', value: item.callNumber })
           break
 
         case 'jstor':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'jstor' })
+          if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'jstor' })
           break
 
         case 'pubmed':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'pubmed' })
+          if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'pubmed' })
           break
 
         case 'hdl':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'hdl' })
+          if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'hdl' })
           break
 
         case 'googlebooks': case 'google books':
-          if (!ref.has.eprinttype) ref.add({ eprinttype: 'googlebooks' })
+          if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'googlebooks' })
           break
 
         default:
@@ -442,7 +442,7 @@ Translator.doExport = () => {
       }
 
       if (archive) {
-        if (!ref.has.eprint) ref.add({ eprint: item.archiveLocation })
+        if (!ref.has.eprint) ref.add({ name: 'eprint', value: item.archiveLocation })
       }
     }
 
