@@ -136,10 +136,20 @@ export = new class CSLExporter {
       if (csl.issued && item.date) csl.issued = parseDate(item.date)
 
       debug('extracted:', item.extraFields)
-      for (const [name, {type, value}] of Object.entries(item.extraFields.csl)) {
-        if (name === 'type') {
-          if (validCSLTypes.includes(value)) csl.type = value
-          continue
+      for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
+        switch (name) {
+          case 'type':
+            if (validCSLTypes.includes(value)) csl.type = value
+            continue
+
+          case 'doi':
+          case 'isbn':
+          case 'issn':
+          case 'pmcid':
+          case 'pmid':
+          case 'url':
+            name = name.toUpperCase()
+            break
         }
 
         switch (type) {
