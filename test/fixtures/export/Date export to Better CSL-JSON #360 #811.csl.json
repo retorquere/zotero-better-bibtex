@@ -115,5 +115,13 @@
   	"issued":{"date-parts":[[2011]]},
   	"title":"Date=2010 & Extra=issued:2011",
     "type":"book"
+  },
+  {
+    "ISBN":"0-943396-04-2 0-85131-041-9",
+    "author":[{"literal":"Doe15"}],
+    "id":"Doe15multipleISBNs2017",
+    "issued":{"date-parts":[[2017]]},
+    "title":"multiple ISBNs",
+    "type":"book"
   }
 ]

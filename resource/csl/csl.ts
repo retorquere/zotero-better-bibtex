@@ -127,6 +127,9 @@ export = new class CSLExporter {
       delete csl['publisher-place']
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
+      // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
+      if (item.ISBN) csl.ISBN = item.ISBN
+
       delete csl.authority
       if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 

@@ -94,3 +94,10 @@
   date = {2011},
   title = {Date=2010 \& {{Extra}}=issued:2011}
 }
+
+@book{Doe15multipleISBNs2017,
+  author = {{Doe15}},
+  date = {2017},
+  isbn = {0-943396-04-2 0-85131-041-9},
+  title = {Multiple {{ISBNs}}}
+}

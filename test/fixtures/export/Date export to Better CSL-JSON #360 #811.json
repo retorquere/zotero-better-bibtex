@@ -557,6 +557,48 @@
 
       ],
       "citekey": "AuthorDate2010Extra2010"
+    },
+    {
+      "itemType": "book",
+      "ISBN": "0-943396-04-2 0-85131-041-9",
+      "date": "2017",
+      "title": "multiple ISBNs",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Doe15"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 16:16:20",
+      "dateModified": "2017-11-27 12:01:49",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/X2I7HXV5",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "ISBN": "0-943396-04-2 0-85131-041-9",
+        "date": "2017",
+        "title": "multiple ISBNs"
+      },
+      "itemID": 10,
+      "key": "X2I7HXV5",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthormultipleISBNs2017"
     }
   ]
 }
