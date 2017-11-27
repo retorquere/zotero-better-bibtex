@@ -78,10 +78,8 @@ class Translators {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
     try {
-      let installed = Zotero.Translators.get(header.translatorID)
-      installed = installed && installed.configOptions
-      installed = installed && installed.configOptions.BetterBibTeX === header.configOptions.BetterBibTeX
-      if (installed) return false
+      const installed = Zotero.Translators.get(header.translatorID)
+      if (((installed || {}).configOptions || {}).BetterBibTeX === header.configOptions.BetterBibTeX) return false
     } catch (err) {
       debug('Translators.install', header, err)
     }
