@@ -1,7 +1,6 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
 import debug = require('./debug.ts')
-import Prefs = require('./prefs.ts')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -42,10 +41,6 @@ function normalize_edtf(date) {
       [ year, month, day ] = date.values
       if (typeof month === 'number') month += 1
       return doubt({ type: 'date', year, month, day}, {approximate: date.approximate || date.unspecified, uncertain: date.uncertain })
-
-//    when 'Set'
-//      if date.values.length == 1
-//        return { type: 'set', orig: { type: 'date', year: date.values[0].values[0] } }
 
     case 'Interval':
       // tslint:disable-next-line:no-magic-numbers
@@ -279,8 +274,7 @@ function parse(value, descend = true) {
 
 function testEDTF(value) {
   try {
-    const date = EDTF.parse(value)
-    return date && (date.type !== 'Set' || !Prefs.get('dateOrigHack'))
+    return EDTF.parse(value, { level: 1 })
   } catch (err) {
     return false
   }
