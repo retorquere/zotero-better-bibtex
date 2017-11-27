@@ -115,6 +115,10 @@ class DocFinder {
     }
   }
 
+  private ungfm(str) {
+    return str.replace(/\r/g, '').replace(/\n+/g, newlines => newlines.length === 1 ? ' ' : newlines)
+  }
+
   private walk(node) {
     let label, pref, type, dflt
 
@@ -127,7 +131,7 @@ class DocFinder {
         if (node.content[0] === '!') {
           if (this.tab !== -1) throw new Error('Doc block outside the prefs section')
 
-          const text = dedent(node.content.substring(1))
+          const text = this.ungfm(dedent(node.content.substring(1)))
           if (this.preference) {
             if (this.preferences[this.preference].description) throw new Error(`Duplicate description for ${this.preference}`)
             this.preferences[this.preference].description = text
