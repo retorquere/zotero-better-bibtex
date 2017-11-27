@@ -4,7 +4,7 @@ declare const Components: any
 declare const Zotero: any
 declare const AddonManager: any
 
-require('./prefs.ts') // needs to be here early, initializes the prefs observer
+import Prefs = require('./prefs.ts') // needs to be here early, initializes the prefs observer
 require('./pull-export.ts') // just require, initializes the pull-export end points
 require('./json-rpc.ts') // just require, initializes the json-rpc end point
 
@@ -310,85 +310,86 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
 /*
   EVENTS
 */
-Zotero.Notifier.registerObserver({
-  notify(action, type, ids, extraData) {
-    debug('item.notify', {action, type, ids, extraData})
 
-    // prevents update loop -- see KeyManager.init()
-    if (action === 'modify') {
-      ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
-      if (!ids.length) return
+function notify(event, handler) {
+  Zotero.Notifier.registerObserver({
+    notify(...args) {
+      bbtReady.promise.then(() => handler.apply(null, args))
+    },
+  }, [event], 'BetterBibTeX', 1)
+}
+
+notify('item', (action, type, ids, extraData) => {
+  debug('item.notify', {action, type, ids, extraData})
+
+  // prevents update loop -- see KeyManager.init()
+  if (action === 'modify') {
+    ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
+    if (!ids.length) return
+  }
+
+  Cache.remove(ids)
+
+  // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
+  // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
+  const parents = []
+  const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter(item => {
+    if (item.isNote() || item.isAttachment()) {
+      parents.push(item.parentID)
+      return false
     }
 
-    Cache.remove(ids)
+    return true
+  })
+  if (parents.length) Cache.remove(parents)
 
-    // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
-    // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
-    const parents = []
-    const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter(item => {
-      if (item.isNote() || item.isAttachment()) {
-        parents.push(item.parentID)
-        return false
+  switch (action) {
+    case 'delete':
+    case 'trash':
+      debug(`event.${type}.${action}`, {ids, extraData})
+      KeyManager.remove(ids)
+      Events.emit('items-removed', ids)
+      break
+
+    case 'add':
+    case 'modify':
+      for (const item of items) {
+        KeyManager.update(item)
       }
 
-      return true
-    })
-    if (parents.length) Cache.remove(parents)
+      Events.emit('items-changed', ids)
+      break
 
-    switch (action) {
-      case 'delete':
-      case 'trash':
-        debug(`event.${type}.${action}`, {ids, extraData})
-        KeyManager.remove(ids)
-        Events.emit('items-removed', ids)
-        break
+    default:
+      debug('item.notify: unhandled', {action, type, ids, extraData})
+      return
+  }
 
-      case 'add':
-      case 'modify':
-        for (const item of items) {
-          KeyManager.update(item)
-        }
+  AutoExport.changed(items)
+})
 
-        Events.emit('items-changed', ids)
-        break
+notify('collection', (event, type, ids, extraData) => {
+  if ((event === 'delete') && ids.length) Events.emit('collections-removed', ids)
+})
 
-      default:
-        debug('item.notify: unhandled', {action, type, ids, extraData})
-        return
+notify('group', (event, type, ids, extraData) => {
+  if ((event === 'delete') && ids.length) Events.emit('libraries-removed', ids)
+})
+
+notify('collection-item', (event, type, collection_items) => {
+  const changed = new Set()
+
+  for (const collection_item of collection_items) {
+    let collectionID = parseInt(collection_item.split('-')[0])
+    if (changed.has(collectionID)) continue
+    while (collectionID) {
+      changed.add(collectionID)
+      collectionID = Zotero.Collections.get(collectionID).parentID
     }
+  }
 
-    AutoExport.changed(items)
-  },
-}, ['item'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify(event, type, ids, extraData) {
-    if ((event === 'delete') && ids.length) Events.emit('collections-removed', ids)
-  },
-}, ['collection'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify(event, type, ids, extraData) {
-    if ((event === 'delete') && ids.length) Events.emit('libraries-removed', ids)
-  },
-}, ['group'], 'BetterBibTeX', 1)
-
-Zotero.Notifier.registerObserver({
-  notify(event, type, collection_items) {
-    const changed = new Set()
-
-    for (const collection_item of collection_items) {
-      let collectionID = parseInt(collection_item.split('-')[0])
-      if (changed.has(collectionID)) continue
-      while (collectionID) {
-        changed.add(collectionID)
-        collectionID = Zotero.Collections.get(collectionID).parentID
-      }
-    }
-
-    if (changed.size) Events.emit('collections-changed', Array.from(changed))
-  },
-}, ['collection-item'], 'BetterBibTeX', 1)
+  if (changed.size) Events.emit('collections-changed', Array.from(changed))
+})
 
 /*
   INIT
@@ -397,18 +398,25 @@ Zotero.Notifier.registerObserver({
 debug('Loading Better BibTeX: setup done')
 
 class Lock {
-  private mark: { ts: number, msg: string }
+  private timestamp: number
+  private msg: string
+  private enabled: boolean
+  private progressWin: any
+  private progress: any
 
   constructor() {
-    this.mark = { ts: (new Date()).valueOf(), msg: '' }
+    this.enabled = Prefs.get('lockedInit')
   }
 
-  public async lock(msg){
-    await Zotero.uiReadyPromise
+  public async lock(msg) {
+    this.timestamp = (new Date()).valueOf()
+    this.msg = msg || 'Initializing'
 
-    if (Zotero.locked) await Zotero.unlockPromise
+    if (this.enabled) {
+      await Zotero.uiReadyPromise
 
-    this.update(msg || 'Initializing')
+      if (Zotero.locked) await Zotero.unlockPromise
+    }
 
     this.toggle(true)
     debug('Lock: locked')
@@ -416,13 +424,17 @@ class Lock {
 
   public update(msg) {
     this.bench(msg)
-    Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
+
+    if (this.enabled) {
+      Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
+    } else {
+      this.progress.setText(msg)
+    }
   }
 
   public unlock() {
-    this.bench('')
+    this.bench(null)
 
-    Zotero.hideZoteroPaneOverlays()
     this.toggle(false)
     debug('Lock: unlocked')
   }
@@ -430,17 +442,36 @@ class Lock {
   private bench(msg) {
     const ts = (new Date()).valueOf()
     // tslint:disable-next-line:no-magic-numbers
-    if (this.mark.msg) debug('Lock:', this.mark.msg, 'took', (ts - this.mark.ts) / 1000.0, 's')
-    this.mark = { ts, msg }
+    if (this.msg) debug('Lock:', this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    this.msg = msg
+    this.timestamp = ts
   }
 
-  private toggle(locked) {
-    for (const id of ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']) {
-      document.getElementById(id).hidden = locked
-    }
+  private toggle(lock) {
+    if (this.enabled) {
+      for (const id of ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']) {
+        document.getElementById(id).hidden = lock
+      }
 
-    for (const id of ['zotero-collections-tree']) {
-      document.getElementById(id).disabled = locked
+      for (const id of ['zotero-collections-tree']) {
+        document.getElementById(id).disabled = lock
+      }
+
+      if (lock) {
+        Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${this.msg}...`)
+      } else {
+        Zotero.hideZoteroPaneOverlays()
+      }
+    } else if (lock) {
+      this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
+      this.progressWin.changeHeadline('Better BibTeX: Initializing')
+      // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
+      const icon = `chrome://zotero/skin/treesource-unfiled${Zotero.hiDPI ? '@2x' : ''}.png`
+      this.progress = new this.progressWin.ItemProgress(icon, `${this.msg}...`)
+      this.progressWin.show()
+    } else {
+      this.progress.setText('Ready')
+      this.progressWin.startCloseTimer(500) // tslint:disable-line:no-magic-numbers
     }
   }
 }

@@ -331,6 +331,30 @@
           Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't unable this unless explicitly asked to.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.lockedInit"
+          type="bool"
+          default="true"/>
+        <!--!
+          BBT locks the UI during startup because I have been told in
+          no uncertain terms I am not to touch the Zotero database
+          before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
+          access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
+          to make sure BBT initialization has completed before freeing the UI. I want to stress that during most of the
+          lock-time, BBT is simply waiting for Zotero to complete its own initialization; try to do an export of any
+          kind (not just BBT) or to import new references directly after Zotero has started and you'll notice that it
+          may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty
+          race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
+
+          If you however cannot stand the lockout during startup and you
+          want to live dangerously, you can turn this off and hope that
+          no race conditions bite you. If you turn this on and experience
+          problems, you are welcome to file a bug report and I will see what I can do, but be prepared
+          for the answer to be "turn this back on for now".
+
+          This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs">
