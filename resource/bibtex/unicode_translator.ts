@@ -5,6 +5,7 @@ declare const Zotero: any
 
 import debug = require('../lib/debug.ts')
 import MarkupParser = require('../lib/markupparser.ts')
+import HE = require('he')
 const unicodeMapping = require('./unicode_translator.json')
 
 const htmlConverter = new class HTMLConverter {
@@ -53,7 +54,7 @@ const htmlConverter = new class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if ((tag.attrs.href ? tag.attrs.href.length : undefined) > 0) latex = `\\href{${tag.attrs.href}}{...}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href}}{...}`
         break
 
       case 'sup':
@@ -144,6 +145,8 @@ const htmlConverter = new class HTMLConverter {
     let latex = ''
     let math = false
     let braced = 0
+
+    if (this.options.mode === 'html') text = HE.decode(text, { isAttributeValue: true })
 
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
       // in and out of math mode
