@@ -520,6 +520,55 @@ export = new class BetterBibTeX {
     return ''
   }
 
+  public async toTeXstudio() {
+    let pathsep, dirsep
+
+    if (Zotero.platform.toLowerCase().startsWith('win')) {
+      pathsep = ';'
+      dirsep = '\\'
+    } else {
+      pathsep = ':'
+      dirsep = '/'
+    }
+
+    const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+    const path = env.get('PATH')
+
+    let texstudio = null
+    for (const dir of path.split(pathsep)) {
+      texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio`)
+      if (texstudio.exists()) break
+      texstudio = null
+    }
+    if (!texstudio) {
+      alert(this.getString('BetterBibTeX.texstudio.notfound', { path }))
+      return
+    }
+
+    debug('TeXstudio: found at', texstudio.path)
+
+    let items
+    try {
+      items = pane.getSelectedItems()
+      debug('TeXstudio:', items)
+    } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+      debug('TeXstudio: Could not get selected items:', err)
+      return
+    }
+
+    const citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
+    if (!citation) {
+      debug('TeXstudio: no items to cite')
+      return
+    }
+
+    try {
+      await Zotero.Utilities.Internal.exec(texstudio.path, ['--insert-cite', citation])
+    } catch (err) {
+      debug('TeXstudio: Could not get execute texstudio:', err)
+    }
+  }
+
   public errorReport(includeReferences) {
     debug('ErrorReport::start', includeReferences)
 
@@ -557,7 +606,7 @@ export = new class BetterBibTeX {
 
   public getString(id, params = null) {
     try {
-      return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+      return params ? format(this.strings.getString(id), params) : this.strings.getString(id)
     } catch (err) {
       debug('getString', id, err)
       return id

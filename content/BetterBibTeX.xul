@@ -36,6 +36,8 @@
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
     <menuseparator/>
+    <menuitem label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.toTeXstudio()"/>
+    <menuseparator/>
     <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('items')"/>
   </menupopup>
 
