@@ -17,6 +17,7 @@ interface IField {
   bare?: boolean
   raw?: boolean
 
+  // kept as seperate booleans for backwards compat
   replace?: boolean
   fallback?: boolean
 
