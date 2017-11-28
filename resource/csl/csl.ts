@@ -64,6 +64,7 @@ function date2csl(date) {
 
 function parseDate(date) {
   const parsed = Zotero.BetterBibTeX.parseDate(date)
+  debug('parseDate', date, parsed)
   switch (parsed.type) {
     case 'date':
       return {
@@ -72,13 +73,20 @@ function parseDate(date) {
       }
 
     case 'interval':
-      return { 'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ] }
+      return {
+        'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ],
+        circa: (parsed.from.approximate || parsed.to.approximate) ? true : undefined,
+      }
 
     case 'verbatim':
       return { literal: parsed.verbatim }
 
     case 'season':
-      return { 'date-parts': [ [ parsed.year ] ], season: parsed.season }
+      return {
+        'date-parts': [ [ parsed.year ] ],
+        season: parsed.season,
+        circa: parsed.approximate ? true : undefined,
+      }
 
     default:
       throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)
@@ -119,16 +127,29 @@ export = new class CSLExporter {
       delete csl['publisher-place']
       if (item.place) csl[item.itemType === 'presentation' ? 'event-place' : 'publisher-place'] = item.place
 
+      // https://github.com/retorquere/zotero-better-bibtex/issues/811#issuecomment-347165389
+      if (item.ISBN) csl.ISBN = item.ISBN
+
       delete csl.authority
       if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
       if (csl.issued && item.date) csl.issued = parseDate(item.date)
 
       debug('extracted:', item.extraFields)
-      for (const [name, {type, value}] of Object.entries(item.extraFields.csl)) {
-        if (name === 'type') {
-          if (validCSLTypes.includes(value)) csl.type = value
-          continue
+      for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
+        switch (name) {
+          case 'type':
+            if (validCSLTypes.includes(value)) csl.type = value
+            continue
+
+          case 'doi':
+          case 'isbn':
+          case 'issn':
+          case 'pmcid':
+          case 'pmid':
+          case 'url':
+            name = name.toUpperCase()
+            break
         }
 
         switch (type) {

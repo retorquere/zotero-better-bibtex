@@ -178,26 +178,26 @@ Translator.doExport = () => {
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
-    ref.add({address: item.place})
-    ref.add({chapter: item.section})
-    ref.add({edition: item.edition})
-    ref.add({type: item.type})
-    ref.add({series: item.series})
-    ref.add({title: item.title})
-    ref.add({volume: item.volume})
-    ref.add({copyright: item.rights})
-    ref.add({isbn: item.ISBN})
-    ref.add({issn: item.ISSN})
-    ref.add({lccn: item.callNumber})
-    ref.add({shorttitle: item.shortTitle})
-    ref.add({doi: item.DOI})
-    ref.add({abstract: item.abstractNote})
-    ref.add({nationality: item.country})
-    ref.add({language: item.language})
-    ref.add({assignee: item.assignee})
+    ref.add({name: 'address', value: item.place})
+    ref.add({name: 'chapter', value: item.section})
+    ref.add({name: 'edition', value: item.edition})
+    ref.add({name: 'type', value: item.type})
+    ref.add({name: 'series', value: item.series})
+    ref.add({name: 'title', value: item.title})
+    ref.add({name: 'volume', value: item.volume})
+    ref.add({name: 'copyright', value: item.rights})
+    ref.add({name: 'isbn', value: item.ISBN})
+    ref.add({name: 'issn', value: item.ISSN})
+    ref.add({name: 'lccn', value: item.callNumber})
+    ref.add({name: 'shorttitle', value: item.shortTitle})
+    ref.add({name: 'doi', value: item.DOI})
+    ref.add({name: 'abstract', value: item.abstractNote})
+    ref.add({name: 'nationality', value: item.country})
+    ref.add({name: 'language', value: item.language})
+    ref.add({name: 'assignee', value: item.assignee})
 
-    ref.add({ number: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
-    ref.add({ urldate: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
+    ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
+    ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     switch (Translator.preferences.bibtexURL) {
       case 'url':
@@ -219,8 +219,8 @@ Translator.doExport = () => {
     }
 
     switch (item.__type__) {
-      case 'thesis': ref.add({ school: item.publisher }); break
-      case 'report': ref.add({ institution: item.institution || item.publisher }); break
+      case 'thesis': ref.add({ name: 'school', value: item.publisher }); break
+      case 'report': ref.add({ name: 'institution', value: item.institution || item.publisher }); break
       default:       ref.add({ name: 'publisher', value: item.publisher })
     }
 
@@ -235,20 +235,20 @@ Translator.doExport = () => {
       const date = Zotero.BetterBibTeX.parseDate(item.date)
       switch ((date || {}).type || 'verbatim') {
         case 'verbatim':
-          ref.add({ year: item.date })
+          ref.add({ name: 'year', value: item.date })
           break
 
         case 'interval':
           if (date.from.month) ref.add({ name: 'month', value: months[date.from.month - 1], bare: true })
-          ref.add({ year: `${date.from.year}` })
+          ref.add({ name: 'year', value: `${date.from.year}` })
           break
 
         case 'date':
           if (date.month) ref.add({ name: 'month', value: months[date.month - 1], bare: true })
           if ((date.orig || {}).type === 'date') {
-            ref.add({ year: `[${date.orig.year}] ${date.year}` })
+            ref.add({ name: 'year', value: `[${date.orig.year}] ${date.year}` })
           } else {
-            ref.add({ year: `${date.year}` })
+            ref.add({ name: 'year', value: `${date.year}` })
           }
           break
       }
@@ -258,9 +258,9 @@ Translator.doExport = () => {
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if (item.pages) {
-      let { pages } = item
+      let pages = item.pages
       if (!ref.raw) pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--')
-      ref.add({ pages })
+      ref.add({ name: 'pages', value: pages })
     }
 
     if (item.notes && Translator.options.exportNotes) {

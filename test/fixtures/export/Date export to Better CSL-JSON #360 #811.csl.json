@@ -1,78 +1,127 @@
 [
-   {
-      "author" : [ { "given" : "John", "family" : "Doe" } ],
-      "title" : "A manuscript",
-      "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 2015, 1, 1 ] ] },
-      "original-date" : { "date-parts" : [ [ 1777, 7, 27 ], [ 1888, 8, 28 ] ] },
-      "id" : "t1",
-      "type" : "manuscript",
-      "container": {"date-parts": [[ 1777, 7, 27]]},
-      "event-date": {"date-parts": [[ 1888, 8, 28]]},
-      "submitted": {"date-parts": [[ 1999, 9, 29], [0]]},
-      "accessed": {"date-parts": [[ 2014, 12, 31]], "circa": true}
-   },
-   {
-      "title" : "container, event-date, and submitted test",
-      "event-date" : { "date-parts" : [ [ 1800, 1, 1 ], [ 1800, 12, 31 ] ] },
-      "submitted" : { "date-parts" : [ [ 1900, 1, 1 ], [ 1900, 12, 31 ] ] },
-      "id" : "t2",
-      "type" : "book",
-      "container" : { "date-parts" : [ [ 1700, 1, 1 ], [ 1700, 12, 31 ] ] },
-      "author" : [ { "family" : "Doe", "given" : "John" } ],
-      "accessed": { "literal": "13th cent" }
-   },
-   {
-      "id": "t3",
-      "issued" : { "date-parts" : [ [ 2014, 12, 31 ], [ 0 ] ] },
-      "title" : "open-ended date range test",
-      "author" : [ { "given" : "John", "family" : "Doe" } ],
-      "type" : "book"
-   },
-   {
-      "issued" : { "date-parts" : [ [ 2014, 12, 31 ] ] },
-      "title" : "single date test",
-      "author" : [ { "family" : "Doe", "given" : "John" } ],
-      "id" : "t4",
-      "type" : "book"
-   },
   {
+    "id": "t1",
+    "type": "manuscript",
+    "title": "A manuscript: 2014-12-31/2015-01-01",
+    "author": [ { "family": "Doe1", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2014, 12, 31 ], [ 2015, 1, 1 ] ] },
+    "accessed": { "date-parts": [ [ 2014, 12, 31 ] ], "circa": true },
+    "original-date": { "date-parts": [ [ 1777, 7, 27 ], [ 1888, 8, 28 ] ] },
+    "container": { "date-parts": [ [ 1777, 7, 27 ] ] },
+    "event-date": { "date-parts": [ [ 1888, 8, 28 ] ] },
+    "submitted": { "date-parts": [ [ 1999, 9, 29 ], [ 0 ] ] }
+  },
+  {
+    "id": "t2",
+    "type": "book",
+    "title": "container, event-date, and submitted test",
+    "author": [ { "family": "Doe2", "given": "John" } ],
+    "accessed": { "literal": "13th cent" },
+    "container": { "date-parts": [ [ 1700, 1, 1 ], [ 1700, 12, 31 ] ] },
+    "event-date": { "date-parts": [ [ 1800, 1, 1 ], [ 1800, 12, 31 ] ] },
+    "submitted": { "date-parts": [ [ 1900, 1, 1 ], [ 1900, 12, 31 ] ] }
+  },
+  {
+    "id": "t3",
+    "type": "book",
+    "title": "open-ended date range test: 2014-12-31/",
+    "author": [ { "family": "Doe3", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2014, 12, 31 ], [ 0 ] ] }
+  },
+  {
+    "id": "t4",
+    "type": "book",
+    "title": "single date test: 2014-12-31",
+    "author": [ { "family": "Doe4", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2014, 12, 31 ] ] }
+  },
+  {
+    "id": "t5",
+    "type": "book",
+    "title": "BC tests: -0333",
+    "author": [ { "family": "Doe5", "given": "John" } ],
+    "issued": { "date-parts": [ [ -334 ] ] },
     "accessed": { "date-parts": [ [ -333, 11, 5 ] ] },
-    "author": [ { "family": "Doe", "given": "John" } ],
+    "original-date": { "date-parts": [ [ -334 ], [ -333 ] ] },
     "container": { "date-parts": [ [ -63, 9, 23 ], [ 14, 8, 19 ] ] },
     "event-date": { "date-parts": [ [ -1 ] ] },
-    "id": "t5",
-    "issued": { "date-parts": [ [ -334 ] ] },
-    "original-date": { "date-parts": [ [ -334 ], [ -333 ] ] },
-    "submitted": { "date-parts": [ [ -2 ] ] },
-    "title": "BC tests",
-    "type": "book"
+    "submitted": { "date-parts": [ [ -2 ] ] }
   },
   {
-    "author": [ { "family": "Doe", "given": "John" } ],
     "id": "t6",
-    "issued": { "date-parts": [ [-100,7,12],[-44,3,15] ] },
-    "title": "BC tests 2",
-    "type": "book"
+    "type": "book",
+    "title": "BC tests 2: -0099-07-12/-0043-03-15",
+    "author": [ { "family": "Doe6", "given": "John" } ],
+    "issued": { "date-parts": [ [ -100, 7, 12 ], [ -44, 3, 15 ] ] }
   },
   {
-    "URL":"http://www.jstor.org/stable/1225428",
-    "accessed":{"date-parts":[["2015",4,30]]},
-    "author":[
-      {
-        "family":"Staiger",
-        "given":"Janet"
-      }
-    ],
-    "container-title":"Cinema Journal",
-    "id":"Staiger1985",
-    "issue":"3",
-    "issued":{
-      "date-parts":[[1985]],
-      "season": 1
-    },
-    "page":"4-23",
-    "title":"The Politics of Film Canons",
-    "type":"article-journal",
-    "volume":"24"
-	}
+    "id": "Doe7PoliticsFilmCanons1985",
+    "type": "article-journal",
+    "title": "The Politics of Film Canons: printemps 1985",
+    "container-title": "Cinema Journal",
+    "page": "4-23",
+    "volume": "24",
+    "issue": "3",
+    "URL": "http://www.jstor.org/stable/1225428",
+    "author": [ { "family": "Doe7", "given": "John" } ],
+    "issued": { "date-parts": [ [ 1985 ] ], "season": 1 },
+    "accessed": { "date-parts": [ [ "2015", 4, 30 ] ] }
+  },
+  {
+    "id": "Doe8Title2017232017",
+    "type": "webpage",
+    "title": "Title: 2017-23",
+    "author": [ { "family": "Doe8", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2017 ] ], "season": 3 }
+  },
+  {
+    "id": "Doe9EDTFdaterange2011",
+    "type": "webpage",
+    "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26",
+    "author": [ { "family": "Doe9", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
+  },
+  {
+    "id": "Doe10EDTFdaterange2011",
+    "type": "webpage",
+    "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
+    "author": [ { "family": "Doe10", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
+  },
+  {
+    "id": "Doe11EDTFdaterange2011",
+    "type": "webpage",
+    "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~",
+    "author": [ { "family": "Doe11", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
+  },
+  {
+    "id": "Doe12EDTFdateYYYYMM2011",
+    "type": "webpage",
+    "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
+    "author": [ { "family": "Doe12", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2011, 5 ] ], "circa": true }
+  },
+  {
+    "id": "Doe13Seasoncirca2017242017",
+    "type": "webpage",
+    "title": "Season circa: : 2017-24~",
+    "author": [ { "family": "Doe13", "given": "John" } ],
+    "issued": { "date-parts": [ [ 2017 ] ], "season": 4, "circa": true }
+  },
+	{
+  	"author":[{"literal":"Doe14"}],
+  	"id":"Doe14Date2010Extra2010",
+  	"issued":{"date-parts":[[2011]]},
+  	"title":"Date=2010 & Extra=issued:2011",
+    "type":"book"
+  },
+  {
+    "ISBN":"0-943396-04-2 0-85131-041-9",
+    "author":[{"literal":"Doe15"}],
+    "id":"Doe15multipleISBNs2017",
+    "issued":{"date-parts":[[2017]]},
+    "title":"multiple ISBNs",
+    "type":"book"
+  }
 ]

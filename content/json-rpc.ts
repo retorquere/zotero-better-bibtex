@@ -10,11 +10,13 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-const scholmd = new class ScholMD {
-  public async $libraries() {
+const user = new class User {
+  public async groups() {
     return Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
   }
+}
 
+const api = new class API {
   public async handle(request, allowArray = true) {
     if (allowArray && Array.isArray(request)) {
       const response = []
@@ -27,14 +29,22 @@ const scholmd = new class ScholMD {
     if (!this.validRequest(request)) return {jsonrpc: '2.0', error: {code: INVALID_REQUEST, message: 'Invalid Request'}, id: null}
     if (request.params && (!Array.isArray(request.params) && typeof request.params !== 'object')) return {jsonrpc: '2.0', error: {code: INVALID_PARAMETERS, message: 'Invalid Parameters'}, id: null}
 
-    const method = this[`$${request.method}`]
-    if (!method) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: 'Method not found'}, id: null}
+    const [namespace, methodName ] = request.method.split('.')
+    let method = null
+
+    switch (namespace) {
+      case 'user':
+        method = user[methodName]
+        break
+    }
+
+    if (!method) return {jsonrpc: '2.0', error: {code: METHOD_NOT_FOUND, message: `Method not found: ${request.method}`}, id: null}
     try {
       if (!request.params) return {jsonrpc: '2.0', result: await method(), id: request.id || null}
       if (Array.isArray(request.params)) return {jsonrpc: '2.0', result: await method.apply(null, request.params), id: request.id || null}
       return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
     } catch (err) {
-      debug('ScholMD:', err)
+      debug('JSON-RPC:', err)
       return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: 'Internal error'}, id: null}
     }
   }
@@ -47,17 +57,17 @@ const scholmd = new class ScholMD {
   }
 }
 
-Zotero.Server.Endpoints['/better-bibtex/scholmd'] = class {
+Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public supportedMethods = ['POST']
   public supportedDataTypes = '*'
   public permitBookmarklet = false
 
   public async init(options) {
     if (typeof options.data === 'string') options.data = JSON.parse(options.data)
-    debug('ScholMD: execute', options.data)
+    debug('json-rpc: execute', options.data)
 
     try {
-      return [OK, 'application/json', JSON.stringify(await scholmd.handle(options.data))]
+      return [OK, 'application/json', JSON.stringify(await api.handle(options.data))]
     } catch (err) {
       return [OK, 'application/json', JSON.stringify({jsonrpc: '2.0', error: {code: PARSE_ERROR, message: `Parse error: ${err} in ${options.data}`}, id: null})]
     }

@@ -1,0 +1,103 @@
+@unpublished{t1,
+  author = {Doe1, John},
+  date = {2014-12-31/2015-01-01},
+  eventdate = {1888-08-28},
+  origdate = {1777-07-27/1888-08-28},
+  title = {A Manuscript: 2014-12-31/2015-01-01},
+  urldate = {2014-12-31~}
+}
+
+@book{t2,
+  author = {Doe2, John},
+  eventdate = {1800-01-01/1800-12-31},
+  title = {Container, Event-Date, and Submitted Test},
+  urldate = {13th cent}
+}
+
+@book{t3,
+  author = {Doe3, John},
+  date = {2014-12-31/},
+  title = {Open-Ended Date Range Test: 2014-12-31/}
+}
+
+@book{t4,
+  author = {Doe4, John},
+  date = {2014-12-31},
+  title = {Single Date Test: 2014-12-31}
+}
+
+@book{t5,
+  author = {Doe5, John},
+  date = {-0333},
+  eventdate = {0000},
+  origdate = {-0333/-0332},
+  title = {{{BC}} Tests: -0333},
+  urldate = {-0332-11-05}
+}
+
+@book{t6,
+  author = {Doe6, John},
+  date = {-0099-07-12/-0043-03-15},
+  title = {{{BC}} Tests 2: -0099-07-12/-0043-03-15}
+}
+
+@article{Doe7PoliticsFilmCanons1985,
+  author = {Doe7, John},
+  date = {1985-21},
+  eprint = {1225428},
+  eprinttype = {jstor},
+  journaltitle = {Cinema Journal},
+  number = {3},
+  pages = {4--23},
+  title = {The {{Politics}} of {{Film Canons}}: Printemps 1985},
+  volume = {24}
+}
+
+@online{Doe8Title2017232017,
+  author = {Doe8, John},
+  date = {2017-23},
+  title = {Title: 2017-23}
+}
+
+@online{Doe9EDTFdaterange2011,
+  author = {Doe9, John},
+  date = {2011-05-25~/2012-06-26},
+  title = {{{EDTF}} Date Range, circa Begin: 2011-05-25\textasciitilde/2012-06-26}
+}
+
+@online{Doe10EDTFdaterange2011,
+  author = {Doe10, John},
+  date = {2011-05-25~/2012-06-26~},
+  title = {{{EDTF}} Date Range, circa Begin \& End: 2011-05-25\textasciitilde/2012-06-26\textasciitilde{}}
+}
+
+@online{Doe11EDTFdaterange2011,
+  author = {Doe11, John},
+  date = {2011-05-25/2012-06-26~},
+  title = {{{EDTF}} Date Range, circa End: 2011-05-25/2012-06-26\textasciitilde{}}
+}
+
+@online{Doe12EDTFdateYYYYMM2011,
+  author = {Doe12, John},
+  date = {2011-05~},
+  title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde{}}
+}
+
+@online{Doe13Seasoncirca2017242017,
+  author = {Doe13, John},
+  date = {2017-24~},
+  title = {Season circa: : 2017-24\textasciitilde{}}
+}
+
+@book{Doe14Date2010Extra2010,
+  author = {{Doe14}},
+  date = {2011},
+  title = {Date=2010 \& {{Extra}}=issued:2011}
+}
+
+@book{Doe15multipleISBNs2017,
+  author = {{Doe15}},
+  date = {2017},
+  isbn = {0-943396-04-2 0-85131-041-9},
+  title = {Multiple {{ISBNs}}}
+}
