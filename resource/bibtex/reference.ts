@@ -934,7 +934,7 @@ export = class Reference {
       return
     }
 
-    this.add({ ...field, mode: field.mode || 'replace' })
+    this.add({ ...field, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
   }
 
   /*

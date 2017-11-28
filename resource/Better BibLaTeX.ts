@@ -322,11 +322,11 @@ Translator.doExport = () => {
 
     switch (item.__type__) {
       case 'letter': case 'personal_communication':
-        ref.add({ name: 'type', value: item.letterType || 'Letter', mode: 'replace' })
+        ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
         break
 
       case 'email':
-        ref.add({ name: 'type', value: 'E-mail', mode: 'replace' })
+        ref.add({ name: 'type', value: 'E-mail', replace: true })
         break
 
       case 'thesis':
@@ -335,7 +335,7 @@ Translator.doExport = () => {
           ref.referencetype = thesistype
           ref.remove('type')
         } else {
-          ref.add({ name: 'type', value: item.thesisType, mode: 'replace' })
+          ref.add({ name: 'type', value: item.thesisType, replace: true })
         }
         break
 
@@ -343,12 +343,12 @@ Translator.doExport = () => {
         if ((item.type || '').toLowerCase().trim() === 'techreport') {
           ref.referencetype = 'techreport'
         } else {
-          ref.add({ name: 'type', value: item.type, mode: 'replace' })
+          ref.add({ name: 'type', value: item.type, replace: true })
         }
         break
 
       default:
-        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, mode: 'replace' })
+        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, replace: true })
     }
 
     ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
