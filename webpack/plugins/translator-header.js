@@ -33,9 +33,6 @@ TranslatorHeaderPlugin.prototype.apply = function(compiler) {
   compiler.plugin('emit', function(compilation, done) {
     var header = require(__dirname + '/../../resource/' + self.translator + '.json')
 
-    header.configOptions = header.configOptions || {}
-    header.configOptions.BetterBibTeX = version
-
     // header.lastUpdated = self.lastModified.toISOString().replace('T', ' ').replace(/\..*/, '');
     header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '');
 

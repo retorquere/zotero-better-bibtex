@@ -12,30 +12,27 @@ class Translators {
     const start = (new Date()).valueOf()
     Object.assign(this, require('../gen/translators.json'))
 
+    let reinit = false
+
     if (Prefs.get('removeStock')) {
       this.uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')
       this.uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')
+      reinit = true
     }
 
-    let reinit = false
-    // tslint:disable-next-line:no-unused-variable
-    for (const [id, header] of Object.entries(this.byId)) {
-      if (this.install(header)) {
-        reinit = true
-        debug('Translators.init: installed', header.label, '@', (new Date()).valueOf() - start)
-      } else {
-        debug('Translators.init: retained', header.label, '@', (new Date()).valueOf() - start)
+    for (const header of Object.values(this.byId)) {
+      if (this.install(header)) reinit = true
+    }
+
+    if (reinit) {
+      debug('Translators.init: reinit translators...')
+      try {
+        debug('Translators.init: reinit start @', (new Date()).valueOf() - start)
+        await Zotero.Translators.reinit()
+        debug('Translators.init: reinit ready @', (new Date()).valueOf() - start)
+      } catch (err) {
+        debug('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
       }
-    }
-
-    if (!reinit) return
-
-    debug('Translators.init: reinit translators...')
-    try {
-      await Zotero.Translators.reinit()
-      debug('Translators.init: reinit ready @', (new Date()).valueOf() - start)
-    } catch (err) {
-      debug('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
     }
   }
 
@@ -77,11 +74,21 @@ class Translators {
   public install(header) {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
+    let installed = null
     try {
-      const installed = Zotero.Translators.get(header.translatorID)
-      if (((installed || {}).configOptions || {}).BetterBibTeX === header.configOptions.BetterBibTeX) return false
+      installed = Zotero.Translators.get(header.translatorID)
     } catch (err) {
       debug('Translators.install', header, err)
+      installed = null
+    }
+
+    if (installed && installed.lastUpdated === header.lastUpdated) {
+      debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
+      return false
+    } else if (installed) {
+      debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated)
+    } else {
+      debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated)
     }
 
     debug('Translators.install: saving translator', header.label)
