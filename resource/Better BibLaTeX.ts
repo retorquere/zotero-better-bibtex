@@ -369,14 +369,7 @@ Translator.doExport = () => {
       ref.add({ name: 'pages', value: `${item.firstPage}` })
     }
 
-    ref.add({ name: (ref.has.note ? 'annotation' : 'note'), value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
-
-    if (item.notes && Translator.options.exportNotes) {
-      for (const note of item.notes) {
-        ref.add({ name: 'annotation', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
-      }
-    }
 
     /*
      * 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.

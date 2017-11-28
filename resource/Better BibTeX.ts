@@ -204,10 +204,10 @@ Translator.doExport = () => {
         ref.add({ name: 'url', value: item.url })
         break
       case 'note':
-        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) ? 'howpublished' : 'note'), allowDuplicates: true, value: item.url, enc: 'url' })
+        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
         break
       default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.__type__)) ref.add({ name: 'howpublished', allowDuplicates: true, value: item.url })
+        if (['webpage', 'post', 'post-weblog'].includes(item.__type__)) ref.add({ name: 'howpublished', value: item.url })
     }
 
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.__type__)) {
@@ -254,19 +254,12 @@ Translator.doExport = () => {
       }
     }
 
-    ref.add({ name: 'note', value: item.extra, allowDuplicates: true })
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     if (item.pages) {
       let pages = item.pages
       if (!ref.raw) pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--')
       ref.add({ name: 'pages', value: pages })
-    }
-
-    if (item.notes && Translator.options.exportNotes) {
-      for (const note of item.notes) {
-        ref.add({ name: 'annote', value: Zotero.Utilities.unescapeHTML(note.note), allowDuplicates: true, html: true })
-      }
     }
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })

@@ -145,6 +145,16 @@ const htmlConverter = new class HTMLConverter {
     let math = false
     let braced = 0
 
+    text = text.replace(/&([a-z]+);/g, (match, name) => {
+      switch (name.toLowerCase()) {
+        case 'nbsp':
+          return '\u00A0'
+        default:
+          throw new Error(`Don't know how to convert '${match}'`)
+      }
+    })
+    text = text.replace(/&#([0-9]+);/g, (match, code) => String.fromCharCode(code))
+
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
       // in and out of math mode
       if (!!this.mapping.math[c] !== math) {

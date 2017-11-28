@@ -12,13 +12,14 @@ interface IField {
   verbatim?: string
   value: string | number | null
   enc?: string
-  mode?: 'replace' | 'fallback'
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   preserveBibTeXVariables?: boolean
   bare?: boolean
   raw?: boolean
 
-  allowDuplicates?: boolean
+  replace?: boolean
+  fallback?: boolean
+
   html?: boolean
 
   bibtex?: string
@@ -419,7 +420,8 @@ export = class Reference {
       return
     }
 
-    if (field.mode === 'fallback' && this.has[field.name]) return
+    if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
+    if (field.fallback && this.has[field.name]) return
 
     // legacy field addition, leave in place for postscripts
     if (!field.name) {
@@ -443,8 +445,7 @@ export = class Reference {
       if (Array.isArray(field.value) && (field.value.length === 0)) return
     }
 
-    if (field.mode === 'replace') this.remove(field.name)
-    if (this.has[field.name] && !field.allowDuplicates) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
+    if (this.has[field.name] && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
 
     if (!field.bibtex) {
       let value
@@ -457,6 +458,8 @@ export = class Reference {
 
         if (!value) return
 
+        if (field.name === 'annotation') debug('annotation:', value)
+        value = value.trim()
         if (!field.bare || field.value.match(/\s/)) value = `{${value}}`
       }
 
@@ -624,7 +627,7 @@ export = class Reference {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value: field.value, enc, mode: replace ? 'replace' : 'fallback' })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value: field.value, enc, replace, fallback: !replace })
       } else {
         debug('Unmapped CSL field', cslName, '=', field.value)
       }
@@ -682,6 +685,18 @@ export = class Reference {
     }
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
+
+    let notes = ''
+    if (Translator.options.exportNotes && this.item.notes && this.item.notes.length) {
+      notes = this.item.notes.map(note => note.note).join('<p>')
+    }
+    const annotation = Translator.BetterBibTeX ? 'annote' : 'annotation'
+    if (this.has.note && this.item.extra) {
+      this.add({ name: annotation, value: notes ? `${this.item.extra.replace(/\n/g, '<br/>')}<p>${notes}` : this.item.extra, html: !!notes })
+    } else {
+      this.add({ name: 'note', value: this.item.extra })
+      this.add({ name: annotation, value: notes, html: true })
+    }
 
     try {
       this.postscript(this, this.item)
