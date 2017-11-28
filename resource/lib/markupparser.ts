@@ -194,7 +194,7 @@ export = new class MarkupParser {
   private closeSelf = makeMap('colgroup dd dt li options p td tfoot th thead tr')
   private empty = makeMap('area base basefont br col frame hr img input link meta param embed command keygen source track wbr')
 
-  public parse(html, options: { caseConversion?: boolean, mode?: string } = {}) {
+  public parse(html, options: { caseConversion?: boolean, mode?: string } = {}): IHTMLNode {
     html = `${html}`
     this.handler = new AST(options.caseConversion)
 

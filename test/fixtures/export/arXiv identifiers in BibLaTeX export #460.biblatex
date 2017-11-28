@@ -1,6 +1,7 @@
 @article{Sen.2016.BV,
   abstract = {We construct the quantum BV master action for heterotic and type II string field theories.},
   annotation = {27/03/16 - overview - studying the papers of Ashoke
+
 This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.},
   archivePrefix = {arXiv},
   author = {Sen, Ashoke},
