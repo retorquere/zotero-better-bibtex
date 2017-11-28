@@ -5,6 +5,24 @@ declare const Zotero: any
 import debug = require('../lib/debug.ts')
 import Exporter = require('../lib/exporter.ts')
 import { text2latex } from './unicode_translator.ts'
+import datefield = require('./datefield.ts')
+
+interface IField {
+  name: string
+  verbatim?: string
+  value: string | number | null
+  enc?: string
+  mode?: 'replace' | 'fallback'
+  orig?: { name?: string, verbatim?: string, inherit?: boolean }
+  preserveBibTeXVariables?: boolean
+  bare?: boolean
+  raw?: boolean
+
+  allowDuplicates?: boolean
+  html?: boolean
+
+  bibtex?: string
+}
 
 const arXiv = new class {
   // new-style IDs
@@ -324,6 +342,7 @@ export = class Reference {
 
     if (this.item.extraFields.csl.type) {
       this.item.cslType = this.item.extraFields.csl.type.value
+      delete item.extraFields.csl.type
     }
 
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
@@ -340,7 +359,7 @@ export = class Reference {
     if (typeof referencetype === 'string') {
       this.referencetype = referencetype
     } else {
-      this.add({ entrysubtype: referencetype.subtype })
+      this.add({ name: 'entrysubtype', value: referencetype.subtype })
       this.referencetype = referencetype.type
     }
 
@@ -361,10 +380,10 @@ export = class Reference {
     }
 
     if (this.item.arXiv) {
-      this.add({ archivePrefix: 'arXiv'} )
-      this.add({ eprinttype: 'arxiv'})
-      this.add({ eprint: this.item.arXiv.eprint })
-      if (this.item.arXiv.primaryClass) this.add({ primaryClass: this.item.arXiv.primaryClass })
+      this.add({ name: 'archivePrefix', value: 'arXiv'} )
+      this.add({ name: 'eprinttype', value: 'arxiv'})
+      this.add({ name: 'eprint', value: this.item.arXiv.eprint })
+      if (this.item.arXiv.primaryClass) this.add({ name: 'primaryClass', value: this.item.arXiv.primaryClass })
       delete this.item.extraFields.kv.arxiv
     }
   }
@@ -377,7 +396,35 @@ export = class Reference {
    *   'enc' means 'enc_latex'. If you pass both 'bibtex' and 'latex', 'bibtex' takes precedence (and 'value' will be
    *   ignored)
    */
-  public add(field) {
+  public add(field: IField) {
+    debug('add field', field)
+
+    if (field.enc === 'date') {
+      if (!field.value) return
+
+      if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
+        return this.add({
+          ...field,
+          enc: 'verbatim',
+        })
+      }
+
+      const date = Zotero.BetterBibTeX.parseDate(field.value)
+
+      this.add(datefield(date, field))
+
+      this.add(datefield(date.orig, {
+        ...field,
+        name: (field.orig && field.orig.inherit) ? `orig${field.name}` : (field.orig && field.orig.name),
+        verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
+      }))
+
+      return
+    }
+
+    if (field.mode === 'fallback' && this.has[field.name]) return
+
+    // legacy field addition, leave in place for postscripts
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
@@ -399,7 +446,7 @@ export = class Reference {
       if (Array.isArray(field.value) && (field.value.length === 0)) return
     }
 
-    if (field.replace) this.remove(field.name)
+    if (field.mode === 'replace') this.remove(field.name)
     if (this.has[field.name] && !field.allowDuplicates) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
 
     if (!field.bibtex) {
@@ -422,7 +469,6 @@ export = class Reference {
       field.bibtex = `${value}`
     }
 
-    // field.bibtex = field.bibtex.normalize('NFKC') if @normalize
     this.fields.push(field)
     this.has[field.name] = field
   }
@@ -462,11 +508,12 @@ export = class Reference {
     if ((this.item.collections || []).length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
       let groups = this.item.collections.filter(key => Translator.collections[key]).map(key => Translator.collections[key].name)
       groups = groups.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
-      this.add({ groups: groups.join(',') })
+      this.add({ name: 'groups', value: groups.join(',') })
     }
 
-    const fields = []
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
+      debug('extraFields: csl', cslName, field)
+
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
         this.item.extraFields.kv[cslName] = field
@@ -475,14 +522,21 @@ export = class Reference {
       }
 
       let name = null
+      let replace = false
       let enc
       switch (field.type) {
         case 'string':
           enc = null
           break
+
         case 'creator':
           enc = 'creators'
           break
+
+        case 'date':
+          enc = 'date'
+          replace = true
+
         default:
           enc = field.type
       }
@@ -541,6 +595,14 @@ export = class Reference {
             name = 'venue'
             break
 
+          case 'event-date':
+            name = 'eventdate'
+            break
+
+          case 'accessed':
+            name = 'urldate'
+            break
+
           case 'number':
           case 'volume':
           case 'author':
@@ -567,72 +629,61 @@ export = class Reference {
       }
 
       if (name) {
-        fields.push({ name, value: field.value, enc })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value: field.value, enc, mode: replace ? 'replace' : 'fallback' })
       } else {
         debug('Unmapped CSL field', cslName, '=', field.value)
       }
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.bibtex)) {
+      debug('extraFields: bibtex', name, field)
+
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
         this.referencetype = field.value
         continue
       }
 
-      fields.push(field)
+      debug('extraFields: bibtex')
+      this.override(field)
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
+      debug('extraFields: kv', name, field)
+
       switch (name) {
         case 'mr':
-          fields.push({ name: 'mrnumber', value: field.value, raw: field.raw })
+          this.override({ name: 'mrnumber', value: field.value, raw: field.raw })
           break
         case 'zbl':
-          fields.push({ name: 'zmnumber', value: field.value, raw: field.raw })
+          this.override({ name: 'zmnumber', value: field.value, raw: field.raw })
           break
         case 'lccn': case 'pmcid':
-          fields.push({ name, value: field.value, raw: field.raw })
+          this.override({ name, value: field.value, raw: field.raw })
           break
         case 'pmid': case 'arxiv': case 'jstor': case 'hdl':
           if (Translator.BetterBibLaTeX) {
-            fields.push({ name: 'eprinttype', value: name })
-            fields.push({ name: 'eprint', value: field.value, raw: field.raw })
+            this.override({ name: 'eprinttype', value: name })
+            this.override({ name: 'eprint', value: field.value, raw: field.raw })
           } else {
-            fields.push({ name, value: field.value, raw: field.raw })
+            this.override({ name, value: field.value, raw: field.raw })
           }
           break
         case 'googlebooksid':
           if (Translator.BetterBibLaTeX) {
-            fields.push({ name: 'eprinttype', value: 'googlebooks' })
-            fields.push({ name: 'eprint', value: field.value, raw: field.raw })
+            this.override({ name: 'eprinttype', value: 'googlebooks' })
+            this.override({ name: 'eprint', value: field.value, raw: field.raw })
           } else {
-            fields.push({ name: 'googlebooks', value: field.value, raw: field.raw })
+            this.override({ name: 'googlebooks', value: field.value, raw: field.raw })
           }
           break
         case 'xref':
-          fields.push({ name, value: field.value, raw: field.raw })
+          this.override({ name, value: field.value, raw: field.raw })
           break
 
         default:
           debug('unexpected KV field', name, field)
       }
-    }
-
-    for (const field of fields) {
-      const name = field.name.split('.')
-      if (name.length > 1) {
-        if (this.referencetype !== name[0]) continue
-        field.name = name[1]
-      }
-
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) {
-        this.remove(field.name)
-        continue
-      }
-
-      field.replace = true
-      this.add(field)
     }
 
     if (this.fields.length === 0) this.add({name: 'type', value: this.referencetype})
@@ -672,35 +723,6 @@ export = class Reference {
    */
   protected enc_raw(f) {
     return f.value
-  }
-
-  /*
-   * Encode to date
-   *
-   * @param {field} field to encode
-   * @return {String} unmodified `field.value`
-   */
-  protected enc_date(f) {
-    let parsed
-    if (!f.value) return null
-
-    const { value } = f
-    if (typeof f.value === 'string') parsed = Zotero.BetterBibTeX.parseDate(value, this.item.language)
-
-    if (parsed.type === 'verbatim') {
-      if (f.value === 'n.d.') return '\\bibstring{nodate}'
-      return this.enc_latex(this.clone(f, f.value))
-    }
-
-    let date = this.isodate(parsed.from || parsed)
-    if (!date) return null
-
-    if (parsed.to) {
-      const enddate = this.isodate(parsed.to)
-      if (enddate) date += `/${enddate}`
-    }
-
-    return this.enc_latex({value: date})
   }
 
   /*
@@ -797,7 +819,7 @@ export = class Reference {
 
     if (Array.isArray(f.value)) {
       if (f.value.length === 0) return null
-      return f.value.map(function(word) { return this.enc_latex(this.clone(f, word), raw) }).join(f.sep || '')
+      return f.value.map(word => this.enc_latex(this.clone(f, word), raw)).join(f.sep || '')
     }
 
     if (f.raw || raw) return f.value
@@ -887,6 +909,21 @@ export = class Reference {
 
     if (Translator.preferences.jabrefFormat) return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
     return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
+  }
+
+  private override(field: IField) {
+    const name = field.name.split('.')
+    if (name.length > 1) {
+      if (this.referencetype !== name[0]) return
+      field.name = name[1]
+    }
+
+    if ((typeof field.value === 'string') && (field.value.trim() === '')) {
+      this.remove(field.name)
+      return
+    }
+
+    this.add({ ...field, mode: field.mode || 'replace' })
   }
 
   /*
@@ -1019,17 +1056,6 @@ export = class Reference {
     if (name.given) latex += `, ${name.given}`
 
     return latex
-  }
-
-  private isodate(date) {
-    if (!date || !date.year || !['date', 'season'].includes(date.type)) return null
-
-    let iso = `${date.year}`
-    if (date.month) {
-      iso += `-${(`0${date.month}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-      if (date.day) iso += `-${(`0${date.day}`).slice(-2)}` // tslint:disable-line:no-magic-numbers
-    }
-    return iso
   }
 
   private postscript(reference, item) {} // tslint:disable-line:no-empty

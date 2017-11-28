@@ -226,11 +226,11 @@ Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
   Then an export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
 
-@365 @pandoc
-Scenario: Export of creator-type fields from embedded CSL variables #365
-  When I import 6 references from "export/Export of creator-type fields from embedded CSL variables #365.json"
-  Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365.biblatex"
-  And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365.csl.json"
+@365 @pandoc @825
+Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
+  When I import 7 references from "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.json"
+  Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.biblatex"
+  And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.csl.json"
 
 @587
 Scenario: Setting the item type via the cheater syntax #587
@@ -241,8 +241,9 @@ Scenario: Setting the item type via the cheater syntax #587
 
 @360 @811 @pandoc
 Scenario: Date export to Better CSL-JSON #360 #811
-  When I import 7 references from "export/Date export to Better CSL-JSON #360 #811.json"
+  When I import 15 references from "export/Date export to Better CSL-JSON #360 #811.json"
   And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360 #811.csl.json"
+  And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
