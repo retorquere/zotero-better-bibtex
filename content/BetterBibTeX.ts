@@ -25,6 +25,7 @@ import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
 import AUXScanner = require('./aux-scanner.ts')
+import TeXstudio = require('./tex-studio.ts')
 import format = require('string-template')
 
 import $patch$ = require('./monkey-patch.ts')
@@ -521,52 +522,7 @@ export = new class BetterBibTeX {
   }
 
   public async toTeXstudio() {
-    let pathsep, dirsep
-
-    if (Zotero.platform.toLowerCase().startsWith('win')) {
-      pathsep = ';'
-      dirsep = '\\'
-    } else {
-      pathsep = ':'
-      dirsep = '/'
-    }
-
-    const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-    const path = env.get('PATH')
-
-    let texstudio = null
-    for (const dir of path.split(pathsep)) {
-      texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio`)
-      if (texstudio.exists()) break
-      texstudio = null
-    }
-    if (!texstudio) {
-      alert(this.getString('BetterBibTeX.texstudio.notfound', { path }))
-      return
-    }
-
-    debug('TeXstudio: found at', texstudio.path)
-
-    let items
-    try {
-      items = pane.getSelectedItems()
-      debug('TeXstudio:', items)
-    } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-      debug('TeXstudio: Could not get selected items:', err)
-      return
-    }
-
-    const citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
-    if (!citation) {
-      debug('TeXstudio: no items to cite')
-      return
-    }
-
-    try {
-      await Zotero.Utilities.Internal.exec(texstudio.path, ['--insert-cite', citation])
-    } catch (err) {
-      debug('TeXstudio: Could not get execute texstudio:', err)
-    }
+    await TeXstudio.push()
   }
 
   public errorReport(includeReferences) {
@@ -618,11 +574,14 @@ export = new class BetterBibTeX {
 
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
-    // oh FFS -- datadir is async now
+    Array.prototype.forEach.call(document.getElementsByClassName('bbt-texstudio'), node => {
+      node.hidden = !TeXstudio.enabled
+    })
 
     const lock = new Lock()
     await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
+    // oh FFS -- datadir is async now
     Cache.init()
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
