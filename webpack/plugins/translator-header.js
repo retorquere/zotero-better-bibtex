@@ -15,30 +15,14 @@ var TranslatorHeaderPlugin = function (translator) {
 TranslatorHeaderPlugin.prototype.apply = function(compiler) {
   var self = this;
 
-  /*
-  compiler.plugin('after-compile', function(compilation, done) {
-    compilation.fileDependencies.forEach(function(dep) {
-      if (!self.seen[dep]) {
-        self.seen[dep] = true;
-        var stats = fs.statSync(dep);
-        if (stats.mtime > self.lastModified) {
-          self.lastModified = stats.mtime;
-        }
-      }
-    })
-    done();
-  });
-  */
-
   compiler.plugin('emit', function(compilation, done) {
-    var header = require(__dirname + '/../../resource/' + self.translator + '.json')
+    const translators = require(__dirname + '/../../gen/translators.json');
+    var header = translators.byName[self.translator];
 
-    // header.lastUpdated = self.lastModified.toISOString().replace('T', ' ').replace(/\..*/, '');
-    header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '');
+    var preferences = require(__dirname + '/../../gen/preferences.json');
 
-    var preferences = require(__dirname + '/../../gen/preferences.json')
     var asset = self.translator + '.js';
-    compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset])
+    compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset]);
     done();
   })
 }
