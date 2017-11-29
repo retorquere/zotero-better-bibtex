@@ -21,7 +21,7 @@ class Translators {
     }
 
     for (const header of Object.values(this.byId)) {
-      if (this.install(header)) reinit = true
+      if (await this.install(header)) reinit = true
     }
 
     if (reinit) {
@@ -71,7 +71,7 @@ class Translators {
     }
   }
 
-  public install(header) {
+  public async install(header) {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
     let installed = null
@@ -105,6 +105,8 @@ class Translators {
       debug('Translator.install', header, 'failed:', err)
       this.uninstall(header.label, header.translatorID)
     }
+
+    await Zotero.Translators.cacheInDB(header.label + '.js', JSON.stringify(header), Date.parse(header.lastModifiedTime))
 
     return true
   }
