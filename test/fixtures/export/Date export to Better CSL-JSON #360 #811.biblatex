@@ -41,7 +41,7 @@
   title = {{{BC}} Tests 2: -0099-07-12/-0043-03-15}
 }
 
-@article{Doe7PoliticsFilmCanons1985,
+@article{doe7_politics_1985,
   author = {Doe7, John},
   date = {1985-21},
   eprint = {1225428},
@@ -53,49 +53,49 @@
   volume = {24}
 }
 
-@online{Doe8Title2017232017,
+@online{doe8_title_2017,
   author = {Doe8, John},
   date = {2017-23},
   title = {Title: 2017-23}
 }
 
-@online{Doe9EDTFdaterange2011,
+@online{doe9_edtf_2011,
   author = {Doe9, John},
   date = {2011-05-25~/2012-06-26},
   title = {{{EDTF}} Date Range, circa Begin: 2011-05-25\textasciitilde/2012-06-26}
 }
 
-@online{Doe10EDTFdaterange2011,
+@online{doe10_edtf_2011,
   author = {Doe10, John},
   date = {2011-05-25~/2012-06-26~},
   title = {{{EDTF}} Date Range, circa Begin \& End: 2011-05-25\textasciitilde/2012-06-26\textasciitilde{}}
 }
 
-@online{Doe11EDTFdaterange2011,
+@online{doe11_edtf_2011,
   author = {Doe11, John},
   date = {2011-05-25/2012-06-26~},
   title = {{{EDTF}} Date Range, circa End: 2011-05-25/2012-06-26\textasciitilde{}}
 }
 
-@online{Doe12EDTFdateYYYYMM2011,
+@online{doe12_edtf_2011,
   author = {Doe12, John},
   date = {2011-05~},
   title = {{{EDTF}} Date {{YYYY}}-{{MM}}\textasciitilde{} [Month Precision \& circa]: 2011-05\textasciitilde{}}
 }
 
-@online{Doe13Seasoncirca2017242017,
+@online{doe13_season_2017,
   author = {Doe13, John},
   date = {2017-24~},
   title = {Season circa: : 2017-24\textasciitilde{}}
 }
 
-@book{Doe14Date2010Extra2010,
+@book{doe14_date2010_2010,
   author = {{Doe14}},
   date = {2011},
   title = {Date=2010 \& {{Extra}}=issued:2011}
 }
 
-@book{Doe15multipleISBNs2017,
+@book{doe15_multiple_2017,
   author = {{Doe15}},
   date = {2017},
   isbn = {0-943396-04-2 0-85131-041-9},
