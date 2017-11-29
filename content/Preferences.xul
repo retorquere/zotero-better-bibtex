@@ -96,7 +96,7 @@
           name="extensions.zotero.translators.better-bibtex.citekeyFormat"
           id="pref-better-bibtex-citekeyFormat"
           type="string"
-          default="[auth][shorttitle][year]"/>
+          default="[zotero:clean]"/>
         <!--!
           Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
         -->

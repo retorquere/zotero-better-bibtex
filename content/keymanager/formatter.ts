@@ -424,6 +424,11 @@ export = new class PatternFormatter {
     return value
   }
 
+  protected _clean(value) {
+    if (!value) return ''
+    return this.clean(value)
+  }
+
   private removeDiacritics(str) {
     str = transliterate(str || '')
     str = fold2ascii(str)
