@@ -1,5 +1,6 @@
 # Submitting an issue to the BBT bug tracker
 
+* Please verify that you are on the latest release of BBT.
 * If you wish to report a combination of feature requests, bug reports and general usage questions, please file a separate report for each of these. It is easier for me to manage them separately. Thank you.
 * Please use a descriptive subject for the issue you are experiencing, and describe what you've done. "It doesn't work" is not enough information for me to know what's going on.
 * Make yourself available for follow-up questions and testing. If my test suite hasn't picked it out, it's something that is particular to your system/references. I need the feedback so I can help you.
