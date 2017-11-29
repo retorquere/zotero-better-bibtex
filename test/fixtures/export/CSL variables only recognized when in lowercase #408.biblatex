@@ -13,7 +13,6 @@
   publisher = {{Springer Berlin Heidelberg}},
   rights = {©2006 Springer-Verlag Berlin Heidelberg},
   series = {Lecture Notes in Computer Science},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {An {{Improved Construction}} for {{Counting Bloom Filters}}},
   url = {http://link.springer.com/chapter/10.1007/11841036_61},
   urldate = {2015-11-16}

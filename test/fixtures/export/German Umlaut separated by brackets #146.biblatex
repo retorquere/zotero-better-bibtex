@@ -1,6 +1,9 @@
 
 @book{Kaufmann1995,
-  annotation = {"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurdeaus Messungen statistisch ermittelt [2.3]. Eine gute Näherung für die Praxisist die Gleichung (2.5) :" (S. 2.3)
+  annotation = {"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde\\
+aus Messungen statistisch ermittelt [2.3]. Eine gute Näherung für die Praxis\\
+ist die Gleichung (2.5) :" (S. 2.3)
+
 Keine Notwendigkeit, in ihrem Grundlegendem Charakter völlig verschiedenartige Belastungen (PV, Wärmepumpe) in dieses Schema zu pressen.},
   author = {Kaufmann, Wolfgang},
   date = {1995},
@@ -8,7 +11,6 @@ Keine Notwendigkeit, in ihrem Grundlegendem Charakter völlig verschiedenartige 
   langid = {german},
   location = {{Berlin; Frankfurt am Main}},
   publisher = {{VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizitätswerke}},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Planung öffentlicher Elektrizitätsverteilungs-Systeme}
 }
 

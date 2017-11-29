@@ -3,16 +3,16 @@
 <!DOCTYPE overlay SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
 <overlay id="zotero-better-bibtex-zoteroPane-overlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <!-- stringbundleset id="stringbundleset">
-    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/better-bibtex.properties"/>
-  </stringbundleset -->
+  <stringbundleset>
+    <stringbundle id="zotero-better-bibtex-strings" src="chrome://zotero-better-bibtex/locale/zotero-better-bibtex.properties"/>
+  </stringbundleset>
 
   <menupopup id="zotero-tb-actions-popup">
     <menuitem
       insertafter="zotero-tb-actions-reportErrors"
       label="&better-bibtex.BetterBibTeX.reportErrors;"
       oncommand="Zotero.BetterBibTeX.errorReport()"/>
-      <!-- menuitem insertafter="zotero-tb-actions-plugins-separator" label="&zotero.better-bibtex.auxScanner;" oncommand="new Zotero.BetterBibTeX.AUXScanner(window)"/ -->
+      <menuitem insertafter="zotero-tb-actions-plugins-separator" label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="new Zotero.BetterBibTeX.scanAUX()"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem
@@ -22,12 +22,11 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <!-- menuseparator id="zotero-better-bibtex-collectionmenu-separator"/>
+    <menuseparator/>
     <menuitem
-      id="zotero-better-bibtex-show-export-url"
-      label="&zotero.better-bibtex.show-collection-key;"
-      oncommand="alert(ZoteroPane_Local.BetterBibTeX.serverURL('.biblatex') || '&zotero.better-bibtex.server.disabled;')"
-    / -->
+      label="&better-bibtex.BetterBibTeX.show-collection-key;"
+      oncommand="alert(Zotero.BetterBibTeX.pullExport() || '&better-bibtex.BetterBibTeX.server.disabled;')"
+    />
     <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
   </menupopup>
 
@@ -36,6 +35,8 @@
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
     <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
+    <menuseparator/>
+    <menuitem label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.toTeXstudio()"/>
     <menuseparator/>
     <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('items')"/>
   </menupopup>

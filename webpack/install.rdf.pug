@@ -2,9 +2,15 @@ doctype xml
 RDF(xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#")
   Description(about="urn:mozilla:install-manifest")
     em:name= name
+    em:description= description
+    if localizedDescriptions
+      each localizedDescription, locale in localizedDescriptions
+        Description
+          em:locale= locale
+          em:name= name
+          em:description= localizedDescription
     em:id= id
     em:version= version
-    em:description= description
     em:homepageURL= homepage
     em:creator= author.name
     if iconURL

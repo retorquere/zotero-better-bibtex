@@ -25,6 +25,8 @@ class NoSuchFileError extends Error {
 class FileStore {
   public mode = 'reference'
 
+  private collectionsMissing = false
+
   public name(name) { return name + '.json' }
 
   public save(name, data) {
@@ -54,10 +56,11 @@ class FileStore {
 
     try {
       for (const coll of dbref.collections) {
-        if (coll.dirty) this.save(`${name}.${coll.name}`, coll)
+        if (coll.dirty || this.collectionsMissing) this.save(`${name}.${coll.name}`, coll)
       }
       // save header last for sort-of-transaction
       this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}})
+      this.collectionsMissing = false
     } catch (err) {
       debug('LokiJS.FileStore.exportDatabase: save failed', err)
     }
@@ -87,6 +90,7 @@ class FileStore {
         try {
           collections.push(this.load(`${name}.${coll}`))
         } catch (err) {
+          this.collectionsMissing = true
           debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
         }
       }
@@ -144,9 +148,7 @@ DB.init = () => {
     value : { Zotero: ZoteroConfig.Zotero.version },
   }])
 
-  /*
-    TODO: for this to work, an object must be updated when it is fetched
-  */
+  // this reaps unused cache entries -- make sure that cacheFetchs updates the object
   //                  secs    mins  hours days
   const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
@@ -193,10 +195,6 @@ Events.on('preference-changed', () => {
     DB.getCollection(translator).removeDataOnly()
   }
 })
-
-/*
-  TODO: use preference-changed event to drop the translator caches
-*/
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }

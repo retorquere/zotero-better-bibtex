@@ -9,6 +9,7 @@ require 'httparty'
 require 'shellwords'
 require 'benchmark'
 require 'json'
+require 'reverse_markdown'
 
 if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
   STDOUT.puts "Starting headless..."
@@ -176,7 +177,9 @@ def normalizeJSON(lib)
     item.delete('__citekey__')
     item.delete('uri')
 
-    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.sort
+    item['notes'] = (item['notes'] || []).collect{|note| note.is_a?(String) ? note : note['note'] }.collect{|note| ReverseMarkdown.convert(note) }.sort
+
+    item['note']  = ReverseMarkdown.convert(item['note']) if item['note']
 
     item['tags'] = (item['tags'] || []).collect{|tag| tag.is_a?(String) ? tag : tag['tag'] }.sort
 
@@ -235,7 +238,7 @@ end
 #end
 
 def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
-  throw "Auto-export needs a destination" if displayOptions['Keep updated'] && !output
+  throw "Auto-export needs a destination" if displayOptions['keepUpdated'] && !output
     
   if translator =~ /^id:(.+)$/
     translator = $1
@@ -289,7 +292,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  system("yarn run build") || raise("Build failed")
+  system("npm run build") || raise("Build failed")
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
@@ -349,15 +352,63 @@ module BBT
     profile.add_extension(plugin)
   }
   
-  profile['extensions.checkCompatibility.5.0'] = false
+  profile["browser.EULA.3.accepted"] = true
+  profile["browser.EULA.override"] = true
+
+  profile["browser.displayedE10SNotice"] = 4
+  profile["browser.dom.window.dump.enabled"] = true
+  profile["browser.laterrun.enabled"] = false
+  profile["browser.link.open_external"] = 2
+  profile["browser.link.open_newwindow"] = 2
+  profile["browser.newtab.url"] = "about:blank"
+  profile["browser.newtabpage.enabled"] = false
+  profile["browser.offline"] = false
+  profile["browser.reader.detectedFirstArticle"] = true
+  profile["browser.safebrowsing.enabled"] = false
+  profile["browser.safebrowsing.malware.enabled"] = false
+  profile["browser.search.update"] = false
+  profile["browser.selfsupport.url"] = ""
+  profile["browser.sessionstore.resume_from_crash"] = false
+  profile["browser.shell.checkDefaultBrowser"] = false
+  profile["browser.startup.homepage"] = "about:blank"
+  profile["browser.startup.page"] = 0
+  profile["browser.tabs.warnOnClose"] = false
+  profile["browser.tabs.warnOnOpen"] = false
+  profile["browser.usedOnWindows10.introURL"] = "about:blank"
+  profile["datareporting.healthreport.logging.consoleEnabled"] = false
+  profile["extensions.logging.enabled"] = true
+  profile["extensions.zotero.firstRunGuidance"] = false
+  profile["datareporting.healthreport.service.firstRun"] = false
+  profile["datareporting.healthreport.uploadEnabled"] = false
+  profile["datareporting.policy.dataSubmissionPolicyAccepted"] = false
+  profile["devtools.errorconsole.enabled"] = true
+  profile["devtools.source-map.locations.enabled"] = true
+  profile["dom.disable_open_during_load"] = false
+  profile["dom.max_chrome_script_run_time"] = 30
+  profile["dom.max_script_run_time"] = 30
+  profile["dom.report_all_js_exceptions"] = true
+  profile["extensions.autoDisableScopes"] = 10
+  profile["extensions.blocklist.enabled"] = false
+  profile["extensions.blocklist.pingCountVersion"] = -1
+
+  if ENV['DEBUG'] != 'false'
+    profile["extensions.zotero.debug.log"] = true
+    profile["extensions.zotero.debug.time"] = true
+    profile['extensions.zotero.debug.store'] = true
+  end
+
+  if ENV['ZOTERO_LOCALE'] == 'fr'
+    profile["intl.locale.matchOS"] = false
+    profile["general.useragent.locale"] = 'fr'
+    profile["intl.accept_languages"] = 'fr, fr-fr, en-us, en'
+  end
+
   #profile['extensions.zotero.dataDir'] = data_tgt
-  profile['extensions.zotero.debug.log'] = true
-  profile['extensions.zotero.debug.store'] = true
-  profile['extensions.zotero.debug.time'] = true
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
 
   # speed up startup
@@ -373,7 +424,7 @@ module BBT
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST -ZoteroDebugText -datadir profile > #{logfile.shellescape} 2>&1") }
+  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1") }
 
   at_exit {
     execute("""

@@ -37,15 +37,15 @@ for (let label of Object.keys(translators)) {
 }
 fs.writeFileSync(path.join(__dirname, 'gen/translators.json'), JSON.stringify(tr, null, 2));
 
-console.log('update citeproc');
-if (shell.exec('cd citeproc-js && git checkout master').code != 0) throw 'Citeproc update failed';
-if (shell.exec('git submodule update --depth 1 -- citeproc-js').code != 0) throw 'Citeproc update failed';
+if (shell.exec(`git submodule update --init --recursive`).code != 0) throw 'submodule update failed';
 
 dateparser(path.join(__dirname, 'citeproc-js/locale'), path.join(__dirname, 'gen/dateparser-data.json'));
 rdf();
 preferences();
 assets();
 console.log('write version'); fs.writeFileSync(path.join(__dirname, 'gen/version.js'), `module.exports = ${JSON.stringify(version)};\n`, 'utf8')
+
+require('./webpack/translator-typing.js')
 
 console.log("let's roll");
 
@@ -58,6 +58,7 @@ var common = {
       'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
       'json-loader': path.join(__dirname, './webpack/loaders/json'),
       'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
+      'bcf-loader': path.join(__dirname, './webpack/loaders/bcf'),
     },
   },
   module: {
@@ -65,6 +66,7 @@ var common = {
       { test: /\.coffee$/, use: [ {loader: 'coffee-loader', options: { sourceMap: false } }, 'wrap-loader' ] },
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, use: [ 'json-loader' ] },
+      { test: /\.bcf$/, use: [ 'bcf-loader' ] },
       // { enforce: 'pre', test: /\.ts$/, exclude: /node_modules/, loader: 'tslint-loader?' + JSON.stringify({ emitErrors: true, failOnHint: true }) },
       { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader' ] }
     ]

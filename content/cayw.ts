@@ -232,7 +232,7 @@ class Document {
    * Gets the citation
    */
   public citation() {
-    if (!this.fields.length) return []
+    if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
       debug('CAYW.citation:', item)
@@ -244,6 +244,10 @@ class Document {
         suffix: item.suffix || '',
         label: item.locator ? (item.label || 'page') : '',
         citekey: KeyManager.get(item.id).citekey,
+
+        uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
+        itemType: item.itemData ? item.itemData.type : undefined,
+        title: item.itemData ? item.itemData.title : undefined,
       }
     })
   }
@@ -315,7 +319,9 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
       const doc = application.createDocument(options)
       await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
 
-      const citation = await Formatter[options.format || 'playground'](doc.citation(), options)
+      const picked = doc.citation()
+
+      const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
       application.closeDocument(doc)
 
       if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)

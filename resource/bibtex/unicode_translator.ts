@@ -1,8 +1,11 @@
-declare const Translator: any
+import { ITranslator } from '../../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
 
 import debug = require('../lib/debug.ts')
 import MarkupParser = require('../lib/markupparser.ts')
+import HE = require('he')
 const unicodeMapping = require('./unicode_translator.json')
 
 const htmlConverter = new class HTMLConverter {
@@ -20,9 +23,9 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    this.walk(MarkupParser.parse(html, this.options))
-
-    return this.latex
+    const ast = MarkupParser.parse(html, this.options)
+    this.walk(ast)
+    return { latex: this.latex, raw: ast.name === 'pre' }
   }
 
   private walk(tag) {
@@ -51,7 +54,7 @@ const htmlConverter = new class HTMLConverter {
 
       case 'a':
         /* zotero://open-pdf/0_5P2KA4XM/7 is actually a reference. */
-        if ((tag.attrs.href ? tag.attrs.href.length : undefined) > 0) latex = `\\href{${tag.attrs.href}}{...}`
+        if (tag.attr.href && tag.attr.href.length) latex = `\\href{${tag.attr.href}}{...}`
         break
 
       case 'sup':
@@ -143,6 +146,8 @@ const htmlConverter = new class HTMLConverter {
     let math = false
     let braced = 0
 
+    if (this.options.mode === 'html') text = HE.decode(text, { isAttributeValue: true })
+
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
       // in and out of math mode
       if (!!this.mapping.math[c] !== math) {
@@ -184,10 +189,11 @@ const htmlConverter = new class HTMLConverter {
 
 export function html2latex(html, options) {
   if (!options.mode) options.mode = 'html'
-  let latex = htmlConverter.convert(html, options)
-  latex = latex.replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
-  latex = latex.replace(/\n\n\n+/g, '\n\n')
-  latex = latex.replace(/{}([}])/g, '$1')
+  const latex = htmlConverter.convert(html, options)
+  latex.latex = latex.latex
+    .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
+    .replace(/\n\n\n+/g, '\n\n')
+    .replace(/{}([}])/g, '$1')
   return latex
 }
 

@@ -1,5 +1,7 @@
+import { ITranslator } from '../../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
-declare const Translator: any
 
 import JabRef = require('../bibtex/jabref.ts') // not so nice... BibTeX-specific code in general exporter lib
 import debug = require('../lib/debug.ts')

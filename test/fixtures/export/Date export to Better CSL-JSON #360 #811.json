@@ -1,0 +1,604 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": "1.4.7",
+    "preferences": {
+      "bibtexURL": "note",
+      "biblatexExtendedDateFormat": true,
+      "jabrefFormat": 0
+    },
+    "options": {
+      "skipFields": [
+        ""
+      ],
+      "jabrefGroups": true,
+      "postscript": "",
+      "csquotes": "",
+      "preserveCaps": "inner",
+      "fancyURLs": false,
+      "langID": "babel",
+      "rawImports": false,
+      "DOIandURL": "both",
+      "attachmentsNoMetadata": false,
+      "preserveBibTeXVariables": false
+    }
+  },
+  "collections": {
+  },
+  "items": [
+    {
+      "itemType": "manuscript",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "date": "2014-12-31/2015-01-01",
+      "extra": "bibtex: t1\naccessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
+      "title": "A manuscript: 2014-12-31/2015-01-01",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe1",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 8,
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "extra": "bibtex: t2\naccessed: 13th cent\ncontainer: 1700-01-01_1700-12-31\nevent-date: 1800-01-01--1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
+      "title": "container, event-date, and submitted test",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe2",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 12,
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "date": "2014-12-31/",
+      "title": "open-ended date range test: 2014-12-31/",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe3",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 11,
+      "seeAlso": [
+
+      ],
+      "extra": "bibtex: t3"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "date": "2014-12-31",
+      "title": "single date test: 2014-12-31",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe4",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 13,
+      "seeAlso": [
+
+      ],
+      "extra": "bibtex: t4"
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "date": "-0333",
+      "extra": "bibtex: t5\naccessed: -0332-11-05\noriginal-date: -0333/-0332\ncontainer: -0062-09-23/0014-08-19\nevent-date: 0000\nsubmitted:-0001",
+      "title": "BC tests: -0333",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe5",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 13,
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemType": "book",
+      "tags": [
+
+      ],
+      "relations": {
+      },
+      "date": "-0099-07-12/-0043-03-15",
+      "title": "BC tests 2: -0099-07-12/-0043-03-15",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe6",
+          "firstName": "John"
+        }
+      ],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 13,
+      "seeAlso": [
+
+      ],
+      "extra": "bibtex: t6"
+    },
+    {
+      "itemType": "journalArticle",
+      "url": "http://www.jstor.org/stable/1225428",
+      "volume": "24",
+      "issue": "3",
+      "pages": "4-23",
+      "publicationTitle": "Cinema Journal",
+      "date": "printemps 1985",
+      "accessDate": "2015-04-30",
+      "title": "The Politics of Film Canons: printemps 1985",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe7",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TGVC5SPQ"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2015-05-05 11:13:05",
+      "dateModified": "2015-07-03 12:39:41",
+      "uri": "http://zotero.org/users/1123677/items/MFRFINAT",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Staiger-Canons.pdf",
+          "parentItem": "MFRFINAT",
+          "linkMode": 0,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "Staiger-Canons.pdf",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2015-05-05 11:15:23",
+          "dateModified": "2015-05-05 11:15:23",
+          "uri": "http://zotero.org/users/1123677/items/X9HF3G83",
+          "uniqueFields": {
+            "title": "Staiger-Canons.pdf",
+            "linkMode": 0,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 377,
+          "key": "X9HF3G83",
+          "libraryID": null,
+          "sourceItemKey": "MFRFINAT",
+          "seeAlso": [
+
+          ],
+          "mimeType": "application/pdf",
+          "localPath": "/home/dm/Zotero/storage/X9HF3G83/Staiger-Canons.pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "url": "http://www.jstor.org/stable/1225428",
+        "volume": "24",
+        "issue": "3",
+        "pages": "4-23",
+        "publicationTitle": "Cinema Journal",
+        "date": "printemps 1985",
+        "accessDate": "2015-04-30",
+        "title": "The Politics of Film Canons"
+      },
+      "itemID": 153,
+      "key": "MFRFINAT",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "staiger_politics_1985"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2017-23",
+      "title": "Title: 2017-23",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe8",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-23 21:51:33",
+      "dateModified": "2017-11-23 21:57:40",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/Q4D26GUK",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2017-23",
+        "title": "Title"
+      },
+      "itemID": 2,
+      "key": "Q4D26GUK",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorTitle2017"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25~/2012-06-26",
+      "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe9",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-23 21:51:33",
+      "dateModified": "2017-11-24 10:30:03",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/Q4D26GUK",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25~/2012-06-26",
+        "title": "EDTF date range, circa begin"
+      },
+      "itemID": 2,
+      "key": "Q4D26GUK",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011b"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25~/2012-06-26~",
+      "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe10",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:26:29",
+      "dateModified": "2017-11-24 10:36:54",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/H5TVD7LC",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25~/2012-06-26~",
+        "title": "EDTF date range, circa begin & end"
+      },
+      "itemID": 4,
+      "key": "H5TVD7LC",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05-25/2012-06-26~",
+      "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe11",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:28:02",
+      "dateModified": "2017-11-24 10:29:59",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/26XIYZ3M",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05-25/2012-06-26~",
+        "title": "EDTF date range, circa end"
+      },
+      "itemID": 5,
+      "key": "26XIYZ3M",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdaterange2011a"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2011-05~",
+      "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe12",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 10:28:27",
+      "dateModified": "2017-11-24 10:37:08",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/LI499VWN",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2011-05~",
+        "title": "EDTF date YYYY-MM~ [month precision & circa]"
+      },
+      "itemID": 6,
+      "key": "LI499VWN",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorEDTFdateYYYYMM2011"
+    },
+    {
+      "itemType": "webpage",
+      "date": "2017-24~",
+      "title": "Season circa: : 2017-24~",
+      "creators": [
+        {
+          "creatorType": "author",
+          "lastName": "Doe13",
+          "firstName": "John"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-23 21:51:33",
+      "dateModified": "2017-11-23 21:57:40",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/Q4D26GUK",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2017-23",
+        "title": "Title"
+      },
+      "itemID": 2,
+      "key": "Q4D26GUK",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorTitle2017"
+    },
+    {
+      "itemType": "book",
+      "date": "2010",
+      "extra": "issued:2011",
+      "title": "Date=2010 & Extra=issued:2011",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Doe14"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 16:16:20",
+      "dateModified": "2017-11-26 15:07:51",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/X2I7HXV5",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2010",
+        "extra": "issued:2011",
+        "title": "Date=2010 & Extra=issued:2011"
+      },
+      "itemID": 10,
+      "key": "X2I7HXV5",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthorDate2010Extra2010"
+    },
+    {
+      "itemType": "book",
+      "ISBN": "0-943396-04-2 0-85131-041-9",
+      "date": "2017",
+      "title": "multiple ISBNs",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": 1,
+          "lastName": "Doe15"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TVW4R3PP"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-11-24 16:16:20",
+      "dateModified": "2017-11-27 12:01:49",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/X2I7HXV5",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "ISBN": "0-943396-04-2 0-85131-041-9",
+        "date": "2017",
+        "title": "multiple ISBNs"
+      },
+      "itemID": 10,
+      "key": "X2I7HXV5",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "AuthormultipleISBNs2017"
+    }
+  ]
+}

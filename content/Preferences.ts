@@ -13,27 +13,6 @@ import KeyManager = require('./keymanager.ts')
 import AutoExport = require('./auto-export.ts')
 import Translators = require('./translators.ts')
 
-function autoExportNameCollectionPath(id) {
-  if (!id) return ''
-  const coll = Zotero.Collections.get(id)
-  if (!coll) return ''
-
-  if (coll.parent) return `${autoExportNameCollectionPath(coll.parent)}/${coll.name}`
-  return coll.name
-}
-function autoExportName(ae, full = false) {
-  let name
-  switch (ae.type) {
-    case 'library':
-      name = Zotero.Libraries.getName(ae.id)
-      break
-    case 'collection':
-      name = full ? autoExportNameCollectionPath(ae.id) : Zotero.Collections.get(ae.id).name
-      break
-  }
-  return name || ae.path
-}
-
 class AutoExportPrefPane {
   protected AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
 
@@ -66,11 +45,22 @@ class AutoExportPrefPane {
       return
     }
 
-    const exportlist = document.getElementById('better-bibtex-export-list')
+    const exportlist = document.getElementById('better-bibtex-auto-exports')
     if (!exportlist) return
     while (exportlist.hasChildNodes()) {
       exportlist.removeChild(exportlist.firstChild)
     }
+
+    const columns = Array.from(
+      document.getElementById('better-bibtex-export-list').getElementsByTagName('treecol') as NodeList
+    ).map(
+      col => (col as Element).getAttribute('id').replace(/^better-bibtex-preferences-auto-export-/, '')
+    )
+
+    const on = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.on')
+    const off = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.off')
+    const status = {}
+    const type = {}
 
     for (const ae of AutoExport.db.chain().simplesort('path').data()) {
       const treeitem = exportlist.appendChild(document.createElement('treeitem'))
@@ -79,23 +69,66 @@ class AutoExportPrefPane {
       const treerow = treeitem.appendChild(document.createElement('treerow'))
       // TODO: https://github.com/Microsoft/TypeScript/issues/19186
       // TODO: https://github.com/Microsoft/TypeScript/issues/1260
-      const cells: Array<{label: string, tooltip?: string}> = [
-        { label: `${ae.type}: ${autoExportName(ae)}` },
-        { label: ae.status + (ae.updated ? ` (${ae.updated})` : ''), tooltip: ae.error },
-        { label: ae.path.replace(/.*[\\\/]/, ''), tooltip: ae.path },
-        { label: (Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : undefined) || '??' },
-        { label: `${ae.useJournalAbbreviation}` },
-        { label: `${ae.exportNotes}` },
-      ]
-      for (const cell of cells) {
-        debug('Preferences.AutoExport.refresh:', cell)
+
+      for (const column of columns) {
+        debug('Preferences.AutoExport.refresh:', column)
         const treecell = treerow.appendChild(document.createElement('treecell'))
         treecell.setAttribute('editable', 'false')
-        treecell.setAttribute('label', cell.label)
-        if (cell.tooltip) treecell.setAttribute('tooltiptext', cell.tooltip)
+
+        switch (column) {
+          case 'collection':
+            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) || ae.type
+            treecell.setAttribute('label', `${type[ae.type]}: ${this.autoExportName(ae)}`)
+            break
+
+          case 'status':
+            status[ae.status] = status[ae.status] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${ae.status}`) || ae.status
+            treecell.setAttribute('label', (status[ae.status] + (ae.updated ? ` (${ae.updated})` : '')) + (ae.error ? `: ${ae.error}` : ''))
+            break
+
+          case 'target':
+            treecell.setAttribute('label', ae.path)
+            break
+
+          case 'translator':
+            treecell.setAttribute('label', Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??')
+            break
+
+          case 'auto-abbrev':
+            treecell.setAttribute('label', ae.useJournalAbbreviation ? on : off)
+            break
+
+          case 'notes':
+            treecell.setAttribute('label', ae.exportNotes ? on : off)
+            break
+
+          default:
+            throw new Error(`Unexpected auto-export column ${column}`)
+        }
       }
     }
+  }
 
+  private autoExportNameCollectionPath(id) {
+    if (!id) return ''
+    const coll = Zotero.Collections.get(id)
+    if (!coll) return ''
+
+    if (coll.parent) return `${this.autoExportNameCollectionPath(coll.parent)}/${coll.name}`
+    return coll.name
+  }
+
+  private autoExportName(ae) {
+    let name
+    switch (ae.type) {
+      case 'library':
+        name = Zotero.Libraries.getName(ae.id)
+        break
+      case 'collection':
+        name = this.autoExportNameCollectionPath(ae.id)
+        break
+    }
+    return name || ae.path
   }
 }
 
@@ -160,7 +193,7 @@ export = new class PrefPane {
     debug('manual key rescan done')
   }
 
-  public update() {
+  private update() {
     this.checkCitekeyFormat()
 
     if (ZoteroConfig.isJurisM) {
@@ -186,6 +219,12 @@ export = new class PrefPane {
 
         setTimeout(() => { stylebox.ensureIndexIsVisible(selectedIndex); stylebox.selectedIndex = selectedIndex }, 0)
       })
+    }
+
+    const quickCopyNode = document.getElementById('id-better-bibtex-preferences-quickCopyMode').selectedItem
+    const quickCopyMode = quickCopyNode ? quickCopyNode.getAttribute('value') : ''
+    for (const [row, enabledFor] of [['citeCommand', 'latex'], ['quickCopyPandocBrackets', 'pandoc']]) {
+      document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
     this.AutoExport.refresh()
@@ -239,11 +278,6 @@ export = new class PrefPane {
   }
   */
 }
-
-// TODO: caching
-//  cacheReset: ->
-//    @cache.reset('user request')
-//    @serialized.reset('user request')
 
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156
 delete require.cache[module.id]

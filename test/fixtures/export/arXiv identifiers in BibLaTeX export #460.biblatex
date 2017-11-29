@@ -1,6 +1,7 @@
 @article{Sen.2016.BV,
   abstract = {We construct the quantum BV master action for heterotic and type II string field theories.},
   annotation = {27/03/16 - overview - studying the papers of Ashoke
+
 This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.},
   archivePrefix = {arXiv},
   author = {Sen, Ashoke},
@@ -12,7 +13,6 @@ This paper is of great importance because it constructs a fully consistent quant
   journaltitle = {Journal of High Energy Physics},
   keywords = {Batalin-Vilkoviski formalism,_tablet,covariant string field theory,futur: 3,note: 4,printed,superstring field theory},
   number = {2},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {{{BV Master Action}} for {{Heterotic}} and {{Type II String Field Theories}}},
   url = {http://arxiv.org/abs/1508.05387},
   urldate = {2016-04-17},
@@ -29,7 +29,6 @@ This paper is of great importance because it constructs a fully consistent quant
   eprinttype = {arxiv},
   keywords = {Quantum Physics},
   primaryClass = {quant-ph},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Classical Signature of Quantum Annealing},
   url = {http://arxiv.org/abs/1305.4904},
   urldate = {2016-04-18}
@@ -49,7 +48,6 @@ This paper is of great importance because it constructs a fully consistent quant
   number = {6195},
   pages = {420--424},
   primaryClass = {quant-ph},
-  timestamp = {2015-02-24 12:14:36 +0100},
   title = {Defining and Detecting Quantum Speedup},
   url = {http://arxiv.org/abs/1401.2910},
   urldate = {2016-04-18},

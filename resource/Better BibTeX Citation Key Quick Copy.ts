@@ -1,5 +1,7 @@
+import { ITranslator } from '../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
-declare const Translator: any
 
 import Exporter = require('./lib/exporter.ts')
 import debug = require('./lib/debug.ts')

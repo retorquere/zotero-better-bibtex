@@ -30,9 +30,9 @@
       "member-ordering": [true, {
         "order": [
           "public-static-field",
+          "private-static-field",
           "public-instance-field",
           "protected-instance-field",
-          "private-static-field",
           "private-instance-field",
           "public-constructor",
           "public-instance-method",

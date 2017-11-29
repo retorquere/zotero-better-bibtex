@@ -4,13 +4,11 @@
     "label": "BetterBibTeX JSON",
     "release": "0.7.32",
     "preferences": {
-      "attachmentsNoMetadata": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "citekeyFormat": "[auth]_[year]",
       "DOIandURL": "doi",
-      "jabrefGroups": 0,
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

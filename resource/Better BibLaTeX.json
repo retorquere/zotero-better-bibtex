@@ -7,14 +7,13 @@
   "minVersion": "4.0.27",
   "maxVersion": "",
   "configOptions": {
-    "getCollections": true,
-    "serializationCache": true
+    "getCollections": true
   },
   "displayOptions": {
     "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
-    "Keep updated": false
+    "keepUpdated": false
   },
   "priority": 50,
   "inRepository": false

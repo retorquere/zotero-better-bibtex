@@ -5,9 +5,8 @@
     "release": "1.5.3",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "skipFields": [
@@ -245,6 +244,71 @@
 
       ],
       "__citekey__": ""
+    },
+    {
+      "itemType": "encyclopediaArticle",
+      "url": "http://www.oxforddnb.com/view/article/10183",
+      "place": "Oxford",
+      "publisher": "Oxford University Press",
+      "date": "2004",
+      "extra": "DOI: 10.1093/ref:odnb/10183",
+      "accessDate": "2014-06-13 15:44:43",
+      "libraryCatalog": "CrossRef",
+      "encyclopediaTitle": "Oxford dictionary of national biography",
+      "title": "Frithuswith (<i>d.</i> 727)",
+      "creators": [
+        {
+          "firstName": "H.C.G.",
+          "lastName": "Matthew",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Brian Howard",
+          "lastName": "Harrison",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "John",
+          "lastName": "Blair",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+        "TZ8SB8SH"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2015-08-13 18:39:21",
+      "dateModified": "2016-08-19 14:52:17",
+      "uri": "http://zotero.org/users/254032/items/7FX9HRIV",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "url": "http://www.oxforddnb.com/view/article/10183",
+        "place": "Oxford",
+        "publisher": "Oxford University Press",
+        "date": "2004",
+        "extra": "DOI: 10.1093/ref:odnb/10183",
+        "accessDate": "2014-06-13 15:44:43",
+        "libraryCatalog": "CrossRef",
+        "publicationTitle": "Oxford dictionary of national biography",
+        "title": "Frithuswith (<i>d.</i> 727)"
+      },
+      "itemID": 670,
+      "key": "7FX9HRIV",
+      "publicationTitle": "Oxford dictionary of national biography",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "blair:2004frithuswith"
     }
   ]
 }

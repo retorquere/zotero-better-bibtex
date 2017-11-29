@@ -13,15 +13,16 @@ import Prefs = require('./prefs.ts')
 import Citekey = require('./keymanager/get-set.ts')
 import DB = require('./db/main.ts')
 import Formatter = require('./keymanager/formatter.ts')
+import AutoExport = require('./auto-export.ts')
 
 class KeyManager {
-
-  public keys: any
-
   private static postfixRE = {
     numeric: /^(-[0-9]+)?$/,
     alphabetic: /^([a-z])?$/,
   }
+
+  public keys: any
+  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
 
   private scanning: any[]
   private query: {
@@ -69,11 +70,11 @@ class KeyManager {
 
   }
 
-  public async refresh(ids, warn = false) {
+  public async refresh(ids, manual = false) {
     ids = this.expandSelection(ids)
     debug('KeyManager.refresh', ids)
 
-    const warnAt = warn ? Prefs.get('warnBulkModify') : 0
+    const warnAt = manual ? Prefs.get('warnBulkModify') : 0
     if (warnAt > 0 && ids.length > warnAt) {
       const affected = this.keys.find({ itemID: { $in: ids }, pinned: false }).length
       if (affected > warnAt) {
@@ -91,6 +92,7 @@ class KeyManager {
       }
     }
 
+    const updates = []
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
@@ -99,8 +101,10 @@ class KeyManager {
       if (parsed.pinned) continue
 
       this.update(item)
+      if (manual) updates.push(item)
     }
 
+    if (manual) AutoExport.changed(updates)
   }
 
   public async init() {
@@ -135,17 +139,24 @@ class KeyManager {
     })
 
     this.keys.on(['insert', 'update'], citekey => {
-      const extraData = {}
-      // prevents update loop -- see Zotero.Notifier.registerObserver in main
-      extraData[citekey.itemID] = { bbtCitekeyUpdate: true }
-
-      // update display panes
-      Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], extraData)
+      // async is just a heap of fun. Who doesn't enjoy a good race condition?
+      // https://github.com/retorquere/zotero-better-bibtex/issues/774
+      // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
+      setTimeout(() => {
+        // update display panes
+        Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
+      }, this.itemObserverDelay)
     })
-
   }
 
   public async rescan(clean?: boolean) {
+    if (Prefs.get('scrubDatabase')) {
+      for (const item of this.keys.where(i => i.hasOwnProperty('extra'))) { // 799
+        delete item.extra
+        this.keys.update(item)
+      }
+    }
+
     if (Array.isArray(this.scanning)) {
       let left
       if (this.scanning.length) {
@@ -159,18 +170,15 @@ class KeyManager {
 
     this.scanning = []
 
-    if (clean) {
-      this.keys.removeDataOnly()
-    }
-//    else
-//      @keys.findAndRemove({ citekey: '' }) # how did empty keys get into the DB?!
+    if (clean) this.keys.removeDataOnly()
+
     debug('KeyManager.rescan:', {clean, keys: this.keys})
 
     const marker = '\uFFFD'
 
     const ids = []
     const items = await ZoteroDB.queryAsync(`
-      SELECT item.itemID, item.libraryID, extra.value as extra, item.itemTypeID
+      SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
       FROM items item
       LEFT JOIN itemData field ON field.itemID = item.itemID AND field.fieldID = ${this.query.field.extra}
       LEFT JOIN itemDataValues extra ON extra.valueID = field.valueID
@@ -184,17 +192,20 @@ class KeyManager {
       debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
 
       const saved = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      debug('KeyManager.rescan:', {saved})
       if (saved) {
         if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
           debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
-          Object.assign(saved, { citekey: citekey.citekey, pinned: true })
-          this.keys.update(saved)
+          // tslint:disable-next-line:prefer-object-spread
+          this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
         } else {
+          // tslint:disable-next-line:prefer-object-spread
+          if (!saved.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
           debug('KeyManager.rescan: keeping', saved)
         }
       } else {
         debug('KeyManager.rescan: clearing citekey for', item.itemID)
-        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID })
+        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
       }
     }
 
@@ -250,6 +261,7 @@ class KeyManager {
     if (item.isNote() || item.isAttachment()) return
 
     current = current || this.keys.findOne({ itemID: item.id })
+
     const proposed = this.propose(item)
 
     if (current && (current.pinned === proposed.pinned) && (current.citekey === proposed.citekey)) return current.citekey
@@ -259,7 +271,7 @@ class KeyManager {
       current.citekey = proposed.citekey
       this.keys.update(current)
     } else {
-      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, pinned: proposed.pinned, citekey: proposed.citekey })
+      this.keys.insert({ itemID: item.id, libraryID: item.libraryID, itemKey: item.key, pinned: proposed.pinned, citekey: proposed.citekey })
     }
 
     return proposed.citekey
