@@ -74,6 +74,17 @@ class Translators {
   public async install(header) {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
 
+    const fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
+    const destFile = Zotero.getTranslatorsDirectory()
+    destFile.append(fileName)
+
+    let manualParse = null
+    if (destFile.exists()) {
+      const code = Zotero.File.getContents(destFile)
+      const end_of_json = '\n}'
+      manualParse = JSON.parse(code.substring(0, code.indexOf(end_of_json) + end_of_json.length))
+    }
+
     let installed = null
     try {
       installed = Zotero.Translators.get(header.translatorID)
@@ -81,6 +92,8 @@ class Translators {
       debug('Translators.install', header, err)
       installed = null
     }
+
+    debug('Translators.install: installed =', installed, manualParse)
 
     if (installed && installed.lastUpdated === header.lastUpdated) {
       debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
@@ -94,10 +107,6 @@ class Translators {
     debug('Translators.install: saving translator', header.label)
 
     try {
-      const fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
-      const destFile = Zotero.getTranslatorsDirectory()
-      destFile.append(fileName)
-
       Zotero.File.putContents(destFile, Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`))
 
       debug('Translator.install', header, 'succeeded')
