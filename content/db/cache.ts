@@ -118,6 +118,20 @@ DB.remove = function(ids) {
   }
 }
 
+function upgrade(coll, property, current) {
+  const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
+  if (dbVersion === current) return false
+
+  debug('CACHE: dropping cache', coll.name, 'because', property, 'went from', dbVersion, 'to', current)
+
+  coll.setTransform(METADATA, [{
+    type: METADATA,
+    value : { [property]: current },
+  }])
+
+  return true
+}
+
 DB.init = () => {
   DB.loadDatabase()
   let coll = DB.schemaCollection('itemToExportFormat', {
@@ -139,14 +153,7 @@ DB.init = () => {
     },
   })
 
-  if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.Zotero !== ZoteroConfig.Zotero.version) {
-    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', ZoteroConfig.Zotero.version)
-    coll.removeDataOnly()
-  }
-  coll.setTransform(METADATA, [{
-    type: METADATA,
-    value : { Zotero: ZoteroConfig.Zotero.version },
-  }])
+  if (upgrade(coll, 'Zotero', ZoteroConfig.Zotero.version)) coll.removeDataOnly()
 
   // this reaps unused cache entries -- make sure that cacheFetchs updates the object
   //                  secs    mins  hours days
@@ -177,16 +184,8 @@ DB.init = () => {
       ttlInterval,
     })
 
-    if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.BetterBibTeX !== version) {
-      debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
-      coll.removeDataOnly()
-    }
-    coll.setTransform(METADATA, [{
-      type: METADATA,
-      value : { BetterBibTeX: version },
-    }])
+    if (upgrade(coll, 'BetterBibTeX', version)) coll.removeDataOnly()
   }
-
 }
 
 // the preferences influence the output way too much, no keeping track of that
