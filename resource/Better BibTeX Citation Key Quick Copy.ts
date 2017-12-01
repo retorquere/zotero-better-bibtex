@@ -50,17 +50,14 @@ const Mode = { // tslint:disable-line:variable-name
       const m = item.uri.match(/\/(users|groups)\/([0-9]+|(local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
       if (!m) throw new Error(`Malformed item uri ${item.uri}`)
 
-      const type = m[1]
-      const groupID = m[2]
-      const key = m[4] // tslint:disable-line:no-magic-numbers
+      const [, type, groupID, , key ] = m
 
       switch (type) {
         case 'users':
           if (groupID.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-          id = `0_${key}`
+          id = key
           break
         case 'groups':
-          if (!groupID) throw new Error(`Missing groupID in ${item.uri}`)
           id = `${groupID}~${key}`
           break
       }
