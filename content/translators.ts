@@ -83,6 +83,7 @@ class Translators {
       const code = Zotero.File.getContents(destFile)
       const end_of_json = '\n}'
       manualParse = JSON.parse(code.substring(0, code.indexOf(end_of_json) + end_of_json.length))
+      manualParse.path = destFile.path
     }
 
     let installed = null
