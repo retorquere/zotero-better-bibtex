@@ -1,7 +1,11 @@
-import fs = require('fs')
+// tslint:disable:no-console
+
+import * as fs from 'fs-extra'
 import parseXML = require('@rgrove/parse-xml')
 import dedent = require('dedent-js')
 import path = require('path')
+
+import root from './root'
 
 class DocFinder {
   private strings: { [key: string]: string }
@@ -24,9 +28,9 @@ class DocFinder {
   private errors: number
   private defaults: { [key: string]: any }
 
-  constructor() {
+  public parse() {
     this.strings = {}
-    const dtd = fs.readFileSync('locale/en-US/zotero-better-bibtex.dtd', 'utf8')
+    const dtd = fs.readFileSync(path.join(root, 'locale/en-US/zotero-better-bibtex.dtd'), 'utf8')
     dtd.replace(/<!ENTITY\s+([^\s]+)\s+"([^"]+)"\s*/g, (decl, entity, str) => { this.strings[`&${entity};`] = str; return '' })
 
     this.preferences = {}
@@ -39,7 +43,7 @@ class DocFinder {
       testing: false,
     }
 
-    const prefsPane = parseXML(fs.readFileSync('content/Preferences.xul', 'utf8'), {
+    const prefsPane = parseXML(fs.readFileSync(path.join(root, 'content/Preferences.xul'), 'utf8'), {
       resolveUndefinedEntity: entity => this.strings[entity] || entity,
       preserveComments: true,
     })
@@ -67,9 +71,18 @@ class DocFinder {
 
     if (this.errors) process.exit(1)
 
-    fs.writeFileSync(path.join(__dirname, '../../gen/preferences.json'), JSON.stringify(this.defaults, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences.json'), JSON.stringify(this.defaults, null, 2))
 
-    const docs = path.join(__dirname, '../../wiki/Configuration.md')
+    fs.ensureDirSync(path.join(root, 'build/defaults/preferences'))
+    const js = Object.keys(this.defaults)
+    js.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+    fs.writeFileSync(
+      path.join(root, 'build/defaults/preferences/defaults.js'),
+      js.map(key => `pref(${JSON.stringify('extensions.zotero.translators.better-bibtex.' + key)}, ${JSON.stringify(this.defaults[key])});`).join('\n') + '\n',
+      'utf8'
+    )
+
+    const docs = path.join(root, 'wiki/Configuration.md')
     if (fs.existsSync(docs)) {
       const md = [
         dedent(`
@@ -113,6 +126,7 @@ class DocFinder {
 
       fs.writeFileSync(docs, md.join('\n\n'))
     }
+
   }
 
   private ungfm(str) {
@@ -235,4 +249,4 @@ class DocFinder {
   }
 }
 
-new DocFinder // tslint:disable-line:no-unused-expression
+(new DocFinder).parse()

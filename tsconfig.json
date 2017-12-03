@@ -14,7 +14,9 @@
   "include": [
     "content/**/*",
     "resource/**/*",
-    "webpack/**/*"
+    "webpack/**/*",
+    "setup/**/*",
+    "webpack.config.ts"
   ],
   "exclude": [
     "node_modules",
