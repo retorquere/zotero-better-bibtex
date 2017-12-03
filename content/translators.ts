@@ -94,7 +94,7 @@ class Translators {
       installed = null
     }
 
-    debug('Translators.install: installed =', installed, manualParse)
+    debug('Translators.install: installed =', destFile.path, installed, manualParse)
 
     if (installed && installed.lastUpdated === header.lastUpdated) {
       debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
@@ -108,15 +108,16 @@ class Translators {
     debug('Translators.install: saving translator', header.label)
 
     try {
-      Zotero.File.putContents(destFile, Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`))
+      const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
+      const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
+
+      await Zotero.Translators.save(JSON.parse(metadata), code)
 
       debug('Translator.install', header, 'succeeded')
     } catch (err) {
       debug('Translator.install', header, 'failed:', err)
       this.uninstall(header.label, header.translatorID)
     }
-
-    await Zotero.Translators.cacheInDB(header.label + '.js', JSON.stringify(header), Date.parse(header.lastModifiedTime))
 
     return true
   }
