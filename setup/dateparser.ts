@@ -4,7 +4,7 @@ import parseXML = require('xml-parser')
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
-import root from './root'
+import root from '../webpack/root'
 
 console.log('generating date parser data')
 const localesRoot = path.join(root, 'citeproc-js/locale')

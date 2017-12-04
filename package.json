@@ -72,7 +72,6 @@
     "bluebird": "^3.5.1",
     "circular-dependency-plugin": "^4.2.1",
     "clean-webpack-plugin": "^0.1.17",
-    "copy-webpack-plugin": "^4.2.3",
     "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",

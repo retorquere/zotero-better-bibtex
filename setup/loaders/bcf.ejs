@@ -1,0 +1,52 @@
+const fieldSet = <%- fieldSet %>
+const allowed = {
+<%_ for (const [type, sets] of Object.entries(allowed)) { -%>
+  <%= type -%>: [
+    <%_ for (const set of sets) { -%>
+      fieldSet.<%= set -%>,
+    <%_ } -%>
+  ],
+<%_ } -%>
+}
+const required = [
+  <%_ for (const [, {types, fields}] of Object.entries(required)) { -%>
+    {
+      types: new Set(<%- JSON.stringify(types) -%>),
+      check: function(ref, report) {
+        <%_ for (const field of fields) { -%>
+          <%_ if (typeof field == 'string') { -%>
+            if (!ref.has.<%= field -%>) report.push("Missing required field '<%= field -%>'")
+          <%_ } else if (field.or) { -%>
+            if (!(<%- field.or.map(field => "this.has." + field).join(' || ') -%>)) report.push("At least one of <%- field.or.map(f => "'" + f + "'").join(' / ') -%> must be present")
+          <%_ } else if (field.xor) { -%>
+            if (!ref.has.<%= field.xor[0] -%> === !ref.has.<%= field.xor[1] -%>) report.push("Exactly one of <%- field.xor.map(f => "'" + f + "'").join(' / ') -%> must be present")
+          <%_ } -%>
+        <%_ } -%>
+      }
+    },
+  <%_ } -%>
+]
+
+module.exports = function(explanation) {
+  var type = this.referencetype.toLowerCase()
+
+  if (!allowed[type]) return
+
+  var unexpected = Object.keys(this.has).filter(field => !allowed[type].find(set => set.has(field)))
+  var report = unexpected.map(field => "Unexpected field '" + field + "'" + (explanation[field] ? (' (' + explanation[field] + ')'): ''))
+
+  for (const test of required) {
+    if (test.types.has(type)) test.check(this, report)
+  }
+
+  <%_ for (const [, {test, fields, params}] of Object.entries(data)) { -%>
+    for (const field of <%- JSON.stringify(fields) -%>) {
+      if (this.has[field]) {
+        const warning = Zotero.BetterBibTeX.qrCheck(this.has[field].value, <%- JSON.stringify(test) -%><%- typeof params === 'undefined' ? '' : ', ' + JSON.stringify(params) -%>)
+        if (warning) report.push("'" + field + "': " + warning)
+      }
+    }
+  <%_ } -%>
+
+  return report
+}

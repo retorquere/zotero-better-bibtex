@@ -5,8 +5,7 @@ import * as path from 'path'
 import * as archiver from 'archiver'
 
 import root from '../root'
-
-const version = require('../version')
+import version from '../version'
 
 const [ , , source, target ] = process.argv
 

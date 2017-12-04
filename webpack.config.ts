@@ -1,6 +1,5 @@
 // tslint:disable:no-console
 
-const fs = require('fs')
 const replace = require('replace')
 
 import * as webpack from 'webpack'
@@ -13,15 +12,9 @@ import BailPlugin from './webpack/plugins/bail'
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 import AfterBuildPlugin = require('./webpack/plugins/after-build')
 import TranslatorHeaderPlugin = require('./webpack/plugins/translator-header')
-import CopyAssetsPlugin = require('copy-webpack-plugin')
 
-const version = require('./webpack/version')
 const translators = require('./gen/translators.json')
-const rdf = require('./webpack/rdf')
 const _ = require('lodash')
-
-rdf()
-console.log('write version'); fs.writeFileSync(path.join(__dirname, 'gen/version.js'), `module.exports = ${JSON.stringify(version)};\n`, 'utf8')
 
 console.log("let's roll")
 
@@ -32,7 +25,7 @@ const common = {
       'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
       'json-loader': path.join(__dirname, './webpack/loaders/json'),
       'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
-      'bcf-loader': path.join(__dirname, './webpack/loaders/bcf'),
+      'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
   },
   module: {
@@ -62,10 +55,6 @@ config.push(
           paths: [path.join(options.output.path, ccp)],
         })
       }),
-      new CopyAssetsPlugin(
-        ['chrome.manifest', 'content', 'locale', 'skin'].map(source => ({ from: `../${source}${source.indexOf('.') > 0 ? '' : '/**/*'}`, to: path.join(__dirname, 'build', source) })),
-        { ignore: [ '*.json', '*.ts', '*.pegjs' ], copyUnmodified: true }
-      ),
       BailPlugin,
     ],
 
