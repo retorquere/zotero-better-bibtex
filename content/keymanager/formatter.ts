@@ -358,17 +358,30 @@ class PatternFormatter {
 
   public $title() { return this.titleWords(this.item.title).join('') }
 
-  // filters
+  /**
+   * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+   * parameter, e.g `condense,_` will replace spaces with underscores. **Parameters should not contain spaces** unless
+   * you want the spaces in the value passed in to be replaced with those spaces in the parameter
+   */
   public _condense(value, sep) {
     return (value || '').replace(/\s/g, sep || '')
   }
 
+  /**
+   * prefixes with its parameter, so `prefix,_` will add an underscore to the front if, and only if, the value
+   * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
+   * add a backslash (`\`) in front of it.
+   */
   public _prefix(value, prefix) {
     value = value || ''
     if (value && prefix) return `${prefix}${value}`
     return value
   }
 
+  /**
+   * postfixes with its parameter, so `postfix,_` will add an underscore to the end if, and only if, the value
+   * it is supposed to postfix isn't empty
+   */
   public _postfix(value, postfix) {
     value = value || ''
     if (value && postfix) return `${value}${postfix}`
@@ -387,10 +400,25 @@ class PatternFormatter {
     return (value || '').toUpperCase()
   }
 
+  /**
+   * filters out common words like 'of', 'the', ... the list of words can be seen and changed by going into
+   * `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
+   * case-insensitive list of words.
+   *
+   * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
+   * after adding `jr` to the skipWords list.
+   * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
+   */
   public _skipwords(value) {
     return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
+  /**
+   * selects words from the value passed in. The format is `select,start,number` (1-based), so `select,1,4`
+   * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
+   * selected. It is important to note that `select' works only on values that have the words separated by whitespace,
+   * so the caveat below applies.
+   */
   public _select(value, start, n) {
     value = (value || '').split(/\s+/)
     let end = value.length
@@ -405,22 +433,27 @@ class PatternFormatter {
     return (value || '').slice(start - 1, (start - 1) + n)
   }
 
+  /** removes all non-ascii characters */
   public _ascii(value) {
     return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   }
 
+  /** clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`) */
   public _alphanum(value) {
     return Zotero.Utilities.XRegExp.replace(value || '', this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
   }
 
+  /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
   public _fold(value) {
     return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
   }
 
+  /** uppercases the first letter of each word */
   public _capitalize(value) {
     return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
   }
 
+  /** Removes punctuation */
   public _nopunct(value) {
     value = value || ''
     value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '-', 'all')
