@@ -1,46 +1,3 @@
-'use strict';
-
-const ConcatSource = require('webpack-sources').ConcatSource;
-const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers');
-const version = require('../version');
-const ejs = require('ejs');
-const fs = require('fs');
-
-var TranslatorHeaderPlugin = function (translator) {
-  this.translator = translator;
-  this.lastModified = new Date(0);
-  this.seen = {}
-}
-
-TranslatorHeaderPlugin.prototype.apply = function(compiler) {
-  var self = this;
-
-  compiler.plugin('after-compile', function(compilation, done) {
-    compilation.fileDependencies.forEach(function(dep) {
-      if (!self.seen[dep]) {
-        self.seen[dep] = true;
-        var stats = fs.statSync(dep);
-        if (stats.mtime > self.lastModified) {
-          self.lastModified = stats.mtime;
-        }
-      }
-    })
-    done();
-  });
-
-  compiler.plugin('emit', function(compilation, done) {
-    var header = require(__dirname + '/../../resource/' + self.translator + '.json')
-    header.lastUpdated = self.lastModified.toISOString().replace('T', ' ').replace(/\..*/, '');
-    var preferences = require(__dirname + '/../../gen/preferences.json')
-    var asset = self.translator + '.js';
-    compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset])
-    done();
-  })
-}
-
-module.exports = TranslatorHeaderPlugin;
-
-const Header = `
 <%- JSON.stringify(header, null, 2) %>
 
 var Translator = {
@@ -129,4 +86,3 @@ var Translator = {
     Translator.doImport()
   }
 <% } %>
-`.trim();

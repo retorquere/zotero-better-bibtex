@@ -11,7 +11,7 @@ import BailPlugin from './webpack/plugins/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 import AfterBuildPlugin = require('./webpack/plugins/after-build')
-import TranslatorHeaderPlugin = require('./webpack/plugins/translator-header')
+import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
 
 const translators = require('./gen/translators.json')
 const _ = require('lodash')
