@@ -25,6 +25,7 @@ import JournalAbbrev = require('./journal-abbrev.ts')
 import AutoExport = require('./auto-export.ts')
 import KeyManager = require('./keymanager.ts')
 import AUXScanner = require('./aux-scanner.ts')
+import TeXstudio = require('./tex-studio.ts')
 import format = require('string-template')
 
 import $patch$ = require('./monkey-patch.ts')
@@ -520,6 +521,10 @@ export = new class BetterBibTeX {
     return ''
   }
 
+  public async toTeXstudio() {
+    await TeXstudio.push()
+  }
+
   public errorReport(includeReferences) {
     debug('ErrorReport::start', includeReferences)
 
@@ -557,7 +562,7 @@ export = new class BetterBibTeX {
 
   public getString(id, params = null) {
     try {
-      return params ? this.strings.getString(id) : format(this.strings.getString(id), params)
+      return params ? format(this.strings.getString(id), params) : this.strings.getString(id)
     } catch (err) {
       debug('getString', id, err)
       return id
@@ -569,11 +574,14 @@ export = new class BetterBibTeX {
 
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
-    // oh FFS -- datadir is async now
+    Array.prototype.forEach.call(document.getElementsByClassName('bbt-texstudio'), node => {
+      node.hidden = !TeXstudio.enabled
+    })
 
     const lock = new Lock()
     await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
+    // oh FFS -- datadir is async now
     Cache.init()
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
