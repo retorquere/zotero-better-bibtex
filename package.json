@@ -30,7 +30,8 @@
     "branches": "ts-node webpack/scripts/branches.ts",
     "prefs": "ts-node webpack/scripts/prefs.ts",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
-    "running": "ps auxw | grep -i zotero | grep -v grep || true"
+    "running": "ps auxw | grep -i zotero | grep -v grep || true",
+    "docs": "typedoc --ignoreCompilerErrors --json typedoc.json content/keymanager && node formatter.js"
   },
   "main": "index.js",
   "directories": {
@@ -91,10 +92,12 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "shelljs": "^0.7.8",
+    "sqlite-sync": "^0.3.6",
     "ts-loader": "^3.1.1",
     "ts-node": "^3.3.0",
     "tslint": "^5.8.0",
     "tslint-loader": "^3.5.3",
+    "typedoc": "^0.9.0",
     "typescript": "^2.6.2",
     "uri-templates": "^0.2.0",
     "webpack": "^3.8.1",

@@ -13,7 +13,7 @@ const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
 import JournalAbbrev = require('../journal-abbrev.ts')
 
-export = new class PatternFormatter {
+class PatternFormatter {
   public generate: Function
 
   private re = {
@@ -136,8 +136,8 @@ export = new class PatternFormatter {
     return citekey
   }
 
-  // methods
-  protected $zotero() {
+  /** Generates citation keys as the stock Zotero Bib(La)TeX export does */
+  public $zotero() {
     let key = ''
     const creator = (this.item.item.getCreators() || [])[0]
 
@@ -174,12 +174,13 @@ export = new class PatternFormatter {
     return ''
   }
 
-  protected $library() {
+  /** returns the name of the shared group library, or nothing if the reference is in your personal library */
+  public $library() {
     if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
     return Zotero.Libraries.getName(this.item.item.libraryID)
   }
 
-  protected $auth(onlyEditors, withInitials, n, m) {
+  public $auth(onlyEditors, withInitials, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     let author = authors[m || 0]
@@ -187,27 +188,30 @@ export = new class PatternFormatter {
     return author || ''
   }
 
-  protected $authForeIni(onlyEditors) {
+  public $authForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[0]
   }
 
-  protected $authorLastForeIni(onlyEditors) {
+  public $authorLastForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
-  protected $authorLast(onlyEditors, withInitials) {
+  public $authorLast(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
-  protected $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
+  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
+   */
+  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
-  protected $authors(onlyEditors, withInitials, n) {
+  public $authors(onlyEditors, withInitials, n) {
     let authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -220,7 +224,7 @@ export = new class PatternFormatter {
     return authors.join('')
   }
 
-  protected $authorsAlpha(onlyEditors, withInitials) {
+  public $authorsAlpha(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -239,13 +243,13 @@ export = new class PatternFormatter {
     }
   }
 
-  protected $authIni(onlyEditors, withInitials, n) {
+  public $authIni(onlyEditors, withInitials, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors.map(author => author.substring(0, n)).join('.')
   }
 
-  protected $authorIni(onlyEditors, withInitials) {
+  public $authorIni(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     const firstAuthor = authors.shift()
@@ -254,7 +258,7 @@ export = new class PatternFormatter {
     return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
   }
 
-  protected $auth_auth_ea(onlyEditors, withInitials) {
+  public $auth_auth_ea(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -262,7 +266,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
   }
 
-  protected $authEtAl(onlyEditors, withInitials) {
+  public $authEtAl(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -271,7 +275,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
   }
 
-  protected $auth_etal(onlyEditors, withInitials) {
+  public $auth_etal(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -280,7 +284,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
   }
 
-  protected $authshort(onlyEditors, withInitials) {
+  public $authshort(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -297,7 +301,7 @@ export = new class PatternFormatter {
     }
   }
 
-  protected $firstpage() {
+  public $firstpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
     let firstpage = ''
@@ -305,7 +309,7 @@ export = new class PatternFormatter {
     return firstpage
   }
 
-  protected $lastpage() {
+  public $lastpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
     let lastpage = ''
@@ -313,12 +317,12 @@ export = new class PatternFormatter {
     return lastpage
   }
 
-  protected $keyword(n) {
+  public $keyword(n) {
     this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
     return this.item.tags[n] || ''
   }
 
-  protected $shorttitle() {
+  public $shorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
 
@@ -326,68 +330,68 @@ export = new class PatternFormatter {
     return words.slice(0, 3).join('')
   }
 
-  protected $veryshorttitle() {
+  public $veryshorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
     return words.slice(0, 1).join('')
   }
 
-  protected $shortyear() {
+  public $shortyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 2)
   }
 
-  protected $year() {
+  public $year() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 4)
   }
 
-  protected $origyear() {
+  public $origyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.origyear, 4)
   }
 
-  protected $month() {
+  public $month() {
     if (!this.item.month) return ''
     return this.months[this.item.month - 1] || ''
   }
 
-  protected $title() { return this.titleWords(this.item.title).join('') }
+  public $title() { return this.titleWords(this.item.title).join('') }
 
   // filters
-  protected _condense(value, sep) {
+  public _condense(value, sep) {
     return (value || '').replace(/\s/g, sep || '')
   }
 
-  protected _prefix(value, prefix) {
+  public _prefix(value, prefix) {
     value = value || ''
     if (value && prefix) return `${prefix}${value}`
     return value
   }
 
-  protected _postfix(value, postfix) {
+  public _postfix(value, postfix) {
     value = value || ''
     if (value && postfix) return `${value}${postfix}`
     return value
   }
 
-  protected _abbr(value) {
+  public _abbr(value) {
     return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
   }
 
-  protected _lower(value) {
+  public _lower(value) {
     return (value || '').toLowerCase()
   }
 
-  protected _upper(value) {
+  public _upper(value) {
     return (value || '').toUpperCase()
   }
 
-  protected _skipwords(value) {
+  public _skipwords(value) {
     return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
-  protected _select(value, start, n) {
+  public _select(value, start, n) {
     value = (value || '').split(/\s+/)
     let end = value.length
 
@@ -397,34 +401,42 @@ export = new class PatternFormatter {
     return value.slice(start, end).join(' ')
   }
 
-  protected _substring(value, start, n) {
+  public _substring(value, start, n) {
     return (value || '').slice(start - 1, (start - 1) + n)
   }
 
-  protected _ascii(value) {
+  public _ascii(value) {
     return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   }
 
-  protected _alphanum(value) {
+  public _alphanum(value) {
     return Zotero.Utilities.XRegExp.replace(value || '', this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
   }
 
-  protected _fold(value) {
+  public _fold(value) {
     return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
   }
 
-  protected _capitalize(value) {
+  public _capitalize(value) {
     return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
   }
 
-  protected _nopunct(value) {
+  public _nopunct(value) {
     value = value || ''
     value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '-', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
     return value
   }
 
-  protected _clean(value) {
+  /** Removes punctuation and word-connecting dashes */
+  public _nopunctordash(value) {
+    value = value || ''
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '', 'all')
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
+    return value
+  }
+
+  public _clean(value) {
     if (!value) return ''
     return this.clean(value)
   }
@@ -550,3 +562,5 @@ export = new class PatternFormatter {
     return this.item.creators.authors || this.item.creators.editors || this.item.creators.translators || this.item.creators.collaborators || []
   }
 }
+
+export = new PatternFormatter
