@@ -63,7 +63,7 @@ config.push(
         })
       }),
       new CopyAssetsPlugin(
-        ['content', 'locale', 'skin'].map(dir => ({ from: `../${dir}/**/*`, to: path.join(__dirname, 'build', dir) })),
+        ['chrome.manifest', 'content', 'locale', 'skin'].map(source => ({ from: `../${source}${source.indexOf('.') > 0 ? '' : '/**/*'}`, to: path.join(__dirname, 'build', source) })),
         { ignore: [ '*.json', '*.ts', '*.pegjs' ], copyUnmodified: true }
       ),
       BailPlugin,
