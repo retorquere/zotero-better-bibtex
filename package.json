@@ -18,7 +18,7 @@
   "scripts": {
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
-    "lint": "tsc --lib es6 webpack/tslint/noModuleExportsRule.ts && tslint -t stylish --project . --rules-dir ./webpack/tslint",
+    "lint": "tslint -t stylish --project .",
     "prebuild": "mkdir -p build && rm -rf build/* && mkdir -p xpi && rm -f xpi/*.xpi && mkdir -p gen && rm -rf gen/*",
     "webpack": "npm run prefs && webpack",
     "build": "npm run lint && npm run webpack",
@@ -104,7 +104,7 @@
     "wrapper-webpack-plugin": "^1.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
-    "xpath": "^0.0.26"
+    "xpath": "^0.0.27"
   },
   "repository": {
     "type": "git",

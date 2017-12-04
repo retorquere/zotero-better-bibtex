@@ -162,7 +162,7 @@ class PatternFormatter {
     return key.replace(this.re.zotero.citeKeyClean, '')
   }
 
-  protected $property(name) {
+  public $property(name) {
     try {
       return this.innerText(this.item.item.getField(name, false, true) || '')
     } catch (err) {}
