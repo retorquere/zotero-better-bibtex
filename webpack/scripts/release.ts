@@ -1,14 +1,15 @@
 // tslint:disable:no-console
 
 require('dotenv').config()
-require('../circle')
-import path = require('path')
+import * as path from 'path'
+
+import './circle'
+
+import root from '../root'
+import version from '../version'
+import * as github from './github'
 
 const pkg = require('../../package.json')
-const version = require('../version')
-const build_root = path.join(__dirname, '../../')
-
-import * as github from './github'
 
 const PRERELEASE = false
 const KEEP_BUILDS = 40
@@ -113,7 +114,7 @@ async function main() {
     await github.upload({
       release: release.current,
       name: xpi,
-      path: path.resolve(__dirname, path.join(build_root, `xpi/${xpi}`)),
+      path: path.resolve(__dirname, path.join(root, `xpi/${xpi}`)),
       contentType: 'application/x-xpinstall',
     })
 
@@ -143,7 +144,7 @@ async function main() {
     await github.upload({
       release: release.builds,
       name: xpi,
-      path: path.resolve(__dirname, path.join(build_root, `xpi/${xpi}`)),
+      path: path.resolve(__dirname, path.join(root, `xpi/${xpi}`)),
       contentType: 'application/x-xpinstall',
     })
 
