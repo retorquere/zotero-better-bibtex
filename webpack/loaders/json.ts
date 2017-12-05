@@ -19,7 +19,7 @@ function normalize(obj) {
   return obj
 }
 
-export = source => {
+export = function loader(source) {
   if (this.cacheable) this.cacheable()
 
   const value = typeof source === 'string' ? JSON.parse(source) : source

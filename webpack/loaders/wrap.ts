@@ -1,4 +1,4 @@
-export = source => {
+export = function loader(source) {
   // this.cacheable()
 
   const src = this.resourcePath.substring(process.cwd().length + 1)
