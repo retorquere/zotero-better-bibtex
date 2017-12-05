@@ -3,7 +3,7 @@
 require('dotenv').config()
 import * as path from 'path'
 
-import './circle'
+import '../circle'
 
 import root from '../root'
 import version from '../version'
