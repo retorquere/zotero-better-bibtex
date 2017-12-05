@@ -1,35 +1,3 @@
-'use strict';
-
-const ConcatSource = require('webpack-sources').ConcatSource;
-const ModuleFilenameHelpers = require('webpack/lib/ModuleFilenameHelpers');
-const version = require('../version');
-const ejs = require('ejs');
-const fs = require('fs');
-
-var TranslatorHeaderPlugin = function (translator) {
-  this.translator = translator;
-  this.lastModified = new Date(0);
-  this.seen = {}
-}
-
-TranslatorHeaderPlugin.prototype.apply = function(compiler) {
-  var self = this;
-
-  compiler.plugin('emit', function(compilation, done) {
-    const translators = require(__dirname + '/../../gen/translators.json');
-    var header = translators.byName[self.translator];
-
-    var preferences = require(__dirname + '/../../gen/preferences.json');
-
-    var asset = self.translator + '.js';
-    compilation.assets[asset] = new ConcatSource(ejs.render(Header, {preferences: preferences, header: header, version: version}), compilation.assets[asset]);
-    done();
-  })
-}
-
-module.exports = TranslatorHeaderPlugin;
-
-const Header = `
 <%- JSON.stringify(header, null, 2) %>
 
 var Translator = {
@@ -60,8 +28,8 @@ var Translator = {
       this.preferences[key] = Zotero.getHiddenPref('better-bibtex.' + key)
     }
     // special handling
-    this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\\s*,\\s*/).filter(function(s) { return s })
-    this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\\s*,\\s*/).filter(function(s) { return s })
+    this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
+    this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
     if (this.preferences.csquotes) {
       var i, csquotes = { open: '', close: '' }
@@ -118,4 +86,3 @@ var Translator = {
     Translator.doImport()
   }
 <% } %>
-`.trim();

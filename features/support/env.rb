@@ -452,6 +452,10 @@ module BBT
       begin
         sleep(1)
         result = execute(timeout: 60, script: """
+          if (!Zotero.BetterBibTeX) {
+            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
+            return false;
+          }
           if (!Zotero.BetterBibTeX.ready) {
             Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
             return false;

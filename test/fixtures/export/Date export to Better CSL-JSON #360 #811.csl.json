@@ -55,7 +55,7 @@
     "issued": { "date-parts": [ [ -100, 7, 12 ], [ -44, 3, 15 ] ] }
   },
   {
-    "id": "Doe7PoliticsFilmCanons1985",
+    "id": "doe7_politics_1985",
     "type": "article-journal",
     "title": "The Politics of Film Canons: printemps 1985",
     "container-title": "Cinema Journal",
@@ -68,42 +68,42 @@
     "accessed": { "date-parts": [ [ "2015", 4, 30 ] ] }
   },
   {
-    "id": "Doe8Title2017232017",
+    "id": "doe8_title_2017",
     "type": "webpage",
     "title": "Title: 2017-23",
     "author": [ { "family": "Doe8", "given": "John" } ],
     "issued": { "date-parts": [ [ 2017 ] ], "season": 3 }
   },
   {
-    "id": "Doe9EDTFdaterange2011",
+    "id": "doe9_edtf_2011",
     "type": "webpage",
     "title": "EDTF date range, circa begin: 2011-05-25~/2012-06-26",
     "author": [ { "family": "Doe9", "given": "John" } ],
     "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
   },
   {
-    "id": "Doe10EDTFdaterange2011",
+    "id": "doe10_edtf_2011",
     "type": "webpage",
     "title": "EDTF date range, circa begin & end: 2011-05-25~/2012-06-26~",
     "author": [ { "family": "Doe10", "given": "John" } ],
     "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
   },
   {
-    "id": "Doe11EDTFdaterange2011",
+    "id": "doe11_edtf_2011",
     "type": "webpage",
     "title": "EDTF date range, circa end: 2011-05-25/2012-06-26~",
     "author": [ { "family": "Doe11", "given": "John" } ],
     "issued": { "date-parts": [ [ 2011, 5, 25 ], [ 2012, 6, 26 ] ], "circa": true }
   },
   {
-    "id": "Doe12EDTFdateYYYYMM2011",
+    "id": "doe12_edtf_2011",
     "type": "webpage",
     "title": "EDTF date YYYY-MM~ [month precision & circa]: 2011-05~",
     "author": [ { "family": "Doe12", "given": "John" } ],
     "issued": { "date-parts": [ [ 2011, 5 ] ], "circa": true }
   },
   {
-    "id": "Doe13Seasoncirca2017242017",
+    "id": "doe13_season_2017",
     "type": "webpage",
     "title": "Season circa: : 2017-24~",
     "author": [ { "family": "Doe13", "given": "John" } ],
@@ -111,7 +111,7 @@
   },
 	{
   	"author":[{"literal":"Doe14"}],
-  	"id":"Doe14Date2010Extra2010",
+  	"id":"doe14_date2010_2010",
   	"issued":{"date-parts":[[2011]]},
   	"title":"Date=2010 & Extra=issued:2011",
     "type":"book"
@@ -119,7 +119,7 @@
   {
     "ISBN":"0-943396-04-2 0-85131-041-9",
     "author":[{"literal":"Doe15"}],
-    "id":"Doe15multipleISBNs2017",
+    "id":"doe15_multiple_2017",
     "issued":{"date-parts":[[2017]]},
     "title":"multiple ISBNs",
     "type":"book"

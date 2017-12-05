@@ -30,3 +30,4 @@ resource/reports/cacheActivity.txt
 .env
 webpack/tslint/noModuleExportsRule.js
 package-lock.json
+typedoc.json

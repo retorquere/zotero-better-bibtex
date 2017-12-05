@@ -85,6 +85,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Refresh BibTeX key">
+<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Push references to TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Replace left/right guillemets/double quotes with \\enquote{...} (requires csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Export by HTTP disabled">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "BibLaTeX url">
