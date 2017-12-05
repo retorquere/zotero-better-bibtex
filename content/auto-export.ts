@@ -98,7 +98,7 @@ const scheduler = new Queue(
       if (task.cancelled) {
         debug('AutoExport.scheduler: cancel', ae)
       } else {
-        debug('AutoExport.schedule: start', ae)
+        debug('AutoExport.scheduler: start', ae)
         scheduled.push(task)
       }
     }
