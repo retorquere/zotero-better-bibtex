@@ -20,6 +20,9 @@ class Translators {
       reinit = true
     }
 
+    // cleanup old translators
+    if (this.uninstall('Better BibTeX Quick Copy', '9b85ff96-ceb3-4ca2-87a9-154c18ab38b1')) reinit = true
+
     for (const header of Object.values(this.byId)) {
       if (await this.install(header)) reinit = true
     }
@@ -65,26 +68,20 @@ class Translators {
       const fileName = Zotero.Translators.getFileNameFromLabel(label, id)
       const destFile = Zotero.getTranslatorsDirectory()
       destFile.append(fileName)
-      if (destFile.exists()) destFile.remove(false)
+      if (destFile.exists()) {
+        destFile.remove(false)
+        return true
+      }
     } catch (err) {
       debug(`Translators.uninstall: failed to remove ${label}:`, err)
+      return true
     }
+
+    return false
   }
 
   public async install(header) {
     if (!header.label || !header.translatorID) throw new Error('not a translator')
-
-    const fileName = Zotero.Translators.getFileNameFromLabel(header.label, header.translatorID)
-    const destFile = Zotero.getTranslatorsDirectory()
-    destFile.append(fileName)
-
-    let manualParse = null
-    if (destFile.exists()) {
-      const code = Zotero.File.getContents(destFile)
-      const end_of_json = '\n}'
-      manualParse = JSON.parse(code.substring(0, code.indexOf(end_of_json) + end_of_json.length))
-      manualParse.path = destFile.path
-    }
 
     let installed = null
     try {
@@ -94,7 +91,7 @@ class Translators {
       installed = null
     }
 
-    debug('Translators.install: installed =', destFile.path, installed, manualParse)
+    debug('Translators.install: installed =', installed)
 
     if (installed && installed.lastUpdated === header.lastUpdated) {
       debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
