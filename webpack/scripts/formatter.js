@@ -13,7 +13,7 @@ while (fields.length) {
 }
 console.log(table)
 
-const preferences = require('./gen/preferences.json')
+const preferences = require('../../gen/preferences.json')
 
 const formatter = {
   '_': {},
@@ -21,7 +21,7 @@ const formatter = {
 }
 function walk(doc) {
   if (doc.kindString === 'Method') {
-    if ((doc.name[0] == '_' || doc.name[0] === '$') && doc.flags.isPublic) {
+    if ((doc.name[0] == '_' || doc.name[0] === '$') && doc.name !== '$property') {
       if (doc.signatures.length !== 1) throw new Error('multiple sigs?')
 
       const name = doc.name.substr(1).replace(/_/g, '.')
@@ -40,13 +40,15 @@ function walk(doc) {
   }
 }
 
-walk(require('./typedoc.json'))
+walk(require('../../typedoc.json'))
 
 function quote(s) { return `\`${s}\`` }
 for (const func of Object.keys(formatter.$)) {
   let name
   if (func.startsWith('authors')) {
     name = [func, func.replace(/^authors/, 'editors')].map(quote).join(' / ')
+  } else if (func.startsWith('author')) {
+    name = [func, func.replace(/^author/, 'editor')].map(quote).join(' / ')
   } else if (func.startsWith('auth')) {
     name = [func, func.replace(/^auth/, 'edtr')].map(quote).join(' / ')
   } else {
