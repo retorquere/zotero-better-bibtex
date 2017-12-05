@@ -84,7 +84,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Verrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Déverrouiller la clé de citation">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Rafraichir la clé de citation">
-<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Push references to TeXstudio">
+<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
 <!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">
