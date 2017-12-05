@@ -22,9 +22,9 @@ const common = {
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {
-      'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs'),
-      'json-loader': path.join(__dirname, './webpack/loaders/json'),
-      'wrap-loader': path.join(__dirname, './webpack/loaders/wrap'),
+      'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs.ts'),
+      'json-loader': path.join(__dirname, './webpack/loaders/json.ts'),
+      'wrap-loader': path.join(__dirname, './webpack/loaders/wrap.ts'),
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
   },
