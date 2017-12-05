@@ -12,7 +12,10 @@ import Prefs = require('./prefs.ts')
 
 function queueHandler(handler) {
   return (task, cb) => {
-    handler(task).then(() => cb(null)).catch(err => {
+    handler(task).then(() => {
+      debug('AutoExport: task completed', task)
+      cb(null)
+    }).catch(err => {
       debug('AutoExport: task failed', task, err)
       cb(err)
     })
@@ -57,6 +60,7 @@ const scheduled = new Queue(
       ae.status = 'done'
       ae.updated = new Date()
       db.update(ae)
+      debug('AutoExport.scheduled completed', task, ae)
     }
   ),
 
