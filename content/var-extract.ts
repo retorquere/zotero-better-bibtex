@@ -110,8 +110,8 @@ export = function extract(item) {
       return false
     }
 
-    if (['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name)) {
-      extraFields.kv[name] = value
+    if (['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name.replace(/-/g, ''))) { // google-books-id
+      extraFields.kv[name.replace(/-/g, '')] = value
       return false
     }
 

@@ -190,10 +190,10 @@ Translator.initialize = () => {
 }
 
 Translator.doExport = () => {
-  let item
-  debug('Translation started with prefs', Translator.preferences)
-
+  // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
+
+  let item
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
