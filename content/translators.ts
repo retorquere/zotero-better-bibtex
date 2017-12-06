@@ -56,8 +56,7 @@ class Translators {
         const file = Zotero.File.pathToFile(path)
 
         if (file.exists() && !file.isFile()) return reject(`${path} exists but is not a file`)
-        if (!file.parent) return reject(`${path} does not have a parent folder`)
-        if (!file.parent.isDirectory()) reject(`${file.parent.path} is not a folder`)
+        if (!file.parent || !file.parent.exists()) return reject(`${path} does not have a parent folder`)
 
         translation.setLocation(file)
       }
