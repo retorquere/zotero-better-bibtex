@@ -92,11 +92,12 @@
           Surround pandoc quick-copy citations with brackets.
         -->
 
+        <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
         <preference
           name="extensions.zotero.translators.better-bibtex.citekeyFormat"
           id="pref-better-bibtex-citekeyFormat"
           type="string"
-          default="[zotero:clean]"/>
+          default="&#x200B;[zotero:clean]"/>
         <!--!
           Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
         -->
