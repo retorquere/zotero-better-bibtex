@@ -73,7 +73,7 @@ const Mode = { // tslint:disable-line:variable-name
   },
 
   selectLink(items) {
-    Zotero.write(items.map(select_link).join(''))
+    Zotero.write(items.map(select_link).join('\n'))
   },
 
   'string-template'(items) {
