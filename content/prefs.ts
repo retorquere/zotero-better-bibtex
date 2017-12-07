@@ -14,6 +14,10 @@ class Preferences {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
     this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
 
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    const citekeyFormat = this.get('citekeyFormat')
+    if (citekeyFormat && citekeyFormat.startsWith('\u200B')) this.set('citekeyFormat', citekeyFormat.substr(1))
+
     // preference upgrades
     for (const pref of this.branch.getChildList('')) {
       switch (pref) {

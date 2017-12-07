@@ -143,7 +143,7 @@ class Serializer {
 
   public fetch(item, legacy, skipChildItems) {
     const cache = Cache.getCollection(Serializer.collection)
-    if (cache) return null
+    if (!cache) return null
 
     const cached = cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
     if (!cached) return null

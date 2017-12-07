@@ -10,10 +10,15 @@ import DB = require('./db/main.ts')
 import Translators = require('./translators.ts')
 import Prefs = require('./prefs.ts')
 
-function queueHandler(handler) {
+function queueHandler(kind, handler) {
   return (task, cb) => {
-    handler(task).then(() => cb(null)).catch(err => {
-      debug('AutoExport: task failed', task, err)
+    debug('AutoExport.queue:', kind, task)
+
+    handler(task).then(() => {
+      debug('AutoExport.queue:', kind, task, 'completed')
+      cb(null)
+    }).catch(err => {
+      debug('AutoExport.queue:', kind, task, 'failed:', err)
       cb(err)
     })
 
@@ -24,13 +29,13 @@ function queueHandler(handler) {
 }
 
 const scheduled = new Queue(
-  queueHandler(
+  queueHandler('scheduled',
     async task => {
       const db = DB.getCollection('autoexport')
       const ae = db.get(task.id)
       if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-      debug('AutoExport.starting export', ae)
+      debug('AutoExport.scheduled:', ae)
       ae.status = 'running'
       db.update(ae)
 
@@ -47,16 +52,19 @@ const scheduled = new Queue(
             items = null
         }
 
+        debug('AutoExport.scheduled: starting export', ae)
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
+        debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
       } catch (err) {
-        debug('AutoExport.scheduled failed for', ae, err)
+        debug('AutoExport.scheduled: failed', ae, err)
         ae.error = `${err}`
       }
 
       ae.status = 'done'
       ae.updated = new Date()
       db.update(ae)
+      debug('AutoExport.scheduled: completed', task, ae)
     }
   ),
 
@@ -70,28 +78,27 @@ scheduled.resume()
 
 const debounce_delay = 1000
 const scheduler = new Queue(
-  queueHandler(
+  queueHandler('scheduler',
     async task => {
       task = {...task}
-      debug('AutoExport.scheduler.exec:', task)
 
       const db = DB.getCollection('autoexport')
       const ae = db.get(task.id)
       if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-      debug('AutoExport.scheduler.task found:', task, '->', ae, !!ae)
+      debug('AutoExport.scheduler:', task, '->', ae, !!ae)
       ae.status = 'scheduled'
       db.update(ae)
-      debug('AutoExport.scheduler.task scheduled, waiting...', task, ae)
+      debug('AutoExport.scheduler: waiting...', task, ae)
 
       await Zotero.Promise.delay(debounce_delay)
 
-      debug('AutoExport.scheduler.task scheduled, woken', task, ae)
+      debug('AutoExport.scheduler: woken', task, ae)
 
       if (task.cancelled) {
-        debug('AutoExport.canceled export', ae)
+        debug('AutoExport.scheduler: cancel', ae)
       } else {
-        debug('AutoExport.scheduled export', ae)
+        debug('AutoExport.scheduler: start', ae)
         scheduled.push(task)
       }
     }
@@ -195,15 +202,15 @@ class AutoExport {
   }
 
   public schedule(type, ids) {
-    debug('AutoExport.schedule', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    debug('AutoExport.schedule:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
-      debug('AutoExport.scheduler.push', ae.$loki)
+      debug('AutoExport.schedule: push', ae.$loki)
       scheduler.push({ id: ae.$loki })
     }
   }
 
   public remove(type, ids) {
-    debug('AutoExport.remove', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    debug('AutoExport.remove:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
       scheduled.cancel(ae.$loki)
       scheduler.cancel(ae.$loki)

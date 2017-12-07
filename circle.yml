@@ -16,6 +16,7 @@ dependencies:
   - gem install bundler
   - gem update bundler
   override:
+    - curl -o- -L https://yarnpkg.com/install.sh | bash
     - yarn
     - yarn install
     - bundle config

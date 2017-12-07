@@ -51,7 +51,17 @@ class Translators {
 
       translation.setTranslator(translatorID)
       if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
-      if (path) translation.setLocation(Zotero.File.pathToFile(path))
+
+      if (path) {
+        const file = Zotero.File.pathToFile(path)
+
+        if (file.exists() && !file.isFile()) return reject(`${path} exists but is not a file`)
+        if (!file.parent) return reject(`${path} does not have a parent folder`)
+        if (!file.parent.isDirectory()) reject(`${file.parent.path} is not a folder`)
+
+        translation.setLocation(file)
+      }
+
       translation.setHandler('done', (obj, success) => {
         if (success) {
           return resolve(obj ? obj.string : undefined)
