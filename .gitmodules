@@ -1,3 +1,4 @@
 [submodule "citeproc-js"]
 	path = citeproc-js
 	url = https://github.com/Juris-M/citeproc-js.git
+	branch = master

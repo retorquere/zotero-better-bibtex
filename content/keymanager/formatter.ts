@@ -133,6 +133,10 @@ class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
+
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    if (citekey.citekey.startsWith('\u200B')) citekey.citekey = citekey.citekey.substr(1)
+
     return citekey
   }
 

@@ -50,12 +50,15 @@ class Translators {
       if (items.collection) translation.setCollection(typeof items.collection === 'number' ? Zotero.Collections.get(items.collection) : items.collection)
 
       translation.setTranslator(translatorID)
-
       if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 
       if (path) {
         const file = Zotero.File.pathToFile(path)
-        if (!file.parent || !file.parent.isDirectory()) return reject(`path to ${path} does not exist`)
+
+        if (file.exists() && !file.isFile()) return reject(`${path} exists but is not a file`)
+        if (!file.parent) return reject(`${path} does not have a parent folder`)
+        if (!file.parent.isDirectory()) reject(`${file.parent.path} is not a folder`)
+
         translation.setLocation(file)
       }
 

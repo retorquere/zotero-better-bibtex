@@ -9,7 +9,7 @@ export = (value, test, params = null) => {
   switch (test) {
     case 'isbn':
       const isbn = ISBN.parse(value)
-      return isbn.isIsbn10() || isbn.isIsbn13() ? '' : 'not a valid ISBN'
+      return (isbn && (isbn.isIsbn10() || isbn.isIsbn13())) ? '' : 'not a valid ISBN'
 
     case 'issn':
       return ISSN(value) ? '' : 'not a valid ISSN'
