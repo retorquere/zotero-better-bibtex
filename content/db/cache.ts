@@ -136,6 +136,7 @@ DB.init = () => {
   DB.loadDatabase()
   let coll = DB.schemaCollection('itemToExportFormat', {
     indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+    cloneObjects: true,
     schema: {
       type: 'object',
       properties: {
