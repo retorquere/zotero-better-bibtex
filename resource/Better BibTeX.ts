@@ -231,6 +231,8 @@ Translator.doExport = () => {
       ref.remove('type')
     }
 
+    ref.addCreators()
+
     if (item.date) {
       const date = Zotero.BetterBibTeX.parseDate(item.date)
       switch ((date || {}).type || 'verbatim') {

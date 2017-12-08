@@ -495,8 +495,6 @@ export = class Reference {
   public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
   public complete() {
-    this.addCreators()
-
     if (Translator.preferences.DOIandURL !== 'both') {
       if (this.has.doi && this.has.url) {
         debug('removing', Translator.preferences.DOIandURL === 'doi' ? 'url' : 'doi')
@@ -788,6 +786,7 @@ export = class Reference {
         if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
 
         if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
+          // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
           if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
         }

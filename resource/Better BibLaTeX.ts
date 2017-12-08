@@ -371,6 +371,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
+    ref.addCreators()
     /*
      * 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
      *ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
