@@ -24,7 +24,7 @@ Reference.prototype.fieldEncoding = {
   publisher: 'literal',
 }
 
-Reference.prototype.lint = explanation => {
+Reference.prototype.lint = function(explanation) {
   const required = {
     inproceedings: [ 'author', 'booktitle', 'pages', 'publisher', 'title', 'year' ],
     article: [ 'author', 'journal', 'number', 'pages', 'title', 'volume', 'year' ],
@@ -45,7 +45,7 @@ Reference.prototype.lint = explanation => {
   return fields.map(field => this.has[field] ? '' : `Missing required field '${field}'`).filter(msg => msg)
 }
 
-Reference.prototype.addCreators = () => {
+Reference.prototype.addCreators = function() {
   if (!this.item.creators || !this.item.creators.length) return
 
   /* split creators into subcategories */

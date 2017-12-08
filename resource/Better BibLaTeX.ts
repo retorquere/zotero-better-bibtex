@@ -36,7 +36,7 @@ Reference.prototype.caseConversion = {
 
 Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
-Reference.prototype.addCreators = () => {
+Reference.prototype.addCreators = function() {
   if (!this.item.creators || !this.item.creators.length) return
 
   const creators = {
