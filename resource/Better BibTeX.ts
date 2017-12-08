@@ -45,17 +45,17 @@ Reference.prototype.lint = explanation => {
   return fields.map(field => this.has[field] ? '' : `Missing required field '${field}'`).filter(msg => msg)
 }
 
-function addCreators(ref) {
-  if (!ref.item.creators || !ref.item.creators.length) return
+Reference.prototype.addCreators = () => {
+  if (!this.item.creators || !this.item.creators.length) return
 
   /* split creators into subcategories */
   const authors = []
   const editors = []
   const translators = []
   const collaborators = []
-  const primaryCreatorType = Zotero.Utilities.getCreatorsForType(ref.item.itemType)[0]
+  const primaryCreatorType = Zotero.Utilities.getCreatorsForType(this.item.itemType)[0]
 
-  for (const creator of ref.item.creators) {
+  for (const creator of this.item.creators) {
     switch (creator.creatorType) {
       case 'editor': case 'seriesEditor': editors.push(creator); break
       case 'translator':                  translators.push(creator); break
@@ -64,15 +64,15 @@ function addCreators(ref) {
     }
   }
 
-  ref.remove('author')
-  ref.remove('editor')
-  ref.remove('translator')
-  ref.remove('collaborator')
+  this.remove('author')
+  this.remove('editor')
+  this.remove('translator')
+  this.remove('collaborator')
 
-  ref.add({ name: 'author', value: authors, enc: 'creators' })
-  ref.add({ name: 'editor', value: editors, enc: 'creators' })
-  ref.add({ name: 'translator', value: translators, enc: 'creators' })
-  ref.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
+  this.add({ name: 'author', value: authors, enc: 'creators' })
+  this.add({ name: 'editor', value: editors, enc: 'creators' })
+  this.add({ name: 'translator', value: translators, enc: 'creators' })
+  this.add({ name: 'collaborator', value: collaborators, enc: 'creators' })
 }
 
 Reference.prototype.typeMap = {
@@ -230,8 +230,6 @@ Translator.doExport = () => {
       ref.referencetype = item.thesisType
       ref.remove('type')
     }
-
-    addCreators(ref)
 
     if (item.date) {
       const date = Zotero.BetterBibTeX.parseDate(item.date)

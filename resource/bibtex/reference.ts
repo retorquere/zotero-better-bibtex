@@ -282,6 +282,7 @@ export = class Reference {
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
+  public addCreators: Function
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -494,6 +495,8 @@ export = class Reference {
   public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
 
   public complete() {
+    this.addCreators()
+
     if (Translator.preferences.DOIandURL !== 'both') {
       if (this.has.doi && this.has.url) {
         debug('removing', Translator.preferences.DOIandURL === 'doi' ? 'url' : 'doi')
