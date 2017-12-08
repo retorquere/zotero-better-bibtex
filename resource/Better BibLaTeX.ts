@@ -105,9 +105,9 @@ Reference.prototype.addCreators = () => {
   }
 
   this.remove('editoratype')
-  if (creators.editora.length > 0) this.add({ name: 'editoratype': value: 'collaborator' })
+  if (creators.editora.length > 0) this.add({ name: 'editoratype', value: 'collaborator' })
   this.remove('editorbtype')
-  if (creators.editorb.length > 0) this.add({ name: 'editorbtype': value: 'redactor' })
+  if (creators.editorb.length > 0) this.add({ name: 'editorbtype', value: 'redactor' })
 }
 
 Reference.prototype.typeMap = {
