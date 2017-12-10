@@ -44,6 +44,7 @@
     "better-queue": "^3.8.6",
     "better-queue-memory": "^1.0.2",
     "biblatex-csl-converter": "^1.2.2",
+    "citeproc": "^2.1.182",
     "edtf": "^2.2.2",
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",

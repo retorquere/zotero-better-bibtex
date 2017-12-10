@@ -7,7 +7,7 @@ import * as path from 'path'
 import root from '../webpack/root'
 
 console.log('generating date parser data')
-const localesRoot = path.join(root, 'citeproc-js/locale')
+const localesRoot = path.join(root, 'citation-style-language-locales')
 
 const result = {}
 const translate = {

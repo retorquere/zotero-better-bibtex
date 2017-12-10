@@ -1,5 +1,4 @@
-[submodule "citeproc-js"]
-	path = citeproc-js
-	url = https://github.com/Juris-M/citeproc-js.git
+[submodule "citation-style-language-locales"]
+	path = citation-style-language-locales
+	url = https://github.com/citation-style-language/locales.git
 	branch = master
-  ignore = dirty
