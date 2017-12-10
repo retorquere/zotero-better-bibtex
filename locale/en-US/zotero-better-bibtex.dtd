@@ -27,6 +27,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
+<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Translator">
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">

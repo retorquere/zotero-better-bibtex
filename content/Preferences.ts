@@ -59,8 +59,6 @@ class AutoExportPrefPane {
 
     const on = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.on')
     const off = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.off')
-    const status = {}
-    const type = {}
 
     for (const ae of AutoExport.db.chain().simplesort('path').data()) {
       const treeitem = exportlist.appendChild(document.createElement('treeitem'))
@@ -77,13 +75,19 @@ class AutoExportPrefPane {
 
         switch (column) {
           case 'collection':
-            type[ae.type] = type[ae.type] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) || ae.type
-            treecell.setAttribute('label', `${type[ae.type]}: ${this.autoExportName(ae)}`)
+            const type = Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) || ae.type
+            treecell.setAttribute('label', `${type}: ${this.autoExportName(ae)}`)
             break
 
           case 'status':
-            status[ae.status] = status[ae.status] || Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${ae.status}`) || ae.status
-            treecell.setAttribute('label', (status[ae.status] + (ae.updated ? ` (${ae.updated})` : '')) + (ae.error ? `: ${ae.error}` : ''))
+            let status = ae.error ? 'error' : ae.status
+            status = Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${status}`) || status
+            if (ae.error) status += `: ${ae.error}`
+            treecell.setAttribute('label', status)
+            break
+
+          case 'updated':
+            treecell.setAttribute('label', `${ae.updated || ''}`)
             break
 
           case 'target':
