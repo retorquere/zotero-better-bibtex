@@ -44,7 +44,7 @@ dependencies:
 
       ls -lh ~/downloads
   cache_directories:
-  - citeproc-js
+  - citation-style-language-locales
   - ~/downloads
   - ~/.cache/yarn
 test:
