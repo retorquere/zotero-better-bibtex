@@ -282,6 +282,7 @@ export = class Reference {
   public caseConversion: { [key: string]: boolean }
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
+  public addCreators: Function
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -785,6 +786,7 @@ export = class Reference {
         if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
 
         if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
+          // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'
           if (!this.useprefix) this.useprefix = !!name['non-dropping-particle']
           if (!this.juniorcomma) this.juniorcomma = (f.juniorcomma && name['comma-suffix'])
         }

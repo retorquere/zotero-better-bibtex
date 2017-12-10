@@ -5,6 +5,28 @@ declare const Zotero: any
 
 import Exporter = require('./lib/exporter.ts')
 import debug = require('./lib/debug.ts')
+import format = require('string-template')
+
+function select_link(item) {
+  const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
+  if (!m) throw new Error(`Malformed item uri ${item.uri}`)
+
+  const [ , type, groupId, key ] = m
+
+  let id
+  switch (type) {
+    case 'users':
+      if (groupId.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
+      id = `0_${key}`
+      break
+    case 'groups':
+      if (!groupId) throw new Error(`Missing groupId in ${item.uri}`)
+      id = `${groupId}_${key}`
+      break
+  }
+
+  return `zotero://select/items/${id}`
+}
 
 const Mode = { // tslint:disable-line:variable-name
   gitbook(items) {
@@ -46,23 +68,20 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgmode(items) {
     for (const item of items) {
-      let id
-      const m = item.uri.match(/\/(users|groups)\/([0-9]+|(local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
-      if (!m) throw new Error(`Malformed item uri ${item.uri}`)
+      Zotero.write(`[[${select_link(item)}][@${item.citekey}]]`)
+    }
+  },
 
-      const [, type, groupID, , key ] = m
+  selectLink(items) {
+    Zotero.write(items.map(select_link).join('\n'))
+  },
 
-      switch (type) {
-        case 'users':
-          if (groupID.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-          id = key
-          break
-        case 'groups':
-          id = `${groupID}~${key}`
-          break
-      }
-
-      Zotero.write(`[[zotero://select/items/${id}][@${item.citekey}]]`)
+  'string-template'(items) {
+    try {
+      const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)
+      Zotero.write(format(citation || '{citation}', { citation: items.map(i => format(item || '{item}', { item: i })).join(sep || '') }))
+    } catch (err) {
+      Zotero.write(`${err}`)
     }
   },
 }
@@ -78,6 +97,6 @@ Translator.doExport = () => {
   if (mode) {
     mode.call(null, items)
   } else {
-    throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}'`)
+    throw new Error(`Unsupported Quick Copy format '${Translator.options.quickCopyMode || Translator.preferences.quickCopyMode}', I only know about: ${Object.keys(Mode).join(', ')}`)
   }
 }

@@ -36,8 +36,8 @@ Reference.prototype.caseConversion = {
 
 Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
-function addCreators(ref) {
-  if (!ref.item.creators || !ref.item.creators.length) return
+Reference.prototype.addCreators = function() {
+  if (!this.item.creators || !this.item.creators.length) return
 
   const creators = {
     author: [],
@@ -51,12 +51,12 @@ function addCreators(ref) {
     scriptwriter: [],
     director: [],
   }
-  for (const creator of ref.item.creators) {
+  for (const creator of this.item.creators) {
     let kind
     switch (creator.creatorType) {
       case 'director':
         // 365.something
-        if (['video', 'movie'].includes(ref.referencetype)) {
+        if (['video', 'movie'].includes(this.referencetype)) {
           kind = 'director'
         } else {
           kind = 'author'
@@ -85,7 +85,7 @@ function addCreators(ref) {
         break
       case 'scriptwriter':
         // 365.something
-        if (['video', 'movie'].includes(ref.referencetype)) {
+        if (['video', 'movie'].includes(this.referencetype)) {
           kind = 'scriptwriter'
         } else {
           kind = 'editora'
@@ -100,12 +100,14 @@ function addCreators(ref) {
   }
 
   for (const [field, value] of Object.entries(creators)) {
-    ref.remove(field)
-    ref.add({ name: field, value, enc: 'creators' })
+    this.remove(field)
+    this.add({ name: field, value, enc: 'creators' })
   }
 
-  if (creators.editora.length > 0) ref.add({ editoratype: 'collaborator' })
-  if (creators.editorb.length > 0) ref.add({ editorbtype: 'redactor' })
+  this.remove('editoratype')
+  if (creators.editora.length > 0) this.add({ name: 'editoratype', value: 'collaborator' })
+  this.remove('editorbtype')
+  if (creators.editorb.length > 0) this.add({ name: 'editorbtype', value: 'redactor' })
 }
 
 Reference.prototype.typeMap = {
@@ -355,8 +357,6 @@ Translator.doExport = () => {
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
-    addCreators(ref)
-
     if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate), enc: 'date' })
 
     ref.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
@@ -371,6 +371,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
+    ref.addCreators()
     /*
      * 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
      *ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })

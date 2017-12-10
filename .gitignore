@@ -29,5 +29,5 @@ resource/reports/cacheActivity.txt
 .DS_Store
 .env
 webpack/tslint/noModuleExportsRule.js
-package-lock.json
 typedoc.json
+package-lock.json

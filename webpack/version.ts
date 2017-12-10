@@ -22,7 +22,7 @@ if (fs.existsSync(version_js)) {
     if (branch.match(/^[0-9]+$/)) branch = 'issue-' + branch
     version += [ '', process.env.CIRCLE_BUILD_NUM, branch].join('.')
   } else if (process.env.CIRCLECI !== 'true') {
-    version += [ '', os.userInfo().username, os.hostname() ].join('.')
+    version += [ '', os.userInfo().username, os.hostname(), '' + Date.now() ].join('.')
   }
 
   fs.writeFileSync(version_js, `module.exports = ${JSON.stringify(version)};\n`, 'utf8')
