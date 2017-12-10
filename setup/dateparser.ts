@@ -3,6 +3,7 @@
 import parseXML = require('xml-parser')
 import * as fs from 'fs-extra'
 import * as path from 'path'
+import * as glob from 'glob'
 
 import root from '../webpack/root'
 
@@ -29,10 +30,8 @@ const translate = {
   'season-04': 'winter',
 }
 
-const locales = require(path.join(localesRoot, 'locales.json'))
-
-for (const [short, full] of Object.entries(locales['primary-dialects'])) {
-  const locale = parseXML(fs.readFileSync(path.join(localesRoot, `locales-${full}.xml`), 'utf8'))
+for (const translation of glob.sync(path.join(localesRoot, 'locales-*.xml'))) {
+  const locale = parseXML(fs.readFileSync(translation, 'utf8'))
 
   const months = locale.root.children.find(e => e.name === 'terms').children.filter(e => e.attributes.name.startsWith('month-') || e.attributes.name.startsWith('season-'))
   for (const month of months) {
