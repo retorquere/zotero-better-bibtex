@@ -557,6 +557,10 @@ circular-dependency-plugin@^4.2.1:
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-4.2.1.tgz#d3af66e04b3bb3f47300824740b817cea74e38f1"
 
+citeproc@^2.1.182:
+  version "2.1.182"
+  resolved "https://registry.yarnpkg.com/citeproc/-/citeproc-2.1.182.tgz#97dcfe5fc7fdc84a0f70f3af9576a5255d60dc1a"
+
 clean-css@^3.3.0:
   version "3.4.28"
   resolved "https://registry.yarnpkg.com/clean-css/-/clean-css-3.4.28.tgz#bf1945e82fc808f55695e6ddeaec01400efd03ff"

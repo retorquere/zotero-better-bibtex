@@ -63,13 +63,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a url field">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a URL field">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "le DOI seulement">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
-<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "When a reference has both a DOI and a URL, export">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
@@ -88,4 +88,4 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "BibLaTeX URL">
