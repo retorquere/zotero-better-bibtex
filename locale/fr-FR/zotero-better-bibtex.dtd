@@ -63,7 +63,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "Oui, dans un champ 'URL'">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a URL field">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
@@ -88,4 +88,4 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "BibLaTeX URL">
