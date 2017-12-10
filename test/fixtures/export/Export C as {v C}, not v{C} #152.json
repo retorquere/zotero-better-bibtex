@@ -7,9 +7,8 @@
       "citekeyFormat": "[auth][year]",
       "skipFields": "note,language,file,urldate",
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "jabrefGroups": 0,
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

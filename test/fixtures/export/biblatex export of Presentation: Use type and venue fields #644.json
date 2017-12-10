@@ -1,0 +1,329 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.25",
+        "platform": "Linux x86_64",
+        "oscpu": "Linux x86_64",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.25"
+      },
+      "BetterBibTeX": "5.0.41"
+    },
+    "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": false,
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth:lower][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [
+        "doi"
+      ],
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "quickCopyMode": "latex",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {
+  },
+  "items": [
+    {
+      "itemType": "conferencePaper",
+      "date": "2015",
+      "extra": "bibtex[eventdate=2015-05-07/2015-05-09;venue=San Diego, CA, USA]",
+      "abstractNote": "We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm.",
+      "title": "Adam: A Method for Stochastic Optimization",
+      "proceedingsTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
+      "creators": [
+        {
+          "firstName": "Diederik P.",
+          "lastName": "Kingma",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jimmy",
+          "lastName": "Ba",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Computer Science - Learning",
+          "type": 1
+        }
+      ],
+      "collections": [
+        "J2I4Q9RN"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-09-05 15:18:50",
+      "dateModified": "2017-11-17 18:09:52",
+      "uri": "http://zotero.org/users/2713770/items/KGS7MIWD",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "url": "http://www.arxiv.org/pdf/1412.6980.pdf",
+          "accessDate": "2017-09-05 15:18:53",
+          "title": "arXiv:1412.6980 PDF",
+          "parentItem": "KGS7MIWD",
+          "linkMode": 1,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "Kingma and Ba - 2014 - Adam A Method for Stochastic Optimization.pdf",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2017-09-05 15:18:53",
+          "dateModified": "2017-09-05 15:18:53",
+          "uri": "http://zotero.org/users/2713770/items/7ZVU6APK",
+          "uniqueFields": {
+            "url": "http://www.arxiv.org/pdf/1412.6980.pdf",
+            "accessDate": "2017-09-05 15:18:53",
+            "title": "arXiv:1412.6980 PDF",
+            "linkMode": 1,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 378,
+          "key": "7ZVU6APK",
+          "libraryID": null,
+          "sourceItemKey": "KGS7MIWD",
+          "seeAlso": [
+
+          ],
+          "mimeType": "application/pdf",
+          "localPath": "/home/javier/Zotero/storage/7ZVU6APK/Kingma and Ba - 2014 - Adam A Method for Stochastic Optimization.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "url": "https://arxiv.org/abs/1412.6980",
+          "accessDate": "2017-09-05 15:18:54",
+          "title": "arXiv.org Snapshot",
+          "parentItem": "KGS7MIWD",
+          "linkMode": 1,
+          "contentType": "text/html",
+          "charset": "utf-8",
+          "filename": "1412.html",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2017-09-05 15:18:54",
+          "dateModified": "2017-09-05 15:18:55",
+          "uri": "http://zotero.org/users/2713770/items/HYK8U7LT",
+          "uniqueFields": {
+            "url": "https://arxiv.org/abs/1412.6980",
+            "accessDate": "2017-09-05 15:18:54",
+            "title": "arXiv.org Snapshot",
+            "linkMode": 1,
+            "mimeType": "text/html"
+          },
+          "itemID": 377,
+          "key": "HYK8U7LT",
+          "libraryID": null,
+          "sourceItemKey": "KGS7MIWD",
+          "seeAlso": [
+
+          ],
+          "mimeType": "text/html",
+          "localPath": "/home/javier/Zotero/storage/HYK8U7LT/1412.html"
+        }
+      ],
+      "notes": [
+        {
+          "key": "93GFH4QZ",
+          "itemType": "note",
+          "parentItem": "KGS7MIWD",
+          "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2017-09-05 15:18:50",
+          "dateModified": "2017-09-06 14:07:12",
+          "uniqueFields": {
+            "note": "<p>Comment: Published as a conference paper at the 3rd International Conference for Learning Representations, San Diego, 2015</p>"
+          },
+          "itemID": 376,
+          "libraryID": null,
+          "sourceItemKey": "KGS7MIWD",
+          "seeAlso": [
+
+          ]
+        }
+      ],
+      "uniqueFields": {
+        "date": "2015",
+        "extra": "bibtex[eventdate=2015-05-07/2015-05-09;venue=San Diego, CA, USA]",
+        "abstractNote": "We introduce Adam, an algorithm for first-order gradient-based optimization of stochastic objective functions, based on adaptive estimates of lower-order moments. The method is straightforward to implement, is computationally efficient, has little memory requirements, is invariant to diagonal rescaling of the gradients, and is well suited for problems that are large in terms of data and/or parameters. The method is also appropriate for non-stationary objectives and problems with very noisy and/or sparse gradients. The hyper-parameters have intuitive interpretations and typically require little tuning. Some connections to related algorithms, on which Adam was inspired, are discussed. We also analyze the theoretical convergence properties of the algorithm and provide a regret bound on the convergence rate that is comparable to the best known results under the online convex optimization framework. Empirical results demonstrate that Adam works well in practice and compares favorably to other stochastic optimization methods. Finally, we discuss AdaMax, a variant of Adam based on the infinity norm.",
+        "title": "Adam: A Method for Stochastic Optimization",
+        "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)"
+      },
+      "itemID": 117,
+      "key": "KGS7MIWD",
+      "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "kingma2015"
+    }
+  ]
+}

@@ -9,15 +9,23 @@
     "preserveConstEnums": false,
     "sourceMap": false,
     "downlevelIteration": true,
-    "lib": [ "es2017" ]
+    "lib": [ "es2017", "dom" ],
+    "typeRoots": [
+      "./typings",
+      "./gen/typings",
+      "./node_modules/@types"
+    ]
   },
   "include": [
     "content/**/*",
     "resource/**/*",
-    "webpack/**/*"
+    "webpack/**/*",
+    "setup/**/*",
+    "webpack.config.ts"
   ],
   "exclude": [
     "node_modules",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "typings"
   ]
 }

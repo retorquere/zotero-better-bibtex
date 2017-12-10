@@ -1,5 +1,7 @@
+import { ITranslator } from '../../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
-declare const Translator: any
 
 import debug = require('./debug.ts')
 
@@ -192,7 +194,7 @@ export = new class MarkupParser {
   private closeSelf = makeMap('colgroup dd dt li options p td tfoot th thead tr')
   private empty = makeMap('area base basefont br col frame hr img input link meta param embed command keygen source track wbr')
 
-  public parse(html, options: { caseConversion?: boolean, mode?: string } = {}) {
+  public parse(html, options: { caseConversion?: boolean, mode?: string } = {}): IHTMLNode {
     html = `${html}`
     this.handler = new AST(options.caseConversion)
 
@@ -292,7 +294,12 @@ export = new class MarkupParser {
       this.unwrapNocase(this.handler.root)
     }
 
-    return this.handler.root
+    let root = this.handler.root
+    if (root.name !== 'span') throw new Error(`markupparser: Unexpected root node ${root.name}`)
+    // spurious wrapping span
+    if (!Object.keys(root.attr).length && root.children.length === 1) root = root.children[0]
+    debug('markupparser:', root)
+    return root
   }
 
   private parseStartTag(tag, tagName, rest, unary) {

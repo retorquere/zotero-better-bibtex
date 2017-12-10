@@ -1,0 +1,275 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.24",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "de",
+        "appName": "Zotero",
+        "appVersion": "5.0.24"
+      },
+      "BetterBibTeX": "5.0.32"
+    },
+    "preferences": {
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "itemObserverDelay": 100,
+      "citeCommand": "cite",
+      "citekeyFormat": "[auth:fold:lower]_[Title:nopunct:skipwords:select,1,1:lower]_[year]",
+      "citekeyFold": true,
+      "DOIandURL": "both",
+      "bibtexURL": "off",
+      "csquotes": "",
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "skipFields": [
+
+      ],
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "warnBulkModify": 10,
+      "postscript": "",
+      "jabrefFormat": 4,
+      "bibtexParticleNoOp": false,
+      "biblatexExtendedNameFormat": true,
+      "biblatexExtendedDateFormat": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "jurismPreferredLanguage": "zh-alalc97",
+      "qualityReport": false,
+      "suppressTitleCase": false,
+      "parseParticles": true,
+      "debug": false,
+      "testing": false,
+      "rawLaTag": "#LaTeX"
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {
+  },
+  "items": [
+    {
+      "itemType": "book",
+      "place": "[Marburg]",
+      "publisher": "Krieger",
+      "date": "1789",
+      "extra": "bibtex[options=pseudoauthor=true] \nbibtex: knoblauch_dialogen_1789-1",
+      "language": "german",
+      "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie",
+      "shortTitle": "Dialogen",
+      "numPages": "72",
+      "creators": [
+        {
+          "firstName": "Karl von",
+          "lastName": "Knoblauch",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Quelle",
+          "type": 0
+        },
+        {
+          "tag": "Monographie",
+          "type": 0
+        },
+        {
+          "tag": "Knoblauch",
+          "type": 0
+        },
+        {
+          "tag": "anonym",
+          "type": 0
+        }
+      ],
+      "collections": [
+        "A4AMQ4AK",
+        "AKZP75SH"
+      ],
+      "relations": {
+        "dc:relation": [
+          "http://zotero.org/users/1772795/items/TVZAXAXJ"
+        ]
+      },
+      "dateAdded": "2014-01-28 12:51:16",
+      "dateModified": "2017-04-25 11:54:13",
+      "uri": "http://zotero.org/users/1772795/items/CWRTF2J8",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Dialogen_über_einige_Gegenstände_der_p.pdf",
+          "parentItem": "CWRTF2J8",
+          "linkMode": 0,
+          "contentType": "application/pdf",
+          "charset": "",
+          "filename": "Dialogen_über_einige_Gegenstände_der_p.pdf",
+          "tags": [
+
+          ],
+          "relations": {
+          },
+          "dateAdded": "2014-03-04 13:18:23",
+          "dateModified": "2014-03-04 13:18:23",
+          "uri": "http://zotero.org/users/1772795/items/BDQ8IKHS",
+          "uniqueFields": {
+            "title": "Dialogen_über_einige_Gegenstände_der_p.pdf",
+            "linkMode": 0,
+            "mimeType": "application/pdf"
+          },
+          "itemID": 1240,
+          "key": "BDQ8IKHS",
+          "libraryID": null,
+          "sourceItemKey": "CWRTF2J8",
+          "seeAlso": [
+
+          ],
+          "mimeType": "application/pdf",
+          "localPath": "/Users/ml/Zotero/storage/BDQ8IKHS/Dialogen_über_einige_Gegenstände_der_p.pdf"
+        }
+      ],
+      "notes": [
+
+      ],
+      "itemID": 423,
+      "key": "CWRTF2J8",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "knoblauch_dialogen_1789"
+    }
+  ]
+}

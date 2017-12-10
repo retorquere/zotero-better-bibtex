@@ -8,6 +8,7 @@ Before do |scenario|
   ) unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
   @selected = nil
+  @picked = []
   @explicitprefs = {}
 end
 
@@ -198,7 +199,7 @@ end
 #end
 Then /^an (auto-)?export (?:of "([^"]*)" )?(?:to "([^"]+)" )?using "([^"]+)" should match "([^"]+)"$/ do |auto, collection, target, translator, library|
   exportLibrary(
-    displayOptions: @displayOptions.merge({'Keep updated' => !!auto}),
+    displayOptions: @displayOptions.merge({'keepUpdated' => !!auto}),
     translator: translator,
     collection: collection || nil,
     output: target || nil,
@@ -229,6 +230,24 @@ When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, valu
   )
   expect(@selected).not_to be(nil)
   sleep 3
+end
+
+When(/^I pick "([^"]+)" for CAYW:$/) do |title, table|
+  picked = execute(
+    args: { title: title },
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.find(args.title)'
+  )
+  expect(picked).not_to be(nil)
+
+  @picked << table.rows_hash.merge({id: picked})
+end
+
+Then("the picks for {string} should be {string}") do |format, expected|
+  found = execute(
+    args: { format: format, picked: @picked },
+    script: 'return yield Zotero.BetterBibTeX.TestSupport.pick(args.format, args.picked)'
+  )
+  expect(found.strip).to eq(expected)
 end
 
 When(/^I remove the selected item$/) do

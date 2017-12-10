@@ -1,4 +1,6 @@
-declare const Translator: any
+import { ITranslator } from '../../gen/translator'
+declare const Translator: ITranslator
+
 declare const Zotero: any
 
 import format = require('../../content/debug-formatter.ts')

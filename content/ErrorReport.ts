@@ -4,12 +4,15 @@ declare const Components: any
 declare const Zotero: any
 declare const FormData: any
 declare const Blob: any
+declare const Services: any
 
 import getAddons = require('./addons.ts')
 import Prefs = require('./prefs.ts')
 import Translators = require('./translators.ts')
 import debug = require('./debug.ts')
 const PACKAGE = require('../package.json')
+
+Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
   public static max_log_lines = 5000
@@ -69,12 +72,43 @@ export = new class ErrorReport {
     }
   }
 
+  public show() {
+    const wizard = document.getElementById('better-bibtex-error-report')
+
+    if (wizard.onLastPage) wizard.canRewind = false
+    else if (wizard.pageIndex === 0) wizard.canRewind = false
+    else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
+    else wizard.canRewind = true
+  }
+
+  public restartWithDebugEnabled() {
+    const ps = Services.prompt
+    const buttonFlags = ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING
+        + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_CANCEL
+        + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING
+    const index = ps.confirmEx(
+      null,
+      Zotero.getString('zotero.debugOutputLogging'),
+      Zotero.getString('zotero.debugOutputLogging.enabledAfterRestart', [Zotero.clientName]),
+      buttonFlags,
+      Zotero.getString('general.restartNow'),
+      null, Zotero.getString('general.restartLater'), null, {}
+    )
+
+    if (index !== 1) Zotero.Prefs.set('debug.store', true)
+
+    if (index === 0) Zotero.Utilities.Internal.quit(true)
+  }
+
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
     const wizard = document.getElementById('better-bibtex-error-report')
+
+    if (Zotero.Debug.enabled) wizard.pageIndex = 1
+
     const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
+    continueButton.disabled = false
 
     this.form = JSON.parse(Zotero.File.getContentsFromURL(PACKAGE.xpi.releaseURL + 'error-report.json'))
     this.key = Zotero.Utilities.generateObjectKey()
@@ -101,7 +135,7 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
     document.getElementById('better-bibtex-error-log').value = this.errorlog.truncated
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines)
+    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines) + '...'
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     continueButton.focus()
@@ -136,9 +170,11 @@ export = new class ErrorReport {
     for (const key of Prefs.branch.getChildList('')) {
       prefs.push(key)
     }
-    prefs.sort()
-    for (const key of prefs) {
+    for (const key of prefs.sort()) {
       info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
+    }
+    for (const key of ['export.quickCopy.setting']) {
+      info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
     return info

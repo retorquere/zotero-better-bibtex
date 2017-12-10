@@ -25,6 +25,8 @@ class NoSuchFileError extends Error {
 class FileStore {
   public mode = 'reference'
 
+  private collectionsMissing = false
+
   public name(name) { return name + '.json' }
 
   public save(name, data) {
@@ -54,10 +56,11 @@ class FileStore {
 
     try {
       for (const coll of dbref.collections) {
-        if (coll.dirty) this.save(`${name}.${coll.name}`, coll)
+        if (coll.dirty || this.collectionsMissing) this.save(`${name}.${coll.name}`, coll)
       }
       // save header last for sort-of-transaction
       this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}})
+      this.collectionsMissing = false
     } catch (err) {
       debug('LokiJS.FileStore.exportDatabase: save failed', err)
     }
@@ -87,6 +90,7 @@ class FileStore {
         try {
           collections.push(this.load(`${name}.${coll}`))
         } catch (err) {
+          this.collectionsMissing = true
           debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
         }
       }
@@ -114,10 +118,25 @@ DB.remove = function(ids) {
   }
 }
 
+function upgrade(coll, property, current) {
+  const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
+  if (dbVersion === current) return false
+
+  debug('CACHE: dropping cache', coll.name, 'because', property, 'went from', dbVersion, 'to', current)
+
+  coll.setTransform(METADATA, [{
+    type: METADATA,
+    value : { [property]: current },
+  }])
+
+  return true
+}
+
 DB.init = () => {
   DB.loadDatabase()
   let coll = DB.schemaCollection('itemToExportFormat', {
     indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+    cloneObjects: true,
     schema: {
       type: 'object',
       properties: {
@@ -135,18 +154,9 @@ DB.init = () => {
     },
   })
 
-  if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.Zotero !== ZoteroConfig.Zotero.version) {
-    debug('CACHE: dropping cache', coll.name, 'because Zotero is now', ZoteroConfig.Zotero.version)
-    coll.removeDataOnly()
-  }
-  coll.setTransform(METADATA, [{
-    type: METADATA,
-    value : { Zotero: ZoteroConfig.Zotero.version },
-  }])
+  if (upgrade(coll, 'Zotero', ZoteroConfig.Zotero.version)) coll.removeDataOnly()
 
-  /*
-    TODO: for this to work, an object must be updated when it is fetched
-  */
+  // this reaps unused cache entries -- make sure that cacheFetchs updates the object
   //                  secs    mins  hours days
   const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
@@ -175,16 +185,8 @@ DB.init = () => {
       ttlInterval,
     })
 
-    if ((coll.getTransform(METADATA) || [{value: {}}])[0].value.BetterBibTeX !== version) {
-      debug('CACHE: dropping cache', coll.name, 'because BetterBibTeX is now', version)
-      coll.removeDataOnly()
-    }
-    coll.setTransform(METADATA, [{
-      type: METADATA,
-      value : { BetterBibTeX: version },
-    }])
+    if (upgrade(coll, 'BetterBibTeX', version)) coll.removeDataOnly()
   }
-
 }
 
 // the preferences influence the output way too much, no keeping track of that
@@ -193,10 +195,6 @@ Events.on('preference-changed', () => {
     DB.getCollection(translator).removeDataOnly()
   }
 })
-
-/*
-  TODO: use preference-changed event to drop the translator caches
-*/
 
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }

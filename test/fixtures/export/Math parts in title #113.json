@@ -5,9 +5,8 @@
     "release": "0.6.48",
     "preferences": {
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

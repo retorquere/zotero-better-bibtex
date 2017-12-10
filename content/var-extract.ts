@@ -28,20 +28,21 @@ export = function extract(item) {
   extraFields.citekey = { citekey: citekey.citekey, pinned: citekey.pinned }
   extra = citekey.extra
 
-  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, plainText, fields) => {
+  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, cook, fields) => {
     const legacy = {}
     for (const field of fields.split(';')) {
-      const kv = field.split(/\s*=\s*/)
-      if (kv.length === 2) { // tslint:disable-line:no-magic-numbers
-        let [name, value] = kv
-        name = name.toLowerCase()
-        legacy[name] = { name, value, raw: !plainText }
-      } else {
+      const kv = field.match(/^([^=]+)(?:=)([\S\s]*)/)
+      if (!kv) {
         debug('fieldExtract: not a field', field)
         return match
       }
+
+      let [ , name, value ] = kv.map(v => v.trim())
+      name = name.toLowerCase()
+      legacy[name] = { name, value, raw: !cook }
     }
 
+    debug('var-extract:', legacy)
     Object.assign(extraFields.bibtex, legacy)
     return ''
   }).trim()
@@ -109,8 +110,8 @@ export = function extract(item) {
       return false
     }
 
-    if (['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name)) {
-      extraFields.kv[name] = value
+    if (['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name.replace(/-/g, ''))) { // google-books-id
+      extraFields.kv[name.replace(/-/g, '')] = value
       return false
     }
 

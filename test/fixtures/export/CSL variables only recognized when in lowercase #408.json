@@ -6,17 +6,14 @@
     "preferences": {
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "attachmentsNoMetadata": false,
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
       "csquotes": "",
       "DOIandURL": "both",
-      "jabrefGroups": 0,
-      "langID": "babel",
       "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "",
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     },
     "options": {
       "exportFileData": false,

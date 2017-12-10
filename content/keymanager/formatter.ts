@@ -7,19 +7,20 @@ import Prefs = require('../prefs.ts')
 import debug = require('../debug.ts')
 
 const parser = require('./formatter.pegjs')
-import parseDate = require('../dateparser.ts')
+import DateParser = require('../dateparser.ts')
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
 import JournalAbbrev = require('../journal-abbrev.ts')
 
-export = new class PatternFormatter {
+class PatternFormatter {
   public generate: Function
 
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;?\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
-    punct: Zotero.Utilities.XRegExp('\\p{Pc}|\\p{Pd}|\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
+    dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
     caseNotUpperTitle: Zotero.Utilities.XRegExp('[^\\p{Lu}\\p{Lt}]', 'g'),
     caseNotUpper: Zotero.Utilities.XRegExp('[^\\p{Lu}]', 'g'),
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
@@ -43,7 +44,7 @@ export = new class PatternFormatter {
 
   private item: any
 
-  private skipWords: string[]
+  private skipWords: Set<string>
 
   private fold: boolean
   private citekeyFormat: string
@@ -54,7 +55,7 @@ export = new class PatternFormatter {
 
   public update() {
     debug('PatternFormatter.update:')
-    this.skipWords = Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word)
+    this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'reset']) {
@@ -94,7 +95,7 @@ export = new class PatternFormatter {
     } catch (error1) {}
 
     if (this.item.date) {
-      let date = parseDate(this.item.date)
+      let date = DateParser.parse(this.item.date)
       if (date.type === 'list') date = date.dates[0]
       if (date.type === 'interval') date = date.from || date.to
 
@@ -132,11 +133,15 @@ export = new class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
+
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    if (citekey.citekey.startsWith('\u200B')) citekey.citekey = citekey.citekey.substr(1)
+
     return citekey
   }
 
-  // methods
-  protected $zotero() {
+  /** Generates citation keys as the stock Zotero Bib(La)TeX export does */
+  public $zotero() {
     let key = ''
     const creator = (this.item.item.getCreators() || [])[0]
 
@@ -161,7 +166,7 @@ export = new class PatternFormatter {
     return key.replace(this.re.zotero.citeKeyClean, '')
   }
 
-  protected $property(name) {
+  public $property(name) {
     try {
       return this.innerText(this.item.item.getField(name, false, true) || '')
     } catch (err) {}
@@ -173,12 +178,13 @@ export = new class PatternFormatter {
     return ''
   }
 
-  protected $library() {
+  /** returns the name of the shared group library, or nothing if the reference is in your personal library */
+  public $library() {
     if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
     return Zotero.Libraries.getName(this.item.item.libraryID)
   }
 
-  protected $auth(onlyEditors, withInitials, n, m) {
+  public $auth(onlyEditors, withInitials, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     let author = authors[m || 0]
@@ -186,27 +192,30 @@ export = new class PatternFormatter {
     return author || ''
   }
 
-  protected $authForeIni(onlyEditors) {
+  public $authForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[0]
   }
 
-  protected $authorLastForeIni(onlyEditors) {
+  public $authorLastForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
-  protected $authorLast(onlyEditors, withInitials) {
+  public $authorLast(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
-  protected $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
+  /** returns the journal abbreviation, or, if not found, the journal title, If 'automatic journal abbreviation' is enabled in the BBT settings,
+   * it will use the same abbreviation filter Zotero uses in the wordprocessor integration. You might want to use the `abbr` filter on this.
+   */
+  public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
-  protected $authors(onlyEditors, withInitials, n) {
+  public $authors(onlyEditors, withInitials, n) {
     let authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -219,7 +228,7 @@ export = new class PatternFormatter {
     return authors.join('')
   }
 
-  protected $authorsAlpha(onlyEditors, withInitials) {
+  public $authorsAlpha(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -238,13 +247,13 @@ export = new class PatternFormatter {
     }
   }
 
-  protected $authIni(onlyEditors, withInitials, n) {
+  public $authIni(onlyEditors, withInitials, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors.map(author => author.substring(0, n)).join('.')
   }
 
-  protected $authorIni(onlyEditors, withInitials) {
+  public $authorIni(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     const firstAuthor = authors.shift()
@@ -253,7 +262,7 @@ export = new class PatternFormatter {
     return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
   }
 
-  protected $auth_auth_ea(onlyEditors, withInitials) {
+  public $auth_auth_ea(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -261,7 +270,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
   }
 
-  protected $authEtAl(onlyEditors, withInitials) {
+  public $authEtAl(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -270,7 +279,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
   }
 
-  protected $auth_etal(onlyEditors, withInitials) {
+  public $auth_etal(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -279,7 +288,7 @@ export = new class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
   }
 
-  protected $authshort(onlyEditors, withInitials) {
+  public $authshort(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -296,7 +305,7 @@ export = new class PatternFormatter {
     }
   }
 
-  protected $firstpage() {
+  public $firstpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
     let firstpage = ''
@@ -304,7 +313,7 @@ export = new class PatternFormatter {
     return firstpage
   }
 
-  protected $lastpage() {
+  public $lastpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
     let lastpage = ''
@@ -312,12 +321,12 @@ export = new class PatternFormatter {
     return lastpage
   }
 
-  protected $keyword(n) {
+  public $keyword(n) {
     this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
     return this.item.tags[n] || ''
   }
 
-  protected $shorttitle() {
+  public $shorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
 
@@ -325,68 +334,96 @@ export = new class PatternFormatter {
     return words.slice(0, 3).join('')
   }
 
-  protected $veryshorttitle() {
+  public $veryshorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
     return words.slice(0, 1).join('')
   }
 
-  protected $shortyear() {
+  public $shortyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 2)
   }
 
-  protected $year() {
+  public $year() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 4)
   }
 
-  protected $origyear() {
+  public $origyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.origyear, 4)
   }
 
-  protected $month() {
+  public $month() {
     if (!this.item.month) return ''
     return this.months[this.item.month - 1] || ''
   }
 
-  protected $title() { return this.titleWords(this.item.title).join('') }
+  public $title() { return this.titleWords(this.item.title).join('') }
 
-  // filters
-  protected _condense(value, sep) {
+  /**
+   * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
+   * parameter, e.g `condense,_` will replace spaces with underscores. **Parameters should not contain spaces** unless
+   * you want the spaces in the value passed in to be replaced with those spaces in the parameter
+   */
+  public _condense(value, sep) {
     return (value || '').replace(/\s/g, sep || '')
   }
 
-  protected _prefix(value, prefix) {
+  /**
+   * prefixes with its parameter, so `prefix,_` will add an underscore to the front if, and only if, the value
+   * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
+   * add a backslash (`\`) in front of it.
+   */
+  public _prefix(value, prefix) {
     value = value || ''
     if (value && prefix) return `${prefix}${value}`
     return value
   }
 
-  protected _postfix(value, postfix) {
+  /**
+   * postfixes with its parameter, so `postfix,_` will add an underscore to the end if, and only if, the value
+   * it is supposed to postfix isn't empty
+   */
+  public _postfix(value, postfix) {
     value = value || ''
     if (value && postfix) return `${value}${postfix}`
     return value
   }
 
-  protected _abbr(value) {
+  public _abbr(value) {
     return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
   }
 
-  protected _lower(value) {
+  public _lower(value) {
     return (value || '').toLowerCase()
   }
 
-  protected _upper(value) {
+  public _upper(value) {
     return (value || '').toUpperCase()
   }
 
-  protected _skipwords(value) {
-    return (value || '').split(/\s+/).filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0).join(' ').trim()
+  /**
+   * filters out common words like 'of', 'the', ... the list of words can be seen and changed by going into
+   * `about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
+   * case-insensitive list of words.
+   *
+   * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
+   * after adding `jr` to the skipWords list.
+   * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
+   */
+  public _skipwords(value) {
+    return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
   }
 
-  protected _select(value, start, n) {
+  /**
+   * selects words from the value passed in. The format is `select,start,number` (1-based), so `select,1,4`
+   * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
+   * selected. It is important to note that `select' works only on values that have the words separated by whitespace,
+   * so the caveat below applies.
+   */
+  public _select(value, start, n) {
     value = (value || '').split(/\s+/)
     let end = value.length
 
@@ -396,28 +433,49 @@ export = new class PatternFormatter {
     return value.slice(start, end).join(' ')
   }
 
-  protected _substring(value, start, n) {
+  public _substring(value, start, n) {
     return (value || '').slice(start - 1, (start - 1) + n)
   }
 
-  protected _ascii(value) {
+  /** removes all non-ascii characters */
+  public _ascii(value) {
     return (value || '').replace(/[^ -~]/g, '').split(/\s+/).join(' ').trim()
   }
 
-  protected _alphanum(value) {
+  /** clears out everything but unicode alphanumeric characters (unicode character classes `L` and `N`) */
+  public _alphanum(value) {
     return Zotero.Utilities.XRegExp.replace(value || '', this.re.alphanum, '', 'all').split(/\s+/).join(' ').trim()
   }
 
-  protected _fold(value) {
+  /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
+  public _fold(value) {
     return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
   }
 
-  protected _capitalize(value) {
+  /** uppercases the first letter of each word */
+  public _capitalize(value) {
     return (value || '').replace(/((^|\s)[a-z])/g, m => m.toUpperCase())
   }
 
-  protected _nopunct(value) {
-    return Zotero.Utilities.XRegExp.replace(value || '', this.re.punct, '', 'all')
+  /** Removes punctuation */
+  public _nopunct(value) {
+    value = value || ''
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '-', 'all')
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
+    return value
+  }
+
+  /** Removes punctuation and word-connecting dashes */
+  public _nopunctordash(value) {
+    value = value || ''
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '', 'all')
+    value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
+    return value
+  }
+
+  public _clean(value) {
+    if (!value) return ''
+    return this.clean(value)
   }
 
   private removeDiacritics(str) {
@@ -463,7 +521,7 @@ export = new class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => this.skipWords.indexOf(word.toLowerCase()) < 0 && PunyCode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && PunyCode.ucs2.decode(word).length > 1)
     if (words.length === 0) return null
     return words
   }
@@ -541,3 +599,5 @@ export = new class PatternFormatter {
     return this.item.creators.authors || this.item.creators.editors || this.item.creators.translators || this.item.creators.collaborators || []
   }
 }
+
+export = new PatternFormatter

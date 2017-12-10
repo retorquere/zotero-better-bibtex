@@ -1,17 +1,18 @@
 // tslint:disable:no-console
 
 require('dotenv').config()
-require('../circle')
-import path = require('path')
+import * as path from 'path'
 
-const pkg = require('../../package.json')
-const version = require('../version')
-const build_root = path.join(__dirname, '../../')
+import '../circle'
 
+import root from '../root'
+import version from '../version'
 import * as github from './github'
 
-const PRERELEASE = true // TODO: remove after release
-const KEEP_BUILDS = 5
+const pkg = require('../../package.json')
+
+const PRERELEASE = false
+const KEEP_BUILDS = 40
 
 function bail(msg, status = 1) {
   console.log(msg)
@@ -43,6 +44,7 @@ tags = dedup(tags)
 if (tags.indexOf('norelease') >= 0) bail(`Not releasing ${process.env.CIRCLE_BRANCH} because of 'norelease' tag`, 0)
 
 let issues = tags.filter(tag => !isNaN(parseInt(tag)))
+
 if (process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)) issues.push(process.env.CIRCLE_BRANCH)
 issues = dedup(issues)
 
@@ -82,6 +84,12 @@ async function main() {
     }
   }
 
+  if (process.env.CIRCLE_BRANCH === 'l10n_master') {
+    const translations = await github.request({ uri: '/issues?state=open&labels=translation' })
+    issues = issues.concat(translations.map(issue => issue.number))
+  }
+  issues = dedup(issues)
+
   const xpi = `zotero-better-bibtex-${version}.xpi`
 
   if (process.env.CIRCLE_TAG) {
@@ -106,7 +114,7 @@ async function main() {
     await github.upload({
       release: release.current,
       name: xpi,
-      path: path.resolve(__dirname, path.join(build_root, `xpi/${xpi}`)),
+      path: path.resolve(__dirname, path.join(root, `xpi/${xpi}`)),
       contentType: 'application/x-xpinstall',
     })
 
@@ -136,7 +144,7 @@ async function main() {
     await github.upload({
       release: release.builds,
       name: xpi,
-      path: path.resolve(__dirname, path.join(build_root, `xpi/${xpi}`)),
+      path: path.resolve(__dirname, path.join(root, `xpi/${xpi}`)),
       contentType: 'application/x-xpinstall',
     })
 

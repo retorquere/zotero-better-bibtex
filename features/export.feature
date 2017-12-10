@@ -3,14 +3,20 @@ Feature: Export
 
 ### BibLaTeX cookie-cutter ###
 
-@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590
+@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
+@573 @590 @747 @edtf @689
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
-     | date ranges #747+#746                                                                          | 3           |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
+     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           |
+     | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
+     | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
+     | EDTF dates in BibLaTeX #590                                                                    | 27          |
+     | date ranges #747+#746                                                                          | 4           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
@@ -20,7 +26,6 @@ Scenario Outline: BibLaTeX Export
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
-#     | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           | #    deferred
      | Math parts in title #113                                                                       | 1           |
      | map csl-json variables #293                                                                    | 2           |
      | Fields in Extra should override defaults                                                       | 1           |
@@ -55,7 +60,6 @@ Scenario Outline: BibLaTeX Export
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
-     | EDTF dates in BibLaTeX #590                                                                    | 14          |
      | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |
@@ -99,13 +103,14 @@ Scenario Outline: BibLaTeX Export
 
 ### BibTeX cookie-cutter ###
 
-@441 @439 @bbt @300 @565 @551 @558
+@441 @439 @bbt @300 @565 @551 @558 @747
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | date ranges #747+#746                                                              | 4          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | veryshorttitle and compound words #551                                             | 4          |
@@ -129,9 +134,9 @@ Scenario Outline: BibTeX Export
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/Omit URL export when DOI present. #131.json" into a new collection
   And I set preference .DOIandURL to both
-  And I set preference .jabrefGroups to 3
+  And I set preference .jabrefFormat to 3
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.groups3.biblatex"
-  And I set preference .jabrefGroups to 4
+  And I set preference .jabrefFormat to 4
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.default.biblatex"
   And I set preference .DOIandURL to doi
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.prefer-DOI.biblatex"
@@ -170,20 +175,20 @@ Scenario: BibTeX URLs
   When I set preference .bibtexURL to "url"
   Then an export using "Better BibTeX" should match "export/BibTeX; URL missing in bibtex for Book Section #412.url.bibtex"
 
-#@cayw
-#Scenario: CAYW picker
-#  When I import 3 references from "export/cayw.json"
-#  And I pick "6 The time it takes: temporalities of planning" for CAYW:
-#    | label | page |
-#    | locator | 1 |
-#  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation" for CAYW:
-#    | label | chapter |
-#    | locator | 1 |
-#  Then the picks for pandoc should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
-#  And the picks for mmd should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
-#  And the picks for latex should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
-#  And the picks for scannable-cite should be "{|Abram, 2014|p. 1||zu:0:ITEMKEY}{|Pollard and Bray, 2007|ch. 1||zu:0:ITEMKEY}"
-#  And the picks for asciidoctor-bibtex should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]"
+@cayw
+Scenario: CAYW picker
+  When I import 3 references from "export/cayw.json"
+  And I pick "6 The time it takes: temporalities of planning" for CAYW:
+    | label | page |
+    | locator | 1 |
+  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation" for CAYW:
+    | label | chapter |
+    | locator | 1 |
+  Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
+  And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
+  And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
+  And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 |  | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 |  | zu:0:ITEMKEY }"
+  And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]"
 
 @307 @bbt
 Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
@@ -221,11 +226,11 @@ Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
   Then an export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
 
-@365 @pandoc
-Scenario: Export of creator-type fields from embedded CSL variables #365
-  When I import 6 references from "export/Export of creator-type fields from embedded CSL variables #365.json"
-  Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365.biblatex"
-  And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365.csl.json"
+@365 @pandoc @825
+Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
+  When I import 7 references from "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.json"
+  Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.biblatex"
+  And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.csl.json"
 
 @587
 Scenario: Setting the item type via the cheater syntax #587
@@ -234,10 +239,11 @@ Scenario: Setting the item type via the cheater syntax #587
   And an export using "Better BibTeX" should match "export/Setting the item type via the cheater syntax #587.bibtex"
   And an export using "Better CSL JSON" should match "export/Setting the item type via the cheater syntax #587.csl.json"
 
-@360 @pandoc
-Scenario: Date export to Better CSL-JSON #360
-  When I import 6 references from "export/Date export to Better CSL-JSON #360.json"
-  And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360.csl.json"
+@360 @811 @pandoc
+Scenario: Date export to Better CSL-JSON #360 #811
+  When I import 15 references from "export/Date export to Better CSL-JSON #360 #811.json"
+  And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360 #811.csl.json"
+  And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
@@ -323,7 +329,7 @@ Scenario: Sorting and optional particle handling #411
 Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/autoexport.json" into a new collection
   And I set preference .autoExport to immediate
-  And I set preference .jabrefGroups to 3
+  And I set preference .jabrefFormat to 3
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/autoexport.before.biblatex"
   And an auto-export of "/autoexport" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/autoexport.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
@@ -331,11 +337,6 @@ Scenario: auto-export
   And I wait 5 seconds
   Then "/tmp/autoexport.bib" should match "export/autoexport.after.biblatex"
   And "/tmp/autoexport.coll.bib" should match "export/autoexport.after.coll.biblatex"
-
-#@163 # test files missing
-#Scenario: Preserve Bib variable names #163
-#  When I import 1 reference from "export/Preserve Bib variable names #163.json"
-#  Then an export using "Better BibLaTeX" should match "export/Preserve Bib variable names #163.biblatex"
 
 @313 @bblt
 Scenario: (non-)dropping particle handling #313

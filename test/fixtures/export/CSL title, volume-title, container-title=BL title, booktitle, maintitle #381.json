@@ -11,16 +11,13 @@
       "skipFields": "",
       "postscript": "",
       "csquotes": "",
-      "langID": "babel",
       "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
       "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "citekeyFormat": "[auth][year]",
-      "jabrefGroups": 0,
-      "defaultDateParserLocale": "en-GB",
-      "bibtexURL": "note"
+      "bibtexURL": "note",
+      "jabrefFormat": 0
     }
   },
   "collections": {
