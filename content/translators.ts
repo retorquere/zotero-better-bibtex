@@ -55,9 +55,8 @@ class Translators {
       if (path) {
         const file = Zotero.File.pathToFile(path)
 
-        if (file.exists() && !file.isFile()) return reject(`${path} exists but is not a file`)
-        if (!file.parent) return reject(`${path} does not have a parent folder`)
-        if (!file.parent.isDirectory()) reject(`${file.parent.path} is not a folder`)
+        if (file.exists() && !file.isFile()) return reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
+        if (!file.parent || !file.parent.exists()) return reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
 
         translation.setLocation(file)
       }
