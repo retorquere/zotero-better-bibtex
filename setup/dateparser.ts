@@ -31,9 +31,7 @@ const translate = {
 
 const locales = require(path.join(localesRoot, 'locales.json'))
 
-for (const short of Object.keys(locales['primary-dialects'])) {
-  const full = locales['primary-dialects'][short]
-
+for (const [short, full] of Object.entries(locales['primary-dialects'])) {
   const locale = parseXML(fs.readFileSync(path.join(localesRoot, `locales-${full}.xml`), 'utf8'))
 
   const months = locale.root.children.find(e => e.name === 'terms').children.filter(e => e.attributes.name.startsWith('month-') || e.attributes.name.startsWith('season-'))
@@ -42,7 +40,7 @@ for (const short of Object.keys(locales['primary-dialects'])) {
     if (name.match(/^[0-9]+$/)) continue
 
     if (result[name] && result[name] !== translate[month.attributes.name]) {
-      console.log(`  ignoring ${month.attributes.name} ${name}`)
+      console.log(`  ${name} (${month.attributes.name}) already mapped to ${result[name]}, ignoring ${translate[month.attributes.name]}`)
       continue
     }
 
