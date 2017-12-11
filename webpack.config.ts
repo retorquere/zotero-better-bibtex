@@ -5,8 +5,6 @@ const replace = require('replace')
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import './setup'
-
 import BailPlugin from './webpack/plugins/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
@@ -15,8 +13,6 @@ import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
 
 const translators = require('./gen/translators.json')
 const _ = require('lodash')
-
-console.log("let's roll")
 
 const common = {
   node: { fs: 'empty' },
