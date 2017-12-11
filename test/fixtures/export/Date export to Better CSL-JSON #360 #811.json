@@ -6,12 +6,7 @@
     "preferences": {
       "bibtexURL": "note",
       "biblatexExtendedDateFormat": true,
-      "jabrefFormat": 0
-    },
-    "options": {
-      "skipFields": [
-        ""
-      ],
+      "jabrefFormat": 0,
       "jabrefGroups": true,
       "postscript": "",
       "csquotes": "",
@@ -21,7 +16,10 @@
       "rawImports": false,
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": false
+      "preserveBibTeXVariables": false,
+      "citekeyFormat": "[zotero:clean]"
+    },
+    "options": {
     }
   },
   "collections": {
