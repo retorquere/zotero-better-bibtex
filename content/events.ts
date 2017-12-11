@@ -15,6 +15,7 @@ if (Zotero.Debug.enabled) {
     'collections-changed',
     'collections-removed',
     'libraries-removed',
+    'loaded',
   ]
 
   $patch$(emitter, 'on', original => function() {

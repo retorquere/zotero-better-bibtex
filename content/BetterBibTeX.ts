@@ -610,5 +610,7 @@ export = new class BetterBibTeX {
     bbtReady.resolve(true)
 
     lock.unlock()
+
+    Events.emit('loaded')
   }
 }

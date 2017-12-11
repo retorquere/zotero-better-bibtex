@@ -10,13 +10,18 @@ class Preferences {
 
   public branch: any
 
+  private citekeyFormatDefault = false
+
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
     this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     const citekeyFormat = this.get('citekeyFormat')
-    if (citekeyFormat && citekeyFormat.startsWith('\u200B')) this.set('citekeyFormat', citekeyFormat.substr(1))
+    if (citekeyFormat && citekeyFormat[0] === '\u200B') {
+      this.citekeyFormatDefault = true
+      this.set('citekeyFormat', citekeyFormat.substr(1))
+    }
 
     // preference upgrades
     for (const pref of this.branch.getChildList('')) {
@@ -29,6 +34,13 @@ class Preferences {
     }
 
     this.branch.addObserver('', this, false)
+
+    Events.on('loaded', () => {
+      if (!this.citekeyFormatDefault) return
+      const msg = Zotero.BetterBibTeX.getString('Preferences.citekeyFormat.default', { pattern: citekeyFormat.substr(1) })
+      debug(msg)
+      if (!this.get('testing')) alert(msg)
+    })
   }
 
   public observe(branch, topic, pref) {
