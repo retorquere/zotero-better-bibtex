@@ -27,7 +27,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.refresh "Rafraichir">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
-<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
+<!ENTITY better-bibtex.Preferences.auto-export.updated "Mis à jour">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Convertisseur">
 <!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
@@ -90,4 +90,4 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "BibLaTeX URL">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "URL BibLaTeX">
