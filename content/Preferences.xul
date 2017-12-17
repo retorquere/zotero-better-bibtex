@@ -325,6 +325,15 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.citeprocNoteCitekey"
+          type="bool"
+          default="false"/>
+        <!--!
+          Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
+          This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.scrubDatabase"
           type="bool"
           default="false"/>
@@ -335,7 +344,7 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.lockedInit"
           type="bool"
-          default="true"/>
+          default="false"/>
         <!--!
           BBT locks the UI during startup because I have been told in
           no uncertain terms I am not to touch the Zotero database
