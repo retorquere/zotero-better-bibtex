@@ -76,6 +76,14 @@ AddonManager.addAddonListener({
   MONKEY PATCHES
 */
 
+$patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem) {
+  const cslItem = original.apply(this, arguments)
+
+  const citekey = KeyManager.get(zoteroItem.id)
+  if (citekey) cslItem.citekey = citekey.citekey
+  return cslItem
+})
+
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKeyHash(id) {
   try {
