@@ -158,7 +158,7 @@ export = new class Formatter {
       const [ , text, , , id ] = item.split('|').map(v => v.trim())
       result[id] = text
       return result
-    })
+    }, {})
 
     debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels)
 
