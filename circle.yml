@@ -16,9 +16,7 @@ dependencies:
   - gem install bundler
   - gem update bundler
   override:
-    - curl -o- -L https://yarnpkg.com/install.sh | bash
-    - yarn
-    - yarn install
+    - npm install
     - bundle config
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3:
         timeout: 180
@@ -46,7 +44,6 @@ dependencies:
   cache_directories:
   - citation-style-language-locales
   - ~/downloads
-  - ~/.cache/yarn
 test:
   override:
   - ? |-
@@ -83,4 +80,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - yarn run release
+    - npm run release
