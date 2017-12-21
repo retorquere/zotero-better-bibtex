@@ -8,6 +8,14 @@
   dependencies:
     babel-runtime "^6.23.0"
 
+"@types/arrify@^1.0.1":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@types/arrify/-/arrify-1.0.2.tgz#4a6856b9bfd4713c781df95349c6b15db60d4de1"
+
+"@types/diff@^3.2.1":
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/@types/diff/-/diff-3.2.2.tgz#4d6f45537322a7a420d353a0939513c7e96d14a6"
+
 "@types/events@*":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-1.1.0.tgz#93b1be91f63c184450385272c47b6496fd028e02"
@@ -38,11 +46,25 @@
   version "2.0.29"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-2.0.29.tgz#5002e14f75e2d71e564281df0431c8c1b4a2a36a"
 
-"@types/node@*", "@types/node@^8.0.54":
+"@types/minimist@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@types/minimist/-/minimist-1.2.0.tgz#69a23a3ad29caf0097f06eda59b361ee2f0639f6"
+
+"@types/mkdirp@^0.5.0":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@types/mkdirp/-/mkdirp-0.5.2.tgz#503aacfe5cc2703d5484326b1b27efa67a339c1f"
+  dependencies:
+    "@types/node" "*"
+
+"@types/node@*":
   version "8.0.54"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.54.tgz#3fd9357db4af388b79e03845340259440edffde6"
   dependencies:
     "@types/events" "*"
+
+"@types/node@^8.0.27", "@types/node@^8.0.57":
+  version "8.0.58"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-8.0.58.tgz#5b3881c0be3a646874803fee3197ea7f1ed6df90"
 
 "@types/shelljs@0.7.0":
   version "0.7.0"
@@ -50,9 +72,23 @@
   dependencies:
     "@types/node" "*"
 
+"@types/source-map-support@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@types/source-map-support/-/source-map-support-0.4.0.tgz#a62a1866614af68c888173c001481f242aaf148b"
+  dependencies:
+    "@types/node" "*"
+
 "@types/source-map@*":
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/@types/source-map/-/source-map-0.5.2.tgz#973459e744cc7445c85b97f770275b479b138e08"
+
+"@types/strip-bom@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/strip-bom/-/strip-bom-3.0.0.tgz#14a8ec3956c2e81edb7520790aecf21c290aebd2"
+
+"@types/strip-json-comments@0.0.30":
+  version "0.0.30"
+  resolved "https://registry.yarnpkg.com/@types/strip-json-comments/-/strip-json-comments-0.0.30.tgz#9aa30c04db212a9a0649d6ae6fd50accc40748a1"
 
 "@types/tapable@*":
   version "0.2.4"
@@ -64,6 +100,10 @@
   dependencies:
     "@types/source-map" "*"
 
+"@types/v8flags@github:types/npm-v8flags#de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d":
+  version "2.0.0"
+  resolved "https://codeload.github.com/types/npm-v8flags/tar.gz/de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d"
+
 "@types/webpack@^3.8.1":
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-3.8.1.tgz#20c11ea43f1ea7bb09eee4d6d633d830653e5a55"
@@ -71,6 +111,10 @@
     "@types/node" "*"
     "@types/tapable" "*"
     "@types/uglify-js" "*"
+
+"@types/yn@github:types/npm-yn#ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9":
+  version "2.0.0"
+  resolved "https://codeload.github.com/types/npm-yn/tar.gz/ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9"
 
 abbrev@1:
   version "1.1.1"
@@ -517,7 +561,7 @@ chalk@^1.1.1, chalk@^1.1.3:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chalk@^2.0.0, chalk@^2.1.0, chalk@^2.3.0:
+chalk@^2.1.0, chalk@^2.3.0:
   version "2.3.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-2.3.0.tgz#b5ea48efc9c1793dccc9b4767c93914d3f2d52ba"
   dependencies:
@@ -553,9 +597,9 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-circular-dependency-plugin@^4.2.1:
-  version "4.2.1"
-  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-4.2.1.tgz#d3af66e04b3bb3f47300824740b817cea74e38f1"
+circular-dependency-plugin@^4.3.0:
+  version "4.3.0"
+  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-4.3.0.tgz#2a12824e584546e1aeea5865b7bf234a11c4a695"
 
 citeproc@^2.1.182:
   version "2.1.182"
@@ -858,9 +902,9 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
 
-edtf@^2.2.2:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/edtf/-/edtf-2.2.2.tgz#ea67b05bb81334c870a56d7844c397107ab1f81d"
+edtf@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/edtf/-/edtf-2.2.3.tgz#678afd6e0a6a35d90695c4b76115a1a66436576b"
   dependencies:
     nearley "^2.11.0"
     randexp "^0.4.6"
@@ -1146,9 +1190,17 @@ form-data@~2.3.1:
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
 
-fs-extra@^4.0.0, fs-extra@^4.0.2:
+fs-extra@^4.0.0:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-4.0.2.tgz#f91704c53d1b461f893452b0c307d9997647ab6b"
+  dependencies:
+    graceful-fs "^4.1.2"
+    jsonfile "^4.0.0"
+    universalify "^0.1.0"
+
+fs-extra@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/fs-extra/-/fs-extra-5.0.0.tgz#414d0110cdd06705734d055652c5411260c31abd"
   dependencies:
     graceful-fs "^4.1.2"
     jsonfile "^4.0.0"
@@ -1937,9 +1989,9 @@ minimist@~0.0.1:
   dependencies:
     minimist "0.0.8"
 
-moment@^2.19.3:
-  version "2.19.3"
-  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.3.tgz#bdb99d270d6d7fda78cc0fbace855e27fe7da69f"
+moment@^2.19.4:
+  version "2.19.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.19.4.tgz#17e5e2c6ead8819c8ecfad83a0acccb312e94682"
 
 mpbasic@0.0.x:
   version "0.0.18"
@@ -2748,11 +2800,11 @@ source-list-map@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/source-list-map/-/source-list-map-2.0.0.tgz#aaa47403f7b245a92fbc97ea08f250d6087ed085"
 
-source-map-support@^0.4.0:
-  version "0.4.18"
-  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.4.18.tgz#0286a6de8be42641338594e97ccea75f0a2c585f"
+source-map-support@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/source-map-support/-/source-map-support-0.5.0.tgz#2018a7ad2bdf8faf2691e5fddab26bed5a2bacab"
   dependencies:
-    source-map "^0.5.6"
+    source-map "^0.6.0"
 
 source-map@0.4.x, source-map@^0.4.4:
   version "0.4.4"
@@ -2764,7 +2816,7 @@ source-map@^0.5.3, source-map@^0.5.6, source-map@~0.5.1:
   version "0.5.7"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.5.7.tgz#8a039d2d1021d22d1ea14c80d8ea468ba2ef3fcc"
 
-source-map@~0.6.1:
+source-map@^0.6.0, source-map@~0.6.1:
   version "0.6.1"
   resolved "https://registry.yarnpkg.com/source-map/-/source-map-0.6.1.tgz#74722af32e9614e9c287a8d0bbde48b5e2f1a263"
 
@@ -2976,25 +3028,35 @@ ts-loader@^3.2.0:
     loader-utils "^1.0.2"
     semver "^5.0.1"
 
-ts-node@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-3.3.0.tgz#c13c6a3024e30be1180dd53038fc209289d4bf69"
+ts-node@^4.0.1:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-4.0.1.tgz#4d368088b50c382d78285c029784ea0f32a4eb5c"
   dependencies:
+    "@types/arrify" "^1.0.1"
+    "@types/diff" "^3.2.1"
+    "@types/minimist" "^1.2.0"
+    "@types/mkdirp" "^0.5.0"
+    "@types/node" "^8.0.27"
+    "@types/source-map-support" "^0.4.0"
+    "@types/v8flags" types/npm-v8flags#de224ae1cd5fd7dbb4e7158a6cc7a29e5315930d
+    "@types/yn" types/npm-yn#ca75f6c82940fae6a06fb41d2d37a6aa9b4ea8e9
     arrify "^1.0.0"
-    chalk "^2.0.0"
+    chalk "^2.3.0"
     diff "^3.1.0"
     make-error "^1.1.1"
     minimist "^1.2.0"
     mkdirp "^0.5.1"
-    source-map-support "^0.4.0"
-    tsconfig "^6.0.0"
+    source-map-support "^0.5.0"
+    tsconfig "^7.0.0"
     v8flags "^3.0.0"
     yn "^2.0.0"
 
-tsconfig@^6.0.0:
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/tsconfig/-/tsconfig-6.0.0.tgz#6b0e8376003d7af1864f8df8f89dd0059ffcd032"
+tsconfig@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/tsconfig/-/tsconfig-7.0.0.tgz#84538875a4dc216e5c4a5432b3a4dec3d54e91b7"
   dependencies:
+    "@types/strip-bom" "^3.0.0"
+    "@types/strip-json-comments" "0.0.30"
     strip-bom "^3.0.0"
     strip-json-comments "^2.0.0"
 
@@ -3196,7 +3258,7 @@ webpack-sources@^1.0.1:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^3.9.1:
+webpack@^3.10.0:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-3.10.0.tgz#5291b875078cf2abf42bdd23afe3f8f96c17d725"
   dependencies:
