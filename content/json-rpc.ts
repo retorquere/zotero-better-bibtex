@@ -20,7 +20,7 @@ const $user = new class User {
 }
 
 const $item = new class Item {
-  public async resolve(terms) {
+  public async search(terms) {
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
