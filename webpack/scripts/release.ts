@@ -72,6 +72,7 @@ async function announce(issue, release) {
 async function main() {
   const release: { [key: string]: { tag_name: string, assets?: any } } = {
     static: { tag_name: pkg.xpi.releaseURL.split('/').filter(name => name).reverse()[0] },
+    legacy: { tag_name: 'update.rdf' },
     current: { tag_name: `v${pkg.version}` },
     builds: { tag_name: 'builds' },
   }
@@ -97,8 +98,11 @@ async function main() {
 
     if (!release.static) bail('No release found to hold release pointers, bailing')
 
-    const update_rdf = release.static.assets && release.static.assets.find(asset => asset.name === 'update.rdf')
-    if (update_rdf) await github.request({ method: 'DELETE', uri: `/releases/assets/${update_rdf.id}` })
+    for (const rel of [release.static, release.legacy]) {
+      if (!rel) continue
+      const update_rdf = rel.assets && rel.assets.find(asset => asset.name === 'update.rdf')
+      if (update_rdf) await github.request({ method: 'DELETE', uri: `/releases/assets/${update_rdf.id}` })
+    }
 
     // create release.current
     release.current = await github.request({
@@ -114,16 +118,18 @@ async function main() {
     await github.upload({
       release: release.current,
       name: xpi,
-      path: path.resolve(__dirname, path.join(root, `xpi/${xpi}`)),
+      path: path.join(root, `xpi/${xpi}`),
       contentType: 'application/x-xpinstall',
     })
 
-    await github.upload({
-      release: release.static,
-      name: 'update.rdf',
-      path: path.resolve(__dirname, '../../gen/update.rdf'),
-      contentType: 'application/rdf+xml',
-    })
+    for (const rel of [release.static, release.legacy]) {
+      await github.upload({
+        release: rel,
+        name: 'update.rdf',
+        path: path.join(root, 'gen/update.rdf'),
+        contentType: 'application/rdf+xml',
+      })
+    }
 
     for (const issue of issues) {
       await announce(issue, release.current.tag_name)
