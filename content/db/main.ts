@@ -208,10 +208,10 @@ DB.init = async () => {
     try {
       const data = JSON.parse(Zotero.File.getContents(legacy))
       for (const old of data.collections.find(c => c.name === 'keys').data) {
-        const citekey = citekeys.findOne({ itemID: key.itemID })
+        const citekey = citekeys.findOne({ itemID: old.itemID })
         if (citekey) {
           citekey.citekey = old.citekey
-          coll.update(citekey)
+          citekeys.update(citekey)
         }
       }
     } catch (err) {
