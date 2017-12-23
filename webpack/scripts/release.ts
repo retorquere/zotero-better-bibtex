@@ -8,82 +8,120 @@ import '../circle'
 import root from '../root'
 import version from '../version'
 import * as github from './github'
+import CommandLineOptions = require ('command-line-args')
+import camelCase = require('lodash.camelcase')
+import GitHub = require('github')
 
 const pkg = require('../../package.json')
 
-const PRERELEASE = false
-const KEEP_BUILDS = 40
-
-function bail(msg, status = 1) {
-  console.log(msg)
-  process.exit(status)
+const options = CommandLineOptions([
+  { name: 'verbose', alias: 'v', type: Boolean },
+  { name: 'dry-run', alias: 'd', type: Boolean },
+  { name: 'pre-release', alias: 'p', type: Boolean },
+  { name: 'ttl', alias: 't', type: Number, defaultValue: 14 },
+  { name: 'repo', alias: 'r', type: String },
+  { name: 'owner', alias: 'o', type: String },
+])
+for (const [key, value] of Object.entries(options)) {
+  const camelCased = camelCase(key)
+  if (camelCased != key) {
+    options[camelCased] = options[key]
+    delete options[key]
+  }
 }
-
-function dedup(arr) {
-  return arr.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
+if (options.repo.indexOf('/') >= 0 && !options.owner) {
+  [options.owner, options.repo] = options.repo.split('/')
 }
+github = new GitHub({ debug: options.verbose })
+github.authenticate({ type: 'token', token: process.env.GITHUB_TOKEN })
 
-if (!process.env.CIRCLE_BRANCH) bail('Not running on CircleCI')
+/*
+class Releaser {
+  private release: { [key: string]: { tag_name: string, assets?: any }
 
-if (process.env.CI_PULL_REQUEST) bail('Not releasing pull requests', 0)
+  constructor() {
 
-if (process.env.CIRCLE_TAG) {
-  if (`v${pkg.version}` !== process.env.CIRCLE_TAG) bail(`Building tag ${process.env.CIRCLE_TAG}, but package version is ${pkg.version}`)
+    this.tags = new Set
 
-  if (process.env.CIRCLE_BRANCH !== 'master') bail(`Building tag ${process.env.CIRCLE_TAG}, but branch is ${process.env.CIRCLE_BRANCH}`)
-}
+    for (let regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, tag; tag = regex.exec(process.env.CIRCLE_COMMIT_MSG || ''); ) {
+      this.tags.add(tag[1])
+    }
 
-if (process.env.CIRCLE_BRANCH.startsWith('@')) bail(`Not releasing ${process.env.CIRCLE_BRANCH}`, 0)
+    // numeric tags are assumed to be issues to be notified
+    this.issues = new Set(Array.from(this.tags).filter(tag => !isNaN(parseInt(tag))))
 
-let tags = []
-for (let regex = /(?:^|\s)(?:#)([a-zA-Z\d]+)/gm, tag; tag = regex.exec(process.env.CIRCLE_COMMIT_MSG); ) {
-  tags.push(tag[1])
-}
-tags = dedup(tags)
-
-if (tags.indexOf('norelease') >= 0) bail(`Not releasing ${process.env.CIRCLE_BRANCH} because of 'norelease' tag`, 0)
-
-let issues = tags.filter(tag => !isNaN(parseInt(tag)))
-
-if (process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)) issues.push(process.env.CIRCLE_BRANCH)
-issues = dedup(issues)
-
-async function announce(issue, release) {
-  let build, reason
-  if (process.env.CIRCLE_TAG) {
-    build = `${PRERELEASE ? 'pre-' : ''}release ${process.env.CIRCLE_TAG}`
-    reason = ''
-  } else {
-    build = `test build ${process.env.CIRCLE_BUILD_NUM}`
-    reason = ` (${JSON.stringify(process.env.CIRCLE_COMMIT_MSG)})`
+    // if the branch is a number, assume it is an issues to be notified
+    if (process.env.CIRCLE_BRANCH.match(/^[0-9]+$/)) this.issues.add(process.env.CIRCLE_BRANCH)
   }
 
-  const msg = `:robot: this is your friendly neighborhood build bot announcing [${build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/${release}/zotero-better-bibtex-${version}.xpi)${reason}.`
+  private bail(msg, status = 1) {
+    console.log(msg)
+    process.exit(status)
+  }
 
-  try {
-    await github.request({
-      uri: `/issues/${issue}/comments`,
-      method: 'POST',
-      body: { body: msg },
-    })
-  } catch (error) {}
+  public async run() {
+    this.release = {
+      static: this.getRelease(pkg.xpi.releaseURL.split('/').filter(name => name).reverse()[0]),
+      legacy: this.getRelease('update.rdf'),
+      current: this.getRelease(`v${pkg.version}`),
+      builds: this.getRelease('builds'),
+    }
+
+    this.verifyEnv()
+  }
+
+  private async getRelease(name, tag) {
+    try {
+      return await this.github.repos.getReleaseByTag({ owner: options.owner, repo: options.repo, tag })
+    } catch (error) {
+      return null
+    }
+  }
+
+  private verifyEnv() {
+    ef (!process.env.CIRCLE_BRANCH && !options.dryRun) bail('Not running on CircleCI')
+
+    if (process.env.CI_PULL_REQUEST) bail('Not releasing pull requests', 0)
+
+    if (process.env.CIRCLE_TAG) {
+      if (`v${pkg.version}` !== process.env.CIRCLE_TAG) bail(`Building tag ${process.env.CIRCLE_TAG}, but package version is ${pkg.version}`)
+
+      if (process.env.CIRCLE_BRANCH !== 'master') bail(`Building tag ${process.env.CIRCLE_TAG}, but branch is ${process.env.CIRCLE_BRANCH}`)
+    }
+
+    if (process.env.CIRCLE_BRANCH.startsWith('@')) {
+      console.log(`switching to dry-run mode because branch name starts with '@'`)
+      options.dryRun = true
+    }
+    if (!option.dryRun && this.tags.has('norelease'))
+      console.log(`switching to dry-run mode because commit is tagged with '#norelease'`)
+      options.dryRun = true
+    }
+  }
+
+  private async function announce(issue, release) {
+    let build, reason
+    if (process.env.CIRCLE_TAG) {
+      build = `${options.prerelease ? 'pre-' : ''}release ${process.env.CIRCLE_TAG}`
+      reason = ''
+    } else {
+      build = `test build ${process.env.CIRCLE_BUILD_NUM}`
+      reason = ` (${JSON.stringify(process.env.CIRCLE_COMMIT_MSG)})`
+    }
+
+    const msg = `:robot: this is your friendly neighborhood build bot announcing [${build}](https://github.com/retorquere/zotero-better-bibtex/releases/download/${release}/zotero-better-bibtex-${version}.xpi)${reason}.`
+
+    if (options.dryRun) {
+      console.log(msg)
+    } else {
+      try {
+        await this.github.issues.createComment({ options: this.owner, repo: options.repo, number: parseInt(issue), body: msg })
+      } catch (error) {}
+    }
+  }
 }
 
 async function main() {
-  const release: { [key: string]: { tag_name: string, assets?: any } } = {
-    static: { tag_name: pkg.xpi.releaseURL.split('/').filter(name => name).reverse()[0] },
-    legacy: { tag_name: 'update.rdf' },
-    current: { tag_name: `v${pkg.version}` },
-    builds: { tag_name: 'builds' },
-  }
-
-  for (const [id, rel] of Object.entries(release)) {
-    try {
-      release[id] = await github.request({ uri: `/releases/tags/${rel.tag_name}` })
-    } catch (error) {
-      release[id] = null
-    }
-  }
 
   if (process.env.CIRCLE_BRANCH === 'l10n_master') {
     const translations = await github.request({ uri: '/issues?state=open&labels=translation' })
@@ -165,3 +203,4 @@ async function main() {
 }
 
 main()
+*/
