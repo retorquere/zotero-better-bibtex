@@ -5,7 +5,7 @@ import parseXML = require('@rgrove/parse-xml')
 import dedent = require('dedent-js')
 import path = require('path')
 
-import root from '../webpack/root'
+import root from '../zotero-webpack/root'
 
 class DocFinder {
   private strings: { [key: string]: string }

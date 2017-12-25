@@ -3,7 +3,7 @@
 import * as fs from 'fs-extra'
 import * as path from 'path'
 
-import root from '../webpack/root'
+import root from '../zotero-webpack/root'
 
 console.log('generate translator list')
 const translators = {byId: {}, byName: {}, byLabel: {}}

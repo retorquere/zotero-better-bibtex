@@ -5,10 +5,10 @@ const replace = require('replace')
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import BailPlugin from './webpack/plugin/bail'
+import BailPlugin from './zotero-webpack/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
-import AfterBuildPlugin = require('./webpack/plugin/after-build')
+import AfterBuildPlugin = require('./zotero-webpack/plugin/after-build')
 import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
 
 const translators = require('./gen/translators.json')
@@ -18,9 +18,9 @@ const common = {
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {
-      'pegjs-loader': path.join(__dirname, './webpack/loader/pegjs.ts'),
-      'json-loader': path.join(__dirname, './webpack/loader/json.ts'),
-      'wrap-loader': path.join(__dirname, './webpack/loader/wrap.ts'),
+      'pegjs-loader': path.join(__dirname, './zotero-webpack/loader/pegjs.ts'),
+      'json-loader': path.join(__dirname, './zotero-webpack/loader/json.ts'),
+      'wrap-loader': path.join(__dirname, './zotero-webpack/loader/wrap.ts'),
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
   },

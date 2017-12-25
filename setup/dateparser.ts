@@ -5,7 +5,7 @@ import * as fs from 'fs-extra'
 import * as path from 'path'
 import * as glob from 'glob'
 
-import root from '../webpack/root'
+import root from '../zotero-webpack/root'
 
 console.log('generating date parser data')
 const localesRoot = path.join(root, 'citation-style-language-locales')
