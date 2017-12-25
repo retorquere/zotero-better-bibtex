@@ -1,4 +1,4 @@
-const marker = 'BetterBibTeXMOnkeyPatched'
+const marker = 'BetterBibTeXMonkeyPatched'
 
 export = (object, method, patch) => {
   if (object[method][marker]) return

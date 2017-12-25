@@ -1,11 +1,16 @@
 // tslint:disable:no-console
 
-require('dotenv').config()
+import 'dotenv/config'
 
 import AWSS3Form = require('aws-s3-form')
 import moment = require('moment')
-import * as github from './github'
+
+import * as GitHub from 'github'
+const github = new GitHub
+github.authenticate({ type: 'token', token: process.env.GITHUB_TOKEN })
+
 const pkg = require('../../package.json')
+const [ , owner, repo ] = pkg.repository.url.match(/:\/\/github.com\/([^\/]+)\/([^\.]+)\.git$/)
 
 const expireAfterDay = 6
 
@@ -31,16 +36,23 @@ async function main() {
 
   const form = formGenerator.create('${filename}')
 
-  const json = 'error-report.json'
+  const name = 'error-report.json'
 
-  const release_name = pkg.xpi.releaseURL.split('/').filter(path => path).reverse()[0]
+  const release = await github.repos.getReleaseByTag({ owner, repo, tag: pkg.xpi.releaseURL.split('/').filter(part => part).reverse()[0] })
 
-  const release = await github.request({ uri: `/releases/tags/${release_name}` })
+  for (const asset of release.data.assets || []) {
+    if (asset.name === name) await github.repos.deleteAsset({ owner, repo, id: asset.id })
+  }
 
-  const existing = release.assets && release.assets.find(asset => asset.name === json)
-  if (existing) await github.request({ method: 'DELETE', uri: `/releases/assets/${existing.id}` })
+  const body = JSON.stringify(form, null, 2)
 
-  await github.upload({release, name: json, body: JSON.stringify(form, null, 2), contentType: 'application/json'})
+  await github.repos.uploadAsset({
+    url: release.data.upload_url,
+    file: body,
+    contentType: 'application/json',
+    contentLength: body.length,
+    name,
+  })
 }
 
 main()

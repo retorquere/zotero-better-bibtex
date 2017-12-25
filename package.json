@@ -69,8 +69,7 @@
     "xregexp": "^3.2.0"
   },
   "devDependencies": {
-    "lodash.camelcase": "^4.3.0",
-    "command-line-args": "^4.0.7",
+    "current-git-branch": "^1.0.1",
     "github": "^13.0.1",
     "@rgrove/parse-xml": "^1.1.1",
     "@types/node": "^8.0.57",
