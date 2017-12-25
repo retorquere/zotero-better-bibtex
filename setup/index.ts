@@ -1,9 +1,10 @@
 import root from '../webpack/root'
 process.chdir(root)
 
+import './submodules'
+
 import './make-dirs'
 import './translators'
-import './submodules'
 import './translators'
 import './dateparser'
 import './preferences'
