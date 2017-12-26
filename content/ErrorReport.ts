@@ -6,7 +6,6 @@ declare const FormData: any
 declare const Blob: any
 declare const Services: any
 
-import getAddons = require('./addons.ts')
 import Prefs = require('./prefs.ts')
 import Translators = require('./translators.ts')
 import debug = require('./debug.ts')
@@ -101,6 +100,8 @@ export = new class ErrorReport {
   }
 
   private async init() {
+    await Zotero.BetterBibTeX.ready
+
     this.params = window.arguments[0].wrappedJSObject
 
     const wizard = document.getElementById('better-bibtex-error-report')
@@ -126,7 +127,6 @@ export = new class ErrorReport {
 
     if (this.params.items) {
       debug('ErrorReport::init items', this.params.items)
-      await Zotero.BetterBibTeX.ready // because we need the translators to have been loaded
       this.errorlog.references = await Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
       debug('ErrorReport::init references', this.errorlog.references)
     }
@@ -144,24 +144,17 @@ export = new class ErrorReport {
 
   // general state of Zotero
   private async info() {
-    let addon
     let info = ''
 
     const appInfo = Components.classes['@mozilla.org/xre/app-info;1'].getService(Components.interfaces.nsIXULAppInfo)
     info += `Application: ${appInfo.name} ${appInfo.version} ${Zotero.locale}\n`
     info += `Platform: ${Zotero.platform} ${Zotero.oscpu}\n`
 
-    const addons = await getAddons()
-    if (addons.active.length) {
-      info += 'Active addons:\n'
-      for (addon of addons.active) {
-        info += `  ${addon.info}\n`
-      }
-    }
-    if (addons.inactive.length) {
-      info += 'Inactive addons:\n'
-      for (addon of addons.inactive) {
-        info += `  ${addon.info}\n`
+    const addons = await Zotero.getInstalledExtensions()
+    if (addons.length) {
+      info += 'Addons:\n'
+      for (const addon of addons) {
+        info += `  ${addon}\n`
       }
     }
 
