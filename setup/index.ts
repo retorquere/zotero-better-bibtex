@@ -1,14 +1,14 @@
-import root from '../zotero-webpack/root'
+import root from 'zotero-plugin/root'
 process.chdir(root)
 
 import './submodules'
 
-import '../zotero-webpack/make-dirs'
+import 'zotero-plugin/make-dirs'
 import './translators'
 import './dateparser'
 import './preferences'
 import './translator-typing'
 
-import '../zotero-webpack/copy-assets'
-import '../zotero-webpack/rdf'
-import '../zotero-webpack/version'
+import 'zotero-plugin/copy-assets'
+import 'zotero-plugin/rdf'
+import 'zotero-plugin/version'

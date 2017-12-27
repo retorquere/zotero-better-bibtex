@@ -2,7 +2,3 @@
 	path = citation-style-language-locales
 	url = https://github.com/citation-style-language/locales.git
 	branch = master
-[submodule "webpack"]
-	path = zotero-webpack
-	url = https://github.com/retorquere/zotero-plugin-webpack.git
-	branch = master
