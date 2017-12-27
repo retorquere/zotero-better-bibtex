@@ -221,6 +221,11 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
    And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then an export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
+@856
+Scenario: Quotes around last names should be removed from citekeys #856
+  When I import 1 reference from "export/Quotes around last names should be removed from citekeys #856.json"
+  Then an export using "Better CSL JSON" should match "export/Quotes around last names should be removed from citekeys #856.csl.json"
+
 @372 @pandoc
 Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"

@@ -533,14 +533,22 @@ class PatternFormatter {
     return doc.textContent
   }
 
+  private stripQuotes(name) {
+    if (!name) return ''
+    if (name.length >= 2 && name[0] === '"' && name[name.length - 1] === '"') return name.slice(1, -1)
+    return name
+  }
+
   private initial(creator) {
     if (!creator.firstName) return ''
 
+    const firstName = this.stripQuotes(creator.firstName)
+
     let initial, m
-    if (m = creator.firstName.match(/(.+)\u0097/)) {
+    if (m = firstName.match(/(.+)\u0097/)) {
       initial = m[1]
     } else {
-      initial = creator.firstName[0]
+      initial = firstName[0]
     }
 
     return this.removeDiacritics(initial)
@@ -557,16 +565,16 @@ class PatternFormatter {
       for (const creator of this.item.item.getCreators()) {
         if (onlyEditors && ![types.editor, types.seriesEditor].includes(creator.creatorTypeID)) continue
 
-        let name = options.initialOnly ? this.initial(creator) : this.innerText(creator.lastName)
+        let name = options.initialOnly ? this.initial(creator) : this.stripQuotes(this.innerText(creator.lastName))
         if (name) {
           if (options.withInitials && creator.firstName) {
-            let initials = Zotero.Utilities.XRegExp.replace(creator.firstName, this.re.caseNotUpperTitle, '', 'all')
+            let initials = Zotero.Utilities.XRegExp.replace(this.stripQuotes(creator.firstName), this.re.caseNotUpperTitle, '', 'all')
             initials = this.removeDiacritics(initials)
             initials = Zotero.Utilities.XRegExp.replace(initials, this.re.caseNotUpper, '', 'all')
             name += initials
           }
         } else {
-          name = this.innerText(creator.firstName)
+          name = this.stripQuotes(this.innerText(creator.firstName))
         }
 
         if (!name) continue

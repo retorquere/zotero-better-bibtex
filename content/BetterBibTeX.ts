@@ -422,9 +422,9 @@ class Lock {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
-    if (this.enabled) {
-      await Zotero.uiReadyPromise
+    await Zotero.uiReadyPromise
 
+    if (this.enabled) {
       if (Zotero.locked) await Zotero.unlockPromise
     }
 
@@ -590,13 +590,11 @@ export = new class BetterBibTeX {
     const lock = new Lock()
     await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
-    // oh FFS -- datadir is async now
-    Cache.init()
-
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
     lock.update(this.getString('BetterBibTeX.startup.loadingKeys'))
+    Cache.init() // oh FFS -- datadir is async now
     await DB.init()
 
     lock.update(this.getString('BetterBibTeX.startup.autoExport'))
