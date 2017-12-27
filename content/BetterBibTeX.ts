@@ -422,9 +422,9 @@ class Lock {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
-    if (this.enabled) {
-      await Zotero.uiReadyPromise
+    await Zotero.uiReadyPromise
 
+    if (this.enabled) {
       if (Zotero.locked) await Zotero.unlockPromise
     }
 
