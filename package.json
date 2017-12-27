@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.61",
+  "version": "5.0.64",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "author": {
@@ -22,12 +22,12 @@
     "webpack": "parallel-webpack --no-stats",
     "prebuild": "npm run lint && ts-node setup/index.ts",
     "build": "parallel-webpack --no-stats",
-    "postbuild": "ts-node zotero-webpack/script/zipup.ts build zotero-better-bibtex && ts-node zotero-webpack/script/zipup.ts test/fixtures/debug-bridge debug-bridge",
+    "postbuild": "zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
-    "s3form": "ts-node zotero-webpack/script/s3form.ts",
-    "release": "ts-node zotero-webpack/script/release.ts",
-    "branches": "ts-node zotero-webpack/script/branches.ts",
+    "s3form": "zotero-plugin-s3form",
+    "release": "zotero-plugin-release",
+    "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "preversion": "rm -f package-lock.json",
     "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
@@ -65,7 +65,8 @@
     "punycode": "^2.1.0",
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
-    "xregexp": "^3.2.0"
+    "xregexp": "^3.2.0",
+    "zotero-plugin": "0.0.9"
   },
   "devDependencies": {
     "current-git-branch": "^1.0.1",

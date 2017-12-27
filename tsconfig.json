@@ -1,1 +1,30 @@
-zotero-webpack/tsconfig.json
+{
+  "compilerOptions": {
+    "importHelpers": true,
+    "target": "es2017",
+    "disableSizeLimit": true,
+    "module": "commonjs",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "preserveConstEnums": false,
+    "sourceMap": false,
+    "downlevelIteration": true,
+    "lib": [ "es2017", "dom" ],
+    "typeRoots": [
+      "./typings",
+      "./gen/typings",
+      "./node_modules/@types"
+    ]
+  },
+  "include": [
+    "content/**/*",
+    "resource/**/*",
+    "zotero-webpack/**/*",
+    "setup/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts",
+    "typings"
+  ]
+}

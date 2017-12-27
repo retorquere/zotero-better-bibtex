@@ -125,7 +125,7 @@ export = new class Formatter {
     for (const citation of citations) {
       let cite = ''
       if (citation.prefix) cite += `${citation.prefix} `
-      if (citation['suppress-author']) cite += '-'
+      if (citation.suppressAuthor) cite += '-'
       cite += `@${citation.citekey}`
       if (citation.locator) cite += `, ${shortLabel[citation.label] || citation.label} ${citation.locator}`
       if (citation.suffix) cite += ` ${citation.suffix}`
