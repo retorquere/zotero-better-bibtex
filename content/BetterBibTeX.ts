@@ -407,72 +407,72 @@ notify('collection-item', (event, type, collection_items) => {
 
 debug('Loading Better BibTeX: setup done')
 
-class Lock {
+class Progress {
   private timestamp: number
   private msg: string
-  private enabled: boolean
+  private locked: boolean
   private progressWin: any
   private progress: any
+  private name: string
 
   constructor() {
-    this.enabled = Prefs.get('lockedInit')
+    this.locked = Prefs.get('lockedInit')
+    this.name = this.locked ? 'Startup lock' : 'Startup progress'
   }
 
-  public async lock(msg) {
+  public async start(msg) {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
     await Zotero.uiReadyPromise
 
-    if (this.enabled) {
-      if (Zotero.locked) await Zotero.unlockPromise
-    }
+    if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
     this.toggle(true)
-    debug('Lock: locked')
+    debug(`${this.name}: started`)
   }
 
   public update(msg) {
     this.bench(msg)
 
-    if (this.enabled) {
+    if (this.locked) {
       Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
     } else {
       this.progress.setText(msg)
     }
   }
 
-  public unlock() {
+  public done() {
     this.bench(null)
 
     this.toggle(false)
-    debug('Lock: unlocked')
+    debug(`${this.name}: done`)
   }
 
   private bench(msg) {
     const ts = (new Date()).valueOf()
     // tslint:disable-next-line:no-magic-numbers
-    if (this.msg) debug('Lock:', this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    if (this.msg) debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
   }
 
-  private toggle(lock) {
-    if (this.enabled) {
+  private toggle(busy) {
+    if (this.locked) {
       for (const id of ['menu_import', 'menu_importFromClipboard', 'menu_newItem', 'menu_newNote', 'menu_newCollection', 'menu_exportLibrary']) {
-        document.getElementById(id).hidden = lock
+        document.getElementById(id).hidden = busy
       }
 
       for (const id of ['zotero-collections-tree']) {
-        document.getElementById(id).disabled = lock
+        document.getElementById(id).disabled = busy
       }
 
-      if (lock) {
+      if (busy) {
         Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${this.msg}...`)
       } else {
         Zotero.hideZoteroPaneOverlays()
       }
-    } else if (lock) {
+    } else if (busy) {
       this.progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       this.progressWin.changeHeadline('Better BibTeX: Initializing')
       // this.progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
@@ -587,36 +587,36 @@ export = new class BetterBibTeX {
       node.hidden = !TeXstudio.enabled
     })
 
-    const lock = new Lock()
-    await lock.lock(this.getString('BetterBibTeX.startup.waitingForZotero'))
+    const progress = new Progress()
+    await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
 
-    lock.update(this.getString('BetterBibTeX.startup.loadingKeys'))
+    progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     Cache.init() // oh FFS -- datadir is async now
     await DB.init()
 
-    lock.update(this.getString('BetterBibTeX.startup.autoExport'))
+    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
 
-    lock.update(this.getString('BetterBibTeX.startup.keyManager'))
+    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 
-    lock.update(this.getString('BetterBibTeX.startup.serializationCache'))
+    progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
     await Serializer.init() // creates simplify et al
 
-    lock.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
+    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
 
-    lock.update(this.getString('BetterBibTeX.startup.installingTranslators'))
+    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
 
     bbtReady.resolve(true)
 
-    lock.unlock()
+    progress.done()
 
     Events.emit('loaded')
   }
