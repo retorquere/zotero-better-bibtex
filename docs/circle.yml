@@ -1,0 +1,10 @@
+machine:
+  ruby:
+    version: "2.2"
+dependencies:
+  cache_directories:
+    - retorquere
+    - zotplus
+test:
+  override:
+    - bundle exec rake publish

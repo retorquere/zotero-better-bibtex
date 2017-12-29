@@ -126,7 +126,6 @@ class DocFinder {
 
       fs.writeFileSync(docs, md.join('\n\n'))
     }
-
   }
 
   private ungfm(str) {
