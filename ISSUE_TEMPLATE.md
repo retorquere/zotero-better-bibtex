@@ -1,10 +1,7 @@
-# Submitting an issue to the BBT bug tracker
-
-* Please verify that you are on the latest release of BBT.
-* If you wish to report a combination of feature requests, bug reports and general usage questions, please file a separate report for each of these. It is easier for me to manage them separately. Thank you.
-* Please use a descriptive subject for the issue you are experiencing, and describe what you've done. "It doesn't work" is not enough information for me to know what's going on.
-* Make yourself available for follow-up questions and testing. If my test suite hasn't picked it out, it's something that is particular to your system/references. I need the feedback so I can help you.
-* DO NOT CLOSE ISSUES unless you've opened it by accident. After the problem is resolved I need to still make sure the fix gets into the release, and open issues remind me of that.
+[ ] I am on the latest release of BBT and Zotero
+[ ] I am posting a single question, bug or feature request
+[ ] I have included a descriptive subject of the problem
+[ ] I am available for follow-up questions and testing
 
 # Bug classification
 
