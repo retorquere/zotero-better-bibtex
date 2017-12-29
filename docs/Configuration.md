@@ -26,7 +26,7 @@ Surround pandoc quick-copy citations with brackets.
 
 ### Citation key format
 
-default: `"[auth][shorttitle][year]"`
+default: `"​[auth][shorttitle][year]"`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
 
@@ -57,12 +57,14 @@ Options:
 * Cite Keys
 * Pandoc
 * Org-mode
+* org-ref
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
+* Select link
 
 ## Export
 
-### When a reference has both a DOI and an URL, export
+### When a reference has both a DOI and a URL, export
 
 default: `both`
 
@@ -107,12 +109,12 @@ If there are some fields you don't want in your bibtex files (such as `note` for
 
 default: `no`
 
-BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note` field (not as clean, but compatible with BibTeX out of the box), or in an `url` field (requires extra packages to be loaded, or bibtex will error out).
+BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note` field (not as clean, but compatible with BibTeX out of the box), or in a `url` field (requires extra packages to be loaded, or bibtex will error out).
 
 Options:
 * no
 * in a note field
-* in an url field
+* in a URL field
 
 ### Include JabRef-specific metadata:
 
@@ -216,9 +218,9 @@ When language alternates are present in Juris-M, this is the language BBT will p
 
 ### biblatexExtendedDateFormat
 
-default: `off`
+default: `on`
 
-Support for ambiguous dates
+Support for EDTF dates in biblatex
 
 ### suppressTitleCase
 
@@ -238,6 +240,12 @@ default: `on`
 
 Name particle handling
 
+### citeprocNoteCitekey
+
+default: `off`
+
+Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc. This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect.
+
 ### scrubDatabase
 
 default: `off`
@@ -246,7 +254,7 @@ Finds potential problems in the database and fixes those. This runs **extremely*
 
 ### lockedInit
 
-default: `on`
+default: `off`
 
 BBT locks the UI during startup because I have been told in no uncertain terms I am not to touch the Zotero database before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest to make sure BBT initialization has completed before freeing the UI. I want to stress that during most of the lock-time, BBT is simply waiting for Zotero to complete its own initialization; try to do an export of any kind (not just BBT) or to import new references directly after Zotero has started and you'll notice that it may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
 

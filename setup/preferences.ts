@@ -7,6 +7,8 @@ import path = require('path')
 
 import root from 'zotero-plugin/root'
 
+console.log('Generating preferences documentation')
+
 class DocFinder {
   private strings: { [key: string]: string }
   private tab: number
@@ -82,7 +84,7 @@ class DocFinder {
       'utf8'
     )
 
-    const docs = path.join(root, 'wiki/Configuration.md')
+    const docs = path.join(root, 'docs/Configuration.md')
     if (fs.existsSync(docs)) {
       const md = [
         dedent(`
