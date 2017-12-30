@@ -59,8 +59,12 @@ function date2csl(date) {
       return csl
 
     case 'season':
+      if (Translator.BetterCSLYAML) {
+        return { year: date.year, season: date.season }
+      } else {
       // https://github.com/retorquere/zotero-better-bibtex/issues/860
-      return [ date.year, date.season + 12 ] // tslint:disable-line:no-magic-numbers
+        return [ date.year, date.season + 12 ] // tslint:disable-line:no-magic-numbers
+      }
 
     default:
       throw new Error(`Expected date or open, got ${date.type}`)

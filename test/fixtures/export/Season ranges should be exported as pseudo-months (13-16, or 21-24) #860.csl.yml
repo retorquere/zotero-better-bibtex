@@ -1,17 +1,12 @@
 ---
-references:
-- id: SeasonrangesEDTF2017
-  issued:
-    date-parts:
-    - - 2017
-      - 15
-    - - 2017
-      - 16
-  original-date:
-    date-parts:
-    - - 2015
-      - 13
-    - - 2016
-      - 14
-  title: 'Season ranges: EDTF and literal'
-  type: webpage
+id: SeasonrangesEDTF2017
+issued:
+- season: 3
+  year: 2017
+- season: 4
+  year: 2017
+original-date:
+- season: 1
+  year: 2015
+- season: 2
+  year: 2016
