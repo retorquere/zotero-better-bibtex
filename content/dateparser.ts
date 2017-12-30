@@ -72,6 +72,13 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
+function has_plausible_year(date) {
+  return date
+    && date.type !== 'verbatim'
+    && date.year
+    && date.year > 24 // tslint:disable-line:no-magic-numbers
+}
+
 function parse(value, descend = true) {
   value = value.trim()
 
@@ -185,11 +192,14 @@ function parse(value, descend = true) {
   }
 
   if (!parsed) {
-    const split = value.split(/--?|\/|_|–/)
-    if (split.length === 2) {
-      const from = parse(split[0], false)
-      const to = parse(split[1], false)
-      if (from && from.type !== 'verbatim' && to && to.type !== 'verbatim') return { type: 'interval', from, to }
+    for (const sep of ['--', '-', '/', '_', '–']) {
+      const split = value.split(sep)
+      debug('dateparser: trying date range from manual split:', value, split)
+      if (split.length === 2) {
+        const from = parse(split[0], false)
+        const to = parse(split[1], false)
+        if (has_plausible_year(from) && has_plausible_year(to)) return { type: 'interval', from, to }
+      }
     }
   }
 
