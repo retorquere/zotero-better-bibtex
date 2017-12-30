@@ -57,14 +57,15 @@ function date2csl(date) {
         }
       }
       return csl
-  }
 
-  if (!['date', 'open'].includes(date.type)) throw new Error(`Expected date or open, got ${date.type}`)
+    default:
+      throw new Error(`Expected date or open, got ${date.type}`)
+  }
 }
 
 function parseDate(date) {
   const parsed = Zotero.BetterBibTeX.parseDate(date)
-  debug('parseDate', date, parsed)
+
   switch (parsed.type) {
     case 'date':
       return {
