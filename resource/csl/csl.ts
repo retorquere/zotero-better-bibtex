@@ -43,68 +43,10 @@ const validCSLTypes = [
   'thesis',
 ]
 
-function date2csl(date) {
-  switch (date.type) {
-    case 'open':
-      return [0]
-
-    case 'date':
-      const csl = [date.year > 0 ? date.year : date.year - 1]
-      if (date.month) {
-        csl.push(date.month)
-        if (date.day) {
-          csl.push(date.day)
-        }
-      }
-      return csl
-
-    case 'season':
-      if (Translator.BetterCSLYAML) {
-        return { year: date.year, season: date.season }
-      } else {
-      // https://github.com/retorquere/zotero-better-bibtex/issues/860
-        return [ date.year, date.season + 12 ] // tslint:disable-line:no-magic-numbers
-      }
-
-    default:
-      throw new Error(`Expected date or open, got ${date.type}`)
-  }
-}
-
-function parseDate(date) {
-  const parsed = Zotero.BetterBibTeX.parseDate(date)
-
-  switch (parsed.type) {
-    case 'date':
-      return {
-        'date-parts': [ date2csl(parsed) ],
-        circa: parsed.approximate ? true : undefined,
-      }
-
-    case 'interval':
-      return {
-        'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ],
-        circa: (parsed.from.approximate || parsed.to.approximate) ? true : undefined,
-      }
-
-    case 'verbatim':
-      return { literal: parsed.verbatim }
-
-    case 'season':
-      return {
-        'date-parts': [ [ parsed.year ] ],
-        season: parsed.season,
-        circa: parsed.approximate ? true : undefined,
-      }
-
-    default:
-      throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)
-  }
-}
-
 export = new class CSLExporter {
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
+  public parseDate: Function // will be added by JSON/YAML exporter
 
   public doExport() {
     const items = []
@@ -142,7 +84,7 @@ export = new class CSLExporter {
       delete csl.authority
       if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
-      if (csl.issued && item.date) csl.issued = parseDate(item.date)
+      if (csl.issued && item.date) csl.issued = this.parseDate(item.date)
 
       debug('extracted:', item.extraFields)
       for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
@@ -163,7 +105,7 @@ export = new class CSLExporter {
 
         switch (type) {
           case 'date':
-            csl[name] = parseDate(value)
+            csl[name] = this.parseDate(value)
             break
 
           case 'creator':

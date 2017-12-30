@@ -1,6 +1,8 @@
 import { ITranslator } from '../gen/translator'
 declare const Translator: ITranslator
 
+declare const Zotero: any
+
 import YAML = require('js-yaml')
 
 import Exporter = require('./csl/csl.ts')
@@ -99,6 +101,50 @@ const htmlConverter = new class HTML {
         if (span_attrs) this.markdown += '</span>'
         break
     }
+  }
+}
+
+function date2csl(date) {
+  switch (date.type) {
+    case 'open':
+      return { year: 0 }
+
+    case 'date':
+      return {
+        year: date.year > 0 ? date.year : date.year - 1,
+        month: date.month || undefined,
+        day: date.month && date.day ? date.day : undefined,
+        circa: !!date.approximate || undefined,
+      }
+
+    case 'season':
+      return {
+        year: date.year,
+        season: date.season,
+        circa: !!date.approximate || undefined,
+      }
+
+    default:
+      throw new Error(`Expected date or open, got ${date.type}`)
+  }
+}
+
+Exporter.parseDate = date => {
+  const parsed = Zotero.BetterBibTeX.parseDate(date)
+
+  switch (parsed.type) {
+    case 'date':
+    case 'season':
+      return [ date2csl(parsed) ]
+
+    case 'interval':
+      return [ date2csl(parsed.from), date2csl(parsed.to) ]
+
+    case 'verbatim':
+      return [ { literal: parsed.verbatim } ]
+
+    default:
+      throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)
   }
 }
 
