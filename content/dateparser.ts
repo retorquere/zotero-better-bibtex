@@ -184,6 +184,15 @@ function parse(value, descend = true) {
     }
   }
 
+  if (!parsed) {
+    const split = value.split(/--?|\/|_|–/)
+    if (split.length === 2) {
+      const from = parse(split[0], false)
+      const to = parse(split[1], false)
+      if (from && from.type !== 'verbatim' && to && to.type !== 'verbatim') return { type: 'interval', from, to }
+    }
+  }
+
   debug('parseDate:', value, parsed)
 
   return parsed || { type: 'verbatim', verbatim: value }
