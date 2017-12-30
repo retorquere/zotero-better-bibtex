@@ -2,7 +2,11 @@
 references:
 - id: SeasonrangesEDTF2017
   issued:
-    literal: 2017-23/2017-24
+    date-parts:
+    - - 2017
+      - 15
+    - - 2017
+      - 16
   original-date:
     date-parts:
     - - 2015
