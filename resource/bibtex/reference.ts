@@ -765,7 +765,8 @@ export = class Reference {
   }
 
   protected _enc_creators_scrub_name(name) {
-    return Zotero.Utilities.XRegExp.replace(name.replace(/\u200B/g, ''), this.whitespace, ' ', 'all')
+    // return Zotero.Utilities.XRegExp.replace(name.replace(/\u200B/g, ''), this.whitespace, ' ', 'all')
+    return Zotero.Utilities.XRegExp.replace(name, this.whitespace, ' ', 'all')
   }
   /*
    * Encode creators to author-style field
