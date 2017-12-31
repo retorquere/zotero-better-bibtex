@@ -84,7 +84,8 @@ export = new class CSLExporter {
       delete csl.authority
       if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
-      if (csl.issued && item.date) csl.issued = this.parseDate(item.date)
+      if (item.date) csl.issued = this.parseDate(item.date)
+      if (item.accessDate) csl.accessed = this.parseDate(item.accessDate)
 
       debug('extracted:', item.extraFields)
       for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
@@ -139,10 +140,6 @@ export = new class CSLExporter {
       delete csl.multi
       delete csl.system_id
 
-      let m
-      if (csl.accessed && csl.accessed.raw && (m = csl.accessed.raw.match(/^([0-9]{4})-([0-9]{2})-([0-9]{2})$/))) {
-        csl.accessed = { 'date-parts': [[ m[1], parseInt(m[2]), parseInt(m[3]) ]] } // tslint:disable-line:no-magic-numbers
-      }
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
       csl = this.serialize(csl)
