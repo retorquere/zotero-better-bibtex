@@ -203,9 +203,9 @@ function parse(value, mayrecurse = true) {
       debug('dateparser: trying date range from manual split:', value, split)
       if (split.length === 2) {
         const from = parse(split[0], false)
-        if (from.type === 'verbatim') continue
+        if (from.type !== 'date' && from.type !== 'season') continue
         const to = parse(split[1], false)
-        if (to.type === 'verbatim') continue
+        if (to.type !== 'date' && to.type !== 'season') continue
         return { type: 'interval', from, to }
       }
     }

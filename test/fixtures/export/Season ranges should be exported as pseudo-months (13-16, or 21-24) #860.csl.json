@@ -12,5 +12,25 @@
     "original-date":{"literal":"2017-14/2017-99"},
     "title":"months out of range",
     "type":"webpage"
+  },
+  {
+    "id":"00112100122211",
+    "issued":{"date-parts":[[11,13],[12,14]]},
+    "title":"0011-21/0012-22",
+    "type":"webpage"
+  },
+  {
+    "id":"001121001222-11",
+    "issued":{"date-parts":[[-11,13],[-12,14]]},
+    "title":"-0011-21/-0012-22",
+    "type":"webpage"
+  },
+  {
+    "id":"201121201222-2011",
+    "issued":{
+      "date-parts":[[-2011,13],[-2012,14]]
+    },
+    "title":"-2011-21/-2012-22",
+    "type":"webpage"
   }
 ]
