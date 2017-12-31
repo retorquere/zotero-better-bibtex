@@ -72,19 +72,9 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function has_plausible_year(date) {
-  return date
-    && date.type !== 'verbatim'
-    && date.year
-    && date.year > 24 // tslint:disable-line:no-magic-numbers
-}
-
-function has_valid_month(date) {
-  if (!date) return false
-  if (!date.month) return true
-
-  if (date.month >= 1 && date.month <= 12) return true // tslint:disable-line:no-magic-numbers
-  if (date.month >= 21 && date.month <= 24) return true // tslint:disable-line:no-magic-numbers
+function is_valid_month(month) {
+  if (month >= 1 && month <= 12) return true // tslint:disable-line:no-magic-numbers
+  if (month >= 21 && month <= 24) return true // tslint:disable-line:no-magic-numbers
 
   return false
 }
@@ -92,10 +82,11 @@ function has_valid_month(date) {
 function parse(value, mayrecurse = true) {
   value = value.trim()
 
-  const december = 12
   let parsed, m
 
-  debug('dateparser: parsing', value)
+  debug('dateparser: parsing', value, mayrecurse)
+
+  if (mayrecurse && value === '') return { type: 'open' }
 
   if (mayrecurse && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
@@ -161,9 +152,11 @@ function parse(value, mayrecurse = true) {
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = _day ? parseInt(_day) : undefined
-    if (day && month > december && day < december) [day, month] = [month, day]
-    debug('parseDate:', value, exactish, state)
-    if (has_valid_month({ month })) return seasonize(doubt({ type: 'date', year, month, day }, state))
+
+    // swap day/month for our American brethren
+    if (is_valid_month(day) && !is_valid_month(month)) [day, month] = [month, day]
+
+    if (is_valid_month(month)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -171,8 +164,11 @@ function parse(value, mayrecurse = true) {
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = parseInt(_day)
-    if (day && month > december && day < december) [day, month] = [month, day]
-    if (has_valid_month({ month })) return seasonize(doubt({ type: 'date', year, month, day }, state))
+
+    // swap day/month for our American brethren
+    if (is_valid_month(day) && !is_valid_month(month)) [day, month] = [month, day]
+
+    if (is_valid_month(month)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {
@@ -207,8 +203,10 @@ function parse(value, mayrecurse = true) {
       debug('dateparser: trying date range from manual split:', value, split)
       if (split.length === 2) {
         const from = parse(split[0], false)
+        if (from.type === 'verbatim') continue
         const to = parse(split[1], false)
-        if (has_plausible_year(from) && has_valid_month(from) && has_plausible_year(to) && has_valid_month(to)) return { type: 'interval', from, to }
+        if (to.type === 'verbatim') continue
+        return { type: 'interval', from, to }
       }
     }
   }
