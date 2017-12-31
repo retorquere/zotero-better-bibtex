@@ -72,9 +72,9 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function is_valid_month(month) {
+function is_valid_month(month, allowseason) {
   if (month >= 1 && month <= 12) return true // tslint:disable-line:no-magic-numbers
-  if (month >= 21 && month <= 24) return true // tslint:disable-line:no-magic-numbers
+  if (allowseason && month >= 21 && month <= 24) return true // tslint:disable-line:no-magic-numbers
 
   return false
 }
@@ -154,9 +154,9 @@ function parse(value, mayrecurse = true) {
     let day = _day ? parseInt(_day) : undefined
 
     // swap day/month for our American brethren
-    if (is_valid_month(day) && !is_valid_month(month)) [day, month] = [month, day]
+    if (day && is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
 
-    if (is_valid_month(month)) return seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (is_valid_month(month, !day)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -166,9 +166,9 @@ function parse(value, mayrecurse = true) {
     let day = parseInt(_day)
 
     // swap day/month for our American brethren
-    if (is_valid_month(day) && !is_valid_month(month)) [day, month] = [month, day]
+    if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
 
-    if (is_valid_month(month)) return seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {
