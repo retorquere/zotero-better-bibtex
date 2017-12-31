@@ -5,5 +5,12 @@
     "original-date":{"date-parts":[[2015,13],[2016,14]]},
     "title":"Season ranges: EDTF and literal",
     "type":"webpage"
+  },
+  {
+    "id":"monthsoutrange2017",
+    "issued":{"literal":"2017-14/2017-15"},
+    "original-date":{"literal":"2017-14/2017-99"},
+    "title":"months out of range",
+    "type":"webpage"
   }
 ]

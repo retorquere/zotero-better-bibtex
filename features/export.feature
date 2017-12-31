@@ -223,7 +223,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 @860
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
-  When I import 1 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
+  When I import 2 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"

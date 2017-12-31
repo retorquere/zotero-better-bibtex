@@ -13,4 +13,12 @@ references:
       season: 1
     - year: 2016
       season: 2
+
+- id: monthsoutrange2017
+  issued:
+    - literal: 2017-14/2017-15
+  original-date:
+    - literal: 2017-14/2017-99
+  title: months out of range
+  type: webpage
 ...

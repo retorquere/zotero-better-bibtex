@@ -3,3 +3,9 @@
   origdate = {2015-21/2016-22},
   title = {Season Ranges: {{EDTF}} and Literal}
 }
+
+@online{monthsoutrange2017,
+  origdate = {2017-14/2017-99},
+  title = {Months out of Range},
+  year = {2017-14/2017-15}
+}

@@ -10,7 +10,7 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 require 'reverse_markdown'
-require 'psych'
+require 'deepsort'
 
 if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
   STDOUT.puts "Starting headless..."
@@ -42,19 +42,8 @@ class IniFile
   end
 end
 
-def ast_sort_hash(node)
-  if node.class == Psych::Nodes::Mapping
-    children = node.children.each_slice(2).sort{|a, b| a[0].value <=> b[0].value}.flatten(1)
-    node.children.sort!{|a, b| children.find_index(a) <=> children.find_index(b) }
-  end
-
-  return if node.children.nil?
-  node.children.each{|c| ast_sort_hash(c) }
-end
 def sort_yaml(yaml)
-	stream = Psych.parse_stream(yaml)
-	ast_sort_hash(stream)
-	return stream.to_yaml
+  return YAML.load(yaml).deep_sort.to_yaml
 end
 
 class HTTPInternalError < StandardError; end
@@ -290,6 +279,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
     when :csl_yaml
       #return compare(YAML.load(found), YAML.load(expected))
       expect(sort_yaml(found)).to eq(sort_yaml(expected))
+      return
 
     when :bbt_json
       found = normalizeJSON(JSON.parse(found))

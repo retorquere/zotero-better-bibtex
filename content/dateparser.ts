@@ -79,6 +79,16 @@ function has_plausible_year(date) {
     && date.year > 24 // tslint:disable-line:no-magic-numbers
 }
 
+function has_valid_month(date) {
+  if (!date) return false
+  if (!date.month) return true
+
+  if (date.month >= 1 && date.month <= 12) return true // tslint:disable-line:no-magic-numbers
+  if (date.month >= 21 && date.month <= 24) return true // tslint:disable-line:no-magic-numbers
+
+  return false
+}
+
 function parse(value, mayrecurse = true) {
   value = value.trim()
 
@@ -153,7 +163,7 @@ function parse(value, mayrecurse = true) {
     let day = _day ? parseInt(_day) : undefined
     if (day && month > december && day < december) [day, month] = [month, day]
     debug('parseDate:', value, exactish, state)
-    return seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (has_valid_month({ month })) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -162,7 +172,7 @@ function parse(value, mayrecurse = true) {
     let month = parseInt(_month)
     let day = parseInt(_day)
     if (day && month > december && day < december) [day, month] = [month, day]
-    return seasonize(doubt({ type: 'date', year, month, day }, state))
+    if (has_valid_month({ month })) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {
@@ -198,7 +208,7 @@ function parse(value, mayrecurse = true) {
       if (split.length === 2) {
         const from = parse(split[0], false)
         const to = parse(split[1], false)
-        if (has_plausible_year(from) && has_plausible_year(to)) return { type: 'interval', from, to }
+        if (has_plausible_year(from) && has_valid_month(from) && has_plausible_year(to) && has_valid_month(to)) return { type: 'interval', from, to }
       }
     }
   }
