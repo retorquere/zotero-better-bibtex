@@ -303,8 +303,8 @@ export = class Reference {
     }
   }
 
-  private _enc_creators_initials_marker = '\u0097'
-  private _enc_creators_relax_marker = '\u200C'
+  private _enc_creators_initials_marker = '\u0097' // end of guarded area
+  private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
   private isBibVarRE = /^[a-z][a-z0-9_]*$/i
   private data: { DeclarePrefChars: string }
@@ -995,7 +995,7 @@ export = class Reference {
       ({ family } = name)
     }
 
-    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // zero-width space
+    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // end of guarded area
 
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials >= 0) {
@@ -1043,7 +1043,7 @@ export = class Reference {
       ({ family } = name)
     }
 
-    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) { // zero-width space
+    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) {
       name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
     }
 
