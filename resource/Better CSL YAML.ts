@@ -114,14 +114,14 @@ function date2csl(date) {
         year: date.year > 0 ? date.year : date.year - 1,
         month: date.month || undefined,
         day: date.month && date.day ? date.day : undefined,
-        circa: !!date.approximate || undefined,
+        circa: (date.approximate || date.uncertain) ? true : undefined,
       }
 
     case 'season':
       return {
         year: date.year,
         season: date.season,
-        circa: !!date.approximate || undefined,
+        circa: (date.approximate || date.uncertain) ? true : undefined,
       }
 
     default:

@@ -36,13 +36,13 @@ Exporter.parseDate = date => {
     case 'date':
       return {
         'date-parts': [ date2csl(parsed) ],
-        circa: parsed.approximate ? true : undefined,
+        circa: (parsed.approximate || parsed.uncertain) ? true : undefined,
       }
 
     case 'interval':
       return {
         'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ],
-        circa: (parsed.from.approximate || parsed.to.approximate) ? true : undefined,
+        circa: (parsed.from.approximate || parsed.from.uncertain || parsed.to.approximate || parsed.to.uncertain) ? true : undefined,
       }
 
     case 'verbatim':
@@ -52,7 +52,7 @@ Exporter.parseDate = date => {
       return {
         'date-parts': [ [ parsed.year ] ],
         season: parsed.season,
-        circa: parsed.approximate ? true : undefined,
+        circa: (parsed.approximate || parsed.uncertain) ? true : undefined,
       }
 
     default:
