@@ -16,6 +16,7 @@
       "}": "\\}",
       "~": "\\textasciitilde{}",
       " ": "~",
+      "​": "\\mbox{}",
       "‌": "{\\aftergroup\\ignorespaces}"
     }
   },

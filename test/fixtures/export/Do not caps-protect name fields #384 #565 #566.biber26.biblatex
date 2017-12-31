@@ -184,7 +184,7 @@
 }
 
 @book{medici,
-  author = {family=Medici, given=Lorenzo, prefix=de’​, useprefix=false},
+  author = {family=Medici, given=Lorenzo, prefix=de’\mbox{}, useprefix=false},
   note = {[Medici][Lorenzo de’U+200B]}
 }
 
