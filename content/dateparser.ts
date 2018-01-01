@@ -79,37 +79,37 @@ function is_valid_month(month, allowseason) {
   return false
 }
 
-function parse(value, mayrecurse = true) {
+function parse(value, toplevel = true) {
   value = value.trim()
 
   let parsed, m
 
-  debug('dateparser: parsing', value, mayrecurse)
+  debug('dateparser: parsing', value, toplevel)
 
-  if (mayrecurse && value === '') return { type: 'open' }
+  if (!toplevel && value === '') return { type: 'open' }
 
-  if (mayrecurse && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+  if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
     const year = parse(_year, false)
     const orig = parse(_orig, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
-  if (mayrecurse && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
+  if (toplevel && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _year, _orig ] = m
     const year = parse(_year, false)
     const orig = parse(_orig, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
-  if (mayrecurse && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
+  if (toplevel && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _orig ] = m
     const orig = parse(_orig, false)
     if (orig.type === 'date') return { ...{ orig } }
   }
 
   // 747
-  if (mayrecurse && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`, false)
@@ -119,7 +119,7 @@ function parse(value, mayrecurse = true) {
   }
 
   // 747, January 30–February 3, 1989
-  if (mayrecurse && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
     const from = parse(`${date1} ${year}`, false)
@@ -129,7 +129,7 @@ function parse(value, mayrecurse = true) {
   }
 
   // 746
-  if (mayrecurse && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, day2, month, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`, false)
@@ -197,7 +197,7 @@ function parse(value, mayrecurse = true) {
     }
   }
 
-  if (mayrecurse && !parsed) {
+  if (toplevel && !parsed) {
     for (const sep of ['--', '-', '/', '_', '–']) {
       const split = value.split(sep)
       debug('dateparser: trying date range from manual split:', value, split)
