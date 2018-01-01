@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>zotero-better-bibtex</title>
+  <meta name="description" content="IMake Zotero effective for us LaTeX holdouts">
+
+<!-- TODO: Create customizable favicon -->
+  <!-- favicon -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#3B3535">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#BB2316"> -->
+
+  <!-- MDL styles -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css" />
+
+  <!-- Theme Styles -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Prism Styles -->
+  <link rel="stylesheet" href="assets/css/prism.css">
+
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <!-- Variable pages to sort pages for navigation -->
+
+
+<header class="mdl-layout__header mdl-layout__header--waterfall">
+  <!-- Top row, always visible -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <!-- Title -->
+    <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+  mdl-textfield--floating-label mdl-textfield--align-right">
+      <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+  <i class="material-icons">search</i>
+  </label>
+      <div class="mdl-textfield__expandable-holder">
+        <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
+      </div>
+    </div>
+  </div>
+  <!-- Bottom row, not visible on scroll -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation -->
+    <nav class="mdl-navigation">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </nav>
+  </div>
+</header>
+<div class="mdl-layout__drawer eng-navigation-row">
+  <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+  <nav class="mdl-navigation">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </nav>
+</div>
+
+    <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-64261422-5', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+      <div class="mdl-grid eng-wrapper">
+
+   
+
+  <div class="mdl-card__supporting-text">
+    <p>Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration!</p>
+
+<h2 id="editor-integration">Editor integration</h2>
+
+<h3 id="vim">vim</h3>
+
+<p>Create a script called (e.g.) <code class="highlighter-rouge">cite</code> in your path with the following content:</p>
+
+<p><code class="highlighter-rouge"><span class="c">#!/bin/sh</span></code></p>
+
+<p><code class="highlighter-rouge">curl -s http://localhost:23119/better-bibtex/cayw?format=citet</code></p>
+
+<p>Now, in vi, you can execute <code class="highlighter-rouge">:r!cite</code> in command mode to get your references inserted</p>
+
+<h3 id="zotero-citations-for-atom">Zotero Citations for Atom</h3>
+
+<p>A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the <a href="https://atom.io/packages/zotero-citations">Zotero Citations</a> package for the <a href="http://atom.io">Atom</a> editor.</p>
+
+<h3 id="scrivener-20marked-2-for-mac">Scrivener 2.0/Marked 2 for Mac</h3>
+
+<p>Dave Smith has gracefully written <a href="http://davepwsmith.github.io/academic-scrivener-howto/">instructions</a> on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps</p>
+
+<h3 id="linux">Linux</h3>
+
+<ul>
+  <li>Emma Reisz has gracefully written <a href="https://emmareisz.github.io/zotpicknix/">instructions and scripts</a> for setting up CAYW on Linux.</li>
+  <li>ConorIA has more versatile solution called <a href="https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf">zotero4overleaf</a>, which was inspired by Emma’s scripts.</li>
+</ul>
+
+<h2 id="diy">DIY</h2>
+
+<p>BBT now exposes (if you have HTTP export on in the preferences) an URL at http://localhost:23119/better-bibtex/cayw. The url accepts
+the following URL parameters:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>parameter</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">probe</code></td>
+      <td>If set to any non-empty value, returns <code class="highlighter-rouge">ready</code>. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">format</code></td>
+      <td>Set the output format</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">clipboard</code></td>
+      <td>Any non-empty value will copy the results to the clipboard</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">minimize</code></td>
+      <td>Any non-empty value minimize all Firefox windows after a pick</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The following formats are available:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">latex</code>.</li>
+  <li><code class="highlighter-rouge">cite</code> is an alias for <code class="highlighter-rouge">latex</code> with the assumption you want the cite command to be <code class="highlighter-rouge">cite</code></li>
+  <li><code class="highlighter-rouge">mmd</code>: MultiMarkdown</li>
+  <li><code class="highlighter-rouge">pandoc</code>. Accepts additional URL parameter <code class="highlighter-rouge">brackets</code>; any non-empty value surrounds the citation with brackets</li>
+  <li><code class="highlighter-rouge">asciidoctor-bibtex</code></li>
+  <li><code class="highlighter-rouge">scannable-cite</code> for the <a href="https://zotero-odf-scan.github.io/zotero-odf-scan/">ODF scanner</a></li>
+  <li><code class="highlighter-rouge">formatted-citation</code>: output formatted citation as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
+  <li><code class="highlighter-rouge">formatted-bibliography</code>: output formatted bibliography as per the current Zotero quick-export setting, if it is set to a citation style, and not an export format</li>
+  <li><code class="highlighter-rouge">translate</code> invokes a Zotero export translator. Extra URL parameters allowed:
+    <ul>
+      <li><code class="highlighter-rouge">translator</code>: stripped name of one of the BBT translators (lowercased, remove ‘better’, and only the letters, e.g.  <code class="highlighter-rouge">biblatex</code> or <code class="highlighter-rouge">csljson</code>), or a translator ID. Defaults to <code class="highlighter-rouge">biblatex</code>.</li>
+      <li><code class="highlighter-rouge">exportNotes</code>: set to <code class="highlighter-rouge">true</code> to export notes</li>
+      <li><code class="highlighter-rouge">useJournalAbbreviation</code>: set to <code class="highlighter-rouge">true</code> to use journal abbreviations</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The picker passes the following data along with your picked references if you filled them out:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>field</th>
+      <th> </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code class="highlighter-rouge">locator</code></td>
+      <td>the place within the work (e.g. page number)</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">prefix</code></td>
+      <td>for stuff like “see …”</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">suffix</code></td>
+      <td>for stuff after the citations</td>
+    </tr>
+    <tr>
+      <td><code class="highlighter-rouge">suppress author</code></td>
+      <td>if you only want the year</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>However not all output formats supports these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
+none. LaTeX supports all 4, in a way; if you choose <code class="highlighter-rouge">suppress author</code> for none or all of your references in a pick, you
+will get the citation as you would normally enter it, such as <code class="highlighter-rouge">\\cite{author1,author2}</code>, or
+<code class="highlighter-rouge">\\citeyear{author1,author2}</code>. If you use <code class="highlighter-rouge">locator</code>, <code class="highlighter-rouge">prefix</code>, <code class="highlighter-rouge">suffix</code> in any one of them, or you use <code class="highlighter-rouge">suppress author</code>
+for some but not for others, the picker will write them out all separate, like <code class="highlighter-rouge">\cite[p.  1]{author1}\citeyear{author2}</code>, 
+as LaTeX doesn’t seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators. The <code class="highlighter-rouge">formatted-</code> formats will ignore these.</p>
+
+<p>The <code class="highlighter-rouge">clipboard</code> option can be used as a workaround for editors that haven’t gotten around to integrating this yet. If
+you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
+<a href="http://www.autohotkey.com">AutoHotKey</a> works for windows, for OSX <a href="https://pqrs.org/osx/karabiner/">Karabiner</a> ought to
+do the job, and for Linux you could give <a href="https://github.com/polyethene/IronAHK">IronAHK</a> or
+<a href="https://code.google.com/p/autokey/">autokey</a> a shot).</p>
+
+<p>For example, if you call up <a href="http://localhost:23119/better-bibtex/cayw?format=mmd&amp;clipboard=yes">http://localhost:23119/better-bibtex/cayw?format=mmd&amp;clipboard=yes</a>, the Zotero citation picker will pop up. If you then select two references that happen to have cite keys <code class="highlighter-rouge">adams2001</code> and <code class="highlighter-rouge">brigge2002</code>, then</p>
+
+<ul>
+  <li>the response body will be <code class="highlighter-rouge">[#adams2001][][#brigge2002][]</code>, and</li>
+  <li><code class="highlighter-rouge">[#adams2001][][#brigge2002][]</code> will be left on the clipboard</li>
+</ul>
+
+<h2 id="playing-around">Playing around</h2>
+
+<p>For testing for other markdown formatters, you can construct simple references yourself, using:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">citeprefix</code>, default empty, for text to put before the full citation.</li>
+  <li><code class="highlighter-rouge">citepostfix</code>, default empty, for text to put after the full citation.</li>
+  <li><code class="highlighter-rouge">keyprefix</code>, default empty, for text to put before each individual citekey</li>
+  <li><code class="highlighter-rouge">keypostfix</code>, default empty, for text to put after each individual citekey</li>
+  <li><code class="highlighter-rouge">separator</code>, default <code class="highlighter-rouge">,</code>, for text to put between citekeys</li>
+</ul>
+
+<p>but if you need an extra format, just ask.</p>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer class="mdl-mini-footer">
+  <div class="mdl-mini-footer__left-section">
+    <div class="mdl-logo">zotero-better-bibtex</div>
+    <ul class="mdl-mini-footer__link-list">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy & Terms</a></li>
+    </ul>
+  </div>
+  <div class="mdl-mini-footer--right-section">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#top" title="back to top" role="button">
+      <i class="material-icons md-48" role="presentation">arrow_upward</i>
+    </a>
+  </div>
+</footer>
+
+  </div>
+  <!-- Prismjs -->
+  <script type="text/javascript" src=/assets/js/prism.min.js>
+
+  </script>
+  <!-- MDL Lite js -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!-- Google Analytics -->
+  
+</body>
+</html>

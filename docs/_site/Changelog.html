@@ -1,0 +1,2485 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>Change Log</title>
+  <meta name="description" content="IMake Zotero effective for us LaTeX holdouts">
+
+<!-- TODO: Create customizable favicon -->
+  <!-- favicon -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#3B3535">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#BB2316"> -->
+
+  <!-- MDL styles -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css" />
+
+  <!-- Theme Styles -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Prism Styles -->
+  <link rel="stylesheet" href="assets/css/prism.css">
+
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <!-- Variable pages to sort pages for navigation -->
+
+
+<header class="mdl-layout__header mdl-layout__header--waterfall">
+  <!-- Top row, always visible -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <!-- Title -->
+    <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+  mdl-textfield--floating-label mdl-textfield--align-right">
+      <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+  <i class="material-icons">search</i>
+  </label>
+      <div class="mdl-textfield__expandable-holder">
+        <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
+      </div>
+    </div>
+  </div>
+  <!-- Bottom row, not visible on scroll -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation -->
+    <nav class="mdl-navigation">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </nav>
+  </div>
+</header>
+<div class="mdl-layout__drawer eng-navigation-row">
+  <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+  <nav class="mdl-navigation">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </nav>
+</div>
+
+    <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-64261422-5', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+      <div class="mdl-grid eng-wrapper">
+
+  
+  <div class="mdl-card__title">
+    <h3 class="mdl-card__title-text">Change Log</h3>
+  </div>
+   
+
+  <div class="mdl-card__supporting-text">
+    <h1 id="change-log">Change Log</h1>
+
+<h2 id="1679-2016-10-25"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.79">1.6.79</a> (2016-10-25)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.78...1.6.79">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Setting the item type via the “cheater syntax” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/587">#587</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“null translator” in webserver export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/586">#586</a></li>
+  <li>Error in automatic export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/585">#585</a></li>
+  <li>Missing items in right-click menu <a href="https://github.com/retorquere/zotero-better-bibtex/issues/584">#584</a></li>
+  <li>[JavaScript Error: “TypeError: collection.getChildItems is not a function” {file: “chrome://zotero/content/xpcom/translation/translate_item.js” line: 763}] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/579">#579</a></li>
+  <li>Error exporting <a href="https://github.com/retorquere/zotero-better-bibtex/issues/576">#576</a></li>
+</ul>
+
+<p><strong>Closed issues:</strong></p>
+
+<ul>
+  <li>Fields do not “refresh” in Zotero 5.0-beta.r67+3f5ead (only “Citation Key” field) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/588">#588</a></li>
+  <li>Better BibTeX silently updates within a version of Juris-M it no longer supports? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/582">#582</a></li>
+</ul>
+
+<h2 id="1678-2016-10-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.78">1.6.78</a> (2016-10-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.77...1.6.78">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Problem exporting Library <a href="https://github.com/retorquere/zotero-better-bibtex/issues/578">#578</a></li>
+  <li>better bibtex disabled on ZSA <a href="https://github.com/retorquere/zotero-better-bibtex/issues/575">#575</a></li>
+</ul>
+
+<h2 id="1677-2016-10-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.77">1.6.77</a> (2016-10-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.76...1.6.77">Full Changelog</a></p>
+
+<h2 id="1676-2016-10-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.76">1.6.76</a> (2016-10-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.75...1.6.76">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Add a Quick Copy Gitbook mode <a href="https://github.com/retorquere/zotero-better-bibtex/issues/574">#574</a></li>
+  <li>Support asciidoctor-bibtex format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/567">#567</a></li>
+  <li>Biblatex extended name format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/566">#566</a></li>
+  <li>titles are title-cased in .bib file; titleCase pref not present <a href="https://github.com/retorquere/zotero-better-bibtex/issues/558">#558</a></li>
+  <li>veryshorttitle and compound words <a href="https://github.com/retorquere/zotero-better-bibtex/issues/551">#551</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Braces around author last name when exporting BibTeX <a href="https://github.com/retorquere/zotero-better-bibtex/issues/565">#565</a></li>
+  <li>Title case of latex greek text on biblatex export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/564">#564</a></li>
+</ul>
+
+<p><strong>Closed issues:</strong></p>
+
+<ul>
+  <li>CSL status → biblatex pubstate <a href="https://github.com/retorquere/zotero-better-bibtex/issues/573">#573</a></li>
+  <li>Default-language assumption for references that have no language set <a href="https://github.com/retorquere/zotero-better-bibtex/issues/571">#571</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Update Do not caps-protect name fields #384.noopsort.bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/pull/570">#570</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Update Do not caps-protect name fields #384.bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/pull/569">#569</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Update Do not caps-protect name fields #384.noopsort.bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/pull/568">#568</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+</ul>
+
+<h2 id="1675-2016-09-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.75">1.6.75</a> (2016-09-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.74...1.6.75">Full Changelog</a></p>
+
+<h2 id="1674-2016-09-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.74">1.6.74</a> (2016-09-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.73...1.6.74">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>&lt;pre&gt; not working in Extra field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/559">#559</a></li>
+</ul>
+
+<h2 id="1673-2016-08-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.73">1.6.73</a> (2016-08-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.72...1.6.73">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Missing JabRef pattern: [authEtAl] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/554">#554</a></li>
+  <li>Missing JabRef pattern: [authorsN+initials] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/553">#553</a></li>
+  <li>Better BibLaTeX import improvements <a href="https://github.com/retorquere/zotero-better-bibtex/issues/549">#549</a></li>
+  <li>Abbreviations in key generated for Conference Proceedings <a href="https://github.com/retorquere/zotero-better-bibtex/issues/548">#548</a></li>
+  <li>italics in title - capitalization <a href="https://github.com/retorquere/zotero-better-bibtex/issues/541">#541</a></li>
+</ul>
+
+<h2 id="1672-2016-08-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.72">1.6.72</a> (2016-08-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.71...1.6.72">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Request: Shortcut for quickly copying the citekey <a href="https://github.com/retorquere/zotero-better-bibtex/issues/544">#544</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>kivelson1995, kivelson1995a swapped after update <a href="https://github.com/retorquere/zotero-better-bibtex/issues/545">#545</a></li>
+</ul>
+
+<h2 id="1671-2016-08-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.71">1.6.71</a> (2016-08-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.70...1.6.71">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Citekey search on Zotero search box <a href="https://github.com/retorquere/zotero-better-bibtex/issues/502">#502</a></li>
+</ul>
+
+<h2 id="1670-2016-08-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.70">1.6.70</a> (2016-08-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.69...1.6.70">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Citation keys have changed <a href="https://github.com/retorquere/zotero-better-bibtex/issues/538">#538</a></li>
+  <li>Auto exporting issue <a href="https://github.com/retorquere/zotero-better-bibtex/issues/533">#533</a></li>
+</ul>
+
+<h2 id="1669-2016-07-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.69">1.6.69</a> (2016-07-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.68...1.6.69">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Automatic Export error (with Zotero Standalone) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/537">#537</a></li>
+  <li>Report ID: PDQPCADE / An error occurred while trying to export the selected file. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/530">#530</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Add a Gitter chat badge to README.md <a href="https://github.com/retorquere/zotero-better-bibtex/pull/539">#539</a> (<a href="https://github.com/gitter-badger">gitter-badger</a>)</li>
+</ul>
+
+<h2 id="1668-2016-07-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.68">1.6.68</a> (2016-07-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.67...1.6.68">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Firefox crashed and now Better Bibtex doesn’t work: no citation keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/526">#526</a></li>
+</ul>
+
+<h2 id="1667-2016-06-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.67">1.6.67</a> (2016-06-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.66...1.6.67">Full Changelog</a></p>
+
+<h2 id="1666-2016-06-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.66">1.6.66</a> (2016-06-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.65...1.6.66">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Cache must be dropped if Zotero profile location changes <a href="https://github.com/retorquere/zotero-better-bibtex/issues/524">#524</a></li>
+  <li>Aux scanner does not scan secondary aux files when \include is used in the tex document <a href="https://github.com/retorquere/zotero-better-bibtex/issues/522">#522</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Aux scanner does not recognize multiple citations when using the cite package <a href="https://github.com/retorquere/zotero-better-bibtex/issues/521">#521</a></li>
+</ul>
+
+<h2 id="1665-2016-06-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.65">1.6.65</a> (2016-06-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.64...1.6.65">Full Changelog</a></p>
+
+<h2 id="1664-2016-06-12"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.64">1.6.64</a> (2016-06-12)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.63...1.6.64">Full Changelog</a></p>
+
+<h2 id="1663-2016-06-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.63">1.6.63</a> (2016-06-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.61...1.6.63">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Biblatex export. Date parses incorrectly with year ‘1000’ when source Zotero field is in datetime format. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/515">#515</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Some more changes. <a href="https://github.com/retorquere/zotero-better-bibtex/pull/514">#514</a> (<a href="https://github.com/KarlHegbloom">KarlHegbloom</a>)</li>
+</ul>
+
+<h2 id="1661-2016-06-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.61">1.6.61</a> (2016-06-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.60...1.6.61">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Database updates every minute <a href="https://github.com/retorquere/zotero-better-bibtex/issues/510">#510</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Mantain JabRef group structure when importing BibTeX db (again) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/508">#508</a></li>
+  <li>Repeatedly asks to clear cache on launch <a href="https://github.com/retorquere/zotero-better-bibtex/issues/507">#507</a></li>
+  <li>Zotero Standalone doesn’t show citekeys in reference list on startup <a href="https://github.com/retorquere/zotero-better-bibtex/issues/497">#497</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Probably done now… <a href="https://github.com/retorquere/zotero-better-bibtex/pull/511">#511</a> (<a href="https://github.com/KarlHegbloom">KarlHegbloom</a>)</li>
+</ul>
+
+<h2 id="1660-2016-05-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.60">1.6.60</a> (2016-05-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.59...1.6.60">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Protocol in case of clash between shared collection citation keys and other keys? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/505">#505</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“Citation key rescan after upgrade” message <a href="https://github.com/retorquere/zotero-better-bibtex/issues/506">#506</a></li>
+  <li>Authors with a single name are exported with a comma inside the value. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/504">#504</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Latest changes to support TeXmacs integration. <a href="https://github.com/retorquere/zotero-better-bibtex/pull/503">#503</a> (<a href="https://github.com/KarlHegbloom">KarlHegbloom</a>)</li>
+</ul>
+
+<h2 id="1659-2016-05-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.59">1.6.59</a> (2016-05-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.58...1.6.59">Full Changelog</a></p>
+
+<h2 id="1658-2016-05-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.58">1.6.58</a> (2016-05-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.57...1.6.58">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Citekey generation is broken with conditional formatting after v1.6.50 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/499">#499</a></li>
+</ul>
+
+<h2 id="1657-2016-05-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.57">1.6.57</a> (2016-05-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.56...1.6.57">Full Changelog</a></p>
+
+<h2 id="1656-2016-05-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.56">1.6.56</a> (2016-05-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.55...1.6.56">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Zotero picker add page, suffix/ prefix does not work <a href="https://github.com/retorquere/zotero-better-bibtex/issues/495">#495</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>export of report item : no institution field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/494">#494</a></li>
+  <li>Synchronization with attachments between different computers. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/489">#489</a></li>
+</ul>
+
+<h2 id="1655-2016-05-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.55">1.6.55</a> (2016-05-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.54...1.6.55">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Issue Citing Websites <a href="https://github.com/retorquere/zotero-better-bibtex/issues/492">#492</a></li>
+</ul>
+
+<h2 id="1654-2016-05-12"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.54">1.6.54</a> (2016-05-12)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.53...1.6.54">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Cannot add an auto-export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/490">#490</a></li>
+</ul>
+
+<h2 id="1653-2016-05-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.53">1.6.53</a> (2016-05-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.52...1.6.53">Full Changelog</a></p>
+
+<h2 id="1652-2016-05-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.52">1.6.52</a> (2016-05-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.51...1.6.52">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Juris-M missing multi-lingual fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/482">#482</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Better BibTeX Database Corruption <a href="https://github.com/retorquere/zotero-better-bibtex/issues/488">#488</a></li>
+</ul>
+
+<h2 id="1651-2016-05-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.51">1.6.51</a> (2016-05-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.50...1.6.51">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>[Juris-m] citekeys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/483">#483</a></li>
+</ul>
+
+<h2 id="1650-2016-05-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.50">1.6.50</a> (2016-05-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.49...1.6.50">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>”[zotero]” citekey format doesn’t match zotero’s default format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/487">#487</a></li>
+</ul>
+
+<h2 id="1649-2016-04-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.49">1.6.49</a> (2016-04-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.48...1.6.49">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Dollar sign in title not properly escaped <a href="https://github.com/retorquere/zotero-better-bibtex/issues/485">#485</a></li>
+  <li>The link in the add-on pane of FF points to the wrong URL <a href="https://github.com/retorquere/zotero-better-bibtex/issues/481">#481</a></li>
+</ul>
+
+<h2 id="1648-2016-04-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.48">1.6.48</a> (2016-04-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.47...1.6.48">Full Changelog</a></p>
+
+<h2 id="1647-2016-04-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.47">1.6.47</a> (2016-04-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.45...1.6.47">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>conditional citekey formatting/zotero year field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/478">#478</a></li>
+  <li>Expose “select” in server URL?  <a href="https://github.com/retorquere/zotero-better-bibtex/issues/477">#477</a></li>
+  <li>Cannot install the plugin zotero-better-bibtex–1.6.43 in JurisM Standalone 4.0.29.6m63 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/475">#475</a></li>
+  <li>URL export simple name <a href="https://github.com/retorquere/zotero-better-bibtex/issues/464">#464</a></li>
+  <li>arXiv identifiers in BibLaTeX export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/460">#460</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Preferences GUI issue <a href="https://github.com/retorquere/zotero-better-bibtex/issues/476">#476</a></li>
+  <li>Url export preference lost <a href="https://github.com/retorquere/zotero-better-bibtex/issues/466">#466</a></li>
+</ul>
+
+<h2 id="1645-2016-04-09"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.45">1.6.45</a> (2016-04-09)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.43...1.6.45">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Edit Postscript via the preferences. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/473">#473</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Possible key generation scheme issue with [journal:nopunct] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/474">#474</a></li>
+  <li>Math markup to unicode not always imported correctly <a href="https://github.com/retorquere/zotero-better-bibtex/issues/472">#472</a></li>
+  <li>BBT does not support connector mode <a href="https://github.com/retorquere/zotero-better-bibtex/issues/143">#143</a></li>
+</ul>
+
+<h2 id="1643-2016-04-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.43">1.6.43</a> (2016-04-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.39...1.6.43">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Ability to handle original publication date <a href="https://github.com/retorquere/zotero-better-bibtex/issues/237">#237</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export url field in wrong tab <a href="https://github.com/retorquere/zotero-better-bibtex/issues/469">#469</a></li>
+  <li>Zotero Better Bib(La)Tex is not compatible with Iceweasel 38.7.1 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/468">#468</a></li>
+</ul>
+
+<h2 id="1639-2016-03-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.39">1.6.39</a> (2016-03-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.40...1.6.39">Full Changelog</a></p>
+
+<h2 id="1640-2016-03-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.40">1.6.40</a> (2016-03-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.41...1.6.40">Full Changelog</a></p>
+
+<h2 id="1641-2016-03-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.41">1.6.41</a> (2016-03-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.38...1.6.41">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Endpoint schomd.bibtex does not work <a href="https://github.com/retorquere/zotero-better-bibtex/issues/462">#462</a></li>
+  <li>BBT cache corrupted <a href="https://github.com/retorquere/zotero-better-bibtex/issues/461">#461</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Also omit square brackets for Pandoc Citation in CAYW <a href="https://github.com/retorquere/zotero-better-bibtex/pull/463">#463</a> (<a href="https://github.com/jpcirrus">jpcirrus</a>)</li>
+</ul>
+
+<h2 id="1638-2016-03-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.38">1.6.38</a> (2016-03-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.37...1.6.38">Full Changelog</a></p>
+
+<h2 id="1637-2016-03-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.37">1.6.37</a> (2016-03-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.36...1.6.37">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Ignoring upper cases in German titles <a href="https://github.com/retorquere/zotero-better-bibtex/issues/456">#456</a></li>
+  <li>BBT does not correctly exports arXiv citations with opening bracket [ <a href="https://github.com/retorquere/zotero-better-bibtex/issues/452">#452</a></li>
+  <li>Auto-export always recursive regardless of options <a href="https://github.com/retorquere/zotero-better-bibtex/issues/450">#450</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>New jsonrpc endpoints for bibliographyhtml and bibliographybbl <a href="https://github.com/retorquere/zotero-better-bibtex/pull/459">#459</a> (<a href="https://github.com/KarlHegbloom">KarlHegbloom</a>)</li>
+  <li>[CSL YAML] add missing EOF newline <a href="https://github.com/retorquere/zotero-better-bibtex/pull/458">#458</a> (<a href="https://github.com/jpcirrus">jpcirrus</a>)</li>
+</ul>
+
+<h2 id="1636-2016-02-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.36">1.6.36</a> (2016-02-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.35...1.6.36">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Export formatting as Markdown in CSL YAML <a href="https://github.com/retorquere/zotero-better-bibtex/issues/447">#447</a></li>
+  <li>Disambiguation of bibtex keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/444">#444</a></li>
+  <li>Replicate Zotero key algorithm <a href="https://github.com/retorquere/zotero-better-bibtex/issues/439">#439</a></li>
+</ul>
+
+<h2 id="1635-2016-02-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.35">1.6.35</a> (2016-02-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.34...1.6.35">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Unsupported key patterns break export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/446">#446</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Fix typos <a href="https://github.com/retorquere/zotero-better-bibtex/pull/445">#445</a> (<a href="https://github.com/edwinksl">edwinksl</a>)</li>
+</ul>
+
+<h2 id="1634-2016-01-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.34">1.6.34</a> (2016-01-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.32...1.6.34">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Suggestion: Rephrase configuration options and/or add link to the docs <a href="https://github.com/retorquere/zotero-better-bibtex/issues/433">#433</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>custom fields should be exported as-is <a href="https://github.com/retorquere/zotero-better-bibtex/issues/441">#441</a></li>
+  <li>BibTeX name escaping has a million inconsistencies <a href="https://github.com/retorquere/zotero-better-bibtex/issues/438">#438</a></li>
+  <li>Dead link in README.md <a href="https://github.com/retorquere/zotero-better-bibtex/issues/436">#436</a></li>
+</ul>
+
+<h2 id="1632-2016-01-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.32">1.6.32</a> (2016-01-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.31...1.6.32">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Fatal error when checking for cache preserval <a href="https://github.com/retorquere/zotero-better-bibtex/issues/437">#437</a></li>
+</ul>
+
+<h2 id="1631-2016-01-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.31">1.6.31</a> (2016-01-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.30...1.6.31">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>biblatex export of phdthesis does not case-protect “type” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/435">#435</a></li>
+</ul>
+
+<h2 id="1630-2016-01-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.30">1.6.30</a> (2016-01-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.29...1.6.30">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>return full date for <code class="highlighter-rouge">year</code> in the citekey if no year is returned (“forthcoming”) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/434">#434</a></li>
+</ul>
+
+<h2 id="1629-2016-01-09"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.29">1.6.29</a> (2016-01-09)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.28...1.6.29">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>yaml output for usage with pandoc-citeproc <a href="https://github.com/retorquere/zotero-better-bibtex/issues/432">#432</a></li>
+  <li>Issue citing website <a href="https://github.com/retorquere/zotero-better-bibtex/issues/430">#430</a></li>
+</ul>
+
+<h2 id="1628-2016-01-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.28">1.6.28</a> (2016-01-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.27...1.6.28">Full Changelog</a></p>
+
+<h2 id="1627-2016-01-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.27">1.6.27</a> (2016-01-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.25...1.6.27">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Atom Zotero Scan <a href="https://github.com/retorquere/zotero-better-bibtex/issues/429">#429</a></li>
+</ul>
+
+<h2 id="1625-2015-12-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.25">1.6.25</a> (2015-12-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.24...1.6.25">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>BBT doesn’t work with zotero 4.0.22, notification of this is blank.  <a href="https://github.com/retorquere/zotero-better-bibtex/issues/425">#425</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Clarify button labels for cache reset dialog <a href="https://github.com/retorquere/zotero-better-bibtex/pull/424">#424</a> (<a href="https://github.com/briandk">briandk</a>)</li>
+</ul>
+
+<h2 id="1624-2015-12-25"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.24">1.6.24</a> (2015-12-25)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.23...1.6.24">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>LaTeX CAYW picker doesn’t include page numbers <a href="https://github.com/retorquere/zotero-better-bibtex/issues/422">#422</a></li>
+</ul>
+
+<h2 id="1623-2015-12-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.23">1.6.23</a> (2015-12-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.22...1.6.23">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Error exporting files with BetterBibTex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/421">#421</a></li>
+  <li>Auto-export doesn’t work. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/392">#392</a></li>
+</ul>
+
+<h2 id="1622-2015-12-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.22">1.6.22</a> (2015-12-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.21...1.6.22">Full Changelog</a></p>
+
+<h2 id="1621-2015-12-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.21">1.6.21</a> (2015-12-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.20...1.6.21">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Pandoc citations: Needs space after semicolon with multiple items <a href="https://github.com/retorquere/zotero-better-bibtex/issues/417">#417</a></li>
+</ul>
+
+<h2 id="1620-2015-12-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.20">1.6.20</a> (2015-12-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.19...1.6.20">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Upgrade forgets to ask whether cache should be retained <a href="https://github.com/retorquere/zotero-better-bibtex/issues/413">#413</a></li>
+</ul>
+
+<h2 id="1619-2015-12-12"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.19">1.6.19</a> (2015-12-12)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.18...1.6.19">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Duplicate citekeys generated in chronological order w.r.t. Date Added <a href="https://github.com/retorquere/zotero-better-bibtex/issues/415">#415</a></li>
+</ul>
+
+<h2 id="1618-2015-12-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.18">1.6.18</a> (2015-12-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.17...1.6.18">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Add <code class="highlighter-rouge">relax</code> support for given names <a href="https://github.com/retorquere/zotero-better-bibtex/issues/414">#414</a></li>
+  <li>URL missing in bibtex for Book Section <a href="https://github.com/retorquere/zotero-better-bibtex/issues/412">#412</a></li>
+  <li>Sorting and optional particle handling <a href="https://github.com/retorquere/zotero-better-bibtex/issues/411">#411</a></li>
+</ul>
+
+<h2 id="1617-2015-12-10"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.17">1.6.17</a> (2015-12-10)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.16...1.6.17">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Key update doesn’t reset corresponding cache entry <a href="https://github.com/retorquere/zotero-better-bibtex/issues/410">#410</a></li>
+</ul>
+
+<h2 id="1616-2015-12-09"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.16">1.6.16</a> (2015-12-09)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.15...1.6.16">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Book sections have book title for journal in citekey <a href="https://github.com/retorquere/zotero-better-bibtex/issues/409">#409</a></li>
+</ul>
+
+<h2 id="1615-2015-12-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.15">1.6.15</a> (2015-12-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.14...1.6.15">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>CSL variables only recognized when in lowercase, DOI not read from extra <a href="https://github.com/retorquere/zotero-better-bibtex/issues/408">#408</a></li>
+  <li>dot-separated date not parsed <a href="https://github.com/retorquere/zotero-better-bibtex/issues/406">#406</a></li>
+</ul>
+
+<h2 id="1614-2015-12-05"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.14">1.6.14</a> (2015-12-05)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.13...1.6.14">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Add Bibtex field ‘lastchecked’ for websites. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/401">#401</a></li>
+</ul>
+
+<h2 id="1613-2015-12-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.13">1.6.13</a> (2015-12-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.11...1.6.13">Full Changelog</a></p>
+
+<h2 id="1611-2015-12-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.11">1.6.11</a> (2015-12-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.10...1.6.11">Full Changelog</a></p>
+
+<h2 id="1610-2015-12-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.10">1.6.10</a> (2015-12-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.9...1.6.10">Full Changelog</a></p>
+
+<h2 id="169-2015-12-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.9">1.6.9</a> (2015-12-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.8...1.6.9">Full Changelog</a></p>
+
+<h2 id="168-2015-12-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.8">1.6.8</a> (2015-12-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.6...1.6.8">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Capitalization: Capitalize all title-fields for language “en” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/383">#383</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Colon in bibtex key <a href="https://github.com/retorquere/zotero-better-bibtex/issues/405">#405</a></li>
+  <li>Better bibtex: url export does not survive underscores <a href="https://github.com/retorquere/zotero-better-bibtex/issues/402">#402</a></li>
+</ul>
+
+<h2 id="166-2015-11-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.6">1.6.6</a> (2015-11-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.5...1.6.6">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Do not caps-protect literal lists <a href="https://github.com/retorquere/zotero-better-bibtex/issues/391">#391</a></li>
+  <li>Capitalization: Don’t caps-protect name fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/384">#384</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>cache not changed after renaming attachments <a href="https://github.com/retorquere/zotero-better-bibtex/issues/403">#403</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Update Do not caps-protect name fields #384.bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/pull/398">#398</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Add ZWS to “de’ Medici” <a href="https://github.com/retorquere/zotero-better-bibtex/pull/397">#397</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Update Do not caps-protect name fields #384.biblatex <a href="https://github.com/retorquere/zotero-better-bibtex/pull/396">#396</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+</ul>
+
+<h2 id="165-2015-11-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.5">1.6.5</a> (2015-11-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.4...1.6.5">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Better BibTeX debug dump reverses options and preferences <a href="https://github.com/retorquere/zotero-better-bibtex/issues/395">#395</a></li>
+</ul>
+
+<h2 id="164-2015-11-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.4">1.6.4</a> (2015-11-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.3...1.6.4">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Oriental dates trip up date parser <a href="https://github.com/retorquere/zotero-better-bibtex/issues/389">#389</a></li>
+</ul>
+
+<h2 id="163-2015-10-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.3">1.6.3</a> (2015-10-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.2...1.6.3">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Quick format citation dialog: Insert entire BibTeX record? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/387">#387</a></li>
+</ul>
+
+<h2 id="162-2015-10-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.2">1.6.2</a> (2015-10-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.1...1.6.2">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>CSL title, volume-title, container-title → BL title, booktitle, maintitle <a href="https://github.com/retorquere/zotero-better-bibtex/issues/381">#381</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Cannot delete Automatic Export rules <a href="https://github.com/retorquere/zotero-better-bibtex/issues/388">#388</a></li>
+</ul>
+
+<h2 id="161-2015-10-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.1">1.6.1</a> (2015-10-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.6.0...1.6.1">Full Changelog</a></p>
+
+<h2 id="160-2015-10-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.6.0">1.6.0</a> (2015-10-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.11...1.6.0">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Caching overhaul, massive speedups. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/385">#385</a></li>
+  <li>biblatex: Language tag ‘xx’ is exported, ‘xx-XX’ is not <a href="https://github.com/retorquere/zotero-better-bibtex/issues/380">#380</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Fix typo <a href="https://github.com/retorquere/zotero-better-bibtex/pull/378">#378</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+</ul>
+
+<h2 id="1511-2015-10-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.11">1.5.11</a> (2015-10-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.10...1.5.11">Full Changelog</a></p>
+
+<h2 id="1510-2015-10-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.10">1.5.10</a> (2015-10-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.9...1.5.10">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Non-ascii in dates is not matched by date parser <a href="https://github.com/retorquere/zotero-better-bibtex/issues/376">#376</a></li>
+</ul>
+
+<h2 id="159-2015-10-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.9">1.5.9</a> (2015-10-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.8...1.5.9">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>BBT CSL JSON: shortTitle should be title-short; journalAbbreviation should be container-title-short <a href="https://github.com/retorquere/zotero-better-bibtex/issues/372">#372</a></li>
+</ul>
+
+<h2 id="158-2015-10-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.8">1.5.8</a> (2015-10-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.7...1.5.8">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>“Pandoc JSON” should be “Better CSL JSON” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/369">#369</a></li>
+</ul>
+
+<h2 id="157-2015-10-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.7">1.5.7</a> (2015-10-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.5...1.5.7">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>cache statistics not initialised <a href="https://github.com/retorquere/zotero-better-bibtex/issues/371">#371</a></li>
+</ul>
+
+<h2 id="155-2015-10-12"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.5">1.5.5</a> (2015-10-12)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.4...1.5.5">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>very slow export? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/370">#370</a></li>
+</ul>
+
+<h2 id="154-2015-10-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.4">1.5.4</a> (2015-10-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.3...1.5.4">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Export of creator-type fields from embedded CSL variables + change authors to directors for CSL-JSON film+tvBroadcast + export tvBroadcast to biblatex video <a href="https://github.com/retorquere/zotero-better-bibtex/issues/365">#365</a></li>
+  <li>change Preserve Capitalization default <a href="https://github.com/retorquere/zotero-better-bibtex/issues/364">#364</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Update Export of creator-type fields from embedded CSL variables #365.json <a href="https://github.com/retorquere/zotero-better-bibtex/pull/368">#368</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Update Export of creator-type fields from embedded CSL variables #365.csl.json <a href="https://github.com/retorquere/zotero-better-bibtex/pull/367">#367</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+  <li>Update Export of creator-type fields from embedded CSL variables #365.bib <a href="https://github.com/retorquere/zotero-better-bibtex/pull/366">#366</a> (<a href="https://github.com/nickbart1980">nickbart1980</a>)</li>
+</ul>
+
+<h2 id="153-2015-10-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.3">1.5.3</a> (2015-10-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.2...1.5.3">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Commas in Bib(La)Tex keywords field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/361">#361</a></li>
+</ul>
+
+<h2 id="152-2015-09-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.2">1.5.2</a> (2015-09-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.1...1.5.2">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Date export to “Pandoc JSON” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/360">#360</a></li>
+</ul>
+
+<h2 id="151-2015-09-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.1">1.5.1</a> (2015-09-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.5.0...1.5.1">Full Changelog</a></p>
+
+<h2 id="150-2015-09-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.5.0">1.5.0</a> (2015-09-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.7...1.5.0">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Omit square brackets for Pandoc Citation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/358">#358</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Serialization cache is not saved <a href="https://github.com/retorquere/zotero-better-bibtex/issues/359">#359</a></li>
+</ul>
+
+<h2 id="147-2015-09-25"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.7">1.4.7</a> (2015-09-25)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.6...1.4.7">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Normalize date ranges in citekeys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/356">#356</a></li>
+  <li>Sort file attachments before snapshots for JabRef <a href="https://github.com/retorquere/zotero-better-bibtex/issues/355">#355</a></li>
+  <li>Parse key-value pairs into Pandoc-CSL fields if the key is a CSL value <a href="https://github.com/retorquere/zotero-better-bibtex/issues/354">#354</a></li>
+  <li>Recognize more CSL fields, better date parser/emitter <a href="https://github.com/retorquere/zotero-better-bibtex/issues/352">#352</a></li>
+  <li>BibLaTeX; export CSL override ‘issued’ to date or year <a href="https://github.com/retorquere/zotero-better-bibtex/issues/351">#351</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export single-field names as “literal” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/357">#357</a></li>
+  <li>Name particle parser always makes “van den” non-dropping <a href="https://github.com/retorquere/zotero-better-bibtex/issues/348">#348</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Typo: schmd -&gt; schomd <a href="https://github.com/retorquere/zotero-better-bibtex/pull/350">#350</a> (<a href="https://github.com/davepwsmith">davepwsmith</a>)</li>
+</ul>
+
+<h2 id="146-2015-09-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.6">1.4.6</a> (2015-09-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.5...1.4.6">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>SCHOMD: don’t resolve partially failed citation clusters <a href="https://github.com/retorquere/zotero-better-bibtex/issues/347">#347</a></li>
+</ul>
+
+<h2 id="145-2015-09-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.5">1.4.5</a> (2015-09-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.4...1.4.5">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>SCHOMD citations need to be resolved all at once <a href="https://github.com/retorquere/zotero-better-bibtex/issues/346">#346</a></li>
+</ul>
+
+<h2 id="144-2015-09-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.4">1.4.4</a> (2015-09-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.2...1.4.4">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Cleanup for scholarly markdown <a href="https://github.com/retorquere/zotero-better-bibtex/issues/345">#345</a></li>
+  <li>Collected notes: HTML is a cleaner format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/342">#342</a></li>
+</ul>
+
+<h2 id="142-2015-09-09"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.2">1.4.2</a> (2015-09-09)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.4.1...1.4.2">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Have Collected Notes follow the BibLaTeX Unicode settings <a href="https://github.com/retorquere/zotero-better-bibtex/issues/341">#341</a></li>
+</ul>
+
+<h2 id="141-2015-09-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.4.1">1.4.1</a> (2015-09-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.3.1...1.4.1">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Export web page to “misc” type with “notes” and “howpublished” custom fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/329">#329</a></li>
+</ul>
+
+<h2 id="131-2015-09-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.3.1">1.3.1</a> (2015-09-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.3.0...1.3.1">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>preserve BibTeX Variables does not check for null values while escaping <a href="https://github.com/retorquere/zotero-better-bibtex/issues/337">#337</a></li>
+</ul>
+
+<h2 id="130-2015-09-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.3.0">1.3.0</a> (2015-09-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.39...1.3.0">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>CAYW probe: return stable “ready” rather than version number <a href="https://github.com/retorquere/zotero-better-bibtex/issues/336">#336</a></li>
+</ul>
+
+<h2 id="1239-2015-09-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.39">1.2.39</a> (2015-09-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.38...1.2.39">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Allow probing for cayw support <a href="https://github.com/retorquere/zotero-better-bibtex/issues/335">#335</a></li>
+</ul>
+
+<h2 id="1238-2015-09-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.38">1.2.38</a> (2015-09-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.37...1.2.38">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Bug with cayw search box when called with pandoc format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/334">#334</a></li>
+</ul>
+
+<h2 id="1237-2015-09-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.37">1.2.37</a> (2015-09-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.36...1.2.37">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Better BibTeX requires Zotero 4.0.28+ <a href="https://github.com/retorquere/zotero-better-bibtex/issues/333">#333</a></li>
+</ul>
+
+<h2 id="1236-2015-08-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.36">1.2.36</a> (2015-08-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.35...1.2.36">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Command to force autoexport update <a href="https://github.com/retorquere/zotero-better-bibtex/issues/330">#330</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Allow state of columns in export list to persist <a href="https://github.com/retorquere/zotero-better-bibtex/pull/331">#331</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="1235-2015-08-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.35">1.2.35</a> (2015-08-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.34...1.2.35">Full Changelog</a></p>
+
+<h2 id="1234-2015-08-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.34">1.2.34</a> (2015-08-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.33...1.2.34">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>cayw picker for zotero-atom-citations <a href="https://github.com/retorquere/zotero-better-bibtex/issues/328">#328</a></li>
+  <li>@legislation: map code/container-title to journaltitle <a href="https://github.com/retorquere/zotero-better-bibtex/issues/327">#327</a></li>
+</ul>
+
+<h2 id="1233-2015-08-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.33">1.2.33</a> (2015-08-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.32...1.2.33">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>@jurisdiction: map court/authority to institution <a href="https://github.com/retorquere/zotero-better-bibtex/issues/326">#326</a></li>
+</ul>
+
+<h2 id="1232-2015-08-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.32">1.2.32</a> (2015-08-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.31...1.2.32">Full Changelog</a></p>
+
+<h2 id="1231-2015-08-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.31">1.2.31</a> (2015-08-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.30...1.2.31">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Single letter capitals are no longer preserved <a href="https://github.com/retorquere/zotero-better-bibtex/issues/325">#325</a></li>
+</ul>
+
+<h2 id="1230-2015-08-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.30">1.2.30</a> (2015-08-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.29...1.2.30">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Collected Notes: translator not initialized <a href="https://github.com/retorquere/zotero-better-bibtex/issues/324">#324</a></li>
+  <li>Citation cache needs to be primed before schomd searches can be reliable <a href="https://github.com/retorquere/zotero-better-bibtex/issues/323">#323</a></li>
+  <li>Unable to submit ZotPlus errors: ‘Invalid response from repository’ <a href="https://github.com/retorquere/zotero-better-bibtex/issues/321">#321</a></li>
+</ul>
+
+<h2 id="1229-2015-08-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.29">1.2.29</a> (2015-08-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.28...1.2.29">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>(non-)dropping particle handling <a href="https://github.com/retorquere/zotero-better-bibtex/issues/313">#313</a></li>
+</ul>
+
+<h2 id="1228-2015-08-25"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.28">1.2.28</a> (2015-08-25)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.27...1.2.28">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>CAYW Not Copying Pandoc <a href="https://github.com/retorquere/zotero-better-bibtex/issues/320">#320</a></li>
+</ul>
+
+<h2 id="1227-2015-08-23"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.27">1.2.27</a> (2015-08-23)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.26...1.2.27">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Scrivener support <a href="https://github.com/retorquere/zotero-better-bibtex/issues/263">#263</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Conflict check references undefined variable <a href="https://github.com/retorquere/zotero-better-bibtex/issues/319">#319</a></li>
+</ul>
+
+<h2 id="1226-2015-08-23"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.26">1.2.26</a> (2015-08-23)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.25...1.2.26">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Changes in Zotero do not invalidate serialisation cache. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/316">#316</a></li>
+</ul>
+
+<h2 id="1225-2015-08-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.25">1.2.25</a> (2015-08-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.24...1.2.25">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Enable ODF-scan format in CAYW <a href="https://github.com/retorquere/zotero-better-bibtex/issues/312">#312</a></li>
+</ul>
+
+<h2 id="1224-2015-08-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.24">1.2.24</a> (2015-08-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.23...1.2.24">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Zutilo 1.2.10.1 interferes with Quick Copy <a href="https://github.com/retorquere/zotero-better-bibtex/issues/311">#311</a></li>
+</ul>
+
+<h2 id="1223-2015-08-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.23">1.2.23</a> (2015-08-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.22...1.2.23">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>unfiltered fields leave punctuation in citation key <a href="https://github.com/retorquere/zotero-better-bibtex/issues/310">#310</a></li>
+  <li>BibTeX variable support for journal titles. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/309">#309</a></li>
+</ul>
+
+<h2 id="1222-2015-08-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.22">1.2.22</a> (2015-08-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.21...1.2.22">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>thesis zotero entries always create <code class="highlighter-rouge">@phdthesis</code> bibtex entries <a href="https://github.com/retorquere/zotero-better-bibtex/issues/307">#307</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>condense in cite key format not working <a href="https://github.com/retorquere/zotero-better-bibtex/issues/308">#308</a></li>
+</ul>
+
+<h2 id="1221-2015-08-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.21">1.2.21</a> (2015-08-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.20...1.2.21">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export fails – key + library ID fails to yield reference in 4.0.28 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/306">#306</a></li>
+  <li>Underscores break capital-preservation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/300">#300</a></li>
+</ul>
+
+<h2 id="1220-2015-08-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.20">1.2.20</a> (2015-08-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.19...1.2.20">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Clear a field / export as empty <a href="https://github.com/retorquere/zotero-better-bibtex/issues/303">#303</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>test case for #303 <a href="https://github.com/retorquere/zotero-better-bibtex/pull/305">#305</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="1219-2015-08-10"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.19">1.2.19</a> (2015-08-10)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.18...1.2.19">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Quotation marks: add on option to replace them by \enquote{} on export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/302">#302</a></li>
+</ul>
+
+<h2 id="1218-2015-08-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.18">1.2.18</a> (2015-08-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.17...1.2.18">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Add more simple HTML/Zotero markup: small-caps <a href="https://github.com/retorquere/zotero-better-bibtex/issues/301">#301</a></li>
+</ul>
+
+<h2 id="1217-2015-08-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.17">1.2.17</a> (2015-08-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.16...1.2.17">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Escape chars in field are unnecessarily added by BBT <a href="https://github.com/retorquere/zotero-better-bibtex/issues/296">#296</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Numbers confuse capital-preservation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/295">#295</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Add test for #296 <a href="https://github.com/retorquere/zotero-better-bibtex/pull/299">#299</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="1216-2015-08-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.16">1.2.16</a> (2015-08-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.15...1.2.16">Full Changelog</a></p>
+
+<h2 id="1215-2015-08-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.15">1.2.15</a> (2015-08-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.14...1.2.15">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Unchecking ‘Force citation key to ASCII’ replaces contents of citation key format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/297">#297</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Correct association of folding preference. <a href="https://github.com/retorquere/zotero-better-bibtex/pull/298">#298</a> (<a href="https://github.com/adunning">adunning</a>)</li>
+</ul>
+
+<h2 id="1214-2015-08-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.14">1.2.14</a> (2015-08-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.13...1.2.14">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Spaces not stripped from citation keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/294">#294</a></li>
+</ul>
+
+<h2 id="1213-2015-08-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.13">1.2.13</a> (2015-08-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.12...1.2.13">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>More CSL-BibTeX field mappings (to get to exclude parts of date (day or month) from export for certain fields) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/293">#293</a></li>
+</ul>
+
+<h2 id="1212-2015-08-05"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.12">1.2.12</a> (2015-08-05)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.11...1.2.12">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Collected Notes: itemized/enumerated lists are not closed. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/292">#292</a></li>
+</ul>
+
+<h2 id="1211-2015-08-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.11">1.2.11</a> (2015-08-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.10...1.2.11">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Collected Notes: Ignore unexpected HTML tags <a href="https://github.com/retorquere/zotero-better-bibtex/issues/291">#291</a></li>
+</ul>
+
+<h2 id="1210-2015-08-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.10">1.2.10</a> (2015-08-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.9...1.2.10">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“Collected Notes” sometimes misses notes <a href="https://github.com/retorquere/zotero-better-bibtex/issues/290">#290</a></li>
+</ul>
+
+<h2 id="129-2015-08-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.9">1.2.9</a> (2015-08-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.8...1.2.9">Full Changelog</a></p>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Fix book -&gt; mvbook (multi-volume book) export <a href="https://github.com/retorquere/zotero-better-bibtex/pull/288">#288</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="128-2015-08-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.8">1.2.8</a> (2015-08-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.7...1.2.8">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Default folding no longer applied, changing all keys with diacritics <a href="https://github.com/retorquere/zotero-better-bibtex/issues/286">#286</a></li>
+</ul>
+
+<h2 id="127-2015-08-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.7">1.2.7</a> (2015-08-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.6...1.2.7">Full Changelog</a></p>
+
+<h2 id="126-2015-08-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.6">1.2.6</a> (2015-08-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.5...1.2.6">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Auto-Export with “keep updated” not updated after new mapping  <a href="https://github.com/retorquere/zotero-better-bibtex/issues/285">#285</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Fix typo stature-&gt;statute (zotero item type) <a href="https://github.com/retorquere/zotero-better-bibtex/pull/284">#284</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="125-2015-07-31"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.5">1.2.5</a> (2015-07-31)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.4...1.2.5">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Zotero’s bookSection is always converted to @inbook, never @incollection <a href="https://github.com/retorquere/zotero-better-bibtex/issues/282">#282</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Prettier generate/clear keys confirm dialog <a href="https://github.com/retorquere/zotero-better-bibtex/pull/283">#283</a> (<a href="https://github.com/gracile-fr">gracile-fr</a>)</li>
+</ul>
+
+<h2 id="124-2015-07-31"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.4">1.2.4</a> (2015-07-31)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.3...1.2.4">Full Changelog</a></p>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>New substring filter for custom BibTeX keys <a href="https://github.com/retorquere/zotero-better-bibtex/pull/281">#281</a> (<a href="https://github.com/hfichtenberger">hfichtenberger</a>)</li>
+</ul>
+
+<h2 id="123-2015-07-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.3">1.2.3</a> (2015-07-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.2...1.2.3">Full Changelog</a></p>
+
+<h2 id="122-2015-07-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.2">1.2.2</a> (2015-07-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.1...1.2.2">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>referencetype= does not work <a href="https://github.com/retorquere/zotero-better-bibtex/issues/278">#278</a></li>
+  <li>BBT fails to start when invalid cite key pattern is configured <a href="https://github.com/retorquere/zotero-better-bibtex/issues/276">#276</a></li>
+</ul>
+
+<h2 id="121-2015-07-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.1">1.2.1</a> (2015-07-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.2.0...1.2.1">Full Changelog</a></p>
+
+<h2 id="120-2015-07-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.2.0">1.2.0</a> (2015-07-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.1.3...1.2.0">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>#274 requires a key rescan to be sure. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/275">#275</a></li>
+</ul>
+
+<h2 id="113-2015-07-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.1.3">1.1.3</a> (2015-07-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.1.2...1.1.3">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>“Generate / Clear BibTex key” should not change “modified” date (and warn on bulk changes) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/273">#273</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>URL escaping in BibLaTeX (not BibTeX!) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/271">#271</a></li>
+</ul>
+
+<h2 id="112-2015-07-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.1.2">1.1.2</a> (2015-07-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.1.1...1.1.2">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Allow parameter escaping in citekey pattern so a colon can be used <a href="https://github.com/retorquere/zotero-better-bibtex/issues/272">#272</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Keys with numeric disambiguator are not unique <a href="https://github.com/retorquere/zotero-better-bibtex/issues/274">#274</a></li>
+</ul>
+
+<h2 id="111-2015-07-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.1.1">1.1.1</a> (2015-07-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.1.0...1.1.1">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Cite As You Write for text-based editors <a href="https://github.com/retorquere/zotero-better-bibtex/issues/270">#270</a></li>
+</ul>
+
+<h2 id="110-2015-07-23"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.1.0">1.1.0</a> (2015-07-23)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.19...1.1.0">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Prioritize translator over contributor for generating citation key <a href="https://github.com/retorquere/zotero-better-bibtex/issues/267">#267</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Colon not allowed in citation key format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/268">#268</a></li>
+  <li>Diacritics stripped from keys regardless of presence of <code class="highlighter-rouge">ascii</code> or <code class="highlighter-rouge">fold</code> filters <a href="https://github.com/retorquere/zotero-better-bibtex/issues/266">#266</a></li>
+  <li>Ignore HTML tags when generating citation key <a href="https://github.com/retorquere/zotero-better-bibtex/issues/264">#264</a></li>
+  <li>Parsed CSL variables from notes are supplied with extra keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/262">#262</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Expand default skipwords list <a href="https://github.com/retorquere/zotero-better-bibtex/pull/265">#265</a> (<a href="https://github.com/adunning">adunning</a>)</li>
+</ul>
+
+<h2 id="1019-2015-07-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.19">1.0.19</a> (2015-07-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.18...1.0.19">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Parsing extra variables from CSL notes <a href="https://github.com/retorquere/zotero-better-bibtex/issues/260">#260</a></li>
+</ul>
+
+<h2 id="1018-2015-07-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.18">1.0.18</a> (2015-07-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.17...1.0.18">Full Changelog</a></p>
+
+<h2 id="1017-2015-07-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.17">1.0.17</a> (2015-07-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.16...1.0.17">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Add pandoc-compatible CSL-JSON auto-export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/259">#259</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>System menus disappear under Zotero Standalone <a href="https://github.com/retorquere/zotero-better-bibtex/issues/256">#256</a></li>
+</ul>
+
+<h2 id="1016-2015-07-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.16">1.0.16</a> (2015-07-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.15...1.0.16">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Zotero hangs on exporting saved search <a href="https://github.com/retorquere/zotero-better-bibtex/issues/258">#258</a></li>
+</ul>
+
+<h2 id="1015-2015-07-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.15">1.0.15</a> (2015-07-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.14...1.0.15">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Tags with &lt;italic&gt; rather than &lt;i&gt; throw an error during export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/257">#257</a></li>
+</ul>
+
+<h2 id="1014-2015-07-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.14">1.0.14</a> (2015-07-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.13...1.0.14">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>DB schema upgrade failure <a href="https://github.com/retorquere/zotero-better-bibtex/issues/255">#255</a></li>
+</ul>
+
+<h2 id="1013-2015-07-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.13">1.0.13</a> (2015-07-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.12...1.0.13">Full Changelog</a></p>
+
+<h2 id="1012-2015-07-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.12">1.0.12</a> (2015-07-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.11...1.0.12">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>BBT changes literally entered HTML entities into their decoded form <a href="https://github.com/retorquere/zotero-better-bibtex/issues/254">#254</a></li>
+  <li>bibtex dislikes \textbackslash <a href="https://github.com/retorquere/zotero-better-bibtex/issues/251">#251</a></li>
+</ul>
+
+<h2 id="1011-2015-07-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.11">1.0.11</a> (2015-07-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.10...1.0.11">Full Changelog</a></p>
+
+<h2 id="1010-2015-07-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.10">1.0.10</a> (2015-07-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.9...1.0.10">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Citation Key not produced <a href="https://github.com/retorquere/zotero-better-bibtex/issues/252">#252</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Text that legally contains the text of HTML entities such as “ ” triggers an overzealous decoding second-guesser <a href="https://github.com/retorquere/zotero-better-bibtex/issues/253">#253</a></li>
+</ul>
+
+<h2 id="109-2015-07-16"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.9">1.0.9</a> (2015-07-16)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.8...1.0.9">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Allow numeric postfix for key disambiguation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/250">#250</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Error when generating cite key with “editor” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/249">#249</a></li>
+</ul>
+
+<h2 id="108-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.8">1.0.8</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.7...1.0.8">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“Report Error including references” does not include references <a href="https://github.com/retorquere/zotero-better-bibtex/issues/247">#247</a></li>
+</ul>
+
+<h2 id="107-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.7">1.0.7</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.6...1.0.7">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export failure for items that have related references <a href="https://github.com/retorquere/zotero-better-bibtex/issues/248">#248</a></li>
+</ul>
+
+<h2 id="106-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.6">1.0.6</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.5...1.0.6">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>xref should not be escaped <a href="https://github.com/retorquere/zotero-better-bibtex/issues/246">#246</a></li>
+  <li>Better Bib(La)TeX export: square brackets <a href="https://github.com/retorquere/zotero-better-bibtex/issues/245">#245</a></li>
+</ul>
+
+<h2 id="105-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.5">1.0.5</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.4...1.0.5">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Collected Notes: line-breaks on empty line makes LaTeX sad <a href="https://github.com/retorquere/zotero-better-bibtex/issues/244">#244</a></li>
+</ul>
+
+<h2 id="104-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.4">1.0.4</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.3...1.0.4">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Display auto-export timestamps in user locale <a href="https://github.com/retorquere/zotero-better-bibtex/issues/243">#243</a></li>
+</ul>
+
+<h2 id="103-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.3">1.0.3</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.2...1.0.3">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>” conditions;” picked up as HTML entity <a href="https://github.com/retorquere/zotero-better-bibtex/issues/242">#242</a></li>
+</ul>
+
+<h2 id="102-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.2">1.0.2</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.1...1.0.2">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Show time of last auto-export in auto-export status <a href="https://github.com/retorquere/zotero-better-bibtex/issues/241">#241</a></li>
+</ul>
+
+<h2 id="101-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.1">1.0.1</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/1.0.0...1.0.1">Full Changelog</a></p>
+
+<h2 id="100-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/1.0.0">1.0.0</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.17...1.0.0">Full Changelog</a></p>
+
+<h2 id="01417-2015-07-14"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.17">0.14.17</a> (2015-07-14)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.16...0.14.17">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Cleaner HTML-&gt;LaTeX converter <a href="https://github.com/retorquere/zotero-better-bibtex/issues/240">#240</a></li>
+</ul>
+
+<h2 id="01416-2015-07-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.16">0.14.16</a> (2015-07-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.15...0.14.16">Full Changelog</a></p>
+
+<h2 id="01415-2015-07-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.15">0.14.15</a> (2015-07-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.14...0.14.15">Full Changelog</a></p>
+
+<h2 id="01414-2015-07-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.14">0.14.14</a> (2015-07-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.13...0.14.14">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Output “Collected Notes” in TeX <a href="https://github.com/retorquere/zotero-better-bibtex/issues/239">#239</a></li>
+  <li>Extended debugging too verbose? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/238">#238</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Single-field author entries with commas generate invalid BibTex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/235">#235</a></li>
+</ul>
+
+<h2 id="01413-2015-07-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.13">0.14.13</a> (2015-07-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.12...0.14.13">Full Changelog</a></p>
+
+<h2 id="01412-2015-07-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.12">0.14.12</a> (2015-07-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.11...0.14.12">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Handling Jr. in generated cite keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/236">#236</a></li>
+</ul>
+
+<h2 id="01411-2015-07-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.11">0.14.11</a> (2015-07-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.10...0.14.11">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“Report ZotPlus errors” for item does not work <a href="https://github.com/retorquere/zotero-better-bibtex/issues/234">#234</a></li>
+</ul>
+
+<h2 id="01410-2015-07-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.10">0.14.10</a> (2015-07-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.9...0.14.10">Full Changelog</a></p>
+
+<h2 id="0149-2015-07-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.9">0.14.9</a> (2015-07-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.8...0.14.9">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Automatic export when idle triggered immediately at every change <a href="https://github.com/retorquere/zotero-better-bibtex/issues/232">#232</a></li>
+</ul>
+
+<h2 id="0148-2015-07-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.8">0.14.8</a> (2015-07-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.7...0.14.8">Full Changelog</a></p>
+
+<h2 id="0147-2015-07-05"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.7">0.14.7</a> (2015-07-05)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.6...0.14.7">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>increase maximum log size <a href="https://github.com/retorquere/zotero-better-bibtex/issues/233">#233</a></li>
+</ul>
+
+<h2 id="0146-2015-07-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.6">0.14.6</a> (2015-07-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.5...0.14.6">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>ZotPlus Error reporting doesn’t work on Standalone <a href="https://github.com/retorquere/zotero-better-bibtex/issues/231">#231</a></li>
+  <li>Translators not appearing in Zotero standalone on OS X 10.10 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/230">#230</a></li>
+</ul>
+
+<h2 id="0145-2015-07-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.5">0.14.5</a> (2015-07-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.4...0.14.5">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Automatic exports not kicked off for item changes <a href="https://github.com/retorquere/zotero-better-bibtex/issues/229">#229</a></li>
+</ul>
+
+<h2 id="0144-2015-07-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.4">0.14.4</a> (2015-07-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.3...0.14.4">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Toggling recursive export stops automatic export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/228">#228</a></li>
+</ul>
+
+<h2 id="0143-2015-07-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.3">0.14.3</a> (2015-07-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.2...0.14.3">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Collection name displayed as “collection:id” rather than actual name <a href="https://github.com/retorquere/zotero-better-bibtex/issues/227">#227</a></li>
+</ul>
+
+<h2 id="0142-2015-07-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.2">0.14.2</a> (2015-07-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.1...0.14.2">Full Changelog</a></p>
+
+<h2 id="0141-2015-07-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.1">0.14.1</a> (2015-07-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.14.0...0.14.1">Full Changelog</a></p>
+
+<h2 id="0140-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.14.0">0.14.0</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.15...0.14.0">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Automatic export of collections faultily captures fictitious library export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/226">#226</a></li>
+  <li>Better BibTeX disabled after automatic Zotero update <a href="https://github.com/retorquere/zotero-better-bibtex/issues/225">#225</a></li>
+  <li>collection export URL not working for firefox <a href="https://github.com/retorquere/zotero-better-bibtex/issues/224">#224</a></li>
+</ul>
+
+<h2 id="01315-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.15">0.13.15</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.14...0.13.15">Full Changelog</a></p>
+
+<h2 id="01314-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.14">0.13.14</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.13...0.13.14">Full Changelog</a></p>
+
+<h2 id="01313-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.13">0.13.13</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.12...0.13.13">Full Changelog</a></p>
+
+<h2 id="01312-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.12">0.13.12</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.11...0.13.12">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>BBT incompatible with Zotero 4.0.27 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/220">#220</a></li>
+</ul>
+
+<h2 id="01311-2015-07-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.11">0.13.11</a> (2015-07-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.10...0.13.11">Full Changelog</a></p>
+
+<h2 id="01310-2015-06-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.10">0.13.10</a> (2015-06-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.9...0.13.10">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Export mapping for reporter field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/219">#219</a></li>
+</ul>
+
+<h2 id="0139-2015-06-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.9">0.13.9</a> (2015-06-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.8...0.13.9">Full Changelog</a></p>
+
+<h2 id="0138-2015-06-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.8">0.13.8</a> (2015-06-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.7...0.13.8">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>“Preserve bibtex variables” error <a href="https://github.com/retorquere/zotero-better-bibtex/issues/218">#218</a></li>
+</ul>
+
+<h2 id="0137-2015-06-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.7">0.13.7</a> (2015-06-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.6...0.13.7">Full Changelog</a></p>
+
+<h2 id="0136-2015-06-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.6">0.13.6</a> (2015-06-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.5...0.13.6">Full Changelog</a></p>
+
+<h2 id="0135-2015-06-23"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.5">0.13.5</a> (2015-06-23)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.3...0.13.5">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>support for saved searched <a href="https://github.com/retorquere/zotero-better-bibtex/issues/216">#216</a></li>
+</ul>
+
+<h2 id="0133-2015-06-23"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.3">0.13.3</a> (2015-06-23)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.2...0.13.3">Full Changelog</a></p>
+
+<h2 id="0132-2015-06-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.2">0.13.2</a> (2015-06-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.1...0.13.2">Full Changelog</a></p>
+
+<h2 id="0131-2015-06-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.1">0.13.1</a> (2015-06-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.13.0...0.13.1">Full Changelog</a></p>
+
+<h2 id="0130-2015-06-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.13.0">0.13.0</a> (2015-06-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.12.0...0.13.0">Full Changelog</a></p>
+
+<h2 id="0120-2015-06-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.12.0">0.12.0</a> (2015-06-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.16...0.12.0">Full Changelog</a></p>
+
+<h2 id="01116-2015-06-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.16">0.11.16</a> (2015-06-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.15...0.11.16">Full Changelog</a></p>
+
+<h2 id="01115-2015-06-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.15">0.11.15</a> (2015-06-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.14...0.11.15">Full Changelog</a></p>
+
+<h2 id="01114-2015-06-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.14">0.11.14</a> (2015-06-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.13...0.11.14">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Check directory exists before starting auto-export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/215">#215</a></li>
+</ul>
+
+<h2 id="01113-2015-06-17"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.13">0.11.13</a> (2015-06-17)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.12...0.11.13">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Translate or keep bibtex keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/212">#212</a></li>
+</ul>
+
+<h2 id="01112-2015-06-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.12">0.11.12</a> (2015-06-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.11...0.11.12">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Database schema upgrade error <a href="https://github.com/retorquere/zotero-better-bibtex/issues/208">#208</a></li>
+</ul>
+
+<h2 id="01111-2015-06-10"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.11">0.11.11</a> (2015-06-10)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.10...0.11.11">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>AUX file import generates JSON list, but no objects. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/211">#211</a></li>
+</ul>
+
+<h2 id="01110-2015-06-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.10">0.11.10</a> (2015-06-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.9...0.11.10">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Replace test profile with “dirty” profile in order to include database schema upgrades in the Travis tests <a href="https://github.com/retorquere/zotero-better-bibtex/issues/209">#209</a></li>
+</ul>
+
+<h2 id="0119-2015-06-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.9">0.11.9</a> (2015-06-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.8...0.11.9">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export breaks on empty fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/210">#210</a></li>
+  <li>“Keep Updated” does not update .bib file when additions made to exported watch collection. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/204">#204</a></li>
+</ul>
+
+<h2 id="0118-2015-06-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.8">0.11.8</a> (2015-06-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.7...0.11.8">Full Changelog</a></p>
+
+<h2 id="0117-2015-06-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.7">0.11.7</a> (2015-06-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.6...0.11.7">Full Changelog</a></p>
+
+<h2 id="0116-2015-06-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.6">0.11.6</a> (2015-06-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.5...0.11.6">Full Changelog</a></p>
+
+<h2 id="0115-2015-06-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.5">0.11.5</a> (2015-06-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.3...0.11.5">Full Changelog</a></p>
+
+<h2 id="0113-2015-06-06"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.3">0.11.3</a> (2015-06-06)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.2...0.11.3">Full Changelog</a></p>
+
+<h2 id="0112-2015-06-01"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.2">0.11.2</a> (2015-06-01)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.1...0.11.2">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Auto-updated .bib files not preserved after update <a href="https://github.com/retorquere/zotero-better-bibtex/issues/207">#207</a></li>
+</ul>
+
+<h2 id="0111-2015-05-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.1">0.11.1</a> (2015-05-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.11.0...0.11.1">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>export cache picks random version among bib(la)tex formats <a href="https://github.com/retorquere/zotero-better-bibtex/issues/205">#205</a></li>
+</ul>
+
+<h2 id="0110-2015-05-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.11.0">0.11.0</a> (2015-05-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.30...0.11.0">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Known problem: Auto-export overview doesn’t update <a href="https://github.com/retorquere/zotero-better-bibtex/issues/203">#203</a></li>
+</ul>
+
+<h2 id="01030-2015-05-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.30">0.10.30</a> (2015-05-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.29...0.10.30">Full Changelog</a></p>
+
+<h2 id="01029-2015-05-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.29">0.10.29</a> (2015-05-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.27...0.10.29">Full Changelog</a></p>
+
+<h2 id="01027-2015-05-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.27">0.10.27</a> (2015-05-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.25...0.10.27">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Cannot export pdf files from zotero collection <a href="https://github.com/retorquere/zotero-better-bibtex/issues/192">#192</a></li>
+</ul>
+
+<h2 id="01025-2015-05-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.25">0.10.25</a> (2015-05-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.24...0.10.25">Full Changelog</a></p>
+
+<h2 id="01024-2015-05-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.24">0.10.24</a> (2015-05-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.22...0.10.24">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Export error for items without publicationTitle and “Preserve BibTeX variables” enabled <a href="https://github.com/retorquere/zotero-better-bibtex/issues/201">#201</a></li>
+</ul>
+
+<h2 id="01022-2015-05-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.22">0.10.22</a> (2015-05-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.18...0.10.22">Full Changelog</a></p>
+
+<h2 id="01018-2015-05-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.18">0.10.18</a> (2015-05-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.14...0.10.18">Full Changelog</a></p>
+
+<h2 id="01014-2015-05-27"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.14">0.10.14</a> (2015-05-27)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.6...0.10.14">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>automatic export does not export groups <a href="https://github.com/retorquere/zotero-better-bibtex/issues/196">#196</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Database schema upgrade error <a href="https://github.com/retorquere/zotero-better-bibtex/issues/200">#200</a></li>
+</ul>
+
+<h2 id="0106-2015-05-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.6">0.10.6</a> (2015-05-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.2...0.10.6">Full Changelog</a></p>
+
+<h2 id="0102-2015-05-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.2">0.10.2</a> (2015-05-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.10.1...0.10.2">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Bibtex key generation no longer is unique <a href="https://github.com/retorquere/zotero-better-bibtex/issues/199">#199</a></li>
+</ul>
+
+<h2 id="0101-2015-05-26"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.10.1">0.10.1</a> (2015-05-26)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.38...0.10.1">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Enforce dependency on latest Zotero release <a href="https://github.com/retorquere/zotero-better-bibtex/issues/198">#198</a></li>
+</ul>
+
+<h2 id="0938-2015-05-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.38">0.9.38</a> (2015-05-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.37...0.9.38">Full Changelog</a></p>
+
+<h2 id="0937-2015-05-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.37">0.9.37</a> (2015-05-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.36...0.9.37">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Database schema upgrade error <a href="https://github.com/retorquere/zotero-better-bibtex/issues/197">#197</a></li>
+</ul>
+
+<h2 id="0936-2015-05-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.36">0.9.36</a> (2015-05-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.35...0.9.36">Full Changelog</a></p>
+
+<h2 id="0935-2015-05-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.35">0.9.35</a> (2015-05-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.34...0.9.35">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Quick Copy i.e. drag and drop citations not working <a href="https://github.com/retorquere/zotero-better-bibtex/issues/195">#195</a></li>
+</ul>
+
+<h2 id="0934-2015-05-22"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.34">0.9.34</a> (2015-05-22)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.33...0.9.34">Full Changelog</a></p>
+
+<h2 id="0933-2015-05-21"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.33">0.9.33</a> (2015-05-21)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.32...0.9.33">Full Changelog</a></p>
+
+<h2 id="0932-2015-05-21"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.32">0.9.32</a> (2015-05-21)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.31...0.9.32">Full Changelog</a></p>
+
+<h2 id="0931-2015-05-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.31">0.9.31</a> (2015-05-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.30...0.9.31">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Improved caching, etc for faster download of large databases <a href="https://github.com/retorquere/zotero-better-bibtex/issues/190">#190</a></li>
+  <li>Zotfile-like rename PDF using bibkey <a href="https://github.com/retorquere/zotero-better-bibtex/issues/189">#189</a></li>
+</ul>
+
+<h2 id="0930-2015-05-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.30">0.9.30</a> (2015-05-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.29...0.9.30">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>autoexported collections not displayed in preferences <a href="https://github.com/retorquere/zotero-better-bibtex/issues/188">#188</a></li>
+</ul>
+
+<h2 id="0929-2015-05-16"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.29">0.9.29</a> (2015-05-16)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.28...0.9.29">Full Changelog</a></p>
+
+<h2 id="0928-2015-05-16"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.28">0.9.28</a> (2015-05-16)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.27...0.9.28">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>support export Keep Updated for entire library <a href="https://github.com/retorquere/zotero-better-bibtex/issues/187">#187</a></li>
+</ul>
+
+<h2 id="0927-2015-05-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.27">0.9.27</a> (2015-05-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.26...0.9.27">Full Changelog</a></p>
+
+<h2 id="0926-2015-05-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.26">0.9.26</a> (2015-05-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.25...0.9.26">Full Changelog</a></p>
+
+<h2 id="0925-2015-05-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.25">0.9.25</a> (2015-05-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.24...0.9.25">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Brace balancer throws error <a href="https://github.com/retorquere/zotero-better-bibtex/issues/177">#177</a></li>
+</ul>
+
+<h2 id="0924-2015-05-13"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.24">0.9.24</a> (2015-05-13)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.23...0.9.24">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Thrashing on betterbibtex.sqlite <a href="https://github.com/retorquere/zotero-better-bibtex/issues/186">#186</a></li>
+</ul>
+
+<h2 id="0923-2015-05-11"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.23">0.9.23</a> (2015-05-11)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.22...0.9.23">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Auto-export of group libraries <a href="https://github.com/retorquere/zotero-better-bibtex/issues/185">#185</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Import not working anymore due to better-bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/184">#184</a></li>
+</ul>
+
+<h2 id="0922-2015-05-04"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.22">0.9.22</a> (2015-05-04)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.21...0.9.22">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Auto export collection hangs in 0.9.18 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/183">#183</a></li>
+</ul>
+
+<h2 id="0921-2015-05-03"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.21">0.9.21</a> (2015-05-03)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.18...0.9.21">Full Changelog</a></p>
+
+<h2 id="0918-2015-05-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.18">0.9.18</a> (2015-05-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.17...0.9.18">Full Changelog</a></p>
+
+<h2 id="0917-2015-05-02"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.17">0.9.17</a> (2015-05-02)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.16...0.9.17">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>autosave not working <a href="https://github.com/retorquere/zotero-better-bibtex/issues/181">#181</a></li>
+</ul>
+
+<h2 id="0916-2015-04-30"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.16">0.9.16</a> (2015-04-30)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.15...0.9.16">Full Changelog</a></p>
+
+<h2 id="0915-2015-04-29"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.15">0.9.15</a> (2015-04-29)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.14...0.9.15">Full Changelog</a></p>
+
+<h2 id="0914-2015-04-28"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.14">0.9.14</a> (2015-04-28)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.6...0.9.14">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Auto-export ignores ASCII-enforcement <a href="https://github.com/retorquere/zotero-better-bibtex/issues/179">#179</a></li>
+</ul>
+
+<h2 id="096-2015-04-24"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.6">0.9.6</a> (2015-04-24)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.5...0.9.6">Full Changelog</a></p>
+
+<h2 id="095-2015-04-21"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.5">0.9.5</a> (2015-04-21)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.4...0.9.5">Full Changelog</a></p>
+
+<h2 id="094-2015-04-20"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.4">0.9.4</a> (2015-04-20)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.2...0.9.4">Full Changelog</a></p>
+
+<h2 id="092-2015-04-19"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.2">0.9.2</a> (2015-04-19)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.1...0.9.2">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Feature Request: Push Export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/70">#70</a></li>
+</ul>
+
+<h2 id="091-2015-04-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.1">0.9.1</a> (2015-04-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.9.0...0.9.1">Full Changelog</a></p>
+
+<h2 id="090-2015-04-18"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.9.0">0.9.0</a> (2015-04-18)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.8.41...0.9.0">Full Changelog</a></p>
+
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Feature Request: Option to emit relative paths for “file” field in Bib(La)Tex export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/126">#126</a></li>
+</ul>
+
+<h2 id="0841-2015-04-15"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.8.41">0.8.41</a> (2015-04-15)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.8.40...0.8.41">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>JavaScript Error: “this.skipFields is undefined” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/175">#175</a></li>
+</ul>
+
+<h2 id="0840-2015-04-08"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.8.40">0.8.40</a> (2015-04-08)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.8.37...0.8.40">Full Changelog</a></p>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>Link broken: Install by downloading the latest version (0.8.21). <a href="https://github.com/retorquere/zotero-better-bibtex/issues/176">#176</a></li>
+</ul>
+
+<h2 id="0837-2015-04-07"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.8.37">0.8.37</a> (2015-04-07)</h2>
+<p><a href="https://github.com/retorquere/zotero-better-bibtex/compare/0.8.21...0.8.37">Full Changelog</a></p>
+
+<h2 id="0821-2015-04-05"><a href="https://github.com/retorquere/zotero-better-bibtex/tree/0.8.21">0.8.21</a> (2015-04-05)</h2>
+<p><strong>Implemented enhancements:</strong></p>
+
+<ul>
+  <li>Mimicing Zotero’s citation scheme <a href="https://github.com/retorquere/zotero-better-bibtex/issues/173">#173</a></li>
+  <li>Clickable URLs again <a href="https://github.com/retorquere/zotero-better-bibtex/issues/169">#169</a></li>
+  <li>performance during pull export degraded after last upgrade <a href="https://github.com/retorquere/zotero-better-bibtex/issues/161">#161</a></li>
+  <li>Capitalisation in techreport titles  <a href="https://github.com/retorquere/zotero-better-bibtex/issues/160">#160</a></li>
+  <li>Capitalization preservation also for single-letter words <a href="https://github.com/retorquere/zotero-better-bibtex/issues/155">#155</a></li>
+  <li>Import fails to perform @String substitutions <a href="https://github.com/retorquere/zotero-better-bibtex/issues/154">#154</a></li>
+  <li>Export Č as {\v C}, not \v{C}  <a href="https://github.com/retorquere/zotero-better-bibtex/issues/152">#152</a></li>
+  <li>Icon is too big in Zotero preferences (on OSX) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/151">#151</a></li>
+  <li>Specify custom reference type <a href="https://github.com/retorquere/zotero-better-bibtex/issues/147">#147</a></li>
+  <li>Export PMID, PMCID fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/144">#144</a></li>
+  <li>bib timestamp <a href="https://github.com/retorquere/zotero-better-bibtex/issues/142">#142</a></li>
+  <li>Extra ‘;’ in biblatexadata causes export failure <a href="https://github.com/retorquere/zotero-better-bibtex/issues/133">#133</a></li>
+  <li>Export Newspaper Article misses section field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/132">#132</a></li>
+  <li>Omit URL export when DOI present. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/131">#131</a></li>
+  <li>BibTex cite key column in overview? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/123">#123</a></li>
+  <li>Scan cited items (AUX scanner) <a href="https://github.com/retorquere/zotero-better-bibtex/issues/118">#118</a></li>
+  <li>Math parts in title <a href="https://github.com/retorquere/zotero-better-bibtex/issues/113">#113</a></li>
+  <li>Generating keys and export broken <a href="https://github.com/retorquere/zotero-better-bibtex/issues/111">#111</a></li>
+  <li>option to mantain the braces and special commands in titles or all fields <a href="https://github.com/retorquere/zotero-better-bibtex/issues/100">#100</a></li>
+  <li>Importing BibTeX entries with percent sign <a href="https://github.com/retorquere/zotero-better-bibtex/issues/95">#95</a></li>
+  <li>Remove BBT translators when uninstalling BBT <a href="https://github.com/retorquere/zotero-better-bibtex/issues/93">#93</a></li>
+  <li>Drag and drop citations for Pandoc <a href="https://github.com/retorquere/zotero-better-bibtex/issues/91">#91</a></li>
+  <li>Ignore/Remove last character if it is a punctuation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/90">#90</a></li>
+  <li>Import bibtex db from JabRef 2.10 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/89">#89</a></li>
+  <li>Include first name initial(s) in cite key generation pattern <a href="https://github.com/retorquere/zotero-better-bibtex/issues/86">#86</a></li>
+  <li>Prob with cite-keys when used with Eratosthenes <a href="https://github.com/retorquere/zotero-better-bibtex/issues/83">#83</a></li>
+  <li>Journal abbreviations exported in bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/81">#81</a></li>
+  <li>Better Bibtex key generator; add “journal” as a supported field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/80">#80</a></li>
+  <li>German umlaut in author name <a href="https://github.com/retorquere/zotero-better-bibtex/issues/69">#69</a></li>
+  <li>More cite key options? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/61">#61</a></li>
+  <li>Make more fields optional <a href="https://github.com/retorquere/zotero-better-bibtex/issues/60">#60</a></li>
+  <li>language v. langid for better biblatex export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/56">#56</a></li>
+  <li>Missing standard bibtex field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/52">#52</a></li>
+  <li>export JabRef groups <a href="https://github.com/retorquere/zotero-better-bibtex/issues/45">#45</a></li>
+  <li>Ability to control exportNotes and other settings in translators <a href="https://github.com/retorquere/zotero-better-bibtex/issues/40">#40</a></li>
+  <li>Many field markers not working in Better Biblatex’s key format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/38">#38</a></li>
+  <li>No “and” in AUTHOR field when multiple authors <a href="https://github.com/retorquere/zotero-better-bibtex/issues/33">#33</a></li>
+  <li>inconsistent key generator between jabref  and zotero-better-bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/31">#31</a></li>
+  <li>Using special fields of BibLaTeX not available in Zotero <a href="https://github.com/retorquere/zotero-better-bibtex/issues/30">#30</a></li>
+  <li>Double brackets for authors if single field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/20">#20</a></li>
+  <li>Underscores or other ‘glue’ in citation key format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/15">#15</a></li>
+  <li>Encoding of library when accessed by http <a href="https://github.com/retorquere/zotero-better-bibtex/issues/13">#13</a></li>
+  <li>weird journal field with BibTeX export and abbreviations <a href="https://github.com/retorquere/zotero-better-bibtex/issues/9">#9</a></li>
+  <li>ensuremath <a href="https://github.com/retorquere/zotero-better-bibtex/issues/8">#8</a></li>
+  <li>Babelbib interaction with month field of generated bibliography <a href="https://github.com/retorquere/zotero-better-bibtex/issues/5">#5</a></li>
+</ul>
+
+<p><strong>Fixed bugs:</strong></p>
+
+<ul>
+  <li>References with multiple notes fail to export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/174">#174</a></li>
+  <li>better-bibtex does not use biblatex fields eprint and eprinttype <a href="https://github.com/retorquere/zotero-better-bibtex/issues/170">#170</a></li>
+  <li>Force re-scan of keys on upgrade <a href="https://github.com/retorquere/zotero-better-bibtex/issues/166">#166</a></li>
+  <li>Generating a new BibTeX key deletes other info (PMIC, PMCID) stored in extra field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/165">#165</a></li>
+  <li>Citation key cache does not update on reference change <a href="https://github.com/retorquere/zotero-better-bibtex/issues/164">#164</a></li>
+  <li>Malformed prefs window on Mac <a href="https://github.com/retorquere/zotero-better-bibtex/issues/159">#159</a></li>
+  <li>AUX scanner doesn’t work for group libraries <a href="https://github.com/retorquere/zotero-better-bibtex/issues/158">#158</a></li>
+  <li>Group Library key and personal library key conflicts <a href="https://github.com/retorquere/zotero-better-bibtex/issues/157">#157</a></li>
+  <li>Group Library Pinned keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/156">#156</a></li>
+  <li>Getting exports mixed up <a href="https://github.com/retorquere/zotero-better-bibtex/issues/153">#153</a></li>
+  <li>German Umlaut “separated” by brackets <a href="https://github.com/retorquere/zotero-better-bibtex/issues/146">#146</a></li>
+  <li>capital delta breaks .bib output <a href="https://github.com/retorquere/zotero-better-bibtex/issues/141">#141</a></li>
+  <li>HTML Fragment separator escaped in url <a href="https://github.com/retorquere/zotero-better-bibtex/issues/140">#140</a></li>
+  <li>spans without attributes break export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/139">#139</a></li>
+  <li>Exporting of single-field author lacks braces <a href="https://github.com/retorquere/zotero-better-bibtex/issues/130">#130</a></li>
+  <li>Export via localhost URL not working for group libraries anymore <a href="https://github.com/retorquere/zotero-better-bibtex/issues/129">#129</a></li>
+  <li>Be robust against misconfigured journal abbreviator/html parser failure <a href="https://github.com/retorquere/zotero-better-bibtex/issues/127">#127</a></li>
+  <li>“Biblatex URL” doesn´t show up <a href="https://github.com/retorquere/zotero-better-bibtex/issues/125">#125</a></li>
+  <li>Bibtex key regenerating issue when trashing items <a href="https://github.com/retorquere/zotero-better-bibtex/issues/117">#117</a></li>
+  <li>Biblatex-exporter prints to year-field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/116">#116</a></li>
+  <li>URL export broken for fancy urls <a href="https://github.com/retorquere/zotero-better-bibtex/issues/114">#114</a></li>
+  <li>Hang on non-file attachment export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/112">#112</a></li>
+  <li>two ISSN number are freezing browser <a href="https://github.com/retorquere/zotero-better-bibtex/issues/110">#110</a></li>
+  <li>DOI with underscores in extra field <a href="https://github.com/retorquere/zotero-better-bibtex/issues/108">#108</a></li>
+  <li><code class="highlighter-rouge">biblatexcitekey\[my\_key\]</code> does not seem to work – <code class="highlighter-rouge">bibtex:</code> does <a href="https://github.com/retorquere/zotero-better-bibtex/issues/105">#105</a></li>
+  <li>underscores in URL fields should not be escaped <a href="https://github.com/retorquere/zotero-better-bibtex/issues/104">#104</a></li>
+  <li>Shortjournal does not get exported to biblatex format <a href="https://github.com/retorquere/zotero-better-bibtex/issues/102">#102</a></li>
+  <li>biber error on generated biblatex file <a href="https://github.com/retorquere/zotero-better-bibtex/issues/99">#99</a></li>
+  <li>Export of item to Better Bibtex fails for auth3_1 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/98">#98</a></li>
+  <li>Mantain the JabRef group and subgroup structure when importing a BibTeX db <a href="https://github.com/retorquere/zotero-better-bibtex/issues/97">#97</a></li>
+  <li>@PREAMBLE directive not removed during import <a href="https://github.com/retorquere/zotero-better-bibtex/issues/96">#96</a></li>
+  <li>Importing BibTeX entries with square brackets <a href="https://github.com/retorquere/zotero-better-bibtex/issues/94">#94</a></li>
+  <li>Error when importing a BibTeX InCollection record <a href="https://github.com/retorquere/zotero-better-bibtex/issues/92">#92</a></li>
+  <li>Fixed citation keys messed up my library <a href="https://github.com/retorquere/zotero-better-bibtex/issues/88">#88</a></li>
+  <li>Clean Extra field handling for “Generate BibTex key” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/87">#87</a></li>
+  <li>Don’t escape right square brackets <a href="https://github.com/retorquere/zotero-better-bibtex/issues/85">#85</a></li>
+  <li>periods between author names in [authors] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/82">#82</a></li>
+  <li>Generate unique static bibtex label <a href="https://github.com/retorquere/zotero-better-bibtex/issues/79">#79</a></li>
+  <li>Syntax [field:(fallback-string)] bugged? <a href="https://github.com/retorquere/zotero-better-bibtex/issues/78">#78</a></li>
+  <li>Showstopper: citation keys change! <a href="https://github.com/retorquere/zotero-better-bibtex/issues/76">#76</a></li>
+  <li>Export stops at amazon/googlebooks link <a href="https://github.com/retorquere/zotero-better-bibtex/issues/75">#75</a></li>
+  <li>Dashes ignored in cite key <a href="https://github.com/retorquere/zotero-better-bibtex/issues/74">#74</a></li>
+  <li>{ in filename makes Bibdesk and Bibtex cry <a href="https://github.com/retorquere/zotero-better-bibtex/issues/72">#72</a></li>
+  <li>Special characters in DOI <a href="https://github.com/retorquere/zotero-better-bibtex/issues/66">#66</a></li>
+  <li>Spaces in author names are not filtered out. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/64">#64</a></li>
+  <li>html tags are not filtered out in [shorttitle] <a href="https://github.com/retorquere/zotero-better-bibtex/issues/63">#63</a></li>
+  <li>shorttitle behaves differently in version 0.5.15 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/62">#62</a></li>
+  <li>Don’t alter the Function prototype – bad things happen. <a href="https://github.com/retorquere/zotero-better-bibtex/issues/58">#58</a></li>
+  <li>Problem with forced citekey generation <a href="https://github.com/retorquere/zotero-better-bibtex/issues/57">#57</a></li>
+  <li>Change in Pandoc Citation behavior <a href="https://github.com/retorquere/zotero-better-bibtex/issues/55">#55</a></li>
+  <li>&lt;i&gt;work&lt;/i&gt; Closing tag ignored <a href="https://github.com/retorquere/zotero-better-bibtex/issues/47">#47</a></li>
+  <li>[authorsN] and [auth.etal] field markers not working <a href="https://github.com/retorquere/zotero-better-bibtex/issues/44">#44</a></li>
+  <li>Error when importing with better bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/43">#43</a></li>
+  <li>“show biblatex url” doesn’t work on main library/collection <a href="https://github.com/retorquere/zotero-better-bibtex/issues/41">#41</a></li>
+  <li>No “Bib(La)TeX citations” translater available <a href="https://github.com/retorquere/zotero-better-bibtex/issues/39">#39</a></li>
+  <li>Better Biblatex exports some fields twice <a href="https://github.com/retorquere/zotero-better-bibtex/issues/37">#37</a></li>
+  <li>Non-numeric dates not exporting in Biblatex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/36">#36</a></li>
+  <li>Title field not being exported <a href="https://github.com/retorquere/zotero-better-bibtex/issues/35">#35</a></li>
+  <li>doi field wrapped in second pair of {} <a href="https://github.com/retorquere/zotero-better-bibtex/issues/34">#34</a></li>
+  <li>No “and” in AUTHOR field when multiple authors <a href="https://github.com/retorquere/zotero-better-bibtex/issues/33">#33</a></li>
+  <li>ReferenceError: item not defined <a href="https://github.com/retorquere/zotero-better-bibtex/issues/26">#26</a></li>
+  <li>Javascript “An error occurred while trying to export the selected file” <a href="https://github.com/retorquere/zotero-better-bibtex/issues/25">#25</a></li>
+  <li>Configurable citekey generator <a href="https://github.com/retorquere/zotero-better-bibtex/issues/24">#24</a></li>
+  <li>Export with notes &amp; files fails <a href="https://github.com/retorquere/zotero-better-bibtex/issues/21">#21</a></li>
+  <li>Export fails with v0.19 <a href="https://github.com/retorquere/zotero-better-bibtex/issues/19">#19</a></li>
+  <li>Proper URL encoding for bibtex <a href="https://github.com/retorquere/zotero-better-bibtex/issues/18">#18</a></li>
+  <li>BibTeX key is not generated when positon have a translator field set <a href="https://github.com/retorquere/zotero-better-bibtex/issues/12">#12</a></li>
+  <li>JavaScript Error on export <a href="https://github.com/retorquere/zotero-better-bibtex/issues/11">#11</a></li>
+  <li>breaks bibtex import in Zotero <a href="https://github.com/retorquere/zotero-better-bibtex/issues/7">#7</a></li>
+  <li>Bug in authorLast <a href="https://github.com/retorquere/zotero-better-bibtex/issues/3">#3</a></li>
+  <li>Ambiguous keys <a href="https://github.com/retorquere/zotero-better-bibtex/issues/2">#2</a></li>
+</ul>
+
+<p><strong>Merged pull requests:</strong></p>
+
+<ul>
+  <li>Preserve Bib variable names <a href="https://github.com/retorquere/zotero-better-bibtex/pull/163">#163</a> (<a href="https://github.com/nalt">nalt</a>)</li>
+  <li>Wrapped call to @items inside Zotero.Items.get; Made 2nd argument option… <a href="https://github.com/retorquere/zotero-better-bibtex/pull/138">#138</a> (<a href="https://github.com/baig">baig</a>)</li>
+  <li>Fixed indentation in schomd.search <a href="https://github.com/retorquere/zotero-better-bibtex/pull/136">#136</a> (<a href="https://github.com/baig">baig</a>)</li>
+  <li>Search <a href="https://github.com/retorquere/zotero-better-bibtex/pull/135">#135</a> (<a href="https://github.com/baig">baig</a>)</li>
+  <li>Add ‘les’, ‘zu’, ‘zum’ to skipwords. <a href="https://github.com/retorquere/zotero-better-bibtex/pull/103">#103</a> (<a href="https://github.com/adunning">adunning</a>)</li>
+  <li>Update download link in README.md <a href="https://github.com/retorquere/zotero-better-bibtex/pull/68">#68</a> (<a href="https://github.com/PhilLab">PhilLab</a>)</li>
+  <li>Permit HTTP export of group libraries <a href="https://github.com/retorquere/zotero-better-bibtex/pull/65">#65</a> (<a href="https://github.com/abrasive">abrasive</a>)</li>
+  <li>Minor language fix in README <a href="https://github.com/retorquere/zotero-better-bibtex/pull/17">#17</a> (<a href="https://github.com/kachkaev">kachkaev</a>)</li>
+  <li>More detailed installation instruction in README <a href="https://github.com/retorquere/zotero-better-bibtex/pull/16">#16</a> (<a href="https://github.com/kachkaev">kachkaev</a>)</li>
+  <li>_veryshorttitle should return 1 word instead of 3 <a href="https://github.com/retorquere/zotero-better-bibtex/pull/14">#14</a> (<a href="https://github.com/kachkaev">kachkaev</a>)</li>
+  <li>Fix: shortyear could expand to single digit <a href="https://github.com/retorquere/zotero-better-bibtex/pull/10">#10</a> (<a href="https://github.com/rrutledge">rrutledge</a>)</li>
+  <li>Removed trailing comma from entries. <a href="https://github.com/retorquere/zotero-better-bibtex/pull/6">#6</a> (<a href="https://github.com/sdietzel">sdietzel</a>)</li>
+  <li>Fix problem with url field encoding <a href="https://github.com/retorquere/zotero-better-bibtex/pull/1">#1</a> (<a href="https://github.com/santtu">santtu</a>)</li>
+</ul>
+
+<p>* <em>This Change Log was automatically generated by <a href="https://github.com/skywinder/Github-Changelog-Generator">github_changelog_generator</a></em></p>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer class="mdl-mini-footer">
+  <div class="mdl-mini-footer__left-section">
+    <div class="mdl-logo">zotero-better-bibtex</div>
+    <ul class="mdl-mini-footer__link-list">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy & Terms</a></li>
+    </ul>
+  </div>
+  <div class="mdl-mini-footer--right-section">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#top" title="back to top" role="button">
+      <i class="material-icons md-48" role="presentation">arrow_upward</i>
+    </a>
+  </div>
+</footer>
+
+  </div>
+  <!-- Prismjs -->
+  <script type="text/javascript" src=/assets/js/prism.min.js>
+
+  </script>
+  <!-- MDL Lite js -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!-- Google Analytics -->
+  
+</body>
+</html>

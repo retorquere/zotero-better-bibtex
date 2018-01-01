@@ -1,3 +1,12 @@
-remote_theme: "mmistakes/minimal-mistakes"
+remote_theme: "ENG618/jekyll-theme-material"
 plugins:
   - jekyll-remote-theme
+  - jekyll-titles-from-headings
+  - jekyll-default-layout
+  - jekyll-readme-index
+  - jekyll-optional-front-matter
+
+titles_from_headings:
+  enabled:     true
+  strip_title: false
+  collections: false

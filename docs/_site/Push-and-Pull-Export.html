@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+
+  <title>Push Export</title>
+  <meta name="description" content="IMake Zotero effective for us LaTeX holdouts">
+
+<!-- TODO: Create customizable favicon -->
+  <!-- favicon -->
+  <!-- <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="mask-icon" href="/images/favicon/safari-pinned-tab.svg" color="#3B3535">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <meta name="theme-color" content="#BB2316"> -->
+
+  <!-- MDL styles -->
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue_grey-red.min.css" />
+
+  <!-- Theme Styles -->
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <!-- Prism Styles -->
+  <link rel="stylesheet" href="assets/css/prism.css">
+
+  <style>
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <!-- Variable pages to sort pages for navigation -->
+
+
+<header class="mdl-layout__header mdl-layout__header--waterfall">
+  <!-- Top row, always visible -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <!-- Title -->
+    <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+    <div class="mdl-layout-spacer"></div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+  mdl-textfield--floating-label mdl-textfield--align-right">
+      <label class="mdl-button mdl-js-button mdl-button--icon" for="waterfall-exp">
+  <i class="material-icons">search</i>
+  </label>
+      <div class="mdl-textfield__expandable-holder">
+        <input class="mdl-textfield__input" type="text" name="sample" id="waterfall-exp">
+      </div>
+    </div>
+  </div>
+  <!-- Bottom row, not visible on scroll -->
+  <div class="mdl-layout__header-row eng-navigation-row">
+    <div class="mdl-layout-spacer"></div>
+    <!-- Navigation -->
+    <nav class="mdl-navigation">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </nav>
+  </div>
+</header>
+<div class="mdl-layout__drawer eng-navigation-row">
+  <span class="mdl-layout-title"><a class="eng-title-a" href="/">zotero-better-bibtex</a></span>
+  <nav class="mdl-navigation">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </nav>
+</div>
+
+    <script>
+  (function(i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r;
+    i[r] = i[r] || function() {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date();
+    a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0];
+    a.async = 1;
+    a.src = g;
+    m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+ga('create', 'UA-64261422-5', 'auto');
+ga('send', 'pageview');
+
+</script>
+
+
+    <main class="mdl-layout__content">
+      <a name="top"></a>
+      <div class="mdl-grid eng-wrapper">
+
+  
+  <div class="mdl-card__title">
+    <h3 class="mdl-card__title-text">Push Export</h3>
+  </div>
+   
+
+  <div class="mdl-card__supporting-text">
+    <h1 id="push-export">Push Export</h1>
+
+<p>When exporting using Better Bib(La)Tex you will be offered a new export option: Keep Updated. Checking this option
+registers the export for automation; any changes to the collection after you’ve completed the current export will
+trigger an automatic re-export to update the bib file. You can review/remove exports from the BBT preferences.  While
+I’ve gone to some lengths to make sure performance is OK, don’t go overboard with the number of auto-exports you have
+going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
+separate exports for separate papers for example if you have set up a collection for each.</p>
+
+<h1 id="pull-export">Pull Export</h1>
+<p>You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
+rule), or with a BibLaTeX remote statement like
+\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.  For Zotero
+standalone this is enabled by default; for Zotero embedded, you need to enable the embedded webserver from the BBT
+preferences screen (see below). You can then fetch your bibliography on the url
+http://localhost:23119/better-bibtex/collection?[collectionID].[format], where collectionID is:</p>
+
+<ul>
+  <li>the ID you get by right-clicking your collection and selecting “Show collection key”</li>
+  <li>the path “/[library id]/full/path/to/collection” (the library id is the first number from the key you get in the
+option above; it’s always ‘0’ for your personal library)</li>
+</ul>
+
+<p>or any multiple of those, separated by a ‘+’ sign.</p>
+
+<p>The format is either ‘bibtex’ or ‘biblatex’, and determines the translator used for export.</p>
+
+<p>You can add options to the export as URL parameters:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">&amp;exportCharset=&lt;charset&gt;</code></li>
+  <li><code class="highlighter-rouge">&amp;exportNotes=[true|false]</code></li>
+  <li><code class="highlighter-rouge">&amp;useJournalAbbreviation=[true|false]</code></li>
+</ul>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Zotero needs to be running and the [[embedded server needs to be enabled</td>
+      <td>Configuration]] for this to work.</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+</div>
+
+    </main>
+
+    <footer class="mdl-mini-footer">
+  <div class="mdl-mini-footer__left-section">
+    <div class="mdl-logo">zotero-better-bibtex</div>
+    <ul class="mdl-mini-footer__link-list">
+      <li><a href="#">Help</a></li>
+      <li><a href="#">Privacy & Terms</a></li>
+    </ul>
+  </div>
+  <div class="mdl-mini-footer--right-section">
+    <a class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" href="#top" title="back to top" role="button">
+      <i class="material-icons md-48" role="presentation">arrow_upward</i>
+    </a>
+  </div>
+</footer>
+
+  </div>
+  <!-- Prismjs -->
+  <script type="text/javascript" src=/assets/js/prism.min.js>
+
+  </script>
+  <!-- MDL Lite js -->
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <!-- Google Analytics -->
+  
+</body>
+</html>
