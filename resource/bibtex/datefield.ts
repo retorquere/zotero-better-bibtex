@@ -21,14 +21,14 @@ function year(y) {
 function format(date) {
   let formatted
 
-  if (date.year && date.month && date.day) {
+  if (typeof date.year === 'number' && date.month && date.day) {
     formatted = `${year(date.year)}-${pad(date.month, '00')}-${pad(date.day, '00')}`
 
-  } else if (date.year && (date.month || date.season)) {
+  } else if (typeof date.year === 'number' && (date.month || date.season)) {
     // tslint:disable-next-line:no-magic-numbers
     formatted = `${year(date.year)}-${pad((date.month || (date.season + 20)), '00')}`
 
-  } else if (date.year) {
+  } else if (typeof date.year === 'number') {
     formatted = year(date.year)
 
   } else {

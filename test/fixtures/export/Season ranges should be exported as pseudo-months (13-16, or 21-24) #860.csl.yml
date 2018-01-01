@@ -25,9 +25,9 @@ references:
 - id: 001121001222-11
   issued:
   - season: 1
-    year: -11
-  - season: 2
     year: -12
+  - season: 2
+    year: -13
   title: "-0011-21/-0012-22"
   type: webpage
 
@@ -43,10 +43,19 @@ references:
 - id: 201121201222-2011
   issued:
   - season: 1
-    year: -2011
-  - season: 2
     year: -2012
+  - season: 2
+    year: -2013
   title: "-2011-21/-2012-22"
+  type: webpage
+
+- id: '0000210000240'
+  issued:
+  - season: 1
+    year: -1
+  - season: 4
+    year: -1
+  title: 0000-21/0000-24
   type: webpage
 
 ...
