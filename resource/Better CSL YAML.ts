@@ -119,7 +119,7 @@ function date2csl(date) {
 
     case 'season':
       return {
-        year: date.year,
+        year: date.year > 0 ? date.year : date.year - 1,
         season: date.season,
         circa: (date.approximate || date.uncertain) ? true : undefined,
       }

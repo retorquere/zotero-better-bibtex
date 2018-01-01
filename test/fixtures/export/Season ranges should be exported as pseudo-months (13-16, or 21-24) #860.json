@@ -366,6 +366,42 @@
 
       ],
       "citekey": "SeasonrangesEDTF2017"
+    },
+    {
+      "itemType": "webpage",
+      "date": "0000-21/0000-24",
+      "title": "0000-21/0000-24",
+      "creators": [
+
+      ],
+      "tags": [
+
+      ],
+      "collections": [
+
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-12-30 10:53:52",
+      "dateModified": "2017-12-30 10:57:01",
+      "uri": "http://zotero.org/users/local/12Rqxy1S/items/FWK48YVN",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "date": "2017-23/2017-24",
+        "title": "Season ranges: EDTF and literal"
+      },
+      "itemID": 366,
+      "key": "FWK48YVN",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "SeasonrangesEDTF2017"
     }
   ]
 }
