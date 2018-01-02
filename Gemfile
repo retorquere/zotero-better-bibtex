@@ -13,3 +13,5 @@ gem 'inifile'
 gem 'httparty'
 gem 'reverse_markdown'
 gem 'deepsort'
+gem 'github-pages', group: :jekyll_plugins
+gem "jekyll-remote-theme"

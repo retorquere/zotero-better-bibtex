@@ -1,1 +1,15 @@
-theme: jekyll-theme-cayman
+remote_theme: "ENG618/jekyll-theme-material"
+plugins:
+  - jekyll-default-layout
+  - jekyll-github-metadata
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-redirect-from
+  - jekyll-relative-links
+  - jekyll-remote-theme
+  - jekyll-titles-from-headings
+
+titles_from_headings:
+  enabled:     true
+  strip_title: false
+  collections: false
