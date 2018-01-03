@@ -590,7 +590,7 @@ export = new class BetterBibTeX {
 
     // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
     // its presence also indicates first-run, so right after the DB is ready, configure BBT
-    const citekeyFormat = ('\u200B' + Prefs.get('citekeyFormat')).replace(/^\u200B+/, '\u200B')
+    const citekeyFormat = Prefs.get('citekeyFormat')
     if (citekeyFormat[0] === '\u200B') {
       const params = { wrappedJSObject: { citekeyFormat: 'bbt', dragndrop: true } }
       const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
