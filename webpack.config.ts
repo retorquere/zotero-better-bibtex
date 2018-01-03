@@ -61,6 +61,7 @@ config.push(
       'BetterBibTeX.TestSupport': './test/support.ts',
       'BetterBibTeX.Preferences': './Preferences.ts',
       'BetterBibTeX.ErrorReport': './ErrorReport.ts',
+      'BetterBibTeX.FirstRun': './FirstRun.ts',
       'BetterBibTeX.itemPane': './itemPane.ts',
       'BetterBibTeX.exportOptions': './exportOptions.ts',
     },

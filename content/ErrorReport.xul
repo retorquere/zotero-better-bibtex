@@ -69,7 +69,7 @@
     <description>&zotero.errorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>
-        &better-bibtex.ErrorReport.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain" readonly="true"/>
+        &better-bibtex.ErrorReport.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain textbox-emph" readonly="true"/>
       </description>
     </description>
     <description>&better-bibtex.ErrorReport.postToGitHub;</description>

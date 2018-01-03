@@ -388,6 +388,7 @@
                   onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat() }, 1);"/>
               </hbox>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
+              <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
             </groupbox>
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.quickCopy;"/>

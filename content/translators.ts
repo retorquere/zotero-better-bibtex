@@ -3,14 +3,17 @@ declare const Zotero: any
 import Prefs = require('./prefs.ts')
 import debug = require('./debug.ts')
 
-class Translators {
+export = new class Translators {
   public byId: any
   public byName: any
   public byLabel: any
 
+  constructor() {
+    Object.assign(this, require('../gen/translators.json'))
+  }
+
   public async init() {
     const start = (new Date()).valueOf()
-    Object.assign(this, require('../gen/translators.json'))
 
     let reinit = false
 
@@ -128,5 +131,3 @@ class Translators {
     return true
   }
 }
-
-export = new Translators()

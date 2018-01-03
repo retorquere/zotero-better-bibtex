@@ -190,7 +190,9 @@ DB.init = () => {
 }
 
 // the preferences influence the output way too much, no keeping track of that
-Events.on('preference-changed', () => {
+Events.on('preference-changed', async () => {
+  await Zotero.BetterBibTeX.ready
+
   for (const translator of Object.keys(translators.byName)) {
     DB.getCollection(translator).removeDataOnly()
   }
