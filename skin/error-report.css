@@ -36,9 +36,7 @@ description {
 	margin-bottom: .4em;
 }
 
-/* Submitted pane */
-
-#zotero-report-id {
+.textbox-emph {
 	color: red;
 	font-weight: bold;
 }

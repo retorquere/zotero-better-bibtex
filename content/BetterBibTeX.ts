@@ -486,6 +486,21 @@ class Progress {
   }
 }
 
+function firstRun() {
+  // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+  // its presence also indicates first-run, so right after the DB is ready, configure BBT
+  const citekeyFormat = ('\u200B' + Prefs.get('citekeyFormat')).replace(/^\u200B+/, '\u200B')
+
+  if (citekeyFormat[0] !== '\u200B') return
+
+  const params = { wrappedJSObject: { citekeyFormat: 'bbt' } }
+  const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+  ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
+  debug(params)
+
+  Prefs.set('citekeyFormat', (params.wrappedJSObject.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
+}
+
 export = new class BetterBibTeX {
   public ready: any
   private strings: any
@@ -596,6 +611,8 @@ export = new class BetterBibTeX {
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     Cache.init() // oh FFS -- datadir is async now
     await DB.init()
+
+    firstRun()
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
