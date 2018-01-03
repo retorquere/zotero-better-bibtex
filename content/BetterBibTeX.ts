@@ -486,24 +486,10 @@ class Progress {
   }
 }
 
-function firstRun() {
-  // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-  // its presence also indicates first-run, so right after the DB is ready, configure BBT
-  const citekeyFormat = ('\u200B' + Prefs.get('citekeyFormat')).replace(/^\u200B+/, '\u200B')
-
-  if (citekeyFormat[0] !== '\u200B') return
-
-  const params = { wrappedJSObject: { citekeyFormat: 'bbt' } }
-  const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
-  ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
-  debug(params)
-
-  Prefs.set('citekeyFormat', (params.wrappedJSObject.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
-}
-
 export = new class BetterBibTeX {
   public ready: any
   private strings: any
+  private firstRun: { citekeyFormat: String, dragndrop: boolean }
 
   constructor() {
     if (Zotero.BetterBibTeX) {
@@ -598,9 +584,25 @@ export = new class BetterBibTeX {
 
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
-    Array.prototype.forEach.call(document.getElementsByClassName('bbt-texstudio'), node => {
+    for (const node of [...document.getElementsByClassName('bbt-texstudio')]) {
       node.hidden = !TeXstudio.enabled
-    })
+    }
+
+    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+    // its presence also indicates first-run, so right after the DB is ready, configure BBT
+    const citekeyFormat = ('\u200B' + Prefs.get('citekeyFormat')).replace(/^\u200B+/, '\u200B')
+    if (citekeyFormat[0] === '\u200B') {
+      const params = { wrappedJSObject: { citekeyFormat: 'bbt', dragndrop: true } }
+      const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
+      ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
+      this.firstRun = params.wrappedJSObject
+
+      debug('firstRun:', this.firstRun)
+
+      Prefs.set('citekeyFormat', (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
+    } else {
+      this.firstRun = null
+    }
 
     const progress = new Progress()
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
@@ -611,8 +613,6 @@ export = new class BetterBibTeX {
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     Cache.init() // oh FFS -- datadir is async now
     await DB.init()
-
-    firstRun()
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     AutoExport.init()
@@ -634,6 +634,8 @@ export = new class BetterBibTeX {
     bbtReady.resolve(true)
 
     progress.done()
+
+    if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibLaTeX.translatorID}`)
 
     Events.emit('loaded')
   }
