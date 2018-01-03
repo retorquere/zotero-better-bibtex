@@ -38,5 +38,5 @@ description {
 
 .textbox-emph {
 	color: red;
-	font-weight: bold;
+	/* font-weight: bold; */
 }

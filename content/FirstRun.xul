@@ -17,7 +17,7 @@
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   id="better-bibtex-first-run" title="&better-bibtex.FirstRun.title;"
-  width="550" height="450">
+  width="550" height="500">
 
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.FirstRun.js"/>
@@ -36,9 +36,11 @@
       <radio label="&better-bibtex.FirstRun.citekeyFormat.whatever;" value="whatever"/>
     </radiogroup>
     <separator/>
-    <description id="better-bibtex-first-run-citekeyFormat-bbt" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <textbox flex="1" class="plain textbox-emph" readonly="true" value="GoffmanForms1981"/></description>
-    <description id="better-bibtex-first-run-citekeyFormat-zotero" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <textbox flex="1" class="plain textbox-emph" readonly="true" value="goffman_forms_1981"/></description>
-    <description id="better-bibtex-first-run-citekeyFormat-whatever" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.whatever;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <textbox flex="1" class="plain textbox-emph" readonly="true" value="GoffmanForms1981"/></description>
+    <description id="better-bibtex-first-run-citekeyFormat-bbt" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">GoffmanForms1981</box>.
+<separator/>
+<box class="textbox-emph">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note;:</box> &better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
+    <description id="better-bibtex-first-run-citekeyFormat-zotero" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">goffman_forms_1981</box>.</description>
+    <description id="better-bibtex-first-run-citekeyFormat-whatever" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.whatever;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">GoffmanForms1981</box>.</description>
   </wizardpage>
 
   <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
@@ -49,7 +51,7 @@
 
   <wizardpage label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.FirstRun.exporting;</description>
-    <description>&better-bibtex.FirstRun.exporting.explanation; <textbox flex="1" class="plain textbox-emph" readonly="true" value="Better BibTeX"/></description>
+    <description>&better-bibtex.FirstRun.exporting.explanation; <box class="textbox-emph">Better BibTeX</box></description>
   </wizardpage>
 
   <wizardpage label=" ">

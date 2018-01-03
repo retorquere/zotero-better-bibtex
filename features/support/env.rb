@@ -415,6 +415,7 @@ module BBT
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
   profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
+  profile['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth][shorttitle][year]' unless ENV['FIRST_RUN'] == 'true'
 
   # speed up startup
   profile['extensions.zotero.automaticScraperUpdates'] = false
