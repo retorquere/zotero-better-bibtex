@@ -72,36 +72,44 @@ function upgrade_edtf(date) {
     .replace(/y/g, 'Y')
 }
 
-function parse(value, descend = true) {
+function is_valid_month(month, allowseason) {
+  if (month >= 1 && month <= 12) return true // tslint:disable-line:no-magic-numbers
+  if (allowseason && month >= 21 && month <= 24) return true // tslint:disable-line:no-magic-numbers
+
+  return false
+}
+
+function parse(value, toplevel = true) {
   value = value.trim()
 
-  const december = 12
   let parsed, m
 
-  debug('dateparser: parsing', value)
+  debug('dateparser: parsing', value, toplevel)
 
-  if (descend && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
+  if (!toplevel && value === '') return { type: 'open' }
+
+  if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
     const year = parse(_year, false)
     const orig = parse(_orig, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
-  if (descend && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
+  if (toplevel && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _year, _orig ] = m
     const year = parse(_year, false)
     const orig = parse(_orig, false)
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
-  if (descend && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
+  if (toplevel && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _orig ] = m
     const orig = parse(_orig, false)
     if (orig.type === 'date') return { ...{ orig } }
   }
 
   // 747
-  if (descend && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`, false)
@@ -111,7 +119,7 @@ function parse(value, descend = true) {
   }
 
   // 747, January 30–February 3, 1989
-  if (descend && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([a-zA-Z]+\s+[0-9]+)(?:--|-|–)([a-zA-Z]+\s+[0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , date1, date2, year ] = m
 
     const from = parse(`${date1} ${year}`, false)
@@ -121,7 +129,7 @@ function parse(value, descend = true) {
   }
 
   // 746
-  if (descend && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+  if (toplevel && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
     const [ , day1, day2, month, year ] = m
 
     const from = parse(`${month} ${day1} ${year}`, false)
@@ -144,9 +152,11 @@ function parse(value, descend = true) {
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = _day ? parseInt(_day) : undefined
-    if (day && month > december && day < december) [day, month] = [month, day]
-    debug('parseDate:', value, exactish, state)
-    return seasonize(doubt({ type: 'date', year, month, day }, state))
+
+    // swap day/month for our American brethren
+    if (day && is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+
+    if (is_valid_month(month, !day)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
@@ -154,8 +164,11 @@ function parse(value, descend = true) {
     const year = parseInt(_year)
     let month = parseInt(_month)
     let day = parseInt(_day)
-    if (day && month > december && day < december) [day, month] = [month, day]
-    return seasonize(doubt({ type: 'date', year, month, day }, state))
+
+    // swap day/month for our American brethren
+    if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
+
+    if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {
@@ -181,6 +194,20 @@ function parse(value, descend = true) {
       )))
     } catch (err) {
       parsed = null
+    }
+  }
+
+  if (toplevel && !parsed) {
+    for (const sep of ['--', '-', '/', '_', '–']) {
+      const split = value.split(sep)
+      debug('dateparser: trying date range from manual split:', value, split)
+      if (split.length === 2) {
+        const from = parse(split[0], false)
+        if (from.type !== 'date' && from.type !== 'season') continue
+        const to = parse(split[1], false)
+        if (to.type !== 'date' && to.type !== 'season') continue
+        return { type: 'interval', from, to }
+      }
     }
   }
 

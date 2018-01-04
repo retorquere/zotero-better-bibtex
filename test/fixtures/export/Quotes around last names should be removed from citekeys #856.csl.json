@@ -1,0 +1,14 @@
+[
+  {
+    "author":[
+      {
+        "family":"de la Mare",
+        "given":"Walter"
+      }
+    ],
+    "id":"delaMareTitle2017",
+    "issued":{"date-parts":[[2017]]},
+    "title":"Title",
+    "type":"article-journal"
+  }
+]

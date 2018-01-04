@@ -288,6 +288,7 @@ export = class Reference {
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
   private startsWithLowercase = new Zotero.Utilities.XRegExp('^[\\p{Ll}]')
   private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
+  private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
 
   public static installPostscript() {
     const postscript = Translator.preferences.postscript
@@ -302,8 +303,8 @@ export = class Reference {
     }
   }
 
-  private _enc_creators_initials_marker = '\u0097'
-  private _enc_creators_relax_marker = '\u200C'
+  private _enc_creators_initials_marker = '\u0097' // end of guarded area
+  private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
   private isBibVarRE = /^[a-z][a-z0-9_]*$/i
   private data: { DeclarePrefChars: string }
@@ -762,6 +763,10 @@ export = class Reference {
   protected enc_verbatim(f) {
     return this.toVerbatim(f.value)
   }
+
+  protected _enc_creators_scrub_name(name) {
+    return Zotero.Utilities.XRegExp.replace(name, this.whitespace, ' ', 'all')
+  }
   /*
    * Encode creators to author-style field
    *
@@ -775,13 +780,16 @@ export = class Reference {
     for (const creator of f.value) {
       let name
       if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
-        name = raw ? `{${creator.name || creator.lastName}}` : this.enc_latex({value: new String(creator.name || creator.lastName)}) // tslint:disable-line:no-construct
+        name = raw ? `{${creator.name || creator.lastName}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(creator.name || creator.lastName))}) // tslint:disable-line:no-construct
 
       } else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
 
       } else if (creator.lastName || creator.firstName) {
-        name = {family: creator.lastName || '', given: creator.firstName || ''}
+        name = {
+          family: this._enc_creators_scrub_name(creator.lastName || ''),
+          given: this._enc_creators_scrub_name(creator.firstName || ''),
+        }
 
         if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
 
@@ -987,7 +995,7 @@ export = class Reference {
       ({ family } = name)
     }
 
-    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // zero-width space
+    let initials = (name.given || '').indexOf(this._enc_creators_initials_marker) // end of guarded area
 
     if (Translator.preferences.biblatexExtendedNameFormat && (name['dropping-particle'] || name['non-dropping-particle'] || name['comma-suffix'])) {
       if (initials >= 0) {
@@ -1035,7 +1043,7 @@ export = class Reference {
       ({ family } = name)
     }
 
-    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) { // zero-width space
+    if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) {
       name.given = `<span relax="true">${name.given.replace(this._enc_creators_initials_marker, '</span>')}`
     }
 

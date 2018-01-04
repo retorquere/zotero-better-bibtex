@@ -5,10 +5,10 @@ const replace = require('replace')
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import BailPlugin from './webpack/plugins/bail'
+import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
-import AfterBuildPlugin = require('./webpack/plugins/after-build')
+import AfterBuildPlugin = require('zotero-plugin/plugin/after-build')
 import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
 
 const translators = require('./gen/translators.json')
@@ -18,9 +18,9 @@ const common = {
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {
-      'pegjs-loader': path.join(__dirname, './webpack/loaders/pegjs.ts'),
-      'json-loader': path.join(__dirname, './webpack/loaders/json.ts'),
-      'wrap-loader': path.join(__dirname, './webpack/loaders/wrap.ts'),
+      'pegjs-loader': 'zotero-plugin/loader/pegjs',
+      'json-loader': 'zotero-plugin/loader/json',
+      'wrap-loader': 'zotero-plugin/loader/wrap',
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
   },
@@ -61,6 +61,7 @@ config.push(
       'BetterBibTeX.TestSupport': './test/support.ts',
       'BetterBibTeX.Preferences': './Preferences.ts',
       'BetterBibTeX.ErrorReport': './ErrorReport.ts',
+      'BetterBibTeX.FirstRun': './FirstRun.ts',
       'BetterBibTeX.itemPane': './itemPane.ts',
       'BetterBibTeX.exportOptions': './exportOptions.ts',
     },

@@ -65,7 +65,7 @@
     "URL": "http://www.jstor.org/stable/1225428",
     "author": [ { "family": "Doe7", "given": "John" } ],
     "issued": { "date-parts": [ [ 1985 ] ], "season": 1 },
-    "accessed": { "date-parts": [ [ "2015", 4, 30 ] ] }
+    "accessed": { "date-parts": [ [ 2015, 4, 30 ] ] }
   },
   {
     "id": "doe8_title_2017",

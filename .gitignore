@@ -1,3 +1,4 @@
+docs/_site
 wiki
 gen
 build
@@ -30,4 +31,3 @@ resource/reports/cacheActivity.txt
 .env
 webpack/tslint/noModuleExportsRule.js
 typedoc.json
-package-lock.json

@@ -44,7 +44,7 @@
     "accessed": {
       "date-parts": [
         [
-          "2014",
+          2014,
           10,
           2
         ]
@@ -75,7 +75,7 @@
   {
     "URL": "https://archive.org/details/gospelaccording00goog",
     "accessed": {
-      "date-parts": [ [ "2014", 4, 29 ] ]
+      "date-parts": [ [ 2014, 4, 29 ] ]
     },
     "collection-number": "1",
     "collection-title": "Old-Latin Biblical Texts",

@@ -125,7 +125,7 @@ export = new class Formatter {
     for (const citation of citations) {
       let cite = ''
       if (citation.prefix) cite += `${citation.prefix} `
-      if (citation['suppress-author']) cite += '-'
+      if (citation.suppressAuthor) cite += '-'
       cite += `@${citation.citekey}`
       if (citation.locator) cite += `, ${shortLabel[citation.label] || citation.label} ${citation.locator}`
       if (citation.suffix) cite += ` ${citation.suffix}`
@@ -154,26 +154,27 @@ export = new class Formatter {
     debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
-    const scannable_cites = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items } )).split(/[{}]+/).filter(cite => cite)
+    const labels = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
+      const [ , text, , , id ] = item.split('|').map(v => v.trim())
+      result[id] = text
+      return result
+    }, {})
 
-    if (citations.length !== scannable_cites.length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${scannable_cites.length}`)
+    debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels)
+
+    if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
 
     let citation = ''
-    for (let i = 0; i < citations.length; i++) {
-      const scannable = scannable_cites[i]
-      const picked = citations[i]
-
-      const [ , text, , , id ] = scannable.split('|').map(v => v.trim())
-
-      const [ , kind, lib, key ] = picked.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
-      const pickedID = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
-      if (id !== pickedID) throw new Error(`Expected ${pickedID}, found ${id}`)
+    for (const item of citations) {
+      const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+      const id = `${kind === 'users' ? 'zu' : 'zg'}:${lib.startsWith('local/') ? '0' : lib}:${key}`
+      if (!labels[id]) throw new Error(`No formatted citation found for ${id}`)
 
       const enriched = [
-        picked.prefix || '',
-        `${picked.suppressAuthor ? '-' : ''}${text}`,
-        picked.locator ? `${shortLabel[picked.label] || picked.label} ${picked.locator}` : '',
-        picked.suffix || '',
+        item.prefix || '',
+        `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
+        item.locator ? `${shortLabel[item.label] || item.label} ${item.locator}` : '',
+        item.suffix || '',
         testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ')
 

@@ -5,7 +5,9 @@ import parseXML = require('@rgrove/parse-xml')
 import dedent = require('dedent-js')
 import path = require('path')
 
-import root from '../webpack/root'
+import root from 'zotero-plugin/root'
+
+console.log('Generating preferences documentation')
 
 class DocFinder {
   private strings: { [key: string]: string }
@@ -82,7 +84,7 @@ class DocFinder {
       'utf8'
     )
 
-    const docs = path.join(root, 'wiki/Configuration.md')
+    const docs = path.join(root, 'docs/Configuration.md')
     if (fs.existsSync(docs)) {
       const md = [
         dedent(`
@@ -126,7 +128,6 @@ class DocFinder {
 
       fs.writeFileSync(docs, md.join('\n\n'))
     }
-
   }
 
   private ungfm(str) {

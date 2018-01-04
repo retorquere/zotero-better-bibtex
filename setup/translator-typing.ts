@@ -5,7 +5,7 @@ import * as fs from 'fs-extra'
 
 console.log('translator framework typings')
 
-import root from '../webpack/root'
+import root from 'zotero-plugin/root'
 
 const preferences = require(path.join(root, 'gen/preferences.json'))
 const translators = require(path.join(root, 'gen/translators.json'))

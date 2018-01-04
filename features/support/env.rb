@@ -10,6 +10,7 @@ require 'shellwords'
 require 'benchmark'
 require 'json'
 require 'reverse_markdown'
+require 'deepsort'
 
 if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
   STDOUT.puts "Starting headless..."
@@ -39,6 +40,10 @@ class IniFile
     end
     self
   end
+end
+
+def sort_yaml(yaml)
+  return YAML.load(yaml).deep_sort.to_yaml
 end
 
 class HTTPInternalError < StandardError; end
@@ -272,9 +277,9 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
       return compare(JSON.parse(found), JSON.parse(expected))
 
     when :csl_yaml
-      return compare(YAML.load(found), YAML.load(expected))
-      #found = sort_object(YAML.load(found)).to_yaml
-      #expected = sort_object(YAML.load(expected)).to_yaml
+      #return compare(YAML.load(found), YAML.load(expected))
+      expect(sort_yaml(found)).to eq(sort_yaml(expected))
+      return
 
     when :bbt_json
       found = normalizeJSON(JSON.parse(found))
@@ -410,6 +415,7 @@ module BBT
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
   profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
   profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
+  profile['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth][shorttitle][year]' unless ENV['FIRST_RUN'] == 'true'
 
   # speed up startup
   profile['extensions.zotero.automaticScraperUpdates'] = false

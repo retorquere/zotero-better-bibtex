@@ -19,9 +19,8 @@
   "include": [
     "content/**/*",
     "resource/**/*",
-    "webpack/**/*",
-    "setup/**/*",
-    "webpack.config.ts"
+    "zotero-webpack/**/*",
+    "setup/**/*"
   ],
   "exclude": [
     "node_modules",

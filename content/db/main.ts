@@ -5,6 +5,8 @@ import debug = require('../debug.ts')
 import Prefs = require('../prefs.ts')
 import getItemsAsync = require('../get-items-async.ts')
 
+import createFile = require('../create-file.ts')
+
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
 
@@ -134,7 +136,7 @@ DB.init = async () => {
     },
   })
 
-  DB.schemaCollection('citekey', {
+  const citekeys = DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
     schema: {
@@ -199,6 +201,24 @@ DB.init = async () => {
       item.setField('extra', clean)
       await item.saveTx()
     }
+  }
+
+  const legacy = createFile('db.json')
+  if (legacy.exists()) {
+    try {
+      const data = JSON.parse(Zotero.File.getContents(legacy))
+      for (const old of data.collections.find(c => c.name === 'keys').data) {
+        const citekey = citekeys.findOne({ itemID: old.itemID })
+        if (citekey) {
+          citekey.citekey = old.citekey
+          citekeys.update(citekey)
+        }
+      }
+    } catch (err) {
+      debug('failed to migrate legacy DB:', err)
+    }
+
+    legacy.moveTo(null, 'db.json.migrated')
   }
 }
 

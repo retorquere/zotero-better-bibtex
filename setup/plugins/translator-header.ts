@@ -3,8 +3,8 @@ import * as path from 'path'
 import * as ejs from 'ejs'
 import { ConcatSource } from 'webpack-sources'
 
-import version from '../../webpack/version'
-import root from '../../webpack/root'
+import version from 'zotero-plugin/version'
+import root from 'zotero-plugin/root'
 
 class TranslatorHeaderPlugin {
   private translator: string

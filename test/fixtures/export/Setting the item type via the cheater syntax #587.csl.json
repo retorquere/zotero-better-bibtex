@@ -24,13 +24,7 @@
     "URL": "http://nedwww.ipac.caltech.edu/",
     "abstract": "Example from CMoS, 16e, 14.272",
     "accessed": {
-      "date-parts": [
-        [
- 	 "2009",
- 	 10,
- 	 6
-        ]
-      ]
+      "date-parts": [ [ 2009, 10, 6 ] ]
     },
     "container-title": "NASA/IPAC Extragalactic Database",
     "id": "_object_????",
