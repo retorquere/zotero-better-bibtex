@@ -36,10 +36,12 @@ const $item = new class Item {
 
     const ids = new Set(await search.search())
 
+    /*
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
     debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    */
 
     // add citekey search
     for (const item of KeyManager.keys.find({ citekey: { $contains: terms } })) {
