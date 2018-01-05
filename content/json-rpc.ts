@@ -93,7 +93,7 @@ const api = new class API {
       return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
     } catch (err) {
       debug('JSON-RPC:', err)
-      return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: 'Internal error'}, id: null}
+      return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: `${err}`}, id: null}
     }
   }
 
