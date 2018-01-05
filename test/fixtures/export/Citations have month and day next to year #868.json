@@ -1,0 +1,361 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.33",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.33"
+      },
+      "BetterBibTeX": "5.0.68"
+    },
+    "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": false,
+      "DOIandURL": "doi",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[zotero]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [],
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "quickCopyMode": "pandoc",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "lockedInit": false
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "volume": "15",
+      "issue": "22",
+      "pages": "6241-6250",
+      "publicationTitle": "The EMBO journal",
+      "ISSN": "0261-4189 0261-4189",
+      "date": "1996 Nov 15",
+      "extra": "PMID: 8947047 \nPMCID: PMC452447",
+      "journalAbbreviation": "EMBO J",
+      "language": "eng",
+      "abstractNote": "Pleckstrin homology (PH) domains may act as membrane localization modules through specific interactions with phosphoinositide phospholipids. These interactions could represent responses to second messengers, with scope for regulation by soluble inositol polyphosphates. A biosensor-based assay was used here to probe interactions between PH domains and unilamellar liposomes containing different phospholipids and to demonstrate specificity for distinct phosphoinositides. The  dynamin PH domain specifically interacted with liposomes containing phosphatidylinositol-4,5-bisphosphate [PI(4,5)P2] and, more weakly, with liposomes containing phosphatidylinositol-4-phosphate [PI(4)P]. This correlates with phosphoinositide activation of the dynamin GTPase. The functional GTPase of  a dynamin mutant lacking the PH domain, however, cannot be activated by PI(4,5)P2. The phosphoinositide-PH domain interaction can be abolished selectively by point mutations in the putative binding pocket predicted by molecular modelling and NMR spectroscopy. In contrast, the Bruton's tyrosine kinase (Btk)PH domain specifically bound liposomes containing phosphatidylinositol-3,4,5-trisphosphate [PI(3,4,5)P3]: an interaction requiring  Arg28, a residue found to be mutated in some X-linked agammaglobulinaemia patients. A rational explanation for these different specificities is proposed through modelling of candidate binding pockets and is supported by NMR spectroscopy.",
+      "title": "Distinct specificity in the recognition of phosphoinositides by the pleckstrin homology domains of dynamin and Bruton's tyrosine kinase.",
+      "creators": [
+        {
+          "firstName": "K.",
+          "lastName": "Salim",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M. J.",
+          "lastName": "Bottomley",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "E.",
+          "lastName": "Querfurth",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M. J.",
+          "lastName": "Zvelebil",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "I.",
+          "lastName": "Gout",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Scaife",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R. L.",
+          "lastName": "Margolis",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Gigg",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "C. I.",
+          "lastName": "Smith",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "P. C.",
+          "lastName": "Driscoll",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M. D.",
+          "lastName": "Waterfield",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "G.",
+          "lastName": "Panayotou",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "Amino Acid Sequence",
+          "type": 0
+        },
+        {
+          "tag": "Molecular Sequence Data",
+          "type": 0
+        },
+        {
+          "tag": "Protein Binding",
+          "type": 0
+        },
+        {
+          "tag": "Biosensing Techniques",
+          "type": 0
+        },
+        {
+          "tag": "Protein Structure, Tertiary",
+          "type": 0
+        },
+        {
+          "tag": "Enzyme Activation/drug effects",
+          "type": 0
+        },
+        {
+          "tag": "Mutagenesis, Site-Directed",
+          "type": 0
+        },
+        {
+          "tag": "Binding Sites",
+          "type": 0
+        },
+        {
+          "tag": "Sequence Alignment",
+          "type": 0
+        },
+        {
+          "tag": "Phosphatidylinositol Phosphates/metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Dynamins",
+          "type": 0
+        },
+        {
+          "tag": "Magnetic Resonance Spectroscopy",
+          "type": 0
+        },
+        {
+          "tag": "Models, Molecular",
+          "type": 0
+        },
+        {
+          "tag": "GTP Phosphohydrolases/*chemistry/drug effects/genetics/*metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Liposomes/metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Phosphatidylinositol 4,5-Diphosphate/metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Phosphatidylinositols/*metabolism",
+          "type": 0
+        },
+        {
+          "tag": "Protein-Tyrosine Kinases/*chemistry/*metabolism",
+          "type": 0
+        }
+      ],
+      "collections": [
+        "JZ8F36JX"
+      ],
+      "relations": {},
+      "dateAdded": "2017-05-29 11:26:23",
+      "dateModified": "2018-01-05 19:09:08",
+      "uri": "http://zotero.org/users/2695700/items/M8XUSTIB",
+      "attachments": [],
+      "notes": [],
+      "uniqueFields": {
+        "volume": "15",
+        "issue": "22",
+        "pages": "6241-6250",
+        "publicationTitle": "The EMBO journal",
+        "ISSN": "0261-4189 0261-4189",
+        "date": "1996 Nov 15",
+        "extra": "PMID: 8947047 \nPMCID: PMC452447",
+        "journalAbbreviation": "EMBO J",
+        "language": "eng",
+        "abstractNote": "Pleckstrin homology (PH) domains may act as membrane localization modules through specific interactions with phosphoinositide phospholipids. These interactions could represent responses to second messengers, with scope for regulation by soluble inositol polyphosphates. A biosensor-based assay was used here to probe interactions between PH domains and unilamellar liposomes containing different phospholipids and to demonstrate specificity for distinct phosphoinositides. The  dynamin PH domain specifically interacted with liposomes containing phosphatidylinositol-4,5-bisphosphate [PI(4,5)P2] and, more weakly, with liposomes containing phosphatidylinositol-4-phosphate [PI(4)P]. This correlates with phosphoinositide activation of the dynamin GTPase. The functional GTPase of  a dynamin mutant lacking the PH domain, however, cannot be activated by PI(4,5)P2. The phosphoinositide-PH domain interaction can be abolished selectively by point mutations in the putative binding pocket predicted by molecular modelling and NMR spectroscopy. In contrast, the Bruton's tyrosine kinase (Btk)PH domain specifically bound liposomes containing phosphatidylinositol-3,4,5-trisphosphate [PI(3,4,5)P3]: an interaction requiring  Arg28, a residue found to be mutated in some X-linked agammaglobulinaemia patients. A rational explanation for these different specificities is proposed through modelling of candidate binding pockets and is supported by NMR spectroscopy.",
+        "title": "Distinct specificity in the recognition of phosphoinositides by the pleckstrin homology domains of dynamin and Bruton's tyrosine kinase."
+      },
+      "itemID": 191,
+      "key": "M8XUSTIB",
+      "libraryID": null,
+      "seeAlso": [],
+      "citekey": "salim_distinct_1996"
+    }
+  ]
+}
