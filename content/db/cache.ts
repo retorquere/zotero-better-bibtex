@@ -118,18 +118,25 @@ DB.remove = function(ids) {
   }
 }
 
-function upgrade(coll, property, current) {
+function clearOnUpgrade(coll, property, current) {
   const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
-  if (dbVersion === current) return false
+  if (current && dbVersion === current) {
+    Zotero.debug(`CACHE: retaining cache ${coll.name} because stored ${property} is ${dbVersion} (current: ${current})`)
+    return
+  }
 
-  debug('CACHE: dropping cache', coll.name, 'because', property, 'went from', dbVersion, 'to', current)
+  if (dbVersion) {
+    Zotero.debug(`CACHE: dropping cache ${coll.name} because ${property} went from ${dbVersion} to ${current}`)
+  } else {
+    Zotero.debug(`CACHE: dropping cache ${coll.name} because ${property} was not set (current: ${current})`)
+  }
+
+  coll.removeDataOnly()
 
   coll.setTransform(METADATA, [{
     type: METADATA,
     value : { [property]: current },
   }])
-
-  return true
 }
 
 DB.init = () => {
@@ -154,7 +161,7 @@ DB.init = () => {
     },
   })
 
-  if (upgrade(coll, 'Zotero', ZoteroConfig.Zotero.version)) coll.removeDataOnly()
+  clearOnUpgrade(coll, 'Zotero', ZoteroConfig.Zotero.version)
 
   // this reaps unused cache entries -- make sure that cacheFetchs updates the object
   //                  secs    mins  hours days
@@ -185,7 +192,7 @@ DB.init = () => {
       ttlInterval,
     })
 
-    if (upgrade(coll, 'BetterBibTeX', version)) coll.removeDataOnly()
+    clearOnUpgrade(coll, 'BetterBibTeX', version)
   }
 }
 
