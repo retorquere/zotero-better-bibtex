@@ -88,7 +88,9 @@ class FileStore {
       const collections = []
       for (const coll of db.collections) {
         try {
-          collections.push(this.load(`${name}.${coll}`))
+          const data = this.load(`${name}.${coll}`)
+          Zotero.debug(`Loaded ${name}.${coll}: ${JSON.stringify(data.transforms)}`)
+          collections.push(data)
         } catch (err) {
           this.collectionsMissing = true
           debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
