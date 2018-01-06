@@ -197,12 +197,13 @@ function parse(value, toplevel = true) {
     }
   }
 
+  // https://github.com/retorquere/zotero-better-bibtex/issues/868
   if (!parsed) {
-    if (m = /^([0-9]+)\s([^0-9]+)\s+([0-9]+)$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
+    if (m = /^([0-9]+)\s([^0-9]+)(?:\s+([0-9]+))?$/.exec(value.normalize('NFC').replace(months_re, _ => months[_.toLowerCase()] || _))) {
       const [ , year, month, day ] = m
       if (months[month]) {
         try {
-          parsed = normalize_edtf(EDTF.parse(edtfy(`${day} ${month} ${year}`)))
+          parsed = normalize_edtf(EDTF.parse(edtfy(`${day || ''} ${month} ${year}`.trim())))
         } catch (err) {
           parsed = null
         }

@@ -11,7 +11,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
-     | Citations have month and day next to year #868                                                 | 1           |
+     | Citations have month and day next to year #868                                                 | 2           |
      | Thin space in author name #859                                                                 | 1           |
      | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
      | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           |

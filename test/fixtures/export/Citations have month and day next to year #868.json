@@ -28,7 +28,9 @@
       "keyConflictPolicy": "keep",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "bibtexURL": "off",
       "warnBulkModify": 10,
       "postscript": "",
@@ -178,7 +180,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
@@ -332,12 +335,17 @@
       "collections": [
         "JZ8F36JX"
       ],
-      "relations": {},
+      "relations": {
+      },
       "dateAdded": "2017-05-29 11:26:23",
       "dateModified": "2018-01-05 19:09:08",
       "uri": "http://zotero.org/users/2695700/items/M8XUSTIB",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "uniqueFields": {
         "volume": "15",
         "issue": "22",
@@ -354,8 +362,125 @@
       "itemID": 191,
       "key": "M8XUSTIB",
       "libraryID": null,
-      "seeAlso": [],
+      "seeAlso": [
+
+      ],
       "citekey": "salim_distinct_1996"
+    },
+    {
+      "itemType": "journalArticle",
+      "volume": "313",
+      "issue": "1",
+      "pages": "37-48",
+      "publicationTitle": "Carbohydrate research",
+      "ISSN": "0008-6215 0008-6215",
+      "date": "1998 Nov",
+      "extra": "PMID: 9861700",
+      "journalAbbreviation": "Carbohydr Res",
+      "language": "eng",
+      "abstractNote": "The epitopes present on beta-(1-->4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.",
+      "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1.",
+      "creators": [
+        {
+          "firstName": "J.",
+          "lastName": "Keusch",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "G.",
+          "lastName": "Panayotou",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M.",
+          "lastName": "Malissard",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "E. G.",
+          "lastName": "Berger",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "H. E.",
+          "lastName": "Appert",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "P. M.",
+          "lastName": "Lydyard",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "P. J.",
+          "lastName": "Delves",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "*Epitope Mapping",
+          "type": 0
+        },
+        {
+          "tag": "Antibodies, Monoclonal",
+          "type": 0
+        },
+        {
+          "tag": "beta-N-Acetylglucosaminylglycopeptide beta-1,4-Galactosyltransferase/genetics/*immunology",
+          "type": 0
+        },
+        {
+          "tag": "Catalysis",
+          "type": 0
+        },
+        {
+          "tag": "Humans",
+          "type": 0
+        },
+        {
+          "tag": "Mutation",
+          "type": 0
+        },
+        {
+          "tag": "N-Acetyllactosamine Synthase/genetics/*immunology",
+          "type": 0
+        }
+      ],
+      "collections": [
+        "JZ8F36JX"
+      ],
+      "relations": {
+      },
+      "dateAdded": "2017-05-29 11:26:22",
+      "dateModified": "2017-05-29 11:26:22",
+      "uri": "http://zotero.org/users/2695700/items/43G8NW5I",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "uniqueFields": {
+        "volume": "313",
+        "issue": "1",
+        "pages": "37-48",
+        "publicationTitle": "Carbohydrate research",
+        "ISSN": "0008-6215 0008-6215",
+        "date": "1998 Nov",
+        "extra": "PMID: 9861700",
+        "journalAbbreviation": "Carbohydr Res",
+        "language": "eng",
+        "abstractNote": "The epitopes present on beta-(1-->4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.",
+        "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1."
+      },
+      "itemID": 13,
+      "key": "43G8NW5I",
+      "libraryID": null,
+      "seeAlso": [
+
+      ],
+      "citekey": "keusch_antibody_1998"
     }
   ]
 }
