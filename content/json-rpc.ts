@@ -1,6 +1,9 @@
 declare const Zotero: any
 
 import debug = require('./debug.ts')
+// import Prefs = require('./prefs.ts')
+import KeyManager = require('./keymanager.ts')
+import getItemsAsync = require('./get-items-async.ts')
 
 const OK = 200
 
@@ -10,9 +13,53 @@ const METHOD_NOT_FOUND = -32601 // The method does not exist / is not available.
 const INVALID_PARAMETERS = -32602 // Invalid method parameter(s).
 const INTERNAL_ERROR = -32603 // Internal JSON-RPC error.
 
-const user = new class User {
+const $user = new class User {
   public async groups() {
     return Zotero.Libraries.getAll().map(lib => ({ id: lib.libraryID, name: lib.name }))
+  }
+}
+
+const $item = new class Item {
+  public async search(terms) {
+    // quicksearch-titleCreatorYear / quicksearch-fields
+    // const mode = Prefs.get('caywAPIsearchMode')
+
+    terms = terms.replace(/ (?:&|and) /g, ' ', 'g')
+    if (!/[\w\u007F-\uFFFF]/.test(terms)) return []
+
+    const search = new Zotero.Search()
+    for (const feed of Zotero.Feeds.getAll()) {
+      search.addCondition('libraryID', 'isNot', feed.libraryID)
+    }
+    search.addCondition('quicksearch-titleCreatorYear', 'contains', terms)
+    search.addCondition('itemType', 'isNot', 'attachment')
+
+    const ids = new Set(await search.search())
+
+    /*
+    const format = Zotero.Prefs.get('export.quickCopy.setting')
+
+    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
+    */
+
+    // add citekey search
+    for (const item of KeyManager.keys.find({ citekey: { $contains: terms } })) {
+      ids.add(item.itemID)
+    }
+
+    const items = await getItemsAsync(Array.from(ids))
+    const libraries = {}
+
+    return items.map(item => {
+      libraries[item.libraryID] = libraries[item.libraryID] || Zotero.Libraries.get(item.libraryID).name
+
+      return {
+        ...Zotero.Utilities.itemToCSLJSON(item),
+        library: libraries[item.libraryID],
+        citekey: KeyManager.keys.findOne({ libraryID: item.libraryID, itemID: item.id }).citekey,
+      }
+    })
   }
 }
 
@@ -34,7 +81,10 @@ const api = new class API {
 
     switch (namespace) {
       case 'user':
-        method = user[methodName]
+        method = $user[methodName]
+        break
+      case 'item':
+        method = $item[methodName]
         break
     }
 
@@ -45,7 +95,7 @@ const api = new class API {
       return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
     } catch (err) {
       debug('JSON-RPC:', err)
-      return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: 'Internal error'}, id: null}
+      return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: `${err}`}, id: null}
     }
   }
 
@@ -63,6 +113,8 @@ Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
   public permitBookmarklet = false
 
   public async init(options) {
+    await Zotero.BetterBibTeX.ready
+
     if (typeof options.data === 'string') options.data = JSON.parse(options.data)
     debug('json-rpc: execute', options.data)
 

@@ -635,7 +635,7 @@ export = new class BetterBibTeX {
 
     progress.done()
 
-    if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibLaTeX.translatorID}`)
+    if (this.firstRun && this.firstRun.dragndrop) Zotero.Prefs.set('export.quickCopy.setting', `export=${Translators.byLabel.BetterBibTeXCitationKeyQuickCopy.translatorID}`)
 
     Events.emit('loaded')
   }
