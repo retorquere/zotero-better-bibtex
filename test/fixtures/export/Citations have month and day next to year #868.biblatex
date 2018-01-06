@@ -16,3 +16,19 @@
   volume = {15}
 }
 
+@article{keusch_antibody_1998,
+  abstract = {The epitopes present on beta-(1--$>$4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.},
+  author = {Keusch, J. and Panayotou, G. and Malissard, M. and Berger, E. G. and Appert, H. E. and Lydyard, P. M. and Delves, P. J.},
+  date = {1998-11},
+  eprint = {9861700},
+  eprinttype = {pmid},
+  issn = {0008-6215 0008-6215},
+  journaltitle = {Carbohydrate research},
+  keywords = {*Epitope Mapping,Antibodies; Monoclonal,Catalysis,Humans,Mutation,N-Acetyllactosamine Synthase/genetics/*immunology,beta-N-Acetylglucosaminylglycopeptide beta-1;4-Galactosyltransferase/genetics/*immunology},
+  langid = {english},
+  number = {1},
+  pages = {37--48},
+  shortjournal = {Carbohydr Res},
+  title = {Antibody Recognition of Epitopes on Wild-Type and Mutant Beta-(1--$>$4)-Galactosyltransferase-1.},
+  volume = {313}
+}
