@@ -13,3 +13,10 @@ titles_from_headings:
   enabled:     true
   strip_title: false
   collections: false
+
+candidate_themes:
+  - http://www.minddust.com/post/alternative-tags-and-categories-on-github-pages/
+  - https://github.com/CloudCannon/edition-jekyll-template
+  - http://longqian.me/2017/02/09/github-jekyll-tag/
+  - https://github.com/enrmarc/jekyll-tagcloud/blob/master/tags.html
+
