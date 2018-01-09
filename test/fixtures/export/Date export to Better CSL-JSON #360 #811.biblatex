@@ -3,15 +3,13 @@
   date = {2014-12-31/2015-01-01},
   eventdate = {1888-08-28},
   origdate = {1777-07-27/1888-08-28},
-  title = {A Manuscript: 2014-12-31/2015-01-01},
-  urldate = {2014-12-31~}
+  title = {A Manuscript: 2014-12-31/2015-01-01}
 }
 
 @book{t2,
   author = {Doe2, John},
   eventdate = {1800-01-01/1800-12-31},
-  title = {Container, Event-Date, and Submitted Test},
-  urldate = {13th cent}
+  title = {Container, Event-Date, and Submitted Test}
 }
 
 @book{t3,
@@ -31,8 +29,7 @@
   date = {-0333},
   eventdate = {0000},
   origdate = {-0333/-0332},
-  title = {{{BC}} Tests: -0333},
-  urldate = {-0332-11-05}
+  title = {{{BC}} Tests: -0333}
 }
 
 @book{t6,
