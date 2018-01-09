@@ -9,8 +9,7 @@
   pages = {1--10},
   publisher = {{IEEE}},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Comparing Archival Policies for {{Blue Waters}}},
-  urldate = {2014-10-23}
+  title = {Comparing Archival Policies for {{Blue Waters}}}
 }
 
 @inproceedings{CumEA14,
@@ -27,8 +26,7 @@
   publisher = {{IEEE Press}},
   series = {SC '14},
   timestamp = {2015-02-24 12:14:36 +0100},
-  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU}}-{{GPU}} Systems},
-  urldate = {2015-01-12}
+  title = {Application Centric Energy-Efficiency Study of Distributed Multi-Core and Hybrid {{CPU}}-{{GPU}} Systems}
 }
 
 @article{TayEA11,
@@ -42,7 +40,6 @@
   pages = {485--498},
   timestamp = {2015-02-24 12:14:36 +0100},
   title = {An Overview of {{CMIP5}} and the {{Experiment Design}}},
-  urldate = {2012-04-17},
   volume = {93}
 }
 
