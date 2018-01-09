@@ -687,8 +687,6 @@ export = class Reference {
       }
     }
 
-    if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
-
     let notes = ''
     if (Translator.options.exportNotes && this.item.notes && this.item.notes.length) {
       notes = this.item.notes.map(note => note.note).join('<p>')
@@ -710,6 +708,10 @@ export = class Reference {
     for (const name of Translator.preferences.skipFields) {
       this.remove(name)
     }
+
+    if (!this.has.url && this.has.urldate) this.remove('urldate')
+
+    if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
 
     const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
     // sort fields for stable tests
