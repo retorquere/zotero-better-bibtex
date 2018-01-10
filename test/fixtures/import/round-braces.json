@@ -1,0 +1,26 @@
+{
+  "collections":{},
+  "items":[
+    {
+      "creators":[
+        {
+          "creatorType":"author",
+          "firstName":"Drew V.",
+          "lastName":"McDermott"
+        },
+        {
+          "creatorType":"author",
+          "firstName":"Gerald J.",
+          "lastName":"Sussman"
+        }
+      ],
+      "date":"1972-05",
+      "extra":"bibtex: McDermott:72",
+      "institution":"MIT Artificial Intelligence\tLaboratory",
+      "itemID":0,
+      "itemType":"report",
+      "publisher":"MIT Artificial Intelligence\tLaboratory",
+      "title":"The  CONNIVER Reference Manual"
+    }
+  ]
+}
