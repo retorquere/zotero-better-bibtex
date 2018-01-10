@@ -35,7 +35,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
-  | round-braces                                                                | 1           |
+  | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibTeX import; preamble with def create problems #732                       | 2           |
   | space after citekey creates confusion #716                                  | 2           |
   | Endnote should parse                                                        | 1           |
