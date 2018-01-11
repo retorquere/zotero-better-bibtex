@@ -19,7 +19,7 @@
   "items": [
     {
       "itemType": "note",
-      "note": "Import errors found: <ul><li>Incomplete reference @emptyreference</li></ul>",
+      "note": "Import errors found: <ul><li>line 13: incomplete reference @emptyreference</li></ul>",
       "itemID": 4
     },
     {
