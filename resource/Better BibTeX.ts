@@ -1010,10 +1010,10 @@ Translator.doImport = () => {
     for (const err of bib.errors) {
       switch (err.type) {
         case 'cut_off_citation':
-          item.note += `<li>${htmlEscape(`Incomplete reference @${err.entry}`)}</li>`
+          item.note += `<li>line ${err.line}: ${htmlEscape(`Incomplete reference @${err.entry}`)}</li>`
           break
         case 'token_mismatch':
-          item.note += `<li>Parse error: found ${htmlEscape(JSON.stringify(err.found))}, expected ${htmlEscape(JSON.stringify(err.expected))}</li>`
+          item.note += `<li>line ${err.line}: Parse error: found ${htmlEscape(JSON.stringify(err.found))}, expected ${htmlEscape(JSON.stringify(err.expected))}</li>`
           break
         default:
           throw(err)
