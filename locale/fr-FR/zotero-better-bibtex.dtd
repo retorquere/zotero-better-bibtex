@@ -20,7 +20,7 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "With BBT, you can drag-and-drop citations into your LaTeX editor of choice. Do you want to enable this now?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Enable drag-and-drop citations">
 
-<!ENTITY better-bibtex.FirstRun.done "All Done!">
+<!ENTITY better-bibtex.FirstRun.done "Terminé !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT is now set up for use. You can still change any of these settings by going into the Zotero preferences and opening the BBT tab.">
 
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
