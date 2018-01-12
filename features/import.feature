@@ -28,7 +28,7 @@ Scenario: AUX scanner
   And I import 1 reference from "import/AUX scanner.aux"
   Then an export using "BetterBibTeX JSON" should match "import/AUX scanner-post.json"
 
-@i3
+@nightly
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
@@ -36,6 +36,14 @@ Scenario Outline: Better BibTeX Import
   Examples:
   | file                                                                        | references  |
   | Some bibtex entries quietly discarded on import from bib file #873          | 985         |
+
+@i3
+Scenario Outline: Better BibTeX Import
+  When I import <references> reference from "import/<file>.bib"
+  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+
+  Examples:
+  | file                                                                        | references  |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibTeX import; preamble with def create problems #732                       | 2           |
   | space after citekey creates confusion #716                                  | 2           |

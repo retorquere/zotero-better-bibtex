@@ -57,10 +57,17 @@ test:
               DATADIR=~/.BBTZ5TEST/zotero
               ;;
       esac
+
+      if [ "$NIGHTLY" = "true" ]; then
+        NIGHTLY_TAGS=""
+      else
+        NIGHTLY_TAGS="not @nightly and"
+      fi
+
       case $CIRCLE_NODE_INDEX in
-        0|2)  export CIRCLE_TESTS="not @noci and @test-cluster-1"
+        0|2)  export CIRCLE_TESTS="$NIGHTLY_TAGS @test-cluster-1"
               ;;
-        *)    export CIRCLE_TESTS="not @noci and not @test-cluster-1"
+        *)    export CIRCLE_TESTS="$NIGHTLY_TAGS not @test-cluster-1"
               ;;
       esac
 
