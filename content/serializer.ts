@@ -169,6 +169,7 @@ class Serializer {
           seeAlso: true,
           id: true,
           itemID: true,
+          dateAdded: true,
         }
       }
 

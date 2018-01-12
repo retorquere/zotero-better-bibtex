@@ -624,6 +624,7 @@ export = class Reference {
             break
 
           case 'doi':
+          case 'issn':
             name = cslName
             break
         }

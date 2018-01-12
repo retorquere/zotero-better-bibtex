@@ -476,10 +476,12 @@ class ZoteroItem {
     this.biblatexdata = {}
 
     this.import()
+
     if (Translator.preferences.testing) {
       const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
+
     this.item.complete()
   }
 
@@ -515,6 +517,8 @@ class ZoteroItem {
   protected $translator(value, field) { return this.$author(value, field) }
 
   protected $publisher(value) {
+    if (!this.validFields.publisher) return false
+
     if (!this.item.publisher) this.item.publisher = ''
     if (this.item.publisher) this.item.publisher += ' / '
     this.item.publisher += value.map(this.unparse).join(' and ')
@@ -532,7 +536,20 @@ class ZoteroItem {
 
   protected $date(value) { return this.set('date', this.unparse(value)) }
 
-  protected $booktitle(value) { return this.set('publicationTitle', this.unparse(value)) }
+  protected $booktitle(value) {
+    value = this.unparse(value)
+
+    switch (this.type) {
+      case 'conferencePaper':
+        return this.set('publicationTitle', value)
+
+      case 'book':
+        if (!this.item.title) return this.set('title', value)
+        break
+    }
+
+    return false
+  }
 
   protected $journaltitle(value) {
     value = this.unparse(value)
@@ -584,7 +601,7 @@ class ZoteroItem {
 
   protected $doi(value) { return this.set('DOI', this.unparse(value)) }
 
-  protected $abstract(value) { return this.set('abstractNote', this.unparse(value, true)) }
+  protected $abstract(value) { return this.set('abstractNote', this.unparse(value, false)) }
 
   protected $keywords(value) {
     value = value.map(tag => this.unparse(tag).replace(/\n+/g, ' '))
@@ -730,7 +747,7 @@ class ZoteroItem {
   }
 
   protected $annotation(value) {
-    this.item.notes.push(Zotero.Utilities.text2html(this.unparse(value)))
+    this.item.notes.push(Zotero.Utilities.text2html(this.unparse(value, false)))
     return true
   }
   protected $comment(value) { return this.$annotation(value) }
@@ -748,7 +765,7 @@ class ZoteroItem {
   protected $groups(value) { return true }
 
   protected $note(value) {
-    this.addToExtra(this.unparse(value))
+    this.addToExtra(this.unparse(value, false))
     return true
   }
 
@@ -762,7 +779,10 @@ class ZoteroItem {
     if (!language) return true
 
     switch (language.toLowerCase()) {
-      case 'en': case 'eng': case 'usenglish':
+      case 'en':
+      case 'eng':
+      case 'usenglish':
+      case 'english':
         language = 'English'
         break
     }
@@ -804,7 +824,7 @@ class ZoteroItem {
     throw new Error(err)
   }
 
-  private unparse(text, allowtilde = false): string {
+  private unparse(text, condense = true): string {
     if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
 
     if (['string', 'number'].includes(typeof text)) return text
@@ -916,7 +936,8 @@ class ZoteroItem {
     html = html.replace(/ \u00A0/g, ' ~') // if allowtilde
     html = html.replace(/\u00A0 /g, '~ ') // if allowtilde
     // html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
-    return html
+
+    return condense ? html.replace(/\s+/g, ' ') : html
   }
 
   private import() {
@@ -932,8 +953,9 @@ class ZoteroItem {
     }
     fields = fields.concat(unexpected).concat(unknown)
     // tslint:disable-next-line:prefer-object-spread
-    this.fields = Object.assign({}, (this.bibtex.unknown_fields || {}), (this.bibtex.unexpected_fields || {}), this.bibtex.fields)
+    this.fields = Object.assign({}, (this.bibtex.fields || {}), (this.bibtex.unexpected_fields || {}), this.bibtex.unknown_fields)
 
+    debug('importing bibtex:', fields, this.bibtex)
     for (const field of fields) {
       const value = this.fields[field]
 
@@ -944,7 +966,20 @@ class ZoteroItem {
       }
 
       if (this[`$${field}`] && this[`$${field}`](value, field)) continue
-      this.addToExtraData(field, this.unparse(value))
+
+      switch (field) {
+        case 'doi':
+          this.hackyFields.push(`DOI: ${this.unparse(value)}`)
+          break
+
+        case 'issn':
+          this.hackyFields.push(`ISSN: ${this.unparse(value)}`)
+          break
+
+        default:
+          this.addToExtraData(field, this.unparse(value))
+          break
+      }
     }
 
     if ([ 'conferencePaper', 'paper-conference' ].includes(this.type) && this.item.publicationTitle && !this.item.proceedingsTitle) {
@@ -980,7 +1015,6 @@ class ZoteroItem {
       this.item.publisher = this.item.backupPublisher
       delete this.item.backupPublisher
     }
-
   }
 
   private addToExtra(str) {
@@ -997,10 +1031,15 @@ class ZoteroItem {
   }
 
   private set(field, value) {
-    if (Translator.preferences.testing && typeof this.item[field] !== 'undefined') {
-      this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.entry_key}`)
+    debug('import.set:', this.type, field, this.validFields[field])
+    if (!this.validFields[field]) return false
+
+    if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
+      this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.entry_key} (old: ${this.item[field]}, new: ${value})`)
     }
+
     this.item[field] = value
+    return true
   }
 }
 

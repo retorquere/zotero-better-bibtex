@@ -72,11 +72,16 @@ Translator.doImport = () => {
   }
 
   const data = JSON.parse(json)
+  const validFields = Zotero.BetterBibTeX.validFields()
 
   for (const source of data.items) {
-    /* works around https://github.com/Juris-M/zotero/issues/20 */
-    // delete source.multi.main if source.multi
-    Zotero.BetterBibTeX.scrubFields(source)
+    // works around https://github.com/Juris-M/zotero/issues/20
+    if (source.multi) delete source.multi.main
+
+    if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
+    for (const field of Object.keys(source)) {
+      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field}`)
+    }
 
     const item = new Zotero.Item()
     Object.assign(item, source, { itemID: source.key })

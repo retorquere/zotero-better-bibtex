@@ -20,6 +20,7 @@
     {
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 13: incomplete reference @emptyreference</li></ul>",
+      "tags":["#Better BibTeX import error"],
       "itemID": 4
     },
     {

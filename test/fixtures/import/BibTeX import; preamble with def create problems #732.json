@@ -15,7 +15,8 @@
     {
       "itemID": 0,
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 6: found &quot;1&quot;, expected &quot;}&quot;</li></ul>"
+      "note": "Import errors found: <ul><li>line 6: found &quot;1&quot;, expected &quot;}&quot;</li></ul>",
+      "tags":["#Better BibTeX import error"]
     },
     {
       "creators": [
