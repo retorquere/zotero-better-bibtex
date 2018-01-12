@@ -640,10 +640,10 @@ class ZoteroItem {
     return true
   }
 
-  protected '$date-modified'() { return this.item.dateAdded = this.unparse(value) }
-  protected '$date-added'() { return this.item.dateAdded = this.unparse(value) }
-  protected '$added-at'() { return this.item.dateAdded = this.unparse(value) }
-  protected $timestamp() { return this.item.dateAdded = this.unparse(value) }
+  protected '$date-modified'(value) { return this.item.dateAdded = this.unparse(value) }
+  protected '$date-added'(value) { return this.item.dateAdded = this.unparse(value) }
+  protected '$added-at'(value) { return this.item.dateAdded = this.unparse(value) }
+  protected $timestamp(value) { return this.item.dateAdded = this.unparse(value) }
 
   protected $number(value) {
     value = this.unparse(value)
