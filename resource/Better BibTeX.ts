@@ -1004,6 +1004,16 @@ Translator.doImport = () => {
   }
   const bib = importReferences(input)
 
+  // biblatex-csl-converter is opinionated about URLs.
+  bib.errors = bib.errors.filter(err => {
+    if (err.type !== 'unknown_uri' || err.field_name !== 'url') return true
+    if (!bib.references[err.entry]) return true
+    if (bib.references[err.entry].url) return true
+
+    bib.references[err.entry].url = err.value
+    return false
+  })
+
   if (bib.errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
