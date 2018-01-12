@@ -35,6 +35,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Some bibtex entries quietly discarded on import from bib file #873          | 985         |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibTeX import; preamble with def create problems #732                       | 2           |
   | space after citekey creates confusion #716                                  | 2           |
