@@ -469,7 +469,7 @@ class ZoteroItem {
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
     this.validFields = validFields[this.type]
 
-    if (!this.validFields) this.error(`import error: unexpected item of type ${this.type}`)
+    if (!this.validFields) this.error(`import error: unexpected item ${bibtex.entry_key} of type ${this.type}`)
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
@@ -478,16 +478,16 @@ class ZoteroItem {
     this.import()
     if (Translator.preferences.testing) {
       const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
-      if (err) this.error(`import error: unexpected fields on ${this.type}: ${err}`)
+      if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
     this.item.complete()
   }
 
   protected $title(value) {
     if (this.type === 'encyclopediaArticle') {
-      this.item.publicationTitle = this.unparse(value)
+      this.set('publicationTitle', this.unparse(value))
     } else {
-      this.item.title = this.unparse(value)
+      this.set('title', this.unparse(value))
     }
     return true
   }
@@ -523,24 +523,30 @@ class ZoteroItem {
   protected $institution(value) { return this.$publisher(value) }
   protected $school(value) { return this.$publisher(value) }
 
-  protected $address(value) { return this.item.place = this.unparse(value) }
+  protected $address(value) { return this.set('place', this.unparse(value)) }
   protected $location(value) { return this.$address(value) }
 
-  protected $edition(value) { return this.item.edition = this.unparse(value) }
+  protected $edition(value) { return this.set('edition', this.unparse(value)) }
 
-  protected $isbn(value) { return this.item.ISBN = this.unparse(value) }
+  protected $isbn(value) { return this.set('ISBN', this.unparse(value)) }
 
-  protected $date(value) { return this.item.date = this.unparse(value) }
+  protected $date(value) { return this.set('date', this.unparse(value)) }
 
-  protected $booktitle(value) { return this.item.publicationTitle = this.unparse(value) }
+  protected $booktitle(value) { return this.set('publicationTitle', this.unparse(value)) }
 
   protected $journaltitle(value) {
     value = this.unparse(value)
-    if (this.fields.booktitle) {
-      this.item.journalAbbreviation = value
-    } else {
-      this.item.publicationTitle = value
+
+    switch (this.type) {
+      case 'conferencePaper':
+        this.set('series', value)
+        break
+
+      default:
+        this.set('publicationTitle', value)
+        break
     }
+
     return true
   }
   protected $journal(value) { return this.$journaltitle(value) }
@@ -566,19 +572,19 @@ class ZoteroItem {
     if (!pages.length) return true
 
     if (['book', 'thesis', 'manuscript'].includes(this.type)) {
-      this.item.numPages = pages.join(', ')
+      this.set('numPages', pages.join(', '))
     } else {
-      this.item.pages = pages.join(', ')
+      this.set('pages', pages.join(', '))
     }
 
     return true
   }
 
-  protected $volume(value) { return this.item.volume = this.unparse(value) }
+  protected $volume(value) { return this.set('volume', this.unparse(value)) }
 
-  protected $doi(value) { return this.item.DOI = this.unparse(value) }
+  protected $doi(value) { return this.set('DOI', this.unparse(value)) }
 
-  protected $abstract(value) { return this.item.abstractNote = this.unparse(value, true) }
+  protected $abstract(value) { return this.set('abstractNote', this.unparse(value, true)) }
 
   protected $keywords(value) {
     value = value.map(tag => this.unparse(tag).replace(/\n+/g, ' '))
@@ -674,7 +680,7 @@ class ZoteroItem {
     }
 
     if (!this.validFields[field]) return false
-    this.item[field] = value
+    this.set(field, value)
 
     return true
   }
@@ -682,7 +688,7 @@ class ZoteroItem {
   protected $issn(value) {
     if (!this.validFields.ISSN) return false
 
-    return this.item.ISSN = this.unparse(value)
+    return this.set('ISSN', this.unparse(value))
   }
 
   protected $url(value, field) {
@@ -707,14 +713,19 @@ class ZoteroItem {
   protected $howpublished(value, field) { return this.$url(value, field) }
 
   protected $type(value) {
-    this.item.sessionType = (this.item.websiteType = (this.item.manuscriptType = (this.item.genre = (this.item.postType = (this.item.sessionType = (this.item.letterType = (this.item.manuscriptType = (this.item.mapType = (this.item.presentationType = (this.item.regulationType = (this.item.reportType = (this.item.thesisType = (this.item.websiteType = this.unparse(value))))))))))))))
-    return true
+    for (const field of ['sessionType', 'websiteType', 'manuscriptType', 'genre', 'postType', 'sessionType', 'letterType', 'manuscriptType', 'mapType', 'presentationType', 'regulationType', 'reportType', 'thesisType', 'websiteType']) {
+      if (this.validFields[field]) {
+        this.set(field, this.unparse(value))
+        return true
+      }
+    }
+    return false
   }
 
   protected $lista(value) {
     if (this.type !== 'encyclopediaArticle' || !!this.item.title) return false
 
-    this.item.title = this.unparse(value)
+    this.set('title', this.unparse(value))
     return true
   }
 
@@ -727,10 +738,10 @@ class ZoteroItem {
   protected $review(value) { return this.$annotation(value) }
   protected $notes(value) { return this.$annotation(value) }
 
-  protected $urldate(value) { return this.item.accessDate = this.unparse(value) }
+  protected $urldate(value) { return this.set('accessDate', this.unparse(value)) }
   protected $lastchecked(value) { return this.$urldate(value) }
 
-  protected $series(value) { return this.item.series = this.unparse(value) }
+  protected $series(value) { return this.set('series', this.unparse(value)) }
 
   // if the biblatex-csl-converter hasn't already taken care of it it is a remnant of the horribly broken JabRaf 3.8.1
   // groups format -- shoo, we don't want you
@@ -755,12 +766,12 @@ class ZoteroItem {
         language = 'English'
         break
     }
-    this.item.language = language
+    this.set('language', language)
     return true
   }
   protected $langid(value, field) { return this.$language(value, field) }
 
-  protected $shorttitle(value) { return this.item.shortTitle = this.unparse(value) }
+  protected $shorttitle(value) { return this.set('shortTitle', this.unparse(value)) }
 
   protected $eprint(value, field) {
     /* Support for IDs exported by BibLaTeX */
@@ -784,9 +795,9 @@ class ZoteroItem {
   protected $eprinttype(value) { return this.fields.eprint }
   protected $archiveprefix(value) { return this.$eprinttype(value) }
 
-  protected $nationality(value) { return this.item.country = this.unparse(value) }
+  protected $nationality(value) { return this.set('country', this.unparse(value)) }
 
-  protected $chapter(value) { return this.item.section = this.unparse(value) }
+  protected $chapter(value) { return this.set('section', this.unparse(value)) }
 
   private error(err) {
     debug(err)
@@ -983,6 +994,13 @@ class ZoteroItem {
   private addToExtraData(key, value) {
     this.biblatexdata[key] = this.unparse(value)
     if (key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)) this.biblatexdatajson = true
+  }
+
+  private set(field, value) {
+    if (Translator.preferences.testing && typeof this.item[field] !== 'undefined') {
+      this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.entry_key}`)
+    }
+    this.item[field] = value
   }
 }
 
