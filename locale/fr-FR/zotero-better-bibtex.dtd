@@ -2,7 +2,7 @@
 <!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (or BBT as it commonly named) aims to make Zotero more useful for LaTeX and Markdown holdouts. There's a lot to configure about BBT -- take a look in the preferences if you're curious -- but let's start you off with a few simple choices.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Vos clés de citation">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your references. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "Better BibTex va générer les clés de citations de vos références. La génération des clés de citation est hautement configurable ; vous pourrez même modifier les clés manuellement. Veuillez sélectionner la valeur par défaut maintenant (vous pourrez toujours modifier ce paramètre plus tard).">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "J'ai déjà utilisé Better BibTex">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Je suis nouveau sur BBT mais j'ai utilisé auparavant le générateur BibTex de Zotero">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.whatever "Je n'ai jamais utilisé auparavant le générateur BibTex de Zotero">
@@ -14,7 +14,7 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "vos clés de citation ressembleront à">
 
 <!ENTITY better-bibtex.FirstRun.exporting "Exporter en utilisant BBT">
-<!ENTITY better-bibtex.FirstRun.exporting.explanation "Exporting using BBT works as usual in Zotero, but make sure you have the right format selected; in the list of formats, instead of 'BibTeX', select">
+<!ENTITY better-bibtex.FirstRun.exporting.explanation "L'exportation via Better BibTex fonctionne de manière transparente dans Zotero. Assurez-vous simplement d'avoir sélectionné le bon format : dans la liste des formats, au lieu de 'BibTex', sélectionnez">
 
 <!ENTITY better-bibtex.FirstRun.dragndrop "Citations par glisser déposer">
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Better BibTex vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?">
