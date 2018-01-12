@@ -251,6 +251,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   scrubFields(sandbox, item) { return Serializer.scrub(item) },
+  validFields(sandbox) { return Serializer.validFields },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {

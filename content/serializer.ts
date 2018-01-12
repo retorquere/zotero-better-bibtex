@@ -13,6 +13,8 @@ class Serializer {
   public simplify: Function
   public scrub: Function
 
+  public validFields: { [key: string]: { [key: string]: boolean } }
+
 //  # prune cache on old accessed
 //  prune: Zotero.Promise.coroutine(->
 //    ids = yield Zotero.DB.columnQueryAsync('select itemID from items where itemID not in (select itemID from deletedItems)')
@@ -55,7 +57,7 @@ class Serializer {
     this.simplify = new Function('item', simplify)
 
     /* SCRUB */
-    const fields = await ZoteroDB.queryAsync(`
+    let fields = await ZoteroDB.queryAsync(`
       SELECT it.typeName, f.fieldName
       FROM itemTypes it
       JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
@@ -137,6 +139,42 @@ class Serializer {
 
     debug('Serializer.init: scrub =', scrub)
     this.scrub = new Function('item', scrub)
+
+    // VALIDATE
+    fields = await ZoteroDB.queryAsync(`
+      SELECT * FROM (
+        SELECT it.typeName, f.fieldName, a.fieldName AS fieldAlias
+        FROM baseFieldMappingsCombined bfmc
+        JOIN fields f ON f.fieldID = bfmc.baseFieldID
+        JOIN fields a ON a.fieldID = bfmc.fieldID
+        JOIN itemTypes it ON it.itemTypeID = bfmc.itemTypeID
+
+        UNION
+
+        SELECT it.typeName, f.fieldName, NULL
+        FROM itemTypes it
+        JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
+        JOIN fields f ON f.fieldID = itf.fieldID
+      ) ORDER BY typeName, fieldName
+    `)
+    this.validFields = {}
+    for (const field of fields) {
+      if (!this.validFields[field.typeName]) {
+        this.validFields[field.typeName] = {
+          itemType: true,
+          creators: true,
+          tags: true,
+          attachments: true,
+          notes: true,
+          seeAlso: true,
+          id: true,
+          itemID: true,
+        }
+      }
+
+      this.validFields[field.typeName][field.fieldName] = true
+      if (field.fieldAlias) this.validFields[field.typeName][field.fieldAlias] = true
+    }
 
     debug('Serializer.init: done')
   }

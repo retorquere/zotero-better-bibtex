@@ -5,7 +5,7 @@ declare const Zotero: any
 
 import Reference = require('./bibtex/reference.ts')
 import Exporter = require('./lib/exporter.ts')
-// import debug = require('./lib/debug.ts')
+import debug = require('./lib/debug.ts')
 import JSON5 = require('json5')
 import htmlEscape = require('./lib/html-escape.ts')
 const BibTeXParser = require('biblatex-csl-converter').BibLatexParser // tslint:disable-line:variable-name
@@ -459,22 +459,27 @@ class ZoteroItem {
   private hackyFields: string[]
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
+  private validFields: { [key: string]: boolean }
 
-  constructor(id, bibtex, groups) {
+  constructor(id, bibtex, groups, validFields) {
     this.id = id
     this.bibtex = bibtex
     this.groups = groups
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
+    this.validFields = validFields[this.type]
+
+    if (!this.validFields) this.error(`import error: unexpected item of type ${this.type}`)
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
     this.biblatexdata = {}
-//    @item.notes.push({ note: ('The following fields were not imported:<br/>' + @bibtex.__note__).trim(), tags: ['#BBT Import'] }) if @bibtex.__note__
+
     this.import()
-//    if Translator.preferences.rawImports
-//      @item.tags ?= []
-//      @item.tags.push(Translator.preferences.rawLaTag)
+    if (Translator.preferences.testing) {
+      const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
+      if (err) this.error(`import error: unexpected fields on ${this.type}: ${err}`)
+    }
     this.item.complete()
   }
 
@@ -648,16 +653,37 @@ class ZoteroItem {
 
   protected $number(value) {
     value = this.unparse(value)
+    let field
     switch (this.type) {
-      case 'report':                                    this.item.reportNumber = value; break
-      case 'book': case 'bookSection': case 'chapter':  this.item.seriesNumber = value; break
-      case 'patent':                                    this.item.patentNumber = value; break
-      default:                                          this.item.issue = value
+      case 'report':
+        field = 'reportNumber'
+        break
+
+      case 'book':
+      case 'bookSection':
+      case 'chapter':
+        field = 'seriesNumber'
+        break
+
+      case 'patent':
+        field = 'patentNumber'
+        break
+
+      default:
+        field = 'issue'
     }
+
+    if (!this.validFields[field]) return false
+    this.item[field] = value
+
     return true
   }
 
-  protected $issn(value) { return this.item.ISSN = this.unparse(value) }
+  protected $issn(value) {
+    if (!this.validFields.ISSN) return false
+
+    return this.item.ISSN = this.unparse(value)
+  }
 
   protected $url(value, field) {
     let m, url
@@ -761,6 +787,11 @@ class ZoteroItem {
   protected $nationality(value) { return this.item.country = this.unparse(value) }
 
   protected $chapter(value) { return this.item.section = this.unparse(value) }
+
+  private error(err) {
+    debug(err)
+    throw new Error(err)
+  }
 
   private unparse(text, allowtilde = false): string {
     if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
@@ -1020,6 +1051,7 @@ Translator.doImport = () => {
           throw(err)
       }
     }
+    item.tags = ['#Better BibTeX import error']
     item.note += '</ul>'
     item.complete()
   }
@@ -1028,10 +1060,12 @@ Translator.doImport = () => {
     ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
   }
 
+  const validFields = Zotero.BetterBibTeX.validFields()
+
   const itemIDS = {}
   for (const [id, ref] of Object.entries(bib.references)) {
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
-    new ZoteroItem(id, ref, bib.groups) // tslint:disable-line:no-unused-expression
+    new ZoteroItem(id, ref, bib.groups, validFields) // tslint:disable-line:no-unused-expression
   }
 
   for (const group of bib.groups || []) {
