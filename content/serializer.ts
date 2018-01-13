@@ -11,8 +11,6 @@ class Serializer {
   private static collection = 'itemToExportFormat'
 
   public simplify: Function
-  public scrub: Function
-
   public validFields: { [key: string]: { [key: string]: boolean } }
 
 //  # prune cache on old accessed
@@ -25,120 +23,26 @@ class Serializer {
     Abbrevs.init()
 
     debug('Serializer.init')
-    const fieldsWithAliases = await ZoteroDB.queryAsync(`
-      SELECT it.typeName, f.fieldName, a.fieldName as fieldAlias
+
+    // SIMPLIFY
+    let fields = await ZoteroDB.queryAsync(`
+      SELECT DISTINCT f.fieldName, a.fieldName as fieldAlias
       FROM baseFieldMappingsCombined bfmc
       JOIN fields f ON f.fieldID = bfmc.baseFieldID
       JOIN fields a ON a.fieldID = bfmc.fieldID
-      JOIN itemTypes it ON it.itemTypeID = bfmc.itemTypeID
     `)
-
-    /* SIMPLIFY */
-    const mapping = fieldsWithAliases.reduce((map, alias) => {
-      if (!map[alias.typeName]) map[alias.typeName] = {}
-      map[alias.typeName][alias.fieldAlias] = alias.fieldName
-      return map
-    }
-    , {})
-
+    const alias = {}
     let simplify = ''
-    for (const [itemType, aliases] of Object.entries(mapping)) {
-      simplify += `if (item.itemType == '${itemType}') {\n`
-      for (const [alias, field] of Object.entries(aliases)) {
-        simplify += `item.${field} = item.${field} || item.${alias};\n`
-      }
-      simplify += '}\n'
+    for (const field of fields) {
+      if (alias[field.fieldAlias] && alias[field.fieldAlias] !== field.fieldName) throw new Error(`field alias ${field.fieldAlias} maps to ${alias[field.fieldAlias]} and ${field.fieldName}`)
+      alias[field.fieldAlias] = field.fieldName
+      simplify += `if (item.${field.fieldAlias} || typeof item.${field.fieldAlias} === 'number') item.${field.fieldName} = item.${field.fieldAlias};\n`
+      simplify += `delete item.${field.fieldAlias};\n`
     }
-
     simplify += 'item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];\n'
     simplify += 'return item;'
-
     debug('Serializer.init: simplify =\n', simplify)
     this.simplify = new Function('item', simplify)
-
-    /* SCRUB */
-    let fields = await ZoteroDB.queryAsync(`
-      SELECT it.typeName, f.fieldName
-      FROM itemTypes it
-      JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
-      JOIN fields f ON f.fieldID = itf.fieldID
-    `)
-
-    let renames = ''
-    let seen = {}
-    for (const field of fieldsWithAliases) {
-      seen[field.fieldAlias] = true
-      renames += `if (item.${field.fieldAlias}) { item.${field.fieldName} = item.${field.fieldAlias}; delete item.${field.fieldAlias}; }\n`
-      fields.push(field.fieldName)
-    }
-
-    fields.push.apply(fields, [
-      'key',
-      'itemType',
-      'creators',
-      'itemID',
-      'seeAlso',
-      // 'relations',
-      'attachments',
-      // 'collections',
-      'tags',
-      'notes',
-      'related',
-    ])
-
-    let supported = ''
-    seen = {}
-    for (let field of fields) {
-      if (typeof field === 'string') field = { fieldName: field }
-      if (seen[field.fieldName]) continue
-      seen[field.fieldName] = true
-      supported += `case '${field.fieldName}':\n`
-    }
-
-    const scrub = `
-      if (Array.isArray(item.tags) && item.tags.length && item.tags[0].note) {
-        item.tags = item.tags.map(function(tag) { return tag.tag }).filter(function(tag) { return tag })
-      }
-
-      if (Array.isArray(item.notes) && item.notes.length && item.notes[0].note) {
-        item.notes = item.notes.map(function(note) { return note.note }).filter(function(note) { return note })
-      }
-
-      if (Array.isArray(item.attachments) && item.attachments.length) {
-        item.attachments.forEach(function(attachment) {
-          attachment.path || (attachment.path = attachment.localPath)
-        })
-      }
-
-      if (item.relations) {
-        if (item.relations['dc:relation']) {
-          var relations = item.relations['dc:relation']
-          if (!Array.isArray(relations)) relations = [relations]
-
-          item.relations = relations.map(rel => rel.replace(/.*\\//, ''))
-        } else if (!Array.isArray(item.relations)) {
-          delete item.relations
-        }
-      }
-
-      ${renames}
-
-      for (var key in item) {
-        switch (key) {
-          ${supported}
-            if (item[key] == null || item[key] == '') delete item[key]
-            else if (Array.isArray(item[key]) && !item[key].length) delete item[key]
-            break
-          default:
-            Zotero.debug('{better-bibtex:<Translator>}: removing unsupported field ' + key + ': ' + item[key])
-            delete item[key]
-        }
-      }
-      return item
-    `
-
-    debug('Serializer.init: scrub =', scrub)
-    this.scrub = new Function('item', scrub)
 
     // VALIDATE
     fields = await ZoteroDB.queryAsync(`
@@ -170,6 +74,8 @@ class Serializer {
           id: true,
           itemID: true,
           dateAdded: true,
+          dateModified: true,
+          multi: true, // accomodate Juris-M
         }
       }
 

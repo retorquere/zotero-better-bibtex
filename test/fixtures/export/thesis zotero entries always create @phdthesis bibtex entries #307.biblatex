@@ -2,12 +2,14 @@
   author = {Wøller, Sune Brøndum},
   date = {2011},
   langid = {norsk},
-  title = {Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler}
+  title = {Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler},
+  type = {mastersthesis}
 }
 
 @phdthesis{Woller2011CTRDet,
   author = {Wøller, Sune Brøndum},
   date = {2011},
   langid = {norsk},
-  title = {CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler}
+  title = {CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler},
+  type = {phdthesis}
 }

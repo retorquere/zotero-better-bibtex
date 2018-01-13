@@ -36,8 +36,6 @@
         "Startle",
         "fMRI"
       ],
-      "relations": {
-      },
       "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1469-8986.2007.00620.x/abstract",
       "volume": "45",
       "issue": "2",
@@ -74,17 +72,7 @@
           "firstName": "Alfons O."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 80,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Wendt"
+      "itemID": 80
     }
   ]
 }

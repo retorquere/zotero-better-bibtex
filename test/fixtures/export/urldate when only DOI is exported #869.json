@@ -186,7 +186,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
@@ -215,11 +216,8 @@
           "type": 0
         }
       ],
-      "collections": [],
-      "relations": {},
       "dateAdded": "2016-08-03 11:36:08",
       "dateModified": "2018-01-09 12:37:54",
-      "uri": "http://zotero.org/users/1354388/items/ZHMVIPGP",
       "attachments": [
         {
           "itemType": "attachment",
@@ -229,8 +227,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "Almog_1984_Semantical_anthropology.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2016-11-14 11:03:12",
           "dateModified": "2018-01-02 20:10:00",
           "uri": "http://zotero.org/users/1354388/items/NGD6CH85",
@@ -243,31 +244,14 @@
           "key": "NGD6CH85",
           "libraryID": null,
           "sourceItemKey": "ZHMVIPGP",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "/home/t/Zotero/storage/NGD6CH85/Almog_1984_Semantical_anthropology.pdf"
         }
       ],
-      "notes": [],
-      "uniqueFields": {
-        "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4975.1984.tb00073.x/abstract",
-        "volume": "9",
-        "issue": "1",
-        "pages": "478-489",
-        "publicationTitle": "Midwest Studies In Philosophy",
-        "ISSN": "1475-4975",
-        "date": "September 1, 1984",
-        "DOI": "10.1111/j.1475-4975.1984.tb00073.x",
-        "accessDate": "2016-08-03 11:36:08",
-        "libraryCatalog": "Wiley Online Library",
-        "abstractNote": "The association between the smell and the bacon is “.natural”., that is to say it is not the result of any human behavhior. But the association between the word “.breakfast”. and breakfast is a social matter, which exists only for English speaking people.—B. Russell, “.An Inquiry into Meaning and Truth”.",
-        "title": "Semantical anthropology"
-      },
-      "itemID": 1100,
-      "key": "ZHMVIPGP",
-      "libraryID": null,
-      "seeAlso": [],
-      "citekey": "Almog1984"
+      "itemID": 1100
     }
   ]
 }

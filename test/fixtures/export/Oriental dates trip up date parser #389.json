@@ -23,11 +23,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://ao.osa.org/abstract.cfm?URI=ao-15-4-1040",
       "volume": "15",
       "issue": "4",
@@ -66,14 +61,7 @@
           "url": "http://www.opticsinfobase.org/ao/abstract.cfm?uri=ao-15-4-1040"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 844,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Sammut"
+      "itemID": 844
     }
   ]
 }

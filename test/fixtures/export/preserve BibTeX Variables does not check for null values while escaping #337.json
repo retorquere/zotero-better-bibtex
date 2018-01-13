@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.nap.edu/openbook.php?record_id=203",
       "publisher": "The National Academies Press",
       "ISBN": "978-0-309-02928-5",
@@ -63,14 +58,7 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 386,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "geophysicsstudycommittee_continental_1980"
+      "itemID": 386
     }
   ]
 }

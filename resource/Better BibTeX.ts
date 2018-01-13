@@ -937,7 +937,7 @@ class ZoteroItem {
     html = html.replace(/\u00A0 /g, '~ ') // if allowtilde
     // html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
 
-    return condense ? html.replace(/\s+/g, ' ') : html
+    return condense ? html.replace(/[\t\r\n ]+/g, ' ') : html
   }
 
   private import() {

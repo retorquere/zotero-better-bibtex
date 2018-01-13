@@ -41,11 +41,6 @@
   "items": [
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Mesopotamia, OH",
       "publisher": "Trumbull County Historical Society",
       "date": "1957",
@@ -59,53 +54,20 @@
           "firstName": "Hazel V."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 17,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "clark_mesopotamia:_1957"
+      "itemID": 17
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://nedwww.ipac.caltech.edu/",
       "publicationTitle": "NASA/IPAC Extragalactic Database",
       "extra": "type: dataset",
       "accessDate": "2009-10-06",
       "abstractNote": "Example from CMoS, 16e, 14.272",
       "title": "object name IRAS F00400+4059",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 18,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_object_????"
+      "itemID": 18
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "edition": "Rev. ed.",
       "place": "Bryn Mawr, PA",
       "publisher": "Theodore Presser",
@@ -125,25 +87,10 @@
           "firstName": "Nathan"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 19,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "mozart_sonatas_1960"
+      "itemID": 19
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "9",
       "pages": "B13–B14",
       "publicationTitle": "Lingua Franca",
@@ -164,25 +111,13 @@
           "lastName": "Hermano Vianna"
         }
       ],
-      "attachments": [
-
-      ],
       "notes": [
         "<p>biblatex-chicago example, adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.&nbsp;&nbsp;Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.&nbsp;&nbsp;Also note the use of \\parteditandtrans.&nbsp;&nbsp;The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.&nbsp;&nbsp;Still, although simply writing \"edited and translated by\" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes \\&amp; bibliography style, should that be needed.&nbsp;&nbsp;See next entry.</p>\n<p>&nbsp;</p>\n<p>Example from CMoS, 16e, 14.125</p>"
       ],
-      "itemID": 20,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ratliff_mystery_1999"
+      "itemID": 20
     },
     {
       "itemType": "newspaperArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html.",
       "date": "2006-04-23",
       "section": "Sunday Book Review",
@@ -202,17 +137,7 @@
           "firstName": "Michael"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 22,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "kamp_deconstructing_2006"
+      "itemID": 22
     }
   ],
   "cache": {

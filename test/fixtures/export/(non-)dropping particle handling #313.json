@@ -48,11 +48,6 @@
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "series": "International Library of Philosophy and Scientific Method",
       "place": "Londres",
       "publisher": "Routledge & Kegan Paul",
@@ -91,25 +86,10 @@
           "firstName": "Georg Henrik Explicit"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2066,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "vonwright_norm_1963"
+      "itemID": 2066
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Oxford",
       "publisher": "Hart Publishing",
       "ISBN": "978-1-84946-324-9",
@@ -134,25 +114,10 @@
           "firstName": "Andrea"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 5934,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "almeida_reading_2013"
+      "itemID": 5934
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Lexington Kentucky",
       "publisher": "CreateSpace Independent Publishing Platform",
       "ISBN": "978-1-4793-4771-1",
@@ -166,25 +131,10 @@
           "firstName": "Frank G.,! Jr."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 5921,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "bennett_citations_2013"
+      "itemID": 5921
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "New York",
       "publisher": "Grosset & Dunlap",
       "date": "1968",
@@ -197,17 +147,7 @@
           "firstName": "Martin Luther, Jr."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 5920,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "king_have_1968"
+      "itemID": 5920
     },
     {
       "itemType": "journalArticle",

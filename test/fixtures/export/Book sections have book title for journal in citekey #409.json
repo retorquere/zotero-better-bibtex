@@ -31,8 +31,6 @@
         "Latin literature",
         "Rome"
       ],
-      "relations": {
-      },
       "series": "Collection Latomus",
       "place": "Bruxelles",
       "publisher": "Latomus",
@@ -64,15 +62,8 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 18810,
-      "publicationTitle": "Studies in Latin literature and Roman history",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Orlin2015StudLatLitRomanHist"
+      "publicationTitle": "Studies in Latin literature and Roman history"
     }
   ]
 }

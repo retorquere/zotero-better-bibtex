@@ -123,7 +123,14 @@ Translator.doExport = () => {
   }
   debug('header ready')
 
+  const validFields = Zotero.BetterBibTeX.validFields()
+
   while ((item = Zotero.nextItem())) {
+    for (const field of Object.keys(item)) {
+      if (validFields[item.itemType] && !validFields[item.itemType][field]) {
+        delete item[field]
+      }
+    }
     debug('adding item', item.itemID)
     data.items.push(item)
   }

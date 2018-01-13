@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "21",
       "issue": "spécial anniversaire 1978-1988",
       "pages": "135-162",
@@ -37,7 +32,6 @@
       "extra": "bibtex[date=1988;number=spécial anniversaire 1978-1988;issue=]",
       "journalAbbreviation": "RIEJ",
       "language": "fr-FR",
-      "abstractNote": "",
       "title": "Dimensions du savoir juridique et orientations philosophiques",
       "creators": [
         {
@@ -46,17 +40,7 @@
           "firstName": "Enrico"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 677,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "pattaro_dimensions_1988"
+      "itemID": 677
     }
   ]
 }

@@ -180,7 +180,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
@@ -193,25 +194,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [
-        "ISYPN44L"
-      ],
-      "relations": {},
       "dateAdded": "2017-12-26 15:49:33",
       "dateModified": "2017-12-26 16:05:02",
-      "uri": "http://zotero.org/users/local/12Rqxy1S/items/78T7R3EF",
-      "attachments": [],
-      "notes": [],
-      "uniqueFields": {
-        "date": "2017",
-        "title": "Title"
-      },
-      "itemID": 362,
-      "key": "78T7R3EF",
-      "libraryID": null,
-      "seeAlso": [],
-      "citekey": "delaMareTitle2017"
+      "itemID": 362
     }
   ]
 }

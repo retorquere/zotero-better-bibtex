@@ -246,36 +246,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-        "3JW9MDH9",
-        "H2XXRRKH"
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "uri": "http://zotero.org/users/local/Nywl04ll/items/EKCXQT96",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "date": "2017",
-        "extra": "bibtex: Doe-2017 \nbibtex[owner=klein]",
-        "title": "The paper in subgroup"
-      },
-      "itemID": 56,
-      "key": "EKCXQT96",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "Doe-2017"
+      "itemID": 56
     },
     {
       "itemType": "journalArticle",
@@ -288,35 +261,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-        "3JW9MDH9",
-        "GMJYS2QC"
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "uri": "http://zotero.org/users/local/Nywl04ll/items/3HWYJINN",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "extra": "bibtex: Other- \nbibtex[owner=klein]",
-        "title": "The article in my other subgroup"
-      },
-      "itemID": 57,
-      "key": "3HWYJINN",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "Other-"
+      "itemID": 57
     },
     {
       "itemType": "journalArticle",
@@ -329,34 +276,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-        "3JW9MDH9"
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "uri": "http://zotero.org/users/local/Nywl04ll/items/CXPB8548",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "extra": "bibtex: Unkonw- \nbibtex[owner=klein]",
-        "title": "the paper not in a group"
-      },
-      "itemID": 58,
-      "key": "CXPB8548",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "Unkonw-"
+      "itemID": 58
     }
   ]
 }

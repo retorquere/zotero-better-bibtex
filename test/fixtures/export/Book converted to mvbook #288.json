@@ -23,9 +23,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
       "series": "Profil",
       "place": "Paris",
       "publisher": "Hatier",
@@ -44,17 +41,10 @@
           "firstName": "Jacqueline"
         }
       ],
-      "attachments": [
-
-      ],
       "notes": [
         "<p>Comprend : t. 1, La puissance du désordre ; t. 2, La fin des dogmes</p>"
       ],
-      "itemID": 860,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "russ_savoir_1990"
+      "itemID": 860
     }
   ]
 }

@@ -15,17 +15,8 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-10-30 19:04:48",
       "dateModified": "2017-11-03 19:06:17",
-      "uri": "http://zotero.org/users/10604/items/FSB6XCJF",
       "attachments": [
         {
           "itemType": "attachment",
@@ -63,25 +54,8 @@
           "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html"
         }
       ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "place": "San Diego, California, USA",
-        "publisher": "USENIX",
-        "pages": "287–304",
-        "date": "January 30–February 3, 1989",
-        "title": "A tour of the worm",
-        "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference"
-      },
       "itemID": 12181,
-      "key": "FSB6XCJF",
-      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "seeley30tour"
+      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference"
     },
     {
       "itemType": "journalArticle",
@@ -217,17 +191,8 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-        "5JMPFPKZ"
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-10-20 19:37:10",
       "dateModified": "2017-10-20 19:37:59",
-      "uri": "http://zotero.org/users/10604/items/NBDZHC39",
       "attachments": [
         {
           "itemType": "attachment",
@@ -333,30 +298,8 @@
           "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf"
         }
       ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "url": "http://doi.acm.org/10.1145/637069.637096",
-        "place": "Austin, TX",
-        "publisher": "ACM",
-        "pages": "203–220",
-        "date": "December 3-5, 1986",
-        "DOI": "10.1145/637069.637096",
-        "accessDate": "2017-10-20 19:37:10",
-        "libraryCatalog": "ACM Digital Library",
-        "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
-        "title": "A language/action perspective on the design of cooperative work",
-        "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)"
-      },
       "itemID": 12093,
-      "key": "NBDZHC39",
-      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "winograd86language"
+      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)"
     }
   ],
   "config": {

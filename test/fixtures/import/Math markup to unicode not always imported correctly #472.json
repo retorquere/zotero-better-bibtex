@@ -41,11 +41,9 @@
         "Keyword 1",
         "Keyword 2"
       ],
-      "relations": {
-      },
       "pages": "300-301",
       "date": "2016-02",
-      "extra":"bibtex: test_citation1 \nISSN: 0193-6530",
+      "extra": "bibtex: test_citation1 \nISSN: 0193-6530",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
       "title": "Test Title With 100 μJ, 200 μJ Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
@@ -62,18 +60,8 @@
           "firstName": "R."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 69,
-      "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "doe_test_2016DoeSmith"
+      "publicationTitle": "IEEE_J_PROC"
     },
     {
       "itemType": "conferencePaper",
@@ -81,11 +69,9 @@
         "Keyword 1",
         "Keyword 2"
       ],
-      "relations": {
-      },
       "pages": "300-301",
       "date": "2016-02",
-      "extra":"bibtex: test_citation2 \nISSN: 0193-6530",
+      "extra": "bibtex: test_citation2 \nISSN: 0193-6530",
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
       "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
@@ -102,18 +88,8 @@
           "firstName": "R."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 70,
-      "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "doe_test_2016DoeSmith"
+      "publicationTitle": "IEEE_J_PROC"
     }
   ]
 }

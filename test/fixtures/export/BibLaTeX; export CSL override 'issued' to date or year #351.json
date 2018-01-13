@@ -25,11 +25,6 @@
   "items": [
     {
       "itemType": "webpage",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "extra": "{:issued:2014-12-31/2015-01-01}",
       "title": "Test",
       "creators": [
@@ -39,17 +34,7 @@
           "firstName": "John"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "doe_test"
+      "itemID": 1
     }
   ]
 }

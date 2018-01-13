@@ -60,11 +60,6 @@
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
       "volume": "34",
       "pages": "5-32",
@@ -96,22 +91,13 @@
           "url": "http://brepols.metapress.com/content/H38158WR4WX74P82"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 5451,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "berndt:skizze"
+      "itemID": 5451
     },
     {
       "itemType": "book",
       "tags": [
         "Vulgate"
       ],
-      "relations": {
-      },
       "url": "https://archive.org/details/gospelaccording00goog",
       "series": "Old-Latin Biblical Texts",
       "place": "Oxford",
@@ -131,25 +117,10 @@
           "firstName": "John"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 947,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "wordsworth:gospel"
+      "itemID": 947
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "series": "Toronto Medieval Latin Texts",
       "place": "Toronto",
       "publisher": "Pontifical Institute of Mediaeval Studies",
@@ -164,17 +135,7 @@
           "firstName": "Andrew N.J."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 5725,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dunning:samuel"
+      "itemID": 5725
     }
   ],
   "config": {

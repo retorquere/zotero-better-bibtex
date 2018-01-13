@@ -25,11 +25,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Paris",
       "publisher": "Cerf",
       "date": "1897/1913",
@@ -53,24 +48,10 @@
           "firstName": "Paul"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 3,
-      "seeAlso": [
-
-      ]
+      "itemID": 3
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Paris",
       "publisher": "Cerf",
       "date": "1897-1913",
@@ -94,24 +75,10 @@
           "firstName": "Paul"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 3,
-      "seeAlso": [
-
-      ]
+      "itemID": 3
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Paris",
       "publisher": "Cerf",
       "date": "1897_1913",
@@ -135,16 +102,7 @@
           "firstName": "Paul"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 3,
-      "seeAlso": [
-
-      ]
+      "itemID": 3
     }
   ]
 }

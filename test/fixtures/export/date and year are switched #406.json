@@ -25,11 +25,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "edition": "2",
       "publisher": "Prentice Hall",
       "ISBN": "978-0-13-014400-3",
@@ -43,25 +38,10 @@
           "firstName": "Douglas Brent"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 60,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "west_introduction_"
+      "itemID": 60
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Masterthesis, Fakultät Statistik",
       "publisher": "TU Dortmund",
       "date": "2012.09.27",
@@ -73,25 +53,10 @@
           "firstName": "Adam"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 50,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "skubala_modellierung_2014"
+      "itemID": 50
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "115",
       "issue": "7",
       "pages": "49 - 68",
@@ -106,25 +71,10 @@
           "firstName": "Tsutomu"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 31,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "michigami_development_2014"
+      "itemID": 31
     },
     {
       "itemType": "report",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://dx.doi.org/10.17877/DE290R-13190",
       "place": "Eldorado",
       "date": "2014.02.11",
@@ -163,19 +113,9 @@
           "firstName": "Claus"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 10,
       "publisher": "Technische Universität Dortmund",
-      "number": "2003/32864",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "brato_stability_2014"
+      "number": "2003/32864"
     }
   ]
 }

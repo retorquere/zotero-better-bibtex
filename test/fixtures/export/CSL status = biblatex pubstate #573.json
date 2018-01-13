@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "extra": "{:status:forthcoming}",
       "title": "Title",
       "creators": [
@@ -51,17 +46,7 @@
           "firstName": "John"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 4,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "doe_title_????"
+      "itemID": 4
     }
   ]
 }

@@ -31,11 +31,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "56",
       "issue": "2",
       "pages": "110-113",
@@ -52,17 +47,7 @@
           "firstName": "Leo"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 275,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "spitzer_poele_1941"
+      "itemID": 275
     }
   ]
 }

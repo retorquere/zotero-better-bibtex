@@ -35,11 +35,6 @@
   "items": [
     {
       "itemType": "thesis",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "2012",
       "extra": "bibtex: TayW12",
       "thesisType": "PhD Thesis",
@@ -59,16 +54,9 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 19601,
       "type": "PhD Thesis",
-      "publisher": "TU München",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "TayW"
+      "publisher": "TU München"
     }
   ]
 }

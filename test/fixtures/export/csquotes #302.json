@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "issue": "4",
       "pages": "641-656",
       "publicationTitle": "Revue française de droit administratif",
@@ -44,25 +39,10 @@
           "firstName": "Guillaume"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2235,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "tusseau_critique_2009"
+      "itemID": 2235
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "73",
       "issue": "1",
       "pages": "43-58",
@@ -80,17 +60,7 @@
           "firstName": "John R."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1663,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "searle_how_1964"
+      "itemID": 1663
     }
   ]
 }

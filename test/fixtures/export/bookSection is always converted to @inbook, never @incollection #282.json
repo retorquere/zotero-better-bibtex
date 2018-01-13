@@ -23,11 +23,6 @@
   "items": [
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "t. 1",
       "place": "Paris",
       "publisher": "LGDJ",
@@ -45,18 +40,8 @@
           "firstName": "Charles"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 1303,
-      "publicationTitle": "Cours de droit administratif",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "eisenmann_problemes_1982"
+      "publicationTitle": "Cours de droit administratif"
     }
   ]
 }

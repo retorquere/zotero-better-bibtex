@@ -36,30 +36,10 @@
           "lastName": "Latour",
           "fieldMode": ""
         }
-      ],
-      "notes": [
-
-      ],
-      "attachments": [
-
-      ],
-      "tags": [
-
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "series": "Bibliothèque Dalloz",
       "edition": "2",
       "place": "Paris",
@@ -89,17 +69,7 @@
           "firstName": "Charles"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 4325,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "kelsen_democratie_2004"
+      "itemID": 4325
     }
   ],
   "collections": {

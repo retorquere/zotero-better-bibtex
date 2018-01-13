@@ -215,18 +215,8 @@
           "type": 0
         }
       ],
-      "collections": [
-        "A4AMQ4AK",
-        "AKZP75SH"
-      ],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/users/1772795/items/TVZAXAXJ"
-        ]
-      },
       "dateAdded": "2014-01-28 12:51:16",
       "dateModified": "2017-04-25 11:54:13",
-      "uri": "http://zotero.org/users/1772795/items/CWRTF2J8",
       "attachments": [
         {
           "itemType": "attachment",
@@ -260,16 +250,7 @@
           "localPath": "/Users/ml/Zotero/storage/BDQ8IKHS/Dialogen_über_einige_Gegenstände_der_p.pdf"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 423,
-      "key": "CWRTF2J8",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "knoblauch_dialogen_1789"
+      "itemID": 423
     }
   ]
 }

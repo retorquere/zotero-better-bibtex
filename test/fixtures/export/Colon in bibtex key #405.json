@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "conferencePaper",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://repository.tue.nl/663080",
       "place": "Barcelona",
       "publisher": "Starlab",
@@ -54,18 +49,8 @@
           "firstName": "K."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 468,
-      "publicationTitle": "Proceedings of the 10th Annual International Workshop on Presence",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dekort2007digital"
+      "publicationTitle": "Proceedings of the 10th Annual International Workshop on Presence"
     }
   ]
 }

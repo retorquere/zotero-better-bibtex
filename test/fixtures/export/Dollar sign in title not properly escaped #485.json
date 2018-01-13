@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "https://twitter.com/SenSanders/status/717771426284060673",
       "date": "2016-04-06",
       "extra": "bibtex: sanders_largest_2016 \nbibtex[titleaddon=SenSanders]",
@@ -53,17 +48,7 @@
           "firstName": "Bernie"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 100,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "sanders_largest_2016Sanders"
+      "itemID": 100
     }
   ]
 }

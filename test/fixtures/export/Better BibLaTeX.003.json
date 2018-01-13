@@ -34,8 +34,7 @@
       ],
       "title": "Proceedings of the Xth conference on XYZ",
       "date": "October 2006",
-      "extra": "bibtex: conference:06",
-      "publicationTitle": "Proceedings of the Xth Conference on XYZ"
+      "extra": "bibtex: conference:06"
     }
   ],
   "config": {

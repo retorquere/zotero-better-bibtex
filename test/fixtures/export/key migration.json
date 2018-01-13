@@ -23,8 +23,6 @@
         "breadcrust",
         "plinian"
       ],
-      "relations": {
-      },
       "volume": "62",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
@@ -67,20 +65,7 @@
           "firstName": "Kendra"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1,
-      "seeAlso": [
-
-      ],
-      "__citekeys__": [
-        "adams_physical_2001",
-        "Adams2001"
-      ]
+      "itemID": 1
     },
     {
       "itemType": "journalArticle",
@@ -89,8 +74,6 @@
         "breadcrust",
         "plinian"
       ],
-      "relations": {
-      },
       "volume": "62",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
@@ -128,20 +111,7 @@
           "firstName": "Kendra"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 4058,
-      "seeAlso": [
-
-      ],
-      "__citekeys__": [
-        "adams_physical_2001",
-        "Adams2001"
-      ]
+      "itemID": 4058
     }
   ]
 }

@@ -30,8 +30,6 @@
       "tags": [
         "NonPerRev"
       ],
-      "relations": {
-      },
       "url": "http://www.fa2014.agh.edu.pl/fa2014_cd/",
       "place": "Krakow",
       "date": "September 2014",
@@ -73,15 +71,8 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 10653,
-      "publicationTitle": "7th Forum Acusticum",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "EmmerJaens"
+      "publicationTitle": "7th Forum Acusticum"
     }
   ]
 }

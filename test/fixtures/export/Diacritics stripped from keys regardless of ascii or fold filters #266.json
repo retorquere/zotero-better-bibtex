@@ -23,11 +23,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://link.springer.com/10.1007/s00276-014-1305-7",
       "publicationTitle": "Surgical and Radiologic Anatomy",
       "ISSN": "1279-8517",
@@ -58,14 +53,7 @@
           "url": "http://www.ncbi.nlm.nih.gov/pubmed/24828123"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 1,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "VlčekVácha2014HistoryLatin"
+      "itemID": 1
     }
   ]
 }

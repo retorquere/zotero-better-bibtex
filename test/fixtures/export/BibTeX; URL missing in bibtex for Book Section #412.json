@@ -29,8 +29,6 @@
         "Appl.Mathematics/Computational Methods of Engineering",
         "Artificial Intelligence (incl. Robotics)"
       ],
-      "relations": {
-      },
       "url": "http://link.springer.com/chapter/10.1007/978-3-642-11218-8_6",
       "rights": "©2010 Springer-Verlag Berlin Heidelberg",
       "series": "Studies in Computational Intelligence",
@@ -82,15 +80,8 @@
           "url": "http://link.springer.com/content/pdf/10.1007%2F978-3-642-11218-8_6.pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 7501,
-      "publicationTitle": "Advances in Multi-Objective Nature Inspired Computing",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "lt2011"
+      "publicationTitle": "Advances in Multi-Objective Nature Inspired Computing"
     }
   ]
 }

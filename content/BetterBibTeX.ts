@@ -200,7 +200,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseParticles(sandbox, name) { return CiteProc.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
-  scrubFields(sandbox, item) { return Serializer.scrub(item) },
+  validFields(sandbox) { return Serializer.validFields },
   extractFields(sandbox, item) { return require('./var-extract.ts')(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
@@ -250,7 +250,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  scrubFields(sandbox, item) { return Serializer.scrub(item) },
   validFields(sandbox) { return Serializer.validFields },
 }
 

@@ -20,7 +20,9 @@
     {
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 13: incomplete reference @emptyreference</li></ul>",
-      "tags":["#Better BibTeX import error"],
+      "tags": [
+        "#Better BibTeX import error"
+      ],
       "itemID": 4
     },
     {
@@ -69,9 +71,6 @@
           "lastName": "Arbesman"
         }
       ],
-      "notes": [
-
-      ],
       "attachments": [
         {
           "path": "/tmp/webdriver-rb-profilecopy20150416-23495-crcjql/zotero/storage/23F72225/Adams_Huaynaputina.pdf",
@@ -84,12 +83,6 @@
         "Vulcanian eruptions",
         "breadcrust",
         "plinian"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     },
     {
@@ -138,9 +131,6 @@
           "lastName": "Arbesman"
         }
       ],
-      "notes": [
-
-      ],
       "attachments": [
         {
           "path": "/tmp/webdriver-rb-profilecopy20150416-23495-crcjql/zotero/storage/H2DWW7E7/Adams_Huaynaputina.pdf",
@@ -153,12 +143,6 @@
         "Vulcanian eruptions",
         "breadcrust",
         "plinian"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     }
   ]

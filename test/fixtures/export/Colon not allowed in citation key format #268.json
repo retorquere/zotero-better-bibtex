@@ -30,8 +30,6 @@
         "Neckam, Alexander, 1157-1217",
         "Political Science / Human Rights"
       ],
-      "relations": {
-      },
       "place": "Oxford",
       "publisher": "Clarendon Press",
       "ISBN": "978-0-19-820756-6",
@@ -59,11 +57,7 @@
       "notes": [
         "<p>p. 94, ref. to SMF ms</p>"
       ],
-      "itemID": 4064,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "coates:1999english"
+      "itemID": 4064
     }
   ]
 }

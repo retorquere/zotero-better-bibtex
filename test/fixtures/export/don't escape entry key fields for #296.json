@@ -23,11 +23,6 @@
   "items": [
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "t. 2",
       "place": "Paris",
       "publisher": "LGDJ",
@@ -46,18 +41,8 @@
           "firstName": "Charles"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 5864,
-      "publicationTitle": "Cours de droit administratif",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "eisenmann_actes_1983"
+      "publicationTitle": "Cours de droit administratif"
     }
   ]
 }

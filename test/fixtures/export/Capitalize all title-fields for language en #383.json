@@ -25,196 +25,52 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-GB",
       "title": "A carbocyclic carbene as an efficient catalyst ligand for C–C coupling reactions",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 323,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_carbocyclic"
+      "itemID": 323
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-US",
       "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 324,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_alkanethiolate"
+      "itemID": 324
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-US",
       "title": "A stochastic model of TCP Reno congestion avoidance and control",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 325,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_stochastic"
+      "itemID": 325
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-US",
       "title": "Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 326,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_effect"
+      "itemID": 326
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "fr-FR",
       "abstractNote": "in French, so no case conversion, nor protection.",
       "title": "Estimateur d'un défaut de fonctionnement d'un modulateur en quadrature et étage de modulation l'utilisant",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 327,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_estimateur"
+      "itemID": 327
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-US",
       "title": "High-speed digital-to-RF converter",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 328,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_highspeed"
+      "itemID": 328
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "language": "en-GB",
       "title": "Pleistocene <i><span class=\"nocase\">Homo sapiens</span></i> from Middle Awash, Ethiopia",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 329,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_pleistocene"
+      "itemID": 329
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "abstractNote": "Zotero’s “Language” field empty, so “en-US” is assumed.",
       "title": "Some remarks on <span class=\"nocase\">’t Hooft’s</span> S-matrix for black holes",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 330,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_remarks"
+      "itemID": 330
     }
   ]
 }

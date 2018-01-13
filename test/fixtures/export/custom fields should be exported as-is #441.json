@@ -54,8 +54,6 @@
         "jet flow",
         "spillway"
       ],
-      "relations": {
-      },
       "volume": "29",
       "issue": "6",
       "pages": "885-898",
@@ -78,17 +76,7 @@
           "firstName": "Mustafa"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 9,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Kokpinar2002"
+      "itemID": 9
     }
   ]
 }

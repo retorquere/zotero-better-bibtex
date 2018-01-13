@@ -39,11 +39,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://link.springer.com/article/10.1007/s10695-006-9104-7",
       "volume": "32",
       "issue": "4",
@@ -77,14 +72,7 @@
           "url": "http://link.springer.com/article/10.1007/s10695-006-9104-7"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 1022,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "brill_effects_2006"
+      "itemID": 1022
     }
   ]
 }

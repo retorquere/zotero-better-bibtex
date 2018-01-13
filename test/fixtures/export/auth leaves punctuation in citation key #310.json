@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "2015",
       "title": "A testbook",
       "creators": [
@@ -38,17 +33,7 @@
           "firstName": "james"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "O'hara2015"
+      "itemID": 1
     }
   ]
 }

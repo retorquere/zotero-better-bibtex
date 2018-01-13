@@ -29,11 +29,6 @@
   "items": [
     {
       "itemType": "film",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "2015",
       "distributor": "The Distributor",
       "extra": "publisher-place: US/GB",
@@ -50,26 +45,11 @@
           "firstName": "Rob"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 16,
-      "publisher": "The Distributor",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "doe_film_2015"
+      "publisher": "The Distributor"
     },
     {
       "itemType": "report",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Place",
       "date": "2015",
       "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
@@ -84,28 +64,13 @@
           "firstName": "Ann"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 15,
       "publisher": "Institution",
       "type": "working paper",
-      "number": "77",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "author_report_2015"
+      "number": "77"
     },
     {
       "itemType": "tvBroadcast",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "1964",
       "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb",
       "shortTitle": "Dr. Strangelove",
@@ -116,25 +81,10 @@
           "firstName": "Stanley"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Kubrick1964"
+      "itemID": 2
     },
     {
       "itemType": "tvBroadcast",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "US",
       "date": "1996-09-16",
       "extra": "bibtex: friends:leia:tv\nvolume: 3",
@@ -161,27 +111,15 @@
           "firstName": "Gregory S."
         }
       ],
-      "attachments": [
-
-      ],
       "notes": [
         "<p>Adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only*. This is a template for citing television shows in the 16th edition. The eventdate is the original broadcast date, while the date applies to the medium you are citing. As in other audiovisual entries, the earliest date automatically goes at the head of the entry. Note that information about the season and episode numbers [season~3, episode~1] goes in booktitleaddon.</p>"
       ],
       "itemID": 251,
       "publisher": "NBC",
-      "number": "1",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "mancuso_one_1996"
+      "number": "1"
     },
     {
       "itemType": "videoRecording",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "3",
       "place": "US",
       "date": "2003",
@@ -208,42 +146,17 @@
           "firstName": "Gregory S."
         }
       ],
-      "attachments": [
-
-      ],
       "notes": [
         "<p>Adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only*. This is a template for citing television shows in the 16th edition. The eventdate is the original broadcast date, while the date applies to the medium you are citing. As in other audiovisual entries, the earliest date automatically goes at the head of the entry. Note that information about the season and episode numbers [season~3, episode~1] goes in booktitleaddon.</p>"
       ],
       "itemID": 253,
       "medium": "DVD",
-      "publisher": "Warner Home Video",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "mancuso_one_1996"
+      "publisher": "Warner Home Video"
     },
     {
       "itemType": "encyclopediaArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "extra": "bibtex:emptybook\n{:X-genre: xxx}{:editor: Xxx}",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 255,
-      "seeAlso": [
-
-      ],
-      "__citekey__": ""
+      "itemID": 255
     },
     {
       "itemType": "encyclopediaArticle",
@@ -273,42 +186,10 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
-      "collections": [
-        "TZ8SB8SH"
-      ],
-      "relations": {
-      },
       "dateAdded": "2015-08-13 18:39:21",
       "dateModified": "2016-08-19 14:52:17",
-      "uri": "http://zotero.org/users/254032/items/7FX9HRIV",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "url": "http://www.oxforddnb.com/view/article/10183",
-        "place": "Oxford",
-        "publisher": "Oxford University Press",
-        "date": "2004",
-        "extra": "DOI: 10.1093/ref:odnb/10183",
-        "accessDate": "2014-06-13 15:44:43",
-        "libraryCatalog": "CrossRef",
-        "publicationTitle": "Oxford dictionary of national biography",
-        "title": "Frithuswith (<i>d.</i> 727)"
-      },
       "itemID": 670,
-      "key": "7FX9HRIV",
-      "publicationTitle": "Oxford dictionary of national biography",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "blair:2004frithuswith"
+      "publicationTitle": "Oxford dictionary of national biography"
     }
   ]
 }

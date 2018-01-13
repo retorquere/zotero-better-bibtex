@@ -29,11 +29,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "76",
       "issue": "1",
       "pages": "19-35",
@@ -51,17 +46,7 @@
           "firstName": "Hope A."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 259,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "olson_codes_2006"
+      "itemID": 259
     }
   ]
 }

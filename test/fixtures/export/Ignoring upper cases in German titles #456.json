@@ -35,11 +35,6 @@
   "items": [
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7",
       "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
       "publisher": "VS Verlag für Sozialwissenschaften",
@@ -71,22 +66,11 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 362,
-      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "seeAlso": [
-
-      ]
+      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen"
     },
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11",
       "rights": "©2002 VS Verlag für Sozialwissenschaften | Springer Fachmedien Wiesbaden GmbH, Wiesbaden",
       "publisher": "VS Verlag für Sozialwissenschaften",
@@ -118,14 +102,8 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 386,
-      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen",
-      "seeAlso": [
-
-      ]
+      "publicationTitle": "Sozialpolitik und Sozialstaat: Soziologische Analysen"
     }
   ]
 }

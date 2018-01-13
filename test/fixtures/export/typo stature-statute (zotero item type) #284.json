@@ -23,15 +23,6 @@
   "items": [
     {
       "itemType": "statute",
-      "tags": [
-
-      ],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/users/70789/items/ET36DEMT",
-          "http://zotero.org/users/70789/items/WJH3F3KQ"
-        ]
-      },
       "url": "http://www.legifrance.gouv.fr/WAspad/UnTexteDeJorf?numjo=PRMX0908015L",
       "pages": "9784",
       "code": "JORF",
@@ -40,23 +31,10 @@
       "dateEnacted": "15 juin 2009",
       "publicLawNumber": "PRMX0908015L",
       "nameOfAct": "Loi n° 2009-689 du 15 juin 2009 tendant à modifier l’ordonnance n° 58-1100 du 17 novembre 1958 relative au fonctionnement des assemblées parlementaires et à compléter le code de justice administrative",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 1998,
       "date": "15 juin 2009",
       "number": "PRMX0908015L",
-      "title": "Loi n° 2009-689 du 15 juin 2009 tendant à modifier l’ordonnance n° 58-1100 du 17 novembre 1958 relative au fonctionnement des assemblées parlementaires et à compléter le code de justice administrative",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_loi_2009"
+      "title": "Loi n° 2009-689 du 15 juin 2009 tendant à modifier l’ordonnance n° 58-1100 du 17 novembre 1958 relative au fonctionnement des assemblées parlementaires et à compléter le code de justice administrative"
     }
   ]
 }

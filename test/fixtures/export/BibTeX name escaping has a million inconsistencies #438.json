@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "2014",
       "title": "Why Is Apple Launching a New Version of the iPod?",
       "creators": [
@@ -51,25 +46,10 @@
           "firstName": "Name"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 3,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Nome"
+      "itemID": 3
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "date": "2014",
       "title": "Why Is Apple Launching a New Version of the iPod?",
       "creators": [
@@ -79,17 +59,7 @@
           "firstName": "Vincent"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 3,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Nome"
+      "itemID": 3
     }
   ]
 }

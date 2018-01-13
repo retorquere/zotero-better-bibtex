@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "webpage",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "accessDate": "2015-02-13 15:35:03",
@@ -48,22 +43,10 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 75,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ntp.org_clock_2015"
+      "itemID": 75
     },
     {
       "itemType": "webpage",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "title": "Clock Quality",
@@ -82,22 +65,10 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 75,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ntp.org_clock_2015"
+      "itemID": 75
     },
     {
       "itemType": "webpage",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm",
       "date": "2015",
       "title": "Clock Quality",
@@ -116,14 +87,7 @@
           "url": "http://www.ntp.org/ntpfaq/NTP-s-sw-clocks-quality.htm"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 75,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ntp.org_clock_2015"
+      "itemID": 75
     }
   ]
 }

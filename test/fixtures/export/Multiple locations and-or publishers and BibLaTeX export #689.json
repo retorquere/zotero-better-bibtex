@@ -44,11 +44,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "<pre>Basel and Boston and Berlin</pre>",
       "publisher": "Birkhäuser",
       "ISBN": "978-3-7643-7986-5",
@@ -64,17 +59,7 @@
           "firstName": "Vincenzo de"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2609,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "risi_geometry_2007"
+      "itemID": 2609
     }
   ],
   "cache": {

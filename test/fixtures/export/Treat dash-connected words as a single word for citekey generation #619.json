@@ -98,14 +98,8 @@
           "type": 0
         }
       ],
-      "collections": [
-        "F3ASFEV6"
-      ],
-      "relations": {
-      },
       "dateAdded": "2017-08-17 19:37:30",
       "dateModified": "2017-11-06 17:33:31",
-      "uri": "http://zotero.org/users/5223/items/RKU87UUU",
       "attachments": [
         {
           "itemType": "attachment",
@@ -144,24 +138,7 @@
           "localPath": "/mnt/sdc1/Cloud/Dropbox/Zot/SchulzZumerEtAl_2017_Frame_Tracking_Model_for_MemoryEnhanced_Dialogue_Systems.pdf"
         }
       ],
-      "notes": [
-
-      ],
-      "uniqueFields": {
-        "url": "https://arxiv.org/abs/1706.01690",
-        "publicationTitle": "arXiv preprint arXiv:1706.01690",
-        "date": "2017",
-        "accessDate": "2017-08-17 19:37:30",
-        "libraryCatalog": "Google Scholar",
-        "title": "A Frame Tracking Model for Memory-Enhanced Dialogue Systems"
-      },
-      "itemID": 9877,
-      "key": "RKU87UUU",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "citekey": "SchulzZumerEtAl_2017_Frame_Tracking_Model_for_MemoryEnhanced_Dialogue_Systems"
+      "itemID": 9877
     }
   ]
 }

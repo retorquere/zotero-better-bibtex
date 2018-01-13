@@ -33,8 +33,6 @@
         "Numeric Computing",
         "data structures"
       ],
-      "relations": {
-      },
       "url": "http://link.springer.com/chapter/10.1007/11841036_61",
       "rights": "©2006 Springer-Verlag Berlin Heidelberg",
       "series": "Lecture Notes in Computer Science",
@@ -101,15 +99,8 @@
           "url": "http://link.springer.com/chapter/10.1007/11841036_61#page-1"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 2,
-      "publicationTitle": "Algorithms – ESA 2006",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "bonomi_improved"
+      "publicationTitle": "Algorithms – ESA 2006"
     }
   ]
 }

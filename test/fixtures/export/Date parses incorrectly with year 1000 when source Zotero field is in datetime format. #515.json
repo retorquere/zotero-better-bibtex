@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "newspaperArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.abc.net.au/news/2016-06-06/swiss-voters-reject-basic-income-proposal/7481672",
       "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
       "publicationTitle": "ABC News",
@@ -57,17 +52,7 @@
           "firstName": "Anne"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 300,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "barker_2013_swiss"
+      "itemID": 300
     }
   ]
 }

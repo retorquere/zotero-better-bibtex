@@ -42,11 +42,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.ajemjournal.com/article/S0735-6757(14)00421-5/abstract",
       "volume": "32",
       "issue": "9",
@@ -92,22 +87,10 @@
           "url": "http://www.ajemjournal.com/article/S0735-6757(14)00421-5/abstract"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 1087,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "araz_using_2014"
+      "itemID": 1087
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.nature.com/articles/srep08154",
       "volume": "5",
       "pages": "8154",
@@ -135,17 +118,7 @@
           "firstName": "Jennifer M."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1092,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "davidson_using_2015"
+      "itemID": 1092
     }
   ]
 }

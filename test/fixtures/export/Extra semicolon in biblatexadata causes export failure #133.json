@@ -39,23 +39,11 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
-      "attachments": [
-
-      ],
       "tags": [
         "error estimate",
         "ill-posed problems",
         "modified Tikhonov  regularization",
         "numerical analytic continuation"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     },
     {
@@ -80,23 +68,11 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
-      "attachments": [
-
-      ],
       "tags": [
         "error estimate",
         "ill-posed problems",
         "modified Tikhonov  regularization",
         "numerical analytic continuation"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     },
     {
@@ -121,23 +97,11 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
-      "attachments": [
-
-      ],
       "tags": [
         "error estimate",
         "ill-posed problems",
         "modified Tikhonov  regularization",
         "numerical analytic continuation"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     }
   ]

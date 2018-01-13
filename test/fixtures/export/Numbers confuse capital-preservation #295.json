@@ -23,29 +23,11 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.patanalyse.com/sample-analysis.html",
       "extra": "bibtex: zotero-1855286-1414",
       "accessDate": "2014-10-18",
       "title": "Patent Landscape analysis: sample from S40RTS",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 5,
-      "seeAlso": [
-
-      ],
-      "__citekey__": ":patent"
+      "itemID": 5
     }
   ]
 }

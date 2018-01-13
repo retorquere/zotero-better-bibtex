@@ -30,8 +30,6 @@
         "evaluation",
         "monitoring"
       ],
-      "relations": {
-      },
       "url": "http://www.oecd-ilibrary.org/content/book/9789264209305-en",
       "place": "Paris",
       "publisher": "Organisation for Economic Co-operation and Development",
@@ -111,14 +109,7 @@
           "url": "http://www.oecd-ilibrary.org/docserver/download/4314021e.pdf?expires=1401121522&id=id&accname=guest&checksum=890A7D0833279E48F9BC6E02BDCF093C"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 8462,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "oecd_making_2014"
+      "itemID": 8462
     }
   ]
 }

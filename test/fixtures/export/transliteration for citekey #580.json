@@ -47,8 +47,6 @@
         "Nuclear reactor accidents",
         "Radioactive wastes"
       ],
-      "relations": {
-      },
       "publisher": "МК-Периодика",
       "date": "2002",
       "libraryCatalog": "Google Books",
@@ -69,14 +67,7 @@
           "url": "https://books.google.se/books?id=ZtAYAQAAIAAJ"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 3185,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "__2002"
+      "itemID": 3185
     }
   ],
   "cache": {

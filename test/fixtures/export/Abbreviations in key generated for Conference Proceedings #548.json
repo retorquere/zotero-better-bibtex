@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "conferencePaper",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "publisher": "ACM Press",
       "pages": "197-204",
       "ISBN": "0-89791-875-4",
@@ -76,15 +71,8 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 341,
-      "publicationTitle": "Proceedings of the 1997 International Symposium on Symbolic and Algebraic Computation",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "CorlessJeffreyKnuth2008Proceedingsofthe1997InternationalSymposiumonSymbolicandAlgebraicComputation"
+      "publicationTitle": "Proceedings of the 1997 International Symposium on Symbolic and Algebraic Computation"
     }
   ]
 }

@@ -185,7 +185,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
@@ -313,14 +314,8 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "collections": [
-        "75SN2MI4"
-      ],
-      "relations": {},
       "dateAdded": "2017-12-29 18:37:20",
       "dateModified": "2017-12-29 18:37:20",
-      "uri": "http://zotero.org/users/1699682/items/ISYSWZVR",
       "attachments": [
         {
           "itemType": "attachment",
@@ -332,8 +327,11 @@
           "contentType": "text/html",
           "charset": "utf-8",
           "filename": "PhysRevLett.115.html",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-12-29 18:37:27",
           "dateModified": "2017-12-29 18:37:28",
           "uri": "http://zotero.org/users/1699682/items/6STJ3PD5",
@@ -348,7 +346,9 @@
           "key": "6STJ3PD5",
           "libraryID": null,
           "sourceItemKey": "ISYSWZVR",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html",
           "localPath": "/Users/Eden/Dropbox/zotero/storage/6STJ3PD5/PhysRevLett.115.html"
         },
@@ -362,8 +362,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2017-12-29 18:37:22",
           "dateModified": "2017-12-29 18:37:22",
           "uri": "http://zotero.org/users/1699682/items/TG95AQ8P",
@@ -378,31 +381,14 @@
           "key": "TG95AQ8P",
           "libraryID": null,
           "sourceItemKey": "ISYSWZVR",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "/Users/Eden/Dropbox/zotero/storage/TG95AQ8P/Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf"
         }
       ],
-      "notes": [],
-      "uniqueFields": {
-        "url": "https://link.aps.org/doi/10.1103/PhysRevLett.115.250401",
-        "volume": "115",
-        "issue": "25",
-        "pages": "250401",
-        "publicationTitle": "Physical Review Letters",
-        "date": "December 16, 2015",
-        "journalAbbreviation": "Phys. Rev. Lett.",
-        "DOI": "10.1103/PhysRevLett.115.250401",
-        "accessDate": "2017-12-29 18:37:20",
-        "libraryCatalog": "APS",
-        "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell’s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell’s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74×10−31, corresponding to an 11.5 standard deviation effect.",
-        "title": "Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons"
-      },
-      "itemID": 1766,
-      "key": "ISYSWZVR",
-      "libraryID": null,
-      "seeAlso": [],
-      "citekey": "giustina2015significantloopholefree"
+      "itemID": 1766
     }
   ]
 }

@@ -17,36 +17,16 @@
     {
       "itemType": "book",
       "url": "http://ptolemy.org/books/Systems",
-      "rights": "",
-      "series": "",
-      "volume": "",
-      "edition": "",
-      "place": "",
       "publisher": "Ptolemy.org",
-      "ISBN": "",
       "date": "2014",
-      "callNumber": "",
-      "archiveLocation": "",
       "extra": "bibtex: \nbiblatexdata[ptolemaeus:14:systemdesigneditor=Claudius Ptolemaeus]",
-      "accessDate": "",
-      "seriesNumber": "",
-      "numberOfVolumes": "",
-      "libraryCatalog": "",
-      "language": "",
-      "abstractNote": "",
       "title": "System design, modeling, and simulation using Ptolemy II",
-      "shortTitle": "",
-      "numPages": "",
-      "archive": "",
       "attachments": [
         {
           "path": "/home/abhishek/.zotero/zotero/41my9n7e.default/zotero/storage/3ICED3XD/ModelingTimedSystems.pdf",
           "title": "ModelingTimedSystems.pdf",
           "mimeType": "application/pdf"
         }
-      ],
-      "related": [
-
       ]
     }
   ],

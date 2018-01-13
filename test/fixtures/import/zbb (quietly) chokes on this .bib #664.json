@@ -50,8 +50,6 @@
       "tags": [
         "Political economy"
       ],
-      "relations": {
-      },
       "url": "http://www.sciencedirect.com/science/article/pii/S014759670300101X",
       "volume": "31",
       "issue": "4",
@@ -70,17 +68,7 @@
           "firstName": "Daron"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "acemoglu_why_2003"
+      "itemID": 2
     }
   ],
   "cache": {

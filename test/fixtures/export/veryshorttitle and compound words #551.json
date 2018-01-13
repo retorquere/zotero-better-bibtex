@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://rspb.royalsocietypublishing.org/content/276/1655/355",
       "volume": "276",
       "issue": "1655",
@@ -80,22 +75,10 @@
           "mimeType": "application/msword"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 2688,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "puurtinen_group_1988"
+      "itemID": 2688
     },
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Bruxelles",
       "publisher": "De Boeck",
       "ISBN": "2-8041-4660-X 978-2-8041-4660-3",
@@ -128,23 +111,11 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 360,
-      "publicationTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "bowles_co_1988"
+      "publicationTitle": "Cultural diversity versus economic solidarity: proceedings of the Seventh Francqui Colloquium, Brussels, 28 February-1 March 2003"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "place": "Boston, MA",
       "publisher": "Ginn",
       "date": "1906",
@@ -166,22 +137,10 @@
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 1730,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "sumner_folkways:_1906"
+      "itemID": 1730
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://pss.sagepub.com/content/early/2013/11/08/0956797613493444",
       "volume": "25",
       "issue": "1",
@@ -219,17 +178,7 @@
           "firstName": "Joseph"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 1983,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "bauer_wars_2014"
+      "itemID": 1983
     }
   ],
   "cache": {

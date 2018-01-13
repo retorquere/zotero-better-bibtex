@@ -37,11 +37,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "extra": "Hello <pre> hej </pre> \nbibtex: Brons:pretest",
       "title": "<pre>$pretest$</pre>",
       "creators": [
@@ -51,17 +46,7 @@
           "firstName": "Morten"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 2337,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Brons:$pretest$"
+      "itemID": 2337
     }
   ]
 }

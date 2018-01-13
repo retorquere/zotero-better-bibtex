@@ -25,12 +25,6 @@
       "tags": [
         "måske"
       ],
-      "relations": {
-        "dc:relation": [
-          "http://zotero.org/users/local/aMgNMAOC/items/QCDNM7UT",
-          "http://zotero.org/users/local/aMgNMAOC/items/S5XB48IN"
-        ]
-      },
       "url": "http://onlinelibrary.wiley.com.ep.fjernadgang.kb.dk/doi/10.1111/1467-9655.12097/abstract",
       "rights": "© Royal Anthropological Institute 2014",
       "volume": "20",
@@ -64,24 +58,10 @@
       "notes": [
         "<p>This is the child note</p>"
       ],
-      "itemID": 281,
-      "key": "C2SKJGVM",
-      "seeAlso": [
-
-      ],
-      "__citekeys__": [
-        "abram_6_2014",
-        "Abram2014"
-      ]
+      "itemID": 281
     },
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-        "dc:relation": "http://zotero.org/users/local/aMgNMAOC/items/C2SKJGVM"
-      },
       "url": "http://www.annualreviews.org/doi/pdf/10.1146/annurev.anthro.36.081406.094354",
       "volume": "36",
       "pages": "245–59",
@@ -100,30 +80,13 @@
           "firstName": "Peter"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 831,
-      "key": "QCDNM7UT",
-      "seeAlso": [
-
-      ],
-      "__citekeys__": [
-        "pollard_bicycle_2007",
-        "Pollard2007"
-      ]
+      "itemID": 831
     },
     {
       "itemType": "case",
       "tags": [
         "au"
       ],
-      "relations": {
-        "dc:relation": "http://zotero.org/users/local/aMgNMAOC/items/C2SKJGVM"
-      },
       "extra": "bibtex:kartinyeri\nbibtex{\nauthor:\"Kaetinyeri v Commonwealth\",\ntranslator:\"Kartinyeri\"\n}",
       "reporter": "CLR",
       "court": "HCA",
@@ -132,28 +95,11 @@
       "firstPage": "337",
       "caseName": "Kartinyeri v Commonwealth",
       "shortTitle": "Kartinyeri",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 1825,
-      "key": "S5XB48IN",
       "date": "1998-04-01",
       "volume": "195",
       "pages": "337",
-      "title": "Kartinyeri v Commonwealth",
-      "seeAlso": [
-
-      ],
-      "__citekeys__": [
-        "_kartinyeri_1998",
-        "1998"
-      ]
+      "title": "Kartinyeri v Commonwealth"
     }
   ]
 }

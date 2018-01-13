@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "statute",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://www.legifrance.gouv.fr/affichTexte.do?cidTexte=JORFTEXT000024021430&categorieLien=id",
       "pages": "8537",
       "code": "JORF",
@@ -37,23 +32,10 @@
       "dateEnacted": "18/05/2011",
       "publicLawNumber": "BCRX0929142L",
       "nameOfAct": "Loi n<sup>o</sup> 2011-525 du 17 mai 2011 de simplification et d'amélioration de la qualité du droit",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 752,
       "date": "18/05/2011",
       "number": "BCRX0929142L",
-      "title": "Loi n<sup>o</sup> 2011-525 du 17 mai 2011 de simplification et d'amélioration de la qualité du droit",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_loi_2011"
+      "title": "Loi n<sup>o</sup> 2011-525 du 17 mai 2011 de simplification et d'amélioration de la qualité du droit"
     }
   ]
 }

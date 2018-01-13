@@ -24,12 +24,6 @@
   "items": [
     {
       "itemType": "case",
-      "tags": [
-
-      ],
-      "relations": {
-      },
-      "extra": "",
       "reporter": "Rec.",
       "court": "CE, Ass.",
       "language": "fr-FR",
@@ -38,24 +32,11 @@
       "firstPage": "649",
       "caseName": "Dalain",
       "docketNumber": "337033",
-      "creators": [
-
-      ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 2077,
       "date": "23/12/2010",
       "pages": "649",
       "title": "Dalain",
-      "number": "337033",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "_dalain_2010"
+      "number": "337033"
     }
   ]
 }

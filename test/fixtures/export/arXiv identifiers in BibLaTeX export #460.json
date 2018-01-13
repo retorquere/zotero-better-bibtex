@@ -44,8 +44,6 @@
         "printed",
         "superstring field theory"
       ],
-      "relations": {
-      },
       "url": "http://arxiv.org/abs/1508.05387",
       "volume": "2016",
       "issue": "2",
@@ -82,19 +80,13 @@
       "notes": [
         "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
       ],
-      "itemID": 19002,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "Sen:2015:BVMasterAction"
+      "itemID": 19002
     },
     {
       "itemType": "journalArticle",
       "tags": [
         "Quantum Physics"
       ],
-      "relations": {
-      },
       "url": "http://arxiv.org/abs/1305.4904",
       "publicationTitle": "arXiv:1305.4904 [quant-ph]",
       "date": "2013-05-21",
@@ -132,19 +124,13 @@
       "notes": [
         "Comment: 8 pages, 3 pdf figures"
       ],
-      "itemID": 4,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "smolin_classical_2013"
+      "itemID": 4
     },
     {
       "itemType": "journalArticle",
       "tags": [
         "Quantum Physics"
       ],
-      "relations": {
-      },
       "url": "http://arxiv.org/abs/1401.2910",
       "volume": "345",
       "issue": "6195",
@@ -219,14 +205,7 @@
           "url": "http://arxiv.org/abs/1401.2910"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 8,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ronnow_defining_2014"
+      "itemID": 8
     }
   ]
 }

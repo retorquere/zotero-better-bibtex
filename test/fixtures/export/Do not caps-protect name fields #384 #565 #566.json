@@ -25,11 +25,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -37,26 +32,11 @@
           "firstName": "Vincent"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 316,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "vangogh",
       "extra": "[van Gogh][Vincent]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -64,26 +44,11 @@
           "firstName": "Alexander von"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 296,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "humboldt",
       "extra": "[Humboldt][Alexander von]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -91,26 +56,11 @@
           "firstName": "Simone de"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 281,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "beauvoir",
       "extra": "[Beauvoir][Simone de]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -118,26 +68,11 @@
           "firstName": "Charles"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 288,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "degaulle",
       "extra": "[\"de Gaulle\"][Charles]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -145,26 +80,11 @@
           "firstName": "Martin Luther, Jr."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 297,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "king",
       "extra": "[King][Martin Luther, Jr.]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -172,26 +92,11 @@
           "firstName": "Adlai E.,! III"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 314,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "stevenson",
       "extra": "[Stevenson][Adlai E.,! III]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -199,26 +104,11 @@
           "lastName": "National Aeronautics and Space Administration"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 306,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "nationalaeronauticsandspaceadministration",
       "extra": "[[National Aeronautics and Space Administration]]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -226,26 +116,11 @@
           "firstName": "Christianus"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 282,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "bovendeert",
       "extra": "[boven d'Eert][Christianus]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -253,26 +128,11 @@
           "firstName": "Goverdus"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 311,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "s-gravesande",
       "extra": "['s-Gravesande][Goverdus]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -280,26 +140,11 @@
           "firstName": "Thomas"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 292,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dequincey",
       "extra": "[De Quincey][Thomas]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -307,26 +152,11 @@
           "firstName": "José"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 307,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "ortegaygasset",
       "extra": "[Ortega y Gasset][José]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -334,26 +164,11 @@
           "firstName": "Alfonse"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 285,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "damato",
       "extra": "[D’Amato][Alfonse]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -361,26 +176,11 @@
           "firstName": "Anwar el-"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 309,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "sadat",
       "extra": "[Sadat][Anwar el-]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -388,26 +188,11 @@
           "firstName": "Robert M., Sr."
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 298,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "lafollette",
       "extra": "[La Follette][Robert M., Sr.]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -415,26 +200,11 @@
           "firstName": "Walter"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 290,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "delamare",
       "extra": "[\"de la Mare\"][Walter]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -442,26 +212,11 @@
           "firstName": "Diana"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 289,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "degette",
       "extra": "[DeGette][Diana]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -469,26 +224,11 @@
           "firstName": "John Bertrand de Cusance Morant"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 310,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "saunders",
       "extra": "[Saunders][John Bertrand de Cusance Morant]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -496,26 +236,11 @@
           "lastName": "Marcus Aurelius"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 303,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "marcusaurelius",
       "extra": "[[Marcus Aurelius]]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -523,26 +248,11 @@
           "firstName": "Alexandre, père"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 293,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dumas",
       "extra": "[Dumas][Alexandre, père]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -550,26 +260,11 @@
           "firstName": "Stephen"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 318,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "vanrensselaer",
       "extra": "[Van Rensselaer][Stephen]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -577,26 +272,11 @@
           "firstName": "Pierre-Charles"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 301,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "lenfant",
       "extra": "[L’Enfant][Pierre-Charles]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -604,26 +284,11 @@
           "firstName": "Robert"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 317,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "vangulik",
       "extra": "[\"van Gulik\"][Robert]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -631,26 +296,11 @@
           "firstName": "Victoria"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 308,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "sackville-west",
       "extra": "[Sackville-West][Victoria]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -658,26 +308,11 @@
           "firstName": "Ralph"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 319,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "vaughanwilliams",
       "extra": "[Vaughan Williams][Ralph]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -685,26 +320,11 @@
           "firstName": "Ludwig"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 305,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "miesvanderrohe",
       "extra": "[Mies van der Rohe][Ludwig]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -712,26 +332,11 @@
           "firstName": "Jean le Rond"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 284,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dalembert",
       "extra": "[d’Alembert][Jean le Rond]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -739,26 +344,11 @@
           "firstName": "Alexis de"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 315,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "tocqueville",
       "extra": "[Tocqueville][Alexis de]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -766,26 +356,11 @@
           "firstName": "Jean de"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 299,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "lafontaine",
       "extra": "[La Fontaine][Jean de]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -793,26 +368,11 @@
           "firstName": "René-Robert Cavelier de"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 300,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "lasalle",
       "extra": "[La Salle][René-Robert Cavelier de]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -820,26 +380,11 @@
           "firstName": "Philippe"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 294,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dupuydeclinchamps",
       "extra": "[du Puy de Clinchamps][PhU+0097ilippe]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -847,26 +392,11 @@
           "firstName": "Heinrich Friedrich Karl vom und zum"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 313,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "stein",
       "extra": "[Stein][Heinrich Friedrich Karl vom und zum]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -874,26 +404,11 @@
           "firstName": "Agostinho da"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 312,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "silva",
       "extra": "[Silva][Agostinho da]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -901,26 +416,11 @@
           "firstName": "Vasco"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 283,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dagama",
       "extra": "[\"da Gama\"][Vasco]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -928,26 +428,11 @@
           "firstName": "Gabriele"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 286,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dannunzio",
       "extra": "[D’Annunzio][Gabriele]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -955,26 +440,11 @@
           "firstName": "Lorenzo"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 287,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "daponte",
       "extra": "[Da Ponte][Lorenzo]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -982,26 +452,11 @@
           "firstName": "Luca"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 291,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "dellarobbia",
       "extra": "[Della Robbia][Luca]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -1009,26 +464,11 @@
           "firstName": "Beatrice d’"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 295,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "este",
       "extra": "[Este][Beatrice d’]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -1036,26 +476,11 @@
           "firstName": "Lorenzo de’​"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 304,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "medici",
       "extra": "[Medici][Lorenzo de’U+200B]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -1063,26 +488,11 @@
           "firstName": "Tawfiq"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 280,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "al-hakim",
       "extra": "[al-Hakim][Tawfiq]"
     },
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "creators": [
         {
           "creatorType": "author",
@@ -1090,17 +500,7 @@
           "firstName": "François de La Mothe"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 302,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "levayer",
       "extra": "[Le Vayer][François de La Mothe]"
     }
   ]

@@ -39,8 +39,6 @@
         "Literary Criticism / European / Spanish & Portuguese",
         "Portuguese literature"
       ],
-      "relations": {
-      },
       "place": "Lisboa",
       "publisher": "Na Typographia da Mesma Academia",
       "date": "1799",
@@ -63,22 +61,10 @@
           "url": "http://books.google.com.br/books?id=nbkQAAAAIAAJ"
         }
       ],
-      "notes": [
-
-      ],
-      "itemID": 2832,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "macedo_catalogo_1992"
+      "itemID": 2832
     },
     {
       "itemType": "thesis",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "url": "http://repositorium.sdum.uminho.pt/handle/1822/6877",
       "place": "Guimarães, Portugal",
       "date": "2007",
@@ -103,16 +89,9 @@
           "url": "http://repositorium.sdum.uminho.pt/handle/1822/6877"
         }
       ],
-      "notes": [
-
-      ],
       "itemID": 3492,
       "type": "Tese de Doutoramento em Arquitectura",
-      "publisher": "Universidade do Minho",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "oliveira_memoriam_1992"
+      "publisher": "Universidade do Minho"
     }
   ]
 }

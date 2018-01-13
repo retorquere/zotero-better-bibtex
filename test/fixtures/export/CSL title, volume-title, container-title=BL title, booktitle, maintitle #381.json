@@ -25,11 +25,6 @@
   "items": [
     {
       "itemType": "book",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "series": "Oxford classical texts CSL-VAR",
       "volume": "4",
       "place": "Oxford",
@@ -50,25 +45,10 @@
           "firstName": "John"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 276,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "plato_opera_1902"
+      "itemID": 276
     },
     {
       "itemType": "bookSection",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "series": "Oxford classical texts",
       "volume": "4",
       "place": "Oxford",
@@ -91,18 +71,8 @@
           "firstName": "John"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 277,
-      "publicationTitle": "Opera",
-      "seeAlso": [
-
-      ],
-      "__citekey__": "plato_republic_1902"
+      "publicationTitle": "Opera"
     }
   ]
 }

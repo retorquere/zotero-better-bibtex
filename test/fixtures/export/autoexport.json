@@ -30,7 +30,6 @@
       "accessDate": "2014-10-23 05:48:04",
       "libraryCatalog": "Google Scholar",
       "title": "Comparing archival policies for Blue Waters",
-      "proceedingsTitle": "High performance computing (HiPC), 2011 18th international conference on",
       "creators": [
         {
           "creatorType": "author",
@@ -63,20 +62,11 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
       "tags": [
         "bdec15",
         "zotero_testcase"
       ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
-      ],
-      "publicationTitle": "High Performance Computing (HiPC), 2011 18th International Conference on"
+      "publicationTitle": "High performance computing (HiPC), 2011 18th international conference on"
     },
     {
       "itemID": 3433,
@@ -94,7 +84,6 @@
       "libraryCatalog": "ACM Digital Library",
       "abstractNote": "We study the energy used by a production-level regional climate and weather simulation code on a distributed memory system with hybrid CPU-GPU nodes. The code is optimised for both processor architectures, for which we investigate both time and energy to solution. Operational constraints for time to solution can be met with both processor types, although on different numbers of nodes. Energy to solution is a factor 3 lower with GPUs, but strong scaling can be pushed to larger node counts with CPUs to minimize time to solution. Our data shows that an affine relationship exists between energy and nodehours consumed by the simulation. We use this property to devise a simple and practical methodology for optimising for energy efficiency that can be applied to other applications, which we demonstrate with the HPCG benchmark. We conclude with a discussion about the relationship to the commonly-used GF/Watt metric.",
       "title": "Application centric energy-efficiency study of distributed multi-core and hybrid CPU-GPU systems",
-      "proceedingsTitle": "Proceedings of the international conference for High Performance Computing, Networking, Storage and Analysis",
       "creators": [
         {
           "creatorType": "author",
@@ -133,9 +122,6 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
       "attachments": [
         {
           "path": "/Users/BNL28/zotero-storage/storage/FKSJTBGQ/Cumming et al. - 2014 - Application Centric Energy-efficiency Study of Dis.pdf",
@@ -148,13 +134,7 @@
         "bdec15",
         "zotero_testcase"
       ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
-      ],
-      "publicationTitle": "Proceedings of the International Conference for High Performance Computing, Networking, Storage and Analysis"
+      "publicationTitle": "Proceedings of the international conference for High Performance Computing, Networking, Storage and Analysis"
     },
     {
       "itemID": 542,
@@ -190,9 +170,6 @@
           "fieldMode": ""
         }
       ],
-      "notes": [
-
-      ],
       "attachments": [
         {
           "path": "/Users/BNL28/zotero-storage/storage/P2JMZW55/BAMS-D-11-00094.html",
@@ -219,12 +196,6 @@
         "p-12-iam",
         "p-gmdm41",
         "zotero_testcase"
-      ],
-      "related": [
-
-      ],
-      "seeAlso": [
-
       ]
     }
   ]

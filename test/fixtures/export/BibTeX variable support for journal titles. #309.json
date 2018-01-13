@@ -24,11 +24,6 @@
   "items": [
     {
       "itemType": "journalArticle",
-      "tags": [
-
-      ],
-      "relations": {
-      },
       "volume": "18",
       "issue": "4",
       "pages": "460-473",
@@ -43,17 +38,7 @@
           "firstName": "Richard E"
         }
       ],
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 36,
-      "seeAlso": [
-
-      ],
-      "__citekey__": "blahut_computation_1972"
+      "itemID": 36
     }
   ]
 }
