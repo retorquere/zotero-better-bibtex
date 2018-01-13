@@ -1,5 +1,5 @@
 <!ENTITY better-bibtex.FirstRun.title "Welcome to Better BibTeX for Zotero">
-<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (or BBT as it commonly named) aims to make Zotero more useful for LaTeX and Markdown holdouts. There's a lot to configure about BBT -- take a look in the preferences if you're curious -- but let's start you off with a few simple choices.">
+<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (or BBT as it is commonly named) aims to make Zotero more useful for LaTeX and Markdown holdouts. There's a lot to configure about BBT -- take a look in the preferences if you're curious -- but let's start you off with a few simple choices.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Your citation keys">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT will generate citation keys for your references. The citekey generation is highly configurable, and you can choose to override the generation, but you will need to select the default now. You can always go into the preferences and change this at any time.">
