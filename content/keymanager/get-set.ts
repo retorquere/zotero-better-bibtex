@@ -1,7 +1,7 @@
 const bibtex = /(?:^|\s)bibtex:[^\S\n]*([^\s]*)(?:\s|$)/
 const biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^\[\]\s]*)\](?:\s|$)/
 
-function get(extra) {
+export function get(extra) {
   extra = extra ? `${extra}` : ''
 
   let citekey = ''
@@ -24,6 +24,4 @@ function get(extra) {
   return {extra, citekey, pinned}
 }
 
-function set(extra, citekey) { return `${get(extra).extra}\nbibtex: ${citekey}`.trim() }
-
-export = { get, set }
+export function set(extra, citekey) { return `${get(extra).extra}\nbibtex: ${citekey}`.trim() }

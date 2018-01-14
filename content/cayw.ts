@@ -2,7 +2,7 @@ declare const Components: any
 declare const XPCOMUtils: any
 declare const Zotero: any
 
-import Loki = require('./db/loki.ts')
+import { XULoki as Loki } from './db/loki.ts'
 import KeyManager = require('./keymanager.ts')
 import Formatter = require('./cayw/formatter.ts')
 import debug = require('./debug.ts')
@@ -253,10 +253,8 @@ class Document {
   }
 }
 
-/**
- * The Application class corresponds to a word processing application.
- */
-const application = new class Application {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Application = new class { // tslint:disable-line:variable-name
   public primaryFieldType = 'Field'
   public secondaryFieldType = 'Bookmark'
   public fields: any[]
@@ -316,13 +314,13 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     if (options.probe) return [this.OK, 'text/plain', 'ready']
 
     try {
-      const doc = application.createDocument(options)
+      const doc = Application.createDocument(options)
       await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
 
       const picked = doc.citation()
 
       const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
-      application.closeDocument(doc)
+      Application.closeDocument(doc)
 
       if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)
 
@@ -341,5 +339,3 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     }
   }
 }
-
-export = application

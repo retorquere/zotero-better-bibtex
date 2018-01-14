@@ -44,7 +44,7 @@ const validCSLTypes = [
 ]
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let CSLExporter = new class {
+export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
   public parseDate: Function // will be added by JSON/YAML exporter

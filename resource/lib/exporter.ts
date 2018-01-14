@@ -8,7 +8,7 @@ import { JabRef } from '../bibtex/jabref.ts' // not so nice... BibTeX-specific c
 import { debug } from '../lib/debug.ts'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let Exporter = new class {
+export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
   public attachmentCounter = 0
   public caching: boolean

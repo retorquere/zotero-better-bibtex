@@ -81,7 +81,7 @@ idleService.addIdleObserver({
 }, 5) // tslint:disable-line:no-magic-numbers
 
 // https://github.com/Microsoft/TypeScript/issues/17032
-export = class XULoki extends (Loki as { new(name, options): any }) {
+export class XULoki extends (Loki as { new(name, options): any }) {
   constructor(name, options: any = {}) {
 
     const nullStore = !options.adapter

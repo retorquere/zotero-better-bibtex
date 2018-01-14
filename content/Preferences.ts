@@ -8,10 +8,10 @@ import ZoteroConfig = require('./zotero-config.ts')
 import $patch$ = require('./monkey-patch.ts')
 
 import Prefs = require('./prefs.ts')
-import Formatter = require('./keymanager/formatter.ts')
+import { Formatter } from './keymanager/formatter.ts'
 import KeyManager = require('./keymanager.ts')
 import AutoExport = require('./auto-export.ts')
-import Translators = require('./translators.ts')
+import { Translators } from './translators.ts'
 
 class AutoExportPrefPane {
   protected AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name

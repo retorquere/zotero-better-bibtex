@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import Translators = require('../translators.ts')
+import { Translators } from '../translators.ts'
 import debug = require('../debug.ts')
 import getItemsAsync = require('../get-items-async.ts')
 import Prefs = require('../prefs.ts')

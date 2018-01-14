@@ -7,7 +7,7 @@ declare const Blob: any
 declare const Services: any
 
 import Prefs = require('./prefs.ts')
-import Translators = require('./translators.ts')
+import { Translators } from './translators.ts'
 import debug = require('./debug.ts')
 const PACKAGE = require('../package.json')
 

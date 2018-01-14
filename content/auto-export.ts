@@ -7,7 +7,7 @@ import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
 import Events = require('./events.ts')
 import DB = require('./db/main.ts')
-import Translators = require('./translators.ts')
+import { Translators } from './translators.ts'
 import Prefs = require('./prefs.ts')
 
 function queueHandler(kind, handler) {

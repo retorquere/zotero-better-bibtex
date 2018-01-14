@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import createFile = require('../create-file.ts')
-import Loki = require('./loki.ts')
+import { XULoki as Loki } from './loki.ts'
 import debug = require('../debug.ts')
 import Events = require('../events.ts')
 import ZoteroConfig = require('../zotero-config.ts')

@@ -79,7 +79,7 @@ function is_valid_month(month, allowseason) {
   return false
 }
 
-function parse(value, toplevel = true) {
+export function parse(value, toplevel = true) {
   value = value.trim()
 
   let parsed, m
@@ -321,12 +321,8 @@ function testEDTF(value) {
   }
 }
 
-export = {
-  isEDTF(value, minuteLevelPrecision = false) {
-    value = upgrade_edtf(value)
+export function isEDTF(value, minuteLevelPrecision = false) {
+  value = upgrade_edtf(value)
 
-    return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
-  },
-
-  parse,
+  return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
 }

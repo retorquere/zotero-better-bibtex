@@ -17,7 +17,7 @@ import ZoteroConfig = require('./zotero-config.ts')
 
 debug('Loading Better BibTeX')
 
-import Translators = require('./translators.ts')
+import { Translators } from './translators.ts'
 import DB = require('./db/main.ts')
 import Cache = require('./db/cache.ts')
 import Serializer = require('./serializer.ts')
@@ -181,23 +181,24 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
-import CAYW = require('./cayw.ts')
+import { Application as CAYW } from './cayw.ts'
 $patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
   if (agent === 'BetterBibTeX') return CAYW
   return original.apply(this, arguments)
 })
 
 /* bugger this, I don't want megabytes of shared code in the translators */
-import DateParser = require('./dateparser.ts')
-import CiteProc = require('./citeproc.ts')
+import * as DateParser from './dateparser.ts'
+// import CiteProc = require('./citeproc.ts')
+import { qualityReport } from './qr-check.ts'
 import titleCase = require('./title-case.ts')
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
-  qrCheck(sandbox, value, test, params = null) { return require('./qr-check.ts')(value, test, params) },
+  qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
-  parseParticles(sandbox, name) { return CiteProc.parseParticles(name) },
+  parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   validFields(sandbox) { return Serializer.validFields },

@@ -7,7 +7,7 @@ import ZoteroDB = require('../db/zotero.ts')
 import debug = require('../debug.ts')
 import KeyManager = require('../keymanager.ts')
 import Prefs = require('../prefs.ts')
-import Translators = require('../translators.ts')
+import { Translators } from '../translators.ts'
 import CAYWFormatter = require('../cayw/formatter.ts')
 import getItemsAsync = require('../get-items-async.ts')
 

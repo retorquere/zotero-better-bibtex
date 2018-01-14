@@ -10,9 +10,9 @@ import ZoteroDB = require('./db/zotero.ts')
 import getItemsAsync = require('./get-items-async.ts')
 
 import Prefs = require('./prefs.ts')
-import Citekey = require('./keymanager/get-set.ts')
+import * as Citekey from './keymanager/get-set.ts'
 import DB = require('./db/main.ts')
-import Formatter = require('./keymanager/formatter.ts')
+import { Formatter } from './keymanager/formatter.ts'
 import AutoExport = require('./auto-export.ts')
 
 class KeyManager {

@@ -1,11 +1,11 @@
 import ISBN = require('isbnjs')
 import ISSN = require('issn')
 import EAN = require('barcoder')
-import DateParser = require('./dateparser.ts')
+import * as DateParser from './dateparser.ts'
 
 const isnm_prefix = '9790'
 
-export = (value, test, params = null) => {
+export function qualityReport(value, test, params = null) {
   switch (test) {
     case 'isbn':
       const isbn = ISBN.parse(value)

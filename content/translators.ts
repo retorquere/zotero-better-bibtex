@@ -3,7 +3,8 @@ declare const Zotero: any
 import Prefs = require('./prefs.ts')
 import debug = require('./debug.ts')
 
-export = new class Translators {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
   public byName: any
   public byLabel: any

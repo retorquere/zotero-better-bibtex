@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import Loki = require('./loki.ts')
+import { XULoki as Loki } from './loki.ts'
 import debug = require('../debug.ts')
 import Prefs = require('../prefs.ts')
 import getItemsAsync = require('../get-items-async.ts')

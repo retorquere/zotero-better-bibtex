@@ -7,7 +7,7 @@ import Prefs = require('../prefs.ts')
 import debug = require('../debug.ts')
 
 const parser = require('./formatter.pegjs')
-import DateParser = require('../dateparser.ts')
+import * as DateParser from '../dateparser.ts'
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
@@ -608,4 +608,5 @@ class PatternFormatter {
   }
 }
 
-export = new PatternFormatter
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Formatter = new PatternFormatter // tslint:disable-line:variable-name

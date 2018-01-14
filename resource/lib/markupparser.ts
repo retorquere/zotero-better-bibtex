@@ -176,7 +176,7 @@ function makeMap(elts) {
 }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let MarkupParser = new class {
+export let MarkupParser = new class { // tslint:disable-line:variable-name
   // Regular Expressions for parsing tags and attributes
   private re = {
     startTag: /^<([-\w:]+)((?:\s+[^\s\/>"'=]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,

@@ -1,4 +1,5 @@
-import Citeproc = require('./citeproc.ts')
+// import Citeproc = require('./citeproc.ts')
+declare const Zotero: any
 
 const state = {
   opt: { lang: 'en' },
@@ -6,11 +7,11 @@ const state = {
   locale: {
     en: {
       opts: {
-        'skip-words': Citeproc.SKIP_WORDS,
-        'skip-words-regexp': new RegExp(`(?:(?:[?!:]*\\s+|-|^)(?:${Citeproc.SKIP_WORDS.slice().join('|')})(?=[!?:]*\\s+|-|$))`, 'g'),
+        'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS,
+        'skip-words-regexp': new RegExp(`(?:(?:[?!:]*\\s+|-|^)(?:${Zotero.CiteProc.CSL.SKIP_WORDS.slice().join('|')})(?=[!?:]*\\s+|-|$))`, 'g'),
       },
     },
   },
 }
 
-export = text => Citeproc.Output.Formatters.title(state, text)
+export = text => Zotero.CiteProc.CSL.Output.Formatters.title(state, text)
