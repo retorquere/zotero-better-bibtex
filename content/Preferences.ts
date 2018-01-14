@@ -8,8 +8,8 @@ import { ZoteroConfig } from './zotero-config.ts'
 import { patch as $patch$ } from './monkey-patch.ts'
 
 import { Preferences as Prefs } from './prefs.ts'
-import { Formatter } from './keymanager/formatter.ts'
-import KeyManager = require('./KeyManager.ts')
+import { Formatter } from './key-manager/formatter.ts'
+import { KeyManager } from './key-manager.ts'
 import { AutoExport } from './auto-export.ts'
 import { Translators } from './translators.ts'
 

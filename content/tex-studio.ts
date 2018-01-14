@@ -1,7 +1,7 @@
 declare const Components: any
 declare const Zotero: any
 
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import { debug } from './debug.ts'
 
 let pathsep, dirsep

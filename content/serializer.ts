@@ -4,7 +4,7 @@ import { JournalAbbrev } from './journal-abbrev.ts'
 import { debug } from './debug.ts'
 
 import { DB as Cache } from './db/cache.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import * as ZoteroDB from './db/zotero.ts'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern

@@ -3,7 +3,7 @@ declare const XPCOMUtils: any
 declare const Zotero: any
 
 import { XULoki as Loki } from './db/loki.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import { Formatter } from './cayw/formatter.ts'
 import { debug } from './debug.ts'
 

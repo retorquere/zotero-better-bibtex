@@ -2,7 +2,7 @@ declare const Components: any
 declare const Zotero: any
 
 import { debug } from './debug.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 
 export class AUXScanner {
   private citekeys: Set<string>

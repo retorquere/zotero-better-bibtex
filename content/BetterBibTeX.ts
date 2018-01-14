@@ -23,7 +23,7 @@ import { DB as Cache } from './db/cache.ts'
 import { Serializer } from './serializer.ts'
 import { JournalAbbrev } from './journal-abbrev.ts'
 import { AutoExport } from './auto-export.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import { AUXScanner } from './aux-scanner.ts'
 import { TeXstudio } from './tex-studio.ts'
 import format = require('string-template')

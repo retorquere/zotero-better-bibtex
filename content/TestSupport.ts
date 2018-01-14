@@ -5,7 +5,7 @@ declare const Components: any
 import { AutoExport } from './auto-export.ts'
 import * as ZoteroDB from './db/zotero.ts'
 import { debug } from './debug.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { Formatter as CAYWFormatter } from './cayw/formatter.ts'

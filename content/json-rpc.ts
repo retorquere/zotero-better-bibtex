@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { debug } from './debug.ts'
-import KeyManager = require('./KeyManager.ts')
+import { KeyManager } from './key-manager.ts'
 import { getItemsAsync } from './get-items-async.ts'
 
 const OK = 200
