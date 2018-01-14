@@ -5,46 +5,6 @@ declare const Zotero: any
 
 import debug = require('./lib/debug.ts')
 
-/*
-scrub = (item) ->
-  delete item.libraryID
-  delete item.key
-  delete item.uniqueFields
-  delete item.dateAdded
-  delete item.dateModified
-  delete item.uri
-  delete item.attachmentIDs
-  delete item.relations
-
-  delete item.collections
-
-  item.attachments = ({
-    path: attachment.localPath || undefined,
-    title: attachment.title || undefined,
-    url: attachment.url || undefined,
-    linkMode: if typeof attachment.linkMode == 'number' then attachment.linkMode else undefined,
-    contentType: attachment.contentType || undefined,
-    mimeType: attachment.mimeType || undefined,
-  } for attachment in item.attachments || [])
-
-  item.notes = (item.notes || []).map((note) -> note.note.trim())
-
-  item.tags = (item.tags || []).map((tag) -> tag.tag)
-  item.tags.sort()
-
-  for own attr, val of item
-    continue if typeof val is 'number'
-    continue if Array.isArray(val) and val.length != 0
-
-    switch typeof val
-      when 'string'
-        delete item[attr] if val.trim() == ''
-      when 'undefined'
-        delete item[attr]
-
-  return item
-*/
-
 const chunkSize = 0x100000
 
 Translator.detectImport = () => {

@@ -8,7 +8,7 @@ import JabRef = require('../bibtex/jabref.ts') // not so nice... BibTeX-specific
 import debug = require('../lib/debug.ts')
 debug('exporter: so far so good')
 
-export = new class Exporter {
+export default new class Exporter {
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
   public attachmentCounter = 0
   public caching: boolean

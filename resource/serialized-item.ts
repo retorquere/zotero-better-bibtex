@@ -57,9 +57,22 @@ export interface ISerializedItem {
   url: any
   versionNumber: any
   volume: any
-  volumeTitle: any
+
+  itemType: string
+  dateModified: string
+  dateAdded: string
+  notes: string[]
+  tags: string[]
+  collections: any[]
+  creators: any[]
+  attachments: any[]
+  itemID: any
   multi: any
-  __type__: any
-  attachments: any
-  tags: any
+
+  citekey: string
+  cslType: string
+  volumeTitle: string
+  __type__: string
+  extraFields: { bibtex: { [key: string]: { name: string, type: string, value: any } }, csl: { [key: string]: { name: string, type: string, value: any } }, kv: { [key: string]: { name: string, type: string, value: string, raw?: boolean } } }
+  arXiv: { eprint: string, source?: string, id: string, primaryClass?: string }
 }

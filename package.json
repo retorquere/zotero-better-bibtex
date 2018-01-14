@@ -19,6 +19,7 @@
     "test": "cucumber --fail-fast --no-color | tee cucumber.log",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "tslint -t stylish --project .",
+    "onlywebpack": "webpack",
     "webpack": "parallel-webpack --no-stats",
     "prebuild": "npm run lint && ts-node setup/index.ts",
     "build": "parallel-webpack --no-stats",

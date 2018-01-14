@@ -11,10 +11,10 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
      | urldate when only DOI is exported #869                                                         | 1           |
      | Citations have month and day next to year #868                                                 | 2           |
      | Thin space in author name #859                                                                 | 1           |
-     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
      | Multiple locations and-or publishers and BibLaTeX export #689                                  | 1           |
      | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |

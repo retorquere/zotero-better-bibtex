@@ -5,8 +5,9 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import Reference = require('./bibtex/reference.ts')
-import Exporter = require('./lib/exporter.ts')
+import { Reference } from './bibtex/reference'
+import Exporter from './lib/exporter'
+
 import debug = require('./lib/debug.ts')
 import JSON5 = require('json5')
 import htmlEscape = require('./lib/html-escape.ts')

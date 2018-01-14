@@ -5,9 +5,10 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import Exporter = require('./lib/exporter.ts')
-import debug = require('./lib/debug.ts')
 import format = require('string-template')
+
+import Exporter from './lib/exporter'
+import debug = require('./lib/debug.ts')
 
 function select_link(item) {
   const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)

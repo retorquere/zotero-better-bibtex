@@ -1,16 +1,18 @@
 import { ITranslator } from '../../gen/translator'
+import { ISerializedItem } from '../serialized-item'
+
 declare const Translator: ITranslator
 declare const Zotero: any
 
-import debug = require('../lib/debug.ts')
-import Exporter = require('../lib/exporter.ts')
+import Exporter from '../lib/exporter'
 import { text2latex } from './unicode_translator.ts'
+import debug = require('../lib/debug.ts')
 import datefield = require('./datefield.ts')
 
 interface IField {
   name: string
   verbatim?: string
-  value: string | number | null
+  value: string | string[] | number | null
   enc?: string
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   preserveBibTeXVariables?: boolean
@@ -268,10 +270,10 @@ const Language = new class { // tslint:disable-line:variable-name
  *   * bibtex: the LaTeX-encoded value of the field
  *   * enc: the encoding to use for the field
  */
-export = class Reference {
+export class Reference {
   public raw: boolean
   public has: { [key: string]: any }
-  public item: any
+  public item: ISerializedItem
   public referencetype: string
   public useprefix: boolean
   public language: string
@@ -461,9 +463,8 @@ export = class Reference {
 
         if (!value) return
 
-        if (field.name === 'annotation') debug('annotation:', value)
         value = value.trim()
-        if (!field.bare || field.value.match(/\s/)) value = `{${value}}`
+        if (!field.bare || (field.value as string).match(/\s/)) value = `{${value}}`
       }
 
       // separation protection at end unnecesary
@@ -690,7 +691,7 @@ export = class Reference {
 
     let notes = ''
     if (Translator.options.exportNotes && this.item.notes && this.item.notes.length) {
-      notes = this.item.notes.map(note => note.note).join('<p>')
+      notes = this.item.notes.join('<p>')
     }
     const annotation = Translator.BetterBibTeX ? 'annote' : 'annotation'
     if (this.has.note && this.item.extra) {
