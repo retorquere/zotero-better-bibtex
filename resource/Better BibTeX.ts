@@ -544,6 +544,7 @@ class ZoteroItem {
 
     switch (this.type) {
       case 'conferencePaper':
+      case 'bookSection':
         return this.set('publicationTitle', value)
 
       case 'book':
