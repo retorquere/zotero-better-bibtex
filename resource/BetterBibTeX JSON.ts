@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import debug = require('./lib/debug.ts')
+import { debug } from './lib/debug.ts'
 
 const chunkSize = 0x100000
 

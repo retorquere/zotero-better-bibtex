@@ -7,10 +7,10 @@ declare const Zotero: any
 
 import { Reference } from './bibtex/reference.ts'
 import { Exporter } from './lib/exporter.ts'
+import { debug } from './lib/debug.ts'
+import { htmlEscape } from './lib/html-escape.ts'
 
-import debug = require('./lib/debug.ts')
 import JSON5 = require('json5')
-import htmlEscape = require('./lib/html-escape.ts')
 const BibTeXParser = require('biblatex-csl-converter').BibLatexParser // tslint:disable-line:variable-name
 
 Reference.prototype.caseConversion = {

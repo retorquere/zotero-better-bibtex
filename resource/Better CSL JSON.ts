@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import Exporter = require('./csl/csl.ts')
+import { CSLExporter as Exporter } from './csl/csl.ts'
 
 function date2csl(date) {
   switch (date.type) {

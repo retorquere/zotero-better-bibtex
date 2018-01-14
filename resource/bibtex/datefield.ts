@@ -1,7 +1,7 @@
 import { ITranslator } from '../../gen/translator'
 declare const Translator: ITranslator
 
-import debug = require('../lib/debug.ts')
+import { debug } from '../lib/debug.ts'
 
 function pad(v, padding) {
   if (v.length >= padding.length) return v
@@ -44,7 +44,7 @@ function format(date) {
   return formatted
 }
 
-export = (date, field) => {
+export function datefield(date, field) {
   debug('formatting date', date, field)
 
   if (!date) return {}

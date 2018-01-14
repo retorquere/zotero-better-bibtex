@@ -8,7 +8,7 @@ declare const Zotero: any
 import format = require('string-template')
 
 import { Exporter } from './lib/exporter.ts'
-import debug = require('./lib/debug.ts')
+import { debug } from './lib/debug.ts'
 
 function select_link(item) {
   const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)

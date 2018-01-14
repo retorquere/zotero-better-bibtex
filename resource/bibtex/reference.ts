@@ -6,8 +6,8 @@ declare const Zotero: any
 
 import { Exporter } from '../lib/exporter.ts'
 import { text2latex } from './unicode_translator.ts'
-import debug = require('../lib/debug.ts')
-import datefield = require('./datefield.ts')
+import { debug } from '../lib/debug.ts'
+import { datefield } from './datefield.ts'
 
 interface IField {
   name: string

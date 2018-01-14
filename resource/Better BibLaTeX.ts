@@ -7,8 +7,7 @@ declare const Zotero: any
 
 import { Reference } from './bibtex/reference.ts'
 import { Exporter } from './lib/exporter.ts'
-
-import debug = require('./lib/debug.ts')
+import { debug } from './lib/debug.ts'
 
 Reference.prototype.fieldEncoding = {
   url: 'url',

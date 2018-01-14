@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 /* From https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js */
 
@@ -175,7 +175,8 @@ function makeMap(elts) {
   return elts.split(/\s+/).reduce((map, elt) => { map[elt] = true; return map }, {})
 }
 
-export = new class MarkupParser {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let MarkupParser = new class {
   // Regular Expressions for parsing tags and attributes
   private re = {
     startTag: /^<([-\w:]+)((?:\s+[^\s\/>"'=]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,

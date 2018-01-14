@@ -3,9 +3,9 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import debug = require('../lib/debug.ts')
+import { debug } from '../lib/debug.ts'
 
-export = class JabRef {
+export class JabRef {
   public citekeys: any
 
   constructor() {

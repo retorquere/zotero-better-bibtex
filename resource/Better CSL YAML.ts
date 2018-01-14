@@ -5,16 +5,16 @@ declare const Zotero: any
 
 import YAML = require('js-yaml')
 
-import Exporter = require('./csl/csl.ts')
-import debug = require('./lib/debug.ts')
-import markupParser = require('./lib/markupparser.ts')
+import { debug } from './lib/debug.ts'
+import { CSLExporter as Exporter } from './csl/csl.ts'
+import { MarkupParser } from './lib/markupparser.ts'
 
 const htmlConverter = new class HTML {
   private markdown: string
 
   public convert(html) {
     this.markdown = ''
-    this.walk(markupParser.parse(html))
+    this.walk(MarkupParser.parse(html))
     return this.markdown
   }
 

@@ -4,10 +4,10 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import JabRef = require('../bibtex/jabref.ts') // not so nice... BibTeX-specific code in general exporter lib
-import debug = require('../lib/debug.ts')
-debug('exporter: so far so good')
+import { JabRef } from '../bibtex/jabref.ts' // not so nice... BibTeX-specific code
+import { debug } from '../lib/debug.ts'
 
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class {
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
   public attachmentCounter = 0

@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import debug = require('../lib/debug.ts')
+import { debug } from '../lib/debug.ts'
 
 const validCSLTypes = [
   'article',
@@ -43,7 +43,8 @@ const validCSLTypes = [
   'thesis',
 ]
 
-export = new class CSLExporter {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let CSLExporter = new class {
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
   public parseDate: Function // will be added by JSON/YAML exporter

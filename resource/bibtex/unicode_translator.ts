@@ -3,8 +3,9 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import debug = require('../lib/debug.ts')
-import MarkupParser = require('../lib/markupparser.ts')
+import { debug } from '../lib/debug.ts'
+import { MarkupParser } from '../lib/markupparser.ts'
+
 import HE = require('he')
 const unicodeMapping = require('./unicode_translator.json')
 
