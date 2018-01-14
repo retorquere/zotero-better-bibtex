@@ -7,7 +7,7 @@ declare const Zotero: any
 
 import format = require('string-template')
 
-import Exporter from './lib/exporter'
+import { Exporter } from './lib/exporter.ts'
 import debug = require('./lib/debug.ts')
 
 function select_link(item) {
