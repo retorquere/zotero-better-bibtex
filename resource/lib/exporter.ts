@@ -1,4 +1,5 @@
 import { ITranslator } from '../../gen/translator'
+import { ISerializedItem } from '../serialized-item'
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -32,7 +33,7 @@ export = new class Exporter {
     return uniq
   }
 
-  public nextItem() {
+  public nextItem(): ISerializedItem {
     let item
     while (item = Zotero.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
@@ -52,7 +53,9 @@ export = new class Exporter {
         continue
       }
 
+      // debug('pre-simplify', item)
       Zotero.BetterBibTeX.simplifyFields(item)
+      // debug('post-simplify', item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
 

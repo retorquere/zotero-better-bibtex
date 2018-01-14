@@ -24,42 +24,39 @@ class Serializer {
 
     debug('Serializer.init')
 
-    // SIMPLIFY
     let fields = await ZoteroDB.queryAsync(`
-      SELECT DISTINCT f.fieldName, a.fieldName as fieldAlias
-      FROM baseFieldMappingsCombined bfmc
-      JOIN fields f ON f.fieldID = bfmc.baseFieldID
-      JOIN fields a ON a.fieldID = bfmc.fieldID
+      SELECT DISTINCT bf.fieldName, f.fieldName as fieldAlias
+      FROM itemTypes it
+      JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
+      JOIN fields f ON f.fieldID = itf.fieldID
+      JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
+      JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
+      ORDER BY 1
     `)
-    const alias = {}
     let simplify = ''
+    const alias = {}
     for (const field of fields) {
+      // just to make sure
       if (alias[field.fieldAlias] && alias[field.fieldAlias] !== field.fieldName) throw new Error(`field alias ${field.fieldAlias} maps to ${alias[field.fieldAlias]} and ${field.fieldName}`)
       alias[field.fieldAlias] = field.fieldName
-      simplify += `if (item.${field.fieldAlias} || typeof item.${field.fieldAlias} === 'number') item.${field.fieldName} = item.${field.fieldAlias};\n`
-      simplify += `delete item.${field.fieldAlias};\n`
+
+      simplify += `if (typeof item.${field.fieldAlias} != 'undefined') { item.${field.fieldName} = item.${field.fieldAlias}; delete item.${field.fieldAlias}; }\n`
     }
     simplify += 'item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];\n'
+    simplify += 'item.notes = item.notes ? item.notes.map(function(note) { return note.note }) : [];\n'
     simplify += 'return item;'
     debug('Serializer.init: simplify =\n', simplify)
     this.simplify = new Function('item', simplify)
 
-    // VALIDATE
+    this.validFields = {}
     fields = await ZoteroDB.queryAsync(`
-      SELECT * FROM (
-        SELECT it.typeName, f.fieldName, a.fieldName AS fieldAlias
-        FROM baseFieldMappingsCombined bfmc
-        JOIN fields f ON f.fieldID = bfmc.baseFieldID
-        JOIN fields a ON a.fieldID = bfmc.fieldID
-        JOIN itemTypes it ON it.itemTypeID = bfmc.itemTypeID
-
-        UNION
-
-        SELECT it.typeName, f.fieldName, NULL
-        FROM itemTypes it
-        JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
-        JOIN fields f ON f.fieldID = itf.fieldID
-      ) ORDER BY typeName, fieldName
+      SELECT it.typeName, COALESCE(bf.fieldName, f.fieldName) as fieldName, CASE WHEN bf.fieldName IS NULL THEN NULL ELSE f.fieldName END as fieldAlias
+      FROM itemTypes it
+      JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
+      JOIN fields f ON f.fieldID = itf.fieldID
+      LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
+      LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
+      ORDER BY 2
     `)
     this.validFields = {}
     for (const field of fields) {

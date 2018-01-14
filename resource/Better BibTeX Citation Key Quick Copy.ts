@@ -1,4 +1,6 @@
 import { ITranslator } from '../gen/translator'
+import { ISerializedItem } from './serialized-item'
+
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -92,7 +94,7 @@ const Mode = { // tslint:disable-line:variable-name
 }
 
 Translator.doExport = () => {
-  let item
+  let item: ISerializedItem
   const items = []
   while ((item = Exporter.nextItem())) {
     items.push(item)

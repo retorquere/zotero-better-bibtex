@@ -77,7 +77,7 @@
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
-    "circular-dependency-plugin": "^4.3.0",
+    "circular-dependency-plugin": "^4.4.0",
     "clean-webpack-plugin": "^0.1.17",
     "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",

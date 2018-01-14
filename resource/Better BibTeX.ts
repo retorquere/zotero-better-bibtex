@@ -1,4 +1,6 @@
 import { ITranslator } from '../gen/translator'
+import { ISerializedItem } from './serialized-item'
+
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -177,7 +179,7 @@ Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item
+  let item: ISerializedItem
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
@@ -199,7 +201,7 @@ Translator.doExport = () => {
     ref.add({name: 'language', value: item.language})
     ref.add({name: 'assignee', value: item.assignee})
 
-    ref.add({ name: 'number', value: item.reportNumber || item.issue || item.seriesNumber || item.patentNumber })
+    ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     switch (Translator.preferences.bibtexURL) {
@@ -223,12 +225,12 @@ Translator.doExport = () => {
 
     switch (item.__type__) {
       case 'thesis': ref.add({ name: 'school', value: item.publisher }); break
-      case 'report': ref.add({ name: 'institution', value: item.institution || item.publisher }); break
+      case 'report': ref.add({ name: 'institution', value: item.publisher }); break
       default:       ref.add({ name: 'publisher', value: item.publisher })
     }
 
-    if (item.__type__ === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.thesisType)) {
-      ref.referencetype = item.thesisType
+    if (item.__type__ === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
+      ref.referencetype = item.type
       ref.remove('type')
     }
 
@@ -521,7 +523,7 @@ class ZoteroItem {
 
     if (!this.item.publisher) this.item.publisher = ''
     if (this.item.publisher) this.item.publisher += ' / '
-    this.item.publisher += value.map(this.unparse).join(' and ')
+    this.item.publisher += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
     return true
   }
   protected $institution(value) { return this.$publisher(value) }
@@ -980,11 +982,6 @@ class ZoteroItem {
           this.addToExtraData(field, this.unparse(value))
           break
       }
-    }
-
-    if ([ 'conferencePaper', 'paper-conference' ].includes(this.type) && this.item.publicationTitle && !this.item.proceedingsTitle) {
-      this.item.proceedingsTitle = this.item.publicationTitle
-      delete this.item.publicationTitle
     }
 
     if (this.bibtex.entry_key) this.addToExtra(`bibtex: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex

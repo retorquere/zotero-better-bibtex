@@ -1,4 +1,6 @@
 import { ITranslator } from '../gen/translator'
+import { ISerializedItem } from './serialized-item'
+
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -195,7 +197,7 @@ Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
-  let item
+  let item: ISerializedItem
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
@@ -227,9 +229,17 @@ Translator.doExport = () => {
 
     ref.add({ name: 'langid', value: ref.language })
     ref.add({ name: 'location', value: item.place })
-    ref.add({ name: 'chapter', value: item.chapter })
-    ref.add({ name: 'edition', value: item.edition })
+
+    /*
+    if (ref.referencetype === 'inbook') {
+      ref.add({ name: 'chapter', value: item.title })
+    } else {
+      ref.add({ name: 'title', value: item.title })
+    }
+    */
     ref.add({ name: 'title', value: item.title })
+
+    ref.add({ name: 'edition', value: item.edition })
     ref.add({ name: 'volume', value: item.volume })
     ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
@@ -244,7 +254,7 @@ Translator.doExport = () => {
     ref.add({ name: 'pagetotal', value: item.numPages })
     ref.add({ name: 'type', value: item.type })
 
-    ref.add({ name: 'number', value: item.seriesNumber || item.number || item.docketNumber })
+    ref.add({ name: 'number', value: item.seriesNumber || item.number })
     ref.add({ name: (isNaN(parseInt(item.issue)) || (`${parseInt(item.issue)}` !== `${item.issue}`)  ? 'issue' : 'number'), value: item.issue })
 
     switch (item.__type__) {
@@ -258,8 +268,13 @@ Translator.doExport = () => {
 
     if (item.publicationTitle) {
       switch (item.__type__) {
-        case 'bookSection': case 'conferencePaper': case 'dictionaryEntry': case 'encyclopediaArticle': case 'chapter':
-          ref.add({ name: 'booktitle', value: item.bookTitle || item.publicationTitle, preserveBibTeXVariables: true })
+        case 'bookSection':
+        case 'conferencePaper':
+        case 'dictionaryEntry':
+        case 'encyclopediaArticle':
+        case 'chapter':
+        case 'chapter':
+          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           break
 
         case 'magazineArticle': case 'newspaperArticle': case 'article-magazine': case 'article-newspaper':
@@ -285,8 +300,17 @@ Translator.doExport = () => {
       }
     }
 
-    if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.bookTitle || item.encyclopediaTitle || item.dictionaryTitle || item.proceedingsTitle })
-    if (['movie', 'video'].includes(ref.referencetype) && !ref.has.booktitle) ref.add({ name: 'booktitle', value: item.websiteTitle || item.forumTitle || item.blogTitle || item.programTitle })
+    switch (item.__type__) {
+      case 'bookSection':
+      case 'encyclopediaArticle':
+      case 'dictionaryEntry':
+      case 'conferencePaper':
+      case 'film':
+      case 'videoRecording':
+      case 'tvBroadcast':
+        if (!ref.has.booktitle) ref.add({ name: 'booktitle', value: item.publicationTitle })
+        break
+    }
 
     let main
     if (((item.multi || {})._keys || {}).title && (main = (item.multi.main || {}).title || item.language)) {
@@ -310,11 +334,14 @@ Translator.doExport = () => {
     ref.add({ name: 'series', value: item.seriesTitle || item.series })
 
     switch (item.__type__) {
-      case 'report': case 'thesis':
-        ref.add({ name: 'institution', value: item.institution || item.publisher || item.university })
+      case 'report':
+      case 'thesis':
+        ref.add({ name: 'institution', value: item.publisher })
         break
 
-      case 'case': case 'hearing': case 'legal_case':
+      case 'case':
+      case 'hearing':
+      case 'legal_case':
         ref.add({ name: 'institution', value: item.court })
         break
 
@@ -323,8 +350,9 @@ Translator.doExport = () => {
     }
 
     switch (item.__type__) {
-      case 'letter': case 'personal_communication':
-        ref.add({ name: 'type', value: item.letterType || 'Letter', replace: true })
+      case 'letter':
+      case 'personal_communication':
+        ref.add({ name: 'type', value: item.type || 'Letter', replace: true })
         break
 
       case 'email':
@@ -332,12 +360,12 @@ Translator.doExport = () => {
         break
 
       case 'thesis':
-        const thesistype = item.thesisType ? item.thesisType.toLowerCase() : null
+        const thesistype = item.type ? item.type.toLowerCase() : null
         if (['phdthesis', 'mastersthesis'].includes(thesistype)) {
           ref.referencetype = thesistype
           ref.remove('type')
         } else {
-          ref.add({ name: 'type', value: item.thesisType, replace: true })
+          ref.add({ name: 'type', value: item.type, replace: true })
         }
         break
 
@@ -350,38 +378,38 @@ Translator.doExport = () => {
         break
 
       default:
-        ref.add({ name: 'type', value: item.type || item.websiteType || item.manuscriptType, replace: true })
+        ref.add({ name: 'type', value: item.type, replace: true })
     }
 
-    ref.add({ name: 'howpublished', value: item.presentationType || item.manuscriptType })
+    if (['presentation', 'manuscript'].includes(item.__type__)) ref.add({ name: 'howpublished', value: item.type })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
     if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate), enc: 'date' })
 
-    ref.add({ name: 'date', verbatim: 'year', orig: { name: 'origdate', verbatim: 'origdate' }, value: item.date, enc: 'date' })
+    ref.add({
+      name: 'date',
+      verbatim: 'year',
+      orig: { name: 'origdate', verbatim: 'origdate' },
+      value: item.date,
+      enc: 'date',
+    })
 
-    if (item.pages) {
-      ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
-    } else if (item.firstPage && item.lastPage) {
-      ref.add({ name: 'pages', value: `${item.firstPage}--${item.lastPage}` })
-    } else if (item.firstPage) {
-      ref.add({ name: 'pages', value: `${item.firstPage}` })
-    }
+    if (item.pages) ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
     ref.addCreators()
-    /*
-     * 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
-     *ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
-     */
+
+    // 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.
+    // ref.add({ name: 'options', value: (option for option in ['useprefix', 'juniorcomma'] when ref[option]).join(',') })
+
     if (ref.useprefix) ref.add({ name: 'options', value: 'useprefix=true' })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
     if (item.volumeTitle) { // #381
-      debug('volumeTitle: true, type:', item._type__, 'has:', Object.keys(ref.has))
+      debug('volumeTitle: true, type:', item.__type__, 'has:', Object.keys(ref.has))
       if (item.__type__ === 'book' && ref.has.title) {
         debug('volumeTitle: for book, type:', item.__type__, 'has:', Object.keys(ref.has))
         ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
