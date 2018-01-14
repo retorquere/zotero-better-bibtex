@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-export = async function getItemsAsync(ids) {
+export async function getItemsAsync(ids) {
   let returnSingle
   if (Array.isArray(ids)) {
     returnSingle = false

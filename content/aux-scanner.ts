@@ -1,10 +1,10 @@
 declare const Components: any
 declare const Zotero: any
 
-import debug = require('./debug.ts')
-import KeyManager = require('./keymanager.ts')
+import { debug } from './debug.ts'
+import KeyManager = require('./KeyManager.ts')
 
-export = class AUXScanner {
+export class AUXScanner {
   private citekeys: Set<string>
   private citationRE = /(?:\\citation|@cite){([^}]+)}/g
   private includeRE = /\\@input{([^}]+)}/g

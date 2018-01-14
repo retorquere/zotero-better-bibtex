@@ -1,6 +1,6 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 

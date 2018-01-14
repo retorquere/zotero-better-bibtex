@@ -2,16 +2,16 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
-import flash = require('../flash.ts')
-import Prefs = require('../prefs.ts')
-import debug = require('../debug.ts')
+import { flash } from '../flash.ts'
+import { Preferences as Prefs } from '../prefs.ts'
+import { debug } from '../debug.ts'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser.ts'
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
-import JournalAbbrev = require('../journal-abbrev.ts')
+import { JournalAbbrev } from '../journal-abbrev.ts'
 
 class PatternFormatter {
   public generate: Function

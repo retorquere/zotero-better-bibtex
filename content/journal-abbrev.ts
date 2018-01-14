@@ -1,11 +1,12 @@
 declare const Zotero: any
 
-import Prefs = require('./prefs.ts')
-import debug = require('./debug.ts')
-import Events = require('./events.ts')
-import ZoteroConfig = require('./zotero-config.ts')
+import { Preferences as Prefs } from './prefs.ts'
+import { debug } from './debug.ts'
+import { Events } from './events.ts'
+import { ZoteroConfig } from './zotero-config.ts'
 
-class JournalAbbrev {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let JournalAbbrev = new class { // tslint:disable-line:variable-name
   private initialized: boolean
   private style: any
   private abbrevs: any
@@ -101,5 +102,3 @@ class JournalAbbrev {
     return abbr || journal
   }
 }
-
-export = new JournalAbbrev()

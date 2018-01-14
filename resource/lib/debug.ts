@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import format = require('../../content/debug-formatter.ts')
+import { format } from '../../content/debug-formatter.ts'
 
 export function debug(...msg) {
   if (!Translator.debugEnabled && !Translator.preferences.testing) return

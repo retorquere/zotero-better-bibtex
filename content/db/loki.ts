@@ -2,11 +2,11 @@ declare const Components: any
 declare const AsyncShutdown: any
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
-import $patch$ = require('../monkey-patch.ts')
+import { patch as $patch$ } from '../monkey-patch.ts'
 
 import AJV = require('ajv')
-import debug = require('../debug.ts')
-import Prefs = require('../prefs.ts')
+import { debug } from '../debug.ts'
+import { Preferences as Prefs } from '../prefs.ts'
 
 // tslint:disable-next-line:variable-name
 import Loki = require('lokijs')

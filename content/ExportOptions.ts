@@ -3,7 +3,7 @@ declare const document: any
 declare const MutationObserver: any
 declare const Zotero: any
 
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 let DOM_OBSERVER = null
 let reset = true

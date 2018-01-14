@@ -1,14 +1,14 @@
 declare const Zotero: any
 declare const Components: any
 
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
-import Events = require('./events.ts')
-import DB = require('./db/main.ts')
+import { Events } from './events.ts'
+import { DB } from './db/main.ts'
 import { Translators } from './translators.ts'
-import Prefs = require('./prefs.ts')
+import { Preferences as Prefs } from './prefs.ts'
 
 function queueHandler(kind, handler) {
   return (task, cb) => {
@@ -153,7 +153,8 @@ Events.on('preference-changed', pref => {
   }
 })
 
-class AutoExport {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
 
   constructor() {
@@ -227,5 +228,3 @@ class AutoExport {
     scheduled.push({ id: ae.$loki })
   }
 }
-
-export = new AutoExport()

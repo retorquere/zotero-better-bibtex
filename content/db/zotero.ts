@@ -1,5 +1,3 @@
 declare const Zotero: any
 
-export = {
-  queryAsync: (query, args = undefined) => Zotero.DB.queryAsync(query.replace(/[\s\n]+/g, ' ').trim(), args),
-}
+export function queryAsync(query, args?) { return Zotero.DB.queryAsync(query.replace(/[\s\n]+/g, ' ').trim(), args) }

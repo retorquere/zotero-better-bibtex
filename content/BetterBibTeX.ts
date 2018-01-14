@@ -4,31 +4,31 @@ declare const Components: any
 declare const Zotero: any
 declare const AddonManager: any
 
-import Prefs = require('./prefs.ts') // needs to be here early, initializes the prefs observer
+import { Preferences as Prefs } from './prefs.ts' // needs to be here early, initializes the prefs observer
 require('./pull-export.ts') // just require, initializes the pull-export end points
 require('./json-rpc.ts') // just require, initializes the json-rpc end point
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-import debug = require('./debug.ts')
-import flash = require('./flash.ts')
-import Events = require('./events.ts')
-import ZoteroConfig = require('./zotero-config.ts')
+import { debug } from './debug.ts'
+import { flash } from './flash.ts'
+import { Events } from './events.ts'
+import { ZoteroConfig } from './zotero-config.ts'
 
 debug('Loading Better BibTeX')
 
 import { Translators } from './translators.ts'
-import DB = require('./db/main.ts')
-import Cache = require('./db/cache.ts')
-import Serializer = require('./serializer.ts')
-import JournalAbbrev = require('./journal-abbrev.ts')
-import AutoExport = require('./auto-export.ts')
-import KeyManager = require('./keymanager.ts')
-import AUXScanner = require('./aux-scanner.ts')
-import TeXstudio = require('./tex-studio.ts')
+import { DB } from './db/main.ts'
+import { DB as Cache } from './db/cache.ts'
+import { Serializer } from './serializer.ts'
+import { JournalAbbrev } from './journal-abbrev.ts'
+import { AutoExport } from './auto-export.ts'
+import KeyManager = require('./KeyManager.ts')
+import { AUXScanner } from './aux-scanner.ts'
+import { TeXstudio } from './tex-studio.ts'
 import format = require('string-template')
 
-import $patch$ = require('./monkey-patch.ts')
+import { patch as $patch$ } from './monkey-patch.ts'
 
 const bbtReady = Zotero.Promise.defer()
 const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
@@ -191,7 +191,8 @@ $patch$(Zotero.Integration, 'getApplication', original => function(agent, comman
 import * as DateParser from './dateparser.ts'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check.ts'
-import titleCase = require('./title-case.ts')
+import { titleCase } from './title-case.ts'
+import { extract as varExtract } from './var-extract.ts'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
@@ -202,7 +203,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   titleCase(sandbox, text) { return titleCase(text) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   validFields(sandbox) { return Serializer.validFields },
-  extractFields(sandbox, item) { return require('./var-extract.ts')(item) },
+  extractFields(sandbox, item) { return varExtract(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 

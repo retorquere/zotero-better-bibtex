@@ -1,6 +1,6 @@
 import stringify = require('json-stringify-safe')
 
-export = function format(prefix, msg) {
+export function format(prefix, msg) {
   let err = false
   let str = ''
 

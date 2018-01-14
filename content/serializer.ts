@@ -1,17 +1,18 @@
 declare const Zotero: any
 
-import Abbrevs = require('./journal-abbrev.ts')
-import debug = require('./debug.ts')
+import { JournalAbbrev } from './journal-abbrev.ts'
+import { debug } from './debug.ts'
 
-import Cache = require('./db/cache.ts')
-import KeyManager = require('./keymanager.ts')
-import ZoteroDB = require('./db/zotero.ts')
+import { DB as Cache } from './db/cache.ts'
+import KeyManager = require('./KeyManager.ts')
+import * as ZoteroDB from './db/zotero.ts'
 
-class Serializer {
-  private static collection = 'itemToExportFormat'
-
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Serializer = new class { // tslint:disable-line:variable-name
   public simplify: Function
   public validFields: { [key: string]: { [key: string]: boolean } }
+
+  private collection = 'itemToExportFormat'
 
 //  # prune cache on old accessed
 //  prune: Zotero.Promise.coroutine(->
@@ -20,7 +21,7 @@ class Serializer {
 //      delete cache[id] if entry.accessed
 
   public async init() {
-    Abbrevs.init()
+    JournalAbbrev.init()
 
     debug('Serializer.init')
 
@@ -84,7 +85,7 @@ class Serializer {
   }
 
   public fetch(item, legacy, skipChildItems) {
-    const cache = Cache.getCollection(Serializer.collection)
+    const cache = Cache.getCollection(this.collection)
     if (!cache) return null
 
     const cached = cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
@@ -94,7 +95,7 @@ class Serializer {
   }
 
   public store(item, serialized, legacy, skipChildItems) {
-    const cache = Cache.getCollection(Serializer.collection)
+    const cache = Cache.getCollection(this.collection)
 
     // come on -- these are used in the collections export but not provided on the items?!
     serialized.itemID = item.id
@@ -119,11 +120,9 @@ class Serializer {
 
       default:
         serialized.citekey = KeyManager.get(item.id).citekey
-        serialized.journalAbbreviation = Abbrevs.get(serialized)
+        serialized.journalAbbreviation = JournalAbbrev.get(serialized)
         break
     }
     return serialized
   }
 }
-
-export = new Serializer()

@@ -6,9 +6,9 @@ declare const FormData: any
 declare const Blob: any
 declare const Services: any
 
-import Prefs = require('./prefs.ts')
+import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')

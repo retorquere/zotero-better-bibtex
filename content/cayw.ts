@@ -3,9 +3,9 @@ declare const XPCOMUtils: any
 declare const Zotero: any
 
 import { XULoki as Loki } from './db/loki.ts'
-import KeyManager = require('./keymanager.ts')
-import Formatter = require('./cayw/formatter.ts')
-import debug = require('./debug.ts')
+import KeyManager = require('./KeyManager.ts')
+import { Formatter } from './cayw/formatter.ts'
+import { debug } from './debug.ts'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 

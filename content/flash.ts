@@ -1,10 +1,10 @@
 declare const Zotero: any
 
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 const seconds = 1000
 
-export = (title, body = null, timeout = 8) => {
+export function flash(title, body = null, timeout = 8) {
   try {
     debug('flash:', {title, body})
     const pw = new Zotero.ProgressWindow()

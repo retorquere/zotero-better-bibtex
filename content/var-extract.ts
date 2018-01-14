@@ -1,4 +1,4 @@
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 import JSON5 = require('json5')
 
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
@@ -14,7 +14,7 @@ function cslCreator(value) {
   }
 }
 
-export = function extract(item) {
+export function extract(item) {
   let extra = item.extra || ''
 
   const extraFields = {

@@ -1,9 +1,9 @@
 declare const Zotero: any
 
 import { Translators } from '../translators.ts'
-import debug = require('../debug.ts')
-import getItemsAsync = require('../get-items-async.ts')
-import Prefs = require('../prefs.ts')
+import { debug } from '../debug.ts'
+import { getItemsAsync } from '../get-items-async.ts'
+import { Preferences as Prefs } from '../prefs.ts'
 
 /*
     @config.citeprefix ||= ''
@@ -44,7 +44,8 @@ const shortLabel = {
     volume: 'vol.',
   }
 
-export = new class Formatter {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Formatter = new class { // tslint:disable-line:variable-name
   public async playground(citations, options) {
     const formatted = citations.map(cit => `${options.keyprefix || ''}${cit.citekey}${options.keypostfix || ''}`)
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''

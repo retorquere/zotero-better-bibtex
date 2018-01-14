@@ -1,8 +1,8 @@
 declare const Components: any
 declare const Zotero: any
 
-import KeyManager = require('./keymanager.ts')
-import debug = require('./debug.ts')
+import KeyManager = require('./KeyManager.ts')
+import { debug } from './debug.ts'
 
 let pathsep, dirsep
 
@@ -29,7 +29,8 @@ if (texstudio) {
   debug('TeXstudio: not found')
 }
 
-export = {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let TeXstudio = { // tslint:disable-line:variable-name
   enabled: !!texstudio,
 
   async push() {

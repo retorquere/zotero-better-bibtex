@@ -3,14 +3,14 @@ declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
 
-import debug = require('./debug.ts')
-import ZoteroConfig = require('./zotero-config.ts')
-import $patch$ = require('./monkey-patch.ts')
+import { debug } from './debug.ts'
+import { ZoteroConfig } from './zotero-config.ts'
+import { patch as $patch$ } from './monkey-patch.ts'
 
-import Prefs = require('./prefs.ts')
+import { Preferences as Prefs } from './prefs.ts'
 import { Formatter } from './keymanager/formatter.ts'
-import KeyManager = require('./keymanager.ts')
-import AutoExport = require('./auto-export.ts')
+import KeyManager = require('./KeyManager.ts')
+import { AutoExport } from './auto-export.ts'
 import { Translators } from './translators.ts'
 
 class AutoExportPrefPane {

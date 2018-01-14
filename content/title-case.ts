@@ -14,4 +14,4 @@ const state = {
   },
 }
 
-export = text => Zotero.CiteProc.CSL.Output.Formatters.title(state, text)
+export function titleCase(text) { return Zotero.CiteProc.CSL.Output.Formatters.title(state, text) }

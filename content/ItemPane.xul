@@ -29,5 +29,5 @@
   </tabpanels>
 
   <script src="chrome://zotero/content/include.js"/>
-  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.itemPane.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ItemPane.js"/>
 </overlay>

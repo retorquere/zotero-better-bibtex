@@ -1,7 +1,7 @@
 const marker = 'BetterBibTeXMonkeyPatched'
 
-export = (object, method, patch) => {
+export function patch(object, method, patcher) {
   if (object[method][marker]) return
-  object[method] = patch(object[method])
+  object[method] = patcher(object[method])
   object[method][marker] = true
 }

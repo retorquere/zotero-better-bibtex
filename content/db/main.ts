@@ -1,11 +1,11 @@
 declare const Zotero: any
 
 import { XULoki as Loki } from './loki.ts'
-import debug = require('../debug.ts')
-import Prefs = require('../prefs.ts')
-import getItemsAsync = require('../get-items-async.ts')
+import { debug } from '../debug.ts'
+import { Preferences as Prefs } from '../prefs.ts'
+import { getItemsAsync } from '../get-items-async.ts'
 
-import createFile = require('../create-file.ts')
+import { createFile } from '../create-file.ts'
 
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
@@ -112,7 +112,8 @@ class DBStore {
   }
 }
 
-const DB = new Loki('better-bibtex', {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,
@@ -244,5 +245,3 @@ for ae in autoexports.data()
     delete ae.scheduled
   autoexports.update(ae)
 */
-
-export = DB

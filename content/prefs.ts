@@ -1,18 +1,19 @@
 declare const Components: any
 declare const Zotero: any
 
-import debug = require('./debug.ts')
-import Events = require('./events.ts')
-import ZoteroConfig = require('./zotero-config.ts')
+import { debug } from './debug.ts'
+import { Events } from './events.ts'
+import { ZoteroConfig } from './zotero-config.ts'
 
-class Preferences {
-  private static prefix = 'translators.better-bibtex'
-
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
+
+  private prefix = 'translators.better-bibtex'
 
   constructor() {
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
-    this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${Preferences.prefix}.`)
+    this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${this.prefix}.`)
 
     // preference upgrades
     for (const pref of this.branch.getChildList('')) {
@@ -54,7 +55,5 @@ class Preferences {
 
   }
 
-  private key(pref) { return `${Preferences.prefix}.${pref}` }
+  private key(pref) { return `${this.prefix}.${pref}` }
 }
-
-export = new Preferences()

@@ -57,13 +57,13 @@ config.push(
     context: path.resolve(__dirname, './content'),
     entry: {
       BetterBibTeX: './BetterBibTeX.ts',
-      'BetterBibTeX.KeyManager': './keymanager.ts',
-      'BetterBibTeX.TestSupport': './test/support.ts',
+      'BetterBibTeX.KeyManager': './KeyManager.ts',
+      'BetterBibTeX.TestSupport': './TestSupport.ts',
       'BetterBibTeX.Preferences': './Preferences.ts',
       'BetterBibTeX.ErrorReport': './ErrorReport.ts',
       'BetterBibTeX.FirstRun': './FirstRun.ts',
-      'BetterBibTeX.itemPane': './itemPane.ts',
-      'BetterBibTeX.exportOptions': './exportOptions.ts',
+      'BetterBibTeX.ItemPane': './ItemPane.ts',
+      'BetterBibTeX.ExportOptions': './exportOptions.ts',
     },
     // devtool: '#source-map',
     output: {

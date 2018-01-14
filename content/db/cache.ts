@@ -1,15 +1,15 @@
 declare const Zotero: any
 
-import createFile = require('../create-file.ts')
+import { createFile } from '../create-file.ts'
 import { XULoki as Loki } from './loki.ts'
-import debug = require('../debug.ts')
-import Events = require('../events.ts')
-import ZoteroConfig = require('../zotero-config.ts')
+import { debug } from '../debug.ts'
+import { Events } from '../events.ts'
+import { ZoteroConfig } from '../zotero-config.ts'
 
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
 
-import Prefs = require('../prefs.ts')
+import { Preferences as Prefs } from '../prefs.ts'
 
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
@@ -105,7 +105,8 @@ class FileStore {
   }
 }
 
-const DB = new Loki('cache', {
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let DB = new Loki('cache', { // tslint:disable-line:variable-name
   autosave: true,
   adapter: new FileStore(),
 })
@@ -210,5 +211,3 @@ Events.on('preference-changed', async () => {
 // cleanup
 if (DB.getCollection('cache')) { DB.removeCollection('cache') }
 if (DB.getCollection('serialized')) { DB.removeCollection('serialized') }
-
-export = DB

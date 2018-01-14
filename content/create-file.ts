@@ -1,11 +1,11 @@
 declare const Zotero: any
 declare const Components: any
 
-import debug = require('./debug.ts')
+import { debug } from './debug.ts'
 
 const a_rwx = 0o777
 
-export = (...paths) => {
+export function createFile(...paths) {
   if (paths.length === 0) throw new Error('no path specified')
 
   const f = Zotero.File.pathToFile(Zotero.DataDirectory.dir)

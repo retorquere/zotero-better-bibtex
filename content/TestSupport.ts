@@ -2,16 +2,16 @@ declare const Zotero: any
 declare const Zotero_File_Interface: any
 declare const Components: any
 
-import AutoExport = require('../auto-export.ts')
-import ZoteroDB = require('../db/zotero.ts')
-import debug = require('../debug.ts')
-import KeyManager = require('../keymanager.ts')
-import Prefs = require('../prefs.ts')
-import { Translators } from '../translators.ts'
-import CAYWFormatter = require('../cayw/formatter.ts')
-import getItemsAsync = require('../get-items-async.ts')
+import { AutoExport } from './auto-export.ts'
+import * as ZoteroDB from './db/zotero.ts'
+import { debug } from './debug.ts'
+import KeyManager = require('./KeyManager.ts')
+import { Preferences as Prefs } from './prefs.ts'
+import { Translators } from './translators.ts'
+import { Formatter as CAYWFormatter } from './cayw/formatter.ts'
+import { getItemsAsync } from './get-items-async.ts'
 
-const pref_defaults = require('../../gen/preferences.json')
+const pref_defaults = require('./../gen/preferences.json')
 
 export = Prefs.get('testing') && {
   async reset() {

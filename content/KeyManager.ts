@@ -1,19 +1,19 @@
 declare const Zotero: any
 declare const window: any
 
-import debug = require('./debug.ts')
-import flash = require('./flash.ts')
-import Events = require('./events.ts')
+import { debug } from './debug.ts'
+import { flash } from './flash.ts'
+import { Events } from './events.ts'
 import ETA = require('node-eta')
-import ZoteroDB = require('./db/zotero.ts')
+import * as ZoteroDB from './db/zotero.ts'
 
-import getItemsAsync = require('./get-items-async.ts')
+import { getItemsAsync } from './get-items-async.ts'
 
-import Prefs = require('./prefs.ts')
+import { Preferences as Prefs } from './prefs.ts'
 import * as Citekey from './keymanager/get-set.ts'
-import DB = require('./db/main.ts')
+import { DB } from './db/main.ts'
 import { Formatter } from './keymanager/formatter.ts'
-import AutoExport = require('./auto-export.ts')
+import { AutoExport } from './auto-export.ts'
 
 class KeyManager {
   private static postfixRE = {
