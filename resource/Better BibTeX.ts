@@ -1090,6 +1090,8 @@ Translator.doImport = () => {
   while ((read = Zotero.read(0x100000)) !== false) { // tslint:disable-line:no-magic-numbers
     input += read
   }
+
+  if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
   const bib = importReferences(input)
 
   if (bib.errors.length) {
