@@ -232,6 +232,8 @@ export = new class PrefPane {
     }
 
     this.AutoExport.refresh()
+
+    window.sizeToContent()
   }
 
   private load() {
@@ -263,6 +265,8 @@ export = new class PrefPane {
       setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
     debug('PrefPane.new: ready')
+
+    window.sizeToContent()
   }
 
   private styleChanged(index) {

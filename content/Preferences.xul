@@ -18,6 +18,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&better-bibtex.Preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
+            onpaneload="window.sizeToContent()"
             helpTopic="BetterBibTeX"
             >
       <!--!
@@ -376,7 +377,7 @@
 
       </preferences>
       <tabbox style="border: 1px solid red" id="better-bibtex-prefs-tabbox">
-        <tabs id="better-bibtex-prefs-tabs">
+        <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
           <tab label="&better-bibtex.Preferences.tab.citekey;"/>
           <tab label="&better-bibtex.Preferences.tab.export;"/>
           <tab id="better-bibtex-prefs-tab-journal-abbrev" label="&better-bibtex.Preferences.tab.journal-abbrev;"/>
