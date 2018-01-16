@@ -139,10 +139,6 @@ class AutoExportPrefPane {
 export = new class PrefPane {
   private AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
 
-  constructor() {
-    window.addEventListener('load', () => this.load(), false)
-  }
-
   public getCitekeyFormat() {
     debug('PrefPane.getCitekeyFormat...')
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
@@ -197,6 +193,49 @@ export = new class PrefPane {
     debug('manual key rescan done')
   }
 
+  public load() {
+    debug('PrefPane.new: loading...')
+    if (typeof Zotero_Preferences === 'undefined') return
+
+    // no other way that I know of to know that I've just been selected
+    const timer = window.setInterval(() => {
+      const pane = document.getElementById('zotero-prefpane-better-bibtex')
+      if (pane) {
+        if (pane.selected) window.sizeToContent()
+      } else {
+        window.clearInterval(timer)
+      }
+    }, 500) // tslint:disable-line:no-magic-numbers
+
+    this.AutoExport = new AutoExportPrefPane()
+
+    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
+
+    $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
+      if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
+        const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
+      } else {
+        original.apply(this, arguments)
+      }
+    })
+
+    this.getCitekeyFormat()
+    this.update()
+
+    debug('PrefPane.new loaded @', document.location.hash)
+
+    if (document.location.hash === '#better-bibtex') {
+      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
+      // tslint:disable-next-line:no-magic-numbers
+      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
+    }
+    debug('PrefPane.new: ready')
+
+    window.sizeToContent()
+  }
+
   private update() {
     this.checkCitekeyFormat()
 
@@ -232,39 +271,6 @@ export = new class PrefPane {
     }
 
     this.AutoExport.refresh()
-
-    window.sizeToContent()
-  }
-
-  private load() {
-    debug('PrefPane.new: loading...')
-    if (typeof Zotero_Preferences === 'undefined') return
-
-    this.AutoExport = new AutoExportPrefPane()
-
-    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
-
-    $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
-      if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
-        const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
-        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
-      } else {
-        original.apply(this, arguments)
-      }
-    })
-
-    this.getCitekeyFormat()
-    this.update()
-
-    debug('PrefPane.new loaded @', document.location.hash)
-
-    if (document.location.hash === '#better-bibtex') {
-      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-      // tslint:disable-next-line:no-magic-numbers
-      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
-    }
-    debug('PrefPane.new: ready')
 
     window.sizeToContent()
   }
