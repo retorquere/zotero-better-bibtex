@@ -4,23 +4,39 @@ declare const Zotero: any
 import { KeyManager } from './key-manager.ts'
 import { debug } from './debug.ts'
 
-let pathsep, dirsep
+let pathsep, dirsep, ext
 
 if (Zotero.platform.toLowerCase().startsWith('win')) {
   pathsep = ';'
   dirsep = '\\'
+  ext = '.exe'
 } else {
   pathsep = ':'
   dirsep = '/'
+  ext = ''
 }
 
 const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 const path = env.get('PATH')
 
+debug('Trying to find TeXstudio:', {
+  platform: Zotero.platform.toLowerCase(),
+  pathsep,
+  dirsep,
+  path,
+})
+
 let texstudio = null
 for (const dir of path.split(pathsep)) {
-  texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio`)
-  if (texstudio.exists()) break
+  if (!dir) continue
+
+  debug('Trying to find TeXstudio:', `${dir}${dirsep}texstudio${ext}`)
+  try {
+    texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio${ext}`)
+    if (texstudio.exists()) break
+  } catch (err) {
+    debug('Trying to find TeXstudio:', err)
+  }
   texstudio = null
 }
 if (texstudio) {
