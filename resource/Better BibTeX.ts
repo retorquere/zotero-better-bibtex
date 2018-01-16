@@ -1094,10 +1094,11 @@ Translator.doImport = () => {
   if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
   const bib = importReferences(input)
 
-  if (bib.errors.length) {
+  const errors = bib.errors.concat(bib.warnings)
+  if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
-    for (const err of bib.errors) {
+    for (const err of errors) {
       switch (err.type) {
         case 'cut_off_citation':
           item.note += `<li>line ${err.line}: ${htmlEscape(`incomplete reference @${err.entry}`)}</li>`
@@ -1106,7 +1107,9 @@ Translator.doImport = () => {
           item.note += `<li>line ${err.line}: found ${htmlEscape(JSON.stringify(err.found))}, expected ${htmlEscape(JSON.stringify(err.expected))}</li>`
           break
         default:
-          throw(err)
+          if (Translator.preferences.testing) throw(err)
+          item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
+          break
       }
     }
     item.tags = ['#Better BibTeX import error']
