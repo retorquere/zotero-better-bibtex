@@ -2,45 +2,213 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.43-manchineel-1460112009",
+    "release": {
+      "Zotero": {
+        "version": "5.0.33",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.33"
+      },
+      "BetterBibTeX": "5.0.77.emile.manchineel"
+    },
     "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": true,
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoAbbrev": false,
       "autoExport": "immediate",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [],
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "quickCopyMode": "latex",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
       "autoExportIdleWait": 10,
       "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFormat": "[zotero][authors]",
-      "citekeyFold": true,
-      "debug": true,
-      "DOIandURL": "both",
       "csquotes": "",
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": true,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "this.add({ name: 'x-audience', value: 'international' });\nthis.add({ name: 'x-popularlevel', value: 'no' });\nthis.add({ name: 'x-peereviewing', value: 'yes' });\nthis.add({ name: 'x-proceedings', value: 'yes' });\nthis.add({ name: 'x-invitedcommunication', value: 'yes' });\nif (this.has.language) {\n  this.has.language.name = 'x-language';\n}\nif (this.item.itemType = 'report' && this.has.type) {\n  this.has.type.name = 'x-reporttype';\n}\n",
-      "jabrefFormat": true
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "lockedInit": false
     },
     "options": {
-      "exportPath": "/Users/emile/Downloads",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": true
+      "exportNotes": true,
+      "exportFileData": false
     }
   },
-  "collections": {
-  },
+  "collections": {},
   "items": [
     {
-      "itemType": "conferencePaper",
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>",
       "tags": [
-        "Keyword 1",
-        "Keyword 2"
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 0
+        }
       ],
+      "collections": [
+        "BLZJA6PY"
+      ],
+      "relations": {},
+      "dateAdded": "2018-01-16 16:17:07",
+      "dateModified": "2018-01-16 16:17:07",
+      "uri": "http://zotero.org/users/local/Nywl04ll/items/Y6FML8S8",
+      "uniqueFields": {
+        "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>"
+      },
+      "itemID": 56,
+      "key": "Y6FML8S8",
+      "libraryID": null,
+      "seeAlso": [],
+      "attachments": []
+    },
+    {
+      "itemType": "conferencePaper",
       "pages": "300-301",
       "date": "2016-02",
       "extra": "bibtex: test_citation1 \nISSN: 0193-6530",
@@ -50,25 +218,36 @@
       "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
-          "creatorType": "author",
+          "firstName": "J.",
           "lastName": "Doe",
-          "firstName": "J."
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
+          "firstName": "R.",
           "lastName": "Smith",
-          "firstName": "R."
+          "creatorType": "author"
         }
       ],
-      "itemID": 69,
-      "publicationTitle": "IEEE_J_PROC"
+      "tags": [
+        {
+          "tag": "Keyword 1",
+          "type": 0
+        },
+        {
+          "tag": "Keyword 2",
+          "type": 0
+        }
+      ],
+      "dateAdded": "2018-01-16 16:17:07",
+      "dateModified": "2018-01-16 16:17:07",
+      "attachments": [],
+      "notes": [],
+      "itemID": 57,
+      "publicationTitle": "IEEE_J_PROC",
+      "seeAlso": []
     },
     {
       "itemType": "conferencePaper",
-      "tags": [
-        "Keyword 1",
-        "Keyword 2"
-      ],
       "pages": "300-301",
       "date": "2016-02",
       "extra": "bibtex: test_citation2 \nISSN: 0193-6530",
@@ -78,18 +257,33 @@
       "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
-          "creatorType": "author",
+          "firstName": "J.",
           "lastName": "Doe",
-          "firstName": "J."
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
+          "firstName": "R.",
           "lastName": "Smith",
-          "firstName": "R."
+          "creatorType": "author"
         }
       ],
-      "itemID": 70,
-      "publicationTitle": "IEEE_J_PROC"
+      "tags": [
+        {
+          "tag": "Keyword 1",
+          "type": 0
+        },
+        {
+          "tag": "Keyword 2",
+          "type": 0
+        }
+      ],
+      "dateAdded": "2018-01-16 16:17:07",
+      "dateModified": "2018-01-16 16:17:07",
+      "attachments": [],
+      "notes": [],
+      "itemID": 58,
+      "publicationTitle": "IEEE_J_PROC",
+      "seeAlso": []
     }
   ]
 }

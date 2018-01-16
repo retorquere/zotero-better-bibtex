@@ -1094,7 +1094,9 @@ Translator.doImport = () => {
   if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
   const bib = importReferences(input)
 
-  const errors = bib.errors.concat(bib.warnings)
+  const ignore = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
+  const errors = bib.errors.concat(bib.warnings).filter(err => !ignore.has(err.type))
+
   if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
@@ -1106,8 +1108,11 @@ Translator.doImport = () => {
         case 'token_mismatch':
           item.note += `<li>line ${err.line}: found ${htmlEscape(JSON.stringify(err.found))}, expected ${htmlEscape(JSON.stringify(err.expected))}</li>`
           break
+        case 'undefined_variable':
+          item.note += `<li>line ${err.line}: undefined variable '${htmlEscape(err.variable)}'</li>`
+          break
         default:
-          if (Translator.preferences.testing) throw(err)
+          if (Translator.preferences.testing) throw new Error('unhandled import error: ' + JSON.stringify(err))
           item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
           break
       }

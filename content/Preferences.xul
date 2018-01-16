@@ -197,7 +197,7 @@
           type="string"
           default=""/>
         <!--!
-          Snippet of javascript to run [[after each reference generation|Scripting]].
+          If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
         -->
 
         <preference
