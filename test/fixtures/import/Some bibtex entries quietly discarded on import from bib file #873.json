@@ -404,7 +404,9 @@
       "place": "New York",
       "publisher": "American Elsevier",
       "date": "1971",
-      "extra": "bibtex: Huffman:71 \nbibtex[booktitle=Machine Intelligence]",
+      "bookTitle":"Machine Intelligence",
+      "publicationTitle":"Machine Intelligence",
+      "extra": "bibtex: Huffman:71",
       "title": "Impossible objects as nonsense sentences",
       "creators": [
         {
@@ -658,7 +660,9 @@
       "itemType": "bookSection",
       "pages": "155-184",
       "date": "1976",
-      "extra": "bibtex: Wilks:76 \nbibtex[booktitle=Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension]",
+      "bookTitle":"Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension",
+      "publicationTitle":"Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension",
+      "extra": "bibtex: Wilks:76",
       "title": "Parsing English II",
       "creators": [
         {
@@ -724,7 +728,9 @@
       "place": "New York",
       "publisher": "McGraw-Hill",
       "date": "1975",
-      "extra": "Republished in KR \nbibtex: Minsky:Frames \nbibtex[booktitle=The Psychology of Computer Vision]",
+      "publicationTitle":"The Psychology of Computer Vision",
+      "bookTitle":"The Psychology of Computer Vision",
+      "extra": "Republished in KR \nbibtex: Minsky:Frames",
       "title": "A framework for representing knowledge",
       "creators": [
         {
@@ -840,7 +846,9 @@
       "place": "New York",
       "publisher": "McGraw-Hill",
       "date": "1975",
-      "extra": "bibtex: Shirai:75 \nbibtex[booktitle=The Psychology of Computer Vision]",
+      "bookTitle":"The Psychology of Computer Vision",
+      "publicationTitle":"The Psychology of Computer Vision",
+      "extra": "bibtex: Shirai:75",
       "title": "Analysing intensity arrays using knowledge about scenes",
       "creators": [
         {
