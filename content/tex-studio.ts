@@ -17,6 +17,12 @@ if (Zotero.platform.toLowerCase().startsWith('win')) {
 const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
 const path = env.get('PATH')
 
+debug('Trying to find TeXstudio:', {
+  platform: Zotero.platform.toLowerCase(),
+  pathsep,
+  dirsep,
+})
+
 let texstudio = null
 for (const dir of path.split(pathsep)) {
   texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio`)
