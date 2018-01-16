@@ -18,6 +18,7 @@
             insertafter="zotero-prefpane-advanced"
             label="&better-bibtex.Preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
+            onpaneload="Zotero.BetterBibTeX.Preferences.load()"
             helpTopic="BetterBibTeX"
             >
       <!--!
@@ -184,6 +185,15 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.postscript"
           id="pref-better-bibtex-postscript"
+          type="string"
+          default=""/>
+        <!--!
+          Snippet of javascript to run [[after each reference generation|Scripting]].
+        -->
+
+        <preference
+          name="extensions.zotero.translators.better-bibtex.strings"
+          id="pref-better-bibtex-strings"
           type="string"
           default=""/>
         <!--!
@@ -367,7 +377,7 @@
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
-        <tabs id="better-bibtex-prefs-tabs">
+        <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
           <tab label="&better-bibtex.Preferences.tab.citekey;"/>
           <tab label="&better-bibtex.Preferences.tab.export;"/>
           <tab id="better-bibtex-prefs-tab-journal-abbrev" label="&better-bibtex.Preferences.tab.journal-abbrev;"/>
@@ -569,11 +579,25 @@
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
-            <label forpreference="pref-better-bibtex-postscript" value="&better-bibtex.Preferences.postscript;"/>
-            <textbox flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
-                  onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
-                  oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
-                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
+
+            <tabbox>
+              <tabs>
+                <tab forpreference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.tab.postscript;"/>
+                <tab forpreference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.tab.strings;"/>
+              </tabs>
+              <tabpanels>
+                <tabpanel orient="vertical">
+                  <textbox rows="20" flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
+                        onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
+                        oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
+                        onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
+                </tabpanel>
+                <tabpanel orient="vertical">
+                  <textbox rows="20" flex="1" multiline="true" preference="pref-better-bibtex-strings"/>
+                </tabpanel>
+              </tabpanels>
+            </tabbox>
+
             <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
             <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
 

@@ -13,6 +13,7 @@ class DocFinder {
   private strings: { [key: string]: string }
   private tab: number
   private tabs: string[]
+  private tablevel: number = 0
   private preference: string
   private preferences: {
     [key: string]: {
@@ -159,6 +160,10 @@ class DocFinder {
 
       case 'element':
         switch (node.name) {
+          case 'tabbox':
+            this.tablevel += 1
+            break
+
           case 'preference':
             this.preference = node.attributes.id || `#${node.attributes.name}`
             type = ({bool: 'boolean', int: 'number'}[node.attributes.type]) || node.attributes.type
@@ -200,11 +205,19 @@ class DocFinder {
             break
 
           case 'tab':
-            this.tabs.push(node.attributes.label)
+            if (this.tablevel === 1) {
+              this.tabs.push(node.attributes.label)
+            } else {
+              if (pref = node.attributes.label && node.attributes.forpreference) {
+                if (!this.preferences[pref]) throw new Error(`There's an UI element for non-existent preference ${pref}`)
+                this.preferences[pref].label = node.attributes.label
+                this.preferences[pref].tab = this.tabs[this.tab]
+              }
+            }
             break
 
           case 'tabpanel':
-            this.tab++
+            if (this.tablevel === 1) this.tab++
             break
 
           default:
@@ -242,6 +255,8 @@ class DocFinder {
     }
 
     for (const child of node.children || []) { this.walk(child) }
+
+    if (node.type === 'element' && node.name === 'tabbox') this.tablevel += 1
   }
 
   private report(msg) {

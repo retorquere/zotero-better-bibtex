@@ -36,7 +36,7 @@
 Si vous acceptez d'envoyer ces données, cliquez sur &quot;Suivant&quot; et publiez l'ID de débogage présenté dans l'écran suivant dans le suivi des problèmes à : 
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.itemPane.citekey_column	"Clé de citation">
+<!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
 <!ENTITY better-bibtex.Preferences.auto-export.add "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option 'Keep updated' (Garder à jour).">
@@ -101,7 +101,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journaux d'exportation">
-<!ENTITY better-bibtex.Preferences.postscript "PostScript">
+<!ENTITY better-bibtex.Preferences.tab.postscript "PostScript">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scanner les clés de citation">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
