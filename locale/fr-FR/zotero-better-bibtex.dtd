@@ -36,7 +36,7 @@
 Si vous acceptez d'envoyer ces données, cliquez sur &quot;Suivant&quot; et publiez l'ID de débogage présenté dans l'écran suivant dans le suivi des problèmes à : 
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
+<!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Abréger automatiquement le titre du journal si aucun n'est explicitement défini">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Style d'abréviation :">
 <!ENTITY better-bibtex.Preferences.auto-export.add "Vous pouvez consulter et supprimer les exportations uniquement ici. Pour ajouter une exportation automatique, effectuez une exportation normale et cochez l'option 'Keep updated' (Garder à jour).">
