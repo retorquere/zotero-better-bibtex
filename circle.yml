@@ -58,7 +58,7 @@ test:
               ;;
       esac
 
-      if [ "$NIGHTLY" = "true" ]; then
+      if [ "$NIGHTLY" = "true" -o "$CIRCLE_TAG" ]; then
         NIGHTLY_TAGS=""
       else
         NIGHTLY_TAGS="not @nightly and"
