@@ -28,6 +28,8 @@ debug('Trying to find TeXstudio:', {
 
 let texstudio = null
 for (const dir of path.split(pathsep)) {
+  if (!dir) continue
+
   debug('Trying to find TeXstudio:', `${dir}${dirsep}texstudio${ext}`)
   try {
     texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio${ext}`)
