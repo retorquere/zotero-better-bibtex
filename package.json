@@ -22,7 +22,7 @@
     "onlywebpack": "webpack",
     "webpack": "parallel-webpack --no-stats",
     "prebuild": "npm run lint && ts-node setup/index.ts",
-    "build": "parallel-webpack --no-stats",
+    "build": "webpack",
     "postbuild": "zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "minitest": "npm run webpack && node ./minitests/build/dateparser.js",
     "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
