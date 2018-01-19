@@ -1,5 +1,5 @@
 <!ENTITY better-bibtex.FirstRun.title "Bienvenue dans Better BibTex pour Zotero">
-<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (or BBT as it is commonly named) aims to make Zotero more useful for LaTeX and Markdown holdouts. There's a lot to configure about BBT -- take a look in the preferences if you're curious -- but let's start you off with a few simple choices.">
+<!ENTITY better-bibtex.FirstRun.welcome "Better BibTex pour Zotero (ou BBT) ajoute à Zotero une compatibilité étendue avec LaTeX ou Markdown. BBT est totalement configurable -- rendez-vous dans les préférences si vous êtes curieux -- mais nous allons commencer avec quelques choix simples.">
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Vos clés de citation">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT va générer les clés de citations de vos références. La génération des clés de citation est entièrement configurable ; vous pourrez même modifier les clés manuellement. Veuillez sélectionner la valeur par défaut maintenant (vous pourrez toujours modifier ce paramètre plus tard).">
@@ -20,7 +20,7 @@
 <!ENTITY better-bibtex.FirstRun.dragndrop.explanation "BBT vous permet de glisser-déposer vos références dans l'éditeur LaTeX de votre choix. Voulez-vous activer cette fonctionnalité dès maintenant ?">
 <!ENTITY better-bibtex.FirstRun.dragndrop.enable "Activer les citations par glisser déposer">
 
-<!ENTITY better-bibtex.FirstRun.done "Terminé !">
+<!ENTITY better-bibtex.FirstRun.done "Félicitations !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
@@ -101,8 +101,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journaux d'exportation">
-<!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
-<!ENTITY better-bibtex.Preferences.tab.strings "import @string definitions">
+<!ENTITY better-bibtex.Preferences.tab.postscript "Postscript">
+<!ENTITY better-bibtex.Preferences.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scanner les clés de citation">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
