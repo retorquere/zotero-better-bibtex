@@ -11,7 +11,6 @@
   number = {4168},
   pages = {684--695},
   publisher = {{Springer Berlin Heidelberg}},
-  rights = {©2006 Springer-Verlag Berlin Heidelberg},
   series = {Lecture Notes in Computer Science},
   title = {An {{Improved Construction}} for {{Counting Bloom Filters}}},
   url = {http://link.springer.com/chapter/10.1007/11841036_61},

@@ -229,11 +229,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'langid', value: ref.language })
 
-    ref.add({
-      name: item.referenceType === 'presentation' ? 'venue' : 'location',
-      value: item.place,
-      enc: item.referenceType === 'presentation' ? 'literal' : 'latex',
-    })
+    ref.add({ name: item.referenceType === 'presentation' ? 'venue' : 'location', value: item.place, enc: 'literal' })
 
     /*
     if (ref.referencetype === 'inbook') {
