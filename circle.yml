@@ -10,7 +10,7 @@ machine:
   ruby:
     version: '2.4.1'
   node:
-    version: '8.9.4'
+    version: '9.4.0'
 dependencies:
   pre:
   - gem install bundler
