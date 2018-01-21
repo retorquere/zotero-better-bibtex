@@ -4,14 +4,14 @@ Feature: Export
 ### BibLaTeX cookie-cutter ###
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf @689 @biblatex
+@573 @590 @747 @edtf @689 @biblatex @644
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
-     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 2           |
      | urldate when only DOI is exported #869                                                         | 1           |
      | Citations have month and day next to year #868                                                 | 2           |
      | Thin space in author name #859                                                                 | 1           |

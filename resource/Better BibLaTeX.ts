@@ -201,8 +201,8 @@ Translator.doExport = () => {
   while (item = Exporter.nextItem()) {
     const ref = new Reference(item)
 
-    if (['bookSection', 'chapter'].includes(item.__type__) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
-    if (item.__type__ === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
+    if (['bookSection', 'chapter'].includes(item.referenceType) && ref.hasCreator('bookAuthor')) ref.referencetype = 'inbook'
+    if (item.referenceType === 'book' && !ref.hasCreator('author') && ref.hasCreator('editor')) ref.referencetype = 'collection'
     if (ref.referencetype === 'book' && item.numberOfVolumes) ref.referencetype = 'mvbook'
 
     let m
@@ -257,7 +257,7 @@ Translator.doExport = () => {
     ref.add({ name: 'number', value: item.seriesNumber || item.number })
     ref.add({ name: (isNaN(parseInt(item.issue)) || (`${parseInt(item.issue)}` !== `${item.issue}`)  ? 'issue' : 'number'), value: item.issue })
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'case': case 'gazette': case 'legal_case':
         ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
         break
@@ -267,7 +267,7 @@ Translator.doExport = () => {
     }
 
     if (item.publicationTitle) {
-      switch (item.__type__) {
+      switch (item.referenceType) {
         case 'bookSection':
         case 'conferencePaper':
         case 'dictionaryEntry':
@@ -279,7 +279,7 @@ Translator.doExport = () => {
 
         case 'magazineArticle': case 'newspaperArticle': case 'article-magazine': case 'article-newspaper':
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
-          if (['newspaperArticle', 'article-newspaper'].includes(item.__type__)) ref.add({ name: 'journalsubtitle', value: item.section })
+          if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
           break
 
         case 'journalArticle': case 'article': case 'article-journal':
@@ -300,7 +300,7 @@ Translator.doExport = () => {
       }
     }
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'bookSection':
       case 'encyclopediaArticle':
       case 'dictionaryEntry':
@@ -333,7 +333,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'series', value: item.seriesTitle || item.series })
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'report':
       case 'thesis':
         ref.add({ name: 'institution', value: item.publisher })
@@ -349,7 +349,7 @@ Translator.doExport = () => {
         ref.add({ name: 'publisher', value: item.publisher })
     }
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'letter':
       case 'personal_communication':
         ref.add({ name: 'type', value: item.type || 'Letter', replace: true })
@@ -381,7 +381,7 @@ Translator.doExport = () => {
         ref.add({ name: 'type', value: item.type, replace: true })
     }
 
-    if (['presentation', 'manuscript'].includes(item.__type__)) ref.add({ name: 'howpublished', value: item.type })
+    if (['presentation', 'manuscript'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.type })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
@@ -408,18 +408,18 @@ Translator.doExport = () => {
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
-    if (item.volumeTitle) { // #381
-      debug('volumeTitle: true, type:', item.__type__, 'has:', Object.keys(ref.has))
-      if (item.__type__ === 'book' && ref.has.title) {
-        debug('volumeTitle: for book, type:', item.__type__, 'has:', Object.keys(ref.has))
-        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
+    if (item.cslVolumeTitle) { // #381
+      debug('cslVolumeTitle: true, type:', item.referenceType, 'has:', Object.keys(ref.has))
+      if (item.referenceType === 'book' && ref.has.title) {
+        debug('cslVolumeTitle: for book, type:', item.referenceType, 'has:', Object.keys(ref.has))
+        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
-      if (['bookSection', 'chapter'].includes(item.__type__) && ref.has.booktitle) {
-        debug('volumeTitle: for bookSection, type:', item.__type__, 'has:', Object.keys(ref.has))
-        ref.add({name: 'maintitle', value: item.volumeTitle }); // ; to prevent chaining
+      if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
+        debug('cslVolumeTitle: for bookSection, type:', item.referenceType, 'has:', Object.keys(ref.has))
+        ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]
       }

@@ -213,10 +213,10 @@ Translator.doExport = () => {
         ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
         break
       default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.__type__)) ref.add({ name: 'howpublished', value: item.url })
+        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
     }
 
-    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.__type__)) {
+    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
     } else if (ref.isBibVar(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
@@ -224,13 +224,13 @@ Translator.doExport = () => {
       ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
     }
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'thesis': ref.add({ name: 'school', value: item.publisher }); break
       case 'report': ref.add({ name: 'institution', value: item.publisher }); break
       default:       ref.add({ name: 'publisher', value: item.publisher })
     }
 
-    if (item.__type__ === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
+    if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
       ref.referencetype = item.type
       ref.remove('type')
     }
@@ -1045,7 +1045,7 @@ class ZoteroItem {
 // ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 //
-// ZoteroItem::$__type__ = (value) ->
+// ZoteroItem::$referenceType = (value) ->
 //   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
 //   return true
 //

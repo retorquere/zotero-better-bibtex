@@ -83,7 +83,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       if (item.ISBN) csl.ISBN = item.ISBN
 
       delete csl.authority
-      if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
+      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
       if (item.date) csl.issued = this.parseDate(item.date)
       if (item.accessDate) csl.accessed = this.parseDate(item.accessDate)

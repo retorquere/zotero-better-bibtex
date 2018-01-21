@@ -349,11 +349,11 @@ export class Reference {
     }
 
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
-      this.item.volumeTitle = this.item.extraFields.csl['volume-title'].value
+      this.item.cslVolumeTitle = this.item.extraFields.csl['volume-title'].value
       delete this.item.extraFields.csl['volume-title']
     }
 
-    this.item.__type__ = this.item.cslType || this.item.itemType
+    this.item.referenceType = (this.item.cslType || this.item.itemType).toLowerCase()
     debug('postextract: item:', this.item)
 
     // should be const referencetype: string | { type: string, subtype?: string }
@@ -559,10 +559,22 @@ export class Reference {
             break
 
           case 'container-title':
-            switch (this.item.__type__) {
-              case 'film': case 'tvBroadcast': case 'videoRecording': case 'motion_picture': name = 'booktitle'; break
-              case 'bookSection': case 'chapter': name = 'maintitle'; break
-              default: name = 'journaltitle'
+            switch (this.item.referenceType) {
+              case 'film':
+              case 'tvBroadcast':
+              case 'videoRecording':
+              case 'motion_picture':
+                name = 'booktitle'
+                break
+
+              case 'bookSection':
+              case 'chapter':
+                name = 'maintitle'
+                break
+
+              default:
+                name = 'journaltitle'
+                break
             }
             break
 

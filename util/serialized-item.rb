@@ -5,21 +5,35 @@ require 'sqlite3'
 db = SQLite3::Database.new(File.expand_path("~/.BBTZ5TEST/zotero/zotero.sqlite"))
 
 query = """
-  SELECT distinct COALESCE(bf.fieldName, f.fieldName) as fieldName
+  SELECT it.typeName, COALESCE(bf.fieldName, f.fieldName) as fieldName, CASE WHEN bf.fieldName IS NULL THEN NULL ELSE f.fieldName END as fieldAlias
   FROM itemTypes it
   JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
   JOIN fields f ON f.fieldID = itf.fieldID
   LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
   LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
-  ORDER BY 1
+  ORDER BY 2, 1, 3
 """
 
-interface = ['export interface ISerializedItem {']
+fields = {}
+itemTypes = []
 db.execute(query) do |row|
-  interface << "  #{row[0]}: any"
+  typeName, fieldName, fieldAlias = *row
+
+  itemTypes << typeName
+  fields[fieldName] ||= { types: [], aliases: [] }
+  fields[fieldName][:types] << typeName
+  fields[fieldName][:aliases] << "#{typeName}.#{fieldAlias}" if fieldAlias
 end
+
+interface = ['export interface ISerializedItem {']
+fields.keys.sort.each{|fieldName|
+  interface << "  #{fieldName}: any // [#{fields[fieldName][:types].uniq.sort.join(', ')}] #{fields[fieldName][:aliases].uniq.sort.join(', ')}".rstrip
+}
 interface << ''
-%w{itemType dateModified dateAdded}.each{|field|
+itemTypes.uniq!
+itemTypes.sort!
+interface << "  itemType: string // " + itemTypes.join(', ')
+%w{dateModified dateAdded}.each{|field|
   interface << "  #{field}: string"
 }
 %w{notes tags}.each{|field|
@@ -32,7 +46,7 @@ interface << ''
   interface << "  #{field}: any"
 }
 interface << ''
-%w{citekey cslType volumeTitle __type__}.each{|field|
+%w{referenceType cslType cslVolumeTitle citekey}.each{|field|
   interface << "  #{field}: string"
 }
 
