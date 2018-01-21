@@ -246,7 +246,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'edition', value: item.edition })
     ref.add({ name: 'volume', value: item.volume })
-    ref.add({ name: 'rights', value: item.rights })
+    // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
     ref.add({ name: 'url', value: item.url })
