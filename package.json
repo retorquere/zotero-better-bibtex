@@ -31,7 +31,7 @@
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "preversion": "rm -f package-lock.json",
-    "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
+    "postversion": "git add package-lock.json && git commit -m package-lock.json && TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "typedoc --ignoreCompilerErrors --json typedoc.json content/keymanager && node zotero-webpack/script/formatter.js",
     "ncu": "ncu -a"
