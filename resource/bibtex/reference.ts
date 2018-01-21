@@ -344,7 +344,7 @@ export class Reference {
     }
 
     if (this.item.extraFields.csl.type) {
-      this.item.cslType = this.item.extraFields.csl.type.value
+      this.item.cslType = this.item.extraFields.csl.type.value.toLowerCase()
       delete item.extraFields.csl.type
     }
 
@@ -353,7 +353,7 @@ export class Reference {
       delete this.item.extraFields.csl['volume-title']
     }
 
-    this.item.referenceType = this.item.cslType ? this.item.cslType.toLowerCase() : this.item.itemType
+    this.item.referenceType = this.item.cslType || this.item.itemType
     debug('postextract: item:', this.item)
 
     // should be const referencetype: string | { type: string, subtype?: string }
