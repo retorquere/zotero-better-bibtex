@@ -15,4 +15,4 @@ If your issue is a bug report, but not for exports, restart Zotero with debuggin
 
 ## Support
 
-I want to make it abundently clear that you are in no way obliged to pay anything for BBT, and I hate asking for money for BBT, but the time has come: my MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook is what I need. [Anything you can spare](https://www.paypal.me/retorquere) towards that goal is very much appreciated. Currently at 7.5% of target.
+I want to make it abundently clear that you are in no way obliged to pay anything for BBT, and I hate asking for money for BBT, but the time has come: my MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook is what I need. [Anything you can spare](https://www.paypal.me/retorquere) towards that goal is very much appreciated. Currently at 20% of target.
