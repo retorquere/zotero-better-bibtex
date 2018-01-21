@@ -1,8 +1,6 @@
 @export
 Feature: Export
 
-### BibLaTeX cookie-cutter ###
-
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
 @573 @590 @747 @edtf @689 @biblatex @644
 Scenario Outline: BibLaTeX Export
@@ -63,7 +61,7 @@ Scenario Outline: BibLaTeX Export
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
-     | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
+#    | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |
      | Ignore HTML tags when generating citation key #264                                             | 1           |
@@ -104,8 +102,6 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
 
-### BibTeX cookie-cutter ###
-
 @441 @439 @bbt @300 @565 @551 @558 @747
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
@@ -132,7 +128,6 @@ Scenario Outline: BibTeX Export
      | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.018                                                                  | 1          |
 
-## Other ###
 @test-cluster-1 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/Omit URL export when DOI present. #131.json" into a new collection
