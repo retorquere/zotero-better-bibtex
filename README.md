@@ -40,3 +40,7 @@ The support request guidelines are very detailed, perhaps to the point of being 
 these guidelines simply express my ideal bug submission.
 I of course prefer very clearly documented issue reports over fuzzy ones,
 but I prefer fuzzy ones over missed ones.
+
+# A new dev system
+
+I hate asking for money for BBT, but the time has come: my MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook is what I need. [Anything you can spare](https://www.paypal.me/retorquere)  towards that goal is very much appreciated.
