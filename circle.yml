@@ -16,6 +16,9 @@ dependencies:
   - gem install bundler
   - gem update bundler
   override:
+    - sudo apt-get install -y x11vnc
+    - x11vnc -forever -nopw:
+      background: true
     - npm install
     - bundle config
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3:
@@ -73,6 +76,7 @@ test:
 
       echo $CIRCLE_TESTS
       export LOGS=$CIRCLE_ARTIFACTS
+      export HEADLESS=false
       bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
       cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
       cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
