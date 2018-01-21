@@ -840,6 +840,7 @@ export class Reference {
    * @return {String} field.value encoded as author-style value
    */
   protected enc_literal(f) {
+    if (!f.value) return null
     return this.enc_latex({value: new String(f.value)}) // tslint:disable-line:no-construct
   }
 

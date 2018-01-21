@@ -32,7 +32,7 @@ Reference.prototype.caseConversion = {
   origtitle: true,
   booktitle: true,
   maintitle: true,
-  type: true,
+  // type: true,
   eventtitle: true,
 }
 
@@ -228,7 +228,12 @@ Translator.doExport = () => {
     }
 
     ref.add({ name: 'langid', value: ref.language })
-    ref.add({ name: 'location', value: item.place })
+
+    ref.add({
+      name: item.referenceType === 'presentation' ? 'venue' : 'location',
+      value: item.place,
+      enc: item.referenceType === 'presentation' ? 'literal' : 'latex',
+    })
 
     /*
     if (ref.referencetype === 'inbook') {
@@ -252,7 +257,6 @@ Translator.doExport = () => {
     ref.add({ name: 'version', value: item.versionNumber })
     ref.add({ name: 'eventtitle', value: item.conferenceName })
     ref.add({ name: 'pagetotal', value: item.numPages })
-    ref.add({ name: 'type', value: item.type })
 
     ref.add({ name: 'number', value: item.seriesNumber || item.number })
     ref.add({ name: (isNaN(parseInt(item.issue)) || (`${parseInt(item.issue)}` !== `${item.issue}`)  ? 'issue' : 'number'), value: item.issue })
@@ -352,20 +356,19 @@ Translator.doExport = () => {
     switch (item.referenceType) {
       case 'letter':
       case 'personal_communication':
-        ref.add({ name: 'type', value: item.type || 'Letter', replace: true })
+        ref.add({ name: 'type', value: item.type || 'Letter' })
         break
 
       case 'email':
-        ref.add({ name: 'type', value: 'E-mail', replace: true })
+        ref.add({ name: 'type', value: 'E-mail' })
         break
 
       case 'thesis':
         const thesistype = item.type ? item.type.toLowerCase() : null
         if (['phdthesis', 'mastersthesis'].includes(thesistype)) {
           ref.referencetype = thesistype
-          ref.remove('type')
         } else {
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.type })
         }
         break
 
@@ -373,15 +376,15 @@ Translator.doExport = () => {
         if ((item.type || '').toLowerCase().trim() === 'techreport') {
           ref.referencetype = 'techreport'
         } else {
-          ref.add({ name: 'type', value: item.type, replace: true })
+          ref.add({ name: 'type', value: item.type })
         }
         break
 
       default:
-        ref.add({ name: 'type', value: item.type, replace: true })
+        ref.add({ name: 'type', value: item.type })
     }
 
-    if (['presentation', 'manuscript'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.type })
+    if (item.referenceType === 'manuscript') ref.add({ name: 'howpublished', value: item.type })
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 

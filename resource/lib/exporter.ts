@@ -53,9 +53,9 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
-      // debug('pre-simplify', item)
+      debug('pre-simplify', item)
       Zotero.BetterBibTeX.simplifyFields(item)
-      // debug('post-simplify', item)
+      debug('post-simplify', item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
 
