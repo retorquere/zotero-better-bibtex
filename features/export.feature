@@ -62,7 +62,6 @@ Scenario Outline: BibLaTeX Export
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
-#    | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |
      | Ignore HTML tags when generating citation key #264                                             | 1           |
@@ -111,6 +110,7 @@ Scenario Outline: BibTeX Export
   Examples:
      | file                                                                               | references |
      | date ranges #747+#746                                                              | 4          |
+     | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | veryshorttitle and compound words #551                                             | 4          |
