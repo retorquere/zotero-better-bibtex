@@ -41,7 +41,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "^6.0.1",
+    "ajv": "^6.1.0",
     "ajv-keywords": "^3.0.0",
     "barcoder": "^2.0.1",
     "better-queue": "^3.8.6",
@@ -67,19 +67,19 @@
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
     "xregexp": "^4.0.0",
-    "zotero-plugin": "0.0.16"
+    "zotero-plugin": "0.0.17"
   },
   "devDependencies": {
     "current-git-branch": "^1.0.1",
     "github": "^13.1.0",
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^9.3.0",
-    "@types/webpack": "^3.8.3",
+    "@types/node": "^9.4.0",
+    "@types/webpack": "^3.8.4",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
     "circular-dependency-plugin": "^4.4.0",
-    "clean-webpack-plugin": "^0.1.17",
+    "clean-webpack-plugin": "^0.1.18",
     "dedent-js": "^1.0.1",
     "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
