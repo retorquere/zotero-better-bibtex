@@ -186,6 +186,7 @@ class PatternFormatter {
 
   public $auth(onlyEditors, withInitials, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
+    debug('$auth:', { onlyEditors, withInitials, n, m, authors })
     if (!authors || !authors.length) return ''
     let author = authors[m || 0]
     if (author && n) author = author.substring(0, n)
@@ -555,12 +556,14 @@ class PatternFormatter {
   }
 
   private creators(onlyEditors, options: { initialOnly?: boolean, withInitials?: boolean} = {}) {
-    if (!this.item.creators) {
+    const format = `creators${options.initialOnly ? '_io' : ''}${options.initialOnly ? '_wi' : ''}`
+    let creators = this.item[format]
+    if (!creators) {
       let types = Zotero.CreatorTypes.getTypesForItemType(this.item.item.itemTypeID)
       types = types.reduce((map, type) => { map[type.name] = type.id; return map }, {})
       const primary = Zotero.CreatorTypes.getPrimaryIDForType(this.item.item.itemTypeID)
 
-      this.item.creators = {}
+      creators = this.item[format] = {}
 
       for (const creator of this.item.item.getCreators()) {
         if (onlyEditors && ![types.editor, types.seriesEditor].includes(creator.creatorTypeID)) continue
@@ -582,29 +585,29 @@ class PatternFormatter {
         switch (creator.creatorTypeID) {
           case types.editor:
           case types.seriesEditor:
-            this.item.creators.editors = this.item.creators.editors || []
-            this.item.creators.editors.push(name)
+            creators.editors = creators.editors || []
+            creators.editors.push(name)
             break
 
           case types.translator:
-            this.item.creators.translators = this.item.creators.translators || []
-            this.item.creators.translators.push(name)
+            creators.translators = creators.translators || []
+            creators.translators.push(name)
             break
 
           case primary:
-            this.item.creators.authors = this.item.creators.authors || []
-            this.item.creators.authors.push(name)
+            creators.authors = creators.authors || []
+            creators.authors.push(name)
             break
 
           default:
-            this.item.creators.collaborators = this.item.creators.collaborators || []
-            this.item.creators.collaborators.push(name)
+            creators.collaborators = creators.collaborators || []
+            creators.collaborators.push(name)
         }
       }
     }
 
-    if (onlyEditors) return this.item.creators.editors || []
-    return this.item.creators.authors || this.item.creators.editors || this.item.creators.translators || this.item.creators.collaborators || []
+    if (onlyEditors) return creators.editors || []
+    return creators.authors || creators.editors || creators.translators || creators.collaborators || []
   }
 }
 
