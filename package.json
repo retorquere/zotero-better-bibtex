@@ -67,7 +67,7 @@
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
     "xregexp": "^4.0.0",
-    "zotero-plugin": "0.0.17"
+    "zotero-plugin": "0.0.18"
   },
   "devDependencies": {
     "current-git-branch": "^1.0.1",
