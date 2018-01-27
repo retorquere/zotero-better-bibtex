@@ -32,7 +32,6 @@ Reference.prototype.caseConversion = {
   origtitle: true,
   booktitle: true,
   maintitle: true,
-  // type: true,
   eventtitle: true,
 }
 

@@ -17,6 +17,7 @@ Reference.prototype.caseConversion = {
   title: true,
   shorttitle: true,
   booktitle: true,
+  type: true,
 }
 
 Reference.prototype.fieldEncoding = {
