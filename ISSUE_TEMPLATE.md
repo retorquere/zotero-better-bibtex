@@ -12,8 +12,3 @@ If your bug report/feature request/question concerns problems with exporting ref
 ## Non-export problems with BBT
 
 If your issue is a bug report, but not for exports, restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproduce your problem, and select "Report Better BibTeX error" from the help menu, and post the resulting report ID (shown in red after you submit) here.
-
-
-<!--
-<sub><sub>I want to stress that this should in no way be seen as an obligation, but I'm in need for a new dev system for BBT development. [Anything you can spare](https://www.paypal.me/retorquere)  towards that goal is very much appreciated. If you'd rather contribute a little bit each month (and a little means a lot) so I can save up for a replacement a year or so down the line, head on over to [Patreon](https://www.patreon.com/retorquere). Many, many thanks, also to the existing 15 contributors; thanks to you I'm currently at 33% of target; *so* looking forward to retire my trusty `manchineel`.</sub></sub>
--->
