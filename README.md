@@ -40,3 +40,7 @@ The support request guidelines are very detailed, perhaps to the point of being 
 these guidelines simply express my ideal bug submission.
 I of course prefer very clearly documented issue reports over fuzzy ones,
 but I prefer fuzzy ones over missed ones.
+
+# A new dev system
+
+I hate asking for money for BBT, but the time has come: my MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. [Anything you can spare](https://www.paypal.me/retorquere)  towards that goal is very much appreciated. If you'd rather contribute a little bit each month (and a little means a lot) so I can save up for a replacement a year or so down the line, head on over to [Patreon](https://www.patreon.com/retorquere). Many, many thanks, also to the existing 15 contributors -- thanks to you I'm currently at 33% of target; *so* looking forward to replace my trusty `manchineel`.

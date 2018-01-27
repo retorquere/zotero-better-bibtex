@@ -12,3 +12,4 @@ If your bug report/feature request/question concerns problems with exporting ref
 ## Non-export problems with BBT
 
 If your issue is a bug report, but not for exports, restart Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproduce your problem, and select "Report Better BibTeX error" from the help menu, and post the resulting report ID (shown in red after you submit) here.
+

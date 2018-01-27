@@ -11,7 +11,7 @@ build
 *.keys
 *.serialized
 .bundle
-*.translator
+*.js
 *.js.map
 *.tmp
 .depend.mf
