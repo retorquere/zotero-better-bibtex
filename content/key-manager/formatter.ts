@@ -17,7 +17,7 @@ class PatternFormatter {
   public generate: Function
 
   private re = {
-    unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;?\\[\\]]'),
+    unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
     punct: Zotero.Utilities.XRegExp('\\p{Pe}|\\p{Pf}|\\p{Pi}|\\p{Po}|\\p{Ps}', 'g'),
     dash: Zotero.Utilities.XRegExp('(\\p{Pc}|\\p{Pd})+', 'g'),
