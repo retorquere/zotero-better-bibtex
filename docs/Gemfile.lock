@@ -192,7 +192,7 @@ GEM
     mini_portile2 (2.3.0)
     minima (2.1.1)
       jekyll (~> 3.3)
-    minitest (5.10.3)
+    minitest (5.11.1)
     multipart-post (2.0.0)
     net-dns (0.8.0)
     nokogiri (1.8.1)
@@ -210,7 +210,7 @@ GEM
       i18n
     rubyzip (1.2.1)
     safe_yaml (1.0.4)
-    sass (3.5.4)
+    sass (3.5.5)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
       rb-fsevent (~> 0.9, >= 0.9.4)
@@ -233,10 +233,13 @@ PLATFORMS
 DEPENDENCIES
   github-pages
   jekyll-default-layout
+  jekyll-github-metadata
   jekyll-optional-front-matter
   jekyll-readme-index
+  jekyll-redirect-from
+  jekyll-relative-links
   jekyll-remote-theme
   jekyll-titles-from-headings
 
 BUNDLED WITH
-   1.16.0
+   1.16.1

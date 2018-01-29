@@ -1,4 +1,3 @@
-remote_theme: "ENG618/jekyll-theme-material"
 plugins:
   - jekyll-default-layout
   - jekyll-github-metadata
@@ -19,4 +18,3 @@ candidate_themes:
   - https://github.com/CloudCannon/edition-jekyll-template
   - http://longqian.me/2017/02/09/github-jekyll-tag/
   - https://github.com/enrmarc/jekyll-tagcloud/blob/master/tags.html
-
