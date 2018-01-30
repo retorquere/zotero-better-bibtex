@@ -165,3 +165,11 @@ In Zotero when using an Export Format of Better Biblatex we'll get something lik
 
 Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).
 -->
+
+## Detect and protect LaTeX math formulas
+
+```
+if (Translator.BetterBibTeX && this.has.title) {
+  this.add({ name: 'title', value: this.item.title.replace(/(\$.*?\$)/g, '<pre>$1</pre>'), replace: true });
+}
+```

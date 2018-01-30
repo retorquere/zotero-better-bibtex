@@ -168,11 +168,17 @@ default: `10`
 
 For those who are curious about what the "Clear/Generate BibTeX key" right-click options do, this will warn you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing all your citation keys at once.
 
-### Postscript
+### postscript
 
 default: `""`
 
 Snippet of javascript to run [[after each reference generation|Scripting]].
+
+### import @string definitions
+
+default: `""`
+
+If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
 
 ## Hidden preferences
 

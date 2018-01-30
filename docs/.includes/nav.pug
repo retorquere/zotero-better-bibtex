@@ -6,7 +6,7 @@ transform: translateY(0px);\
     .navbar-brand
       a.navbar-item(href="https://retorquere.github.io/zotero-better-bibtex/")
         img(src="/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28")
-      a.navbar-item.is-hidden-desktop(href="https://github.com/jgthms/bulma" target="_blank")
+      a.navbar-item.is-hidden-desktop(href="https://github.com/retorquere/zotero-better-bibtex" target="_blank")
         span.icon(style="color: #333;")
           i.fa.fa-github(aria-hidden="true")
       #navbarBurger.navbar-burger.burger(data-target="navMenuIndex")
@@ -15,121 +15,29 @@ transform: translateY(0px);\
         span
     #navMenuIndex.navbar-menu
       .navbar-start
+        | {% for item in site.data.nav %}
         .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link(href="/documentation/overview/start/")
-            | Docs
+          a.navbar-link(href="{{ item.pages.first.url }}")
+            | {{ item.title }}
           .navbar-dropdown.is-boxed
-            a.navbar-item(href="/documentation/overview/start/")
-              | Overview
-            a.navbar-item(href="https://bulma.io/documentation/modifiers/syntax/")
-              | Modifiers
-            a.navbar-item(href="https://bulma.io/documentation/columns/basics/")
-              | Columns
-            a.navbar-item(href="https://bulma.io/documentation/layout/container/")
-              | Layout
-            a.navbar-item(href="https://bulma.io/documentation/form/general/")
-              | Form
-            a.navbar-item(href="https://bulma.io/documentation/elements/box/")
-              | Elements
-            a.navbar-item(href="https://bulma.io/documentation/components/breadcrumb/")
-              | Components
-            hr.navbar-divider
-            .navbar-item
-              div
-                p.is-size-6-desktop
-                  strong 0.6.2
-                small
-                  a.bd-view-all-versions(href="https://versions.bulma.io/") View all versions
-        .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link(href="https://bulma.io/blog/")
-            | Blog
-          #blogDropdown.navbar-dropdown.is-boxed(data-style="width: 18rem;")
-            a.navbar-item(href="/2018/01/18/bulma-supports-font-awesome-5/")
-              .navbar-content
-                p
-                  small.has-text-link 18 Jan 2018
-                p Bulma supports Font Awesome 5
-            a.navbar-item(href="/2017/11/01/fixed-navbar/")
-              .navbar-content
-                p
-                  small.has-text-link 01 Nov 2017
-                p New feature: fixed navbar
-            a.navbar-item(href="https://bulma.io/blog/")
-              | More posts
-            hr.navbar-divider
-            .navbar-item
-              .navbar-content
-                .level.is-mobile
-                  .level-left
-                    .level-item
-                      strong Stay up to date!
-                  .level-right
-                    .level-item
-                      a.button.bd-is-rss.is-small(href="https://bulma.io/atom.xml")
-                        span.icon.is-small
-                          i.fas.fa-rss
-                        span Subscribe
-        .navbar-item.has-dropdown.is-hoverable
-          .navbar-link
-            | More
-          #moreDropdown.navbar-dropdown.is-boxed
-            a.navbar-item(href="https://bulma.io/bulma-start/")
-              .media
-                .media-left
-                  span.icon.is-large.has-text-success
-                    i.fas.fa-rocket.fa-2x
-                .media-content
-                  p
-                    strong Bulma start
-                    br
-                    small A tiny npm package to get started
-            hr.navbar-divider
-            a.navbar-item(href="https://bulma.io/made-with-bulma/")
-              .media
-                .media-left
-                  span.icon.is-large.has-text-primary
-                    i.fas.fa-certificate.fa-2x
-                .media-content
-                  p
-                    strong Made with Bulma
-                    br
-                    small The official community badge
-            hr.navbar-divider
-            a#moreDropdownBootstrap.navbar-item(href="https://bulma.io/alternative-to-bootstrap/")
-              .media
-                .media-left
-                  span.icon.is-large
-                    i.fas.fa-exchange-alt.fa-2x
-                .media-content
-                  p
-                    strong Coming from Bootstrap
-                    br
-                    small See how Bulma is an alternative to Bootstrap
-            hr.navbar-divider
-            a.navbar-item(href="https://bulma.io/extensions/")
-              .media
-                .media-left
-                  span.icon.is-large.has-text-danger
-                    i.fas.fa-plug.fa-2x
-                .media-content
-                  p
-                    strong Extensions
-                    br
-                    small Side projects to enhance Bulma
-        a.navbar-item(href="https://bulma.io/expo/")
-          span.bd-emoji ⭐️
-          |         Expo
-        a.navbar-item(href="https://bulma.io/love/")
+            | {% for entry in item.pages %}
+            a.navbar-item(href="{{ entry.url }}")
+              | {{ entry.title }}
+            | {% endfor %}
+        | {% endfor %}
+
+        a.navbar-item(href="/sponsoring/")
           span.bd-emoji ❤️
-          |         Love
+          | Sponsorship
+
       .navbar-end
-        a.navbar-item.is-hidden-desktop-only(href="https://github.com/jgthms/bulma" target="_blank")
+        a.navbar-item.is-hidden-desktop-only(href="https://github.com/retorquere/zotero-better-bibtex" target="_blank")
           span.icon(style="color: #333;")
             i.fab.fa-lg.fa-github
         .navbar-item
           .field.is-grouped.is-grouped-multiline
             p.control
-              a.button.is-primary(href="https://github.com/jgthms/bulma/releases/download/0.6.2/bulma-0.6.2.zip")
+              a.button.is-primary(href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" target="_blank")
                 span.icon
                   i.fas.fa-download
                 span Download

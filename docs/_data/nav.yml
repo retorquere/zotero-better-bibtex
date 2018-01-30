@@ -1,0 +1,34 @@
+- title: Better BibTeX for Zotero
+  pages:
+    - title: Us LaTeX holdouts
+      url: /
+    - title: Installation
+      url: /installation/
+    - title: Configuration
+      url: /configuration/
+    - title: Bundled translators
+      url: /bundled-translators/
+- title: Exporting
+  pages:
+    - title: Push and Pull Export
+      url: /push-and-pull/
+    - title: Customized exports
+      url: /customized-exports/
+    - title: Scripting
+      url: /scripting/
+    - title: Why all these braces?
+      url: /all-them-braces/
+- title: Citing
+  pages:
+    - title: Configurable citation keys
+      url: /citation-keys/
+    - title: Cite as you write
+      url: /cayw/
+- title: Support
+  pages:
+    - title: Getting help
+      url: /support/
+    - title: FAQ
+      url: /faq/
+    - title: Performance
+      url: /performance/

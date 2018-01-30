@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prestart": "rm _layouts/* _includes/* && pug .layouts -o _layouts && pug .includes -o _includes && cp ../skin/better-bibtex.svg assets/img",
+    "prestart": "rm -f _layouts/* _includes/* && pug .layouts -o _layouts && pug .includes -o _includes && cp ../skin/better-bibtex.svg assets/img",
     "start": "jekyll serve"
   },
   "author": "",

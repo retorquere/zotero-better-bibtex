@@ -85,7 +85,7 @@ class DocFinder {
       'utf8'
     )
 
-    const docs = path.join(root, 'docs/Configuration.md')
+    const docs = path.join(root, 'docs/configuration.md')
     if (fs.existsSync(docs)) {
       const md = [
         dedent(`
