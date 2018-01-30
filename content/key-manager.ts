@@ -290,7 +290,14 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     // go-ahead to *start* my init.
     if (!this.keys) return { citekey: '', pinned: false, retry: true }
 
-    const key = this.keys.findOne({ itemID })
+    // 894
+    let key
+    try {
+      key = this.keys.findOne({ itemID })
+    } catch (err) {
+      debug('keymanager.get:', err)
+      key = null
+    }
     if (key) return key
 
     debug('KeyManager.get called for non-existent', itemID)
