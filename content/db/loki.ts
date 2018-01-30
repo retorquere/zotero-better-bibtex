@@ -14,6 +14,13 @@ import Loki = require('lokijs')
 const validator = new AJV({ useDefaults: true, coerceTypes: true })
 require('ajv-keywords')(validator)
 
+// 894
+$patch$(Loki.Collection.prototype, 'findOne', original => function() {
+  if (!this.data.length) return null
+
+  return original.apply(this, arguments)
+})
+
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
