@@ -102,13 +102,14 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747
+@441 @439 @bbt @300 @565 @551 @558 @747 @892
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | creating a key with [authForeIni] and [authN] not working properly #892            | 2          |
      | date ranges #747+#746                                                              | 4          |
      | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
