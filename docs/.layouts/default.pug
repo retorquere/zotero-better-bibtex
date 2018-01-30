@@ -4,9 +4,9 @@ head
   meta(name="viewport" content="width=device-width, initial-scale=1")
   title Better BibTeX for Zotero
   link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css")
-  link(rel="stylesheet" href="/assets/css/site.css")
+  link(rel="stylesheet" href="{{ site.url }}/assets/css/site.css")
   script(defer="" src="https://use.fontawesome.com/releases/v5.0.0/js/all.js")
-  script(src="/assets/js/toc.js")
+  script(src="{{ site.url }}/assets/js/toc.js")
 section.section
   .container
     | {% include nav.html %}
@@ -17,6 +17,10 @@ section.section
           | {{ content }}
       .column
         | {% include toc.html %}
+    hr
+    p
+      | This site is open source. {% raw %}{% github_edit_link "Improve this page" %}{% endraw %}
+
 script(type="text/javascript").
   console.log('generating TOC')
   TableOfContents('toc', 'content')

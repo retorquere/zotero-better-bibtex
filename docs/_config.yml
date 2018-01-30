@@ -8,6 +8,8 @@ plugins:
   - jekyll-remote-theme
   - jekyll-titles-from-headings
 
+repository: retorquere/zotero-better-bibtex
+
 titles_from_headings:
   enabled:     true
   strip_title: false

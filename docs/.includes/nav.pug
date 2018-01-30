@@ -5,7 +5,7 @@ transform: translateY(0px);\
   .container
     .navbar-brand
       a.navbar-item(href="https://retorquere.github.io/zotero-better-bibtex/")
-        img(src="/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28")
+        img(src="{{ site.url }}/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28")
       a.navbar-item.is-hidden-desktop(href="https://github.com/retorquere/zotero-better-bibtex" target="_blank")
         span.icon(style="color: #333;")
           i.fa.fa-github(aria-hidden="true")
@@ -17,16 +17,16 @@ transform: translateY(0px);\
       .navbar-start
         | {% for item in site.data.nav %}
         .navbar-item.has-dropdown.is-hoverable
-          a.navbar-link(href="{{ item.pages.first.url }}")
+          a.navbar-link(href="{{ site.url }}{{ item.pages.first.url }}")
             | {{ item.title }}
           .navbar-dropdown.is-boxed
             | {% for entry in item.pages %}
-            a.navbar-item(href="{{ entry.url }}")
+            a.navbar-item(href="{{ site.url }}{{ entry.url }}")
               | {{ entry.title }}
             | {% endfor %}
         | {% endfor %}
 
-        a.navbar-item(href="/sponsoring/")
+        a.navbar-item(href="{{ site.url }}/sponsoring/")
           span.bd-emoji ❤️
           | Sponsorship
 
