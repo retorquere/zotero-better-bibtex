@@ -30,8 +30,7 @@
     "release": "zotero-plugin-release",
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
-    "preversion": "rm -f package-lock.json",
-    "postversion": "git add package-lock.json && git commit -m package-lock.json && TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
+    "postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "typedoc --ignoreCompilerErrors --json typedoc.json content/keymanager && node zotero-webpack/script/formatter.js",
     "ncu": "ncu -a"
@@ -41,7 +40,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "^6.1.0",
+    "ajv": "^6.1.1",
     "ajv-keywords": "^3.0.0",
     "barcoder": "^2.0.1",
     "better-queue": "^3.8.6",
@@ -81,7 +80,7 @@
     "circular-dependency-plugin": "^4.4.0",
     "clean-webpack-plugin": "^0.1.18",
     "dedent-js": "^1.0.1",
-    "dotenv": "^4.0.0",
+    "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
     "find-up": "^2.1.0",
     "fs-extra": "^5.0.0",
@@ -104,7 +103,7 @@
     "rimraf": "^2.6.2",
     "shelljs": "^0.8.1",
     "sqlite-sync": "^0.3.6",
-    "ts-loader": "^3.3.1",
+    "ts-loader": "^3.4.0",
     "ts-node": "^4.1.0",
     "tslint": "^5.9.1",
     "tslint-loader": "^3.5.3",
