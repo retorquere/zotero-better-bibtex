@@ -4,14 +4,19 @@ head
   meta(name="viewport" content="width=device-width, initial-scale=1")
   title Hello Bulma!
   link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css")
+  link(rel="stylesheet" href="/assets/css/site.css")
   script(defer="" src="https://use.fontawesome.com/releases/v5.0.0/js/all.js")
+  script(src="/assets/js/toc.js")
 section.section
   .container
     | {% include nav.html %}
     hr
     .columns
       .column.is-three-quarters
-        .content
+        #content.content
           | {{ content }}
       .column
-        | {% include menu.html %}
+        | {% include toc.html %}
+script(type="text/javascript").
+  console.log('generating TOC')
+  TableOfContents('toc', 'content')
