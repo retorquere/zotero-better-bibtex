@@ -109,7 +109,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
-     | creating a key with [authForeIni] and [authN] not working properly #892            | 1          |
+     | creating a key with [authForeIni] and [authN] not working properly #892            | 2          |
      | date ranges #747+#746                                                              | 4          |
      | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |

@@ -4,19 +4,19 @@
     "label": "BetterBibTeX JSON",
     "release": {
       "Zotero": {
-        "version": "5.0.34",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
+        "version": "5.0.34.4",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "de",
         "appName": "Zotero",
-        "appVersion": "5.0.34"
+        "appVersion": "5.0.34.4"
       },
-      "BetterBibTeX": "5.0.79.emile.titanarum"
+      "BetterBibTeX": "5.0.79.5455.issue-892"
     },
     "preferences": {
       "debug": false,
       "rawLaTag": "#LaTeX",
-      "testing": true,
+      "testing": false,
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
@@ -28,14 +28,16 @@
       "keyConflictPolicy": "keep",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "bibtexURL": "off",
       "warnBulkModify": 10,
       "postscript": "",
       "strings": "",
       "quickCopyMode": "latex",
       "autoAbbrev": false,
-      "autoAbbrevStyle": "",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "autoExportIdleWait": 10,
       "cacheFlushInterval": 5,
       "csquotes": "",
@@ -176,12 +178,51 @@
       "lockedInit": false
     },
     "options": {
-      "exportNotes": false,
-      "exportFileData": false
+      "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
+    {
+      "itemType": "book",
+      "edition": "3. Aufl.",
+      "place": "Berlin [u.~a.]",
+      "publisher": "Springer",
+      "ISBN": "978-3-642-37365-7",
+      "date": "2014",
+      "libraryCatalog": "Library of Congress ISBN",
+      "language": "ger",
+      "title": "Tutorium Analysis 1 und Lineare Algebra 1. Mathematik von Studenten für Studenten erklärt und kommenteiert",
+      "shortTitle": "Tutorium",
+      "creators": [
+        {
+          "firstName": "Florian",
+          "lastName": "Modler",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Martin",
+          "lastName": "Kreh",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "dateAdded": "2018-01-16 13:48:27",
+      "dateModified": "2018-01-16 14:09:51",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 320,
+      "seeAlso": [
+
+      ]
+    },
     {
       "itemType": "book",
       "volume": "12",
@@ -195,13 +236,21 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "dateAdded": "2018-01-27 12:17:16",
       "dateModified": "2018-01-27 12:19:02",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 60,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }
