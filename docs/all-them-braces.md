@@ -67,7 +67,7 @@ about this. Brace protection cannot be turned off.
 
 ## Why the double braces?
 
-But why then the double-braces (`{{...}}`) rather than the commonly recommended single braces (`{...}`)?
+But why then the double-braces (`{% raw %}{{...}}{% endraw %}`) rather than the commonly recommended single braces (`{...}`)?
 
 This is not because of some arcane aesthetic preference, but because the Bib(La)TeX case protection rules are incredibly
 convoluted ([#541](https://github.com/retorquere/zotero-better-bibtex/issues/541),

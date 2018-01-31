@@ -32,3 +32,6 @@
       url: /faq/
     - title: Performance
       url: /performance/
+- title: Sponsorship
+  url: /sponsoring/
+  icon: heart

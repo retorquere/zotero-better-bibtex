@@ -1,2 +1,26 @@
-<!DOCTYPE html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Better BibTeX for Zotero</title><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"><link rel="stylesheet" href="{{ site.url }}/assets/css/site.css"><script defer="" src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script><script src="{{ site.url }}/assets/js/toc.js"></script></head><section class="section"><div class="container">{% include nav.html %}<hr><div class="columns"><div class="column is-two-thirds"><div class="content" id="content">{{ content }}</div></div><div class="column">{% include toc.html %}</div></div><hr><p>This site is open source. {% raw %}{% github_edit_link "Improve this page" %}{% endraw %}</p></div></section><script type="text/javascript">console.log('generating TOC')
-TableOfContents('toc', 'content')</script>
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Better BibTeX for Zotero</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
+  <link rel="stylesheet" href="{{ site.url }}/assets/css/site.css">
+  <script defer="" src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script><script src="{{ site.url }}/assets/js/toc.js"></script>
+</head>
+<section class="section">
+  <div class="container">
+    {% include nav.html %}
+    <hr>
+    <div class="columns">
+      <div class="column is-two-thirds">
+        <div class="content" id="content">{{ content }}</div>
+      </div>
+      <div class="column">{% include toc.html %}</div>
+    </div>
+    <hr>
+    <p>This site is open source. {% github_edit_link "Improve this page" %}</p>
+  </div>
+</section>
+<script type="text/javascript">
+  TableOfContents('toc', 'content')
+</script>
