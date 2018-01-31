@@ -9,12 +9,6 @@ guidelines are very detailed, perhaps to the point of being off-putting, but ple
 express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I prefer
 fuzzy ones over missed ones.
 
-# Known problems
-
-* Better BibTeX will fail with incomprehensible errors if you run but Zotero Standalone and Zotero for Firefox
-  simultaniously [#143](https://github.com/retorquere/zotero-better-bibtex/issues/143)
-* If Zotero stalls with BBT installed, it is often a one-time thing as the [cache fills](performance)
-
 # Submitting an issue
 
 Unfortunately, however, my time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I
@@ -51,3 +45,7 @@ For the fastest fix:
 * **If your problem pertains to BBT interfering with other plugins** (which wouldn't be the first time), and this interference
   has something to do with importing, you ***must*** include a sample file that triggers the issue. I know it may seem
   that "any file triggers it" -- I need a *specific* file that does so I know we're looking at the same problem.
+
+# Known problems
+
+* If Zotero stalls after installing BBT, it is often a one-time thing as the [cache fills](performance)
