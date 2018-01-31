@@ -28,5 +28,3 @@ You can add options to the export as URL parameters:
 * `&exportCharset=<charset>`
 * `&exportNotes=[true|false]`
 * `&useJournalAbbreviation=[true|false]`
-
-Zotero needs to be running and the [[embedded server needs to be enabled|Configuration]] for this to work.
