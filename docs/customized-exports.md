@@ -10,14 +10,12 @@ Through the configuration pane of BBT you can customize the BibTeX file that wil
 * **Omit fields from export**: Should you so wish, you can prevent fields of your choosing from being exported. In the
   configuration screen, add a comma-separated list of BibTeX fields you do not want to see in your export. The fields
   are case-sensitive, separated by a comma *only*, no spaces.
-* **[[Configurable citekey generator|Citation-Keys]]**
-* **[[Push-and-Pull-Export]]**: You can fetch your library as part of your build, using curl (for example by using the included
+* **[Configurable citekey generator](citation-keys)**
+* **[Push-and-Pull-Export](push-and-pull)**: You can fetch your library as part of your build, using curl (for example by using the included
   zoterobib.yaml arara rule), or with a BiblaTeX remote statement like
   \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.  For Zotero
   standalone this is enabled by default; for Zotero embedded, this enables the embedded webserver.
 * Add other custom BibLaTeX fields
-* Scan your AUX files to get a list of references specifically for your article (and incidentally list missing
-  references) by importing it.
 
 BBT http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL HTTP
 facilities in Zotero -- including the non-Firefox plugins provided by Zotero.
@@ -90,4 +88,4 @@ and
 You got customized. If you go into the Advanced preferences of BBT, find an edit field labeled `Postscript`, empty by default. In this, you can paste a JavaScript snippet which will be executed for each reference
 generated in the Bib(La)TeX exporter. In this code, you have access to the reference just before it will be written out
 and cached. Examples and the documentation-in-progress for the script environment can be found
-[[here|Scripting]]; feel free to add your own examples.
+[here](scripting); feel free to add your own examples.

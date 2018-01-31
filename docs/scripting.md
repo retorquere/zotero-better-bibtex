@@ -146,6 +146,7 @@ if (Translator.BetterBibTeX || Translator.BetterBibLaTeX) {
 ```
 In Zotero when using an Export Format of Better Biblatex we'll get something like the following entry ...
 
+{% raw %}
 <pre><code>@book{nietzsche_1974_gay,
   <strong>author</strong> = {Nietzsche, Friedrich Wilhelm},
   <strong>date</strong> = {1974-03},
@@ -161,6 +162,7 @@ In Zotero when using an Export Format of Better Biblatex we'll get something lik
   isbn = {0-394-71985-9},
   edition = {1}
 }
+{% endraw %}
 </code></pre>
 
 Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://github.com/retorquere/zotero-better-bibtex/issues/512).

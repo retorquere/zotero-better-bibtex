@@ -1,9 +1,10 @@
+{% assign root = site.url | append: site.baseurl %}
 <nav id="navbar" class="navbar is-fixed-top is-primary" style="transform: translateY(0px);">
   <div class="bd-special-shadow" id="specialShadow" style="opacity: 0; transform: scaleY(1);"></div>
   <div class="container">
     <div class="navbar-brand">
       <a class="navbar-item" href="https://retorquere.github.io/zotero-better-bibtex/">
-        <img src="{{ site.url }}/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28"/>
+        <img src="{{ root }}/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28"/>
       </a>
       <a class="navbar-item is-hidden-desktop" href="https://github.com/retorquere/zotero-better-bibtex" target="_blank">
         <span class="icon" style="color: #333;">
@@ -18,25 +19,19 @@
       <div class="navbar-start">
         {% for item in site.data.nav %}
           {% assign selected = "" %}
-          {% assign dropdown = false %}
 
           {% if item.url == page.url %}
             {% assign selected = "is-selected" %}
           {% endif %}
 
           {% if item.pages %}
-            {% assign dropdown = true %}
-
             {% for entry in item.pages %}
               {% if entry.url == page.url %}
                 {% assign selected = "is-selected" %}
               {% endif %}
             {% endfor %}
-          {% endif %}
-
-          {% if dropdown %}
             <div class="navbar-item is-hoverable has-dropdown">
-              <a class="navbar-link {{ selected }}" href="{{ site.url }}{{ url }}">{{ item.title }}</a>
+              <a class="navbar-link {{ selected }}" href="{{ root }}{{ item.pages.first.url }}">{{ item.title }}</a>
               <div class="navbar-dropdown is-boxed">
                 {% for entry in item.pages %}
                   {% assign selected = "" %}
@@ -44,12 +39,12 @@
                     {% assign selected = "is-selected" %}
                   {% endif %}
 
-                  <a class="navbar-item {{ selected }}" href="{{ site.url }}{{ entry.url }}">{{ entry.title }}</a>
+                  <a class="navbar-item {{ selected }}" href="{{ root }}{{ entry.url }}">{{ entry.title }}</a>
                 {% endfor %}
               </div>
             </div>
           {% else %}
-            <a class="navbar-item {{ selected }}" href="{{ site.url }}{{ item.url }}">
+            <a class="navbar-item {{ selected }}" href="{{ root }}{{ item.url }}">
               {% if item.icon %}
                 <i class="fa fa-{{ item.icon }}" aria-hidden="true"></i>&nbsp;
               {% endif %}

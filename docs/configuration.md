@@ -8,7 +8,7 @@ The Better BibTeX Configuration can be found under the regular Zotero preference
 
 The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which only have hidden preferences). The defaults should just work, but here's an attempt to describe what they do.
 
-**Making any change here will drop your entire export cache.** This is usually not a problem unless you have a really large library, but you can read about what is involved [[here|Performance]].
+**Making any change here will drop your entire export cache.** This is usually not a problem unless you have a really large library, but you can read about what is involved [here](performance).
 
 ## Citation keys
 
@@ -28,13 +28,13 @@ Surround pandoc quick-copy citations with brackets.
 
 default: `"​[auth][shorttitle][year]"`
 
-Set the pattern used to generate citation keys. The format of the keys is documented [[here|Citation-Keys]].
+Set the pattern used to generate citation keys. The format of the keys is documented [here](citation-keys).
 
 ### Force citation key to plain text
 
 default: `on`
 
-If you have deviated from the default citation key format pattern by [[specifying your own|Citation-Keys]], you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
+If you have deviated from the default citation key format pattern by [specifying your own](citation-keys), you may wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
 ### On conflict, non-pinned keys will be
 
@@ -153,7 +153,7 @@ If set, generates journal abbreviations on export using the Zotero journal abbre
 
 default: `On Change`
 
-Determines when [[automatic exports|Push-and-Pull-Export]] are kicked off. Having it disabled still marks auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports happen whenever a reference in the export changes/is added/is removed. On idle does more or less what `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is idle. You mostly want this if your computer is performance-constrained (aka slow).
+Determines when [automatic exports](push-and-pull) are kicked off. Having it disabled still marks auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports happen whenever a reference in the export changes/is added/is removed. On idle does more or less what `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is idle. You mostly want this if your computer is performance-constrained (aka slow).
 
 Options:
 * Disabled
@@ -172,7 +172,7 @@ For those who are curious about what the "Clear/Generate BibTeX key" right-click
 
 default: `""`
 
-Snippet of javascript to run [[after each reference generation|Scripting]].
+Snippet of javascript to run [after each reference generation](scripting).
 
 ### import @string definitions
 

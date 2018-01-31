@@ -51,7 +51,7 @@ of those words -- that have capitals in them with double braces.
 
 For English titles BBT will Title Case and brace-protect your titles on output. Except, those Title Cased words which BBT changed itself will *not* be wrapped in double-braces,
 as it *is* OK for the styles to change casing for those, depending on the style at play. So `I like ISDN heaps better
-than dialup` would output to `I Like {{ISDN}} Heaps Better than Dialup`. Apparently non-English titles are supposed to
+than dialup` would output to `I Like {% raw %}{{ISDN}}{% endraw %} Heaps Better than Dialup`. Apparently non-English titles are supposed to
 be in sentence case, so BBT doesn't touch those.
 
 You can steer this process somewhat by enclosing the parts you don't want case manipulation on in `<span
@@ -76,9 +76,9 @@ that BBT has learned to deal with. Did you know that
 
 * `{\emph{Homo sapiens}}` *un*-case-protects `Homo sapiens`? It sure was a surprise to me.  So
   `\emph{Homo sapiens}` is case-protected (will not be recapitalized by Bib(La)TeX), but `{\emph{Homo sapiens}}` *is not* case-protected so it *will* be recapitalized. So to get
-  predictable behavior, this is written out as `{{\emph{Homo sapiens}}}`.
+  predictable behavior, this is written out as `{% raw %}{{\emph{Homo sapiens}}}{% endraw %}`.
 * casing behavior over the *whole* reference field depends on [whether there's a slash-command at the first position](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274) of the title? 
-* [apparently](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396), to make sure that `Reading HLA Hart's: <i>The Concept of Law</i>` renders as expected means I have to output the astoundingly ugly `{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}`?
+* [apparently](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396), to make sure that `Reading HLA Hart's: <i>The Concept of Law</i>` renders as expected means I have to output the astoundingly ugly `{% raw %}{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}{% endraw %}`?
 
 The double-bracing is the only unambiguous rule I could construct that consistently gets the rendered reference right (so far).
 
