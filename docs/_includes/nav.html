@@ -18,25 +18,19 @@
       <div class="navbar-start">
         {% for item in site.data.nav %}
           {% assign selected = "" %}
-          {% assign dropdown = false %}
 
           {% if item.url == page.url %}
             {% assign selected = "is-selected" %}
           {% endif %}
 
           {% if item.pages %}
-            {% assign dropdown = true %}
-
             {% for entry in item.pages %}
               {% if entry.url == page.url %}
                 {% assign selected = "is-selected" %}
               {% endif %}
             {% endfor %}
-          {% endif %}
-
-          {% if dropdown %}
             <div class="navbar-item is-hoverable has-dropdown">
-              <a class="navbar-link {{ selected }}" href="{{ site.url }}{{ url }}">{{ item.title }}</a>
+              <a class="navbar-link {{ selected }}" href="{{ site.url }}{{ item.pages.first.url }}">{{ item.title }}</a>
               <div class="navbar-dropdown is-boxed">
                 {% for entry in item.pages %}
                   {% assign selected = "" %}

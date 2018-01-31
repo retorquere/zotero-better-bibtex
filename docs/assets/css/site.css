@@ -1,5 +1,6 @@
 h2 .h2 {
-  background-color: blue
+  background-color: grey;
+  padding: 2px;
 }
 
 .is-selected {
