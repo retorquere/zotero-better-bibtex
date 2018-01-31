@@ -232,6 +232,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         let key = this.scanning[done]
         const item = await getItemsAsync(key.itemID)
 
+        debug('KeyManager.rescan: fixing', key)
         if (key.citekey === marker) {
           if (key.pinned) {
             const parsed = Citekey.get(item.getField('extra'))
