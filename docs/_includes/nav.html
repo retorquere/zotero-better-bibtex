@@ -20,14 +20,14 @@
         {% for item in site.data.nav %}
           {% assign selected = "" %}
 
-          <!-- {{ item.url }} === {{ page.url }} -->
-
+          <!-- {{ item.url }} === {{ page.url }} ?-->
           {% if item.url == page.url %}
             {% assign selected = "is-selected" %}
           {% endif %}
 
           {% if item.pages %}
             {% for entry in item.pages %}
+              <!-- {{ entry.url }} == {{ page.url }} ? -->
               {% if entry.url == page.url %}
                 {% assign selected = "is-selected" %}
               {% endif %}
