@@ -60,7 +60,7 @@ Zotero and will work in the Word/LibreOffice plugins as well as in the BibTeX ex
 you wish to always keep lowercase, for example.  Also, if
 you don't generally use Zotero for generating bibliographies but just for BibTeX reference management, you can turn on the hidden
 preference
-[extensions.zotero.translators.better-bibtex.suppressTitleCase](https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#extensionszoterotranslatorsbetter-bibtexsuppresstitlecase)
+[extensions.zotero.translators.better-bibtex.suppressTitleCase](configuration#suppresstitlecase)
 to keep BBT from applying title-casing, but take note that if you do this, the
 bibliographies you get from Zotero and the bibliograhies you get through Bib(La)TeX will differ, and you can't complain
 about this. Brace protection cannot be turned off.
