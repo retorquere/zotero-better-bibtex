@@ -184,6 +184,7 @@ class PatternFormatter {
     return Zotero.Libraries.getName(this.item.item.libraryID)
   }
 
+  /** The last name of the first author */
   public $auth(onlyEditors, withInitials, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
     debug('$auth:', { onlyEditors, withInitials, n, m, authors })
@@ -193,18 +194,21 @@ class PatternFormatter {
     return author || ''
   }
 
+  /** The forename initial of the first author. */
   public $authForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[0]
   }
 
+  /** The forename initial of the last author. */
   public $authorLastForeIni(onlyEditors) {
     const authors = this.creators(onlyEditors, {initialOnly: true})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
   }
 
+  /** The last name of the last author */
   public $authorLast(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -216,6 +220,7 @@ class PatternFormatter {
    */
   public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
+  /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
   public $authors(onlyEditors, withInitials, n) {
     let authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -229,6 +234,9 @@ class PatternFormatter {
     return authors.join('')
   }
 
+  /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
+   * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
+   */
   public $authorsAlpha(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -248,12 +256,14 @@ class PatternFormatter {
     }
   }
 
+  /** The beginning of each author's last name, using no more than `N` characters. */
   public $authIni(onlyEditors, withInitials, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors.map(author => author.substring(0, n)).join('.')
   }
 
+  /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
   public $authorIni(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -263,6 +273,7 @@ class PatternFormatter {
     return [firstAuthor.substring(0, 5)].concat(authors.map(auth => auth.map(name => name.substring(0, 1)).join('.'))).join('.')
   }
 
+  /** The last name of the first two authors, and ".ea" if there are more than two. */
   public $auth_auth_ea(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -271,6 +282,7 @@ class PatternFormatter {
     return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
   }
 
+  /** The last name of the first author, and the last name of the second author if there are two authors or "EtAl" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by "." and in case of more than 2 authors "EtAl" instead of ".etal" is appended. */
   public $authEtAl(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -280,6 +292,7 @@ class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
   }
 
+  /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
   public $auth_etal(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -289,6 +302,7 @@ class PatternFormatter {
     return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
   }
 
+  /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
   public $authshort(onlyEditors, withInitials) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
@@ -306,6 +320,7 @@ class PatternFormatter {
     }
   }
 
+  /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
@@ -314,6 +329,7 @@ class PatternFormatter {
     return firstpage
   }
 
+  /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
@@ -322,11 +338,13 @@ class PatternFormatter {
     return lastpage
   }
 
+  /** Tag number `N` */
   public $keyword(n) {
     this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
     return this.item.tags[n] || ''
   }
 
+  /** The first 3 words of the title */
   public $shorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
@@ -335,32 +353,38 @@ class PatternFormatter {
     return words.slice(0, 3).join('')
   }
 
+  /** The first word of the title, discounting 'the', 'a', 'an'. */
   public $veryshorttitle() {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
     return words.slice(0, 1).join('')
   }
 
+  /** The last 2 digits of the publication year */
   public $shortyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 2)
   }
 
+  /** The year of the publication */
   public $year() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.year, 4)
   }
 
+  /** the original year of the publication */
   public $origyear() {
     // tslint:disable-next-line:no-magic-numbers
     return this.padYear(this.item.origyear, 4)
   }
 
+  /** the month of the publication */
   public $month() {
     if (!this.item.month) return ''
     return this.months[this.item.month - 1] || ''
   }
 
+  /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref` */
   public $title() { return this.titleWords(this.item.title).join('') }
 
   /**
@@ -393,14 +417,17 @@ class PatternFormatter {
     return value
   }
 
+  /** Abbreviates the text. Only the first character and subsequent characters following white space will be included. */
   public _abbr(value) {
     return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
   }
 
+  /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
   public _lower(value) {
     return (value || '').toLowerCase()
   }
 
+  /** Forces the text inserted by the field marker to be in uppercase. For example, `[auth:upper]` expands the last name of the first author in uppercase. */
   public _upper(value) {
     return (value || '').toUpperCase()
   }
@@ -434,6 +461,7 @@ class PatternFormatter {
     return value.slice(start, end).join(' ')
   }
 
+  /** (`substring,start,n`) selects `n` characters starting at `start` */
   public _substring(value, start, n) {
     return (value || '').slice(start - 1, (start - 1) + n)
   }
@@ -474,6 +502,7 @@ class PatternFormatter {
     return value
   }
 
+  /** removes unsafe characters from the citation key */
   public _clean(value) {
     if (!value) return ''
     return this.clean(value)
