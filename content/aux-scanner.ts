@@ -4,7 +4,7 @@ declare const Zotero: any
 import { debug } from './debug.ts'
 import { KeyManager } from './key-manager.ts'
 
-export class AUXScanner {
+export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>
   private citationRE = /(?:\\citation|@cite){([^}]+)}/g
   private includeRE = /\\@input{([^}]+)}/g
