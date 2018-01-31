@@ -22,8 +22,6 @@
   pages:
     - title: Configurable citation keys
       url: /citation-keys/
-    - title: Citation key patterns
-      url: /formatters/
     - title: Cite as you write
       url: /cayw/
     - title: Parsing existing citations
