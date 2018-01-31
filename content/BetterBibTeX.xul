@@ -8,7 +8,7 @@
   </stringbundleset>
 
   <menupopup id="menu_ToolsPopup">
-    <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="new Zotero.BetterBibTeX.scanAUX()"/>
+    <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX()"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport()"/>
