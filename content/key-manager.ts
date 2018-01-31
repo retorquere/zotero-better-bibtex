@@ -219,7 +219,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     this.scanning = this.keys.find({ citekey: marker })
 
     if (this.scanning.length !== 0) {
-      debug(`Found ${this.scanning.length} references without a citation key`)
+      debug(`KeyManager.rescan: found ${this.scanning.length} references without a citation key`)
       const progressWin = new Zotero.ProgressWindow({ closeOnClick: false })
       progressWin.changeHeadline('Better BibTeX: Assigning citation keys')
       progressWin.addDescription(`Found ${this.scanning.length} references without a citation key`)
@@ -229,10 +229,20 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
       const eta = new ETA(this.scanning.length, { autoStart: true })
       for (let done = 0; done < this.scanning.length; done++) {
-        const key = this.scanning[done]
+        let key = this.scanning[done]
+        const item = await getItemsAsync(key.itemID)
+
+        if (key.citekey === marker) {
+          if (key.pinned) {
+            const parsed = Citekey.get(item.getField('extra'))
+            item.setField('extra', parsed.extra)
+            await item.saveTx({ [key.itemID]: { bbtCitekeyUpdate: true } })
+          }
+          key = null
+        }
 
         try {
-          this.update(await getItemsAsync(key.itemID), key)
+          this.update(item, key)
         } catch (err) {
           debug('KeyManager.rescan: update', done, 'failed:', err)
         }
