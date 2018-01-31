@@ -1,6 +1,5 @@
 // tslint:disable:no-console
 
-import * as ejs from 'ejs'
 import * as fs from 'fs'
 import * as sqlite from 'sqlite-sync'
 import * as yaml from 'js-yaml'
@@ -9,11 +8,11 @@ sqlite.connect('test/fixtures/profile/zotero/zotero/zotero.sqlite')
 // fetch fieldnames and capitalize them
 const fields = sqlite.run('SELECT fieldName FROM fields').map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
 fields.sort()
-const table = []
+
 const cells = 4
+const table = []
 while (fields.length) {
-  table.push(Array(cells).fill().map((_, i) => fields[i] || ''))
-  fields.splice(0, cells)
+  table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells))
 }
 
 const preferences = require('../gen/preferences.json')
@@ -29,7 +28,7 @@ function walk(doc) {
 
       let name = doc.name.substr(1).replace(/_/g, '.')
       if (doc.signatures[0].parameters && doc.name[0] === '$') {
-        const parameters = doc.signatures[0].parameters.reduce((acc, p) => acc[p.name] = true && acc, {})
+        const parameters = doc.signatures[0].parameters.reduce((acc, p) => { acc[p.name] = true ; return acc }, {})
         if (parameters.n) name += 'N'
         if (parameters.n && parameters.m) name += '_M'
       }
@@ -71,9 +70,6 @@ for (const filter of Object.keys(formatter._)) {
   formatter._[quote(filter)] = formatter._[filter]
   delete formatter._[filter]
 }
-
-// const template = fs.readFileSync('wiki/Citation-Keys.ejs', 'utf8')
-// console.log(ejs.render(template, {fields: table, preferences, functions: formatter.$, filters: formatter._}))
 
 fs.writeFileSync('docs/_data/preferences.yml', yaml.safeDump(preferences))
 fs.writeFileSync('docs/_data/pattern/fields.yml', yaml.safeDump(table))
