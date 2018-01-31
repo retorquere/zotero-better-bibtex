@@ -16,7 +16,7 @@ function TableOfContents(tocId, containerId) {
   var createLiWithAnchor = function(anchor, heading) {
     var li = document.createElement('li');
     var a = document.createElement('a');
-    a.href = '#' + anchor;
+    a.href = window.location.href.replace(/#.*/, '') + '#' + anchor;
     a.textContent = heading.textContent;
     li.appendChild(a);
 
