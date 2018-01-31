@@ -20,6 +20,8 @@
         {% for item in site.data.nav %}
           {% assign selected = "" %}
 
+          <!-- {{ item.url }} === {{ page.url }} -->
+
           {% if item.url == page.url %}
             {% assign selected = "is-selected" %}
           {% endif %}
