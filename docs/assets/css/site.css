@@ -1,1 +1,9 @@
-h2 .h2 { background-color: blue }
+h2 .h2 {
+  background-color: grey;
+  padding: 2px;
+}
+
+.is-selected {
+  font-weight: bold;
+  color: black !important;
+}

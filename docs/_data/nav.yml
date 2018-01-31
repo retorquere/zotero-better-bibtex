@@ -1,6 +1,6 @@
 - title: Better BibTeX for Zotero
   pages:
-    - title: Us LaTeX holdouts
+    - title: Zotero for LaTeX holdouts
       url: /
     - title: Installation
       url: /installation/
@@ -24,6 +24,8 @@
       url: /citation-keys/
     - title: Cite as you write
       url: /cayw/
+    - title: Parsing existing citations
+      url: /aux/
 - title: Support
   pages:
     - title: Getting help
@@ -32,3 +34,6 @@
       url: /faq/
     - title: Performance
       url: /performance/
+- title: Sponsorship
+  url: /sponsoring/
+  icon: heart

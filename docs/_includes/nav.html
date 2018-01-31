@@ -1,1 +1,69 @@
-<nav class="navbar is-fixed-top is-transparent" id="navbar" style="transform: translateY(0px);"><div class="bd-special-shadow" id="specialShadow" style="opacity: 0; transform: scaleY(1);"></div><div class="container"><div class="navbar-brand"><a class="navbar-item" href="https://retorquere.github.io/zotero-better-bibtex/"><img src="{{ site.url }}/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28"/></a><a class="navbar-item is-hidden-desktop" href="https://github.com/retorquere/zotero-better-bibtex" target="_blank"><span class="icon" style="color: #333;"><i class="fa fa-github" aria-hidden="true"></i></span></a><div class="navbar-burger burger" id="navbarBurger" data-target="navMenuIndex"><span></span><span></span><span></span></div></div><div class="navbar-menu" id="navMenuIndex"><div class="navbar-start">{% for item in site.data.nav %}<div class="navbar-item has-dropdown is-hoverable"><a class="navbar-link" href="{{ site.url }}{{ item.pages.first.url }}">{{ item.title }}</a><div class="navbar-dropdown is-boxed">{% for entry in item.pages %}<a class="navbar-item" href="{{ site.url }}{{ entry.url }}">{{ entry.title }}</a>{% endfor %}</div></div>{% endfor %}<a class="navbar-item" href="{{ site.url }}/sponsoring/"><span class="bd-emoji">❤️</span>Sponsorship</a></div><div class="navbar-end"><a class="navbar-item is-hidden-desktop-only" href="https://github.com/retorquere/zotero-better-bibtex" target="_blank"><span class="icon" style="color: #333;"><i class="fab fa-lg fa-github"></i></span></a><div class="navbar-item"><div class="field is-grouped is-grouped-multiline"><p class="control"><a class="button is-primary" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" target="_blank"><span class="icon"><i class="fas fa-download"></i></span><span>Download</span></a></p></div></div></div></div></div></nav>
+{% assign root = site.url | append: site.baseurl %}
+<nav id="navbar" class="navbar is-fixed-top is-primary" style="transform: translateY(0px);">
+  <div class="bd-special-shadow" id="specialShadow" style="opacity: 0; transform: scaleY(1);"></div>
+  <div class="container">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="https://retorquere.github.io/zotero-better-bibtex/">
+        <img src="{{ root }}/assets/img/better-bibtex.svg" alt="Better BibTeX for Zotero" height="28"/>
+      </a>
+      <a class="navbar-item is-hidden-desktop" href="https://github.com/retorquere/zotero-better-bibtex" target="_blank">
+        <span class="icon" style="color: #333;">
+          <i class="fa fa-github" aria-hidden="true"></i>
+        </span>
+      </a>
+      <div class="navbar-burger burger" id="navbarBurger" data-target="navMenuIndex">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+    <div class="navbar-menu" id="navMenuIndex">
+      <div class="navbar-start">
+        {% for item in site.data.nav %}
+          {% assign selected = "" %}
+
+          <!-- {{ item.url }} === {{ page.url }} ?-->
+          {% if item.url == page.url %}
+            {% assign selected = "is-selected" %}
+          {% endif %}
+
+          {% if item.pages %}
+            {% for entry in item.pages %}
+              <!-- {{ entry.url }} == {{ page.url }} ? -->
+              {% if entry.url == page.url %}
+                {% assign selected = "is-selected" %}
+              {% endif %}
+            {% endfor %}
+            <div class="navbar-item is-hoverable has-dropdown">
+              <a class="navbar-link {{ selected }}" href="{{ root }}{{ item.pages.first.url }}">{{ item.title }}</a>
+              <div class="navbar-dropdown is-boxed">
+                {% for entry in item.pages %}
+                  {% assign selected = "" %}
+                  {% if entry.url == page.url %}
+                    {% assign selected = "is-selected" %}
+                  {% endif %}
+
+                  <a class="navbar-item {{ selected }}" href="{{ root }}{{ entry.url }}">{{ entry.title }}</a>
+                {% endfor %}
+              </div>
+            </div>
+          {% else %}
+            <a class="navbar-item {{ selected }}" href="{{ root }}{{ item.url }}">
+              {% if item.icon %}
+                <i class="fa fa-{{ item.icon }}" aria-hidden="true"></i>&nbsp;
+              {% endif %}
+              {{ item.title }}
+            </a>
+          {% endif %}
+        {% endfor %}
+      </div>
+
+      <div class="navbar-end">
+        <a class="navbar-item is-hidden-desktop-only" href="https://github.com/retorquere/zotero-better-bibtex" target="_blank"><span class="icon" style="color: #333;"><i class="fab fa-lg fa-github"></i></span></a>
+        <div class="navbar-item">
+          <div class="field is-grouped is-grouped-multiline">
+            <p class="control"><a class="button is-primary" href="https://github.com/retorquere/zotero-better-bibtex/releases/latest" target="_blank"><span class="icon"><i class="fas fa-download"></i></span><span>Download</span></a></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

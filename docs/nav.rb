@@ -4,7 +4,7 @@ require 'yaml'
 
 nav = YAML::load_file('_data/nav.yml')
 
-$pages = Dir['*.md'].collect{|md| File.basename(md, File.extname(md)) }.reject{|md| md == 'sponsorship' }
+$pages = Dir['*.md'].collect{|md| File.basename(md, File.extname(md)) }
 
 def verify(pages)
   pages.each{|page|

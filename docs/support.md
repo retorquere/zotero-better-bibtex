@@ -1,5 +1,3 @@
-<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/CONTRIBUTING.md. EDITS WILL BE OVERWRITTEN -->
-
 Before all else, ***thank you for taking the time for submitting an issue***, and I'm sorry that I've probably
 interrupted your flow.
 
@@ -15,7 +13,7 @@ fuzzy ones over missed ones.
 
 * Better BibTeX will fail with incomprehensible errors if you run but Zotero Standalone and Zotero for Firefox
   simultaniously [#143](https://github.com/retorquere/zotero-better-bibtex/issues/143)
-* If Zotero stalls with BBT installed, it is often a one-time thing as the [[cache fills|Performance]]
+* If Zotero stalls with BBT installed, it is often a one-time thing as the [cache fills](performance)
 
 # Submitting an issue
 
