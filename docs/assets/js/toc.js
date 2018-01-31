@@ -26,7 +26,8 @@ function TableOfContents(tocId, containerId) {
     anchorElement.setAttribute('style', style);
 
     var span = document.createElement('span');
-    span.className = 'h2'
+    if (heading.tagName === 'H2') span.className = 'hero is-info'
+    if (heading.tagName === 'H3') span.className = 'hero is-light'
     span.setAttribute('style', 'width: 100%; display: inline-block;')
     Array.from(heading.childNodes).forEach(function(node) { span.appendChild(node) })
 
