@@ -568,8 +568,9 @@ export = new class BetterBibTeX {
     debug('ErrorReport::start done')
   }
 
-  public scanAUX(path = null) {
-    (new AUXScanner).scan(path)
+  public async scanAUX(path = null) {
+    await bbtReady.promise
+    await AUXScanner.scan(path)
   }
 
   public getString(id, params = null) {
