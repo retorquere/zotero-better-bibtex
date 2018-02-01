@@ -50,6 +50,16 @@ $patch$(Loki.prototype, 'close', original => function(callback) {
   })
 })
 
+Loki.Collection.prototype.repair = function repair() {
+  for (const [index, data] of Object.entries(this.binaryIndices || {})) {
+    if (data.values.length > this.idIndex.length) {
+      debug('fixing binaryIndices.', index)
+      delete this.binaryIndices[index]
+      this.ensureIndex(index)
+    }
+  }
+}
+
 Loki.prototype.loadDatabaseAsync = function(options) {
   return new Promise((resolve, reject) => this.loadDatabase(options, err => err ? reject(err) : resolve(null)))
 }

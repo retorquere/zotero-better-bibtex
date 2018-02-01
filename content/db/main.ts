@@ -160,6 +160,7 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
+  citekeys.repair()
 
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
