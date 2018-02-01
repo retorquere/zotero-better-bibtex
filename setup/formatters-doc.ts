@@ -1,36 +1,45 @@
-const ejs = require('ejs')
-const sqlite = require('sqlite-sync')
-const fs = require('fs')
+// tslint:disable:no-console
+
+import * as fs from 'fs'
+import * as sqlite from 'sqlite-sync'
+import * as yaml from 'js-yaml'
 
 sqlite.connect('test/fixtures/profile/zotero/zotero/zotero.sqlite')
 // fetch fieldnames and capitalize them
-const fields = sqlite.run("SELECT fieldName FROM fields ORDER BY fieldName").map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
-const table = []
-const cells = 4
-while (fields.length) {
-  table.push(Array(cells).fill().map((_, i) => fields[i] || ''))
-  fields.splice(0, cells)
-}
-console.log(table)
+const fields = sqlite.run('SELECT fieldName FROM fields').map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
+fields.sort()
 
-const preferences = require('../../gen/preferences.json')
+const cells = 4
+const table = []
+while (fields.length) {
+  table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells))
+}
+
+const preferences = require('../gen/preferences.json')
 
 const formatter = {
-  '_': {},
-  '$': {},
+  _: {},
+  $: {},
 }
 function walk(doc) {
   if (doc.kindString === 'Method') {
-    if ((doc.name[0] == '_' || doc.name[0] === '$') && doc.name !== '$property') {
+    if ((doc.name[0] === '_' || doc.name[0] === '$') && doc.name !== '$property') {
       if (doc.signatures.length !== 1) throw new Error('multiple sigs?')
 
-      const name = doc.name.substr(1).replace(/_/g, '.')
+      let name = doc.name.substr(1).replace(/_/g, '.')
+      if (doc.signatures[0].parameters && doc.name[0] === '$') {
+        const parameters = doc.signatures[0].parameters.reduce((acc, p) => { acc[p.name] = true ; return acc }, {})
+        if (parameters.n) name += 'N'
+        if (parameters.n && parameters.m) name += '_M'
+      }
+
       let documentation = ''
       if (doc.signatures[0].comment && doc.signatures[0].comment.shortText) {
         documentation = doc.signatures[0].comment.shortText
       } else {
         documentation = 'not documented'
       }
+
       formatter[doc.name[0]][name] = documentation
     }
   } else {
@@ -40,7 +49,7 @@ function walk(doc) {
   }
 }
 
-walk(require('../../typedoc.json'))
+walk(require('../typedoc.json'))
 
 function quote(s) { return `\`${s}\`` }
 for (const func of Object.keys(formatter.$)) {
@@ -62,7 +71,7 @@ for (const filter of Object.keys(formatter._)) {
   delete formatter._[filter]
 }
 
-console.log(formatter)
-
-const template = fs.readFileSync('wiki/Citation-Keys.ejs', 'utf8')
-console.log(ejs.render(template, {fields: table, preferences, functions: formatter.$, filters: formatter._}))
+fs.writeFileSync('docs/_data/preferences.yml', yaml.safeDump(preferences))
+fs.writeFileSync('docs/_data/pattern/fields.yml', yaml.safeDump(table))
+fs.writeFileSync('docs/_data/pattern/functions.yml', yaml.safeDump(formatter.$))
+fs.writeFileSync('docs/_data/pattern/filters.yml', yaml.safeDump(formatter._))

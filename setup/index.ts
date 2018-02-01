@@ -8,7 +8,6 @@ import './translators'
 import './dateparser'
 import './preferences'
 import './translator-typing'
-import './readme'
 
 import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/rdf'

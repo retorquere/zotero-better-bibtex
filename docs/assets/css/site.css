@@ -7,3 +7,7 @@ h2 .h2 {
   font-weight: bold;
   color: black !important;
 }
+
+body {
+  font-family: "Computer Modern Sans", sans-serif !important;
+}
