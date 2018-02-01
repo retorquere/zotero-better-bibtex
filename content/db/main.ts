@@ -85,6 +85,9 @@ class DBStore {
           db.collections = db.collections.filter(coll => collections[coll]).map(coll => collections[coll])
         }
 
+        const dump = createFile(dbname + '.txt')
+        Zotero.File.putContents(dump, stringify(db))
+
         callback(db)
       })
     } catch (err) {
