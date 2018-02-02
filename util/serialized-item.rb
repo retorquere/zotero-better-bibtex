@@ -25,7 +25,7 @@ db.execute(query) do |row|
   fields[fieldName][:aliases] << "#{typeName}.#{fieldAlias}" if fieldAlias
 end
 
-interface = ['export interface ISerializedItem {']
+interface = ['interface ISerializedItem {']
 fields.keys.sort.each{|fieldName|
   interface << "  #{fieldName}: any // [#{fields[fieldName][:types].uniq.sort.join(', ')}] #{fields[fieldName][:aliases].uniq.sort.join(', ')}".rstrip
 }
@@ -61,4 +61,4 @@ interface << '  arXiv: { eprint: string, source?: string, id: string, primaryCla
 interface << '}'
 interface << ''
 
-open('resource/serialized-item.ts', 'w'){|f| f.puts interface.join("\n") }
+open('resource/typings/serialized-item.d.ts', 'w'){|f| f.puts interface.join("\n") }

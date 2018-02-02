@@ -18,7 +18,7 @@ function displayOptions(request) {
 }
 
 function getTranslatorId(name) {
-  for (const [id, translator] of Object.entries(Translators.byId)) {
+  for (const [id, translator] of (Object.entries(Translators.byId) as [string, ITranslatorHeader][])) {
     if (translator.label.replace(/\s/g, '').toLowerCase().replace('better', '') === name) return id
   }
   // allowed to pass GUID

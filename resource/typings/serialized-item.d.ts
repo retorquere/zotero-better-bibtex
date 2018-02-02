@@ -1,4 +1,4 @@
-export interface ISerializedItem {
+interface ISerializedItem {
   DOI: any // [conferencePaper, journalArticle]
   ISBN: any // [audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, encyclopediaArticle, map, videoRecording]
   ISSN: any // [journalArticle, magazineArticle, newspaperArticle]

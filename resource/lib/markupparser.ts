@@ -1,4 +1,3 @@
-import { ITranslator } from '../../gen/translator'
 declare const Translator: ITranslator
 
 declare const Zotero: any
