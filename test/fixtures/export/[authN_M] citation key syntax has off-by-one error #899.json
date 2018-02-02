@@ -5,19 +5,19 @@
     "release": {
       "Zotero": {
         "version": "5.0.34",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
+        "platform": "Win32",
+        "oscpu": "Windows NT 6.1; WOW64",
         "locale": "en-US",
         "appName": "Zotero",
         "appVersion": "5.0.34"
       },
-      "BetterBibTeX": "5.0.85.emile.titanarum"
+      "BetterBibTeX": "5.0.85"
     },
     "preferences": {
       "debug": false,
       "rawLaTag": "#LaTeX",
-      "testing": true,
-      "DOIandURL": "both",
+      "testing": false,
+      "DOIandURL": "doi",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoExport": "immediate",
@@ -176,8 +176,7 @@
       "lockedInit": false
     },
     "options": {
-      "exportNotes": true,
-      "exportFileData": false
+      "exportNotes": true
     }
   },
   "collections": {},
@@ -213,11 +212,11 @@
         }
       ],
       "tags": [],
-      "dateAdded": "2018-02-02 08:54:22",
-      "dateModified": "2018-02-02 08:54:30",
+      "dateAdded": "2018-02-02 15:28:00",
+      "dateModified": "2018-02-02 15:28:04",
       "attachments": [],
       "notes": [],
-      "itemID": 56,
+      "itemID": 1374,
       "seeAlso": []
     }
   ]

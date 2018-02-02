@@ -43,7 +43,7 @@ AddonManager.addAddonListener({
     debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    for (const [label, metadata] of (Object.entries(Translators.byName) as [string, ITranslatorHeader][])) {
+    for (const [label, metadata] of (Object.entries(Translators.byName) as Array<[string, ITranslatorHeader]>)) {
       if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
 
       try {
