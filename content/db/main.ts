@@ -73,6 +73,7 @@ class DBStore {
             try {
               debug(`DBStore.loadDatabase: loading ${row.name}`)
               collections[row.name] = JSON.parse(row.data)
+              collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
               debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
             } catch (err) {
               debug(`DBStore.loadDatabase: failed to parse ${row.name}`)
@@ -160,7 +161,7 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
-  citekeys.repair()
+  // citekeys.ensureAllIndices(true) https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
 
   DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
