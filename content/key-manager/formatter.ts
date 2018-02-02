@@ -189,7 +189,7 @@ class PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     debug('$auth:', { onlyEditors, withInitials, n, m, authors })
     if (!authors || !authors.length) return ''
-    let author = authors[m || 0]
+    let author = authors[m ? m - 1 : 0]
     if (author && n) author = author.substring(0, n)
     return author || ''
   }
