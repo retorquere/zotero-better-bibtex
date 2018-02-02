@@ -3,7 +3,7 @@ process.chdir(root)
 
 import './submodules'
 
-import 'zotero-plugin/make-dirs'
+import './make-dirs'
 import './translators'
 import './dateparser'
 import './preferences'

@@ -1,4 +1,3 @@
-import { ITranslator } from '../../gen/translator'
 declare const Translator: ITranslator
 
 import { debug } from '../lib/debug.ts'

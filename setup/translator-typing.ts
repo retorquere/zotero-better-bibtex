@@ -57,8 +57,8 @@ for (const [key, value] of Object.entries(header)) {
 
 const options = Object.keys(header.displayOptions).map(option => `    ${quoted(option)}?: ${typeof header.displayOptions[option]}`).join('\n')
 
-fs.writeFileSync(path.join(root, 'gen/translator.ts'), `
-export interface ITranslator {
+fs.writeFileSync(path.join(root, 'gen/typings/translator.d.ts'), `
+interface ITranslator {
   preferences: {
 ${prefs}
   }

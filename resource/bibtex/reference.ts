@@ -1,6 +1,3 @@
-import { ITranslator } from '../../gen/translator'
-import { ISerializedItem } from '../serialized-item'
-
 declare const Translator: ITranslator
 declare const Zotero: any
 

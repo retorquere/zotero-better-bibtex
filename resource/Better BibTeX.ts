@@ -1,6 +1,3 @@
-import { ITranslator } from '../gen/translator'
-import { ISerializedItem } from './serialized-item'
-
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -1130,7 +1127,7 @@ Translator.doImport = () => {
   const validFields = Zotero.BetterBibTeX.validFields()
 
   const itemIDS = {}
-  for (const [id, ref] of Object.entries(bib.references)) {
+  for (const [id, ref] of (Object.entries(bib.references) as any[][])) { // TODO: add typings to the npm package
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
     new ZoteroItem(id, ref, bib.groups, validFields) // tslint:disable-line:no-unused-expression
   }

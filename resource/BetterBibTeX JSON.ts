@@ -1,4 +1,3 @@
-import { ITranslator } from '../gen/translator'
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -34,7 +33,7 @@ Translator.doImport = () => {
   const data = JSON.parse(json)
   const validFields = Zotero.BetterBibTeX.validFields()
 
-  for (const source of data.items) {
+  for (const source of (data.items as any[])) {
     // works around https://github.com/Juris-M/zotero/issues/20
     if (source.multi) delete source.multi.main
 
@@ -51,17 +50,17 @@ Translator.doImport = () => {
     item.complete()
   }
 
-  const object = data.collections || {}
-  for (const [key, collection] of Object.entries(object)) { // tslint:disable-line:no-unused-variable
-    collection.imported = new Zotero.Collection()
+  const collections: any[] = Object.values(data.collections || {})
+  for (const collection of collections) {
+    collection.imported = (new Zotero.Collection()) as any
     collection.imported.type = 'collection'
     collection.imported.name = collection.name
     collection.imported.children = collection.items.map(id => ({type: 'item', id}))
   }
-  for (const [key, collection] of Object.entries(data.collections)) { // tslint:disable-line:no-unused-variable
+  for (const collection of collections) {
     collection.imported.children = collection.imported.children.concat(collection.collections.map(coll => data.collections[coll.key].imported))
   }
-  for (const [key, collection] of Object.entries(data.collections)) { // tslint:disable-line:no-unused-variable
+  for (const collection of collections) {
     if (collection.parent) continue
     collection.imported.complete()
   }
