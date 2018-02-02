@@ -89,6 +89,7 @@ class FileStore {
       for (const coll of db.collections) {
         try {
           const data = this.load(`${name}.${coll}`)
+          data.cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
           Zotero.debug(`Loaded ${name}.${coll}: ${JSON.stringify(data.transforms)}`)
           collections.push(data)
         } catch (err) {
