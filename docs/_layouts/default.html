@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% comment %} work around https://github.com/jekyll/github-metadata/issues/47 {% endcomment %}
-{% assign root = site.url | append: site.baseurl %}
+{% assign root = site.url | replace_first: 'http://', 'https://' | append: site.baseurl %}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">

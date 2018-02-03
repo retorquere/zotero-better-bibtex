@@ -1,4 +1,4 @@
-{% assign root = site.url | append: site.baseurl %}
+{% assign root = site.url | replace_first: 'http://', 'https://' | append: site.baseurl %}
 <nav id="navbar" class="navbar is-fixed-top is-primary" style="transform: translateY(0px);">
   <div class="bd-special-shadow" id="specialShadow" style="opacity: 0; transform: scaleY(1);"></div>
   <div class="container">
