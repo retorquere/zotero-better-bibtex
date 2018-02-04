@@ -1,7 +1,15 @@
 <!DOCTYPE html>
 {% comment %} work around https://github.com/jekyll/github-metadata/issues/47 {% endcomment %}
-{% assign root = site.url | replace_first: 'http://', 'https://' | append: site.baseurl %}
+{% assign root = site.url | append: site.baseurl %}
+{% if jekyll.environment != 'development' %}
+  {% assign root = root | replace_first: 'http://', 'https://' %}
+{% endif %}
 <head>
+  {% if jekyll.environment != 'development' %}
+    <script>
+      if (location.protocol != 'https:') location.protocol = 'https:'
+    </script>
+  {% endif %}
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Better BibTeX for Zotero</title>
