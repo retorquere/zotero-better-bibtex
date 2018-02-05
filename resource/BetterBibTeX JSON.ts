@@ -104,6 +104,7 @@ Translator.doExport = () => {
     }
 
     for (const att of item.attachments || []) {
+      att.path = att.localpath
       for (const field of Object.keys(att)) {
         if (!validAttachmentFields.has(field)) delete att[field]
       }

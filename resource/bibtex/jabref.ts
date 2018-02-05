@@ -2,17 +2,20 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
+import { debug } from '../lib/debug.ts'
+
 export class JabRef {
-  public citekeys: any
+  public citekeys: Map<number, string>
+  private groups: string[]
 
   constructor() {
-    this.citekeys = {}
+    this.citekeys = new Map
   }
 
   public exportGroups() {
-    let meta
     if ((Object.keys(Translator.collections).length === 0) || !Translator.preferences.jabrefFormat) return
 
+    let meta
     if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
       meta = 'groupsversion:3'
     } else if (Translator.BetterBibLaTeX) {
@@ -23,43 +26,40 @@ export class JabRef {
 
     Zotero.write(`@comment{jabref-meta: ${meta};}\n`)
     Zotero.write('@comment{jabref-meta: groupstree:\n')
-    Zotero.write('0 AllEntriesGroup:;\n')
+
+    this.groups = ['0 AllEntriesGroup:']
     for (const collection of Object.values(Translator.collections)) {
       if (collection.parent) continue
-      Zotero.write(this.exportGroup(collection, 1))
+      this.exportGroup(collection, 1)
     }
-    Zotero.write(';\n')
+
+    Zotero.write(this.groups.map(group => this.quote(group, true)).concat('').join(';\n'))
     Zotero.write('}\n')
   }
 
-  private serialize(list, wrap = false) {
-    let serialized = list.map(elt => elt.replace(/\\/g, '\\\\').replace(/;/g, '\\;'))
-    if (wrap) serialized = serialized.map(elt => elt.match(/.{1,70}/g).join('\n'))
-    return serialized.join(wrap ? ';\n' : ';')
-  }
-
   private exportGroup(collection, level) {
-    let collected = [`${level} ExplicitGroup:${collection.name}`, '0']
+    let group = [`${level} ExplicitGroup:${this.quote(collection.name)}`, '0']
 
     if (Translator.preferences.jabrefFormat === 3) { // tslint:disable-line:no-magic-numbers
-      const references = ((collection.items || []).filter(id => this.citekeys[id]).map(id => this.citekeys[id]))
+      const references = ((collection.items || []).filter(id => this.citekeys.has(id)).map(id => this.quote(this.citekeys.get(id))))
       if (Translator.preferences.testing) references.sort()
-      collected = collected.concat(references)
+      group = group.concat(references)
     }
 
     // what is the meaning of the empty cell at the end, JabRef?
-    collected = collected.concat([''])
+    group.push('')
 
-    collected = [this.serialize(collected)]
+    this.groups.push(group.join(';'))
 
     for (const key of collection.collections || []) {
-      if (Translator.collections[key]) collected = collected.concat(this.exportGroup(Translator.collections[key], level + 1))
+      if (Translator.collections[key]) this.exportGroup(Translator.collections[key], level + 1)
     }
+  }
 
-    if (level > 1) {
-      return collected
-    } else {
-      return this.serialize(collected, true)
-    }
+  private quote(s, wrap = false) {
+    s = s.replace(/([\\;])/g, '\\$1')
+    debug('JabRef.quote:', s)
+    if (wrap) s = s.match(/.{1,70}/g).join('\n')
+    return s
   }
 }
