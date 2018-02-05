@@ -33,6 +33,7 @@ Translator.doImport = () => {
   const data = JSON.parse(json)
   const validFields = Zotero.BetterBibTeX.validFields()
 
+  const items = new Set
   for (const source of (data.items as any[])) {
     // works around https://github.com/Juris-M/zotero/issues/20
     if (source.multi) delete source.multi.main
@@ -43,26 +44,36 @@ Translator.doImport = () => {
     }
 
     const item = new Zotero.Item()
-    Object.assign(item, source, { itemID: source.key })
+    Object.assign(item, source)
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
     }
     item.complete()
+    items.add(source.itemID)
   }
 
   const collections: any[] = Object.values(data.collections || {})
   for (const collection of collections) {
-    collection.imported = (new Zotero.Collection()) as any
-    collection.imported.type = 'collection'
-    collection.imported.name = collection.name
-    collection.imported.children = collection.items.map(id => ({type: 'item', id}))
+    collection.zoteroCollection = (new Zotero.Collection()) as any
+    collection.zoteroCollection.type = 'collection'
+    collection.zoteroCollection.name = collection.name
+    collection.zoteroCollection.children = collection.items.filter(id => {
+      if (items.has(id)) return true
+      debug(`Collection ${collection.key} has non-existent item ${id}`)
+      return false
+    }).map(id => ({type: 'item', id}))
   }
   for (const collection of collections) {
-    collection.imported.children = collection.imported.children.concat(collection.collections.map(coll => data.collections[coll.key].imported))
+    if (collection.parent && data.collections[collection.parent]) {
+      data.collections[collection.parent].zoteroCollection.children.push(collection.zoteroCollection)
+    } else {
+      if (collection.parent) debug(`Collection ${collection.key} has non-existent parent ${collection.parent}`)
+      collection.parent = false
+    }
   }
   for (const collection of collections) {
     if (collection.parent) continue
-    collection.imported.complete()
+    collection.zoteroCollection.complete()
   }
 }
 
@@ -83,6 +94,7 @@ Translator.doExport = () => {
   debug('header ready')
 
   const validFields = Zotero.BetterBibTeX.validFields()
+  const validAttachmentFields = new Set([ 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
     for (const field of Object.keys(item)) {
@@ -90,6 +102,13 @@ Translator.doExport = () => {
         delete item[field]
       }
     }
+
+    for (const att of item.attachments || []) {
+      for (const field of Object.keys(att)) {
+        if (!validAttachmentFields.has(field)) delete att[field]
+      }
+    }
+
     debug('adding item', item.itemID)
     data.items.push(item)
   }
