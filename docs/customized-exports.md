@@ -13,8 +13,7 @@ Through the configuration pane of BBT you can customize the BibTeX file that wil
 * **[Configurable citekey generator](citation-keys)**
 * **[Push-and-Pull-Export](push-and-pull)**: You can fetch your library as part of your build, using curl (for example by using the included
   zoterobib.yaml arara rule), or with a BiblaTeX remote statement like
-  \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.  For Zotero
-  standalone this is enabled by default; for Zotero embedded, this enables the embedded webserver.
+  \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.
 * Add other custom BibLaTeX fields
 
 BBT http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL HTTP
