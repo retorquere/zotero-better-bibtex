@@ -63,6 +63,12 @@ var Translator = {
           // level: undefined
         }
       }
+      for (const collection of Object.values(this.collections)) {
+        if (collection.parent && !this.collections[collection.parent]) {
+          collection.parent = false
+          Zotero.debug('BBT translator: collection with key ' + collection.key + ' has non-existent parent ' + collection.parent + ', assuming root collection')
+        }
+      }
     }
   }
 };

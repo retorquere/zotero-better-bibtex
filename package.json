@@ -89,7 +89,7 @@
     "indent-string": "^3.2.0",
     "jsesc": "^2.5.1",
     "loader-utils": "^1.1.0",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.5",
     "moment": "^2.20.1",
     "node-archiver": "^0.3.0",
     "parallel-webpack": "^2.2.0",
