@@ -10,9 +10,7 @@ separate exports for separate papers for example if you have set up a collection
 # Pull Export
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
 rule), or with a BibLaTeX remote statement like
-\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.  For Zotero
-standalone this is enabled by default; for Zotero embedded, you need to enable the embedded webserver from the BBT
-preferences screen (see below). You can then fetch your bibliography on the url
+\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}. You can then fetch your bibliography on the url
 http://localhost:23119/better-bibtex/collection?[collectionID].[format], where collectionID is:
 
 * the ID you get by right-clicking your collection and selecting "Show collection key"
