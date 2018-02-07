@@ -60,12 +60,16 @@ class ClientAction(argparse.Action):
     else:
       parser.error('Unexpected client "' + values + '", expected "Zotero" or "Juris-M"')
 
+installdir_local = os.path.expanduser('~/bin')
+installdir_global = '/opt'
+
 parser = argparse.ArgumentParser()
-parser.add_argument('-c', '--client', action=ClientAction, required=True)
-parser.add_argument('-v', '--version')
-parser.add_argument('-d', '--destination', action=LocationAction, required=True)
-parser.add_argument('-r', '--replace', action='store_true')
-parser.add_argument('--cache')
+parser.add_argument('-c', '--client', action=ClientAction, required=True, help='select Zotero client to download and install, either Zotero or Juris-M')
+parser.add_argument('-v', '--version', help='install the given version rather than the latest')
+parser.add_argument('-d', '--destination', action=LocationAction, required=True, help="location to install, either 'local' (" + installdir_local + ") or 'global' (" + installdir_global + ')')
+parser.add_argument('-r', '--replace', action='store_true', help='replace Zotero at selected install location if it exists there')
+parser.add_argument('--datadir', action='store_true', help='Store zotero data in the profile. Use this if you expect to use multiple profiles.')
+parser.add_argument('--cache', help='cache downloaded installer in this directory. Use this if you expect to re-install Zotero often')
 
 args = parser.parse_args()
 
@@ -86,10 +90,10 @@ if args.destination is None:
   if installdir == '': raise Exception("Installation directory is mandatory")
   menudir = None
 elif args.destination == 'local':
-  installdir = os.path.join(os.path.expanduser('~/bin'), args.client)
+  installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
 else:
-  installdir = '/opt'
+  installdir = installdir_global
   menudir = '/usr/share/applications'
   
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
@@ -136,8 +140,12 @@ if not menudir is None:
       desktop.write("Name=Zotero\n")
     else:
       desktop.write("Name=Juris-M\n")
+
+    client = args.client
+    if args.datadir:
+      client = client + ' -datadir profile'
     desktop.write("Comment=Open-source reference manager\n")
-    desktop.write("Exec=" + installdir + '/' + args.client + " -datadir profile\n")
+    desktop.write("Exec=" + installdir + '/' + client + "\n")
     desktop.write("Icon=" + installdir + "/chrome/icons/default/default48.png\n")
     desktop.write("Type=Application\n")
     desktop.write("StartupNotify=true")
