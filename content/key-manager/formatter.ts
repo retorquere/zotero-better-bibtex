@@ -184,7 +184,7 @@ class PatternFormatter {
     return Zotero.Libraries.getName(this.item.item.libraryID)
   }
 
-  /** The last name of the first author */
+  /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(onlyEditors, withInitials, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
     debug('$auth:', { onlyEditors, withInitials, n, m, authors })

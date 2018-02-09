@@ -1,4 +1,6 @@
-'`authN_M` / `edtrN_M`': The last name of the first author
+'`authN_M` / `edtrN_M`': >-
+  The first `N` (default: all) characters of the `M`th (default: first) author's
+  last name.
 '`authEtAl` / `edtrEtAl`': >-
   The last name of the first author, and the last name of the second author if
   there are two authors or "EtAl" if there are more than two. This is similar to
