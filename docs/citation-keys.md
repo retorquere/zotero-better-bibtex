@@ -72,7 +72,7 @@ for *Zotero* native fields (case sensitive!) not Bib(La)TeX native fields. The p
 
 ### Advanced usage
 
-BBT adds a few fields, flags and filter functions that JabRef (perhaps wisely) doesn't. These are:
+The full list of functions (extract data from your reference into your citekey) and filters (change the extracted data) is:
 
 #### Functions
 
