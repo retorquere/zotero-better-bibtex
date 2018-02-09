@@ -53,7 +53,7 @@ A common pattern is `[auth:lower][year]`, which means
 2. year of publication if any,
 3. a letter postfix in case of a clash (this part is always added, you can't disable it)
 
-**note that changing the pattern will cause all your non-fixed keys to be regenerated**
+**note that changing the pattern used to cause all your non-fixed keys to be regenerated in Zotero 4.** In Zotero 5, this is no longer the case; changing a pattern will only affect references being created/changed after you changed the pattern. If you want your keys to update after a pattern change you will have to select your references, right-click, and select `Refresh`. This will not affect keys you have pinned.
 
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated. Note that in addition to
