@@ -6,13 +6,21 @@ import * as yaml from 'js-yaml'
 
 sqlite.connect('test/fixtures/profile/zotero/zotero/zotero.sqlite')
 // fetch fieldnames and capitalize them
-const fields = sqlite.run('SELECT fieldName FROM fields').map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
+const query = `
+  SELECT DISTINCT COALESCE(bf.fieldName, f.fieldName) as fieldName
+  FROM itemTypes it
+  JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
+  JOIN fields f ON f.fieldID = itf.fieldID
+  LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
+  LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
+`.replace(/\n/g, ' ').trim()
+const fields = sqlite.run(query).map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
 fields.sort()
 
 const cells = 4
 const table = []
 while (fields.length) {
-  table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells))
+  table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells).map(cell => cell || ''))
 }
 
 const preferences = require('../gen/preferences.json')

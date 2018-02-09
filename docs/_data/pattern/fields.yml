@@ -3,102 +3,58 @@
   - ApplicationNumber
   - Archive
 - - ArchiveLocation
-  - ArtworkMedium
   - ArtworkSize
   - Assignee
-- - AudioFileType
-  - AudioRecordingFormat
-  - BillNumber
-  - BlogTitle
-- - BookTitle
   - CallNumber
-  - CaseName
-  - Code
-- - CodeNumber
-  - CodePages
-  - CodeVolume
+- - Code
+  - CodeNumber
   - Committee
-- - Company
   - ConferenceName
-  - Country
+- - Country
   - Court
-- - DOI
+  - DOI
   - Date
-  - DateDecided
-  - DateEnacted
-- - DictionaryTitle
-  - Distributor
-  - DocketNumber
-  - DocumentNumber
 - - Edition
-  - EncyclopediaTitle
-  - EpisodeNumber
   - Extra
-- - FilingDate
-  - FirstPage
-  - ForumTitle
-  - Genre
-- - History
-  - ISBN
+  - FilingDate
+  - History
+- - ISBN
   - ISSN
-  - Institution
-- - InterviewMedium
   - Issue
-  - IssueDate
   - IssuingAuthority
 - - JournalAbbreviation
-  - Label
   - Language
   - LegalStatus
-- - LegislativeBody
-  - LetterType
-  - LibraryCatalog
-  - ManuscriptType
-- - MapType
+  - LegislativeBody
+- - LibraryCatalog
   - Medium
   - MeetingName
-  - NameOfAct
-- - Network
   - NumPages
-  - Number
+- - Number
   - NumberOfVolumes
-- - Pages
-  - PatentNumber
+  - Pages
   - Place
-  - PostType
-- - PresentationType
-  - PriorityNumbers
-  - ProceedingsTitle
-  - ProgramTitle
-- - ProgrammingLanguage
-  - PublicLawNumber
+- - PriorityNumbers
+  - ProgrammingLanguage
   - PublicationTitle
   - Publisher
 - - References
-  - ReportNumber
-  - ReportType
   - Reporter
-- - ReporterVolume
   - Rights
   - RunningTime
-  - Scale
-- - Section
+- - Scale
+  - Section
   - Series
   - SeriesNumber
-  - SeriesText
-- - SeriesTitle
+- - SeriesText
+  - SeriesTitle
   - Session
   - ShortTitle
-  - Studio
-- - Subject
-  - System
-  - ThesisType
+- - System
   - Title
-- - Type
-  - University
+  - Type
   - Url
-  - VersionNumber
-- - VideoRecordingFormat
+- - VersionNumber
   - Volume
-  - WebsiteTitle
-  - WebsiteType
+  - ''
+  - ''
