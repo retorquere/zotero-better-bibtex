@@ -5,6 +5,7 @@ DOIandURL: both
 asciiBibLaTeX: false
 asciiBibTeX: true
 autoExport: immediate
+quickCopyMode: latex
 citeCommand: cite
 quickCopyPandocBrackets: false
 citekeyFormat: '​[auth][shorttitle][year]'
@@ -17,7 +18,6 @@ bibtexURL: 'off'
 warnBulkModify: 10
 postscript: ''
 strings: ''
-quickCopyMode: latex
 autoAbbrev: false
 autoAbbrevStyle: ''
 autoExportIdleWait: 10

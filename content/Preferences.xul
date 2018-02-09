@@ -73,14 +73,22 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.quickCopyMode"
+          id="pref-better-bibtex-quickCopyMode"
+          type="string"
+          default="latex"/>
+        <!--!
+          Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy,
+          and choose the desired format for the drag-and-drop citations here.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.citeCommand"
           id="pref-better-bibtex-citeCommand"
           type="string"
           default="cite"/>
         <!--!
-          Used for drag-and-drop/quick copy citations. In the Zotero "Export" pane, choose, "Better BibTeX
-          Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation
-          command here. If you set this to `citep`, drag-and-drop citations will yield
+          Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield
           `\citep{key1,key2,...}`
         -->
 
@@ -90,7 +98,7 @@
           type="bool"
           default="false"/>
         <!--!
-          Surround pandoc quick-copy citations with brackets.
+          Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
         -->
 
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
@@ -198,15 +206,6 @@
           default=""/>
         <!--!
           If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.quickCopyMode"
-          id="pref-better-bibtex-quickCopyMode"
-          type="string"
-          default="latex"/>
-        <!--!
-          Used for drag-and-drop/quick copy citations. You can select the output format here.
         -->
 
         <preference

@@ -12,17 +12,33 @@ The configuration of Better BibTeX is a little baroque compared to the standard 
 
 ## Citation keys
 
+### QuickCopy format
+
+default: `LaTeX`
+
+Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+
+Options:
+* LaTeX
+* Cite Keys
+* Pandoc
+* Org-mode
+* org-ref
+* Atom (https://atom.io/packages/zotero-citations)
+* GitBook
+* Select link
+
 ### LaTeX command
 
 default: `"cite"`
 
-Used for drag-and-drop/quick copy citations. In the Zotero "Export" pane, choose, "Better BibTeX Quick Copy" as the default export format for quick copy, then set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield `\citep{key1,key2,...}`
+Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield `\citep{key1,key2,...}`
 
 ### Surround Pandoc citations with brackets
 
 default: `off`
 
-Surround pandoc quick-copy citations with brackets.
+Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
 
 ### Citation key format
 
@@ -45,22 +61,6 @@ This determines what happens if you pin a key to a value that is already in use 
 Options:
 * postfixed (causes key changes)
 * kept (causes key duplicates)
-
-### QuickCopy format
-
-default: `LaTeX`
-
-Used for drag-and-drop/quick copy citations. You can select the output format here.
-
-Options:
-* LaTeX
-* Cite Keys
-* Pandoc
-* Org-mode
-* org-ref
-* Atom (https://atom.io/packages/zotero-citations)
-* GitBook
-* Select link
 
 ## Export
 
