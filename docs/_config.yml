@@ -11,8 +11,10 @@ repository: retorquere/zotero-better-bibtex
 
 permalink: pretty
 
+optional_front_matter:
+  remove_originals: true
+
 titles_from_headings:
   enabled:     true
   strip_title: false
   collections: false
-
