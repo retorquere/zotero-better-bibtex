@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prestart": "cp ../skin/better-bibtex.svg assets/img",
-    "start": "jekyll serve"
+    "start": "./nav.rb && jekyll serve"
   },
   "author": "",
   "license": "ISC",

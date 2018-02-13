@@ -2,19 +2,20 @@ Before all else, ***thank you for taking the time for submitting an issue***, an
 interrupted your flow.
 
 Your report matters to me. I love hearing my software helps you, and it pains me to know that things aren't working for
-you.  If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help.
-If you're reporting a bug in the plugin, please take a moment to glance through the Support Request Guidelines; it will
-make sure I get your problem fixed as quick as possible. Clear bug reports commonly have time-to-fix of 10 minutes. The
-guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply
+you.
+
+If you have any questions on the use of the plugin, please do not hesitate to file a GitHub issue to ask for help.
+
+If you're reporting a bug in the plugin, please take a moment to glance through the Support Request Guidelines below; it will
+make sure I get your problem fixed as quick as possible. The guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply
 express my ideal bug submission. I of course prefer very clearly documented issue reports over fuzzy ones, but I prefer
 fuzzy ones over missed ones.
 
 # Submitting an issue
 
-Unfortunately, however, my time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I
-cannot accept bug reports or support requests on anything but the latest version.
-
-If you submit an issue report, please include the version that you are on. By the time I get to your issue, the latest
+You can report problems with BBT by [opening a new issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) on github.
+Unfortunately, my time is extremely limited for a number of very great reasons (you shall have to trust me on this). Because of this, I
+cannot accept bug reports or support requests on anything but the latest version. By the time I get to your issue, the latest
 version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and
 re-verify that your issue still exists. Apologies for the inconvenience, but such are the breaks.
 
@@ -39,9 +40,7 @@ For the fastest fix:
   *Do not* paste the sample in the issue, as the issue tracker will format it into oblivion. Instead, choose one of
   these options:
   * Post an URL in the issue where I can download your sample, or
-  * Put the sample in a [gist](https://gist.github.com/) and post the URL of the gist into the issue, or 
-  * upload your files to [dbinbox](http://dbinbox.com/allthatisthecase) -- please use descriptive file names (at least
-    the issue number), as I can't see who uploaded what.
+  * Put the sample in a [gist](https://gist.github.com/) and post the URL of the gist into the issue
 * **If your problem pertains to BBT interfering with other plugins** (which wouldn't be the first time), and this interference
   has something to do with importing, you ***must*** include a sample file that triggers the issue. I know it may seem
   that "any file triggers it" -- I need a *specific* file that does so I know we're looking at the same problem.

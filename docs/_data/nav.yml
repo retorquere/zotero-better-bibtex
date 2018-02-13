@@ -30,6 +30,8 @@
   pages:
     - title: Getting help
       url: /support/
+    - title: Translations
+      url: /translations/
     - title: FAQ
       url: /faq/
     - title: Performance
