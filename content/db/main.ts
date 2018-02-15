@@ -153,7 +153,7 @@ DB.init = async () => {
     citekeys.find({ itemID: -1})
   } catch (err) {
     debug('possible index corruption -- rebuilding indexes')
-    citekeys.ensureAllIndices(true)
+    citekeys.ensureAllIndexes(true)
   }
 
   const autoexport = DB.schemaCollection('autoexport', {
@@ -182,7 +182,7 @@ DB.init = async () => {
     },
   })
   // https://github.com/retorquere/zotero-better-bibtex/issues/908
-  autoexport.ensureAllIndices(true)
+  autoexport.ensureAllIndexes(true)
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/903
   for (const ae of autoexport.find()) {
