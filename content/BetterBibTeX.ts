@@ -498,7 +498,12 @@ export = new class BetterBibTeX {
       debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
     } else {
       this.ready = bbtReady.promise
-      window.addEventListener('load', this.load.bind(this), false)
+      window.addEventListener('load', () => {
+        this.load().catch(err => {
+          this.ready = false
+          debug('Better BibTeX failed to load:', err)
+        })
+      }, false)
     }
   }
 

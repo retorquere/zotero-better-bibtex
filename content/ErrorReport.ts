@@ -100,8 +100,6 @@ export = new class ErrorReport {
   }
 
   private async init() {
-    await Zotero.BetterBibTeX.ready
-
     this.params = window.arguments[0].wrappedJSObject
 
     const wizard = document.getElementById('better-bibtex-error-report')
@@ -125,7 +123,9 @@ export = new class ErrorReport {
     truncated = truncated.map(line => Zotero.Utilities.ellipsize(line, ErrorReport.max_line_length, true))
     this.errorlog.truncated = truncated.join('\n')
 
-    if (this.params.items) {
+    if (Zotero.BetterBibTeX.ready && this.params.items) {
+      await Zotero.BetterBibTeX.ready
+
       debug('ErrorReport::init items', this.params.items)
       this.errorlog.references = await Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
       debug('ErrorReport::init references', this.errorlog.references)
