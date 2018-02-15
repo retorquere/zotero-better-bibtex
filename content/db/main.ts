@@ -147,7 +147,14 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
-  // citekeys.ensureAllIndices(true) https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+
+  // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+  try {
+    citekeys.find({ itemID: -1})
+  } catch (err) {
+    debug('possible index corruption -- rebuilding indexes')
+    citekeys.ensureAllIndices(true)
+  }
 
   const autoexport = DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
