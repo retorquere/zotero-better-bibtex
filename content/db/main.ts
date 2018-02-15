@@ -181,6 +181,9 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
+  // https://github.com/retorquere/zotero-better-bibtex/issues/908
+  autoexport.ensureAllIndices(true)
+
   // https://github.com/retorquere/zotero-better-bibtex/issues/903
   for (const ae of autoexport.find()) {
     if (ae.updated) {
