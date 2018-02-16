@@ -13,9 +13,9 @@ export function format(prefix, msg) {
 
     if (typeof m === 'undefined') return '<undefined>'
 
-    if (i === (msg.length - 1)) return stringify(data, null, 2) // last object
+    if (i === (msg.length - 1)) return stringify(m, null, 2) // last object
 
-    return stringify(data)
+    return stringify(m)
   }).join(' ')
 
   return `{${prefix}} ${str}`
