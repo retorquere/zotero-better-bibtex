@@ -4,5 +4,5 @@ JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
 JOIN fields f ON f.fieldID = itf.fieldID
 LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
 LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
-ORDER BY 2
+ORDER BY 1, 2
 ;

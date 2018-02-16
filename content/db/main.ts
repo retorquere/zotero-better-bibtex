@@ -86,7 +86,7 @@ class DBStore {
           db.collections = db.collections.filter(coll => collections[coll]).map(coll => collections[coll])
         }
 
-        const dump = createFile(dbname + '.txt')
+        const dump = createFile(`_${dbname}.json`)
         Zotero.File.putContents(dump, stringify(db))
 
         callback(db)
