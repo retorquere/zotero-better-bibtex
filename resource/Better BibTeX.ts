@@ -487,13 +487,19 @@ class ZoteroItem {
   }
 
   protected $title(value) {
+    const title = [this.unparse(value)]
+    if (this.fields.titleaddon) title.push(this.unparse(this.fields.titleaddon))
+    if (this.fields.subtitle) title.push(this.unparse(this.fields.subtitle))
+
     if (this.type === 'encyclopediaArticle') {
-      this.set('publicationTitle', this.unparse(value))
+      this.set('publicationTitle', title.join(' - '))
     } else {
-      this.set('title', this.unparse(value))
+      this.set('title', title.join(' - '))
     }
     return true
   }
+  protected $titleaddon(value) { return true } // handled by $title
+  protected $subtitle(value) { return true } // handled by $title
 
   protected $author(value, field) {
     for (const name of value) {
@@ -598,6 +604,7 @@ class ZoteroItem {
 
     return true
   }
+  protected $pagetotal(value) { return this.$pages([[value]]) } // pages expects ranges
 
   protected $volume(value) { return this.set('volume', this.unparse(value)) }
 
@@ -827,6 +834,7 @@ class ZoteroItem {
   }
 
   private unparse(text, condense = true): string {
+    debug('unparsing', text)
     if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
 
     if (['string', 'number'].includes(typeof text)) return text
@@ -944,23 +952,17 @@ class ZoteroItem {
 
   private import() {
     this.hackyFields = []
+    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
-    let fields = Object.keys(this.bibtex.fields)
-    const unexpected = Object.keys(this.bibtex.unexpected_fields || {})
-    const unknown = Object.keys(this.bibtex.unknown_fields || {})
-    if (Translator.preferences.testing) {
-      fields.sort()
-      unexpected.sort()
-      unknown.sort()
+    for (const subtitle of ['titleaddon', 'subtitle']) {
+      if (!this.fields.title && this.fields[subtitle]) {
+        this.fields.title = this.fields[subtitle]
+        delete this.fields[subtitle]
+      }
     }
-    fields = fields.concat(unexpected).concat(unknown)
-    // tslint:disable-next-line:prefer-object-spread
-    this.fields = Object.assign({}, (this.bibtex.fields || {}), (this.bibtex.unexpected_fields || {}), this.bibtex.unknown_fields)
 
-    debug('importing bibtex:', fields, this.bibtex)
-    for (const field of fields) {
-      const value = this.fields[field]
-
+    debug('importing bibtex:', this.bibtex, this.fields)
+    for (const [field, value] of Object.entries(this.fields)) {
       if (field.match(/^local-zo-url-[0-9]+$/)) {
         if (this.$file(value)) continue
       } else if (field.match(/^bdsk-url-[0-9]+$/)) {

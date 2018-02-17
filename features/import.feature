@@ -44,6 +44,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibTeX import; preamble with def create problems #732                       | 2           |
   | space after citekey creates confusion #716                                  | 2           |
@@ -58,7 +59,6 @@ Scenario Outline: Better BibTeX Import
   | Math formatting lost on import #627                                         | 1           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
-  | Better BibTeX.001                                                           | 1           |
   | Better BibTeX.003                                                           | 2           |
   | Better BibTeX.004                                                           | 1           |
   | Better BibTeX.005                                                           | 1           |

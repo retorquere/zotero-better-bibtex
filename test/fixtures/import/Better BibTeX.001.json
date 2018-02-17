@@ -58,6 +58,24 @@
       "volume": "62",
       "date": "2001",
       "itemID": 0
+    },
+    {
+      "ISBN":"978-3-446-40695-7",
+      "creators":[
+        {
+          "creatorType":"author",
+          "firstName":"Peter",
+          "lastName":"Rechenberg"
+        }
+      ],
+      "date":"2006",
+      "edition":"3., erw. und aktualisierte Aufl.",
+      "extra":"bibtex: Rechenberg2006a \nbibtex[ppn_gvk=511633173]",
+      "itemID":1,
+      "itemType":"book",
+      "numPages":"253",
+      "publisher":"Hanser Fachbuchverlag",
+      "title":"Technisches Schreiben - (nicht nur) für Informatiker"
     }
   ],
   "config": {
