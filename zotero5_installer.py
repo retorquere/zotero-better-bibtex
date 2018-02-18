@@ -74,7 +74,7 @@ parser.add_argument('--cache', help='cache downloaded installer in this director
 args = parser.parse_args()
 
 if args.cache is not None and not os.path.exists(args.cache):
-  print args.cache + ' does not exist'
+  print(args.cache + ' does not exist')
   sys.exit(1)
 
 if args.version == 'latest' or args.version is None:
@@ -117,9 +117,9 @@ else:
   tarball = os.path.join(args.cache, tarball)
 
 if os.path.exists(tarball):
-  print 'Retaining ' + tarball
+  print('Retaining ' + tarball)
 else:
-  print "Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url
+  print("Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url)
   urllib.urlretrieve (args.url, tarball)
 
 extracted = tempfile.mkdtemp()
