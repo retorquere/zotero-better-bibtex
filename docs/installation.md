@@ -1,3 +1,5 @@
+# Installation
+
 Install by downloading the [latest release](https://github.com/retorquere/zotero-better-bibtex/releases/latest), and then in Zotero:
 
 1. In the main menu go to Tools > Add-ons

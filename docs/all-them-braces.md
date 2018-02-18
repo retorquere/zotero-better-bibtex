@@ -1,3 +1,5 @@
+# Why all those braces? And why are my titles being recapitalized?
+
 Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
 to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
 in your references that Bib(La)TeX won't understand.
