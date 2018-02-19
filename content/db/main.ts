@@ -148,14 +148,6 @@ DB.init = async () => {
     },
   })
 
-  // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-  try {
-    citekeys.find({ itemID: -1})
-  } catch (err) {
-    debug('possible index corruption -- rebuilding indexes')
-    citekeys.ensureAllIndexes(true)
-  }
-
   const autoexport = DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
@@ -181,8 +173,16 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
-  // https://github.com/retorquere/zotero-better-bibtex/issues/908
-  autoexport.ensureAllIndexes(true)
+
+  // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+  for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
+    const corrupt = coll.checkAllIndexes({ repair: true })
+    if (corrupt.length > 0) {
+      for (const index of corrupt) {
+        Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+      }
+    }
+  }
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/903
   for (const ae of autoexport.find()) {
