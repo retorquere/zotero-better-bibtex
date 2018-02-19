@@ -9,6 +9,8 @@ declare const Services: any
 import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
+import { createFile } from './create-file.ts'
+
 const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')
@@ -27,6 +29,7 @@ export = new class ErrorReport {
     info?: string,
     errors?: string,
     full?: string,
+    db?: string
   } = {}
 
   private form: {
@@ -57,6 +60,7 @@ export = new class ErrorReport {
 
     try {
       await this.submit('errorlog.txt', errorlog)
+      await this.submit('db.json', this.errorlog.db)
       if (this.errorlog.references) await this.submit('references.json', this.errorlog.references)
       wizard.advance()
       wizard.getButton('cancel').disabled = true
@@ -117,6 +121,7 @@ export = new class ErrorReport {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
       full: await Zotero.Debug.get(),
+      db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
     let truncated = this.errorlog.full.split('\n')
     truncated = truncated.slice(0, ErrorReport.max_log_lines)
