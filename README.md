@@ -8,7 +8,16 @@ currently, that translates to the LaTeX/Markdown crowd. To get started, read the
 it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
 you'll find *Better Bib(La)TeX* listed as one of the choices.  If nothing else, you could keep your existing workflow as-is,
 and just enjoy the improved LaTeX &harr; unicode translation on import and export and more accurate field mapping. 
-Over and above this improvement, it adds the following features to Zotero:
+
+Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
+to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
+in your references that Bib(La)TeX won't understand.
+
+BBT will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
+&lt;sub&gt;&#8660;\_{...}, &lt;sup&gt;&#8660;^{...} and &lt;sc&gt;&#8660;\\textsc{...}; more can be added on request.
+BBT contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode
+equivalents on import, and their unicode equivalents back to `\"{o}` if you have that option enabled (but you don't
+have to if you use BibLaTeX, which has fairly good Unicode support). With BBT you'll have:
 
 * Stable [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citation-keys), without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!

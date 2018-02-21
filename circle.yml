@@ -16,7 +16,7 @@ dependencies:
   - gem install bundler
   - gem update bundler
   override:
-    - npm install
+    - yarn install
     - bundle config
     - bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3:
         timeout: 180
@@ -24,7 +24,7 @@ dependencies:
       set -e
 
       if [ "$NIGHTLY" = "true" ]; then
-        npm run s3form
+        yarn run s3form
       fi
 
       mkdir -p ~/downloads
@@ -88,4 +88,4 @@ deployment:
   all:
     branch: "/.*/"
     commands:
-    - npm run release
+    - yarn run release
