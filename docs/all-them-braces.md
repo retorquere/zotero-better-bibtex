@@ -1,30 +1,6 @@
 # Why all those braces? And why are my titles being recapitalized?
 
-Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
-to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
-in your references that Bib(La)TeX won't understand.
-
-BBT will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
-&lt;sub&gt;&#8660;\_{...}, &lt;sup&gt;&#8660;^{...} and &lt;sc&gt;&#8660;\\textsc{...}; more can be added on request.
-BBT contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode
-equivalents on import, and their unicode equivalents back to `\"{o}` if you have that option enabled (but you don't
-have to if you use BibLaTeX, which has fairly good Unicode support).
-
-## Gotchas
-
-* In titles of English references, you can control capitalization by surrounding parts of the text in `<span
-  class="nocase">...</span>`. Text between these will not have their capitalization changed in any way. See more on this
-  below in the section `Mapping fields`.
-* In names, you can force first names like `Philippe` to be exported to `{\relax Ph}ilippe` (which causes it to get
-  initial `Ph.` rather than `P.` in styles that do initials) by adding a [end of guarded area](http://www.fileformat.info/info/unicode/char/0097/index.htm) character between `Ph` and `ilippe`.
-
-## Hidden features
-
-* **`csquotes` support**; if you [open `about:config`](Configuration#hidden-preferences) and set
-  `extensions.zotero.translators.better-bibtex.csquotes` to a string of character pairs, each pair will be assumed to be
-  the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
-
-## Mapping Fields
+## BBT is changing the capitalization of my titles -- why?
 
 There isn't a straightforward one-to-one mapping for all Zotero to Bib(La)TeX fields. For most I can make reasonable
 choices, but there are some things where Better BibTeX takes a little more liberties with your references in order to
@@ -97,3 +73,19 @@ If you'd really just rather hand-code your LaTeX constructs, BBT makes that poss
 * An entry tagged with `#LaTeX` (case-sensitive!) will have all fields exported as if they're wrapped in
   `<pre>...</pre>`, so you can include LaTeX markup in your references. <!-- If you enable "Raw BibTeX import" in the preferences, BibTeX imports will not be
   escaped on import, and will automatically be tagged for raw export. -->
+  
+
+
+## Hidden features
+
+* **`csquotes` support**; if you [open `about:config`](Configuration#hidden-preferences) and set
+  `extensions.zotero.translators.better-bibtex.csquotes` to a string of character pairs, each pair will be assumed to be
+  the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
+  
+## Gotchas
+
+* In titles of English references, you can control capitalization by surrounding parts of the text in `<span
+  class="nocase">...</span>`. Text between these will not have their capitalization changed in any way. See more on this
+  below in the section `Mapping fields`.
+* In names, you can force first names like `Philippe` to be exported to `{\relax Ph}ilippe` (which causes it to get
+  initial `Ph.` rather than `P.` in styles that do initials) by adding a [end of guarded area](http://www.fileformat.info/info/unicode/char/0097/index.htm) character between `Ph` and `ilippe`.
