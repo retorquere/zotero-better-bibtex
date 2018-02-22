@@ -210,7 +210,7 @@ How often the Better BibTeX database should be saved to disk. Defaults to once e
 
 default: `""`
 
-Enables [csquotes](Unnecessarily-complicated-BibTeX-output%3F#hidden-features) support.
+if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
 
 ### skipWords
 

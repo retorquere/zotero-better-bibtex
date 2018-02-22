@@ -16,8 +16,8 @@
       url: /customized-exports/
     - title: Scripting
       url: /scripting/
-    - title: Why all these braces?
-      url: /all-them-braces/
+    - title: Advanced
+      url: /advanced/
 - title: Citing
   pages:
     - title: Configurable citation keys
