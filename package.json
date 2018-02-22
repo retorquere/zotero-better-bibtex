@@ -68,8 +68,6 @@
     "zotero-plugin": "0.0.24"
   },
   "devDependencies": {
-    "current-git-branch": "^1.0.1",
-    "github": "^13.1.0",
     "@rgrove/parse-xml": "^1.1.1",
     "@types/node": "^9.4.6",
     "@types/webpack": "^3.8.8",
@@ -78,11 +76,13 @@
     "bluebird": "^3.5.1",
     "circular-dependency-plugin": "^4.4.0",
     "clean-webpack-plugin": "^0.1.18",
+    "current-git-branch": "^1.0.1",
     "dedent-js": "^1.0.1",
     "dotenv": "^5.0.0",
     "ejs": "^2.5.7",
     "find-up": "^2.1.0",
     "fs-extra": "^5.0.0",
+    "github": "^13.1.0",
     "glob": "^7.1.2",
     "grasp": "^0.6.0",
     "ignore-loader": "^0.1.2",
