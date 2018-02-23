@@ -21,7 +21,7 @@ cannot accept bug reports or support requests on anything but the latest version
 version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and
 re-verify that your issue still exists. Apologies for the inconvenience, but such are the breaks.
 
-* You can send off an error report by choosing `Report Better BibTeX Errors` from the gear menu. Post the resulting ID
+* You can send off an error report by selecting `Report Better BibTeX Errors` from the `Help` menu. Post the resulting ID
   (displayed in red) in a github issue.
 * You can send off an error report for a specific collection or (selection of) items that fails to export by selecting those, right-clicking
   and choosing `Report Better BibTeX Errors`
