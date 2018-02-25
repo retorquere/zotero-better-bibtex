@@ -426,12 +426,14 @@ class Progress {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
+    debug(`${this.name}: starting`)
+
     await Zotero.uiReadyPromise
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    this.toggle(true)
     debug(`${this.name}: started`)
+    this.toggle(true)
   }
 
   public update(msg) {

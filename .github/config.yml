@@ -1,0 +1,10 @@
+---
+label-gun:
+  labels:
+    ignore:
+    - chatter
+    - deferred
+    reopen:
+    - bug
+    - enhancement
+    - question
