@@ -5,6 +5,4 @@ label-gun:
     - chatter
     - deferred
     reopen:
-    - bug
-    - enhancement
-    - question
+    - *
