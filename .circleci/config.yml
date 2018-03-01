@@ -30,9 +30,9 @@ jobs:
         command: echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin" >> $BASH_ENV
     - checkout
     - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    - run:
-        working_directory: ~/retorquere/zotero-better-bibtex
-        command: rm -f retorquere/zotero-better-bibtex/.rvmrc; echo 2.4.1 > retorquere/zotero-better-bibtex/.ruby-version; rvm use 2.4.1 --default
+    #- run:
+    #    working_directory: ~/retorquere/zotero-better-bibtex
+    #    command: rm -f retorquere/zotero-better-bibtex/.rvmrc; echo 2.4.1 > retorquere/zotero-better-bibtex/.ruby-version; rvm use 2.4.1 --default
     - run:
         working_directory: ~/retorquere/zotero-better-bibtex
         command: nvm install 9.4.0 && nvm alias default 9.4.0
