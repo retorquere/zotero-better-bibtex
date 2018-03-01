@@ -127,3 +127,5 @@ jobs:
     # The config translation tool does not support translating deployment steps
     # since deployment in CircleCI 2.0 are better handled through workflows.
     # See the documentation for more information https://circleci.com/docs/2.0/workflows/
+    # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
+    # https://circleci.com/docs/2.0/configuration-reference/#persist_to_workspace
