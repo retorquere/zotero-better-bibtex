@@ -1,8 +1,8 @@
 ---
 label-gun:
-  labels:
-    ignore:
-    - chatter
-    - deferred
-    reopen:
-    - *
+
+  ignore:
+  - chatter
+  - deferred
+  reopen:
+  - *
