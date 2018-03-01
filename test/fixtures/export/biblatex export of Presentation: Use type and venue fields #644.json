@@ -305,6 +305,38 @@
       ],
       "itemID": 117,
       "publicationTitle": "Proceedings of the 3rd International Conference on Learning Representations (ICLR 2015)"
+    },
+    {
+      "itemType": "presentation",
+      "rights": "CMS16e",
+      "place": "Northwestern University, Evanston, IL",
+      "date": "2000-04-26",
+      "presentationType": "lecture",
+      "language": "en-US",
+      "title": "The craft and career of writing",
+      "creators": [
+        {
+          "firstName": "Stacy",
+          "lastName": "D’Erasmo",
+          "creatorType": "presenter"
+        }
+      ],
+      "tags": [
+
+      ],
+      "dateAdded": "2014-05-24 10:18:28",
+      "dateModified": "2015-01-19 19:47:37",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 2499,
+      "type": "lecture",
+      "seeAlso": [
+
+      ]
     }
   ]
 }

@@ -1,4 +1,3 @@
-import { ITranslator } from '../../gen/translator'
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -52,7 +51,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public doExport() {
     const items = []
 
-    let item
+    let item: ISerializedItem
     while (item = Zotero.nextItem()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
@@ -83,7 +82,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       if (item.ISBN) csl.ISBN = item.ISBN
 
       delete csl.authority
-      if (item.__type__ === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
+      if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
       if (item.date) csl.issued = this.parseDate(item.date)
       if (item.accessDate) csl.accessed = this.parseDate(item.accessDate)

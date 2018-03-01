@@ -11,7 +11,8 @@
     "downlevelIteration": true,
     "lib": [ "es2017", "dom" ],
     "typeRoots": [
-      "./typings",
+      "./content/typings",
+      "./resource/typings",
       "./gen/typings",
       "./node_modules/@types"
     ]
@@ -20,7 +21,8 @@
     "content/**/*",
     "resource/**/*",
     "zotero-webpack/**/*",
-    "setup/**/*"
+    "setup/**/*",
+    "gen/**/*"
   ],
   "exclude": [
     "node_modules",

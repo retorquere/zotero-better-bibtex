@@ -1,17 +1,16 @@
 @export
 Feature: Export
 
-### BibLaTeX cookie-cutter ###
-
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf @689 @biblatex
+@573 @590 @747 @edtf @689 @biblatex @644 @889
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
-     | biblatex export of Presentation: Use type and venue fields #644                                | 1           |
+     | biblatex export of Presentation: Use type and venue fields #644                                | 2           |
+     | Month showing up in year field on export #889                                                  | 1           |
      | urldate when only DOI is exported #869                                                         | 1           |
      | Citations have month and day next to year #868                                                 | 2           |
      | Thin space in author name #859                                                                 | 1           |
@@ -63,7 +62,6 @@ Scenario Outline: BibLaTeX Export
      | auth leaves punctuation in citation key #310                                                   | 1           |
      | condense in cite key format not working #308                                                   | 1           |
      | italics in title - capitalization #541                                                         | 1           |
-     | biblatex export of phdthesis does not case-protect -type- #435                                 | 1           |
      | CSL title, volume-title, container-title=BL title, booktitle, maintitle #381                   | 2           |
      | Better BibLaTeX.019                                                                            | 1           |
      | Ignore HTML tags when generating citation key #264                                             | 1           |
@@ -104,16 +102,18 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
 
-### BibTeX cookie-cutter ###
-
-@441 @439 @bbt @300 @565 @551 @558 @747
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | Better BibTeX does not export collections #901                                     | 36         |
+     | [authN_M] citation key syntax has off-by-one error #899                            | 1          |
+     | creating a key with [authForeIni] and [authN] not working properly #892            | 2          |
      | date ranges #747+#746                                                              | 4          |
+     | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |
      | veryshorttitle and compound words #551                                             | 4          |
@@ -132,7 +132,6 @@ Scenario Outline: BibTeX Export
      | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.018                                                                  | 1          |
 
-## Other ###
 @test-cluster-1 @131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/Omit URL export when DOI present. #131.json" into a new collection

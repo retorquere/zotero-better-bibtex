@@ -7,7 +7,7 @@ cd ..
 
 . .env
 
-npm run --silent s3form
+yarn run --silent s3form
 
 curl --silent \
   --header "Content-Type: application/json" \

@@ -1,22 +1,20 @@
-remote_theme: "ENG618/jekyll-theme-material"
 plugins:
   - jekyll-default-layout
   - jekyll-github-metadata
-  - jekyll-optional-front-matter
   - jekyll-readme-index
   - jekyll-redirect-from
   - jekyll-relative-links
-  - jekyll-remote-theme
   - jekyll-titles-from-headings
+  - jekyll-optional-front-matter
+
+repository: retorquere/zotero-better-bibtex
+
+permalink: pretty
+
+optional_front_matter:
+  remove_originals: true
 
 titles_from_headings:
   enabled:     true
   strip_title: false
   collections: false
-
-candidate_themes:
-  - http://www.minddust.com/post/alternative-tags-and-categories-on-github-pages/
-  - https://github.com/CloudCannon/edition-jekyll-template
-  - http://longqian.me/2017/02/09/github-jekyll-tag/
-  - https://github.com/enrmarc/jekyll-tagcloud/blob/master/tags.html
-

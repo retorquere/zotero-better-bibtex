@@ -1,6 +1,3 @@
-import { ITranslator } from '../gen/translator'
-import { ISerializedItem } from './serialized-item'
-
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -17,6 +14,7 @@ Reference.prototype.caseConversion = {
   title: true,
   shorttitle: true,
   booktitle: true,
+  type: true,
 }
 
 Reference.prototype.fieldEncoding = {
@@ -213,10 +211,10 @@ Translator.doExport = () => {
         ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
         break
       default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.__type__)) ref.add({ name: 'howpublished', value: item.url })
+        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
     }
 
-    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.__type__)) {
+    if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
     } else if (ref.isBibVar(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
@@ -224,13 +222,13 @@ Translator.doExport = () => {
       ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
     }
 
-    switch (item.__type__) {
+    switch (item.referenceType) {
       case 'thesis': ref.add({ name: 'school', value: item.publisher }); break
       case 'report': ref.add({ name: 'institution', value: item.publisher }); break
       default:       ref.add({ name: 'publisher', value: item.publisher })
     }
 
-    if (item.__type__ === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
+    if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
       ref.referencetype = item.type
       ref.remove('type')
     }
@@ -489,13 +487,19 @@ class ZoteroItem {
   }
 
   protected $title(value) {
+    const title = [this.unparse(value)]
+    if (this.fields.titleaddon) title.push(this.unparse(this.fields.titleaddon))
+    if (this.fields.subtitle) title.push(this.unparse(this.fields.subtitle))
+
     if (this.type === 'encyclopediaArticle') {
-      this.set('publicationTitle', this.unparse(value))
+      this.set('publicationTitle', title.join(' - '))
     } else {
-      this.set('title', this.unparse(value))
+      this.set('title', title.join(' - '))
     }
     return true
   }
+  protected $titleaddon(value) { return true } // handled by $title
+  protected $subtitle(value) { return true } // handled by $title
 
   protected $author(value, field) {
     for (const name of value) {
@@ -600,6 +604,7 @@ class ZoteroItem {
 
     return true
   }
+  protected $pagetotal(value) { return this.$pages([[value]]) } // pages expects ranges
 
   protected $volume(value) { return this.set('volume', this.unparse(value)) }
 
@@ -829,6 +834,7 @@ class ZoteroItem {
   }
 
   private unparse(text, condense = true): string {
+    debug('unparsing', text)
     if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
 
     if (['string', 'number'].includes(typeof text)) return text
@@ -946,23 +952,17 @@ class ZoteroItem {
 
   private import() {
     this.hackyFields = []
+    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
-    let fields = Object.keys(this.bibtex.fields)
-    const unexpected = Object.keys(this.bibtex.unexpected_fields || {})
-    const unknown = Object.keys(this.bibtex.unknown_fields || {})
-    if (Translator.preferences.testing) {
-      fields.sort()
-      unexpected.sort()
-      unknown.sort()
+    for (const subtitle of ['titleaddon', 'subtitle']) {
+      if (!this.fields.title && this.fields[subtitle]) {
+        this.fields.title = this.fields[subtitle]
+        delete this.fields[subtitle]
+      }
     }
-    fields = fields.concat(unexpected).concat(unknown)
-    // tslint:disable-next-line:prefer-object-spread
-    this.fields = Object.assign({}, (this.bibtex.fields || {}), (this.bibtex.unexpected_fields || {}), this.bibtex.unknown_fields)
 
-    debug('importing bibtex:', fields, this.bibtex)
-    for (const field of fields) {
-      const value = this.fields[field]
-
+    debug('importing bibtex:', this.bibtex, this.fields)
+    for (const [field, value] of Object.entries(this.fields)) {
       if (field.match(/^local-zo-url-[0-9]+$/)) {
         if (this.$file(value)) continue
       } else if (field.match(/^bdsk-url-[0-9]+$/)) {
@@ -1045,7 +1045,7 @@ class ZoteroItem {
 // ZoteroItem::$__note__ = ZoteroItem::$__key__ = -> true
 
 //
-// ZoteroItem::$__type__ = (value) ->
+// ZoteroItem::$referenceType = (value) ->
 //   @item.thesisType = value if value in [ 'phdthesis', 'mastersthesis' ]
 //   return true
 //
@@ -1129,7 +1129,7 @@ Translator.doImport = () => {
   const validFields = Zotero.BetterBibTeX.validFields()
 
   const itemIDS = {}
-  for (const [id, ref] of Object.entries(bib.references)) {
+  for (const [id, ref] of (Object.entries(bib.references) as any[][])) { // TODO: add typings to the npm package
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
     new ZoteroItem(id, ref, bib.groups, validFields) // tslint:disable-line:no-unused-expression
   }

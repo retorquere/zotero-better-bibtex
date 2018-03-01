@@ -1,0 +1,256 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.34.4",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "de",
+        "appName": "Zotero",
+        "appVersion": "5.0.34.4"
+      },
+      "BetterBibTeX": "5.0.79.5455.issue-892"
+    },
+    "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": false,
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[authForeIni:upper][auth2:upper][shortyear]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [
+
+      ],
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "quickCopyMode": "latex",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "lockedInit": false
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {
+  },
+  "items": [
+    {
+      "itemType": "book",
+      "edition": "3. Aufl.",
+      "place": "Berlin [u.~a.]",
+      "publisher": "Springer",
+      "ISBN": "978-3-642-37365-7",
+      "date": "2014",
+      "libraryCatalog": "Library of Congress ISBN",
+      "language": "ger",
+      "title": "Tutorium Analysis 1 und Lineare Algebra 1. Mathematik von Studenten für Studenten erklärt und kommenteiert",
+      "shortTitle": "Tutorium",
+      "creators": [
+        {
+          "firstName": "Florian",
+          "lastName": "Modler",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Martin",
+          "lastName": "Kreh",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "dateAdded": "2018-01-16 13:48:27",
+      "dateModified": "2018-01-16 14:09:51",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 320,
+      "seeAlso": [
+
+      ]
+    },
+    {
+      "itemType": "book",
+      "volume": "12",
+      "publisher": "Springer",
+      "date": "2013",
+      "title": "Analysis 1",
+      "creators": [
+        {
+          "firstName": "Otto",
+          "lastName": "Forster",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+
+      ],
+      "dateAdded": "2018-01-27 12:17:16",
+      "dateModified": "2018-01-27 12:19:02",
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
+      "itemID": 60,
+      "seeAlso": [
+
+      ]
+    }
+  ]
+}

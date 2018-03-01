@@ -52,6 +52,8 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async cite(citations, options) { return this.latex(citations, options) }
+  public async citet(citations, options) { return this.latex(citations, { command: 'citet', ...options } ) }
+  public async citep(citations, options) { return this.latex(citations, { command: 'citep', ...options } ) }
 
   public async latex(citations, options) {
     if (!options.command) options.command = 'cite'

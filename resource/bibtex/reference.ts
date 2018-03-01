@@ -1,6 +1,3 @@
-import { ITranslator } from '../../gen/translator'
-import { ISerializedItem } from '../serialized-item'
-
 declare const Translator: ITranslator
 declare const Zotero: any
 
@@ -344,16 +341,16 @@ export class Reference {
     }
 
     if (this.item.extraFields.csl.type) {
-      this.item.cslType = this.item.extraFields.csl.type.value
+      this.item.cslType = this.item.extraFields.csl.type.value.toLowerCase()
       delete item.extraFields.csl.type
     }
 
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
-      this.item.volumeTitle = this.item.extraFields.csl['volume-title'].value
+      this.item.cslVolumeTitle = this.item.extraFields.csl['volume-title'].value
       delete this.item.extraFields.csl['volume-title']
     }
 
-    this.item.__type__ = this.item.cslType || this.item.itemType
+    this.item.referenceType = this.item.cslType || this.item.itemType
     debug('postextract: item:', this.item)
 
     // should be const referencetype: string | { type: string, subtype?: string }
@@ -559,10 +556,22 @@ export class Reference {
             break
 
           case 'container-title':
-            switch (this.item.__type__) {
-              case 'film': case 'tvBroadcast': case 'videoRecording': case 'motion_picture': name = 'booktitle'; break
-              case 'bookSection': case 'chapter': name = 'maintitle'; break
-              default: name = 'journaltitle'
+            switch (this.item.referenceType) {
+              case 'film':
+              case 'tvBroadcast':
+              case 'videoRecording':
+              case 'motion_picture':
+                name = 'booktitle'
+                break
+
+              case 'bookSection':
+              case 'chapter':
+                name = 'maintitle'
+                break
+
+              default:
+                name = 'journaltitle'
+                break
             }
             break
 
@@ -828,6 +837,7 @@ export class Reference {
    * @return {String} field.value encoded as author-style value
    */
   protected enc_literal(f) {
+    if (!f.value) return null
     return this.enc_latex({value: new String(f.value)}) // tslint:disable-line:no-construct
   }
 
@@ -850,7 +860,7 @@ export class Reference {
 
     if (f.raw || raw) return f.value
 
-    const caseConversion = this.caseConversion[f.name] || f.caseConversion
+    const caseConversion = !Translator.preferences.suppressTitleCase && (this.caseConversion[f.name] || f.caseConversion)
     const latex = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
     let value: String | string = latex.latex
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
