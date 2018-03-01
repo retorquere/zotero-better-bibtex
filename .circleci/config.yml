@@ -21,7 +21,7 @@ jobs:
     # To see the list of pre-built images that CircleCI provides for most common languages see
     # https://circleci.com/docs/2.0/circleci-images/
     docker:
-    - image: circleci/ruby:2.4.1-node
+    - image: circleci/2.4.3-node
       command: /sbin/init
 
     steps:
@@ -33,9 +33,9 @@ jobs:
     #- run:
     #    working_directory: ~/retorquere/zotero-better-bibtex
     #    command: rm -f retorquere/zotero-better-bibtex/.rvmrc; echo 2.4.1 > retorquere/zotero-better-bibtex/.ruby-version; rvm use 2.4.1 --default
-    - run:
-        working_directory: ~/retorquere/zotero-better-bibtex
-        command: nvm install 9.4.0 && nvm alias default 9.4.0
+    #- run:
+    #    working_directory: ~/retorquere/zotero-better-bibtex
+    #    command: nvm install 9.4.0 && nvm alias default 9.4.0
     - run: git submodule sync
     - run: git submodule update --init --recursive
     - restore_cache:
@@ -55,6 +55,9 @@ jobs:
     - run: npm install
     - run: |-
         set -e
+
+        ruby --version
+        node --version
 
         mkdir -p ~/downloads
         case $CIRCLE_NODE_INDEX in
