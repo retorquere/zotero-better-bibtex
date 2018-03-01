@@ -52,7 +52,7 @@ jobs:
     - run:
         command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
         no_output_timeout: 180s
-    - run: npm install
+    - run: yarn install
     - run: |-
         set -e
 
@@ -71,7 +71,7 @@ jobs:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
         - vendor/bundle
-        - ~/virtualenvs
+        - ~/.yarn
         - ~/.m2
         - ~/.ivy2
         - ~/.bundle
@@ -83,7 +83,7 @@ jobs:
         set -e
 
         if [ "$NIGHTLY" = "true" ]; then
-          npm run s3form
+          yarn run s3form
         fi
 
         case $CIRCLE_NODE_INDEX in
