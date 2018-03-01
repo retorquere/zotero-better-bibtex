@@ -46,7 +46,7 @@ jobs:
         - v1-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
-    - run: sudo apt-get install -y libgtk-3-0 libdbus-glib-1-2
+    - run: mkdir -p $HOME/aptcache && sudo apt-get -o dir::cache::archives="$HOME/aptcache" update && sudo apt-get -o dir::cache::archives="$HOME/aptcache" install -y libgtk-3-0 libdbus-glib-1-2
     - run: gem install bundler
     - run: gem update bundler
     - run: bundle config
@@ -73,6 +73,7 @@ jobs:
         paths:
         - vendor/bundle
         - ~/.yarn
+        - ~/aptcache
         - ~/.m2
         - ~/.ivy2
         - ~/.bundle
