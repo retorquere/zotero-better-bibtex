@@ -297,7 +297,30 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  system("yarn run build") || raise("Build failed")
+  xpis = Dir.glob('xpi/*.xpi').collect{|f| File.mtime(f)}.max
+  if xpis
+    sources = Dir.glob([
+      'chrome.manifest',
+      'Gemfile.lock',
+      'yarn.lock',
+      'tsconfig.json',
+      'tslint.json',
+      'webpack.config.ts',
+      'citation-style-language-locales/**/*',
+      'content/**/*',
+      'locale/**/*',
+      'resource/**/*',
+      'setup/**/*',
+      'skin/**/*',
+    ], File::FNM_DOTMATCH).select{|f| File.file?(f) }.collect{|f| File.mtime(f)}.max
+    rebuild = sources > xpis
+  else
+    rebuild = true
+  end
+  if rebuild
+    system("yarn run build") || raise("Build failed")
+  end
+
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?

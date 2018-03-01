@@ -68,6 +68,7 @@ jobs:
                 ;;
         esac
         ls -lh ~/downloads
+
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
@@ -126,6 +127,14 @@ jobs:
         path: /tmp/circleci-artifacts
     - store_artifacts:
         path: xpi
+    persist_to_workspace:
+      root: xpi
+      paths:
+        - *.xpi
+  test:
+    parallelism: 2
+
+  deploy:
 
     # Deployment
     # Your existing circle.yml file contains deployment steps.
@@ -134,3 +143,4 @@ jobs:
     # See the documentation for more information https://circleci.com/docs/2.0/workflows/
     # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
     # https://circleci.com/docs/2.0/configuration-reference/#persist_to_workspace
+    # https://circleci.com/docs/1.0/ssh-between-build-containers/
