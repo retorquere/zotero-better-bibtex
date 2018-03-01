@@ -21,7 +21,7 @@ jobs:
     # To see the list of pre-built images that CircleCI provides for most common languages see
     # https://circleci.com/docs/2.0/circleci-images/
     docker:
-    - image: circleci/2.4.3-node
+    - image: circleci/ruby:2.4.3-node
       command: /sbin/init
 
     steps:
