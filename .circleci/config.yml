@@ -70,7 +70,6 @@ jobs:
     - persist_to_workspace:
         root: *working_directory
         paths:
-          - Gemfile*
           - apt-cache
           - bin
           - citation-style-language-locales
@@ -85,6 +84,7 @@ jobs:
 
     steps:
     - run: *setenv
+    - checkout
 
     - attach_workspace:
         at: *working_directory
