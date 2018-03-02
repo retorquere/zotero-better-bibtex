@@ -22,7 +22,6 @@ _run:
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
-      cat $BASH_ENV
   apt: &apt_get
     command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
   ruby: &ruby
