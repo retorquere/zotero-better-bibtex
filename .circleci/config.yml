@@ -22,8 +22,10 @@ _run:
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
+      echo $BASH_ENV
+      cat $BASH_ENV
   apt: &apt_get
-    command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
+    command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
   ruby: &ruby
     command: gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
     no_output_timeout: 180s
