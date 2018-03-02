@@ -116,9 +116,12 @@ if args.destination is None:
 elif args.destination == 'local':
   installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
-else:
+elif args.destination == 'global':
   installdir = installdir_global
   menudir = '/usr/share/applications'
+else:
+  installdir = args.destination
+  menudir = None
   
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
 
