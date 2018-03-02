@@ -1,43 +1,41 @@
 version: 2
+
+_defaults: &defaults
+  working_directory: &working_directory ~/retorquere/zotero-better-bibtex
+  shell: /bin/bash --login
+  environment:
+    CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
+    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+  docker:
+  - image: circleci/ruby:2.4.3-node
+    command: /sbin/init
+  
+_run:
+  setenv: &setenv
+    command: |-
+      echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin" >> $BASH_ENV
+      case $CIRCLE_NODE_INDEX in
+        2|3)  echo -e "export ZOTERO=jurism" >> $BASH_ENV
+              ;;
+        *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
+              ;;
+      esac
+  apt: &apt_get
+    command: mkdir -p $HOME/aptcache && sudo apt-get -o dir::cache::archives="$HOME/aptcache" update && sudo apt-get -o dir::cache::archives="$HOME/aptcache" install -y libgtk-3-0 libdbus-glib-1-2
+  ruby: &ruby
+    command: gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
+    no_output_timeout: 180s
+  node: &node
+    command: yarn install
+
 jobs:
   build:
-    working_directory: ~/retorquere/zotero-better-bibtex
-    parallelism: 2
-    shell: /bin/bash --login
-
-    # CircleCI 2.0 does not support environment variables that refer to each other the same way as 1.0 did.
-    # If any of these refer to each other, rewrite them so that they don't or see https://circleci.com/docs/2.0/env-vars/#interpolating-environment-variables-to-set-other-environment-variables .
-    environment:
-      CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-      CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
-
-    # In CircleCI 1.0 we used a pre-configured image with a large number of languages and other packages.
-    # In CircleCI 2.0 you can now specify your own image, or use one of our pre-configured images.
-    # The following configuration line tells CircleCI to use the specified docker image as the runtime environment for you job.
-    # We have selected a pre-built image that mirrors the build environment we use on
-    # the 1.0 platform, but we recommend you choose an image more tailored to the needs
-    # of each job. For more information on choosing an image (or alternatively using a
-    # VM instead of a container) see https://circleci.com/docs/2.0/executor-types/
-    # To see the list of pre-built images that CircleCI provides for most common languages see
-    # https://circleci.com/docs/2.0/circleci-images/
-    docker:
-    - image: circleci/ruby:2.4.3-node
-      command: /sbin/init
+    <<: *defaults
 
     steps:
-    - run:
-        working_directory: ~/retorquere/zotero-better-bibtex
-        command: echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin" >> $BASH_ENV
+    - run: *setenv
     - checkout
-    - run: mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
-    #- run:
-    #    working_directory: ~/retorquere/zotero-better-bibtex
-    #    command: rm -f retorquere/zotero-better-bibtex/.rvmrc; echo 2.4.1 > retorquere/zotero-better-bibtex/.ruby-version; rvm use 2.4.1 --default
-    #- run:
-    #    working_directory: ~/retorquere/zotero-better-bibtex
-    #    command: nvm install 9.4.0 && nvm alias default 9.4.0
-    - run: git submodule sync
-    - run: git submodule update --init --recursive
+    - run: git submodule sync && git submodule update --init --recursive
     - restore_cache:
         keys:
         # This branch if available
@@ -46,57 +44,69 @@ jobs:
         - v1-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
-    - run: mkdir -p $HOME/aptcache && sudo apt-get -o dir::cache::archives="$HOME/aptcache" update && sudo apt-get -o dir::cache::archives="$HOME/aptcache" install -y libgtk-3-0 libdbus-glib-1-2
-    - run: gem install bundler
-    - run: gem update bundler
-    - run: bundle config
-    - run:
-        command: bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-        no_output_timeout: 180s
-    - run: yarn install
-    - run: |-
-        set -e
-
-        ruby --version
-        node --version
-
-        mkdir -p ~/downloads
-        case $CIRCLE_NODE_INDEX in
-          2|3)  ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
-                ;;
-          *)    ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
-                ;;
-        esac
-        ls -lh ~/downloads
-
+    - run: *apt_get
+    - run: *ruby
+    - run: *node
+    - run: ./zotero5_installer.py --client zotero --version latest --destination local --replace --cache ~/downloads
+    - run: ./zotero5_installer.py --client jurism --version latest --destination local --replace --cache ~/downloads
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
-        - vendor/bundle
-        - ~/.yarn
-        - ~/aptcache
-        - ~/.m2
-        - ~/.ivy2
-        - ~/.bundle
-        - citation-style-language-locales
-        - ~/downloads
-        - ./node_modules
+          # home
+          - ~/aptcache
+          - ~/bin
+          - ~/.bundle
+          - ~/downloads
+          - ~/.yarn
+
+          # working directoey
+          - citation-style-language-locales
+          - node_modules
+          - vendor/bundle
+
+    - run: yarn run build
+
+    - store_artifacts:
+        path: xpi
+
+    - persist_to_workspace:
+        root: *working_directory
+        paths:
+          - xpi
+          - citation-style-language-locales
+          - node_modules
+          - vendor/bundle
+
+    - persist_to_workspace:
+        root: ~
+        paths:
+          - aptcache
+          - bin
+          - downloads
+
+  test:
+    <<: *defaults
+    parallelism: 2
+
+    steps:
+    - run: *setenv
+
+    - attach_workspace:
+        at: *working_directory
+    - attach_workspace:
+        at: ~
+
+    - run: *apt_get
+    - run: *ruby
 
     - run: |-
         set -e
+
+        mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
         if [ "$NIGHTLY" = "true" ]; then
           yarn run s3form
         fi
-
-        case $CIRCLE_NODE_INDEX in
-          2|3)  export JURISM=true
-                DATADIR=~/.BBTZ5TEST/jurism
-                ;;
-          *)    export JURISM=false
-                DATADIR=~/.BBTZ5TEST/zotero
-                ;;
-        esac
 
         if [ "$NIGHTLY" = "true" -o "$CIRCLE_TAG" ]; then
           NIGHTLY_TAGS=""
@@ -114,27 +124,13 @@ jobs:
         export LOGS=$CIRCLE_ARTIFACTS
         bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
         cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
-        cp -r $DATADIR/better* $CIRCLE_ARTIFACTS
+        cp -r ~/.BBTZ5TEST/$ZOTERO/better* $CIRCLE_ARTIFACTS
         ls -lh $CIRCLE_ARTIFACTS/*
 
-    # Teardown
-    #   If you break your build into multiple jobs with workflows, you will probably want to do the parts of this that are relevant in each
-    # Save test results
     - store_test_results:
         path: /tmp/circleci-test-results
-    # Save artifacts
     - store_artifacts:
         path: /tmp/circleci-artifacts
-    - store_artifacts:
-        path: xpi
-    persist_to_workspace:
-      root: xpi
-      paths:
-        - *.xpi
-  test:
-    parallelism: 2
-
-  deploy:
 
     # Deployment
     # Your existing circle.yml file contains deployment steps.
@@ -144,3 +140,12 @@ jobs:
     # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
     # https://circleci.com/docs/2.0/configuration-reference/#persist_to_workspace
     # https://circleci.com/docs/1.0/ssh-between-build-containers/
+
+workflows:
+  version: 2
+  build-test-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build

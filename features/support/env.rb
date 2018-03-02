@@ -60,7 +60,7 @@ def execute(options)
 
   #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
   #STDOUT.flush
-  port = ENV['JURISM'] == 'true' ? 24119 : 23119
+  port = ENV['ZOTERO'] == 'jurism' ? 24119 : 23119
   response = HTTParty.post("http://127.0.0.1:#{port}/debug-bridge/execute", options)
   #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
   #STDOUT.flush
@@ -324,7 +324,7 @@ module BBT
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
-    if ENV['JURISM'] == 'true'
+    if ENV['ZOTERO'] == 'jurism'
       profiles = File.expand_path('~/.jurism/jurism')
       zotero = File.expand_path('~/bin/jurism/jurism')
     else
