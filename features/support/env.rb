@@ -297,39 +297,20 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  xpis = Dir.glob('xpi/*.xpi').collect{|f| File.mtime(f)}.max
-  if xpis
-    sources = Dir.glob([
-      'chrome.manifest',
-      'Gemfile.lock',
-      'yarn.lock',
-      'tsconfig.json',
-      'tslint.json',
-      'webpack.config.ts',
-      'citation-style-language-locales/**/*',
-      'content/**/*',
-      'locale/**/*',
-      'resource/**/*',
-      'setup/**/*',
-      'skin/**/*',
-    ], File::FNM_DOTMATCH).select{|f| File.file?(f) }.collect{|f| File.mtime(f)}.max
-    rebuild = sources > xpis
-  else
-    rebuild = true
-  end
-  if rebuild
+  if (ENV['CIRCLE_STAGE'] || 'build') == 'build'
     system("yarn run build") || raise("Build failed")
   end
 
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
+    home = ENV['CIRCLE_WORKING_DIR'] || '~'
     if ENV['ZOTERO'] == 'jurism'
-      profiles = File.expand_path('~/.jurism/jurism')
-      zotero = File.expand_path('~/bin/jurism/jurism')
+      profiles = File.expand_path("#{home}/.jurism/jurism")
+      zotero = File.expand_path("#{home}/bin/jurism/jurism")
     else
-      profiles = File.expand_path('~/.zotero/zotero')
-      zotero = File.expand_path('~/bin/zotero/zotero')
+      profiles = File.expand_path("#{home}/.zotero/zotero")
+      zotero = File.expand_path("#{home}/bin/zotero/zotero")
     end
   elsif OS.mac?
     profiles = File.expand_path('~/Library/Application Support/Zotero')

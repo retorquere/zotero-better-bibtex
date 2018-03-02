@@ -48,6 +48,8 @@ def destinationType(name):
   name = re.sub(r"[^a-z]", '', name.lower())
 
   if len(name) == 0: raise Exception('Missing destination')
+
+  if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
   if 'local'[:len(name)] == name: return 'local'
   if 'global'[:len(name)] == name: return 'global'
   raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
