@@ -14,15 +14,14 @@ _run:
   setenv: &setenv
     command: |-
       echo -e "export CIRCLE_WORKING_DIR=${HOME}/${CIRCLE_PROJECT_REPONAME}" >> $BASH_ENV
-      echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:${CIRCLE_WORKING_DIR}/node_modules/.bin" >> $BASH_ENV
-      echo -e "export APT_CACHE_FOLDER=${CIRCLE_WORKING_DIR}/apt-cache" >> $BASH_ENV
+      echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:\${CIRCLE_WORKING_DIR}/node_modules/.bin" >> $BASH_ENV
+      echo -e "export APT_CACHE_FOLDER=\${CIRCLE_WORKING_DIR}/apt-cache" >> $BASH_ENV
       case $CIRCLE_NODE_INDEX in
         2|3)  echo -e "export ZOTERO=jurism" >> $BASH_ENV
               ;;
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
-      echo $BASH_ENV
       cat $BASH_ENV
   apt: &apt_get
     command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
