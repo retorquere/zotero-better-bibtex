@@ -49,7 +49,7 @@ jobs:
     - run: *apt_get
     - run: *ruby
     - run: *node
-    - run: mkdir -p bin
+    - run: mkdir -p bin downloads
     - run: ./zotero5_installer.py --client zotero --version latest --destination $CIRCLE_WORKING_DIR/bin --replace --cache downloads
     - run: ./zotero5_installer.py --client jurism --version latest --destination $CIRCLE_WORKING_DIR/bin --replace --cache downloads
     - save_cache:
