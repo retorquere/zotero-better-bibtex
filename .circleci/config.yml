@@ -75,8 +75,6 @@ jobs:
           - xpi
           - vendor/bundle
           - node_modules
-          - package.json
-          - yarn.lock
 
   test:
     <<: *defaults
@@ -90,7 +88,6 @@ jobs:
         at: *working_directory
 
     - run: *apt_get
-    - run: *ruby
 
     - run: |-
         set -e
@@ -148,9 +145,9 @@ jobs:
 
     steps:
     - run: *setenv
+    - checkout
     - attach_workspace:
         at: *working_directory
-    - run: *node
     - run: yarn run release
     - run: |-
         set -e
