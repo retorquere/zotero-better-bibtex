@@ -12,18 +12,18 @@ require 'json'
 require 'reverse_markdown'
 require 'deepsort'
 
-if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
-  STDOUT.puts "Starting headless..."
-  require 'headless'
-  $headless ||= false
-  unless $headless
-    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
-    $headless.start
-  end
-  at_exit do
-    $headless.destroy if $headless
-  end
-end
+#if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
+#  STDOUT.puts "Starting headless..."
+#  require 'headless'
+#  $headless ||= false
+#  unless $headless
+#    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
+#    $headless.start
+#  end
+#  at_exit do
+#    $headless.destroy if $headless
+#  end
+#end
 
 class IniFile
   def write_compact( opts = {} )
@@ -453,7 +453,7 @@ module BBT
       end
     }
     Process.kill("HUP", pid) unless stopped
-  } if (ENV['KILL'] || 'true') == 'true' || (ENV['HEADLESS'] || 'true') == 'true'
+  } if (ENV['KILL'] || 'true') == 'true' # || (ENV['HEADLESS'] || 'true') == 'true'
 
   puts Benchmark.measure {
     print "Starting Zotero."

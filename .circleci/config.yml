@@ -25,7 +25,7 @@ _run:
   #apt: &apt_get
   #  command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
   apt: &apt_get
-    command: sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)" && sudo apt-get install aria2 && sudo apt-fast install -y libgtk-3-0 libdbus-glib-1-2
+    command: sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)" && sudo apt-get install aria2 && sudo apt-fast install -y libgtk-3-0 libdbus-glib-1-2 vnc4server metacity
   ruby: &ruby
     command: pwd && ls && gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
     no_output_timeout: 180s
@@ -95,6 +95,10 @@ jobs:
     - run: |-
         set -e
 
+				vnc4server -geometry 1280x1024 -depth 24
+				export DISPLAY=:1.0
+				metacity &
+
         mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
         if [ "$NIGHTLY" = "true" ]; then
@@ -114,7 +118,6 @@ jobs:
                 ;;
         esac
 
-        export LOGS=$CIRCLE_ARTIFACTS
         bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
         cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
         cp -r ~/.BBTZ5TEST/$ZOTERO/better* $CIRCLE_ARTIFACTS
