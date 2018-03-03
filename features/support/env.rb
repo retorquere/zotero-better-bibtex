@@ -351,7 +351,7 @@ module BBT
   profiles_ini.write_compact
   
   fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
-  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}"))
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}"))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
@@ -412,7 +412,7 @@ module BBT
     profile["intl.accept_languages"] = 'fr, fr-fr, en-us, en'
   end
 
-  profile['extensions.zotero.dataDir'] = File.join(profile_tgt, ENV['JURISM'] == 'true' ? 'jurism' : 'zotero') # Juris-M doesn't support -datadir
+  profile['extensions.zotero.dataDir'] = File.join(profile_tgt, ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero') # Juris-M doesn't support -datadir
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
@@ -430,10 +430,10 @@ module BBT
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   if ENV['ZOTERO_BIGLY'] == 'true'
     STDOUT.puts "Testing using bigly database!"
-    FileUtils.cp(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
+    FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
-  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
+  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV{'ZOTERO']}.log") : '~/.BBTZ5TEST.log')
   cmd = "#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1"
   puts cmd
   pid = Process.fork{ system(cmd) }
