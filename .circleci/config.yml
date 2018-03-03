@@ -18,15 +18,13 @@ _run:
     command: |-
       echo -e "export CIRCLE_WORKING_DIR=${HOME}/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" >> $BASH_ENV
       echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:\${CIRCLE_WORKING_DIR}/node_modules/.bin" >> $BASH_ENV
-      # echo -e "export APT_CACHE_FOLDER=\${CIRCLE_WORKING_DIR}/apt-cache" >> $BASH_ENV
+      echo -e "export DISPLAY=:1.0" >> $BASH_ENV
       case $CIRCLE_NODE_INDEX in
         2|3)  echo -e "export ZOTERO=jurism" >> $BASH_ENV
               ;;
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
-  apt: &apt_get
-    command: sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)" && sudo apt-get install aria2 && sudo apt-fast install -y libgtk-3-0 libdbus-glib-1-2 vnc4server metacity expect
   ruby: &ruby
     command: gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
     no_output_timeout: 180s
@@ -105,7 +103,6 @@ jobs:
         EOF
 
         vnc4server -geometry 1280x1024 -depth 24
-        export DISPLAY=:1.0
         metacity &
 
         mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
