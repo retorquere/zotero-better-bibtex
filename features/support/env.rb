@@ -433,7 +433,7 @@ module BBT
     FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
-  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV{'ZOTERO']}.log") : '~/.BBTZ5TEST.log')
+  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV['ZOTERO']}.log") : '~/.BBTZ5TEST.log')
   cmd = "#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1"
   puts cmd
   pid = Process.fork{ system(cmd) }
