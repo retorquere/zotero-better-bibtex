@@ -13,7 +13,7 @@ _defaults: &defaults
 _run:
   setenv: &setenv
     command: |-
-      echo -e "export CIRCLE_WORKING_DIR=${HOME}/${CIRCLE_PROJECT_REPONAME}" >> $BASH_ENV
+      echo -e "export CIRCLE_WORKING_DIR=${HOME}/${CIRCLE_PROJECT_USERNAME}/${CIRCLE_PROJECT_REPONAME}" >> $BASH_ENV
       echo -e "export PATH=${PATH}:${HOME}/.yarn/bin:\${CIRCLE_WORKING_DIR}/node_modules/.bin" >> $BASH_ENV
       echo -e "export APT_CACHE_FOLDER=\${CIRCLE_WORKING_DIR}/apt-cache" >> $BASH_ENV
       case $CIRCLE_NODE_INDEX in
