@@ -95,15 +95,15 @@ jobs:
     - run: |-
         set -e
 
-				/usr/bin/expect <<EOF
-				spawn "/usr/bin/vnc4passwd"
-				expect "Password:"
-				send "$VNCPASSWORD\r"
-				expect "Verify:"
-				send "$VNCPASSWORD\r"
-				expect eof
-				exit
-				EOF
+        /usr/bin/expect <<EOF
+        spawn "/usr/bin/vnc4passwd"
+        expect "Password:"
+        send "$VNCPASSWORD\r"
+        expect "Verify:"
+        send "$VNCPASSWORD\r"
+        expect eof
+        exit
+        EOF
 
         vnc4server -geometry 1280x1024 -depth 24
         export DISPLAY=:1.0
