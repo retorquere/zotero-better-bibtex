@@ -10,7 +10,7 @@ _defaults: &defaults
 #  - image: circleci/ruby:2.4.3-node
 #    command: /sbin/init
   docker:
-  - image: retorquere/better-bibtex-zotero-5
+  - image: retorquere/better-bibtex-zotero-5:0.0.1
     command: /sbin/init
   
 _run:
@@ -28,7 +28,7 @@ _run:
   apt: &apt_get
     command: sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)" && sudo apt-get install aria2 && sudo apt-fast install -y libgtk-3-0 libdbus-glib-1-2 vnc4server metacity expect
   ruby: &ruby
-    command: pwd && ls && gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
+    command: gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
     no_output_timeout: 180s
   node: &node
     command: yarn install
