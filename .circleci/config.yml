@@ -70,12 +70,13 @@ jobs:
         root: *working_directory
         paths:
           - bin
-          - gen
           - citation-style-language-locales
-          - downloads
-          - node_modules
-          - vendor/bundle
+          - gen
           - xpi
+          - vendor/bundle
+          - node_modules
+          - package.json
+          - yarn.lock
 
   test:
     <<: *defaults
