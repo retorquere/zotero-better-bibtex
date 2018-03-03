@@ -412,7 +412,7 @@ module BBT
     profile["intl.accept_languages"] = 'fr, fr-fr, en-us, en'
   end
 
-  #profile['extensions.zotero.dataDir'] = data_tgt
+  profile['extensions.zotero.dataDir'] = File.join(profile_tgt, ENV['JURISM'] == 'true' ? 'jurism' : 'zotero') # Juris-M doesn't support -datadir
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
