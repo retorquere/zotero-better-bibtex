@@ -50,6 +50,7 @@ jobs:
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
         - v1-dep-
     - run: *node
+    - run: *ruby
     - run: mkdir -p bin downloads
     - run: ./zotero5_installer.py --client zotero --version latest --destination $CIRCLE_WORKING_DIR/bin --replace --cache downloads
     - run: ./zotero5_installer.py --client jurism --version latest --destination $CIRCLE_WORKING_DIR/bin --replace --cache downloads
