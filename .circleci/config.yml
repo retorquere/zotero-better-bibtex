@@ -92,7 +92,7 @@ jobs:
     - run: *ruby
 
     - run: |-
-        # set -e
+        set -e
 
         /usr/bin/expect <<EOF
         spawn "/usr/bin/vnc4passwd"
@@ -127,8 +127,6 @@ jobs:
         cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
         cp -r ~/.BBTZ5TEST/$ZOTERO/better* $CIRCLE_ARTIFACTS
         ls -lh $CIRCLE_ARTIFACTS/*
-
-        find ~ -name retorquere -prune -o -print
 
     - store_test_results:
         path: /tmp/circleci-test-results
