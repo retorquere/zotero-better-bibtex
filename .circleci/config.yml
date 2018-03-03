@@ -95,6 +95,7 @@ jobs:
     - run: |-
         set -e
 
+        echo $VNCPASSWORD | vnc4passwd -f
         vnc4server -geometry 1280x1024 -depth 24
         export DISPLAY=:1.0
         metacity &
