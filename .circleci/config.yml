@@ -10,7 +10,7 @@ _defaults: &defaults
 #  - image: circleci/ruby:2.4.3-node
 #    command: /sbin/init
   docker:
-  - image: retorquere/better-bibtex-zotero-5:0.0.1
+  - image: retorquere/better-bibtex-zotero-5:0.0.2
     command: /sbin/init
   
 _run:
