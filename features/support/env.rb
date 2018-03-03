@@ -306,10 +306,10 @@ module BBT
   if OS.linux?
     home = ENV['CIRCLE_WORKING_DIR'] || '~'
     if ENV['ZOTERO'] == 'jurism'
-      profiles = File.expand_path("#{home}/.jurism/jurism")
+      profiles = File.expand_path("~/.jurism/jurism")
       zotero = File.expand_path("#{home}/bin/jurism/jurism")
     else
-      profiles = File.expand_path("#{home}/.zotero/zotero")
+      profiles = File.expand_path("~/.zotero/zotero")
       zotero = File.expand_path("#{home}/bin/zotero/zotero")
     end
   elsif OS.mac?
