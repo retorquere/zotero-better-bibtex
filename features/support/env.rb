@@ -434,7 +434,9 @@ module BBT
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1") }
+  cmd = "#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1"
+  puts cmd
+  pid = Process.fork{ system(cmd) }
 
   at_exit {
     execute("""
