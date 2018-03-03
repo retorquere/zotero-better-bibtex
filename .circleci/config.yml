@@ -6,8 +6,11 @@ _defaults: &defaults
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
     CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+#  docker:
+#  - image: circleci/ruby:2.4.3-node
+#    command: /sbin/init
   docker:
-  - image: circleci/ruby:2.4.3-node
+  - image: retorquere/better-bibtex-zotero-5
     command: /sbin/init
   
 _run:
@@ -22,8 +25,6 @@ _run:
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
-  #apt: &apt_get
-  #  command: mkdir -p $APT_CACHE_FOLDER && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER update && sudo apt-get -o dir::cache::archives=$APT_CACHE_FOLDER install -y libgtk-3-0 libdbus-glib-1-2
   apt: &apt_get
     command: sudo /bin/bash -c "$(curl -sL https://git.io/vokNn)" && sudo apt-get install aria2 && sudo apt-fast install -y libgtk-3-0 libdbus-glib-1-2 vnc4server metacity expect
   ruby: &ruby
@@ -86,7 +87,7 @@ jobs:
     - attach_workspace:
         at: *working_directory
 
-    - run: *apt_get
+    # - run: *apt_get
     - run: *ruby
 
     - run: |-
