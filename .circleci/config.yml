@@ -110,10 +110,6 @@ jobs:
 
         mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
-        if [ "$NIGHTLY" = "true" ]; then
-          yarn run s3form
-        fi
-
         if [ "$NIGHTLY" = "true" -o "$CIRCLE_TAG" ]; then
           NIGHTLY_TAGS=""
         else
@@ -145,6 +141,22 @@ jobs:
     # https://circleci.com/docs/2.0/workflows/#using-workspaces-to-share-data-among-jobs
     # https://circleci.com/docs/2.0/configuration-reference/#persist_to_workspace
     # https://circleci.com/docs/1.0/ssh-between-build-containers/
+
+  release:
+    <<: *defaults
+
+    steps:
+    - run: *setenv
+    - attach_workspace:
+        at: *working_directory
+    - run: *node
+    - run: npm run release
+    - run: |-
+        set -e
+
+        if [ "$NIGHTLY" = "true" ]; then
+          yarn run s3form
+        fi
 
 workflows:
   version: 2
