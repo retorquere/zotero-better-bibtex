@@ -95,9 +95,9 @@ jobs:
     - run: |-
         set -e
 
-				vnc4server -geometry 1280x1024 -depth 24
-				export DISPLAY=:1.0
-				metacity &
+        vnc4server -geometry 1280x1024 -depth 24
+        export DISPLAY=:1.0
+        metacity &
 
         mkdir -p $CIRCLE_ARTIFACTS $CIRCLE_TEST_REPORTS
 
