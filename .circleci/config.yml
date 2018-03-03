@@ -56,7 +56,6 @@ jobs:
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
-          - bin
           - citation-style-language-locales
           - downloads
           - node_modules
