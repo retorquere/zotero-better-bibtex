@@ -295,7 +295,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
     when '.csl.json'
       return compare(JSON.parse(found), JSON.parse(expected))
 
-    when '.csl.yaml'
+    when '.csl.yml'
       #return compare(YAML.load(found), YAML.load(expected))
       expect(sort_yaml(found)).to eq(sort_yaml(expected))
       return
@@ -432,7 +432,7 @@ module BBT
   end
 
   if ENV['ZOTERO'] == 'jurism' # Juris-M doesn't support -datadir
-    STDERR.puts "WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34"
+    STDERR.puts "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
     STDERR.flush
     profile['extensions.zotero.dataDir'] = File.join(profile_tgt, 'jurism')
     profile['extensions.zotero.useDataDir']  = true
