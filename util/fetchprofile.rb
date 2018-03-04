@@ -9,7 +9,14 @@ require 'httparty'
 require 'shellwords'
 require 'benchmark'
 
-$zotero = ARGV[0].nil? || ARGV[0].downcase != 'j' ? 'zotero' : 'jurism'
+case ARGV[0][0].downcase
+  when 'j'
+    $zotero = 'jurism'
+  when 'z'
+    $zotero = 'zotero'
+  else
+    raise "Don't know what to do with #{ARGV[0]}"
+end
 
 puts "Getting #{$zotero}"
 
@@ -44,11 +51,17 @@ IO.readlines(File.join(PROFILE_DIR, 'prefs.js')).each{|pref|
 }
 
 TEMPLATE_STASH = File.expand_path(File.join(File.dirname(__FILE__), "../test/fixtures/profile/fetched-#{$zotero}"))
+DATA_DIR = File.join(TEMPLATE_STASH, $zotero)
+
+if !File.file?(File.join(DATA_DIR, 'translators', 'Scannable Cite.js'))
+  raise "Scannable Cite is missing from the translators"
+end
 
 puts "#{PROFILE_DIR} => #{TEMPLATE_STASH}"
 
 FileUtils.rm_rf(TEMPLATE_STASH)
 FileUtils.cp_r(PROFILE_DIR, TEMPLATE_STASH)
-FileUtils.cp_r(dataDir, File.join(TEMPLATE_STASH, $zotero)) if useDataDir
+FileUtils.cp_r(dataDir, DATA_DIR) if dataDir
 
+puts "WARNING: #{$zotero} has dataDir but does not use it" if dataDir && !useDataDir
 puts "WARNING: #{$zotero} uses dataDir" if dataDir
