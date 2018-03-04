@@ -145,7 +145,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       setTimeout(() => {
-        // update display panes
+        // update display panes by issuing a fake item-update notification
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }, this.itemObserverDelay)
     })
