@@ -12,18 +12,18 @@ require 'json'
 require 'reverse_markdown'
 require 'deepsort'
 
-if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
-  STDOUT.puts "Starting headless..."
-  require 'headless'
-  $headless ||= false
-  unless $headless
-    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
-    $headless.start
-  end
-  at_exit do
-    $headless.destroy if $headless
-  end
-end
+#if !OS.mac? && (ENV['HEADLESS'] || 'true') == 'true'
+#  STDOUT.puts "Starting headless..."
+#  require 'headless'
+#  $headless ||= false
+#  unless $headless
+#    $headless = Headless.new(display: 100) # reserve 100 for BetterBibTeX
+#    $headless.start
+#  end
+#  at_exit do
+#    $headless.destroy if $headless
+#  end
+#end
 
 class IniFile
   def write_compact( opts = {} )
@@ -60,7 +60,7 @@ def execute(options)
 
   #STDOUT.puts "Executing " + options[:body][0..60].gsub(/\n/, ' ') + "..."
   #STDOUT.flush
-  port = ENV['JURISM'] == 'true' ? 24119 : 23119
+  port = ENV['ZOTERO'] == 'jurism' ? 24119 : 23119
   response = HTTParty.post("http://127.0.0.1:#{port}/debug-bridge/execute", options)
   #STDOUT.puts "Got " + response.body[0..60].gsub(/\n/, ' ') + '...'
   #STDOUT.flush
@@ -297,16 +297,20 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  system("yarn run build") || raise("Build failed")
+  if (ENV['CIRCLE_STAGE'] || 'build') == 'build'
+    system("yarn run build") || raise("Build failed")
+  end
+
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
-    if ENV['JURISM'] == 'true'
-      profiles = File.expand_path('~/.jurism/jurism')
-      zotero = File.expand_path('~/bin/jurism/jurism')
+    home = ENV['CIRCLE_WORKING_DIR'] || '~'
+    if ENV['ZOTERO'] == 'jurism'
+      profiles = File.expand_path("~/.jurism/zotero")
+      zotero = File.expand_path("#{home}/bin/jurism/jurism")
     else
-      profiles = File.expand_path('~/.zotero/zotero')
-      zotero = File.expand_path('~/bin/zotero/zotero')
+      profiles = File.expand_path("~/.zotero/zotero")
+      zotero = File.expand_path("#{home}/bin/zotero/zotero")
     end
   elsif OS.mac?
     profiles = File.expand_path('~/Library/Application Support/Zotero')
@@ -347,7 +351,7 @@ module BBT
   profiles_ini.write_compact
   
   fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
-  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}"))
+  profile = Selenium::WebDriver::Firefox::Profile.new(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}"))
   #profile.log_file = File.expand_path(File.join(File.dirname(__FILE__), "#{ENV['LOGS'] || '.'}/firefox-console.log"))
   
   plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
@@ -408,7 +412,7 @@ module BBT
     profile["intl.accept_languages"] = 'fr, fr-fr, en-us, en'
   end
 
-  #profile['extensions.zotero.dataDir'] = data_tgt
+  profile['extensions.zotero.dataDir'] = File.join(profile_tgt, ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero') # Juris-M doesn't support -datadir
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
@@ -426,11 +430,13 @@ module BBT
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   if ENV['ZOTERO_BIGLY'] == 'true'
     STDOUT.puts "Testing using bigly database!"
-    FileUtils.cp(File.join(fixtures, "profile/#{ENV['JURISM'] == 'true' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
+    FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
-  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], 'zotero.log') : '~/.BBTZ5TEST.log')
-  pid = Process.fork{ system("#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1") }
+  logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV['ZOTERO']}.log") : '~/.BBTZ5TEST.log')
+  cmd = "#{zotero} -P BBTZ5TEST #{ENV['DEBUG'] == 'false' ? '' : '-ZoteroDebugText'} -datadir profile > #{logfile.shellescape} 2>&1"
+  puts cmd
+  pid = Process.fork{ system(cmd) }
 
   at_exit {
     execute("""
@@ -449,7 +455,7 @@ module BBT
       end
     }
     Process.kill("HUP", pid) unless stopped
-  } if (ENV['KILL'] || 'true') == 'true' || (ENV['HEADLESS'] || 'true') == 'true'
+  } if (ENV['KILL'] || 'true') == 'true' # || (ENV['HEADLESS'] || 'true') == 'true'
 
   puts Benchmark.measure {
     print "Starting Zotero."

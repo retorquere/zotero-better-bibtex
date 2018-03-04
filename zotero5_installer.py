@@ -45,9 +45,12 @@ def jurism_latest():
   return parser.version
 
 def destinationType(name):
+  if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
+
   name = re.sub(r"[^a-z]", '', name.lower())
 
   if len(name) == 0: raise Exception('Missing destination')
+
   if 'local'[:len(name)] == name: return 'local'
   if 'global'[:len(name)] == name: return 'global'
   raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
@@ -113,9 +116,12 @@ if args.destination is None:
 elif args.destination == 'local':
   installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
-else:
-  installdir = installdir_global
+elif args.destination == 'global':
+  installdir = os.path.join(installdir_global, args.client)
   menudir = '/usr/share/applications'
+else:
+  installdir = os.path.join(args.destination, args.client)
+  menudir = None
   
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
 
