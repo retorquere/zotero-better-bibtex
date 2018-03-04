@@ -2,13 +2,14 @@
 Feature: Export
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf @689 @biblatex @644 @889
+@573 @590 @747 @edtf @689 @biblatex @644 @889 @482
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | Juris-M missing multi-lingual fields #482                                                      | 2           |
      | biblatex export of Presentation: Use type and venue fields #644                                | 2           |
      | Month showing up in year field on export #889                                                  | 1           |
      | urldate when only DOI is exported #869                                                         | 1           |
@@ -100,7 +101,6 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.010                                                                            | 1           |
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
-     | Juris-M missing multi-lingual fields #482                                                      | 2           |
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901
 Scenario Outline: BibTeX Export

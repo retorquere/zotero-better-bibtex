@@ -242,6 +242,34 @@ end
   #}
 #end
 
+def expand_expected(expected)
+  if expected =~ /(.*)(\.csl\.json)$/
+    base = $1
+    ext = $2
+  elsif expected =~ /(.*)(\.json)$/
+    base = $1
+    ext = $2
+  elsif expected =~ /(.*)(\.csl.yml)$/
+    base = $1
+    ext = $2
+  elsif expected =~ /(.*)(\.bib(la)?tex)$/
+    base = $1
+    ext = $2
+  else
+    raise "Unexpected extension #{File.extname(expected)} on #{expected}"
+  end
+
+  fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
+  return [File.join(fixtures, expected), ext] if ENV['ZOTERO'] != 'jurism'
+
+  ['.juris-m', ''].each{|variant|
+    variant = File.join(fixtures, "#{base}#{variant}#{ext}")
+    return [variant, ext] if File.file?(variant)
+  }
+
+  raise "Could not find #{expected}"
+end
+
 def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
   throw "Auto-export needs a destination" if displayOptions['keepUpdated'] && !output
     
@@ -260,28 +288,19 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
   return if expected == :ignore
 
   found = File.read(output) if output
-
-  if expected =~ /\.csl\.json$/
-    expected_type = :csl_json
-  elsif expected =~ /\.json$/
-    expected_type = :bbt_json
-  elsif expected =~ /\.yml$/
-    expected_type = :csl_yaml
-  end
-
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected))
+  expected, ext = expand_expected(expected)
   expected = File.read(expected)
 
-  case expected_type
-    when :csl_json
+  case ext
+    when '.csl.json'
       return compare(JSON.parse(found), JSON.parse(expected))
 
-    when :csl_yaml
+    when '.csl.yaml'
       #return compare(YAML.load(found), YAML.load(expected))
       expect(sort_yaml(found)).to eq(sort_yaml(expected))
       return
 
-    when :bbt_json
+    when '.json'
       found = normalizeJSON(JSON.parse(found))
       expected = normalizeJSON(JSON.parse(expected))
 
