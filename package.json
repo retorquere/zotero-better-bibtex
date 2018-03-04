@@ -24,7 +24,7 @@
     "build": "webpack",
     "postbuild": "zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "minitest": "webpack && node ./minitests/build/dateparser.js",
-    "start": "HEADLESS=false KILL=false cucumber --fail-fast --tags @none",
+    "start": "KILL=false cucumber --fail-fast --tags @none",
     "s3form": "zotero-plugin-s3form",
     "release": "zotero-plugin-release",
     "branches": "zotero-plugin-branches",

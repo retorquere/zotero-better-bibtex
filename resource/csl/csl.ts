@@ -46,7 +46,7 @@ const validCSLTypes = [
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
   public serialize: Function // will be added by JSON/YAML exporter
-  public parseDate: Function // will be added by JSON/YAML exporter
+  public date2CSL: Function // will be added by JSON/YAML exporter
 
   public doExport() {
     const items = []
@@ -84,8 +84,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       delete csl.authority
       if (item.itemType === 'videoRecording' && csl.type === 'video') csl.type = 'motion_picture'
 
-      if (item.date) csl.issued = this.parseDate(item.date)
-      if (item.accessDate) csl.accessed = this.parseDate(item.accessDate)
+      if (item.date) {
+        const parsed = Zotero.BetterBibTeX.parseDate(item.date)
+        csl.issued = this.date2CSL(parsed)
+        if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
+      }
+      if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
       debug('extracted:', item.extraFields)
       for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
@@ -106,7 +110,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
         switch (type) {
           case 'date':
-            csl[name] = this.parseDate(value)
+            csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
             break
 
           case 'creator':
