@@ -77,7 +77,7 @@ jobs:
 
   test:
     <<: *defaults
-    parallelism: 4
+    parallelism: 2
 
     steps:
     - run: *setenv
