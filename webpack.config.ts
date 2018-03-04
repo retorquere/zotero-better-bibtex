@@ -5,7 +5,7 @@ const replace = require('replace')
 import * as webpack from 'webpack'
 import * as path from 'path'
 
-import BailPlugin from 'zotero-plugin/plugin/bail'
+// import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 import AfterBuildPlugin = require('zotero-plugin/plugin/after-build')
@@ -15,11 +15,21 @@ const translators = require('./gen/translators.json')
 const _ = require('lodash')
 
 const common = {
+  mode: 'production',
+  optimization: {
+    minimize: false,
+    concatenateModules: false,
+    noEmitOnErrors: true,
+    namedModules: true,
+    namedChunks: true,
+    runtimeChunk: false,
+  },
+
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {
       'pegjs-loader': 'zotero-plugin/loader/pegjs',
-      'json-loader': 'zotero-plugin/loader/json',
+      'json-jsesc-loader': 'zotero-plugin/loader/json',
       'wrap-loader': 'zotero-plugin/loader/wrap',
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
     },
@@ -27,7 +37,7 @@ const common = {
   module: {
     rules: [
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
-      { test: /\.json$/, use: [ 'json-loader' ] },
+      { test: /\.json$/, type: 'javascript/auto', use: [ 'json-jsesc-loader' ] }, // https://github.com/webpack/webpack/issues/6572
       { test: /\.bcf$/, use: [ 'bcf-loader' ] },
       { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader' ] },
     ],
@@ -39,10 +49,32 @@ const config: webpack.Configuration[] = []
 config.push(
   // main app logic
   _.merge({}, common, {
+    optimization: {
+      runtimeChunk: { name: 'runtime' },
+      // new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
+      splitChunks: {
+        chunks: 'all',
+        name: true,
+        cacheGroups: {
+          runtime: {
+            test: /\/node_modules\//,
+            priority: 1,
+            name: 'runtime',
+            minChunks: 2000000000,
+          },
+          common: {
+            priority: 2,
+            name: 'common',
+            minChunks: 2,
+            reuseExistingChunk: true,
+          },
+        }
+      },
+    },
     plugins: [
       new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
-      new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
+      /*
       new AfterBuildPlugin((stats, options) => {
         const ccp = options.plugins.find(plugin => plugin instanceof webpack.optimize.CommonsChunkPlugin).filenameTemplate
         replace({
@@ -51,7 +83,8 @@ config.push(
           paths: [path.join(options.output.path, ccp)],
         })
       }),
-      BailPlugin,
+      */
+      // BailPlugin,
     ],
 
     context: path.resolve(__dirname, './content'),
@@ -86,7 +119,7 @@ for (const label of Object.keys(translators.byName)) {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
         new TranslatorHeaderPlugin(label),
-        BailPlugin,
+        // BailPlugin,
       ],
       context: path.resolve(__dirname, './resource'),
       entry: { [label]: `./${label}.ts` },
