@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 3,
-	"browserSupport": "gcs",
-	"lastUpdated": "2014-03-31 20:27:28"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-12-17 17:43:00"
 }
 
 /*
@@ -126,7 +126,7 @@ function doImport() {
 					}
 					
 					openItem = new Zotero.Item("webpage");
-					openItem.title = title;
+					openItem.title = ZU.unescapeHTML(title);
 					openItem.itemID = openItem.id = itemID++;
 					if(collection) collection.children.push(openItem);
 					

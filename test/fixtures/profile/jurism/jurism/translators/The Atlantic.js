@@ -722,12 +722,12 @@ choices          : {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.theatlantic.com/ta-nehisi-coates/",
+		"url": "https://www.theatlantic.com/author/ta-nehisi-coates/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.theatlantic.com/politics/archive/2011/06/jon-stewart-challenges-fox-news-to-correct-its-errors/240900/",
+		"url": "https://www.theatlantic.com/politics/archive/2011/06/jon-stewart-challenges-fox-news-to-correct-its-errors/240900/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -744,7 +744,7 @@ var testCases = [
 				"abstractNote": "In the same segment, the comedian apologized for saying its viewers are always found to be the most misinformed",
 				"libraryCatalog": "The Atlantic",
 				"publicationTitle": "The Atlantic",
-				"url": "http://www.theatlantic.com/politics/archive/2011/06/jon-stewart-challenges-fox-news-to-correct-its-errors/240900/",
+				"url": "https://www.theatlantic.com/politics/archive/2011/06/jon-stewart-challenges-fox-news-to-correct-its-errors/240900/",
 				"attachments": [
 					{
 						"title": "The Atlantic Snapshot",
@@ -759,7 +759,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.theatlantic.com/magazine/archive/2011/07/the-worlds-schoolmaster/308532/",
+		"url": "https://www.theatlantic.com/magazine/archive/2011/07/the-worlds-schoolmaster/308532/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -776,7 +776,7 @@ var testCases = [
 				"abstractNote": "How a German scientist is using test data to revolutionize global learning",
 				"libraryCatalog": "The Atlantic",
 				"publicationTitle": "The Atlantic",
-				"url": "http://www.theatlantic.com/magazine/archive/2011/07/the-worlds-schoolmaster/308532/",
+				"url": "https://www.theatlantic.com/magazine/archive/2011/07/the-worlds-schoolmaster/308532/",
 				"attachments": [
 					{
 						"title": "The Atlantic Snapshot",
@@ -791,13 +791,13 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.theatlantic.com/search/?q=europe",
+		"url": "https://www.theatlantic.com/search/?q=europe",
 		"defer": true,
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.theatlantic.com/health/archive/2014/03/the-toxins-that-threaten-our-brains/284466/",
+		"url": "https://www.theatlantic.com/health/archive/2014/03/the-toxins-that-threaten-our-brains/284466/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -814,7 +814,7 @@ var testCases = [
 				"abstractNote": "Leading scientists recently identified a dozen chemicals as being responsible for widespread behavioral and cognitive problems. But the scope of the chemical dangers in our environment is likely even greater. Why children and the poor are most susceptible to neurotoxic exposure that may be costing the U.S. billions of dollars and immeasurable peace of mind.",
 				"libraryCatalog": "The Atlantic",
 				"publicationTitle": "The Atlantic",
-				"url": "http://www.theatlantic.com/health/archive/2014/03/the-toxins-that-threaten-our-brains/284466/",
+				"url": "https://www.theatlantic.com/health/archive/2014/03/the-toxins-that-threaten-our-brains/284466/",
 				"attachments": [
 					{
 						"title": "The Atlantic Snapshot",

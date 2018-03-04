@@ -18,7 +18,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2017-07-27 09:11:30"
+	"lastUpdated": "2017-10-28 09:11:30"
 }
 
 function detectImport() {
@@ -153,7 +153,7 @@ for(ty in degenerateExportTypeMap) {
  *****************************/
 /** Syntax
  * {
- *   RIS-TAG: 
+ *   RIS-TAG:
  *     String, Zotero field used for any item type
  *     List, item-type dependent mapping
  *     {
@@ -1920,7 +1920,9 @@ function doExport() {
 					if(!value.length) value = undefined;
 				break;
 				case "notes":
-					value = item.notes.map(function(n) { return n.note.replace(/(?:\r\n?|\n)/g, "\r\n"); });
+					if (item.notes && Zotero.getOption("exportNotes")) {
+						value = item.notes.map(function(n) { return n.note.replace(/(?:\r\n?|\n)/g, "\r\n"); });
+					}
 				break;
 				case "tags":
 					value = item.tags.map(function(t) { return t.tag; });

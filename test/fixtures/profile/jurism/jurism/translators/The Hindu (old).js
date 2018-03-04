@@ -2,14 +2,14 @@
 	"translatorID": "9499c586-d672-42d6-9ec4-ee9594dcc571",
 	"label": "The Hindu (old)",
 	"creator": "Prashant Iyengar and Michael Berkowitz",
-	"target": "^https?://(www\\.)?hindu\\.com/",
+	"target": "^https?://(www\\.)?thehindu\\.com/lr/",
 	"minVersion": "1.0.0b4.r5",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-02 21:30:30"
+	"lastUpdated": "2017-07-10 15:25:23"
 }
 
 function detectWeb(doc, url) {
@@ -61,7 +61,6 @@ function doWeb(doc, url) {
 		Zotero.debug(art);
 		Zotero.Utilities.HTTP.doGet(art, function(text) {
 			var newItem = new Zotero.Item("newspaperArticle");
-			newItem.publicationTitle = "The Hindu";
 			newItem.url = art;
 			//title
 			var t = /\<TITLE\>[\w\W]*\:([\w\W]*?)<\/TITLE/;
@@ -76,6 +75,7 @@ function doWeb(doc, url) {
 			}
 	
 			newItem.publicationTitle="The Hindu";
+			newItem.ISSN = "0971-751X";
 			
 			newItem.attachments = [{"title":"The Hindu Snapshot", mimeType:"text/html", url:art}];
 	
@@ -86,18 +86,17 @@ function doWeb(doc, url) {
 				regexMeta(metaTags[j], newItem);
 			}
 			newItem.complete();
-			Zotero.done();
 		});
-		Zotero.wait();
 	}
 }/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.hindu.com/lr/2004/01/04/stories/2004010400030100.htm",
+		"url": "http://www.thehindu.com/lr/2004/01/04/stories/2004010400030100.htm",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Falling at the speed of light",
 				"creators": [
 					{
 						"firstName": "To be torn between two languages, discovers H. MASUD TAJ, is to drown soul-deep in the",
@@ -105,23 +104,23 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "01-01-2004",
+				"ISSN": "0971-751X",
+				"libraryCatalog": "The Hindu (old)",
+				"pages": "01",
+				"place": "CHEN",
+				"publicationTitle": "The Hindu",
+				"section": "LITERARY",
+				"url": "http://www.thehindu.com/lr/2004/01/04/stories/2004010400030100.htm",
 				"attachments": [
 					{
 						"title": "The Hindu Snapshot",
 						"mimeType": "text/html"
 					}
 				],
-				"publicationTitle": "The Hindu",
-				"url": "http://www.hindu.com/lr/2004/01/04/stories/2004010400030100.htm",
-				"title": "Falling at the speed of light",
-				"date": "01-01-2004",
-				"pages": "01",
-				"place": "CHEN",
-				"section": "LITERARY",
-				"libraryCatalog": "The Hindu (old)"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

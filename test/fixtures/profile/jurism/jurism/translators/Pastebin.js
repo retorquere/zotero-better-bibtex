@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-09 20:45:12"
+	"lastUpdated": "2017-01-22 12:41:39"
 }
 
 /*
@@ -17,7 +17,7 @@
 	Copyright (C) 2016 Félix Brezo, felixbrezo@gmail.com
 	
 	This program is free software: you can redistribute it and/or modify
-	it under the terms of the Affero GNU General Public License as published by
+	it under the terms of the GNU Affero General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 	
@@ -59,21 +59,22 @@ function doWeb(doc, url) {
 	}	
 
 	// Settingspecific metadata
+	var author, date;
 	if (urlType == "general") {
-		var author = ZU.xpathText(doc, '//div[@class="paste_box_line2"]//a');	
-		if (author != null) {
-			newItem.creators = [Zotero.Utilities.cleanAuthor(author, "author", false)];
-		}
-		
-		var date = ZU.xpathText(doc, '//div[@class="paste_box_line2"]//span/@title');
-		newItem.date = date;	
+		author = ZU.xpathText(doc, '//div[@class="paste_box_line2"]//a');	
+		date = ZU.xpathText(doc, '//div[@class="paste_box_line2"]//span/@title');
 	} 
 	else if (urlType == "profile")  {
-		var author = url.substring(url.lastIndexOf('/'));	
-		newItem.creators = [Zotero.Utilities.cleanAuthor(author, "author", false)];
+		author = url.substring(url.lastIndexOf('/'));	
+		date = ZU.xpathText(doc, '//div[@class="paste_box_line_u2"]//span/@title');
 		
-		var date = ZU.xpathText(doc, '//div[@class="paste_box_line_u2"]//span/@title');
-		newItem.date = date;
+	}
+	if (author) {
+		newItem.creators.push(ZU.cleanAuthor(author, "author", false));
+	}
+	// normalize date
+	if (date) {
+		newItem.date = ZU.strToISO(date);
 	}
 	
 	// Adding the attachment
@@ -101,12 +102,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
+				"date": "2012-02-22",
 				"url": "http://pastebin.com/u/febrezo",
 				"websiteTitle": "Pastebin.com",
-				"websiteType": "profile",
+				"websiteType": "Paste Site",
 				"attachments": [
 					{
-						"title": "Febrezo's Pastebin",
+						"title": "Pastebin Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -130,13 +132,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "Sunday 27th of May 2012 11:01:02 AM CDT",
+				"date": "2012-05-27",
 				"url": "http://pastebin.com/FuzVdRiJ",
 				"websiteTitle": "Pastebin.com",
-				"websiteType": "paste",
+				"websiteType": "Paste Site",
 				"attachments": [
 					{
-						"title": "Bash, basic parameters processing",
+						"title": "Pastebin Snapshot",
 						"mimeType": "text/html"
 					}
 				],
@@ -154,10 +156,10 @@ var testCases = [
 				"itemType": "webpage",
 				"title": "Untitled",
 				"creators": [],
-				"date": "Saturday 3rd of September 2016 02:59:22 AM CDT",
+				"date": "2016-09-03",
 				"url": "http://pastebin.com/cCkDi5ZA",
 				"websiteTitle": "Pastebin.com",
-				"websiteType": "paste",
+				"websiteType": "Paste Site",
 				"attachments": [
 					{
 						"title": "Pastebin Snapshot",

@@ -1,17 +1,22 @@
 {
-	"translatorID":"14763d25-8ba0-45df-8f52-b8d1108e7ac9",
-	"translatorType":3,
-	"label":"Bibliontology RDF",
-	"creator":"Simon Kornblith",
-	"target":"rdf",
-	"minVersion":"2.0",
-	"maxVersion":"",
-	"priority":50,
-	"browserSupport":"gcs",
-	"configOptions":{"getCollections":"true", "dataMode":"rdf/xml"},
-	"displayOptions":{"exportNotes":true},
-	"inRepository":false,
-	"lastUpdated":"2016-06-21 08:45:20"
+	"translatorID": "14763d25-8ba0-45df-8f52-b8d1108e7ac9",
+	"label": "Bibliontology RDF",
+	"creator": "Simon Kornblith",
+	"target": "rdf",
+	"minVersion": "2.0",
+	"maxVersion": "",
+	"priority": 50,
+	"configOptions": {
+		"getCollections": "true",
+		"dataMode": "rdf/xml"
+	},
+	"displayOptions": {
+		"exportNotes": true
+	},
+	"inRepository": true,
+	"translatorType": 3,
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-03 10:21:42"
 }
 
 var n = {
@@ -145,26 +150,26 @@ var SUBCONTAINER_SERIES = 6; 	// not used
 var CONTAINER_SERIES = 7;
 
 /**
-    Fields should be in the form
-    
-    <ZOTERO_FIELD>: ([<SUBJECT>, <PREDICATE>] | <FUNCTION>)
-    
-    If a <FUNCTION> is specified, then it is passed the item and should return a set of triples in
-    the form
-    
-    [[<SUBJECT>, <PREDICATE>, <OBJECT>, <LITERAL>]*]
-    
-    where <SUBJECT> refers to one of the constants defined above. If <LITERAL> is true, then
-    <OBJECT> is treated as a literal.
-    
-    If a <FUNCTION> is not used and <PREDICATE> is a string, then the parameters generate a triple
-    in the form
-    
-    <SUBJECT> 		<PREDICATE>				FIELD_CONTENT
-    
-    where <SUBJECT> refers to one of the constants defined above. Alternatively, <PREDICATE> may be
-    an array in the form
-    
+	Fields should be in the form
+	
+	<ZOTERO_FIELD>: ([<SUBJECT>, <PREDICATE>] | <FUNCTION>)
+	
+	If a <FUNCTION> is specified, then it is passed the item and should return a set of triples in
+	the form
+	
+	[[<SUBJECT>, <PREDICATE>, <OBJECT>, <LITERAL>]*]
+	
+	where <SUBJECT> refers to one of the constants defined above. If <LITERAL> is true, then
+	<OBJECT> is treated as a literal.
+	
+	If a <FUNCTION> is not used and <PREDICATE> is a string, then the parameters generate a triple
+	in the form
+	
+	<SUBJECT> 		<PREDICATE>				FIELD_CONTENT
+	
+	where <SUBJECT> refers to one of the constants defined above. Alternatively, <PREDICATE> may be
+	an array in the form
+	
 	[<ITEM_PREDICATE>, [<BLANK_NODE_PREDICATE>, <BLANK_NODE_OBJECT>]*, <PREDICATE>]
 	
 	This generates the triples
@@ -1110,3 +1115,39 @@ function doExport() {
 		//Zotero.debug("relations added");
 	}
 }
+/** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "import",
+		"input": "<rdf:RDF\n xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n xmlns:res=\"http://purl.org/vocab/resourcelist/schema#\"\n xmlns:z=\"http://www.zotero.org/namespaces/export#\"\n xmlns:bibo=\"http://purl.org/ontology/bibo/\"\n xmlns:dcterms=\"http://purl.org/dc/terms/\"\n xmlns:foaf=\"http://xmlns.com/foaf/0.1/\">\n    <z:UserItem rdf:about=\"http://zotero.org/users/96641/items/XW66MVF4\">\n        <res:resource rdf:resource=\"http://libreas.eu/ausgabe29/05kim/\"/>\n        <z:accessDate>2017-05-28 14:08:38</z:accessDate>\n        <z:repository>libreas.eu</z:repository>\n    </z:UserItem>\n    <bibo:AcademicArticle rdf:about=\"http://libreas.eu/ausgabe29/05kim/\">\n        <bibo:uri>http://libreas.eu/ausgabe29/05kim/</bibo:uri>\n        <dcterms:language>de</dcterms:language>\n        <dcterms:abstract>Im Folgenden soll aufgezeigt werden, wie derzeit das Literaturverwaltungsprogramm Zotero innerhalb des Index Theologicus genutzt wird, um unselbstständige Literatur in einem bibliothekarischen Katalogisierungssystem zu erfassen. Die modulare und flexible Architektur der Open Source Software erlaubt es, die bereits kollaborativ zusammengetragene Programmierarbeit zur Datenextraktion mitzunutzen. Das vorgestellte semiautomatische Verfahren bringt auch bei der Verknüpfung von Normdaten erhebliche Vorteile für die Medienbearbeitung. &lt;/br&gt; &lt;b&gt;Schlüsselwörter&lt;/b&gt;: Literaturverwaltungsprogramm, Zotero, Katalogisierung, Unselbständige Werke, Aufsatzliteratur, Index Theologicus, Online-Bibliographie, WinIBW, Fachinformationsdienst Theologie &lt;hr&gt; This article presents an approach to use the reference management software Zotero within the theological article database Index Theologicus to catalogue article metadata for a library management system. Zotero's Open Source nature and flexible architecture allowed us to seamlessly reuse the vast amount of data extraction routines collaboratively developed for the software. We will show how the semi-automatic workflow we developed will make authority linking fun again. &lt;/br&gt; &lt;b&gt;Keywords:&lt;/b&gt; Reference Management System, Zotero, Cataloguing, Journal articles, Index Theologicus, Theological database, Academic Information Services for Theology</dcterms:abstract>\n        <dcterms:title>Semiautomatische Katalogisierung und Normdatenverknüpfung mit Zotero im Index Theologicus</dcterms:title>\n        <dcterms:creator rdf:nodeID=\"n5\"/>\n        <bibo:authorList>\n           <rdf:Seq><rdf:li rdf:nodeID=\"n5\"/><rdf:li rdf:nodeID=\"n7\"/></rdf:Seq>\n        </bibo:authorList>\n        <dcterms:creator rdf:nodeID=\"n7\"/>\n        <dcterms:isPartOf>\n            <bibo:Issue>\n                <bibo:issue>29</bibo:issue>\n                <dcterms:date>2016</dcterms:date>\n                <dcterms:isPartOf>\n                    <bibo:Journal>\n                        <dcterms:title>LIBREAS. Library Ideas</dcterms:title>\n                        <bibo:issn>1860-7950</bibo:issn>\n                    </bibo:Journal>\n                </dcterms:isPartOf>\n            </bibo:Issue>\n        </dcterms:isPartOf>\n    </bibo:AcademicArticle>\n    <foaf:Person rdf:nodeID=\"n5\">\n        <foaf:givenname>Timotheus Chang-whae</foaf:givenname>\n        <foaf:surname>Kim</foaf:surname>\n    </foaf:Person>\n    <foaf:Person rdf:nodeID=\"n7\">\n        <foaf:givenname>Philipp</foaf:givenname>\n        <foaf:surname>Zumstein</foaf:surname>\n    </foaf:Person>\n</rdf:RDF>\n",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Semiautomatische Katalogisierung und Normdatenverknüpfung mit Zotero im Index Theologicus",
+				"creators": [
+					{
+						"lastName": "Kim",
+						"firstName": "Timotheus Chang-whae"
+					},
+					{
+						"lastName": "Zumstein",
+						"firstName": "Philipp"
+					}
+				],
+				"date": "2016",
+				"ISSN": "1860-7950",
+				"abstractNote": "Im Folgenden soll aufgezeigt werden, wie derzeit das Literaturverwaltungsprogramm Zotero innerhalb des Index Theologicus genutzt wird, um unselbstständige Literatur in einem bibliothekarischen Katalogisierungssystem zu erfassen. Die modulare und flexible Architektur der Open Source Software erlaubt es, die bereits kollaborativ zusammengetragene Programmierarbeit zur Datenextraktion mitzunutzen. Das vorgestellte semiautomatische Verfahren bringt auch bei der Verknüpfung von Normdaten erhebliche Vorteile für die Medienbearbeitung. </br> <b>Schlüsselwörter</b>: Literaturverwaltungsprogramm, Zotero, Katalogisierung, Unselbständige Werke, Aufsatzliteratur, Index Theologicus, Online-Bibliographie, WinIBW, Fachinformationsdienst Theologie <hr> This article presents an approach to use the reference management software Zotero within the theological article database Index Theologicus to catalogue article metadata for a library management system. Zotero's Open Source nature and flexible architecture allowed us to seamlessly reuse the vast amount of data extraction routines collaboratively developed for the software. We will show how the semi-automatic workflow we developed will make authority linking fun again. </br> <b>Keywords:</b> Reference Management System, Zotero, Cataloguing, Journal articles, Index Theologicus, Theological database, Academic Information Services for Theology",
+				"issue": "29",
+				"language": "de",
+				"libraryCatalog": "libreas.eu",
+				"publicationTitle": "LIBREAS. Library Ideas",
+				"url": "http://libreas.eu/ausgabe29/05kim/",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	}
+]
+/** END TEST CASES **/

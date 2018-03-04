@@ -1,177 +1,283 @@
 {
 	"translatorID": "c7830593-807e-48cb-99f2-c3bed2b148c2",
 	"label": "New Zealand Herald",
-	"creator": "Sopheak Hean, Michael Berkowitz",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://www\\.nzherald\\.co\\.nz",
-	"minVersion": "1.0",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-03 17:49:28"
+	"lastUpdated": "2017-07-22 10:37:29"
 }
 
-function detectWeb(doc, url) {
-/* If the address bar has /news in it then its a newspaper article*/
+/*
+	***** BEGIN LICENSE BLOCK *****
 
-	if (doc.location.href.indexOf("/search/results.cfm") !=-1){
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
+
+
+function detectWeb(doc, url) {
+	if (url.indexOf("/search")>-1 && getSearchResults(doc, true)){
 		return "multiple";
-	} else if (doc.location.href.indexOf("/news/article.cfm") !=-1){
+	} else if (url.indexOf("/news/article.cfm")>-1){
 		return "newspaperArticle";
 	}
 }
 
-function associateData (newItem, items, field, zoteroField) {
-	if (items[field]){
-		newItem[zoteroField] = items[field];
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('article.result-item a[href*="/news/article.cfm"]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
+	return found ? items : false;
 }
 
-function scrape(doc, url){
-	var authorTemp;
 
-	var articleLanguage = "en-NZ";
-
-	var newItem = new Zotero.Item('newspaperArticle');
-	newItem.url = doc.location.href;
-
-	newItem.publicationTitle = "New Zealand Herald";
-	newItem.ISSN = "1170-0777";
-
-	//Get title of the news via xpath
-	var myXPath = '//h1[@class="articleTitle"]';
-	var myXPathObject = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-	var headers;
-	var items = new Object();
-	var authorsTemp;
-	var blankCell;
-	var contents;
-	var authorArray = new Array();
-
-	/*
-	 Get authors of the article
-	 Remove "By " then replace "and " with ", "
-
-	 Put the string into an array then split the array and loop all
-	 authors then push author to Zotero.  Possible with more than 1 author
-	 on an article.
-	*/
-	var authorXPath = '//p[@class="details"]';
-	var authorXPathObject = doc.evaluate(authorXPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-
-	if (authorXPathObject) {
-		var authorString = authorXPathObject.textContent.replace(/\bBy\W+/g, '');
-		if (authorString.match(/\W\band\W+/g)){
-			authorTemp = authorString.replace(/\W\band\W+/g, ', ');
-			authorArray = authorTemp.split(", ");
-		} else if (!authorString.match(/\W\band\W+/g)){
-			authorArray = authorString;
-		}
-		if( authorArray instanceof Array ) {
-			for (var i in authorArray){
-				var author;
-				author = authorArray[i];
-				newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));
-			}
-		} else {
-			if (authorString.match(/\W\bof\W+/g)){
-				authorTemp = authorString.replace (/\W\bof\W(.*)/g, '');
-				authorArray = authorTemp;
-				newItem.creators.push(Zotero.Utilities.cleanAuthor(authorTemp, "author"));
-
-			}  else {
-				newItem.creators.push(Zotero.Utilities.cleanAuthor(authorArray, "author"));
-			}
-		}
-	}
-	//date-Year
-	var dateXPath = '//span[contains(@class, "storyDate")]';
-	var dateXPathObject = doc.evaluate(dateXPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.replace(/\d{1,2}:\d{1,2} (AM|PM) (\w)+ /g, '');
-
-	//If the original Xpath1 is equal to Updated then go to XPath2
-	if ((dateXPathObject =="Updated")|| (dateXPathObject =="New")){
-		var dateXPath = '//div[contains(@class, "tools")]/span[2]';
-		var dateXPathObject = doc.evaluate(dateXPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.replace(/\d{1,2}:\d{1,2} (AM|PM) (\w)+ /g, '');
-		newItem.date = dateXPathObject ;
-	} else { //great found the date just push it to Zotero.
-		var dateXPath = '//span[contains(@class, "storyDate")]';
-		var dateXPathObject = doc.evaluate(dateXPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent.replace(/\d{1,2}:\d{1,2} (AM|PM) (\w)+ /g, '');
-		newItem.date = dateXPathObject ;
-	}
-
-	//Get Section of the news
-	var sectionXPath = '//ul[@id="navContainer"]/li/a[contains(@class, "active")]';
-	var sectionXPathObject = ZU.xpathText(doc, sectionXPath);
-	newItem.section = sectionXPathObject;
-
-	//Get news title
-	headers =myXPathObject;
-	newItem.title = headers;
-
-	newItem.language= articleLanguage;
-
-	//grab abstract from meta data
-	var a= "//meta[@name='description']";
-	newItem.abstractNote = doc.evaluate(a, doc, null, XPathResult.ANY_TYPE, null).iterateNext().content;
-	newItem.complete();
-}
-
-function doWeb(doc, url){
-
-	var articles = new Array();
-	var items = new Object();
-	var nextTitle;
-
-	if (detectWeb(doc, url) == "multiple"){
-		var titles = doc.evaluate('//div[@id="results"]//a[@class="headline"]', doc, null, XPathResult.ANY_TYPE, null);
-		while (nextTitle = titles.iterateNext()){
-			items[nextTitle.href] = nextTitle.textContent;
-		}
-	Zotero.selectItems(items, function (items) {
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			Zotero.Utilities.processDocuments(articles, scrape);
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		scrape(doc, url)
+		scrape(doc, url);
 	}
 }
-/**
-Test cases temporarily disabled; they occasionally hang the test harness
+
+
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
+	
+	translator.setHandler('itemDone', function (obj, item) {
+		item.ISSN = "1170-0777";
+		//EM looks at byline for author which does not work well here;
+		//thus we delete this and do it here again properly
+		item.creators = [];
+		var author = text(doc, '.byline.has-author .author');
+		if (!author) {
+			var firstElement = text(doc, '#article-content p.element');
+			if (firstElement && firstElement.indexOf('By')>-1) {
+				author = firstElement;
+			}
+		}
+		if (author) {
+			item.creators.push(ZU.cleanAuthor(author.replace('By', ''), "author"));
+		}
+		item.url = attr(doc, 'link[rel=canonical]', 'href');
+		if (item.language) {
+			item.language = item.language.replace('_', '-');
+		}
+		item.complete();
+	});
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "newspaperArticle";
+		trans.addCustomFields({
+			'language': 'language',
+			'article:section': 'section'
+		});
+		trans.doWeb(doc, url);
+	});
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.nzherald.co.nz/business/news/article.cfm?c_id=3&objectid=10765066",
+		"url": "http://www.nzherald.co.nz/world/news/article.cfm?c_id=2&objectid=11892211",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
-				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://www.nzherald.co.nz/business/news/article.cfm?c_id=3&objectid=10765066",
-				"publicationTitle": "New Zealand Herald",
+				"title": "China unveils its answer to US Reaper drone - how does it compare?",
+				"creators": [
+					{
+						"firstName": "Stephen",
+						"lastName": "Chen",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-18T02:45:22Z",
 				"ISSN": "1170-0777",
-				"date": "Nov 10, 2011",
-				"section": "Business",
-				"title": "Manufacturing slumps in October",
+				"abstractNote": "A production model of China's heavy military drone has made a successful flight.",
 				"language": "en-NZ",
-				"abstractNote": "The New Zealand manufacturing sector contracted in October to its worst level since June 2009 as the Rugby World Cup distracted business and the construction sector ebbed.",
-				"libraryCatalog": "New Zealand Herald",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"libraryCatalog": "www.nzherald.co.nz",
+				"publicationTitle": "NZ Herald",
+				"section": "World",
+				"url": "http://www.nzherald.co.nz/world/news/article.cfm?c_id=2&objectid=11892211",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Asia",
+					"China",
+					"Front Page - Top Stories"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"defer": true,
-		"url": "http://www.nzherald.co.nz/labor/search/results.cfm?kw1=labor&kw2=&st=gsa",
+		"url": "http://www.nzherald.co.nz/technology/news/article.cfm?c_id=5&objectid=11891847",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Data drones a sign of the times",
+				"creators": [
+					{
+						"firstName": "James",
+						"lastName": "Penn",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-19T18:00:00Z",
+				"ISSN": "1170-0777",
+				"abstractNote": "New tech could have farmers checking the state of their farm before getting out of bed.",
+				"language": "en-NZ",
+				"libraryCatalog": "www.nzherald.co.nz",
+				"publicationTitle": "NZ Herald",
+				"section": "Business, Technology",
+				"url": "http://www.nzherald.co.nz/business/news/article.cfm?c_id=3&objectid=11891847",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Agribusiness Report",
+					"Agricultural Services",
+					"The Country"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.nzherald.co.nz/technology/news/article.cfm?c_id=5&objectid=11892937",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Nanogirl Michelle Dickinson: Getaway without the long-haul flight",
+				"creators": [
+					{
+						"firstName": "Michelle",
+						"lastName": "Dickinson",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-21T17:00:00Z",
+				"ISSN": "1170-0777",
+				"abstractNote": "COMMENT: The future of air travel is faster and quieter.",
+				"language": "en-NZ",
+				"libraryCatalog": "www.nzherald.co.nz",
+				"publicationTitle": "NZ Herald",
+				"section": "Technology",
+				"shortTitle": "Nanogirl Michelle Dickinson",
+				"url": "http://www.nzherald.co.nz/technology/news/article.cfm?c_id=5&objectid=11892937",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Opinion",
+					"Science"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.nzherald.co.nz/nz/news/article.cfm?c_id=1&objectid=11893407",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Steve Braunias: The Secret Diary of Todd Barclay",
+				"creators": [
+					{
+						"firstName": "Steve",
+						"lastName": "Braunias",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-21T17:00:00Z",
+				"ISSN": "1170-0777",
+				"abstractNote": "Steve Braunias takes a look at Todd Barclay's secret diary",
+				"language": "en-NZ",
+				"libraryCatalog": "www.nzherald.co.nz",
+				"publicationTitle": "NZ Herald",
+				"section": "New Zealand",
+				"shortTitle": "Steve Braunias",
+				"url": "http://www.nzherald.co.nz/nz/news/article.cfm?c_id=1&objectid=11893407",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Australasia",
+					"Front Page - Top Stories",
+					"New Zealand",
+					"Opinion",
+					"Politics",
+					"WC - Opinion"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.nzherald.co.nz/search/hobbits/?type=article,image.gallery,video.other&c_id=2",
 		"items": "multiple"
 	}
 ]

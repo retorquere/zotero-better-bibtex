@@ -2,14 +2,14 @@
 	"translatorID": "a354331-981b-43de-a61-bc26dd1be3a9",
 	"label": "AMS MathSciNet",
 	"creator": "Simon Kornblith",
-	"target": "^https?://(www\\.)?ams\\.[^/]*/mathscinet(\\-getitem\\?|/search/(publications\\.html|publdoc\\.html))",
+	"target": "^https?://(mathscinet\\.)?ams\\.[^/]*/mathscinet(\\-getitem\\?|/search/(publications\\.html|publdoc\\.html))",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-03-20 03:33:32"
+	"lastUpdated": "2017-10-20 16:08:00"
 }
 
 function detectWeb(doc, url) {
@@ -97,7 +97,7 @@ function scrape(doc, url) {
 			}
 			
 			if(mrnumber) {
-				url = 'http://www.ams.org/mathscinet-getitem?mr=' + mrnumber;
+				url = 'https://mathscinet.ams.org/mathscinet-getitem?mr=' + mrnumber;
 			}
 			item.attachments.push({title: "MathSciNet Snapshot", document: doc});
 			item.url = url;
@@ -110,12 +110,12 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.ams.org/mathscinet/search/publications.html?pg4=AUCN&s4=Karcher&co4=AND&pg5=TI&s5=&co5=AND&pg6=PC&s6=&co6=AND&pg7=ALLF&s7=&co7=AND&Submit=Search&dr=all&yrop=eq&arg3=&yearRangeFirst=&yearRangeSecond=&pg8=ET&s8=All&review_format=html",
+		"url": "https://mathscinet.ams.org/mathscinet/search/publications.html?pg4=AUCN&s4=Karcher&co4=AND&pg5=TI&s5=&co5=AND&pg6=PC&s6=&co6=AND&pg7=ALLF&s7=&co7=AND&Submit=Search&dr=all&yrop=eq&arg3=&yearRangeFirst=&yearRangeSecond=&pg8=ET&s8=All&review_format=html",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.ams.org/mathscinet-getitem?mr=3004573",
+		"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=3004573",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -146,7 +146,7 @@ var testCases = [
 				"libraryCatalog": "AMS MathSciNet",
 				"pages": "516–536",
 				"publicationTitle": "Journal of Multivariate Analysis",
-				"url": "http://www.ams.org/mathscinet-getitem?mr=3004573",
+				"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=3004573",
 				"volume": "115",
 				"attachments": [
 					{
@@ -161,12 +161,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ams.org/mathscinet/search/publications.html?pg1=ISSI&s1=308850",
+		"url": "https://mathscinet.ams.org/mathscinet/search/publications.html?pg1=ISSI&s1=308850",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.ams.org.libezproxy2.syr.edu/mathscinet-getitem?mr=2767535",
+		"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=2767535",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -195,7 +195,7 @@ var testCases = [
 				"libraryCatalog": "AMS MathSciNet",
 				"pages": "97–111",
 				"publisher": "Physica-Verlag/Springer, Heidelberg",
-				"url": "http://www.ams.org/mathscinet-getitem?mr=2767535",
+				"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=2767535",
 				"attachments": [
 					{
 						"title": "MathSciNet Snapshot"
@@ -206,10 +206,10 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
-	},
+	},	
 	{
 		"type": "web",
-		"url": "http://www.ams.org.libezproxy2.syr.edu/mathscinet-getitem?mr=2663710",
+		"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=2663710",
 		"items": [
 			{
 				"itemType": "book",
@@ -233,7 +233,7 @@ var testCases = [
 				"libraryCatalog": "AMS MathSciNet",
 				"numPages": "xiv+321",
 				"publisher": "Physica-Verlag/Springer, Heidelberg",
-				"url": "http://www.ams.org/mathscinet-getitem?mr=2663710",
+				"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=2663710",
 				"attachments": [
 					{
 						"title": "MathSciNet Snapshot"
@@ -251,7 +251,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ams.org/mathscinet-getitem?mr=1346201",
+		"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=1346201",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -272,7 +272,7 @@ var testCases = [
 				"libraryCatalog": "AMS MathSciNet",
 				"pages": "163–222",
 				"publicationTitle": "Expositiones Mathematicae. International Journal",
-				"url": "http://www.ams.org/mathscinet-getitem?mr=1346201",
+				"url": "https://mathscinet.ams.org/mathscinet-getitem?mr=1346201",
 				"volume": "13",
 				"attachments": [
 					{

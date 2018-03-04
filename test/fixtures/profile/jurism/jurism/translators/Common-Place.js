@@ -202,10 +202,10 @@ var testCases = [
 				"libraryCatalog": "Common-Place",
 				"publicationTitle": "Common-Place",
 				"url": "http://common-place.org/book/alive-with-the-sound-of-music/",
-				"volume": "8",
+				"volume": "08",
 				"attachments": [
 					{
-						"title": "Alive with the Sound of Music › Common-placeCommon-place: The Journal of early American Life"
+						"title": "Alive with the Sound of Music - Common-placeCommon-place: The Journal of early American Life"
 					}
 				],
 				"tags": [],

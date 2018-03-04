@@ -144,23 +144,17 @@ var testCases = [
 				"DOI": "10.3366/jqs.2012.0036",
 				"ISSN": "1465-3591",
 				"abstractNote": "After first surveying the development of academic studies of Islam within the modern Turkish higher education system, this essay provides an inventory of material that has been translated from Western languages into Turkish. It is inevitable that orientalist studies will have a place of tremendous importance in this analysis. However, approaches to the Qur'an and its exegesis which have been developed under the influence of the Western scientific and cultural world encompass a larger range of literature that includes not only the orientalist studies themselves but also the criticisms directed against these studies. Particular attention is paid to the work of Fazlur Rahman and Arab scholars influenced by Western methods, and an assessment of the various issues related to the critique of orientalist works is provided.",
-				"accessDate": "CURRENT_TIMESTAMP",
 				"issue": "1",
 				"journalAbbreviation": "J Qur'anic Studies",
 				"libraryCatalog": "Edinburgh University Press Journals",
 				"pages": "9-44",
 				"publicationTitle": "Journal of Qur'anic Studies",
-				"publisher": "Edinburgh University Press",
 				"url": "http://www.euppublishing.com/doi/abs/10.3366/jqs.2012.0036",
 				"volume": "14",
 				"attachments": [
 					{
 						"title": "EUP Snapshot",
 						"mimeType": "text/html"
-					},
-					{
-						"title": "EUP PDF fulltext",
-						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcs",
-	"lastUpdated": "2016-09-09 13:18:27"
+	"lastUpdated": "2018-01-08 17:17:11"
 }
 
 /*
@@ -46,7 +46,8 @@ var mappingClassNameToItemType = {
 	'LSK'	: 'journalArticle', // Artikel in Leitsatzkartei
 	'ZINHALTVERZ' : 'multiple',//Inhaltsverzeichnis
 	'KOMMENTAR' : 'encyclopediaArticle',
-	'ALTEVERSION' : 'encyclopediaArticle'
+	'ALTEVERSION' : 'encyclopediaArticle',
+	'ALTEVERSION KOMMENTAR' : 'encyclopediaArticle'
 }
 
 // build a regular expression for author cleanup in authorRemoveTitlesEtc()
@@ -179,7 +180,7 @@ function scrapeLSK(doc, url) {
 	// description example 1: "Marco Ganzhorn: Ist ein E-Book ein Buch?"
 	// description example 2: "Michael Fricke/Dr. Martin Gerecke: Informantenschutz und Informantenhaftung"
 	// description example 3: "Sara Sun Beale: Die Entwicklung des US-amerikanischen Rechts der strafrechtlichen Verantwortlichkeit von Unternehmen"
-	var description = ZU.xpathText(doc, "//*[@id='doktoccontent']/h1");
+	var description = ZU.xpathText(doc, "//*[@id='dokcontent']/h1");
 	var descriptionItems = description.split(':');
 
 	//authors
@@ -286,14 +287,14 @@ function scrapeCase(doc, url) {
 		item.extra += "{:jurisdiction: de}";
 	}
 	
-	var decisionDateStr = ZU.xpathText(doc, '//span[@class="edat"] | //span[@class="EDAT"] | //span[@class="datum"]');
+	var decisionDateStr = ZU.xpathText(doc, '(//span[@class="edat"] | //span[@class="EDAT"] | //span[@class="datum"])[1]');
 	if (decisionDateStr == null) {
 		decisionDateStr = alternativeData[3];
 	}
 	//e.g. 24. 9. 2001 or 24-9-1990
 	item.dateDecided = decisionDateStr.replace(/(\d\d?)[\.-]\s*(\d\d?)[\.-]\s*(\d\d\d\d)/, "$3-$2-$1");
 	
-	item.docketNumber = ZU.xpathText(doc, '//span[@class="az"]');
+	item.docketNumber = ZU.xpathText(doc, '(//span[@class="az"])[1]');
 	if (item.docketNumber == null) {
 		item.docketNumber = alternativeData[4];
 	}
@@ -341,7 +342,7 @@ function scrapeCase(doc, url) {
 		item.pages = beckRSsrc[3];*/
 	}
 
-	var otherCitations = ZU.xpath(doc, '//li[a[@title="Parallelfundstellen"]]')[0];
+	var otherCitations = ZU.xpath(doc, '//div[@id="verweiszettel-top"]//li[a[contains(text(), "Parallelfundstellen")]]')[0];
 	if (otherCitations) {
 		var otherCitationsText = ZU.xpathText(otherCitations, './following-sibling::li/ul/li',  null, " ; ");
 		if (otherCitationsText) {
@@ -361,14 +362,14 @@ function scrapeCase(doc, url) {
 	// there is additional information if the case is published in a journal
 	if (documentClassName == 'ZRSPR') {
 		// short title of publication
-		item.reporter = ZU.xpathText(doc, '//div[@id="doktoccontent"]/ul/li/a[2]');
+		item.reporter = ZU.xpathText(doc, '//div[@id="toccontent"]/ul/li/a[2]');
 		// long title of publication
 		var publicationTitle = ZU.xpathText(doc, '//li[@class="breadcurmbelemenfirst"]');
 		if (publicationTitle) {
 			note = addNote(note, "<h3>Zeitschrift Titel</h3><p>" + ZU.trimInternal(publicationTitle) + "</p>");
 		}
 		
-		item.date = ZU.xpathText(doc, '//div[@id="doktoccontent"]/ul/li/ul/li/a[2]');
+		item.date = ZU.xpathText(doc, '//div[@id="toccontent"]/ul/li/ul/li/a[2]');
 		
 		//e.g. ArbrAktuell 2014, 150
 		var shortCitation = ZU.xpathText(doc, '//div[@class="dk2"]//span[@class="citation"]');
@@ -470,12 +471,12 @@ function scrape(doc, url) {
 	}
 	
 	item.publicationTitle = ZU.xpathText(doc, '//li[@class="breadcurmbelemenfirst"]');
-	item.journalAbbreviation = ZU.xpathText(doc, '//div[@id="doktoccontent"]/ul/li/a[2]');
+	item.journalAbbreviation = ZU.xpathText(doc, '//div[@id="toccontent"]/ul/li/a[2]');
 	
-	item.date = ZU.xpathText(doc, '//div[@id="doktoccontent"]/ul/li/ul/li/a[2]');
+	item.date = ZU.xpathText(doc, '//div[@id="toccontent"]/ul/li/ul/li/a[2]');
 	
 	//e.g. Heft 6 (Seite 141-162)
-	var issueText = ZU.xpathText(doc, '//div[@id="doktoccontent"]/ul/li/ul/li/ul/li/a[2]');
+	var issueText = ZU.xpathText(doc, '//div[@id="toccontent"]/ul/li/ul/li/ul/li/a[2]');
 
 	if (issueText) {
 		item.issue = issueText.replace(/\([^\)]*\)/,"");
@@ -573,7 +574,7 @@ var testCases = [
 				"tags": [],
 				"notes": [
 					{
-						"note": "Additional Metadata: <h3>Beschreibung</h3><p>Schadensersatz wegen fehlerhafter Ad-hoc-Mitteilungen („Infomatec”)</p><h3>Parallelfundstellen</h3><p>BB 2001 Heft 42, 2130 ; BeckRS 9998, 03964 ; NJOZ 2001, 1878 ; NJW-RR 2001, 1705 ; NZG 2002, 429 ; WuB I G 7. - 8.01 Schäfer... ; FHZivR 47 Nr. 2816 (Ls.) ; FHZivR 47 Nr. 6449 (Ls.) ; FHZivR 48 Nr. 2514 (Ls.) ; FHZivR 48 Nr. 6053 (Ls.) ; LSK 2001, 520032 (Ls.) ; NJW-RR 2003, 216 (Ls.) ; DB 2001, 2334 ; WPM 2001, 1944 ; WuB 2001, 1269 ; ZIP 2001, 1881</p><h3>Normen</h3><p>§ WPHG § 15 WpHG; § BOERSG § 88 BörsG; §§ BGB § 823, BGB § 826 BGB</p><h3>Zeitschrift Titel</h3><p>Zeitschrift für Bank- und Kapitalmarktrecht</p>"
+						"note": "Additional Metadata: <h3>Beschreibung</h3><p>Schadensersatz wegen fehlerhafter Ad-hoc-Mitteilungen („Infomatec”)</p><h3>Parallelfundstellen</h3><p>BeckRS 9998, 03964 ; EWiR 2001, 1049 (m. Anm. … ; NJOZ 2001, 1878 ; NJW-RR 2001, 1705 ; NZG 2002, 429 ; WM 2001 Heft 41, 1944 ; WuB I G 7. - 8.01 Schäfer… ; ZIP 2001, 1881 (m. Anm.) ; FHZivR 47 Nr. 2816 (Ls.) ; FHZivR 47 Nr. 6449 (Ls.) ; FHZivR 48 Nr. 2514 (Ls.) ; FHZivR 48 Nr. 6053 (Ls.) ; LSK 2001, 520032 (Ls.) ; NJW-RR 2003, 216 (Ls.) ; DB 2001, 2334 ; WuB 2001, 1269</p><h3>Normen</h3><p>§ WPHG § 15 WpHG; § BOERSG § 88 BörsG; §§ BGB § 823, BGB § 826 BGB</p><h3>Zeitschrift Titel</h3><p>Zeitschrift für Bank- und Kapitalmarktrecht</p>"
 					}
 				],
 				"seeAlso": []
@@ -647,7 +648,7 @@ var testCases = [
 					}
 				],
 				"date": "2014",
-				"abstractNote": "Die Durchführung von Beweisverfahren ist mit Duldungs- und Mitwirkungspflichten von Beweisgegnern und Dritten verbunden, die nur über begrenzte Weigerungsrechte verfügen. Einen Sonderfall bildet der bei „Wohnungsbetroffenheit“ eingreifende letzte Halbsatz des § ZPO § 144 ZPO § 144 Absatz I 3 ZPO. Dessen Voraussetzungen und Reichweite bedürfen der Klärung. Ferner gibt die neuere Rechtsprechung Anlass zu untersuchen, inwieweit auch der Eigentumsschutz einer Beweisaufnahme entgegenstehen kann.",
+				"abstractNote": "Die Durchführung von Beweisverfahren ist mit Duldungs- und Mitwirkungspflichten von Beweisgegnern und Dritten verbunden, die nur über begrenzte Weigerungsrechte verfügen. Einen Sonderfall bildet der bei „Wohnungsbetroffenheit“ eingreifende letzte Halbsatz des § ZPO § 144 ZPO § 144 Absatz I 3 ZPO. Dessen Voraussetzungen und Reichweite bedürfen der Klärung. Ferner gibt die neuere Rechtsprechung Anlass zu untersuchen, inwieweit auch der Eigentumsschutz einer Beweisaufnahme entgegenstehen kann.",
 				"issue": "46",
 				"journalAbbreviation": "NJW",
 				"libraryCatalog": "beck-online",
@@ -716,7 +717,7 @@ var testCases = [
 					}
 				],
 				"date": "2014",
-				"abstractNote": "Nachdem die Selbstanzeige nach § AO § 371 AO bereits im Frühjahr 2011 nur knapp einer Abschaffung entging und (lediglich) verschärft wurde, plant der Gesetzgeber nun eine weitere Einschränkung. Dabei unterscheiden sich der Referentenentwurf vom 27.8.2014 und der Regierungsentwurf vom 26.9.2014 scheinbar kaum; Details legen aber die Vermutung nahe, dass dort noch einmal jemand „gebremst“ hat. zur Fussnote 1",
+				"abstractNote": "Nachdem die Selbstanzeige nach § AO § 371 AO bereits im Frühjahr 2011 nur knapp einer Abschaffung entging und (lediglich) verschärft wurde, plant der Gesetzgeber nun eine weitere Einschränkung. Dabei unterscheiden sich der Referentenentwurf vom 27.8.2014 und der Regierungsentwurf vom 26.9.2014 scheinbar kaum; Details legen aber die Vermutung nahe, dass dort noch einmal jemand „gebremst“ hat. zur Fussnote 1",
 				"issue": "46",
 				"journalAbbreviation": "DStR",
 				"libraryCatalog": "beck-online",
@@ -784,7 +785,7 @@ var testCases = [
 					}
 				],
 				"date": "2014",
-				"abstractNote": "Die Durchführung von Beweisverfahren ist mit Duldungs- und Mitwirkungspflichten von Beweisgegnern und Dritten verbunden, die nur über begrenzte Weigerungsrechte verfügen. Einen Sonderfall bildet der bei „Wohnungsbetroffenheit“ eingreifende letzte Halbsatz des § ZPO § 144 ZPO § 144 Absatz I 3 ZPO. Dessen Voraussetzungen und Reichweite bedürfen der Klärung. Ferner gibt die neuere Rechtsprechung Anlass zu untersuchen, inwieweit auch der Eigentumsschutz einer Beweisaufnahme entgegenstehen kann.",
+				"abstractNote": "Die Durchführung von Beweisverfahren ist mit Duldungs- und Mitwirkungspflichten von Beweisgegnern und Dritten verbunden, die nur über begrenzte Weigerungsrechte verfügen. Einen Sonderfall bildet der bei „Wohnungsbetroffenheit“ eingreifende letzte Halbsatz des § ZPO § 144 ZPO § 144 Absatz I 3 ZPO. Dessen Voraussetzungen und Reichweite bedürfen der Klärung. Ferner gibt die neuere Rechtsprechung Anlass zu untersuchen, inwieweit auch der Eigentumsschutz einer Beweisaufnahme entgegenstehen kann.",
 				"issue": "46",
 				"journalAbbreviation": "NJW",
 				"libraryCatalog": "beck-online",
@@ -875,13 +876,14 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://beck-online.beck.de/?vpath=bibdata%2fents%2furteile%2f2012%2fcont%2fbeckrs_2012_09546.htm",
+		"url": "https://beck-online.beck.de/Dokument?vpath=bibdata%2Fents%2Fbeckrs%2F2012%2Fcont%2Fbeckrs.2012.09546.htm&anchor=Y-300-Z-BECKRS-B-2012-N-09546",
 		"items": [
 			{
 				"itemType": "case",
 				"caseName": "OLG Köln, 23.03.2012 - 6 U 67/11",
 				"creators": [],
 				"dateDecided": "2012-03-23",
+				"abstractNote": "Leitsätze:\n\t\t\t\t\t1. Die Eltern eines 13-jährigen Sohnes, dem sie einen PC mit Internetanschluss überlassen haben, können ihrer aus § BGB § 832 BGB § 832 Absatz I BGB resultierenden Aufsichtspflicht zur Verhinderung der Teilnahme des Kindes an illegalen sog. Tauschbörsen durch die Installation einer Firewall und eines Passwortes sowie monatliche stichprobenmäßige Kontrollen genügen. Diese Kontrollen sind aber nicht hinreichend durchgeführt worden, wenn die Eltern über Monate das trotz der installierten Schutzmaßnahmen erfolgte Herunterladen zweier Filesharingprogramme nicht entdecken, für die Ikons auf dem Desktop sichtbar waren.\n\t\t\t\t\t2. Die Höhe des dem Rechteinhaber durch die Teilnahme an einer sog. Tauschbörse entstandenen, im Wege der Lizenzanalogie berechneten Schadens ist mangels besser geeigneter Grundlagen an dem GEMA Tarif zu orientieren, der dem zu beurteilenden Sachverhalt am nächsten kommt. Das ist nicht der Tarif VR W 1, sondern der (frühere) Tarif VR-OD 5. Es sind weiter alle in Betracht kommenden Umstände wie die Länge des Zeitraumes, in dem der Titel in die \"Tauschbörse\" eingestellt war, und die Höhe des Lizenzbetrages zu berücksichtigen, der für vergleichbare Titel nach Lizenzierung gezahlt wird. Sind gängige Titel über Monate durch die Tauschbörse öffentlich zugänglichgemacht worden, so kann ein Betrag von 200 € für jeden Titel geschuldet sein.",
 				"court": "OLG Köln",
 				"docketNumber": "6 U 67/11",
 				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
@@ -893,7 +895,7 @@ var testCases = [
 				"tags": [],
 				"notes": [
 					{
-						"note": "Additional Metadata: <h3>Fundstelle</h3><p>BeckRS 2012, 09546</p><h3>Parallelfundstellen</h3><p>GRUR-Prax 2012, 238 (m. A... ; MMR 2012, 387 (m. Anm. Ho... ; NJOZ 2013, 365 ; ZUM 2012, 697 ; LSK 2012, 250148 (Ls.) ; CR 2012, 397 ; K & R 2012, 437 L ; MD 2012, 621 ; WRP 2012, 1007</p>"
+						"note": "Additional Metadata: <h3>Fundstelle</h3><p>BeckRS 2012, 09546</p><h3>Parallelfundstellen</h3><p>GRUR-Prax 2012, 238 (m. A… ; MMR 2012, 387 (m. Anm. Ho… ; NJOZ 2013, 365 ; ZUM 2012, 697 ; LSK 2012, 250148 (Ls.) ; CR 2012, 397 ; K & R 2012, 437 ; MD 2012, 621 ; WRP 2012, 1007</p><h3>Normen</h3><p>Normenketten: BGB § BGB § 683 S. 1, § 670, § 832 Abs. 1 UrhG § URHG § 19a, § 97 Abs. 2</p>"
 					}
 				],
 				"seeAlso": []
@@ -924,7 +926,7 @@ var testCases = [
 				"tags": [],
 				"notes": [
 					{
-						"note": "Additional Metadata: <h3>Beschreibung</h3><p>EU-konforme unbestimmte Sperrverfügung gegen Internetprovider - UPC Telekabel/Constantin Film ua [kino.to]</p><h3>Parallelfundstellen</h3><p>BeckEuRS 2014, 417030 ; BeckEuRS 2014, 754042 ; BeckRS 2014, 80615 ; EuZW 2014, 388 (m. Anm. K... ; GRUR 2014, 468 (m. Anm. M... ; GRUR Int. 2014, 469 ; GRUR-Prax 2014, 157 (m. A... ; MMR 2014, 397 (m. Anm. Ro... ; NJW 2014, 1577 ; ZUM 2014, 494 ; LSK 2014, 160153 (Ls.) ; EuGRZ 2014, 301 ; EWS 2014, 225 ; K & R 2014, 329 ; MittdtPatA 2014, 335 L ; WRP 2014, 540</p><h3>Normen</h3><p>AEUV Art. AEUV Artikel 267; Richtlinie 2001/29/EG Art. EWG_RL_2001_29 Artikel 3 EWG_RL_2001_29 Artikel 3 Absatz II, EWG_RL_2001_29 Artikel 8 EWG_RL_2001_29 Artikel 3 Absatz III</p><h3>Zeitschrift Titel</h3><p>Gewerblicher Rechtsschutz und Urheberrecht</p>"
+						"note": "Additional Metadata: <h3>Beschreibung</h3><p>EU-konforme unbestimmte Sperrverfügung gegen Internetprovider - UPC Telekabel/Constantin Film ua [kino.to]</p><h3>Parallelfundstellen</h3><p>BeckEuRS 2014, 417030 ; BeckRS 2014, 80615 ; EuZW 2014, 388 (m. Anm. K… ; GRUR Int. 2014, 469 ; GRUR-Prax 2014, 157 (m. A… ; MMR 2014, 397 (m. Anm. Ro… ; NJW 2014, 1577 ; ZUM 2014, 494 ; LSK 2014, 160153 (Ls.) ; EuGRZ 2014, 301 ; EWS 2014, 225 ; GRUR-Prax 2014, 157 ; K & R 2014, 329 ; MittdtPatA 2014, 335 ; MittdtPatA 2014, 335 L ; WRP 2014, 540 ; MMR-Aktuell 2014, 356790 ; MMR-Aktuell 2014, 356900</p><h3>Normen</h3><p>AEUV Art. AEUV Artikel 267; Richtlinie 2001/29/EG Art. EWG_RL_2001_29 Artikel 3 EWG_RL_2001_29 Artikel 3 Absatz II, EWG_RL_2001_29 Artikel 8 EWG_RL_2001_29 Artikel 3 Absatz III</p><h3>Zeitschrift Titel</h3><p>Gewerblicher Rechtsschutz und Urheberrecht</p>"
 					}
 				],
 				"seeAlso": []
@@ -956,7 +958,7 @@ var testCases = [
 				"tags": [],
 				"notes": [
 					{
-						"note": "Additional Metadata: <h3>Beschreibung</h3><p>Indizierung eines pornographischen Romans (\"Josefine Mutzenbacher\") zur Fussnote †</p><h3>Parallelfundstellen</h3><p>BeckRS 9998, 165476 ; BeckRS 9998, 169076 ; NStZ 1991, 188 ; BeckRS 9998, 170068 (Ls.) ; FHOeffR 42 Nr. 13711 (Ls.... ; FHOeffR 42 Nr. 13713 (Ls.... ; FHOeffR 42 Nr. 6327 (Ls.) ; FHOeffR 42 Nr. 7072 (Ls.) ; LSK 1991, 230089 (Ls.) ; NVwZ 1991, 663 (Ls.) ; AfP 1991, 379 ; AfP 1991, 384 ; Bespr.: , JZ 1991, 470 ; BVerfGE 83, 130 ; DVBl 1991, 261 ; EuGRZ 1991, 33 ; JZ 1991, 465</p><h3>Normen</h3><p>GG Art. GG Artikel 1 GG Artikel 1 Absatz I, GG Artikel 2 GG Artikel 2 Absatz I, GG Artikel 5 GG Artikel 5 Absatz III 1, GG Artikel 6 GG Artikel 6 Absatz II, GG Artikel 19 GG Artikel 19 Absatz I 2, GG Artikel 19 Absatz IV, GG Artikel 20 GG Artikel 20 Absatz III, GG Artikel 103 GG Artikel 103 Absatz I; GjS §§ 1, 6, 9 II</p><h3>Zeitschrift Titel</h3><p>Neue Juristische Wochenschrift</p>"
+						"note": "Additional Metadata: <h3>Beschreibung</h3><p>Indizierung eines pornographischen Romans (\"Josefine Mutzenbacher\") zur Fussnote †</p><h3>Parallelfundstellen</h3><p>BeckRS 9998, 165476 ; NStZ 1991, 188 ; FHOeffR 42 Nr. 13711 (Ls.) ; FHOeffR 42 Nr. 13713 (Ls.) ; FHOeffR 42 Nr. 6327 (Ls.) ; FHOeffR 42 Nr. 7072 (Ls.) ; LSK 1991, 230089 (Ls.) ; NVwZ 1991, 663 (Ls.) ; AfP 1991, 379 ; AfP 1991, 384 ; Bespr.: , JZ 1991, 470 ; BVerfGE 83, 130 ; DVBl 1991, 261 ; EuGRZ 1991, 33 ; JZ 1991, 465 ; ZUM 1991, 310</p><h3>Normen</h3><p>GG Art. GG Artikel 1 GG Artikel 1 Absatz I, GG Artikel 2 GG Artikel 2 Absatz I, GG Artikel 5 GG Artikel 5 Absatz III 1, GG Artikel 6 GG Artikel 6 Absatz II, GG Artikel 19 GG Artikel 19 Absatz I 2, GG Artikel 19 Absatz IV, GG Artikel 20 GG Artikel 20 Absatz III, GG Artikel 103 GG Artikel 103 Absatz I; GjS §§ 1, 6, 9 II</p><h3>Zeitschrift Titel</h3><p>Neue Juristische Wochenschrift</p>"
 					}
 				],
 				"seeAlso": []

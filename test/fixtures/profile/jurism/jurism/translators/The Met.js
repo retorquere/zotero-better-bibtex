@@ -1,106 +1,133 @@
 {
 	"translatorID": "72dbad15-cd1a-4d52-b2ed-7d67f909cada",
 	"label": "The Met",
-	"creator": "Aurimas Vinckevicius",
-	"target": "^https?://metmuseum\\.org/collection/the-collection-online/search",
+	"creator": "Aurimas Vinckevicius, Philipp Zumstein",
+	"target": "^https?://metmuseum\\.org/art/collection",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsib",
-	"lastUpdated": "2014-07-09 01:41:36"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-07-01 11:39:10"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
 
 function detectWeb(doc, url) {
-	if(doc.getElementsByClassName('tombstone')[0]) return 'artwork';
-	
-	if(getSearchResults(doc)) return 'multiple';
+	if (ZU.xpathText(doc, '//div[contains(@class, "collection-details__tombstone")]')) {
+		return 'artwork';
+	}
+	//multiples are working when waiting for the website to load completely,
+	//but automatic testing seems difficult, try manually e.g.
+	//http://metmuseum.org/art/collection?ft=albrecht+d%C3%BCrer&noqs=true
+	if (getSearchResults(doc, true)) return 'multiple';
 }
 
-function getSearchResults(doc) {
-	var titles = doc.getElementsByClassName('objtitle');
-	
-	var items = {}, found = false;
-	for(var i=0; i<titles.length; i++) {
-		var a = titles[i].parentNode;
-		if(!a || !a.href) continue;
-		
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//h2[contains(@class, "card__title")]/a');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
 		found = true;
-		items[a.href] = ZU.trimInternal(titles[i].textContent);
+		items[href] = title;
 	}
-	
 	return found ? items : false;
 }
 
+
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
-		var items = getSearchResults(doc);
-		Z.selectItems(items, function(items) {
-			if(!items) return true;
-			
-			var urls = [];
-			for(var i in items) {
-				urls.push(i);
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
 			}
-			ZU.processDocuments(urls, scrape);
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
 }
 
+
 function scrape(doc, url) {
 	var item = new Zotero.Item('artwork');
-	var tmbstCont = doc.getElementsByClassName('tombstone-container')[0];
-	item.title = ZU.trimInternal(tmbstCont.getElementsByTagName('h2')[0].textContent);
+	item.title = ZU.xpathText(doc, '//h1');
 	
-	var creator = tmbstCont.getElementsByTagName('h3')[0];
-	if(creator) {
-		item.creators.push(ZU.cleanAuthor(
-			ZU.trimInternal(creator.firstChild.textContent),
-			'author',
-			false
-		));
-	}
-	
-	var meta = doc.getElementsByClassName('tombstone')[0].firstElementChild;
-	
-	do {
-		var heading = ZU.trimInternal(meta.getElementsByTagName('strong')[0].textContent);
+	var meta = ZU.xpath(doc, '//div[contains(@class, "collection-details__tombstone")]/dl')
+	for (var i=0; i<meta.length; i++) {
+		var heading = ZU.xpathText(meta[i], './dt[contains(@class, "label")]');
 		heading = heading.toLowerCase().substr(0, heading.length-1);
-		var content = ZU.trimInternal(meta.lastChild.textContent);
+		var content = ZU.xpathText(meta[i], './dd[contains(@class, "value")]');
+		//Z.debug(heading + content)
+
 		switch(heading) {
 			case 'date':
 			case 'medium':
 				item[heading] = content;
-			break;
+				break;
 			case 'dimensions':
 				item.artworkSize = content;
-			break;
+				break;
 			case 'accession number':
 				item.callNumber = content;
-			break;
+				break;
 			case 'classification':
 			case 'period':
 			case 'culture':
 				item.tags.push(content);
-			break;
+				break;
+			case 'artist':
+				var cleaned = content.replace(/\(.*\)$/, '').trim();
+				if (cleaned.split(' ').length>2) {
+					item.creators.push({'lastName': content, 'creatorType': 'artist', 'fieldMode': 1})
+				} else {
+					item.creators.push(ZU.cleanAuthor(cleaned, "artist"));
+				}
+				break;
 		}
-	} while(meta = meta.nextElementSibling);
+	} 
 	
-	var desc = doc.getElementById('gallery-label');
-	if(desc) {
-		item.abstractNote = ZU.trimInternal(desc.textContent);
-	}
+	item.abstractNote = ZU.xpathText(doc, '//div[contains(@class, "collection-details__label")]');
 	item.libraryCatalog = 'The Metropolitan Museum of Art';
-	item.url = doc.getElementsByClassName('permalink')[0].href;
+	item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href');
 	
-	var download = doc.getElementsByClassName('download')[0];
+	var download = ZU.xpathText(doc, '//li[contains(@class, "utility-menu__item--download")]/a/@href');
 	if(download) {
 		item.attachments.push({
 			title: 'Met Image',
-			url: download.href
+			url: download
 		});
 	}
 	item.attachments.push({
@@ -109,11 +136,13 @@ function scrape(doc, url) {
 	});
 	
 	item.complete();
-}/** BEGIN TEST CASES **/
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://metmuseum.org/collection/the-collection-online/search/328877?rpp=30&pg=1&rndkey=20140708&ft=*&who=Babylonian&pos=4",
+		"url": "http://metmuseum.org/art/collection/search/328877?rpp=30&pg=1&rndkey=20140708&ft=*&who=Babylonian&pos=4",
 		"items": [
 			{
 				"itemType": "artwork",
@@ -125,7 +154,7 @@ var testCases = [
 				"callNumber": "86.11.214b",
 				"libraryCatalog": "The Metropolitan Museum of Art",
 				"shortTitle": "Cuneiform tablet case impressed with four cylinder seals, for cuneiform tablet 86.11.214a",
-				"url": "http://metmuseum.org/collection/the-collection-online/search/328877",
+				"url": "http://metmuseum.org/art/collection/search/328877",
 				"attachments": [
 					{
 						"title": "Met Image"
@@ -146,7 +175,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://metmuseum.org/collection/the-collection-online/search/328877",
+		"url": "http://metmuseum.org/art/collection/search/328877",
 		"items": [
 			{
 				"itemType": "artwork",
@@ -158,7 +187,7 @@ var testCases = [
 				"callNumber": "86.11.214b",
 				"libraryCatalog": "The Metropolitan Museum of Art",
 				"shortTitle": "Cuneiform tablet case impressed with four cylinder seals, for cuneiform tablet 86.11.214a",
-				"url": "http://metmuseum.org/collection/the-collection-online/search/328877",
+				"url": "http://metmuseum.org/art/collection/search/328877",
 				"attachments": [
 					{
 						"title": "Met Image"
@@ -179,7 +208,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://metmuseum.org/collection/the-collection-online/search/436243?rpp=30&pg=1&ft=albrecht+d%c3%bcrer&pos=1",
+		"url": "http://metmuseum.org/art/collection/search/436243?rpp=30&pg=1&ft=albrecht+d%c3%bcrer&pos=1",
 		"items": [
 			{
 				"itemType": "artwork",
@@ -188,16 +217,16 @@ var testCases = [
 					{
 						"firstName": "Albrecht",
 						"lastName": "Dürer",
-						"creatorType": "author"
+						"creatorType": "artist"
 					}
 				],
 				"date": "ca. 1505",
 				"abstractNote": "This picture of Christ as Salvator Mundi, Savior of the World, who raises his right hand in blessing and in his left holds a globe representing the earth, can be appreciated both as a painting and as a drawing. Albrecht Dürer, the premier artist of the German Renaissance, probably began this work shortly before he departed for Italy in 1505, but completed only the drapery. His unusually extensive and meticulous preparatory drawing on the panel is visible in the unfinished portions of Christ's face and hands.",
-				"artworkMedium": "Oil on wood",
+				"artworkMedium": "Oil on linden",
 				"artworkSize": "22 7/8 x 18 1/2in. (58.1 x 47cm)",
 				"callNumber": "32.100.64",
 				"libraryCatalog": "The Metropolitan Museum of Art",
-				"url": "http://metmuseum.org/collection/the-collection-online/search/436243",
+				"url": "http://metmuseum.org/art/collection/search/436243",
 				"attachments": [
 					{
 						"title": "Met Image"
@@ -213,11 +242,6 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
-	},
-	{
-		"type": "web",
-		"url": "http://metmuseum.org/collection/the-collection-online/search?ft=albrecht+d%C3%BCrer&noqs=true",
-		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

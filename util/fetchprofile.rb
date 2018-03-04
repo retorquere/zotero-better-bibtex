@@ -9,8 +9,12 @@ require 'httparty'
 require 'shellwords'
 require 'benchmark'
 
+$zotero = ARGV[0].nil? || ARGV[0].downcase != 'j' ? 'zotero' : 'jurism'
+
+puts "Getting #{$zotero}"
+
 if OS.linux?
-  PROFILES_DIR = File.expand_path('~/.zotero/zotero')
+  PROFILES_DIR = File.expand_path("~/.#{$zotero}/zotero")
 elsif OS.mac?
   PROFILES_DIR = File.expand_path('~/Library/Application Support/Zotero')
 else
@@ -39,20 +43,12 @@ IO.readlines(File.join(PROFILE_DIR, 'prefs.js')).each{|pref|
   end
 }
 
-puts [dataDir, useDataDir].inspect
+TEMPLATE_STASH = File.expand_path(File.join(File.dirname(__FILE__), "../test/fixtures/profile/fetched-#{$zotero}"))
 
-if !dataDir || !useDataDir || dataDir[0] != '/'
-  raise "Data dir not found"
-end
+puts "#{PROFILE_DIR} => #{TEMPLATE_STASH}"
 
-DATA_DIR = dataDir
+FileUtils.rm_rf(TEMPLATE_STASH)
+FileUtils.cp_r(PROFILE_DIR, TEMPLATE_STASH)
+FileUtils.cp_r(dataDir, File.join(TEMPLATE_STASH, $zotero)) if useDataDir
 
-TEMPLATE_STASH = File.join(File.dirname(__FILE__), '../test/fixtures/profile')
-
-puts "#{PROFILE_DIR} => #{File.join(TEMPLATE_STASH, 'profile')}"
-puts "#{DATA_DIR} => #{File.join(TEMPLATE_STASH, 'data')}"
-
-FileUtils.rm_rf(File.join(TEMPLATE_STASH, 'profile'))
-FileUtils.cp_r(PROFILE_DIR, File.join(TEMPLATE_STASH, 'profile'))
-FileUtils.rm_rf(File.join(TEMPLATE_STASH, 'data'))
-FileUtils.cp_r(DATA_DIR, File.join(TEMPLATE_STASH, 'data'))
+puts "WARNING: #{$zotero} uses dataDir" if dataDir

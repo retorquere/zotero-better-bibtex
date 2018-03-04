@@ -216,7 +216,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2016/08",
+				"date": "2016/09",
 				"DOI": "10.1257/jep.30.3.235",
 				"ISSN": "0895-3309",
 				"abstractNote": "We can imagine a plausible case for government support of science based on traditional economic reasons of externalities and public goods. Yet when it comes to government support of grants from the National Science Foundation (NSF) for economic research, our sense is that many economists avoid critical questions, skimp on analysis, and move straight to advocacy. In this essay, we take a more skeptical attitude toward the efforts of the NSF to subsidize economic research. We offer two main sets of arguments. First, a key question is not whether NSF funding is justified relative to laissez-faire, but rather, what is the marginal value of NSF funding given already existing government and nongovernment support for economic research? Second, we consider whether NSF funding might more productively be shifted in various directions that remain within the legal and traditional purview of the NSF. Such alternative focuses might include data availability, prizes rather than grants, broader dissemination of economic insights, and more. Given these critiques, we suggest some possible ways in which the pattern of NSF funding, and the arguments for such funding, might be improved.",

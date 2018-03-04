@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="in-text" version="1.0" demote-non-dropping-particle="never" page-range-format="expanded">
   <info>
     <title>American Psychological Association 6th edition</title>
     <title-short>APA</title-short>
@@ -31,7 +31,7 @@
     <category citation-format="author-date"/>
     <category field="psychology"/>
     <category field="generic-base"/>
-    <updated>2017-07-11T03:08:02+00:00</updated>
+    <updated>2018-01-19T15:04:50+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -145,8 +145,8 @@
     <!-- genre: U.S. Patent number: 123,445-->
     <group delimiter=" ">
       <group delimiter=" ">
-	<text variable="genre"/>
-	<text term="issue" form="short" text-case="capitalize-first"/>
+        <text variable="genre"/>
+        <text term="issue" form="short" text-case="capitalize-first"/>
       </group>
       <text variable="number"/>
     </group>
@@ -207,7 +207,7 @@
   </macro>
   <macro name="title">
     <choose>
-      <if type="book graphic manuscript motion_picture report song speech thesis" match="any">
+      <if type="book dataset graphic manuscript motion_picture report song speech thesis" match="any">
         <choose>
           <if variable="version" type="book" match="all">
             <!---This is a hack until we have a computer program type -->
@@ -293,7 +293,15 @@
         <text variable="medium" text-case="capitalize-first"/>
       </if>
       <else-if type="dataset" match="any">
-        <text value="Data set"/>
+        <choose>
+          <if variable="genre">
+            <text variable="genre" text-case="capitalize-first"/>
+          </if>
+          <else>
+            <!-- This should be localized -->
+            <text value="Data set"/>
+          </else>
+        </choose>
       </else-if>
     </choose>
   </macro>
@@ -327,7 +335,7 @@
       <else-if type="post-weblog webpage" match="none">
         <group delimiter=", ">
           <choose>
-            <if variable="event version" type="speech motion_picture" match="none">
+            <if variable="event version" type="speech dataset motion_picture" match="none">
               <!-- Including version is to avoid printing the programming language for computerProgram /-->
               <text variable="genre"/>
             </if>
@@ -438,7 +446,9 @@
     <choose>
       <if variable="issued">
         <group delimiter="/">
-          <date variable="original-date" form="text"/>
+          <date variable="original-date">
+            <date-part name="year"/>
+          </date>
           <group>
             <date variable="issued">
               <date-part name="year"/>
@@ -641,12 +651,31 @@
   </macro>
   <macro name="original-date">
     <choose>
-      <if variable="original-date">
-        <group prefix="(" suffix=")" delimiter=" ">
-          <!---This should be localized-->
-          <text value="Original work published"/>
-          <date variable="original-date" form="text"/>
-        </group>
+      <if type="bill legal_case legislation" match="none">
+        <choose>
+          <if variable="original-date">
+            <group prefix=" (" suffix=")" delimiter=" ">
+              <!---This should be localized-->
+              <text value="Original work published"/>
+              <choose>
+                <if type="speech" match="any">
+                  <date variable="original-date" delimiter=" ">
+                    <date-part name="month"/>
+                    <date-part name="year"/>
+                  </date>
+                </if>
+                <else-if type="article-journal bill book chapter graphic legal_case legislation motion_picture paper-conference report song dataset" match="none">
+                  <date variable="original-date" form="text"/>
+                </else-if>
+                <else>
+                  <date variable="original-date">
+                    <date-part name="year"/>
+                  </date>
+                </else>
+              </choose>
+            </group>
+          </if>
+        </choose>
       </if>
     </choose>
   </macro>

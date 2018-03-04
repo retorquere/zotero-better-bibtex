@@ -8,8 +8,8 @@
 	"priority": 98,
 	"inRepository": true,
 	"translatorType": 8,
-	"browserSupport": "gcsb",
-	"lastUpdated": "2015-04-14 20:56:41"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-03 11:41:00"
 }
 
 
@@ -63,13 +63,14 @@ var testCases = [
 				"attachments": [],
 				"libraryCatalog": "Library of Congress ISBN",
 				"place": "Cambridge ; New York",
-				"ISBN": "0521770599",
+				"ISBN": "9780521770590 9780521779241",
 				"title": "The Cambridge companion to Adam Smith",
 				"publisher": "Cambridge University Press",
 				"date": "2006",
 				"numPages": "409",
 				"series": "Cambridge companions to philosophy",
-				"callNumber": "B1545.Z7 C36 2006"
+				"callNumber": "B1545.Z7 C36 2006",
+				"extra": "OCLC: ocm60321422"
 			}
 		]
 	}

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-12-30 20:06:51"
+	"lastUpdated": "2017-06-07 11:47:30"
 }
 
 /*********************** BEGIN FRAMEWORK ***********************/
@@ -671,11 +671,10 @@ FW.Scraper({
 itemType	: 'newspaperArticle',
 detect		: FW.Xpath('.//h1[@itemprop="name headline"]'),
 title		: FW.Xpath('.//h1[@itemprop="name headline"]').text().trim(),
-attachments : [ {url: FW.Xpath('//div[@class="article__toolbar"]/ul/li[3]/a').key("href"),
+attachments : [ {url: FW.Url(),
   title: FW.Xpath('//meta[@name="application-name"]/@content').text().append( " Printable"),
   type:  "text/html",
 }],
-
 date		: FW.Xpath('//*[@id="content"]/main/article/header//time').text().trim(),
 creators	: FW.Xpath('//h5[@itemprop="name"]').text().split(/,\s+|\s+and\s+/).cleanAuthor("Author"),
 publicationTitle : FW.Xpath('//meta[@name="application-name"]/@content').text(),

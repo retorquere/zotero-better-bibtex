@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-03-22 11:58:30"
+	"lastUpdated": "2017-08-13 08:57:34"
 }
 
 /*
@@ -140,20 +140,6 @@ function getSearchResults(doc, checkOnly, extras) {
 	return found ? items : false;
 }
 
-var map = {
-	"newspaperArticle" : "newspaperArticle",
-	"jnlArticle" : "journalArticle", //also magazineArticles
-	"dissertationPublished" : "thesis",
-	"reportSerial" : "report",
-	"workingPaper" : "report",
-	"book" : "book",
-	"webPage" : "webpage",
-	"blog" : "blogPost",
-	"report" : "report",
-	"audioVideo" : "videoRecording",
-	"default" : "conferencePaper" //also default = manuscript?, referenceWork, encyclopedia
-}
-
 function detectWeb(doc, url) {
 	initLang(doc, url);
 	
@@ -167,14 +153,6 @@ function detectWeb(doc, url) {
 	var types = getTextValue(doc, ["Source type", "Document type", "Record type"]);
 	var zoteroType = getItemType(types);
 	if (zoteroType) return zoteroType;
-
-	//search for comments like
-	//<!-- Open:block:newspaperArticle -->
-	//these are also present on the pdf sites
-	var type = doc.getElementById('mainContentLeft');
-	type = type && type.innerHTML.match(/\bopen:block:\S+/i);
-	type = type && map[type[0].substring(11)];
-	if (type) return type;
 	
 	//hack for NYTs, which misses crucial data.
 	var db = getTextValue(doc, "Database")[0];
@@ -182,8 +160,15 @@ function detectWeb(doc, url) {
 		return "newspaperArticle";
 	}
 
-	// Fall back on journalArticle-- even if we couldn't guess the type
-	if(types.length) return "journalArticle";
+	//there is not much information about the item type in the pdf/fulltext page
+	var citationTextWrapper = ZU.xpathText(doc, '//div[@class="citationTextWrapper"]');
+	if (citationTextWrapper) {
+		if (citationTextWrapper.indexOf('ProQuest Dissertations Publishing')>-1) {
+			return "thesis";
+		}
+		// Fall back on journalArticle - even if we couldn't guess the type
+		return "journalArticle";
+	}
 }
 
 function doWeb(doc, url, noFollow) {

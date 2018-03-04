@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-11-02 21:46:36"
+	"lastUpdated": "2017-12-21 03:11:03"
 }
 
 /*
@@ -91,7 +91,13 @@ function doWeb(doc, url) {
 			Zotero.Utilities.processDocuments(articles, scrape)
 		});
 	} else {
-		scrape(doc, url);
+		//work on PDF pages
+		if (url.search(/\/document$/) != -1 ) {
+			var articleURL = url.replace(/\/document$/, "")
+			//Z.debug(articleURL)
+			ZU.processDocuments(articleURL, scrape);
+		}
+		else scrape(doc, url);
 	}
 }
 
@@ -99,7 +105,7 @@ function scrape(doc, url) {
 	var bibtexUrl = url.replace(/#.+|\/$/, "") + "/bibtex";
 	var abstract = ZU.xpathText(doc, '//div[@class="abstract-content"]');
 	var pdfUrl = ZU.xpathText(doc, '//meta[@name="citation_pdf_url"]/@content'); 
-	//Z.debug(pdfUrl)
+	//Z.debug("pdfURL " + pdfUrl)
 	ZU.doGet(bibtexUrl, function (bibtex) {
 		//Z.debug(bibtex)
 		var translator = Zotero.loadTranslator("import");

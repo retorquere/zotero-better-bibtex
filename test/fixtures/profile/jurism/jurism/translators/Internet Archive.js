@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-08-06 01:24:43"
+	"lastUpdated": "2017-06-04 10:03:10"
 }
 
 function detectWeb(doc, url) {
@@ -27,7 +27,13 @@ function detectWeb(doc, url) {
 			return "computerProgram";
 		} else if (icon.indexOf("image") != -1) {
 			return "artwork";
+		} else if (icon.indexOf("tv") != -1) {
+			return "tvBroadcast";
+		} else {
+			Z.debug("Unknown Item Type: " + icon);
 		}
+	} else if (url.indexOf('/stream/')>-1) {
+		return "book";
 	} else if (getSearchResults(doc, url, true)) {
 		return "multiple";
 	}
@@ -47,14 +53,21 @@ function test(data) {
 	return clean;
 }
 
-function getSearchResults(doc, url, testOnly) {
-	var results = ZU.xpath(doc, '//div[@class="results"]//div[contains(@class, "ttl ")]/a');
-	if (testOnly && results.length > 0) {
-		return true;
-	} else if (results.length > 0) {
-		return results;
-	} else return false
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[@class="results"]//div[contains(@class, "item-ttl")]//a[@href]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
 }
+
 
 function scrape(doc, url) {
 	//maximum PDF size to be downloaded. default to 10 MB
@@ -62,7 +75,15 @@ function scrape(doc, url) {
 	var pdfurl = ZU.xpathText(doc, '//div[contains(@class, "thats-right")]/div/div/a[contains(text(), "PDF") and not(contains(text(), "B/W"))]/@href');
 	var pdfSize = ZU.xpathText(doc, '//div[contains(@class, "thats-right")]/div/div/a[contains(text(), "PDF") and not(contains(text(), "B/W"))]/@data-original-title');
 	//Z.debug(pdfurl);
-	var apiurl = url  + "&output=json";
+	var canonicalurl = ZU.xpathText(doc, '//link[@rel="canonical"]/@href');
+	if (canonicalurl) {
+		var apiurl = canonicalurl + "&output=json";
+		//alternative is
+		//var apiurl = url.replace('/details/', '/metadata/').replace('/stream/', '/metadata/');
+	} else {
+		var apiurl = url.replace('/stream/', '/details/').replace(/#.*$/, '')  + "&output=json";
+	}
+	//Z.debug(apiurl);
 	ZU.doGet(apiurl, function(text) {
 		//Z.debug(text);
 		try {
@@ -72,29 +93,44 @@ function scrape(doc, url) {
 			throw e;
 		}
 		var type = obj.mediatype[0];
-		var itemType = typemap[type];
-
-		if (itemType) var newItem = new Zotero.Item(itemType);
-		else var newItem = new Zotero.Item("Document");
+		var itemType = typemap[type] || "document";
+		if (type=="movies" && obj.collection.indexOf("tvarchive")>-1) {
+			itemType = "tvBroadcast";
+		}
+		
+		var newItem = new Zotero.Item(itemType);
+		
 		newItem.title = obj.title[0];
 		var creators = obj.creator;
-		//sometimes authors are in one field delimiter by ;
-		if (creators && creators[0].match(/;/)) {
-			creators = creators[0].split(/\s*;\s*/);
-		}
-		for (var i in creators) {
-			//authors are lastname, firsname, additional info - only use the first two.
-			var author = creators[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
-			newItem.creators[i] = ZU.cleanAuthor(author, "author", true);
+		if (creators) {
+			//sometimes authors are in one field delimiter by ;
+			if (creators && creators[0].match(/;/)) {
+				creators = creators[0].split(/\s*;\s*/);
+			}
+			for (var i = 0; i<creators.length; i++) {
+				//authors are lastname, firstname, additional info - only use the first two.
+				var author = creators[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
+				if (author.indexOf(',')>-1) {
+					newItem.creators.push(ZU.cleanAuthor(author, "author", true));
+				} else {
+					newItem.creators.push({"lastName": author, "creatorType": "author", "fieldMode": 1});
+				}
+			}
 		}
 		var contributors = obj.contributor;
-		for (i in contributors) {
-			//authors are lastname, firsname, additional info - only use the first two.
-			var contributor = contributors[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
-			newItem.creators.push(ZU.cleanAuthor(contributor, "contributor", true));
+		if (contributors) {
+			for (var i = 0; i<contributors.length; i++) {
+				//authors are lastname, firstname, additional info - only use the first two.
+				var contributor = contributors[i].replace(/(\,[^\,]+)(\,.+)/, "$1");
+				if (contributor.indexOf(',')>-1) {
+					newItem.creators.push(ZU.cleanAuthor(contributor, "contributor", true));
+				} else {
+					newItem.creators.push({"lastName": contributor, "creatorType": "contributor", "fieldMode": 1});
+				}
+			}
 		}
 
-		for (i in newItem.creators) {
+		for (var i = 0; i<newItem.creators.length; i++) {
 			if (!newItem.creators[i].firstName) {
 				newItem.creators[i].fieldMode = 1;
 			}
@@ -102,13 +138,16 @@ function scrape(doc, url) {
 		//abstracts can be in multiple fields;
 		if (obj.description) newItem.abstractNote = ZU.cleanTags(obj.description.join("; "));
 
-		var date = obj.date;
-		if (!date) date = obj.year;
+		var date = obj.date || obj.year;
+		
 		var tags = test(obj.subject);
-		if (tags) tags = tags.split(/\s*;\s*/);
-		for (i in tags) {
-			newItem.tags.push(tags[i]);
+		if (tags) {
+			tags = tags.split(/\s*;\s*/);
+			for (var i =0; i<tags.length; i++) {
+				newItem.tags.push(tags[i]);
+			}
 		}
+		
 		//download PDFs; We're being conservative here, only downloading if we understand the filesize
 		if (pdfurl && pdfSize && parseFloat(pdfSize)){
 			//calculate file size in MB
@@ -140,33 +179,24 @@ function scrape(doc, url) {
 	});
 }
 
+
 function doWeb(doc, url) {
-
-	var items = {};
-	var articles = new Array();
-
 	if (detectWeb(doc, url) == "multiple") {
-		Zotero.debug("multiple");
-		var items = new Object();
-
-		var titles = getSearchResults(doc, url);
-		for (var i = 0; i < titles.length; i++) {
-			items[titles[i].href] = titles[i].textContent;
-		}
-
-		Zotero.selectItems(items, function(items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			ZU.processDocuments(articles, scrape)
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
-}/** BEGIN TEST CASES **/
+}
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -308,7 +338,7 @@ var testCases = [
 					}
 				],
 				"date": "1990",
-				"abstractNote": "PLEASE NOTE: Due to a bug in Chrome Version 51, Oregon Trail does not work in that version of Chrome. It is expected to work in Version 52. The program continues to run in Firefox, Internet Explorer, and Safari, and in Beta/Canary versions of Chrome.\n\nPublished by\n   MECC\nDeveloped by\n   MECC\nReleased\n   1990\nAlso For\n   Apple II, Atari 8-bit, Macintosh, Windows, Windows 3.x \nGenre\n   Adventure, Educational, Simulation\nPerspective\n   3rd-Person Perspective, Side-Scrolling\nSport\n   Hunting\nTheme\n   Managerial, Real-Time\nEducational\n   Geography, HistoryDescription\n  As a covered wagon party of pioneers, you head out west from Independence, Missouri to the Willamette River and valley in Oregon. You first must stock up on provisions, and then, while traveling, make decisions such as when to rest, how much food to eat, etc. The Oregon Trail incorporates simulation elements and planning ahead, along with discovery and adventure, as well as mini-game-like activities (hunting and floating down the Dalles River). From Mobygames.com. Original Entry",
+				"abstractNote": "Published by\n   MECC\nDeveloped by\n   MECC\nReleased\n   1990\nAlso For\n   Apple II, Atari 8-bit, Macintosh, Windows, Windows 3.x \nGenre\n   Adventure, Educational, Simulation\nPerspective\n   3rd-Person Perspective, Side-Scrolling\nSport\n   Hunting\nTheme\n   Managerial, Real-Time\nEducational\n   Geography, HistoryDescription\n  As a covered wagon party of pioneers, you head out west from Independence, Missouri to the Willamette River and valley in Oregon. You first must stock up on provisions, and then, while traveling, make decisions such as when to rest, how much food to eat, etc. The Oregon Trail incorporates simulation elements and planning ahead, along with discovery and adventure, as well as mini-game-like activities (hunting and floating down the Dalles River). From Mobygames.com. Original Entry",
 				"libraryCatalog": "Internet Archive",
 				"url": "http://archive.org/details/msdos_Oregon_Trail_The_1990",
 				"attachments": [],
@@ -334,6 +364,106 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					"Photographs"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://archive.org/stream/siopsecretusplan0000prin#page/n85/mode/2up",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "SIOP, the secret U.S. plan for nuclear war",
+				"creators": [
+					{
+						"firstName": "Peter",
+						"lastName": "Pringle",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Internet Archive",
+						"creatorType": "contributor",
+						"fieldMode": 1
+					}
+				],
+				"date": "1983",
+				"abstractNote": "Bibliography: p. 263-277; Includes index",
+				"language": "eng",
+				"libraryCatalog": "Internet Archive",
+				"numPages": "298",
+				"publisher": "New York : Norton",
+				"url": "http://archive.org/details/siopsecretusplan0000prin",
+				"attachments": [],
+				"tags": [
+					"Nuclear warfare"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://archive.org/details/MSNBCW_20170114_020000_The_Rachel_Maddow_Show/start/60/end/120",
+		"items": [
+			{
+				"itemType": "tvBroadcast",
+				"title": "The Rachel Maddow Show : MSNBCW : January 13, 2017 6:00pm-7:01pm PST",
+				"creators": [
+					{
+						"lastName": "MSNBCW",
+						"creatorType": "contributor",
+						"fieldMode": 1
+					}
+				],
+				"date": "2017-01-14",
+				"abstractNote": "Rachel Maddow takes a look at the day's top political news stories.",
+				"language": "eng",
+				"libraryCatalog": "Internet Archive",
+				"runningTime": "01:01:00",
+				"shortTitle": "The Rachel Maddow Show",
+				"url": "http://archive.org/details/MSNBCW_20170114_020000_The_Rachel_Maddow_Show",
+				"attachments": [],
+				"tags": [
+					"amd",
+					"atlas",
+					"backups",
+					"bernie sanders",
+					"breo",
+					"britain",
+					"charleston",
+					"chuck schumer",
+					"chuck todd",
+					"cialis",
+					"clinton",
+					"comcast business",
+					"directv",
+					"donald trump",
+					"donald trump jr.",
+					"downy fabric conditioner",
+					"fbi",
+					"geico",
+					"james comey",
+					"john lewis",
+					"london",
+					"michael beschloss",
+					"moscow",
+					"nancy pelosi",
+					"nbc news",
+					"obama",
+					"oregon",
+					"osteo bi-flex",
+					"rachel",
+					"rachel maddow",
+					"richard nixon",
+					"russia",
+					"south carolina",
+					"titan atlas",
+					"washington",
+					"waterloo"
 				],
 				"notes": [],
 				"seeAlso": []

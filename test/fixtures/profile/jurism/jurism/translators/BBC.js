@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-05-20 06:30:47"
+	"lastUpdated": "2017-07-18 11:06:53"
 }
 
 /*
@@ -36,8 +36,9 @@
 */
 
 function detectWeb(doc, url) {
-	if (/\d{8}$/.test(url)) {
-		var pageNode = doc.getElementById("page");;
+	url = url.replace(/[\?#].+/, "");
+	if (/\d{8}$/.test(url)||/\d{7}\.(stm)$/.test(url)) {
+		var pageNode = doc.getElementById("page");
 		if (pageNode) {
 			//Z.debug(pageNode.className);
 			if (pageNode.className.indexOf("media-asset-page")>-1 || pageNode.className.indexOf("vxp-headlines")>-1) {
@@ -91,7 +92,7 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	
+	url = url.replace(/[\?#].+/, "");
 	var itemType = detectWeb(doc, url);
 	
 	var translator = Zotero.loadTranslator('web');
@@ -101,10 +102,11 @@ function scrape(doc, url) {
 	
 	translator.setHandler('itemDone', function (obj, item) {
 		
-		//add date and time if missing by one of three attempts:
+		//add date and time if missing by one of four attempts:
 		// 1. look at the json-ld data
 		// 2. calculate it from the data-seconds attribute
 		// 3. extract it from a nonstandard meta field
+		// 4. for old pages, get from metadata
 		var jsonld = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
 		var data = JSON.parse(jsonld);
 		//Z.debug(data);
@@ -120,13 +122,16 @@ function scrape(doc, url) {
 				item.date = ZU.xpathText(doc, '//meta[@property="rnews:datePublished"]/@content');
 				if(!item.date) {
 					item.date = ZU.xpathText(doc, '//p[@class="timestamp"]');
-					if (item.date) {
-						item.date = ZU.strToISO(item.date);
+					if (!item.date) {
+						item.date = ZU.xpathText(doc, '//meta[@name="OriginalPublicationDate"]/@content');
 					}
 				}
 			}
 		}
 		
+		if (item.date) {
+			item.date = ZU.strToISO(item.date);
+		}
 		//delete wrongly attached creators like
 		//"firstName": "B. B. C.", "lastName": "News"
 		item.creators = [];
@@ -162,11 +167,22 @@ function scrape(doc, url) {
   			item.blogTitle = "BBC Newsbeat";
 		}
 
+		// description for old BBC pages
+		if(!item.abstractNote)
+			item.abstractNote = ZU.xpathText(doc, '//meta[@name="Description"]/@content');
+
+		for (var i in item.tags)
+			item.tags[i] = item.tags[i].charAt(0).toUpperCase()+item.tags[i].substring(1);
+
 		item.language = "en-GB";
-		
+
+		if (url.substr(-4)==".stm") {
+			item.title = ZU.xpathText(doc, '//meta[@name="Headline"]/@content');
+		}
+
 		item.complete();
 	});
-	
+
 	translator.getTranslatorObject(function(trans) {
 		trans.itemType = itemType;
 		trans.doWeb(doc, url);
@@ -187,7 +203,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2011-10-18T10:31:45+01:00",
+				"date": "2011-10-18",
 				"abstractNote": "Spanish society has been shaken by revelations of the mass trafficking of babies, dating back to the Franco era but continuing until the 1990s involving respected doctors, nuns and priests.",
 				"language": "en-GB",
 				"libraryCatalog": "www.bbc.com",
@@ -218,7 +234,7 @@ var testCases = [
 				"itemType": "newspaperArticle",
 				"title": "China staff fined for not liking boss's Weibo posts",
 				"creators": [],
-				"date": "2016-08-18T12:55:52+01:00",
+				"date": "2016-08-18",
 				"abstractNote": "Company in China punishes employees who don't comment on manager's social media posts.",
 				"language": "en-GB",
 				"libraryCatalog": "www.bbc.com",
@@ -255,7 +271,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2016-08-17T00:49:43+01:00",
+				"date": "2016-08-17",
 				"abstractNote": "How a simple post on social media ended a Russian woman's 40-year search for her father.",
 				"language": "en-GB",
 				"libraryCatalog": "www.bbc.com",
@@ -316,7 +332,7 @@ var testCases = [
 				"itemType": "newspaperArticle",
 				"title": "Rio Olympics 2016: Joseph Schooling beats Michael Phelps in 100m butterfly",
 				"creators": [],
-				"date": "2016/08/13 1:43:21",
+				"date": "2016-08-13",
 				"abstractNote": "Singapore's Joseph Schooling wins his nation's first ever gold medal with victory in the 100m butterfly as Michael Phelps finishes joint second.",
 				"language": "en-GB",
 				"libraryCatalog": "www.bbc.com",
@@ -330,6 +346,42 @@ var testCases = [
 					}
 				],
 				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://news.bbc.co.uk/2/hi/uk_news/politics/2116949.stm",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "EU must expand, Straw warns",
+				"creators": [],
+				"date": "2002-07-08",
+				"abstractNote": "Debate on reform of the Common Agricultural Policy must not dilute support for EU enlargement, Foreign Secretary Jack Straw will warn.",
+				"language": "en-GB",
+				"libraryCatalog": "news.bbc.co.uk",
+				"url": "http://news.bbc.co.uk/2/hi/uk_news/politics/2116949.stm",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"BBC",
+					"BBC News",
+					"British",
+					"Foreign",
+					"International",
+					"News",
+					"News online",
+					"Online",
+					"Service",
+					"Uk",
+					"World"
+				],
 				"notes": [],
 				"seeAlso": []
 			}

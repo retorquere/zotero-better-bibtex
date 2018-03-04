@@ -237,7 +237,7 @@ var testCases = [
 					{
 						"creatorType": "author",
 						"fieldMode": 1,
-						"lastName": "Undervisningsministeriet"
+						"lastName": "Ministeriet for Børn, Undervisning og Ligestilling"
 					}
 				],
 				"dateEnacted": "2013-12-16",
@@ -262,7 +262,7 @@ var testCases = [
 					{
 						"creatorType": "author",
 						"fieldMode": 1,
-						"lastName": "Ministeriet for Børn, Ligestilling, Integration og Sociale Forhold"
+						"lastName": "Ministeriet for Børn, Undervisning og Ligestilling"
 					}
 				],
 				"dateEnacted": "2015-04-30",

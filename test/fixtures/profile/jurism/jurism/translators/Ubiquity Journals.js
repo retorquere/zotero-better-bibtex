@@ -105,7 +105,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journal.eahn.org/articles/10.5334/ah.bd/",
+		"url": "https://journal.eahn.org/articles/10.5334/ah.bd/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -117,7 +117,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014-03-19T12:43:17",
+				"date": "2014-03-19",
 				"DOI": "10.5334/ah.bd",
 				"ISSN": "2050-5833",
 				"abstractNote": "This paper explores the relation between the ‘DIY’ (‘do-it-yourself’) movement and ‘DIY architecture’, and the notion of social transformation, in examples of DIY manuals and discourse of North America drawn from the 1940s to the 1970s. The DIY movement emerged as a significant phenomenon in North America of the 1950s, where it was associated with a mainstream audience and a residential market. By the 1960s, the DIY approach was embraced by the North American counterculture as a self-sustaining sensibility that could overcome a reliance on the mainstream, consumerist society that spurned it. On the surface, the association of DIY with the counterculture and countercultural architects appears to denote a significant ideological shift from its original association with the beliefs and culture of mainstream North America and the nuclear family. However, one of the key characterisations of the DIY movement identified in the present paper is the way it is bound to the notion of social identity and transformation, regardless of ideology. Particular attention is paid to DIY manuals and discourse of the 1950s.",

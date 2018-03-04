@@ -169,7 +169,7 @@ function cleanMath(str) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prd/abstract/10.1103/PhysRevD.84.077701",
+		"url": "https://journals.aps.org/prd/abstract/10.1103/PhysRevD.84.077701",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -194,7 +194,7 @@ var testCases = [
 				"libraryCatalog": "APS",
 				"pages": "077701",
 				"publicationTitle": "Physical Review D",
-				"url": "http://link.aps.org/doi/10.1103/PhysRevD.84.077701",
+				"url": "https://link.aps.org/doi/10.1103/PhysRevD.84.077701",
 				"volume": "84",
 				"attachments": [
 					{
@@ -213,17 +213,17 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prd/issues/84/7",
+		"url": "https://journals.aps.org/prd/issues/84/7",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/search/results?sort=relevance&clauses=%5B%7B%22operator%22:%22AND%22,%22field%22:%22all%22,%22value%22:%22test%22%7D%5D",
+		"url": "https://journals.aps.org/search/results?sort=relevance&clauses=%5B%7B%22operator%22:%22AND%22,%22field%22:%22all%22,%22value%22:%22test%22%7D%5D",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prl/abstract/10.1103/PhysRevLett.114.098105",
+		"url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.114.098105",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -268,7 +268,7 @@ var testCases = [
 				"libraryCatalog": "APS",
 				"pages": "098105",
 				"publicationTitle": "Physical Review Letters",
-				"url": "http://link.aps.org/doi/10.1103/PhysRevLett.114.098105",
+				"url": "https://link.aps.org/doi/10.1103/PhysRevLett.114.098105",
 				"volume": "114",
 				"attachments": [
 					{
@@ -287,7 +287,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prx/supplemental/10.1103/PhysRevX.5.011029",
+		"url": "https://journals.aps.org/prx/supplemental/10.1103/PhysRevX.5.011029",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -327,7 +327,7 @@ var testCases = [
 				"libraryCatalog": "APS",
 				"pages": "011029",
 				"publicationTitle": "Physical Review X",
-				"url": "http://link.aps.org/doi/10.1103/PhysRevX.5.011029",
+				"url": "https://link.aps.org/doi/10.1103/PhysRevX.5.011029",
 				"volume": "5",
 				"attachments": [
 					{
@@ -346,7 +346,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prx/references/10.1103/PhysRevX.5.011029",
+		"url": "https://journals.aps.org/prx/references/10.1103/PhysRevX.5.011029",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -386,7 +386,7 @@ var testCases = [
 				"libraryCatalog": "APS",
 				"pages": "011029",
 				"publicationTitle": "Physical Review X",
-				"url": "http://link.aps.org/doi/10.1103/PhysRevX.5.011029",
+				"url": "https://link.aps.org/doi/10.1103/PhysRevX.5.011029",
 				"volume": "5",
 				"attachments": [
 					{
@@ -405,7 +405,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://journals.aps.org/prx/cited-by/10.1103/PhysRevX.5.011003",
+		"url": "https://journals.aps.org/prx/cited-by/10.1103/PhysRevX.5.011003",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -445,7 +445,7 @@ var testCases = [
 				"libraryCatalog": "APS",
 				"pages": "011003",
 				"publicationTitle": "Physical Review X",
-				"url": "http://link.aps.org/doi/10.1103/PhysRevX.5.011003",
+				"url": "https://link.aps.org/doi/10.1103/PhysRevX.5.011003",
 				"volume": "5",
 				"attachments": [
 					{

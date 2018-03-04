@@ -2,14 +2,14 @@
 	"translatorID": "4fd6b89b-2316-2dc4-fd87-61a97dd941e8",
 	"label": "Library Catalog (InnoPAC)",
 	"creator": "Simon Kornblith and Michael Berkowitz",
-	"target": "(search~|/search\\?|(a|X|t|Y|w)\\?|\\?(searchtype|searchscope)|frameset&FF|record=b[0-9]+(~S[0-9])?|/search/q\\?)",
+	"target": "(search~|/search\\?|(a|X|t|Y|w)\\?|\\?(searchtype|searchscope)|frameset&FF|record=[bi][0-9]+(~S[0-9])?|/search/q\\?)",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 250,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-01 16:17:52"
+	"lastUpdated": "2017-09-26 22:26:13"
 }
 
 function detectWeb(doc, url) {
@@ -193,10 +193,6 @@ function doWeb(doc, url) {
 			
 			var tableRows = doc.evaluate('//table//tr[@class="browseEntry" or @class="briefCitRow" or td/input[@type="checkbox"] or td[contains(@class,"briefCitRow") or contains(@class,"briefcitCell") or contains(@class,"briefcitDetail")]]',
 										 doc, null, XPathResult.ANY_TYPE, null);
-			if (!tableRows.iterateNext()){
-				//http://lib.ntu.edu.tw/en
-				tableRows = doc.evaluate('//table[@class="briefCitRow"]', doc, null, XPathResult.ANY_TYPE, null);
-			}
 			// Go through table rows
 			var i = 0;
 			while(tableRow = tableRows.iterateNext()) {
@@ -267,6 +263,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
+				"title": "Black mass: apocalyptic religion and the death of utopia",
 				"creators": [
 					{
 						"firstName": "John",
@@ -274,35 +271,34 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
+				"date": "2007",
+				"ISBN": "9780374105983",
+				"callNumber": "BL65.P7 G69 2007",
+				"edition": "1st American ed",
+				"libraryCatalog": "libcat.dartmouth.edu Library Catalog",
+				"numPages": "242",
+				"place": "New York",
+				"publisher": "Farrar Straus and Giroux",
+				"shortTitle": "Black mass",
+				"attachments": [],
+				"tags": [
+					"20th century",
+					"21st century",
+					"Conservatism",
+					"Religion and politics",
+					"Religious aspects",
+					"Religious aspects",
+					"Revolutions",
+					"Utopias",
+					"World politics",
+					"World politics"
+				],
 				"notes": [
 					{
 						"note": "The death of utopia -- Enlightenment and terror in the twentieth century -- Utopia enters the mainstream -- The Americanization of the apocalypse -- Armed missionaries --Post-apocalypse"
 					}
 				],
-				"tags": [
-					"Religion and politics",
-					"Utopias",
-					"Revolutions",
-					"Religious aspects",
-					"Conservatism",
-					"Religious aspects",
-					"World politics",
-					"20th century",
-					"World politics",
-					"21st century"
-				],
-				"seeAlso": [],
-				"attachments": [],
-				"ISBN": "9780374105983",
-				"title": "Black mass: apocalyptic religion and the death of utopia",
-				"edition": "1st American ed",
-				"place": "New York",
-				"publisher": "Farrar Straus and Giroux",
-				"date": "2007",
-				"numPages": "242",
-				"callNumber": "BL65.P7 G69 2007",
-				"libraryCatalog": "libcat.dartmouth.edu Library Catalog",
-				"shortTitle": "Black mass"
+				"seeAlso": []
 			}
 		]
 	},
@@ -315,6 +311,70 @@ var testCases = [
 		"type": "web",
 		"url": "http://las.sinica.edu.tw:1085/search~S0*eng/?searchtype=a&searcharg=%E9%BB%83%E5%8B%97%E5%90%BE&sortdropdown=-&SORT=D&extended=0&SUBMIT=Search&searchlimits=&searchorigarg=aborges",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://lib.hope.edu/record=i2182237",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Preaching the women of the Old Testament: who they were and why they matter",
+				"creators": [
+					{
+						"firstName": "Lynn",
+						"lastName": "Japinga",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017",
+				"ISBN": "9780664259693",
+				"abstractNote": "Women played an important role in the Old Testament. However, their stories are often untold in both the classroom and from the pulpit-- until now. Inside Preaching the Women of the Old Testament author Lynn Japinga explores the stories of over forty fierce, faithful, and strong women featured in the Old Testament, including Eve, Rebekah, Dinah, Tamar, Miriam, Deborah, Jael, Abigail, Bathsheba, and Vashti. Along with providingan interpretation of their stories, Japinga demonstrates how each woman's story has been read in Christian tradition and offers sermon ideas that connect each story to various contemporary issues. This unique resource is ideal for pastors who want to know more about the many women in the Old Testament and how to better incorporate them into their sermons. - back of the book",
+				"callNumber": "BS575 .J38 2017",
+				"edition": "First edition",
+				"extra": "OCLC: 954719851",
+				"libraryCatalog": "lib.hope.edu Library Catalog",
+				"numPages": "221",
+				"place": "Louisville, Kentucky",
+				"publisher": "Westminster John Knox Press",
+				"shortTitle": "Preaching the women of the Old Testament",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Bible"
+					},
+					{
+						"tag": "Bible"
+					},
+					{
+						"tag": "Women in the Bible"
+					},
+					{
+						"tag": "Sermons, American"
+					},
+					{
+						"tag": "Sermons, American"
+					},
+					{
+						"tag": "Women in the Bible"
+					},
+					{
+						"tag": "Biography"
+					},
+					{
+						"tag": "Sermons"
+					}
+				],
+				"notes": [
+					{
+						"note": "Includes bibliographical references and indexes"
+					},
+					{
+						"note": "Eve -- Sarah and Hagar -- Lot's wife and daughters -- Rebekah -- Rachel and Leah -- Dinah -- Tamar (Genesis) -- Potiphar's wife -- The women who kept Moses alive -- Miriam -- Zipporah -- Daughters of Zelophehad -- Rahab -- Achsah -- Deborah -- Jael -- Jephthah's daughter -- Samson's mother/Manoah's wife -- Delilah -- The Levite's concubine -- Ruth and Naomi -- Hannah -- Michal -- Abigail-- The medium at Endor -- Bathsheba -- Tamar (2 Samuel) --Rizpah -- The Queen of Sheba -- Jezebel -- The widow of Zarephath -- The woman with the oil -- The Shunammite woman -- The maid of Naaman's wife -- Huldah -- Vashti -- Esther -- Job's wife -- The woman in Proverbs 31 -- Gomer"
+					}
+				],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

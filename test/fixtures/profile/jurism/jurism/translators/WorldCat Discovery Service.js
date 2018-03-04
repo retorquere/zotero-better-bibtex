@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2015-06-27 03:23:48"
+	"lastUpdated": "2017-06-25 19:26:46"
 }
 
 /*
@@ -45,7 +45,7 @@ function detectWeb(doc, url) {
 	//single result
 	// generate item and return type
 	var co = getFirstContextObj(doc);
-	if (!co | url.indexOf("?databaseList") == -1) return false;
+	if (!co || url.indexOf("?databaseList") == -1) return false;
 
 	return generateItem(doc, co).itemType;
 }
@@ -99,7 +99,7 @@ function getTitleNode(searchResult) {
 }
 
 function getFirstContextObj(doc) {
-	return ZU.xpathText(doc, '//span[@class="Z3988"][1]/@title');
+	return ZU.xpathText(doc, '//span[contains(@class, "Z3988")][1]/@title');
 }
 
 
@@ -192,6 +192,20 @@ function scrape(risURL) {
 				//extract possible roman numerals and number of pages without the p
 				var numPages = item.section.match(/(([lxiv]+,\s*)?\d+)\s*p/);
 				if (numPages) item.numPages = numPages[1];
+			}
+			
+			//the url field sometimes contains an additional label, e.g. for TOC
+			//"url": "Table of contents http://bvbr.bib-bvb.de:8991/...
+			if (item.url) {
+				var posUrl = item.url.indexOf('http');
+				if (posUrl>0) {
+					item.attachments.push({
+						url: item.url.substr(posUrl),
+						title: item.url.substr(0, posUrl),
+						snapshot: false
+					});
+					delete item.url;
+				}
 			}
 
 			item.complete();
@@ -298,7 +312,7 @@ var testCases = [
 					}
 				],
 				"date": "2010",
-				"ISBN": "9781598565836\n1598565834",
+				"ISBN": "9781598565836",
 				"language": "English",
 				"libraryCatalog": "WorldCat Discovery Service",
 				"numPages": "xx, 404",
@@ -306,7 +320,12 @@ var testCases = [
 				"publisher": "Hendrickson Publishers Marketing",
 				"series": "Lexham Bible reference series; Lexham Bible reference series.",
 				"shortTitle": "Discourse grammar of the Greek New Testament",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Table of contents ",
+						"snapshot": false
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []

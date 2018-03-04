@@ -7,6 +7,7 @@
 	"maxVersion": "",
 	"priority": 200,
 	"configOptions": {
+		"async": true,
 		"getCollections": true
 	},
 	"displayOptions": {
@@ -18,7 +19,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2017-03-11 13:39:28"
+	"lastUpdated": "2017-12-27 22:23:20"
 }
 
 function detectImport() {
@@ -169,7 +170,13 @@ var inputFieldMap = {
 	institution:"publisher",
 	publisher:"publisher",
 	issue:"issue",
-	location:"place"
+	location:"place",
+	// import also BibLaTeX fields:
+	journaltitle:"publicationTitle",
+	shortjournal:"journalAbbreviation",
+	eventtitle:"conferenceName",
+	pagetotal:"numPages",
+	version:"version"
 };
 
 var zotero2bibtexTypeMap = {
@@ -206,7 +213,21 @@ var bibtex2zoteroTypeMap = {
 	"mastersthesis":"thesis",
 	"misc":"book",
 	"proceedings":"book",
-	"online":"webpage"
+	"online":"webpage",
+	// from BibLaTeX translator:
+	"thesis":"thesis",
+	"letter":"letter",
+	"movie":"film",
+	"artwork":"artwork",
+	"report":"report",
+	"legislation":"bill",
+	"jurisdiction":"case",
+	"audio":"audioRecording",
+	"video":"videoRecording",
+	"software":"computerProgram",
+	"inreference":"encyclopediaArticle",
+	"collection":"book",
+	"mvbook":"book"
 };
 
 /*
@@ -820,6 +841,10 @@ function beginRecord(type, closeChar) {
 		item._extraFields = [];
 	}
 	
+	// For theses write the thesisType determined by the BibTeX type.
+	if (type == "mastersthesis" && item) item.type = "Master's Thesis";
+	if (type == "phdthesis" && item) item.type = "PhD Thesis";
+
 	var field = "";
 	
 	// by setting dontRead to true, we can skip a read on the next iteration
@@ -879,7 +904,7 @@ function beginRecord(type, closeChar) {
 					item.publisher=item.backupPublisher;
 					delete item.backupPublisher;
 				}
-				item.complete();
+				return item.complete();
 			}
 			return;
 		} else if(" \n\r\t".indexOf(read) == -1) {		// skip whitespace
@@ -889,30 +914,67 @@ function beginRecord(type, closeChar) {
 }
 
 function doImport() {
-	var read = "", text = "", recordCloseElement = false;
+	if (typeof Promise == 'undefined') {
+		readString(
+			function () {},
+			function (e) {
+				throw e;
+			}
+		);
+	}
+	else {
+		return new Promise(function (resolve, reject) {
+			readString(resolve, reject);
+		});
+	}
+}
+
+function readString(resolve, reject) {
+	var read = "";
 	var type = false;
 	
-	while(read = Zotero.read(1)) {
-		if(read == "@") {
-			type = "";
-		} else if(type !== false) {
-			if(type == "comment") {
-				processComment();
-				type = false;
-			} else if(read == "{") {		// possible open character
-				beginRecord(type, "}");
-				type = false;
-			} else if(read == "(") {		// possible open character
-				beginRecord(type, ")");
-				type = false;
-			} else if(/[a-zA-Z0-9-_]/.test(read)) {
-				type += read;
+	var next = function () {
+		readString(resolve, reject);
+	};
+	
+	try {
+		while (read = Zotero.read(1)) {
+			if(read == "@") {
+				type = "";
+			} else if(type !== false) {
+				if(type == "comment") {
+					processComment();
+					type = false;
+				} else if(read == "{") {		// possible open character
+					// This might return a promise if an item was saved
+					// TODO: When 5.0-only, make sure this always returns a promise
+					var maybePromise = beginRecord(type, "}");
+					if (maybePromise) {
+						maybePromise.then(next);
+						return;
+					}
+				} else if(read == "(") {		// possible open character
+					var maybePromise = beginRecord(type, ")");
+					if (maybePromise) {
+						maybePromise.then(next);
+						return;
+					}
+				} else if(/[a-zA-Z0-9-_]/.test(read)) {
+					type += read;
+				}
 			}
 		}
+		for (var key in jabref.root) {
+			// TODO: Handle promise?
+			if (jabref.root.hasOwnProperty(key)) { jabref.root[key].complete(); }
+		}
 	}
-	for (var key in jabref.root) {
-		if (jabref.root.hasOwnProperty(key)) { jabref.root[key].complete(); }
+	catch (e) {
+		reject(e);
+		return;
 	}
+	
+	resolve();
 }
 
 // some fields are, in fact, macros.  If that is the case then we should not put the
@@ -1189,6 +1251,22 @@ function doExport() {
 		// determine type
 		var type = zotero2bibtexTypeMap[item.itemType];
 		if (typeof(type) == "function") { type = type(item); }
+
+		// For theses BibTeX distinguish between @mastersthesis and @phdthesis
+		// and the default mapping will map all Zotero thesis items to a
+		// BibTeX phdthesis item. Here we try to fix this by examining the
+		// Zotero thesisType field.
+		if (type == "phdthesis") {
+			// In practice, we just want to separate out masters theses,
+			// and will assume everything else maps to @phdthesis. Better to
+			// err on the side of caution.
+			var thesisType = item.type && item.type.toLowerCase().replace(/[\s.]+|thesis|unpublished/g, '');
+			if (thesisType &&  (thesisType == 'master' || thesisType == 'masters'  || thesisType == "master's" || thesisType == 'ms' || thesisType == 'msc' || thesisType == 'ma')) {
+				type = "mastersthesis";
+				item["type"] = "";
+			}
+		}
+
 		if(!type) type = "misc";
 		
 		// create a unique citation key
@@ -3505,6 +3583,52 @@ var testCases = [
 				],
 				"extra": "DOI: 10.12345/123456\nLCCN: L123456\nMR: MR123456\nZbl: ZM123456\nPMID: P123456\nPMCID: PMC123456\narXiv: AX123456",
 				"itemID": "smith_testing_????",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@mastersthesis{DBLP:ms/Hoffmann2008,\n  author    = {Oliver Hoffmann},\n  title     = {Regelbasierte Extraktion und asymmetrische Fusion bibliographischer\n               Informationen},\n  school    = {Diplomarbeit, Universit{\\\"{a}}t Trier, {FB} IV, {DBIS/DBLP}},\n  year      = {2009},\n  url       = {http://dblp.uni-trier.de/papers/DiplomarbeitOliverHoffmann.pdf},\n  timestamp = {Wed, 03 Aug 2011 15:40:21 +0200},\n  biburl    = {http://dblp.org/rec/bib/ms/Hoffmann2008},\n  bibsource = {dblp computer science bibliography, http://dblp.org}\n}\n\n@phdthesis{DBLP:phd/Ackermann2009,\n  author    = {Marcel R. Ackermann},\n  title     = {Algorithms for the Bregman k-Median problem},\n  school    = {University of Paderborn},\n  year      = {2009},\n  url       = {http://digital.ub.uni-paderborn.de/hs/content/titleinfo/1561},\n  urn       = {urn:nbn:de:hbz:466-20100407029},\n  timestamp = {Thu, 01 Dec 2016 16:33:49 +0100},\n  biburl    = {http://dblp.org/rec/bib/phd/Ackermann2009},\n  bibsource = {dblp computer science bibliography, http://dblp.org}\n}",
+		"items": [
+			{
+				"itemType": "thesis",
+				"title": "Regelbasierte Extraktion und asymmetrische Fusion bibliographischer Informationen",
+				"creators": [
+					{
+						"firstName": "Oliver",
+						"lastName": "Hoffmann",
+						"creatorType": "author"
+					}
+				],
+				"date": "2009",
+				"itemID": "DBLP:ms/Hoffmann2008",
+				"thesisType": "Master's Thesis",
+				"university": "Diplomarbeit, Universität Trier, FB IV, DBIS/DBLP",
+				"url": "http://dblp.uni-trier.de/papers/DiplomarbeitOliverHoffmann.pdf",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			},
+			{
+				"itemType": "thesis",
+				"title": "Algorithms for the Bregman k-Median problem",
+				"creators": [
+					{
+						"firstName": "Marcel R.",
+						"lastName": "Ackermann",
+						"creatorType": "author"
+					}
+				],
+				"date": "2009",
+				"itemID": "DBLP:phd/Ackermann2009",
+				"thesisType": "PhD Thesis",
+				"university": "University of Paderborn",
+				"url": "http://digital.ub.uni-paderborn.de/hs/content/titleinfo/1561",
 				"attachments": [],
 				"tags": [],
 				"notes": [],

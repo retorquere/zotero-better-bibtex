@@ -2,14 +2,14 @@
 	"translatorID": "4c272290-7ac4-433e-862d-244884ed285a",
 	"label": "sbn.it",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://www\\.sbn\\.it/opacsbn/opaclib\\?",
+	"target": "^https?://(www|opac)\\.sbn\\.it/opacsbn/opaclib\\?",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-07-27 05:48:04"
+	"lastUpdated": "2017-06-24 10:05:03"
 }
 
 /*
@@ -137,7 +137,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sbn.it/opacsbn/opaclib?db=solr_iccu&rpnquery=%2540attrset%2Bbib-1%2B%2B%2540attr%2B1%253D1016%2B%2540attr%2B4%253D6%2B%2522z39.50%2522&totalResult=6&select_db=solr_iccu&nentries=1&rpnlabel=+Any+%3D+z39.50+%28words+in+AND%29+&format=&resultForward=opac%2Ficcu%2Ffull.jsp&searchForm=opac%2Ficcu%2Ferror.jsp&do_cmd=show_cmd&saveparams=false&&fname=none&from=6",
+		"url": "http://opac.sbn.it/opacsbn/opaclib?db=solr_iccu&rpnquery=%2540attrset%2Bbib-1%2B%2B%2540attr%2B1%253D1032%2B%2540attr%2B4%253D2%2B%2522VEA0102960%2522&totalResult=1&select_db=solr_iccu&nentries=1&rpnlabel=BID%3DVEA0102960&resultForward=opac%2Ficcu%2Ffull.jsp&searchForm=opac%2Ficcu%2Ferror.jsp&do_cmd=show_cmd&saveparams=false&&fname=none&from=1",
 		"items": [
 			{
 				"itemType": "book",

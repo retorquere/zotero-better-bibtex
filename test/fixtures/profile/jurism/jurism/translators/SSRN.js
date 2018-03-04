@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2013-09-25 15:23:47"
+	"lastUpdated": "2017-06-26 04:35:21"
 }
 
 /*
@@ -48,11 +48,11 @@ function doWeb(doc,url)
 	if (detectWeb(doc, url) == "multiple") {
 		var hits = {};
 		var urls = [];
-		//this one is for searches and publication series:
+		//this one is for publication series:
 		var results = ZU.xpath(doc, "//tr/td//strong/a[(@class='textlink' or @class='textLink') and contains(@href, 'papers.cfm?abstract_id')]");
-		//otherwise, this is an author page
+		//otherwise, this is an author page or searches
 		if(results.length<1){
-			results = ZU.xpath(doc,"//tr[contains(@id, 'row_') or contains(@id, '_version')]//a[@class='textlink' and contains(@href, 'ssrn.com/abstract=')]");
+			results = ZU.xpath(doc,"//div[contains(@class, 'trow')]//a[contains(@class, 'title') and contains(@href, 'ssrn.com/abstract=')]");
 		}
 		for(var i=0, n=results.length; i<n; i++) {
 			hits[results[i].href] = results[i].textContent;
@@ -70,7 +70,7 @@ function doWeb(doc,url)
 }
 
 function scrape(doc, url) {
-	var abstract = ZU.xpathText(doc, '//div[@id="innerWhite"]/font[1]')
+	var abstract = ZU.xpathText(doc, '//div[@class="abstract-text"]/p[1]');
 	// We call the Embedded Metadata translator to do the actual work
 	var translator = Zotero.loadTranslator("web");
 	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
@@ -83,6 +83,14 @@ function scrape(doc, url) {
 		if(number) item.reportNumber= "ID " + number[1];
 		item.place = "Rochester, NY";
 		if (abstract) item.abstractNote = abstract.trim(); 
+		//The pdfurl in the meta tag 'citation_pdf_url' is just pointing
+		//to the entry itself and there seems to be no stable, reliable
+		//one-click pdfurl anyhow. --> Delete this non-working attachment.
+		for (var i=0; i<item.attachments.length; i++) {
+			if (item.attachments[i].title=="Full Text PDF") {
+				item.attachments.splice(i, 1);
+			}
+		}
 
 		item.complete();
 	});
@@ -92,25 +100,26 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://papers.ssrn.com/sol3/results.cfm?txtKey_Words=europe",
+		"url": "https://papers.ssrn.com/sol3/results.cfm?txtKey_Words=europe",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=1747960",
+		"url": "https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=1747960",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=16042",
+		"url": "https://papers.ssrn.com/sol3/cf_dev/AbsByAuth.cfm?per_id=16042",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://papers.ssrn.com/sol3/papers.cfm?abstract_id=1450387",
+		"url": "https://papers.ssrn.com/sol3/papers.cfm?abstract_id=1450387",
 		"items": [
 			{
 				"itemType": "report",
+				"title": "Who Doesn't Support the Genocide Convention? A Nested Analysis",
 				"creators": [
 					{
 						"firstName": "Michael",
@@ -123,41 +132,35 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"human rights",
-					"genocide",
-					"Japan",
-					"international law",
-					"nested analysis",
-					"mixed methods",
-					"event history analysis",
-					"survival models",
-					"hazard models",
-					"international norms",
-					"norm cascades"
-				],
-				"seeAlso": [],
+				"date": "2009",
+				"abstractNote": "What explains the large variation in the time taken by different countries to ratify the 1948 Genocide Convention? The costs of ratiﬁcation would appear to be relatively low, yet many countries have waited for years, and even decades, before ratifying this symbolically important treaty. This study employs a \"nested analysis\" that combines a large-n event history analysis with a detailed study of an important outlying case in order to explain the main sources of this variation. The initial event history history produces a puzzling ﬁnding: countries appear to be less likely to ratify the treaty if relevant peer countries have already done so. We use the case of Japan -- which has not yet ratiﬁed the Genocide Convention, despite the predictions of the event history model -- to explore the proposed causes of ratiﬁcation in more detail. Based on these ﬁndings, we suggest that once the norms embodied in a treaty take on a sufﬁciently \"taken-for-granted\" character, many countries decide that the costs of ratiﬁcation outweigh its marginal beneﬁts. The pattern of ratiﬁcation of the Genocide Convention therefore does not appear to ﬁt the classic model of the \"norm cascade\" that has been used to explain the adoption of other human rights norms. We conclude with suggestions for how the validity of our theory could be tested through a combination of further large-n and small-n analysis.",
+				"institution": "Social Science Research Network",
+				"libraryCatalog": "papers.ssrn.com",
+				"place": "Rochester, NY",
+				"reportNumber": "ID 1450387",
+				"reportType": "SSRN Scholarly Paper",
+				"shortTitle": "Who Doesn't Support the Genocide Convention?",
+				"url": "https://papers.ssrn.com/abstract=1450387",
 				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
 					{
 						"title": "Snapshot"
 					}
 				],
-				"title": "Who Doesn't Support the Genocide Convention? A Nested Analysis",
-				"date": "2009",
-				"url": "http://papers.ssrn.com/abstract=1450387",
-				"abstractNote": "What explains the large variation in the time taken by different countries to ratify the 1948 Genocide Convention? The costs of ratiﬁcation would appear to be relatively low, yet many countries have waited for years, and even decades, before ratifying this symbolically important treaty. This study employs a \"nested analysis\" that combines a large-n event history analysis with a detailed study of an important outlying case in order to explain the main sources of this variation. The initial event history history produces a puzzling ﬁnding: countries appear to be less likely to ratify the treaty if relevant peer countries have already done so. We use the case of Japan -- which has not yet ratiﬁed the Genocide Convention, despite the predictions of the event history model -- to explore the proposed causes of ratiﬁcation in more detail. Based on these ﬁndings, we suggest that once the norms embodied in a treaty take on a sufﬁciently \"taken-for-granted\" character, many countries decide that the costs of ratiﬁcation outweigh its marginal beneﬁts. The pattern of ratiﬁcation of the Genocide Convention therefore does not appear to ﬁt the classic model of the \"norm cascade\" that has been used to explain the adoption of other human rights norms. We conclude with suggestions for how the validity of our theory could be tested through a combination of further large-n and small-n analysis.",
-				"libraryCatalog": "papers.ssrn.com",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"type": "SSRN Scholarly Paper",
-				"institution": "Social Science Research Network",
-				"reportNumber": "ID 1450387",
-				"place": "Rochester, NY",
-				"shortTitle": "Who Doesn't Support the Genocide Convention?"
+				"tags": [
+					"Japan",
+					"event history analysis",
+					"genocide",
+					"hazard models",
+					"human rights",
+					"international law",
+					"international norms",
+					"mixed methods",
+					"nested analysis",
+					"norm cascades",
+					"survival models"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

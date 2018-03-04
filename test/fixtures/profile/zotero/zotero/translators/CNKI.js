@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcs",
-	"lastUpdated": "2017-01-01 16:51:46"
+	"lastUpdated": "2017-09-02 11:17:43"
 }
 
 /*
@@ -103,6 +103,14 @@ function getTypeFromDBName(dbname) {
 }
 
 function getItemsFromSearchResults(doc, url, itemInfo) {
+	var iframe = doc.getElementById('iframeResult');
+	if (iframe) {
+		var innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+		if (innerDoc) {
+			doc = innerDoc;
+		}
+	}
+	
 	var links = ZU.xpath(doc, '//tr[not(.//tr) and .//a[@class="fz14"]]');
 	var aXpath = './/a[@class="fz14"]';
 	if(!links.length) {

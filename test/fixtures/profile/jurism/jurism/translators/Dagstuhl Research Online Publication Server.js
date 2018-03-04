@@ -151,7 +151,7 @@ var testCases = [
 					}
 				],
 				"date": "2015",
-				"DOI": "http://dx.doi.org/10.4230/LIPIcs.STACS.2015.1",
+				"DOI": "10.4230/LIPIcs.STACS.2015.1",
 				"ISBN": "9783939897781",
 				"itemID": "arora:LIPIcs:2015:4958",
 				"libraryCatalog": "Dagstuhl Research Online Publication Server",
@@ -237,7 +237,7 @@ var testCases = [
 					}
 				],
 				"date": "2016",
-				"DOI": "http://dx.doi.org/10.4230/LIPIcs.SoCG.2016.41",
+				"DOI": "10.4230/LIPIcs.SoCG.2016.41",
 				"ISBN": "9783959770095",
 				"itemID": "geyer_et_al:LIPIcs:2016:5933",
 				"libraryCatalog": "Dagstuhl Research Online Publication Server",

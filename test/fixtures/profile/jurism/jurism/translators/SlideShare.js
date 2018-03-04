@@ -81,31 +81,31 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.slideshare.net/eby/zotero-and-you-or-bibliography-on-the-semantic-web",
+		"url": "https://www.slideshare.net/eby/zotero-and-you-or-bibliography-on-the-semantic-web",
 		"items": [
 			{
 				"itemType": "presentation",
+				"title": "Zotero and You, or Bibliography on the Semantic Web",
 				"creators": [
 					{
 						"lastName": "eby",
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"title": "Zotero and You, or Bibliography on the Semantic Web",
-				"abstractNote": "Representatives from the Center for History and New Media will introduce Zotero, a free and open source extension for Firefox that allows you to collect, organize and archive your research materials. After a brief demo and explanation, we will discuss best practices for making your projects \"Zotero ready\" and other opportunities to integrate with your digital projects through the Zotero API.",
 				"date": "2008-03-06 10:51:58 UTC",
-				"url": "http://www.slideshare.net/eby/zotero-and-you-or-bibliography-on-the-semantic-web",
-				"presentationType": "Business"
+				"abstractNote": "Representatives from the Center for History and New Media will introduce Zotero, a free and open source extension for Firefox that allows you to collect, organize and archive your research materials. After a brief demo and explanation, we will discuss best practices for making your projects \"Zotero ready\" and other opportunities to integrate with your digital projects through the Zotero API.",
+				"presentationType": "Business",
+				"url": "https://www.slideshare.net/eby/zotero-and-you-or-bibliography-on-the-semantic-web",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.slideshare.net/search/slideshow?searchfrom=header&q=zotero",
+		"url": "https://www.slideshare.net/search/slideshow?searchfrom=header&q=zotero",
 		"items": "multiple"
 	}
 ]

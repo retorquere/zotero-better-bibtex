@@ -1,15 +1,15 @@
 {
 	"translatorID": "f61beec2-1431-4218-a9d3-68063ede6ecd",
 	"label": "Welt Online",
-	"creator": "Martin Meyerhoff",
+	"creator": "Martin Meyerhoff, Philipp Zumstein",
 	"target": "^https?://www\\.welt\\.de",
-	"minVersion": "2.1.9",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-04 10:02:57"
+	"lastUpdated": "2017-06-17 21:34:51"
 }
 
 /*
@@ -38,123 +38,85 @@ http://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewin
 */
 
 function detectWeb(doc, url) {
-	var welt_article_XPath = '//div[@id="main"]//h1';
-	var welt_multiple_XPath = "//h4[contains(@class, 'headline')]/a";
-	//Z.debug(ZU.xpathText(doc, welt_multiple_XPath))
-	if (ZU.xpathText(doc, welt_article_XPath) ){ 
+	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')=="article") {
 		Zotero.debug("newspaperArticle");
 		return "newspaperArticle";
-	} 	else if (ZU.xpathText(doc, welt_multiple_XPath)){ 
+	} else if (getSearchResults(doc, true)){ 
 		Zotero.debug("multiple");
 		return "multiple"; 
 	} 
 }
 
 function scrape(doc, url) {
-	var newItem = new Zotero.Item("newspaperArticle");
-	newItem.url = doc.location.href; 
-
+	var data = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
+	var json = JSON.parse(data);
+	//Z.debug(json);
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
 	
-	// This is for the title! Welt's titles are ok without their "supertitles". They seem to convey - nothing. 
-	
-	var xPath = ".//meta[contains(@property, 'og:title')]";
-	var title = doc.evaluate(xPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().content;
-	newItem.title = title;
-
-	// Authors
-	
-	var xPath = ".//meta[contains(@name, 'author')]/@content";
-	var author= ZU.xpathText(doc, xPath);
-	if (author == "WELT ONLINE") {
-		author = "";
-	}
-	if (author){ 
-		author = author.split(/\sund\s|\su\.\s|\,\s|\&|Und/)
-		for (var i in author) {
-			if (author[i].match(/\s/)) { // only names that contain a space!
-				author[i] = author[i].replace(/^\s*|\s*$/g, '');
-				newItem.creators.push(Zotero.Utilities.cleanAuthor(author[i], "author"));
-			}
-		}	
-	}
-	
-	// Summary
-	
-	var xPath = '//meta[contains(@name, "description")]';
-	var summary = doc.evaluate(xPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().content;
-	newItem.abstractNote = summary;
-
-	// Tags
-	var xPath = '//meta[contains(@name, "keywords")]/@content';
-	var tags= ZU.xpathText(doc, xPath);
-	Z.debug(tags)
-	if (tags){
-	tags = tags.split(/,\s/);
-		if (tags[0] != "" ) {
-			for (var i in tags) {
-				tags[i] = tags[i].replace(/^\s*|\s*$/g, '');
-				newItem.tags.push(tags[i]);
-			}
+	translator.setHandler('itemDone', function (obj, item) {
+		item.date = json.datePublished;
+		if (item.creators.length==0) {
+			item.creators.push(ZU.cleanAuthor(json.author.name, "author"));
 		}
+		if (json.headline) {
+			item.title = json.headline;
+			Z.debug(json.headline)
+		}
+		item.complete();
+	});
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "newspaperArticle";
+		trans.doWeb(doc, url);
+	});
+}
+
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//h4/a[@data-qa="Teaser.Link"]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-	// Date 
-	var xPath = "//div[@id='main']/div/span[contains(@class, 'time')][last()]";
-	var date= ZU.xpathText(doc, xPath);
-	if(date && date.match(/\d{2}\.\d{2}\.\d{2}/)) newItem.date = date;
-	else newItem.date = ZU.xpathText(doc, '//meta[@name="date"]/@content').replace(/T.+/, "");
-
-	// Publikation (I can only distinguish some articles from Welt am Sonntag by their URL, otherwise its all mishmash)
-	if (doc.location.href.match(/.*wams_print.*/)) {
-		newItem.publicationTitle = "Welt am Sonntag";
-	} else {
-		newItem.publicationTitle = "Welt Online";
-	}
-	
-	// Section
-	var xPath = ".//*[@id='mainNavigationMenu']/ul/li[contains(@class, 'active')]/a";
-	var section= ZU.xpathText(doc, xPath);
-	newItem.section = section;
-
-	// Attachment
-	newItem.attachments.push({url:doc.location.href+"?print=true", title:doc.title, mimeType:"text/html"});
-
-	newItem.complete()
+	return found ? items : false;
 }
 
 
 function doWeb(doc, url) {
-	var articles = new Array();
-	
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		
-		var titles = doc.evaluate("//h4[contains(@class, 'headline')]/a", doc, null, XPathResult.ANY_TYPE, null);
-		
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			items[next_title.href] = next_title.textContent;
-		}
-Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			Zotero.Utilities.processDocuments(articles, scrape);
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
-}	
+}
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html",
+		"url": "https://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Gesundheit: Krankenkassen werfen Ärzten Gewinnstreben vor",
 				"creators": [
 					{
 						"firstName": "Philipp",
@@ -162,25 +124,25 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Doris;Kliniken [ks];Krankenkassen [ks]",
-					"Pfeiffer"
-				],
-				"seeAlso": [],
+				"date": "2011-03-26T06:50:04Z",
+				"abstractNote": "Die Chefin des Krankenkassenverbands Doris Pfeiffer fordert den Gesundheitsminister auf, überschüssiges Geld im Gesundheitsfonds zurückzugegeben.",
+				"libraryCatalog": "www.welt.de",
+				"publicationTitle": "DIE WELT",
+				"shortTitle": "Gesundheit",
+				"url": "https://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html",
 				"attachments": [
 					{
-						"title": "Gesundheit : Krankenkassen werfen Ärzten Gewinnstreben vor - Nachrichten Wirtschaft - DIE WELT",
-						"mimeType": "text/html"
+						"title": "Snapshot"
 					}
 				],
-				"url": "http://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html",
-				"title": "Krankenkassen werfen Ärzten Gewinnstreben vor",
-				"abstractNote": "Die Chefin des Krankenkassenverbands Doris Pfeiffer fordert den Gesundheitsminister auf, überschüssiges Geld im Gesundheitsfonds zurückzugegeben.",
-				"date": "2011-03-26",
-				"publicationTitle": "Welt Online",
-				"section": "Wirtschaft",
-				"libraryCatalog": "Welt Online"
+				"tags": [
+					"Doris",
+					"Kliniken",
+					"Krankenkassen",
+					"Pfeiffer"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},

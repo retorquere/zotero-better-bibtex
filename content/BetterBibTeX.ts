@@ -426,19 +426,20 @@ class Progress {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
-    debug(`${this.name}: starting`)
+    debug(`${this.name}: waiting for Zotero locks...`)
 
     await Zotero.uiReadyPromise
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    debug(`${this.name}: started`)
+    debug(`${this.name}: ${msg}...`)
     this.toggle(true)
   }
 
   public update(msg) {
     this.bench(msg)
 
+    debug(`${this.name}: ${msg}...`)
     if (this.locked) {
       Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
     } else {

@@ -37,7 +37,6 @@
 
 
 function detectWeb(doc, url) {
-	//TODO: adjust the logic here
 	if (url.indexOf('/servlet/articulo')>-1) {
 		return "journalArticle";
 	} else if (url.indexOf('/servlet/libro')>-1) {

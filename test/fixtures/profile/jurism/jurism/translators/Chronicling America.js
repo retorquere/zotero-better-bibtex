@@ -104,7 +104,7 @@ var testCases = [
 				"ISSN": "1941-0654",
 				"language": "eng",
 				"libraryCatalog": "chroniclingamerica.loc.gov",
-				"url": "http://chroniclingamerica.loc.gov/lccn/sn83030193/1912-02-14/ed-1/seq-15/#words=Wilson&date1=1836&rows=20&searchType=basic&state=&date2=1922&proxtext=wilson&y=0&x=0&dateFilterType=yearRange&index=4",
+				"url": "http://chroniclingamerica.loc.gov/lccn/sn83030193/1912-02-14/ed-1/seq-15/",
 				"attachments": [
 					{
 						"title": "Snapshot"

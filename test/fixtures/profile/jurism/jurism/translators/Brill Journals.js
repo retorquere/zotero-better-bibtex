@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-08-26 03:35:40"
+	"lastUpdated": "2017-07-27 10:35:13"
 }
 
 /*
@@ -74,7 +74,7 @@ function doWeb(doc,url)
 		});
 	} else {
 		// We call the Embedded Metadata translator to do the actual work
-		var translator = Zotero.loadTranslator("import");
+		var translator = Zotero.loadTranslator("web");
 		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
 		translator.setHandler("itemDone", function(obj, item) {
 			item.DOI = ZU.xpathText(doc, '//span[@class="meta-value doi"]')

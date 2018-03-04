@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-10-28 18:30:15"
+	"lastUpdated": "2017-07-22 20:35:31"
 }
 
 /*
@@ -36,7 +36,7 @@
 */
 
 
-//Disclaimer: Single Documents and Browisng is supported
+//Disclaimer: Single Documents and Browsing is supported
 //(not the search, becauses there it was not clear how to
 //receive the correct, stable url for the processDocuments)
 
@@ -115,7 +115,7 @@ function doWeb(doc, url) {
 				if (splitPosition) {
 					var id = i.substr(splitPosition+1);
 					if (id.substr(0,4) == 'bgbl') {
-						permalink = '/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo='+id;
+						permalink = '/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo='+id;
 					}
 				}
 				articles.push(permalink);			
@@ -144,14 +144,19 @@ function scrape(doc, url) {
 		//     parts[1] = 0001.pdf (i.e. article starts on page 1)
 		item.pages = parts[1].replace(/\D/g,'').replace(/^0+/,'');
 		
-		item.url = 'http://www.bgbl.de/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo='+pdfName;
-		var pdflink = '/banzxaver/bgbl/'+doc.getElementById('PDFcontainer').children[0].getAttribute('src');//http://www.bgbl.de
-
-		item.attachments.push({
-			title: 'Full Text PDF',
-			url: pdflink,
-			mimeType: 'application/pdf'
-		});
+		item.url = 'http://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo='+pdfName;
+		var embeddedPdf = ZU.xpathText(doc, '//div[@id="PDFcontainer"]/iframe/@src');
+		//e.g. media.xav/bgbl117s2262_75530.pdf?SID=&name=A730335D9081EC7D0035E5213AFA9AF8%2Fbgbl117s2262_75530.pdf&iid=75530
+		var m = embeddedPdf.match(/&name=([^&]+)/);
+		if (m) {
+			var pdfLink = '/xaver/bgbl/media/' + decodeURIComponent(m[1]);
+			//Z.debug(pdfLink);
+			item.attachments.push({
+				title: 'Full Text PDF',
+				url: pdfLink,
+				mimeType: 'application/pdf'
+			});
+		}
 	} else {
 		item.publicationTitle = doc.getElementsByClassName('ub2')[0].getAttribute('title');
 		item.date = doc.getElementsByClassName('ub3')[0].getAttribute('title');
@@ -172,7 +177,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.bgbl.de/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo=bgbl114s1602.pdf#__bgbl__%2F%2F*%5B%40attr_id%3D%27bgbl114s1602.pdf%27%5D__1414520914170",
+		"url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl114s1602.pdf#__bgbl__%2F%2F*%5B%40attr_id%3D%27bgbl114s1602.pdf%27%5D__1500114233404",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -183,7 +188,7 @@ var testCases = [
 				"libraryCatalog": "Bundesgesetzblatt",
 				"pages": "1602",
 				"publicationTitle": "Bundesgesetzblatt Teil I",
-				"url": "http://www.bgbl.de/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo=bgbl114s1602.pdf",
+				"url": "http://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl114s1602.pdf",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -198,7 +203,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.bgbl.de/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo=bgbl149s0001.pdf#__bgbl__%2F%2F*%5B%40attr_id%3D%27bgbl149s0001.pdf%27%5D__1414520925829",
+		"url": "https://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl149s0001.pdf#__bgbl__%2F%2F*%5B%40attr_id%3D%27bgbl149s0001.pdf%27%5D__1500114236442",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -209,7 +214,7 @@ var testCases = [
 				"libraryCatalog": "Bundesgesetzblatt",
 				"pages": "1",
 				"publicationTitle": "Bundesgesetzblatt Teil I",
-				"url": "http://www.bgbl.de/banzxaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&amp;jumpTo=bgbl149s0001.pdf",
+				"url": "http://www.bgbl.de/xaver/bgbl/start.xav?startbk=Bundesanzeiger_BGBl&jumpTo=bgbl149s0001.pdf",
 				"attachments": [
 					{
 						"title": "Full Text PDF",

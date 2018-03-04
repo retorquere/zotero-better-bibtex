@@ -9,8 +9,10 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2013-12-18 22:57:58"
+	"lastUpdated": "2017-10-20 20:50:32"
 }
+
+var sessionKey;
 
 function textToXML(text) {
 	try {
@@ -23,22 +25,23 @@ function textToXML(text) {
 }
 
 function scrape(text) {
-	var xml;
-	if( ( xml = textToXML(text) ) &&
-		xml.documentElement.nodeName != 'parsererror' ) {
-
-		var itemJSON = xml.documentElement.getElementsByTagName('content')[0].textContent;
-
-		var item = JSON.parse(itemJSON);
-
-		var newItem = new Zotero.Item();
-		for(var property in item) {
-			newItem[property] = item[property];
+	var item = JSON.parse(text);
+	var newItem = new Zotero.Item();
+	for (var prop in item.data) {
+		switch (prop) {
+			case 'key':
+			case 'version':
+			case 'collections':
+			case 'relations':
+			case 'dateAdded':
+			case 'dateModified':
+				continue;
 		}
-		if(!newItem.title) newItem.title = "[Untitled]";
-
-		newItem.complete();
+		newItem[prop] = item.data[prop];
 	}
+	// TODO: Don't pass for notes, once client no longer requires it
+	if (!newItem.title) newItem.title = "[Untitled]";
+	newItem.complete();
 }
 
 function getListTitles(doc) {
@@ -47,28 +50,22 @@ function getListTitles(doc) {
 			+ '/span[not(contains(@class,"sprite-treeitem-attachment"))]]');
 }
 
-var apiKey;
-
 function getLibraryURI(doc) {
 	var feed = ZU.xpath(doc, '//a[@type="application/atom+xml" and @rel="alternate"]')[0]
 	if(!feed) return;
 	var url = feed.href.match(/^.+?\/(?:users|groups)\/\w+/);
-	
-	if(!url) {
-		//personal library. see if we can find an API key
-		var key = ZU.xpathText(doc, '//script[contains(text(),"apiKey")]');
-		if(!key) return;
-		
-		key = key.match(/apiKey\s*:\s*(['"])(.+?)\1/);
-		if(!key) return;
-		apiKey = key[2];
-		
+	if (!url) {
 		url = decodeURIComponent(feed.href)
 			.match(/https?:\/\/[^\/]+\/(?:users|groups)\/\w+/);
 		if(!url) return;
 	}
-	
-	return url[0] + '/items/';
+	if (!url) return;
+	return (url[0] + '/items/').replace("https://api.zotero.org", "https://www.zotero.org/api");
+}
+
+function getSessionKey(doc) {
+	var matches = doc.cookie.match(/zotero_www_session_v2=([a-z0-9]+)/);
+	return matches ? matches[1] : null;
 }
 
 function detectWeb(doc, url) {
@@ -92,11 +89,14 @@ function detectWeb(doc, url) {
 }
 
 function doWeb(doc, url) {
+	var headers = {
+		'Zotero-API-Version': 3
+	};
 	var libraryURI = getLibraryURI(doc);
-	if(Zotero.isBookmarklet) {
-		libraryURI = libraryURI.replace("https://api.zotero.org", "https://www.zotero.org/api");
-	}
-	var apiOpts = '?format=atom&content=json' + (apiKey ? '&key=' + apiKey : '' );
+	// Pass session key in URL, as required for CSRF protection. This allows saving of items
+	// in private libraries.
+	var sessionKey = getSessionKey(doc);
+	var suffix = sessionKey ? '?session=' + sessionKey : "";
 	var itemRe = /\/itemKey\/(\w+)/;
 
 	if (detectWeb(doc, url) == "multiple") {
@@ -109,15 +109,15 @@ function doWeb(doc, url) {
 			var apiURIs = [], itemID;
 			for (var url in selectedItems) {
 				itemID = url.match(itemRe)[1];
-				apiURIs.push(libraryURI + itemID + apiOpts);
+				apiURIs.push(libraryURI + itemID + suffix);
 			}
 
-			Zotero.Utilities.HTTP.doGet(apiURIs, scrape);
+			Zotero.Utilities.HTTP.doGet(apiURIs, scrape, null, null, headers);
 		});
 	} else {
 		var itemID = url.match(itemRe)[1];
-		var itemURI = libraryURI + itemID + apiOpts;
-		Zotero.Utilities.doGet(itemURI, scrape);
+		var itemURI = libraryURI + itemID + suffix;
+		Zotero.Utilities.doGet(itemURI, scrape, null, null, headers);
 	}
 }
 

@@ -169,15 +169,16 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://link.library.utoronto.ca/champlain/search_results.cfm?lang=eng&query=test&searchtype=Fulltext&limit=All",
+		"url": "https://champlain.library.utoronto.ca/search_results.cfm?lang=eng&query=test&searchtype=Fulltext&limit=All",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://link.library.utoronto.ca/champlain/item_record.cfm?Idno=9_96862&lang=eng&query=test&searchtype=Fulltext&startrow=1&Limit=All",
+		"url": "https://champlain.library.utoronto.ca/item_record.cfm?Idno=9_96862&lang=eng&query=test&searchtype=Fulltext&startrow=1&Limit=All",
 		"items": [
 			{
 				"itemType": "book",
+				"title": "An historical journal of the campaigns in North America for the years 1757, 1758, 1759 and 1760, Vol. I",
 				"creators": [
 					{
 						"firstName": "John",
@@ -190,30 +191,27 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
+				"date": "1914-16.",
+				"abstractNote": "• Original issued in series: The Publications of the Champlain Society. General series ; 8.\n              \n               • Title from title screen.\n              \n               • Includes bibliographical references and an index.",
+				"callNumber": "9_96862",
+				"libraryCatalog": "Champlain Society - Collection",
+				"place": "Toronto",
+				"publisher": "Champlain Society",
+				"url": "https://champlain.library.utoronto.ca/item_record.cfm?Idno=9_96862&lang=eng&query=test&searchtype=Fulltext&startrow=1&Limit=All",
+				"attachments": [],
 				"tags": [
-					"United States -- History -- French and Indian War, 1755-1763 -- Bibliography.",
-					"United States -- History -- French and Indian War, 1755-1763.",
-					"United States -- History -- French and Indian War, 1755-1763 -- Registers.",
-					"Canada -- History -- Seven Years' War, 1755-1763.",
 					"Amherst, Jeffrey Amherst, Baron, 1717-1797.",
 					"Amherst, William, 1732-1781.",
+					"Canada -- History -- Seven Years' War, 1755-1763.",
 					"Doughty, Arthur G. (Arthur George), Sir, 1860-1936.",
 					"Johnson, William, Sir, 1715-1774.",
-					"Murray, James, 1721-1794."
+					"Murray, James, 1721-1794.",
+					"United States -- History -- French and Indian War, 1755-1763 -- Bibliography.",
+					"United States -- History -- French and Indian War, 1755-1763 -- Registers.",
+					"United States -- History -- French and Indian War, 1755-1763."
 				],
-				"seeAlso": [],
-				"attachments": [],
-				"place": "Toronto",
-				"date": "1914-16.",
-				"publisher": "Champlain Society",
-				"pages": "596 pages.",
-				"callNumber": "9_96862",
-				"abstractNote": "• Original issued in series: The Publications of the Champlain Society. General series ; 8.\n              \n               • Title from title screen.\n              \n               • Includes bibliographical references and an index.",
-				"title": "An historical journal of the campaigns in North America for the years 1757, 1758, 1759 and 1760, Vol. I",
-				"url": "http://link.library.utoronto.ca/champlain/item_record.cfm?Idno=9_96862&lang=eng&query=test&searchtype=Fulltext&startrow=1&Limit=All",
-				"libraryCatalog": "Champlain Society - Collection",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

@@ -1,215 +1,169 @@
 {
 	"translatorID": "649c2836-a94d-4bbe-8e28-6771f283702f",
 	"label": "TVNZ",
-	"creator": "Sopheak Hean",
-	"target": "^https?://tvnz\\.co\\.nz",
-	"minVersion": "1.0",
+	"creator": "Philipp Zumstein",
+	"target": "^https?://(www\\.)?tvnz\\.co\\.nz/one-news/",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-04 10:01:57"
+	"lastUpdated": "2017-07-05 06:37:09"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
 function detectWeb(doc, url) {
-	if (url.indexOf("/search/") !=-1){
+	if (url.indexOf("/search?") !=-1 && getSearchResults(doc, true)){
 		return "multiple";
 	} 
-	else if ((url.indexOf("politics-news/") !=-1) && (url.indexOf("-video") !=-1) 
-	|| (url.indexOf("politics-news/") !=-1) && (url.indexOf("/video") !=-1)
-	|| (url.indexOf("business-news/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("national-news/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("breakfast-news/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("breakfast-news/") !=-1) && (url.indexOf("/video") !=-1)
-	|| (url.indexOf("world-news/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("all-blacks/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("weather/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("-news/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("-news/") !=-1) && (url.indexOf("/video") !=-1)
-	|| (url.indexOf("on/") !=-1) && (url.indexOf("-video") !=-1)
-	|| (url.indexOf("up/") !=-1) &&  (url.indexOf("/video") !=-1)){
-		return "tvBroadcast";
-	} 
-	else if ((url.indexOf("news/") !=-1) || (url.indexOf("all-blacks/") !=-1) || (url.indexOf("up/")!=-1)){
+	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')) {
 		return "newspaperArticle";
 	} 
 }
 
+
 function scrape(doc, url){
-	if (detectWeb(doc, url) == "newspaperArticle") {
-		var newItem = new Zotero.Item('newspaperArticle');
-		newItem.url = url;
-		newItem.publicationTitle = "TVNZ";
-		newItem.language = "en";
-
-		newItem.title = ZU.xpathText(doc, '//h1');
-
-		var date = ZU.xpathText(doc, '//p[@class="time"]');
-		if(date){
-			newItem.date = ZU.trimInternal(date.replace(/\W\bPublished:\W\d{1,2}:\d{1,2}(AM|PM) (\w)+ /g, ''));
+	var item = new Zotero.Item("newspaperArticle");
+	item.title = ZU.xpathText(doc, '//meta[@property="og:title"]/@content');
+	item.date = ZU.xpathText(doc, '(//div[contains(@class, "storyPage") and h1]//time)[1]');
+	if (item.date) {
+		if (item.date.match(/\d\d?:\d\d[pa]m/)) {
+			item.date = "Today"
+		} else if (!item.date.match(/\d\d\d\d/)) {
+			item.date += " 2017";
 		}
-
-		//get Author from the article
-		var author = ZU.xpathText(doc, '//p[@class="source"]');
-		if (author){
-			newItem.creators.push(ZU.cleanAuthor(author.replace(/\W\bSource:\W+/g, '').replace(/\W+/g, '-'), "author"));
-		}
-		
-		//get Section of the article
-		var section = ZU.xpathText(doc, '//li[@class="selectedLi"]/a/span');
-		if (section){
-			section = section.replace(/^s/g, '');
-			var sectionArray = new Array("Rugby", "All Blacks", "Cricket", "League",  "Football", "Netball", "Basketball", "Tennis", "Motor", "Golf", "Other", "Tipping");
-			
-			//loop through the Array and check for condition for section category
-			//var count =0;
-			for (var i=0; i <sectionArray.length; i++){
-				//count = 1;
-				//if there is a match in the loop then replacing the section found with SPORT
-				if(section == sectionArray[i]){
-					newItem.section = "Sport";
-					break;
-				}
-			}
-			//if not found then take the value from XPath
-			if(i == sectionArray.length) {
-				newItem.section = section;
-			}
-		}
-		
-		//get Abstract
-		newItem.abstractNote = ZU.xpathText(doc, "//meta[@name='description']");
-		
-		//closed up NewItem
-		newItem.complete();
-	} else if (detectWeb(doc, url) == "tvBroadcast"){
-		var newItem = new Zotero.Item("tvBroadcast");
-		newItem.url = url;
-		
-		newItem.network = "TVNZ";
-		newItem.language = "en";
-
-		/* get Title and Running time for video clip */
-		//if meta title exist
-			
-		//if the array is true then do this
-		var date = ZU.xpathText(doc, '//p[@class="added"]');
-		
-		if (date){
-			newItem.date = ZU.trim(date.replace(/\W\bAdded:\W\d{1,2}:\d{1,2}(AM|PM) (\w)+ /g, ''));
-		} else {
-			newItem.date = ZU.trim(ZU.xpathText(doc, '//p[@class="time"]')
-					.replace(/\W\bPublished:\W\d{1,2}:\d{1,2}(AM|PM) (\w)+ /g, ''));			
-		}
-
-		var myTitle= ZU.xpathText(doc, '//meta[@name="title" or @name="og:title"]/@content');
-		if (myTitle){
-			myTitle = myTitle.replace(/\b[)]+/g, '');
-			var TitleResult= myTitle.split(" (");
-			newItem.title = TitleResult[0];
-			if(TitleResult[1] == undefined) {
-				newItem.runningTime ="";	
-			} else {
-				newItem.runningTime = TitleResult[1];
-			}
-		}else{
-			newItem.title= ZU.xpathText(doc, '//head/title').split(" | ")[0];	
-		}
-		
-		//get Author from the article
-		var author = ZU.xpathText(doc, '//p[@class="source"]');
-		if (author){
-			author = author.replace(/\W\bSource:\W+/g, '');
-			newItem.creators.push(ZU.cleanAuthor(author.replace(/\W+/g, '-'), "author"));
-		
-		} else {
-			var keywordsObject = ZU.xpathText(doc, '//meta[@name="keywords"]').replace(/\s+/g, '-').split(",");
-			newItem.creators.push(ZU.cleanAuthor(keywordsObject[0], "author"));
-		}
-	
-		//get Abstract
-		newItem.abstractNote = ZU.xpathText(doc, "//meta[@name='description']");
-		
-		//get Section of the video, not sure if this meant for Archive location, if incorrect then leave it commented.
-		//var sectionPath = "//meta[@name='keywords']";
-		//var sectionPathObject = doc.evaluate(sectionPath,  doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().content;
-		//var sectionResult = sectionMetaObject.split(",");
-		//newItem.archiveLocation = sectionPathObject;
-
-		newItem.complete();
+		item.date = ZU.strToISO(item.date);
 	}
+	item.abstractNote = ZU.xpathText(doc, '//meta[@property="og:description"]/@content');
+	var tagString = ZU.xpathText(doc, '//meta[@name="news_keywords"]/@content');
+	if (tagString) {
+		item.tags = tagString.split(', ');
+	}
+	item.section = ZU.xpathText(doc, '//div[@class="colStorySectionHeader"]/div[@class="tagItem"]/h2');
+	item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href') || url;
+	item.publicationTitle = "TVNZ";
+	item.language = "en-NZ";
+	item.complete();
 }
 
-function doWeb(doc, url){
-	if ( detectWeb(doc, url) == "multiple"){
-		var titles = ZU.xpath(doc, '//div[@class="readItem"]/h4');
-		Zotero.selectItems(ZU.getItemArray(doc, titles), function(selectedItems) {
-			if(!selectedItems) return true;
 
-			var articles = new Array();
-			for (var i in selectedItems){
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[@class="tileContent"]/a[h3]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
 				articles.push(i);
 			}
-			ZU.processDocuments(articles, function(doc) { scrape(doc, doc.location.href); });
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://tvnz.co.nz/politics-news/jon-johansson-s-all-2014-4523189",
+		"url": "https://www.tvnz.co.nz/one-news/new-zealand/below-average-temperatures-forecast-across-nz-first-half-july",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Below average temperatures forecast across NZ for first half of July",
 				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://tvnz.co.nz/politics-news/jon-johansson-s-all-2014-4523189",
-				"publicationTitle": "TVNZ",
-				"language": "en",
-				"title": "Jon Johansson: It's all about 2014",
+				"date": "2017-07-05",
+				"abstractNote": "MetService's long-range forecast for this month has colder temperatures than usual.",
+				"language": "en-NZ",
 				"libraryCatalog": "TVNZ",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Jon Johansson"
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://tvnz.co.nz/search/ta_ent_search_news_skin.xhtml?q=storm&sort=date%3AD%3AS%3Ad1",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "http://tvnz.co.nz/national-news/patea-devastated-storm-video-4752377",
-		"items": [
-			{
-				"itemType": "tvBroadcast",
-				"creators": [
-					{
-						"firstName": "",
-						"lastName": "Breakfast-",
-						"creatorType": "author"
-					}
+				"publicationTitle": "TVNZ",
+				"section": "New Zealand",
+				"url": "https://www.tvnz.co.nz/one-news/new-zealand/below-average-temperatures-forecast-across-nz-first-half-july",
+				"attachments": [],
+				"tags": [
+					"new-zealand",
+					"nzn",
+					"one-news",
+					"weather-news"
 				],
 				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://tvnz.co.nz/national-news/patea-devastated-storm-video-4752377",
-				"network": "TVNZ",
-				"language": "en",
-				"date": "March 03, 2012",
-				"title": "Patea devastated by storm",
-				"libraryCatalog": "TVNZ"
+				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.tvnz.co.nz/one-news/new-zealand/watch-stunning-aurora-australis-storm-lights-up-southern-skies",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Watch: Stunning Aurora Australis storm lights up southern skies",
+				"creators": [],
+				"date": "2017-05-28",
+				"abstractNote": "A geomagnetic storm made for some incredible photos in the South Island overnight.",
+				"language": "en-NZ",
+				"libraryCatalog": "TVNZ",
+				"publicationTitle": "TVNZ",
+				"section": "New Zealand",
+				"shortTitle": "Watch",
+				"url": "https://www.tvnz.co.nz/one-news/new-zealand/watch-stunning-aurora-australis-storm-lights-up-southern-skies",
+				"attachments": [],
+				"tags": [
+					"breakfast",
+					"new-zealand",
+					"space"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.tvnz.co.nz/one-news/search?q=storm",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

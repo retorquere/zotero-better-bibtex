@@ -1,144 +1,195 @@
 {
 	"translatorID": "180a62bf-efdd-4d38-8d85-8971af04dd85",
 	"label": "TV by the Numbers",
-	"creator": "odie5533",
-	"target": "^https?://tvbythenumbers\\.com/",
-	"minVersion": "1.0",
+	"creator": "Sonali Gupta",
+	"target": "^https?://tvbythenumbers\\.zap2it\\.com/",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "g",
-	"lastUpdated": "2015-06-10 10:48:25"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-07-11 19:01:21"
 }
 
 /*
-	TV by the Numbers - translator for Zotero
-	Copyright (C) 2010 odie5533
+	***** BEGIN LICENSE BLOCK *****
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
+	Copyright © 2017 Sonali Gupta
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
+	Zotero is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
-
-/*
-	This translator supports saving a snapshot of a single post and saving
-	the citation of many posts at once without visiting each post. Thus, it does
-	not save a snapshot when multiple citations are to be saved.
-*/
-
-
-PUB_TITLE = "TV by the Numbers";
-XPATH_TITLE = "//title";
-XPATH_PAGES = null;
-XPATH_DATE = "substring-after(substring-before(string(//p[@class='posted_on']),' by '), 'on ')";
-RE_DATE = /(.*)/;
-XPATH_AUTHORS = "substring-after(string(//p[@class='posted_on']),' by ')";
-RE_AUTHORS = /(.*)/;
 
 function detectWeb(doc, url) {
-	/* site has lots of garbage, check we're on the right doc */
-	if (!xpath_string(doc, doc, XPATH_TITLE))
-		return;
-	var posts = doc.evaluate("count(//div[@class='post-alt blog'])", doc, null,
-		XPathResult.NUMBER_TYPE, null).numberValue;
-	if (posts  == 1)
-		return "webpage";
-	else if (posts > 1)
+	if (url.indexOf('/?s=') > -1 && getSearchResults(doc, true))
 		return "multiple";
-}
-
-function xpath_string(doc, node, xpath) {
-	var res = doc.evaluate(xpath, node, null, XPathResult.STRING_TYPE, null);
-	if (!res || !res.stringValue)
-		return null;
-	return Zotero.Utilities.trim(res.stringValue);
-}
-
-function xpre(doc, node, xpath, reg) {
-	var xpmatch = xpath_string(doc, node, xpath);
-	return reg.exec(xpmatch)[1];
-}
-
-function scrape(doc, url) {
-	var items = new Array();
-	var posts = doc.evaluate("//div[@class='post-alt blog']", doc, null,
-		XPathResult.ANY_TYPE, null);
-		
-	var post_count = 0;
-
-	while (post = posts.iterateNext()) {
-		var newItem = new Zotero.Item("webpage");
-		newItem.publicationTitle = PUB_TITLE;
-		
-		var link = post.getElementsByTagName("a")[0];
-		newItem.url = link.href;
-		
-		var title = Zotero.Utilities.unescapeHTML(
-			Zotero.Utilities.cleanTags(link.textContent));
-		title = title.replace(/(\s+)(?:‘|’)|(?:‘|’)(\s+)/g, "$1''$2").replace(/‘|’/g, "'");
-		newItem.title = title;
-		
-		if (XPATH_DATE)
-			newItem.date = xpre(doc, post, XPATH_DATE, RE_DATE);
-		if (XPATH_PAGES)
-			newItem.pages = xpath_string(doc, post, XPATH_PAGES);
-		
-		//authors
-		var author_text = xpre(doc, post, XPATH_AUTHORS, RE_AUTHORS);
-		var authors = [];
-		if (author_text) {
-			if (author_text.indexOf(" and ") != -1)
-				authors = author_text.split(" and ");
-			else if (author_text.indexOf(";") != -1)
-				authors = author_text.split(";");
-			else
-				authors.push(author_text);
-		}
-		for (var i=0; i<authors.length; i++) {
-			if (authors[i] != 'null') {
-				newItem.creators.push(
-					Zotero.Utilities.cleanAuthor(authors[i], "author"));
-			}
-		}
-
-		// attach html
-		if (url == newItem.url)
-			newItem.attachments.push({title:PUB_TITLE+" Snapshot",
-				mimeType:"text/html", url:doc.location.href, snapshot:true});
-		
-		newItem.toString = function() { return this.title; };
-		items[newItem.url] = newItem;
-		post_count++;
-	}
-	
-	/* a stupidly complex way of calling selectItems, and then completing
-	   the items which were selected */
-	if (post_count > 1) {
-		var sel_items = new Object();
-		for (var i=0; i<items.length; i++) {
-			var item = items[i];
-			sel_items[item.url] = item.title;
-		}
-		sel_items = Zotero.selectItems(sel_items);
-		
-		for (var i in sel_items)
-			items[i].complete();
-	} else if (post_count == 1)
-		for (var i=0; i<items.length; i++) {
-			items[i].complete();
-		}
+	else if (doc.body.className.indexOf("single-post") > -1)
+		return "blogPost";
 }
 
 function doWeb(doc, url) {
-	scrape(doc, url);
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function(items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+	} else {
+		scrape(doc, url);
+	}
 }
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[@class="container container-small"]/article/h2/a');
+	for (var i = 0; i < rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	translator.setDocument(doc);
+
+	translator.setHandler('itemDone', function(obj, item) {
+		if(item.date) item.date = ZU.strToISO(item.date);
+		var authors = ZU.xpath(doc, '//a[@rel="author"]');
+		for (var i = 0; i<authors.length; i++ ) {
+			if (authors[i].textContent != 'TV By The Numbers') {
+				item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
+			}
+		}
+		item.publicationTitle = "TV By The Numbers";
+		var tags = ZU.xpath(doc, '//a[@rel="tag"]');
+		item.tags = [];
+		for (var i = 0; i<tags.length; i++) {
+			item.tags.push(tags[i].textContent);
+		}
+		item.complete();
+	});
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "blogPost";
+		trans.doWeb(doc, url);
+	});
+} /** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "web",
+		"url": "http://tvbythenumbers.zap2it.com/page/20/?s=harry+potter",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://tvbythenumbers.zap2it.com/daily-ratings/monday-final-ratings-july-3-2017/",
+		"items": [
+			{
+				"itemType": "blogPost",
+				"title": "‘American Ninja Warrior’ adjusts up: Monday final ratings",
+				"creators": [
+					{
+						"firstName": "Rick",
+						"lastName": "Porter",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-06",
+				"abstractNote": "Final broadcast primetime live + same-day ratings for Monday, July 3, 2017 The top show on a rerun-filled Monday night saw its adults 18-49 rating grow from the preliminary numbers to the finals. &…",
+				"blogTitle": "TV By The Numbers",
+				"shortTitle": "‘American Ninja Warrior’ adjusts up",
+				"url": "http://tvbythenumbers.zap2it.com/daily-ratings/monday-final-ratings-july-3-2017/",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"American Ninja Warrior Ratings",
+					"Battle of the Network Stars Ratings",
+					"Kevin Can Wait Ratings",
+					"Life in Pieces Ratings",
+					"Man With a Plan Ratings",
+					"Mom Ratings",
+					"Scorpion Ratings",
+					"So You Think You Can Dance Ratings",
+					"Spartan: Ultimate Team Challenge Ratings",
+					"Supergirl Ratings",
+					"Superhuman Ratings",
+					"The Bachelorette Ratings",
+					"Whose Line is it Anyway Ratings"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://tvbythenumbers.zap2it.com/sdsdskdh279882992z1/tv-ratings-friday-grimm-constantine-fall-shark-tank-the-amazing-race-last-man-standing-up-cristela-hawaii-five-0-steady/322517/",
+		"items": [
+			{
+				"itemType": "blogPost",
+				"title": "TV Ratings Friday: ‘Grimm’ & ‘Constantine’ Fall, ‘Shark Tank’, ‘The Amazing Race’ & ‘Last Man Standing’ Up, ‘Cristela’ & ‘Hawaii FIve-0’ Steady",
+				"creators": [],
+				"date": "2014-11-01",
+				"abstractNote": "ABC was number one in adults 18-49 while CBS won with total viewers.",
+				"blogTitle": "TV By The Numbers",
+				"shortTitle": "TV Ratings Friday",
+				"url": "http://tvbythenumbers.zap2it.com/sdsdskdh279882992z1/tv-ratings-friday-grimm-constantine-fall-shark-tank-the-amazing-race-last-man-standing-up-cristela-hawaii-five-0-steady/",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"20/20 Ratings",
+					"America's Next Top Model Ratings",
+					"Blue Bloods Ratings",
+					"Constantine Ratings",
+					"Cristela Ratings",
+					"Dateline Ratings",
+					"Gotham Ratings",
+					"Hawaii Five-0 Ratings",
+					"Last Man Standing Ratings",
+					"Shark Tank Ratings",
+					"The Amazing Race Ratings",
+					"Utopia Ratings",
+					"Whose Line is it Anyway Ratings",
+					"World Series Ratings"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	}
+]
+/** END TEST CASES **/

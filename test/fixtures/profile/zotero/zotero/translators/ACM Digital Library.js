@@ -2,14 +2,14 @@
 	"translatorID": "f3f092bf-ae09-4be6-8855-a22ddd817925",
 	"label": "ACM Digital Library",
 	"creator": "Simon Kornblith, Michael Berkowitz, John McCaffery, and Sebastian Karcher",
-	"target": "^https?://([^/]+\\.)?dl\\.acm\\.org/(results|citation|author_page)\\.cfm",
+	"target": "^https?://([^/]+\\.)?dl\\.acm\\.org/(results|citation|author_page|ccs/ccs)\\.cfm",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-26 12:12:58"
+	"lastUpdated": "2018-01-16 21:49:57"
 }
 
 /*
@@ -29,10 +29,16 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
 function detectWeb(doc, url) {
-	if (url.indexOf("/results.cfm") != -1 || url.indexOf("/author_page.cfm") != -1) {
+	if (url.includes("/results.cfm") || url.includes("/author_page.cfm") || url.includes("/ccs/ccs.cfm")) {
 		return getSearchResults(doc, true) ? 'multiple' : false;
-	} else if (url.indexOf("/citation.cfm") != -1) {
+	} else if (url.includes("/citation.cfm")) {
 		return getArticleType(doc);
 	}
 }
@@ -55,10 +61,12 @@ function doWeb(doc, url) {
 	}
 }
 
+
 function getSearchResults(doc, checkOnly) {
-	var results = ZU.xpath(doc, '//div[@id="results"]//div[@class="title"]/a[@target="_self"]'),
-		items = {},
-		found = false;
+	var items = {};
+	var found = false;	
+	var results = doc.querySelectorAll('div#results div.title>a[target="_self"], #toShowTop10 li>a');
+	
 	for (var i=0; i<results.length; i++) {
 		var url = results[i].href;
 		var title = ZU.trimInternal(results[i].textContent);
@@ -76,8 +84,9 @@ function getSearchResults(doc, checkOnly) {
 	return found ? items : false;
 }
 
+
 function scrape(doc) {
-	var abs = ZU.xpath(doc, '//div/div[@style="display:inline"]')[0];
+	var abs = text(doc, '#abstract');
 
 	// Get genric URL, preferring the conference version.
 	var url = ZU.xpath(doc, '//meta[@name="citation_conference"]\
@@ -94,7 +103,8 @@ function scrape(doc) {
 
 	//compose bibtex URL
 	var bibtexstring = 'id=' + itemID + '&parent_id=' + parentID + '&expformat=bibtex';
-	var bibtexURL = url.replace(/citation\.cfm/, 'downformats.cfm')
+	var bibtexURL = url.replace(/dl[.-]acm[.-]org[^\/]*/, "dl.acm.org")  //deproxify the URL above.
+		.replace(/citation\.cfm/, 'downformats.cfm')
 		.replace(/([?&])id=[^&#]+/, '$1' + bibtexstring);
 	Zotero.debug('bibtex URL: ' + bibtexURL);
 	
@@ -106,8 +116,10 @@ function scrape(doc) {
 			//get the URL for the pdf fulltext from the metadata
 			var pdfURL = ZU.xpath(doc, '//meta[@name="citation_pdf_url"]/@content')[0];
 			if (pdfURL) {
+				pdfURL = pdfURL.textContent.replace(/dl[.-]acm[.-]org[^\/]*/, "dl.acm.org"); //deproxify URL
+				Z.debug("pdfURL: " + pdfURL);
 				item.attachments = [{
-					url: pdfURL.textContent,
+					url: pdfURL,
 					title: "ACM Full Text PDF",
 					mimeType: "application/pdf"
 				}];
@@ -115,9 +127,6 @@ function scrape(doc) {
 			
 			//fix DOIs if they're in URL form
 			if (item.DOI) item.DOI = item.DOI.replace(/^.*\/(10\.\d+\/)/, '$1');
-			
-			//The Abstract from above - may or may not work
-			if (abs) item.abstractNote = abs.textContent;
 			
 			//Conference Locations shouldn't go int Loc in Archive (nor should anything else)
 			delete item.archiveLocation;
@@ -128,7 +137,7 @@ function scrape(doc) {
 			}
 			
 			//full issues of journals/magazines don't have a title
-			if (!item.title && text.indexOf("issue_date")>-1) {
+			if (!item.title && text.includes("issue_date")) {
 				var m = text.match(/issue_date\s*=\s*{(.*)},?/);
 				item.itemType = "book";
 				item.title = item.publicationTitle;
@@ -137,7 +146,23 @@ function scrape(doc) {
 				}
 			}
 			
-			item.complete();
+			//The abstract from above or we try to make an individual request
+			//e.g. for multiples
+			if (!item.abstractNote) {
+				if (abs && abs.trim()) {
+					item.abstractNote = abs;
+					item.complete();
+				} else {
+					ZU.doGet("https://dl.acm.org/tab_abstract.cfm?id="+itemID, function(abstract) {
+						item.abstractNote = ZU.unescapeHTML(abstract);
+						if (item.abstractNote.trim() == "An abstract is not available.") delete item.abstractNote;
+						item.complete();
+					});
+				}
+			} else {
+				item.complete();
+			}
+			
 		});
 		translator.translate();
 	});
@@ -240,7 +265,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://dl.acm.org/citation.cfm?id=254650.257486&coll=DL&dl=GUIDE",
+		"url": "https://dl.acm.org/citation.cfm?id=254650.257486&coll=DL&dl=GUIDE",
 		"defer": true,
 		"items": [
 			{
@@ -267,18 +292,34 @@ var testCases = [
 				"libraryCatalog": "ACM Digital Library",
 				"pages": "137–149",
 				"publicationTitle": "J. Electron. Test.",
-				"url": "http://dx.doi.org/10.1023/A:1008286901817",
+				"url": "https://doi.org/10.1023/A:1008286901817",
 				"volume": "10",
 				"attachments": [],
 				"tags": [
-					"DFM",
-					"DFT",
-					"MCM",
-					"SMT",
-					"board",
-					"simulation",
-					"test",
-					"yield"
+					{
+						"tag": "DFM"
+					},
+					{
+						"tag": "DFT"
+					},
+					{
+						"tag": "MCM"
+					},
+					{
+						"tag": "SMT"
+					},
+					{
+						"tag": "board"
+					},
+					{
+						"tag": "simulation"
+					},
+					{
+						"tag": "test"
+					},
+					{
+						"tag": "yield"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -419,6 +460,11 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://dl.acm.org/ccs/ccs.cfm?id=10010343&lid=0.10010147.10010341.10010342.10010343",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

@@ -112,7 +112,7 @@ var testCases = [
 					}
 				],
 				"date": "1927",
-				"archiveLocation": "XXIe siècle",
+				"archiveLocation": "XVIIe siècle",
 				"language": "Français",
 				"libraryCatalog": "rechercheisidore.fr",
 				"url": "http://www.numdam.org/item?id=NAM_1927_6_2__314_0",
@@ -128,21 +128,20 @@ var testCases = [
 				"tags": [
 					"Addition",
 					"Anthropologie religieuse",
+					"Architecture",
 					"Economies et finances",
-					"Education",
-					"Géographie",
+					"Espace",
 					"Géométrie",
 					"Histoire",
-					"Histoire sociale",
+					"Pensée",
 					"Philosophie et Sociologie des sciences",
 					"Représentations",
-					"Sociologie",
+					"aménagement de l'espace",
 					"géométrie",
+					"société et territoire",
 					"Économie",
-					"Éducation",
 					"Épistémologie",
-					"Épistémologie et méthodes",
-					"Études du politique"
+					"Études des sciences"
 				],
 				"notes": [],
 				"seeAlso": []
@@ -165,7 +164,7 @@ var testCases = [
 				],
 				"date": "2000",
 				"abstractNote": "Weber Florence. Introduction. In: Genèses, 41, 2000. Comment décrire les transactions, sous la direction de Susanna Magri. pp. 2-4.",
-				"archiveLocation": "Époque contemporaine",
+				"archiveLocation": "Florence",
 				"language": "Français",
 				"libraryCatalog": "rechercheisidore.fr",
 				"publisher": "MESR",
@@ -182,8 +181,10 @@ var testCases = [
 				"tags": [
 					"Gestion",
 					"Géographie urbaine",
+					"Histoire",
 					"Histoire urbaine",
 					"Sociologie",
+					"Sociologie de la culture",
 					"Sociologie économique",
 					"Études du politique",
 					"Études urbaines"
@@ -226,7 +227,6 @@ var testCases = [
 					"Nord (point cardinal)",
 					"Pièces",
 					"Santé",
-					"Sociologie",
 					"Sociologie de la santé",
 					"Sud (point cardinal)",
 					"santé"
@@ -267,7 +267,7 @@ var testCases = [
 				"libraryCatalog": "www.rechercheisidore.fr",
 				"publisher": "Centre pour la communication scientifique directe",
 				"shortTitle": "LES CHERCHEURS ALGERIENS ET LA PUBLICATION ELECTRONIQUE DANS LES ARCHIVES OUVERTES",
-				"url": "http://archivesic.ccsd.cnrs.fr/sic_00284311",
+				"url": "https://archivesic.ccsd.cnrs.fr/sic_00284311",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -294,13 +294,11 @@ var testCases = [
 					"Information scientifique",
 					"Information technique",
 					"Internet",
-					"Liberté d'information",
 					"Littérature",
 					"Monde",
 					"Mouvement",
 					"Mutations",
 					"Nouvelles",
-					"Nouvelles technologies de l'information et de la communication",
 					"Nécessité",
 					"Patrimoine",
 					"Rapports techniques",
@@ -308,7 +306,6 @@ var testCases = [
 					"Sciences de l'information",
 					"Sciences de l'information et de la communication",
 					"Scientifiques",
-					"Sociologie",
 					"Technique",
 					"Thèses et écrits académiques",
 					"Utilisation",

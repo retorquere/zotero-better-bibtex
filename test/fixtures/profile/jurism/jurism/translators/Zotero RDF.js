@@ -1,16 +1,22 @@
 {
-	"translatorID":"14763d24-8ba0-45df-8f52-b8d1108e7ac9",
-	"translatorType":2,
-	"label":"Zotero RDF",
-	"creator":"Simon Kornblith",
-	"target":"rdf",
-	"minVersion":"1.0.0b4.r1",
-	"maxVersion":"",
-	"priority":25,
-	"configOptions":{"getCollections":"true", "dataMode":"rdf/xml"},
-	"displayOptions":{"exportNotes":true, "exportFileData":false},
-	"inRepository":true,
-	"lastUpdated":"2016-06-21 08:45:20"
+	"translatorID": "14763d24-8ba0-45df-8f52-b8d1108e7ac9",
+	"translatorType": 2,
+	"label": "Zotero RDF",
+	"creator": "Simon Kornblith",
+	"target": "rdf",
+	"minVersion": "1.0.0b4.r1",
+	"maxVersion": "",
+	"priority": 25,
+	"configOptions": {
+		"getCollections": "true",
+		"dataMode": "rdf/xml"
+	},
+	"displayOptions": {
+		"exportNotes": true,
+		"exportFileData": false
+	},
+	"inRepository": true,
+	"lastUpdated": "2016-06-21 08:45:20"
 }
 
 var item;
