@@ -4,17 +4,25 @@ import platform
 import glob
 import argparse
 import re
-import urllib2
 import json
 import os
 import sys
-from HTMLParser import HTMLParser
 import tempfile
-import urllib
+
+if sys.version_info[0] >= 3:
+  from urllib.request import urlopen
+  from html.parser import HTMLParser
+  from urllib.request import urlretrieve
+else:
+  from urllib2 import urlopen
+  from HTMLParser import HTMLParser
+  from urllib import urlretrieve
+  input = raw_input
 
 def zotero_latest():
-  response = urllib2.urlopen('https://www.zotero.org/download/')
-  for line in response.read().split('\n'):
+  response = urlopen('https://www.zotero.org/download/').read()
+  if type(response) is bytes: response = response.decode("utf-8")
+  for line in response.split('\n'):
     if not '"standaloneVersions"' in line: continue
     line = re.sub(r'.*Downloads,', '', line)
     line = re.sub(r'\),', '', line)
@@ -31,66 +39,90 @@ def jurism_latest():
       m = re.match(r'https://our.law.nagoya-u.ac.jp/download/client/Jurism-(.+)_linux-' + platform.machine() + '.tar.bz2', href)
       if m is None: return
       self.version = m.group(1)
-  response = urllib2.urlopen('https://juris-m.github.io/downloads/')
+  response = urlopen('https://juris-m.github.io/downloads/').read()
+  if type(response) is bytes: response = response.decode("utf-8")
   parser = Parser()
-  parser.feed(response.read())
+  parser.feed(response)
   return parser.version
+
+def destinationType(name):
+  if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
+
+  name = re.sub(r"[^a-z]", '', name.lower())
+
+  if len(name) == 0: raise Exception('Missing destination')
+
+  if 'local'[:len(name)] == name: return 'local'
+  if 'global'[:len(name)] == name: return 'global'
+  raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
 
 class LocationAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
-    location = values.lower()
-    if len(location) == 0:
-      parser.error('Missing location')
-    elif 'local'[:len(location)] == location:
-      setattr(namespace, self.dest, 'local')
-    elif 'global'[:len(location)] == location:
-      setattr(namespace, self.dest, 'global')
-    else:
-      parser.error('Unexpected location "' + values + '", expected "local" or "global"')
+    try:
+      setattr(namespace, self.dest, destinationType(values))
+    except Exception as err:
+      parser.error(err)
+
+def clientType(name):
+  name = re.sub(r"[^a-z]", '', name.lower())
+
+  if len(name) == 0: raise Exception('Missing client name')
+  if 'jurism'[:len(name)] == name: return 'jurism'
+  if 'zotero'[:len(name)] == name: return 'zotero'
+  raise Exception('Unexpected client type "' + name + '", expected "Zotero" or "Juris-M"')
 
 class ClientAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
-    client = re.sub(r"[^a-z]", '', values.lower())
-    if len(client) == 0:
-      parser.error('Missing client')
-    elif 'jurism'[:len(client)] == client:
-      setattr(namespace, self.dest, 'jurism')
-    elif 'zotero'[:len(client)] == client:
-      setattr(namespace, self.dest, 'zotero')
-    else:
-      parser.error('Unexpected client "' + values + '", expected "Zotero" or "Juris-M"')
+    try:
+      setattr(namespace, self.dest, clientType(values))
+    except Exception as err:
+      parser.error(err)
+
+installdir_local = os.path.expanduser('~/bin')
+installdir_global = '/opt'
 
 parser = argparse.ArgumentParser()
-parser.add_argument('-c', '--client', action=ClientAction, required=True)
-parser.add_argument('-v', '--version')
-parser.add_argument('-d', '--destination', action=LocationAction, required=True)
-parser.add_argument('-r', '--replace', action='store_true')
-parser.add_argument('--cache')
+parser.add_argument('-c', '--client', action=ClientAction, help='select Zotero client to download and install, either Zotero or Juris-M')
+parser.add_argument('-v', '--version', help='install the given version rather than the latest')
+parser.add_argument('-d', '--destination', action=LocationAction, help="location to install, either 'local' (" + installdir_local + ") or 'global' (" + installdir_global + ')')
+parser.add_argument('-r', '--replace', action='store_true', help='replace Zotero at selected install location if it exists there')
+parser.add_argument('-p', '--picker', action='store_true', help='Start Zotero with the profile picker')
+parser.add_argument('--datadir', action='store_true', help='Store zotero data in the profile. Use this if you expect to use multiple profiles.')
+parser.add_argument('--cache', help='cache downloaded installer in this directory. Use this if you expect to re-install Zotero often')
 
 args = parser.parse_args()
 
+if args.client is None:
+  args.client = clientType(input('Client to install (zotero or juris-m):'))
+
+if args.destination is None:
+  args.destination = destinationType(input('Location to install (local or global):'))
+
 if args.cache is not None and not os.path.exists(args.cache):
-  print args.cache + ' does not exist'
+  print(args.cache + ' does not exist')
   sys.exit(1)
 
 if args.version == 'latest' or args.version is None:
   version = zotero_latest() if args.client == 'zotero' else jurism_latest()
   if args.version is None:
-    args.version = raw_input(args.client + ' version (' + version + '):')
+    args.version = input(args.client + ' version (' + version + '):')
     if args.version == '': args.version = version
   else:
     args.version = version
 
 if args.destination is None:
-  installdir = raw_input('Installation directory: ')
+  installdir = input('Installation directory: ')
   if installdir == '': raise Exception("Installation directory is mandatory")
   menudir = None
 elif args.destination == 'local':
-  installdir = os.path.join(os.path.expanduser('~/bin'), args.client)
+  installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
-else:
-  installdir = '/opt'
+elif args.destination == 'global':
+  installdir = os.path.join(installdir_global, args.client)
   menudir = '/usr/share/applications'
+else:
+  installdir = os.path.join(args.destination, args.client)
+  menudir = None
   
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
 
@@ -113,10 +145,10 @@ else:
   tarball = os.path.join(args.cache, tarball)
 
 if os.path.exists(tarball):
-  print 'Retaining ' + tarball
+  print('Retaining ' + tarball)
 else:
-  print "Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url
-  urllib.urlretrieve (args.url, tarball)
+  print("Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
+  urlretrieve (args.url, tarball)
 
 extracted = tempfile.mkdtemp()
 
@@ -136,8 +168,14 @@ if not menudir is None:
       desktop.write("Name=Zotero\n")
     else:
       desktop.write("Name=Juris-M\n")
+
+    client = args.client
+    if args.datadir:
+      client = client + ' -datadir profile'
+    if args.picker:
+      client = client + ' -P'
     desktop.write("Comment=Open-source reference manager\n")
-    desktop.write("Exec=" + installdir + '/' + args.client + " -datadir profile\n")
+    desktop.write("Exec=" + installdir + '/' + client + "\n")
     desktop.write("Icon=" + installdir + "/chrome/icons/default/default48.png\n")
     desktop.write("Type=Application\n")
     desktop.write("StartupNotify=true")

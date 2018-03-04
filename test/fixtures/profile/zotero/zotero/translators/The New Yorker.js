@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-02 15:22:11"
+	"lastUpdated": "2017-11-12 22:00:35"
 }
 
 /*
@@ -38,9 +38,9 @@
 
 function detectWeb(doc, url) {
 	var bodyClass = ZU.xpathText(doc, '//body/@class');
-	if (bodyClass.indexOf('page-article')>-1) {
+	if (bodyClass && bodyClass.indexOf('article')>-1) {
 		return "magazineArticle";
-	} else if (bodyClass.indexOf('search-page')>-1 && getSearchResults(doc, true)) {
+	} else if (url.indexOf('/search/')>-1 && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
@@ -48,7 +48,7 @@ function detectWeb(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//h2[contains(@class, "title")]/a');
+	var rows = ZU.xpath(doc, '//li//a[h4]');
 	for (var i=0; i<rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
@@ -90,10 +90,16 @@ function scrape(doc, url) {
 	//translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
-		var author = ZU.xpathText(doc, '//div[contains(@class, "ArticleHeader__metaInfo")]//a[@rel="author"]');
 		if (item.creators.length==0 && json.author) {
-			for (var i=0; i<json.author.name.length; i++) {
-				item.creators.push(ZU.cleanAuthor(json.author.name[i], "author"));
+			//json.author can either be an array, or a object containing an array
+			if (Array.isArray(json.author)) {
+				for (var i=0; i<json.author.length; i++) {
+					item.creators.push(ZU.cleanAuthor(json.author[i].name, "author"));
+				}
+			} else if (json.author.name) {
+				for (var i=0; i<json.author.name.length; i++) {
+					item.creators.push(ZU.cleanAuthor(json.author.name[i], "author"));
+				}
 			}
 		}
 		item.date = json.datePublished;
@@ -112,7 +118,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.newyorker.com/magazine/2011/10/31/foreign-campaigns",
+		"url": "https://www.newyorker.com/magazine/2011/10/31/foreign-campaigns",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -129,7 +135,7 @@ var testCases = [
 				"abstractNote": "The Republican professionals know it. The numbers show that more than half the country identifies the economy as the most pressing issue of the campaign; …",
 				"libraryCatalog": "www.newyorker.com",
 				"publicationTitle": "The New Yorker",
-				"url": "http://www.newyorker.com/magazine/2011/10/31/foreign-campaigns",
+				"url": "https://www.newyorker.com/magazine/2011/10/31/foreign-campaigns",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -150,7 +156,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.newyorker.com/news/hendrik-hertzberg/is-that-rick-santorum-on-the-cafeteria-line",
+		"url": "https://www.newyorker.com/news/hendrik-hertzberg/is-that-rick-santorum-on-the-cafeteria-line",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -167,7 +173,7 @@ var testCases = [
 				"abstractNote": "I’m a week late with this, but Chris Matthews had a pretty devastating take on Santorum’s “phony theology” attack on Obama’s concern about what …",
 				"libraryCatalog": "www.newyorker.com",
 				"publicationTitle": "The New Yorker",
-				"url": "http://www.newyorker.com/news/hendrik-hertzberg/is-that-rick-santorum-on-the-cafeteria-line",
+				"url": "https://www.newyorker.com/news/hendrik-hertzberg/is-that-rick-santorum-on-the-cafeteria-line",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -184,8 +190,46 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.newyorker.com/search?q=labor",
+		"url": "https://www.newyorker.com/search/q/labor",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.newyorker.com/magazine/2017/06/19/remembering-the-murder-you-didnt-commit",
+		"items": [
+			{
+				"itemType": "magazineArticle",
+				"title": "Remembering the Murder You Didn’t Commit",
+				"creators": [
+					{
+						"firstName": "Rachel",
+						"lastName": "Aviv",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-06-12T04:00:00Z",
+				"ISSN": "0028-792X",
+				"abstractNote": "DNA evidence exonerated six convicted killers. So why do some of them recall the crime so clearly?",
+				"libraryCatalog": "www.newyorker.com",
+				"publicationTitle": "The New Yorker",
+				"url": "https://www.newyorker.com/magazine/2017/06/19/remembering-the-murder-you-didnt-commit",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Crime",
+					"FalseMemories",
+					"Memory",
+					"Murder",
+					"Nebraska",
+					"Psychology"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

@@ -7,12 +7,13 @@
 	"maxVersion": "",
 	"priority": 100,
 	"configOptions": {
+		"async": true,
 		"dataMode": "rdf/xml"
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcs",
-	"lastUpdated": "2016-06-22 21:09:00"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-10-28 21:15:21"
 }
 
 /*
@@ -858,6 +859,10 @@ function importItem(newItem, node) {
 	}
     
 	var itemType = detectType(newItem, node, ret);
+	var isZoteroRDF = false;
+	if (getFirstResults(node, [n.z+"itemType", n.z+"type"], true)) {
+		isZoteroRDF = true;
+	}
 	newItem.itemType = exports.itemType || itemType;
 	var container = ret.container;
 	var isPartOf = ret.isPartOf;
@@ -1109,6 +1114,16 @@ function importItem(newItem, node) {
 
 	// type
 	var type = getFirstResults(node, [n.dc+"type", n.dc1_0+"type", n.dcterms+"type"], true);
+	
+	/**CUSTOM ITEM TYPE  -- Currently only Dataset **/
+	if (type && type.toLowerCase() == "dataset") {
+		if (newItem.extra) {
+			newItem.extra += "\ntype: dataset";
+		}
+		else newItem.extra = "type: dataset";
+	}
+
+
 	// these all mean the same thing
 	var typeProperties = ["reportType", "letterType", "manuscriptType",
 				"mapType", "thesisType", "websiteType",
@@ -1117,6 +1132,8 @@ function importItem(newItem, node) {
 		newItem[ typeProperties[i] ] = type;
 	}
 	
+	
+
 	//thesis type from eprints
 	if (newItem.itemType == "thesis"){
 		newItem.thesisType = getFirstResults(node, [n.eprints+"thesis_type"], true) || newItem.thesisType;
@@ -1173,7 +1190,12 @@ function importItem(newItem, node) {
 	// description/attachment note
 	if(newItem.itemType == "attachment") {
 		newItem.note = getFirstResults(node, [n.dc+"description", n.dc1_0+"description", n.dcterms+"description"], true);
-	} else if (!newItem.abstractNote) {
+	}
+	// extra for Zotero RDF
+	else if (isZoteroRDF) {
+		newItem.extra = getFirstResults(node, [n.dc+"description"], true);
+	}
+	else if (!newItem.abstractNote) {
 		newItem.abstractNote = getFirstResults(node, [n.dc+"description", n.dcterms+"description"], true);
 	}
 	
@@ -1185,7 +1207,7 @@ function importItem(newItem, node) {
 		var type = Zotero.RDF.getTargets(referentNode, rdf+"type");
 		if(type && Zotero.RDF.getResourceURI(type[0]) == n.bib+"Memo") {
 			// if this is a memo
-			var note = new Array();
+			var note = {};
 			note.note = getFirstResults(referentNode, [rdf+"value", n.dc+"description", n.dc1_0+"description", n.dcterms+"description"], true);
 			if(note.note != undefined) {
 				// handle see also
@@ -1197,6 +1219,7 @@ function importItem(newItem, node) {
 			}
 		}
 	}
+
 	
 	if(newItem.itemType == "note") {
 		// add note for standalone
@@ -1299,81 +1322,102 @@ function getNodes(skipCollections) {
 }
 
 function doImport() {
-	Zotero.setProgress(null);
-	var nodes = getNodes();
-	if(!nodes.length) {
-		return false;
+	if (typeof Promise == 'undefined') {
+		startImport(
+			function () {},
+			function (e) {
+				throw e;
+			}
+		);
 	}
-	
-	// keep track of collections while we're looping through
-	var collections = new Array();
-	
-	// topics also
-	var topics = new Array();
-	
-	for (var i=0; i<nodes.length; i++) {
-		var node = nodes[i];
-        // JURIS-M (start)
-		var itemID = Zotero.RDF.getResourceURI(node);
+	else {
+		return new Promise(function (resolve, reject) {
+			startImport(resolve, reject);
+		});
+	}
+}
+
+function startImport(resolve, reject) {
+	try {
+		Zotero.setProgress(null);
+		var nodes = getNodes();
+		if (!nodes.length) {
+			resolve();
+			return;
+		}
 		
-		// Suppress import of foaf:topic nodes that have a dc:title attribute
-		// (RDF descriptions of this kind are shipped by CiNii)
-		var topicset = getFirstResults(node, [n.foaf+"topic"]);
-		if (topicset) {
-			for (var i = 0, ilen = topicset.length; i < ilen; i += 1) {
-				var topic = Zotero.RDF.getResourceURI(topicset[i]);
-				topics.push(topic);
-			}
-		}
-		if (topics.indexOf(itemID) > -1) {
-			continue;
-		}
+		// keep track of collections while we're looping through
+		var collections = [];
+		importNext(nodes, 0, collections, resolve, reject);
+	}
+	catch (e) {
+		reject(e);
+	}
+}
 
-		// figure out if this is a part of another resource, or a linked
-		// attachment
-		if(Zotero.RDF.getSources(node, n.dcterms+"isPartOf") ||
-		   Zotero.RDF.getSources(node, n.bib+"presentedAt") ||
-		   Zotero.RDF.getSources(node, n.link+"link")) {
-			continue;
-		}
-        // JURIS-M (end)
-
-		// type
-		var type = Zotero.RDF.getTargets(node, rdf+"type");
-		if(type) {
-			type = Zotero.RDF.getResourceURI(type[0]);
-
-			// skip if this is not an independent attachment,
-			if((type == n.z+"Attachment" || type == n.bib+"Memo") && isPart(node)) {
+function importNext(nodes, index, collections, resolve, reject) {
+	try {
+		for (var i = index; i < nodes.length; i++) {
+			var node = nodes[i];
+			// JURIS-M (start)
+			var itemID = Zotero.RDF.getResourceURI(node);
+			
+			// figure out if this is a part of another resource, or a linked
+			// attachment
+			if(Zotero.RDF.getSources(node, n.dcterms+"isPartOf") ||
+			   Zotero.RDF.getSources(node, n.bib+"presentedAt") ||
+			   Zotero.RDF.getSources(node, n.link+"link")) {
 				continue;
 			}
-
-			// skip collections until all the items are done
-			if(type == n.bib+"Collection" || type == n.z+"Collection") {
-				collections.push(node);
-				continue;
+			// JURIS-M (end)
+			// type
+			var type = Zotero.RDF.getTargets(node, rdf+"type");
+			if (type) {
+				type = Zotero.RDF.getResourceURI(type[0]);
+				
+				// skip if this is not an independent attachment,
+				if((type == n.z+"Attachment" || type == n.bib+"Memo") && isPart(node)) {
+					continue;
+				}
+				
+				// skip collections until all the items are done
+				if(type == n.bib+"Collection" || type == n.z+"Collection") {
+					collections.push(node);
+					continue;
+				}
+			}
+			
+			var newItem = new Zotero.Item();
+			newItem.itemID = Zotero.RDF.getResourceURI(node);
+			
+			if (importItem(newItem, node)) {
+				var maybePromise = newItem.complete();
+				if (maybePromise) {
+					maybePromise.then(function () {
+						importNext(nodes, i + 1, collections, resolve, reject);
+					});
+					return;
+				}
+			}
+			
+			Zotero.setProgress((i + 1) / nodes.length * 100);
+		}
+		
+		// Collections
+		for (var i=0; i<collections.length; i++) {
+			var collection = collections[i];
+			if(!Zotero.RDF.getArcsIn(collection)) {
+				var newCollection = new Zotero.Collection();
+				processCollection(collection, newCollection);
+				newCollection.complete();
 			}
 		}
-
-		var newItem = new Zotero.Item();
-		newItem.itemID = Zotero.RDF.getResourceURI(node);
-
-		if(importItem(newItem, node)) {
-			newItem.complete();
-		}
-		Zotero.setProgress((i+1)/nodes.length*100);
+	}
+	catch (e) {
+		reject(e);
 	}
 	
-	/* COLLECTIONS */
-	
-	for (var i=0; i<collections.length; i++) {
-		var collection = collections[i];
-		if(!Zotero.RDF.getArcsIn(collection)) {
-			var newCollection = new Zotero.Collection();
-			processCollection(collection, newCollection);
-			newCollection.complete();
-		}
-	}
+	resolve();
 }
 
 /**
@@ -1386,3 +1430,42 @@ var exports = {
 	"defaultUnknownType":false,
 	"itemType": false
 };
+/** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"utf-8\" ?>\n<rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n         xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n         xmlns:bibo=\"http://purl.org/ontology/bibo/\"\n         xmlns:dc=\"http://purl.org/dc/terms/\"\n         xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n         xmlns:dc11=\"http://purl.org/dc/elements/1.1/\"\n         xmlns:ns0=\"http://rdaregistry.info/Elements/u/\"\n         xmlns:ns1=\"http://iflastandards.info/ns/isbd/elements/\"\n         xmlns:foaf=\"http://xmlns.com/foaf/0.1/\">\n\n  <bibo:Book rdf:about=\"http://d-nb.info/1054873992\">\n    <dc:medium rdf:resource=\"http://rdaregistry.info/termList/RDACarrierType/1044\"/>\n    <owl:sameAs rdf:resource=\"http://hub.culturegraph.org/resource/DNB-1054873992\"/>\n    <dc11:identifier>(DE-101)1054873992</dc11:identifier>\n    <dc11:identifier>(OCoLC)888461076</dc11:identifier>\n    <bibo:isbn13>9783658060268</bibo:isbn13>\n    <ns0:P60521>kart. : ca. EUR 39.99 (DE), ca. EUR 41.11 (AT), ca. sfr 50.00 (freier Pr.)</ns0:P60521>\n    <bibo:isbn10>3658060263</bibo:isbn10>\n    <bibo:gtin14>9783658060268</bibo:gtin14>\n    <dc:language rdf:resource=\"http://id.loc.gov/vocabulary/iso639-2/ger\"/>\n    <dc11:title>Das Adam-Smith-Projekt</dc11:title>\n    <dc:creator rdf:resource=\"http://d-nb.info/gnd/136486045\"/>\n    <dc11:publisher>Springer VS</dc11:publisher>\n    <ns0:P60163>Wiesbaden</ns0:P60163>\n    <ns0:P60333>Wiesbaden : Springer VS</ns0:P60333>\n    <ns1:P1053>447 S.</ns1:P1053>\n    <dc:isPartOf>Edition Theorie und Kritik</dc:isPartOf>\n    <ns0:P60489>Zugl. leicht überarb. Fassung von: Berlin, Freie Univ., Diss., 2012</ns0:P60489>\n    <dc:relation rdf:resource=\"http://d-nb.info/1064805604\"/>\n    <dc:subject>Smith, Adam</dc:subject>\n    <dc:subject>Liberalismus</dc:subject>\n    <dc:subject>Rechtsordnung</dc:subject>\n    <dc:subject>Foucault, Michel</dc:subject>\n    <dc:subject>Macht</dc:subject>\n    <dc:subject>Politische Philosophie</dc:subject>\n    <dc:subject rdf:resource=\"http://dewey.info/class/320.512092/e22/\"/>\n    <dc:tableOfContents rdf:resource=\"http://d-nb.info/1054873992/04\"/>\n    <dc:issued>2015</dc:issued>\n    <ns0:P60493>zur Genealogie der liberalen Gouvernementalität</ns0:P60493>\n  </bibo:Book>\n  \n  <foaf:Person rdf:about=\"http://d-nb.info/gnd/136486045\">\n    <foaf:familyName>Ronge</foaf:familyName>\n    <foaf:givenName>Bastian</foaf:givenName>\n  </foaf:Person>\n  \n\n</rdf:RDF>",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Das Adam-Smith-Projekt",
+				"creators": [
+					{
+						"lastName": "Ronge",
+						"firstName": "Bastian",
+						"creatorType": "author"
+					}
+				],
+				"date": "2015",
+				"ISBN": "9783658060268",
+				"itemID": "http://d-nb.info/1054873992",
+				"language": "http://id.loc.gov/vocabulary/iso639-2/ger",
+				"publisher": "Springer VS",
+				"attachments": [],
+				"tags": [
+					"Foucault, Michel",
+					"Liberalismus",
+					"Macht",
+					"Politische Philosophie",
+					"Rechtsordnung",
+					"Smith, Adam"
+				],
+				"notes": [],
+				"seeAlso": [
+					"http://d-nb.info/1064805604"
+				]
+			}
+		]
+	}
+]
+/** END TEST CASES **/

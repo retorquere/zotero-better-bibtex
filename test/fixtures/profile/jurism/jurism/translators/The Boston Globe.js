@@ -2,14 +2,14 @@
 	"translatorID": "1f245496-4c1b-406a-8641-d286b3888231",
 	"label": "The Boston Globe",
 	"creator": "Adam Crymble, Frank Bennett, Sebastian Karcher",
-	"target": "^https?://(www|search|articles)\\.boston\\.com/",
+	"target": "^https?://(www|search|articles|archive)\\.boston\\.com/",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-04 09:54:41"
+	"lastUpdated": "2017-06-29 18:49:20"
 }
 
 /*
@@ -112,8 +112,8 @@ function scrape (doc, url) {
 		newItem.attachments.push({url:doc.location.href,mimetype:"text/html",snapshot:true,title:"Boston.com page"});
 		// Now try to get some citation details (go ahead, try)
 		var info = magicComment.replace('\n','','g');
-		newItem.title = Zotero.Utilities.unescapeHTML(info.replace(/.*<headline>(.*)<\/headline>.*/,"$1"));
-		newItem.date = info.replace(/.*<date>(.*)<\/date>.*/,"$1");
+		newItem.title = ZU.xpathText(doc, '//div[@id="headTools"]/h1');
+		newItem.date = ZU.xpathText(doc, '//span[@id="dateline"]/text()[2]');
 		var authors = findAuthorString(doc, newItem);
 		if (!authors) {
 			var authors = info.replace(/.*<byline>(.*)<\/byline>.*/,"$1");
@@ -223,10 +223,11 @@ function doWeb (doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.boston.com/lifestyle/articles/2011/04/28/anticipation_grows_for_mfas_art_in_bloom_festival/?camp=pm",
+		"url": "http://archive.boston.com/lifestyle/articles/2011/04/28/anticipation_grows_for_mfas_art_in_bloom_festival/?camp=pm",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Anticipation grows for MFA’s spring flower festival",
 				"creators": [
 					{
 						"firstName": "Carol",
@@ -234,9 +235,10 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "April 28, 2011",
+				"libraryCatalog": "The Boston Globe",
+				"publicationTitle": "Boston.com",
+				"url": "http://archive.boston.com/lifestyle/articles/2011/04/28/anticipation_grows_for_mfas_art_in_bloom_festival/?camp=pm",
 				"attachments": [
 					{
 						"mimetype": "text/html",
@@ -244,21 +246,19 @@ var testCases = [
 						"title": "Boston.com page"
 					}
 				],
-				"publicationTitle": "Boston.com",
-				"url": "http://www.boston.com/lifestyle/articles/2011/04/28/anticipation_grows_for_mfas_art_in_bloom_festival/?camp=pm",
-				"title": "Anticipation grows for MFA’s spring flower festival",
-				"date": "April 28, 2011",
-				"libraryCatalog": "The Boston Globe",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.boston.com/news/nation/washington/articles/2011/05/08/bin_laden_occupied_shrunken_dark_world/",
+		"url": "http://archive.boston.com/news/nation/washington/articles/2011/05/08/bin_laden_occupied_shrunken_dark_world/",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "A peek inside bin Laden’s world: isolation, vanity, power",
 				"creators": [
 					{
 						"firstName": "Elisabeth",
@@ -271,9 +271,11 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "May 8, 2011",
+				"libraryCatalog": "The Boston Globe",
+				"publicationTitle": "Boston.com",
+				"shortTitle": "A peek inside bin Laden’s world",
+				"url": "http://archive.boston.com/news/nation/washington/articles/2011/05/08/bin_laden_occupied_shrunken_dark_world/",
 				"attachments": [
 					{
 						"mimetype": "text/html",
@@ -281,13 +283,9 @@ var testCases = [
 						"title": "Boston.com page"
 					}
 				],
-				"publicationTitle": "Boston.com",
-				"url": "http://www.boston.com/news/nation/washington/articles/2011/05/08/bin_laden_occupied_shrunken_dark_world/",
-				"title": "A peek inside bin Laden’s world: isolation, vanity, power",
-				"date": "May 8, 2011",
-				"libraryCatalog": "The Boston Globe",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "A peek inside bin Laden’s world"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

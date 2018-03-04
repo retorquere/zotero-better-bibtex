@@ -7,6 +7,7 @@
 	"maxVersion": "",
 	"priority": 100,
 	"configOptions": {
+		"async": true,
 		"getCollections": true
 	},
 	"displayOptions": {
@@ -16,7 +17,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcv",
-	"lastUpdated": "2016-06-21 08:45:20"
+	"lastUpdated": "2017-07-05 19:32:38"
 }
 
 function detectImport() {
@@ -503,161 +504,198 @@ function getField(field, type) {
 }
 
 function doImport() {
-	var xml = Zotero.getXML();
+	if (typeof Promise == 'undefined') {
+		startImport(
+			function () {},
+			function (e) {
+				throw e;
+			}
+		);
+	}
+	else {
+		return new Promise(function (resolve, reject) {
+			startImport(resolve, reject);
+		});
+	}
+}
 
-	var records = ZU.xpath(xml, "//record");
-	//Z.debug(records.length)
-	for (var i = 0, n = records.length; i < n; i++) {
-		Z.setProgress(i/n*100);
-		
-		var record = records[i];
-		newItem = new Zotero.Item();
-		//we prefer the name of the ref-type as it e.g. works with Mendeley and probably other Endnote 7 exports
-		newItem.itemType = processItemType[ZU.xpathText(record, './/ref-type/@name')];
-		//fall back to ref-type number
-		if (!newItem.itemType) newItem.itemType = processNumberType[ZU.xpathText(record, './/ref-type')];
-		//fall back to journal Article if all else fails
-		if (!newItem.itemType) newItem.itemType = "journalArticle";
-		var notecache = [];
-		//Z.debug(newItem.itemType)
-		for (var j = 0; j < record.children.length; j++) {
-			var node = record.children[j];
-			var field = node.nodeName;
-			var zfield;
+function startImport(resolve, reject) {
+	try {
+		var xml = Zotero.getXML();
+		var records = ZU.xpath(xml, "//record");
+		importNext(records, 0, resolve, reject);
+	}
+	catch (e) {
+		reject(e);
+	}
+}
 
-			if (zfield = getField(field, newItem.itemType)) {
-				if (zfield.indexOf("creators") != -1) {
-					var authortype = zfield.replace(/creators\//, "");
-					newItem.creators.push(ZU.cleanAuthor(node.textContent, authortype))
-				} else if (ZU.fieldIsValidForType(zfield, newItem.itemType)) {
-					if (zfield == 'abstractNote') {
-						// Preserve newlines
-						newItem[zfield] = processField(node, true)
-							.replace(/\r\n?/g, '\n');
-					} else {
-						newItem[zfield] = processField(node);
-					}
-				}
-				else {
-					notecache.push(field + ": " + processField(node));
-				}
-			} else if (field == "titles" || field == "periodical" || field == "alt-periodical") {
-				for (var k = 0; k < node.children.length; k++) {
-					var subnode = node.children[k];
-					var subfield = subnode.nodeName;
-					if (zfield = getField(subfield, newItem.itemType)) {
-						//Z.debug(zfield)
-						if (ZU.fieldIsValidForType(zfield, newItem.itemType)) {
-							newItem[zfield] = processField(subnode);
+function importNext(records, index, resolve, reject) {
+	try {
+		//Z.debug(records.length)
+		for (var i = index, n = records.length; i < n; i++) {
+			Z.setProgress(i/n*100);
+			
+			var record = records[i];
+			newItem = new Zotero.Item();
+			//we prefer the name of the ref-type as it e.g. works with Mendeley and probably other Endnote 7 exports
+			newItem.itemType = processItemType[ZU.xpathText(record, './/ref-type/@name')];
+			//fall back to ref-type number
+			if (!newItem.itemType) newItem.itemType = processNumberType[ZU.xpathText(record, './/ref-type')];
+			//fall back to journal Article if all else fails
+			if (!newItem.itemType) newItem.itemType = "journalArticle";
+			var notecache = [];
+			//Z.debug(newItem.itemType)
+			for (var j = 0; j < record.children.length; j++) {
+				var node = record.children[j];
+				var field = node.nodeName;
+				var zfield;
+	
+				if (zfield = getField(field, newItem.itemType)) {
+					if (zfield.indexOf("creators") != -1) {
+						var authortype = zfield.replace(/creators\//, "");
+						newItem.creators.push(ZU.cleanAuthor(node.textContent, authortype))
+					} else if (ZU.fieldIsValidForType(zfield, newItem.itemType)) {
+						if (zfield == 'abstractNote') {
+							// Preserve newlines
+							newItem[zfield] = processField(node, true)
+								.replace(/\r\n?/g, '\n');
+						} else {
+							newItem[zfield] = processField(node);
 						}
-						else {
-							notecache.push(field + ": " + processField(subnode));
-						}
-					} else {
-						notecache.push(subfield + ": " + processField(subnode));			
 					}
-				}
-			} else if (field == "contributors") {
-				for (var k = 0; k < node.children.length; k++) {
-					var subnode = node.children[k];
-					var subfield = subnode.nodeName;
-					var authortype;
-					if (authortype = getField(subfield, newItem.itemType)) {
-						var creators = subnode.getElementsByTagName("author");
-						for (var l = 0; l < creators.length; l++) {
-							if (authortype) {
-								newItem.creators.push(ZU.cleanAuthor(creators[l].textContent, authortype, true));
+					else {
+						notecache.push(field + ": " + processField(node));
+					}
+				} else if (field == "titles" || field == "periodical" || field == "alt-periodical") {
+					for (var k = 0; k < node.children.length; k++) {
+						var subnode = node.children[k];
+						var subfield = subnode.nodeName;
+						if (zfield = getField(subfield, newItem.itemType)) {
+							//Z.debug(zfield)
+							if (ZU.fieldIsValidForType(zfield, newItem.itemType)) {
+								newItem[zfield] = processField(subnode);
 							}
 							else {
-								notecache.push(subfield + ": " + processField(subnode));
+								notecache.push(field + ": " + processField(subnode));
+							}
+						} else {
+							notecache.push(subfield + ": " + processField(subnode));			
+						}
+					}
+				} else if (field == "contributors") {
+					for (var k = 0; k < node.children.length; k++) {
+						var subnode = node.children[k];
+						var subfield = subnode.nodeName;
+						var authortype;
+						if (authortype = getField(subfield, newItem.itemType)) {
+							var creators = subnode.getElementsByTagName("author");
+							for (var l = 0; l < creators.length; l++) {
+								if (authortype) {
+									newItem.creators.push(ZU.cleanAuthor(creators[l].textContent, authortype, true));
+								}
+								else {
+									notecache.push(subfield + ": " + processField(subnode));
+								}
+							}
+						} else {
+							notecache.push(subfield + ": " + processField(subnode));
+						}
+					}
+				} else if (field == "dates") {
+					var date = node.getElementsByTagName("pub-dates");
+					var year = node.getElementsByTagName("year");
+					if (date.length > 0 && year.length > 0) {
+						date = date[0].getElementsByTagName("date")[0].textContent.trim();
+						year = year[0].textContent.trim();
+						if (date.search(/\d{4}/) != -1) newItem.date = date;
+						else newItem.date = date + " " + year;
+					} else if (date.length > 0) {
+						newItem.date = date[0].firstChild.textContent;
+					} else if (year.length > 0) {
+						newItem.date = year[0].textContent;
+					} else if (node.textContent.trim().length > 0) {
+						//there is only copyright note left;
+						notecache.push("copyright-dates: " + node.textContent)
+					}
+	
+				} else if (field == "notes" || field == "research-notes") {
+					newItem.notes.push(
+						'<p>' + processField(node, true, 'note')
+							.split(/(?:\r\n|\r(?!\n)|\n){2,}/) // Double newlines (or more) are paragraphs
+							.join('</p><p>')
+							.replace(/[\r\n]+/g, '<br/>') // Single newlines are just new lines
+						+ '</p>'
+					);
+				} else if (field == "keywords") {
+					for (var k = 0; k < node.children.length; k++) {
+						var subnode = node.children[k];
+						newItem.tags.push(subnode.textContent.trim())
+					}
+				} else if (field == "urls") {
+	
+					for (var k = 0; k < node.children.length; k++) {
+						var subnode = node.children[k];
+						var attachmenttype = "";
+						switch(subnode.nodeName){
+							case "text-urls":
+							case "related-urls":
+								attachmenttype="text/html";
+								break;
+							case "web-urls":
+								attachmenttype="url";
+								break;
+							case "pdf-urls":
+								attachmenttype="application/pdf";
+						}
+						for (var l = 0; l < subnode.children.length; l++) {
+							if (subnode.children[l].nodeType == 3) continue;
+							var filepath = subnode.children[l].textContent;
+							if (!filepath) continue
+							//support for EndNote's relative paths
+							filepath = filepath.replace(/^internal-pdf:\/\//i, 'PDF/').trim();
+							var filename = filepath.replace(/.+\//, "").replace(/\.[^\.]+$/, "");
+							if (attachmenttype == "url") {
+								newItem.url = subnode.textContent;
+							} else {
+								newItem.attachments.push({
+									title: filename,
+									path: filepath,
+									mimeType: attachmenttype
+								})
 							}
 						}
-					} else {
-						notecache.push(subfield + ": " + processField(subnode));
 					}
-				}
-			} else if (field == "dates") {
-				var date = node.getElementsByTagName("pub-dates");
-				var year = node.getElementsByTagName("year");
-				if (date.length > 0 && year.length > 0) {
-					date = date[0].getElementsByTagName("date")[0].textContent.trim();
-					year = year[0].textContent.trim();
-					if (date.search(/\d{4}/) != -1) newItem.date = date;
-					else newItem.date = date + " " + year;
-				} else if (date.length > 0) {
-					newItem.date = date[0].firstChild.textContent;
-				} else if (year.length > 0) {
-					newItem.date = year[0].textContent;
-				} else if (node.textContent.trim().length > 0) {
-					//there is only copyright note left;
-					notecache.push("copyright-dates: " + node.textContent)
-				}
-
-			} else if (field == "notes" || field == "research-notes") {
-				newItem.notes.push(
-					'<p>' + processField(node, true, 'note')
-						.split(/(?:\r\n|\r(?!\n)|\n){2,}/) // Double newlines (or more) are paragraphs
-						.join('</p><p>')
-						.replace(/[\r\n]+/g, '<br/>') // Single newlines are just new lines
-					+ '</p>'
-				);
-			} else if (field == "keywords") {
-				for (var k = 0; k < node.children.length; k++) {
-					var subnode = node.children[k];
-					newItem.tags.push(subnode.textContent.trim())
-				}
-			} else if (field == "urls") {
-
-				for (var k = 0; k < node.children.length; k++) {
-					var subnode = node.children[k];
-					var attachmenttype = "";
-					switch(subnode.nodeName){
-						case "text-urls":
-						case "related-urls":
-							attachmenttype="text/html";
-							break;
-						case "web-urls":
-							attachmenttype="url";
-							break;
-						case "pdf-urls":
-							attachmenttype="application/pdf";
+				} else if (field.search(/custom[237]/) != -1 && 
+						(newItem.itemType == "book" || newItem.itemType ==  "bookSection" || newItem.itemType == "journalArticle")) {
+					//it'd be nice if we could do PMIDs as well, but doesn't look like they're mapped and we can't test for them reliably
+					if (node.textContent.search(/PMC\d+/i) != -1) {
+						newItem.extra = "PMCID: " + node.textContent.match(/PMC\d+/i)[0];
 					}
-					for (var l = 0; l < subnode.children.length; l++) {
-						if (subnode.children[l].nodeType == 3) continue;
-						var filepath = subnode.children[l].textContent;
-						if (!filepath) continue
-						//support for EndNote's relative paths
-						filepath = filepath.replace(/^internal-pdf:\/\//i, 'PDF/').trim();
-						var filename = filepath.replace(/.+\//, "").replace(/\.[^\.]+$/, "");
-						if (attachmenttype == "url") {
-							newItem.url = subnode.textContent;
-						} else {
-							newItem.attachments.push({
-								title: filename,
-								path: filepath,
-								mimeType: attachmenttype
-							})
-						}
-					}
+				} else if (field == "database" || field == "source-app" || field == "rec-number" || field == "ref-type" 
+					|| field == "foreign-keys"){
+						//skipping these fields
+				} else {
+					notecache.push(node.nodeName + ": " + processField(node));
 				}
-			} else if (field.search(/custom[237]/) != -1 && 
-					(newItem.itemType == "book" || newItem.itemType ==  "bookSection" || newItem.itemType == "journalArticle")) {
-				//it'd be nice if we could do PMIDs as well, but doesn't look like they're mapped and we can't test for them reliably
-				if (node.textContent.search(/PMC\d+/i) != -1) {
-					newItem.extra = "PMCID: " + node.textContent.match(/PMC\d+/i)[0];
-				}
-			} else if (field == "database" || field == "source-app" || field == "rec-number" || field == "ref-type" 
-				|| field == "foreign-keys"){
-					//skipping these fields
-			} else {
-				notecache.push(node.nodeName + ": " + processField(node));
+			}
+			if (notecache.length > 0){ 
+				newItem.notes.push({note: "The following values have no corresponding Zotero field:<br/>" + notecache.join("<br/>"), tags: ['_EndnoteXML import']})
+			}
+			var maybePromise = newItem.complete();
+			if (maybePromise) {
+				maybePromise.then(function () {
+					importNext(records, i + 1, resolve, reject);
+				});
+				return;
 			}
 		}
-		if (notecache.length > 0){ 
-			newItem.notes.push({note: "The following values have no corresponding Zotero field:<br/>" + notecache.join("<br/>"), tags: ['_EndnoteXML import']})
-		}
-		newItem.complete();
 	}
+	catch (e) {
+		reject(e);
+	}
+	
+	resolve();
 }
 
 function doExport() {

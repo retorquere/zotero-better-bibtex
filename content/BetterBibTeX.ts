@@ -43,7 +43,7 @@ AddonManager.addAddonListener({
     debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
-    for (const [label, metadata] of Object.entries(Translators.byName)) {
+    for (const [label, metadata] of (Object.entries(Translators.byName) as Array<[string, ITranslatorHeader]>)) {
       if (quickCopy === `export=${metadata.translatorID}`) Zotero.Prefs.clear('export.quickCopy.setting')
 
       try {
@@ -426,17 +426,20 @@ class Progress {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
+    debug(`${this.name}: waiting for Zotero locks...`)
+
     await Zotero.uiReadyPromise
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
+    debug(`${this.name}: ${msg}...`)
     this.toggle(true)
-    debug(`${this.name}: started`)
   }
 
   public update(msg) {
     this.bench(msg)
 
+    debug(`${this.name}: ${msg}...`)
     if (this.locked) {
       Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
     } else {
@@ -498,7 +501,12 @@ export = new class BetterBibTeX {
       debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
     } else {
       this.ready = bbtReady.promise
-      window.addEventListener('load', this.load.bind(this), false)
+      window.addEventListener('load', () => {
+        this.load().catch(err => {
+          this.ready = false
+          debug('Better BibTeX failed to load:', err)
+        })
+      }, false)
     }
   }
 
@@ -568,8 +576,9 @@ export = new class BetterBibTeX {
     debug('ErrorReport::start done')
   }
 
-  public scanAUX(path = null) {
-    (new AUXScanner).scan(path)
+  public async scanAUX(path = null) {
+    await bbtReady.promise
+    await AUXScanner.scan(path)
   }
 
   public getString(id, params = null) {

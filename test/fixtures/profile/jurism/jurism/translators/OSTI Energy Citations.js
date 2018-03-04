@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-03 11:31:22"
+	"lastUpdated": "2017-07-27 10:41:29"
 }
 
 /*
@@ -77,7 +77,7 @@ function doWeb(doc,url)
 		if (type && type.indexOf("Thesis")!=-1) itemtype = "thesis";
 		
 		// We call the Embedded Metadata translator to do the actual work
-		var translator = Zotero.loadTranslator("import");
+		var translator = Zotero.loadTranslator("web");
 		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
 		translator.setHandler("itemDone", function(obj, item) {
 				if (item.institution){

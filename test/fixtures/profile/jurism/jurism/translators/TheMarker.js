@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-08-17 22:04:49"
+	"lastUpdated": "2017-07-03 10:47:30"
 }
 
 /**
@@ -47,16 +47,19 @@ function doWeb(doc, url) {
 	if (!abstract) abstract = ZU.xpathText(doc, '//meta[@property="og:description"]/@content');
 	newItem.abstractNote = abstract;
 	
-	newItem.date = ZU.xpathText(doc, '//time[@itemprop="datePublished"]/@datetime').split('T')[0];
+	newItem.date = ZU.xpathText(doc, '(//meta[@itemprop="datePublished"]/@content)[1]');
 	
 	var authors = ZU.xpath(doc, '//address/a[@rel="author"]');
 	for(var i=0; i<authors.length; i++) {
 		newItem.creators.push(ZU.cleanAuthor(authors[i].textContent, 'author'));
 	}
-		var keywords = ZU.xpathText(doc, '//head/meta[@name="news_keywords"]/@content').split(',');
+	var keywordsString = ZU.xpathText(doc, '//meta[@name="news_keywords"]/@content');
+	if (keywordsString) {
+		var keywords = keywordsString.split(',');
 		for(var i=0; i<keywords.length; i++) {
 				if(keywords[i].length>0) newItem.tags.push(keywords[i].trim());
 		}
+	}
 
 	newItem.attachments = [{
 		document: doc,
@@ -82,7 +85,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2015-08-15",
+				"date": "2015-08-15T13:23:18+0300",
 				"abstractNote": "כאשר במשק יש ריכוזי כוח כלכלי ופוליטי, לאיש אין עניין לצעוק שהמלך הוא עירום, ורוב האנשים יעדיפו לשכנע את עצמם שאלה בגדי המלך החדשים והיפים",
 				"libraryCatalog": "TheMarker",
 				"publicationTitle": "TheMarker",

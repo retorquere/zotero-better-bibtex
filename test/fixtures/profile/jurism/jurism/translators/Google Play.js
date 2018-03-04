@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsib",
-	"lastUpdated": "2016-09-21 18:53:33"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-07 18:01:47"
 }
 
 /*
@@ -139,7 +139,13 @@ var testCases = [
 			{
 				"itemType": "computerProgram",
 				"title": "Zandy",
-				"creators": [],
+				"creators": [
+					{
+						"firstName": "Avram",
+						"lastName": "Lyon",
+						"creatorType": "author"
+					}
+				],
 				"date": "October 1, 2014",
 				"abstractNote": "Access your Zotero library from your mobile device! Edit and view your library, sync, and work offline. Zandy provides a simple interface to all your research. Browse and modify the items in your library, add new items, view attachments, take and edit item notes, search your library, and add webpages from the Android browser, with more features coming soon!See http://www.gimranov.com/avram/w/zandy-user-guide for a complete guide to using Zandy. If you have Zandy 1.0 already, see the update note, http://wp.me/p1i2jM-2UFor more information on the Zotero project, the premier system for managing research and bibliographic data, see the project site at http://www.zotero.org/. Zandy is a free software project, licensed under the Affero GPL v3. By buying the paid application on Google Play, you support the future development of this app and ensure its further improvement. All future releases of the software will be free updates bringing new capabilities and bugfixes.To file bug reports or feature requests, please see the project repository at https://github.com/ajlyon/zandy/. The full source code is also available at that address.If you find that Zandy doesn't fit your needs, satisfaction is guaranteed: just send me an email at zandy@gimranov.com, and I'll refund the purchase price.Please note that Zandy has no official connection to the Zotero project and its home institution at the Center for History and New Media at George Mason University.",
 				"company": "Avram Lyon",

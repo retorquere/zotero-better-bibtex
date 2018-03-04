@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-03-02 21:10:56"
+	"lastUpdated": "2018-01-14 20:53:20"
 }
 
 /*
@@ -94,6 +94,7 @@ function scrape(doc, url) {
 		//appeared online is in Y1. Thus, we want to prefer DA over T1
 		//and will therefore simply delete the later in cases both
 		//dates are present.
+		//Z.debug(text);
 		if (text.indexOf("DA  - ")>-1) {
 			text = text.replace(/Y1  - .*\r?\n/, '');
 		}
@@ -119,6 +120,16 @@ function scrape(doc, url) {
 			if (abstract) {
 				item.abstractNote = abstract;
 			}
+			
+			//Workaround while Sage hopefully fixes RIS for authors
+			for (let i = 0; i<item.creators.length; i++) {
+				if (!item.creators[i].firstName) {
+					let type = item.creators[i].creatorType;
+					let comma = item.creators[i].lastName.includes(",");
+					item.creators[i] = ZU.cleanAuthor(item.creators[i].lastName, type, comma);
+				}
+			}
+			
 			item.notes = [];
 			item.language = ZU.xpathText(doc, '//meta[@name="dc.Language"]/@content');
 			item.attachments.push({
@@ -143,8 +154,8 @@ var testCases = [
 				"title": "Emotion and Regulation are One!",
 				"creators": [
 					{
-						"lastName": "Kappas",
 						"firstName": "Arvid",
+						"lastName": "Kappas",
 						"creatorType": "author"
 					}
 				],
@@ -158,7 +169,7 @@ var testCases = [
 				"libraryCatalog": "SAGE Journals",
 				"pages": "17-25",
 				"publicationTitle": "Emotion Review",
-				"url": "http://dx.doi.org/10.1177/1754073910380971",
+				"url": "https://doi.org/10.1177/1754073910380971",
 				"volume": "3",
 				"attachments": [
 					{
@@ -186,18 +197,18 @@ var testCases = [
 				"title": "Brookfield powder flow tester – Results of round robin tests with CRM-116 limestone powder",
 				"creators": [
 					{
+						"firstName": "R. J.",
 						"lastName": "Berry",
-						"firstName": "RJ",
 						"creatorType": "author"
 					},
 					{
+						"firstName": "M. S. A.",
 						"lastName": "Bradley",
-						"firstName": "MSA",
 						"creatorType": "author"
 					},
 					{
+						"firstName": "R. G.",
 						"lastName": "McGregor",
-						"firstName": "RG",
 						"creatorType": "author"
 					}
 				],
@@ -210,7 +221,7 @@ var testCases = [
 				"libraryCatalog": "SAGE Journals",
 				"pages": "215-230",
 				"publicationTitle": "Proceedings of the Institution of Mechanical Engineers, Part E: Journal of Process Mechanical Engineering",
-				"url": "http://journals.sagepub.com/doi/abs/10.1177/0954408914525387",
+				"url": "https://doi.org/10.1177/0954408914525387",
 				"volume": "229",
 				"attachments": [
 					{
@@ -238,23 +249,23 @@ var testCases = [
 				"title": "Moffitt’s Developmental Taxonomy and Gang Membership: An Alternative Test of the Snares Hypothesis",
 				"creators": [
 					{
-						"lastName": "Petkovsek",
 						"firstName": "Melissa A.",
+						"lastName": "Petkovsek",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Boutwell",
 						"firstName": "Brian B.",
+						"lastName": "Boutwell",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Barnes",
 						"firstName": "J. C.",
+						"lastName": "Barnes",
 						"creatorType": "author"
 					},
 					{
-						"lastName": "Beaver",
 						"firstName": "Kevin M.",
+						"lastName": "Beaver",
 						"creatorType": "author"
 					}
 				],
@@ -268,7 +279,7 @@ var testCases = [
 				"pages": "335-349",
 				"publicationTitle": "Youth Violence and Juvenile Justice",
 				"shortTitle": "Moffitt’s Developmental Taxonomy and Gang Membership",
-				"url": "http://journals.sagepub.com/doi/abs/10.1177/1541204015581389",
+				"url": "https://doi.org/10.1177/1541204015581389",
 				"volume": "14",
 				"attachments": [
 					{

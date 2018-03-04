@@ -9,32 +9,46 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2016-09-03 10:43:32"
+	"lastUpdated": "2017-08-28 07:22:19"
 }
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
+
 
 function detectWeb(doc, url) {
 	if(getSearchResults(doc, true)) {
 		return (Zotero.isBookmarklet ? "server" : "multiple");
 	} else {
-		var xpath = '//input[contains(@name, "ASIN")]';
-		if(doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
-			if(Zotero.isBookmarklet) return "server";
+		if (attr(doc, 'input[name*="ASIN"]', 'value')) {
+			if (Zotero.isBookmarklet) return "server";
 			
-			var elmt = doc.evaluate('//input[@name="storeID"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-			if(elmt) {
-				var storeID = elmt.value;
-				//Z.debug(storeID);
-				if (storeID=="music"|storeID=="dmusic"){
+			var storeID = attr(doc, 'input[name="storeID"]', 'value');
+			if (storeID) {
+				if (storeID.indexOf("books")>-1) {
+					return "book";
+				} else if (storeID=="music"|storeID=="dmusic"){
 					return "audioRecording";
 				} else if (storeID=="dvd"|storeID=="dvd-de"|storeID=="video"|storeID=="movies-tv"){
 					return "videoRecording";
 				} else if (storeID=="videogames"|storeID=="mobile-apps") {
 					return "computerProgram";
 				} else {
-					return "book";
+					Z.debug("Items in this store will be ignored by Zotero: " + storeID);
 				}
 			} else {
-				return "book";
+				//audio books are purchased as audible abo
+				if (text(doc, 'form[class="a-spacing-none"][action*="/audible/"]')) {
+					return "audioRecording";
+				}
+				var mainCategory = text(doc, '#wayfinding-breadcrumbs_container li a');
+				if (mainCategory && mainCategory.indexOf('Kindle')>-1) {
+					return "book";
+				} else {
+					Z.debug("Items in this category will be ignored by Zotero: " + mainCategory);
+				}
+				
 			}
 		}
 	}
@@ -161,21 +175,6 @@ function translateField(str) {
 	}
 }
 
-function get_nextsibling(n) {
-	//returns next sibling of n, or if it was the last one
-	//returns next sibling of its parent node, or... --> while(x == null)
-	//accepts only element nodes (type 1) or nonempty textnode (type 3)
-	//and skips everything else
-	var x=n.nextSibling;
-	while (x == null || (x.nodeType != 1 && (x.nodeType != 3 || x.textContent.match(/^\s*$/) ))) {
-		if (x==null) {
-			x = get_nextsibling(n.parentNode);
-		} else {
-			x=x.nextSibling;
-		}
-	}
-	return x;	
-}
 
 function scrape(doc, url) {
 	var isAsian = url.search(/^https?:\/\/[^\/]+\.(?:jp|cn)[:\/]/) != -1;
@@ -593,7 +592,7 @@ var testCases = [
 				"language": "Deutsch",
 				"libraryCatalog": "Amazon",
 				"numPages": 192,
-				"place": "Frankfurt a.M",
+				"place": "Frankfurt am Main",
 				"publisher": "FISCHER Taschenbuch",
 				"shortTitle": "Fiktionen",
 				"attachments": [
@@ -644,11 +643,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.it/Emil-Astrid-Lindgren/dp/888203867X/ref=sr_1_1?s=books&ie=UTF8&qid=1362324961&sr=1-1",
+		"url": "https://www.amazon.it/Emil-Astrid-Lindgren/dp/888203867X/ref=sr_1_1?s=books&ie=UTF8&qid=1362324961&sr=1-1",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Emil",
+				"title": "Emil. Ediz. illustrata",
 				"creators": [
 					{
 						"firstName": "Astrid",
@@ -834,13 +833,12 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012/8/2",
+				"date": "August 2, 2012",
 				"ISBN": "9780099578079",
-				"edition": "Combined volume版",
+				"edition": "Combined volume edition",
 				"language": "英語",
 				"libraryCatalog": "Amazon",
 				"numPages": 1328,
-				"place": "London",
 				"publisher": "Vintage",
 				"shortTitle": "1Q84",
 				"attachments": [
@@ -905,7 +903,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.com/First-Quarto-Hamlet-Cambridge-Shakespeare/dp/0521653908/",
+		"url": "https://www.amazon.com/First-Quarto-Hamlet-Cambridge-Shakespeare/dp/0521653908/",
 		"items": [
 			{
 				"itemType": "book",
@@ -928,7 +926,7 @@ var testCases = [
 				"language": "English",
 				"libraryCatalog": "Amazon",
 				"numPages": 144,
-				"place": "New York",
+				"place": "Cambridge",
 				"publisher": "Cambridge University Press",
 				"attachments": [
 					{
@@ -945,7 +943,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.co.jp/dp/4003314212",
+		"url": "https://www.amazon.co.jp/dp/4003314212",
 		"items": [
 			{
 				"itemType": "book",
@@ -957,7 +955,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "1977/9/16",
+				"date": "September 16, 1977",
 				"ISBN": "9784003314210",
 				"language": "日本語",
 				"libraryCatalog": "Amazon",

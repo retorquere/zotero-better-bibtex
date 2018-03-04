@@ -2,14 +2,14 @@
 	"translatorID": "6bc635a4-6823-4f95-acaf-b43e8a158144",
 	"label": "Le Monde",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://(www\\.)?lemonde\\.fr/",
+	"target": "^https?://(www\\.)?(abonnes\\.)?lemonde\\.fr/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-06-09 20:21:01"
+	"lastUpdated": "2018-01-13 11:53:25"
 }
 
 /*
@@ -35,13 +35,15 @@
 	***** END LICENSE BLOCK *****
 */
 
+
 function detectWeb(doc, url) {
-	if (url.indexOf('/article/')>-1) {
+	if (url.includes('/article/')) {
 		return "newspaperArticle";
 	} else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
+
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
@@ -65,7 +67,7 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var articles = new Array();
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
@@ -106,7 +108,7 @@ function scrape(doc, url) {
 			item.creators.push( ZU.cleanAuthor(author, "author") );
 		}
 		
-		item.section = ZU.xpathText(doc, '//nav[@id="nav"]/ul/li[contains(@class,"actif")]/a/@data-rubrique-title');
+		item.section = ZU.xpathText(doc, '//nav[@id="navigation-generale"]/ul/li[contains(@class,"alt")]/a/@data-rubrique-title');
 		
 		item.complete();
 	});
@@ -115,7 +117,9 @@ function scrape(doc, url) {
 		trans.itemType = "newspaperArticle";
 		trans.doWeb(doc, url);
 	});
-}/** BEGIN TEST CASES **/
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",

@@ -6,8 +6,10 @@ import * as path from 'path'
 
 import root from 'zotero-plugin/root'
 
-console.log('make build dirs')
-for (const dir of [path.join(root, 'build'), path.join(root, 'gen'), path.join(root, 'xpi')]) {
+console.log('make build dirs under', root)
+for (let dir of ['build', 'gen', 'gen/typings', 'xpi']) {
+  dir = path.join(root, dir)
+  console.log('creating', dir)
   rimraf.sync(dir)
   fs.mkdirSync(dir)
 }

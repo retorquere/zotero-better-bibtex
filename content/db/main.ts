@@ -73,6 +73,7 @@ class DBStore {
             try {
               debug(`DBStore.loadDatabase: loading ${row.name}`)
               collections[row.name] = JSON.parse(row.data)
+              collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
               debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
             } catch (err) {
               debug(`DBStore.loadDatabase: failed to parse ${row.name}`)
@@ -84,6 +85,9 @@ class DBStore {
           debug('DBStore.loadDatabase: restoring collections:', db.collections)
           db.collections = db.collections.filter(coll => collections[coll]).map(coll => collections[coll])
         }
+
+        const dump = createFile(`_${dbname}.json`)
+        Zotero.File.putContents(dump, stringify(db))
 
         callback(db)
       })
@@ -121,21 +125,7 @@ export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
 })
 
 DB.init = async () => {
-  await DB.loadDatabaseAsync({
-    autoexport: {
-      inflate(src, dest) {
-        dest = dest || {}
-        Object.assign(dest, src)
-        const updated = Date.parse(dest.updated)
-        if (isNaN(updated)) {
-          delete dest.updated
-        } else {
-          dest.updated = new Date(updated)
-        }
-        return dest
-      },
-    },
-  })
+  await DB.loadDatabaseAsync()
 
   const citekeys = DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
@@ -158,7 +148,7 @@ DB.init = async () => {
     },
   })
 
-  DB.schemaCollection('autoexport', {
+  const autoexport = DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
     logging: true,
@@ -174,9 +164,6 @@ DB.init = async () => {
         useJournalAbbreviation: { type: 'boolean', default: false },
         error: { type: 'string', default: '' },
 
-        // optional
-        updated: { instanceof: 'Date' },
-
         // LokiJS
         meta: { type: 'object' },
         $loki: { type: 'integer' },
@@ -186,6 +173,24 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
+
+  // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+  for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
+    const corrupt = coll.checkAllIndexes({ repair: true })
+    if (corrupt.length > 0) {
+      for (const index of corrupt) {
+        Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+      }
+    }
+  }
+
+  // https://github.com/retorquere/zotero-better-bibtex/issues/903
+  for (const ae of autoexport.find()) {
+    if (ae.updated) {
+      delete ae.updated
+      autoexport.update(ae)
+    }
+  }
 
   if (Prefs.get('scrubDatabase')) {
     const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/

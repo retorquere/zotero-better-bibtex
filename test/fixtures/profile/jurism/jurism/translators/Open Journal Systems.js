@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-03 08:46:13"
+	"lastUpdated": "2017-06-18 22:34:25"
 }
 
 function detectWeb(doc, url) {
@@ -27,6 +27,30 @@ function doWeb(doc, url) {
 	trans.setDocument(doc);
 
 	trans.setHandler('itemDone', function(obj, item) {
+		if (!item.itemType) {
+			item.itemType = "journalArticle";
+		}
+		
+		if (!item.title) {
+			item.title = doc.getElementById('articleTitle');
+		}
+		
+		if (item.creators.length==0) {
+			var authorString = doc.getElementById("authorString");
+			if (authorString) {
+				var authorsList = authorString.textContent.split(',');
+				for (var i=0; i<authorsList.length; i++) {
+					item.creators.push(ZU.cleanAuthor(authorsList[i], "author"));
+				}
+		
+			}
+		}
+		
+		var doiNode = doc.getElementById('pub-id::doi');
+		if (!item.DOI && doiNode) {
+			item.DOI = doiNode.textContent;
+		}
+		
 		//abstract is supplied in DC:description, so it ends up in extra
 		//abstractNote is pulled from description, which is same as title
 		item.abstractNote = item.extra;
@@ -52,57 +76,6 @@ function doWeb(doc, url) {
 }
 /** BEGIN TEST CASES **/
 var testCases = [
-	{
-		"type": "web",
-		"url": "http://cab.unime.it/journals/index.php/AAPP/article/view/AAPP.901A1",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "A framework of coopetitive games: Applications to the Greek crisis",
-				"creators": [
-					{
-						"firstName": "David",
-						"lastName": "Carfì",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Daniele",
-						"lastName": "Schilirò",
-						"creatorType": "author"
-					}
-				],
-				"date": "2012/06/08",
-				"DOI": "10.1478/AAPP.901A1",
-				"ISSN": "1825-1242",
-				"abstractNote": "In the present work we propose an original analytical model of coopetitive game. We shall apply this analytical model of coopetition (based on normal form game theory) to the Greek crisis, while conceiving this game theory model at a macro level. We construct two realizations of such model, trying to represent possible realistic macro-economic scenarios of the Germany-Greek strategic interaction. We shall suggest - after a deep and complete study of the two samples - feasible transferable utility solutions in a properly coopetitive perspective for the divergent interests which drive the economic policies in the euro area.",
-				"issue": "1",
-				"language": "en",
-				"libraryCatalog": "cab.unime.it",
-				"publicationTitle": "Atti della Accademia Peloritana dei Pericolanti - Classe di Scienze Fisiche, Matematiche e Naturali",
-				"rights": "Copyright (c) 2015 AAPP | Physical, Mathematical, and Natural Sciences",
-				"shortTitle": "A framework of coopetitive games",
-				"url": "http://cab.unime.it/journals/index.php/AAPP/article/view/AAPP.901A1",
-				"volume": "90",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [
-					"Games and economics",
-					"competition",
-					"cooperation",
-					"coopetition"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
 	{
 		"type": "web",
 		"url": "http://journals.linguisticsociety.org/elanguage/dad/article/view/362.html",
@@ -183,16 +156,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "19/11/2013",
+				"date": "2013/11/19",
 				"DOI": "10.2218/ijdc.v8i2.263",
 				"ISSN": "1746-8256",
-				"abstractNote": "Academic librarians are increasingly engaging in data curation by providing infrastructure (e.g., institutional repositories) and offering services (e.g., data management plan consultations) to support the management of research data on their campuses. Efforts to develop these resources may benefit from a greater understanding of disciplinary differences in research data management needs. After conducting a survey of data management practices and perspectives at our research university, we categorized faculty members into four research domains—arts and humanities, social sciences, medical sciences, and basic sciences—and analyzed variations in their patterns of survey responses. We found statistically significant differences among the four research domains for nearly every survey item, revealing important disciplinary distinctions in data management actions, attitudes, and interest in support services. Serious consideration of both the similarities and dissimilarities among disciplines will help guide academic librarians and other data curation professionals in developing a range of data-management services that can be tailored to the unique needs of different scholarly researchers.",
+				"abstractNote": "Academic librarians are increasingly engaging in data curation by providing infrastructure (e.g., institutional repositories) and offering services (e.g., data management plan consultations) to support the management of research data on their campuses. Efforts to develop these resources may benefit from a greater understanding of disciplinary differences in research data management needs. After conducting a survey of data management practices and perspectives at our research university, we categorized faculty members into four research domainsâ€”arts and humanities, social sciences, medical sciences, and basic sciencesâ€”and analyzed variations in their patterns of survey responses. We found statistically significant differences among the four research domains for nearly every survey item, revealing important disciplinary distinctions in data management actions, attitudes, and interest in support services. Serious consideration of both the similarities and dissimilarities among disciplines will help guide academic librarians and other data curation professionals in developing a range of data-management services that can be tailored to the unique needs of different scholarly researchers.",
 				"issue": "2",
 				"language": "en",
 				"libraryCatalog": "www.ijdc.net",
 				"pages": "5-26",
 				"publicationTitle": "International Journal of Digital Curation",
-				"rights": "Copyright for papers and articles published in this journal is retained by the authors, with first publication rights granted to the University of Edinburgh. It is a condition of publication that authors license their paper or article under a  Creative Commons Attribution Licence .",
+				"rights": "Copyright (c)",
 				"url": "http://www.ijdc.net/index.php/ijdc/article/view/8.2.5",
 				"volume": "8",
 				"attachments": [
@@ -288,7 +261,7 @@ var testCases = [
 					}
 				],
 				"date": "2016/06/23",
-				"abstractNote": "to the article / zum BeitragThis study deals with the question of genre cinema in terms of an aesthetic experience that also accounts for a shared experience. The focus will be on the historical framework that constituted the emotional mobilization of the American public during World War II when newsreels and fictional war films were screened together as part of the staple program in movie theaters. Drawing on existing concepts of cinema and public sphere as well as on a phenomenological theory of spectator engagement this study sets out to propose a definition of the term moviegoing experience. On these grounds a historiographical account of the institutional practice of staple programming shall be explored together with a theoretical conceptualization of the spectator within in the realm of genre cinema.Diese Studie befragt das Genrekino als Modus ästhetischer Erfahrung in Hinblick auf die konkrete geteilten Erfahrung des Kinosaals. Der Fokus liegt auf den historischen Rahmenbedingen der emotionalen Mobilisierung der US-amerikanischen Öffentlichkeit während des Zweiten Weltkriegs und der gemeinsamen Vorführung von Kriegsnachrichten und fiktionalen Kriegsfilmen in Kinoprogrammen. Dabei wird auf Konzepte des Kinos als öffentlichem Raum und auf phänomenologische Theorien der Zuschaueradressierung Bezug genommen und ein integrative Definition der moviegoing experience entworfen. Dadurch ist es möglich, historiographische Schilderungen der institutionalisierten Praktiken der Kinoprogrammierung mit theoretischen Konzeptualisierungen der Zuschauererfahrung und des Genrekinos ins Verhältnis zu setzen.David Gaertner, M.A. is currently writing his dissertation on the cinematic experience of World War II and is a lecturer at the division of Film Studies at Freie Universität Berlin. From 2011 to 2014 he was research associate in the project “Staging images of war as a mediated experience of community“. He is co-editor of the book “Mobilisierung der Sinne. Der Hollywood-Kriegsfilm zwischen Genrekino und Historie” (Berlin 2013). // David Gaertner, M.A. arbeitet an einer Dissertation zur Kinoerfahrung im Zweiten Weltkrieg und lehrt am Seminar für Filmwissenschaft an der Freien Universität Berlin. 2011 bis 2014 war er wissenschaftlicher Mitarbeiter im DFG-Projekt „Inszenierungen des Bildes vom Krieg als Medialität des Gemeinschaftserlebens“. Er ist Mitherausgeber des Sammelbands “Mobilisierung der Sinne. Der Hollywood-Kriegsfilm zwischen Genrekino und Historie” (Berlin 2013).",
+				"abstractNote": "This study deals with the question of genre cinema in terms of an aesthetic experience that also accounts for a shared experience. The focus will be on the historical framework that constituted the emotional mobilization of the American public during World War II when newsreels and fictional war films were screened together as part of the staple program in movie theaters. Drawing on existing concepts of cinema and public sphere as well as on a phenomenological theory of spectator engagement this study sets out to propose a definition of the term moviegoing experience. On these grounds a historiographical account of the institutional practice of staple programming shall be explored together with a theoretical conceptualization of the spectator within in the realm of genre cinema.Diese Studie befragt das Genrekino als Modus ästhetischer Erfahrung in Hinblick auf die konkrete geteilten Erfahrung des Kinosaals. Der Fokus liegt auf den historischen Rahmenbedingen der emotionalen Mobilisierung der US-amerikanischen Öffentlichkeit während des Zweiten Weltkriegs und der gemeinsamen Vorführung von Kriegsnachrichten und fiktionalen Kriegsfilmen in Kinoprogrammen. Dabei wird auf Konzepte des Kinos als öffentlichem Raum und auf phänomenologische Theorien der Zuschaueradressierung Bezug genommen und ein integrative Definition der moviegoing experience entworfen. Dadurch ist es möglich, historiographische Schilderungen der institutionalisierten Praktiken der Kinoprogrammierung mit theoretischen Konzeptualisierungen der Zuschauererfahrung und des Genrekinos ins Verhältnis zu setzen.David Gaertner, M.A. is currently writing his dissertation on the cinematic experience of World War II and is a lecturer at the division of Film Studies at Freie Universität Berlin. From 2011 to 2014 he was research associate in the project “Staging images of war as a mediated experience of community“. He is co-editor of the book “Mobilisierung der Sinne. Der Hollywood-Kriegsfilm zwischen Genrekino und Historie” (Berlin 2013). // David Gaertner, M.A. arbeitet an einer Dissertation zur Kinoerfahrung im Zweiten Weltkrieg und lehrt am Seminar für Filmwissenschaft an der Freien Universität Berlin. 2011 bis 2014 war er wissenschaftlicher Mitarbeiter im DFG-Projekt „Inszenierungen des Bildes vom Krieg als Medialität des Gemeinschaftserlebens“. Er ist Mitherausgeber des Sammelbands “Mobilisierung der Sinne. Der Hollywood-Kriegsfilm zwischen Genrekino und Historie” (Berlin 2013).",
 				"issue": "1",
 				"language": "en",
 				"libraryCatalog": "www.mediaesthetics.org",
@@ -633,7 +606,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ajol.info/index.php/thrb/article/view/63347",
+		"url": "https://www.ajol.info/index.php/thrb/article/view/63347",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -684,7 +657,7 @@ var testCases = [
 				"libraryCatalog": "www.ajol.info",
 				"publicationTitle": "Tanzania Journal of Health Research",
 				"rights": "Copyright for articles published in this journal is retained by the journal.",
-				"url": "http://www.ajol.info/index.php/thrb/article/view/63347",
+				"url": "https://www.ajol.info/index.php/thrb/article/view/63347",
 				"volume": "13",
 				"attachments": [
 					{
@@ -702,6 +675,50 @@ var testCases = [
 					"malaria",
 					"prevention",
 					"treatment"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://ejournals.library.vanderbilt.edu/ojs/index.php/ameriquests/article/view/220",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Open Journal Systems",
+				"creators": [
+					{
+						"firstName": "Earl E.",
+						"lastName": "Fitz",
+						"creatorType": "author"
+					}
+				],
+				"DOI": "10.15695/amqst.v8i1.220",
+				"abstractNote": "Historically, Canadian literature has been chary of entering too far into the new discipline of inter-American literary study.  Rightly concerned about the danger of blurring its identity as a distinctive national literature (one made up, as is well known, of two great strands, the French and the English), Canadian writing has, however, come of age, both nationally and internationally.  One dramatic aspect of this transformation is that we now have mounting evidence that both English and French Canadian writers are actively engaging with the literatures and cultures of their hemispheric neighbors.  By extending the methodologies of Comparative Literature to the inter-American paradigm, Canadian writers, critics, and literary historians are finding ways to maintain their status as members of a unique and under-appreciated national literature while also entering into the kinds of comparative studies that demonstrate their New World ties as well.",
+				"libraryCatalog": "ejournals.library.vanderbilt.edu",
+				"url": "http://ejournals.library.vanderbilt.edu/ojs/index.php/ameriquests/article/view/220",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"American studies",
+					"Canadian studies",
+					"american dream",
+					"brazilian studies",
+					"center for the americas",
+					"free trade",
+					"inter-american literature",
+					"latin american studies",
+					"literature and law",
+					"migration",
+					"native american studies",
+					"quebec studies",
+					"storytelling",
+					"vanderbilt"
 				],
 				"notes": [],
 				"seeAlso": []

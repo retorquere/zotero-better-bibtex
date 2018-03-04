@@ -253,7 +253,7 @@ var testCases = [
 				"libraryCatalog": "Lulu",
 				"title": "Viticulture - An Introduction to Commercial Grape Growing for Wine Production",
 				"publisher": "Stephen Skelton",
-				"date": "2014-05-24"
+				"date": "2017-03-06"
 			}
 		]
 	}

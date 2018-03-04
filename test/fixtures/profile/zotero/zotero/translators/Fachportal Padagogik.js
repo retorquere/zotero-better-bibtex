@@ -2,14 +2,14 @@
 	"translatorID": "4b0b42df-76b7-4a61-91aa-b15bc553b77d",
 	"label": "Fachportal Pädagogik",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://(www\\.fachportal-paedagogik\\.de/fis_bildung/|www\\.pedocs\\.de/)",
+	"target": "^https?://(www\\.fachportal-paedagogik\\.de/literatur/|www\\.pedocs\\.de/)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-19 20:22:50"
+	"lastUpdated": "2017-10-14 07:01:47"
 }
 
 /*
@@ -36,8 +36,7 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/suche/fis_set.html?FId=')>-1
-		|| url.indexOf('/suche/fis_set_e.html?FId=')>-1
+	if (url.indexOf('/vollanzeige.html?FId=')>-1
 		|| url.indexOf('source_opus=')>-1) {
 		var coins = doc.getElementsByClassName("Z3988");
 		if (coins.length > 0) {
@@ -51,6 +50,8 @@ function detectWeb(doc, url) {
 		}
 		return "journalArticle";
 	} else if (getSearchResults(doc, true)) {
+		//searches will perform POST calls and therefore
+		//we don't have a test case here; test manually
 		return "multiple";
 	}
 }
@@ -58,7 +59,7 @@ function detectWeb(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "ergebnisliste")]/a|//ol[contains(@class, "pedocs_ergebnisliste")]/li/a');
+	var rows = ZU.xpath(doc, '//li//a[contains(@href, "/literatur/vollanzeige.html")]|//ol[contains(@class, "pedocs_ergebnisliste")]/li/a');
 	for (var i=0; i<rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
@@ -89,10 +90,10 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	var m = url.match(/FId=([\w\d]+)(&|$)/);
+	var m = url.match(/FId=([\w\d]+)(&|$|#)/);
 	if (m) {
-		//e.g. http://www.fachportal-paedagogik.de/fis_bildung/suche/fis_ausg.html?FId=A18196&lart=BibTeX
-		var bibUrl = "/fis_bildung/suche/fis_ausg.html?FId=" + m[1] + "&lart=BibTeX";
+		//e.g. http://www.fachportal-paedagogik.de/literatur/fis_ausgabe.html?FId%5B%5D=1041537&lart=BibTeX&senden=Exportieren&senden_an=
+		var bibUrl = "/literatur/fis_ausgabe.html?FId[]=" + m[1] + "&lart=BibTeX";
 		ZU.doGet(bibUrl, function(text){
 			var translator = Zotero.loadTranslator("import");
 			translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");//BibTex translator
@@ -140,6 +141,10 @@ function finalize(doc, item) {
 			snapshot: false
 		});
 		delete item.url;
+	}
+	var urn = ZU.xpathText(doc, '//meta[@name="DC.Identifier" and contains(@content, "urn:nbn")]/@content');
+	if (urn) {
+		item.url = "http://nbn-resolving.de/" + urn;
 	}
 	if (item.numPages) {
 		item.numPages = item.numPages.replace(/\D/g, '');
@@ -236,7 +241,7 @@ function transcodeURIEncoding(s, fromEncoding) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.fachportal-paedagogik.de/fis_bildung/suche/fis_set.html?FId=A18195",
+		"url": "http://www.fachportal-paedagogik.de/literatur/vollanzeige.html?FId=A18195#vollanzeige",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -284,18 +289,42 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Deutschland",
-					"Einstellung (Psy)",
-					"Empirische Untersuchung",
-					"Fragebogen",
-					"Lehrer",
-					"Lernförderung",
-					"Lernmethode",
-					"Mathematikunterricht",
-					"Schuljahr 09",
-					"Selbstgesteuertes Lernen",
-					"Unterrichtsforschung",
-					"Überzeugung"
+					{
+						"tag": "Empirische Untersuchung"
+					},
+					{
+						"tag": "Fragebogen"
+					},
+					{
+						"tag": "Einstellung (Psy)"
+					},
+					{
+						"tag": "Schuljahr 09"
+					},
+					{
+						"tag": "Lehrer"
+					},
+					{
+						"tag": "Lernförderung"
+					},
+					{
+						"tag": "Lernmethode"
+					},
+					{
+						"tag": "Unterrichtsforschung"
+					},
+					{
+						"tag": "Selbstgesteuertes Lernen"
+					},
+					{
+						"tag": "Mathematikunterricht"
+					},
+					{
+						"tag": "Überzeugung"
+					},
+					{
+						"tag": "Deutschland"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -304,7 +333,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fachportal-paedagogik.de/fis_bildung/suche/fis_set_e.html?FId=A18490&mstn=3&ckd=no&mtz=100&facets=y&maxg=5&suche=erweitert&ohneSynonyme=y&feldname1=Freitext&feldinhalt1=MATHEMATIK&bool1=and&nHits=19233&next=A18569,A19036,1065678&prev=A18195,A18196&marker=1",
+		"url": "http://www.fachportal-paedagogik.de/literatur/vollanzeige.html?FId=1080505&mstn=1&next=&prev=&ckd=no&mtz=20&facets=y&maxg=12&fisPlus=y&db=fis&tab=1&searchIn[]=fis&suche=erweitert&feldname1=Freitext&feldinhalt1=10+JAHRE+INTERNATIONAL+VERGLEICHENDE+SCHULLEISTUNGSFORSCHUNG&bool1=and&nHits=1&marker=1#vollanzeige",
 		"items": [
 			{
 				"itemType": "book",
@@ -346,25 +375,63 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Deutschland",
-					"Europa",
-					"Grundschule",
-					"IGLU (Internationale Grundschul-Lese-Untersuchung)",
-					"Internationaler Vergleich",
-					"Kompetenzmessung",
-					"Leistungsmessung",
-					"Lesekompetenz",
-					"Mathematik",
-					"Mathematische Kompetenz",
-					"Naturwissenschaften",
-					"Naturwissenschaftliche Kompetenz",
-					"Schule",
-					"Schulleistungsmessung",
-					"Schülerleistung",
-					"Sekundarstufe I",
-					"Sekundarstufe II",
-					"TIMSS (Third International Mathematics and Science Study)",
-					"Vergleichende Erziehungswissenschaft"
+					{
+						"tag": "Vergleichende Erziehungswissenschaft"
+					},
+					{
+						"tag": "TIMSS (Third International Mathematics and Science Study)"
+					},
+					{
+						"tag": "Kompetenzmessung"
+					},
+					{
+						"tag": "Schule"
+					},
+					{
+						"tag": "Sekundarstufe I"
+					},
+					{
+						"tag": "Sekundarstufe II"
+					},
+					{
+						"tag": "Grundschule"
+					},
+					{
+						"tag": "Schulleistungsmessung"
+					},
+					{
+						"tag": "Schülerleistung"
+					},
+					{
+						"tag": "Lesekompetenz"
+					},
+					{
+						"tag": "Mathematik"
+					},
+					{
+						"tag": "Mathematische Kompetenz"
+					},
+					{
+						"tag": "Naturwissenschaften"
+					},
+					{
+						"tag": "Naturwissenschaftliche Kompetenz"
+					},
+					{
+						"tag": "Internationaler Vergleich"
+					},
+					{
+						"tag": "Leistungsmessung"
+					},
+					{
+						"tag": "IGLU (Internationale Grundschul-Lese-Untersuchung)"
+					},
+					{
+						"tag": "Deutschland"
+					},
+					{
+						"tag": "Europa"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -373,7 +440,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fachportal-paedagogik.de/fis_bildung/suche/fis_set.html?FId=A18569&mstn=1&ckd=no&mtz=100&facets=y&maxg=6&suche=erweitert&ohneSynonyme=y&feldname1=Freitext&feldinhalt1=MATHEMATIK&bool1=and&feldname2=Dokumenttyp&feldinhalt2=swb&BoolSelect_2=AND&bool2=or&next=1058612,1061165,1064007,1064853,A17755&prev=&nHits=1890&marker=1",
+		"url": "http://www.fachportal-paedagogik.de/literatur/vollanzeige.html?FId=1080581&mstn=1&next=&prev=&ckd=no&mtz=20&facets=y&maxg=12&fisPlus=y&db=fis&tab=1&searchIn[]=fis&suche=erweitert&feldname1=Freitext&feldinhalt1=FORMATIVE+EVALUATION+DATENANALYSEN+BASIS+SCHRITTWEISEN+OPTIMIERUNG&bool1=and&nHits=1&marker=1#vollanzeige",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -422,24 +489,35 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Evaluation",
-					"Lernmaterial",
-					"Mathematik",
-					"Mentoring",
-					"Online-Angebot",
-					"Technische Hochschule",
-					"Virtuelle Lehre",
-					"Vorkurs"
+					{
+						"tag": "Evaluation"
+					},
+					{
+						"tag": "Mentoring"
+					},
+					{
+						"tag": "Lernmaterial"
+					},
+					{
+						"tag": "Mathematik"
+					},
+					{
+						"tag": "Virtuelle Lehre"
+					},
+					{
+						"tag": "Technische Hochschule"
+					},
+					{
+						"tag": "Vorkurs"
+					},
+					{
+						"tag": "Online-Angebot"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
 			}
 		]
-	},
-	{
-		"type": "web",
-		"url": "http://www.fachportal-paedagogik.de/fis_bildung/fis_list.html?suche=erweitert&action=Suchen&feldname1=Freitext&feldinhalt1=Mathematikunterricht&ur_wert_feldinhalt1=mat&bool1=and&BoolSelect_2=AND&feldname2=Schlagw%F6rter&feldinhalt2=&bool2=and&BoolSelect_3=AND&feldname3=Titel&feldinhalt3=&bool3=and&BoolSelect_4=AND&feldname4=Jahr&feldinhalt4=&BoolSelect_5=AND&feldname5=Personen&feldinhalt5=&bool5=and&dokumenttyp%5B%5D=1&dokumenttyp%5B%5D=2&dokumenttyp%5B%5D=3&sprache%5B%5D=1&sprache%5B%5D=2&sprache%5B%5D=3&sprache%5B%5D=4&facets=y&fromForm=2",
-		"items": "multiple"
 	},
 	{
 		"type": "web",
@@ -463,6 +541,7 @@ var testCases = [
 				"pages": "379",
 				"publicationTitle": "Praxis der Kinderpsychologie und Kinderpsychiatrie",
 				"shortTitle": "Hooper, S.R./ Willis, G. (1989)",
+				"url": "http://nbn-resolving.de/urn:nbn:de:0111-opus-27462",
 				"volume": "38",
 				"attachments": [
 					{
@@ -475,18 +554,42 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Book review",
-					"Classification",
-					"Classification system",
-					"Klassifikationssystem",
-					"Learning Difficulties",
-					"Learning Difficulty",
-					"Learning disorder",
-					"Lerndefizit",
-					"Lernschwierigkeit",
-					"Lernschwäche",
-					"Review",
-					"Rezension"
+					{
+						"tag": "Rezension"
+					},
+					{
+						"tag": "Lerndefizit"
+					},
+					{
+						"tag": "Lernschwierigkeit"
+					},
+					{
+						"tag": "Lernschwäche"
+					},
+					{
+						"tag": "Klassifikationssystem"
+					},
+					{
+						"tag": "Book review"
+					},
+					{
+						"tag": "Review"
+					},
+					{
+						"tag": "Learning Difficulties"
+					},
+					{
+						"tag": "Learning Difficulty"
+					},
+					{
+						"tag": "Learning disorder"
+					},
+					{
+						"tag": "Classification"
+					},
+					{
+						"tag": "Classification system"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -519,6 +622,7 @@ var testCases = [
 				"numPages": "49",
 				"place": "Frankfurt",
 				"publisher": "pedocs",
+				"url": "http://nbn-resolving.de/urn:nbn:de:0111-pedocs-118379",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -530,27 +634,69 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Beispiel",
-					"Discourse",
-					"Discourse Analysis",
-					"Diskurs",
-					"Diskursanalyse",
-					"Empirical study",
-					"Empirische Untersuchung",
-					"Forschungsstand",
-					"Ideal (model)",
-					"Kindheitsbild",
-					"Leitbild",
-					"Method",
-					"Methode",
-					"Politics",
-					"Politik",
-					"Text analysis",
-					"Textanalyse",
-					"Textual analysis",
-					"Theorie",
-					"Theory",
-					"Zwischenbericht"
+					{
+						"tag": "Empirische Untersuchung"
+					},
+					{
+						"tag": "Methode"
+					},
+					{
+						"tag": "Leitbild"
+					},
+					{
+						"tag": "Beispiel"
+					},
+					{
+						"tag": "Diskursanalyse"
+					},
+					{
+						"tag": "Textanalyse"
+					},
+					{
+						"tag": "Politik"
+					},
+					{
+						"tag": "Forschungsstand"
+					},
+					{
+						"tag": "Diskurs"
+					},
+					{
+						"tag": "Kindheitsbild"
+					},
+					{
+						"tag": "Theorie"
+					},
+					{
+						"tag": "Zwischenbericht"
+					},
+					{
+						"tag": "Empirical study"
+					},
+					{
+						"tag": "Method"
+					},
+					{
+						"tag": "Ideal (model)"
+					},
+					{
+						"tag": "Discourse Analysis"
+					},
+					{
+						"tag": "Text analysis"
+					},
+					{
+						"tag": "Textual analysis"
+					},
+					{
+						"tag": "Politics"
+					},
+					{
+						"tag": "Discourse"
+					},
+					{
+						"tag": "Theory"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -575,6 +721,7 @@ var testCases = [
 				"language": "Deutsch",
 				"libraryCatalog": "Fachportal Pädagogik",
 				"publisher": "pedocs",
+				"url": "http://nbn-resolving.de/urn:nbn:de:0111-pedocs-94912",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -586,38 +733,102 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Berufsausbildung",
-					"Berufsbildung",
-					"Bildung",
-					"Bildungspolitik",
-					"Bildungsreform",
-					"Bildungswesen",
-					"Bildungsökonomie",
-					"Deutschland",
-					"Economics of education",
-					"Economy",
-					"Education",
-					"Education system",
-					"Educational Economics",
-					"Educational policy",
-					"Educational reform",
-					"Freedom",
-					"Freiheit",
-					"Germany",
-					"Gesellschaft",
-					"Learning",
-					"Lernen",
-					"Reform",
-					"Society",
-					"Soziale Lage",
-					"The public",
-					"Theorie",
-					"Theory",
-					"Vocational Education",
-					"Vocational education and training",
-					"Vocational training",
-					"Wirtschaft",
-					"Öffentlichkeit"
+					{
+						"tag": "Bildung"
+					},
+					{
+						"tag": "Gesellschaft"
+					},
+					{
+						"tag": "Soziale Lage"
+					},
+					{
+						"tag": "Bildungswesen"
+					},
+					{
+						"tag": "Bildungspolitik"
+					},
+					{
+						"tag": "Bildungsreform"
+					},
+					{
+						"tag": "Bildungsökonomie"
+					},
+					{
+						"tag": "Lernen"
+					},
+					{
+						"tag": "Freiheit"
+					},
+					{
+						"tag": "Öffentlichkeit"
+					},
+					{
+						"tag": "Wirtschaft"
+					},
+					{
+						"tag": "Berufsausbildung"
+					},
+					{
+						"tag": "Berufsbildung"
+					},
+					{
+						"tag": "Reform"
+					},
+					{
+						"tag": "Theorie"
+					},
+					{
+						"tag": "Deutschland"
+					},
+					{
+						"tag": "Education"
+					},
+					{
+						"tag": "Society"
+					},
+					{
+						"tag": "Education system"
+					},
+					{
+						"tag": "Educational policy"
+					},
+					{
+						"tag": "Educational reform"
+					},
+					{
+						"tag": "Economics of education"
+					},
+					{
+						"tag": "Educational Economics"
+					},
+					{
+						"tag": "Learning"
+					},
+					{
+						"tag": "Freedom"
+					},
+					{
+						"tag": "The public"
+					},
+					{
+						"tag": "Economy"
+					},
+					{
+						"tag": "Vocational education and training"
+					},
+					{
+						"tag": "Vocational training"
+					},
+					{
+						"tag": "Vocational Education"
+					},
+					{
+						"tag": "Theory"
+					},
+					{
+						"tag": "Germany"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

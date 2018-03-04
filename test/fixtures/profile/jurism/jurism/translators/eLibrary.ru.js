@@ -224,12 +224,12 @@ function scrape (doc) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://elibrary.ru/org_items.asp?orgsid=3326",
+		"url": "https://elibrary.ru/org_items.asp?orgsid=3326",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://elibrary.ru/item.asp?id=9541154",
+		"url": "https://elibrary.ru/item.asp?id=9541154",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -237,7 +237,7 @@ var testCases = [
 				"creators": [
 					{
 						"firstName": "М. В.",
-						"lastName": "СВЕТ",
+						"lastName": "Свет",
 						"creatorType": "author"
 					}
 				],
@@ -247,7 +247,7 @@ var testCases = [
 				"language": "русский",
 				"libraryCatalog": "eLibrary.ru",
 				"pages": "40-58",
-				"publicationTitle": "ВЕСТНИК МОСКОВСКОГО УНИВЕРСИТЕТА. СЕРИЯ 13: ВОСТОКОВЕДЕНИЕ",
+				"publicationTitle": "Вестник Московского Университета. Серия 13: Востоковедение",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -257,56 +257,55 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://elibrary.ru/item.asp?id=17339044",
+		"url": "https://elibrary.ru/item.asp?id=17339044",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Использование молекулярно-генетических методов установления закономерностей наследования для выявления доноров значимых признаков яблони",
+				"title": "Использование Молекулярно-Генетических Методов Установления Закономерностей Наследования Для Выявления Доноров Значимых Признаков Яблони",
 				"creators": [
 					{
-						"firstName": "ИВАН ИВАНОВИЧ",
-						"lastName": "СУПРУН",
+						"firstName": "Иван Иванович",
+						"lastName": "Супрун",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "ЕЛЕНА ВЛАДИМИРОВНА",
-						"lastName": "УЛЬЯНОВСКАЯ",
+						"firstName": "Елена Владимировна",
+						"lastName": "Ульяновская",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "ЕВГЕНИЙ НИКОЛАЕВИЧ",
-						"lastName": "СЕДОВ",
+						"firstName": "Евгений Николаевич",
+						"lastName": "Седов",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "ГАЛИНА АЛЕКСЕЕВНА",
-						"lastName": "СЕДЫШЕВА",
+						"firstName": "Галина Алексеевна",
+						"lastName": "Седышева",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "ЗОЯ МИХАЙЛОВНА",
-						"lastName": "СЕРОВА",
+						"firstName": "Зоя Михайловна",
+						"lastName": "Серова",
 						"creatorType": "author"
 					}
 				],
 				"date": "2012",
 				"ISSN": "2219-5335",
-				"abstractNote": "На основе полученных новых знаний по формированию и проявлению ценных селекционных признаков выделены новые доноры и комплексные доноры значимых признаков яблони.",
 				"issue": "13",
 				"language": "русский",
 				"libraryCatalog": "eLibrary.ru",
 				"pages": "1-10",
-				"publicationTitle": "ПЛОДОВОДСТВО И ВИНОГРАДАРСТВО ЮГА РОССИИ",
+				"publicationTitle": "Плодоводство И Виноградарство Юга России",
 				"attachments": [],
 				"tags": [
-					"APPLE-TREE",
-					"IMMUNITY",
-					"SCAB",
-					"VARIETY",
-					"ИММУНИТЕТ",
-					"ПАРША",
-					"СОРТ",
-					"ЯБЛОНЯ"
+					"Apple-Tree",
+					"Immunity",
+					"Scab",
+					"Variety",
+					"Иммунитет",
+					"Парша",
+					"Сорт",
+					"Яблоня"
 				],
 				"notes": [],
 				"seeAlso": []

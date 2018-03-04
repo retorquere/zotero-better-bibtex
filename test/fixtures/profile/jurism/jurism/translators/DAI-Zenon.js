@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2017-01-01 15:20:22"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-02 16:57:10"
 }
 
 /*
@@ -87,9 +87,9 @@ function scrape(doc, url) {
 	var id = urlParts[urlParts.length-1];
 	
 	//call MARC translator
-	ZU.doPost('http://zenon.dainst.org/Record/' + id + '/AjaxTab', 'tab=details', function(text) {
+	ZU.doGet('/Record/' + id + '/Details', function(text) {
 		var parser = new DOMParser();
-		var xml = parser.parseFromString(text, "text/xml");
+		var xml = parser.parseFromString(text, "text/html");
 		
 		var translator = Zotero.loadTranslator("import");
 		
@@ -167,7 +167,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://zenon.dainst.org/Record/000269027",
+		"url": "https://zenon.dainst.org/Record/000269027",
 		"items": [
 			{
 				"itemType": "book",
@@ -182,21 +182,6 @@ var testCases = [
 						"lastName": "Universität Mannheim",
 						"creatorType": "editor",
 						"fieldMode": true
-					},
-					{
-						"lastName": "Archäologisches Seminar der Universität Mannheim",
-						"creatorType": "editor",
-						"fieldMode": true
-					},
-					{
-						"lastName": "Deutscher Archäologen-Verband",
-						"creatorType": "editor",
-						"fieldMode": true
-					},
-					{
-						"lastName": "Deutscher Archäologen-Verband",
-						"creatorType": "editor",
-						"fieldMode": true
 					}
 				],
 				"date": "1981",
@@ -204,7 +189,7 @@ var testCases = [
 				"libraryCatalog": "DAI-Zenon",
 				"numPages": "197",
 				"place": "Mannheim",
-				"publisher": "Vorstand :  Das Seminar",
+				"publisher": "Deutscher Archäologen-Verband",
 				"series": "Schriften des Deutschen Archäologen-Verbandes",
 				"seriesNumber": "5",
 				"shortTitle": "Die Aufnahme fremder Kultureinflüsse in Etrurien und das Problem des Retardierens in der etruskischen Kunst",
@@ -339,11 +324,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://zenon.dainst.org/Record/000251127",
+		"url": "https://zenon.dainst.org/Record/000251127",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Das Bild des Augustus auf frühen Reichsprägungen: Studien zur Vergöttlichung des ersten Prinzeps",
+				"title": "Das Bild des Augustus auf den frühen Reichsprägungen: Studien zur Vergöttlichung des ersten Prinzeps",
 				"creators": [
 					{
 						"firstName": "Rainer",
@@ -359,7 +344,7 @@ var testCases = [
 				"publisher": "Numismatische Gesellschaft",
 				"series": "Schriftenreihe der Numismatischen Gesellschaft Speyer",
 				"seriesNumber": "21",
-				"shortTitle": "Das Bild des Augustus auf frühen Reichsprägungen",
+				"shortTitle": "Das Bild des Augustus auf den frühen Reichsprägungen",
 				"attachments": [
 					{
 						"title": "DAI Zenon Entry",

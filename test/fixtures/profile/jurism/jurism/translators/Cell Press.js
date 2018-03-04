@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-09 20:58:17"
+	"lastUpdated": "2017-06-06 22:03:36"
 }
 
 /*
@@ -84,7 +84,7 @@ function scrape(doc, url) {
 		}
 
 		var abstractDiv = doc.getElementById('main_fulltext_content');
-		var abstract = ZU.xpathText(doc, '//div[@class="abstract"]/p')
+		var abstract = ZU.xpathText(doc, '//div[contains(@class, "abstract")]/div[contains(@class, "content")]/p')
 			item.abstractNote = abstract;
 
 		//fetch direct PDF link (ScienceDirect)

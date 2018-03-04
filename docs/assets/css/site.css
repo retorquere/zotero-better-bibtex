@@ -1,0 +1,13 @@
+h2 .h2 {
+  background-color: grey;
+  padding: 2px;
+}
+
+.is-selected {
+  font-weight: bold;
+  color: black !important;
+}
+
+body {
+  font-family: "Computer Modern Sans", sans-serif !important;
+}

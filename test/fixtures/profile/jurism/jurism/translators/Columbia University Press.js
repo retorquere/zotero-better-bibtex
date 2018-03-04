@@ -150,7 +150,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://cup.columbia.edu/book/politics-and-cultures-of-islamization-in-southeast-asia/9783933127815",
+		"url": "https://cup.columbia.edu/book/politics-and-cultures-of-islamization-in-southeast-asia/9783933127815",
 		"items": [
 			{
 				"itemType": "book",
@@ -166,7 +166,7 @@ var testCases = [
 				"ISBN": "9783933127815",
 				"abstractNote": "This book is about cultural and political figures, institutions and ideas in a period of transition in two Muslim countries in Southeast Asia, Malaysia and Indonesia. It also addresses some of the permutations of civilizing processes in Singapore and the city-state's image, moving across its borders into the region and representing a miracle of modernity beyond ideas. The central theme is the way in which Islam was re-constructed as an intellectual and socio-political tradition in Southeast Asia in the nineteen-nineties. Scholars who approach Islam both as a textual and local tradition, students who take the heartlands of Islam as imaginative landscapes for cultural transformation and politicians and institutions which have been concerned with transmitting the idea of Islamization are the subjects of this inquiry into different patterns of modernity in a tropical region still bearing the signature of a colonial past.",
 				"libraryCatalog": "Columbia University Press",
-				"publisher": "Transcript-Verlag",
+				"publisher": "Columbia University Press",
 				"shortTitle": "Politics and Cultures of Islamization in Southeast Asia",
 				"attachments": [],
 				"tags": [],
@@ -177,7 +177,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://cup.columbia.edu/book/religion-and-state/9780231120388",
+		"url": "https://cup.columbia.edu/book/religion-and-state/9780231120388",
 		"items": [
 			{
 				"itemType": "book",
@@ -189,7 +189,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2000-10",
+				"date": "2001-08",
 				"ISBN": "9780231529372",
 				"abstractNote": "If Westerners know a single Islamic term, it is likely to be jihad, the Arabic word for \"holy war.\" The image of Islam as an inherently aggressive and xenophobic religion has long prevailed in the West and can at times appear to be substantiated by current events. L. Carl Brown challenges this conventional wisdom with a fascinating historical overview of the relationship between religious and political life in the Muslim world ranging from Islam's early centuries to the present day. Religion and State examines the commonplace notion—held by both radical Muslim ideologues and various Western observers alike—that in Islam there is no separation between religion and politics. By placing this assertion in a broad historical context, the book reveals both the continuities between premodern and modern Islamic political thought as well as the distinctive dimensions of modern Muslim experiences. Brown shows that both the modern-day fundamentalists and their critics have it wrong when they posit an eternally militant, unchanging Islam outside of history. \"They are conflating theology and history. They are confusing the oughtand the is,\" he writes. As the historical record shows, mainstream Muslim political thought in premodern times tended toward political quietism.Brown maintains that we can better understand present-day politics among Muslims by accepting the reality of their historical diversity while at the same time seeking to identify what may be distinctive in Muslim thought and action. In order to illuminate the distinguishing characteristics of Islam in relation to politics, Brown compares this religion with its two Semitic sisters, Judaism and Christianity, drawing striking comparisons between Islam today and Christianity during the Reformation. With a wealth of evidence, he recreates a tradition of Islamic diversity every bit as rich as that of Judaism and Christianity.",
 				"libraryCatalog": "Columbia University Press",

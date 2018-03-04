@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-03-01 20:19:14"
+	"lastUpdated": "2018-02-13 19:20:12"
 }
 
 function detectWeb(doc, url) {
@@ -47,6 +47,10 @@ function getResultList(doc) {
 	if(!results.length) {
 		results = ZU.xpath(doc,
 			'//div[@class="toc"]/ol//div[contains(@class,"toc-item")]/h3/a');
+	}
+	if(!results.length) {
+		results = ZU.xpath(doc,
+			'//div[@class="book-toc-container"]/ol//div[contains(@class,"content-type-list__meta")]/div/a');
 	}
 	if(!results.length) {
 		results = ZU.xpath(doc,
@@ -134,19 +138,16 @@ function complementItem(doc, item) {
 			}
 		}
 		if(!item.ISBN) {
-			item.ISBN = ZU.xpathText(doc,
-				'//dd[@id="abstract-about-book-print-isbn" or\
-						@id="abstract-about-book-online-isbn"]'
-			);
+			item.ISBN = ZU.xpathText(doc, '//dd[@id="abstract-about-book-print-isbn" or @id="abstract-about-book-online-isbn"]')
+				|| ZU.xpathText(doc, '//span[@id="print-isbn" or @id="electronic-isbn"]');
 		}
 		//series/seriesNumber
 		if(!item.series) {
-			item.series = ZU.xpathText(doc,
-				'//dd[@id="abstract-about-book-series-title"]');
+			item.series = ZU.xpathText(doc, '//dd[@id="abstract-about-book-series-title"]')
+				|| ZU.xpathText(doc, '//div[contains(@class, "ArticleHeader")]//a[contains(@href, "/bookseries/")]');;
 		}
 		if(!item.seriesNumber) {
-			item.seriesNumber = ZU.xpathText(doc,
-				'//dd[@id="abstract-about-book-series-volume"]');
+			item.seriesNumber = ZU.xpathText(doc, '//dd[@id="abstract-about-book-series-volume"]');
 		}
 	}
 	//add the DOI to extra for non journal articles
@@ -201,14 +202,11 @@ function scrape(doc, url) {
 			item.complete();
 		});
 		translator.getTranslatorObject(function(trans) {
-			trans.addCustomFields({
-				"citation_inbook_title": "publicationTitle" //we use here the generic field to make sure to overwrite any other content
-			});
 			if(itemType) trans.itemType = itemType;
 			trans.doWeb(doc, doc.location.href);
 		});
 	} else {
-		var risURL = url.replace(/springer\.com/, "springer.com/export-citation/").replace(
+		var risURL = url.replace(/springer\.com/, "springer.com/export-citation").replace(
 				/[#?].*/, "") + ".ris";
 			//Z.debug(risURL)
 		var DOI = url.match(/\/(10\.[^#?]+)/)[1];
@@ -234,7 +232,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://link.springer.com/chapter/10.1007/978-3-540-88682-2_1",
+		"url": "https://link.springer.com/chapter/10.1007/978-3-540-88682-2_1",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -244,21 +242,6 @@ var testCases = [
 						"firstName": "Jan J.",
 						"lastName": "Koenderink",
 						"creatorType": "author"
-					},
-					{
-						"firstName": "David",
-						"lastName": "Forsyth",
-						"creatorType": "editor"
-					},
-					{
-						"firstName": "Philip",
-						"lastName": "Torr",
-						"creatorType": "editor"
-					},
-					{
-						"firstName": "Andrew",
-						"lastName": "Zisserman",
-						"creatorType": "editor"
 					}
 				],
 				"date": "2008/10/12",
@@ -270,10 +253,9 @@ var testCases = [
 				"libraryCatalog": "link.springer.com",
 				"pages": "1-1",
 				"proceedingsTitle": "Computer Vision – ECCV 2008",
-				"publisher": "Springer Berlin Heidelberg",
-				"rights": "©2008 Springer-Verlag Berlin Heidelberg",
+				"publisher": "Springer, Berlin, Heidelberg",
 				"series": "Lecture Notes in Computer Science",
-				"url": "http://link.springer.com/chapter/10.1007/978-3-540-88682-2_1",
+				"url": "https://link.springer.com/chapter/10.1007/978-3-540-88682-2_1",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -283,14 +265,7 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"tags": [
-					"Computer Appl. in Arts and Humanities",
-					"Computer Graphics",
-					"Computer Imaging, Vision, Pattern Recognition and Graphics",
-					"Data Mining and Knowledge Discovery",
-					"Image Processing and Computer Vision",
-					"Pattern Recognition"
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -298,34 +273,21 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://link.springer.com/referenceworkentry/10.1007/978-0-387-79061-9_5173",
+		"url": "https://link.springer.com/referenceworkentry/10.1007/978-0-387-79061-9_5173",
 		"items": [
 			{
 				"itemType": "bookSection",
 				"title": "Characterized by Commitment to Something Without Personal Exploration",
-				"creators": [
-					{
-						"firstName": "Sam",
-						"lastName": "Goldstein",
-						"creatorType": "editor"
-					},
-					{
-						"firstName": "Jack A.",
-						"lastName": "Naglieri",
-						"creatorType": "editor"
-					}
-				],
+				"creators": [],
 				"date": "2011",
-				"ISBN": "9780387775791 9780387790619",
 				"abstractNote": "Identity Foreclosure",
 				"bookTitle": "Encyclopedia of Child Behavior and Development",
 				"extra": "DOI: 10.1007/978-0-387-79061-9_5173",
 				"language": "en",
 				"libraryCatalog": "link.springer.com",
 				"pages": "329-329",
-				"publisher": "Springer US",
-				"rights": "©2011 Springer Science+Business Media, LLC",
-				"url": "http://link.springer.com/referenceworkentry/10.1007/978-0-387-79061-9_5173",
+				"publisher": "Springer, Boston, MA",
+				"url": "https://link.springer.com/referenceworkentry/10.1007/978-0-387-79061-9_5173",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -335,12 +297,7 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"tags": [
-					"Child and School Psychology",
-					"Developmental Psychology",
-					"Education, general",
-					"Learning & Instruction"
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -348,61 +305,40 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://link.springer.com/protocol/10.1007/978-1-60761-839-3_22",
+		"url": "https://link.springer.com/protocol/10.1007/978-1-60761-839-3_22",
 		"items": [
 			{
 				"itemType": "bookSection",
 				"title": "What Do We Know?: Simple Statistical Techniques that Help",
 				"creators": [
 					{
-						"lastName": "Bajorath",
-						"firstName": "Jürgen",
-						"creatorType": "editor"
-					},
-					{
-						"lastName": "Nicholls",
 						"firstName": "Anthony",
+						"lastName": "Nicholls",
 						"creatorType": "author"
 					}
 				],
-				"date": "January 1, 2011",
-				"ISBN": "9781607618386",
+				"date": "2011",
+				"ISBN": "9781607618386 9781607618393",
 				"abstractNote": "An understanding of simple statistical techniques is invaluable in science and in life. Despite this, and despite the sophistication of many concerning the methods and algorithms of molecular modeling, statistical analysis is usually rare and often uncompelling. I present here some basic approaches that have proved useful in my own work, along with examples drawn from the field. In particular, the statistics of evaluations of virtual screening are carefully considered.",
 				"bookTitle": "Chemoinformatics and Computational Chemical Biology",
 				"extra": "DOI: 10.1007/978-1-60761-839-3_22",
-				"language": "English",
-				"libraryCatalog": "Springer Link",
+				"language": "en",
+				"libraryCatalog": "link.springer.com",
 				"pages": "531-581",
-				"publisher": "Humana Press",
-				"rights": "©2011 Humana Press",
+				"publisher": "Humana Press, Totowa, NJ",
 				"series": "Methods in Molecular Biology",
-				"seriesNumber": "672",
 				"shortTitle": "What Do We Know?",
-				"url": "http://dx.doi.org/10.1007/978-1-60761-839-3_22",
+				"url": "https://link.springer.com/protocol/10.1007/978-1-60761-839-3_22",
 				"attachments": [
 					{
-						"title": "Springer Full Text PDF",
+						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot"
 					}
 				],
-				"tags": [
-					"ANOVA",
-					"AUC",
-					"Central Limit Theorem",
-					"Confidence limits",
-					"Correlation",
-					"Enrichment",
-					"Error bars",
-					"Propagation of error",
-					"ROC curves",
-					"Standard deviation",
-					"Statistics",
-					"Student’s t-test",
-					"Variance",
-					"Virtual screening",
-					"logit transform",
-					"p-Values"
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -420,12 +356,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://link.springer.com/referencework/10.1007/978-1-84996-169-1/page/1",
+		"url": "https://link.springer.com/referencework/10.1007/978-1-84996-169-1?page=1#toc",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://link.springer.com/book/10.1007/978-3-540-88682-2/page/1",
+		"url": "http://link.springer.com/book/10.1007/978-3-540-88682-2",
 		"items": "multiple"
 	},
 	{

@@ -9,9 +9,8 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-12-15 23:58:19"
+	"lastUpdated": "2017-06-24 11:53:49"
 }
-
 
 /*
 	Translator
@@ -31,60 +30,66 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+
 function detectWeb(doc,url) {
-
-	var xpath='//meta[@name="citation_journal_title"]';
-
-	if (ZU.xpath(doc, xpath).length > 0) {
+	if (ZU.xpathText(doc, '//meta[@name="citation_journal_title"]/@content')) {
 		return "journalArticle";
 	}
-			
-	if (url.indexOf("search.")!=-1) {
-		multxpath = '//div[@class="data"]/h3/a'
-	
-	if (ZU.xpath(doc, multxpath).length>0){
-			return "multiple";
-		}
+	if (url.indexOf("search.")!=-1 && getSearchResults(doc, true)){
+		return "multiple";
 	}
-	return false;
 }
 
 
-function doWeb(doc,url)
-{
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[contains(@class, "results")]//div[contains(@class, "line")]/a[strong[contains(@class, "title")]]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var hits = {};
-		var urls = [];
-		rowsxpath = '//div[@class="record"]/div[@class="data"]'
-		var rows = ZU.xpath(doc, rowsxpath);
-		var title;
-		var link;
-		for (var i in rows) {
-			title = ZU.xpathText(rows[i], './h3/a');
-			link = ZU.xpathText(rows[i], './div[@class="user-actions"]/div/a/@href');
-			hits[link] = title;
-		}
-		Z.selectItems(hits, function(items) {
-			if (items == null) return true;
-			for (var j in items) {
-				urls.push(j);
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
 			}
-			ZU.processDocuments(urls, doWeb);
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		var abstract = ZU.xpathText(doc, '//div[@class="abstract"]')
-		var translator = Zotero.loadTranslator('web');
-		//use Embedded Metadata
-		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
-		translator.setDocument(doc);
-		translator.setHandler('itemDone', function(obj, item) {
-			if(abstract) item.abstractNote = abstract.replace(/^\s*(ABSTRACT|RESUMO|RESUMEN)/, "").replace(/[\n\t]/g, "");
-			item.libraryCatalog = "SciELO"
-			item.complete();
-		});
-		translator.translate();
+		scrape(doc, url);
 	}
-}/** BEGIN TEST CASES **/
+}
+
+
+function scrape(doc, url) {
+	var abstract = ZU.xpathText(doc, '//div[@class="abstract"]')
+	var translator = Zotero.loadTranslator('web');
+	//use Embedded Metadata
+	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
+	translator.setDocument(doc);
+	translator.setHandler('itemDone', function(obj, item) {
+		if(abstract) item.abstractNote = abstract.replace(/^\s*(ABSTRACT|RESUMO|RESUMEN)/, "").replace(/[\n\t]/g, "");
+		item.libraryCatalog = "SciELO"
+		item.complete();
+	});
+	translator.translate();
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -92,6 +97,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Perceptions of HIV rapid testing among injecting drug users in Brazil",
 				"creators": [
 					{
 						"firstName": "P. R.",
@@ -114,9 +120,14 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "12/2007",
+				"DOI": "10.1590/S0034-89102007000900015",
+				"ISSN": "0034-8910",
+				"libraryCatalog": "SciELO",
+				"pages": "94-100",
+				"publicationTitle": "Revista de Saúde Pública",
+				"url": "http://www.scielosp.org/scielo.php?script=sci_abstract&pid=S0034-89102007000900015&lng=en&nrm=iso&tlng=pt",
+				"volume": "41",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -126,17 +137,9 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "Perceptions of HIV rapid testing among injecting drug users in Brazil",
-				"date": "12/2007",
-				"publicationTitle": "Revista de Saúde Pública",
-				"volume": "41",
-				"publisher": "Faculdade de Saúde Pública da Universidade de São Paulo",
-				"DOI": "10.1590/S0034-89102007000900015",
-				"pages": "94-100",
-				"ISSN": "0034-8910",
-				"url": "http://www.scielosp.org/scielo.php?script=sci_abstract&pid=S0034-89102007000900015&lng=en&nrm=iso&tlng=pt",
-				"libraryCatalog": "SciELO",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -146,6 +149,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "How candidates for the Presidency are nominated?: Rules and procedures in the Latin American political parties",
 				"creators": [
 					{
 						"firstName": "Flavia",
@@ -158,9 +162,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "10/2002",
+				"DOI": "10.1590/S0104-62762002000200002",
+				"ISSN": "0104-6276",
+				"issue": "2",
+				"libraryCatalog": "SciELO",
+				"pages": "158-188",
+				"publicationTitle": "Opinião Pública",
+				"shortTitle": "How candidates for the Presidency are nominated?",
+				"url": "http://www.scielo.br/scielo.php?script=sci_abstract&pid=S0104-62762002000200002&lng=en&nrm=iso&tlng=pt",
+				"volume": "8",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -170,33 +181,24 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "How candidates for the Presidency are nominated?: Rules and procedures in the Latin American political parties",
-				"date": "10/2002",
-				"publicationTitle": "Opinião Pública",
-				"volume": "8",
-				"issue": "2",
-				"publisher": "Universidade Estadual de Campinas",
-				"DOI": "10.1590/S0104-62762002000200002",
-				"pages": "158-188",
-				"ISSN": "0104-6276",
-				"url": "http://www.scielo.br/scielo.php?script=sci_abstract&pid=S0104-62762002000200002&lng=en&nrm=iso&tlng=pt",
-				"libraryCatalog": "SciELO",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "How candidates for the Presidency are nominated?"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://search.scielo.org/",
+		"url": "http://search.scielo.org/?q=&lang=pt&count=15&from=0&output=site&sort=&format=summary&fb=&page=1&q=zotero&lang=pt&page=1",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S1413-35552013005000148&lang=pt",
+		"url": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S1413-35552013000400328&lang=pt",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Analysis of the user satisfaction level in a public physical therapy service",
 				"creators": [
 					{
 						"firstName": "Renato S.",
@@ -209,7 +211,7 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Stephane",
+						"firstName": "Stéphane",
 						"lastName": "Bourliataux-Lajoine",
 						"creatorType": "author"
 					},
@@ -224,14 +226,21 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Stephane",
+						"firstName": "Stéphane",
 						"lastName": "Bourliataux-Lajoine",
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "08/2013",
+				"DOI": "10.1590/S1413-35552013005000097",
+				"ISSN": "1413-3555",
+				"abstractNote": "BACKGROUND: The concepts of quality management have increasingly been introduced into the health sector. Methods to measure satisfaction and quality are examples of this trend.  OBJECTIVE: This study aimed to identify the level of customer satisfaction in a physical therapy department involved in the public area and to analyze the key variables that impact the usersâ€(tm) perceived quality. METHOD: A cross-sectional observational study was conducted, and 95 patients from the physical therapy department of the Hospital Universitário Gaffrée e Guinle - Universidade Federal do Estado do Rio de Janeiro (HUGG/UNIRIO) - Rio de Janeiro, Brazil, were evaluated by the SERVQUAL questionnaire. A brief questionnaire to identify the sociocultural profile of the patients was also performed.  RESULTS: Patients from this health service presented a satisfied status with the treatment, and the population final average value in the questionnaire was 0.057 (a positive value indicates satisfaction). There was an influence of the educational level on the satisfaction status (χ‡Â²=17,149; p=0.002). A correlation was found between satisfaction and the dimensions of tangibility (rho=0.56, p=0.05) and empathy (rho=0.46, p=0.01) for the Unsatisfied group. Among the Satisfied group, the dimension that was correlated with the final value of the SERVQUAL was responsiveness (rho=0.44, p=0.01).  CONCLUSIONS: The final values of the GGUH physical therapy department showed that patients can be satisfied even in a public health service. Satisfaction measures must have a multidimensional approach, and we found that people with more years of study showed lower values of satisfaction.Key words: health management; physical therapy; user satisfaction",
+				"issue": "4",
+				"libraryCatalog": "SciELO",
+				"pages": "328-335",
+				"publicationTitle": "Brazilian Journal of Physical Therapy",
+				"url": "http://www.scielo.br/scielo.php?script=sci_abstract&pid=S1413-35552013000400328&lng=en&nrm=iso&tlng=en",
+				"volume": "17",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -241,17 +250,9 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "Analysis of the user satisfaction level in a public physical therapy service",
-				"date": "08/2013",
-				"publicationTitle": "Brazilian Journal of Physical Therapy",
-				"volume": "17",
-				"issue": "4",
-				"DOI": "10.1590/S1413-35552013005000097",
-				"pages": "328-335",
-				"ISSN": "1413-3555",
-				"url": "http://www.scielo.br/scielo.php?script=sci_abstract&pid=S1413-35552013000400328&lng=en&nrm=iso&tlng=en",
-				"libraryCatalog": "SciELO",
-				"abstractNote": "BACKGROUND: The concepts of quality management have increasingly been introduced into the health sector. Methods to measure satisfaction and quality are examples of this trend.  OBJECTIVE: This study aimed to identify the level of customer satisfaction in a physical therapy department involved in the public area and to analyze the key variables that impact the usersâ€(tm) perceived quality. METHOD: A cross-sectional observational study was conducted, and 95 patients from the physical therapy department of the Hospital Universitário Gaffrée e Guinle - Universidade Federal do Estado do Rio de Janeiro (HUGG/UNIRIO) - Rio de Janeiro, Brazil, were evaluated by the SERVQUAL questionnaire. A brief questionnaire to identify the sociocultural profile of the patients was also performed.  RESULTS: Patients from this health service presented a satisfied status with the treatment, and the population final average value in the questionnaire was 0.057 (a positive value indicates satisfaction). There was an influence of the educational level on the satisfaction status (χ‡Â²=17,149; p=0.002). A correlation was found between satisfaction and the dimensions of tangibility (rho=0.56, p=0.05) and empathy (rho=0.46, p=0.01) for the Unsatisfied group. Among the Satisfied group, the dimension that was correlated with the final value of the SERVQUAL was responsiveness (rho=0.44, p=0.01).  CONCLUSIONS: The final values of the GGUH physical therapy department showed that patients can be satisfied even in a public health service. Satisfaction measures must have a multidimensional approach, and we found that people with more years of study showed lower values of satisfaction.Key words: health management; physical therapy; user satisfaction"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

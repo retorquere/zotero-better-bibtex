@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2015-12-16 08:21:08"
+	"lastUpdated": "2017-06-16 19:45:59"
 }
 
 /*
@@ -51,7 +51,7 @@ function getBoxes(doc) {
 function doWeb(doc, url) {
 	var articles = [];
 	if (detectWeb(doc, url) == "multiple") {
-	    items = {};
+		items = {};
 		var boxes = getBoxes(doc);
 		var box;
 		while (box = boxes.iterateNext()) {
@@ -115,9 +115,6 @@ function scrape(doc, url) {
 				}
 			}
 			item.attachments.push({document: doc, title: "SCOPUS Snapshot", mimeType: "text/html"});
-			if (item.DOI && item.itemType != "journalArticle"){
-				item.extra = "DOI: " + item.DOI
-			}
 			if (ISSN) item.ISSN = ZU.cleanISSN(ISSN);
 			if (ISBN) item.ISBN = ZU.cleanISBN(ISBN);
 			if (language) item.language = language.replace(/Original language:/, "").trim();

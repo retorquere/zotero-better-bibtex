@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2013-04-15 18:04:37"
+	"lastUpdated": "2017-07-27 10:44:58"
 }
 
 /*
@@ -77,41 +77,42 @@ function doWeb(doc,url)
 		var assignee = ZU.xpathText(doc, '//meta[@scheme="assignee"]/@content');
 		var abstract = ZU.xpathText(doc, '//tr/td[b[contains(text(), "Abstract:")]]/following-sibling::td/div/span');
 		// We call the Embedded Metadata translator to do the actual work
-		var translator = Zotero.loadTranslator("import");
+		var translator = Zotero.loadTranslator("web");
 		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
 		translator.setHandler("itemDone", function(obj, item) {
-				item.itemType = "patent";
-				if (language) item.language = language;
-				if (abstract) item.abstractNote = abstract;
-				if (assignee) item.assignee = assignee;
-				if (appno) item.applicationNumber = appno;
-				if (patentno) item.patentNumber = patentno;
-				if (item.abstractNote) item.abstractNote = fixCase(item.abstractNote);
-				for (var i in item.creators){
-					item.creators[i].lastName = fixCase(item.creators[i].lastName);
-					item.creators[i].firstName = fixCase(item.creators[i].firstName);
-					item.creators[i].creatorType = "inventor";
-				}
-				for (i in item.tags){
-					item.tags[i] = fixCase(item.tags[i]);
-				}
-				item.title = fixCase(item.title);
-				item.extra = '';
-				item.complete();
-				});
+			item.itemType = "patent";
+			if (language) item.language = language;
+			if (abstract) item.abstractNote = abstract;
+			if (assignee) item.assignee = assignee;
+			if (appno) item.applicationNumber = appno;
+			if (patentno) item.patentNumber = patentno;
+			if (item.abstractNote) item.abstractNote = fixCase(item.abstractNote);
+			for (var i in item.creators){
+				item.creators[i].lastName = fixCase(item.creators[i].lastName);
+				item.creators[i].firstName = fixCase(item.creators[i].firstName);
+				item.creators[i].creatorType = "inventor";
+			}
+			for (i in item.tags){
+				item.tags[i] = fixCase(item.tags[i]);
+			}
+			item.title = fixCase(item.title);
+			item.extra = '';
+			item.complete();
+		});
 		translator.getTranslatorObject(function (obj) {
-				obj.doWeb(doc, url);
-				});
+			obj.doWeb(doc, url);
+		});
 	}
 }
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://patentscope.wipo.int/search/en/WO2010111344",
+		"url": "https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2010111344",
 		"items": [
 			{
 				"itemType": "patent",
+				"title": "Methods and Microorganisms for Production of C4-Dicarboxylic Acids",
 				"creators": [
 					{
 						"firstName": "Adam",
@@ -164,24 +165,23 @@ var testCases = [
 						"creatorType": "inventor"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Methods and Microorganisms for Production of C4-Dicarboxylic Acids"
-				],
-				"seeAlso": [],
+				"issueDate": "2010/10/01",
+				"abstractNote": "(EN)Methods and recombinant microorganisms for the biological production of C4-dicarboxylic acids are described. The recombinant microorganisms have increased production of OAA as compared to unmodified microorganisms. In some cases, the recombinant microorganisms have been modified to reduce production of pyruvate and/or reduce conversion of pyruvate to acetaldehyde. Thus, the microorganisms are modified to reduce the activity of pyruvate kinase and/or pyruvate decarboxylase.(FR)La présente invention concerne des procédés et des microorganismes recombinants pour la production biologique d'acides dicarboxyliques en C4. Comparés aux microorganismes non modifiés, les microorganismes recombinants produisent beaucoup plus d'OAA. Dans certains cas, les microorganismes recombinants ont été modifiés pour réduire la production de pyruvate et/ou réduire la conversion du pyruvate en acétaldéhyde. Les microorganismes sont ainsi modifiés pour réduire l'activité de la pyruvate kinase et/ou de la pyruvate décarboxylase.",
+				"applicationNumber": "PCT/US2010/028429",
+				"assignee": "DSM IP Assets B.V., LAWRENCE, Adam, PRONK, Jacobus, Thomas, VAN MARIS, Antonius, Jeroen Adriaan, ZELLE, Rintze, Meindert, MADDEN, Kevin, T., HARRISON, Jacob, C., TRUEHEART, Joshua, GANCEDO RODRIGUEZ, Carlos, FLORES MAURIZ, Carmen-lisset, BOWER, Stanley",
+				"language": "English (EN)",
+				"patentNumber": "WO/2010/111344",
+				"url": "https://patentscope.wipo.int/search/en/detail.jsf?docId=WO2010111344",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
-				"abstractNote": "Methods and recombinant microorganisms for the biological production of C4-dicarboxylic acids are described. The recombinant microorganisms have increased production of OAA as compared to unmodified microorganisms. In some cases, the recombinant microorganisms have been modified to reduce production of pyruvate and/or reduce conversion of pyruvate to acetaldehyde. Thus, the microorganisms are modified to reduce the activity of pyruvate kinase and/or pyruvate decarboxylase., La présente invention concerne des procédés et des microorganismes recombinants pour la production biologique d'acides dicarboxyliques en C4. Comparés aux microorganismes non modifiés, les microorganismes recombinants produisent beaucoup plus d'OAA. Dans certains cas, les microorganismes recombinants ont été modifiés pour réduire la production de pyruvate et/ou réduire la conversion du pyruvate en acétaldéhyde. Les microorganismes sont ainsi modifiés pour réduire l'activité de la pyruvate kinase et/ou de la pyruvate décarboxylase.",
-				"url": "http://patentscope.wipo.int/search/en/WO2010111344",
-				"language": "English (EN)",
-				"assignee": "DSM IP Assets B.V., LAWRENCE, Adam, PRONK, Jacobus, Thomas, VAN MARIS, Antonius, Jeroen Adriaan, ZELLE, Rintze, Meindert, MADDEN, Kevin, T., HARRISON, Jacob, C., TRUEHEART, Joshua, GANCEDO RODRIGUEZ, Carlos, FLORES MAURIZ, Carmen-lisset, BOWER, Stanley",
-				"applicationNumber": "PCT/US2010/028429",
-				"patentNumber": "WO/2010/111344",
-				"title": "Methods and Microorganisms for Production of C4-Dicarboxylic Acids",
-				"issueDate": "2010/10/01"
+				"tags": [
+					"Methods and Microorganisms for Production of C4-Dicarboxylic Acids"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

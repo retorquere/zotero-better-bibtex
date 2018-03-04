@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-01-01 16:11:33"
+	"lastUpdated": "2017-12-03 04:20:33"
 }
 
 /*
@@ -68,7 +68,6 @@ function doWeb(doc, url) {
 		ZU.doGet("//books.google.com/books/feeds/volumes/"+m[2], parseXML);
 	} else {
 		var items = getItemArrayGB(doc, doc, 'google\\.' + suffix + '/books\\?id=([^&]+)', '^(?:All matching pages|About this Book|Table of Contents|Index)');
-		//Zotero.debug(items);
 		// Drop " - Page" thing
 		for(var i in items) {
 			items[i] = items[i].replace(/- Page [0-9]+\s*$/, "");
@@ -254,10 +253,10 @@ function getItemArrayGB (doc, inHere, urlRe, rejectRe) {
 			}
 		}
 		else {
-			var links = inHere[j].getElementsByTagName("img");//search for <img>-elements, scrape title from alt-attribute, href-link from parent <a>-element
+			var links = inHere[j].querySelectorAll("h3.r a");
 			for(var i=0; i<links.length; i++) {
-				if(!urlRe || urlRegexp.test(links[i].parentNode.href)) {
-					var text = links[i].alt;
+				if(!urlRe || urlRegexp.test(links[i].href)) {
+					var text = links[i].parentNode.textContent;
 					//Z.debug(text)
 					if(text) {
 						text = Zotero.Utilities.trimInternal(text);
@@ -267,7 +266,7 @@ function getItemArrayGB (doc, inHere, urlRe, rejectRe) {
 									availableItems[links[i].href] += " "+text;
 								}
 							} else {
-								availableItems[links[i].parentNode.href] = text;
+								availableItems[links[i].href] = text;
 							}
 						}
 					}

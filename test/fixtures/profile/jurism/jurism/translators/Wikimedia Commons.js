@@ -754,10 +754,11 @@ choices : {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://commons.wikimedia.org/wiki/File:Boy_with_a_Basket_of_Fruit-Caravaggio_(1593).jpg",
+		"url": "https://commons.wikimedia.org/wiki/File:Boy_with_a_Basket_of_Fruit-Caravaggio_(1593).jpg",
 		"items": [
 			{
 				"itemType": "artwork",
+				"title": "English: Boy with a Basket of Fruit",
 				"creators": [
 					{
 						"firstName": "",
@@ -766,42 +767,41 @@ var testCases = [
 						"fieldMode": 1
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "circa 1593",
+				"archive": "Galleria Borghese",
+				"artworkMedium": "oil on canvas",
+				"artworkSize": "70 × 67 cm",
+				"libraryCatalog": "Wikimedia Commons",
+				"rights": "Public domain",
+				"shortTitle": "English",
+				"url": "https://commons.wikimedia.org/wiki/File:Boy_with_a_Basket_of_Fruit-Caravaggio_(1593).jpg",
 				"attachments": [
 					{
 						"title": "Wikimedia Snapshot",
-						"type": "text/html"
+						"mimeType": "text/html"
 					},
 					{
 						"title": "Wikimedia Image"
 					}
 				],
-				"url": "http://commons.wikimedia.org/wiki/File:Boy_with_a_Basket_of_Fruit-Caravaggio_(1593).jpg",
-				"archive": "Galleria Borghese",
-				"artworkMedium": "oil on canvas",
-				"artworkSize": "70 × 67 cm",
-				"date": "circa 1593",
-				"rights": "Public domain",
-				"title": "English: Boy with a Basket of Fruit",
-				"libraryCatalog": "Wikimedia Commons",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "English"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://commons.wikimedia.org/w/index.php?search=peron&button=&title=Special%3ASearch",
+		"url": "http://commons.wikimedia.org/w/index.php?search=peron&button=&title=Special%3ASearch&limit=100",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://commons.wikimedia.org/wiki/File:Portrait_of_Ambroise_Vollard.jpg",
+		"url": "https://commons.wikimedia.org/wiki/File:Portrait_of_Ambroise_Vollard.jpg",
 		"items": [
 			{
 				"itemType": "artwork",
+				"title": "English: Portrait of Ambroise Vollard",
 				"creators": [
 					{
 						"firstName": "Paul",
@@ -809,35 +809,36 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "1899",
+				"archive": "Petit Palais, Paris",
+				"artworkMedium": "oil on canvas",
+				"artworkSize": "101 × 81 cm (39.8 × 31.9 in)",
+				"libraryCatalog": "Wikimedia Commons",
+				"rights": "Public domain",
+				"shortTitle": "English",
+				"url": "https://commons.wikimedia.org/wiki/File:Portrait_of_Ambroise_Vollard.jpg",
 				"attachments": [
 					{
 						"title": "Wikimedia Snapshot",
-						"type": "text/html"
+						"mimeType": "text/html"
 					},
 					{
 						"title": "Wikimedia Image"
 					}
 				],
-				"url": "http://commons.wikimedia.org/wiki/File:Portrait_of_Ambroise_Vollard.jpg",
-				"archive": "http://arthistory.about.com/od/from_exhibitions/ig/avantgarde/ambrvoll_14.htm",
-				"date": "1899",
-				"rights": "Public domain",
-				"title": "English: Portrait of Ambroise Vollard. Oil on canvas, 101 x 81 cm. Petit Palais, Musée des Beaux-Arts de la Ville de Paris.",
-				"libraryCatalog": "Wikimedia Commons",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "English"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://commons.wikimedia.org/wiki/File:Plaza_Congreso.JPG",
+		"url": "https://commons.wikimedia.org/wiki/File:Plaza_Congreso.JPG",
 		"items": [
 			{
 				"itemType": "artwork",
+				"title": "English: Congressional Plaza, Buenos Aires, Argentina.",
 				"creators": [
 					{
 						"firstName": "",
@@ -846,26 +847,24 @@ var testCases = [
 						"fieldMode": 1
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "28 January 2012",
+				"archive": "Own work",
+				"libraryCatalog": "Wikimedia Commons",
+				"rights": "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled GNU Free Documentation License.http://www.gnu.org/copyleft/fdl.htmlGFDLGNU Free Documentation Licensetruetrue",
+				"shortTitle": "English",
+				"url": "https://commons.wikimedia.org/wiki/File:Plaza_Congreso.JPG",
 				"attachments": [
 					{
 						"title": "Wikimedia Snapshot",
-						"type": "text/html"
+						"mimeType": "text/html"
 					},
 					{
 						"title": "Wikimedia Image"
 					}
 				],
-				"url": "http://commons.wikimedia.org/wiki/File:Plaza_Congreso.JPG",
-				"archive": "Own work",
-				"date": "28 January 2012",
-				"rights": "Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.2 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts. A copy of the license is included in the section entitled GNU Free Documentation License.\nhttp://www.gnu.org/copyleft/fdl.htmlGFDLGNU Free Documentation Licensetruetrue",
-				"title": "English: Congressional Plaza, Buenos Aires, Argentina.",
-				"libraryCatalog": "Wikimedia Commons",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "English"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},

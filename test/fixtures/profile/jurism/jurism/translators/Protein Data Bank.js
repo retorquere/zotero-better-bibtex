@@ -1,7 +1,7 @@
 {
 	"translatorID": "e16095ae-986c-4117-9cb6-20f3b7a52f64",
 	"label": "Protein Data Bank",
-	"creator": "Michael Berkowitz, Sebastian Karcher",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://www\\.(pdb|rcsb)\\.org/pdb/",
 	"minVersion": "3.0",
 	"maxVersion": "",
@@ -9,88 +9,106 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-11-24 00:25:43"
+	"lastUpdated": "2017-06-03 18:51:04"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
 function detectWeb(doc, url) {
-	if (doc.title.indexOf("Query Results") != -1) {
+	if (url.indexOf("results.do") != -1 && getSearchResults(doc, true)) {
 		return "multiple";
 	} else if (url.indexOf("structureId") != -1) {
 		return "journalArticle";
 	}
 }
 
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//li[contains(@class, "oneSearchResult")]//h3/a');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
 function doWeb(doc, url) {
-	var proteins = new Array();
 	if (detectWeb(doc, url) == "multiple") {
-		//search results
-		var items = new Object();
-		var xpath = '//a[@class="qrb_title"]';
-		var titles = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			items[next_title.href.match(/structureId=(.*)/)[1]] = next_title.textContent;
-		}
-		Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
-				proteins.push(i);
+				articles.push(i);
 			}
-			scrape(proteins)
-		})
-	} else {
-		scrape([url.match(/structureId=(.*)/)[1]]);
-	}
-}	
-	
-function scrape (proteins){
-	for (var p in proteins) {
-		var xmlstr = 'http://www.pdb.org/pdb/download/downloadFile.do?fileFormat=xml&headerOnly=YES&structureId=' + proteins[p];
-		Zotero.debug(xmlstr);
-		Zotero.Utilities.HTTP.doGet(xmlstr, function(text) {
-			var item = new Zotero.Item("journalArticle");
-			text = text.replace(/<!DOCTYPE[^>]*>/, "").replace(/<\?xml[^>]*\?>/, "").replace(/PDBx\:/g, "");
-			var article = text.split('<citation id="primary">');
-			var art = article[1].split(/<\/citation>\n/);
-			art = "<citation>" + art[0] + "</citation>";
-			var parser = new DOMParser();
-			var xml = parser.parseFromString(art, "text/xml");
-			var info = text.split('<database_PDB_revCategory>')[1].split('</database_PDB_revCategory>')[0].split('<database_PDB_rev num="2">')[0];
-			var xml2 = parser.parseFromString(info, "text/xml");
-			var aus = text.split('<citation_authorCategory>')[1].split('</citation_authorCategory>')[0];
-			aus = "<authors>" + aus + "</authors>";
-			var xml3 = parser.parseFromString(aus, "text/xml");
-	
-			item.title = ZU.xpathText(xml, '//title')
-			item.publicationTitle = item.journalAbbreviation = ZU.xpathText(xml, '//journal_abbrev');
-			item.volume = ZU.xpathText(xml, '//journal_volume'); 
-			item.pages = ZU.xpathText(xml, '//page_first') + "-" + ZU.xpathText(xml, '//page_last');
-			item.ISSN = ZU.xpathText(xml, '//journal_id_ISSN');
-			item.extra = "PMID: " + ZU.xpathText(xml, '//pdbx_database_id_PubMed');
-			item.DOI = ZU.xpathText(xml, '//pdbx_database_id_DOI');
-			item.date = ZU.xpathText(xml2, '//date_original');
-			item.url = 'http://www.pdb.org/pdb/explore/explore.do?structureId=' + proteins[p];
-			var authors = ZU.xpath(xml3, '//citation_author[@citation_id="primary"]/@name');
-			for (var i in authors) {
-			item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author", true));
-			}
-			item.attachments = [
-				{url: item.url, title:"PDB Snapshot", mimeType:"text/html"},
-				{url:'http://www.pdb.org/pdb/download/downloadFile.do?fileFormat=pdb&compression=NO&structureId=' + proteins[p], title:"Protein Data Bank .pdb File", mimeType:"chemical/x-pdb"}
-			]
-			item.complete(); 
+			ZU.processDocuments(articles, scrape);
 		});
+	} else {
+		scrape(doc, url);
 	}
-}/** BEGIN TEST CASES **/
+}
+
+
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	translator.setDocument(doc);
+	translator.setHandler('itemDone', function (obj, item) {
+		item.DOI = ZU.xpathText(doc, '//li[strong[contains(., "DOI")]]/a');
+		item.tags = [];
+		var pdburl = ZU.xpathText(doc, '//ul/li/a[contains(., "PDB Format")]/@href');
+		if (pdburl) {
+			item.attachments.push({
+				url: pdburl,
+				title: "Protein Data Bank .pdb File",
+				mimeType: "chemical/x-pdb"
+			});
+		}
+		item.complete();
+	});
+	translator.translate();
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.pdb.org/pdb/explore/explore.do?structureId=1COW",
+		"url": "http://www.rcsb.org/pdb/explore/explore.do?structureId=1COW",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "The structure of bovine F1-ATPase complexed with the antibiotic inhibitor aurovertin B.",
 				"creators": [
 					{
 						"firstName": "M. J.",
@@ -113,31 +131,26 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "1996",
+				"DOI": "10.2210/pdb1cow/pdb",
+				"abstractNote": "1COW: The structure of bovine F1-ATPase complexed with the antibiotic inhibitor aurovertin B.",
+				"libraryCatalog": "www.rcsb.org",
+				"pages": "6913-6917",
+				"publicationTitle": "Proc.Natl.Acad.Sci.USA",
+				"url": "http://www.rcsb.org/pdb/explore/explore.do?structureId=1COW",
+				"volume": "93",
 				"attachments": [
 					{
-						"title": "PDB Snapshot",
-						"mimeType": "text/html"
+						"title": "Snapshot"
 					},
 					{
 						"title": "Protein Data Bank .pdb File",
 						"mimeType": "chemical/x-pdb"
 					}
 				],
-				"title": "The structure of bovine F1-ATPase complexed with the antibiotic inhibitor aurovertin B.",
-				"journalAbbreviation": "Proc.Natl.Acad.Sci.USA",
-				"publicationTitle": "Proc.Natl.Acad.Sci.USA",
-				"volume": "93",
-				"pages": "6913-6917",
-				"ISSN": "0027-8424",
-				"extra": "PMID: 8692918",
-				"DOI": "10.1073/pnas.93.14.6913",
-				"date": "1996-05-08",
-				"url": "http://www.pdb.org/pdb/explore/explore.do?structureId=1COW",
-				"libraryCatalog": "Protein Data Bank",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -147,6 +160,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Structural analysis of a set of proteins resulting from a bacterial genomics project",
 				"creators": [
 					{
 						"firstName": "J.",
@@ -404,31 +418,26 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2005",
+				"DOI": "10.2210/pdb1vhz/pdb",
+				"abstractNote": "1VHZ: Structural analysis of a set of proteins resulting from a bacterial genomics project",
+				"libraryCatalog": "www.rcsb.org",
+				"pages": "787-796",
+				"publicationTitle": "Proteins",
+				"url": "http://www.rcsb.org/pdb/explore/explore.do?structureId=1VHZ",
+				"volume": "60",
 				"attachments": [
 					{
-						"title": "PDB Snapshot",
-						"mimeType": "text/html"
+						"title": "Snapshot"
 					},
 					{
 						"title": "Protein Data Bank .pdb File",
 						"mimeType": "chemical/x-pdb"
 					}
 				],
-				"title": "Structural analysis of a set of proteins resulting from a bacterial genomics project",
-				"journalAbbreviation": "Proteins",
-				"publicationTitle": "Proteins",
-				"volume": "60",
-				"pages": "787-796",
-				"ISSN": "0887-3585",
-				"extra": "PMID: 16021622",
-				"DOI": "10.1002/prot.20541",
-				"date": "2003-12-01",
-				"url": "http://www.pdb.org/pdb/explore/explore.do?structureId=1VHZ",
-				"libraryCatalog": "Protein Data Bank",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

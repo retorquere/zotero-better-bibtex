@@ -9,3 +9,12 @@
   title = {Adam: {{A Method}} for {{Stochastic Optimization}}},
   venue = {San Diego, CA, USA}
 }
+
+@unpublished{derasmo2000,
+  author = {D’Erasmo, Stacy},
+  date = {2000-04-26},
+  langid = {american},
+  title = {The Craft and Career of Writing},
+  type = {lecture},
+  venue = {{Northwestern University, Evanston, IL}}
+}

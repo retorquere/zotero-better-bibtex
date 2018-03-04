@@ -1,4 +1,4 @@
-	{
+{
 	"translatorID": "2d174277-7651-458f-86dd-20e168d2f1f3",
 	"label": "Canadiana.ca",
 	"creator": "Adam Crymble, Sebastian Karcher",
@@ -158,35 +158,39 @@ function doWeb(doc, url) {
 		scrape(doc, url);
 	}
 } 
+
 /** BEGIN TEST CASES **/
-var testCases = [{
-	"type": "web",
-	"url": "http://eco.canadiana.ca/view/oocihm.44987/2?r=0&s=1",
-	"items": [{
-		"itemType": "book",
-		"creators": [{
-			"firstName": "Toronto Lying-In",
-			"lastName": "Hospital",
-			"creatorType": "author"
-		}],
-		"notes": [],
-		"tags": ["Toronto Lying-In Hospital.", "Hospitals -- Ontario -- Toronto.", "Hôpitaux -- Ontario -- Toronto."],
-		"seeAlso": [],
-		"attachments": [],
-		"title": "Report of the Toronto Lying-In Hospital : for the year 1857.",
-		"place": "Toronto?",
-		"publisher": "s.n.",
-		"date": "1857?",
-		"language": "en-CA",
-		"pages": "4",
-		"extra": "CIHM Number: 44987",
-		"URL": "http://eco.canadiana.ca/view/oocihm.44987",
-		"libraryCatalog": "Canadiana.ca",
-		"shortTitle": "Report of the Toronto Lying-In Hospital"
-	}]
-}, {
-	"type": "web",
-	"url": "http://eco.canadiana.ca/search?q=Toronto&field=",
-	"items": "multiple"
-}]
+var testCases = [
+	{
+		"type": "web",
+		"url": "http://eco.canadiana.ca/view/oocihm.44987/2?r=0&s=1",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Toronto Lying-In Hospital. Report of the Toronto Lying-In Hospital : for the year 1857.",
+				"creators": [],
+				"date": "1857?",
+				"extra": "CIHM Number: 44987",
+				"language": "eng",
+				"libraryCatalog": "Canadiana.ca",
+				"place": "Toronto?",
+				"publisher": "s.n.",
+				"shortTitle": "Toronto Lying-In Hospital. Report of the Toronto Lying-In Hospital",
+				"attachments": [],
+				"tags": [
+					"Hospitals -- Ontario -- Toronto.",
+					"Hôpitaux -- Ontario -- Toronto.",
+					"Toronto Lying-In Hospital."
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://eco.canadiana.ca/search?q=Toronto&field=",
+		"items": "multiple"
+	}
+]
 /** END TEST CASES **/

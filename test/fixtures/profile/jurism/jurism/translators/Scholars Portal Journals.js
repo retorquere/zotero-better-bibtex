@@ -2,14 +2,14 @@
 	"translatorID": "5ac0fd37-5578-4f82-8340-0e135b6336ee",
 	"label": "Scholars Portal Journals",
 	"creator": "Bartek Kawula",
-	"target": "^https?://journals\\d\\.scholarsportal\\.info/",
+	"target": "^https?://journals\\d?\\.scholarsportal\\.info/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-03-29 12:20:41"
+	"lastUpdated": "2017-06-24 10:24:20"
 }
 
 /*
@@ -134,12 +134,12 @@ function scrape(text, doc) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://journals1.scholarsportal.info/search?q=water",
+		"url": "https://journals.scholarsportal.info/search?q=water&search_in=anywhere&date_from=&date_to=&sort=relevance&sub=",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://journals1.scholarsportal.info/details/00959782/v37i0006/841_tnowhbdbmoxs.xml",
+		"url": "https://journals.scholarsportal.info/details/00959782/v37i0006/841_tnowhbdbmoxs.xml",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -156,8 +156,10 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
+				"date": "2008",
 				"DOI": "10.1007/s10953-008-9276-0",
 				"ISSN": "0095-9782",
+				"abstractNote": "The liquid structures of water-tetrahydrofuran (THF) and water-acetone binary mixtures were investigated by the X-ray scattering method. Comparison of the X-ray scattering data revealed that only one kind of intermolecular water-organic molecule interaction is commonly involved throughout all mole fractions of these liquid mixtures, in addition to the intermolecular water-water and organic molecule-organic molecule interactions, which are present in neat water and organic liquids, respectively. On the basis of this finding, we proposed a new analytical method for studying liquid mixtures. By this method the structural information on the intermolecular water-organic molecule interaction as well as the concentrations of the intermolecular water-water, water-organic molecules, and organic molecule-organic molecule interactions were obtained. Combining the concentrations of the intermolecular water-water interaction with the concentrations of water in the liquid mixtures, the number of water-water hydrogen bonds at various mole fractions was experimentally determined for the first time. From the dependence of the number of water-water hydrogen bonds on the composition of the liquid mixtures, the change of the size of the self-associated water-water clusters was deduced.",
 				"issue": "6",
 				"journalAbbreviation": "Journal of Solution Chemistry",
 				"libraryCatalog": "Scholars Portal Journals",

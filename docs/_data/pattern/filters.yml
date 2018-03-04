@@ -1,0 +1,62 @@
+'`abbr`': >-
+  Abbreviates the text. Only the first character and subsequent characters
+  following white space will be included.
+'`alphanum`': >-
+  clears out everything but unicode alphanumeric characters (unicode character
+  classes `L` and `N`)
+'`ascii`': removes all non-ascii characters
+'`capitalize`': uppercases the first letter of each word
+'`clean`': removes unsafe characters from the citation key
+'`condense`': >-
+  this replaces spaces in the value passed in. You can specify what to replace
+  it with by adding it as a
+
+  parameter, e.g `condense,_` will replace spaces with underscores. **Parameters
+  should not contain spaces** unless
+
+  you want the spaces in the value passed in to be replaced with those spaces in
+  the parameter
+'`fold`': >-
+  tries to replace diacritics with ascii look-alikes. Removes non-ascii
+  characters it cannot match
+'`lower`': >-
+  Forces the text inserted by the field marker to be in lowercase. For example,
+  `[auth:lower]` expands the last name of the first author in lowercase.
+'`nopunct`': Removes punctuation
+'`nopunctordash`': Removes punctuation and word-connecting dashes
+'`postfix`': >-
+  postfixes with its parameter, so `postfix,_` will add an underscore to the end
+  if, and only if, the value
+
+  it is supposed to postfix isn't empty
+'`prefix`': >-
+  prefixes with its parameter, so `prefix,_` will add an underscore to the front
+  if, and only if, the value
+
+  it is supposed to prefix isn't empty. If you want to use a reserved character
+  (such as `:` or `\`), you'll need to
+
+  add a backslash (`\`) in front of it.
+'`select`': >-
+  selects words from the value passed in. The format is `select,start,number`
+  (1-based), so `select,1,4`
+
+  would select the first four words. If `number` is not given, all words from
+  `start` to the end of the list are
+
+  selected. It is important to note that `select' works only on values that have
+  the words separated by whitespace,
+
+  so the caveat below applies.
+'`skipwords`': >-
+  filters out common words like 'of', 'the', ... the list of words can be seen
+  and changed by going into
+
+  `about:config` under the key
+  `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
+
+  case-insensitive list of words.
+'`substring`': '(`substring,start,n`) selects `n` characters starting at `start`'
+'`upper`': >-
+  Forces the text inserted by the field marker to be in uppercase. For example,
+  `[auth:upper]` expands the last name of the first author in uppercase.

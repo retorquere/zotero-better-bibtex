@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 8,
-	"browserSupport": "gcs",
-	"lastUpdated": "2014-05-29 07:46:16"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2018-01-15 11:41:00"
 }
 
 function detectSearch(items) {
@@ -68,7 +68,7 @@ function fixJSON(text) {
 
 function processDOIs(dois) {
 	var doi = dois.pop();
-	ZU.doGet('http://data.datacite.org/application/citeproc+json/' + encodeURIComponent(doi), function(text) {
+	ZU.doGet('https://data.datacite.org/application/citeproc+json/' + encodeURIComponent(doi), function(text) {
 		text = fixJSON(text);
 		if(!text) {
 			return;
@@ -78,6 +78,12 @@ function processDOIs(dois) {
 		var trans = Zotero.loadTranslator('import');
 		trans.setTranslator('bc03b4fe-436d-4a1f-ba59-de4d2d7a63f7');
 		trans.setString(text);
+		trans.setHandler("itemDone", function(obj, item) {
+			if (!item.DOI) {
+				item.extra = "DOI: " + doi;
+			}
+			item.complete();
+		});
 		trans.translate();
 	}, function() {
 		if(dois.length) processDOIs(dois, queryTracker);
@@ -92,10 +98,10 @@ var testCases = [
 		},
 		"items": [
 			{
-				"itemType": "journalArticle",
+				"itemType": "report",
 				"creators": [
 					{
-						"lastName": "Heiliges römisches Reich deutscher Nation",
+						"lastName": "Heiliges Römisches Reich Deutscher Nation",
 						"fieldMode": 1,
 						"creatorType": "author"
 					}
@@ -105,10 +111,13 @@ var testCases = [
 				"seeAlso": [],
 				"attachments": [],
 				"title": "Code criminel de l'empereur Charles V vulgairement appellé la Caroline contenant les loix qui sont suivies dans les jurisdictions criminelles de l'Empire et à l'usage des conseils de guerre des troupes suisses.",
-				"url": "http://dx.doi.org/10.12763/ONA1045",
-				"DOI": "10.12763/ONA1045",
 				"date": "1734",
-				"libraryCatalog": "DataCite"
+				"itemID": "https://doi.org/10.12763/ona1045",
+				"abstractNote": "Le code est accompagné de commentaires de F. A. Vogel, qui signe l'épitre dédicatoire",
+				"language": "fre",
+				"institution": "de l'imprimerie de Claude Simon (A Paris)",
+				"libraryCatalog": "DataCite",
+				"extra": "DOI: 10.12763/ONA1045"
 			}
 		]
 	}

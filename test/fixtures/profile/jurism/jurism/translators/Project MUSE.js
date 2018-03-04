@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-08-27 02:45:11"
+	"lastUpdated": "2017-11-25 17:50:03"
 }
 
 /*
@@ -82,7 +82,7 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	var abstract = ZU.xpathText(doc, '//div[@class="abstract"]');
+	var abstract = ZU.xpathText(doc, '//div[@class="abstract"]/abstract');
 	if (!abstract) abstract = ZU.xpathText(doc, '//div[@class="description"][1]');
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
@@ -123,7 +123,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2006",
+				"date": "2006-07-20",
 				"ISSN": "1477-464X",
 				"issue": "1",
 				"libraryCatalog": "Project MUSE",
@@ -154,7 +154,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Writing the Forest in Early Modern England",
+				"title": "Writing the Forest in Early Modern England: A Sylvan Pastoral Nation",
 				"creators": [
 					{
 						"firstName": "Jeffrey S.",
@@ -168,6 +168,7 @@ var testCases = [
 				"language": "English",
 				"libraryCatalog": "Project MUSE",
 				"publisher": "Duquesne University Press",
+				"shortTitle": "Writing the Forest in Early Modern England",
 				"url": "http://muse.jhu.edu/book/785",
 				"attachments": [
 					{
@@ -194,7 +195,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2013",
+				"date": "2013-12-12",
 				"DOI": "10.1353/tech.2013.0137",
 				"ISSN": "1097-3729",
 				"abstractNote": "This article uses coverage of the fiftieth anniversary of the Pill as an example of what Richard Hirsh describes as the “real world” role of historians of technology. It explores how the presentation of historical topics on the world wide web has complicated how the history of technology is conveyed to the public. The article shows that that the Pill is especially suited to demonstrating the public role of historians of technology because, as the most popular form of reversible birth control, it has touched the lives of millions of Americans. Thus, an exploration of how the Pill’s fiftieth anniversary was covered illustrates how historians can use their expertise to provide a nuanced interpretation of a controversial topic in the history of technology.",
@@ -231,10 +232,10 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014",
+				"date": "2014-08-13",
 				"DOI": "10.1353/lar.2014.0030",
 				"ISSN": "1542-4278",
-				"abstractNote": "This article highlights an important paradox: in Argentina between 2003 and 2013 the center-left Peronist government’s approach to governance mirrors that of the center-right Peronist administration of the 1990s. While the latter centralized authority to pursue neoliberal reforms, the former have centralized authority in the name of expanding government intervention in the economy. In both cases, corruption has tended to go unchecked due to insufficient government accountability. Therefore, although economic policies and political rhetoric have changed dramatically, government corruption remains a constant of the Argentine political system due to the executive branch’s ability to emasculate constitutional checks and balances.\n, \nRESUMEN\nEste artículo pone de relieve una paradoja importante: en la Argentina entre 2003 y 2013 los gobiernos peronistas de centro-izquierda reflejan los de la administración peronista de centro-derecha de la década de 1990. Mientras en los años noventa la concentración del poder presidencial se usó para promover reformas neoliberales, en los 2000 la autoridad centralizada se persiguió en nombre de la expansión de la intervención gubernamental en la economía. En ambos casos, la corrupción ha tendido a pasar inadvertida debido a la insuficiencia de la rendición de cuentas del gobierno. Por lo tanto, aunque las políticas económicas y la retórica política han cambiado drásticamente, la corrupción gubernamental sigue siendo una constante del sistema político argentino, gracias a la capacidad del Poder Ejecutivo para nulificar a los controles y equilibrios constitucionales",
+				"abstractNote": "This article highlights an important paradox: in Argentina between 2003 and 2013 the center-left Peronist government’s approach to governance mirrors that of the center-right Peronist administration of the 1990s. While the latter centralized authority to pursue neoliberal reforms, the former have centralized authority in the name of expanding government intervention in the economy. In both cases, corruption has tended to go unchecked due to insufficient government accountability. Therefore, although economic policies and political rhetoric have changed dramatically, government corruption remains a constant of the Argentine political system due to the executive branch’s ability to emasculate constitutional checks and balances.",
 				"issue": "2",
 				"libraryCatalog": "Project MUSE",
 				"pages": "173-195",

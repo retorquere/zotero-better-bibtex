@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-04-09 14:53:05"
+	"lastUpdated": "2017-06-30 05:37:23"
 }
 
 /*
@@ -18,6 +18,7 @@
  It is based on the earlier translator by Simon Kornblith, but the Chronicle has
  significantly restructured the site since 2006, breaking the old translator.
 */
+
 
 function detectWeb(doc, url) {
 	/* The /daily/ and /weekly/ sections are leftover from the previous version
@@ -38,54 +39,60 @@ function detectWeb(doc, url) {
 					return "blogPost";
 				return false;
 		}
-	} else {
-		// This approach, used again below, is pretty crude.
-		var aTags = doc.getElementsByTagName("a");
-		for(var i=0; i<aTags.length; i++) {
-			if(articleRegexp.test(aTags[i].href)) {
-				return "multiple";
-			}
-		}
+	} else if (getSearchResults(doc, true)) {
+		return "multiple";
 	}
 }
 
-function doWeb (doc, url) {
 
-	
-	var articles = new Array();
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	//search results
+	var rows = ZU.xpath(doc, '//span[@class="content-card__heading"]/h4/a');
+	if (rows.length<1){
+		//overview pages
+		rows = ZU.xpath(doc, '//div[contains(@class, "row")]//h1/a|//div[contains(@class, "row")]//h2[contains(@class, "title")]/a');
+	}
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var items = {};
-		var results = ZU.xpath(doc, '//span[@class="content-card__heading"]/h4/a')
-		if (results.length<1){
-			var results = ZU.xpath(doc, '//div[@id="portal"]//h4/a[contains(@href, "/article/")]|//div[@id="portal"]//h2/a[contains(@href, "/article/")]|//div[@class="blogpost-container"]/a' )
-		}
-		for (var i in results){
-			items[results[i].href] = results[i].textContent.trim();
-		}
-		
-		Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			Z.debug(articles)
-			Zotero.Utilities.processDocuments(articles, scrape);	
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		scrape(doc, url)
+		scrape(doc, url);
 	}
 }
+
 
 function scrape (doc, url){
 		var type = detectWeb(doc, url);
 		var item = new Zotero.Item(type);
 
-		item.url = doc.location.href;
+		item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href');
 		item.publicationTitle = "The Chronicle of Higher Education";
 		// Does the ISSN apply to online-only blog posts?
 		item.ISSN = "0009-5982";
+		item.language = "en-US";
 		
 		var byline = doc.evaluate('//header/div/span[@class="content-item__byline"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
 		if (!byline) byline = doc.evaluate('//div[@class="blog__author"]/a', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
@@ -159,7 +166,7 @@ function parseAuthors(author) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://chronicle.com/blogs/profhacker/the-second-day-of-thatcamp/23068",
+		"url": "http://www.chronicle.com/blogs/profhacker/the-second-day-of-thatcamp/23068",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -172,11 +179,9 @@ var testCases = [
 					}
 				],
 				"date": "March 26, 2010",
-				"ISSN": "0009-5982",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"libraryCatalog": "The Chronicle of Higher Education",
-				"publicationTitle": "The Chronicle of Higher Education Blogs: ProfHacker",
-				"url": "http://chronicle.com/blogs/profhacker/the-second-day-of-thatcamp/23068",
+				"blogTitle": "The Chronicle of Higher Education Blogs: ProfHacker",
+				"language": "en-US",
+				"url": "http://www.chronicle.com/blogs/profhacker/the-second-day-of-thatcamp/23068",
 				"attachments": [
 					{
 						"title": "Chronicle of Higher Education Snapshot",
@@ -191,7 +196,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://chronicle.com/article/A-Little-Advice-From-32000/46210/",
+		"url": "http://www.chronicle.com/article/A-Little-Advice-From-32000/46210/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -210,11 +215,10 @@ var testCases = [
 				],
 				"date": "January 14, 2002",
 				"ISSN": "0009-5982",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"language": "en-US",
 				"libraryCatalog": "The Chronicle of Higher Education",
 				"publicationTitle": "The Chronicle of Higher Education",
-				"section": "Advice",
-				"url": "http://chronicle.com/article/A-Little-Advice-From-32000/46210/",
+				"url": "http://www.chronicle.com/article/A-Little-Advice-From-32000/46210",
 				"attachments": [
 					{
 						"title": "Chronicle of Higher Education Snapshot",
@@ -229,7 +233,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://chronicle.com/article/Grinnells-Green-Secrets/2653/",
+		"url": "http://www.chronicle.com/article/Grinnells-Green-Secrets/2653/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -243,9 +247,10 @@ var testCases = [
 				],
 				"date": "June 16, 2006",
 				"ISSN": "0009-5982",
+				"language": "en-US",
 				"libraryCatalog": "The Chronicle of Higher Education",
 				"publicationTitle": "The Chronicle of Higher Education",
-				"url": "http://chronicle.com/article/Grinnells-Green-Secrets/2653/",
+				"url": "http://www.chronicle.com/article/Grinnells-Green-Secrets/2653",
 				"attachments": [
 					{
 						"title": "Chronicle of Higher Education Snapshot",
@@ -260,7 +265,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://chronicle.com/blogs/brainstorm/humanities-cyberinfrastructure-project-bamboo/6138",
+		"url": "http://www.chronicle.com/blogs/brainstorm/humanities-cyberinfrastructure-project-bamboo/6138",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -274,8 +279,9 @@ var testCases = [
 				],
 				"date": "July 17, 2008",
 				"blogTitle": "The Chronicle of Higher Education Blogs: Brainstorm",
+				"language": "en-US",
 				"shortTitle": "Humanities Cyberinfrastructure",
-				"url": "http://chronicle.com/blogs/brainstorm/humanities-cyberinfrastructure-project-bamboo/6138",
+				"url": "http://www.chronicle.com/blogs/brainstorm/humanities-cyberinfrastructure-project-bamboo/6138",
 				"attachments": [
 					{
 						"title": "Chronicle of Higher Education Snapshot",
@@ -290,12 +296,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://chronicle.com/section/Opinion-Ideas/40/?eio=58977",
+		"url": "http://www.chronicle.com/section/Opinion-Ideas/40/?eio=58977",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://chronicle.com/search/?search_siteId=5&contextId=&action=rem&searchQueryString=adjunct",
+		"url": "http://www.chronicle.com/search/?search_siteId=5&contextId=&action=rem&searchQueryString=adjunct",
 		"items": "multiple"
 	}
 ]

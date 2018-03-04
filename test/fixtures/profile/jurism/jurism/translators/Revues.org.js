@@ -173,48 +173,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://iheid.revues.org/412?lang=fr",
-		"items": [
-			{
-				"itemType": "bookSection",
-				"creators": [
-					{
-						"firstName": "Fabien",
-						"lastName": "Nathan",
-						"creatorType": "author"
-					}
-				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot"
-					}
-				],
-				"title": "Chapitre 2 – L’histoire de La Paz et de la ladera ouest",
-				"rights": "© The Graduate Institute | Geneva",
-				"publisher": "Institut de hautes études internationales et du développement",
-				"date": "2012/02/03",
-				"url": "http://iheid.revues.org/412?lang=fr",
-				"abstractNote": "L’histoire de la ladera ouest de La Paz s’insère dans l’histoire générale de La Paz, à son tour influencée par (et influençant) l’histoire nationale bolivienne. La compréhension du processus de construction des risques, sans laquelle il est impossible de comprendre leur régulation sociale, est en grande partie le produit de l’histoire. En effet, l’approche diachronique semble être un moyen indispensable d’objectivation du social, inspiré ainsi de la sociologie « inséparablement structurale et génétique » (Wacquant 1995) de Pierre Bourdieu, et plus précisément ici, elle joue un rôle fondamental dans la recherche des causes, voire des « causes-racines » de la progression de la vulnérabilité (Wisner et al. 2004). On s’intéressera non seulement aux conditions de possibilité de l’établissement en zone à risque, mais également à la manière dont celle-ci s’est effectivement réalisée.Faire l’histoire de la ladera ouest, c’est construire l’histoire d’un espace, dans la lignée de l’école des annales (Braudel 1990), rendant solidaires l’une de l’autre l’histoire et la géographie. Mais c’est également s’intéresser à un objet inédit – l’histoire des laderas n’a jamais été écrite comme telle, et l’histoire de La Paz correspond souvent à celle du centre-ville. On peut y déceler plusieurs raisons. D’abord, le désintérêt général envers un espace peuplé par des populations indigènes, à faible capital économique, politique et culturel, et dont l’urbanisation constitue dans l’imaginaire collecti",
-				"language": "fr",
-				"ISBN": "978-2-940415-91-5",
-				"libraryCatalog": "iheid.revues.org",
-				"bookTitle": "Collections électroniques de l’Institut de hautes études internationales et du développement. Graduate Institute Publications Online"
-			}
-		]
-	},
-	{
-		"type": "web",
 		"url": "http://e-spania.revues.org/12303?lang=fr",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Le testament d’Elvire (Tábara, 1099)",
 				"creators": [
 					{
 						"firstName": "Georges",
@@ -227,7 +190,25 @@ var testCases = [
 						"creatorType": "contributor"
 					}
 				],
-				"notes": [],
+				"date": "2008/02/01",
+				"DOI": "10.4000/e-spania.12303",
+				"ISSN": "1951-6169",
+				"abstractNote": "Le testament d’Elvire livre de précieuses informations sur la réalité historique de l’infantat : son implantation, la composition de ses biens, ses évolutions, les formes de son acquisition et de sa transmission, sa fonction politique. Mais il nous renseigne aussi sur une infante de niveau moyen, sur son cadre de vie, son entourage, ses activités, les réseaux de son pouvoir et même sur sa foi.",
+				"issue": "5",
+				"language": "fr",
+				"libraryCatalog": "e-spania.revues.org",
+				"publicationTitle": "e-Spania. Revue interdisciplinaire d’études hispaniques médiévales et modernes",
+				"rights": "Les contenus de la revue e-Spania sont mis à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International.",
+				"url": "http://e-spania.revues.org/12303?lang=fr",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot"
+					}
+				],
 				"tags": [
 					"Alphonse VI de Castille et de León",
 					"Elvire Fernandez",
@@ -243,27 +224,8 @@ var testCases = [
 					"infante Urraque",
 					"testament"
 				],
-				"seeAlso": [],
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot"
-					}
-				],
-				"title": "Le testament d’Elvire (Tábara, 1099)",
-				"publicationTitle": "e-Spania. Revue interdisciplinaire d’études hispaniques médiévales et modernes",
-				"rights": "© e-Spania",
-				"issue": "5",
-				"date": "2008/02/01",
-				"DOI": "10.4000/e-spania.12303",
-				"ISSN": "1951-6169",
-				"url": "http://e-spania.revues.org/12303?lang=fr",
-				"abstractNote": "Le testament d’Elvire livre de précieuses informations sur la réalité historique de l’infantat : son implantation, la composition de ses biens, ses évolutions, les formes de son acquisition et de sa transmission, sa fonction politique. Mais il nous renseigne aussi sur une infante de niveau moyen, sur son cadre de vie, son entourage, ses activités, les réseaux de son pouvoir et même sur sa foi.",
-				"language": "fr",
-				"libraryCatalog": "e-spania.revues.org"
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -273,6 +235,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Le testament d’Elvire (Tábara, 1099)",
 				"creators": [
 					{
 						"firstName": "Georges",
@@ -285,7 +248,25 @@ var testCases = [
 						"creatorType": "contributor"
 					}
 				],
-				"notes": [],
+				"date": "2008/02/01",
+				"DOI": "10.4000/e-spania.12303",
+				"ISSN": "1951-6169",
+				"abstractNote": "El testamento de Elvira brinda una preciosísima información sobre la realidad del infantazgo : su extensión, la composición de sus bienes, sus evoluciones, las formas de su adquisición y transmisión, su papel político. También nos informa sobre una infanta de nivel mediano, sobre el marco de su vida, su entorno personal, sus actividades, la red de sus influencias e incluso sobre su fe.",
+				"issue": "5",
+				"language": "fr",
+				"libraryCatalog": "e-spania.revues.org",
+				"publicationTitle": "e-Spania. Revue interdisciplinaire d’études hispaniques médiévales et modernes",
+				"rights": "Les contenus de la revue e-Spania sont mis à disposition selon les termes de la Licence Creative Commons Attribution - Pas d'Utilisation Commerciale - Pas de Modification 4.0 International.",
+				"url": "http://e-spania.revues.org/12303?lang=es",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot"
+					}
+				],
 				"tags": [
 					"Alfonso VI de Castilla y León",
 					"Elvira Fernández",
@@ -300,36 +281,18 @@ var testCases = [
 					"siglo XI",
 					"testamento"
 				],
-				"seeAlso": [],
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot"
-					}
-				],
-				"title": "Le testament d’Elvire (Tábara, 1099)",
-				"publicationTitle": "e-Spania. Revue interdisciplinaire d’études hispaniques médiévales et modernes",
-				"rights": "© e-Spania",
-				"issue": "5",
-				"date": "2008/02/01",
-				"DOI": "10.4000/e-spania.12303",
-				"ISSN": "1951-6169",
-				"url": "http://e-spania.revues.org/12303?lang=es",
-				"abstractNote": "El testamento de Elvira brinda una preciosísima información sobre la realidad del infantazgo : su extensión, la composición de sus bienes, sus evoluciones, las formas de su adquisición y transmisión, su papel político. También nos informa sobre una infanta de nivel mediano, sobre el marco de su vida, su entorno personal, sus actividades, la red de sus influencias e incluso sobre su fe.",
-				"language": "fr",
-				"libraryCatalog": "e-spania.revues.org"
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://chs.revues.org/index142.html",
+		"url": "http://chs.revues.org/142",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "L’encadrement des Algériens de Paris (1944-1954), entre contraintes juridiques et arbitraire policier",
 				"creators": [
 					{
 						"firstName": "Emmanuel",
@@ -337,9 +300,18 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2007/06/01",
+				"DOI": "10.4000/chs.142",
+				"ISSN": "1422-0857",
+				"abstractNote": "Au sortir de la Seconde Guerre mondiale, pour sauvegarder son empire colonial, la France est contrainte de reconnaître la citoyenneté des Français musulmans d’Algérie (FMA). Dès lors, ceux-ci se retrouvent en métropole dans une situation proche de celle d’autres citoyens diminués (vagabonds, prostituées…) qui, bien que juridiquement peu accessibles à la répression policière sont considérés comme « indésirables » et constituent la clientèle privilégiée de forces de l’ordre agissant aux marges de la loi. Si l’ethnicité, la xénophobie, et la situation coloniale contribuent à définir les Algériens comme « indésirables », le répertoire d’actions policier envers les FMA tient avant tout à la façon dont l’arène policière est médiatisée par le contrôle et la représentation politiques.",
+				"issue": "1",
+				"language": "fr",
+				"libraryCatalog": "chs.revues.org",
+				"pages": "5-25",
+				"publicationTitle": "Crime, Histoire & Sociétés / Crime, History & Societies",
+				"rights": "© Droz",
+				"url": "http://chs.revues.org/142",
+				"volume": "11",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -349,19 +321,9 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "L’encadrement des Algériens de Paris (1944-1954), entre contraintes juridiques et arbitraire policier",
-				"publicationTitle": "Crime, Histoire & Sociétés / Crime, History & Societies",
-				"rights": "© Droz",
-				"volume": "11",
-				"issue": "1",
-				"pages": "5-25",
-				"date": "2007/06/01",
-				"DOI": "10.4000/chs.142",
-				"ISSN": "1422-0857",
-				"url": "http://chs.revues.org/142",
-				"abstractNote": "Au sortir de la Seconde Guerre mondiale, pour sauvegarder son empire colonial, la France est contrainte de reconnaître la citoyenneté des Français musulmans d’Algérie (FMA). Dès lors, ceux-ci se retrouvent en métropole dans une situation proche de celle d’autres citoyens diminués (vagabonds, prostituées…) qui, bien que juridiquement peu accessibles à la répression policière sont considérés comme « indésirables » et constituent la clientèle privilégiée de forces de l’ordre agissant aux marges de la loi. Si l’ethnicité, la xénophobie, et la situation coloniale contribuent à définir les Algériens comme « indésirables », le répertoire d’actions policier envers les FMA tient avant tout à la façon dont l’arène policière est médiatisée par le contrôle et la représentation politiques.",
-				"language": "fr",
-				"libraryCatalog": "chs.revues.org"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -371,6 +333,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Développement économique et legs coloniaux en Afrique",
 				"creators": [
 					{
 						"firstName": "Gareth",
@@ -383,11 +346,17 @@ var testCases = [
 						"creatorType": "translator"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Afrique subsaharienne"
-				],
-				"seeAlso": [],
+				"date": "2010/03/01",
+				"DOI": "10.4000/poldev.135",
+				"ISSN": "1663-9375",
+				"abstractNote": "Cet article étudie les effets du gouvernement colonial et de l’action des Africains pendant la période coloniale sur le contexte institutionnel et la situation en matière de ressources qui ont posé le cadre du futur développement économique au sud du Sahara. Cette question est placée dans la perspective de la dynamique du développement dans une région qui était, en 1900, extrêmement riche en terres et caractérisée par un manque de main-d’œuvre et de capital, par des activités marchandes indigènes dont l’ampleur peut étonner et par des degrés variables mais souvent peu élevés de centralisation politique. L’article explore la différence entre les effets des gouvernements français et britannique, mais il affirme que la différence visible dans l’évolution de la pauvreté, du bien-être et du changement structurel a davantage été déterminée par l’opposition entre économies « de peuplement » et « d’exploitation ».",
+				"issue": "1",
+				"language": "fr",
+				"libraryCatalog": "poldev.revues.org",
+				"pages": "11-36",
+				"publicationTitle": "International Development Policy | Revue internationale de politique de développement",
+				"rights": "International Development Policy is licensed under a Creative Commons Attribution-NonCommercial 4.0 International License.",
+				"url": "http://poldev.revues.org/135",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -397,18 +366,11 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "Développement économique et legs coloniaux en Afrique",
-				"publicationTitle": "International Development Policy | Revue internationale de politique de développement",
-				"rights": "© The Graduate Institute|Geneva - http://creativecommons.org/licenses/by-nc/3.0/",
-				"issue": "1",
-				"pages": "11-36",
-				"date": "2010/03/01",
-				"DOI": "10.4000/poldev.135",
-				"ISSN": "1663-9375",
-				"url": "http://poldev.revues.org/135",
-				"abstractNote": "Cet article étudie les effets du gouvernement colonial et de l’action des Africains pendant la période coloniale sur le contexte institutionnel et la situation en matière de ressources qui ont posé le cadre du futur développement économique au sud du Sahara. Cette question est placée dans la perspective de la dynamique du développement dans une région qui était, en 1900, extrêmement riche en terres et caractérisée par un manque de main-d’œuvre et de capital, par des activités marchandes indigènes dont l’ampleur peut étonner et par des degrés variables mais souvent peu élevés de centralisation politique. L’article explore la différence entre les effets des gouvernements français et britannique, mais il affirme que la différence visible dans l’évolution de la pauvreté, du bien-être et du changement structurel a davantage été déterminée par l’opposition entre économies « de peuplement » et « d’exploitation ».",
-				"language": "fr",
-				"libraryCatalog": "poldev.revues.org"
+				"tags": [
+					"Afrique subsaharienne"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

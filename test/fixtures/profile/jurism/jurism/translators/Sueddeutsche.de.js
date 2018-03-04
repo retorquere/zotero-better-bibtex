@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-03 19:57:18"
+	"lastUpdated": "2017-06-24 21:03:57"
 }
 
 /*
@@ -65,7 +65,7 @@ function scrape(doc, url) {
 
 	// Author. This is tricky, the SZ uses the author field for whatever they like.
 	// Sometimes, there is no author.
-	var author =  ZU.xpathText(doc, '//section[@class="authors"]//span[@class="moreInfo"]/strong')
+	var author =  ZU.xpathText(doc, '//section[contains(@class, "authors")]//span[contains(@class, "moreInfo")]/strong')
 
 	// One case i've seen: A full sentence as the "author", with no author in it.
 	if (author && author.trim().charAt(author.length - 1) != '.') {
@@ -84,7 +84,10 @@ function scrape(doc, url) {
 	newItem.abstractNote = ZU.xpathText(doc, '//meta[contains(@property, "og:description")]/@content');
 
 	// Date
-	newItem.date = ZU.xpathText(doc, "//time[@class='timeformat']").replace(/\d{2}:\d{2}/, "");
+	newItem.date = ZU.xpathText(doc, "//time[@class='timeformat']");
+	if (newItem.date) {
+		newItem.date = ZU.strToISO(newItem.date);
+	}
 
 	// Section
 	var section = url.match(/sueddeutsche\.de\/([^\/]+)/);
@@ -106,10 +109,12 @@ function scrape(doc, url) {
 
 	// Attachment. inserting /2.220/ gives us a printable version
 	var printurl = url.replace(/(.*\/)(.*$)/, '$12.220/$2');
-	newItem.attachments.push( { url:printurl,
-								title:newItem.title,
-								mimeType:"text/html",
-								snapshot:true } );
+	newItem.attachments.push({
+		url: printurl,
+		title: "Snapshot",
+		mimeType: "text/html",
+		snapshot: true
+	});
 
 	newItem.complete()
 }
@@ -150,6 +155,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Spitzname \"Kleiner Adolf\"",
 				"creators": [
 					{
 						"firstName": "Peter",
@@ -162,33 +168,31 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Café",
-					"Internet",
-					"Polizei",
-					"SZ",
-					"Süddeutsche Zeitung",
-					"Wohnung"
-				],
-				"seeAlso": [],
+				"date": "2011-11-16",
+				"ISSN": "0174-4917",
+				"abstractNote": "Als die Zwickauer Zelle in einem Kasseler Internet-Café Halit Y. hinrichtet, surft ein hessischer Verfassungsschützer dort im Netz. In seiner Wohnung findet die Polizei später Hinweise auf eine rechtsradikale Gesinnung - doch die Ermittlungen gegen den Mann werden eingestellt. Dabei bleiben viele Fragen offen.",
+				"language": "de",
+				"libraryCatalog": "Sueddeutsche.de",
+				"publicationTitle": "sueddeutsche.de",
+				"section": "politik",
+				"url": "http://www.sueddeutsche.de/politik/verdacht-gegen-hessischen-verfassungsschuetzer-spitzname-kleiner-adolf-1.1190178",
 				"attachments": [
 					{
-						"title": "Verdacht gegen hessischen Verfassungsschützer: Spitzname \"Kleiner Adolf\"",
+						"title": "Snapshot",
 						"mimeType": "text/html",
 						"snapshot": true
 					}
 				],
-				"url": "http://www.sueddeutsche.de/politik/verdacht-gegen-hessischen-verfassungsschuetzer-spitzname-kleiner-adolf-1.1190178",
-				"title": "Verdacht gegen hessischen Verfassungsschützer: Spitzname \"Kleiner Adolf\"",
-				"abstractNote": "Als die Zwickauer Zelle in einem Kasseler Internet-Café Halit Y. hinrichtet, surft ein hessischer Verfassungsschützer dort im Netz. In seiner Wohnung findet die Polizei später Hinweise auf eine rechtsradikale Gesinnung - doch die Ermittlungen gegen den Mann werden eingestellt. Dabei bleiben viele Fragen offen.",
-				"date": "16. November 2011",
-				"section": "politik",
-				"publicationTitle": "sueddeutsche.de",
-				"ISSN": "0174-4917",
-				"language": "de",
-				"libraryCatalog": "Sueddeutsche.de",
-				"shortTitle": "Verdacht gegen hessischen Verfassungsschützer"
+				"tags": [
+					"Internet",
+					"Politik",
+					"Polizei",
+					"SZ",
+					"Süddeutsche Zeitung",
+					"rechter Terror"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},

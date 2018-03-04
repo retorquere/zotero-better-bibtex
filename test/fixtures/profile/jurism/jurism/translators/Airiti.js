@@ -465,7 +465,8 @@ var testCases = [
 				"publicationTitle": "品質學報",
 				"volume": "19",
 				"date": "February 2012",
-				"pages": "1-20"
+				"pages": "1-20",
+				"ISSN": "1022-0690"
 			}
 		]
 	}

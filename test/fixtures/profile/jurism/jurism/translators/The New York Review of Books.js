@@ -1,709 +1,120 @@
 {
 	"translatorID": "4c164cc8-be7b-4d02-bfbf-37a5622dfd56",
 	"label": "The New York Review of Books",
-	"creator": "Simon Kornblith, Avram Lyon",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://www\\.nybooks\\.com/",
-	"minVersion": "1.0.0b3.r1",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2014-03-12 21:39:50"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-07-02 14:40:20"
 }
 
-/*********************** BEGIN FRAMEWORK ***********************/
-/**
-    Copyright (c) 2010-2013, Erik Hetzner
+/*
+	***** BEGIN LICENSE BLOCK *****
 
-    This program is free software: you can redistribute it and/or
-    modify it under the terms of the GNU Affero General Public License
-    as published by the Free Software Foundation, either version 3 of
-    the License, or (at your option) any later version.
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
 
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-    Affero General Public License for more details.
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-    You should have received a copy of the GNU Affero General Public
-    License along with this program.  If not, see
-    <http://www.gnu.org/licenses/>.
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
-
-/**
- * Flatten a nested array; e.g., [[1], [2,3]] -> [1,2,3]
- */
-function flatten(a) {
-    var retval = new Array();
-    for (var i in a) {
-        var entry = a[i];
-        if (entry instanceof Array) {
-            retval = retval.concat(flatten(entry));
-        } else {
-            retval.push(entry);
-        }
-    }
-    return retval;
-}
-
-var FW = {
-    _scrapers : new Array()
-};
-
-FW._Base = function () {
-    this.callHook = function (hookName, item, doc, url) {
-        if (typeof this['hooks'] === 'object') {
-            var hook = this['hooks'][hookName];
-            if (typeof hook === 'function') {
-                hook(item, doc, url);
-            }
-        }
-    };
-
-    this.evaluateThing = function(val, doc, url) {
-        var valtype = typeof val;
-        if (valtype === 'object') {
-            if (val instanceof Array) {
-                /* map over each array val */
-                /* this.evaluate gets out of scope */
-                var parentEval = this.evaluateThing;
-                var retval = val.map ( function(i) { return parentEval (i, doc, url); } );
-                return flatten(retval);
-            } else {
-                return val.evaluate(doc, url);
-            }
-        } else if (valtype === 'function') {
-            return val(doc, url);
-        } else {
-            return val;
-        }
-    };
-
-    /*
-     * makeItems is the function that does the work of making an item.
-     * doc: the doc tree for the item
-     * url: the url for the item
-     * attachments ...
-     * eachItem: a function to be called for each item made, with the arguments (doc, url, ...)
-     * ret: the function to call when you are done, with no args
-     */
-    this.makeItems = function (doc, url, attachments, eachItem, ret) {
-        ret();
-    }
-
-};
-
-FW.Scraper = function (init) { 
-    FW._scrapers.push(new FW._Scraper(init));
-};
-
-FW._Scraper = function (init) {
-    for (x in init) {
-        this[x] = init[x];
-    }
-
-    this._singleFieldNames = [
-        "abstractNote",
-        "applicationNumber",
-        "archive",
-        "archiveLocation",
-        "artworkMedium",
-        "artworkSize",
-        "assignee",
-        "audioFileType",
-        "audioRecordingType",
-        "billNumber",
-        "blogTitle",
-        "bookTitle",
-        "callNumber",
-        "caseName",
-        "code",
-        "codeNumber",
-        "codePages",
-        "codeVolume",
-        "committee",
-        "company",
-        "conferenceName",
-        "country",
-        "court",
-        "date",
-        "dateDecided",
-        "dateEnacted",
-        "dictionaryTitle",
-        "distributor",
-        "docketNumber",
-        "documentNumber",
-        "DOI",
-        "edition",
-        "encyclopediaTitle",
-        "episodeNumber",
-        "extra",
-        "filingDate",
-        "firstPage",
-        "forumTitle",
-        "genre",
-        "history",
-        "institution",
-        "interviewMedium",
-        "ISBN",
-        "ISSN",
-        "issue",
-        "issueDate",
-        "issuingAuthority",
-        "journalAbbreviation",
-        "label",
-        "language",
-        "legalStatus",
-        "legislativeBody",
-        "letterType",
-        "libraryCatalog",
-        "manuscriptType",
-        "mapType",
-        "medium",
-        "meetingName",
-        "nameOfAct",
-        "network",
-        "number",
-        "numberOfVolumes",
-        "numPages",
-        "pages",
-        "patentNumber",
-        "place",
-        "postType",
-        "presentationType",
-        "priorityNumbers",
-        "proceedingsTitle",
-        "programTitle",
-        "programmingLanguage",
-        "publicLawNumber",
-        "publicationTitle",
-        "publisher",
-        "references",
-        "reportNumber",
-        "reportType",
-        "reporter",
-        "reporterVolume",
-        "rights",
-        "runningTime",
-        "scale",
-        "section",
-        "series",
-        "seriesNumber",
-        "seriesText",
-        "seriesTitle",
-        "session",
-        "shortTitle",
-        "studio",
-        "subject",
-        "system",
-        "thesisType",
-        "title",
-        "type",
-        "university",
-        "url",
-        "versionNumber",
-        "videoRecordingType",
-        "volume",
-        "websiteTitle",
-        "websiteType" ];
-    
-    this._makeAttachments = function(doc, url, config, item) {
-        if (config instanceof Array) {
-            config.forEach(function (child) { this._makeAttachments(doc, url, child, item); }, this);
-        } else if (typeof config === 'object') {
-            /* plural or singual */
-            var urlsFilter = config["urls"] || config["url"];
-            var typesFilter = config["types"] || config["type"];
-            var titlesFilter = config["titles"] || config["title"];
-            var snapshotsFilter = config["snapshots"] || config["snapshot"];
-
-            var attachUrls = this.evaluateThing(urlsFilter, doc, url);
-            var attachTitles = this.evaluateThing(titlesFilter, doc, url);
-            var attachTypes = this.evaluateThing(typesFilter, doc, url);
-            var attachSnapshots = this.evaluateThing(snapshotsFilter, doc, url);
-
-            if (!(attachUrls instanceof Array)) {
-                attachUrls = [attachUrls];
-            }
-            for (var k in attachUrls) {
-                var attachUrl = attachUrls[k];
-                var attachType;
-                var attachTitle;
-                var attachSnapshot;
-                if (attachTypes instanceof Array) { attachType = attachTypes[k]; }
-                else { attachType = attachTypes; }
-
-                if (attachTitles instanceof Array) { attachTitle = attachTitles[k]; }
-                else { attachTitle = attachTitles; }
-
-                if (attachSnapshots instanceof Array) { attachSnapshot = attachSnapshots[k]; }
-                else { attachSnapshot = attachSnapshots; }
-
-                item["attachments"].push({ url      : attachUrl,
-                                           title    : attachTitle,
-                                           mimeType : attachType,
-                                           snapshot : attachSnapshot });
-            }
-        }
-    };
-
-    this.makeItems = function (doc, url, ignore, eachItem, ret) {
-        var item = new Zotero.Item(this.itemType);
-        item.url = url;
-        for (var i in this._singleFieldNames) {
-            var field = this._singleFieldNames[i];
-            if (this[field]) {
-                var fieldVal = this.evaluateThing(this[field], doc, url);
-                if (fieldVal instanceof Array) {
-                    item[field] = fieldVal[0];
-                } else {
-                    item[field] = fieldVal;
-                }
-            }
-        }
-        var multiFields = ["creators", "tags"];
-        for (var j in multiFields) {
-            var key = multiFields[j];
-            var val = this.evaluateThing(this[key], doc, url);
-            if (val) {
-                for (var k in val) {
-                    item[key].push(val[k]);
-                }
-            }
-        }
-        this._makeAttachments(doc, url, this["attachments"], item);
-        eachItem(item, this, doc, url);
-        ret();
-    };
-};
-
-FW._Scraper.prototype = new FW._Base;
-
-FW.MultiScraper = function (init) { 
-    FW._scrapers.push(new FW._MultiScraper(init));
-};
-
-FW._MultiScraper = function (init) {
-    for (x in init) {
-        this[x] = init[x];
-    }
-
-    this._mkSelectItems = function(titles, urls) {
-        var items = new Object;
-        for (var i in titles) {
-            items[urls[i]] = titles[i];
-        }
-        return items;
-    };
-
-    this._selectItems = function(titles, urls, callback) {
-        var items = new Array();
-	Zotero.selectItems(this._mkSelectItems(titles, urls), function (chosen) {
-	    for (var j in chosen) {
-		items.push(j);
-	    }
-	    callback(items);
-	});
-    };
-
-    this._mkAttachments = function(doc, url, urls) {
-        var attachmentsArray = this.evaluateThing(this['attachments'], doc, url);
-        var attachmentsDict = new Object();
-        if (attachmentsArray) {
-            for (var i in urls) {
-                attachmentsDict[urls[i]] = attachmentsArray[i];
-            }
-        }
-        return attachmentsDict;
-    };
-
-    /* This logic is very similar to that used by _makeAttachments in
-     * a normal scraper, but abstracting it out would not achieve much
-     * and would complicate it. */
-    this._makeChoices = function(config, doc, url, choiceTitles, choiceUrls) {
-        if (config instanceof Array) {
-            config.forEach(function (child) { this._makeTitlesUrls(child, doc, url, choiceTitles, choiceUrls); }, this);
-        } else if (typeof config === 'object') {
-            /* plural or singual */
-            var urlsFilter = config["urls"] || config["url"];
-            var titlesFilter = config["titles"] || config["title"];
-
-            var urls = this.evaluateThing(urlsFilter, doc, url);
-            var titles = this.evaluateThing(titlesFilter, doc, url);
-
-            var titlesIsArray = (titles instanceof Array);
-            if (!(urls instanceof Array)) {
-                urls = [urls];
-            }
-            for (var k in urls) {
-                var myUrl = urls[k];
-                var myTitle;
-                if (titlesIsArray) { myTitle = titles[k]; }
-                else { myTitle = titles; }
-                choiceUrls.push(myUrl);
-                choiceTitles.push(myTitle);
-            }
-        }
-    };
-
-    this.makeItems = function(doc, url, ignore, eachItem, ret) {
-        if (this.beforeFilter) {
-            var newurl = this.beforeFilter(doc, url);
-            if (newurl != url) {
-                this.makeItems(doc, newurl, ignore, eachItem, ret);
-                return;
-            }
-        }
-        var titles = [];
-        var urls = [];
-        this._makeChoices(this["choices"], doc, url, titles, urls);
-        var attachments = this._mkAttachments(doc, url, urls);
-        
-	var parentItemTrans = this.itemTrans;
-	this._selectItems(titles, urls, function (itemsToUse) {
-	    if(!itemsToUse) {
-		ret();
-	    } else {
-	        var cb = function (doc1) {
-		    var url1 = doc1.documentURI;
-		    var itemTrans = parentItemTrans;
-		    if (itemTrans === undefined) {
-			itemTrans = FW.getScraper(doc1, url1);
-		    }
-		    if (itemTrans === undefined) {
-			/* nothing to do */
-		    } else {
-			itemTrans.makeItems(doc1, url1, attachments[url1],
-                                            eachItem, function() {});
-		    }
-		};
-	        Zotero.Utilities.processDocuments(itemsToUse, cb, ret);
-	    }
-	});
-    };
-};
-
-FW._MultiScraper.prototype = new FW._Base;
-
-FW.WebDelegateTranslator = function (init) { 
-    return new FW._WebDelegateTranslator(init);
-};
-
-FW._WebDelegateTranslator = function (init) {
-    for (x in init) {
-        this[x] = init[x];
-    }
-    this.makeItems = function(doc, url, attachments, eachItem, ret) {
-        // need for scoping
-        var parentThis = this;
-
-        var translator = Zotero.loadTranslator("web");
-        translator.setHandler("itemDone", function(obj, item) { 
-            eachItem(item, parentThis, doc, url);
-        });
-        translator.setDocument(doc);
-
-        if (this.translatorId) {
-            translator.setTranslator(this.translatorId);
-            translator.translate();
-        } else {
-            translator.setHandler("translators", function(obj, translators) {
-                if (translators.length) {
-                    translator.setTranslator(translators[0]);
-                    translator.translate();
-                }
-            });
-            translator.getTranslators();
-        }
-        ret();
-    };
-};
-
-FW._WebDelegateTranslator.prototype = new FW._Base;
-
-FW._StringMagic = function () {
-    this._filters = new Array();
-
-    this.addFilter = function(filter) {
-        this._filters.push(filter);
-        return this;
-    };
-
-    this.split = function(re) {
-        return this.addFilter(function(s) {
-            return s.split(re).filter(function(e) { return (e != ""); });
-        });
-    };
-
-    this.replace = function(s1, s2, flags) {
-        return this.addFilter(function(s) {
-            if (s.match(s1)) {
-                return s.replace(s1, s2, flags);
-            } else {
-                return s;
-            }
-        });
-    };
-
-    this.prepend = function(prefix) {
-        return this.replace(/^/, prefix);
-    };
-
-    this.append = function(postfix) {
-        return this.replace(/$/, postfix);
-    };
-
-    this.remove = function(toStrip, flags) {
-        return this.replace(toStrip, '', flags);
-    };
-
-    this.trim = function() {
-        return this.addFilter(function(s) { return Zotero.Utilities.trim(s); });
-    };
-
-    this.trimInternal = function() {
-        return this.addFilter(function(s) { return Zotero.Utilities.trimInternal(s); });
-    };
-
-    this.match = function(re, group) {
-        if (!group) group = 0;
-        return this.addFilter(function(s) { 
-                                  var m = s.match(re);
-                                  if (m === undefined || m === null) { return undefined; }
-                                  else { return m[group]; } 
-                              });
-    };
-
-    this.cleanAuthor = function(type, useComma) {
-        return this.addFilter(function(s) { return Zotero.Utilities.cleanAuthor(s, type, useComma); });
-    };
-
-    this.key = function(field) {
-        return this.addFilter(function(n) { return n[field]; });
-    };
-
-    this.capitalizeTitle = function() {
-        return this.addFilter(function(s) { return Zotero.Utilities.capitalizeTitle(s); });
-    };
-
-    this.unescapeHTML = function() {
-        return this.addFilter(function(s) { return Zotero.Utilities.unescapeHTML(s); });
-    };
-
-    this.unescape = function() {
-        return this.addFilter(function(s) { return unescape(s); });
-    };
-
-    this._applyFilters = function(a, doc1) {
-        for (i in this._filters) {
-            a = flatten(a);
-            /* remove undefined or null array entries */
-            a = a.filter(function(x) { return ((x !== undefined) && (x !== null)); });
-            for (var j = 0 ; j < a.length ; j++) {
-                try {
-                    if ((a[j] === undefined) || (a[j] === null)) { continue; }
-                    else { a[j] = this._filters[i](a[j], doc1); }
-                } catch (x) {
-                    a[j] = undefined;
-                    Zotero.debug("Caught exception " + x + "on filter: " + this._filters[i]);
-                }
-            }
-            /* remove undefined or null array entries */
-            /* need this twice because they could have become undefined or null along the way */
-            a = a.filter(function(x) { return ((x !== undefined) && (x !== null)); });
-        }
-        return flatten(a);
-    };
-};
-
-FW.PageText = function () {
-    return new FW._PageText();
-};
-
-FW._PageText = function() {
-    this._filters = new Array();
-
-    this.evaluate = function (doc) {        
-        var a = [doc.documentElement.innerHTML];
-        a = this._applyFilters(a, doc);
-        if (a.length == 0) { return false; }
-        else { return a; }
-    };
-};
-
-FW._PageText.prototype = new FW._StringMagic();
-
-FW.Url = function () { return new FW._Url(); };
-
-FW._Url = function () {
-    this._filters = new Array();
-
-    this.evaluate = function (doc, url) {        
-        var a = [url];
-        a = this._applyFilters(a, doc);
-        if (a.length == 0) { return false; }
-        else { return a; }
-    };
-};
-
-FW._Url.prototype = new FW._StringMagic();
-
-FW.Xpath = function (xpathExpr) { return new FW._Xpath(xpathExpr); };
-
-FW._Xpath = function (_xpath) {
-    this._xpath = _xpath;
-    this._filters = new Array();
-
-    this.text = function() {
-        var filter = function(n) {
-            if (typeof n === 'object' && n.textContent) { return n.textContent; }
-            else { return n; }
-        };
-        this.addFilter(filter);
-        return this;
-    };
-
-    this.sub = function(xpath) {
-        var filter = function(n, doc) {
-            var result = doc.evaluate(xpath, n, null, XPathResult.ANY_TYPE, null);
-            if (result) {
-                return result.iterateNext();
-            } else {
-                return undefined;               
-            }
-        };
-        this.addFilter(filter);
-        return this;
-    };
-
-    this.evaluate = function (doc) {
-        var res = doc.evaluate(this._xpath, doc, null, XPathResult.ANY_TYPE, null);
-        var resultType = res.resultType;
-        var a = new Array();
-        if (resultType == XPathResult.STRING_TYPE) {
-            a.push(res.stringValue);
-        } else if (resultType == XPathResult.BOOLEAN_TYPE) {
-            a.push(res.booleanValue);
-        } else if (resultType == XPathResult.NUMBER_TYPE) {
-            a.push(res.numberValue);
-        } else if (resultType == XPathResult.ORDERED_NODE_ITERATOR_TYPE ||
-                   resultType == XPathResult.UNORDERED_NODE_ITERATOR_TYPE) {
-            var x;
-            while ((x = res.iterateNext())) { a.push(x); }
-        } 
-        a = this._applyFilters(a, doc);
-        if (a.length == 0) { return false; }
-        else { return a; }
-    };
-};
-
-FW._Xpath.prototype = new FW._StringMagic();
-
-FW.detectWeb = function (doc, url) {
-    for (var i in FW._scrapers) {
-	var scraper = FW._scrapers[i];
-	var itemType = scraper.evaluateThing(scraper['itemType'], doc, url);
-	var v = scraper.evaluateThing(scraper['detect'], doc, url);
-        if (v.length > 0 && v[0]) {
-	    return itemType;
-	}
-    }
-    return undefined;
-};
-
-FW.getScraper = function (doc, url) {
-    var itemType = FW.detectWeb(doc, url);
-    return FW._scrapers.filter(function(s) {
-        return (s.evaluateThing(s['itemType'], doc, url) == itemType)
-		&& (s.evaluateThing(s['detect'], doc, url));
-    })[0];
-};
-
-FW.doWeb = function (doc, url) {
-    var scraper = FW.getScraper(doc, url);
-    scraper.makeItems(doc, url, [], 
-                      function(item, scraper, doc, url) {
-                          scraper.callHook('scraperDone', item, doc, url);
-                          if (!item['title']) {
-                              item['title'] = "";
-                          }
-                          item.complete();
-                      },
-                      function() {
-                          Zotero.done();
-                      });
-    Zotero.wait();
-};
-
-/*********************** END FRAMEWORK ***********************/
 
 
 function detectWeb(doc, url) {
-	//don't stick to Google adsense pages
-	if ( !Zotero.Utilities.xpathText(doc,
-			'//body/*[not(self::iframe) and not(self::script) and not(self::style)]//*[normalize-space(text())]',
-			null, '').trim() ) return null;
-	return FW.detectWeb(doc, url);
+	if (url.indexOf('/articles/')>-1) {
+		return "magazineArticle";
+	} else if (url.indexOf('/daily/')>-1)  {
+		return "blogPost";
+	} else if (getSearchResults(doc, true)) {
+		return "multiple";
+	}
 }
-function doWeb(doc, url) { return FW.doWeb(doc, url); }
- 
-/** Articles */
-FW.Scraper({
-itemType         : 'magazineArticle',
-detect           : FW.Url().match(/\/articles\/archives\//),
-title            : FW.Xpath('//article[@class="article"]/header/h2').text().trim(), 
-creators         : FW.Xpath('//article[@class="article"]//div[@class="author"]').text().cleanAuthor("author"), 
-url		 : FW.Url().remove(/\?.*/),
-attachments      : [
-		{ url : FW.Url().remove(/\?.*/).append("?pagination=false"),
-		  type : "text/html",
-		  title : "NYRB Snapshot"
-		  }], 
-date             : FW.Xpath('//div[@class="details"]/time').text().remove(/Issue/).trim(), 
-abstractNote     : FW.Xpath('//div[contains(@class, "article-reviewed-items")]').text().trimInternal().prepend("Review of: "),
-publicationTitle : "The New York Review of Books",
-ISSN             : "0028-7504"
-});
 
-/** Blog Posts */
-FW.Scraper({
-itemType         : 'blogPost',
-detect           : FW.Url().match(/\/blogs\//),
-title            : FW.Xpath('//article[@class="blog_post"]//h2').text().trim(), 
-creators         : FW.Xpath('//article[@class="blog_post"]//div[@class="author"]').text().cleanAuthor("author"), 
-url		 : FW.Url().remove(/\?.*/),
-attachments      : [
-		{ url : FW.Url().remove(/\?.*/).append("?pagination=false"),
-		  type : "text/html",
-		  title : "NYRB Snapshot"
-		  }], 
-date             : FW.Xpath('//footer/time').text(), 
-blogTitle        : "NYRblog"
-});
- 
-/** Search results */
-FW.MultiScraper({
-itemType        : "multiple",
-detect          :  FW.Url().match(/\/search\/\?(.*)q=./),
-choices : { titles          : FW.Xpath('//table[@class="result-table"]/tbody/tr/td[2]/h3/a').text(),
-urls            : FW.Xpath('//table[@class="result-table"]/tbody/tr/td[2]/h3/a').key('href').text() }
-});
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//h2/a|//h3/a');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
 
-/** Issue ToC */
-FW.MultiScraper({
-itemType        : "multiple",
-detect          :  FW.Url().match(/\/issues\//),
-choices : { titles          : FW.Xpath('//div[@class="articles_list"]//article//h2/a').text(),
-urls            : FW.Xpath('//div[@class="articles_list"]//article//h2/a').key('href').text() }
-});/** BEGIN TEST CASES **/
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+	} else {
+		scrape(doc, url);
+	}
+}
+
+
+function scrape(doc, url) {
+	var type = (url.indexOf('/articles/')>-1) ? "magazineArticle" : "blogPost";
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
+	
+	translator.setHandler('itemDone', function (obj, item) {
+		if (type=="magazineArticle") {
+			item.ISSN = "0028-7504";
+		}
+		if (!item.date) {
+			var date = ZU.xpathText(doc, '//article//time');
+			if (date) {
+				item.date = ZU.strToISO(date.replace('Issue', ''));
+			}
+		}
+		item.complete();
+	});
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = type;
+		trans.doWeb(doc, url);
+	});
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.nybooks.com/articles/archives/2011/dec/08/zuccotti-park-what-future/",
+		"url": "http://www.nybooks.com/articles/2011/12/08/zuccotti-park-what-future/",
 		"items": [
 			{
 				"itemType": "magazineArticle",
+				"title": "Zuccotti Park: What Future?",
 				"creators": [
 					{
 						"firstName": "Michael",
@@ -711,37 +122,36 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2011-12-08",
+				"ISSN": "0028-7504",
+				"abstractNote": "For weeks, organizers had demonstrated enormous skill in keeping the occupation going, steadily expanding while outfoxing Mayor Bloomberg in his attempts to evict them. But what end did it serve if their status as ethical defenders of the 99 percent was being damaged? It was, after all, their major asset. The complicated logistics of holding the park (and providing food, clothing, and warmth for a floating army of hundreds) was draining resources and forcing the most talented activists to narrow their focus to matters of mere physical survival.",
+				"libraryCatalog": "www.nybooks.com",
+				"publicationTitle": "The New York Review of Books",
+				"shortTitle": "Zuccotti Park",
+				"url": "http://www.nybooks.com/articles/2011/12/08/zuccotti-park-what-future/",
 				"attachments": [
 					{
-						"title": "NYRB Snapshot",
-						"type": "text/html"
+						"title": "Snapshot"
 					}
 				],
-				"url": "http://www.nybooks.com/articles/archives/2011/dec/08/zuccotti-park-what-future/",
-				"date": "December 8, 2011",
-				"ISSN": "0028-7504",
-				"publicationTitle": "The New York Review of Books",
-				"title": "Zuccotti Park: What Future?",
-				"libraryCatalog": "The New York Review of Books",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Zuccotti Park"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.nybooks.com/search/?q=labor+union&origin=magazine",
+		"url": "http://www.nybooks.com/search/?s=labor+union",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.nybooks.com/blogs/nyrblog/2011/nov/16/americas-new-robber-barons/",
+		"url": "http://www.nybooks.com/daily/2011/11/16/americas-new-robber-barons/",
 		"items": [
 			{
 				"itemType": "blogPost",
+				"title": "America’s New Robber Barons",
 				"creators": [
 					{
 						"firstName": "Jeff",
@@ -749,28 +159,28 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2011-11-16",
+				"abstractNote": "With early Tuesday’s abrupt evacuation of Zuccotti Park, the City of New York has managed—for the moment—to dislodge protesters from Wall Street.  But it will be much harder to turn attention away from the financial excesses of the very rich—the problems that have given Occupy Wall Street such traction. Data on who is in the top 1 percent of earners further reinforces their point.  Here's why.\n\nThough the situation is often described as a problem of inequality, this is not quite the real concern.  The issue is runaway incomes at the very top—people earning a million and a half dollars or more according to the most recent data. And much of that runaway income comes from financial investments, stock options, and other special financial benefits available to the exceptionally rich—much of which is taxed at very low capital gains rates. Meanwhile, there has been something closer to stagnation for almost everyone else—including even for many people in the top 20 percent of earners.",
+				"blogTitle": "The New York Review of Books",
+				"url": "http://www.nybooks.com/daily/2011/11/16/americas-new-robber-barons/",
 				"attachments": [
 					{
-						"url": "http://www.nybooks.com/blogs/nyrblog/2011/nov/16/americas-new-robber-barons/?pagination=false",
-						"title": "NYRB Snapshot",
-						"type": "text/html"
+						"title": "Snapshot"
 					}
 				],
-				"url": "http://www.nybooks.com/blogs/nyrblog/2011/nov/16/americas-new-robber-barons/",
-				"blogTitle": "NYRblog",
-				"date": "November 16, 2011, 12:25 p.m.",
-				"title": "America’s New Robber Barons",
-				"libraryCatalog": "The New York Review of Books",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					"Occupy Wall Street",
+					"economics",
+					"inequality"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.nybooks.com/issues/2012/mar/22/",
+		"url": "http://www.nybooks.com/issues/2012/03/22/",
 		"items": "multiple"
 	}
 ]

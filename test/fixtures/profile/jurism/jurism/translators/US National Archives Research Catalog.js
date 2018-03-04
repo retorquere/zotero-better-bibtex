@@ -1,170 +1,166 @@
 {
 	"translatorID": "f8b5501a-1acc-4ffa-a0a5-594add5e6bd3",
 	"label": "US National Archives Research Catalog",
-	"creator": "Adam Crymble",
-	"target": "^https?://arcweb\\.archives\\.gov",
-	"minVersion": "1.0.0b4.r5",
+	"creator": "Philipp Zumstein",
+	"target": "^https?://catalog\\.archives\\.gov",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcs",
-	"lastUpdated": "2012-03-02 00:20:49"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-24 07:29:33"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
 
 function detectWeb(doc, url) {
-	if (doc.location.href.match("ShowArchivalDescriptions") || doc.location.href.match("ShowDODescriptions")) {
-		return "multiple";
-	} else if (doc.location.href.match("ShowFullRecord") && doc.location.href.match("showFullDescriptionTabs/details")) {
+	if (url.indexOf('/id/')>-1) {
 		return "book";
+		//something like archival material would be more appropriate...
+		//but for now we use this type to save some information
 	}
+	//multiples will not work easily because the API will then return
+	//somehow an empty json, thus we skipped this here.
 }
 
-//US National Archives. Code by Adam Crymble
-
-function associateData (newItem, dataTags, field, zoteroField) {
-	if (dataTags[field]) {
-		newItem[zoteroField] = dataTags[field];
-	}
-}
-
-function scrape(doc, url) {
-
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == 'x') return namespace; else return null;
-	} : null;	
-	
-	var dataTags = new Object();
-	var fieldTitle;
-	
-	var newItem = new Zotero.Item("book");
-	
-	var contents2 = doc.evaluate('//td[1]/div[@class="sT"]/p', doc, nsResolver, XPathResult.ANY_TYPE, null);
-
-	for (var i = 0; i < 3; i++) {
-		if (i == 0) {
-			newItem.title = contents2.iterateNext().textContent.replace(/^\s*|\s+$/g, '');
-		} else if (i == 1) {
-			newItem.extra = contents2.iterateNext().textContent.replace(/^\s*|\s+$/g, '');
-		} else if (i == 2) {
-			newItem.locInArchive= contents2.iterateNext().textContent.replace(/^\s*|\s+$/g, '');
-		}				
-	}
-	
-	var headers = doc.evaluate('//tbody/tr/th', doc, nsResolver, XPathResult.ANY_TYPE, null);
-	var contents = doc.evaluate('//body/div[@class="genPad"]', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-
-	var xPathCount = doc.evaluate('count (//tbody/tr/th)', doc, nsResolver, XPathResult.ANY_TYPE, null);
-	
-	var headersArray = new Array();
-	var oneHeader = '';
-
-	if (xPathCount.numberValue > 1) {
-		for (var i = 0; i < xPathCount.numberValue; i++) {
-			fieldTitle = headers.iterateNext().textContent;
-			headersArray.push(fieldTitle);
-		}
-	} else {
-		oneHeader = (headers.iterateNext().textContent);
-	}
-	
-	var contentsArray = new Array();
-	var j = 0;
-	
-	if (oneHeader.length<1) {
-	
-		for (var i = headersArray.length-1; i> -1; i--) {	 	
-		
-			var fieldIndex = contents.lastIndexOf(headersArray[i]);
-			var fieldIndexLength = headersArray[i].length;
-			
-			contentsArray.push(contents.substr(fieldIndex));
-			contents = contents.substr(0, fieldIndex);
-			fieldTitle = headersArray[i].replace(/\s+/g, '');
-			
-			dataTags[fieldTitle] = contentsArray[j].substr(fieldIndexLength).replace(/^\s*|\s+$/g, '');
-			
-			j++;
-		}
-	}
-	j = 0;
-	var k = 0;
-	var tagsContent = new Array();
-	
-	if (dataTags["IndexTerms:"]) {
-		if (dataTags["IndexTerms:"].match(/\n/)){
-			var tagsContent = dataTags["IndexTerms:"].split(/\n/);
-		} else {
-			if (!dataTags["IndexTerms:"].match("Subjects Represented in the Archival Material")) {
-				newItem.tags = dataTags["IndexTerms:"];
-			}
-		}
-		if (tagsContent.length > 1) {
-			for (var i = 0; i < tagsContent.length; i++) {
-		 			if (tagsContent[i].match(/\w/)) {
-			 			if (k == 1) {
-				 			newItem.tags[j] = tagsContent[i];
-			 				j++;
-			 			}
-			 			k = 1;
-		 			}
-	 			}
-		}
-	}
-
-	associateData (newItem, dataTags, "ProductionDate(s):", "date");
-	associateData (newItem, dataTags, "PartOf:", "series");
-	associateData (newItem, dataTags, "VariantControlNumber(s):", "callNumber");
-	
-	if (dataTags["Creator(s):"]) {
-		var author = dataTags["Creator(s):"];
-		if (author.match(", ")) {
-			var authors = author.split(", ");
-			author = authors[1] + " " + authors[0];
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(author, "author"));	
-		} else {
-			newItem.creators.push({lastName: author, creatorType: "creator"});			
-		}
-	}
-
-	newItem.complete();
-}
 
 function doWeb(doc, url) {
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == 'x') return namespace; else return null;
-	} : null;
+	var position = url.indexOf('/id/');
+	var id = url.substr(position+4);
+	var posturl = 'https://catalog.archives.gov/OpaAPI/iapi/v1/exports/noauth';
+	var postdata = 'export.format=json&export.type=full&export.what=metadata&naIds=' + id + '&rows=1';
 	
-	var articles = new Array();
-	
-	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
+	ZU.doPost(posturl, postdata, function(result) {
+		var parsed = JSON.parse(result);
+		var exporturl = parsed.opaResponse.exportFile.url;
+		ZU.doGet(exporturl, function(data) {
+			var json = JSON.parse(data);
+			var item = new Zotero.Item("book");
 			
-		if (doc.evaluate('//div[@class="sT"]/p/strong[@class="sFC"]/a', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext()) {
-			var titles = doc.evaluate('//div[@class="sT"]/p/strong[@class="sFC"]/a', doc, nsResolver, XPathResult.ANY_TYPE, null);
+			item.title = json[0].title;
+			var creators = json[0].creators;
+			for (var i=0; i<creators.length; i++) {
+				creators[i] = creators[i].replace('(Most Recent)', '');
+				if (creators[i].indexOf(", ")>-1) {
+					item.creators.push(ZU.cleanAuthor(creators[i], "author"));	
+				} else {
+					creators[i] = creators[i].replace(/\.? ?\d\d?\/\d\d?\/\d\d\d\d-\d\d?\/\d\d?\/\d\d\d\d/, '');
+					if (creators[i].length>255) {
+						creators[i] = creators[i].substr(0,251) + '...';
+					}
+					item.creators.push({'lastName': creators[i].trim(), 'creatorType': 'author', 'fieldMode': true});
+				}
+			}
+			if (json[0].productionDates) {
+				item.date = json[0].productionDates[0];
+			} else {
+				item.date = json[0].date;
+			}
+			if (json[0].from) {
+				item.series = json[0].from[0];
+			}
+			item.abstractNote = json[0].scopeAndContentNote;
+			item.archive = json[0].archivedCopies.contacts1[0];
+			item.archiveLocation = json[0].localIdentifier;
+			item.extra = 'National Archives Identifier: ' + json[0].arcIdentifier;
 			
-		} else if (doc.evaluate('//td[3]/div[@class="sT"]/p/strong[@class="sFC"]/a', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext()) {
-			var titles = doc.evaluate('//td[3]/div[@class="sT"]/p/strong[@class="sFC"]/a', doc, nsResolver, XPathResult.ANY_TYPE, null);
-			
-		}	
-		
-		
+			item.attachments.push({
+				document: doc,
+				title: "Snapshot"
+			});
 
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			items[next_title.href] = next_title.textContent;
-		}
-		items = Zotero.selectItems(items);
-		for (var i in items) {
-			articles.push(i);
-		}
-	} else {
-		articles = [url];
+			item.complete();
+		})
+	});
+	
+}
+
+/** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "web",
+		"url": "https://catalog.archives.gov/id/486076",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "The Struggle for Trade Union Democracy, December 1947",
+				"creators": [
+					{
+						"lastName": "Supreme Commander for the Allied Powers. Economic and Scientific Section. Director for Labor. Labor Division",
+						"creatorType": "author",
+						"fieldMode": true
+					}
+				],
+				"date": "1945 - 1952",
+				"archive": "National Archives at College Park - Textual Reference(RDT2)",
+				"extra": "National Archives Identifier: 486076",
+				"libraryCatalog": "US National Archives Research Catalog",
+				"series": "Series: Topical File, 1945 - 1952",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://catalog.archives.gov/id/5496901",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Alien Case File for Francisca Torre Vda De Garcia",
+				"creators": [
+					{
+						"lastName": "Department of Justice. Immigration and Naturalization Service",
+						"creatorType": "author",
+						"fieldMode": true
+					}
+				],
+				"date": "1944 - 2003",
+				"abstractNote": "This file consists of an alien case file for Francisca Torre Vda De Garcia.  Date of birth is listed as 10/10/1901.  Country is listed as Cuba.  Port of Entry is Miami, Florida.  Date of entry is 03/08/1973.  Father is listed as Zotero.  Mother is listed as Candita.  Alias name is listed as Francisca Torres.",
+				"archive": "National Archives at Kansas City[A](RM-KC[A])",
+				"archiveLocation": "A20229735/085-08-0653/Box 186",
+				"extra": "National Archives Identifier: 5496901",
+				"libraryCatalog": "US National Archives Research Catalog",
+				"series": "Series: Alien Case Files, 1944 - 2003",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
-	Zotero.Utilities.processDocuments(articles, scrape, function() {Zotero.done();});
-	Zotero.wait();
-}/** BEGIN TEST CASES **/
-var testCases = []
+]
 /** END TEST CASES **/

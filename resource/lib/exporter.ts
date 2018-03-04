@@ -1,5 +1,3 @@
-import { ITranslator } from '../../gen/translator'
-import { ISerializedItem } from '../serialized-item'
 declare const Translator: ITranslator
 
 declare const Zotero: any
@@ -12,17 +10,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
   public attachmentCounter = 0
   public caching: boolean
-  public jabref: any
-  public citekeys: any
+  public jabref: JabRef
 
   constructor() {
     this.preamble = {DeclarePrefChars: ''}
-
     this.caching = !Translator.options.exportFileData
-
     this.jabref = new JabRef()
-
-    this.citekeys = {}
   }
 
   public unique_chars(str) {
@@ -44,7 +37,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
 
-      this.jabref.citekeys[item.itemID] = item.citekey
+      this.jabref.citekeys.set(item.itemID, item.citekey)
 
       const cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options)
       if (cached) {
@@ -53,9 +46,9 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
-      // debug('pre-simplify', item)
+      debug('pre-simplify', item)
       Zotero.BetterBibTeX.simplifyFields(item)
-      // debug('post-simplify', item)
+      debug('post-simplify', item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
 

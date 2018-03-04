@@ -122,7 +122,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.hindawi.com/journals/ije/2015/210527/",
+		"url": "https://www.hindawi.com/journals/ije/2015/210527/",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -163,7 +163,7 @@ var testCases = [
 				"libraryCatalog": "www.hindawi.com",
 				"pages": "e210527",
 				"publicationTitle": "International Journal of Endocrinology",
-				"url": "http://www.hindawi.com/journals/ije/2015/210527/abs/",
+				"url": "https://www.hindawi.com/journals/ije/2015/210527/abs/",
 				"volume": "2015",
 				"attachments": [
 					{

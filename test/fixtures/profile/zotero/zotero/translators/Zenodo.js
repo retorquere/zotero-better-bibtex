@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-20 03:52:15"
+	"lastUpdated": "2018-01-22 21:59:40"
 }
 
 /*
@@ -37,7 +37,7 @@
 
 function detectWeb(doc, url) {
 	if (url.indexOf('/record/')>-1) {
-		var collections = ZU.xpath(doc, '//div[@itemscope]//span[@class="pull-right"]/span[contains(@class, "label-default")]');
+		var collections = ZU.xpath(doc, '//span[@class="pull-right"]/span[contains(@class, "label-default")]');
 		for (var i=0; i<collections.length; i++) {
 			var type = collections[i].textContent.toLowerCase();
 			//Z.debug(type)
@@ -105,7 +105,7 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var articles = new Array();
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
@@ -128,9 +128,9 @@ function scrape(doc, url) {
 	//Z.debug(schemaType)
 	// use CSL JSON translator
 	ZU.processDocuments(cslURL, function(newDoc){
-		var text = ZU.xpathText(newDoc, '//div[@itemscope]//h3/following-sibling::pre');
+		var text = ZU.xpathText(newDoc, '//h3/following-sibling::pre');
 		//Z.debug(text)
-		var type = text.match(/"type": "(.+?)"/)[1]
+		var type = text.match(/"type": "(.+?)"/)[1];
 		text = text.replace(/publisher_place/, "publisher-place");
 		text = text.replace(/container_title/, "container-title");
 
@@ -148,7 +148,8 @@ function scrape(doc, url) {
 				item.extra = "DOI: " + doi;
 			}
 			//workaround while we don't have proper item type for data
-			if (schemaType.indexOf("Dataset") != -1) {
+			//if (schemaType && schemaType.includes("Dataset")) {
+			if (ZU.xpathText(doc, '//span[@class="pull-right"]/span[contains(@class, "label-default") and contains(., "Dataset")]')) {
 				if (item.extra) {
 					item.extra += "\ntype: dataset";
 				}
@@ -159,10 +160,10 @@ function scrape(doc, url) {
 
 			//get PDF attachment, otherwise just snapshot.
 			if (pdfURL) {
-				item.attachments.push({url:pdfURL, title: "Zenodo Full Text PDF", mimeType: "application/pdf"})
+				item.attachments.push({url:pdfURL, title: "Zenodo Full Text PDF", mimeType: "application/pdf"});
 			}
 			else {
-				item.attachments.push({url:url, title: "Zenodo Snapshot", mimeType: "text/html"})
+				item.attachments.push({url:url, title: "Zenodo Snapshot", mimeType: "text/html"});
 			}
 			for (var i = 0; i<tags.length; i++) {
 				item.tags.push(tags[i].content);
@@ -175,6 +176,7 @@ function scrape(doc, url) {
 					item.creators[i].firstName = item.creators[i].lastName.replace(/.+?,\s*/, "");
 					item.creators[i].lastName = item.creators[i].lastName.replace(/,.+/, "");
 				}
+				delete item.creators[i].creatorTypeID;
 			}
 
 			//Don't use Zenodo as university for theses
@@ -189,7 +191,7 @@ function scrape(doc, url) {
 			var zoteroType = {
 				"figure": "artwork",
 	 			"article": "report"
-			}
+			};
 
 			if (item.itemType == "document" && zoteroType[type]) {
 				item.itemType = zoteroType[type];

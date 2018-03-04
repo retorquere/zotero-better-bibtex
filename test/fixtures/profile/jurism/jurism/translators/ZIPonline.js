@@ -180,7 +180,7 @@ var testCases = [
 				"journalAbbreviation": "ZIP",
 				"language": "de",
 				"libraryCatalog": "www.zip-online.de",
-				"pages": "112–119",
+				"pages": "112",
 				"publicationTitle": "Zeitschrift für Wirtschaftsrecht",
 				"url": "https://www.zip-online.de/heft-3-2017/zip-2017-112-die-wohnimmobilienkreditrichtlinie-und-ihre-umsetzung-in-deutschland/",
 				"attachments": [
@@ -215,7 +215,7 @@ var testCases = [
 				"journalAbbreviation": "ZIP",
 				"language": "de",
 				"libraryCatalog": "www.zip-online.de",
-				"pages": "1512–1519",
+				"pages": "1512",
 				"publicationTitle": "Zeitschrift für Wirtschaftsrecht",
 				"url": "https://www.zip-online.de/heft-23-24-1987/zip-1987-1512-massenentlassung-und-einhaltung-von-kuendigungsterminen/",
 				"attachments": [
@@ -242,7 +242,7 @@ var testCases = [
 				"court": "OLG Nürnberg",
 				"docketNumber": "8 U 2259/15",
 				"extra": "Urt.",
-				"firstPage": "19–21",
+				"firstPage": "19",
 				"language": "de",
 				"reporter": "ZIP",
 				"reporterVolume": "2017",

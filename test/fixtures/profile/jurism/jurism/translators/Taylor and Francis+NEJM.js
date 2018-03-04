@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-21 20:31:33"
+	"lastUpdated": "2017-06-29 05:39:46"
 }
 
 /*
@@ -36,48 +36,117 @@
 	***** END LICENSE BLOCK *****
 */
 
-function getTitles(doc) {
-	//Z.debug(ZU.xpath(doc, '//div[contains(@class="articleLink")]/a').length)
-	return ZU.xpath(doc, '//label[@class="resultTitle"]/a\
-						|//a[@class="entryTitle"]|//div[contains(@class, "articleLink")]/a');
-}
 
 function detectWeb(doc, url) {
-	if (url.match(/\/doi\/abs\/10\.|\/doi\/full\/10\.|\/doi\/figure\/10\./)) {
+	if (url.match(/\/doi\/(abs|full|figure)\/10\./)) {
 		return "journalArticle";
-	} else if(url.match(/\/action\/doSearch\?|\/toc\//) &&
-		getTitles(doc).length) {
+	} else if((url.indexOf('/action/doSearch?')>-1 || url.indexOf('/toc/')>-1) && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
 
 
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	//multiples in search results:
+	var rows = ZU.xpath(doc, '//article[contains(@class, "searchResultItem")]//a[contains(@href, "/doi/") and contains(@class, "ref")]');
+	if (rows.length==0) {
+		//multiples in toc view:
+		rows = ZU.xpath(doc, '//div[contains(@class, "articleLink") or contains(@class, "art_title")]/a[contains(@href, "/doi/") and contains(@class, "ref")]');
+	}
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		var titles = getTitles(doc);
-		var doi;
-		for(var i=0, n=titles.length; i<n; i++) {
-			doi = titles[i].href.match(/\/doi\/(?:abs|full|figure)\/(10\.[^?#]+)/);
-			if(doi) {
-				items[doi[1]] = titles[i].textContent;
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
 			}
-		}
-
-		Zotero.selectItems(items, function(selectedItems){
-			if(!selectedItems) return true;
-			
-			var dois = new Array();
-			for (var i in selectedItems) {
-				dois.push(i);
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
 			}
-			scrape(null, url,dois);
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		var doi = url.match(/\/doi\/(?:abs|full|figure)\/(10\.[^?#]+)/);
-		scrape(doc, url,[doi[1]]);
+		scrape(doc, url);
 	}
 }
+
+
+function scrape(doc, url) {
+	var match = url.match(/\/doi\/(?:abs|full|figure)\/(10\.[^?#]+)/);
+	var doi = match[1];
+
+	var baseUrl = url.match(/https?:\/\/[^\/]+/)[0];
+	var postUrl = baseUrl + '/action/downloadCitation';
+	var postBody = 	'downloadFileName=citation&' +
+					'direct=true&' +
+					'include=abs&' +
+					'doi=';
+	var risFormat = '&format=ris';
+	var bibtexFormat = '&format=bibtex';
+
+	ZU.doPost(postUrl, postBody + doi + bibtexFormat, function(text) {
+		var translator = Zotero.loadTranslator("import");
+		// Use BibTeX translator
+		translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
+		translator.setString(text);
+		translator.setHandler("itemDone", function(obj, item) {
+			// BibTeX content can have HTML entities (e.g. &amp;) in various fields
+			// We'll just try to unescape the most likely fields to contain these entities
+			// Note that RIS data is not always correct, so we avoid using it
+			var unescapeFields = ['title', 'publicationTitle', 'abstractNote'];
+			for(var i=0; i<unescapeFields.length; i++) {
+				if(item[unescapeFields[i]]) {
+					item[unescapeFields[i]] = ZU.unescapeHTML(item[unescapeFields[i]]);
+				}
+			}
+			
+			item.bookTitle = item.publicationTitle;
+
+			//unfortunately, bibtex is missing some data
+			//publisher, ISSN/ISBN
+			ZU.doPost(postUrl, postBody + doi + risFormat, function(text) {
+				// Y1 is online publication date
+				if (/^DA\s+-\s+/m.test(text)) {
+					text = text.replace(/^Y1(\s+-.*)/gm, '');
+				}
+				
+				risTrans = Zotero.loadTranslator("import");
+				risTrans.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
+				risTrans.setString(text);
+				risTrans.setHandler("itemDone", function(obj, risItem) {
+					if(!item.title) item.title = "<no title>";	//RIS title can be even worse, it actually says "null"
+					if(risItem.date) item.date = risItem.date; // More complete
+					item.publisher = risItem.publisher;
+					item.ISSN = risItem.ISSN;
+					item.ISBN = risItem.ISBN;
+					//clean up abstract removing Abstract:, Summary: or Abstract Summary:
+					if (item.abstractNote) item.abstractNote = item.abstractNote.replace(/^(Abstract)?\s*(Summary)?:?\s*/i, "");
+					if(item.title.toUpperCase() == item.title) {
+						item.title = ZU.capitalizeTitle(item.title, true);
+					}
+					finalizeItem(item, doc, doi, baseUrl);
+				});
+				risTrans.translate();
+			});
+		});
+		translator.translate();
+	});
+}
+
 
 function finalizeItem(item, doc, doi, baseUrl) {
 	var pdfurl = baseUrl + '/doi/pdf/';
@@ -89,7 +158,6 @@ function finalizeItem(item, doc, doi, baseUrl) {
 		item.tags.push(keywords[i].textContent);
 	}
 	
-
 	//add attachments
 	item.attachments = [{
 		title: 'Full Text PDF',
@@ -110,69 +178,6 @@ function finalizeItem(item, doc, doi, baseUrl) {
 	}
 
 	item.complete();
-}
-
-function scrape(doc, url, dois) {
-	var baseUrl = url.match(/https?:\/\/[^\/]+/)[0]
-	var postUrl = baseUrl + '/action/downloadCitation';
-	var postBody = 	'downloadFileName=citation&' +
-					'direct=true&' +
-					'include=abs&' +
-					'doi=';
-	var risFormat = '&format=ris';
-	var bibtexFormat = '&format=bibtex';
-
-	for(var i=0, n=dois.length; i<n; i++) {
-		(function(doi) {
-			ZU.doPost(postUrl, postBody + doi + bibtexFormat, function(text) {
-				var translator = Zotero.loadTranslator("import");
-				// Use BibTeX translator
-				translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
-				translator.setString(text);
-				translator.setHandler("itemDone", function(obj, item) {
-					// BibTeX content can have HTML entities (e.g. &amp;) in various fields
-					// We'll just try to unescape the most likely fields to contain these entities
-					// Note that RIS data is not always correct, so we avoid using it
-					var unescapeFields = ['title', 'publicationTitle', 'abstractNote'];
-					for(var i=0; i<unescapeFields.length; i++) {
-						if(item[unescapeFields[i]]) {
-							item[unescapeFields[i]] = ZU.unescapeHTML(item[unescapeFields[i]]);
-						}
-					}
-					
-					item.bookTitle = item.publicationTitle;
-
-					//unfortunately, bibtex is missing some data
-					//publisher, ISSN/ISBN
-					ZU.doPost(postUrl, postBody + doi + risFormat, function(text) {
-						// Y1 is online publication date
-						if (/^DA\s+-\s+/m.test(text)) {
-							text = text.replace(/^Y1(\s+-.*)/gm, '');
-						}
-						
-						risTrans = Zotero.loadTranslator("import");
-						risTrans.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
-						risTrans.setString(text);
-						risTrans.setHandler("itemDone", function(obj, risItem) {
-							if(!item.title) item.title = "<no title>";	//RIS title can be even worse, it actually says "null"
-							if(risItem.date) item.date = risItem.date; // More complete
-							item.publisher = risItem.publisher;
-							item.ISSN = risItem.ISSN;
-							item.ISBN = risItem.ISBN;
-							//clean up abstract removing Abstract:, Summary: or Abstract Summary:
-							if (item.abstractNote) item.abstractNote = item.abstractNote.replace(/^(Abstract)?\s*(Summary)?:?\s*/i, "");
-							if(item.title.toUpperCase() == item.title) {
-								item.title = ZU.capitalizeTitle(item.title, true);
-							}
-							finalizeItem(item, doc, doi, baseUrl);
-						});
-						risTrans.translate();
-					});
-				});
-				translator.translate();
-			});
-		})(dois[i]);
-	}
 }
 
 /** BEGIN TEST CASES **/

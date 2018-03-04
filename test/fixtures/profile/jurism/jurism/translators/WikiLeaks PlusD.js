@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-02-25 02:40:23"
+	"lastUpdated": "2017-06-17 20:49:34"
 }
 
 /*
@@ -125,7 +125,11 @@ var testCases = [
 				"reportNumber": "10SHANGHAI60_a",
 				"reportType": "Wikileaks Public Library of US Diplomacy",
 				"url": "https://search.wikileaks.org/plusd/cables/10SHANGHAI60_a.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "WikiLeaks PLUSD Snapshot"
+					}
+				],
 				"tags": [
 					"AE - United Arab Emirates",
 					"CH - China (Mainland)",
@@ -153,7 +157,11 @@ var testCases = [
 				"reportNumber": "1975DACCA00292_b",
 				"reportType": "Wikileaks Public Library of US Diplomacy",
 				"url": "https://search.wikileaks.org/plusd/cables/1975DACCA00292_b.html",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "WikiLeaks PLUSD Snapshot"
+					}
+				],
 				"tags": [
 					"AFSP - Administration--Post Administration",
 					"BG - Bangladesh"

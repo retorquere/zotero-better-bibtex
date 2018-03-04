@@ -143,11 +143,11 @@ export function parse(value, toplevel = true) {
     state.approximate = match.indexOf('~') >= 0
     state.uncertain = match.indexOf('?') >= 0
     return ''
-  })
+  }).replace(/\s+/g, ' ')
 
   // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
-  if (m = /^(-?[0-9]{3,})([-\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
+  if (m = /^(-?[0-9]{3,})([-\s\/\.])([0-9]{1,2})(\2([0-9]{1,2}))?$/.exec(exactish)) {
     const [ , _year, , _month, , _day ] = m
     const year = parseInt(_year)
     let month = parseInt(_month)
@@ -159,7 +159,7 @@ export function parse(value, toplevel = true) {
     if (is_valid_month(month, !day)) return seasonize(doubt({ type: 'date', year, month, day }, state))
   }
 
-  if (m = /^([0-9]{1,2})([-\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
+  if (m = /^([0-9]{1,2})([-\s\/\.])([0-9]{1,2})(\2([0-9]{3,}))$/.exec(exactish)) {
     const [ , _day, , _month, , _year ] = m
     const year = parseInt(_year)
     let month = parseInt(_month)
@@ -169,6 +169,22 @@ export function parse(value, toplevel = true) {
     if (is_valid_month(day, false) && !is_valid_month(month, false)) [day, month] = [month, day]
 
     if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month, day }, state))
+  }
+
+  if (m = /^([0-9]{1,2})[-\s\/\.]([0-9]{3,})$/.exec(exactish)) {
+    const [ , _month, _year ] = m
+    const month = parseInt(_month)
+    const year = parseInt(_year)
+
+    if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month }, state))
+  }
+
+  if (m = /^([0-9]{3,})[-\s\/\.]([0-9]{1,2})$/.exec(exactish)) {
+    const [ , _year, _month ] = m
+    const year = parseInt(_year)
+    const month = parseInt(_month)
+
+    if (is_valid_month(month, false)) return seasonize(doubt({ type: 'date', year, month }, state))
   }
 
   if (exactish.match(/^-?[0-9]+$/)) {

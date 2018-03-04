@@ -1,0 +1,14 @@
+{
+  "name": "zotero-better-bibtex-docs",
+  "version": "1.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prestart": "cp ../skin/better-bibtex.svg assets/img",
+    "start": "./nav.rb && jekyll serve"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {}
+}

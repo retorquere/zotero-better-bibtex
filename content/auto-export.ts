@@ -62,7 +62,6 @@ const scheduled = new Queue(
       }
 
       ae.status = 'done'
-      ae.updated = new Date()
       db.update(ae)
       debug('AutoExport.scheduled: completed', task, ae)
     }

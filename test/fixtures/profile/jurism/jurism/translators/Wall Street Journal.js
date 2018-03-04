@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-11-08 18:53:00"
+	"lastUpdated": "2017-05-23 21:42:48"
 }
 
 /*
@@ -86,6 +86,7 @@ function scrape(doc, url) {
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
 	translator.setHandler('itemDone', function (obj, item) {
 		item.ISSN = "0099-9660";
+		item.language = "en-US";
 		if (type=="newspaperArticle") {
 			item.publicationTitle = "Wall Street Journal";
 		}
@@ -117,7 +118,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.wsj.com/news/articles/SB10001424052970204517204577046222233016362",
+		"url": "https://www.wsj.com/news/articles/SB10001424052970204517204577046222233016362",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -132,10 +133,11 @@ var testCases = [
 				"date": "2011-11-19T05:01:00.000Z",
 				"ISSN": "0099-9660",
 				"abstractNote": "A profile of an Australian miner making $200,000 a year, published in The Wall Street Journal, led hundreds of people to ask how they could apply for such a job.",
+				"language": "en-US",
 				"libraryCatalog": "www.wsj.com",
 				"publicationTitle": "Wall Street Journal",
 				"section": "Careers",
-				"url": "http://www.wsj.com/articles/SB10001424052970204517204577046222233016362",
+				"url": "https://www.wsj.com/articles/SB10001424052970204517204577046222233016362",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -155,7 +157,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.wsj.com/news/articles/SB10001424052970203471004577144672783559392",
+		"url": "https://www.wsj.com/news/articles/SB10001424052970203471004577144672783559392",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -175,10 +177,11 @@ var testCases = [
 				"date": "2012-01-07T05:01:00.000Z",
 				"ISSN": "0099-9660",
 				"abstractNote": "An outspoken analyst who is embroiled in the Wall Street insider-trading investigation allegedly left threatening messages for two FBI agents.",
+				"language": "en-US",
 				"libraryCatalog": "www.wsj.com",
 				"publicationTitle": "Wall Street Journal",
 				"section": "Markets",
-				"url": "http://www.wsj.com/articles/SB10001424052970203471004577144672783559392",
+				"url": "https://www.wsj.com/articles/SB10001424052970203471004577144672783559392",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -192,7 +195,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://blogs.wsj.com/overheard/2012/01/06/the-ego-has-landed/",
+		"url": "https://blogs.wsj.com/overheard/2012/01/06/the-ego-has-landed/",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -207,7 +210,8 @@ var testCases = [
 				"date": "2012-01-06T21:22:12-05:00",
 				"abstractNote": "In their gut, most investors know a narcissistic CEO is cause for caution. But how do you prove that? A group of academics have come up with a possible solution.",
 				"blogTitle": "WSJ",
-				"url": "http://blogs.wsj.com/overheard/2012/01/06/the-ego-has-landed/",
+				"language": "en-US",
+				"url": "https://blogs.wsj.com/overheard/2012/01/06/the-ego-has-landed/",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -224,12 +228,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://online.wsj.com/search/term.html?KEYWORDS=argentina&mod=DNH_S",
+		"url": "https://www.wsj.com/search/term.html?KEYWORDS=argentina&mod=DNH_S",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://blogs.wsj.com/economics/2012/01/07/number-of-the-week-americans-cheaper-restaurant-bills/",
+		"url": "https://blogs.wsj.com/economics/2012/01/07/number-of-the-week-americans-cheaper-restaurant-bills/",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -244,8 +248,9 @@ var testCases = [
 				"date": "2012-01-07T10:00:55-05:00",
 				"abstractNote": "Americans spend less per visit to restaurants than most other major industrialized countries, according to data compiled by market research firm NPD Group.",
 				"blogTitle": "WSJ",
+				"language": "en-US",
 				"shortTitle": "Number of the Week",
-				"url": "http://blogs.wsj.com/economics/2012/01/07/number-of-the-week-americans-cheaper-restaurant-bills/",
+				"url": "https://blogs.wsj.com/economics/2012/01/07/number-of-the-week-americans-cheaper-restaurant-bills/",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -259,7 +264,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.wsj.com/articles/american-detained-in-north-korea-to-face-trial-next-sunday-1410053845",
+		"url": "https://www.wsj.com/articles/american-detained-in-north-korea-to-face-trial-next-sunday-1410053845",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -274,6 +279,7 @@ var testCases = [
 				"date": "2014-09-07T01:37:00.000Z",
 				"ISSN": "0099-9660",
 				"abstractNote": "Matthew Miller, one of three Americans detained by North Korea, will face trial next Sunday, the country's state media said.",
+				"language": "en-US",
 				"libraryCatalog": "www.wsj.com",
 				"publicationTitle": "Wall Street Journal",
 				"section": "World",

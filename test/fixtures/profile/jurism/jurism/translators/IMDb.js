@@ -1,23 +1,22 @@
 {
 	"translatorID": "a30274ac-d3d1-4977-80f4-5320613226ec",
 	"label": "IMDb",
-	"creator": "Avram Lyon",
+	"creator": "Philipp Zumstien",
 	"target": "^https?://www\\.imdb\\.com/",
-	"minVersion": "2.1",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2015-09-23 21:04:11"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-16 20:02:57"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	IMDB Translator
-	Copyright © 2011 Avram Lyon, ajlyon@gmail.com
-
+	Copyright © 2017 Philipp Zumstein
+	
 	This file is part of Zotero.
 
 	Zotero is free software: you can redistribute it and/or modify
@@ -36,100 +35,114 @@
 	***** END LICENSE BLOCK *****
 */
 
+
 function detectWeb(doc, url) {
-	if (url.match(/\/title\/tt\d+/)) {
+	if (url.indexOf('/title/tt')>-1) {
 		return "film";
-	} else if (url.match(/\/find\?/)) {
+	} else if (url.indexOf('/find?')>-1 && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
 
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//td[contains(@class, "result_text")]');
+	for (var i=0; i<rows.length; i++) {
+		var href = ZU.xpathText(rows[i], './a/@href');
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
 function doWeb(doc, url) {
-	var n = doc.documentElement.namespaceURI;
-	var ns = n ?
-	function (prefix) {
-		if (prefix == 'x') return n;
-		else return null;
-	} : null;
-
-	var ids = new Array();
 	if (detectWeb(doc, url) == "multiple") {
-		var results = doc.evaluate('//td[a[contains(@href,"/title/tt")]]', doc, ns, XPathResult.ANY_TYPE, null);
-		var items = {};
-		var result;
-		while (result = results.iterateNext()) {
-			var link = doc.evaluate('./a[contains(@href,"/title/tt")]', result, ns, XPathResult.ANY_TYPE, null).iterateNext();
-			var title = result.textContent;
-			//Zotero.debug(link.href);
-			var url = link.href.match(/\/title\/(tt\d+)/)[1];
-			items[url] = title;
-		}
-
-		Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				Zotero.done();
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
-				ids.push(i);
+				articles.push(i);
 			}
-			apiFetch(ids);
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		var id = url.match(/\/title\/(tt\d+)/)[1];
-		apiFetch([id]);
+		scrape(doc, url);
 	}
 }
 
-// Takes IMDB IDs and makes items
-function apiFetch(ids) {
-	var apiRoot = "http://omdbapi.com/?i="; //&tomatoes=true removed as it often breaks the API
-	for (i in ids) ids[i] = apiRoot + ids[i];
-	Zotero.Utilities.doGet(ids, parseIMDBapi);
-}
 
-// parse result from imdbapi.com
-// should be json
-function parseIMDBapi(text, response, url) {
-	//Zotero.debug(url);
-	//Zotero.debug(text);
-	try {
-		var obj = JSON.parse(text);
-	} catch (e) {
-		Zotero.debug("JSON parse error");
-		throw e;
-	}
-	var item = new Zotero.Item("film");
-	item.title = obj.Title;
-	item.date = obj.Released ? obj.Released : obj.Year;
-	item.genre = obj.Genre;
-	if (obj.Director) item = addCreator(item, obj.Director, "director");
-	if (obj.Writer) item = addCreator(item, obj.Writer, "scriptwriter");
-	if (obj.Actors) item = addCreator(item, obj.Actors, "contributor");
-	item.abstractNote = obj.Plot;
-	item.attachments.push({
-		url: obj.Poster,
-		title: "Poster"
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
+	
+	translator.setHandler('itemDone', function (obj, item) {
+		var titleWrapper = ZU.xpath(doc, '//div[contains(@class, "title_wrapper")]');
+		var title = ZU.xpathText(titleWrapper, './h1/text()[1]');
+		if (title) {
+			item.title = title;
+		}
+		item.date = ZU.xpathText(titleWrapper, './/meta[@itemprop="datePublished"]/@content');
+		item.runningTime = ZU.xpathText(titleWrapper, './/time[@itemprop="duration"]');
+		item.genre = ZU.xpathText(titleWrapper, './/span[@itemprop="genre"]');
+		var origTitle = ZU.xpathText(titleWrapper, './/div[contains(@class, "originalTitle")]/text()[1]');
+		if (origTitle) {
+			addExtra(item, "original-title: "+origTitle);
+		}
+		var pageId = ZU.xpathText(doc, '//meta[@property="pageId"]/@content');
+		if (pageId) {
+			addExtra(item, "IMDb ID: "+pageId);
+		}
+		
+		var summary = ZU.xpath(doc, '//div[contains(@class, "plot_summary_wrapper")]');
+		var creatorsMapping = {
+			"director": "director",
+			"creator": "scriptwriter",
+			"actors": "contributor"
+		};
+		for (var role in creatorsMapping) {
+			var creators = ZU.xpath(summary, './/span[@itemprop="'+role+'"]//span[@itemprop="name"]');
+			for (var i=0; i<creators.length; i++) {
+				item.creators.push(ZU.cleanAuthor(creators[i].textContent, creatorsMapping[role]));
+			}
+		}
+		
+		//the keywords in the meta tags are very generic
+		item.tags = [];
+		var tags = ZU.xpath(doc, '//div[@itemprop="keywords"]/a');
+		for (var i=0; i<tags.length; i++) {
+			item.tags.push(tags[i].textContent);
+		}
+		
+		item.complete();
+		
 	});
-	item.runningTime = obj.Runtime;
-	item.extra = "IMDB ID: " + obj.imdbID;
-	item.extra += "\nIMDB Rating: " + obj.imdbRating + " (" + obj.imdbVotes + " votes)";
-	//rotten tomatoes ranking break the API frequently
-	//item.extra += "; Rotten Tomatoes: " + obj.tomatoRating + " (" + obj.tomatoReviews + " reviews " + " " + obj.tomatoFresh + " fresh, " + obj.tomatoRotten + " rotten)" + ", Tomato Meter: " + obj.tomatoMeter;
-	item.complete();
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "film";
+		trans.doWeb(doc, url);
+	});
 }
 
-function addCreator(item, creator, type) {
-	if (creator == "N/A") {
-		Zotero.debug("Discarding " + type + "=" + creator);
-		return item;
+
+function addExtra(item, value) {
+	if(!item.extra) {
+		item.extra = '';
+	} else {
+		item.extra += "\n";
 	}
-	var broken = creator.split(",");
-	for (i in broken) {
-		item.creators.push(Zotero.Utilities.cleanAuthor(broken[i], type));
-	}
-	return item;
+	item.extra += value;
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -156,38 +169,40 @@ var testCases = [
 						"creatorType": "scriptwriter"
 					},
 					{
-						"firstName": "Héctor",
-						"lastName": "Alterio",
+						"firstName": "Norma",
+						"lastName": "Aleandro",
 						"creatorType": "contributor"
 					},
 					{
-						"firstName": "Norma",
-						"lastName": "Aleandro",
+						"firstName": "Héctor",
+						"lastName": "Alterio",
 						"creatorType": "contributor"
 					},
 					{
 						"firstName": "Chunchuna",
 						"lastName": "Villafañe",
 						"creatorType": "contributor"
-					},
-					{
-						"firstName": "Hugo",
-						"lastName": "Arana",
-						"creatorType": "contributor"
 					}
 				],
-				"date": "08 Nov 1985",
-				"abstractNote": "After the end of the Dirty War, a high school teacher sets out to find out who the mother of her adopted daughter is.",
-				"extra": "IMDB ID: tt0089276\nIMDB Rating: 7.8 (5,300 votes)",
+				"date": "1985-11-08",
+				"abstractNote": "Directed by Luis Puenzo.  With Norma Aleandro, Héctor Alterio, Chunchuna Villafañe, Hugo Arana. After the end of the Dirty War, a high school teacher sets out to find out who the mother of her adopted daughter is.",
+				"extra": "original-title: La historia oficial\nIMDb ID: tt0089276",
 				"genre": "Drama, History, War",
-				"libraryCatalog": "IMDb",
-				"runningTime": "112 min",
+				"libraryCatalog": "www.imdb.com",
+				"runningTime": "1h 52min",
+				"url": "http://www.imdb.com/title/tt0089276/",
 				"attachments": [
 					{
-						"title": "Poster"
+						"title": "Snapshot"
 					}
 				],
-				"tags": [],
+				"tags": [
+					" adopted daughter",
+					" high school teacher",
+					" lawyer",
+					" professor",
+					" school"
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -235,25 +250,27 @@ var testCases = [
 						"firstName": "Pekka",
 						"lastName": "Autiovuori",
 						"creatorType": "contributor"
-					},
-					{
-						"firstName": "Kirsti",
-						"lastName": "Wallasvaara",
-						"creatorType": "contributor"
 					}
 				],
-				"date": "21 Oct 1966",
-				"abstractNote": "Depiction of four urban youths and their excursion to the countryside.",
-				"extra": "IMDB ID: tt0060613\nIMDB Rating: 7.0 (466 votes)",
+				"date": "1967-08-18",
+				"abstractNote": "Directed by Mikko Niskanen.  With Eero Melasniemi, Kristiina Halkola, Pekka Autiovuori, Kirsti Wallasvaara. Depiction of four urban youths and their excursion to the countryside.",
+				"extra": "original-title: Käpy selän alla\nIMDb ID: tt0060613",
 				"genre": "Drama",
-				"libraryCatalog": "IMDb",
-				"runningTime": "89 min",
+				"libraryCatalog": "www.imdb.com",
+				"runningTime": "1h 29min",
+				"url": "http://www.imdb.com/title/tt0060613/",
 				"attachments": [
 					{
-						"title": "Poster"
+						"title": "Snapshot"
 					}
 				],
-				"tags": [],
+				"tags": [
+					" countryside",
+					" dance",
+					" drunk",
+					" topless",
+					" youth"
+				],
 				"notes": [],
 				"seeAlso": []
 			}

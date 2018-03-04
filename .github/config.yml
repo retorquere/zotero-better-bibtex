@@ -1,0 +1,8 @@
+---
+label-gun:
+
+  ignore:
+  - chatter
+  - deferred
+  reopen:
+  - *

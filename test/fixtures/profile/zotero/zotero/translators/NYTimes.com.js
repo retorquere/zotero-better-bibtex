@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-17 18:44:24"
+	"lastUpdated": "2017-07-09 03:45:18"
 }
 
 /*
@@ -35,6 +35,8 @@
 	***** END LICENSE BLOCK *****
 */
 
+// attr()/text()
+function attr(doc,selector,attr,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.getAttribute(attr):null}var elem=doc.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(doc,selector,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.textContent:null}var elem=doc.querySelector(selector);return elem?elem.textContent:null}
 
 function detectWeb(doc, url) {
 	//we use another function name to avoid confusions with the
@@ -72,6 +74,8 @@ function scrape(doc, url) {
 		item.language = ZU.xpathText(doc, '//meta[@itemprop="inLanguage"]/@content') || "en-US";
 		if (item.date) {
 			item.date = ZU.strToISO(item.date);
+		} else {
+			item.date = doc.querySelector('time').getAttribute('datetime');
 		}
 		if (item.itemType == "blogPost") {
 			item.blogTitle = ZU.xpathText(doc, '//meta[@property="og:site_name"]/@content');
@@ -80,9 +84,10 @@ function scrape(doc, url) {
 			item.ISSN = "0362-4331";
 		}
 		//Multiple authors are just put into the same Metadata field
-		//we have to split this here
-		var authors = ZU.xpathText(doc, '//meta[@name="author"]/@content');
+		var authors = attr(doc,'meta[name="author"]','content') || text(doc, 'span[class^="Byline-bylineAuthor--"]');
 		if (authors) {
+			if (authors == authors.toUpperCase()) // convert to title case if all caps
+				authors = ZU.capitalizeTitle(authors, true);
 			item.creators = [];
 			var authorsList = authors.split(/,|\band\b/);
 			for (var i=0; i<authorsList.length; i++) {
@@ -90,14 +95,49 @@ function scrape(doc, url) {
 			}
 		}
 		item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href') || url;
-		var pdfurl = ZU.xpathText(doc, '//div[@id="articleAccess"]//span[@class="downloadPDF"]/a[contains(@href, "/pdf")]/@href');
-		if (pdfurl) {
-			item.attachments.push({
-				url: pdfurl,
-				title: "NYTimes Archive PDF"
-			});
+		item.libraryCatalog = "NYTimes.com";
+		// Convert all caps title of NYT archive pages to title case
+		if (item.title == item.title.toUpperCase())
+				item.title = ZU.capitalizeTitle(item.title, true);
+		// Only force all caps to title case when all tags are all caps
+		var allcaps = true;
+		for (i=0; i < item.tags.length; i++) {
+			if (item.tags[i] != item.tags[i].toUpperCase()) {
+				allcaps = false;
+				break;
+			}
 		}
-		item.complete();
+		if (allcaps) {
+			for (i=0; i < item.tags.length; i++) {
+				item.tags[i] = ZU.capitalizeTitle(item.tags[i], true);
+			}
+		}
+		// PDF attachments are in subURL with key & signature
+		var pdfurl = ZU.xpathText(doc, '//div[@id="articleAccess"]//span[@class="downloadPDF"]/a[contains(@href, "/pdf")]/@href | //a[@class="button download-pdf-button"]/@href');
+		if (pdfurl) {
+			ZU.processDocuments(pdfurl, 
+				function(pdfDoc) {
+					authenticatedPDFURL = pdfDoc.getElementById('archivePDF').src;
+					if (authenticatedPDFURL) {
+						item.attachments.push({
+							title: "NYTimes Archive PDF",
+							mimeType: 'application/pdf',
+							url: authenticatedPDFURL
+						});
+					} else {
+						Z.debug("Could not find authenticated PDF URL");
+						item.complete();
+					}
+				},
+				function() {
+					Z.debug("PDF retrieved: "+authenticatedPDFURL);
+					item.complete();
+				}
+			);
+		} else {
+			Z.debug("Not attempting PDF retrieval");
+			item.complete();
+		}
 	});
 	
 	translator.getTranslatorObject(function(trans) {
@@ -109,7 +149,6 @@ function scrape(doc, url) {
 	});
 	
 }
-
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
@@ -158,7 +197,7 @@ var testCases = [
 				"ISSN": "0362-4331",
 				"abstractNote": "WASHINGTON, March 4. -- The Money Trust inquiry and consideration of the proposed Aldrich monetary legislation will probably be handled side by side by the House Banking and Currency Committee. The present tentative plan is to divide the committee into two parts, one of which, acting as a sub-committee, will investigate as far as it can those allegations of the Henry Money Trust resolution which fall within the jurisdiction of the Banking and Currency Committee.",
 				"language": "en-US",
-				"libraryCatalog": "query.nytimes.com",
+				"libraryCatalog": "NYTimes.com",
 				"publicationTitle": "The New York Times",
 				"url": "http://query.nytimes.com/gst/abstract.html?res=9C07E4DC143CE633A25756C0A9659C946396D6CF",
 				"attachments": [
@@ -166,10 +205,13 @@ var testCases = [
 						"title": "Snapshot"
 					},
 					{
-						"title": "NYTimes Archive PDF"
+						"title": "NYTimes Archive PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					""
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -193,7 +235,7 @@ var testCases = [
 				"ISSN": "0362-4331",
 				"abstractNote": "The university has found Marc Hauser “solely responsible” for eight instances of scientific misconduct.",
 				"language": "en-US",
-				"libraryCatalog": "www.nytimes.com",
+				"libraryCatalog": "NYTimes.com",
 				"publicationTitle": "The New York Times",
 				"section": "Education",
 				"url": "https://www.nytimes.com/2010/08/21/education/21harvard.html",
@@ -275,7 +317,7 @@ var testCases = [
 				"ISSN": "0362-4331",
 				"abstractNote": "뉴욕타임스는 취재 중 많은 네일숍 직원들이 부당한 대우와 인종차별 및 학대에 흔하게 시달리며 정부 노동자법률기구의 보호도 제대로 받지 못한다는 사실을 발견했다.",
 				"language": "ko-KR",
-				"libraryCatalog": "www.nytimes.com",
+				"libraryCatalog": "NYTimes.com",
 				"publicationTitle": "The New York Times",
 				"section": "N.Y. / Region",
 				"url": "https://www.nytimes.com/2015/05/10/nyregion/manicurists-in-new-york-area-are-underpaid-and-unprotected.html",
@@ -325,7 +367,7 @@ var testCases = [
 				"ISSN": "0362-4331",
 				"abstractNote": "American spies collected intelligence last summer revealing that Russians were debating how to work with Trump advisers, current and former officials say.",
 				"language": "en-US",
-				"libraryCatalog": "www.nytimes.com",
+				"libraryCatalog": "NYTimes.com",
 				"publicationTitle": "The New York Times",
 				"section": "Politics",
 				"url": "https://www.nytimes.com/2017/05/24/us/politics/russia-trump-manafort-flynn.html",
@@ -343,6 +385,126 @@ var testCases = [
 					"Russia",
 					"Trump, Donald J",
 					"United States Politics and Government"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://query.nytimes.com/gst/abstract.html?res=9406EFDF153DE532A25751C1A96F9C946791D6CF&login=email&auth=login-email&legacy=true",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Draft Deferment Scored at Rutgers",
+				"creators": [],
+				"date": "1966-09-12",
+				"ISSN": "0362-4331",
+				"abstractNote": "NEW BRUNSWICK, Sept. 11 (AP)--About 1,000 Rutgers University freshmen were urged today by Paul Goodman, author, to go out and campaign for the abolition of the student draft deferment.",
+				"language": "en-US",
+				"libraryCatalog": "NYTimes.com",
+				"publicationTitle": "The New York Times",
+				"url": "http://query.nytimes.com/gst/abstract.html?res=9406EFDF153DE532A25751C1A96F9C946791D6CF",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					},
+					{
+						"title": "NYTimes Archive PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					""
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.nytimes.com/1970/11/12/archives/ideological-labels-changing-along-with-the-labelmakers-ideological.html",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Ideological Labels Changing Along With the Label–Makers",
+				"creators": [
+					{
+						"firstName": "Israel",
+						"lastName": "Shenker",
+						"creatorType": "author"
+					}
+				],
+				"date": "1970-11-12",
+				"ISSN": "0362-4331",
+				"abstractNote": "Comment on labeling pol ideology of intellectuals, apropos of Prof N Glazer coming pub of book of essays on subject; Glazer classification of P Goodman, D Macdonald, M Harrington, I Howe and late C W Mills noted; Goodman, Macdonald, Howe, Harrington, Prof Trilling, I Kristol, N Podhoretz, D Bell, B Rustin, Prof H Rosenberg comment; some pors",
+				"language": "en-US",
+				"libraryCatalog": "NYTimes.com",
+				"publicationTitle": "The New York Times",
+				"section": "Archives",
+				"url": "https://www.nytimes.com/1970/11/12/archives/ideological-labels-changing-along-with-the-labelmakers-ideological.html",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					},
+					{
+						"title": "NYTimes Archive PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					"Bell, Daniel",
+					"Glazer, Nathan",
+					"Goodman, Paul",
+					"Howe, Irving",
+					"Intellectuals",
+					"Kristol, Irving",
+					"Macdonald, Dwight",
+					"Podhoretz, Norman",
+					"Politics and Government",
+					"Trilling, Lionel",
+					"United States"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.nytimes.com/2017/07/03/business/oreo-new-flavors.html",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "When Just Vanilla Won’t Do, How About a Blueberry Pie Oreo?",
+				"creators": [
+					{
+						"firstName": "Maya",
+						"lastName": "Salam",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-07-03",
+				"ISSN": "0362-4331",
+				"abstractNote": "The company has increasingly been experimenting with limited-edition flavors that seemed designed as much for an Instagram feed as they are to be eaten.",
+				"language": "en-US",
+				"libraryCatalog": "NYTimes.com",
+				"publicationTitle": "The New York Times",
+				"section": "Business Day",
+				"url": "https://www.nytimes.com/2017/07/03/business/oreo-new-flavors.html",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Contests and Prizes",
+					"Cookies",
+					"Mondelez International Inc",
+					"Oreo",
+					"Social Media"
 				],
 				"notes": [],
 				"seeAlso": []

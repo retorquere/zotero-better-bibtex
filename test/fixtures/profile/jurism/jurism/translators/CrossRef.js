@@ -9,7 +9,7 @@
 	"priority": 90,
 	"inRepository": true,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2017-05-18 10:05:00"
+	"lastUpdated": "2017-06-03 10:05:00"
 }
 
 /* CrossRef uses unixref; documentation at http://www.crossref.org/schema/documentation/unixref1.0/unixref.html */
@@ -18,10 +18,22 @@ var ns;
 /**********************
  * Utilitiy Functions *
  **********************/
-var xmlSerializer = new XMLSerializer();
+
 function innerXML(n) {
+	var escapedXMLcharacters = {
+		'&amp;': '&',
+		'&quot;': '"',
+		'&lt;': '<',
+		'&gt;': '>'
+	};
+	var xmlSerializer = new XMLSerializer();
 	return xmlSerializer.serializeToString(n) //outer XML
-		.replace(/^[^>]*>|<[^<]*$/g, '');
+		.replace(/^[^>]*>|<[^<]*$/g, '')
+		.replace(/(&quot;|&lt;|&gt;|&amp;)/g,
+			function(str, item) {
+				return escapedXMLcharacters[item];
+			}
+		);
 }
 
 var markupRE = /<(\/?)(\w+)[^<>]*>/gi;
@@ -430,10 +442,42 @@ var testCases = [
 				"publisher": "Palgrave Macmillan",
 				"language": "en",
 				"date": "2012-10-17",
-				"extra": "DOI: 10.1057/9780230391116",
-				"DOI": "10.1057/9780230391116",
+				"extra": "DOI: 10.1057/9780230391116.0016",
+				"DOI": "10.1057/9780230391116.0016",
 				"url": "http://www.palgraveconnect.com/doifinder/10.1057/9780230391116.0016",
 				"title": "Conceptions, Competences and Limits of German Regional Planning during the Four Year Plan, 1936–1940",
+				"libraryCatalog": "CrossRef"
+			}
+		]
+	},
+	{
+		"type": "search",
+		"input": {
+			"DOI":"10.2747/1539-7216.50.2.197"
+		},
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"creators": [
+					{
+						"creatorType": "author",
+						"firstName": "Kam Wing",
+						"lastName": "Chan"
+					}
+				],
+				"notes": [],
+				"tags": [],
+				"seeAlso": [],
+				"attachments": [],
+				"date": "2009-3-1",
+				"DOI": "10.2747/1539-7216.50.2.197",
+				"url": "http://www.tandfonline.com/doi/abs/10.2747/1539-7216.50.2.197",
+				"title": "The Chinese <i>Hukou</i> System at 50",
+				"issue": "2",
+				"ISSN": "1538-7216",
+				"publicationTitle": "Eurasian Geography and Economics",
+				"volume": "50",
+				"pages": "197-221",
 				"libraryCatalog": "CrossRef"
 			}
 		]

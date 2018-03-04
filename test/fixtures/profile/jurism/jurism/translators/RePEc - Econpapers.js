@@ -846,7 +846,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2016/08/20",
+				"date": "2017/02/02",
 				"abstractNote": "estout produces a table of regression results from one or several models for use with spreadsheets, LaTeX, HTML, or a word-processor table. eststo stores a quick copy of the active estimation results for later tabulation. esttab is a wrapper for estout. It displays a pretty looking publication-style regression table without much typing. estadd adds additional results to the e()-returns for one or several models previously fitted and stored. This package subsumes the previously circulated esto, esta, estadd, and estadd_plus. An earlier version of estout is available as estout1.",
 				"libraryCatalog": "RePEc - Econpapers",
 				"seriesTitle": "Statistical Software Components",

@@ -221,7 +221,7 @@ var testCases = [
 				"libraryCatalog": "Access Medicine",
 				"place": "New York, NY",
 				"publisher": "McGraw-Hill Education",
-				"url": "http://mhmedical.com/content.aspx?aid=1105680244",
+				"url": "accessemergencymedicine.mhmedical.com/content.aspx?aid=1105680244",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -323,7 +323,7 @@ var testCases = [
 				"libraryCatalog": "Access Medicine",
 				"place": "New York, NY",
 				"publisher": "McGraw-Hill Education",
-				"url": "http://mhmedical.com/content.aspx?aid=1117754305",
+				"url": "accessmedicine.mhmedical.com/content.aspx?aid=1117754305",
 				"attachments": [
 					{
 						"title": "Snapshot"
