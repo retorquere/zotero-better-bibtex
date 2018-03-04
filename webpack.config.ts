@@ -22,7 +22,7 @@ const common = {
     noEmitOnErrors: true,
     namedModules: true,
     namedChunks: true,
-    runtimeChunk: false,
+    // runtimeChunk: false,
   },
 
   node: { fs: 'empty' },
@@ -50,40 +50,29 @@ config.push(
   // main app logic
   _.merge({}, common, {
     optimization: {
-      runtimeChunk: { name: 'runtime' },
       // new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
       splitChunks: {
-        chunks: 'all',
         name: true,
         cacheGroups: {
-          runtime: {
-            test: /\/node_modules\//,
-            priority: 1,
-            name: 'runtime',
-            minChunks: 2000000000,
-          },
           common: {
-            priority: 2,
             name: 'common',
+            chunks: 'initial',
+            minSize: 1,
             minChunks: 2,
-            reuseExistingChunk: true,
           },
-        }
+        },
       },
     },
     plugins: [
-      new webpack.NamedModulesPlugin(),
+      // new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
-      /*
       new AfterBuildPlugin((stats, options) => {
-        const ccp = options.plugins.find(plugin => plugin instanceof webpack.optimize.CommonsChunkPlugin).filenameTemplate
         replace({
           regex: `window\\["${options.output.jsonpFunction}"\\]`,
           replacement: options.output.jsonpFunction,
-          paths: [path.join(options.output.path, ccp)],
+          paths: [path.join(options.output.path, 'common.js')],
         })
       }),
-      */
       // BailPlugin,
     ],
 
