@@ -243,20 +243,14 @@ end
 #end
 
 def expand_expected(expected)
-  if expected =~ /(.*)(\.csl\.json)$/
+  if expected =~ /(.*)(\.csl\.(json|yml))$/
     base = $1
     ext = $2
-  elsif expected =~ /(.*)(\.json)$/
-    base = $1
-    ext = $2
-  elsif expected =~ /(.*)(\.csl.yml)$/
-    base = $1
-    ext = $2
-  elsif expected =~ /(.*)(\.bib(la)?tex)$/
+  elsif expected =~ /(.*)(\.[a-z]+)$/
     base = $1
     ext = $2
   else
-    raise "Unexpected extension #{File.extname(expected)} on #{expected}"
+    raise "No extension on #{expected}"
   end
 
   fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
