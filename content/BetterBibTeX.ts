@@ -193,6 +193,7 @@ import * as DateParser from './dateparser.ts'
 import { qualityReport } from './qr-check.ts'
 import { titleCase } from './title-case.ts'
 import { extract as varExtract } from './var-extract.ts'
+import * as Citekey from './key-manager/get-set.ts'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
@@ -314,6 +315,20 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
 
   } catch (err) {
     debug('Zotero.Translate.Export::translate error:', err)
+  }
+
+  return original.apply(this, arguments)
+})
+
+$patch$(Zotero.Item.prototype, 'saveTx', original => async function saveTx(options?: object) {
+  try {
+    if (Prefs.get('autoPin')) {
+      await bbtReady.promise // not so nice, but nothing we can do about this.
+      const citekey = KeyManager.propose(this)
+      if (!citekey.pinned) this.setField('extra', Citekey.set({ extra: this.getField('extra') || '' }, citekey.citekey))
+    }
+  } catch (err) {
+    debug('Zotero.Item::saveTx error:', err)
   }
 
   return original.apply(this, arguments)

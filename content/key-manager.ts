@@ -308,35 +308,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     return { citekey: '', pinned: false }
   }
 
-  private expandSelection(ids) {
-    if (Array.isArray(ids)) return ids
-
-    if (ids === 'selected') {
-      try {
-        return Zotero.getActiveZoteroPane().getSelectedItems(true)
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-        debug('Could not get selected items:', err)
-        return []
-      }
-    }
-
-    return [ids]
-  }
-
-  private postfixAlpha(n) {
-    const ordA = 'a'.charCodeAt(0)
-    const ordZ = 'z'.charCodeAt(0)
-    const len = ordZ - ordA + 1
-
-    let postfix = ''
-    while (n >= 0) {
-      postfix = String.fromCharCode(n % len + ordA) + postfix
-      n = Math.floor(n / len) - 1
-    }
-    return postfix
-  }
-
-  private propose(item) {
+  public propose(item) {
     debug('KeyManager.propose: getting existing key from extra field,if any')
     let citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
@@ -382,5 +354,33 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         return { citekey: postfixed, pinned: false }
       }
     }
+  }
+
+  private expandSelection(ids) {
+    if (Array.isArray(ids)) return ids
+
+    if (ids === 'selected') {
+      try {
+        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        return []
+      }
+    }
+
+    return [ids]
+  }
+
+  private postfixAlpha(n) {
+    const ordA = 'a'.charCodeAt(0)
+    const ordZ = 'z'.charCodeAt(0)
+    const len = ordZ - ordA + 1
+
+    let postfix = ''
+    while (n >= 0) {
+      postfix = String.fromCharCode(n % len + ordA) + postfix
+      n = Math.floor(n / len) - 1
+    }
+    return postfix
   }
 }
