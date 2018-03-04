@@ -4,12 +4,23 @@ const replace = require('replace')
 
 import * as webpack from 'webpack'
 import * as path from 'path'
+import * as fs from 'fs'
+import stringify = require('json-stringify-safe')
 
 // import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
-import AfterBuildPlugin = require('zotero-plugin/plugin/after-build')
 import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
+
+/*
+class WebpackFixerPlugin {
+  apply(compiler) {
+    compiler.hooks.done.tap({name: 'WebpackFixerPlugin'}, () => {
+      console.log(compiler.options.entries, compiler.options.output)
+    })
+  }
+}
+*/
 
 const translators = require('./gen/translators.json')
 const _ = require('lodash')
@@ -66,13 +77,6 @@ config.push(
     plugins: [
       // new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
-      new AfterBuildPlugin((stats, options) => {
-        replace({
-          regex: `window\\["${options.output.jsonpFunction}"\\]`,
-          replacement: options.output.jsonpFunction,
-          paths: [path.join(options.output.path, 'common.js')],
-        })
-      }),
       // BailPlugin,
     ],
 
@@ -89,9 +93,10 @@ config.push(
     },
     // devtool: '#source-map',
     output: {
+      globalObject: 'Zotero',
       path: path.resolve(__dirname, './build/content'),
       filename: '[name].js',
-      jsonpFunction: 'Zotero.WebPackedBetterBibTeX',
+      jsonpFunction: 'WebPackedBetterBibTeX',
       // chunkFilename: "[id].chunk.js",
       devtoolLineToLine: true,
       // sourceMapFilename: "./[name].js.map",
