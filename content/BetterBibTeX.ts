@@ -432,8 +432,9 @@ class Progress {
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    debug(`${this.name}: started`)
+    debug(`${this.name}: ready to go`)
     this.toggle(true)
+    debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
 
   public update(msg) {
