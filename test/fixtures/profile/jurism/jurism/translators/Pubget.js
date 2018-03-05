@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2013-06-08 14:05:46"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-03 17:53:26"
 }
 
 /*
@@ -31,68 +31,78 @@
 */
 
 function detectWeb(doc,url) {
-	var xpath='//meta[@name="citation_journal_title"]';
-				
 	if (url.match(/\/search\?.*\&q=|\/mesh_browser\/./)) {
 		return "multiple";
-	}
-	
-	else if (ZU.xpath(doc, xpath).length > 0) {
+	} else if (ZU.xpathText(doc, '//html[@itemtype="http://schema.org/Article"]')) {
 		return "journalArticle";
 	}
 	return false;
 }
 
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[@class="results"]//li/a[@class="title"]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
 
-function doWeb(doc,url)
-{
+
+function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var hits = {};
-		var urls = [];
-		var results = ZU.xpath(doc,'//div[@class="results"]//li/a[@class="title"]');
-	
-		for (var i in results) {
-			hits[results[i].href] = results[i].textContent;
-		}
-		Z.selectItems(hits, function(items) {
-			if (items == null) return true;
-			for (var j in items) {
-				urls.push(j);
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
 			}
-			ZU.processDocuments(urls, function (myDoc) { 
-				doWeb(myDoc, myDoc.location.href) });
-
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
 		});
-	} else if (ZU.xpathText(doc, '//meta[@name="citation_pmid"]/@content') &&
-		ZU.xpathText(doc, '//meta[@name="citation_pmid"]/@content').search(/\d+/)!=-1){
+	} else {
+		scrape(doc, url);
+	}
+}
+
+
+function scrape(doc, url) {
+	var pmid = ZU.xpathText(doc, '//p[contains(@class, "citation")]/a[contains(@href, "ncbi.nlm.nih.gov/pubmed/")]');
+	if (pmid && pmid.search(/\d+/)!=-1){
 		//the best data is from Pubmed
-		var pmid = ZU.xpathText(doc, '//meta[@name="citation_pmid"]/@content');
+		
 		var url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=" + pmid;
-		Zotero.Utilities.HTTP.doGet(url, function(text) {
+		ZU.doGet(url, function(text) {
 		// load translator for PubMed	
 			var translator = Zotero.loadTranslator("import");
 			translator.setTranslator("fcf41bed-0cbc-3704-85c7-8062a0068a7a");
 			translator.setString(text);
-	
 			// don't save when item is done
 			translator.setHandler("itemDone", function(obj, item) {
 				item.attachments.push({document:doc, title:"Pubget Snapshot", mimeType:"text/html"})
 				item.complete()
+			});
+			translator.translate();
 		});
+	} else {	
+		// We call the Embedded Metadata translator as a fallback
+		var translator = Zotero.loadTranslator('web');
+		//use Embedded Metadata
+		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
+		translator.setDocument(doc);
+		translator.setHandler('itemDone', function(obj, item) {
+					item.abstractNote = ZU.xpathText(doc, '//div[@class="paper"]/p[@class="abstract"]');
+					item.extra = '';
+					item.complete();
+					});
 		translator.translate();
-	});
-	} else{	
-	// We call the Embedded Metadata translator as a fallback
-	var translator = Zotero.loadTranslator('web');
-	//use Embedded Metadata
-	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
-	translator.setDocument(doc);
-	translator.setHandler('itemDone', function(obj, item) {
-				item.abstractNote = ZU.xpathText(doc, '//div[@class="paper"]/p[@class="abstract"]');
-				item.extra = '';
-				item.complete();
-				});
-	translator.translate();
 	}
 }
 /** BEGIN TEST CASES **/
@@ -108,6 +118,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Comparison of select reference management tools",
 				"creators": [
 					{
 						"firstName": "Yingting",
@@ -115,14 +126,18 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Information Storage and Retrieval",
-					"Medical Informatics",
-					"Software",
-					"User-Computer Interface"
-				],
-				"seeAlso": [],
+				"date": "2012",
+				"DOI": "10.1080/02763869.2012.641841",
+				"ISSN": "1540-9597",
+				"abstractNote": "Bibliographic management tools have been widely used by researchers to store, organize, and manage their references for research papers, theses, dissertations, journal articles, and other publications. There are a number of reference management tools available. In order for users to decide which tool is best for their needs, it is important to know each tool's strengths and weaknesses. This article compares four reference management tools, one of which is licensed by University of Medicine and Dentistry of New Jersey libraries and the other three are open source and freely available. They were chosen based on their functionality, ease of use, availability to library users, and popularity. These four tools are EndNote/EndNote Web, Zotero, Connotea, and Mendeley Desktop/Mendeley Web. Each tool is analyzed in terms of the following features: accessing, collecting, organizing, collaborating, and citing/formatting. A comparison table is included to summarize the key features of these tools.",
+				"extra": "PMID: 22289095",
+				"issue": "1",
+				"journalAbbreviation": "Med Ref Serv Q",
+				"language": "eng",
+				"libraryCatalog": "Pubget",
+				"pages": "45-60",
+				"publicationTitle": "Medical Reference Services Quarterly",
+				"volume": "31",
 				"attachments": [
 					{
 						"title": "PubMed entry",
@@ -134,19 +149,14 @@ var testCases = [
 						"mimeType": "text/html"
 					}
 				],
-				"title": "Comparison of select reference management tools",
-				"pages": "45-60",
-				"ISSN": "1540-9597",
-				"journalAbbreviation": "Med Ref Serv Q",
-				"publicationTitle": "Medical Reference Services Quarterly",
-				"volume": "31",
-				"issue": "1",
-				"date": "2012",
-				"language": "eng",
-				"abstractNote": "Bibliographic management tools have been widely used by researchers to store, organize, and manage their references for research papers, theses, dissertations, journal articles, and other publications. There are a number of reference management tools available. In order for users to decide which tool is best for their needs, it is important to know each tool's strengths and weaknesses. This article compares four reference management tools, one of which is licensed by University of Medicine and Dentistry of New Jersey libraries and the other three are open source and freely available. They were chosen based on their functionality, ease of use, availability to library users, and popularity. These four tools are EndNote/EndNote Web, Zotero, Connotea, and Mendeley Desktop/Mendeley Web. Each tool is analyzed in terms of the following features: accessing, collecting, organizing, collaborating, and citing/formatting. A comparison table is included to summarize the key features of these tools.",
-				"DOI": "10.1080/02763869.2012.641841",
-				"extra": "PMID: 22289095",
-				"libraryCatalog": "Pubget"
+				"tags": [
+					"Information Storage and Retrieval",
+					"Medical Informatics",
+					"Software",
+					"User-Computer Interface"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

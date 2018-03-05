@@ -316,7 +316,7 @@ function doSearch(item) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/20729678",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/20729678",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -365,12 +365,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed?term=zotero",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed?term=zotero",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/20821847",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/20821847",
 		"items": [
 			{
 				"itemType": "book",
@@ -396,7 +396,7 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Oxford",
 				"publisher": "BIOS Scientific Publishers",
-				"rights": "Copyright © 2001, BIOS Scientific Publishers Limited",
+				"rights": "Copyright © 2001, BIOS Scientific Publishers Limited.",
 				"shortTitle": "Endocrinology",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK22/",
 				"attachments": [
@@ -414,7 +414,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed?term=21249754",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed?term=21249754",
 		"items": [
 			{
 				"itemType": "book",
@@ -449,7 +449,7 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Bethesda (MD)",
 				"publisher": "National Center for Biotechnology Information (US)",
-				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson",
+				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson.",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK1825/",
 				"attachments": [
 					{
@@ -466,7 +466,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/?term=11109029",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/?term=11109029",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -531,7 +531,6 @@ var testCases = [
 					"Cost-Benefit Analysis",
 					"Decision Trees",
 					"Female",
-					"Great Britain",
 					"Humans",
 					"Hyperlipoproteinemia Type II",
 					"Male",
@@ -542,7 +541,8 @@ var testCases = [
 					"Needs Assessment",
 					"Practice Guidelines as Topic",
 					"Research Design",
-					"Technology Assessment, Biomedical"
+					"Technology Assessment, Biomedical",
+					"United Kingdom"
 				],
 				"notes": [],
 				"seeAlso": []
@@ -551,7 +551,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/21249758",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/21249758",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -592,7 +592,7 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Bethesda (MD)",
 				"publisher": "National Center for Biotechnology Information (US)",
-				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson",
+				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson.",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK26374/",
 				"attachments": [
 					{
@@ -614,7 +614,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/books/NBK26374/",
+		"url": "https://www.ncbi.nlm.nih.gov/books/NBK26374/",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -655,7 +655,7 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Bethesda (MD)",
 				"publisher": "National Center for Biotechnology Information (US)",
-				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson",
+				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson.",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK26374/",
 				"attachments": [
 					{
@@ -677,7 +677,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/books/NBK1825/",
+		"url": "https://www.ncbi.nlm.nih.gov/books/NBK1825/",
 		"items": [
 			{
 				"itemType": "book",
@@ -712,7 +712,7 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Bethesda (MD)",
 				"publisher": "National Center for Biotechnology Information (US)",
-				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson",
+				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson.",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK1825/",
 				"attachments": [
 					{
@@ -729,7 +729,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/21249755",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/21249755",
 		"items": [
 			{
 				"itemType": "bookSection",
@@ -792,7 +792,6 @@ var testCases = [
 					}
 				],
 				"date": "2009",
-				"abstractNote": "PJS is a rare disease. (“Peutz-Jeghers syndrome is no frequent nosological unit”. (1)) There are no high-quality estimates of the prevalence or incidence of PJS. Estimates have included 1 in 8,500 to 23,000 live births (2), 1 in 50,000 to 1 in 100,000 in Finland (3), and 1 in 200,000 (4). A report on the incidence of PJS is available at www.peutz-jeghers.com. At Mayo Clinic from 1945 to 1996 the incidence of PJS was 0.9 PJS patients per 100,000 patients. PJS has been reported in Western Europeans (5), African Americans (5), Nigerians (6), Japanese (7), Chinese (8, 9), Indians (10, 11), and other populations (12-15). PJS occurs equally in males and females (7).",
 				"bookTitle": "Cancer Syndromes",
 				"callNumber": "NBK1826",
 				"extra": "PMID: 21249755",
@@ -800,7 +799,6 @@ var testCases = [
 				"libraryCatalog": "PubMed",
 				"place": "Bethesda (MD)",
 				"publisher": "National Center for Biotechnology Information (US)",
-				"rights": "Copyright © 2009-, Douglas L Riegert-Johnson",
 				"url": "http://www.ncbi.nlm.nih.gov/books/NBK1826/",
 				"attachments": [
 					{
@@ -822,12 +820,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/myncbi/browse/collection/40383442/?sort=&direction=",
+		"url": "https://www.ncbi.nlm.nih.gov/myncbi/browse/collection/40383442/?sort=&direction=",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/20981092",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/20981092",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -883,7 +881,7 @@ var testCases = [
 				"DOI": "10.1038/nature09534",
 				"ISSN": "1476-4687",
 				"abstractNote": "The 1000 Genomes Project aims to provide a deep characterization of human genome sequence variation as a foundation for investigating the relationship between genotype and phenotype. Here we present results of the pilot phase of the project, designed to develop and compare different strategies for genome-wide sequencing with high-throughput platforms. We undertook three projects: low-coverage whole-genome sequencing of 179 individuals from four populations; high-coverage sequencing of two mother-father-child trios; and exon-targeted sequencing of 697 individuals from seven populations. We describe the location, allele frequency and local haplotype structure of approximately 15 million single nucleotide polymorphisms, 1 million short insertions and deletions, and 20,000 structural variants, most of which were previously undescribed. We show that, because we have catalogued the vast majority of common variation, over 95% of the currently accessible variants found in any individual are present in this data set. On average, each person is found to carry approximately 250 to 300 loss-of-function variants in annotated genes and 50 to 100 variants previously implicated in inherited disorders. We demonstrate how these results can be used to inform association and functional studies. From the two trios, we directly estimate the rate of de novo germline base substitution mutations to be approximately 10(-8) per base pair per generation. We explore the data with regard to signatures of natural selection, and identify a marked reduction of genetic variation in the neighbourhood of genes, due to selection at linked sites. These methods and public data will support the next phase of human genetic research.",
-				"extra": "PMID: 20981092 \nPMCID: PMC3042601",
+				"extra": "PMID: 20981092\nPMCID: PMC3042601",
 				"issue": "7319",
 				"journalAbbreviation": "Nature",
 				"language": "eng",
@@ -932,7 +930,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/books/NBK21054/",
+		"url": "https://www.ncbi.nlm.nih.gov/books/NBK21054/",
 		"items": [
 			{
 				"itemType": "book",
@@ -984,7 +982,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.ncbi.nlm.nih.gov/pubmed/14779137",
+		"url": "https://www.ncbi.nlm.nih.gov/pubmed/14779137",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1014,6 +1012,8 @@ var testCases = [
 					}
 				],
 				"tags": [
+					"Humans",
+					"PANCREATITIS",
 					"Pancreatitis"
 				],
 				"notes": [],
@@ -1039,7 +1039,7 @@ var testCases = [
 						"creatorType": "author",
 						"lastName": "Sewell",
 						"firstName": "Jeanne P."
-					}
+	}
 				],
 				"notes": [],
 				"tags": [

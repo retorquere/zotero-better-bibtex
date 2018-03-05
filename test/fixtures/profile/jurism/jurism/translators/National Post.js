@@ -1,14 +1,15 @@
 {
-	"translatorID":"1c5b122c-7e58-4cd5-932b-93f5ca0b7e1a",
-	"translatorType":4,
-	"label":"National Post",
-	"creator":"Adam Crymble",
-	"target":"http://www.(national|financial)post.com/",
-	"minVersion":"1.0.0b4.r5",
-	"maxVersion":"",
-	"priority":100,
-	"inRepository":true,
-	"lastUpdated":"2008-08-11 20:40:00"
+	"translatorID": "1c5b122c-7e58-4cd5-932b-93f5ca0b7e1a",
+	"label": "National Post",
+	"creator": "Adam Crymble",
+	"target": "http://www.(national|financial)post.com/",
+	"minVersion": "1.0.0b4.r5",
+	"maxVersion": "",
+	"priority": 100,
+	"inRepository": true,
+	"translatorType": 4,
+	"browserSupport": "g",
+	"lastUpdated": "2017-05-23 21:23:02"
 }
 
 function detectWeb(doc, url) {
@@ -84,6 +85,7 @@ function scrape(doc) {
 	newItem.title = title1;
 	newItem.publication = "The National Post";
 	newItem.ISSN = 	"1486-8008";
+	newItem.language = "en-CA";
 	
 	newItem.complete();
 }

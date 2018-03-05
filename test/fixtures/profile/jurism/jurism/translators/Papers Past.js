@@ -1,159 +1,153 @@
 {
 	"translatorID": "1b052690-16dd-431d-9828-9dc675eb55f6",
 	"label": "Papers Past",
-	"creator": "staplegun",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://(www\\.)?paperspast\\.natlib\\.govt\\.nz",
-	"minVersion": "1.0",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2012-08-18 14:13:34"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-01-22 00:46:33"
 }
 
 /*
-	Papers Past Translator - Parses historic digitised newspaper articles and creates Zotero-based metadata
-	Copyright (C) 2010 staplegun
+	***** BEGIN LICENSE BLOCK *****
 
-	This program is free software: you can redistribute it and/or modify
-	it under the terms of the GNU General Public License as published by
+	Copyright © 2017 Philipp Zumstein
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
 	the Free Software Foundation, either version 3 of the License, or
 	(at your option) any later version.
 
-	This program is distributed in the hope that it will be useful,
+	Zotero is distributed in the hope that it will be useful,
 	but WITHOUT ANY WARRANTY; without even the implied warranty of
-	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-	GNU General Public License for more details.
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
 
-	You should have received a copy of the GNU General Public License
-	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
 
+
 function detectWeb(doc, url) {
-
-  // a results parameter in URL means search hitlist
-  if (url.match(/results=/) ) {
-	return "multiple";
-  } else {
-	// init variables
-	var myXPath;
-	var myXPathObject;
-
-	// publication title in meta tags means have an article
-	myXPath          = '//meta[@name="newsarticle_publication"]/@content';
-	myXPathObject    = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-	var meta = myXPathObject.iterateNext().textContent;
-	if (meta.length > 0) {
-	  return "newspaperArticle";
+	if (url.indexOf('?query')>-1 && getSearchResults(doc, true)) {
+		return "multiple";
+	} else if (ZU.xpathText(doc, '//h3[@itemprop="headline"]')) {
+		if (url.indexOf('/newspapers/')>-1) {
+			return "newspaperArticle";
+		}
+		if (url.indexOf('/periodicals/')>-1) {
+			return "journalArticle";
+		}
+		if (url.indexOf('/manuscripts/')>-1) {
+			return "letter";
+		}
+		if (url.indexOf('/parliamentary/')>-1) {
+			return "report";
+		}
 	}
-  }
 }
 
-function doWeb(doc, url) {
 
-  // hitlist page: compile hitlist titles, user selects which are wanted 
-  // (add &zto=1 to URL for usage tracking)
-  var articles = new Array();
-  if (detectWeb(doc, url) == "multiple") {
-	var titlesXPath = '//div[@class="search-results"]/p/a';
-	var titles      = doc.evaluate(titlesXPath, doc, null, XPathResult.ANY_TYPE, null);
-	var nextTitle;
-	var items       = new Array();
-	while (nextTitle = titles.iterateNext()) {
-	  items[nextTitle.href+"&zto=1"] = nextTitle.textContent;
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//table[contains(@class, "search-results")]//td/a');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-	// presented to user - who reduces list to those selected
-	Zotero.selectItems(items, function (items) {
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			Zotero.Utilities.processDocuments(articles, scrape, function () {
-			});
+			ZU.processDocuments(articles, scrape);
 		});
-
-  // article page: just continue with single (current) page URL
-  } else {
-	articles = [url+"&zto=1"];
-  	Zotero.Utilities.processDocuments(articles, scrape, function(){});
-  }
+	} else {
+		scrape(doc, url);
+	}
 }
 
-function scrape(doc) {
 
-  // init variables
-  var myXPath;
-  var myXPathObject;
-  
-  // basic item details
-  var newItem     = new Zotero.Item('newspaperArticle');
-  newItem.url     = doc.location.href;
-  newItem.archive = 'Papers Past';
+function scrape(doc, url) {
+	var type = detectWeb(doc, url);
+	var item = new Zotero.Item(type);
+	var title = ZU.xpathText(doc, '//h3[@itemprop="headline"]/text()[1]');
+	item.title = ZU.capitalizeTitle(title.toLowerCase(), true);
+	
+	if (type == "journalArticle" || type == "newspaperArticle") {
+		var nav = ZU.xpath(doc, '//table[@id="breadcrumbs"]//td[not(contains(@class, "separator"))]');
+		if (nav.length>1) {
+			item.publicationTitle = nav[1].textContent;
+		}
+		if (nav.length>2) {
+			item.date = ZU.strToISO(nav[2].textContent);
+		}
+		if (nav.length>3) {
+			item.pages = nav[3].textContent.match(/\d+/)[0];
+		}
+	}
+	
+	var container = ZU.xpathText(doc, '//h3[@itemprop="headline"]/small');
+	if (container) {
+		var volume = container.match(/Volume (\w+)\b/);
+		if (volume) {
+			item.volume = volume[1];
+		}
+		var issue = container.match(/Issue (\w+)\b/);
+		if (issue) {
+			item.issue = issue[1];
+		}
+	}
+	
+	if (type == "letter") {
+		var author = ZU.xpathText(doc, '//div[@id="researcher-tools-tab"]//tr[td[.="author"]]/td[2]');
+		//e.g. 42319/Mackay, James, 1831-1912
+		if (author && author.indexOf("Unknown") == -1) {
+			author = author.replace(/^[0-9\/]*/, '').replace(/[0-9\-]*$/, '').replace('(Sir)', '');
+			item.creators.push(ZU.cleanAuthor(author, "author"));
+		}
+		var recipient = ZU.xpathText(doc, '//div[@id="researcher-tools-tab"]//tr[td[.="recipient"]]/td[2]');
+		if (recipient && recipient.indexOf("Unknown") == -1) {
+			recipient = recipient.replace(/^[0-9\/]*/, '').replace(/[0-9\-]*$/, '').replace('(Sir)', '');
+			item.creators.push(ZU.cleanAuthor(recipient, "recipient"));
+		}
+		
+		item.date = ZU.xpathText(doc, '//div[@id="researcher-tools-tab"]//tr[td[.="date"]]/td[2]');
+		
+		item.language = ZU.xpathText(doc, '//div[@id="researcher-tools-tab"]//tr[td[.="language"]]/td[2]');
+		
+	}
 
-  // publication title
-  myXPath       = '//meta[@name="newsarticle_publication"]/@content';
-  myXPathObject = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  newItem.publicationTitle = myXPathObject.iterateNext().textContent;
-  Zotero.debug(newItem.publicationTitle);
-
-  // article title (convert to sentence case)
-  // NB: THE CONVERSION SEEMS TO FAIL IF HAS SPECIAL CHARS
-  myXPath          = '//meta[@name="newsarticle_headline"]/@content';
-  myXPathObject    = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  var title   = myXPathObject.iterateNext().textContent;
-  var words = title.split(/\s/);
-  var titleFixed = '';
-  for (var i in words) {
-   words[i] = words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
-   titleFixed = titleFixed + words[i] + ' ';
-  }
-  titleFixed = Zotero.Utilities.trim(titleFixed);
-  newItem.title = titleFixed;
-
-  // publication date (is preformatted to ISO 8601)
-  myXPath          = '//meta[@name="dc_date"]/@content';
-  myXPathObject    = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  newItem.date = myXPathObject.iterateNext().textContent;
-
-  // pagination
-  myXPath          = '//meta[@name="newsarticle_firstpage"]/@content';
-  myXPathObject    = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  var pages = myXPathObject.iterateNext().textContent;
-
-  myXPath          = '//meta[@name="newsarticle_otherpages"]/@content';
-  myXPathObject    = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  pages = pages + ' ' + myXPathObject.iterateNext().textContent;
-
-  newItem.pages = Zotero.Utilities.trim(pages);
-
-  // save copy of entire web page as attachment
-	var attachments = new Array();
-  attachments.push({
-	title:titleFixed + " : Article webpage",
-	mimeType:"text/html",
-	url:doc.location.href
-  });
-
-  // find image scans and add as attachments
-  myXPath       = '//img[@class="veridianimage"]/@src';
-  myXPathObject = doc.evaluate(myXPath, doc, null, XPathResult.ANY_TYPE, null);
-  var imgSrc;
-  var imgUrl;
-  var imgNo = 0;
-  while (imgSrc = myXPathObject.iterateNext() ) {
-	  imgUrl = "http://paperspast.natlib.govt.nz" + imgSrc.textContent;
-	  attachments.push({
-		  title: titleFixed + " : Scan image part " + ++imgNo,
-		  mimeType: "image/gif",
-		  url: imgUrl
+	item.url = ZU.xpathText(doc, '//div[@id="researcher-tools-tab"]/input/@value');
+	
+	item.attachments.push({
+		title: "Snapshot",
+		document: doc
 	});
-  }
-  newItem.attachments = attachments;
-  // finish
-  newItem.complete();
+	
+	item.complete();
 }
 /** BEGIN TEST CASES **/
 var testCases = [
@@ -164,34 +158,109 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&cl=search&d=EP19440218.2.61&srpos=7&e=-------10--1----0argentina--",
+		"url": "https://paperspast.natlib.govt.nz/newspapers/EP19440218.2.61",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Coup in Argentina",
 				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "1944-02-18",
+				"libraryCatalog": "Papers Past",
+				"pages": "5",
+				"publicationTitle": "Evening Post",
+				"url": "http://paperspast.natlib.govt.nz/newspapers/EP19440218.2.61",
 				"attachments": [
 					{
-						"title": "Coup In Argentina : Article webpage",
-						"mimeType": "text/html",
-						"url": "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&cl=search&d=EP19440218.2.61&srpos=7&e=-------10--1----0argentina--&zto=1"
-					},
-					{
-						"title": "Coup In Argentina : Scan image part 1",
-						"mimeType": "image/gif",
-						"url": "http://paperspast.natlib.govt.nz/cgi-bin/imageserver/imageserver.pl?oid=EP19440218.2.61&area=1&width=350&color=32&ext=gif&key="
+						"title": "Snapshot"
 					}
 				],
-				"url": "http://paperspast.natlib.govt.nz/cgi-bin/paperspast?a=d&cl=search&d=EP19440218.2.61&srpos=7&e=-------10--1----0argentina--&zto=1",
-				"archive": "Papers Past",
-				"publicationTitle": "Evening Post",
-				"title": "Coup In Argentina",
-				"date": "1944-02-18",
-				"pages": "5",
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://paperspast.natlib.govt.nz/newspapers/NZH19360721.2.73.1?query=argentina",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "La Argentina",
+				"creators": [],
+				"date": "1936-07-21",
 				"libraryCatalog": "Papers Past",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"pages": "9",
+				"publicationTitle": "New Zealand Herald",
+				"url": "http://paperspast.natlib.govt.nz/newspapers/NZH19360721.2.73.1",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://paperspast.natlib.govt.nz/periodicals/FRERE18831101.2.2",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "\"The Law Within the Law.\"",
+				"creators": [],
+				"date": "1883-11-01",
+				"issue": "2",
+				"libraryCatalog": "Papers Past",
+				"pages": "3",
+				"publicationTitle": "Freethought Review",
+				"url": "http://paperspast.natlib.govt.nz/periodicals/FRERE18831101.2.2",
+				"volume": "I",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://paperspast.natlib.govt.nz/manuscripts/MCLEAN-1024774.2.1",
+		"items": [
+			{
+				"itemType": "letter",
+				"title": "1 Page Written 19 Jun 1873 by James Mackay in Hamilton City to Sir Donald Mclean in Wellington",
+				"creators": [
+					{
+						"firstName": "Mackay",
+						"lastName": "James",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "McLean",
+						"lastName": "Donald",
+						"creatorType": "recipient"
+					}
+				],
+				"date": "1873-06-19",
+				"language": "English",
+				"libraryCatalog": "Papers Past",
+				"url": "http://paperspast.natlib.govt.nz/manuscripts/MCLEAN-1024774.2.1",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

@@ -2,14 +2,14 @@
 	"translatorID": "f16931f0-372e-4197-8927-05d2ba7599d8",
 	"label": "Talis Aspire",
 	"creator": "Sebastian Karcher",
-	"target": "^https?://([^/]+\\.)?(((my)?reading|resource|lib|cyprus|)lists|aspire\\.surrey)\\..+/(lists|items)/",
+	"target": "^https?://([^/]+\\.)?(((my)?reading|resource|lib|cyprus|)lists|aspire\\.surrey|rl\\.talis)\\..+/(lists|items)/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 270,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2014-09-25 15:51:45"
+	"lastUpdated": "2017-06-28 05:41:09"
 }
 
 /*
@@ -94,7 +94,8 @@ function scrape(urls) {
 		translator.translate();
 	},
 	function() { if (urls.length) scrape(urls) });
-}/** BEGIN TEST CASES **/
+}
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -116,7 +117,8 @@ var testCases = [
 					}
 				],
 				"date": "2006",
-				"ISBN": "0415346665",
+				"ISBN": "9780415346665",
+				"edition": "2nd ed",
 				"libraryCatalog": "Talis Aspire",
 				"place": "London",
 				"publisher": "Routledge",
@@ -144,35 +146,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://lists.library.qmul.ac.uk/lists/34B2A243-2CDC-1F73-D096-997F10E49638.html",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "http://lists.library.qmul.ac.uk/items/10CFCD91-2171-A947-8436-2189D8DDE5BC.html",
-		"items": [
-			{
-				"itemType": "webpage",
-				"title": "The Metaphysical Elements of Ethics by Immanuel Kant (1780)",
-				"creators": [],
-				"accessDate": "CURRENT_TIMESTAMP",
-				"libraryCatalog": "Talis Aspire",
-				"url": "http://www.marxists.org/reference/subject/ethics/kant/morals/ch01.htm",
-				"attachments": [
-					{
-						"title": "Talis Aspire - Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://lists.library.qmul.ac.uk/items/66C2A847-80C3-8259-46AB-0DB8C0779068.html",
+		"url": "https://qmul.rl.talis.com/items/66C2A847-80C3-8259-46AB-0DB8C0779068.html",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -230,7 +204,7 @@ var testCases = [
 					}
 				],
 				"date": "0000 c",
-				"ISBN": "020130998X",
+				"ISBN": "9780201309980",
 				"libraryCatalog": "Talis Aspire",
 				"place": "Harlow",
 				"publisher": "Addison Wesley",
@@ -272,89 +246,10 @@ var testCases = [
 					}
 				],
 				"date": "2005",
-				"ISBN": "0443073848",
+				"ISBN": "9780443073847",
 				"libraryCatalog": "Talis Aspire",
 				"place": "Edinburgh",
 				"publisher": "Elsevier/Churchill Livingstone",
-				"attachments": [
-					{
-						"title": "Talis Aspire - Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://lists.lib.keele.ac.uk/items/239E38F7-E59C-5121-284A-1520A01AD73D.html",
-		"items": [
-			{
-				"itemType": "bookSection",
-				"title": "The Politics of War Memory and Commemoration",
-				"creators": [
-					{
-						"lastName": "Ashplant",
-						"firstName": "T.G. Dawson, G. & Roper, M.",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Ashplant",
-						"firstName": "T.G.",
-						"creatorType": "editor"
-					},
-					{
-						"lastName": "Dawson",
-						"firstName": "Graham",
-						"creatorType": "editor"
-					},
-					{
-						"lastName": "Roper",
-						"firstName": "Michael",
-						"creatorType": "editor"
-					}
-				],
-				"date": "2000",
-				"ISBN": "0415242614",
-				"bookTitle": "The politics of war memory and commemorations",
-				"libraryCatalog": "Talis Aspire",
-				"place": "London",
-				"publisher": "Routledge",
-				"attachments": [
-					{
-						"title": "Talis Aspire - Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://lists.hope.ac.uk/items/381FA0D7-CD14-2AA6-4ACC-1EDCF0A70B64.html",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "Versailles and after, 1919-33",
-				"creators": [
-					{
-						"lastName": "Henig",
-						"firstName": "Ruth",
-						"creatorType": "author"
-					}
-				],
-				"date": "1995",
-				"ISBN": "0415127106",
-				"libraryCatalog": "Talis Aspire",
-				"place": "London",
-				"publisher": "Routledge",
-				"volume": "Lancaster pamphlets",
 				"attachments": [
 					{
 						"title": "Talis Aspire - Snapshot",
@@ -388,6 +283,7 @@ var testCases = [
 				],
 				"date": "2010",
 				"ISBN": "9789963935918",
+				"edition": "3rd ed",
 				"libraryCatalog": "Talis Aspire",
 				"place": "Limassol, Cyprus",
 				"publisher": "A. Neocleous & Co. LLC",
@@ -405,7 +301,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://liblists.derby.ac.uk/items/F9F66F67-142C-B05D-7401-22037C676876.html",
+		"url": "https://derby.rl.talis.com/items/F9F66F67-142C-B05D-7401-22037C676876.html",
 		"items": [
 			{
 				"itemType": "book",
@@ -418,7 +314,8 @@ var testCases = [
 					}
 				],
 				"date": "2012",
-				"ISBN": "0857257730",
+				"ISBN": "9780857257734",
+				"edition": "5th ed",
 				"libraryCatalog": "Talis Aspire",
 				"place": "London",
 				"publisher": "Learning Matters",
@@ -441,7 +338,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://lancaster.myreadinglists.org/items/3ED977AC-FAFF-5832-77C6-957A3D325268.html",
+		"url": "https://lancaster.rl.talis.com/items/3ED977AC-FAFF-5832-77C6-957A3D325268.html",
 		"items": [
 			{
 				"itemType": "book",
@@ -454,7 +351,7 @@ var testCases = [
 					}
 				],
 				"date": "1995",
-				"ISBN": "0201633612",
+				"ISBN": "9780201633610",
 				"libraryCatalog": "Talis Aspire",
 				"place": "Reading, Mass",
 				"publisher": "Addison-Wesley",
@@ -492,7 +389,7 @@ var testCases = [
 					}
 				],
 				"date": "1990",
-				"ISBN": "1853151041",
+				"ISBN": "9781853151040",
 				"libraryCatalog": "Talis Aspire",
 				"place": "London",
 				"publisher": "Royal Society of Medicine Services",
@@ -506,6 +403,47 @@ var testCases = [
 				],
 				"tags": [],
 				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://hope.rl.talis.com/items/185C3A94-8D72-1B2C-B5FB-398F5BCEA12A.html?referrer=%2Flists%2FA557E6B2-78E0-2CBF-F807-894F87CB331B.html%23item-185C3A94-8D72-1B2C-B5FB-398F5BCEA12A",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Applied sport psychology: a case-based approach",
+				"creators": [
+					{
+						"lastName": "Hemmings",
+						"firstName": "Brian",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Holder",
+						"firstName": "Tim",
+						"creatorType": "author"
+					}
+				],
+				"date": "2009",
+				"ISBN": "9780470725733",
+				"libraryCatalog": "Talis Aspire",
+				"place": "Oxford",
+				"publisher": "Wiley-Blackwell",
+				"shortTitle": "Applied sport psychology",
+				"attachments": [
+					{
+						"title": "Talis Aspire - Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<p>pp. 1-4</p>"
+					}
+				],
 				"seeAlso": []
 			}
 		]

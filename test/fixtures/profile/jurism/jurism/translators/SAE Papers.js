@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-10-04 20:39:54"
+	"lastUpdated": "2017-07-07 05:40:25"
 }
 
 /*
@@ -86,8 +86,6 @@ function scrape(doc, url) {
 	translator.setDocument(doc);
 	translator.setHandler('itemDone', function(obj, item) {
 		if (item.itemType=="report"){
-			//map DOI to extra until we have DOI field for reports
-			if (item.DOI) item.extra = "DOI: " + item.DOI;
 			item.reportType = "SAE Technical Paper";
 			item.place = "Warrendale, PA";
 			item.publisher = "SAE International"
@@ -224,10 +222,6 @@ var testCases = [
 				"reportType": "SAE Technical Paper",
 				"url": "http://papers.sae.org/540090/",
 				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
 					{
 						"title": "Snapshot"
 					}

@@ -74,12 +74,12 @@ function doWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-    var translator = Zotero.loadTranslator('web');
-    // Embedded Metadata
-    translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-    //translator.setDocument(doc);
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
 
-    translator.setHandler('itemDone', function (obj, item) {
+	translator.setHandler('itemDone', function (obj, item) {
    		item.libraryCatalog = "Frontiers";
    		//no need for a Snapshot
    		for (var i = item.attachments.length -1; i>=0; i--) {
@@ -87,12 +87,12 @@ function scrape(doc, url) {
    				item.attachments.splice(i, 1);
    			}
    		}
-        item.complete();
-    });
+		item.complete();
+	});
 
-    translator.getTranslatorObject(function(trans) {
-        trans.doWeb(doc, url);
-    });
+	translator.getTranslatorObject(function(trans) {
+		trans.doWeb(doc, url);
+	});
 }
 
 /** BEGIN TEST CASES **/
@@ -129,14 +129,9 @@ var testCases = [
 				"language": "English",
 				"libraryCatalog": "Frontiers",
 				"publicationTitle": "Frontiers in Psychology",
-				"url": "http://journal.frontiersin.org/article/10.3389/fpsyg.2011.00326/abstract",
+				"url": "http://journal.frontiersin.org/article/10.3389/fpsyg.2011.00326/full",
 				"volume": "2",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					}
-				],
+				"attachments": [],
 				"tags": [
 					"Computational models",
 					"Computer Vision",
@@ -271,14 +266,9 @@ var testCases = [
 				"language": "English",
 				"libraryCatalog": "Frontiers",
 				"publicationTitle": "Frontiers in Microbiology",
-				"url": "http://journal.frontiersin.org/article/10.3389/fmicb.2014.00402/abstract",
+				"url": "http://journal.frontiersin.org/article/10.3389/fmicb.2014.00402/full",
 				"volume": "5",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					}
-				],
+				"attachments": [],
 				"tags": [
 					"Biofuels",
 					"Escherichia coli",

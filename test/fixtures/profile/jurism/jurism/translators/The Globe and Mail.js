@@ -149,7 +149,7 @@ function addNote(originalNote, newNote) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.theglobeandmail.com/news/toronto/doug-ford-says-hes-not-yet-sure-about-his-political-future/article21428180/",
+		"url": "https://www.theglobeandmail.com/news/toronto/doug-ford-says-hes-not-yet-sure-about-his-political-future/article21428180/",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -171,7 +171,7 @@ var testCases = [
 				"language": "en-ca",
 				"libraryCatalog": "The Globe and Mail",
 				"section": "news",
-				"url": "http://www.theglobeandmail.com/news/toronto/doug-ford-says-hes-not-yet-sure-about-his-political-future/article21428180/",
+				"url": "https://www.theglobeandmail.com/news/toronto/doug-ford-says-hes-not-yet-sure-about-his-political-future/article21428180/",
 				"attachments": [
 					{
 						"title": "The Globe and Mail Snapshot"
@@ -188,7 +188,7 @@ var testCases = [
 				],
 				"notes": [
 					{
-						"note": "Related URL: http://www.theglobeandmail.com/news/toronto/doug-ford-says-ontario-pc-leadership-bid-is-on-the-table/article21358827/, http://www.theglobeandmail.com/news/toronto/uniting-a-divided-toronto-will-be-a-key-task-for-torys-transition-team/article21359883/, http://www.theglobeandmail.com/news/toronto/a-chuckling-ford-on-his-mayoralty-it-will-definitely-be-remembered/article21414526/"
+						"note": "Related URL: https://www.theglobeandmail.com/news/toronto/doug-ford-says-ontario-pc-leadership-bid-is-on-the-table/article21358827/, https://www.theglobeandmail.com/news/toronto/uniting-a-divided-toronto-will-be-a-key-task-for-torys-transition-team/article21359883/, https://www.theglobeandmail.com/news/toronto/a-chuckling-ford-on-his-mayoralty-it-will-definitely-be-remembered/article21414526/"
 					}
 				],
 				"seeAlso": []
@@ -197,7 +197,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.theglobeandmail.com/search/?q=nuclear",
+		"url": "https://www.theglobeandmail.com/search/?q=nuclear",
 		"items": "multiple"
 	}
 ]

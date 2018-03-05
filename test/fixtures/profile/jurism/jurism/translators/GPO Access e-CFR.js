@@ -88,47 +88,45 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.ecfr.gov/cgi-bin/retrieveECFR?gp=&SID=26a49dfbb6ed6cce629ec44a19c7fe94&r=PART&n=13y1.0.1.1.2",
+		"url": "https://www.ecfr.gov/cgi-bin/retrieveECFR?gp=&SID=26a49dfbb6ed6cce629ec44a19c7fe94&r=PART&n=13y1.0.1.1.2",
 		"items": [
 			{
 				"itemType": "statute",
+				"nameOfAct": "e-CFR: Title 13: Business Credit and Assistance",
 				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://www.ecfr.gov/cgi-bin/retrieveECFR?gp=&SID=26a49dfbb6ed6cce629ec44a19c7fe94&r=PART&n=13y1.0.1.1.2",
 				"code": "Electronic Code of Federal Regulations",
-				"language": "en-US",
-				"title": "e-CFR: Title 13: Business Credit and Assistance",
 				"codeNumber": "Title 13: Business Credit and Assistance",
-				"section": "Part 101—Administration",
-				"history": "Source: 61 FR 2394, Jan. 26, 1996, unless otherwise noted.",
 				"extra": "Authority: 5 U.S.C. 552 and App. 3, secs. 2, 4(a), 6(a), and 9(a)(1)(T); 15 U.S.C. 633, 634, 687; 31 U.S.C. 6506; 44 U.S.C. 3512; 42 U.S.C. 6307(d); 15 U.S.C. 657h; E.O. 12372 (July 14, 1982), 47 FR 30959, 3 CFR, 1982 Comp., p. 197, as amended by E.O. 12416 (April 8, 1983), 48 FR 15887, 3 CFR, 1983 Comp., p. 186.",
-				"libraryCatalog": "GPO Access e-CFR",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "e-CFR"
+				"history": "Source: 61 FR 2394, Jan. 26, 1996, unless otherwise noted.",
+				"language": "en-US",
+				"section": "Part 101—Administration",
+				"shortTitle": "e-CFR",
+				"url": "https://www.ecfr.gov/cgi-bin/retrieveECFR?gp=&SID=26a49dfbb6ed6cce629ec44a19c7fe94&r=PART&n=13y1.0.1.1.2",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.ecfr.gov/cgi-bin/text-idx?c=ecfr&SID=26a49dfbb6ed6cce629ec44a19c7fe94&tpl=/ecfrbrowse/Title02/2cfr376_main_02.tpl",
+		"url": "https://www.ecfr.gov/cgi-bin/text-idx?c=ecfr&SID=26a49dfbb6ed6cce629ec44a19c7fe94&tpl=/ecfrbrowse/Title02/2cfr376_main_02.tpl",
 		"items": [
 			{
 				"itemType": "statute",
+				"nameOfAct": "e-CFR: TITLE 2—Grants and Agreements",
 				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://www.ecfr.gov/cgi-bin/text-idx?c=ecfr&SID=26a49dfbb6ed6cce629ec44a19c7fe94&tpl=/ecfrbrowse/Title02/2cfr376_main_02.tpl",
 				"code": "Electronic Code of Federal Regulations",
-				"language": "en-US",
 				"codeNumber": "TITLE 2—Grants and Agreements",
+				"language": "en-US",
 				"section": "Part 376—Nonprocurement Debarment and Suspension",
 				"shortTitle": "e-CFR",
-				"nameOfAct": "e-CFR: TITLE 2—Grants and Agreements"
+				"url": "https://www.ecfr.gov/cgi-bin/text-idx?c=ecfr&SID=26a49dfbb6ed6cce629ec44a19c7fe94&tpl=/ecfrbrowse/Title02/2cfr376_main_02.tpl",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

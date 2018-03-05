@@ -557,6 +557,32 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "search",
+		"input": {
+			"DOI": "10.3239/9783656578857"
+		},
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "The Iraq War 2003 - A Just or Unjust War?",
+				"creators": [
+					{
+						"firstName": "Dennis",
+						"lastName": "Trom",
+						"creatorType": "author"
+					}
+				],
+				"DOI": "10.3239/9783656578857",
+				"libraryCatalog": "mEDRA",
+				"url": "http://www.grin.com/en/e-book/267324/the-iraq-war-2003-a-just-or-unjust-war",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

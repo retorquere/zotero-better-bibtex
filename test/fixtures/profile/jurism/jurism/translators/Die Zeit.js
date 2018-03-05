@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-12 05:37:03"
+	"lastUpdated": "2017-05-23 21:14:22"
 }
 
 /*
@@ -126,6 +126,7 @@ function scrape(doc, url){
 	
 	newItem.publicationTitle = "Die Zeit";
 	newItem.ISSN = "0044-2070";
+	newItem.language = "de-DE";
 	newItem.place = "Hamburg";
 	
 	var keywordsString = ZU.xpathText(doc, '//meta[@name="keywords"]/@content');
@@ -170,6 +171,7 @@ var testCases = [
 				"date": "2011-09-04",
 				"ISSN": "0044-2070",
 				"abstractNote": "Die von Gadhafi-Anhängern geführte Stadt ist von Rebellentruppen eingekreist. Gespräche über eine friedliche Übergabe sind gescheitert, ein Angriff steht offenbar bevor.",
+				"language": "de-DE",
 				"libraryCatalog": "Die Zeit",
 				"place": "Hamburg",
 				"publicationTitle": "Die Zeit",
@@ -209,6 +211,7 @@ var testCases = [
 				"date": "2011-09-01",
 				"ISSN": "0044-2070",
 				"abstractNote": "Tschechow und Robben, Drama im Flutlicht und Wahrhaftigkeit bei der Arbeit. Der Fußballprofi und Autor Philipp Lahm im Gespräch mit dem Schriftsteller und Fußballer Moritz Rinke",
+				"language": "de-DE",
 				"libraryCatalog": "Die Zeit",
 				"place": "Hamburg",
 				"publicationTitle": "Die Zeit",
@@ -275,6 +278,7 @@ var testCases = [
 				"date": "2009-03-05",
 				"ISSN": "0044-2070",
 				"abstractNote": "Ein Iraner in Wien. Der Fotograf  Daniel Shaked, 31, gibt Österreichs einziges Hip-Hop-Magazin heraus",
+				"language": "de-DE",
 				"libraryCatalog": "Die Zeit",
 				"place": "Hamburg",
 				"publicationTitle": "Die Zeit",

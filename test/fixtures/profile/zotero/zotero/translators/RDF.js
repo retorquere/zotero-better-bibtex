@@ -13,7 +13,7 @@
 	"inRepository": true,
 	"translatorType": 1,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-05 19:32:38"
+	"lastUpdated": "2017-10-28 21:15:21"
 }
 
 /*
@@ -725,6 +725,10 @@ function detectType(newItem, node, ret) {
 function importItem(newItem, node) {
 	var ret = new Object();
 	var itemType = detectType(newItem, node, ret);
+	var isZoteroRDF = false;
+	if (getFirstResults(node, [n.z+"itemType", n.z+"type"], true)) {
+		isZoteroRDF = true;
+	}
 	newItem.itemType = exports.itemType || itemType;
 	var container = ret.container;
 	var isPartOf = ret.isPartOf;
@@ -1044,7 +1048,12 @@ function importItem(newItem, node) {
 	// description/attachment note
 	if(newItem.itemType == "attachment") {
 		newItem.note = getFirstResults(node, [n.dc+"description", n.dc1_0+"description", n.dcterms+"description"], true);
-	} else if (!newItem.abstractNote) {
+	}
+	// extra for Zotero RDF
+	else if (isZoteroRDF) {
+		newItem.extra = getFirstResults(node, [n.dc+"description"], true);
+	}
+	else if (!newItem.abstractNote) {
 		newItem.abstractNote = getFirstResults(node, [n.dc+"description", n.dcterms+"description"], true);
 	}
 	
@@ -1056,7 +1065,7 @@ function importItem(newItem, node) {
 		var type = Zotero.RDF.getTargets(referentNode, rdf+"type");
 		if(type && Zotero.RDF.getResourceURI(type[0]) == n.bib+"Memo") {
 			// if this is a memo
-			var note = new Array();
+			var note = {};
 			note.note = getFirstResults(referentNode, [rdf+"value", n.dc+"description", n.dc1_0+"description", n.dcterms+"description"], true);
 			if(note.note != undefined) {
 				// handle see also

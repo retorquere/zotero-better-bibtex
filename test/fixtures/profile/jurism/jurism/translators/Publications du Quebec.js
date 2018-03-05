@@ -2,14 +2,14 @@
 	"translatorID": "22d0bede-8db5-4656-9b9a-7d682ec1335d",
 	"label": "Publications du Québec",
 	"creator": "Marc Lajoie",
-	"target": "^https?://(www2\\.)?publicationsduquebec\\.gouv\\.qc\\.ca/",
+	"target": "^https?://(www\\.)?legisquebec\\.gouv\\.qc\\.ca/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsib",
-	"lastUpdated": "2014-07-01 19:40:02"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-03 15:38:52"
 }
 
 /*
@@ -30,38 +30,67 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-function getMultiple(doc, checkOnly) {
-	var res = ZU.xpath(doc, '//span[@class="texteNormalBleuB"]/a[2]');
-	if (!res.length) return false;
-	if (checkOnly) return true;
-
-	var items = {};
-	for (var i = 0; i < res.length; i++) {
-		items[res[i].href] = ZU.trimInternal(res[i].textContent);
-	}
-
-	return items;
-}
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/dynamicSearch/telecharge.php?') != -1) {
+	if (url.indexOf('/ShowDoc/') != -1) {
 		return "statute";
-	} else if (getMultiple(doc, true)) {
+	} else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+}
 
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//tr[contains(@class, "legisDocRow")]/td/a') ||
+		ZU.xpath(doc, '//tr/td/a[contains(@href, "ShowDoc/")]');
+	for (var i=0; i<rows.length; i++) {
+		var href;
+		if (rows[i].href) {
+			href = rows[i].href;
+		}
+		var onclick =  ZU.xpathText(rows[i], './@onclick');
+		if (onclick) {
+			var m = onclick.match(/showLeg\('(.*)', '', '(.*)', '(.*)'\);/);
+			if (m) {
+				href = m[2] + '/' + m[3] + '/' + m[1];
+			}
+		}
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+	} else {
+		scrape(doc, url);
+	}
 }
 
 function scrape(doc, url) {
 	var newItem = new Zotero.Item("statute");
 
-	var titleloi = doc.getElementsByClassName('Titreloi')[0]
-		|| doc.getElementsByClassName('Titrereg')[0];
-	titleloi = ZU.trimInternal(titleloi.textContent);
+	var titleloi = ZU.xpathText(doc, '//div[contains(@class, "titre-reglement")]');
+	titleloi = ZU.trimInternal(titleloi);
 	
-	var codeloi = doc.getElementsByClassName('Alpha')[0]
-		|| doc.getElementsByClassName('Libelle')[0];
-	codeloi = ZU.trimInternal(codeloi.textContent);
+	var codeloi = ZU.xpathText(doc, '//div[contains(@class, "Identification-Id")]');
+	if (codeloi) codeloi = ZU.trimInternal(codeloi);
 
 	newItem.title = titleloi;
 
@@ -88,23 +117,6 @@ function scrape(doc, url) {
 	newItem.complete();
 }
 
-function doWeb(doc, url) {
-	if (url.indexOf('/dynamicSearch/telecharge.php?') != -1) {
-		scrape(doc, url);
-	} else {
-		var items = getMultiple(doc);
-		Zotero.selectItems(items, function (items) {
-			if (!items) {
-				return true;
-			}
-			var articles = [];
-			for (var i in items) {
-				articles.push(i);
-			}
-			ZU.processDocuments(articles, scrape);
-		});
-	}
-}
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -114,7 +126,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=2&file=/B_1/B1.html",
+		"url": "http://legisquebec.gouv.qc.ca/fr/ShowDoc/cs/B-1",
 		"items": [
 			{
 				"itemType": "statute",
@@ -123,7 +135,7 @@ var testCases = [
 				"code": "RLRQ c B-1",
 				"language": "fr-CA",
 				"rights": "© Éditeur officiel du Québec",
-				"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=2&file=/B_1/B1.html",
+				"url": "http://legisquebec.gouv.qc.ca/fr/ShowDoc/cs/B-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -137,16 +149,16 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=2&file=/B_1/B1_A.html",
+		"url": "http://legisquebec.gouv.qc.ca/en/ShowDoc/cs/B-1",
 		"items": [
 			{
 				"itemType": "statute",
-				"nameOfAct": "An Act respecting the Barreau du Québec",
+				"nameOfAct": "Act respecting the Barreau du Québec",
 				"creators": [],
 				"code": "CQLR c B-1",
 				"language": "en-CA",
 				"rights": "© Éditeur officiel du Québec",
-				"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=2&file=/B_1/B1_A.html",
+				"url": "http://legisquebec.gouv.qc.ca/en/ShowDoc/cs/B-1",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -160,7 +172,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=3&file=/B_1/B1R3.HTM",
+		"url": "http://legisquebec.gouv.qc.ca/fr/ShowDoc/cr/B-1,%20r.%203",
 		"items": [
 			{
 				"itemType": "statute",
@@ -169,7 +181,7 @@ var testCases = [
 				"code": "RLRQ c B-1, r. 3",
 				"language": "fr-CA",
 				"rights": "© Éditeur officiel du Québec",
-				"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=3&file=/B_1/B1R3.HTM",
+				"url": "http://legisquebec.gouv.qc.ca/fr/ShowDoc/cr/B-1,%20r.%203",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -183,7 +195,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=3&file=/B_1/B1R3_A.HTM",
+		"url": "http://legisquebec.gouv.qc.ca/en/ShowDoc/cr/B-1,%20r.%203",
 		"items": [
 			{
 				"itemType": "statute",
@@ -192,7 +204,7 @@ var testCases = [
 				"code": "CQLR c B-1, r. 3",
 				"language": "en-CA",
 				"rights": "© Éditeur officiel du Québec",
-				"url": "http://www2.publicationsduquebec.gouv.qc.ca/dynamicSearch/telecharge.php?type=3&file=/B_1/B1R3_A.HTM",
+				"url": "http://legisquebec.gouv.qc.ca/en/ShowDoc/cr/B-1,%20r.%203",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -203,6 +215,11 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "http://legisquebec.gouv.qc.ca/en/BrowseChapter",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

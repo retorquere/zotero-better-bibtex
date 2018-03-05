@@ -2,7 +2,7 @@
 	{
 		"name": "CrossRef Lookup",
 		"alias": "CrossRef",
-		"icon": null,
+		"icon": "file:///home/emile/Juris-M/locate/CrossRef%20Lookup.ico",
 		"_urlTemplate": "https://crossref.org/openurl?{z:openURL}&pid=zter:zter321",
 		"description": "CrossRef Search Engine",
 		"hidden": false,

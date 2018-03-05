@@ -1,7 +1,5 @@
 declare const Translator: ITranslator
 
-declare const Zotero: any
-
 import YAML = require('js-yaml')
 
 import { debug } from './lib/debug.ts'
@@ -128,22 +126,20 @@ function date2csl(date) {
   }
 }
 
-Exporter.parseDate = date => {
-  const parsed = Zotero.BetterBibTeX.parseDate(date)
-
-  switch (parsed.type) {
+Exporter.date2CSL = date => {
+  switch (date.type) {
     case 'date':
     case 'season':
-      return [ date2csl(parsed) ]
+      return [ date2csl(date) ]
 
     case 'interval':
-      return [ date2csl(parsed.from), date2csl(parsed.to) ]
+      return [ date2csl(date.from), date2csl(date.to) ]
 
     case 'verbatim':
-      return [ { literal: parsed.verbatim } ]
+      return [ { literal: date.verbatim } ]
 
     default:
-      throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)
+      throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
   }
 }
 

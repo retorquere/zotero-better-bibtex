@@ -39,9 +39,10 @@ def jurism_latest():
       m = re.match(r'https://our.law.nagoya-u.ac.jp/download/client/Jurism-(.+)_linux-' + platform.machine() + '.tar.bz2', href)
       if m is None: return
       self.version = m.group(1)
-  response = urlopen('https://juris-m.github.io/downloads/')
+  response = urlopen('https://juris-m.github.io/downloads/').read()
+  if type(response) is bytes: response = response.decode("utf-8")
   parser = Parser()
-  parser.feed(response.read())
+  parser.feed(response)
   return parser.version
 
 def destinationType(name):
@@ -146,7 +147,7 @@ else:
 if os.path.exists(tarball):
   print('Retaining ' + tarball)
 else:
-  print("Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url)
+  print("Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
   urlretrieve (args.url, tarball)
 
 extracted = tempfile.mkdtemp()

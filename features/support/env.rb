@@ -412,13 +412,21 @@ module BBT
     profile["intl.accept_languages"] = 'fr, fr-fr, en-us, en'
   end
 
-  profile['extensions.zotero.dataDir'] = File.join(profile_tgt, ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero') # Juris-M doesn't support -datadir
+  if ENV['ZOTERO'] == 'jurism' # Juris-M doesn't support -datadir
+    STDERR.puts "WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34"
+    STDERR.flush
+    profile['extensions.zotero.dataDir'] = File.join(profile_tgt, 'jurism')
+    profile['extensions.zotero.useDataDir']  = true
+    profile['extensions.zotero.translators.better-bibtex.removeStock'] = false
+  else
+    profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
+  end
+
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
   profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
-  profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
   profile['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth][shorttitle][year]' unless ENV['FIRST_RUN'] == 'true'
 
   # speed up startup

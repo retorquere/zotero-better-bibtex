@@ -1,26 +1,51 @@
 {
 	"translatorID": "0abd577b-ec45-4e9f-9081-448737e2fd34",
 	"label": "UPCommons",
-	"creator": "Sebastian Karcher",
+	"creator": "Sebastian Karcher, Philipp Zumstein",
 	"target": "^https?://upcommons\\.upc\\.edu",
-	"minVersion": "2.1.9",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-02-08 12:01:01"
+	"lastUpdated": "2017-07-27 10:44:28"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2017 Sebastian Karcher, Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
 function detectWeb(doc, url) {
-	if (doc.evaluate('//table[@class="itemDisplayTable"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
-		var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
+	var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
+	if (url.indexOf('/handle/')>-1 && type) {
 		if(itemTypes[type]!=null) return itemTypes[type];
 		else return "document";
-	} else if (doc.evaluate('//table[@class="miscTable"]//td[2]', doc, null, XPathResult.ANY_TYPE, null).iterateNext() || doc.evaluate('//div[@id="main"]/ul[@class="browselist"]/li/a', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	} else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
+
 
 var itemTypes = {
 	"Article":"journalArticle",
@@ -31,49 +56,67 @@ var itemTypes = {
 	"Technical Report":"report"
 }
 
-function doWeb(doc,url)
-{
-	if (detectWeb(doc, url) == "multiple") {
-		var hits = {};
-		var urls = [];
-		var results = ZU.xpath(doc,"//tr/td[contains(@headers, 't')]/a");
-	
-		for (var i in results) {
-			hits[results[i].href] = results[i].textContent;
-		}
-		Z.selectItems(hits, function(items) {
-			if (items == null) return true;
-			for (var j in items) {
-				urls.push(j);
-			}
-			ZU.processDocuments(urls, function (myDoc) { 
-				doWeb(myDoc, myDoc.location.href) }, function () {Z.done()});
 
-			Z.wait();
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[contains(@class, "row")]//h4[contains(@class, "artifact-title")]/a[contains(@href, "/handle/")]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		// We call the Embedded Metadata translator to do the actual work
-		var translator = Zotero.loadTranslator("import");
-		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
-		translator.setHandler("itemDone", function(obj, item) {
-			 var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
-			 if(itemTypes[type]!=null) item.itemType = itemTypes[type];
-			 item.abstractNote=item.extra;
-			 item.extra = "";
-			item.complete();
-			});
-		translator.getTranslatorObject(function (obj) {
-				obj.doWeb(doc, url);
-				});
+		scrape(doc, url);
 	}
-};/** BEGIN TEST CASES **/
+}
+
+
+function scrape(doc, url) {
+	// We call the Embedded Metadata translator to do the actual work
+	var translator = Zotero.loadTranslator("web");
+	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
+	translator.setHandler("itemDone", function(obj, item) {
+		var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
+		if (itemTypes[type]) item.itemType = itemTypes[type];
+		item.abstractNote=item.extra;
+		item.extra = "";
+		item.complete();
+	});
+	translator.getTranslatorObject(function (obj) {
+		obj.doWeb(doc, url);
+	});
+	
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://upcommons.upc.edu/e-prints/handle/2117/14979",
+		"url": "http://upcommons.upc.edu/handle/2117/14979;jsessionid=AC2F8E675DC24715BCDE63BA8844A489?",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "The new pelagic operational observatory of the catalan sea (OOCS) for the multisensor coordinated measurement of atmospheric and oceanographic conditions",
 				"creators": [
 					{
 						"firstName": "Antonio",
@@ -96,8 +139,13 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Miguel Angel",
-						"lastName": "Ahumada Sempoal",
+						"firstName": "Ahumada",
+						"lastName": "Sempoal",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Miguel",
+						"lastName": "Angel",
 						"creatorType": "author"
 					},
 					{
@@ -121,7 +169,26 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
+				"date": "2011-12",
+				"DOI": "10.3390/s111211251",
+				"ISSN": "1424-8220",
+				"issue": "12",
+				"language": "eng",
+				"libraryCatalog": "upcommons.upc.edu",
+				"pages": "11251-11272",
+				"publicationTitle": "Sensors",
+				"rights": "Open Access",
+				"url": "http://upcommons.upc.edu/handle/2117/14979",
+				"volume": "11",
+				"attachments": [
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					},
+					{
+						"title": "Snapshot"
+					}
+				],
 				"tags": [
 					"Catalunya -- Oceanografia",
 					"Climatologia -- Mesurament",
@@ -139,33 +206,21 @@ var testCases = [
 					"Western Mediterranean Sea",
 					"Àrees temàtiques de la UPC::Enginyeria agroalimentària::Ciències de la terra i de la vida::Climatologia i meteorologia",
 					"Àrees temàtiques de la UPC::Enginyeria civil::Geologia::Oceanografia",
-					"Àrees temàtiques de la UPC::Enginyeria electrònica i telecomunicacions::Instrumentació i mesura::Sensors i actuadors"
+					"Àrees temàtiques de la UPC::Enginyeria electrònica::Instrumentació i mesura::Sensors i actuadors"
 				],
-				"seeAlso": [],
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot"
-					}
-				],
-				"rights": "Open Access",
-				"DOI": "10.3390/s111211251",
-				"abstractNote": "Postprint (published version)",
-				"language": "en",
-				"ISSN": "1424-8220",
-				"url": "http://upcommons.upc.edu/e-prints/handle/2117/14979",
-				"libraryCatalog": "upcommons.upc.edu",
-				"title": "The new pelagic operational observatory of the catalan sea (OOCS) for the multisensor coordinated measurement of atmospheric and oceanographic conditions",
-				"date": "2011-12"
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://upcommons.upc.edu/e-prints/handle/2117/5301",
+		"url": "http://upcommons.upc.edu/handle/2117/5301?",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://upcommons.upc.edu/discover?scope=/&query=zotero&submit=",
 		"items": "multiple"
 	}
 ]

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-12-27 20:25:06"
+	"lastUpdated": "2017-06-04 15:23:35"
 }
 
 /*********************** BEGIN FRAMEWORK ***********************/
@@ -674,7 +674,7 @@ attachments      : [{ url: FW.Url(),
   type: "text/html" }],
 creators         : FW.Xpath('//header/aside/p/a').text().cleanAuthor("author"),
 date             : FW.Url().match(/\d{4}\/\d{2}\/\d{2}/).replace(/\//g,"-"),
-tags             : FW.Xpath('//footer/p[@class="tags"]').text().split(/,\s*/),
+tags             : FW.Xpath('//ul[@id="sidebar"]//p[@class="tags"]').text().split(/,\s*/),
 blogTitle        : "Rock, Paper, Shotgun",
 language         : "en-US",
 abstractNote     : FW.Xpath('//meta[@name="description"]/@content').text()

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-19 22:12:20"
+	"lastUpdated": "2017-06-07 17:26:42"
 }
 
 /*
@@ -54,27 +54,27 @@ function scrape(doc, url) {
 	if (titleObject){
 		newItem.title = titleObject.textContent;
 	}
-	var author = '//p[@id="product_author"]';
-	var authorObject = doc.evaluate(author, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	var authorObject = ZU.xpathText(doc, '//p[@id="product_author"]');
 	if (authorObject){
-			authorObject = authorObject.textContent;
-			if (( authorObject.match(/By\s/)) && (authorObject.match(/\([A-Za-z]+\W[a-zA-Z]+\)/)  )){
-				authorObject = ZU.trimInternal(authorObject).replace(/By\s/, '').replace(/\([A-Za-z]+\W[a-zA-Z]+\)/, '').split(",");
-				var i = 0;
-				while (authorObject[i]){
-					newItem.creators.push(Zotero.Utilities.cleanAuthor(authorObject[i], "author"));   
-					i++;
-				}
+		//Z.debug(authorObject)
+		//e.g. By Astrid Lindgren, Lauren Child (Illustrated by), Tina Nunally (Translated by)    
+		authorObject = authorObject.replace(/By\s/, '').split(",");
+		for (var i=0; i<authorObject.length; i++) {
+			var indexParenthesis = authorObject[i].indexOf('(');
+			if (indexParenthesis == -1) {
+				indexParenthesis = authorObject[i].length;
 			}
-			else if (authorObject.match(/By\W/)) {
-				authorObject = authorObject.replace(/By\s/, '').split(",");
-				var i = 0;
-				while (authorObject[i]){
-				newItem.creators.push(Zotero.Utilities.cleanAuthor(authorObject[i], "author"));   
-				i++;
-				}
+			var authorString = authorObject[i].substr(0, indexParenthesis);
+			var stringParenthesis = authorObject[i].substr(indexParenthesis);
+			var func = "author";
+			if (stringParenthesis.toLowerCase().indexOf('illustrated by')>-1)  {
+				func = "illustrator";
 			}
-			
+			if (stringParenthesis.toLowerCase().indexOf('translated by')>-1)  {
+				func = "translator";
+			}
+			newItem.creators.push(Zotero.Utilities.cleanAuthor(authorString, func));
+		}
 		}
 	var date = '//table[@class="product_info_text"]/tbody/tr[3]';
 	var dateObject = doc.evaluate(date, doc, null, XPathResult.ANY_TYPE, null).iterateNext();
@@ -146,30 +146,39 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.fishpond.co.nz/Books/Pippi-Longstocking-Astrid-Lindgren/9780670014040?cf=3&rid=2103878406&i=3&keywords=lindgren",
+		"url": "http://www.fishpond.co.nz/Books/Pippi-Longstocking-Astrid-Lindgren-Lauren-Child-Illustrated-by/9780670014040?cf=3&rid=2103878406&i=3&keywords=lindgren",
 		"items": [
 			{
 				"itemType": "book",
+				"title": "Pippi Longstocking",
 				"creators": [
 					{
 						"firstName": "Astrid",
 						"lastName": "Lindgren",
 						"creatorType": "author"
+					},
+					{
+						"firstName": "Lauren",
+						"lastName": "Child",
+						"creatorType": "illustrator"
+					},
+					{
+						"firstName": "Tina",
+						"lastName": "Nunally",
+						"creatorType": "translator"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"abstractNote": "The definitive Pippi Longstocking, in paperback for the first time! For over sixty years, Astrid Lindgren's irrepressible red-haired, freckle-faced Pippi Longstocking has been a favorite of children all over the world. This enchanting edition features an all-new translation by award-winning Tiina Nunnally and full-color illustrations throughout by Lauren Child, creator of Charlie and Lola. Child's pictures are the perfect match for Lindgren's text. \"I discovered Pippi Longstocking when I was eight years old and found her completely inspiring . . . . an entirely free spirit,\" Lauren Child says. With a free-wheeling, playful design, this captivating new edition captures the essence of its beloved heroine.",
+				"libraryCatalog": "fishpond.co.nz",
 				"attachments": [
 					{
 						"title": "FishPond Record",
-						"mimeType": "text/html",
-						"url": "http://www.fishpond.co.nz/Books/Pippi-Longstocking-Astrid-Lindgren/9780670014040?cf=3&rid=2103878406&i=3&keywords=lindgren"
+						"mimeType": "text/html"
 					}
 				],
-				"title": "Pippi Longstocking",
-				"abstractNote": "The classic novel about the little girl with crazy red pigtails and a flair for the outrageous is available once again in this large-format gift edition. Full color.",
-				"libraryCatalog": "fishpond.co.nz"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -179,6 +188,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
+				"title": "The Best of Pippi Longstocking",
 				"creators": [
 					{
 						"firstName": "Astrid",
@@ -188,21 +198,20 @@ var testCases = [
 					{
 						"firstName": "Tony",
 						"lastName": "Ross",
-						"creatorType": "author"
+						"creatorType": "illustrator"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"abstractNote": "Pippi Longstocking is as popular as ever, with dedicated fans all over the world. She's funny, feisty, and incredibly strong and has the most amazing adventures ever! Here's a chance to read three books about Pippi in one volume - Pippi Longstocking, Pippi Goes Aboard, and Pippi in the South Seas. * Pippi Longstocking has phenomenal sales and has been in print continuously for over forty years * Illustrated throughout by best-selling artist, Tony Ross, who has illustrated a new cover for this edition * Astrid Lindgren has won numerous awards including the Hans Christian Andersen Award and the International Book Award.",
+				"libraryCatalog": "fishpond.co.nz",
 				"attachments": [
 					{
 						"title": "FishPond Record",
 						"mimeType": "text/html"
 					}
 				],
-				"title": "The Best of Pippi Longstocking",
-				"abstractNote": "Pippi Longstocking is as popular as ever, with dedicated fans all over the world. She's funny, feisty, and incredibly strong and has the most amazing adventures ever! Here's a chance to read three books about Pippi in one volume - Pippi Longstocking, Pippi Goes Aboard, and Pippi in the South Seas. * Pippi Longstocking has phenomenal sales and has been in print continuously for over forty years * Illustrated throughout by best-selling artist, Tony Ross, who has illustrated a new cover for this edition * Astrid Lindgren has won numerous awards including the Hans Christian Andersen Award and the International Book Award.",
-				"libraryCatalog": "fishpond.co.nz"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},

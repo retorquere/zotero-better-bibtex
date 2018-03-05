@@ -1,173 +1,124 @@
 {
 	"translatorID": "d84574f1-e4d6-4337-934f-bf9d01173bf0",
 	"label": "taz.de",
-	"creator": "Martin Meyerhoff",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://(www\\.)?taz\\.de",
-	"minVersion": "1.0",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-06-11 22:07:16"
+	"lastUpdated": "2017-07-10 16:55:04"
 }
 
 /*
-taz.de Translator
-Copyright (C) 2011 Martin Meyerhoff
+	***** BEGIN LICENSE BLOCK *****
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+	Copyright © 2017 Philipp Zumstein
+	
+	This file is part of Zotero.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
 
-/*
-This site is rather heterogenous when it comes to where the author is and all that.
-Whenever the script doesn't find something it just returns an empty field.
-Try on:
-http://www.taz.de/
-http://www.taz.de/1/archiv/detailsuche/?tx_hptazsearch_pi1[search_term]=Krise&tx_hptazsearch_pi2[submit_button].x=0&tx_hptazsearch_pi2[submit_button].y=0
-http://www.taz.de/1/debatte/kolumnen/artikel/1/haengt-sie-hoeher-1/
-*/
 
 function detectWeb(doc, url) {
-
-	var taz_ArticleTitle_XPath = ".//div[@class='sectbody']//h1";
-	var taz_Multiple_XPath = '//div[contains(@class, "first_page")]//a[h4]';
-	var taz_Search_XPath = '//div[contains(@class, "searchresults")]//a[h4]'   	
-	if (doc.evaluate(taz_ArticleTitle_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ){ 
-		//Zotero.debug("newspaperArticle");
+	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')=="article" ){ 
 		return "newspaperArticle";
-	} else if (doc.evaluate(taz_Multiple_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ){ 
-		//Zotero.debug("multiple");
-		return "multiple";
-	}  else if (doc.evaluate(taz_Search_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ){ 
-		//Zotero.debug("multiple");
+	} else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
 
-function authorCase(author) { // Turns All-Uppercase-Authors to normally cased Authors
-	var words = author.split(/\s|-/);
-	var authorFixed = '';
-	for (var i in words) {
-		words[i] = words[i][0].toUpperCase() + words[i].substr(1).toLowerCase();
-		authorFixed = authorFixed + words[i] + ' ';
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+
+	var rows = ZU.xpath(doc, '//div[contains(@class, "first_page") or contains(@class, "searchresults")]//a[h3 or h4]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-	return(authorFixed);
-}
-
-function scrape(doc, url) {
-
-	var newItem = new Zotero.Item("newspaperArticle");
-	newItem.url = doc.location.href; 
-
-	
-	// This is for the title!
-	
-	var title_XPath = '//title';
-	var title = doc.evaluate(title_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-	newItem.title = title.split(" - ")[0];
-	
-	// Summary
-	var description_XPath = '//meta[contains(@name, "description")]';
-	var description = doc.evaluate(description_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().content;
-	summary = description.replace(/\sVON.*$/g, '');
-	newItem.abstractNote = summary.replace(/KOMMENTAR|KOLUMNE.*$/g, '');
-	
-	// Authors 
-	var author_XPath = "//*[contains(@class, 'sectbody')]//a[contains(@class, 'author')]/h4";
-	if (doc.evaluate(author_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ) {
-		var author = doc.evaluate(author_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-	} else if (description.match(/^(KOMMENTAR)|(KOLUMNE)\sVON/)){
-		Zotero.debug(description);
-		author = description.replace(/^(KOMMENTAR)|(KOLUMNE)\sVON\s/, '');
-	} else {
-		var author = "";
-	}
-	author = author.replace(/^\s*|\s*$/g, '');
-	author = author.replace(".", ". "); // in case a space is missing.
-	author = author.replace("VON ", '');
-	author = author.replace(/\s+/g, ' ');
-	author = author.split(/\sund\s|\su\.\s|\,\s|\&/); 
-	for (var i in author) {
-		if (author[i].match(/\s/)) { // only names that contain a space!
-			author[i] = author[i].replace(/^\s*|\s*$/g, '');
-			author[i] = authorCase(author[i]);
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(author[i], "author"));
-		}
-	}
-	
-	
-	
-	// Section
-	var section_XPath = ".//*[contains(@class, 'selected')]/ul/li[contains(@class, 'selected')]";
-	if (doc.evaluate(section_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ) {
-		var section= doc.evaluate(section_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-		newItem.section = section;
-	}
-	
-	// Date 
-	var date_XPath = '//div[contains(@class, "sectbody")]/span[@class="date"]';
-	var date = ZU.xpathText(doc, date_XPath);
-	if (date) newItem.date = ZU.trimInternal(date);	
-
-	newItem.attachments.push({url:doc.location.href, title:doc.title, mimeType:"text/html"});
-	newItem.publicationTitle = "die tageszeitung"
-
-	newItem.complete();
-	
+	return found ? items : false;
 }
 
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		var taz_Multiple_XPath = '//div[contains(@class, "first_page")]//a[h4]';
-		var taz_Search_XPath = '//div[contains(@class, "searchresults")]//a[h4]'   
-
-		 if (doc.evaluate(taz_Multiple_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ){ 
-			var titles = doc.evaluate(taz_Multiple_XPath, doc, null, XPathResult.ANY_TYPE, null);
-		}  else if (doc.evaluate(taz_Search_XPath, doc, null, XPathResult.ANY_TYPE, null).iterateNext() ){ 
-			var titles = doc.evaluate(taz_Search_XPath, doc, null, XPathResult.ANY_TYPE, null);
-		}
-
-		
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			items[next_title.href] = next_title.innerHTML;
-			items[next_title.href] = items[next_title.href].replace(/(\<h4.*?\>.*?\<\/h4\>\<h3.*?\>)(.*)\<\/h3\>.*/, '$2');
-		}
-		items = Zotero.selectItems(items, function(items) {
-			if(!items) return true;
-
-			var articles = new Array();
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			ZU.processDocuments(articles, function(doc) { scrape(doc, doc.location.href) });
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
-}	
+}
+
+
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	// Embedded Metadata
+	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
+	//translator.setDocument(doc);
+	
+	translator.setHandler('itemDone', function (obj, item) {
+		item.publicationTitle = "Die Tageszeitung: taz";
+		item.ISSN = "0931-9085";
+		item.section = ZU.xpathText(doc, '//ul[contains(@class, "navbar")]/li[contains(@class, "selected")]');
+		//sometimes taz puts itself as author
+		for (var i=0; i<item.creators.length; i++) {
+			if (item.creators[i].firstName && item.creators[i].lastName && item.creators[i].firstName == "taz die" && item.creators[i].lastName == "tageszeitung") {
+				item.creators.splice(i, 1);
+			}
+		}
+		
+		item.pages = ZU.xpathText(doc, '//div[contains(@class, "print-page")]//ul[contains(@class, "right")]/li[contains(@class, "page")]');
+		if (item.pages) {
+			item.pages = item.pages.replace('S.', '');
+		}
+		item.complete();
+	});
+
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "newspaperArticle";
+		trans.doWeb(doc, url);
+	});
+}
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.taz.de/!67936/",
+		"url": "http://www.taz.de/!5124174/",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
+				"title": "Kolumne Wortklauberei: Hängt sie höher!",
 				"creators": [
 					{
 						"firstName": "Josef",
@@ -175,24 +126,29 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2011-03-23T18:22:00+02:00",
+				"ISSN": "0931-9085",
+				"abstractNote": "Der deutsche Wald als Leistungsträger. Oder: zynisch Kranke auf freiem Fuß! Was ist mit der öffentlichen Sicherheit?",
+				"libraryCatalog": "www.taz.de",
+				"publicationTitle": "Die Tageszeitung: taz",
+				"section": "Gesellschaft",
+				"shortTitle": "Kolumne Wortklauberei",
+				"url": "http://www.taz.de/!5124174/",
 				"attachments": [
 					{
-						"title": "Wortklauberei: Hängt sie höher! - taz.de",
-						"mimeType": "text/html"
+						"title": "Snapshot"
 					}
 				],
-				"url": "http://www.taz.de/!67936/",
-				"title": "Wortklauberei: Hängt sie höher!",
-				"abstractNote": "Der deutsche Wald als Leistungsträger. Oder: zynisch Kranke auf freiem Fuß! Was ist mit der öffentlichen Sicherheit?",
-				"section": "Kolumnen",
-				"date": "23. 03. 2011",
-				"publicationTitle": "die tageszeitung",
-				"libraryCatalog": "taz.de",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Wortklauberei"
+				"tags": [
+					"Gesellschaft",
+					"Kolumnen",
+					"Nachrichten",
+					"News",
+					"tageszeitung",
+					"taz"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -205,6 +161,40 @@ var testCases = [
 		"type": "web",
 		"url": "http://www.taz.de/!s=bleibt/",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://www.taz.de/Archiv-Suche/!5421550&s=bleibt&SuchRahmen=Print/",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Briten machen dicht:Hering muss gesamteuropäisch bleiben",
+				"creators": [],
+				"date": "2017-06-28T00:00:00+01:00",
+				"ISSN": "0931-9085",
+				"abstractNote": "Das große linke Nachrichten-Portal der \"tageszeitung\" aus Berlin: Unabhängig dank mehr als 14.000 GenossInnen.",
+				"libraryCatalog": "www.taz.de",
+				"pages": "20",
+				"publicationTitle": "Die Tageszeitung: taz",
+				"section": "Archiv",
+				"shortTitle": "Briten machen dicht",
+				"url": "http://www.taz.de/!5421550/",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					"Archiv",
+					"Nachrichten",
+					"News",
+					"tageszeitung",
+					"taz"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

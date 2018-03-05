@@ -515,10 +515,9 @@ var testCases = [
 					}
 				],
 				"date": "2011",
-				"DOI": "10.1002/9781118269381.notes",
 				"ISBN": "9781118269381",
-				"accessDate": "CURRENT_TIMESTAMP",
 				"bookTitle": "The World is Open",
+				"extra": "DOI: 10.1002/9781118269381.notes",
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "427-467",
@@ -591,11 +590,10 @@ var testCases = [
 					}
 				],
 				"date": "2008",
-				"DOI": "10.1002/9781444304794.ch1",
 				"ISBN": "9781444304794",
-				"abstractNote": "This chapter contains sections titled:\n\n* Historical and Political Overview of the Period\n* Context11\n* Film Scenes: Close Readings\n* Directors (Life and Works)\n* Critical Commentary",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"abstractNote": "This chapter contains sections titled:\n\n\n*\nHistorical and Political Overview of the Period\n\n\n*\nContext11\n\n\n*\nFilm Scenes: Close Readings\n\n\n*\nDirectors (Life and Works)\n\n\n*\nCritical Commentary",
 				"bookTitle": "100 Years of Spanish Cinema",
+				"extra": "DOI: 10.1002/9781444304794.ch1",
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "1-20",
@@ -606,6 +604,10 @@ var testCases = [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -675,13 +677,16 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"rights": "Copyright © 2012 WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/pmic.201100327/abstract",
 				"volume": "12",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -734,13 +739,16 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"rights": "Copyright © 2012 WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/pmic.201100327/abstract",
 				"volume": "12",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -793,13 +801,16 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"rights": "Copyright © 2012 WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/pmic.201100327/abstract",
 				"volume": "12",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -852,13 +863,16 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "173-182",
 				"publicationTitle": "PROTEOMICS",
-				"rights": "Copyright © 2012 WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/pmic.201100327/abstract",
 				"volume": "12",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -897,11 +911,10 @@ var testCases = [
 					}
 				],
 				"date": "2002",
-				"DOI": "10.1002/3527603018.ch17",
 				"ISBN": "9783527603015",
 				"abstractNote": "* Immunoassay\n* Hochleistungsflüssigkeitschromatographie (HPLC)\n* Gaschromatographie\n* Medizinische Beurteilung und klinische Interpretation\n* Literatur",
-				"accessDate": "CURRENT_TIMESTAMP",
 				"bookTitle": "Klinisch-toxikologische Analytik",
+				"extra": "DOI: 10.1002/3527603018.ch17",
 				"language": "de",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "365-370",
@@ -912,6 +925,10 @@ var testCases = [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -945,15 +962,11 @@ var testCases = [
 				"DOI": "10.1111/j.1468-5930.2011.00548.x",
 				"ISSN": "1468-5930",
 				"abstractNote": "The possibility of using private military and security companies to bolster the capacity to undertake intervention for human rights purposes (humanitarian intervention and peacekeeping) has been increasingly debated. The focus of such discussions has, however, largely been on practical issues and the contingent problems posed by private force. By contrast, this article considers the principled case for privatising humanitarian intervention. It focuses on two central issues. First, does outsourcing humanitarian intervention to private military and security companies pose some fundamental, deeper problems in this context, such as an abdication of a state's duties? Second, on the other hand, is there a case for preferring these firms to other, state-based agents of humanitarian intervention? For instance, given a state's duties to their own military personnel, should the use of private military and security contractors be preferred to regular soldiers for humanitarian intervention?",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"bookTitle": "Journal of Applied Philosophy",
 				"issue": "1",
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "1-18",
 				"publicationTitle": "Journal of Applied Philosophy",
-				"publisher": "Blackwell Publishing Ltd",
-				"rights": "Published 2011. This article is a U.S. Government work and is in the public domain in the USA.",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1468-5930.2011.00548.x/abstract",
 				"volume": "29",
 				"attachments": [
@@ -995,15 +1008,12 @@ var testCases = [
 				"DOI": "10.1111/j.1540-6261.1986.tb04559.x",
 				"ISSN": "1540-6261",
 				"abstractNote": "Capital gains taxes create incentives to trade. Our major finding is that turnover is higher for winners (stocks, the prices of which have increased) than for losers, which is not consistent with the tax prediction. However, the turnover in December and January is evidence of tax-motivated trading; there is a relatively high turnover for losers in December and for winners in January. We conclude that taxes influence turnover, but other motives for trading are more important. We were unable to find evidence that changing the length of the holding period required to qualify for long-term capital gains treatment affected turnover.",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"bookTitle": "The Journal of Finance",
 				"issue": "4",
+				"journalAbbreviation": "The Journal of Finance",
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "951-974",
 				"publicationTitle": "The Journal of Finance",
-				"publisher": "Blackwell Publishing Ltd",
-				"rights": "1986 The American Finance Association",
 				"shortTitle": "Volume for Winners and Losers",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1540-6261.1986.tb04559.x/abstract",
 				"volume": "41",
@@ -1011,6 +1021,10 @@ var testCases = [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [],
@@ -1048,7 +1062,6 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "165-168",
 				"publicationTitle": "Angewandte Chemie International Edition",
-				"rights": "© 2000 WILEY-VCH Verlag GmbH, Weinheim, Fed. Rep. of Germany",
 				"shortTitle": "Phosphane-Free Palladium-Catalyzed Coupling Reactions",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/(SICI)1521-3773(20000103)39:1<165::AID-ANIE165>3.0.CO;2-B/abstract",
 				"volume": "39",
@@ -1056,6 +1069,10 @@ var testCases = [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
@@ -1092,20 +1109,21 @@ var testCases = [
 				"DOI": "10.1002/jhet.5570200408",
 				"ISSN": "1943-5193",
 				"abstractNote": "The representative mono- and dialkyl-substituted derivatives of 4-carbamoylimidazolium-5-olate (1) were synthesized unequivocally. On the basis of their spectral data for ultraviolet absorption spectra in acidic, basic and neutral solutions, we have found some spectral characteristics which make it facile to clarify the position of substituents.",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"bookTitle": "Journal of Heterocyclic Chemistry",
 				"issue": "4",
+				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "875-885",
 				"publicationTitle": "Journal of Heterocyclic Chemistry",
-				"publisher": "Wiley-Blackwell",
-				"rights": "Copyright © 1983 Journal of Heterocyclic Chemistry",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/jhet.5570200408/abstract",
 				"volume": "20",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [],
@@ -1148,13 +1166,16 @@ var testCases = [
 				"libraryCatalog": "Wiley Online Library",
 				"pages": "25-99",
 				"publicationTitle": "New Directions for Evaluation",
-				"rights": "© Wiley Periodicals, Inc., and the American Evaluation Association",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/ev.20077/abstract",
 				"volume": "2014",
 				"attachments": [
 					{
 						"title": "Snapshot",
 						"mimeType": "text/html"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [],
@@ -1195,10 +1216,10 @@ var testCases = [
 				"date": "2013/01/31",
 				"abstractNote": "Background\nBackground\n\nThis is one of three Cochrane reviews that examine the role of the telephone in HIV/AIDS services. Both in developed and developing countries there is a large proportion of people who do not know they are infected with HIV. Knowledge of one's own HIV serostatus is necessary to access HIV support, care and treatment and to prevent acquisition or further transmission of HIV. Using telephones instead of face-to-face or other means of HIV test results delivery could lead to more people receiving their HIV test results.\n\nObjectives\nObjectives\n\nTo assess the effectiveness of telephone use for delivery of HIV test results and post-test counselling.\nTo evaluate the effectiveness of delivering HIV test results by telephone, we were interested in whether they can increase the proportion of people who receive their HIV test results and the number of people knowing their HIV status.\n\nSearch methods\nSearch methods\n\nWe searched The Cochrane Central Register of Controlled Trials (CENTRAL), MEDLINE, PubMed Central, PsycINFO, ISI Web of Science, Cumulative Index to Nursing & Allied Health (CINAHL), WHOs The Global Health Library and Current Controlled Trials from 1980 to June 2011. We also searched grey literature sources such as Dissertation Abstracts International,CAB Direct Global Health, OpenSIGLE, The Healthcare Management Information Consortium, Google Scholar, Conference on Retroviruses and Opportunistic Infections, International AIDS Society and AEGIS Education Global Information System, and reference lists of relevant studies for this review.\n\nSelection criteria\nSelection criteria\n\nRandomised controlled trials (RCTs), quasi-randomised controlled trials (qRCTs), controlled before and after studies (CBAs), and interrupted time series (ITS) studies comparing the effectiveness of telephone HIV test results notification and post-test counselling to face-to-face or other ways of HIV test result delivery in people regardless of their demographic characteristics and in all settings.\n\nData collection and analysis\nData collection and analysis\n\nTwo reviewers independently searched, screened, assessed study quality and extracted data. A third reviewer resolved any disagreement.\n\nMain results\nMain results\n\nOut of 14 717 citations, only one study met the inclusion criteria; an RCT conducted on homeless and high-risk youth between September 1998 and October 1999 in Portland, United States. Participants (n=351) were offered counselling and oral HIV testing and were randomised into face-to-face (n=187 participants) and telephone (n=167) notification groups. The telephone notification group had the option of receiving HIV test results either by telephone or face-to-face. Overall, only 48% (n=168) of participants received their HIV test results and post-test counselling. Significantly more participants received their HIV test results in the telephone notification group compared to the face-to-face notification group; 58% (n=106) vs. 37% (n=62) (p < 0.001). In the telephone notification group, the majority of participants who received their HIV test results did so by telephone (88%, n=93). The study could not offer information about the effectiveness of telephone HIV test notification with HIV-positive participants because only two youth tested positive and both were assigned to the face-to-face notification group. The study had a high risk of bias.\n\nAuthors' conclusions\nAuthors' conclusions\n\nWe found only one eligible study. Although this study showed the use of the telephone for HIV test results notification was more effective than face-to-face delivery, it had a high-risk of bias. The study was conducted about 13 years ago in a high-income country, on a high-risk population, with low HIV prevalence, and the applicability of its results to other settings and contexts is unclear. The study did not provide information about telephone HIV test results notification of HIV positive people since none of the intervention group participants were HIV positive. We found no information about the acceptability of the intervention to patients’ and providers’, its economic outcomes or potential adverse effects. There is a need for robust evidence from various settings on the effectiveness of telephone use for HIV test results notification.",
 				"bookTitle": "Cochrane Database of Systematic Reviews",
+				"extra": "DOI: 10.1002/14651858.CD009192.pub2",
 				"language": "en",
 				"libraryCatalog": "Wiley Online Library",
 				"publisher": "John Wiley & Sons, Ltd",
-				"rights": "Copyright © 2013 The Cochrane Collaboration. Published by John Wiley & Sons, Ltd.",
 				"url": "http://onlinelibrary.wiley.com/doi/10.1002/14651858.CD009192.pub2/abstract",
 				"attachments": [
 					{

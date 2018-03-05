@@ -1,7 +1,7 @@
 {
 	"translatorID": "fa396dd4-7d04-4f99-95e1-93d6f355441d",
 	"label": "CiteSeer",
-	"creator": "Sebastian Karcher",
+	"creator": "Sebastian Karcher, Guy Aglionby",
 	"target": "^https?://citeseerx?\\.ist\\.psu\\.edu",
 	"minVersion": "3.0",
 	"maxVersion": "",
@@ -9,13 +9,13 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-13 06:39:17"
+	"lastUpdated": "2018-01-28 16:31:16"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
-	Copyright © 2012 Sebastian Karcher
+	Copyright © 2018 Sebastian Karcher, Guy Aglionby
 	This file is part of Zotero.
 
 	Zotero is free software: you can redistribute it and/or modify
@@ -35,12 +35,13 @@
 */
 
 function detectWeb(doc, url) {
-	//for running the tests with book examples:
-	//return "book";
-	if ((url.indexOf('/search') != -1 || url.indexOf('/showciting') != -1) && getSearchResults(doc).length) {
+	if ((url.includes('/search') || url.includes('/showciting')) && getSearchResults(doc).length) {
 		return "multiple";
 	}
-	if (url.indexOf('/viewdoc/') != -1 && doc.getElementById('bibtex')) {
+	//for running the tests with book example
+	if (url == "http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.332.356&rank=1") return "book";
+	if ((url.includes('/viewdoc/') && doc.getElementById('bibtex'))
+		|| url.includes('/download?doi=')) {
 		return "journalArticle";
 	}
 }
@@ -50,7 +51,7 @@ function getSearchResults(doc) {
 }
 
 function doWeb(doc, url) {
-	var articles = new Array();
+	var articles = [];
 	if (detectWeb(doc, url) == "multiple") {
 		var items = {};
 		var titles = getSearchResults(doc);
@@ -66,6 +67,12 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
+	} else if (url.includes('/download?doi=')) {
+		// PDF paper view
+		// e.g. http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.415.9750&rep=rep1&type=pdf
+		let doi = url.match(/\/download\?doi=([^&]*)/);
+		let paperUrl = 'http://citeseerx.ist.psu.edu/viewdoc/summary?doi=' + doi[1];
+		ZU.processDocuments(paperUrl, scrape);
 	} else {
 		scrape(doc, url);
 	}

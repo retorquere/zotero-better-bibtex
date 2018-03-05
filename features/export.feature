@@ -230,6 +230,11 @@ Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #8
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
+@922
+Scenario: CSL YAML export of date with original publication date in [brackets] #922
+  When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
+  Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
+
 @856
 Scenario: Quotes around last names should be removed from citekeys #856
   When I import 1 reference from "export/Quotes around last names should be removed from citekeys #856.json"

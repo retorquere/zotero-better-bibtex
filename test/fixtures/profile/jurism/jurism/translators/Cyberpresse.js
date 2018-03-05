@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2016-11-01 18:26:40"
+	"lastUpdated": "2017-06-07 05:11:00"
 }
 
 /*********************** BEGIN FRAMEWORK ***********************/
@@ -676,7 +676,7 @@ title            : FW.Xpath('//div[contains(@class, "article-header")]/h1').text
 attachments      : [{ url: FW.Url(),
   title:  "CyberPresse.ca Snapshot",
   type: "text/html" }],
-creators         : FW.Xpath('//table[contains(@class, "auteurs")]//p//strong').text().cleanAuthor("author"),
+creators         : FW.Xpath('//div[contains(@class, "infosAuteur")]//strong').text().cleanAuthor("author"),
 date             : FW.Xpath('//div[contains(@class, "article-header")]//strong').text().remove(/Publié le|à\s.+/g),
 abstractNote     : FW.Xpath('//div[@class="excerpt"]/p').text(),
 language		 : FW.Xpath('//meta[@property="og:locale"]/@content').text(),

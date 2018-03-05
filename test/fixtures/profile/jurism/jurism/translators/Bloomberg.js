@@ -85,8 +85,8 @@ function scrape(doc, url) {
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
 	translator.setHandler('itemDone', function (obj, item) {
 		//add date from microdata if not in header	
-        	if (!item.date) item.date = ZU.xpathText(doc, '//main//time[@itemprop="datePublished"]/@datetime');
-        	item.complete();
+			if (!item.date) item.date = ZU.xpathText(doc, '//main//time[@itemprop="datePublished"]/@datetime');
+			item.complete();
 	});
 	translator.getTranslatorObject(function(trans) {
 		trans.itemType = type;
@@ -118,7 +118,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-01-04T00:00:00.001Z",				
+				"date": "2012-01-04T00:00:00.001Z",
 				"abstractNote": "Analysts’ failure to foresee declining earnings per share for the biggest U.S. banks last year hasn’t stopped them from predicting an even bigger profit surge for 2012.",
 				"libraryCatalog": "www.bloomberg.com",
 				"publicationTitle": "Bloomberg.com",
@@ -153,24 +153,16 @@ var testCases = [
 				"date": "2012-01-05T00:01:34.000Z",
 				"abstractNote": "Jan. 5 (Bloomberg) -- “If you laid all the economists in",
 				"libraryCatalog": "www.bloomberg.com",
-				"publicationTitle": "Bloomberg View",
+				"publicationTitle": "Bloomberg.com",
 				"shortTitle": "Four Economists Come Together to Say ‘We Agree’",
-				"url": "http://www.bloombergview.com/articles/2012-01-05/four-economists-come-together-to-say-we-agree-business-class",
+				"url": "https://www.bloomberg.com/view/articles/2012-01-05/four-economists-come-together-to-say-we-agree-business-class",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"China",
-					"Economic Research",
-					"Economics",
-					"Exchange Rate",
-					"Harvard University",
-					"Media",
-					"Monetary Policy",
-					"Stocks",
-					"Tax Reform"
+					"world"
 				],
 				"notes": [],
 				"seeAlso": []
@@ -179,7 +171,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.bloomberg.com/news/videos/2016-09-08/how-to-capitalize-on-the-rotation-in-u-s-stocks",
+		"url": "https://www.bloomberg.com/news/videos/2016-09-08/how-to-capitalize-on-the-rotation-in-u-s-stocks",
 		"items": [
 			{
 				"itemType": "tvBroadcast",
@@ -188,14 +180,13 @@ var testCases = [
 				"abstractNote": "Tobias Levkovich, Citigroup's chief U.S. equity strategist, discusses the investment opportunities in U.S. stocks with Bloomberg's Vonnie Quinn and David Gura on \"Bloomberg Markets.\" (Source: Bloomberg)",
 				"libraryCatalog": "www.bloomberg.com",
 				"programTitle": "Bloomberg.com",
-				"url": "http://www.bloomberg.com/news/videos/2016-09-08/how-to-capitalize-on-the-rotation-in-u-s-stocks",
+				"url": "https://www.bloomberg.com/news/videos/2016-09-08/how-to-capitalize-on-the-rotation-in-u-s-stocks",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Citigroup Inc",
 					"Markets",
 					"Money",
 					"Stocks"

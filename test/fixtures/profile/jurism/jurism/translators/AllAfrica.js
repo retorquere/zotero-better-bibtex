@@ -699,7 +699,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2011-10-17T22:24:01-0400",
+				"date": "2011-10-18T02:24:01+0000",
 				"libraryCatalog": "AllAfrica",
 				"publicationTitle": "Institute for Security Studies (Tshwane/Pretoria)",
 				"shortTitle": "Angola",
@@ -730,7 +730,7 @@ var testCases = [
 				"itemType": "newspaperArticle",
 				"title": "Angola: Justice Minister On Voter's Registration Update",
 				"creators": [],
-				"date": "2011-10-04T05:49:38-0400",
+				"date": "2011-10-04T09:49:38+0000",
 				"libraryCatalog": "AllAfrica",
 				"publicationTitle": "Angola Press Agency (Luanda)",
 				"shortTitle": "Angola",

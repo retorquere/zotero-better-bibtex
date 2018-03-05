@@ -1,7 +1,5 @@
 declare const Translator: ITranslator
 
-declare const Zotero: any
-
 import { CSLExporter as Exporter } from './csl/csl.ts'
 
 function date2csl(date) {
@@ -28,34 +26,32 @@ function date2csl(date) {
   }
 }
 
-Exporter.parseDate = date => {
-  const parsed = Zotero.BetterBibTeX.parseDate(date)
-
-  switch (parsed.type) {
+Exporter.date2CSL = date => {
+  switch (date.type) {
     case 'date':
       return {
-        'date-parts': [ date2csl(parsed) ],
-        circa: (parsed.approximate || parsed.uncertain) ? true : undefined,
+        'date-parts': [ date2csl(date) ],
+        circa: (date.approximate || date.uncertain) ? true : undefined,
       }
 
     case 'interval':
       return {
-        'date-parts': [ date2csl(parsed.from), date2csl(parsed.to) ],
-        circa: (parsed.from.approximate || parsed.from.uncertain || parsed.to.approximate || parsed.to.uncertain) ? true : undefined,
+        'date-parts': [ date2csl(date.from), date2csl(date.to) ],
+        circa: (date.from.approximate || date.from.uncertain || date.to.approximate || date.to.uncertain) ? true : undefined,
       }
 
     case 'verbatim':
-      return { literal: parsed.verbatim }
+      return { literal: date.verbatim }
 
     case 'season':
       return {
-        'date-parts': [ [ parsed.year ] ],
-        season: parsed.season,
-        circa: (parsed.approximate || parsed.uncertain) ? true : undefined,
+        'date-parts': [ [ date.year ] ],
+        season: date.season,
+        circa: (date.approximate || date.uncertain) ? true : undefined,
       }
 
     default:
-      throw new Error(`Unexpected date type ${JSON.stringify(parsed)}`)
+      throw new Error(`Unexpected date type ${JSON.stringify(date)}`)
   }
 }
 

@@ -595,6 +595,7 @@ var testCases = [
 				"place": "Cambridge, Mass.",
 				"date": "1996",
 				"ISBN": "9780585030159",
+				"extra": "OCLC: 793205903",
 				"accessDate": "CURRENT_TIMESTAMP"
 			}
 		]
@@ -633,6 +634,7 @@ var testCases = [
 				"place": "Cambridge, Mass.",
 				"date": "1996",
 				"ISBN": "9780585030159",
+				"extra": "OCLC: 42854423",
 				"accessDate": "CURRENT_TIMESTAMP"
 			}
 		]

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-22 12:54:26"
+	"lastUpdated": "2018-02-01 20:30:42"
 }
 
 /*
@@ -87,9 +87,23 @@ function scrape(doc, url) {
 	}
 	var date = ZU.xpathText(doc, '//div[contains(@class,"permalink-tweet-container")]//span[@class="metadata"]/span[1]');
 	if (date) {
-		var m = date.match(/(\d\d:\d\d)\s*-\s*(.*)/);
-		if (m) {
-			item.date = ZU.strToISO(m[2]) + "T" + m[1];
+		// e.g. 10:22 AM - 1 Feb 2018
+		var m = date.split('-');
+		if (m.length == 2) {
+			// times with AM
+			if (m[0].includes("AM")) {
+				m[0] = m[0].replace("AM", "").trim();
+				if (m[0].indexOf(":")==1) m[0] = "0" + m[0];
+				m[0] = m[0].replace("12:", "00:");
+			}
+			// times with PM
+			if (m[0].includes("PM")) {
+				m[0] = m[0].replace("PM", "").replace(/\d+:/, function(matched) {
+					return (parseInt(matched)+12) + ":";
+				}).trim();
+				m[0] = m[0].replace("24:", "12:");
+			}
+			item.date = ZU.strToISO(m[1]) + "T" + m[0];
 		} else {
 			item.date = date;
 		}
@@ -142,6 +156,37 @@ var testCases = [
 					{
 						"title": "http://www.zotero.org/blog/announcing-zotero-3-0-beta-release/",
 						"snapshot": false
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://twitter.com/DieZeitansage/status/958792005034930176",
+		"items": [
+			{
+				"itemType": "blogPost",
+				"title": "Es ist 21:00 Uhr.",
+				"creators": [
+					{
+						"firstName": "",
+						"lastName": "Zeitansage",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-01-31T12:00",
+				"blogTitle": "@DieZeitansage",
+				"language": "de",
+				"shortTitle": "Es ist 21",
+				"url": "https://twitter.com/DieZeitansage/status/958792005034930176",
+				"websiteType": "Tweet",
+				"attachments": [
+					{
+						"title": "Snapshot"
 					}
 				],
 				"tags": [],

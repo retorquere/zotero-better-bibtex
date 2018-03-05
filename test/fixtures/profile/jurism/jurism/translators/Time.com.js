@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2016-06-14 03:54:31"
+	"lastUpdated": "2017-05-23 21:37:25"
 }
 
 function detectWeb(doc, url) {
@@ -64,6 +64,7 @@ function scrape(doc, url) {
 		item.publicationTitle = "Time";
 		item.url = url;
 		item.ISSN = "0040-781X";
+		item.language = "en-US";
 		
 		var authors = article.getElementsByClassName('byline');
 		if (authors.length) {
@@ -90,6 +91,7 @@ function scrape(doc, url) {
 			item.publicationTitle = "Time";
 			item.url = url;
 			item.ISSN = "0040-781X";
+			item.language = "en-US";
 			
 			var authors = ZU.xpathText(doc, '//meta[@name="byline"]/@content')
 				|| ZU.xpathText(doc, '//span[@class="author vcard"]/a', null, ' and ')
@@ -233,7 +235,7 @@ var testCases = [
 				"date": "Thursday, Nov. 17, 2011",
 				"ISSN": "0040-781X",
 				"abstractNote": "Battling debilitating congressional mandates and competition online, the USPS is closing thousands of post offices and struggling to find a place in the modern world. But there are people behind the scenes trying to save this American institution",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"language": "en-US",
 				"libraryCatalog": "content.time.com",
 				"publicationTitle": "Time",
 				"url": "http://content.time.com/time/nation/article/0,8599,2099187,00.html",
@@ -270,7 +272,7 @@ var testCases = [
 				"date": "Sunday, Mar. 04, 2012",
 				"ISSN": "0040-781X",
 				"abstractNote": "The month of March isn't really the heart of the tornado season but they have come fast and with awesome destruction.",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"language": "en-US",
 				"libraryCatalog": "content.time.com",
 				"publicationTitle": "Time",
 				"shortTitle": "On Scene in Indiana and Kentucky",
@@ -310,7 +312,7 @@ var testCases = [
 				],
 				"ISSN": "0040-781X",
 				"abstractNote": "Obama rejected any notion that his administration has not been in Israel's corner. “Over the last three years, as President of the United States, I have kept my commitments to the state of Israel.\" The President then ticked off the number of ways he has supported Israel in the last year.",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"language": "en-US",
 				"libraryCatalog": "swampland.time.com",
 				"publicationTitle": "Time",
 				"url": "http://swampland.time.com/2012/03/04/obama-courts-aipac-before-netanyahu-meeting/?iid=sl-main-lede",
@@ -352,7 +354,7 @@ var testCases = [
 				],
 				"ISSN": "0040-781X",
 				"abstractNote": "Despite signs that some housing markets are improving, the overall trend is for home prices (and values) to keep dropping—and dropping. As values shrink, more and more homeowners find themselves underwater, the unfortunate scenario in which one owes more on the mortgage than the home is worth.",
-				"accessDate": "CURRENT_TIMESTAMP",
+				"language": "en-US",
 				"libraryCatalog": "business.time.com",
 				"publicationTitle": "Time",
 				"shortTitle": "Struggling to Stay Afloat",

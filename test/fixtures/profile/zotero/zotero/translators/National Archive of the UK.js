@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcb",
-	"lastUpdated": "2014-09-11 06:28:15"
+	"lastUpdated": "2017-10-21 10:10:42"
 }
 
 /**
@@ -36,50 +36,56 @@ function detectWeb(doc, url) {
 }
 
 function scrape(doc, url) {
-	var id = url.match(/details\/r\/([A-Z0-9]+)/i)[1];
+	var id = url.match(/details\/r\/([A-Z\-0-9]+)/i)[1];
 	var reference = ZU.xpathText(doc, '//tr/th[contains(text(), "Reference")]/following-sibling::td')
 	var tags  = ZU.xpath(doc, '//span/a[@class="tagName"]');
 	
-//	In Case we should need it again, we're keeping the screen scraper
-/*	var item = new Zotero.Item("manuscript");
-	var title =  "The National Archive of the UK " + reference;
-	item.archiveLocation = reference;
-	item.title = title.replace(/&lt.+?&gt;/g, "").replace(/<.+?>/g, "");
-	item.language = ZU.xpathText(doc, '//tr/th[contains(text(), "Language")]/following-sibling::td');
-	item.date = ZU.xpathText(doc, '//tr/th[contains(text(), "Date")]/following-sibling::td');
-	item.abstractNote = ZU.xpathText(doc, '//tr/th[contains(text(), "Description")]/following-sibling::td').replace(/<p>/g, "\n").replace(/&lt;p&gt;/g, "\n").replace(/<.+?>/g, "");
-	item.archive = ZU.xpathText(doc, '//tr/th[contains(text(), "Held by")]/following-sibling::td');
-	item.attachments.push({url: url, title: "British National Archive - Link", mimeType: "text/html", snapshot: false});
-
-	for (var i in tags){
-		item.tags.push(tags[i].textContent);
-	}
-	item.complete(); 
-
-	XML Code - hopefully to be reused once API is sorted */
-	var xmlUrl = "http://discovery.nationalarchives.gov.uk/DiscoveryAPI/xml/informationasset/" + id;
-	Zotero.Utilities.doGet(xmlUrl, function (text) {
-		//Z.debug(text)
-		var docxml = (new DOMParser()).parseFromString(text, "text/xml");
-
-  	 	ns = {	
-  	 			"xsi" : "http://www.w3.org/2001/XMLSchema-instance",
-  	 			"xsd" : "http://www.w3.org/2001/XMLSchema"};
-		
+	var apiUrl = "http://discovery.nationalarchives.gov.uk/API/records/v1/details/" + id;
+	Zotero.Utilities.doGet(apiUrl, function (text) {
+		var data = JSON.parse(text);
+		//Z.debug(data);
 		var item = new Zotero.Item("manuscript");
-		var title = ZU.xpathText(docxml, '//Title', ns);
-		if (!title) title =  "The National Archive of the UK " + reference;
-		else item.archiveLocation = reference;
-		item.title = title.replace(/&lt.+?&gt;/g, "").replace(/<.+?>/g, "");
-		item.language = ZU.xpathText(docxml, '//Language');
-		item.date = ZU.xpathText(docxml, '//CoveringDates');
-		item.abstractNote = ZU.xpathText(docxml, '//ScopeContent/Description').replace(/<p>/g, "\n").replace(/&lt;p&gt;/g, "\n").replace(/<.+?>/g, "");
-		item.archive = ZU.xpathText(docxml, '//HeldBy/HeldBy');
-		item.type = ZU.xpathText(docxml, '//PhysicalDescriptionForm');
-		item.attachments.push({url: url, title: "British National Archive - Link", mimeType: "text/html", snapshot: false});
-		var corpauthors = ZU.xpath(docxml, '//CreatorName/Corporate_Body_Name_Text');
-		for (var i in corpauthors){
-			item.creators.push({ lastName:corpauthors[i].textContent, fieldMode: "1", creatorType: "contributor" });
+		var title = data.title || ZU.xpathText(doc, '//h1');
+		item.title =  title.replace(/&lt.+?&gt;/g, "").replace(/<.+?>/g, "");
+		item.archiveLocation = reference;
+		item.language = data.language;
+		item.date = data.coveringDates;
+		if (data.scopeContent && data.scopeContent.description) {
+			item.abstractNote = data.scopeContent.description.replace(/<p>/g, "\n").replace(/&lt;p&gt;/g, "\n").replace(/<.+?>/g, "");
+		}
+		var holdings = data.heldBy;
+		if (holdings && holdings.length>0) {
+			item.archive = holdings.map(entry => entry.xReferenceName).join()
+		}
+		item.type = data.physicalDescriptionForm;
+		item.attachments.push({
+			url: url,
+			title: "British National Archive - Link",
+			snapshot: false
+		});
+		var creators = data.creatorName;
+		for (var i=0; i<creators.length; i++) {
+			if (creators[i].surname) {
+				if (creators[i].firstName) {
+					item.creators.push({
+						lastName: creators[i].surname,
+						firstName: creators[i].firstName,
+						creatorType: "author"
+					});
+				} else {
+					item.creators.push({
+						lastName: creators[i].surname,
+						fieldMode: "1",
+						creatorType: "author"
+					});
+				}
+			} else {
+				item.creators.push({
+					lastName: creators[i].xReferenceName,
+					fieldMode: "1",
+					creatorType: "contributor"
+				});
+			}
 		}
 		for (var i in tags){
 			item.tags.push(tags[i].textContent);
@@ -123,26 +129,31 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://discovery.nationalarchives.gov.uk/SearchUI/Details?uri=C3454320",
+		"url": "http://discovery.nationalarchives.gov.uk/details/r/C3454320",
 		"items": [
 			{
 				"itemType": "manuscript",
-				"title": "The National Archive of the UK INF 3/108",
+				"title": "POSTERS: Food Production: Land girls - Horse-drawn plough, and girl. Artist: Dame Laura...",
 				"creators": [],
 				"date": "1939-1946",
 				"abstractNote": "POSTERS: Food Production: Land girls - Horse-drawn plough, and girl. \nArtist: Dame Laura Knight. \nMedia/Technique: Watercolour and gouache painting with a charcoal underdrawing.Executed on a heavy weight artist board. Light washes of the aqueous media have been applied on top of the loose charcoal sketch giving the painting a powdery, friable quality.",
 				"archive": "The National Archives, Kew",
+				"archiveLocation": "INF 3/108",
 				"libraryCatalog": "National Archive of the UK",
+				"shortTitle": "POSTERS",
 				"attachments": [
 					{
 						"title": "British National Archive - Link",
-						"mimeType": "text/html",
 						"snapshot": false
 					}
 				],
 				"tags": [
-					"land girls",
-					"women"
+					{
+						"tag": "land girls"
+					},
+					{
+						"tag": "women"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -151,7 +162,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://discovery.nationalarchives.gov.uk/SearchUI/Details?uri=C31",
+		"url": "http://discovery.nationalarchives.gov.uk/details/r/C31",
 		"items": [
 			{
 				"itemType": "manuscript",
@@ -178,12 +189,13 @@ var testCases = [
 				"attachments": [
 					{
 						"title": "British National Archive - Link",
-						"mimeType": "text/html",
 						"snapshot": false
 					}
 				],
 				"tags": [
-					"bk23"
+					{
+						"tag": "bk23"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -194,6 +206,32 @@ var testCases = [
 		"type": "web",
 		"url": "http://discovery.nationalarchives.gov.uk/results/r?_q=labour&_hb=tna",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://discovery.nationalarchives.gov.uk/details/r/6faa8c37-6e1a-4cf5-abf6-09eb73d68d68",
+		"items": [
+			{
+				"itemType": "manuscript",
+				"title": "Deeds relating to KIRKLEES",
+				"creators": [],
+				"date": "18 Sep 1236",
+				"abstractNote": "Confirmation by Henry III. to Kirklees Nunnery of grants from Reyner son of William Flandrensis, of the site of the house, Adam fil Peter for repairs and firing, Robert son of Gilbert de Barkeston, Henry Teutonicus, John fil Aumund, Agnes de Flammeuill, Reimund de Medelay. Witnesses, W(illiam) elect 'Valent' (Bp. of Valence?), Peter de Malo lacu (Manley), Hugh de Vinon, Godfrey de Craucumb, John fil. Philip, Geoffrey dispenser, Henry de Capella. Dated at York by the hand of Ralph (de Nevill), Bishop of Chichester Chancellor.",
+				"archive": "West Yorkshire Archive Service, Calderdale",
+				"archiveLocation": "KM/29",
+				"language": "English",
+				"libraryCatalog": "National Archive of the UK",
+				"attachments": [
+					{
+						"title": "British National Archive - Link",
+						"snapshot": false
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

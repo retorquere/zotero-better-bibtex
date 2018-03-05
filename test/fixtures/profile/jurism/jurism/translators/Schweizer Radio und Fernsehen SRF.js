@@ -2,14 +2,14 @@
 	"translatorID": "a8e51f4e-0372-42ad-81a8-bc3dcea6dc03",
 	"label": "Schweizer Radio und Fernsehen SRF",
 	"creator": "ibex, Sebastian Karcher",
-	"target": "^https?://(www\\.)?srf\\.ch/.",
+	"target": "^https?://(www\\.)?srf\\.ch/sendungen/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-02-25 21:02:50"
+	"lastUpdated": "2017-06-24 22:06:07"
 }
 
 /*
@@ -37,10 +37,10 @@ Barebones re-write. This will work for radio shows, but nothing else & no search
 
 /* Zotero API */
 function detectWeb(doc, url) {
-	if (doc.location.href.match(/.*\/sendungen\/.*/i) && (ZU.xpath(doc, '//h1[@class="article-heading"]').length > 0)) {
+	if (ZU.xpathText(doc, '//h1[@class="article-heading"]')) {
 		return "radioBroadcast";
 	// Archive pages
-	} else if (doc.location.href.match(/.*\/sendungen\/.*/i) && ZU.xpath(doc, '//div[contains(@class, "container_episodes")]').length > 0) {
+	} else if (ZU.xpathText(doc, '//div[contains(@class, "container_episodes")]')) {
 		return "multiple";
 	}
 }
@@ -52,7 +52,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		var items = {}
 	var titles = ZU.xpath(doc, '//div[@class="module-content"]/h3/a');
-	for (var i in titles){
+	for (var i = 0; i<titles.length; i++){
 		items[titles[i].href] = titles[i].textContent.trim();	
 	}
 	Zotero.selectItems(items, function (items) {
@@ -80,7 +80,15 @@ function scrape(doc) {
 	newItem.title = ZU.xpathText(doc, '//h1[@class="article-heading"]');
 	
 	var date = ZU.xpathText(doc, '//li[@class="publication"]');
-	if (date) newItem.date = date.match(/^[^,]+,([^,]+),.+/)[1]
+	//Z.debug(date);
+	if (date) {
+		var match = date.match(/^[^,]+,([^,]+),.+/);
+		if (match) {
+			newItem.date = match[1];
+		} else {
+			newItem.date = date;
+		}
+	}
 
 
 	newItem.language = 'de-CH';
@@ -88,7 +96,6 @@ function scrape(doc) {
 	newItem.network = "Schweizer Radio und Fernsehen SRF";
 	newItem.abstractNote = ZU.xpathText(doc, '//p[contains(@class, "lead-text")]');
 	
-
 	var runningTime = ZU.xpath(doc, '//div[@id = "article"]//a[@class = "beitrag_hoeren"]');
 	if (runningTime.length > 0) {
 		newItem.runningTime = ZU.trimInternal(runningTime[0].textContent.match(/(\d|:)+/)[0]);
@@ -111,6 +118,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "radioBroadcast",
+				"title": "Micheline Calmy-Rey zu ihrem Rücktritt",
 				"creators": [
 					{
 						"firstName": "Ursula",
@@ -123,18 +131,15 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
-				"attachments": [],
-				"url": "http://www.srf.ch/sendungen/echo-der-zeit/micheline-calmy-rey-zu-ihrem-ruecktritt",
-				"title": "Micheline Calmy-Rey zu ihrem Rücktritt",
 				"date": "7. September 2011",
 				"language": "de-CH",
-				"programTitle": "Echo der Zeit",
-				"network": "Schweizer Radio und Fernsehen SRF",
 				"libraryCatalog": "Schweizer Radio und Fernsehen SRF",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"network": "Schweizer Radio und Fernsehen SRF",
+				"url": "http://www.srf.ch/sendungen/echo-der-zeit/micheline-calmy-rey-zu-ihrem-ruecktritt",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},

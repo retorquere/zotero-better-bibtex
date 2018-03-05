@@ -528,8 +528,8 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"defer": true,
 		"url": "http://www.google.fr/#q=ordinateur&hl=fr&prmd=imvns&source=lnms&tbm=pts&sa=X&ei=oJJfUJKgBOiU2gWqwIHYCg&ved=0CBIQ_AUoBQ&tbo=1&prmdo=1&bav=on.2,or.r_gc.r_pw.r_qf.&fp=ec5bd0c9391b4cc0&biw=1024&bih=589",
+		"defer": true,
 		"items": "multiple"
 	},
 	{
@@ -596,7 +596,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "patent",
-				"title": "For christmas",
+				"title": "Artificial tree",
 				"creators": [
 					{
 						"firstName": "Chester L. Craig",

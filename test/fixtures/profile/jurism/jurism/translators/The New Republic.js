@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-09-02 03:54:23"
+	"lastUpdated": "2017-07-01 21:10:41"
 }
 
 /*********************** BEGIN FRAMEWORK ***********************/
@@ -671,16 +671,16 @@ function doWeb(doc, url) { return FW.doWeb(doc, url); }
 /** Articles */
 FW.Scraper({
 itemType : 'magazineArticle',
-detect : FW.Xpath('//h1[@class="title headline"]'),
-title : FW.Xpath('//h1[@class="title headline"]').text().trim(),
+detect : FW.Xpath('//h1[@class="article-headline"]'),
+title : FW.Xpath('//h1[@class="article-headline"]').text().trim(),
 attachments : {
   url : FW.Url(),
   title : "New Republic Snapshot",
   type : "text/html"
 },
-creators : FW.Xpath('//h5/a[@itemprop="author"]').text().capitalizeTitle(true).cleanAuthor("author"),
+creators : FW.Xpath('//a[@itemprop="author"]').text().capitalizeTitle(true).cleanAuthor("author"),
 abstractNote : FW.Xpath('//meta[@name="description"]/@content').text(),
-date : FW.Xpath('//h5[@class="date"]/span/@content').text(),
+date : FW.Xpath('//time[@itemprop="datePublished"]/@content').text(),
 ISSN : "0028-6583",
 publicationTitle : "The New Republic"
 });
@@ -705,17 +705,17 @@ publicationTitle : "The New Republic"
 /** Search results */
 FW.MultiScraper({
 itemType : "multiple",
-detect : FW.Xpath('//div[@class="item"]/div[@class="content"]/h3/a'),
+detect : FW.Xpath('//div[@class="result-title"]/h2/a'),
 choices : {
-  titles : FW.Xpath('//div[@class="item"]/div[@class="content"]/h3/a').text().trim(),
-  urls : FW.Xpath('//div[@class="item"]/div[@class="content"]/h3/a').key('href').text()
+  titles : FW.Xpath('//div[@class="result-title"]/h2/a').text().trim(),
+  urls : FW.Xpath('//div[@class="result-title"]/h2/a').key('href').text()
 }
 });
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.newrepublic.com/article/politics/magazine/108848/the-terrifying-rise-greeces-nazi-party",
+		"url": "https://newrepublic.com/article/108848/the-terrifying-rise-greeces-nazi-party",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -727,12 +727,11 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2012-10-19T00:00:00-04:00",
+				"date": "2012-10-19",
 				"ISSN": "0028-6583",
-				"abstractNote": "They own the streets; is parliament next?",
 				"libraryCatalog": "The New Republic",
 				"publicationTitle": "The New Republic",
-				"url": "http://www.newrepublic.com/article/politics/magazine/108848/the-terrifying-rise-greeces-nazi-party",
+				"url": "https://newrepublic.com/article/108848/the-terrifying-rise-greeces-nazi-party",
 				"attachments": [
 					{
 						"title": "New Republic Snapshot",
@@ -747,7 +746,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.newrepublic.com/article/116791/janet-yellen-senate-testimony-waffles-too-big-too-fail",
+		"url": "https://newrepublic.com/article/116791/janet-yellen-senate-testimony-waffles-too-big-too-fail",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -759,13 +758,12 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014-02-27T16:44:56-05:00",
+				"date": "2014-02-27",
 				"ISSN": "0028-6583",
-				"abstractNote": "Her Senate testimony did not inspire confidence.",
 				"libraryCatalog": "The New Republic",
 				"publicationTitle": "The New Republic",
 				"shortTitle": "Uh-Oh",
-				"url": "http://www.newrepublic.com/article/116791/janet-yellen-senate-testimony-waffles-too-big-too-fail",
+				"url": "https://newrepublic.com/article/116791/janet-yellen-senate-testimony-waffles-too-big-too-fail",
 				"attachments": [
 					{
 						"title": "New Republic Snapshot",
@@ -780,7 +778,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.newrepublic.com/tags/labor",
+		"url": "https://newrepublic.com/tags/labor",
 		"items": "multiple"
 	}
 ]

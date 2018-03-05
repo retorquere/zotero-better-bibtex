@@ -734,7 +734,7 @@ choices          : {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://harpers.org/archive/2009/07/labors-last-stand/?single=1",
+		"url": "https://harpers.org/archive/2009/07/labors-last-stand/?single=1",
 		"items": [
 			{
 				"itemType": "magazineArticle",
@@ -751,7 +751,7 @@ var testCases = [
 				"abstractNote": "The corporate campaign to kill the Employee Free Choice Act",
 				"libraryCatalog": "Harpers",
 				"publicationTitle": "Harper's Magazine",
-				"url": "http://harpers.org/archive/2009/07/labors-last-stand/?single=1",
+				"url": "https://harpers.org/archive/2009/07/labors-last-stand/?single=1",
 				"attachments": [
 					{
 						"title": "Harper's PDF",
@@ -788,7 +788,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://harpers.org/blog/2013/10/a-beautiful-truth/",
+		"url": "https://harpers.org/blog/2013/10/a-beautiful-truth/",
 		"items": [
 			{
 				"itemType": "blogPost",
@@ -802,7 +802,7 @@ var testCases = [
 				],
 				"date": "October 28, 2013",
 				"blogTitle": "The Stream - Harper's Magazine Blog",
-				"url": "http://harpers.org/blog/2013/10/a-beautiful-truth/",
+				"url": "https://harpers.org/blog/2013/10/a-beautiful-truth/",
 				"attachments": [
 					{
 						"title": "Harper's Snapshot",
@@ -822,12 +822,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://harpers.org/archive/2013/11/",
+		"url": "https://harpers.org/archive/2013/11/",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://harpers.org/?s=labor",
+		"url": "https://harpers.org/?s=labor",
 		"items": "multiple"
 	}
 ]

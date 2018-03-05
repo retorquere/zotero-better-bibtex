@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2016-09-14 05:06:24"
+	"lastUpdated": "2017-06-07 07:00:39"
 }
 
 /*
@@ -76,8 +76,8 @@ function doWeb(doc,url)
 		ZU.processDocuments(urls, doWeb);
 		});
 	} else {
-		var abstract = ZU.xpathText(doc, '//div[@class="abstract"]/*[self::h3 or (self::p and not(self::p[@class="note"]))]', null, '\n');
-		if (!abstract) abstract = ZU.xpathText(doc, '//div[@class="tContent"]/*[self::h3 or (self::p and not(self::p[@class="note"]))]', null, '\n');
+		var abstract = ZU.xpathText(doc, '//div[@class="abstract"]/div[contains(@class, "content")]/section/*', null, '\n');
+		if (!abstract) abstract = ZU.xpathText(doc, '//div[@class="tContent"]/div[contains(@class, "content")]/section/*', null, '\n');
 		//Z.debug(abstract)
 		var keywords = ZU.xpath(doc, '//div[@class="keywords"]/a');
 		if (keywords.length==0) keywords = ZU.xpath(doc, '//div[@class="tContent"]/p/span[contains(@class, "keyword")]');

@@ -1,0 +1,2 @@
+repo.zotero.org:HSTS	0	17594	1551696931983,1,1
+www.zotero.org:HSTS	0	17594	1551697067254,1,1

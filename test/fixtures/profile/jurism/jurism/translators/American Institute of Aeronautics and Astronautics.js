@@ -149,12 +149,12 @@ function scrape(doc, url, dois) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://arc.aiaa.org/action/doSearch?AllField=titanium",
+		"url": "https://arc.aiaa.org/action/doSearch?AllField=titanium",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://arc.aiaa.org/doi/abs/10.2514/1.T3744?prevSearch=&searchHistoryKey=",
+		"url": "https://arc.aiaa.org/doi/abs/10.2514/1.T3744?prevSearch=&searchHistoryKey=",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -189,7 +189,7 @@ var testCases = [
 				"libraryCatalog": "American Institute of Aeronautics and Astronautics",
 				"pages": "192-196",
 				"publicationTitle": "Journal of Thermophysics and Heat Transfer",
-				"url": "http://dx.doi.org/10.2514/1.T3744",
+				"url": "https://doi.org/10.2514/1.T3744",
 				"volume": "26",
 				"attachments": [
 					{

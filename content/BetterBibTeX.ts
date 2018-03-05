@@ -170,7 +170,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
-    debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
+    // debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
     bbtReady.promise.then(() => {
       debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
 
@@ -426,13 +426,13 @@ class Progress {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
-    debug(`${this.name}: starting`)
+    debug(`${this.name}: waiting for Zotero locks...`)
 
     await Zotero.uiReadyPromise
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    debug(`${this.name}: ready to go`)
+    debug(`${this.name}: ${msg}...`)
     this.toggle(true)
     debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
@@ -440,6 +440,7 @@ class Progress {
   public update(msg) {
     this.bench(msg)
 
+    debug(`${this.name}: ${msg}...`)
     if (this.locked) {
       Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
     } else {

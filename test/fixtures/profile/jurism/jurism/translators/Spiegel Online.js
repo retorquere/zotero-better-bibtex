@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-03-06 09:02:26"
+	"lastUpdated": "2017-06-24 17:08:45"
 }
 
 /*
@@ -39,7 +39,7 @@ http://www.spiegel.de/international/europe/0,1518,700530,00.html
 */
 
 function detectWeb(doc, url) {
-	var spiegel_article_XPath = '//h2[@class="article-title"]';
+	var spiegel_article_XPath = '//h2[contains(@class, "article-title") or contains(@class, "dig-artikel")]';
 	if ( url.indexOf('/thema/')>-1 || url.indexOf('/suche/')>-1 || url.indexOf('/international/search/')>-1 || url.indexOf('/international/topic/')>-1 ) { 
 		return "multiple";
 	} else if (ZU.xpathText(doc, spiegel_article_XPath)) {
@@ -59,21 +59,23 @@ function scrape(doc, url) {
 	newItem.url = url; 
 
 	// This is for the title 
-	newItem.title = ZU.xpathText(doc, '//h2[@class="article-title"]') 
+	newItem.title = ZU.xpathText(doc, '//h2[contains(@class, "article-title") or contains(@class, "dig-artikel")]/span', null, ': ')
 		|| ZU.xpathText(doc, '//meta[@property="og:title"]/@content') 
 		|| ZU.xpathText(doc, '//title');
 	newItem.title = ZU.trimInternal(newItem.title);
 
 
 	// Tags
-	var tags = ZU.xpathText(doc, '//meta[contains(@name, "keywords")][1]/@content');
-	if (tags) {
-		// The first 5 Tags are generic or section info. TODO check if that is anymore true
-		newItem.tags = tags.trim().split(/(?:\s*,\s*)+/).slice(5);
+	var tags = ZU.xpath(doc, '//div[contains(@class, "article-topic-box")]//li/b/a');
+	if (tags.length>0) {
+		for (var i=0; i<tags.length; i++) {
+			newItem.tags.push(tags[i].textContent);
+		}
 	}
 	
 	// Author
 	var author = ZU.xpathText(doc, '//p[contains(@class, "author")]') // Most of the time, the author has its own tag. Easy Case, really.
+		|| ZU.xpathText(doc, '//div[contains(@class, "dig-autoren")]')
 		|| ZU.xpathText(doc, '//span[contains(@class, "author")]')
 		|| ZU.xpathText(doc, '//*[@id="spIntroTeaser"]/strong/i'); // Sometimes, though, the author is in italics in the teaser.
 	if (author) {
@@ -81,26 +83,16 @@ function scrape(doc, url) {
 		author = author.replace(/^\s*Ein.+? von\s|\s*$/, '');//e.g "Ein Kommentar von Peter Müller, Leipzig"
 		author = author.replace(/^\s*Aus.+?berichtet\s*/, "");
 		author = author.replace(/^\s*Interview (Conducted )?by /, '');// e.g. Interview Conducted by Klaus Brinkbäumer
-
-		// Spiegel Online and the Spiegel Archive have different formatting for the author line
-		var formatSpiegelArchive = url.indexOf('http://www.spiegel.de/spiegel/')>-1;
-		
-		if (formatSpiegelArchive) {
-			//e.g. Von Neubacher, Alexander; Neumann, Conny; Winter, Steffen
-			author = author.split(/\sund\s|\su\.\s|\;\s|\sand\s/); 
-		} else {
-			//e.g. By Jörg Diehl, Hubert Gude, Barbara Schmid and Fidelius Schmid
-			author = author.replace(/,\s\S*$/, ''); //e.g "Ein Kommentar von Peter Müller, Leipzig"
-			author = author.replace(/\sin\s\S*(,\s\S*)?$/g, ""); //e.g. "By Susanne Beyer in Kaliningrad, Russia"
-			author = author.split(/\sund\s|\su\.\s|\,\s|\sand\s/); 
-		}
+		author = author.replace(/,\s\S*$/, ''); //e.g "Ein Kommentar von Peter Müller, Leipzig"
+		author = author.replace(/\sin\s\S*(,\s\S*)?$/g, ""); //e.g. "By Susanne Beyer in Kaliningrad, Russia"
+		author = author.split(/\sund\s|\su\.\s|\,\s|\sand\s/); //e.g. By Jörg Diehl, Hubert Gude, Barbara Schmid and Fidelius Schmid
 		for (var i in author) {
 			newItem.creators.push(Zotero.Utilities.cleanAuthor(author[i], "author", author[i].indexOf(',')>-1));
 		}
 	}
 	
 	// Section
-	newItem.section = ZU.xpathText(doc, '//a[@class="channel-name"]');
+	newItem.section = ZU.xpathText(doc, '//a[@class="current-channel-name"]');
 	
 	// attachement
 	if (url.match(/^http\:\/\/www\.spiegel\.de\/spiegel/)){
@@ -210,7 +202,9 @@ var testCases = [
 				],
 				"tags": [
 					"Betreuungsgeld",
+					"CDU",
 					"Eurokrise",
+					"Merkels schwarz-gelbe Regierung 2009-2013",
 					"Mindestlohn"
 				],
 				"notes": [],
@@ -239,7 +233,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "magazineArticle",
-				"title": "WIRTSCHAFTSPOLITIK VEB Energiewende",
+				"title": "WIRTSCHAFTSPOLITIK: VEB Energiewende",
 				"creators": [
 					{
 						"firstName": "Alexander",
@@ -260,6 +254,7 @@ var testCases = [
 				"date": "2012-04-07",
 				"libraryCatalog": "Spiegel Online",
 				"publicationTitle": "Der Spiegel",
+				"shortTitle": "WIRTSCHAFTSPOLITIK",
 				"url": "http://www.spiegel.de/spiegel/print/d-84789653.html",
 				"volume": "15",
 				"attachments": [
@@ -312,7 +307,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "newspaperArticle",
-				"title": "Kinder vom Kamper See Das Grab im Wasser",
+				"title": "Kinder vom Kamper See: Das Grab im Wasser",
 				"creators": [
 					{
 						"firstName": "Matthias",
@@ -321,10 +316,11 @@ var testCases = [
 					}
 				],
 				"date": "2015-03-03",
-				"abstractNote": "Am 5. März 1945 stürzte ein Flugzeug in den Kamper See. An Bord: fast 80 deutsche Kinder auf der Flucht vor der Roten Armee. Eine Initiative will nun ihre Leichen vom Grund des Sees bergen.\n\t\t\t\t\t\t\tVon Matthias Kneip",
+				"abstractNote": "Am 5. März 1945 stürzte ein Flugzeug in den Kamper See. An Bord: fast 80 deutsche Kinder auf der Flucht vor der Roten Armee. Eine Initiative will nun ihre Leichen vom Grund des Sees bergen.",
 				"libraryCatalog": "Spiegel Online",
 				"publicationTitle": "Spiegel Online",
 				"section": "einestages",
+				"shortTitle": "Kinder vom Kamper See",
 				"url": "http://www.spiegel.de/einestages/kinder-vom-kamper-see-grab-unter-wasser-a-1021273.html",
 				"attachments": [
 					{
@@ -333,16 +329,10 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Flucht",
 					"Flucht und Vertreibung",
-					"Flugzeugabsturz",
 					"Flugzeugunglücke",
-					"Kamper See",
-					"Kinder",
-					"Kriegsende",
-					"Zweiter Weltkrieg",
-					"]1945",
-					"einestages"
+					"Weltkriege",
+					"Zweiter Weltkrieg"
 				],
 				"notes": [],
 				"seeAlso": []

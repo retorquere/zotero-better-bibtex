@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-08-15 17:25:20"
+	"lastUpdated": "2017-06-17 15:34:41"
 }
 
 /**
@@ -43,18 +43,18 @@ function doWeb(doc, url) {
 	var abstract = ZU.xpathText(doc, '//div[@class="art_header_sub_title"]');
 	if (!abstract) abstract = ZU.xpathText(doc, '//meta[@property="og:description"]/@content');
 	item.abstractNote = abstract;
-
-	var author = ZU.xpathText(doc, '//div[@class="art_header_footer"]//a');
-	if (author) {
-		item.creators.push(Zotero.Utilities.cleanAuthor(author, 'author'));
+	
+	var json = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
+	var data = JSON.parse(json);
+	if (data) {
+		if (data.author) {
+			item.creators.push(Zotero.Utilities.cleanAuthor(data.author.name, 'author'));
+		}
+		if (data.datePublished) {
+			item.date = ZU.strToISO(data.datePublished);
+		}
 	}
 
-	var kakyDate = ZU.xpathText(doc, '//meta[@property="vr:published_time"]/@content');
-	var dateSplit = /([0-9]{2})\.([0-9]{2})\.([0-9]{2})$/.exec(kakyDate);
-	if(dateSplit) {
-		// it is tricky but should work
-		item.date = ['20'+dateSplit[3], dateSplit[2], dateSplit[1]].join('-');
-	}
 	item.complete();
 }
 /** BEGIN TEST CASES **/

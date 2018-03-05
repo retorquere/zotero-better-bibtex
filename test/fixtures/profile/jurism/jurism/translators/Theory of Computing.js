@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcv",
-	"lastUpdated": "2016-03-23 16:47:35"
+	"lastUpdated": "2017-07-03 10:55:03"
 }
 
 /*****
@@ -203,6 +203,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
+				"title": "Variations on the Sensitivity Conjecture",
 				"creators": [
 					{
 						"firstName": "Pooya",
@@ -220,13 +221,15 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"sensitivity",
-					"block sensitivity",
-					"complexity measures of Boolean functions"
-				],
-				"seeAlso": [],
+				"date": "June 22, 2011",
+				"DOI": "10.4086/toc.gs.2011.004",
+				"accessDate": "CURRENT_TIMESTAMP",
+				"libraryCatalog": "Theory of Computing",
+				"numPages": "27",
+				"publisher": "Theory of Computing Library",
+				"series": "Graduate Surveys",
+				"seriesNumber": "4",
+				"url": "http://theoryofcomputing.org/articles/gs004/",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -236,16 +239,13 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Variations on the Sensitivity Conjecture",
-				"DOI": "10.4086/toc.gs.2011.004",
-				"url": "http://theoryofcomputing.org/articles/gs004/",
-				"date": "June 22, 2011",
-				"numPages": "27",
-				"seriesNumber": "4",
-				"series": "Graduate Surveys",
-				"publisher": "Theory of Computing Library",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					"block sensitivity",
+					"complexity measures of Boolean functions",
+					"sensitivity"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -255,6 +255,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Optimal Hitting Sets for Combinatorial Shapes",
 				"creators": [
 					{
 						"firstName": "Aditya",
@@ -272,15 +273,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"derandomization",
-					"expanders",
-					"explicit construction",
-					"hitting sets",
-					"perfect hashing"
-				],
-				"seeAlso": [],
+				"date": "May 25, 2013",
+				"DOI": "10.4086/toc.2013.v009a013",
+				"accessDate": "CURRENT_TIMESTAMP",
+				"libraryCatalog": "Theory of Computing",
+				"number": "13",
+				"pages": "441–470",
+				"publicationTitle": "Theory of Computing",
+				"publisher": "Theory of Computing",
+				"url": "http://toc.nada.kth.se/articles/v009a013/index.html",
+				"volume": "9",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -290,17 +292,15 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Optimal Hitting Sets for Combinatorial Shapes",
-				"DOI": "10.4086/toc.2013.v009a013",
-				"url": "http://toc.nada.kth.se/articles/v009a013/index.html",
-				"date": "May 25, 2013",
-				"volume": "9",
-				"number": "13",
-				"pages": "441–470",
-				"publicationTitle": "Theory of Computing",
-				"publisher": "Theory of Computing",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					"derandomization",
+					"expanders",
+					"explicit construction",
+					"hitting sets",
+					"perfect hashing"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -310,6 +310,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
+				"title": "Selected Results in Additive Combinatorics: An Exposition",
 				"creators": [
 					{
 						"firstName": "Emanuele",
@@ -317,12 +318,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"additive combinatorics",
-					"linearity testing"
-				],
-				"seeAlso": [],
+				"date": "May 15, 2011",
+				"DOI": "10.4086/toc.gs.2011.003",
+				"accessDate": "CURRENT_TIMESTAMP",
+				"libraryCatalog": "Theory of Computing",
+				"numPages": "15",
+				"publisher": "Theory of Computing Library",
+				"series": "Graduate Surveys",
+				"seriesNumber": "3",
+				"shortTitle": "Selected Results in Additive Combinatorics",
+				"url": "http://tocmirror.cs.tau.ac.il/articles/gs003/index.html",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -332,17 +337,12 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Selected Results in Additive Combinatorics: An Exposition",
-				"DOI": "10.4086/toc.gs.2011.003",
-				"url": "http://tocmirror.cs.tau.ac.il/articles/gs003/index.html",
-				"date": "May 15, 2011",
-				"numPages": "15",
-				"seriesNumber": "3",
-				"series": "Graduate Surveys",
-				"publisher": "Theory of Computing Library",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Selected Results in Additive Combinatorics"
+				"tags": [
+					"additive combinatorics",
+					"linearity testing"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -352,6 +352,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Deterministic History-Independent Strategies for Storing Information on Write-Once Memories",
 				"creators": [
 					{
 						"firstName": "Tal",
@@ -369,17 +370,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"history-independent",
-					"write-once memory",
-					"tamper-evident",
-					"vote storage mechanism",
-					"information-theoretic security",
-					"conflict resolution",
-					"expander graphs"
-				],
-				"seeAlso": [],
+				"date": "May 23, 2009",
+				"DOI": "10.4086/toc.2009.v005a002",
+				"accessDate": "CURRENT_TIMESTAMP",
+				"libraryCatalog": "Theory of Computing",
+				"number": "2",
+				"pages": "43–67",
+				"publicationTitle": "Theory of Computing",
+				"publisher": "Theory of Computing",
+				"url": "http://toc.ilab.sztaki.hu/articles/v005a002/index.html",
+				"volume": "5",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -389,26 +389,27 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Deterministic History-Independent Strategies for Storing Information on Write-Once Memories",
-				"DOI": "10.4086/toc.2009.v005a002",
-				"url": "http://toc.ilab.sztaki.hu/articles/v005a002/index.html",
-				"date": "May 23, 2009",
-				"volume": "5",
-				"number": "2",
-				"pages": "43–67",
-				"publicationTitle": "Theory of Computing",
-				"publisher": "Theory of Computing",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					"conflict resolution",
+					"expander graphs",
+					"history-independent",
+					"information-theoretic security",
+					"tamper-evident",
+					"vote storage mechanism",
+					"write-once memory"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://toc.cse.iitk.ac.in/articles/v009a009/index.html",
+		"url": "http://toc.nada.kth.se/articles/v009a009/index.html",
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Quantum Money from Hidden Subspaces",
 				"creators": [
 					{
 						"firstName": "Scott",
@@ -421,14 +422,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"electronic cash",
-					"multivariate polynomials",
-					"quantum cryptography",
-					"quantum lower bounds"
-				],
-				"seeAlso": [],
+				"date": "March 11, 2013",
+				"DOI": "10.4086/toc.2013.v009a009",
+				"libraryCatalog": "Theory of Computing",
+				"pages": "349–401",
+				"publicationTitle": "Theory of Computing",
+				"url": "http://toc.nada.kth.se/articles/v009a009/index.html",
+				"volume": "9",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -438,17 +438,14 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Quantum Money from Hidden Subspaces",
-				"DOI": "10.4086/toc.2013.v009a009",
-				"url": "http://toc.cse.iitk.ac.in/articles/v009a009/index.html",
-				"date": "March 11, 2013",
-				"volume": "9",
-				"number": "9",
-				"pages": "349–401",
-				"publicationTitle": "Theory of Computing",
-				"publisher": "Theory of Computing",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [
+					"electronic cash",
+					"multivariate polynomials",
+					"quantum cryptography",
+					"quantum lower bounds"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
@@ -458,6 +455,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "book",
+				"title": "Selected Results in Additive Combinatorics: An Exposition",
 				"creators": [
 					{
 						"firstName": "Emanuele",
@@ -465,12 +463,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"additive combinatorics",
-					"linearity testing"
-				],
-				"seeAlso": [],
+				"date": "May 15, 2011",
+				"DOI": "10.4086/toc.gs.2011.003",
+				"accessDate": "CURRENT_TIMESTAMP",
+				"libraryCatalog": "Theory of Computing",
+				"numPages": "15",
+				"publisher": "Theory of Computing Library",
+				"series": "Graduate Surveys",
+				"seriesNumber": "3",
+				"shortTitle": "Selected Results in Additive Combinatorics",
+				"url": "http://www.cims.nyu.edu/~regev/toc/articles/gs003/",
 				"attachments": [
 					{
 						"title": "Theory of Computing Snapshot"
@@ -480,17 +482,12 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"title": "Selected Results in Additive Combinatorics: An Exposition",
-				"DOI": "10.4086/toc.gs.2011.003",
-				"url": "http://www.cims.nyu.edu/~regev/toc/articles/gs003/",
-				"date": "May 15, 2011",
-				"numPages": "15",
-				"seriesNumber": "3",
-				"series": "Graduate Surveys",
-				"publisher": "Theory of Computing Library",
-				"libraryCatalog": "Theory of Computing",
-				"accessDate": "CURRENT_TIMESTAMP",
-				"shortTitle": "Selected Results in Additive Combinatorics"
+				"tags": [
+					"additive combinatorics",
+					"linearity testing"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

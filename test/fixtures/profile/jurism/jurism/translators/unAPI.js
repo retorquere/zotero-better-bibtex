@@ -346,10 +346,11 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://search.library.utoronto.ca/UTL/index?N=0&Ntk=Anywhere&Ntt=nimni+challenge+of+post-zionism&Ntx=mode%2Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
+		"url": "http://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=nimni+challenge+of+post-zionism&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
 		"items": [
 			{
 				"itemType": "book",
+				"title": "The challenge of Post-Zionism : alternatives to Israeli fundamentalist politics",
 				"creators": [
 					{
 						"lastName": "Nimni",
@@ -357,30 +358,29 @@ var testCases = [
 						"creatorType": "seriesEditor"
 					}
 				],
-				"notes": [],
+				"date": "2003",
+				"ISBN": "9781856498937",
+				"archiveLocation": "http://go.utlib.ca/cat/4908720",
+				"libraryCatalog": "search.library.utoronto.ca",
+				"place": "New York",
+				"publisher": "Zed Books",
+				"shortTitle": "The challenge of Post-Zionism",
+				"url": "http://www.loc.gov/catdir/description/hol032/2002190908.html",
+				"attachments": [],
 				"tags": [
 					"Israel -- Politics and government.",
 					"National characteristics, Israeli.",
 					"Post-Zionism.",
 					"Zionism -- Philosophy."
 				],
-				"seeAlso": [],
-				"attachments": [],
-				"title": "The challenge of Post-Zionism : alternatives to Israeli fundamentalist politics",
-				"publisher": "Zed Books",
-				"place": "New York",
-				"ISBN": "185649893X",
-				"url": "http://www.loc.gov/catdir/description/hol032/2002190908.html",
-				"archiveLocation": "Check current status in library catalogue -- http://link.library.utoronto.ca/MyUTL/goto_catalogue_url.cfm?where=ckey&what=4908720",
-				"date": "2003",
-				"libraryCatalog": "search.library.utoronto.ca",
-				"shortTitle": "The challenge of Post-Zionism"
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://search8.library.utoronto.ca/UTL/index?N=0&Ntk=Anywhere&Ntt=adam+smith&Ntx=mode%2Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
+		"url": "http://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=adam+smith&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
 		"items": "multiple"
 	}
 ]

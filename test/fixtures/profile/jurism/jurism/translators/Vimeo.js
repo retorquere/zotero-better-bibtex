@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-23 14:16:08"
+	"lastUpdated": "2017-06-19 06:31:59"
 }
 
 /*
@@ -40,14 +40,13 @@ function detectWeb(doc, url) {
 	if (url.indexOf('vimeo.com/search?q=')>-1 && getSearchResults(doc, true)) {
 		return "multiple";
 	}
-	return false;
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "iris_p_infinite__item")]//a[h5 and contains(@href, "//vimeo.com/")]');
+	var rows = ZU.xpath(doc, '//div[contains(@class, "iris_p_infinite__item")]//a[div/h5 and contains(@href, "//vimeo.com/")]');
 	for (var i=0; i<rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.xpathText(rows[i], './/h5');
@@ -55,6 +54,26 @@ function getSearchResults(doc, checkOnly) {
 		if (checkOnly) return true;
 		found = true;
 		items[href] = title;
+	}
+	//Due to some dynamic loading the DOM might not be ready for the method above
+	//but the data is also saved in some JSON object in a script tag of the website.
+	if (!found) {
+		var script = ZU.xpathText(doc, '//body/script[contains(., "vimeo.config")]');
+		if (script) {
+			var start = script.indexOf('vimeo.config');
+			var stop = script.indexOf('\n', start);
+			var data = script.substring(start+45, stop-2);
+			var json = JSON.parse(data);
+			if (json && json.api && json.api.initial_json && json.api.initial_json.data) {
+				var results = json.api.initial_json.data
+				for (var entry of results) {
+					if (entry.clip && entry.clip.link && entry.clip.name) {
+						items[entry.clip.link] = entry.clip.name;
+						found = true;
+					}
+				}
+			}
+		}
 	}
 	return found ? items : false;
 }

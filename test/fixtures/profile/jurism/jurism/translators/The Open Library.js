@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-03-17 15:15:57"
+	"lastUpdated": "2017-05-25 13:52:51"
 }
 
 /*
@@ -61,13 +61,15 @@ function getEdition(doc, url){
 }
 
 function scrape(doc, url) {
-	var dcUrl = url.replace(/(OL[A-Z0-9]+)\/.+/, "$1.rdf");
+	var regex = /(OL[A-Z0-9]+)\/.+/;
+	var dcUrl = url.replace(regex, "$1.rdf");
+	var olid = url.match(regex);
+	
 	//no ISBN in the RDF data; scraping that from the page; sigh.
 	var isbnscrape;
 	if (ZU.xpathText(doc, '//td[@class="title" and span[contains(text(), "ISBN 13")]]') ){
 		isbnscrape = ZU.xpathText(doc, '//td[@class="title" and span[contains(text(), "ISBN 13")]]/following-sibling::td');
-	}
-	else{
+	} else {
 		isbnscrape = ZU.xpathText(doc, '//td[@class="title" and span[contains(text(), "ISBN 10")]]/following-sibling::td');
 	}
 	Zotero.Utilities.doGet(dcUrl, function (text) {
@@ -106,6 +108,9 @@ function scrape(doc, url) {
 			if (numPages) item.numPages = numPages.replace(/p\..*/, "");
 			if (note) item.notes.push(note);
 			if (item.extra) item.abstractNote=item.extra; item.extra="";
+			if (olid) {
+				item.extra = "Open Library ID: " + olid[1];
+			}
 			item.place = place;
 			if (isbn) item.ISBN= isbn;
 			else item.ISBN = isbnscrape;
@@ -173,6 +178,7 @@ var testCases = [
 				],
 				"date": "April 3, 1985",
 				"ISBN": "9782213014012",
+				"extra": "Open Library ID: OL12455445M",
 				"libraryCatalog": "The Open Library",
 				"numPages": "486",
 				"publisher": "Fayard",
@@ -199,6 +205,7 @@ var testCases = [
 				],
 				"date": "1985",
 				"ISBN": "9788402103222",
+				"extra": "Open Library ID: OL13188011M",
 				"libraryCatalog": "The Open Library",
 				"publisher": "Bruguera",
 				"shortTitle": "Borges",

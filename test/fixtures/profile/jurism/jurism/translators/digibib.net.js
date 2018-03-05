@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcs",
-	"lastUpdated": "2017-01-01 14:57:34"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-06-05 17:35:41"
 }
 
 /*
@@ -39,16 +39,12 @@
  *
  **/
 function detectWeb(doc, url) {
-	var namespace = doc.documentElement.namespaceURI;
-
-	var indicator = doc.evaluate('/html/body//span[@id="zotero"]', doc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-
-	var indicator_class = indicator.getAttribute('class');
-	if (indicator_class.match(/multi/)) {
+	var indicator_class = ZU.xpathText(doc, '//span[@id="zotero"]/@class');
+	if (indicator_class.indexOf('multi')>-1) {
 		// There's one or more result list each containing one or more hits in this page
 		return "multiple";
 	}
-	if (indicator_class.match(/single/)) {
+	if (indicator_class.indexOf('single')>-1) {
 		// There's one hit in this page
 		return "single";
 	}
@@ -63,19 +59,16 @@ function detectWeb(doc, url) {
  *
  **/
 function doWeb(doc, url) {
-	var namespace = doc.documentElement.namespaceURI;
-
-	var indicator = doc.evaluate('/html/body//span[@id="zotero"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	var indicator_class = indicator.getAttribute('class');
+	var indicator_class = ZU.xpathText(doc, '//span[@id="zotero"]/@class');
 
 	var availableItems = new Object();
 
 	var conf = new Object;
 	var type = '';
 	// configure the extraction method
-	if (indicator_class.match(/multi/)) {
+	if (indicator_class.indexOf('multi')>-1) {
 		// There's one or more result list each containing one or more hits in this page
-		if (indicator_class.match(/z_metasearch_multi/)) {
+		if (indicator_class.indexOf('z_metasearch_multi')>-1) {
 			conf["lists_xpath"] = '//div[contains(@class,"listcontainer")]';
 			conf["item_xpath"] = './dl[contains(@class,"list")]/dt';
 			conf["item_title_xpath"] = './a';
@@ -83,7 +76,7 @@ function doWeb(doc, url) {
 			conf["url_trnsfrm"] = function (hitUrl) {
 				return hitUrl.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			};
-		} else if (indicator_class.match(/z_ezb_multi/)) {
+		} else if (indicator_class.indexOf('z_ezb_multi')>-1) {
 			conf["lists_xpath"] = '//div[contains(@class,"listcontainer")]';
 			conf["item_xpath"] = './dl[contains(@class,"list")]/dt';
 			conf["item_title_xpath"] = './a[contains(@class,"js_getFull")]';
@@ -91,7 +84,7 @@ function doWeb(doc, url) {
 			conf["url_trnsfrm"] = function (hitUrl) {
 				return hitUrl.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			};
-		} else if (indicator_class.match(/z_digilink_multi/)) {
+		} else if (indicator_class.indexOf('z_digilink_multi')>-1) {
 			conf["lists_xpath"] = '//div[contains(@class,"listcontainer")]';
 			conf["item_xpath"] = './dl[contains(@class,"list")]/dt';
 			conf["item_title_xpath"] = './strong';
@@ -99,7 +92,7 @@ function doWeb(doc, url) {
 			conf["url_trnsfrm"] = function (hitUrl) {
 				return hitUrl.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			};
-		} else if (indicator_class.match(/z_dbis_multi/)) {
+		} else if (indicator_class.indexOf('z_dbis_multi')>-1) {
 			conf["lists_xpath"] = '//div[contains(@class,"listcontainer")]';
 			conf["item_xpath"] = './dl[contains(@class,"list")]/dt';
 			conf["item_title_xpath"] = './a[contains(@class,"js_getFull")]';
@@ -107,7 +100,7 @@ function doWeb(doc, url) {
 			conf["url_trnsfrm"] = function (hitUrl) {
 				return hitUrl.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			};
-		} else if (indicator_class.match(/z_cart_multi/)) {
+		} else if (indicator_class.indexOf('z_cart_multi')>-1) {
 			conf["lists_xpath"] = '//div[contains(@class,"listcontainer")]';
 			conf["item_xpath"] = './dl[contains(@class,"list")]/dt';
 			conf["item_title_xpath"] = 'child::*[2]';
@@ -116,7 +109,7 @@ function doWeb(doc, url) {
 				return hitUrl.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			};
 		}
-		availableItems = _get_items_multi(doc, url, namespace, conf);
+		availableItems = _get_items_multi(doc, url, conf);
 
 		Zotero.selectItems(availableItems, function (selectedItems) {
 			if (!selectedItems) return true;
@@ -127,14 +120,12 @@ function doWeb(doc, url) {
 			}
 
 			Zotero.Utilities.doGet(fetchThese, importItem);
-			Zotero.wait();
 		});
 	} else if (indicator_class.match(/z_[a-z]*_single/)) {
-		var urlNode = doc.evaluate('/html/body/div/div/div[@id="main"]//a[contains(@class,"js_formatExport")]', doc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
+		var urlNode = doc.evaluate('//div[@id="main"]//a[contains(@class,"js_formatExport")]', doc, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null);
 		if (urlNode) {
 			var hitUrl = urlNode.singleNodeValue.href.replace(/\/direct-export/, '/format-export').replace(/FORMAT=TXT/, 'FORMAT=MODS');
 			Zotero.Utilities.doGet(hitUrl, importItem);
-			Zotero.wait();
 		}
 	}
 }
@@ -144,7 +135,7 @@ function doWeb(doc, url) {
  * guided by a set of XPaths addressing the relevant html nodes.
  *
  **/
-function _get_items_multi(doc, url, namespace, conf) {
+function _get_items_multi(doc, url, conf) {
 	var myItems = new Object;
 
 	// one or more lists in this page
@@ -228,5 +219,27 @@ function cleanup(obj, item) {
 		item.callNumber = item.archiveLocation;
 		item.archiveLocation = "";
 	}
+	//concatenate all notes together, because these can become quite excessive
+	var overallNotes = item.notes.map(function(object) { return object.note }).join("<p>\n");
+	item.notes = [{ "note": overallNotes }];
 	item.complete();
 }
+
+
+//The permalinks in the test cases will point to search results and therefore 
+//trigger multiple here. However, they are useful to have some examples at hand.
+
+/** BEGIN TEST CASES **/
+var testCases = [
+	{
+		"type": "web",
+		"url": "http://www.digibib.net/permalink/EXTERN/HBZ_F/HBZ:HT002853247",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://www.digibib.net/permalink/EXTERN/HBZ_F/HBZ:HT012252560",
+		"items": "multiple"
+	}
+]
+/** END TEST CASES **/

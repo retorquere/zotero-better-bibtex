@@ -12,7 +12,7 @@
 	"inRepository": true,
 	"translatorType": 1,
 	"browserSupport": "gcsi",
-	"lastUpdated": "2016-12-29 13:57:06"
+	"lastUpdated": "2018-01-01 10:43:28"
 }
 
 /*
@@ -43,6 +43,7 @@
 TEST DATA can be found here:
  - Single reference (162 KB) text: https://gist.github.com/zuphilip/02d6478ace4636e4e090e348443c551e
  - Larger project (1221 KB): https://gist.github.com/zuphilip/76ce89ebbdac0386507b36cff3fd499a
+ - Other project (1,11 MB): https://gist.github.com/anonymous/10fc363b6d79dae897e296a4327aa707
 */
 
 
@@ -246,10 +247,19 @@ function doImport() {
 				} else if (addressType == "PubMedId" && item.extra.indexOf("PMID") == -1) {
 					addExtraLine(item, "PMID", address);
 				} else {
-					item.attachments.push({
-						url: address,
-						title:"Location"
-					});
+					// distinguish between local paths and internet addresses
+					// (maybe also encoded in AddressInfo subfield?)
+					if (address.indexOf('http://')==0 || address.indexOf('https://')==0) {
+						item.attachments.push({
+							url: address,
+							title: "Online"
+						});
+					} else {
+						item.attachments.push({
+							path: address,
+							title: "Full Text"
+						});
+					}
 				}
 			}
 			var callNumber = ZU.xpathText(locations[j], 'CallNumber');
@@ -336,6 +346,7 @@ function doImport() {
 		var categoryLists = hierarchy[i].textContent.split(";");
 		var referencePoint = categoryLists[0];
 		if (!numbering[referencePoint]) {
+			//in some cases the ordering of these relations is different
 			Z.debug("Warning: Reference point for categorization hierarchy not yet found");
 			Z.debug(categoryLists);
 			continue;
@@ -348,7 +359,11 @@ function doImport() {
 	for (var i=0, n=categories.length; i<n; i++) {
 		var collection = new Zotero.Collection();
 		collection.id = ZU.xpathText(categories[i], './@id');
-		collection.name = numbering[collection.id].substr(2) + ' ' + ZU.xpathText(categories[i], './Name');
+		collection.name = ZU.xpathText(categories[i], './Name');
+		if (numbering[collection.id]) {
+			//add the hierarchy number whenever possible
+			collection.name = numbering[collection.id].substr(2) + ' ' + collection.name;
+		}
 		collection.type = 'collection';
 		collection.children = [];
 		var referenceCategories = ZU.xpath(doc, '//ReferenceCategories/OnetoN[contains(text(), "'+collection.id+'")]');

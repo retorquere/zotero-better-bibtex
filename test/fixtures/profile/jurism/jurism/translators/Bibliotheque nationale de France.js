@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "g",
-	"lastUpdated": "2016-02-18 11:28:15"
+	"lastUpdated": "2017-07-07 11:47:44"
 }
 
 /*
@@ -530,7 +530,7 @@ var BnfClass = function() {
 
 
 	/* Process UNIMARC URL. */
-	this.processMarcUrl = function(newDoc) {
+	this.processMarcUrl = function(newDoc, url) {
 		/* Init MARC record. */
 		// Load MARC
 		var translator = Zotero.loadTranslator("import");
@@ -591,7 +591,15 @@ var BnfClass = function() {
 			//Check for Gallica URL
 			checkGallica(record, newItem);
 
-			newItem.complete();
+			//We have to restore the public view for the next actions
+			//by the users, which is achieved by opening the url with
+			//public ending again.
+			if (url.indexOf('.public')==-1) {
+				url = url.replace('.unimarc', '') + '.public';
+			}
+			ZU.doGet(url, function(text) {;
+				newItem.complete();
+			});
 		});
 	};
 };
@@ -644,7 +652,7 @@ function doWeb(doc, url) {
 				if (urls.length > 0) {
 					//Z.debug(urls)
 					Zotero.Utilities.processDocuments(urls, function(doc) {
-						Bnf.processMarcUrl.call(Bnf, doc)
+						Bnf.processMarcUrl.call(Bnf, doc, urls[0]);
 					});
 				}
 			});
@@ -652,7 +660,7 @@ function doWeb(doc, url) {
 		case "single":
 			urls = [Bnf.reformURL(url)];
 			Zotero.Utilities.processDocuments(urls, function(doc) {
-				Bnf.processMarcUrl.call(Bnf, doc)
+				Bnf.processMarcUrl.call(Bnf, doc, url);
 			});
 			break;
 		default:

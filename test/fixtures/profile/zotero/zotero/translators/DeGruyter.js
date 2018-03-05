@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2017-01-26 07:54:49"
+	"lastUpdated": "2017-08-28 07:31:18"
 }
 
 /*
@@ -63,7 +63,7 @@ function getSearchResults(doc, url) {
 				results[i].classList.contains('nlm-article') ||
 				results[i].classList.contains('chapter') ||
 				results[i].classList.contains('wdg-biblio-record')) {
-					title = ZU.xpath(results[i], './h2[contains(@class,"itemTitle")]/a')[0];
+					title = ZU.xpath(results[i], './/h2[contains(@class,"itemTitle")]/a')[0];
 			}
 		} else {//view issue
 			title = ZU.xpath(results[i],'.//h3/a')[0];
@@ -94,113 +94,133 @@ function doWeb(doc, url) {
 }
 
 function scrapeRIS(doc, url) {
-	urlRIS = ZU.xpathText(doc,'//li[@class="cite"]/a/@href');
+	var urlCite = ZU.xpathText(doc,'(//li[@class="cite"])[1]/a/@href');
+	var productId = urlCite.replace('/dg/cite/', '').replace(/[?#].*$/, '');
+
 	var abstract = doc.getElementById('overviewContent') || 
 					ZU.xpath(doc,'//div[@class="articleBody_abstract"]/p')[0] || 
 					ZU.xpath(doc,'//div[@class="articleBody_transAbstract"]/p')[0];
 	var pdfUrl = ZU.xpathText(doc,'//div[contains(@class, "fullContentLink")]/a[@class="pdf-link"]/@href');
-
+	var tags = ZU.xpath(doc, '//meta[@name="citation_keywords"]/@content');
+	
 	var biblRemark = doc.getElementById('biblRemark');
-
-	ZU.doGet(urlRIS, function(text) {
-		//Z.debug(text);
-		var ac = /<input value="([^"]+)" name="t:ac" type="hidden"\/>/.exec(text)[1];
-		var formdata = /<input value="([^"]+)" name="t:formdata" type="hidden"\/>/.exec(text)[1];
-		var poststring = "t:ac="+encodeURIComponent(ac)+"&t:formdata="+encodeURIComponent(formdata)+"&previewFormat=mla&submit=Export";
-		
-		//at the moment the page (end)numbers are only in MLA correct
-		//e.g. Journal of Ancient History, 1.2 (2013): 170-229. Retrieved 18 Apr. 2014
-		var pageRange = /\):\s+(\d+)-(\d+)\.\s+Retrieved /.exec(text);
-		ZU.doPost("/dg/cite.form", poststring, function(risData) {
-			if (risData.indexOf("<") == 0) {
-				Z.debug("No RIS");
-				scrapeMetadata(doc);
-			} else {
-				if (detectWeb(doc, url) == "bookSection") {
-					risData = risData.replace("TY  - GENERIC", "TY  - CHAP");
-				}
-				var trans = Zotero.loadTranslator('import');
-				trans.setTranslator('32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7');//https://github.com/zotero/translators/blob/master/RIS.js
-				trans.setString(risData);
+	//at the moment the page (end)numbers are not part of the RIS
+	//but the information is in the meta tags
+	var firstPage = ZU.xpathText(doc, '//meta[@name="citation_firstpage"]/@content');
+	var lastPage = ZU.xpathText(doc, '//meta[@name="citation_lastpage"]/@content');
 	
-				trans.setHandler('itemDone', function (obj, item) {
-					//for debugging
-					//item.notes.push({note:risData});
-					
-					//add endpage if missing
-					if (item.pages && item.pages.indexOf("-") == -1 && pageRange) {
-						if (pageRange[1] == item.pages) {
-							item.pages += "–"+pageRange[2];
-						}
-					}
-
-					//correct authors from RIS data
-					//they are of the form lastname firstname withouth a comma
-					//e.g., AU  - Meggitt Justin J.
-					for(var i=0; i<item.creators.length; i++) {
-						if (item.creators[i].fieldMode == 1) {
-							var splitPos = item.creators[i].lastName.indexOf(" ");
-								item.creators[i].firstName = item.creators[i].lastName.substr( splitPos+1 );
-								item.creators[i].lastName = item.creators[i].lastName.substr( 0, splitPos);
-								delete item.creators[i].fieldMode;
-						}
-					}
-					//add hyphen in ISSN if missing
-					if (item.ISSN) {
-						item.ISSN = ZU.cleanISSN(item.ISSN);
-					}
-					//add abstract
-					if (abstract) {
-						abstract = abstract.textContent.replace(/\u0092/,"’");
-						item.abstractNote = ZU.trimInternal(abstract);
-					}
-
-					//biblRemark e.g. edition maybe more
-					if (biblRemark) {
-						if ((item.itemType == "book" || item.itemType == "bookSection") && !item.edition) {
-							item.edition = biblRemark.textContent;
-						} else {
-							item.notes.push({ note : biblRemark.textContent});
-						}
-					}
-
-					//url is saved in RIS withouth the http(s) protocoll
-					item.url = url;
-
-					//journalAbbreviations are more like internal codes
-					//they don't make sense for citations
-					delete item.journalAbbreviation;
-
-					if (pdfUrl) {
-						Z.debug(pdfUrl);
-						item.attachments.push({
-							url: pdfUrl,
-							title: "Full Text PDF",
-							mimeType: "application/pdf"
-						});
-					}
-
-					item.complete();
-				});
-				trans.translate();
+	ZU.doGet("/dg/cite:exportcitation/ris?t:ac="+productId+"/$N", function(risData) {
+		if (risData.indexOf("<") == 0) {
+			Z.debug("No RIS");
+			scrapeMetadata(doc);
+		} else {
+			if (detectWeb(doc, url) == "bookSection") {
+				risData = risData.replace("TY  - GENERIC", "TY  - CHAP");
 			}
-		});
+			var trans = Zotero.loadTranslator('import');
+			trans.setTranslator('32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7');//https://github.com/zotero/translators/blob/master/RIS.js
+			trans.setString(risData);
+
+			trans.setHandler('itemDone', function (obj, item) {
+				//for debugging
+				//item.notes.push({note:risData});
+				
+				//add endpage if missing
+				if (item.pages && item.pages.indexOf("-") == -1 && lastPage) {
+					if (firstPage == item.pages) {
+						item.pages += "–" + lastPage;
+					}
+				}
+
+				//correct authors from RIS data
+				//they are of the form lastname firstname withouth a comma
+				//e.g., AU  - Meggitt Justin J.
+				for(var i=0; i<item.creators.length; i++) {
+					if (item.creators[i].fieldMode == 1) {
+						var splitPos = item.creators[i].lastName.indexOf(" ");
+							item.creators[i].firstName = item.creators[i].lastName.substr( splitPos+1 );
+							item.creators[i].lastName = item.creators[i].lastName.substr( 0, splitPos);
+							delete item.creators[i].fieldMode;
+					}
+				}
+				//add hyphen in ISSN if missing
+				if (item.ISSN) {
+					item.ISSN = ZU.cleanISSN(item.ISSN);
+				}
+				//add abstract
+				if (abstract) {
+					abstract = abstract.textContent
+						.replace(/\u0092/g,"’")
+						.replace(/\u0093/g,"“")
+						.replace(/\u0094/g,"”");
+					item.abstractNote = ZU.trimInternal(abstract);
+				}
+
+				//biblRemark e.g. edition maybe more
+				if (biblRemark) {
+					if ((item.itemType == "book" || item.itemType == "bookSection") && !item.edition) {
+						item.edition = biblRemark.textContent;
+					} else {
+						item.notes.push({ note : biblRemark.textContent});
+					}
+				}
+
+				//url is saved in RIS withouth the http(s) protocoll
+				item.url = url;
+
+				//journalAbbreviations are more like internal codes
+				//they don't make sense for citations
+				delete item.journalAbbreviation;
+				
+				if (item.tags.length == 0 && tags && tags.length > 0) {
+					for (var i=0; i<tags.length; i++) {
+						item.tags.push(tags[i].textContent.replace(/[,.]$/, ''));
+					}
+				}
+
+				if (pdfUrl) {
+					//Z.debug(pdfUrl);
+					item.attachments.push({
+						url: pdfUrl,
+						title: "Full Text PDF",
+						mimeType: "application/pdf"
+					});
+				}
+
+				item.complete();
+			});
+			trans.translate();
+		}
 	});
-	
+
 }
 
 
 function scrapeMetadata(doc, url) {
+	//the highwire meta tags are now part of the body and not head
+	//which we have to correct here before calling EM translator
+	var head = doc.getElementsByTagName('head');
+	var metasInBody = ZU.xpath(doc, '//body/div/meta');
+	for (var i=0; i<metasInBody.length; i++) {
+		head[0].append(metasInBody[i]);
+	}
 	// We call the Embedded Metadata translator
 	var translator = Zotero.loadTranslator("web");
 	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
 	translator.setHandler("itemDone", function(obj, item) {
 		item.abstractNote = ZU.xpathText(doc, '//div[@class="articleBody_abstract"]');
+		var doi = ZU.xpathText(doc, '(//a[@itemprop="citation_doi"])[1]/@href');
+		if (doi) {
+			var start = doi.indexOf('10.');
+			item.DOI = doi.substr(start);
+		}
 		item.complete();
 	});
 	translator.setDocument(doc);
 	translator.translate();
-}/** BEGIN TEST CASES **/
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -209,7 +229,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/view/j/for.2011.8.4_20120105083457/for.2011.8.4/for.2011.8.4.1405/for.2011.8.4.1405.xml?format=INT",
+		"url": "https://www.degruyter.com/view/j/for.2011.8.4_20120105083457/for.2011.8.4/for.2011.8.4.1405/for.2011.8.4.1405.xml?format=INT",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -229,7 +249,7 @@ var testCases = [
 				"libraryCatalog": "DeGruyter",
 				"publicationTitle": "The Forum",
 				"shortTitle": "The Midterm Landslide of 2010",
-				"url": "http://www.degruyter.com/view/j/for.2011.8.4_20120105083457/for.2011.8.4/for.2011.8.4.1405/for.2011.8.4.1405.xml?format=INT",
+				"url": "https://www.degruyter.com/view/j/for.2011.8.4_20120105083457/for.2011.8.4/for.2011.8.4.1405/for.2011.8.4.1405.xml?format=INT",
 				"volume": "8",
 				"attachments": [
 					{
@@ -237,7 +257,18 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					"congress",
+					"economy",
+					"elections",
+					"midterm elections",
+					"polarization",
+					"political parties",
+					"presidency",
+					"presidential approval",
+					"retrospective voting",
+					"voting"
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -245,7 +276,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/view/j/ev.2010.7.4/ev.2010.7.4.1796/ev.2010.7.4.1796.xml?format=INT",
+		"url": "https://www.degruyter.com/view/j/ev.2010.7.4/ev.2010.7.4.1796/ev.2010.7.4.1796.xml?format=INT",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -265,7 +296,7 @@ var testCases = [
 				"libraryCatalog": "DeGruyter",
 				"publicationTitle": "The Economists' Voice",
 				"shortTitle": "Comment on Nordhaus",
-				"url": "http://www.degruyter.com/view/j/ev.2010.7.4/ev.2010.7.4.1796/ev.2010.7.4.1796.xml?format=INT",
+				"url": "https://www.degruyter.com/view/j/ev.2010.7.4/ev.2010.7.4.1796/ev.2010.7.4.1796.xml?format=INT",
 				"volume": "7",
 				"attachments": [
 					{
@@ -286,7 +317,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/view/product/462324?rskey=UXcy67&result=1",
+		"url": "https://www.degruyter.com/view/product/462324?rskey=UXcy67&result=1",
 		"items": [
 			{
 				"itemType": "book",
@@ -311,7 +342,7 @@ var testCases = [
 				"libraryCatalog": "DeGruyter",
 				"place": "Berlin, Boston",
 				"publisher": "De Gruyter",
-				"url": "http://www.degruyter.com/view/product/462324?rskey=UXcy67&result=1",
+				"url": "https://www.degruyter.com/view/product/462324?rskey=UXcy67&result=1",
 				"attachments": [],
 				"tags": [
 					"Big Data",
@@ -325,7 +356,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/view/j/jah-2013-1-issue-2/jah-2013-0010/jah-2013-0010.xml",
+		"url": "https://www.degruyter.com/view/j/jah-2013-1-issue-2/jah-2013-0010/jah-2013-0010.xml",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -346,7 +377,7 @@ var testCases = [
 				"pages": "170–229",
 				"publicationTitle": "Journal of Ancient History",
 				"shortTitle": "Did Magic Matter?",
-				"url": "http://www.degruyter.com/view/j/jah-2013-1-issue-2/jah-2013-0010/jah-2013-0010.xml",
+				"url": "https://www.degruyter.com/view/j/jah-2013-1-issue-2/jah-2013-0010/jah-2013-0010.xml",
 				"volume": "1",
 				"attachments": [
 					{
@@ -354,7 +385,13 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					"Belief",
+					"Early Roman Empire",
+					"Magic",
+					"Popular Culture",
+					"Scepticism"
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -362,12 +399,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/browse?authorCount=5&pageSize=10&searchTitles=true&sort=datedescending&t1=WS&type_0=books&type_1=journals",
+		"url": "http://www.degruyter.com/browse?authorCount=5&pageSize=10&searchTitles=true&sort=datedescending&t1=EC&type_0=books&type_1=journals",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.degruyter.com/view/IBZ/55568460-8061-41c8-8479-783eefecc02f",
+		"url": "https://www.degruyter.com/view/IBZ/55568460-8061-41c8-8479-783eefecc02f",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -388,7 +425,7 @@ var testCases = [
 				"pages": "165-180",
 				"publicationTitle": "Anuario Musical",
 				"shortTitle": "The Principle of the Eternal-Feminine in Rossini’s L’Italiana in Algeri",
-				"url": "http://www.degruyter.com/view/IBZ/55568460-8061-41c8-8479-783eefecc02f",
+				"url": "https://www.degruyter.com/view/IBZ/55568460-8061-41c8-8479-783eefecc02f",
 				"attachments": [],
 				"tags": [
 					"Italian music",

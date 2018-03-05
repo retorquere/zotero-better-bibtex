@@ -503,7 +503,7 @@
       </group>
       <choose>
         <if variable="title" match="none"/>
-        <else-if type="thesis speech" match="any"/>
+        <else-if type="manuscript thesis speech" match="any"/>
         <else-if match="any" type="treaty">
           <group delimiter=" ">
             <group delimiter=". ">

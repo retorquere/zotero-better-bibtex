@@ -14,8 +14,8 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2015-02-11 01:24:19"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2017-12-25 13:29:42"
 }
 
 var fromMarcGenre = {
@@ -25,7 +25,7 @@ var fromMarcGenre = {
 	"art reproduction":"artwork",
 	"article":"journalArticle",
 	"autobiography":"book",
-	"bibliography":"bookSection",
+	"bibliography":"book",
 	"biography":"book",
 	"book":"book",
 //		"calendar":XXX,
@@ -804,6 +804,11 @@ function extractTitleInfoTitle(titleInfo) {
 	if(subtitle) title = title.replace(/:$/,'') + ": "+ subtitle.trim();
 	var nonSort = ZU.xpathText(titleInfo, "m:nonSort[1]", xns);
 	if(nonSort) title = nonSort.trim() + " " + title;
+	var partNumber = ZU.xpathText(titleInfo, "m:partNumber[1]", xns);
+	var partName = ZU.xpathText(titleInfo, "m:partName[1]", xns);
+	if(partNumber && partName) title = title.replace(/\.$/,'') + ". "+ partNumber.trim() + ": " + partName.trim()
+	else if(partNumber) title = title.replace(/\.$/,'') + ". " + partNumber.trim()
+	else if(partName) title = title.replace(/\.$/,'') + ". " + partName.trim();
 	return extractLangAndType(titleInfo, title);
 }
 
@@ -1422,7 +1427,12 @@ function doImport() {
 			}
 
 			// creators (might be editors)
-			processCreators(host, newItem, "editor");
+			//processCreators(host, newItem, "editor");
+			
+			// creators of host item will be evaluated by their role info
+			// and only if this is missing then they are connected by a generic
+			// contributor role
+			processCreators(host, newItem, "contributor");
 			
 			// identifiers
 			processIdentifiers(host, newItem);
@@ -1747,7 +1757,7 @@ var testCases = [
 		"input": "<?xml version='1.0' encoding='UTF-8' ?>\n<mods xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"3.4\"\n  xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns=\"http://www.loc.gov/mods/v3\"\n  xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd\">\n\n  <titleInfo>\n    <title>Sound and fury</title>\n    <subTitle>the making of the punditocracy</subTitle>\n  </titleInfo>\n\n  <name type=\"personal\" authorityURI=\"http://id.loc.gov/authorities/names\"\n    valueURI=\"http://id.loc.gov/authorities/names/n92101908\">\n    <namePart>Alterman, Eric</namePart>\n\n    <role>\n      <roleTerm type=\"text\">creator</roleTerm>\n    </role>\n  </name>\n\n  <typeOfResource>text</typeOfResource>\n\n  <genre authority=\"marcgt\">bibliography</genre>\n\n  <originInfo>\n    <place>\n      <placeTerm authority=\"marccountry\" type=\"code\"\n        authorityURI=\"http://id.loc.gov/vocabulary/countries\"\n        valueURI=\"http://id.loc.gov/vocabulary/countries/nyu\">nyu</placeTerm>\n    </place>\n    <place>\n      <placeTerm type=\"text\">Ithaca, N.Y</placeTerm>\n    </place>\n\n    <publisher>Cornell University Press</publisher>\n    <dateIssued>c1999</dateIssued>\n    <dateIssued encoding=\"marc\">1999</dateIssued>\n    <issuance>monographic</issuance>\n  </originInfo>\n\n  <language>\n\n    <languageTerm authority=\"iso639-2b\" type=\"code\"\n      authorityURI=\"http://id.loc.gov/vocabulary/iso639-2\"\n      valueURI=\"http://id.loc.gov/vocabulary/iso639-2/eng\">eng</languageTerm>\n  </language>\n\n  <physicalDescription>\n    <form authority=\"marcform\">print</form>\n    <extent>vii, 322 p. ; 23 cm.</extent>\n  </physicalDescription>\n\n  <note type=\"statement of responsibility\">Eric Alterman.</note>\n  <note>Includes bibliographical references (p. 291-312) and index.</note>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\">\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh85070736\">Journalism</topic>\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh00005651\">Political aspects</topic>\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n\n  </subject>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\">\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh2002011436\">Politics and\n      government</topic>\n    <temporal valueURI=\"http://id.loc.gov/authorities/subjects/sh2002012476\">20th century</temporal>\n  </subject>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\"\n    valueURI=\"http://id.loc.gov/authorities/subjects/sh2008107507\">\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh85081863\">Mass media</topic>\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh00005651\">Political aspects</topic>\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n  </subject>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\"\n    valueURI=\"http://id.loc.gov/authorities/subjects/sh2010115992\">\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh85133490\">Television and\n      politics</topic>\n\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n  </subject>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\"\n    valueURI=\"http://id.loc.gov/authorities/subjects/sh2008109555\">\n    <topic valueURI=\"http://id.loc.gov/authorities/subjects/sh85106514\">Press and politics</topic>\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n  </subject>\n\n  <subject authority=\"lcsh\" authorityURI=\"http://id.loc.gov/authorities/subjects\">\n    <topic>Talk shows</topic>\n    <geographic valueURI=\"http://id.loc.gov/authorities/names/n78095330\">United States</geographic>\n  </subject>\n\n  <classification authority=\"lcc\">PN4888.P6 A48 1999</classification>\n  <classification edition=\"21\" authority=\"ddc\">071/.3</classification>\n\n  <identifier type=\"isbn\">0801486394 (pbk. : acid-free, recycled paper)</identifier>\n  <identifier type=\"lccn\">99042030</identifier>\n\n  <recordInfo>\n    <descriptionStandard>aacr</descriptionStandard>\n    <recordContentSource>DLC</recordContentSource>\n    <recordCreationDate encoding=\"marc\">990730</recordCreationDate>\n\n    <recordChangeDate encoding=\"iso8601\">20000406144503.0</recordChangeDate>\n    <recordIdentifier>11761548</recordIdentifier>\n    <recordOrigin>Converted from MARCXML to MODS version 3.4 using MARC21slim2MODS3-4.xsl (Revision\n      1.74), valueURIs and authorityURIs added by hand 20120123</recordOrigin>\n  </recordInfo>\n</mods>\n",
 		"items": [
 			{
-				"itemType": "bookSection",
+				"itemType": "book",
 				"title": "Sound and fury: the making of the punditocracy",
 				"creators": [
 					{
@@ -1760,6 +1770,7 @@ var testCases = [
 				"ISBN": "0801486394",
 				"callNumber": "PN4888.P6 A48 1999, 071/.3",
 				"language": "eng",
+				"numPages": "322",
 				"place": "Ithaca, N.Y",
 				"publisher": "Cornell University Press",
 				"attachments": [],
@@ -2073,7 +2084,7 @@ var testCases = [
 		"input": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mods xmlns=\"http://www.loc.gov/mods/v3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd\" version=\"3.4\">\n    <titleInfo>\n        <title>Papers from the First International Workshop on Plasma-Based Ion Implantation</title>\n        <subTitle>4-6 August 1993, University of Wisconsin--Madison, Madison, Wisconsin</subTitle>\n    </titleInfo>\n    <name type=\"conference\">\n        <namePart>International Workshop on Plasma-Based Ion Implantation 1993 : University of Wisconsin--Madison)</namePart>\n    </name>\n    <name type=\"personal\">\n        <namePart>Conrad, John R.</namePart>\n    </name>\n    <name type=\"personal\">\n        <namePart>Sridharan, Kumar.</namePart>\n    </name>\n    <name type=\"corporate\">\n        <namePart>Applied Science and Technology (ASTeX), Inc</namePart>\n    </name>\n    <typeOfResource>text</typeOfResource>\n    <genre authority=\"marcgt\">bibliography</genre>\n    <genre authority=\"marcgt\">conference publication</genre>\n    <originInfo>\n        <place>\n            <placeTerm type=\"code\" authority=\"marccountry\">nyu</placeTerm>\n        </place>\n        <place>\n            <placeTerm type=\"text\">New York</placeTerm>\n        </place>\n        <publisher>Published for the American Vacuum Society by the American Institute of Physics</publisher>\n        <dateIssued>1994</dateIssued>\n        <issuance>monographic</issuance>\n    </originInfo>\n    <language>\n        <languageTerm type=\"code\" authority=\"iso639-2b\">eng</languageTerm>\n    </language>\n    <physicalDescription>\n        <form authority=\"marcform\">print</form>\n        <extent>p. 813-998 : ill. ; 30 cm.</extent>\n    </physicalDescription>\n    <note>\"Published in both 1994 March/April issue of the Journal of vacuum science and technology B, vol. 12, no. 2\"--T.p. verso.</note>\n    <note type=\"bibliography\">Includes bibliographical references and index.</note>\n    <subject authority=\"lcsh\">\n        <topic>Ion implantation</topic>\n        <topic>Congresses</topic>\n    </subject>\n    <classification authority=\"lcc\">TS695.25 .I57 1993</classification>\n    <classification authority=\"ddc\" edition=\"21\">621.3815/2</classification>\n    <relatedItem type=\"host\">\n        <titleInfo>\n            <title>Journal of vacuum science &amp; technology. B, Microelectronics and nanometer structures processing, measurement and phenomena</title>\n        </titleInfo>\n        <identifier type=\"issn\">1071-1023</identifier>\n        <identifier type=\"local\">(OCoLC)23276603</identifier>\n        <identifier type=\"local\">(DLC)sn 92021098</identifier>\n        <part>\n            <text>2nd ser., v. 12, no. 2</text>\n        </part>\n    </relatedItem>\n    <identifier type=\"isbn\">1563963442</identifier>\n    <identifier type=\"lccn\">97129132</identifier>\n    <identifier type=\"oclc\">35547175</identifier>\n    <recordInfo>\n        <descriptionStandard>aacr</descriptionStandard>\n        <recordContentSource authority=\"marcorg\">DLC</recordContentSource>\n        <recordCreationDate encoding=\"marc\">940504</recordCreationDate>\n        <recordChangeDate encoding=\"iso8601\">19970618142736.9</recordChangeDate>\n        <recordIdentifier>4968605</recordIdentifier>\n        <recordOrigin>Converted from MARCXML to MODS version 3.4 using MARC21slim2MODS3-4.xsl\n        \t\t(Revision 1.76 2012/02/01)</recordOrigin>\n    </recordInfo>\n</mods>",
 		"items": [
 			{
-				"itemType": "bookSection",
+				"itemType": "book",
 				"title": "Papers from the First International Workshop on Plasma-Based Ion Implantation: 4-6 August 1993, University of Wisconsin--Madison, Madison, Wisconsin",
 				"creators": [
 					{
@@ -2288,6 +2299,47 @@ var testCases = [
 					},
 					{
 						"note": "Forms part of: Miscellaneous Manuscripts collection."
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<mods version=\"3.6\" xmlns=\"http://www.loc.gov/mods/v3\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:schemaLocation=\"http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd\">\n   <titleInfo>\n      <title>Ludvig Holbergs udvalgte Skrifter</title>\n      <partNumber>D. 1-6 B. 4</partNumber>\n      <partName>Holbergs Comedier</partName>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Den honette Ambition</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Den Stundesløse</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>De Usynlige</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Pernilles korte Frøkenstand</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Erasmus Montanus</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Det lykkelige Skibbrud</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Den pantsatte Bondedreng</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Comedier</title>\n   </titleInfo>\n   <titleInfo type=\"alternative\">\n      <title>Udvalgte Skrifter</title>\n   </titleInfo>\n   <name type=\"personal\" usage=\"primary\">\n      <namePart>Holberg, Ludvig</namePart>\n      <namePart type=\"date\">1684-1754</namePart>\n      <nameIdentifier>bibsys.no:authority:90073658</nameIdentifier>\n   </name>\n   <name type=\"personal\">\n      <namePart>Rahbek, K.L.</namePart>\n      <nameIdentifier>bibsys.no:authority:90253663</nameIdentifier>\n   </name>\n   <typeOfResource>text</typeOfResource>\n   <genre type=\"literaryform\">fiction</genre>\n   <genre authority=\"marcgt\">fiction</genre>\n   <originInfo>\n      <place>\n         <placeTerm authority=\"marccountry\" type=\"code\">dk</placeTerm>\n      </place>\n      <place>\n         <placeTerm authority=\"iso3166\" type=\"code\">dk</placeTerm>\n      </place>\n      <place>\n         <placeTerm type=\"text\">Kjøbenhavn</placeTerm>\n      </place>\n      <publisher>Schultz</publisher>\n      <dateIssued>1805</dateIssued>\n      <issuance>monographic</issuance>\n   </originInfo>\n   <language>\n      <languageTerm authority=\"iso639-2b\" type=\"code\">dan</languageTerm>\n   </language>\n   <physicalDescription>\n      <form authority=\"marcform\">print</form>\n      <form authority=\"marccategory\">electronic resource</form>\n      <form authority=\"marcsmd\">remote</form>\n      <form authority=\"marccategory\">text</form>\n      <form authority=\"marcsmd\">regular print</form>\n      <extent>XII, 532 s.</extent>\n   </physicalDescription>\n   <accessCondition type=\"restriction on access\"/>\n   <note type=\"reproduction\">Elektronisk reproduksjon [Norge] Nasjonalbiblioteket Digital 2014-02-07</note>\n   <subject>\n      <name type=\"personal\">\n         <namePart>Holberg, Ludvig</namePart>\n         <namePart type=\"date\">1684-1754</namePart>\n      </name>\n   </subject>\n   <location>\n      <url displayLabel=\"Fulltekst NB digitalisert\" note=\"Elektronisk reproduksjon. Gratis\" usage=\"primary display\">http://urn.nb.no/URN:NBN:no-nb_digibok_2012051624006</url>\n   </location>\n   <location>\n      <url displayLabel=\"Fulltekst NB digitalisert\" note=\"Elektronisk reproduksjon. Gratis\">http://urn.nb.no/URN:NBN:no-nb_digibok_2014012024006</url>\n   </location>\n   <location>\n      <url displayLabel=\"electronic resource\" note=\"Elektronisk reproduksjon. Gratis\" usage=\"primary display\">http://urn.nb.no/URN:NBN:no-nb_digibok_2012051624006</url>\n   </location>\n   <identifier type=\"urn\">URN:NBN:no-nb_digibok_2012051624006</identifier>\n   <location>\n      <url displayLabel=\"electronic resource\" note=\"Elektronisk reproduksjon. Gratis\">http://urn.nb.no/URN:NBN:no-nb_digibok_2014012024006</url>\n   </location>\n   <identifier type=\"urn\">URN:NBN:no-nb_digibok_2014012024006</identifier>\n   <location>\n      <physicalLocation authority=\"isil\">NO-0183300</physicalLocation>\n      <holdingSimple>\n         <copyInformation>\n            <subLocation>0183300</subLocation>\n         </copyInformation>\n      </holdingSimple>\n   </location>\n   <location>\n      <physicalLocation authority=\"isil\">NO-0030100</physicalLocation>\n      <holdingSimple>\n         <copyInformation>\n            <subLocation>0030100</subLocation>\n            <note>(ib.) (Proveniens Johan Schweigaard) (Til bruk på NB Oslos lesesal)</note>\n         </copyInformation>\n      </holdingSimple>\n   </location>\n   <location>\n      <physicalLocation authority=\"isil\">NO-0030100</physicalLocation>\n      <holdingSimple>\n         <copyInformation>\n            <subLocation>0030100</subLocation>\n            <note>(ib.) (Til bruk på Spesiallesesalen)</note>\n         </copyInformation>\n      </holdingSimple>\n   </location>\n   <location>\n      <physicalLocation authority=\"isil\">NO-0030100</physicalLocation>\n      <holdingSimple>\n         <copyInformation>\n            <subLocation>0030100</subLocation>\n            <note>(ib.) (Til bruk på Spesiallesesalen)</note>\n         </copyInformation>\n      </holdingSimple>\n   </location>\n   <relatedItem displayLabel=\"Inkludert i\" type=\"host\">\n      <titleInfo>\n         <title>Ludvig Holbergs udvalgte Skrifter. D. 1-6, Holbergs Comedier</title>\n      </titleInfo>\n      <name>\n         <namePart>Holberg, Ludvig, 1684-1754</namePart>\n      </name>\n      <originInfo>\n         <publisher>Kjøbenhavn : Schultz, 1804-1806</publisher>\n      </originInfo>\n      <identifier type=\"local\">999417135394702201</identifier>\n      <part>\n         <text>B. 4</text>\n      </part>\n   </relatedItem>\n   <identifier type=\"oldoaiid\">oai:bibsys.no:biblio:941621081</identifier>\n   <identifier type=\"oldoaiid\">oai:bibsys.no:biblio:121586413</identifier>\n   <identifier type=\"uri\">http://urn.nb.no/URN:NBN:no-nb_digibok_2012051624006</identifier>\n   <identifier type=\"uri\">http://urn.nb.no/URN:NBN:no-nb_digibok_2014012024006</identifier>\n   <recordInfo>\n      <descriptionStandard>katreg</descriptionStandard>\n      <recordContentSource authority=\"marcorg\">NO-TrBIB</recordContentSource>\n      <recordCreationDate encoding=\"marc\">120621</recordCreationDate>\n      <recordChangeDate encoding=\"iso8601\">20170126171829.0</recordChangeDate>\n      <recordIdentifier source=\"nb.bibsys.no\">999416210814702202</recordIdentifier>\n      <recordOrigin>Converted from MARCXML to MODS version 3.6 using a customized MARC21slim2MODS3-5.xsl\n                (based on 3.5 Revision 1.106 2014/12/19)</recordOrigin>\n      <languageOfCataloging>\n         <languageTerm authority=\"iso639-2b\" type=\"code\">nob</languageTerm>\n      </languageOfCataloging>\n   </recordInfo>\n   <relatedItem displayLabel=\"Del av Bibliografien\" type=\"host\">\n      <titleInfo>\n         <title>Schweigaardsamlingen</title>\n      </titleInfo>\n      <genre authority=\"marcgt\">bibliography</genre>\n   </relatedItem>\n   <identifier type=\"sesamid\">4c8b333d27a2eb37c35f99ce42a679bf</identifier>\n   <identifier type=\"oaiid\">oai:nb.bibsys.no:999416210814702202</identifier>\n</mods>",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Ludvig Holbergs udvalgte Skrifter. D. 1-6 B. 4: Holbergs Comedier",
+				"creators": [
+					{
+						"firstName": "Ludvig",
+						"lastName": "Holberg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K. L.",
+						"lastName": "Rahbek",
+						"creatorType": "author"
+					},
+					{
+						"lastName": "Holberg, Ludvig, 1684-1754",
+						"fieldMode": 1,
+						"creatorType": "contributor"
+					}
+				],
+				"date": "1805",
+				"archiveLocation": "NO-0183300; NO-0030100; NO-0030100; NO-0030100",
+				"language": "dan",
+				"place": "Kjøbenhavn",
+				"publisher": "Kjøbenhavn : Schultz, 1804-1806",
+				"url": "http://urn.nb.no/URN:NBN:no-nb_digibok_2012051624006",
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "reproduction: Elektronisk reproduksjon [Norge] Nasjonalbiblioteket Digital 2014-02-07"
 					}
 				],
 				"seeAlso": []

@@ -2,14 +2,14 @@
 	"translatorID": "27ee5b2c-2a5a-4afc-a0aa-d386642d4eed",
 	"label": "PubMed Central",
 	"creator": "Michael Berkowitz and Rintze Zelle",
-	"target": "^https?://(www\\.)?ncbi\\.nlm\\.nih\\.gov/pmc",
+	"target": "^https://(www\\.)?ncbi\\.nlm\\.nih\\.gov/pmc",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-26 04:49:54"
+	"lastUpdated": "2017-09-29 03:13:21"
 }
 
 function detectWeb(doc, url) {
@@ -89,7 +89,7 @@ function getSearchResults(doc, checkOnly) {
 }
 
 function lookupPMCIDs(ids, doc, pdfLink) {
-	var newUri = "//eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&retmode=xml&id="
+	var newUri = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pmc&retmode=xml&id="
 		+ encodeURIComponent(ids.join(","));
 	Zotero.debug(newUri);
 	ZU.doGet(newUri, function (text) {
@@ -187,7 +187,7 @@ function lookupPMCIDs(ids, doc, pdfLink) {
 				}
 			}
 
-			var linkurl = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + ids[i] + "/";
+			var linkurl = "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + ids[i] + "/";
 			newItem.url = linkurl;
 			newItem.attachments = [{
 				url: linkurl,
@@ -199,11 +199,11 @@ function lookupPMCIDs(ids, doc, pdfLink) {
 			if (pdfLink) {
 				var pdfFileName = pdfLink[ids[i]];
 			} else if (ZU.xpathText(article, 'selfuri/@xlinktitle') == "pdf") {
-				var pdfFileName = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + 
+				var pdfFileName = "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC" +
 				ids[i] + "/pdf/" + ZU.xpathText(article, 'selfuri/@xlinkhref');
 			} else if (ZU.xpathText(article, 'articleid[@pubidtype="publisherid"]')){
 				//this should work on most multiples
-				var pdfFileName = "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC" + 
+				var pdfFileName = "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC" +
 				ids[i] + "/pdf/" + ZU.xpathText(article, 'articleid[@pubidtype="publisherid"]') + ".pdf";
 			}
 			
@@ -275,7 +275,7 @@ var testCases = [
 				"libraryCatalog": "PubMed Central",
 				"pages": "37",
 				"publicationTitle": "Respiratory Research",
-				"url": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2377243/",
+				"url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2377243/",
 				"volume": "9",
 				"attachments": [
 					{
@@ -368,7 +368,7 @@ var testCases = [
 				"libraryCatalog": "PubMed Central",
 				"pages": "2767-2777",
 				"publicationTitle": "Statistics in medicine",
-				"url": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC3139813/",
+				"url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3139813/",
 				"volume": "30",
 				"attachments": [
 					{
@@ -435,7 +435,7 @@ var testCases = [
 				"journalAbbreviation": "PLoS One",
 				"libraryCatalog": "PubMed Central",
 				"publicationTitle": "PLoS ONE",
-				"url": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC2801612/",
+				"url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2801612/",
 				"volume": "5",
 				"attachments": [
 					{
@@ -499,7 +499,7 @@ var testCases = [
 				"pages": "88-102",
 				"publicationTitle": "Immunological Reviews",
 				"shortTitle": "The human immune response to tuberculosis and its treatment",
-				"url": "http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4368415/",
+				"url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4368415/",
 				"volume": "264",
 				"attachments": [
 					{

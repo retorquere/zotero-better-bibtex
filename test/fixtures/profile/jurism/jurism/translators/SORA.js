@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2015-01-02 22:03:36"
+	"lastUpdated": "2017-06-24 15:08:40"
 }
 
 /*
@@ -61,7 +61,7 @@ function detectWeb(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "content")]//dt//a|//strong[contains(@class, "field-content")]/a');
+	var rows = ZU.xpath(doc, '//div[contains(@class, "content")]//dt//a|//div[contains(@class, "content")]//h3[contains(@class, "title")]/a|//span[contains(@class, "field-content")]/a');
 	for (var i=0; i<rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
@@ -107,7 +107,7 @@ function scrape(doc, url) {
 	//some heuristic. This heuristic seperates another autor
 	//from a suffix by checking if the string consists any space
 	//and its length is less than 5.
-	var authors = ZU.xpathText(doc, '//div[contains(@class, "content")]/div[contains(@class, "field-field-authors")]/div/div/text()');
+	var authors = ZU.xpathText(doc, '//div[contains(@class, "content")]/div[contains(@class, "field-name-field-authors")]/div/div/text()');
 	if (authors) {
 		var authorsSplit = authors.split(',');
 		var index = 0;
@@ -126,10 +126,10 @@ function scrape(doc, url) {
 	}
 	
 	//other fields
-	var fields = ZU.xpath(doc, '//div[contains(@class, "content")]/fieldset/div');
+	var fields = ZU.xpath(doc, '//div[contains(@class, "content")]/fieldset/div/div');
 	for (var k=0; k<fields.length; k++) {
-		var fieldName = ZU.trim( ZU.xpathText(fields[k], './div/div/div').replace(':','').toLowerCase() );
-		var fieldValue = ZU.trim( ZU.xpathText(fields[k], './div/div/text()').replace(',','') );
+		var fieldName = ZU.xpathText(fields[k], './div[contains(@class, "field-label")]').replace(':','').toLowerCase().trim();
+		var fieldValue = ZU.xpathText(fields[k], './div[contains(@class, "field-items")]').replace(',','').trim();
 		if (mapping[fieldName]) {
 			item[ mapping[fieldName] ] = fieldValue;
 		} else {
@@ -139,16 +139,13 @@ function scrape(doc, url) {
 	
 	
 	//PDF
-	var attachments = doc.getElementById('attachments');
-	if (attachments) {
-		var link = attachments.getElementsByTagName('a');
-		if (link.length) {
-			item.attachments.push({
-				title : "Full Text PDF",
-				url : link[0].href,
-				mimeType : "application/pdf"
-			});
-		}
+	var pdfLink = ZU.xpath(doc, '//div[contains(@class, "field-name-upload")]//a[contains(@type, "application/pdf")]');
+	if (pdfLink.length>0) {
+		item.attachments.push({
+			title : "Full Text PDF",
+			url : pdfLink[0].href,
+			mimeType : "application/pdf"
+		});
 	}
 	//link to SORA entry
 	item.attachments.push({
@@ -256,7 +253,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "An Analysis of Physical, Physiological, and Optical Aspects of Avian Coloration With Emphasis On Wood-Warblers",
+				"title": "An Analysis of Physical, Physiological, and Optical Aspects of Avian Coloration with Emphasis on Wood-Warblers",
 				"creators": [
 					{
 						"firstName": "Edward H., Jr.",

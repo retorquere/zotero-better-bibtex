@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-11-01 11:20:00"
+	"lastUpdated": "2017-06-07 18:52:06"
 }
 
 /*
@@ -141,16 +141,25 @@ function finalize(doc, url, item) {
 	}
 	//Authors names in BibTeX are nonstandard and therefore
 	//splitting into first and last name normally fails.
+	//Moreover, ignore "undefined" authors
+	var creators = [];
 	for (var i=0; i<item.creators.length; i++) {
 		if (item.creators[i].firstName=="") {
-			item.creators[i] = ZU.cleanAuthor(item.creators[i].lastName, item.creators[i].creatorType);
+			if (item.creators[i].lastName!=="undefined") {
+				creators.push(ZU.cleanAuthor(item.creators[i].lastName, item.creators[i].creatorType));
+			}
+			//delete the else cases
+		} else {
+			creators.push(item.creators[i]);
 		}
 	}
+	item.creators = creators;
 	//Adding abstract
 	item.abstractNote = ZU.xpathText(doc, '//div[text()="ABSTRACT"]/following-sibling::div[1]');
 	//Adding tags
 	var keywordText = ZU.xpathText(doc, '//div[text()="INDEX TERMS"]/following-sibling::div[1]');
 	if (keywordText) {
+		keywordText = keywordText.replace(/,\s*$/, '');
 		if (keywordText.indexOf(";")>-1) {
 			item.tags = keywordText.split("; ");
 		} else {
@@ -203,6 +212,11 @@ var testCases = [
 				"title": "Guest Editorial: Special Section on Naturalistic Affect Resources for System Building and Evaluation",
 				"creators": [
 					{
+						"firstName": "Bjorn",
+						"lastName": "Schuller",
+						"creatorType": "author"
+					},
+					{
 						"firstName": "Ellen",
 						"lastName": "Douglas-Cowie",
 						"creatorType": "author"
@@ -210,11 +224,6 @@ var testCases = [
 					{
 						"firstName": "Anton",
 						"lastName": "Batliner",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Bjorn",
-						"lastName": "Schuller",
 						"creatorType": "author"
 					}
 				],

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-06-14 06:39:30"
+	"lastUpdated": "2017-06-17 08:12:24"
 }
 
 /*********************** BEGIN FRAMEWORK ***********************/
@@ -673,30 +673,23 @@ attachments      : [{ url: FW.Url(),
   title:  "USgamer snapshot",
   type: "text/html" }],
 creators         : FW.Xpath('//p[@class="author"]/a').text().cleanAuthor("author"),
-date             : FW.Xpath('//p[@itemprop="datePublished"]/@content').text().replace(/-(\d{2})-(\d{2})/g,"-$2-$1"),
+date             : FW.Xpath('//span[@itemprop="datePublished"]/@content').text().replace(/-(\d{2})-(\d{2})/g,"-$2-$1"),
 blogTitle        : "USgamer",
 language         : "en-US",
 abstractNote     : FW.Xpath('//meta[@name="description"]/@content').text(),
-tags             : FW.Xpath('//p[@class="tags"]').text().replace(/\t/g,"").replace(/\nTags:\n/,"").split(/\n/).trim()
+tags             : FW.Xpath('//div[@class="tags"]//a[contains(@href, "?tag=")]').text().replace(/\t/g,"").replace(/\nTags:\n/,"").split(/\n/).trim()
 });
 
 FW.MultiScraper({
 itemType         : 'multiple',
-detect           : FW.Url().match(/\/archive\?tag\=/), // tagged pages
+detect           : FW.Url().match(/\/archive\?tag\=|\/search\?q\=/),
 choices          : {
   titles :  FW.Xpath('//h2[@class="title"]/a').text().trim(),
   urls    :  FW.Xpath('//h2[@class="title"]/a').key("href").trim()
 }
 });
 
-FW.MultiScraper({
-itemType         : 'multiple',
-detect           : FW.Url().match(/\/search\?q\=/), // search pages
-choices          : {
-  titles :  FW.Xpath('//div[@class="search-results"]/ul/li/h3/a').text().trim(),
-  urls    :  FW.Xpath('//div[@class="search-results"]/ul/li/h3/a').key("href")
-}
-});/** BEGIN TEST CASES **/
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -712,7 +705,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2016-04-15",
+				"date": "2016-06-21",
 				"abstractNote": "While this EarthBound sequel may never see an official English release, it still stands as one of Nintendo's greatest achievements.",
 				"blogTitle": "USgamer",
 				"language": "en-US",
@@ -725,10 +718,10 @@ var testCases = [
 				],
 				"tags": [
 					"Bob Mackey",
+					"Earthbound",
 					"Game Boy Advance",
 					"Nintendo",
 					"USgamer",
-					"earthbound",
 					"jrpg",
 					"mother",
 					"mother 3"

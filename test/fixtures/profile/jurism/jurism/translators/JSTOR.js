@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-01 15:25:02"
+	"lastUpdated": "2017-09-08 18:50:00"
 }
 
 function detectWeb(doc, url) {
@@ -180,7 +180,8 @@ function processRIS(text, jid) {
 			item.ISSN = ZU.cleanISSN(item.ISSN);
 		}
 		
-		if (!item.DOI) item.DOI = jid; // validate later
+		//Only the DOIs mentioned in RIS are valid, and we don't
+		//add any other jid for DOI because they are only internal.
 		
 		if (subtitle){
 			item.title = item.title + ": " + subtitle[1]
@@ -204,14 +205,15 @@ function processRIS(text, jid) {
 		  	item.title =  "Review of " + reviewedTitle
 		}
 		
-		finalizeItem(item);
+		item.complete();
 	});
 		
 	translator.getTranslatorObject(function (trans) {
 		trans.doImport();	
 	});
 }
-	
+
+//We don't need this function currently.
 function finalizeItem(item) {
 	// Validate DOI
 	Zotero.debug("Validating DOI " + item.DOI);
@@ -266,7 +268,6 @@ var testCases = [
 				"ISSN": "0005-2086",
 				"abstractNote": "A reproducible and original method for the preparation of chicken intestine epithelial cells from 18-day-old embryos for long-term culture was obtained by using a mechanical isolation procedure, as opposed to previous isolation methods using relatively high concentrations of trypsin, collagenase, or EDTA. Chicken intestine epithelial cells typically expressed keratin and chicken E-cadherin, in contrast to chicken embryo fibroblasts, and they increased cell surface MHC II after activation with crude IFN-γ containing supernatants, obtained from chicken spleen cells stimulated with concanavalin A or transformed by reticuloendotheliosis virus. Eimeria tenella was shown to be able to develop until the schizont stage after 46 hr of culture in these chicken intestinal epithelial cells, but it was not able to develop further. However, activation with IFN-γ containing supernatants resulted in strong inhibition of parasite replication, as shown by incorporation of [3 H]uracil. Thus, chicken enterocytes, which are the specific target of Eimeria development in vivo, could be considered as potential local effector cells involved in the protective response against this parasite. /// Se desarrolló un método reproducible y original para la preparación de células epiteliales de intestino de embriones de pollo de 18 días de edad para ser empleadas como cultivo primario de larga duración. Las células epiteliales de intestino fueron obtenidas mediante un procedimiento de aislamiento mecánico, opuesto a métodos de aislamientos previos empleando altas concentraciones de tripsina, colagenasa o EDTA. Las células epiteliales de intestino expresaron típicamente keratina y caderina E, a diferencia de los fibroblastos de embrión de pollo, e incrementaron el complejo mayor de histocompatibilidad tipo II en la superficie de la célula posterior a la activación con sobrenadantes de interferón gamma. Los sobrenadantes de interferón gamma fueron obtenidos a partir de células de bazos de pollos estimuladas con concanavalina A o transformadas con el virus de reticuloendoteliosis. Se observó el desarrollo de la Eimeria tenella hasta la etapa de esquizonte después de 46 horas de cultivo en las células intestinales epiteliales de pollo pero no se observó un desarrollo posterior. Sin embargo, la activación de los enterocitos con los sobrenadantes con interferón gamma resultó en una inhibición fuerte de la replicación del parásito, comprobada mediante la incorporación de uracilo [3 H]. Por lo tanto, los enterocitos de pollo, blanco específico del desarrollo in vivo de la Eimeria, podrían ser considerados como células efectoras locales, involucradas en la respuesta protectora contra este parásito.",
 				"issue": "3",
-				"journalAbbreviation": "Avian Diseases",
 				"libraryCatalog": "JSTOR",
 				"pages": "617-624",
 				"publicationTitle": "Avian Diseases",
@@ -303,7 +304,6 @@ var testCases = [
 				"DOI": "10.1086/245591",
 				"ISSN": "0022-2801",
 				"issue": "4",
-				"journalAbbreviation": "The Journal of Modern History",
 				"libraryCatalog": "JSTOR",
 				"pages": "696-721",
 				"publicationTitle": "The Journal of Modern History",
@@ -340,7 +340,6 @@ var testCases = [
 				"DOI": "10.1086/508232",
 				"ISSN": "0097-9740",
 				"issue": "2",
-				"journalAbbreviation": "Signs",
 				"libraryCatalog": "JSTOR",
 				"pages": "523-538",
 				"publicationTitle": "Signs",
@@ -381,7 +380,6 @@ var testCases = [
 				"date": "1998",
 				"ISSN": "0036-0341",
 				"issue": "2",
-				"journalAbbreviation": "The Russian Review",
 				"libraryCatalog": "JSTOR",
 				"pages": "310-311",
 				"publicationTitle": "The Russian Review",
@@ -427,7 +425,6 @@ var testCases = [
 				"ISSN": "0742-1222",
 				"abstractNote": "From the social network perspective, this study explores the ontological structure of knowledge sharing activities engaged in by researchers in the field of information systems (IS) over the past three decades. We construct a knowledge network based on coauthorship patterns extracted from four major journals in the IS field in order to analyze the distinctive characteristics of each subfield and to assess the amount of internal and external knowledge exchange that has taken place among IS researchers. This study also tests the role of different types of social capital that influence the academic impact of researchers. Our results indicate that the proportion of coauthored IS articles in the four journals has doubled over the past 25 years, from merely 40 percent in 1978 to over 80 percent in 2002. However, a significant variation exists in terms of the shape, density, and centralization of knowledge exchange networks across the four subfields of IS—namely, behavioral science, organizational science, computer science, and economic science. For example, the behavioral science subgroup, in terms of internal cohesion among researchers, tends to develop the most dense collaborative relationships, whereas the computer science subgroup is the most fragmented. Moreover, external collaboration across these subfields appears to be limited and severely unbalanced. Across the four subfields, on average, less than 20 percent of the research collaboration ties involved researchers from different subdisciplines. Finally, the regression analysis reveals that knowledge capital derived from a network rich in structural holes has a positive influence on an individual researcher's academic performance.",
 				"issue": "3",
-				"journalAbbreviation": "Journal of Management Information Systems",
 				"libraryCatalog": "JSTOR",
 				"pages": "265-292",
 				"publicationTitle": "Journal of Management Information Systems",
@@ -470,7 +467,6 @@ var testCases = [
 				"ISSN": "0734-6018",
 				"abstractNote": "This article traces a long history in Christian political thought of linking politics, statecraft, and worldly authority to the broader category of carnal literalism, typed as “Jewish” by the Pauline tradition. This tradition produced a tendency to discuss political error in terms of Judaism, with the difference between mortal and eternal, private and public, tyrant and legitimate monarch, mapped onto the difference between Jew and Christian. As a result of this history, transcendence as a political ideal has often figured (and perhaps still figures?) its enemies as Jewish.",
 				"issue": "1",
-				"journalAbbreviation": "Representations",
 				"libraryCatalog": "JSTOR",
 				"pages": "1-29",
 				"publicationTitle": "Representations",
@@ -508,7 +504,6 @@ var testCases = [
 				"ISSN": "0022-2186",
 				"abstractNote": "Abstract The effect of salaries on turnover and performance is analyzed for U.S. attorneys in office during the years 1969 through 1999. Lower salaries are shown to increase the turnover of U.S. attorneys, and higher turnover is shown to reduce output. Two features distinguish U.S. attorneys (chief federal prosecutors) from other public‐ and private‐sector employees. First, since 1977, U.S. attorney salaries have been tied to the salaries of members of Congress and are thus exogenously determined. Second, there are public measures for the output of U.S. attorneys. Both features simplify the study of the effect of salaries on turnover and performance.",
 				"issue": "1",
-				"journalAbbreviation": "The Journal of Law & Economics",
 				"libraryCatalog": "JSTOR",
 				"pages": "75-92",
 				"publicationTitle": "The Journal of Law & Economics",
@@ -597,7 +592,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.jstor.org/stable/pdf/4308405.pdf",
+		"url": "https://www.jstor.org/tc/accept?origin=/stable/pdf/4308405.pdf",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -613,7 +608,6 @@ var testCases = [
 				"ISSN": "0024-2519",
 				"abstractNote": "Bibliographic references are an accepted part of scholarly publication. As such, they have been used for information retrieval, studies of scientific communication, collection development decisions, and even determination of salary raises, as well as for their primary purpose of documentation of authors' claims. However, there appears to be a high percentage of errors in these citations, seen in evidence from the mid-nineteenth century to the present. Such errors can be traced to a lack of standardization in citation formats, misunderstanding of foreign languages, general human inabilities to reproduce long strings of information correctly, and failure to examine the document cited, combined with a general lack of training in the norms of citation. The real problem, the failure to detect and correct citation errors, is due to a diffusion of responsibility in the publishing process.",
 				"issue": "4",
-				"journalAbbreviation": "The Library Quarterly: Information, Community, Policy",
 				"libraryCatalog": "JSTOR",
 				"pages": "291-304",
 				"publicationTitle": "The Library Quarterly: Information, Community, Policy",

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2013-03-31 00:24:41"
+	"lastUpdated": "2017-06-04 09:52:26"
 }
 
 /*
@@ -31,61 +31,65 @@
 */
 
 function detectWeb(doc,url) {
-	var xpath='//meta[@name="citation_journal_title"]';
-		
-	if (ZU.xpath(doc, xpath).length > 0) {
+	if (url.indexOf('articulo.oa?id=')>-1) {
 		return "journalArticle";
+	} else if (getSearchResults(doc, true)) {
+		return "multiple";
 	}
-	if (url.indexOf("/home.oa")!=-1) {
-		var searchxpath = "//a[contains(@href, 'articulo.oa?id=') and span[@class='titulo-resultado']]|//span[@class='resultado-articulo']/a[contains(@href, 'articulo.oa?id=')]"
-		if (ZU.xpath(doc, searchxpath).length>0) {
-			return "multiple";
-		}
-	}
-	if (url.indexOf("/toc.oa?")!=-1) {
-		var tocxpath = "//a[contains(@href, 'articulo.oa?id=') and span[@class='articulo-fasciculo']]";
-		if (ZU.xpath(doc, tocxpath).length>0) {
-			return "multiple";
-		}	
-	}
-	return false;
 }
 
 
-function doWeb(doc,url)
-{
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//a[contains(@href, "articulo.oa?id=") and span]');
+	for (var i=0; i<rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var hits = {};
-		var urls = [];
-		var results = ZU.xpath(doc,"//a[contains(@href, 'articulo.oa?id=') and span[@class='titulo-resultado']]|\
-									//span[@class='resultado-articulo']/a[contains(@href, 'articulo.oa?id=')]");
-		if (results.length<1){
-			results = ZU.xpath(doc, "//a[contains(@href, 'articulo.oa?id=') and span[@class='articulo-fasciculo']]");
-		}
-		for (var i in results) {
-			hits[results[i].href] = results[i].textContent.replace(/\[pdf\]\s* Redalyc\.?/, "");
-		}
-		Z.selectItems(hits, function(items) {
-			if (items == null) return true;
-			for (var j in items) {
-				urls.push(j);
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
 			}
-			ZU.processDocuments(urls, doWeb);
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		var translator = Zotero.loadTranslator('web');
-		//use Embedded Metadata
-		translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
-		translator.setDocument(doc);
-		translator.setHandler('itemDone', function(obj, item) {
-			if (item.title == item.title.toUpperCase()){
-				item.title = ZU.capitalizeTitle(item.title.toLowerCase(), true)
-			}
-			item.complete();
-		});
-		translator.translate();
-		};
+		scrape(doc, url);
+	}
 }
+
+
+function scrape(doc, url) {
+	var translator = Zotero.loadTranslator('web');
+	//use Embedded Metadata
+	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
+	translator.setDocument(doc);
+	translator.setHandler('itemDone', function(obj, item) {
+		if (item.title == item.title.toUpperCase()){
+			item.title = ZU.capitalizeTitle(item.title.toLowerCase(), true)
+		}
+		item.complete();
+	});
+	translator.getTranslatorObject(function(trans) {
+		trans.itemType = "journalArticle";
+		trans.doWeb(doc, url);
+	});
+}
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -94,6 +98,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Os partidos políticos brasileiros realmente não importam?",
 				"creators": [
 					{
 						"firstName": "Maria do Socorro Sousa",
@@ -106,20 +111,16 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"CSES-ESEB2010",
-					"ESEB2010",
-					"Partidos políticos",
-					"Political parties",
-					"comportamento eleitoral",
-					"electoral behavior",
-					"eleições presidenciais",
-					"party sympathy",
-					"presidential elections",
-					"simpatia partidária"
-				],
-				"seeAlso": [],
+				"date": "2011",
+				"ISSN": "1807-0191",
+				"abstractNote": "Há décadas a constatação corrente no Brasil é de que os partidos pouco importam para explicar o comportamento dos eleitores brasileiros. Entretanto, esse cen...",
+				"issue": "2",
+				"language": "pt",
+				"libraryCatalog": "www.redalyc.org",
+				"pages": "271-303",
+				"publicationTitle": "Opinião Pública",
+				"url": "http://www.redalyc.org/articulo.oa?id=32921102001",
+				"volume": "17",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -129,23 +130,23 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"title": "Os partidos políticos brasileiros realmente não importam?",
-				"publicationTitle": "Opinião Pública",
-				"abstractNote": "Há décadas a constatação corrente no Brasil é de que os partidos pouco importam para explicar o comportamento dos eleitores brasileiros. Entretanto, esse cenário de baixa identificação partidária contrasta com a observação de que, ao menos para as eleições presidenciais a competição eleitoral tem se...",
-				"date": "2011",
-				"volume": "17",
-				"issue": "2",
-				"language": "pt",
-				"pages": "271-303",
-				"ISSN": "0104-6276, 1807-0191",
-				"url": "http://www.redalyc.org/resumen.oa?id=32921102001",
-				"libraryCatalog": "www.redalyc.org"
+				"tags": [
+					"ESEB2010.>>>Political parties",
+					"Partidos políticos",
+					"comportamento eleitoral",
+					"electoral behavior",
+					"eleições presidenciais",
+					"presidential ele...",
+					"simpatia partidária"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.redalyc.org/toc.oa?id=329&numero=21102",
+		"url": "http://www.redalyc.org/BusquedaAutorPorNombre.oa?q=%22Maria%20do%20Socorro%20%20Sousa%20Braga%22",
 		"items": "multiple"
 	}
 ]

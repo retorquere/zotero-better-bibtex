@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsb",
-	"lastUpdated": "2017-05-03 09:47:57"
+	"lastUpdated": "2018-01-26 09:57:02"
 }
 
 function getSearchResults(doc) {
@@ -33,24 +33,24 @@ function detectWeb(doc, url) {
 			if (elt = doc.evaluate(xpathimage, doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
 				var type = elt.getAttribute('src');
 				//Z.debug(type);
-				if (type.indexOf('article.') > 0) {
+				if (type.includes('article.')) {
 					//book section and journal article have the same icon
 					//we can check if there is an ISBN
-					if(ZU.xpath(doc, '//tr/td[@class="rec_lable" and .//span[starts-with(text(), "ISBN")]]').length) {
+					if (ZU.xpath(doc, '//tr/td[@class="rec_lable" and .//span[starts-with(text(), "ISBN")]]').length) {
 						return 'bookSection';
 					}
 					return "journalArticle";
-				} else if (type.indexOf('audiovisual.') > 0) {
+				} else if (type.includes('audiovisual.')) {
 					return "film";
-				} else if (type.indexOf('book.') > 0) {
+				} else if (type.includes('book.')) {
 					return "book";
-				} else if (type.indexOf('handwriting.') > 0) {
+				} else if (type.includes('handwriting.')) {
 					return "manuscript";
-				} else if (type.indexOf('sons.') > 0 || type.indexOf('sound.') > 0 || type.indexOf('score') > 0) {
+				} else if (type.includes('sons.') || type.includes('sound.') || type.includes('score')) {
 					return "audioRecording";
-				} else if (type.indexOf('thesis.') > 0) {
+				} else if (type.includes('thesis.')) {
 					return "thesis";
-				} else if (type.indexOf('map.') > 0) {
+				} else if (type.includes('map.')) {
 					return "map";
 				}
 			}
@@ -583,9 +583,11 @@ function doWeb(doc, url) {
 	var type = detectWeb(doc, url);
 	if (type == "multiple") {
 		var newUrl = doc.evaluate('//base/@href', doc, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
+		// fix for sudoc, see #1529
+		newUrl = newUrl.replace(/sudoc\.abes\.fr\/\/?DB=/, 'sudoc.abes.fr/xslt/DB=');
 		var elmts = getSearchResults(doc);
 		var elmt = elmts.iterateNext();
-		var links = new Array();
+		var links = [];
 		var availableItems = {};
 		do {
 			var link = doc.evaluate(".//a/@href", elmt, null, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
@@ -596,7 +598,7 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var uris = new Array();
+			var uris = [];
 			for (var i in items) {
 				uris.push(i);
 			}
@@ -1709,7 +1711,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://iaiweb1.iai.spk-berlin.de/DB=1/XMLPRS=N/PPN?PPN=1914428323",
+		"url": "https://lhiai.gbv.de/DB=1/XMLPRS=N/PPN?PPN=1914428323",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -1723,7 +1725,7 @@ var testCases = [
 				],
 				"date": "2012",
 				"ISSN": "1515-4017",
-				"libraryCatalog": "Library Catalog - iaiweb1.iai.spk-berlin.de",
+				"libraryCatalog": "Library Catalog - lhiai.gbv.de",
 				"pages": "61-71",
 				"publicationTitle": "Proa : en las letras y en las artes",
 				"volume": "83",
@@ -1855,11 +1857,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=024630527",
+		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=024630527",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Conférences sur l'administration et le droit administratif faites à l'Ecole impériale des ponts et chaussées",
+				"title": "Conférences sur l'administration et le droit administratif faites à l'Ecole impériale des ponts et chaussées. Tome premier",
 				"creators": [
 					{
 						"firstName": "Léon",
@@ -1892,14 +1894,22 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Droit administratif -- France",
-					"Ponts et chaussées (administration) -- France",
-					"Travaux publics -- Droit -- France",
-					"Voirie et réseaux divers -- France"
+					{
+						"tag": "Droit administratif -- France"
+					},
+					{
+						"tag": "Ponts et chaussées (administration) -- France"
+					},
+					{
+						"tag": "Travaux publics -- Droit -- France"
+					},
+					{
+						"tag": "Voirie et réseaux divers -- France"
+					}
 				],
 				"notes": [
 					{
-						"note": "<div><span>Titre des tomes 2 et 3 : Conférences sur l'administration et le droit administratif faites à l'Ecole des ponts et chaussées</span></div><div><span>&nbsp;</span></div>"
+						"note": "\n<div><span>Titre des tomes 2 et 3 : Conférences sur l'administration et le droit administratif faites à l'Ecole des ponts et chaussées</span></div>\n<div><span>&nbsp;</span></div>\n"
 					}
 				],
 				"seeAlso": []
@@ -1908,11 +1918,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=001493817",
+		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=001493817",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Traité de la juridiction administrative et des recours contentieux",
+				"title": "Traité de la juridiction administrative et des recours contentieux",
 				"creators": [
 					{
 						"firstName": "Édouard",
@@ -1926,7 +1936,7 @@ var testCases = [
 					}
 				],
 				"date": "1989",
-				"ISBN": "2-275-00790-3",
+				"ISBN": "9782275007908",
 				"language": "français",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"numPages": "ix+670; 675",
@@ -1951,10 +1961,18 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Contentieux administratif -- France -- 19e siècle",
-					"Recours administratifs -- France",
-					"Tribunaux administratifs -- France -- 19e siècle",
-					"Tribunaux administratifs -- Études comparatives"
+					{
+						"tag": "Contentieux administratif -- France -- 19e siècle"
+					},
+					{
+						"tag": "Recours administratifs -- France"
+					},
+					{
+						"tag": "Tribunaux administratifs -- France -- 19e siècle"
+					},
+					{
+						"tag": "Tribunaux administratifs -- Études comparatives"
+					}
 				],
 				"notes": [
 					{
@@ -1967,7 +1985,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.sudoc.abes.fr/DB=2.1/SRCH?IKT=12&TRM=200278649",
+		"url": "http://www.sudoc.abes.fr/xslt/DB=2.1//SRCH?IKT=12&TRM=200278649",
 		"items": [
 			{
 				"itemType": "book",
@@ -1979,11 +1997,13 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
+				"date": "2013",
 				"ISBN": "9788857515953",
 				"language": "italien",
 				"libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
 				"numPages": "232",
-				"place": "Italie",
+				"place": "Milano, Italie",
+				"publisher": "Mimesis",
 				"shortTitle": "Il brutto all'opera",
 				"attachments": [
 					{
@@ -2003,15 +2023,25 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Laideur -- Dans l'opéra",
-					"ML410.V4. S36 2013",
-					"Opera -- 19th century",
-					"Ugliness in opera",
-					"Verdi, Giuseppe (1813-1901) -- Thèmes, motifs"
+					{
+						"tag": "Laideur -- Dans l'opéra"
+					},
+					{
+						"tag": "ML410.V4. S36 2013"
+					},
+					{
+						"tag": "Opera -- 19th century"
+					},
+					{
+						"tag": "Ugliness in opera"
+					},
+					{
+						"tag": "Verdi, Giuseppe (1813-1901) -- Thèmes, motifs"
+					}
 				],
 				"notes": [
 					{
-						"note": "<div><span>Table des matières disponible en ligne (</span><span><a class=\"\n\t\t\tlink_gen\n\t\t    \" target=\"\" href=\"http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf\">http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf</a></span><span>)</span></div>"
+						"note": "<div>\n<span>Table des matières disponible en ligne (</span><span><a class=\"\n\t\t\tlink_gen\n\t\t    \" target=\"\" href=\"http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf\">http://catdir.loc.gov/catdir/toc/casalini11/13192019.pdf</a></span><span>)</span>\n</div>"
 					}
 				],
 				"seeAlso": []

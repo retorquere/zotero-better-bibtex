@@ -35,7 +35,7 @@ function doExport() {
         if (item.creators.length >0){
             mem.set(item.creators[0].lastName,",");
             if (item.creators.length > 2) mem.set("et al.", ",");
-            else if (item.creators.length == 2) mem.set("&amp; " + item.creators[1].lastName, ",");
+            else if (item.creators.length == 2) mem.set("& " + item.creators[1].lastName, ",");
         }
         else {
             mem.set(false, ",","anon.");
@@ -51,7 +51,7 @@ function doExport() {
         var date = Zotero.Utilities.strToDate(item.date);
         var dateS = (date.year) ? date.year : item.date;
         memdate.set(dateS,"","no date");
-        Zotero.write(" " + mem.get() + " (" + memdate.get() + ") | | |");
+        Zotero.write(" " + mem.get() + " " + memdate.get() + " | | |");
         if (Zotero.getHiddenPref("ODFScan.useZoteroSelect")) {
             Zotero.write("zotero://select/items/" + library_id + "_" + item.key + "}");
         } else {

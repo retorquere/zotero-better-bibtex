@@ -126,45 +126,51 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
+				"title": "Global cancer statistics",
 				"creators": [
 					{
-						"creatorType": "author",
+						"firstName": "Ahmedin",
 						"lastName": "Jemal",
-						"firstName": "Ahmedin"
+						"creatorType": "author"
 					},
 					{
-						"creatorType": "author",
+						"firstName": "Freddie",
 						"lastName": "Bray",
-						"firstName": "Freddie"
+						"creatorType": "author"
 					},
 					{
-						"creatorType": "author",
+						"firstName": "Melissa M.",
 						"lastName": "Center",
-						"firstName": "Melissa M"
+						"creatorType": "author"
 					},
 					{
-						"creatorType": "author",
+						"firstName": "Jacques",
 						"lastName": "Ferlay",
-						"firstName": "Jacques"
+						"creatorType": "author"
 					},
 					{
-						"creatorType": "author",
+						"firstName": "Elizabeth",
 						"lastName": "Ward",
-						"firstName": "Elizabeth"
+						"creatorType": "author"
 					},
 					{
-						"creatorType": "author",
+						"firstName": "David",
 						"lastName": "Forman",
-						"firstName": "David"
+						"creatorType": "author"
 					}
 				],
-				"notes": [],
-				"tags": [
-					"Humans",
-					"Internationality",
-					"Neoplasms"
-				],
-				"seeAlso": [],
+				"date": "2011 Mar-Apr",
+				"DOI": "10.3322/caac.20107",
+				"ISSN": "1542-4863",
+				"abstractNote": "The global burden of cancer continues to increase largely because of the aging and growth of the world population alongside an increasing adoption of cancer-causing behaviors, particularly smoking, in economically developing countries. Based on the GLOBOCAN 2008 estimates, about 12.7 million cancer cases and 7.6 million cancer deaths are estimated to have occurred in 2008; of these, 56% of the cases and 64% of the deaths occurred in the economically developing world. Breast cancer is the most frequently diagnosed cancer and the leading cause of cancer death among females, accounting for 23% of the total cancer cases and 14% of the cancer deaths. Lung cancer is the leading cancer site in males, comprising 17% of the total new cancer cases and 23% of the total cancer deaths. Breast cancer is now also the leading cause of cancer death among females in economically developing countries, a shift from the previous decade during which the most common cause of cancer death was cervical cancer. Further, the mortality burden for lung cancer among females in developing countries is as high as the burden for cervical cancer, with each accounting for 11% of the total female cancer deaths. Although overall cancer incidence rates in the developing world are half those seen in the developed world in both sexes, the overall cancer mortality rates are generally similar. Cancer survival tends to be poorer in developing countries, most likely because of a combination of a late stage at diagnosis and limited access to timely and standard treatment. A substantial proportion of the worldwide burden of cancer could be prevented through the application of existing cancer control knowledge and by implementing programs for tobacco control, vaccination (for liver and cervical cancers), and early detection and treatment, as well as public health campaigns promoting physical activity and a healthier dietary intake. Clinicians, public health professionals, and policy makers can play an active role in accelerating the application of such interventions globally.",
+				"extra": "PMID: 21296855",
+				"issue": "2",
+				"journalAbbreviation": "CA Cancer J Clin",
+				"language": "eng",
+				"libraryCatalog": "UpToDate References",
+				"pages": "69-90",
+				"publicationTitle": "CA: a cancer journal for clinicians",
+				"volume": "61",
 				"attachments": [
 					{
 						"title": "PubMed entry",
@@ -176,19 +182,13 @@ var testCases = [
 						"mimeType": "text/html"
 					}
 				],
-				"title": "Global cancer statistics",
-				"pages": "69-90",
-				"ISSN": "1542-4863",
-				"journalAbbreviation": "CA Cancer J Clin",
-				"publicationTitle": "CA: a cancer journal for clinicians",
-				"volume": "61",
-				"issue": "2",
-				"date": "2011 Mar-Apr",
-				"language": "eng",
-				"abstractNote": "The global burden of cancer continues to increase largely because of the aging and growth of the world population alongside an increasing adoption of cancer-causing behaviors, particularly smoking, in economically developing countries. Based on the GLOBOCAN 2008 estimates, about 12.7 million cancer cases and 7.6 million cancer deaths are estimated to have occurred in 2008; of these, 56% of the cases and 64% of the deaths occurred in the economically developing world. Breast cancer is the most frequently diagnosed cancer and the leading cause of cancer death among females, accounting for 23% of the total cancer cases and 14% of the cancer deaths. Lung cancer is the leading cancer site in males, comprising 17% of the total new cancer cases and 23% of the total cancer deaths. Breast cancer is now also the leading cause of cancer death among females in economically developing countries, a shift from the previous decade during which the most common cause of cancer death was cervical cancer. Further, the mortality burden for lung cancer among females in developing countries is as high as the burden for cervical cancer, with each accounting for 11% of the total female cancer deaths. Although overall cancer incidence rates in the developing world are half those seen in the developed world in both sexes, the overall cancer mortality rates are generally similar. Cancer survival tends to be poorer in developing countries, most likely because of a combination of a late stage at diagnosis and limited access to timely and standard treatment. A substantial proportion of the worldwide burden of cancer could be prevented through the application of existing cancer control knowledge and by implementing programs for tobacco control, vaccination (for liver and cervical cancers), and early detection and treatment, as well as public health campaigns promoting physical activity and a healthier dietary intake. Clinicians, public health professionals, and policy makers can play an active role in accelerating the application of such interventions globally.",
-				"DOI": "10.3322/caac.20107",
-				"extra": "PMID: 21296855",
-				"libraryCatalog": "UpToDate References"
+				"tags": [
+					"Humans",
+					"Internationality",
+					"Neoplasms"
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	},
