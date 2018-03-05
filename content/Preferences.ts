@@ -209,8 +209,8 @@ export = new class PrefPane {
 
     this.AutoExport = new AutoExportPrefPane()
 
-    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.isJurisM)
+    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
@@ -239,7 +239,7 @@ export = new class PrefPane {
   private update() {
     this.checkCitekeyFormat()
 
-    if (ZoteroConfig.isJurisM) {
+    if (ZoteroConfig.Zotero.isJurisM) {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)
@@ -276,7 +276,7 @@ export = new class PrefPane {
   }
 
   private styleChanged(index) {
-    if (!ZoteroConfig.isJurisM) return
+    if (!ZoteroConfig.Zotero.isJurisM) return
 
     const stylebox = document.getElementById('better-bibtex-abbrev-style')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem

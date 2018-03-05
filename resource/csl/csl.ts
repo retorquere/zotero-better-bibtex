@@ -136,7 +136,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       csl.id = item.citekey
 
       /* Juris-M workarounds to match Zotero as close as possible */
-      for (const kind of ['author', 'editor', 'director']) {
+      for (const kind of ['translator', 'author', 'editor', 'director', 'reviewed-author']) {
         for (const creator of csl[kind] || []) {
           delete creator.multi
         }

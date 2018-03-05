@@ -10,6 +10,10 @@ var Translator = {
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
   configure: function(stage) {
+    var version = Zotero.BetterBibTeX.version();
+    this.isZotero = version.Zotero.isZotero;
+    this.isJurisM = version.Zotero.isJurisM;
+
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
     this.unicode = true; // set by Better Bib(La)TeX later
 
