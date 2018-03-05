@@ -176,7 +176,13 @@ DB.init = async () => {
 
   // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
   for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
-    const corrupt = coll.checkAllIndexes({ repair: true })
+    let corrupt
+    try {
+      corrupt = coll.checkAllIndexes({ repair: true })
+    } catch (err) {
+      corrupt = [ '*' ]
+      coll.ensureAllIndexes(true)
+    }
     if (corrupt.length > 0) {
       for (const index of corrupt) {
         Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))

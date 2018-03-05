@@ -8,7 +8,7 @@
   url = {http://server.wenzibase.com},
   urldate = {2016-04-20},
   usere = {Database of Chinese Encyclopeadias},
-  year = {n.d.}
+  year = {\bibstring{nodate}}
 }
 
 @thesis{yan_cairong__2003,

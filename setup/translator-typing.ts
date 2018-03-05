@@ -74,6 +74,8 @@ ${headerSpec}  }
 ${options}
   }
 
+  isJurisM: boolean
+  isZotero: boolean
   unicode: boolean
   debugEnabled: boolean
 

@@ -523,16 +523,17 @@ class ZoteroItem {
   protected $editor(value, field) { return this.$author(value, field) }
   protected $translator(value, field) { return this.$author(value, field) }
 
-  protected $publisher(value) {
-    if (!this.validFields.publisher) return false
+  protected $publisher(value, field) {
+    field = field === 'institution' && this.validFields.institution ? 'institution' : 'publisher' // Juris-M supports institution as a base field
+    if (!this.validFields[field]) return false
 
-    if (!this.item.publisher) this.item.publisher = ''
-    if (this.item.publisher) this.item.publisher += ' / '
-    this.item.publisher += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
+    if (!this.item[field]) this.item[field] = ''
+    if (this.item[field]) this.item[field] += ' / '
+    this.item[field] += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
     return true
   }
-  protected $institution(value) { return this.$publisher(value) }
-  protected $school(value) { return this.$publisher(value) }
+  protected $institution(value, field) { return this.$publisher(value, field) }
+  protected $school(value, field) { return this.$publisher(value, field) }
 
   protected $address(value) { return this.set('place', this.unparse(value)) }
   protected $location(value) { return this.$address(value) }
@@ -1050,8 +1051,6 @@ class ZoteroItem {
 //   return true
 //
 // ### these return the value which will be interpreted as 'true' ###
-// ZoteroItem::$institution  = ZoteroItem::$organization = (value) -> @item.backupPublisher = value
-// ZoteroItem::$school       = ZoteroItem::$institution  = ZoteroItem::$publisher = (value) -> @item.publisher = value
 //
 // ZoteroItem::$copyright    = (value) -> @item.rights = value
 // ZoteroItem::$assignee     = (value) -> @item.assignee = value
