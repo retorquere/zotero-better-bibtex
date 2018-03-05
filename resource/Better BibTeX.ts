@@ -483,7 +483,6 @@ class ZoteroItem {
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
 
-    if (Translator.isJurisM) debug('importing 4 jurism', this.type, this.item)
     this.item.complete()
   }
 
@@ -524,26 +523,17 @@ class ZoteroItem {
   protected $editor(value, field) { return this.$author(value, field) }
   protected $translator(value, field) { return this.$author(value, field) }
 
-  protected $publisher(value) {
-    if (!this.validFields.publisher) return false
+  protected $publisher(value, field) {
+    field = field === 'institution' && this.validFields.institution ? 'institution' : 'publisher' // Juris-M supports institution as a base field
+    if (!this.validFields[field]) return false
 
-    let field, sep
-    if (Translator.isJurisM && this.type === 'report') {
-      field = 'authority'
-      sep = ' | '
-    } else {
-      field = 'publisher'
-      sep = ' / '
-    }
-
-    debug('$publisher', value, 'for', this.type, '.', field)
     if (!this.item[field]) this.item[field] = ''
-    if (this.item[field]) this.item[field] += sep
+    if (this.item[field]) this.item[field] += ' / '
     this.item[field] += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
     return true
   }
-  protected $institution(value) { return this.$publisher(value) }
-  protected $school(value) { return this.$publisher(value) }
+  protected $institution(value, field) { return this.$publisher(value, field) }
+  protected $school(value, field) { return this.$publisher(value, field) }
 
   protected $address(value) { return this.set('place', this.unparse(value)) }
   protected $location(value) { return this.$address(value) }
