@@ -11,10 +11,8 @@ var Translator = {
 
   configure: function(stage) {
     var version = Zotero.BetterBibTeX.version();
-    this.isZotero = version.isZotero;
-    this.isJurisM = version.isJurisM;
-
-    Zotero.debug('BBT translator: pre-init:' + JSON.stringify(this, null, 2));
+    this.isZotero = version.Zotero.isZotero;
+    this.isJurisM = version.Zotero.isJurisM;
 
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
     this.unicode = true; // set by Better Bib(La)TeX later
