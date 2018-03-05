@@ -15,6 +15,10 @@ import { Formatter } from './key-manager/formatter.ts'
 import { DB } from './db/main.ts'
 import { AutoExport } from './auto-export.ts'
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
@@ -140,14 +144,19 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       }
     })
 
-    this.keys.on(['insert', 'update'], citekey => {
+    this.keys.on(['insert', 'update'], async citekey => {
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      setTimeout(() => {
+      await timeout(this.itemObserverDelay)
+
+      if (Prefs.get('autoPin') && !citekey.pinned) {
+        debug('Keymanager: auto-pinning', citekey.itemID)
+        this.pin([citekey.itemID])
+      } else {
         // update display panes by issuing a fake item-update notification
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
-      }, this.itemObserverDelay)
+      }
     })
   }
 
