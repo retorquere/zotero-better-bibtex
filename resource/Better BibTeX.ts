@@ -483,7 +483,6 @@ class ZoteroItem {
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
 
-    if (this.type === 'report') debug('importing report', this.item)
     this.item.complete()
   }
 
@@ -527,10 +526,19 @@ class ZoteroItem {
   protected $publisher(value) {
     if (!this.validFields.publisher) return false
 
-    debug('$publisher', value, 'for', this.type)
-    if (!this.item.publisher) this.item.publisher = ''
-    if (this.item.publisher) this.item.publisher += ' / '
-    this.item.publisher += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
+    let field, sep
+    if (Translator.isJurisM && this.type === 'report') {
+      field = 'authority'
+      sep = ' | '
+    } else {
+      field = 'publisher'
+      sep = ' / '
+    }
+
+    debug('$publisher', value, 'for', this.type, '.', field)
+    if (!this.item[field]) this.item[field] = ''
+    if (this.item[field]) this.item[field] += sep
+    this.item[field] += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
     return true
   }
   protected $institution(value) { return this.$publisher(value) }
