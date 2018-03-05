@@ -526,6 +526,7 @@ class ZoteroItem {
   protected $publisher(value) {
     if (!this.validFields.publisher) return false
 
+    debug('$publisher', value, 'for', this.type)
     if (!this.item.publisher) this.item.publisher = ''
     if (this.item.publisher) this.item.publisher += ' / '
     this.item.publisher += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
@@ -1050,8 +1051,6 @@ class ZoteroItem {
 //   return true
 //
 // ### these return the value which will be interpreted as 'true' ###
-// ZoteroItem::$institution  = ZoteroItem::$organization = (value) -> @item.backupPublisher = value
-// ZoteroItem::$school       = ZoteroItem::$institution  = ZoteroItem::$publisher = (value) -> @item.publisher = value
 //
 // ZoteroItem::$copyright    = (value) -> @item.rights = value
 // ZoteroItem::$assignee     = (value) -> @item.assignee = value
