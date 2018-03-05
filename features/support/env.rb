@@ -266,7 +266,7 @@ end
 
 def un_multi(obj)
   if obj.is_a?(Hash)
-    obj.delete(multi)
+    obj.delete('multi')
     obj.values.each{|c| un_multi(c) }
   elsif obj.is_a?(Array)
     obj.each{|c| un_multi(c) }
