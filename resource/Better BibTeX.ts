@@ -483,6 +483,7 @@ class ZoteroItem {
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
 
+    if (Translator.isJurisM && this.type === 'report') debug('jurism.report', this.item)
     this.item.complete()
   }
 
