@@ -483,6 +483,7 @@ class ZoteroItem {
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
 
+    if (this.type === 'report') debug('importing report', this.item)
     this.item.complete()
   }
 
