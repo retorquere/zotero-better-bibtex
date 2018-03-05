@@ -43,7 +43,7 @@ class IniFile
 end
 
 def sort_yaml(yaml)
-  return YAML.load(yaml).deep_sort.to_yaml
+  return un_multi(YAML.load(yaml)).deep_sort.to_yaml
 end
 
 class HTTPInternalError < StandardError; end
@@ -264,6 +264,15 @@ def expand_expected(expected)
   raise "Could not find #{expected}"
 end
 
+def un_multi(obj)
+  if obj.is_a?(Hash)
+    obj.delete(multi)
+    obj.values.each{|c| un_multi(c) }
+  elsif obj.is_a?(Array)
+    obj.each{|c| un_multi(c) }
+  end
+end
+
 def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
   throw "Auto-export needs a destination" if displayOptions['keepUpdated'] && !output
     
@@ -287,7 +296,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 
   case ext
     when '.csl.json'
-      return compare(JSON.parse(found), JSON.parse(expected))
+      return compare(un_multi(JSON.parse(found)), un_multi(JSON.parse(expected)))
 
     when '.csl.yml'
       #return compare(YAML.load(found), YAML.load(expected))
