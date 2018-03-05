@@ -170,7 +170,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
-    debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
+    // debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
     bbtReady.promise.then(() => {
       debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
 
