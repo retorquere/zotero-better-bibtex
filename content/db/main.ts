@@ -73,7 +73,10 @@ class DBStore {
             try {
               debug(`DBStore.loadDatabase: loading ${row.name}`)
               collections[row.name] = JSON.parse(row.data)
+
               collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+              collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+
               debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
             } catch (err) {
               debug(`DBStore.loadDatabase: failed to parse ${row.name}`)
@@ -173,6 +176,16 @@ DB.init = async () => {
       additionalProperties: false,
     },
   })
+
+  // WTH is wrong with LokiJS these days?! https://github.com/techfort/LokiJS/issues/660
+  let rebuild = false
+  for (const ae of autoexport.data) { // directly change the data objects and rebuild indexes
+    if (ae.updated) {
+      delete ae.updated
+      rebuild = true
+    }
+  }
+  if (rebuild) autoexport.ensureAllIndexes(true)
 
   // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
   for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
