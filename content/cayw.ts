@@ -236,15 +236,14 @@ class Document {
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
       debug('CAYW.citation:', item)
-      const itemID = parseInt(item.id)
       return {
-        id: itemID,
+        id: item.id,
         locator: item.locator || '',
         suppressAuthor: !!item['suppress-author'],
         prefix: item.prefix || '',
         suffix: item.suffix || '',
         label: item.locator ? (item.label || 'page') : '',
-        citekey: KeyManager.get(itemID).citekey,
+        citekey: KeyManager.get(item.id).citekey,
 
         uri: Array.isArray(item.uri) ? item.uri[0] : undefined,
         itemType: item.itemData ? item.itemData.type : undefined,
