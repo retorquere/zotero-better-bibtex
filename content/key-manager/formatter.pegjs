@@ -71,23 +71,31 @@ flag
   = '+' flag:[^_:\]]+                 { return flag.join('') }
 
 filter
-  = ':(' def:[^)]+ ')'                {
-      return `chunk = chunk || ${JSON.stringify(def.join(''))}`;
+  = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
+  / ':' f:function_filter   {
+      var _filter = '_' + f.name;
+      if (! options[_filter] ) throw new Error(`invalid filter "${f.name}" in pattern`);
+
+      var params = ['chunk'].concat(f.params.map(function(p) { return JSON.stringify(p) }));
+
+      return `chunk = this.${_filter}(${params})`;
     }
-  / ':' name:[a-z]+ params:fparam*  {
-      name = name.join('');
-      var _filter = '_' + name;
-      if (! options[_filter]) throw new Error(`invalid filter "${name}" in pattern`);
 
-      params = ['chunk'].concat((params || []).map(function(p) { return JSON.stringify(p) }));
+default_filter
+  = '(' text:[^)]+ ')' { return text.join(''); }
 
-      // return `chunk = this.${_filter}(${params}); Zotero.debug("after ${name}: " + chunk)`
-      return `chunk = this.${_filter}(${params})`
+function_filter
+  = name:'fold' language:( ',' ('german') )? {
+      // handle here so the user gets feedback as the pattern is being typed
+      return { name: name, params: language ? [ language[1] ] : [] };
+    }
+  / name:[a-z]+ params:fparam*  {
+      return { name: name.join(''), params: params }
     }
 
 fparam
   = ',' value:fparamtext+ { return value.join('') }
 
 fparamtext
-  = chars:[^,\\\]:]+  { return chars; }
+  = chars:[^,\\\]:]+  { return chars.join(''); }
   / "\\" char:.       { return char;  }

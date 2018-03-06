@@ -101,4 +101,26 @@ for (const label of Object.keys(translators.byName)) {
   )
 }
 
+/*
+for (const minitest of ['pfunc']) {
+  config.push(
+    _.merge({}, common, {
+      plugins: [
+        new CircularDependencyPlugin({ failOnError: true }),
+        BailPlugin,
+      ],
+      context: path.resolve(__dirname, './minitests'),
+      entry: { [minitest]: `./${minitest}.ts` },
+
+      output: {
+        path: path.resolve(__dirname, './build/minitest'),
+        filename: '[name].js',
+        devtoolLineToLine: true,
+        pathinfo: true,
+      },
+    })
+  )
+}
+*/
+
 export default config
