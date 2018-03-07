@@ -1422,8 +1422,8 @@ getpass@^0.1.1:
     assert-plus "^1.0.0"
 
 github@^13.1.0:
-  version "13.1.0"
-  resolved "https://registry.yarnpkg.com/github/-/github-13.1.0.tgz#fc925950beebdff0cb0583197598b86f41bedaa4"
+  version "13.1.1"
+  resolved "https://registry.yarnpkg.com/github/-/github-13.1.1.tgz#e4775be32c3a72e44d5cbec965dbeb8c0aac7c1f"
   dependencies:
     debug "^3.1.0"
     dotenv "^4.0.0"
@@ -2254,10 +2254,6 @@ moment@^2.20.1:
   version "2.21.0"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.21.0.tgz#2a114b51d2a6ec9e6d83cf803f838a878d8a023a"
 
-moo@^0.4.3:
-  version "0.4.3"
-  resolved "https://registry.yarnpkg.com/moo/-/moo-0.4.3.tgz#3f847a26f31cf625a956a87f2b10fbc013bfd10e"
-
 mpbasic@0.0.x:
   version "0.0.18"
   resolved "https://registry.yarnpkg.com/mpbasic/-/mpbasic-0.0.18.tgz#f459ba1dc95cca13e5f8003882700d0926a53c00"
@@ -2292,10 +2288,9 @@ nanomatch@^1.2.9:
     to-regex "^3.0.1"
 
 nearley@^2.11.1:
-  version "2.12.1"
-  resolved "https://registry.yarnpkg.com/nearley/-/nearley-2.12.1.tgz#589cc3f883f5f873902b719838abd45af57b2d69"
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/nearley/-/nearley-2.13.0.tgz#6e7b0f4e68bfc3e74c99eaef2eda39e513143439"
   dependencies:
-    moo "^0.4.3"
     nomnom "~1.6.2"
     railroad-diagrams "^1.0.0"
     randexp "0.4.6"
