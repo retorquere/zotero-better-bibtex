@@ -131,6 +131,15 @@
           This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers.  if you keep the non-pinned key as-is, your library now has duplicate keys.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.keyRefreshPostfix"
+          type="bool"
+          default="false"/>
+        <!--!
+          If you refresh a dynamic key and the newly generated key is the same except for the postfix, the reference retains that postfix by default (in other words, refresh is conservative).
+          If you want the postfix to potentially change when refreshing, enable this option.
+        -->
+
         <!-- preference
           name="extensions.zotero.translators.better-bibtex.langID"
           id="pref-better-bibtex-langID"

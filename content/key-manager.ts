@@ -330,7 +330,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
-    if (citekey = this.keys.findOne({ itemID: item.id })) {
+    if (!Prefs.get('keyRefreshPostfix') && (citekey = this.keys.findOne({ itemID: item.id }))) {
       // item already has proposed citekey ?
       debug(`KeyManager.propose: testing whether ${item.id} can keep ${citekey.citekey}`)
       if (citekey.citekey.startsWith(proposed.citekey)) {                                                         // key begins with proposed sitekey
