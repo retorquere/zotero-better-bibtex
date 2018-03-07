@@ -134,7 +134,7 @@ class DocFinder {
 
           All are prefixed with \`${prefix}\` in the table you will find there
         `),
-        preferences: {}
+        preferences: {},
       })
       md.push('## Hidden preferences')
       md.push(dedent(`
