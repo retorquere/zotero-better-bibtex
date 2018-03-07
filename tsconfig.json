@@ -12,14 +12,14 @@
     "lib": [ "es2017", "dom" ],
     "typeRoots": [
       "./content/typings",
-      "./resource/typings",
+      "./translators/typings",
       "./gen/typings",
       "./node_modules/@types"
     ]
   },
   "include": [
     "content/**/*",
-    "resource/**/*",
+    "translators/**/*",
     "zotero-webpack/**/*",
     "setup/**/*",
     "gen/**/*"

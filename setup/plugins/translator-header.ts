@@ -15,7 +15,7 @@ class TranslatorHeaderPlugin {
 
   public apply(compiler) {
     compiler.plugin('emit', (compilation, done) => {
-      const header = require(path.join(root, 'resource', this.translator + '.json'))
+      const header = require(path.join(root, 'translators', this.translator + '.json'))
       header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
       const preferences = require(path.join(root, 'gen/preferences.json'))
       const asset = this.translator + '.js'

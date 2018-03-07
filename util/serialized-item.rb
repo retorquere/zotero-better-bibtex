@@ -61,4 +61,4 @@ interface << '  arXiv: { eprint: string, source?: string, id: string, primaryCla
 interface << '}'
 interface << ''
 
-open('resource/typings/serialized-item.d.ts', 'w'){|f| f.puts interface.join("\n") }
+open('translators/typings/serialized-item.d.ts', 'w'){|f| f.puts interface.join("\n") }

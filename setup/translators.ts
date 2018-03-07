@@ -7,8 +7,8 @@ import root from 'zotero-plugin/root'
 
 console.log('generate translator list')
 const translators = {byId: {}, byName: {}, byLabel: {}}
-for (const translator of fs.readdirSync(path.join(root, 'resource')).filter(f => f.endsWith('.json'))) {
-  const header = require(path.join(root, 'resource', translator))
+for (const translator of fs.readdirSync(path.join(root, 'translators')).filter(f => f.endsWith('.json'))) {
+  const header = require(path.join(root, 'translators', translator))
   header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
   translators.byId[header.translatorID] = header
   translators.byName[header.label] = header

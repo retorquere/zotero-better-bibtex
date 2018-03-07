@@ -32,10 +32,10 @@ const header = {
   },
 }
 
-fs.readdirSync(path.join(root, 'resource'))
+fs.readdirSync(path.join(root, 'translators'))
   .filter(f => f.endsWith('.json'))
   .map(json => {
-    const tr = JSON.parse(fs.readFileSync(path.join(root, 'resource', json), 'utf-8'))
+    const tr = JSON.parse(fs.readFileSync(path.join(root, 'translators', json), 'utf-8'))
     _.merge(header, tr)
   })
 

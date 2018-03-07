@@ -68,6 +68,7 @@ config.push(
             // minSize: 1,
             minChunks: 2,
             enforce: true,
+            priority: 10,
           },
         },
       },
@@ -116,7 +117,7 @@ for (const label of Object.keys(translators.byName)) {
         new TranslatorHeaderPlugin(label),
         // BailPlugin,
       ],
-      context: path.resolve(__dirname, './resource'),
+      context: path.resolve(__dirname, './translators'),
       entry: { [label]: `./${label}.ts` },
 
       output: {
