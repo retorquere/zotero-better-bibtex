@@ -85,7 +85,7 @@ default_filter
   = '(' text:[^)]+ ')' { return text.join(''); }
 
 function_filter
-  = name:'fold' language:( ',' ('german') )? {
+  = name:'fold' language:( [, =] ('german') )? {
       // handle here so the user gets feedback as the pattern is being typed
       return { name: name, params: language ? [ language[1] ] : [] };
     }
@@ -94,8 +94,8 @@ function_filter
     }
 
 fparam
-  = ',' value:fparamtext+ { return value.join('') }
+  = [, =] value:fparamtext+ { return value.join('') }
 
 fparamtext
-  = chars:[^,\\\]:]+  { return chars.join(''); }
+  = chars:[^= ,\\\]:]+  { return chars.join(''); }
   / "\\" char:.       { return char;  }
