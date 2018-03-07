@@ -1,7 +1,5 @@
 // tslint:disable:no-console
 
-const replace = require('replace')
-
 import * as webpack from 'webpack'
 import * as path from 'path'
 import * as fs from 'fs'

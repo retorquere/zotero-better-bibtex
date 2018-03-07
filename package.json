@@ -3,7 +3,7 @@
   "version": "5.0.99",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
-  "license": "MIT",
+  "license": "ISC",
   "author": {
     "name": "Emiliano Heyns",
     "email": "Emiliano.Heyns@iris-advies.com"
@@ -96,7 +96,6 @@
     "pretty-data": "^0.40.0",
     "properties-reader": "^0.0.16",
     "pug": "^2.0.0",
-    "replace": "^0.3.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
@@ -118,7 +117,6 @@
     "type": "git",
     "url": "git+https://github.com/retorquere/zotero-better-bibtex.git"
   },
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
   }
