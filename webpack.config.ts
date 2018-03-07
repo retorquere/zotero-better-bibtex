@@ -61,7 +61,6 @@ config.push(
   // main app logic
   _.merge({}, common, {
     optimization: {
-      // new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
       splitChunks: {
         // name: true,
         cacheGroups: {
