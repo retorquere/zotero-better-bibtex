@@ -477,8 +477,8 @@ class PatternFormatter {
   }
 
   /** tries to replace diacritics with ascii look-alikes. Removes non-ascii characters it cannot match */
-  public _fold(value) {
-    return this.removeDiacritics(value).split(/\s+/).join(' ').trim()
+  public _fold(value, mode?: string) {
+    return this.removeDiacritics(value, mode).split(/\s+/).join(' ').trim()
   }
 
   /** uppercases the first letter of each word */
@@ -508,8 +508,23 @@ class PatternFormatter {
     return this.clean(value)
   }
 
-  private removeDiacritics(str) {
-    str = transliterate(str || '')
+  private removeDiacritics(str, mode?: string) {
+    const replace = {
+      german: {
+        '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
+        '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
+        '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
+        '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
+        '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
+        '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
+      },
+    }[mode]
+    if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
+
+    str = transliterate(str || '', {
+      unknown: '\uFFFD', // unicode replacement char
+      replace,
+    })
     str = fold2ascii(str)
     return str
   }

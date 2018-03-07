@@ -1,8 +1,15 @@
 // tslint:disable:no-console
 
-const parser = require('../content/keymanager/formatter.pegjs')
+const parser = require('../content/key-manager/formatter.pegjs')
 
-for (const pattern of ['pre:[>0][zotero:fold]:post[Title]', '[auth][year]']) {
+const patterns = [
+  'pre:[>0][zotero:fold]:post[Title]',
+  '[auth][year]',
+  '[auth][Title:fold]',
+  '[auth][Title:fold,german]',
+]
+
+for (const pattern of patterns) {
   console.log(pattern)
-  console.log(parser.parse(pattern, { methods: { zotero: true, auth: true, year: true }, filters: { fold: true } }))
+  console.log(parser.parse(pattern, { $zotero: true, $auth: true, $year: true, _fold: true }))
 }
