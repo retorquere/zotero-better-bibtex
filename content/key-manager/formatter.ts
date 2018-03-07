@@ -389,7 +389,7 @@ class PatternFormatter {
 
   /**
    * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
-   * parameter, e.g `condense,_` will replace spaces with underscores. **Parameters should not contain spaces** unless
+   * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
    * you want the spaces in the value passed in to be replaced with those spaces in the parameter
    */
   public _condense(value, sep) {
@@ -397,7 +397,7 @@ class PatternFormatter {
   }
 
   /**
-   * prefixes with its parameter, so `prefix,_` will add an underscore to the front if, and only if, the value
+   * prefixes with its parameter, so `prefix=_` will add an underscore to the front if, and only if, the value
    * it is supposed to prefix isn't empty. If you want to use a reserved character (such as `:` or `\`), you'll need to
    * add a backslash (`\`) in front of it.
    */
@@ -408,7 +408,7 @@ class PatternFormatter {
   }
 
   /**
-   * postfixes with its parameter, so `postfix,_` will add an underscore to the end if, and only if, the value
+   * postfixes with its parameter, so `postfix=_` will add an underscore to the end if, and only if, the value
    * it is supposed to postfix isn't empty
    */
   public _postfix(value, postfix) {
@@ -446,7 +446,7 @@ class PatternFormatter {
   }
 
   /**
-   * selects words from the value passed in. The format is `select,start,number` (1-based), so `select,1,4`
+   * selects words from the value passed in. The format is `select=start,number` (1-based), so `select=1,4`
    * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
    * selected. It is important to note that `select' works only on values that have the words separated by whitespace,
    * so the caveat below applies.
