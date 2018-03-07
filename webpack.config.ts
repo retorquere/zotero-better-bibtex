@@ -63,15 +63,19 @@ config.push(
     optimization: {
       // new webpack.optimize.CommonsChunkPlugin({ minChunks: 2, name: 'common', filename: 'common.js' }),
       splitChunks: {
-        name: true,
+        // name: true,
         cacheGroups: {
           common: {
             name: 'common',
-            chunks: 'initial',
-            minSize: 1,
+            chunks: 'all',
+            // minSize: 1,
             minChunks: 2,
+            enforce: true,
           },
         },
+      },
+      runtimeChunk: {
+        name: 'common'
       },
     },
     plugins: [
