@@ -151,7 +151,7 @@ Scenario: BibTeX name escaping has a million inconsistencies #438
   And I set preference .relaxAuthors to true
   Then an export using "Better BibTeX" should match "export/BibTeX name escaping has a million inconsistencies #438.bibtex"
 
-@708
+@708 @test-cluster-1
 Scenario: Citekey generation failure #708
   When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
   And I import 6 references from "export/Citekey generation failure #708.json"
@@ -159,7 +159,7 @@ Scenario: Citekey generation failure #708
   And I import 6 references from "export/Citekey generation failure #708.json"
   Then an export using "Better BibLaTeX" should match "export/Citekey generation failure #708.biblatex"
 
-@117
+@117 @test-cluster-1
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from "export/Bibtex key regenerating issue when trashing items #117.json"
   And I select the first item where publicationTitle = "Genetics"
@@ -167,7 +167,7 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from "export/Bibtex key regenerating issue when trashing items #117.json" into "Second Import.json"
   Then an export using "Better BibLaTeX" should match "export/Bibtex key regenerating issue when trashing items #117.biblatex"
 
-@412 @bbt
+@412 @bbt @test-cluster-1
 Scenario: BibTeX URLs
   Given I import 1 reference from "export/BibTeX; URL missing in bibtex for Book Section #412.json"
   And I set preference .bibtexURL to "off"
@@ -177,7 +177,7 @@ Scenario: BibTeX URLs
   When I set preference .bibtexURL to "url"
   Then an export using "Better BibTeX" should match "export/BibTeX; URL missing in bibtex for Book Section #412.url.bibtex"
 
-@cayw
+@cayw @test-cluster-1
 Scenario: CAYW picker
   When I import 3 references from "export/cayw.json"
   And I pick "6 The time it takes: temporalities of planning" for CAYW:
@@ -192,19 +192,19 @@ Scenario: CAYW picker
   And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 |  | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 |  | zu:0:ITEMKEY }"
   And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]"
 
-@307 @bbt
+@307 @bbt @test-cluster-1
 Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
   When I import 2 references from "export/thesis zotero entries always create @phdthesis bibtex entries #307.json"
   Then an export using "Better BibLaTeX" should match "export/thesis zotero entries always create @phdthesis bibtex entries #307.biblatex"
   And an export using "Better BibTeX" should match "export/thesis zotero entries always create @phdthesis bibtex entries #307.bibtex"
 
-@402 @bbt
+@402 @bbt @test-cluster-1
 Scenario: bibtex; url export does not survive underscores #402
   When I import 1 reference from "export/bibtex; url export does not survive underscores #402.json"
   Then an export using "Better BibLaTeX" should match "export/bibtex; url export does not survive underscores #402.biblatex"
   And an export using "Better BibTeX" should match "export/bibtex; url export does not survive underscores #402.bibtex"
 
-@110 @111
+@110 @111 @test-cluster-1
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from "export/two ISSN number are freezing browser #110.json"
   And I select the first item where publicationTitle = "Genetics"
@@ -212,25 +212,25 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/two ISSN number are freezing browser #110.biblatex"
 
-@arXiv @85 @bbt
+@arXiv @85 @bbt @test-cluster-1
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/Square brackets in Publication field (85).json"
   Then an export using "Better BibTeX" should match "export/Square brackets in Publication field (85).bibtex"
 
-@86 @bbt @arXiv
+@86 @bbt @arXiv @test-cluster-1
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I set preference .citekeyFormat to [auth+initials][year]
    And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then an export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
-@860
+@860 @test-cluster-1
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
-@922
+@922 @test-cluster-1
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
   Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
