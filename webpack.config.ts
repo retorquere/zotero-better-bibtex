@@ -31,8 +31,8 @@ const common = {
     minimize: false,
     concatenateModules: false,
     noEmitOnErrors: true,
-    namedModules: true,
-    namedChunks: true,
+    // namedModules: true,
+    // namedChunks: true,
     // runtimeChunk: false,
   },
 
