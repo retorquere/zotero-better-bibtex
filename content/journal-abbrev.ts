@@ -34,7 +34,7 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
     debug('JournalAbbrev.reset')
 
     this.style = Prefs.get('autoAbbrevStyle')
-    if (ZoteroConfig.isJurisM && !this.style) {
+    if (ZoteroConfig.Zotero.isJurisM && !this.style) {
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 

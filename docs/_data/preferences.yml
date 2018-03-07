@@ -36,3 +36,4 @@ parseParticles: true
 citeprocNoteCitekey: false
 scrubDatabase: false
 lockedInit: false
+autoPin: false

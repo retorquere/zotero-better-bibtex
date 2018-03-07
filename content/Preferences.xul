@@ -374,6 +374,14 @@
           This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.autoPin"
+          type="bool"
+          default="false"/>
+        <!--!
+          When on, BBT will automatically pin the first citekey it generates for an item.
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">

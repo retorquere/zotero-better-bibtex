@@ -311,6 +311,8 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public async init(request) {
     const options = request.query || {}
 
+    await Zotero.BetterBibTeX.ready
+
     if (options.probe) return [this.OK, 'text/plain', 'ready']
 
     try {

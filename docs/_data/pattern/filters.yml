@@ -11,7 +11,7 @@
   this replaces spaces in the value passed in. You can specify what to replace
   it with by adding it as a
 
-  parameter, e.g `condense,_` will replace spaces with underscores. **Parameters
+  parameter, e.g `condense=_` will replace spaces with underscores. **Parameters
   should not contain spaces** unless
 
   you want the spaces in the value passed in to be replaced with those spaces in
@@ -25,12 +25,12 @@
 '`nopunct`': Removes punctuation
 '`nopunctordash`': Removes punctuation and word-connecting dashes
 '`postfix`': >-
-  postfixes with its parameter, so `postfix,_` will add an underscore to the end
+  postfixes with its parameter, so `postfix=_` will add an underscore to the end
   if, and only if, the value
 
   it is supposed to postfix isn't empty
 '`prefix`': >-
-  prefixes with its parameter, so `prefix,_` will add an underscore to the front
+  prefixes with its parameter, so `prefix=_` will add an underscore to the front
   if, and only if, the value
 
   it is supposed to prefix isn't empty. If you want to use a reserved character
@@ -38,8 +38,8 @@
 
   add a backslash (`\`) in front of it.
 '`select`': >-
-  selects words from the value passed in. The format is `select,start,number`
-  (1-based), so `select,1,4`
+  selects words from the value passed in. The format is `select=start,number`
+  (1-based), so `select=1,4`
 
   would select the first four words. If `number` is not given, all words from
   `start` to the end of the list are

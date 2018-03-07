@@ -54,7 +54,8 @@
       ],
       "place": "Brussels, Belgium",
       "date": "2007",
-      "extra": "bibtex: Abbott-2007-aa \nbibtex[class=States  Markets 2009, Diss Tax  Democracy 2010ff;date-modified=2014-06-14 15:13:01 +0000]",
+      "extra": "bibtex: Abbott-2007-aa \nbibtex[class=States & Markets 2009, Diss Tax & Democracy 2010ff]",
+      "institution": "European Center for International Political Economy",
       "title": "Are Developing Countries Deterred from Using the WTO Dispute Settlement System? - Participation of Developing Countries in the DSM in the years 1995-2005",
       "creators": [
         {
@@ -63,8 +64,7 @@
           "firstName": "Roderick"
         }
       ],
-      "itemID": 4,
-      "publisher": "European Center for International Political Economy"
+      "itemID": 4
     }
   ],
   "cache": {

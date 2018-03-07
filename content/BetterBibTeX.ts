@@ -170,7 +170,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
-    debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
+    // debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
     bbtReady.promise.then(() => {
       debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
 
@@ -253,6 +253,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   validFields(sandbox) { return Serializer.validFields },
+  version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
@@ -434,6 +435,7 @@ class Progress {
 
     debug(`${this.name}: ${msg}...`)
     this.toggle(true)
+    debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
 
   public update(msg) {

@@ -156,7 +156,18 @@ end
 
 TRANSLATORS = {}
 
+def un_multi(obj)
+  if obj.is_a?(Hash)
+    obj.delete('multi')
+    obj.values.each{|c| un_multi(c) }
+  elsif obj.is_a?(Array)
+    obj.each{|c| un_multi(c) }
+  end
+end
+
 def normalizeJSON(lib)
+  un_multi(lib)
+
   itemIDs = {}
 
   lib.delete('config')
@@ -242,6 +253,28 @@ end
   #}
 #end
 
+def expand_expected(expected)
+  if expected =~ /(.*)(\.csl\.(json|yml))$/
+    base = $1
+    ext = $2
+  elsif expected =~ /(.*)(\.[a-z]+)$/
+    base = $1
+    ext = $2
+  else
+    raise "No extension on #{expected}"
+  end
+
+  fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
+  return [File.join(fixtures, expected), ext] if ENV['ZOTERO'] != 'jurism'
+
+  ['.juris-m', ''].each{|variant|
+    variant = File.join(fixtures, "#{base}#{variant}#{ext}")
+    return [variant, ext] if File.file?(variant)
+  }
+
+  raise "Could not find #{expected}"
+end
+
 def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, expected: nil)
   throw "Auto-export needs a destination" if displayOptions['keepUpdated'] && !output
     
@@ -260,28 +293,19 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
   return if expected == :ignore
 
   found = File.read(output) if output
-
-  if expected =~ /\.csl\.json$/
-    expected_type = :csl_json
-  elsif expected =~ /\.json$/
-    expected_type = :bbt_json
-  elsif expected =~ /\.yml$/
-    expected_type = :csl_yaml
-  end
-
-  expected = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', expected))
+  expected, ext = expand_expected(expected)
   expected = File.read(expected)
 
-  case expected_type
-    when :csl_json
+  case ext
+    when '.csl.json'
       return compare(JSON.parse(found), JSON.parse(expected))
 
-    when :csl_yaml
+    when '.csl.yml'
       #return compare(YAML.load(found), YAML.load(expected))
       expect(sort_yaml(found)).to eq(sort_yaml(expected))
       return
 
-    when :bbt_json
+    when '.json'
       found = normalizeJSON(JSON.parse(found))
       expected = normalizeJSON(JSON.parse(expected))
 
@@ -413,7 +437,7 @@ module BBT
   end
 
   if ENV['ZOTERO'] == 'jurism' # Juris-M doesn't support -datadir
-    STDERR.puts "WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34"
+    STDERR.puts "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
     STDERR.flush
     profile['extensions.zotero.dataDir'] = File.join(profile_tgt, 'jurism')
     profile['extensions.zotero.useDataDir']  = true

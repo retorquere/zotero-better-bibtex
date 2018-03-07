@@ -15,6 +15,10 @@ import { Formatter } from './key-manager/formatter.ts'
 import { DB } from './db/main.ts'
 import { AutoExport } from './auto-export.ts'
 
+function timeout(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
@@ -140,14 +144,19 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       }
     })
 
-    this.keys.on(['insert', 'update'], citekey => {
+    this.keys.on(['insert', 'update'], async citekey => {
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
-      setTimeout(() => {
-        // update display panes
+      await timeout(this.itemObserverDelay)
+
+      if (Prefs.get('autoPin') && !citekey.pinned) {
+        debug('Keymanager: auto-pinning', citekey.itemID)
+        this.pin([citekey.itemID])
+      } else {
+        // update display panes by issuing a fake item-update notification
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
-      }, this.itemObserverDelay)
+      }
     })
   }
 
@@ -297,6 +306,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
    }
 
   public get(itemID) {
+    if (typeof itemID !== 'number') throw new Error(`Keymanager.get expects a number, got ${typeof itemID}`)
+
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys) return { citekey: '', pinned: false, retry: true }
@@ -304,39 +315,11 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const key = this.keys.findOne({ itemID })
     if (key) return key
 
-    debug('KeyManager.get called for non-existent', itemID)
+    debug('KeyManager.get called for non-existent itemID', itemID)
     return { citekey: '', pinned: false }
   }
 
-  private expandSelection(ids) {
-    if (Array.isArray(ids)) return ids
-
-    if (ids === 'selected') {
-      try {
-        return Zotero.getActiveZoteroPane().getSelectedItems(true)
-      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-        debug('Could not get selected items:', err)
-        return []
-      }
-    }
-
-    return [ids]
-  }
-
-  private postfixAlpha(n) {
-    const ordA = 'a'.charCodeAt(0)
-    const ordZ = 'z'.charCodeAt(0)
-    const len = ordZ - ordA + 1
-
-    let postfix = ''
-    while (n >= 0) {
-      postfix = String.fromCharCode(n % len + ordA) + postfix
-      n = Math.floor(n / len) - 1
-    }
-    return postfix
-  }
-
-  private propose(item) {
+  public propose(item) {
     debug('KeyManager.propose: getting existing key from extra field,if any')
     let citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
@@ -382,5 +365,33 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         return { citekey: postfixed, pinned: false }
       }
     }
+  }
+
+  private expandSelection(ids) {
+    if (Array.isArray(ids)) return ids
+
+    if (ids === 'selected') {
+      try {
+        return Zotero.getActiveZoteroPane().getSelectedItems(true)
+      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        debug('Could not get selected items:', err)
+        return []
+      }
+    }
+
+    return [ids]
+  }
+
+  private postfixAlpha(n) {
+    const ordA = 'a'.charCodeAt(0)
+    const ordZ = 'z'.charCodeAt(0)
+    const len = ordZ - ordA + 1
+
+    let postfix = ''
+    while (n >= 0) {
+      postfix = String.fromCharCode(n % len + ordA) + postfix
+      n = Math.floor(n / len) - 1
+    }
+    return postfix
   }
 }

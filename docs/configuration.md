@@ -269,3 +269,9 @@ BBT locks the UI during startup because I have been told in no uncertain terms I
 If you however cannot stand the lockout during startup and you want to live dangerously, you can turn this off and hope that no race conditions bite you. If you turn this on and experience problems, you are welcome to file a bug report and I will see what I can do, but be prepared for the answer to be "turn this back on for now".
 
 This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
+
+### autoPin
+
+default: `off`
+
+When on, BBT will automatically pin the first citekey it generates for an item.

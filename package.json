@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.94",
+  "version": "5.0.99",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "license": "MIT",
@@ -84,7 +84,6 @@
     "ejs": "^2.5.7",
     "find-up": "^2.1.0",
     "fs-extra": "^5.0.0",
-    "github": "^14.0.0",
     "glob": "^7.1.2",
     "grasp": "^0.6.0",
     "ignore-loader": "^0.1.2",
