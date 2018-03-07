@@ -14,7 +14,7 @@ class TranslatorHeaderPlugin {
   }
 
   public apply(compiler) {
-    compiler.plugin('emit', (compilation, done) => {
+    compiler.hooks.emit.tap('TranslatorHeaderPlugin', compilation => {
       const header = require(path.join(root, 'translators', this.translator + '.json'))
       header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
       const preferences = require(path.join(root, 'gen/preferences.json'))
@@ -26,7 +26,6 @@ class TranslatorHeaderPlugin {
         ),
         compilation.assets[asset]
       )
-      done()
     })
   }
 }
