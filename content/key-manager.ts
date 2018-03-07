@@ -306,6 +306,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
    }
 
   public get(itemID) {
+    if (typeof itemID !== 'number') throw new Error(`Keymanager.get expects a number, got ${typeof itemID}`)
+
     // I cannot prevent being called before the init is done because Zotero unlocks the UI *way* before I'm getting the
     // go-ahead to *start* my init.
     if (!this.keys) return { citekey: '', pinned: false, retry: true }
@@ -313,7 +315,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const key = this.keys.findOne({ itemID })
     if (key) return key
 
-    debug('KeyManager.get called for non-existent', itemID)
+    debug('KeyManager.get called for non-existent itemID', itemID)
     return { citekey: '', pinned: false }
   }
 
