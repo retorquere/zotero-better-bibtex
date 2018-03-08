@@ -177,15 +177,13 @@ DB.init = async () => {
     },
   })
 
-  // WTH is wrong with LokiJS these days?! https://github.com/techfort/LokiJS/issues/660
-  let rebuild = false
-  for (const ae of autoexport.data) { // directly change the data objects and rebuild indexes
-    if (ae.updated) {
-      delete ae.updated
-      rebuild = true
-    }
+  // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
+  const length = autoexport.data.length
+  autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
+  if (length !== autoexport.data.length) {
+    autoexport.ensureId()
+    autoexport.ensureAllIndexes(true)
   }
-  if (rebuild) autoexport.ensureAllIndexes(true)
 
   // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
   for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
