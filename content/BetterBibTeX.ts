@@ -80,8 +80,15 @@ if (Prefs.get('citeprocNoteCitekey')) {
   $patch$(Zotero.Utilities, 'itemToCSLJSON', original => function itemToCSLJSON(zoteroItem) {
     const cslItem = original.apply(this, arguments)
 
-    const citekey = KeyManager.get(zoteroItem.id)
-    cslItem.note = citekey ? citekey.citekey : undefined
+    if (typeof Zotero.Item !== 'undefined' && !(zoteroItem instanceof Zotero.Item)) {
+      const citekey = KeyManager.get(zoteroItem.itemID)
+      if (citekey) {
+        cslItem.note = citekey.citekey
+      } else {
+        delete cslItem.note
+      }
+    }
+
     return cslItem
   })
 }
