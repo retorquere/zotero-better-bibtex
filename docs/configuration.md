@@ -188,6 +188,12 @@ The following settings are not exposed in the UI, but can be found under `Prefer
 
 All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table you will find there
 
+### keyRefreshPostfix
+
+default: `off`
+
+If you refresh a dynamic key and the newly generated key is the same except for the postfix, the reference retains that postfix by default (in other words, refresh is conservative). If you want the postfix to potentially change when refreshing, enable this option.
+
 ### autoAbbrevStyle
 
 default: `""`
