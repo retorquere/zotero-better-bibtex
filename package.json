@@ -34,7 +34,8 @@
     "postversion": "git push --follow-tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "ts-node setup/readme.ts && ts-node setup/preferences.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ts-node setup/formatters-doc.ts",
-    "ncu": "ncu -a"
+    "ncu": "ncu -a",
+    "reinstall": "rm -rf node_modules yarn* && yarn install"
   },
   "main": "index.js",
   "directories": {
