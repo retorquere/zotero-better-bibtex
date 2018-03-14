@@ -87,7 +87,7 @@ class AutoExportPrefPane {
             break
 
           case 'updated':
-            treecell.setAttribute('label', `${new Date(ae.meta.updated)}`)
+            treecell.setAttribute('label', `${new Date(ae.meta.updated || ae.meta.created)}`)
             break
 
           case 'target':
