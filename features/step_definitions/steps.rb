@@ -4,7 +4,7 @@ require 'neatjson'
 Before do |scenario|
   execute(
     timeout: 120,
-    script: 'yield Zotero.BetterBibTeX.TestSupport.reset()'
+    script: 'await Zotero.BetterBibTeX.TestSupport.reset()'
   ) unless scenario.source_tag_names.include?('@noreset')
   @displayOptions = {}
   @selected = nil
@@ -87,7 +87,7 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
     imported = execute(
       timeout: 240,
       args: { filename: source, preferences: preferences, createNewCollection: !!collection },
-      script: 'return yield Zotero.BetterBibTeX.TestSupport.importFile(args.filename, args.createNewCollection, args.preferences)'
+      script: 'return await Zotero.BetterBibTeX.TestSupport.importFile(args.filename, args.createNewCollection, args.preferences)'
     )
   }
   expect(imported).to eq(Integer(references))
@@ -95,7 +95,7 @@ end
 
 Then /^the library should have (\d+) references/ do |n|
   library = execute("""
-      var items = yield Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
+      var items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true);
       return items.length;
     """
   )
@@ -226,7 +226,7 @@ end
 When(/^I select the first item where ([^\s]+) = "([^"]+)"$/) do |attribute, value|
   @selected = execute(
     args: { attribute: attribute, value: value },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.select(args.attribute, args.value)'
+    script: 'return await Zotero.BetterBibTeX.TestSupport.select(args.attribute, args.value)'
   )
   expect(@selected).not_to be(nil)
   sleep 3
@@ -235,7 +235,7 @@ end
 When(/^I pick "([^"]+)" for CAYW:$/) do |title, table|
   picked = execute(
     args: { title: title },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.find(args.title)'
+    script: 'return await Zotero.BetterBibTeX.TestSupport.find(args.title)'
   )
   expect(picked).not_to be(nil)
 
@@ -245,7 +245,7 @@ end
 Then("the picks for {string} should be {string}") do |format, expected|
   found = execute(
     args: { format: format, picked: @picked },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.pick(args.format, args.picked)'
+    script: 'return await Zotero.BetterBibTeX.TestSupport.pick(args.format, args.picked)'
   )
   expect(found.strip).to eq(expected)
 end
@@ -253,7 +253,7 @@ end
 When(/^I remove the selected item$/) do
   execute(
     args: {id: @selected},
-    script: 'yield Zotero.Items.trashTx([args.id])'
+    script: 'await Zotero.Items.trashTx([args.id])'
   )
 end
 
@@ -262,7 +262,7 @@ When(/^I (pin|unpin|refresh) (the|all) citation key(s)?$/) do |action, which, mu
   raise "'the' must have 'key'" if which == 'the' && multiple == 's'
   execute(
     args: { itemID: which == 'the' ? @selected : nil, action: action },
-    script: 'yield Zotero.BetterBibTeX.TestSupport.pinCiteKey(args.itemID, args.action)'
+    script: 'await Zotero.BetterBibTeX.TestSupport.pinCiteKey(args.itemID, args.action)'
   )
 end
 

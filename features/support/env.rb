@@ -287,7 +287,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
   found = execute(
     timeout: 600,
     args: { translatorID: translator, displayOptions: displayOptions, path: output, collection: collection || nil },
-    script: 'return yield Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions, args.path, args.collection)'
+    script: 'return await Zotero.BetterBibTeX.TestSupport.exportLibrary(args.translatorID, args.displayOptions, args.path, args.collection)'
   )
 
   return if expected == :ignore
@@ -506,7 +506,7 @@ module BBT
           }
 
           Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
-          yield Zotero.BetterBibTeX.ready;
+          await Zotero.BetterBibTeX.ready;
           Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
           return true;
         """)
