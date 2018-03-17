@@ -175,3 +175,19 @@ if (Translator.BetterBibTeX && this.has.title) {
   this.add({ name: 'title', value: this.item.title.replace(/(\$.*?\$)/g, '<pre>$1</pre>'), replace: true });
 }
 ```
+
+## Replace `director` with `author` for `videoRecording` and `film` references
+
+```
+if (Translator.BetterBibLaTeX) {
+  switch (this.item.itemType) {
+    case 'videoRecording':
+    case 'film':
+      this.item.creators.forEach(creator => {
+        if (creator.creatorType === 'director') creator.creatorType = 'author'
+      })
+      this.addCreators();
+      break;
+  }
+}
+```
