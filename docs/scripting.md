@@ -180,10 +180,10 @@ if (Translator.BetterBibTeX && this.has.title) {
 
 ```
 if (Translator.BetterBibLaTeX) {
-  switch (this.item.itemType) {
+  switch (item.itemType) {
     case 'videoRecording':
     case 'film':
-      this.item.creators.forEach(creator => {
+      item.creators.forEach(creator => {
         if (creator.creatorType === 'director') creator.creatorType = 'author'
       })
       this.addCreators();
