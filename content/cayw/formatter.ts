@@ -183,6 +183,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
       citation += `{ ${enriched.trim()} }`
     }
+    debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels, 'generated=', citation)
     return citation
   }
 
