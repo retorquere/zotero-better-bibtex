@@ -64,7 +64,7 @@ jobs:
     - run: |-
         set -e
         ODFSCAN=`curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '"' -f 4`
-        curl -o xpi/odfscan.xpi $ODFSCAN
+        curl -L -o xpi/odfscan.xpi $ODFSCAN
 
     - store_artifacts:
         path: xpi
