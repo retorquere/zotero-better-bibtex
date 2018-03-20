@@ -41,7 +41,7 @@ switch (Translator.header.label) {
 
 In the `BetterBib(La)TeX` context you will typically access `this`, which will
 be undefined in the `BetterCSL(JSON|YAML)` context. In the `BetterBib(La)TeX` context, your Bib(La)TeX reference being built is
-available as both `this` and `reference`; the source Zotero item is available both as `this.item` and `item`. In the `BetterCSL(JSON|YAML)` context,
+available as both `this` and `reference`; the source Zotero item is available both as `item` (and `this.item` for historic reasons). In the `BetterCSL(JSON|YAML)` context,
 the CSL object being built is available as `reference` and the the source Zotero item is available as `item`.
 
 You should
@@ -57,9 +57,9 @@ In `BetterBibLaTeX` and `BetterBibTeX`,
 
 - `this` is the BibTeX reference you are building, and the reference has a number of fields.
 - `this.fields`
-- `this.item` is the Zotero item that's the source of the reference. 
+- `item` (or as mentioned earlier, `this.item`) is the Zotero item that's the source of the reference. 
 
-  e.g. access the date in zotero item `this.item.date`.
+  e.g. access the date in zotero item `item.date`.
 
 - `this.has` is a dictionary of fields for output.
 
@@ -79,12 +79,12 @@ In `BetterCSLJSON` and `BetterCSLYAML`:
 Since BibTeX doesn't really have well-defined behavior across styles the way BibLaTeX does, BBT can't generate URL data which is compatible with all BibTeX styles. If you know the style you use yourself, you can add the data in the format you want using a postscript. The script below will add a note for the last accessed date, and a `\url` tag within the `howpublished` field, but only for BibTeX, not for BibLaTeX, and only for `webpage` entries:
 
 ```js
-if (Translator.BetterBibTeX && this.item.itemType === 'webpage') {
-    if (this.item.accessDate) {
-      this.add({ name: 'note', value: "(accessed " + this.item.accessDate + ")" });
+if (Translator.BetterBibTeX && item.itemType === 'webpage') {
+    if (item.accessDate) {
+      this.add({ name: 'note', value: "(accessed " + item.accessDate + ")" });
     }
-    if (this.item.url) {
-      this.add({ name: 'howpublished', bibtex: "{\\url{" + this.enc_verbatim({value: this.item.url}) + "}}" });
+    if (item.url) {
+      this.add({ name: 'howpublished', bibtex: "{\\url{" + this.enc_verbatim({value: item.url}) + "}}" });
     }
   }
 ```
@@ -95,7 +95,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```js
 if (Translator.BetterBibTeX || Translator.BetterBibLaTeX) {
-  this.add({ name: 'keywords', replace: true, value: this.item.tags, sep: ', ' });
+  this.add({ name: 'keywords', replace: true, value: item.tags, sep: ', ' });
 }
 ```
 
@@ -104,8 +104,8 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 ## Add DOI in note field
 
 ```js
-if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && this.item.DOI) {
-  var doi = this.item.DOI;
+if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.DOI) {
+  var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
   this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });
 }
@@ -118,8 +118,8 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
 ```
-if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && this.item.arXiv.id) {
-  this.add({ name: 'pages', value: this.item.arXiv.id });
+if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.arXiv.id) {
+  this.add({ name: 'pages', value: item.arXiv.id });
   if (!this.has.journaltitle) { this.add({ name: 'journaltitle', bibtex: '{}' }); }
 }
 ```
@@ -172,6 +172,22 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 
 ```
 if (Translator.BetterBibTeX && this.has.title) {
-  this.add({ name: 'title', value: this.item.title.replace(/(\$.*?\$)/g, '<pre>$1</pre>'), replace: true });
+  this.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<pre>$1</pre>'), replace: true });
+}
+```
+
+## Replace `director` with `author` for `videoRecording` and `film` references
+
+```
+if (Translator.BetterBibLaTeX) {
+  switch (item.itemType) {
+    case 'videoRecording':
+    case 'film':
+      item.creators.forEach(creator => {
+        if (creator.creatorType === 'director') creator.creatorType = 'author'
+      })
+      this.addCreators();
+      break;
+  }
 }
 ```
