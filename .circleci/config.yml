@@ -61,6 +61,10 @@ jobs:
           - vendor/bundle
 
     - run: yarn run build
+    - run: |-
+        set -e
+        ODFSCAN=`curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '"' -f 4`
+        curl -o xpi/odfscan.xpi $ODFSCAN
 
     - store_artifacts:
         path: xpi
@@ -112,9 +116,6 @@ jobs:
         else
           NIGHTLY_TAGS="not @nightly and"
         fi
-
-        ODFSCAN=`curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '"' -f 4`
-        curl -o xpi/odfscan.xpi $ODFSCAN
 
         case $CIRCLE_NODE_INDEX in
           0|2)  export CIRCLE_TESTS="$NIGHTLY_TAGS @test-cluster-1"
