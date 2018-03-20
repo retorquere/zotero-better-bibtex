@@ -148,12 +148,15 @@ jobs:
     - attach_workspace:
         at: *working_directory
     - run: yarn run release
-    - run: |-
-        set -e
 
-        if [ "$NIGHTLY" = "true" ]; then
-          yarn run s3form
-        fi
+  s3form:
+    <<: *defaults
+
+    steps:
+    - run: *setenv
+    - checkout
+    - run: *node
+    - run: yarn run s3form
 
 workflows:
   version: 2
