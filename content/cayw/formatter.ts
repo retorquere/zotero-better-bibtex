@@ -154,6 +154,9 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async 'scannable-cite'(citations) {
+    const addons = await Zotero.getInstalledExtensions()
+    if (!addons.find(addon => addon === 'RTF/ODF Scan for Zotero')) throw new Error('Scannable Cite requires the "RTF/ODF Scan for Zotero" plugin to be installed')
+
     debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
@@ -179,7 +182,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
         item.locator ? `${shortLabel[item.label] || item.label} ${item.locator}` : '',
         item.suffix || '',
         testing ? 'zu:0:ITEMKEY' : id,
-      ].join(' | ')
+      ].join(' | ').replace(/ +/g, ' ')
 
       citation += `{ ${enriched.trim()} }`
     }
