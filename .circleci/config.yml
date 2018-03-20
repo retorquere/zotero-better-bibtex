@@ -169,3 +169,20 @@ workflows:
       - release:
           requires:
             - test
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 14 * * *"
+          filters:  
+            branches:
+              only:
+                - master
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+          context: nightly
+      - release:
+          requires:
+            - test
