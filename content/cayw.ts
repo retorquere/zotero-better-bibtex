@@ -335,6 +335,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         }
       }
 
+      debug('CAYW: sending', citation)
       return [this.OK, 'text/plain', citation]
     } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]

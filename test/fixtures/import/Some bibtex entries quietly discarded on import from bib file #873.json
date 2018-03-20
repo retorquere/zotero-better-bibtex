@@ -10480,7 +10480,7 @@
       "pages": "91-94",
       "publicationTitle": "AIM",
       "date": "2001",
-      "extra": "bibtex: nau-etal:2001a \nbibtex{topic:\"planning;planning-algorithms;planning-systems;\"}",
+      "extra": "bibtex: nau-etal:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "The Shop Planning System",
       "creators": [
         {
