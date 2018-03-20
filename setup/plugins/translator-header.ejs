@@ -14,6 +14,8 @@ var Translator = {
     this.isZotero = version.Zotero.isZotero;
     this.isJurisM = version.Zotero.isJurisM;
 
+    this.BetterCSL = this.BetterCSLYAML || this.BetterCSLJSON;
+
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
     this.unicode = true; // set by Better Bib(La)TeX later
 
