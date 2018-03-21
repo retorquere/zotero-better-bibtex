@@ -516,7 +516,7 @@ module BBT
         end
       rescue Errno::ECONNREFUSED, Net::ReadTimeout, HTTPNotFoundError
         attempts += 1
-        if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 1)
+        if attempts >= 60 * (ENV['ZOTERO_BIGLY'] == 'true' ? 100 : 2)
           raise "Could not connect to Zotero after #{attempts} attempts"
         else
           STDOUT.puts "#{attempts}: could not connect to Zotero, retrying..."
