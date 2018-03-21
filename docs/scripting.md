@@ -39,6 +39,8 @@ switch (Translator.header.label) {
 }
 ```
 
+If you want to run a postscript in the CSL translators but don't care whether it will output YAML or JSON, you can test for `Translator.BetterCSL`, which will be true when either one of `BetterCSLJSON` or `BetterCSLYAML` is active.
+
 In the `BetterBib(La)TeX` context you will typically access `this`, which will
 be undefined in the `BetterCSL(JSON|YAML)` context. In the `BetterBib(La)TeX` context, your Bib(La)TeX reference being built is
 available as both `this` and `reference`; the source Zotero item is available both as `item` (and `this.item` for historic reasons). In the `BetterCSL(JSON|YAML)` context,
