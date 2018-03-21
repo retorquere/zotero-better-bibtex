@@ -79,6 +79,10 @@ function is_valid_month(month, allowseason) {
   return false
 }
 
+function stripTime(date) {
+  return date.replace(/(\s+|T)[0-9]{2}:[0-9]{2}(:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?)?$/, '')
+}
+
 export function parse(value, toplevel = true) {
   value = value.trim()
 
@@ -139,11 +143,11 @@ export function parse(value, toplevel = true) {
   }
 
   const state = {approximate: false, uncertain: false}
-  const exactish = value.replace(/[~?]+$/, match => {
+  const exactish = stripTime(value.replace(/[~?]+$/, match => {
     state.approximate = match.indexOf('~') >= 0
     state.uncertain = match.indexOf('?') >= 0
     return ''
-  }).replace(/\s+/g, ' ')
+  }).replace(/\s+/g, ' '))
 
   // these assume a sensible d/m/y format by default. There's no sane way to guess between m/d/y and d/m/y, and m/d/y is
   // just wrong. https://en.wikipedia.org/wiki/Date_format_by_country
@@ -193,10 +197,7 @@ export function parse(value, toplevel = true) {
 
   try {
     // https://github.com/inukshuk/edtf.js/issues/5
-    parsed = normalize_edtf(EDTF.parse(upgrade_edtf(value
-      .replace(/_|--/, '/')
-      .replace(/(\s+|T)[0-9]{2}:[0-9]{2}:[0-9]{2}(Z|\+[0-9]{2}:?[0-9]{2})?$/, '')
-    )))
+    parsed = normalize_edtf(EDTF.parse(upgrade_edtf(stripTime(value.replace(/_|--/, '/')))))
   } catch (err) {
     parsed = null
   }
