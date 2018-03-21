@@ -13981,7 +13981,7 @@
       "pages": "69-142",
       "publicationTitle": "Artificial Intelligence",
       "date": "1993",
-      "extra": "bibtex: hobbs-etal:1993a \nbibtex{topic:\"nl-interpretation; abduction\"}",
+      "extra": "bibtex: hobbs-etal:1993a \nbibtex{topic:'nl-interpretation; abduction'}",
       "title": "Interpretation as Abduction",
       "creators": [
         {
@@ -20178,7 +20178,7 @@
     {
       "itemType": "thesis",
       "date": "1995",
-      "extra": "Available as UMCP technical report CS-TR-3624 \nbibtex: Erol:thesis \nbibtex{bibsource:\"OAI-PMH server at alcme.oclc.org\",description:\"Thesis research directed by Dept. of Computer Science.; Thesis (Ph. D.)--University of Maryland at College Park, 1995.; Includes bibliographical references (leaves 247-256).\",oai:\"oai:xtcat.oclc.org:OCLCNo/ocm35003840\",subject:\"Planning.; Artificial intelligence.\"}",
+      "extra": "Available as UMCP technical report CS-TR-3624 \nbibtex: Erol:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Thesis research directed by Dept. of Computer Science.; Thesis (Ph. D.)--University of Maryland at College Park, 1995.; Includes bibliographical references (leaves 247-256).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm35003840',subject:'Planning.; Artificial intelligence.'}",
       "university": "University of Maryland at College Park",
       "abstractNote": "Planning is a central activity in many areas including robotics, manufacturing, space mission sequencing, and logistics. As the size and complexity of planning problems grow, there is great economic pressure to automate this process in order to reduce the cost of planning effort, and to improve the quality of produced plans. AI planning research has focused on general-purpose planning systems which can process the specifications of an application domain and generate solutions to planning problems in that domain. Unfortunately, there is a big gap between theoretical and application oriented work in AI planning. The theoretical work has been mostly based on state-based planning, which has limited practical applications. The application-oriented work has been based on hierarchical task network (HTN) planning, which lacks a theoretical foundation. As a result, in spite of many years of research, building planning applications remains a formidable task. The goal of this dissertation is to facilitate building reliable and effective planning applications. The methodology includes design of a mathematical framework for HTN planning, analysis of this framework, development of provably correct algorithms based on this analysis, and the implementation of these algorithms for further evaluation and exploration. The representation, analyses, and algorithms described in this thesis will make it easier to apply HTN planning techniques effectively and correctly to planning applications. The precise and mathematical nature of the descriptions will also help teaching about HTN planning, will clarify misconceptions in the literature, and will stimulate further research.",
       "title": "Hierarchical task network planning :--formalization, analysis, and implementation",
@@ -24025,7 +24025,7 @@
       "pages": "123-191",
       "publicationTitle": "Artificial Intelligence",
       "date": "2000",
-      "extra": "bibtex: bacchus-kabanza:2000a \nbibtex{topic:\"procedural-control;temporal-logic;\"}",
+      "extra": "bibtex: bacchus-kabanza:2000a \nbibtex{topic:'procedural-control;temporal-logic;'}",
       "title": "Using Temporal Logics to Express Search Control Knowledge for Planning",
       "creators": [
         {
@@ -24131,7 +24131,7 @@
       "pages": "47-56",
       "publicationTitle": "AIM",
       "date": "2001",
-      "extra": "bibtex: bacchus:2001a \nbibtex{topic:\"planning;planning-algorithms;planning-systems;\"}",
+      "extra": "bibtex: bacchus:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "AIPS'00 Planning Competition",
       "creators": [
         {
@@ -24425,7 +24425,7 @@
       "itemType": "journalArticle",
       "url": "citeseer.nj.nec.com/ghallab98pddl.html",
       "date": "1998",
-      "extra": "bibtex: ghallab98pddl \nbibtex{text:\"Ghallab, M.; Howe, A.; Knoblock, C.; McDermott, D.; Ram, A.; Veloso, M.; Weld, D.; and Wilkins, D. 1998. PDDL---The Planning Domain Definition Language. AIPS-98 Planning Committee.\"}",
+      "extra": "bibtex: ghallab98pddl \nbibtex{text:'Ghallab, M.; Howe, A.; Knoblock, C.; McDermott, D.; Ram, A.; Veloso, M.; Weld, D.; and Wilkins, D. 1998. PDDL---The Planning Domain Definition Language. AIPS-98 Planning Committee.'}",
       "title": "PDDL---The Planning Domain Definition Language",
       "creators": [
         {
@@ -25664,7 +25664,7 @@
       "pages": "113-148",
       "publicationTitle": "AIJ",
       "date": "1997",
-      "extra": "bibtex: Etzioni-etal:1997a \nbibtex{acontentnote:\"Abstract: Closed-world inference-an essential component of many planning algorithms-is the process of determining that a logical sentence is false based on its absence from a knowledge base, or the inability to derive it. We describe a novel method for closed-world inference and update over the first-order theories of action used by planning algorithms such as NONLIN, TWEAK, and UCPOP. We show the method to be sound and efficient, but incomplete. In our experiments, closed-world inference consistently averaged about 2 milliseconds while updates averaged approximately 1.2 milliseconds. Furthermore, we demonstrate that incompleteness is nonproblematic in practice, since our mechanism makes over 99% of the desired inferences. We incorporated our method into the XII planner, which supports our Internet Softbot (software robot). The technique cut the number of actions executed by the Softbot by a factor of one hundred, and resulted in a corresponding speedup to XII.\",topic:\"planning;circumscription;closed-world-reasoning;\"}",
+      "extra": "bibtex: Etzioni-etal:1997a \nbibtex{acontentnote:'Abstract: Closed-world inference-an essential component of many planning algorithms-is the process of determining that a logical sentence is false based on its absence from a knowledge base, or the inability to derive it. We describe a novel method for closed-world inference and update over the first-order theories of action used by planning algorithms such as NONLIN, TWEAK, and UCPOP. We show the method to be sound and efficient, but incomplete. In our experiments, closed-world inference consistently averaged about 2 milliseconds while updates averaged approximately 1.2 milliseconds. Furthermore, we demonstrate that incompleteness is nonproblematic in practice, since our mechanism makes over 99% of the desired inferences. We incorporated our method into the XII planner, which supports our Internet Softbot (software robot). The technique cut the number of actions executed by the Softbot by a factor of one hundred, and resulted in a corresponding speedup to XII.',topic:'planning;circumscription;closed-world-reasoning;'}",
       "title": "Sound and Efficient Closed-World Reasoning for Planning",
       "creators": [
         {
@@ -25698,7 +25698,7 @@
       "pages": "193-258",
       "publicationTitle": "AIJ",
       "date": "1992",
-      "extra": "bibtex: kambhampati-hendler:1992a \nbibtex{topic:\"planning;plan-reuse;\"}",
+      "extra": "bibtex: kambhampati-hendler:1992a \nbibtex{topic:'planning;plan-reuse;'}",
       "title": "A Validation Structure-Based Theory of Plan Modification and Reuse",
       "creators": [
         {
@@ -25758,7 +25758,7 @@
       "publisher": "AAAI Press",
       "pages": "134-144",
       "date": "2006",
-      "extra": "bibtex: bienvenu-etal:2006a \nbibtex{topic:\"planning;preferences;qualitative-utility;temporal-reasoning;\"}",
+      "extra": "bibtex: bienvenu-etal:2006a \nbibtex{topic:'planning;preferences;qualitative-utility;temporal-reasoning;'}",
       "title": "Planning with Qualitative Temporal Preferences",
       "bookTitle": "KR2006",
       "creators": [
@@ -25860,7 +25860,7 @@
     {
       "itemType": "thesis",
       "date": "1997",
-      "extra": "bibtex: golden:thesis \nbibtex{bibsource:\"OAI-PMH server at alcme.oclc.org\",description:\"Vita.; Thesis (Ph. D.)--University of Washington, 1997.; Includes bibliographical references (p. [166]-173).\",oai:\"oai:xtcat.oclc.org:OCLCNo/ocm40149549\",subject:\"Intelligent agents (Computer software)\"}",
+      "extra": "bibtex: golden:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Vita.; Thesis (Ph. D.)--University of Washington, 1997.; Includes bibliographical references (p. [166]-173).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm40149549',subject:'Intelligent agents (Computer software)'}",
       "university": "University of Washington",
       "title": "Planning and knowledge representation for softbots",
       "creators": [
@@ -26900,7 +26900,7 @@
       "pages": "57-62",
       "publicationTitle": "The AI Magazine",
       "date": "2001",
-      "extra": "bibtex: hoffman_j:2001a \nbibtex{topic:\"planning;planning-algorithms;planning-systems;\"}",
+      "extra": "bibtex: hoffman_j:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "FF: The Fast-Forward PLanning System",
       "creators": [
         {
@@ -27244,7 +27244,7 @@
       "pages": "35-62",
       "publicationTitle": "Artificial Intelligence",
       "date": "2001",
-      "extra": "bibtex: hansen_ea-zilberstein:2001b \nbibtex{topic:\"heuristics;search;dynamic-programming;Markov-decision-processes;\"}",
+      "extra": "bibtex: hansen_ea-zilberstein:2001b \nbibtex{topic:'heuristics;search;dynamic-programming;Markov-decision-processes;'}",
       "title": "LAO*: A Heuristic-Search Algorithm that Finds Solutions with Loops",
       "creators": [
         {
@@ -28152,7 +28152,7 @@
       "publisher": "KAUFMANN",
       "ISBN": "1-55860-221-6",
       "date": "1993",
-      "extra": "bibtex: books/mk/Ginsberg93 \nbibtex{topic:\"AI-intro;AI-text;\"}",
+      "extra": "bibtex: books/mk/Ginsberg93 \nbibtex{topic:'AI-intro;AI-text;'}",
       "title": "Essentials of Artificial Intelligence",
       "creators": [
         {

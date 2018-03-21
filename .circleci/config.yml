@@ -186,3 +186,13 @@ workflows:
       - release:
           requires:
             - test
+  nightly:
+    triggers:
+      - schedule:
+          cron: "0 0 * * *"
+          filters:  
+            branches:
+              only:
+                - master
+    jobs:
+      - s3form
