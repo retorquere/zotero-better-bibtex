@@ -59,4 +59,5 @@ Exporter.serialize = csl => JSON.stringify(csl)
 
 Exporter.flush = items => `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]\n`
 
+Translator.initialize = () => Exporter.initialize()
 Translator.doExport = () => Exporter.doExport()

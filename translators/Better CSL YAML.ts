@@ -152,4 +152,5 @@ Exporter.serialize = csl => {
 
 Exporter.flush = items => `---\nreferences:\n${items.join('\n')}...\n`
 
+Translator.initialize = () => Exporter.initialize()
 Translator.doExport = () => Exporter.doExport()

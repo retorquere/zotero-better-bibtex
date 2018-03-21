@@ -48,6 +48,20 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public serialize: Function // will be added by JSON/YAML exporter
   public date2CSL: Function // will be added by JSON/YAML exporter
 
+  public initialize() {
+    const postscript = Translator.preferences.postscript
+
+    if (typeof postscript === 'string' && postscript.trim() !== '') {
+      try {
+        this.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => void
+        Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+      } catch (err) {
+        Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      }
+    }
+  }
+  public postscript(reference, item) {} // tslint:disable-line:no-empty
+
   public doExport() {
     const items = []
 
@@ -145,6 +159,8 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       delete csl.system_id
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
+
+      this.postscript(csl, item)
 
       csl = this.serialize(csl)
 
