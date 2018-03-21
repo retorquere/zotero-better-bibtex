@@ -17,10 +17,11 @@ start
     }
 
 pattern
-  = blocks:block+ [\|]? { return blocks.map(function(block) { return '  ' + block}).concat(['']).join(";\n") }
+  = blocks:block+ [\|]? { return blocks.filter(block => block).map(block => `  ${block}`).concat(['']).join(";\n") }
 
 block
-  = '[0]'                                 { return `postfix = '0'` }
+  = [ \t\r\n]+                            { return '' }
+  / '[0]'                                 { return `postfix = '0'` }
   / '[=' types:[a-zA-Z/]+ ']'             { return `if (!${JSON.stringify(types.join('').toLowerCase().split('/'))}.includes(this.item.type.toLowerCase())) { break }` }
   / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) { break }` }
   / '[' method:method filters:filter* ']' { return `${[method].concat(filters).join('; ')}; citekey += chunk`; }
