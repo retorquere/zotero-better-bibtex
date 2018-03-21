@@ -21,7 +21,7 @@ pattern
 
 block
   = '[0]'                                 { return `postfix = '0'` }
-  / '[=' type:[a-zA-Z]+ ']'               { return `if (this.item.type !== '${type.join('')}') { break }` }
+  / '[=' types:[a-zA-Z/]+ ']'             { return `if (!${JSON.stringify(types.join('').toLowerCase().split('/'))}.includes(this.item.type.toLowerCase())) { break }` }
   / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) { break }` }
   / '[' method:method filters:filter* ']' { return `${[method].concat(filters).join('; ')}; citekey += chunk`; }
   / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
