@@ -25,7 +25,7 @@ default: `{{ pref[1].default }}`
 Options:
 
       {% for option in pref[1].options %}
-        * {{ options }}
+        * {{ option }}
       {% endfor %}
 
     {% endif %}
