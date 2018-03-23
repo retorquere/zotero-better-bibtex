@@ -2,7 +2,7 @@
 
 ## Are there any plans to support Firefox 57+?
 
-BBT lives where Zotero lives, and Zotero [only has standalone these days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed inside Zotero instead of in the browser.
+BBT lives where Zotero lives, and Zotero [only has standalone these days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed inside Zotero instead of in the browser. Please see the [installation instructions](https://retorque.re/zotero-better-bibtex/installation/) to get started with BBT.
 
 ## BBT is changing the capitalization of my titles -- why?
 
