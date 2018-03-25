@@ -86,6 +86,44 @@ class DocFinder {
       js.map(key => `pref(${JSON.stringify('extensions.zotero.translators.better-bibtex.' + key)}, ${JSON.stringify(this.defaults[key])});`).join('\n') + '\n',
       'utf8'
     )
+
+    const _data = []
+    for (const tab of this.tabs) {
+      _data.push({name: tab, description: '', preferences: {} })
+      for (const pref of Object.values(this.preferences)) {
+        if (pref.tab !== tab) continue
+
+        _data[_data.length - 1].preferences[pref.label] = {
+          default: pref.default,
+          description: pref.description,
+        }
+
+        if (Object.keys(pref.options || {}).length) {
+          _data[_data.length - 1].preferences[pref.label].options = Object.values(pref.options)
+        }
+      }
+    }
+
+    const prefix = 'extensions.zotero.translators.better-bibtex.'
+    _data.push({
+      name: 'Hidden preferences',
+      description: dedent(`
+        The following settings are not exposed in the UI, but can be found under \`Preferences\`/\`Advanced\`/\`Config editor\`.
+
+        All are prefixed with \`${prefix}\` in the table you will find there
+      `),
+      preferences: {},
+    })
+    for (const pref of Object.values(this.preferences)) {
+      if (pref.tab) continue
+
+      _data[_data.length - 1].preferences[pref.preference.replace(prefix, '')] = {
+        default: pref.default,
+        description: pref.description,
+      }
+    }
+
+    fs.writeFileSync(path.join(root, 'docs/_data/configuration.yml'), yaml.safeDump(_data))
   }
 
   private ungfm(str) {
