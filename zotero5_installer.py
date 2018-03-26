@@ -45,38 +45,54 @@ def jurism_latest():
   parser.feed(response)
   return parser.version
 
-def destinationType(name):
-  if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
+class DataDirAction(argparse.Action):
+  def __call__(self, parser, namespace, values, option_string=None):
+    try:
+      setattr(namespace, self.dest, DataDirAction.validate(values))
+    except Exception as err:
+      parser.error(err)
 
-  name = re.sub(r"[^a-z]", '', name.lower())
+  def validate(name):
+    name = re.sub(r"[^a-z]", '', name.lower())
 
-  if len(name) == 0: raise Exception('Missing destination')
+    if len(name) == 0: raise Exception('Missing data dir')
 
-  if 'local'[:len(name)] == name: return 'local'
-  if 'global'[:len(name)] == name: return 'global'
-  raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
+    if 'profile'[:len(name)] == name: return 'profile'
+    if 'home'[:len(name)] == name: return 'home'
+    raise Exception('Unexpected location "' + name + '", expected "profile" or "home"')
 
 class LocationAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
     try:
-      setattr(namespace, self.dest, destinationType(values))
+      setattr(namespace, self.dest, LocationAction.validate(values))
     except Exception as err:
       parser.error(err)
 
-def clientType(name):
-  name = re.sub(r"[^a-z]", '', name.lower())
+  def validate(name):
+    if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
 
-  if len(name) == 0: raise Exception('Missing client name')
-  if 'jurism'[:len(name)] == name: return 'jurism'
-  if 'zotero'[:len(name)] == name: return 'zotero'
-  raise Exception('Unexpected client type "' + name + '", expected "Zotero" or "Juris-M"')
+    name = re.sub(r"[^a-z0-9]", '', name.lower())
+
+    if len(name) == 0: raise Exception('Missing location')
+
+    if 'local'[:len(name)] == name: return 'local'
+    if 'global'[:len(name)] == name: return 'global'
+    raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
 
 class ClientAction(argparse.Action):
   def __call__(self, parser, namespace, values, option_string=None):
     try:
-      setattr(namespace, self.dest, clientType(values))
+      setattr(namespace, self.dest, ClientAction.validate(values))
     except Exception as err:
       parser.error(err)
+
+  def validate(name):
+    name = re.sub(r"[^a-z]", '', name.lower())
+
+    if len(name) == 0: raise Exception('Missing client name')
+    if 'jurism'[:len(name)] == name: return 'jurism'
+    if 'zotero'[:len(name)] == name: return 'zotero'
+    raise Exception('Unexpected client type "' + name + '", expected "Zotero" or "Juris-M"')
 
 installdir_local = os.path.expanduser('~/bin')
 installdir_global = '/opt'
@@ -84,19 +100,19 @@ installdir_global = '/opt'
 parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--client', action=ClientAction, help='select Zotero client to download and install, either Zotero or Juris-M')
 parser.add_argument('-v', '--version', help='install the given version rather than the latest')
-parser.add_argument('-d', '--destination', action=LocationAction, help="location to install, either 'local' (" + installdir_local + ") or 'global' (" + installdir_global + ')')
+parser.add_argument('-l', '--location', action=LocationAction, help="location to install, either 'local' (" + installdir_local + ") or 'global' (" + installdir_global + ')')
 parser.add_argument('-r', '--replace', action='store_true', help='replace Zotero at selected install location if it exists there')
 parser.add_argument('-p', '--picker', action='store_true', help='Start Zotero with the profile picker')
-parser.add_argument('--datadir', action='store_true', help='Store zotero data in the profile. Use this if you expect to use multiple profiles.')
+parser.add_argument('-d', '--datadir', action=DataDirAction, help="location to install, either 'profile' or 'home'")
 parser.add_argument('--cache', help='cache downloaded installer in this directory. Use this if you expect to re-install Zotero often')
 
 args = parser.parse_args()
 
 if args.client is None:
-  args.client = clientType(input('Client to install (zotero or juris-m):'))
+  args.client = ClientAction.validate(input('Client to install (zotero or juris-m):'))
 
-if args.destination is None:
-  args.destination = destinationType(input('Location to install (local or global):'))
+if args.location is None:
+  args.location = LocationAction.validate(input('Location to install (local or global):'))
 
 if args.cache is not None and not os.path.exists(args.cache):
   print(args.cache + ' does not exist')
@@ -110,21 +126,24 @@ if args.version == 'latest' or args.version is None:
   else:
     args.version = version
 
-if args.destination is None:
+if args.location is None:
   installdir = input('Installation directory: ')
   if installdir == '': raise Exception("Installation directory is mandatory")
   menudir = None
-elif args.destination == 'local':
+elif args.location == 'local':
   installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
-elif args.destination == 'global':
+elif args.location == 'global':
   installdir = os.path.join(installdir_global, args.client)
   menudir = '/usr/share/applications'
 else:
-  installdir = os.path.join(args.destination, args.client)
+  installdir = os.path.join(args.location, args.client)
   menudir = None
-  
-if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '"exists')
+
+if args.datadir is None:
+  args.datadir = DataDirAction.validate(input("Data directory ('home' or 'profile'): "))
+
+if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
 
 if args.client == 'zotero':
   if args.version == 'beta':
@@ -170,7 +189,7 @@ if not menudir is None:
       desktop.write("Name=Juris-M\n")
 
     client = args.client
-    if args.datadir:
+    if args.datadir == 'profile':
       client = client + ' -datadir profile'
     if args.picker:
       client = client + ' -P'
