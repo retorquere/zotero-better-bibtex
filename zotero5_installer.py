@@ -111,10 +111,10 @@ parser.add_argument('--cache', help='cache downloaded installer in this director
 args = parser.parse_args()
 
 if args.client is None:
-  args.client = ClientAction.validate(input('Client to install (zotero or juris-m):'))
+  args.client = ClientAction.validate(input('Client to install (zotero or juris-m): '))
 
 if args.location is None:
-  args.location = LocationAction.validate(input('Location to install (local or global):'))
+  args.location = LocationAction.validate(input('Location to install (local or global): '))
 
 if args.cache is not None and not os.path.exists(args.cache):
   print(args.cache + ' does not exist')
@@ -123,7 +123,7 @@ if args.cache is not None and not os.path.exists(args.cache):
 if args.version == 'latest' or args.version is None:
   version = zotero_latest() if args.client == 'zotero' else jurism_latest()
   if args.version is None:
-    args.version = input(args.client + ' version (' + version + '):')
+    args.version = input(args.client + ' version (' + version + '): ')
     if args.version == '': args.version = version
   else:
     args.version = version
@@ -143,7 +143,7 @@ else:
   menudir = None
 
 if args.datadir is None:
-  args.datadir = DataDirAction.validate(input("Data directory ('home' or 'profile'): "))
+  args.datadir = DataDirAction.validate(input('Data directory (profile or home): '))
 
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
 
