@@ -45,54 +45,56 @@ def jurism_latest():
   parser.feed(response)
   return parser.version
 
+def validate(name, value, options, allowpath = False):
+  if allowpath and value[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(value))
+
+  value = re.sub(r"[^a-z0-9]", '', value.lower())
+
+  for option in options:
+    if option[:len(value)] == value: return option
+
+  options = ['"' + option + '"' for option in options]
+  if allowpath: options.push('a path of your choosing')
+  raise Exception('Unexpected ' + name + ' "' + value + '", expected ' + ' / '.join(options))
+
 class DataDirAction(argparse.Action):
+  options = ['profile', 'home']
+
   def __call__(self, parser, namespace, values, option_string=None):
     try:
-      setattr(namespace, self.dest, DataDirAction.validate(values))
+      setattr(namespace, self.dest, self.__class__.validate(values))
     except Exception as err:
       parser.error(err)
 
-  def validate(name):
-    name = re.sub(r"[^a-z]", '', name.lower())
-
-    if len(name) == 0: raise Exception('Missing data dir')
-
-    if 'profile'[:len(name)] == name: return 'profile'
-    if 'home'[:len(name)] == name: return 'home'
-    raise Exception('Unexpected location "' + name + '", expected "profile" or "home"')
+  @classmethod
+  def validate(cls, value):
+    return validate('data directory', value, cls.options)
 
 class LocationAction(argparse.Action):
+  options = ['local', 'global']
+
   def __call__(self, parser, namespace, values, option_string=None):
     try:
-      setattr(namespace, self.dest, LocationAction.validate(values))
+      setattr(namespace, self.dest, self.__class__.validate(values))
     except Exception as err:
       parser.error(err)
 
-  def validate(name):
-    if name[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(name))
-
-    name = re.sub(r"[^a-z0-9]", '', name.lower())
-
-    if len(name) == 0: raise Exception('Missing location')
-
-    if 'local'[:len(name)] == name: return 'local'
-    if 'global'[:len(name)] == name: return 'global'
-    raise Exception('Unexpected location "' + name + '", expected "local" or "global"')
+  @classmethod
+  def validate(cls, value):
+    return validate('install location', value, cls.options, True)
 
 class ClientAction(argparse.Action):
+  options = ['zotero', 'jurism']
+
   def __call__(self, parser, namespace, values, option_string=None):
     try:
-      setattr(namespace, self.dest, ClientAction.validate(values))
+      setattr(namespace, self.dest, self.__class__.validate(values))
     except Exception as err:
       parser.error(err)
 
-  def validate(name):
-    name = re.sub(r"[^a-z]", '', name.lower())
-
-    if len(name) == 0: raise Exception('Missing client name')
-    if 'jurism'[:len(name)] == name: return 'jurism'
-    if 'zotero'[:len(name)] == name: return 'zotero'
-    raise Exception('Unexpected client type "' + name + '", expected "Zotero" or "Juris-M"')
+  @classmethod
+  def validate(cls, value):
+    return validate('client', value, cls.options)
 
 installdir_local = os.path.expanduser('~/bin')
 installdir_global = '/opt'
