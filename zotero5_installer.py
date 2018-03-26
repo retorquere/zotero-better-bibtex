@@ -105,7 +105,7 @@ parser.add_argument('-v', '--version', help='install the given version rather th
 parser.add_argument('-l', '--location', action=LocationAction, help="location to install, either 'local' (" + installdir_local + ") or 'global' (" + installdir_global + ')')
 parser.add_argument('-r', '--replace', action='store_true', help='replace Zotero at selected install location if it exists there')
 parser.add_argument('-p', '--picker', action='store_true', help='Start Zotero with the profile picker')
-parser.add_argument('-d', '--datadir', action=DataDirAction, help="location to install, either 'profile' or 'home'")
+parser.add_argument('-d', '--datadir', action=DataDirAction, help="Zotero data location, either 'profile' or 'home'")
 parser.add_argument('--cache', help='cache downloaded installer in this directory. Use this if you expect to re-install Zotero often')
 
 args = parser.parse_args()
