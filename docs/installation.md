@@ -13,3 +13,5 @@ After the initial installation, the plugin will auto-update to newer releases, s
 Note that the default setting of BBT will generate different citekeys than Zotero would itself generate; the keys from Zotero are not always safe for use in bibtex/biber. If you want to get the stock zotero keys, set the pattern in the preferences to `[zotero]`.
 
 Note that BBT needs to be installed in Zotero, *not* Firefox. There used to be two versions of Zotero, one standalone, and one that was installed in Firefox. BBT is a *Zotero* extension and lives where Zotero lives; Zotero is [no longer available](https://www.zotero.org/blog/zotero-5-and-firefox-faq/) as a Firefox plugin, only as standalone.
+
+On first install you will be asked a few questions. **Please** read these instead of just clicking through.
