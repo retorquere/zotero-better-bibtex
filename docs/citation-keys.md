@@ -60,7 +60,7 @@ A common pattern is `[auth:lower][year]`, which means
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
 that yields a non-empty string. If all return a empty string, a random key will be generated.
 
-### Advanced usage
+### Generating citekeys
 
 The full list of functions (extract data from your reference into your citekey) and filters (change the extracted data) is:
 
