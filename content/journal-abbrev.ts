@@ -92,7 +92,8 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
 
     if (!journal) return null
 
-    if (!this.abbrevs.default['container-title'][journal]) {
+    // juris-m doesn't offer the abbreviator anymore. https://github.com/Juris-M/zotero/issues/47
+    if (!this.abbrevs.default['container-title'][journal] && typeof Zotero.Cite.getAbbreviation === 'function') {
       Zotero.Cite.getAbbreviation(this.style, this.abbrevs, 'default', 'container-title', journal)
     }
     const abbr = this.abbrevs.default['container-title'][journal]
