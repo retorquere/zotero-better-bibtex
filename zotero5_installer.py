@@ -168,7 +168,7 @@ else:
 if os.path.exists(tarball):
   print('Retaining ' + tarball)
 else:
-  print("Downloading " + args.client + " standalone " + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
+  print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
   urlretrieve (args.url, tarball)
 
 extracted = tempfile.mkdtemp()
