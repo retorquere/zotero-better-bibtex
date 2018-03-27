@@ -58,19 +58,7 @@ A common pattern is `[auth:lower][year]`, which means
 **note that changing the pattern used to cause all your non-fixed keys to be regenerated in Zotero 4.** In Zotero 5, this is no longer the case; changing a pattern will only affect references being created/changed after you changed the pattern. If you want your keys to update after a pattern change you will have to select your references, right-click, and select `Refresh`. This will not affect keys you have pinned.
 
 If you want to get fancy, you can set multiple patterns separated by a vertical bar, of which the first will be applied
-that yields a non-empty string. If all return a empty string, a random key will be generated. Note that in addition to
-the 'special' fields JabRef also allows all 'native' fields as key values; the plugin does the same but allows
-for *Zotero* native fields (case sensitive!) not Bib(La)TeX native fields. The possible fields are:
-
-<table>
-  {% for row in site.data.pattern.fields %}
-    <tr>
-      {% for field in row %}
-        <td>{{ field }}</td>
-      {% endfor %}
-    </tr>
-  {% endfor %}
-</table>
+that yields a non-empty string. If all return a empty string, a random key will be generated.
 
 ### Advanced usage
 
@@ -86,7 +74,17 @@ The full list of functions (extract data from your reference into your citekey) 
 - `>X`: a pseudo-function which aborts the current pattern generation if what came before it is X characters or less (`[>0]` is a typical use. You'd typically use this with something like `[auth][>0][year]|[title][year]` which means if there's no author you get `title-year` rather than just `year`.
 - `=typeName`: a pseudo-function that aborts the current pattern generation if the Zotero reference type != `typeName`.
 
-`auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below.
+**Note**: the functions above all have the `clean` filter (see below) automatically applied to them. If you want more control, `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below. For all the non-author fields, you can use the reference fields directly. The possible fields are:
+
+<table>
+  {% for row in site.data.pattern.fields %}
+    <tr>
+      {% for field in row %}
+        <td>{{ field }}</td>
+      {% endfor %}
+    </tr>
+  {% endfor %}
+</table>
 
 #### Flags
 

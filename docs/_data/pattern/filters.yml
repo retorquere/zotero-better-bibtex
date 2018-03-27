@@ -6,7 +6,7 @@
   classes `L` and `N`)
 '`ascii`': removes all non-ascii characters
 '`capitalize`': uppercases the first letter of each word
-'`clean`': removes unsafe characters from the citation key
+'`clean`': transliterates the citation keys and removes unsafe characters
 '`condense`': >-
   this replaces spaces in the value passed in. You can specify what to replace
   it with by adding it as a

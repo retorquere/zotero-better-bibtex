@@ -502,7 +502,7 @@ class PatternFormatter {
     return value
   }
 
-  /** removes unsafe characters from the citation key */
+  /** transliterates the citation keys and removes unsafe characters */
   public _clean(value) {
     if (!value) return ''
     return this.clean(value)
