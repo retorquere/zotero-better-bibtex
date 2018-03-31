@@ -189,6 +189,28 @@ Translator.initialize = () => {
   Translator.unicode = !Translator.preferences.asciiBibLaTeX
 }
 
+function looks_like_number(n) {
+  if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
+  if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
+  if (n.match(/^[A-Z]$/i)) return 'arabic'
+  return false
+}
+function looks_like_number_field(n) {
+  if (!n) return false
+
+  n = n.split(/-+|–|,|\//).map(_n => _n.trim())
+  switch (n.length) {
+    case 1:
+      return looks_like_number(n[0])
+
+    case 2:
+      return looks_like_number(n[0]) && (looks_like_number(n[0]) === looks_like_number(n[1]))
+
+    default:
+      return false
+  }
+}
+
 Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
@@ -250,8 +272,8 @@ Translator.doExport = () => {
     ref.add({ name: 'eventtitle', value: item.conferenceName })
     ref.add({ name: 'pagetotal', value: item.numPages })
 
-    ref.add({ name: 'number', value: item.seriesNumber || item.number })
-    ref.add({ name: (isNaN(parseInt(item.issue)) || (`${parseInt(item.issue)}` !== `${item.issue}`)  ? 'issue' : 'number'), value: item.issue })
+    ref.add({ name: 'number', value: item.number })
+    ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     switch (item.referenceType) {
       case 'case': case 'gazette': case 'legal_case':
