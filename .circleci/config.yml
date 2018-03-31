@@ -186,7 +186,7 @@ workflows:
       - release:
           requires:
             - test
-  nightly:
+  s3form:
     triggers:
       - schedule:
           cron: "0 0 * * *"
