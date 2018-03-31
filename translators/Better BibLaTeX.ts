@@ -272,7 +272,7 @@ Translator.doExport = () => {
     ref.add({ name: 'eventtitle', value: item.conferenceName })
     ref.add({ name: 'pagetotal', value: item.numPages })
 
-    ref.add({ name: 'number', value: item.number })
+    ref.add({ name: 'number', value: item.number || item.seriesNumber })
     ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     switch (item.referenceType) {
