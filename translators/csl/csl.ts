@@ -145,7 +145,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       /* ham-fisted workaround for #365 */
-      if (csl.type === 'motion_picture' || csl.type === 'broadcast') [csl.author, csl.director] = [csl.director, csl.author]
+      if ((csl.type === 'motion_picture' || csl.type === 'broadcast') && csl.author && !csl.director) [csl.author, csl.director] = [csl.director, csl.author]
 
       csl.id = item.citekey
 
