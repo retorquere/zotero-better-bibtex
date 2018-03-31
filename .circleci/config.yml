@@ -51,7 +51,7 @@ jobs:
     - run: *ruby
     - run: mkdir -p bin downloads
     - run: ./zotero5_installer.py --client zotero --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads
-    - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads
+    - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir home    --replace --cache downloads
     - save_cache:
         key: v1-dep-{{ .Branch }}-{{ epoch }}
         paths:
