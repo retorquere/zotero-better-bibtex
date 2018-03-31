@@ -30,20 +30,23 @@ def zotero_latest():
     return versions['standaloneVersions']['linux-' + platform.machine()]
 
 def jurism_latest():
-  class Parser(HTMLParser):
-    def handle_starttag(self, tag, attrs):
-      if tag != 'a': return
-      href = [attr[1] for attr in attrs if attr[0] == 'href']
-      if len(href) == 0: return
-      href = href[0]
-      m = re.match(r'https://our.law.nagoya-u.ac.jp/download/client/Jurism-(.+)_linux-' + platform.machine() + '.tar.bz2', href)
-      if m is None: return
-      self.version = m.group(1)
-  response = urlopen('https://juris-m.github.io/downloads/').read()
-  if type(response) is bytes: response = response.decode("utf-8")
-  parser = Parser()
-  parser.feed(response)
-  return parser.version
+  response = urlopen('https://github.com/Juris-M/assets/releases/latest')
+  return re.sub(r'.*/', '', response.geturl())
+
+#  class Parser(HTMLParser):
+#    def handle_starttag(self, tag, attrs):
+#      if tag != 'a': return
+#      href = [attr[1] for attr in attrs if attr[0] == 'href']
+#      if len(href) == 0: return
+#      href = href[0]
+#      m = re.match(r'https://our.law.nagoya-u.ac.jp/download/client/Jurism-(.+)_linux-' + platform.machine() + '.tar.bz2', href)
+#      if m is None: return
+#      self.version = m.group(1)
+#  response = urlopen('https://juris-m.github.io/downloads/').read()
+#  if type(response) is bytes: response = response.decode("utf-8")
+#  parser = Parser()
+#  parser.feed(response)
+#  return parser.version
 
 def validate(name, value, options, allowpath = False):
   if allowpath and value[0] in ['/', '.', '~']: return os.path.abspath(os.path.expanduser(value))
@@ -144,8 +147,7 @@ else:
 
 if args.datadir is None:
   args.datadir = DataDirAction.validate(input('Data directory (profile or home): '))
-
-if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
+if args.datadir == 'profile' and args.client == 'jurism': raise Exception('datadir profile not supported by Juris-M')
 
 if args.client == 'zotero':
   if args.version == 'beta':
@@ -153,7 +155,8 @@ if args.client == 'zotero':
   else:
     args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
-  args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
+  # args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
+  args.url = 'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F' + args.version + '/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
 
 tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
 
@@ -164,6 +167,8 @@ else:
   for junk in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
     if os.path.basename(junk) != tarball: os.remove(junk)
   tarball = os.path.join(args.cache, tarball)
+
+if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
 
 if os.path.exists(tarball):
   print('Retaining ' + tarball)
