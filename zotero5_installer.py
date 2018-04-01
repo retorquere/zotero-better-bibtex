@@ -13,10 +13,12 @@ if sys.version_info[0] >= 3:
   from urllib.request import urlopen
   from html.parser import HTMLParser
   from urllib.request import urlretrieve
+  from http.client import HTTPSConnection
 else:
   from urllib2 import urlopen
   from HTMLParser import HTMLParser
   from urllib import urlretrieve
+  from httplib import HTTPSConnection
   input = raw_input
 
 def zotero_latest():
@@ -30,8 +32,12 @@ def zotero_latest():
     return versions['standaloneVersions']['linux-' + platform.machine()]
 
 def jurism_latest():
-  response = urlopen('https://github.com/Juris-M/assets/releases/latest')
-  return re.sub(r'.*/', '', response.geturl())
+  release = HTTPSConnection('our.law.nagoya-u.ac.jp')
+  release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
+  release = release.getresponse()
+  release = release.getheader('Location')
+  print(release)
+  return release.split('/')[-2]
 
 #  class Parser(HTMLParser):
 #    def handle_starttag(self, tag, attrs):
@@ -156,7 +162,8 @@ if args.client == 'zotero':
     args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
   # args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
-  args.url = 'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F' + args.version + '/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
+  # args.url = 'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F' + args.version + '/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
+  args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
 
 tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
 
