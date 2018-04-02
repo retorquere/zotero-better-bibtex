@@ -686,31 +686,18 @@ class ZoteroItem {
 
   protected $number(value) {
     value = this.unparse(value)
-    let field
-    switch (this.type) {
-      case 'report':
-        field = 'reportNumber'
-        break
 
-      case 'book':
-      case 'bookSection':
-      case 'chapter':
-        field = 'seriesNumber'
-        break
+    for (const field of ['seriesNumber', 'number', 'issue']) {
+      if (this.validFields[field]) continue
 
-      case 'patent':
-        field = 'patentNumber'
-        break
+      this.set(field, value)
 
-      default:
-        field = 'issue'
+      return true
     }
 
-    if (!this.validFields[field]) return false
-    this.set(field, value)
-
-    return true
+    return false
   }
+  protected $issue(value) { return this.$number(value) }
 
   protected $issn(value) {
     if (!this.validFields.ISSN) return false
