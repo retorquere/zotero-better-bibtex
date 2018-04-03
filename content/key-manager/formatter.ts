@@ -387,6 +387,12 @@ class PatternFormatter {
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref` */
   public $title() { return this.titleWords(this.item.title).join('') }
 
+  /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
+  public _replace(value, find, replace) {
+    if (!find || !replace) return (value || '')
+    return (value || '').replace(new RegExp(find.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&'), 'ig'), replace)
+  }
+
   /**
    * this replaces spaces in the value passed in. You can specify what to replace it with by adding it as a
    * parameter, e.g `condense=_` will replace spaces with underscores. **Parameters should not contain spaces** unless
@@ -463,7 +469,12 @@ class PatternFormatter {
 
   /** (`substring,start,n`) selects `n` characters starting at `start` */
   public _substring(value, start, n) {
-    return (value || '').slice(start - 1, (start - 1) + n)
+    start = parseInt(start)
+    if (isNaN(start)) start = 1
+    n = parseInt(n)
+    if (isNaN(n)) n = value.length
+
+    return (value || '').slice(parseInt(start) - 1, (start - 1) + n)
   }
 
   /** removes all non-ascii characters */
