@@ -687,8 +687,9 @@ class ZoteroItem {
   protected $number(value) {
     value = this.unparse(value)
 
+    debug('$number', this.type, this.validFields)
     for (const field of ['seriesNumber', 'number', 'issue']) {
-      if (this.validFields[field]) continue
+      if (!this.validFields[field]) continue
 
       this.set(field, value)
 
