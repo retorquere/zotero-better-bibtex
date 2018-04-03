@@ -69,6 +69,7 @@ const scheduled = new Queue(
           overleaf = null
         }
 
+        // Zotero.Utilities.Internal.exec('/bin/bash', '-c cd ...')
         if (overleaf) debug(`cd ${overleaf} && git pull`)
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
         if (overleaf) debug(`cd ${overleaf} && git add ${ae.path.split(dirsep).slice(-1).join('')} && git push`)
