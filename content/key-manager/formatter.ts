@@ -185,7 +185,7 @@ class PatternFormatter {
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
-  public $auth(onlyEditors, withInitials, n, m) {
+  public $auth(onlyEditors, withInitials, joiner, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
     debug('$auth:', { onlyEditors, withInitials, n, m, authors })
     if (!authors || !authors.length) return ''
@@ -209,7 +209,7 @@ class PatternFormatter {
   }
 
   /** The last name of the last author */
-  public $authorLast(onlyEditors, withInitials) {
+  public $authorLast(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors[authors.length - 1]
@@ -221,7 +221,7 @@ class PatternFormatter {
   public $journal() { return JournalAbbrev.get(this.item.item, true) || this.item.item.getField('publicationTitle', false, true) }
 
   /** The last name of up to N authors. If there are more authors, "EtAl" is appended. */
-  public $authors(onlyEditors, withInitials, n) {
+  public $authors(onlyEditors, withInitials, joiner, n) {
     let authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -237,7 +237,7 @@ class PatternFormatter {
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
    * More than four authors: First letters of last names of first three authors concatenated. "+" at the end.
    */
-  public $authorsAlpha(onlyEditors, withInitials) {
+  public $authorsAlpha(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
@@ -257,14 +257,14 @@ class PatternFormatter {
   }
 
   /** The beginning of each author's last name, using no more than `N` characters. */
-  public $authIni(onlyEditors, withInitials, n) {
+  public $authIni(onlyEditors, withInitials, joiner, n) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     return authors.map(author => author.substring(0, n)).join('.')
   }
 
   /** The first 5 characters of the first author's last name, and the last name initials of the remaining authors. */
-  public $authorIni(onlyEditors, withInitials) {
+  public $authorIni(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
     const firstAuthor = authors.shift()
@@ -274,36 +274,37 @@ class PatternFormatter {
   }
 
   /** The last name of the first two authors, and ".ea" if there are more than two. */
-  public $auth_auth_ea(onlyEditors, withInitials) {
+  public $auth_auth_ea(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
     // tslint:disable-next-line:no-magic-numbers
-    return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join('.')
+    return authors.slice(0, 2).concat(authors.length > 2 ? ['ea'] : []).join(joiner || '.')
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or "EtAl" if there are more than two. This is similar to `auth.etal`. The difference is that the authors are not separated by "." and in case of more than 2 authors "EtAl" instead of ".etal" is appended. */
-  public $authEtAl(onlyEditors, withInitials) {
+  public $authEtAl(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
     // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join('')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join('')
+    if (authors.length === 2) return authors.join(joiner || '')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['EtAl'] : []).join(joiner || '')
   }
 
   /** The last name of the first author, and the last name of the second author if there are two authors or ".etal" if there are more than two. */
-  public $auth_etal(onlyEditors, withInitials) {
+  public $auth_etal(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
+    debug('auth_etal', {onlyEditors, withInitials, joiner, authors: authors.join(joiner || '.') })
     // tslint:disable-next-line:no-magic-numbers
-    if (authors.length === 2) return authors.join('.')
-    return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join('.')
+    if (authors.length === 2) return authors.join(joiner || '.')
+    return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.')
   }
 
   /** The last name if one author is given; the first character of up to three authors' last names if more than one author is given. A plus character is added, if there are more than three authors. */
-  public $authshort(onlyEditors, withInitials) {
+  public $authshort(onlyEditors, withInitials, joiner) {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
