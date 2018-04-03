@@ -29,6 +29,14 @@ function queueHandler(kind, handler) {
   }
 }
 
+const platform = {}
+if (Zotero.platform.toLowerCase().startsWith('win')) {
+  platform.dirsep = '\\'
+  platform.shell = 'cmd'
+  platform.cd = 'cd /d'
+  platform.quote
+}
+
 const dirsep = Zotero.platform.toLowerCase().startsWith('win') ? '\\' : '/'
 
 const scheduled = new Queue(
