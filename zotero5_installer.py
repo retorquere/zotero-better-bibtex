@@ -36,7 +36,6 @@ def jurism_latest():
   release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
   release = release.getresponse()
   release = release.getheader('Location')
-  print(release)
   return release.split('/')[-2]
 
 #  class Parser(HTMLParser):
