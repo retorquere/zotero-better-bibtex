@@ -37,6 +37,9 @@
   (such as `:` or `\`), you'll need to
 
   add a backslash (`\`) in front of it.
+'`replace`': >-
+  replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl`
+  with `&etal`
 '`select`': >-
   selects words from the value passed in. The format is `select=start,number`
   (1-based), so `select=1,4`

@@ -34,15 +34,23 @@ method
       var editorsOnly = (creators === 'edtr' || creators === 'editors');
       if (editorsOnly) creators = (creators == 'edtr') ? 'auth' : 'authors';
 
-      if (flag && flag != 'initials') throw new Error("Unsupported flag " + flag + " in pattern")
-      var withInitials = (flag == 'initials');
+      flag = flag || '';
+      var withInitials = false;
+      var joiner = '';
+      if (flag == 'initials') {
+        withInitials = true;
+      } else if (flag.length <= 1) {
+        joiner = flag;
+      } else {
+        throw new Error("Unsupported flag " + flag + " in pattern")
+      }
 
       var method = creators + name.join('');
       var $method = '$' + method.replace(/\./g, '_');
 
       if (!options[$method]) throw new Error(`Invalid method '${method}' in citekey pattern`)
 
-      var args = [ '' + !!editorsOnly, '' + !!withInitials];
+      var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
       if (params) args = args.concat(params); // mparams already are stringified integers
 
       var chunk = `chunk = this.${$method}(${args.join(', ')})`
