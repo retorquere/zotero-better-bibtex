@@ -5,6 +5,7 @@ import { debug } from './debug.ts'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
+import * as ini from 'ini'
 import { Events } from './events.ts'
 import { DB } from './db/main.ts'
 import { Translators } from './translators.ts'
@@ -27,6 +28,8 @@ function queueHandler(kind, handler) {
     }
   }
 }
+
+const dirsep = Zotero.platform.toLowerCase().startsWith('win') ? '\\' : '/'
 
 const scheduled = new Queue(
   queueHandler('scheduled',
@@ -53,7 +56,23 @@ const scheduled = new Queue(
         }
 
         debug('AutoExport.scheduled: starting export', ae)
+
+        let overleaf = ae.path.split(dirsep).slice(0, -1).join(dirsep)
+        try {
+          const git_config_path = Zotero.File.pathToFile([overleaf, '.git', 'config'].join(dirsep))
+          if (git_config_path.exists()) {
+            const config = ini.parse(Zotero.File.getContents(git_config_path))
+            if (!config['remote "origin"'] || !config['remote "origin"'].url || !config['remote "origin"'].url.startsWith('https://git.overleaf.com/')) overleaf = null
+          }
+        } catch (err) {
+          debug('overleaf detection:', err)
+          overleaf = null
+        }
+
+        if (overleaf) debug(`cd ${overleaf} && git pull`)
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
+        if (overleaf) debug(`cd ${overleaf} && git add ${ae.path.split(dirsep).slice(-1).join('')} && git push`)
+
         debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
       } catch (err) {
