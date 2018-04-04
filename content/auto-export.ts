@@ -208,6 +208,8 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     debug('AutoExport.add', ae)
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
+
+    if (Prefs.get('overleaf')) this.schedule(ae.type, [ae.id]) // causes initial push at the cost of a unnecesary extra export
   }
 
   public changed(items) {
