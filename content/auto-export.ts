@@ -32,17 +32,6 @@ function queueHandler(kind, handler) {
   }
 }
 
-let git = null
-// https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
-async function exec(cmd, args, workdir) {
-  const proc = await Subprocess.call({
-    command: cmd,
-    arguments: args,
-    workdir,
-  })
-  debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
-}
-
 const scheduled = new Queue(
   queueHandler('scheduled',
     async task => {
@@ -69,31 +58,9 @@ const scheduled = new Queue(
 
         debug('AutoExport.scheduled: starting export', ae)
 
-        let repo = null
-        if (git && Prefs.get('overleaf')) {
-          repo = Zotero.File.pathToFile(ae.path).parent.path
-          try {
-            const config_file = Zotero.File.pathToFile(repo)
-            config_file.append('.git')
-            config_file.append('config')
-            if (config_file.exists()) {
-              const config = ini.parse(Zotero.File.getContents(config_file))
-              if (!config['remote "origin"'] || !config['remote "origin"'].url || !config['remote "origin"'].url.startsWith('https://git.overleaf.com/')) repo = null
-            }
-          } catch (err) {
-            debug('overleaf detection:', err)
-            repo = null
-          }
-        }
-
-        if (repo) await exec(git, ['pull'], repo)
+        AutoExport.pull(ae.path) // tslint:disable-line:no-use-before-declare
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
-        if (repo) {
-          const bib = Zotero.File.pathToFile(ae.path).leafName
-          await exec(git, ['add', bib], repo)
-          await exec(git, ['commit', '-m', bib], repo)
-          await exec(git, ['push'], repo)
-        }
+        AutoExport.push(ae.path) // tslint:disable-line:no-use-before-declare
 
         debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
@@ -196,7 +163,7 @@ Events.on('preference-changed', pref => {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
-  public git: string
+  private git: string
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -214,12 +181,27 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     if (Prefs.get('autoExport') === 'immediate') { scheduler.resume() }
 
     try {
-      git = await Subprocess.pathSearch(`git${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
+      this.git = await Subprocess.pathSearch(`git${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
     } catch (err) {
       debug('AutoExport.init: git not found:', err)
-      git = null
+      this.git = null
     }
-    if (git) debug('AutoExport: git found at', git)
+    if (this.git) debug('AutoExport: git found at', this.git)
+  }
+
+  public async pull(repo) {
+    repo = this.overleafRepo(repo)
+    if (repo) await this.exec(this.git, ['pull'], repo)
+  }
+
+  public async push(path) {
+    const repo = this.overleafRepo(path)
+    if (repo) {
+      const name = Zotero.File.pathToFile(path).leafName
+      await this.exec(this.git, ['add', name], repo)
+      await this.exec(this.git, ['commit', '-m', name], repo)
+      await this.exec(this.git, ['push'], repo)
+    }
   }
 
   public add(ae) {
@@ -275,5 +257,35 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     ae.status = 'scheduled'
     this.db.update(ae)
     scheduled.push({ id: ae.$loki })
+  }
+
+  private overleafRepo(path) {
+    if (!Prefs.get('overleaf')) return null
+
+    let repo = Zotero.File.pathToFile(path)
+    if (!repo.exists()) return null
+
+    if (!repo.isDirectory()) repo = repo.parent
+    if (!repo.exists()) return false
+
+    const config_file = repo.clone()
+    config_file.append('.git')
+    config_file.append('config')
+    if (!config_file.exists()) return null
+
+    const config = ini.parse(Zotero.File.getContents(config_file))
+    if (config['remote "origin"'] && config['remote "origin"'].url && config['remote "origin"'].url.startsWith('https://git.overleaf.com/')) return repo.path
+
+    return null
+  }
+
+  // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
+  private async exec(cmd, args, workdir) {
+    const proc = await Subprocess.call({
+      command: cmd,
+      arguments: args,
+      workdir,
+    })
+    debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
   }
 }
