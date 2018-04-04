@@ -1,10 +1,14 @@
 declare const Zotero: any
 declare const Components: any
+declare const Subprocess: any
+
+Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
 import { debug } from './debug.ts'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
+import * as ini from 'ini'
 import { Events } from './events.ts'
 import { DB } from './db/main.ts'
 import { Translators } from './translators.ts'
@@ -26,6 +30,17 @@ function queueHandler(kind, handler) {
       cancel() { task.cancelled = true },
     }
   }
+}
+
+let git = null
+// https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
+async function exec(cmd, args, workdir) {
+  const proc = await Subprocess.call({
+    command: cmd,
+    arguments: args,
+    workdir,
+  })
+  debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
 }
 
 const scheduled = new Queue(
@@ -53,7 +68,33 @@ const scheduled = new Queue(
         }
 
         debug('AutoExport.scheduled: starting export', ae)
+
+        let repo = null
+        if (git && Prefs.get('overleaf')) {
+          repo = Zotero.File.pathToFile(ae.path).parent.path
+          try {
+            const config_file = Zotero.File.pathToFile(repo)
+            config_file.append('.git')
+            config_file.append('config')
+            if (config_file.exists()) {
+              const config = ini.parse(Zotero.File.getContents(config_file))
+              if (!config['remote "origin"'] || !config['remote "origin"'].url || !config['remote "origin"'].url.startsWith('https://git.overleaf.com/')) repo = null
+            }
+          } catch (err) {
+            debug('overleaf detection:', err)
+            repo = null
+          }
+        }
+
+        if (repo) await exec(git, ['pull'], repo)
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
+        if (repo) {
+          const bib = Zotero.File.pathToFile(ae.path).leafName
+          await exec(git, ['add', bib], repo)
+          await exec(git, ['commit', '-m', bib], repo)
+          await exec(git, ['push'], repo)
+        }
+
         debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
       } catch (err) {
@@ -155,6 +196,7 @@ Events.on('preference-changed', pref => {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
+  public git: string
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -163,13 +205,21 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     Events.on('collections-removed', ids => this.remove('collection', ids))
   }
 
-  public init() {
+  public async init() {
     this.db = DB.getCollection('autoexport')
     for (const ae of this.db.find({ status: { $ne: 'done' } })) {
       scheduler.push({ id: ae.$loki })
     }
 
     if (Prefs.get('autoExport') === 'immediate') { scheduler.resume() }
+
+    try {
+      git = await Subprocess.pathSearch(`git${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
+    } catch (err) {
+      debug('AutoExport.init: git not found:', err)
+      git = null
+    }
+    if (git) debug('AutoExport: git found at', git)
   }
 
   public add(ae) {

@@ -604,6 +604,8 @@ export = new class BetterBibTeX {
 
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
+    await TeXstudio.init()
+
     for (const node of [...document.getElementsByClassName('bbt-texstudio')]) {
       node.hidden = !TeXstudio.enabled
     }
@@ -635,7 +637,7 @@ export = new class BetterBibTeX {
     await DB.init()
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
-    AutoExport.init()
+    await AutoExport.init()
 
     progress.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB

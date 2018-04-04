@@ -1,56 +1,30 @@
 declare const Components: any
+declare const Subprocess: any
 declare const Zotero: any
+
+Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
 import { KeyManager } from './key-manager.ts'
 import { debug } from './debug.ts'
 
-let pathsep, dirsep, ext
-
-if (Zotero.platform.toLowerCase().startsWith('win')) {
-  pathsep = ';'
-  dirsep = '\\'
-  ext = '.exe'
-} else {
-  pathsep = ':'
-  dirsep = '/'
-  ext = ''
-}
-
-const env = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
-const path = env.get('PATH')
-
-debug('Trying to find TeXstudio:', {
-  platform: Zotero.platform.toLowerCase(),
-  pathsep,
-  dirsep,
-  path,
-})
-
-let texstudio = null
-for (const dir of path.split(pathsep)) {
-  if (!dir) continue
-
-  debug('Trying to find TeXstudio:', `${dir}${dirsep}texstudio${ext}`)
-  try {
-    texstudio = Zotero.File.pathToFile(`${dir}${dirsep}texstudio${ext}`)
-    if (texstudio.exists()) break
-  } catch (err) {
-    debug('Trying to find TeXstudio:', err)
-  }
-  texstudio = null
-}
-if (texstudio) {
-  debug('TeXstudio: found at', texstudio.path)
-} else {
-  debug('TeXstudio: not found')
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let TeXstudio = { // tslint:disable-line:variable-name
-  enabled: !!texstudio,
+export let TeXstudio = new class { // tslint:disable-line:variable-name
+  public enabled: boolean
+  public texstudio: string
 
-  async push() {
-    if (!texstudio) throw new Error(`texstudio was not found in "${path}"`)
+  public async init() {
+    try {
+      this.texstudio = await Subprocess.pathSearch(`texstudio${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
+    } catch (err) {
+      debug('TeXstudio: not found:', err)
+      this.texstudio = null
+    }
+    this.enabled = !!this.texstudio
+    if (this.enabled) debug('TeXstudio: found at', this.texstudio)
+  }
+
+  public async push() {
+    if (!this.enabled) throw new Error('texstudio was not found')
 
     const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
 
@@ -70,9 +44,9 @@ export let TeXstudio = { // tslint:disable-line:variable-name
     }
 
     try {
-      await Zotero.Utilities.Internal.exec(texstudio.path, ['--insert-cite', citation])
+      await Zotero.Utilities.Internal.exec(this.texstudio, ['--insert-cite', citation])
     } catch (err) {
       debug('TeXstudio: Could not get execute texstudio:', err)
     }
-  },
+  }
 }
