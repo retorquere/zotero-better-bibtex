@@ -391,6 +391,14 @@
           When on, BBT will automatically pin the first citekey it generates for an item.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.overleaf"
+          type="bool"
+          default="false"/>
+        <!--!
+          When on, BBT auto-detect overleaf git repos and will push changes on auto-export. Experimental
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
