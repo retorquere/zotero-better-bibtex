@@ -398,7 +398,7 @@ export class Reference {
       .replace(/\u2053/g, '~')
       .replace(/[\u2012\u2014\u2015]/g, '---') // em-dash
       .replace(/\u2013/g, '--') // en-dash
-      .replace(/([0-9])\s-\s([0-9])/g, '\1--\2') // treat space-hyphen-space like an en-dash when it's between numbers
+      .replace(/([0-9])\s-\s([0-9])/g, '$1--$2') // treat space-hyphen-space like an en-dash when it's between numbers
   }
 
   /*
