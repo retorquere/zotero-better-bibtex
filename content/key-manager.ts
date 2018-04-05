@@ -329,7 +329,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const postfix = this[proposed.postfix === '0' ? 'postfixZotero' : 'postfixAlpha']
     for (let n = -1; true; n += 1) {
       const postfixed = proposed.citekey + postfix(n)
-      if (this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed })) continue
+      if (this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed, itemID: { $ne: item.id } })) continue
 
       debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
       return { citekey: postfixed, pinned: false }
