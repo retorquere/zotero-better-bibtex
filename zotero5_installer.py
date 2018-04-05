@@ -119,28 +119,25 @@ parser.add_argument('--cache', help='cache downloaded installer in this director
 args = parser.parse_args()
 
 if args.client is None:
-  args.client = ClientAction.validate(input('Client to install (zotero or juris-m): '))
-
-if args.location is None:
-  args.location = LocationAction.validate(input('Location to install (local or global): '))
-
-if args.cache is not None and not os.path.exists(args.cache):
-  print(args.cache + ' does not exist')
-  sys.exit(1)
+  args.client = ClientAction.validate(input("Client to install ('zotero'* or 'juris-m'): ") or 'zotero')
 
 if args.version == 'latest' or args.version is None:
   version = zotero_latest() if args.client == 'zotero' else jurism_latest()
   if args.version is None:
-    args.version = input(args.client + ' version (' + version + '): ')
-    if args.version == '': args.version = version
+    args.version = input(args.client + ' version (' + version + '): ') or version
   else:
     args.version = version
 
+if args.datadir is None:
+  if args.client == 'jurism':
+    args.datadir = 'home'
+  else:
+    args.datadir = DataDirAction.validate(input("Data directory ('home'* or 'profile'): ") or 'home')
+if args.datadir == 'profile' and args.client == 'jurism': raise Exception('datadir profile not supported by Juris-M')
+
 if args.location is None:
-  installdir = input('Installation directory: ')
-  if installdir == '': raise Exception("Installation directory is mandatory")
-  menudir = None
-elif args.location == 'local':
+  args.location = LocationAction.validate(input("Location to install ('local'*, 'global', or absolute path): ") or 'local')
+if args.location == 'local':
   installdir = os.path.join(installdir_local, args.client)
   menudir = os.path.expanduser('~/.local/share/applications')
 elif args.location == 'global':
@@ -150,9 +147,9 @@ else:
   installdir = os.path.join(args.location, args.client)
   menudir = None
 
-if args.datadir is None:
-  args.datadir = DataDirAction.validate(input('Data directory (profile or home): '))
-if args.datadir == 'profile' and args.client == 'jurism': raise Exception('datadir profile not supported by Juris-M')
+if args.cache is not None and not os.path.exists(args.cache):
+  print(args.cache + ' does not exist')
+  sys.exit(1)
 
 if args.client == 'zotero':
   if args.version == 'beta':
@@ -160,8 +157,6 @@ if args.client == 'zotero':
   else:
     args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
-  # args.url = 'https://our.law.nagoya-u.ac.jp/download/client/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
-  # args.url = 'https://github.com/Juris-M/assets/releases/download/client%2Frelease%2F' + args.version + '/Jurism-' + args.version + '_linux-' + platform.machine() + '.tar.bz2'
   args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
 
 tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
