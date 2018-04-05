@@ -28,7 +28,9 @@
       "keyConflictPolicy": "keep",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "bibtexURL": "off",
       "warnBulkModify": 10,
       "postscript": "",
@@ -179,13 +181,14 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
       "volume": "1",
       "issue": "1",
-      "pages": "1-2",
+      "pages": "1–2",
       "publicationTitle": "A Fancy Journal",
       "date": "2018",
       "title": "My Article",
@@ -211,13 +214,21 @@
           "lastName": "Four, Author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "dateAdded": "2018-02-02 15:28:00",
       "dateModified": "2018-02-02 15:28:04",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 1374,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }
