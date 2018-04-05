@@ -395,9 +395,9 @@ export class Reference {
     if (this.raw) return str
 
     return str
-      .replace(/\2053/g, '~')
-      .replace(/[\2012\2014\2015]/g, '--')
-      .replace(/\2013/g, '-')
+      .replace(/\u2053/g, '~')
+      .replace(/[\u2012\u2014\u2015]/g, '--')
+      .replace(/\u2013/g, '-')
   }
 
   /*
