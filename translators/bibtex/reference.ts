@@ -1130,8 +1130,8 @@ export class Reference {
     if (report) {
       if (this.has.pages) {
         const dashes = this.has.pages.bibtex.match(/-+/g)
-        if (dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
-        if (dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
+        if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
+        if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
       }
       if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
       if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
