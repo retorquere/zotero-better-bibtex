@@ -396,8 +396,8 @@ export class Reference {
 
     return str
       .replace(/\u2053/g, '~')
-      .replace(/[\u2012\u2014\u2015]/g, '--')
-      .replace(/\u2013/g, '-')
+      .replace(/[\u2012\u2014\u2015]/g, '---') // em-dash
+      .replace(/\u2013/g, '--') // en-dash
   }
 
   /*
