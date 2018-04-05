@@ -412,7 +412,7 @@ Translator.doExport = () => {
       enc: 'date',
     })
 
-    if (item.pages) ref.add({ name: 'pages', value: item.pages.replace(/[-\u2012-\u2015\u2053]+/g, '--' )})
+    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages)})
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 

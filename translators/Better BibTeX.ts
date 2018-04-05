@@ -260,11 +260,7 @@ Translator.doExport = () => {
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
-    if (item.pages) {
-      let pages = item.pages
-      if (!ref.raw) pages = pages.replace(/[-\u2012-\u2015\u2053]+/g, '--')
-      ref.add({ name: 'pages', value: pages })
-    }
+    ref.add({ name: 'pages', value: ref.normalizeDashes(item.pages) })
 
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
     ref.complete()

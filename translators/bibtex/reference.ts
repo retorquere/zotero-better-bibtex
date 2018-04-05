@@ -388,6 +388,18 @@ export class Reference {
     }
   }
 
+  /** normalize dashes, mainly for use in `pages` */
+  public normalizeDashes(str) {
+    str = (str || '').trim()
+
+    if (this.raw) return str
+
+    return str
+      .replace(/\2053/g, '~')
+      .replace(/[\2012\2014\2015]/g, '--')
+      .replace(/\2013/g, '-')
+  }
+
   /*
    * Add a field to the reference field set
    *
