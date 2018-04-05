@@ -23,11 +23,6 @@ function timeout(ms) {
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
 
-  private postfixRE = {
-    numeric: /^(-[0-9]+)?$/,
-    alphabetic: /^([a-z])?$/,
-  }
-
   private itemObserverDelay: number = Prefs.get('itemObserverDelay')
 
   private scanning: any[]
@@ -321,7 +316,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
   public propose(item) {
     debug('KeyManager.propose: getting existing key from extra field,if any')
-    let citekey = Citekey.get(item.getField('extra'))
+    const citekey = Citekey.get(item.getField('extra'))
     debug('KeyManager.propose: found key', citekey)
 
     if (citekey.pinned) return { citekey: citekey.citekey, pinned: true }
@@ -330,41 +325,36 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
-    if (!Prefs.get('keyRefreshPostfix') && (citekey = this.keys.findOne({ itemID: item.id }))) {
-      // item already has proposed citekey ?
-      debug(`KeyManager.propose: testing whether ${item.id} can keep ${citekey.citekey}`)
-      if (citekey.citekey.startsWith(proposed.citekey)) {                                                         // key begins with proposed sitekey
-        const re = proposed.postfix === '0' ? this.postfixRE.numeric : this.postfixRE.alphabetic
-        if (citekey.citekey.slice(proposed.citekey.length).match(re)) {                                           // rest matches proposed postfix
-          let other
-          if (!(other = this.keys.findOne({ libraryID: item.libraryID, citekey: citekey.citekey, itemID: { $ne: item.id } }))) { // noone else is using it
-            return { citekey: citekey.citekey, pinned: false }
-          }
-        }
-      }
-    }
-//          else
-//            debug('KeyManager.propose: no, because', other, 'is using it')
-//        else
-//          debug('KeyManager.propose: no, because', citekey.citekey.slice(proposed.citekey.length), 'does not match', '' + re)
-//      else
-//        debug('KeyManager.propose: no, because', citekey.citekey, 'does not start with', citekey.citekey)
-
-    debug(`KeyManager.propose: testing whether ${item.id} can use proposed ${proposed.citekey}`)
-    // unpostfixed citekey is available
-    if (!this.keys.findOne({ libraryID: item.libraryID, citekey: proposed.citekey, itemID: { $ne: item.id } })) {
-      debug(`KeyManager.propose: ${item.id} can use proposed ${proposed.citekey}`)
-      return { citekey: proposed.citekey, pinned: false}
-    }
-
     debug(`KeyManager.propose: generating free citekey from ${item.id} from`, proposed.citekey)
-    for (let postfix = 0; true; postfix += 1) {
-      const postfixed = proposed.citekey + (proposed.postfix === '0' ? `-${postfix + 1}` : this.postfixAlpha(postfix))
-      if (!this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed })) {
-        debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
-        return { citekey: postfixed, pinned: false }
-      }
+    const postfix = this[proposed.postfix === '0' ? 'postfixZotero' : 'postfixAlpha']
+    for (let n = -1; true; n += 1) {
+      const postfixed = proposed.citekey + postfix(n)
+      if (this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed })) continue
+
+      debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
+      return { citekey: postfixed, pinned: false }
     }
+  }
+
+  private postfixZotero(n) {
+    if (n < 0) return ''
+
+    return `-${n + 1}`
+  }
+
+  private postfixAlpha(n) {
+    if (n < 0) return ''
+
+    const ordA = 'a'.charCodeAt(0)
+    const ordZ = 'z'.charCodeAt(0)
+    const len = ordZ - ordA + 1
+
+    let postfix = ''
+    while (n >= 0) {
+      postfix = String.fromCharCode(n % len + ordA) + postfix
+      n = Math.floor(n / len) - 1
+    }
+    return postfix
   }
 
   private expandSelection(ids) {
@@ -380,18 +370,5 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     }
 
     return [ids]
-  }
-
-  private postfixAlpha(n) {
-    const ordA = 'a'.charCodeAt(0)
-    const ordZ = 'z'.charCodeAt(0)
-    const len = ordZ - ordA + 1
-
-    let postfix = ''
-    while (n >= 0) {
-      postfix = String.fromCharCode(n % len + ordA) + postfix
-      n = Math.floor(n / len) - 1
-    }
-    return postfix
   }
 }
