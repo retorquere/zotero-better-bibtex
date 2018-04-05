@@ -583,7 +583,7 @@ class ZoteroItem {
       } else {
         const p0 = this.unparse(range[0])
         const p1 = this.unparse(range[1])
-        pages.push(`${p0}\u2013${p1}`)
+        if (p0 || p1) pages.push(`${p0}\u2013${p1}`)
       }
     }
 
