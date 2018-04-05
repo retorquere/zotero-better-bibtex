@@ -583,23 +583,21 @@ class ZoteroItem {
       } else {
         const p0 = this.unparse(range[0])
         const p1 = this.unparse(range[1])
-        if (p0.indexOf('-') >= 0 || p1.indexOf('-') >= 0) {
-          pages.push(`${p0}--${p1}`)
-        } else if (p0 || p1) {
-          pages.push(`${p0}-${p1}`)
-        }
+        pages.push(`${p0}\u2013${p1}`)
       }
     }
 
     if (!pages.length) return true
 
-    if (['book', 'thesis', 'manuscript'].includes(this.type)) {
-      this.set('numPages', pages.join(', '))
-    } else {
-      this.set('pages', pages.join(', '))
+    for (const field of ['pages', 'numPages']) {
+      if (!this.validFields[field]) continue
+
+      this.set(field, pages.join(', '))
+
+      return true
     }
 
-    return true
+    return false
   }
   protected $pagetotal(value) { return this.$pages([[value]]) } // pages expects ranges
 
@@ -683,7 +681,6 @@ class ZoteroItem {
   protected $number(value) {
     value = this.unparse(value)
 
-    debug('$number', this.type, this.validFields)
     for (const field of ['seriesNumber', 'number', 'issue']) {
       if (!this.validFields[field]) continue
 
