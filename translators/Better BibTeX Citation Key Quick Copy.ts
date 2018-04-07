@@ -85,6 +85,17 @@ const Mode = { // tslint:disable-line:variable-name
     const reference = items.map(item => {
       const ref = []
 
+      // author
+      const creators = item.creators || []
+      const creator = creators[0] || {}
+      let name = creator.name || creator.lastName || 'no author'
+      if (creators.length > 1) name += ' et al.'
+      ref.push(name)
+
+      // title
+      if (item.title) ref.push(JSON.stringify(item.title))
+
+      // year
       if (item.date) {
         let date = Zotero.BetterBibTeX.parseDate(item.date)
         if (date.type === 'interval') date = date.from
@@ -98,13 +109,6 @@ const Mode = { // tslint:disable-line:variable-name
         ref.push('no date')
       }
 
-      if (item.title) ref.push(JSON.stringify(item.title))
-
-      const creators = item.creators || []
-      const creator = creators[0] || {}
-      let name = creator.name || creator.lastName || 'no author'
-      if (creators.length > 1) name += ' et al.'
-      ref.push(name)
       return ref.join(', ')
     })
     Zotero.write(`{${reference.join('; ')}}`)
