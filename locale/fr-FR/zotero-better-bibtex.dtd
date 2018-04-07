@@ -66,6 +66,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "Commande LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF Scan">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode "Org-mode">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Org-ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
