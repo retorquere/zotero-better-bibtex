@@ -81,6 +81,35 @@ const Mode = { // tslint:disable-line:variable-name
     Zotero.write(items.map(select_link).join('\n'))
   },
 
+  rtfScan(items) {
+    const reference = items.map(item => {
+      const ref = []
+
+      if (item.date) {
+        let date = Zotero.BetterBibTeX.parseDate(item.date)
+        if (date.type === 'interval') date = date.from
+
+        if (date.type === 'verbatim' || !date.year) {
+          ref.push(item.date)
+        } else {
+          ref.push(date.year)
+        }
+      } else {
+        ref.push('no date')
+      }
+
+      if (item.title) ref.push(JSON.stringify(item.title))
+
+      const creators = item.creators || []
+      const creator = creators[0] || {}
+      let name = creator.name || creator.lastName || 'no author'
+      if (creators.length > 1) name += ' et al.'
+      ref.push(name)
+      return ref.join(', ')
+    })
+    Zotero.write(`{${reference.join('; ')}}`)
+  },
+
   'string-template'(items) {
     try {
       const { citation, item, sep } = JSON.parse(Translator.preferences.citeCommand)

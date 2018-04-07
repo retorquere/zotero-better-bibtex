@@ -14,6 +14,7 @@
         - Pandoc
         - Org-mode
         - org-ref
+        - RTF Scan
         - 'Atom (https://atom.io/packages/zotero-citations)'
         - GitBook
         - Select link
