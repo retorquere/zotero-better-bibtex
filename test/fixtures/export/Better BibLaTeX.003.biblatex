@@ -2,7 +2,7 @@
 @inproceedings{author:06,
   author = {Author, First and Author, Second},
   crossref = {conference:06},
-  pages = {330--331},
+  pages = {330---331},
   title = {Some Publication Title}
 }
 

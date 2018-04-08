@@ -388,6 +388,19 @@ export class Reference {
     }
   }
 
+  /** normalize dashes, mainly for use in `pages` */
+  public normalizeDashes(str) {
+    str = (str || '').trim()
+
+    if (this.raw) return str
+
+    return str
+      .replace(/\u2053/g, '~')
+      .replace(/[\u2012\u2014\u2015]/g, '---') // em-dash
+      .replace(/\u2013/g, '--') // en-dash
+      .replace(/([0-9])\s-\s([0-9])/g, '$1--$2') // treat space-hyphen-space like an en-dash when it's between numbers
+  }
+
   /*
    * Add a field to the reference field set
    *
@@ -1115,6 +1128,11 @@ export class Reference {
     })
 
     if (report) {
+      if (this.has.pages) {
+        const dashes = this.has.pages.bibtex.match(/-+/g)
+        if (dashes && dashes.includes('-')) report.push('? hyphen found in pages field, did you mean to use an en-dash?')
+        if (dashes && dashes.includes('---')) report.push('? em-dash found in pages field, did you mean to use an en-dash?')
+      }
       if (this.has.journal && this.has.journal.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journal.value}`)
       if (this.has.journaltitle && this.has.journaltitle.value.indexOf('.') >= 0) report.push(`? Possibly abbreviated journal title ${this.has.journaltitle.value}`)
 

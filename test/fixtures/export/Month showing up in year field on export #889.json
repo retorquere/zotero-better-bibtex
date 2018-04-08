@@ -182,14 +182,15 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
       "url": "http://www.ncbi.nlm.nih.gov/pubmed/7620294",
       "volume": "5",
       "issue": "2",
-      "pages": "95-110",
+      "pages": "95–110",
       "publicationTitle": "Cerebral Cortex",
       "date": "08 1995",
       "extra": "bibtex: HoukWise95",
@@ -206,7 +207,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "dateAdded": "2015-04-01 06:29:02",
       "dateModified": "2015-05-15 10:51:58",
       "attachments": [
@@ -218,8 +221,11 @@
           "contentType": "application/pdf",
           "charset": "",
           "filename": "HoukWise95.pdf",
-          "tags": [],
-          "relations": {},
+          "tags": [
+
+          ],
+          "relations": {
+          },
           "dateAdded": "2015-07-11 19:28:48",
           "dateModified": "2017-08-25 06:29:10",
           "uri": "http://zotero.org/groups/340666/items/DJUQINI6",
@@ -232,14 +238,20 @@
           "key": "DJUQINI6",
           "libraryID": 2177164,
           "sourceItemKey": "CC8TTAAQ",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf",
           "localPath": "/Users/oreilly/Zotero/storage/DJUQINI6/HoukWise95.pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 27912,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }
