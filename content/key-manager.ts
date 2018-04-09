@@ -325,7 +325,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     const proposed = Formatter.format(item)
     debug('KeyManager.propose: proposed=', proposed)
 
-    debug(`KeyManager.propose: generating free citekey from ${item.id} from`, proposed.citekey)
+    debug(`KeyManager.propose: generating free citekey for ${item.id} from`, proposed, { libraryID: item.libraryID })
     const postfix = this[proposed.postfix === '0' ? 'postfixZotero' : 'postfixAlpha']
     for (let n = -1; true; n += 1) {
       const postfixed = proposed.citekey + postfix(n)
