@@ -151,6 +151,15 @@ DB.init = async () => {
     },
   })
 
+
+  debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
+  if (Zotero.Libraries.userLibraryID) {
+    for (const citekey of citekeys.find({ libraryID: 0 })) {
+      citekey.libraryID = Zotero.Libraries.userLibraryID
+      citekeys.update(citekey)
+    }
+  }
+
   const autoexport = DB.schemaCollection('autoexport', {
     indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
     unique: [ 'path' ],
