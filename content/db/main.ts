@@ -151,7 +151,6 @@ DB.init = async () => {
     },
   })
 
-
   debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
   if (Zotero.Libraries.userLibraryID) {
     for (const citekey of citekeys.find({ libraryID: 0 })) {

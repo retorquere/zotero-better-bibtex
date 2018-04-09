@@ -232,7 +232,7 @@
     {
       "itemType": "journalArticle",
       "volume": "1",
-      "pages": "3-46",
+      "pages": "3–46",
       "publicationTitle": "Cognitive Science",
       "date": "1977",
       "extra": "bibtex: bobrow:77",
@@ -260,7 +260,7 @@
     {
       "itemType": "journalArticle",
       "volume": "8",
-      "pages": "15-45",
+      "pages": "15–45",
       "publicationTitle": "Artificial Intelligence",
       "date": "1977",
       "extra": "bibtex: Davis:77",
@@ -294,7 +294,7 @@
       "itemType": "conferencePaper",
       "series": "Sigplan Notices",
       "volume": "12",
-      "pages": "116-125",
+      "pages": "116–125",
       "date": "August 1977",
       "extra": "bibtex: deKleer:77 \nbibtex[number=8]",
       "title": "AMORD: Explicit control of reasoning",
@@ -333,7 +333,7 @@
     {
       "itemType": "conferencePaper",
       "volume": "2",
-      "pages": "4-18",
+      "pages": "4–18",
       "date": "1976",
       "extra": "bibtex: Green:1976",
       "title": "The design of the PSI program synthesis system",
@@ -356,7 +356,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "232-239",
+      "pages": "232–239",
       "extra": "bibtex: Green:75 \nbibtex[crossref=IJCAI85]",
       "title": "Some rules for the automatic synthesis of programs",
       "creators": [
@@ -403,7 +403,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "291-304",
+      "pages": "291–304",
       "date": "1968",
       "extra": "bibtex: Guzman:68",
       "title": "The decomposition of a visual scene into three dimensional bodies",
@@ -466,7 +466,7 @@
       "date": "1980",
       "extra": "bibtex: Collins:80 \nbibtex[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
       "title": "Inference in text understanding",
-      "numPages": "385-408",
+      "numPages": "385–408",
       "creators": [
         {
           "firstName": "Allan",
@@ -534,7 +534,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "634-639",
+      "pages": "634–639",
       "date": "1991",
       "extra": "bibtex: McAllester:91 \nbibtex[crossref=AAAI91]",
       "title": "Systematic Nonlinear Planning",
@@ -583,7 +583,7 @@
     {
       "itemType": "conferencePaper",
       "volume": "4",
-      "pages": "206-214",
+      "pages": "206–214",
       "date": "1975",
       "extra": "bibtex: Sacerdoti:75",
       "title": "The nonlinear nature of plans",
@@ -606,7 +606,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "200-207",
+      "pages": "200–207",
       "date": "1973",
       "extra": "bibtex: Woods:73",
       "title": "Mechanical inference problems in continuous speech understanding",
@@ -662,7 +662,7 @@
     {
       "itemType": "journalArticle",
       "volume": "4",
-      "pages": "243-284",
+      "pages": "243–284",
       "publicationTitle": "Cognitive Science",
       "date": "1980",
       "extra": "bibtex: Schank:80",
@@ -684,7 +684,7 @@
     },
     {
       "itemType": "bookSection",
-      "pages": "155-184",
+      "pages": "155–184",
       "date": "1976",
       "extra": "bibtex: Wilks:76",
       "title": "Parsing English II",
@@ -718,7 +718,7 @@
     {
       "itemType": "conferencePaper",
       "volume": "1",
-      "pages": "180-195",
+      "pages": "180–195",
       "date": "1975",
       "extra": "bibtex: Rieger:75",
       "title": "The commonsense algorithm as a basis for computer models of human memory, inference, belief and contextual language comprehension",
@@ -986,7 +986,7 @@
     {
       "itemType": "journalArticle",
       "volume": "47",
-      "pages": "79-106",
+      "pages": "79–106",
       "publicationTitle": "AIJ",
       "date": "1991",
       "extra": "bibtex: Hewitt:91",
@@ -1112,7 +1112,7 @@
     {
       "itemType": "journalArticle",
       "issue": "53",
-      "pages": "8-9",
+      "pages": "8–9",
       "publicationTitle": "Sigart Newsletter",
       "date": "1975",
       "extra": "bibtex: Moore:75a",
@@ -1135,7 +1135,7 @@
     {
       "itemType": "conferencePaper",
       "volume": "5",
-      "pages": "99-107",
+      "pages": "99–107",
       "date": "1977",
       "extra": "bibtex: Hayes:77",
       "title": "On semantic nets, frames and associations",
@@ -1159,7 +1159,7 @@
     {
       "itemType": "conferencePaper",
       "volume": "5",
-      "pages": "559-565",
+      "pages": "559–565",
       "date": "1977",
       "extra": "bibtex: Hayes:77a",
       "title": "In defense of logic",
@@ -1231,7 +1231,7 @@
     {
       "itemType": "journalArticle",
       "volume": "47",
-      "pages": "57-77",
+      "pages": "57–77",
       "publicationTitle": "AIJ",
       "date": "1991",
       "extra": "bibtex: Birnbaum:91",
@@ -1322,7 +1322,7 @@
     },
     {
       "itemType": "bookSection",
-      "pages": "75-89",
+      "pages": "75–89",
       "date": "1981",
       "extra": "bibtex: Cullingford:81 \nbibtex[crossref=ICU]",
       "title": "SAM",
@@ -1343,7 +1343,7 @@
     },
     {
       "itemType": "bookSection",
-      "pages": "197-209",
+      "pages": "197–209",
       "extra": "bibtex: Meehan:TALE-SPIN \nbibtex[chapter=9;crossref=ICU]",
       "title": "TALE-SPIN",
       "creators": [
@@ -1385,7 +1385,7 @@
     },
     {
       "itemType": "journalArticle",
-      "pages": "78-83",
+      "pages": "78–83",
       "publicationTitle": "Proceedings of the 3rd Conference of the Cognitive Science Society",
       "date": "1981",
       "extra": "bibtex: Lehnert:81",
@@ -1564,7 +1564,7 @@
     {
       "itemType": "bookSection",
       "place": "New York",
-      "pages": "3-50",
+      "pages": "3–50",
       "extra": "Republished in KR \nbibtex: Brachman:79 \nbibtex[crossref=Findler]",
       "title": "On the epistemological status of semantic networks",
       "creators": [
@@ -1616,7 +1616,7 @@
       "date": "1968",
       "extra": "bibtex: Fillmore:68 \nbibtex[booktitle=Universals in Linguistic Theory]",
       "title": "The case for case",
-      "numPages": "1-88",
+      "numPages": "1–88",
       "creators": [
         {
           "firstName": "Charles J.",
@@ -1715,7 +1715,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "147-154",
+      "pages": "147–154",
       "date": "1987",
       "extra": "bibtex: Webber:87",
       "title": "The interpretation of tense in discourse",
@@ -1738,7 +1738,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "pages": "102-109",
+      "pages": "102–109",
       "extra": "bibtex: Mellish:89 \nbibtex[crossref=ACL-89]",
       "title": "Some Chart-based Techniques for Parsing Ill-formed Input",
       "creators": [
@@ -1796,7 +1796,7 @@
     {
       "itemType": "journalArticle",
       "volume": "5",
-      "pages": "905-915",
+      "pages": "905–915",
       "publicationTitle": "Proc. Ijcai",
       "date": "1977",
       "extra": "bibtex: Teitelman:77",
@@ -1849,7 +1849,7 @@
       "date": "1979",
       "extra": "bibtex: Barstow:79",
       "title": "The roles of knowledge and deduction in program synthesis",
-      "numPages": "37-43",
+      "numPages": "37–43",
       "creators": [
         {
           "firstName": "David R.",
@@ -1872,7 +1872,7 @@
       "date": "1977",
       "extra": "bibtex: Fillmore:77 \nbibtex[booktitle=Syntax and Semantics 8: Grammatical Relations]",
       "title": "The case for case reopened",
-      "numPages": "59-81",
+      "numPages": "59–81",
       "creators": [
         {
           "firstName": "Charles J.",
@@ -1902,7 +1902,7 @@
       "itemType": "bookSection",
       "place": "San Francisco",
       "publisher": "Freeman",
-      "pages": "187-248",
+      "pages": "187–248",
       "date": "1973",
       "extra": "bibtex: Schank:73",
       "title": "Identification of conceptualizations underlying natural language",
@@ -1958,7 +1958,7 @@
     {
       "itemType": "journalArticle",
       "volume": "1",
-      "pages": "92-93",
+      "pages": "92–93",
       "publicationTitle": "Theoretical Issues in Natural Language Processing",
       "date": "1975",
       "extra": "bibtex: Feldman:75",
@@ -2017,7 +2017,7 @@
       "date": "1972",
       "extra": "bibtex: Woods:72 \nbibtex[booktitle=Natural Language Processing]",
       "title": "An experimental parsing system for transition network grammars",
-      "numPages": "113-154",
+      "numPages": "113–154",
       "creators": [
         {
           "firstName": "William A.",
@@ -2041,7 +2041,7 @@
     {
       "itemType": "journalArticle",
       "issue": "4",
-      "pages": "321-398",
+      "pages": "321–398",
       "publicationTitle": "Cognition",
       "date": "1976",
       "extra": "bibtex: Dresher:76",
@@ -2069,7 +2069,7 @@
     {
       "itemType": "journalArticle",
       "volume": "1",
-      "pages": "11-15",
+      "pages": "11–15",
       "publicationTitle": "Theoretical Issues in Natural Language Processing",
       "date": "1975",
       "extra": "bibtex: Riesbeck:75",
@@ -2102,7 +2102,7 @@
     {
       "itemType": "journalArticle",
       "volume": "2",
-      "pages": "236-246",
+      "pages": "236–246",
       "publicationTitle": "Theoretical Issues in Natural Language Processing",
       "date": "1978",
       "extra": "bibtex: Marcus:78",
@@ -2201,7 +2201,7 @@
       "itemType": "journalArticle",
       "volume": "18",
       "issue": "5",
-      "pages": "264-274",
+      "pages": "264–274",
       "publicationTitle": "Communications of the ACM",
       "date": "1975",
       "extra": "bibtex: Wilks:75",
@@ -2224,7 +2224,7 @@
     {
       "itemType": "journalArticle",
       "volume": "5",
-      "pages": "219-227",
+      "pages": "219–227",
       "publicationTitle": "Journal of Verbal Learning and Verbal Behavior",
       "date": "1966",
       "extra": "bibtex: Slobin:66",
@@ -2248,7 +2248,7 @@
       "itemType": "journalArticle",
       "volume": "12",
       "issue": "2",
-      "pages": "213-253",
+      "pages": "213–253",
       "publicationTitle": "Computing Surveys",
       "date": "1980",
       "extra": "bibtex: Erman:80",
@@ -2349,7 +2349,7 @@
     {
       "itemType": "journalArticle",
       "volume": "33",
-      "pages": "457-471",
+      "pages": "457–471",
       "publicationTitle": "AFIPS Conference Proceedings (Fall Joint Computer Conference)",
       "date": "1968",
       "extra": "bibtex: Woods:68",
@@ -2404,7 +2404,7 @@
     {
       "itemType": "journalArticle",
       "volume": "4",
-      "pages": "848-855",
+      "pages": "848–855",
       "publicationTitle": "Proc. Ijcai",
       "date": "1975",
       "extra": "bibtex: Pople:75",
@@ -2437,7 +2437,7 @@
     {
       "itemType": "journalArticle",
       "volume": "307",
-      "pages": "468-476",
+      "pages": "468–476",
       "publicationTitle": "New England Journal of Medicine",
       "date": "1982",
       "extra": "bibtex: RMiller:82",
@@ -2470,7 +2470,7 @@
     {
       "itemType": "journalArticle",
       "volume": "5",
-      "pages": "1030-1037",
+      "pages": "1030–1037",
       "publicationTitle": "Proc. Ijcai",
       "date": "1977",
       "extra": "bibtex: Pople:77",
@@ -2492,7 +2492,7 @@
     },
     {
       "itemType": "journalArticle",
-      "pages": "63-79",
+      "pages": "63–79",
       "date": "1974",
       "extra": "bibtex: Hayes:74 \nbibtex[booktitle=Proceedings of the AISB Summer Conference]",
       "title": "Some problems and non-problems in representation theory",
@@ -2536,7 +2536,7 @@
     {
       "itemType": "journalArticle",
       "volume": "6",
-      "pages": "723-728",
+      "pages": "723–728",
       "publicationTitle": "Proc. Ijcai",
       "date": "1979",
       "extra": "bibtex: Rieger:79",
@@ -2645,7 +2645,7 @@
     {
       "itemType": "journalArticle",
       "volume": "2",
-      "pages": "347-372",
+      "pages": "347–372",
       "publicationTitle": "Linguistics and Philosophy",
       "date": "1978",
       "extra": "bibtex: Friedman:78",
@@ -2674,7 +2674,7 @@
       "itemType": "journalArticle",
       "volume": "2",
       "issue": "3",
-      "pages": "235-266",
+      "pages": "235–266",
       "publicationTitle": "Cognitive Science",
       "date": "1978",
       "extra": "bibtex: Wilensky:78",
@@ -2697,7 +2697,7 @@
     {
       "itemType": "journalArticle",
       "volume": "7",
-      "pages": "89-127",
+      "pages": "89–127",
       "publicationTitle": "Artificial Intelligence",
       "date": "1976",
       "extra": "bibtex: Rieger:76",
@@ -2720,7 +2720,7 @@
     {
       "itemType": "journalArticle",
       "volume": "3",
-      "pages": "177-212",
+      "pages": "177–212",
       "publicationTitle": "Cognitive Science",
       "date": "1979",
       "extra": "bibtex: Cohen:79",
@@ -2749,7 +2749,7 @@
       "itemType": "bookSection",
       "place": "ERLBAUM-ADDRESS",
       "publisher": "LEA",
-      "pages": "245-274",
+      "pages": "245–274",
       "date": "1981",
       "extra": "bibtex: CohenETAL:81",
       "title": "Beyond Question Answering",
@@ -2811,7 +2811,7 @@
     {
       "itemType": "journalArticle",
       "volume": "25",
-      "pages": "487-512",
+      "pages": "487–512",
       "publicationTitle": "Noûs",
       "date": "1991",
       "extra": "bibtex: Cohen:91",
@@ -2842,7 +2842,7 @@
       "date": "1976",
       "extra": "bibtex: Wilks:76 \nbibtex[booktitle=Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension]",
       "title": "Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension",
-      "numPages": "205-233",
+      "numPages": "205–233",
       "creators": [
         {
           "firstName": "Yorick",
@@ -2898,7 +2898,7 @@
     {
       "itemType": "journalArticle",
       "volume": "2",
-      "pages": "189-208",
+      "pages": "189–208",
       "publicationTitle": "Artificial Intelligence",
       "date": "1971",
       "extra": "bibtex: Fikes:71",
