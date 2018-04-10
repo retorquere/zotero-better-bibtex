@@ -153,7 +153,7 @@ DB.init = async () => {
 
   debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
   if (Zotero.Libraries.userLibraryID) {
-    for (const citekey of citekeys.find({ libraryID: 0 })) {
+    for (const citekey of citekeys.where(ck => ck.libraryID === 1 || !ck.libraryID )) {
       citekey.libraryID = Zotero.Libraries.userLibraryID
       citekeys.update(citekey)
     }
