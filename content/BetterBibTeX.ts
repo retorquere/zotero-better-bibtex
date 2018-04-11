@@ -591,8 +591,14 @@ export = new class BetterBibTeX {
   }
 
   public getString(id, params = null) {
+    if (!this.strings || typeof this.strings.getString !== 'function') {
+      debug('getString called before strings were loaded', id)
+      return id
+    }
+
     try {
-      return params ? format(this.strings.getString(id), params) : this.strings.getString(id)
+      const str = this.strings.getString(id)
+      return params ? format(str, params) : str
     } catch (err) {
       debug('getString', id, err)
       return id
@@ -600,9 +606,9 @@ export = new class BetterBibTeX {
   }
 
   private async load() {
-    debug('Loading Better BibTeX: starting...')
-
     this.strings = document.getElementById('zotero-better-bibtex-strings')
+
+    debug('Loading Better BibTeX: starting...')
 
     await TeXstudio.init()
 
@@ -631,6 +637,7 @@ export = new class BetterBibTeX {
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
+    debug("Schema ready, let's roll!")
 
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     Cache.init() // oh FFS -- datadir is async now
