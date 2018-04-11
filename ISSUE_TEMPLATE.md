@@ -1,4 +1,4 @@
-- [ ] I have verified that I am on the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero
+- [ ] I have verified in the Zotero addons screen that I am on the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero
 - [ ] I am posting a single question, bug or feature request
 - [ ] I have included a descriptive subject of the problem
 - [ ] I am available for follow-up questions and testing
