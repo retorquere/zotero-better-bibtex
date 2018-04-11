@@ -204,7 +204,11 @@ DB.init = async () => {
     }
     if (corrupt.length > 0) {
       for (const index of corrupt) {
-        Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+        if (index == '*') {
+          Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
+        } else {
+          Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+        }
       }
     }
   }
