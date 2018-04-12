@@ -5999,9 +5999,9 @@ zip-stream@^1.2.0:
     lodash "^4.8.0"
     readable-stream "^2.0.0"
 
-zotero-plugin@0.0.30:
-  version "0.0.30"
-  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.30.tgz#f3453642b4bc1c5c7d0c54e5fe645e218bb6592c"
+zotero-plugin@0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.31.tgz#fc167990fe939621e42871b7832fc82b33ef6255"
   dependencies:
     "@octokit/rest" "^15.2.6"
     "@rgrove/parse-xml" "^1.1.1"

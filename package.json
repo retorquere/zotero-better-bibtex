@@ -28,7 +28,7 @@
     "minitest": "webpack && node ./minitests/build/dateparser.js",
     "start": "KILL=false cucumber --fail-fast --tags @none",
     "s3form": "zotero-plugin-s3form",
-    "release": "zotero-plugin-release",
+    "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "_postversion": "TAG=$(echo $(git describe --tags $(git rev-list --tags --max-count=1))) && git tag -a $TAG $TAG -f -m \"$(git log `git describe --tags --abbrev=0 HEAD^`..HEAD --oneline)\" && git push && git push --tags",
@@ -71,7 +71,7 @@
     "transliteration": "^1.6.2",
     "webpack-cli": "^2.0.14",
     "xregexp": "^4.1.1",
-    "zotero-plugin": "0.0.30"
+    "zotero-plugin": "0.0.31"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
