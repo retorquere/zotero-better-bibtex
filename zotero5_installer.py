@@ -33,7 +33,14 @@ def zotero_latest():
 
 def jurism_latest():
   release = HTTPSConnection('our.law.nagoya-u.ac.jp')
-  release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
+  try:
+    release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
+  except ConnectionRefusedError as e:
+    if args.cache is not None:
+      return 'cached'
+    else:
+      raise e
+
   release = release.getresponse()
   release = release.getheader('Location')
   return release.split('/')[-2]
@@ -159,23 +166,31 @@ if args.client == 'zotero':
 else:
   args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
 
-tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
-
-if args.cache is None:
-  tarball = tempfile.NamedTemporaryFile().name
+if args.version == 'cached':
+  tarball = None
+  for candidate in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
+    tarball = candidate
+  if tarball is None:
+    raise Exception('No cached ' + args.client + ' found in ' + args.cache)
+  print('Using cached ' + tarball + ' without checking for newer versions')
 else:
   tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
-  for junk in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
-    if os.path.basename(junk) != tarball: os.remove(junk)
-  tarball = os.path.join(args.cache, tarball)
+
+  if args.cache is None:
+    tarball = tempfile.NamedTemporaryFile().name
+  else:
+    tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
+    for junk in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
+      if os.path.basename(junk) != tarball: os.remove(junk)
+    tarball = os.path.join(args.cache, tarball)
+
+  if os.path.exists(tarball):
+    print('Retaining ' + tarball)
+  else:
+    print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
+    urlretrieve (args.url, tarball)
 
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
-
-if os.path.exists(tarball):
-  print('Retaining ' + tarball)
-else:
-  print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
-  urlretrieve (args.url, tarball)
 
 extracted = tempfile.mkdtemp()
 
