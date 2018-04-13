@@ -40,18 +40,24 @@
 
   it will use the same abbreviation filter Zotero uses in the wordprocessor
   integration. You might want to use the `abbr` filter on this.
-'`keywordN`': Tag number `N`
+'`keywordN`': >-
+  Tag number `N`. Note that the tag order is just as Zotero hands it to BBT --
+  no guarantees
 '`lastpage`': The number of the last page of the publication (See the remark on `firstpage`)
 '`library`': >-
   returns the name of the shared group library, or nothing if the reference is
   in your personal library
 '`month`': the month of the publication
 '`origyear`': the original year of the publication
-'`shorttitleN_M`': 'The first `N` (default: 3) words of the title, first `M` capitalized'
+'`shorttitleN_M`': >-
+  The first `N` (default: 3) words of the title, first `M` (default: 0)
+  capitalized
 '`shortyear`': The last 2 digits of the publication year
 '`title`': >-
   Capitalize all the significant words of the title, and concatenate them. For
   example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref`
-'`veryshorttitle`': 'The first word of the title, discounting ''the'', ''a'', ''an''.'
+'`veryshorttitleN_M`': >-
+  The first `N` (default: 1) words of the title, first `M` (default: 0)
+  capitalized
 '`year`': The year of the publication
 '`zotero`': Generates citation keys as the stock Zotero Bib(La)TeX export does
