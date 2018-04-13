@@ -36,11 +36,11 @@
       <radio label="&better-bibtex.FirstRun.citekeyFormat.whatever;" value="whatever"/>
     </radiogroup>
     <separator/>
-    <description id="better-bibtex-first-run-citekeyFormat-bbt" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">GoffmanForms1981</box>.
+    <description id="better-bibtex-first-run-citekeyFormat-bbt" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">goffmanForms1981</box>.
 <separator/>
 <box class="textbox-emph">&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note;:</box> &better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
     <description id="better-bibtex-first-run-citekeyFormat-zotero" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.zotero;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">goffman_forms_1981</box>.</description>
-    <description id="better-bibtex-first-run-citekeyFormat-whatever" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.whatever;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">GoffmanForms1981</box>.</description>
+    <description id="better-bibtex-first-run-citekeyFormat-whatever" style="white-space: pre-wrap;">&better-bibtex.FirstRun.citekeyFormat.explanation.whatever;; &better-bibtex.FirstRun.citekeyFormat.explanation.example; <box class="textbox-emph">goffmanForms1981</box>.</description>
   </wizardpage>
 
   <wizardpage label=" " onpageshow="Zotero.BetterBibTeX.FirstRun.update()">
