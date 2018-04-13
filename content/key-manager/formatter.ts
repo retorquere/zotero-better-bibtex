@@ -342,13 +342,13 @@ class PatternFormatter {
     return lastpage[0] || ''
   }
 
-  /** Tag number `N` */
+  /** Tag number `N`. Note that the tag order is just as Zotero hands it to BBT -- no guarantees */
   public $keyword(n) {
     this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
     return this.item.tags[n] || ''
   }
 
-  /** The first `N` (default: 3) words of the title, first `M` capitalized */
+  /** The first `N` (default: 3) words of the title, first `M` (default: 0) capitalized */
   public $shorttitle(n = 3, m = 0) { // tslint:disable-line:no-magic-numbers
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
@@ -356,11 +356,9 @@ class PatternFormatter {
     return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join('')
   }
 
-  /** The first word of the title, discounting 'the', 'a', 'an'. */
-  public $veryshorttitle() {
-    const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
-    if (!words) return ''
-    return words.slice(0, 1).join('')
+  /** The first `N` (default: 1) words of the title, first `M` (default: 0) capitalized */
+  public $veryshorttitle(n = 1, m = 0) { // tslint:disable-line:no-magic-numbers
+    return this.$shorttitle(n, m)
   }
 
   /** The last 2 digits of the publication year */
