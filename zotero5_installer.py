@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import tempfile
+import socket
 
 if sys.version_info[0] >= 3:
   from urllib.request import urlopen
@@ -20,6 +21,7 @@ else:
   from urllib import urlretrieve
   from httplib import HTTPSConnection
   input = raw_input
+  ConnectionRefusedError = socket.error
 
 def zotero_latest():
   response = urlopen('https://www.zotero.org/download/').read()
