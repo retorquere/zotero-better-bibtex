@@ -468,7 +468,7 @@ class PatternFormatter {
     return value.slice(start, end).join(' ')
   }
 
-  /** (`substring,start,n`) selects `n` characters starting at `start` */
+  /** (`substring=start,n`) selects `n` (default: all) characters starting at `start` (default: 1) */
   public _substring(value, start, n) {
     start = parseInt(start)
     if (isNaN(start)) start = 1
