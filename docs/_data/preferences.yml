@@ -8,7 +8,7 @@ autoExport: immediate
 quickCopyMode: latex
 citeCommand: cite
 quickCopyPandocBrackets: false
-citekeyFormat: '​[auth][shorttitle][year]'
+citekeyFormat: '​[auth:lower][shorttitle3_3][year]'
 citekeyFold: true
 keyConflictPolicy: keep
 preserveBibTeXVariables: false

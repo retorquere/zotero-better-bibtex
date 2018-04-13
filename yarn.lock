@@ -1342,13 +1342,13 @@ cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
     inherits "^2.0.1"
     safe-buffer "^5.0.1"
 
-circular-dependency-plugin@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-5.0.1.tgz#dbf270002e805e3aaa060f315e99dde4763eaff9"
+circular-dependency-plugin@^5.0.2:
+  version "5.0.2"
+  resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-5.0.2.tgz#da168c0b37e7b43563fb9f912c1c007c213389ef"
 
-citeproc@^2.1.200:
-  version "2.1.200"
-  resolved "https://registry.yarnpkg.com/citeproc/-/citeproc-2.1.200.tgz#e52da27e7306be67f7f64e52321e68f553744c82"
+citeproc@^2.1.204:
+  version "2.1.204"
+  resolved "https://registry.yarnpkg.com/citeproc/-/citeproc-2.1.204.tgz#d8d1aa1637883c0eafeabb5fed589054f6d02b25"
 
 class-utils@^0.3.5:
   version "0.3.6"

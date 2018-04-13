@@ -47,7 +47,7 @@
   in your personal library
 '`month`': the month of the publication
 '`origyear`': the original year of the publication
-'`shorttitle`': The first 3 words of the title
+'`shorttitleN_M`': 'The first `N` (default: 3) words of the title, first `M` capitalized'
 '`shortyear`': The last 2 digits of the publication year
 '`title`': >-
   Capitalize all the significant words of the title, and concatenate them. For

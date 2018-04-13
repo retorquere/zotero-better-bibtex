@@ -31,7 +31,7 @@
         use this option to select whether you want to have these pandoc
         citations surrounded with brackets or not.
     Citation key format:
-      default: '"​[auth][shorttitle][year]"'
+      default: '"​[auth:lower][shorttitle3_3][year]"'
       description: >-
         Set the pattern used to generate citation keys. The format of the keys
         is documented [here](citation-keys).

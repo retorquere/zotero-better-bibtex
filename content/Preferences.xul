@@ -106,7 +106,7 @@
           name="extensions.zotero.translators.better-bibtex.citekeyFormat"
           id="pref-better-bibtex-citekeyFormat"
           type="string"
-          default="&#x200B;[auth][shorttitle][year]"/>
+          default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <!--!
           Set the pattern used to generate citation keys. The format of the keys is documented [here](citation-keys).
         -->
