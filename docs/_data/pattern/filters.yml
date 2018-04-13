@@ -59,7 +59,9 @@
   `extensions.zotero.translators.better-bibtex.skipWords` as a comma-separated,
 
   case-insensitive list of words.
-'`substring`': '(`substring,start,n`) selects `n` characters starting at `start`'
+'`substring`': >-
+  (`substring=start,n`) selects `n` (default: all) characters starting at
+  `start` (default: 1)
 '`upper`': >-
   Forces the text inserted by the field marker to be in uppercase. For example,
   `[auth:upper]` expands the last name of the first author in uppercase.
