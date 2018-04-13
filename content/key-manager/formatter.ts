@@ -325,18 +325,21 @@ class PatternFormatter {
   public $firstpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
-    let firstpage = ''
-    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => firstpage = fp)
-    return firstpage
+    const firstpage = []
+    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => firstpage.push(parseInt(fp)))
+    firstpage.sort()
+    return firstpage[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
     if (!this.item.pages) return ''
-    let lastpage = ''
-    this.item.pages.replace(/([0-9]+)[^0-9]*$/g, (match, lp) => lastpage = lp)
-    return lastpage
+    const lastpage = []
+    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => lastpage.push(parseInt(fp)))
+    lastpage.sort()
+    lastpage.reverse()
+    return lastpage[0] || ''
   }
 
   /** Tag number `N` */
