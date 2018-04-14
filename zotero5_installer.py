@@ -45,6 +45,9 @@ def jurism_latest():
 
   release = release.getresponse()
   release = release.getheader('Location')
+
+  if release is None and args.cache is not None: return 'cached'
+
   return release.split('/')[-2]
 
 #  class Parser(HTMLParser):
