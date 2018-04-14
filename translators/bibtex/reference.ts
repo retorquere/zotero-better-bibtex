@@ -460,7 +460,10 @@ export class Reference {
       if (Array.isArray(field.value) && (field.value.length === 0)) return
     }
 
-    if (this.has[field.name] && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
+    if (this.has[field.name]) {
+      if (Translator.preferences.testing && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
+      this.remove(field.name)
+    }
 
     if (!field.bibtex) {
       let value
