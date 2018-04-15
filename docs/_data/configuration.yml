@@ -288,8 +288,3 @@
       description: >-
         When on, BBT will automatically pin the first citekey it generates for
         an item.
-    overleaf:
-      default: 'off'
-      description: >-
-        When on, BBT auto-detect overleaf git repos and will push changes on
-        auto-export. Experimental
