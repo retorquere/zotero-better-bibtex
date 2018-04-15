@@ -1,4 +1,4 @@
-# Push Export
+## Push Export
 
 When exporting using Better Bib(La)Tex you will be offered a new export option: `Keep updated`. Checking this option
 registers the export for automation; any changes to the collection after you've completed the current export will
@@ -21,7 +21,7 @@ Note that the nature of git commit/push is not file-bound; if you made edits to 
 
 git auto-export works nicely with overleaf, which is where I use it myself, but any git service (gitlab, github, etc) should work exactly the same.
 
-# Pull Export
+## Pull Export
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
 rule), or with a BibLaTeX remote statement like
 \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}. You can then fetch your bibliography on the url
