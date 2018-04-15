@@ -24,8 +24,12 @@ git auto-export works nicely with overleaf, which is where I use it myself, but 
 ## Pull Export
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
 rule), or with a BibLaTeX remote statement like
-\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}. You can then fetch your bibliography on the url
-http://localhost:23119/better-bibtex/collection?[collectionID].[format], where collectionID is:
+
+```
+\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}
+```
+
+You can then fetch your bibliography on the url http://localhost:23119/better-bibtex/collection?[collectionID].[format], where collectionID is:
 
 * the ID you get by right-clicking your collection and selecting "Show collection key"
 * the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the
