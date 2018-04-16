@@ -1,0 +1,12 @@
+{
+  "translatorID": "19afa3fd-1c7f-4eb8-a37e-8d07768493e8",
+  "label": "Citation graph",
+  "creator": "Emiliano heyns",
+  "target": "gml",
+  "minVersion": "4.0.27",
+  "maxVersion": "",
+  "translatorType": 2,
+  "browserSupport": "gcsv",
+  "inRepository": false,
+  "priority": 100
+}
