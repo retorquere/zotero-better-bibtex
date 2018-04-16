@@ -190,12 +190,12 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public async pull(repo) {
-    repo = this.overleafRepo(repo)
+    repo = this.gitPush(repo)
     if (repo) await this.exec(this.git, ['pull'], repo)
   }
 
   public async push(path) {
-    const repo = this.overleafRepo(path)
+    const repo = this.gitPush(path)
     if (repo) {
       const name = Zotero.File.pathToFile(path).leafName
       await this.exec(this.git, ['add', name], repo)
@@ -209,7 +209,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
-    if (Prefs.get('overleaf') && this.overleafRepo(ae.path)) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    if (this.gitPush(ae.path)) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
   }
 
   public changed(items) {
@@ -261,9 +261,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     scheduled.push({ id: ae.$loki })
   }
 
-  private overleafRepo(path) {
-    if (!Prefs.get('overleaf')) return null
-
+  private gitPush(path) {
     let repo = Zotero.File.pathToFile(path)
     if (!repo.exists()) return null
 
@@ -276,7 +274,11 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     if (!config_file.exists()) return null
 
     const config = ini.parse(Zotero.File.getContents(config_file))
-    if (config['remote "origin"'] && config['remote "origin"'].url && config['remote "origin"'].url.startsWith('https://git.overleaf.com/')) return repo.path
+
+    // enable with 'git config zotero.betterbibtex.push true'
+    const enabled = (config['zotero "betterbibtex"'] || {}).push
+    debug('git config found for', repo.path, 'enabled =', enabled)
+    if (enabled === 'true') return repo.path
 
     return null
   }
