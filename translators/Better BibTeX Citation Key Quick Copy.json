@@ -1,6 +1,7 @@
 {
   "translatorID": "a515a220-6fef-45ea-9842-8025dfebcc8f",
   "label": "Better BibTeX Citation Key Quick Copy",
+  "description": "exports citations to be copy-pasted into your LaTeX/Markdown /Org-mode/etc documents",
   "creator": "Emiliano heyns",
   "target": "txt",
   "minVersion": "4.0.27",

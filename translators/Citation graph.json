@@ -1,6 +1,7 @@
 {
   "translatorID": "19afa3fd-1c7f-4eb8-a37e-8d07768493e8",
   "label": "Citation graph",
+  "description": "exports a citation graph in graphml format. Use gephi or yEd to clean up and visualize",
   "creator": "Emiliano heyns",
   "target": "gml",
   "minVersion": "4.0.27",

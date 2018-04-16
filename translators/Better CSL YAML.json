@@ -1,6 +1,7 @@
 {
   "translatorID": "0f238e69-043e-4882-93bf-342de007de19",
   "label": "Better CSL YAML",
+  "description": "exports references in pandoc-compatible CSL-YAML format, with added citation keys and parsing of metadata",
   "creator": "Emiliano heyns",
   "target": "yaml",
   "minVersion": "4.0.27",

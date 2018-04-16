@@ -121,7 +121,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
       const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
 
-      await Zotero.Translators.save(JSON.parse(metadata), code)
+      header = JSON.parse(metadata)
+      delete header.description
+      await Zotero.Translators.save(header, code)
 
       debug('Translator.install', header, 'succeeded')
     } catch (err) {

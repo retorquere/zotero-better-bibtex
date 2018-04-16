@@ -1,6 +1,7 @@
 {
   "translatorID": "f4b52ab0-f878-4556-85a0-c7aeedd09dfc",
   "label": "Better CSL JSON",
+  "description": "exports references in pandoc-compatible CSL-JSON format, with added citation keys and parsing of metadata",
   "creator": "Emiliano heyns",
   "target": "json",
   "minVersion": "4.0.27",
