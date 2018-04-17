@@ -188,9 +188,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
-import { Application as CAYW } from './cayw.ts'
+import * as CAYW from './cayw.ts'
 $patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
-  if (agent === 'BetterBibTeX') return CAYW
+  if (agent === 'BetterBibTeX') return CAYW.Application
   return original.apply(this, arguments)
 })
 
@@ -548,6 +548,23 @@ export = new class BetterBibTeX {
     }
 
     return ''
+  }
+
+  public async addCitationLinks() {
+    const items = Zotero.getActiveZoteroPane().getSelectedItems()
+    if (items.length !== 1) {
+      flash('Citation links only works for a single reference')
+      return
+    }
+
+    const extra = items[0].getField('extra') || ''
+    const citations = new Set(extra.split('\n').filter(line => line.startsWith('cites:')))
+    const picked = (await CAYW.pick({ format: 'citationLinks' })).split('\n').filter(citation => !citations.has(citation))
+
+    if (picked.length) {
+      items[0].setField('extra', `${extra}\n${picked.join('\n')}`.trim())
+      await items[0].saveTx()
+    }
   }
 
   public async toTeXstudio() {

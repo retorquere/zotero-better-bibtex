@@ -52,6 +52,10 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return formatted.length ? `${options.citeprefix || ''}${formatted.join(options.separator || ',')}${options.citekeypostfix || ''}` : ''
   }
 
+  public async citationLinks(citations, options) {
+    return citations.map(citation => `cites: ${citation.citekey}`).join('\n')
+  }
+
   public async cite(citations, options) { return this.latex(citations, options) }
   public async citet(citations, options) { return this.latex(citations, { command: 'citet', ...options } ) }
   public async citep(citations, options) { return this.latex(citations, { command: 'citep', ...options } ) }

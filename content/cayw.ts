@@ -303,6 +303,18 @@ export let Application = new class { // tslint:disable-line:variable-name
   }
 }
 
+export async function pick(options) {
+  await Zotero.BetterBibTeX.ready
+
+  const doc = Application.createDocument(options)
+  await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
+
+  const picked = doc.citation()
+  const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
+  Application.closeDocument(doc)
+  return citation
+}
+
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
   public OK = 200
@@ -311,18 +323,10 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public async init(request) {
     const options = request.query || {}
 
-    await Zotero.BetterBibTeX.ready
-
     if (options.probe) return [this.OK, 'text/plain', 'ready']
 
     try {
-      const doc = Application.createDocument(options)
-      await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.$loki)
-
-      const picked = doc.citation()
-
-      const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
-      Application.closeDocument(doc)
+      const citation = await pick(options)
 
       if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)
 
