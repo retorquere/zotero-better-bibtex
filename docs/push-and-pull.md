@@ -14,7 +14,7 @@ If you run plan to use BBT auto-export with a git repo, you can run `git config 
 1. `git pull`
 2. Perform the export
 3. `git add <your library file>`
-4. `git commit -m <your library file`
+4. `git commit -m <your library file>`
 5. `git push`
 
 Note that the nature of git commit/push is not file-bound; if you made edits to other files, and added those, they will be committed and pushed along. If you want to be super-careful, the best way to go about it is to have a separate clone of your repo that BBT auto-exports to, and then another repo that you do your own edits in. I don't use it myself this way, but you have been warned.
