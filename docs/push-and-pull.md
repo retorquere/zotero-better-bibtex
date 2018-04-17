@@ -9,7 +9,7 @@ separate exports for separate papers for example if you have set up a collection
 
 ### git support
 
-If you run plan to use BBT auto-export with a git repo, you can run `git config zotero.betterbibtex.push true` in that repo, and BBT will, at each auto-export update to that folder:
+If you plan to use BBT auto-export with a git repo, you can run `git config zotero.betterbibtex.push true` in that repo, and BBT will, at each auto-export update to that folder:
 
 1. `git pull`
 2. Perform the export
