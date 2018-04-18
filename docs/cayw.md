@@ -22,6 +22,10 @@ A sample implementation of real integration (rather than the working-but-clunky 
 
 Dave Smith has gracefully written [instructions](http://davepwsmith.github.io/academic-scrivener-howto/) on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps
 
+### Scrivener 1.0 for Windows
+
+Emilie has writen [instructions](https://github.com/AmomentOfMusic/Zotero_scrivener_picker_windows) for using the CAYW picker for Scrivener 1.0 in Windows 10, with the necessary files
+
 ### Linux
 
 - Emma Reisz has gracefully written [instructions and scripts](https://emmareisz.github.io/zotpicknix/) for setting up CAYW on Linux.
