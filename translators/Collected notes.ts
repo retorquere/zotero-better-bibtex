@@ -6,15 +6,19 @@ import { htmlEscape } from './lib/html-escape.ts'
 function _collection(collection, level = 1) {
   Zotero.write(`<h${ level }>${ htmlEscape(collection.name) }</h${ level }>\n`)
   for (const item of collection.items) {
-    if (item.itemType === 'note') {
-      _note(item.note)
-    } else {
-      _item(item, level)
-    }
+    _item(item, level)
   }
 
   for (const subcoll of collection.collections) {
     _collection(subcoll, level + 1)
+  }
+}
+
+function _item(item, level) {
+  if (item.itemType === 'note') {
+    _note(item.note)
+  } else {
+    _reference(item, level)
   }
 }
 
@@ -41,7 +45,7 @@ function _creator(cr) {
   return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
 }
 
-function _item(item, level) {
+function _reference(item, level) {
   const creators = item.creators.map(_creator).filter(v => v).join(' and ')
 
   let date = null
@@ -62,24 +66,36 @@ function _item(item, level) {
   }
 }
 
-Translator.doExport = () => {
+function _items() {
   // collect all notes
   const items = {}
   let item
   while (item = Zotero.nextItem()) {
     if (item.itemType === 'note' || (item.notes || []).length || item.extra) items[item.itemID] = item
   }
+  return items
+}
+
+Translator.doExport = () => {
+  // collect all notes
+  const items = _items()
+  const filed = {}
 
   // expand collections
   for (const collection of Object.values(Translator.collections)) {
     collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v)
-    collection.items = collection.items.map(id => items[id]).filter(v => v)
+    collection.items = collection.items.map(id => filed[id] = items[id]).filter(v => v)
   }
 
   // prune empty branches
   const collections = Object.values(Translator.collections).filter(collection => !collection.parent && !_prune(collection))
 
   Zotero.write('<html><body>')
+
+  for (const item of Object.values(items)) {
+    if (filed[item.itemID]) continue
+    _item(item, 1)
+  }
 
   for (const collection of collections) {
     _collection(collection)

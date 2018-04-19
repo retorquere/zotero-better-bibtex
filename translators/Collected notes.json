@@ -6,11 +6,11 @@
   "target": "html",
   "minVersion": "4.0.27",
   "maxVersion": "",
-  "displayOptions": {
-    "keepUpdated": false
-  },
   "translatorType": 2,
   "browserSupport": "gcsv",
   "inRepository": false,
+  "configOptions": {
+    "getCollections": true
+  },
   "priority": 100
 }
