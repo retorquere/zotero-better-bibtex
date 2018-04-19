@@ -1,0 +1,16 @@
+{
+  "translatorID": "f4b52ab0-f878-4556-85a0-c7aeedd09dfc",
+  "label": "Collected notes",
+  "description": "exports your notes",
+  "creator": "Emiliano heyns",
+  "target": "html",
+  "minVersion": "4.0.27",
+  "maxVersion": "",
+  "displayOptions": {
+    "keepUpdated": false
+  },
+  "translatorType": 2,
+  "browserSupport": "gcsv",
+  "inRepository": false,
+  "priority": 100
+}
