@@ -71,13 +71,13 @@ Translator.doExport = () => {
   }
 
   // expand collections
-  for (const collection of Translator.collections) {
+  for (const collection of Object.values(Translator.collections)) {
     collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v)
     collection.items = collection.items.map(id => items[id]).filter(v => v)
   }
 
   // prune empty branches
-  const collections = Translator.collections.filter(collection => !collection.parent && !_prune(collection))
+  const collections = Object.values(Translator.collections).filter(collection => !collection.parent && !_prune(collection))
 
   Zotero.write('<html><body>')
 
