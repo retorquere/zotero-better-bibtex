@@ -66,19 +66,13 @@ function _reference(item, level) {
   }
 }
 
-function _items() {
-  // collect all notes
-  const items = {}
-  let item
-  while (item = Zotero.nextItem()) {
-    if (item.itemType === 'note' || (item.notes || []).length || item.extra) items[item.itemID] = item
-  }
-  return items
-}
-
 Translator.doExport = () => {
   // collect all notes
-  const items = _items()
+  const items = {}
+  let z_item
+  while (z_item = Zotero.nextItem()) {
+    if (z_item.itemType === 'note' || (z_item.notes || []).length || z_item.extra) items[z_item.itemID] = z_item
+  }
   const filed = {}
 
   // expand collections
@@ -92,7 +86,7 @@ Translator.doExport = () => {
 
   Zotero.write('<html><body>')
 
-  for (const item of Object.values(items)) {
+  for (const item of (Object.values(items) as Array<{ itemID: number }>)) {
     if (filed[item.itemID]) continue
     _item(item, 1)
   }
