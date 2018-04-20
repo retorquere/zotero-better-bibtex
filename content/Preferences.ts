@@ -154,7 +154,8 @@ export = new class PrefPane {
       Formatter.parsePattern(keyformat.value)
       msg = ''
     } catch (err) {
-      msg = `${err}`
+      msg = `${err.message} at ${err.location.start.offset + 1}`
+      debug('key format error:', msg)
     }
 
     keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
@@ -167,7 +168,10 @@ export = new class PrefPane {
       Formatter.parsePattern(keyformat.value)
       Prefs.set('citekeyFormat', keyformat.value)
     } catch (error) {
+      // restore previous value
       this.getCitekeyFormat()
+      keyformat.setAttribute('style', '')
+      keyformat.setAttribute('tooltiptext', '')
     }
   }
 

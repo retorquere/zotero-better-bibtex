@@ -25,7 +25,7 @@ block
   / '[=' types:[a-zA-Z/]+ ']'             {
       types = types.join('').toLowerCase().split('/');
       var unknown = types.find(type => !options.itemTypes.has(type));
-      if (typeof unknown !== 'undefined') throw new Error(`Unknown reference type "${unknown}"`);
+      if (typeof unknown !== 'undefined') error(`Unknown reference type "${unknown}"`);
       return `if (!${JSON.stringify(types)}.includes(this.item.type.toLowerCase())) break`;
     }
   / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) break` }
@@ -47,13 +47,13 @@ method
       } else if (flag.length <= 1) {
         joiner = flag;
       } else {
-        throw new Error("Unsupported flag " + flag + " in pattern")
+        error(`Unsupported flag "${flag}" in pattern`)
       }
 
       var method = creators + name.join('');
       var $method = '$' + method.replace(/\./g, '_');
 
-      if (!options[$method]) throw new Error(`Invalid method '${method}' in citekey pattern`)
+      if (!options[$method]) error(`Invalid method '${method}' in citekey pattern`)
 
       var args = [ '' + !!editorsOnly, '' + !!withInitials, JSON.stringify(joiner) ];
       if (params) args = args.concat(params); // mparams already are stringified integers
@@ -72,7 +72,7 @@ method
         chunk = `chunk = this.${$method}(${(params || []).join(', ')})`
         if (name == 'zotero') chunk += `; postfix = '0'`
       } else {
-        if (!name.match(/^[A-Z][A-Za-z]+$/)) throw new Error('Property access name "' + name + '" must start with a capital letter and can only contain letters');
+        if (!name.match(/^[A-Z][A-Za-z]+$/)) error(`Property access name "${name}" must start with a capital letter and can only contain letters`);
         chunk = `chunk = this.$property(${JSON.stringify(name)})`
       }
       return chunk;
@@ -89,7 +89,7 @@ filter
   = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
   / ':' f:function_filter   {
       var _filter = '_' + f.name;
-      if (! options[_filter] ) throw new Error(`invalid filter "${f.name}" in pattern`);
+      if (! options[_filter] ) error(`invalid filter "${f.name}" in pattern`);
 
       var params = ['chunk'].concat(f.params.map(function(p) { return JSON.stringify(p) }));
 
