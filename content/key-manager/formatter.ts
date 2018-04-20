@@ -16,6 +16,8 @@ import { JournalAbbrev } from '../journal-abbrev.ts'
 class PatternFormatter {
   public generate: Function
 
+  public itemTypes: Set<string>
+
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
@@ -50,10 +52,12 @@ class PatternFormatter {
   private citekeyFormat: string
 
   constructor() {
-    this.update()
+    this.update(new Set([]))
   }
 
-  public update() {
+  public update(itemTypes = null) {
+    if (itemTypes) this.itemTypes = itemTypes
+
     debug('PatternFormatter.update:')
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
@@ -78,7 +82,7 @@ class PatternFormatter {
     debug('PatternFormatter.update: citekeyFormat=', this.citekeyFormat, `${this.generate}`)
   }
 
-  public parsePattern(pattern) { return parser.parse(pattern, PatternFormatter.prototype) }
+  public parsePattern(pattern) { return parser.parse(pattern, this) }
 
   public format(item) {
     this.item = {

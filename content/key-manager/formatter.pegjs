@@ -22,8 +22,13 @@ pattern
 block
   = [ \t\r\n]+                            { return '' }
   / '[0]'                                 { return `postfix = '0'` }
-  / '[=' types:[a-zA-Z/]+ ']'             { return `if (!${JSON.stringify(types.join('').toLowerCase().split('/'))}.includes(this.item.type.toLowerCase())) { break }` }
-  / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) { break }` }
+  / '[=' types:[a-zA-Z/]+ ']'             {
+      types = types.join('').toLowerCase().split('/');
+      var unknown = types.find(type => !options.itemTypes.has(type));
+      if (typeof unknown !== 'undefined') throw new Error(`Unknown reference type "${unknown}"`);
+      return `if (!${JSON.stringify(types)}.includes(this.item.type.toLowerCase())) break`;
+    }
+  / '[>' limit:[0-9]+ ']'                 { return `if (citekey.length <= ${limit.join('')}) break` }
   / '[' method:method filters:filter* ']' { return `${[method].concat(filters).join('; ')}; citekey += chunk`; }
   / chars:[^\|>\[\]]+                     { return `citekey += ${JSON.stringify(chars.join(''))}` }
 

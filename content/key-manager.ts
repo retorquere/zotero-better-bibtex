@@ -126,7 +126,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       this.query.type[type.typeName] = type.itemTypeID
     }
 
-    Formatter.update()
+    Formatter.update(new Set((await Zotero.DB.queryAsync('select typeName from itemTypes')).map(type => type.typeName.toLowerCase())))
 
     await this.rescan()
 
