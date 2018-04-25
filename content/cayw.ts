@@ -125,7 +125,7 @@ class Document {
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
     data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
     debug('CAYW.document:', data)
-    this.setDocumentData(data.serialize())
+    this.data = data.serialize()
   }
 
   /**
