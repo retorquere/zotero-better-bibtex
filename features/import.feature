@@ -44,6 +44,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
+  | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibTeX import; preamble with def create problems #732                       | 2           |
