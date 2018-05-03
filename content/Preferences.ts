@@ -148,6 +148,7 @@ export = new class PrefPane {
 
   public checkCitekeyFormat() {
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    if (keyformat.disabled) return // itemTypes not available yet
 
     let msg
     try {
@@ -202,7 +203,19 @@ export = new class PrefPane {
 
   public load() {
     debug('prefs: loading...')
+
     if (typeof Zotero_Preferences === 'undefined') return
+
+    // disable key format editing until DB clears because of course async
+    const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    keyformat.disabled = true
+    Zotero.BetterBibTeX.ready
+      .then(() => {
+        keyformat.disabled = false
+        this.getCitekeyFormat()
+        this.update()
+      })
+      .catch(err => debug('preferences.load: BBT init failed', err))
 
     // no other way that I know of to know that I've just been selected
     const timer = window.setInterval(() => {
