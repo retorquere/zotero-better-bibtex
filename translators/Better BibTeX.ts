@@ -784,26 +784,29 @@ class ZoteroItem {
 
   protected $shorttitle(value) { return this.set('shortTitle', this.unparse(value)) }
 
-  protected $eprint(value, field) {
+  protected _$eprinttype(value) {
+    if (!value) return null
+    const eprinttype = this.unparse(value)
+
+    switch (eprinttype.trim().toLowerCase()) {
+      case 'arxiv':       return 'arXiv'
+      case 'jstor':       return 'JSTOR'
+      case 'pubmed':      return 'PMID'
+      case 'hdl':         return 'HDL'
+      case 'googlebooks': return 'GoogleBooksID'
+      default:            return null
+    }
+  }
+  protected $eprint(value) {
     /* Support for IDs exported by BibLaTeX */
-    let eprinttype = this.fields.eprinttype ||  this.fields.archiveprefix
+    const eprinttype = this._$eprinttype(this.fields.eprinttype ||  this.fields.archiveprefix)
     if (!eprinttype) return false
 
     const eprint = this.unparse(value)
-    eprinttype = this.unparse(eprinttype)
-
-    switch (eprinttype.trim().toLowerCase()) {
-      case 'arxiv': this.hackyFields.push(`arXiv: ${eprint}`); break
-      case 'jstor': this.hackyFields.push(`JSTOR: ${eprint}`); break
-      case 'pubmed': this.hackyFields.push(`PMID: ${eprint}`); break
-      case 'hdl': this.hackyFields.push(`HDL: ${eprint}`); break
-      case 'googlebooks': this.hackyFields.push(`GoogleBooksID: ${eprint}`); break
-      default:
-        return false
-    }
+    this.hackyFields.push(`${eprinttype}: ${eprint}`)
     return true
   }
-  protected $eprinttype(value) { return this.fields.eprint }
+  protected $eprinttype(value) { return this.fields.eprint && this._$eprinttype(value) }
   protected $archiveprefix(value) { return this.$eprinttype(value) }
 
   protected $nationality(value) { return this.set('country', this.unparse(value)) }

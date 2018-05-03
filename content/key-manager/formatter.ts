@@ -16,6 +16,8 @@ import { JournalAbbrev } from '../journal-abbrev.ts'
 class PatternFormatter {
   public generate: Function
 
+  public itemTypes: Set<string>
+
   private re = {
     unsafechars: Zotero.Utilities.XRegExp('[^-\\p{L}0-9_!$*+./;\\[\\]]'),
     alphanum: Zotero.Utilities.XRegExp('[^\\p{L}\\p{N}]'),
@@ -49,12 +51,14 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  constructor() {
-    this.update()
+  public init(itemTypes) {
+    this.itemTypes = itemTypes
+    debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
+  public update(reason) {
+    if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
 
-  public update() {
-    debug('PatternFormatter.update:')
+    debug('PatternFormatter.update:', reason)
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
@@ -64,7 +68,9 @@ class PatternFormatter {
         flash(`Malformed citation pattern '${this.citekeyFormat}', resetting to default`)
         Prefs.clear('citekeyFormat')
       }
-      this.citekeyFormat = Prefs.get('citekeyFormat')
+
+      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+      this.citekeyFormat = Prefs.get('citekeyFormat').replace(/^\u200B/, '')
 
       try {
         debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
@@ -78,7 +84,7 @@ class PatternFormatter {
     debug('PatternFormatter.update: citekeyFormat=', this.citekeyFormat, `${this.generate}`)
   }
 
-  public parsePattern(pattern) { return parser.parse(pattern, PatternFormatter.prototype) }
+  public parsePattern(pattern) { return parser.parse(pattern, this) }
 
   public format(item) {
     this.item = {
@@ -133,9 +139,6 @@ class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
-
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    if (citekey.citekey[0] === '\u200B') citekey.citekey = citekey.citekey.substr(1)
 
     return citekey
   }

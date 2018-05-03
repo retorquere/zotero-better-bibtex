@@ -126,7 +126,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       this.query.type[type.typeName] = type.itemTypeID
     }
 
-    Formatter.update()
+    Formatter.init(new Set((await Zotero.DB.queryAsync('select typeName from itemTypes')).map(type => type.typeName.toLowerCase())))
+    Formatter.update('init')
 
     await this.rescan()
 
@@ -135,7 +136,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     Events.on('preference-changed', pref => {
       debug('KeyManager.pref changed', pref)
       if (['autoAbbrevStyle', 'citekeyFormat', 'citekeyFold', 'skipWords'].includes(pref)) {
-        Formatter.update()
+        Formatter.update('pref-change')
       }
     })
 

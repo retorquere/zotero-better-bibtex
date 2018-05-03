@@ -528,5 +528,7 @@ module BBT
 
     # test whether the existing references, if any, have gotten a cite key
     exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore)
+    user_js = File.join(profile_tgt, 'user.js')
+    File.unlink(user_js) if File.file?(user_js)
   }
 end
