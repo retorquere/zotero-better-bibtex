@@ -51,12 +51,12 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  constructor() {
-    this.update(new Set([]))
+  public init(itemTypes) {
+    this.itemTypes = itemTypes
+    debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
-
-  public update(itemTypes = null) {
-    if (itemTypes) this.itemTypes = itemTypes
+  public update() {
+    if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
 
     debug('PatternFormatter.update:')
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
@@ -68,7 +68,9 @@ class PatternFormatter {
         flash(`Malformed citation pattern '${this.citekeyFormat}', resetting to default`)
         Prefs.clear('citekeyFormat')
       }
-      this.citekeyFormat = Prefs.get('citekeyFormat')
+
+      // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
+      this.citekeyFormat = Prefs.get('citekeyFormat').replace(/^\u200B/, '')
 
       try {
         debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
@@ -137,9 +139,6 @@ class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
-
-    // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-    if (citekey.citekey[0] === '\u200B') citekey.citekey = citekey.citekey.substr(1)
 
     return citekey
   }
