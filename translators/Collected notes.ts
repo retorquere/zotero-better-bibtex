@@ -38,7 +38,9 @@ function _prune(collection) {
 }
 
 function _note(body) {
-  Zotero.write(`<hr/><div>${ body }</div>\n`)
+  if (typeof body.note !== 'undefined') body = body.note
+  if (!body) return
+  Zotero.write(`<div>${ body.note || body }</div><hr/>\n`)
 }
 
 function _creator(cr) {
@@ -73,8 +75,8 @@ Translator.doExport = () => {
   while (z_item = Zotero.nextItem()) {
     if (z_item.itemType === 'note' || (z_item.notes || []).length || z_item.extra) items[z_item.itemID] = z_item
   }
-  const filed = {}
 
+  const filed = {}
   // expand collections
   for (const collection of Object.values(Translator.collections)) {
     collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v)
