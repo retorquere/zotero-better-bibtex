@@ -140,10 +140,10 @@ export = new class PrefPane {
   private AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
 
   public getCitekeyFormat() {
-    debug('PrefPane.getCitekeyFormat...')
+    debug('prefs: fetching citekey for display...')
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     keyformat.value = Prefs.get('citekeyFormat')
-    debug('PrefPane.getCitekeyFormat got', keyformat.value)
+    debug('prefs: fetched citekey for display:', keyformat.value)
   }
 
   public checkCitekeyFormat() {
@@ -154,8 +154,9 @@ export = new class PrefPane {
       Formatter.parsePattern(keyformat.value)
       msg = ''
     } catch (err) {
-      msg = `${err.message} at ${err.location.start.offset + 1}`
-      debug('key format error:', msg)
+      msg = err.message
+      if (err.location) msg += ` at ${err.location.start.offset + 1}`
+      debug('prefs: key format error:', msg)
     }
 
     keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
@@ -165,10 +166,12 @@ export = new class PrefPane {
   public saveCitekeyFormat() {
     const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try {
+      debug('prefs: saving new citekey format', keyformat.value)
       Formatter.parsePattern(keyformat.value)
       Prefs.set('citekeyFormat', keyformat.value)
     } catch (error) {
       // restore previous value
+      debug('prefs: error saving new citekey format', keyformat.value, 'restoring previous')
       this.getCitekeyFormat()
       keyformat.setAttribute('style', '')
       keyformat.setAttribute('tooltiptext', '')
@@ -198,7 +201,7 @@ export = new class PrefPane {
   }
 
   public load() {
-    debug('PrefPane.new: loading...')
+    debug('prefs: loading...')
     if (typeof Zotero_Preferences === 'undefined') return
 
     // no other way that I know of to know that I've just been selected
@@ -228,14 +231,14 @@ export = new class PrefPane {
     this.getCitekeyFormat()
     this.update()
 
-    debug('PrefPane.new loaded @', document.location.hash)
+    debug('prefs: loaded @', document.location.hash)
 
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
       // tslint:disable-next-line:no-magic-numbers
       setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
-    debug('PrefPane.new: ready')
+    debug('prefs: ready')
 
     window.sizeToContent()
   }
