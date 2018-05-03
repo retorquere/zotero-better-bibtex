@@ -17,7 +17,7 @@ function select_link(item) {
   switch (type) {
     case 'users':
       if (groupId.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-      id = `0_${key}`
+      id = key
       break
     case 'groups':
       if (!groupId) throw new Error(`Missing groupId in ${item.uri}`)
