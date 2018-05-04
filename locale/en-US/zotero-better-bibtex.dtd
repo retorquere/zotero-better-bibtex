@@ -37,24 +37,21 @@ If you are OK with sending this data, please click &quot;Next&quot; and post the
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
+
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
-<!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
-<!ENTITY better-bibtex.Preferences.auto-export.auto-abbrev "Auto-abbreviate">
 <!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
-<!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
-<!ENTITY better-bibtex.Preferences.auto-export.mark "Export">
-<!ENTITY better-bibtex.Preferences.auto-export.notes "Export Notes">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
-<!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh">
+<!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh list">
+<!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
+<!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
-<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
-<!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
-<!ENTITY better-bibtex.Preferences.auto-export.translator "Translator">
+
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">

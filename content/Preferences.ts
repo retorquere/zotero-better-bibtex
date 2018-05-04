@@ -13,105 +13,112 @@ import { KeyManager } from './key-manager.ts'
 import { AutoExport } from './auto-export.ts'
 import { Translators } from './translators.ts'
 
-class AutoExportPrefPane {
-  protected AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
+class AutoExportTreeView {
+  public rowCount: number
+  public rows: Array<{ columns: { name: string, value: string}, level: number, parent: number, open?: boolean, autoexport: any }> = []
 
-  public remove() {
-    const exportlist = document.getElementById('better-bibtex-export-list')
-    if (!exportlist) return
-    const selected = exportlist.currentIndex
-    if (selected < 0) return
+  private label: { [key: string]: string }
+  private treeBox: any
+  private data: any[]
 
-    const id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
-    debug('AutoExport: removing', { id })
-    AutoExport.db.remove(id)
-    this.refresh()
+  constructor() {
+    this.label = {}
+    for (const label of ['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes']) {
+      this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.${label}`)
+    }
+    for (const label of ['collection', 'library']) {
+      this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${label}`)
+    }
+    for (const label of ['scheduled', 'running', 'done', 'error']) {
+      this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${label}`)
+    }
   }
 
-  public mark() {
-    const exportlist = document.getElementById('better-bibtex-export-list')
-    if (!exportlist) return
-    const selected = exportlist.currentIndex
-    if (selected < 0) return
-
-    const id = parseInt(exportlist.contentView.getItemAtIndex(selected).getAttribute('autoexport'))
-    AutoExport.run(id)
-    this.refresh()
+  public setTree(treeBox) {
+    this.treeBox = treeBox
+    debug('prefs: ae view set', !!this.treeBox)
+    this.refresh(true)
   }
 
-  public refresh() {
-    if (!AutoExport.db) {
-      debug('AutoExportPrefPane.refresh: DB not loaded')
-      return
-    }
-
-    const exportlist = document.getElementById('better-bibtex-auto-exports')
-    if (!exportlist) return
-    while (exportlist.hasChildNodes()) {
-      exportlist.removeChild(exportlist.firstChild)
-    }
-
-    const columns = Array.from(
-      document.getElementById('better-bibtex-export-list').getElementsByTagName('treecol') as NodeList
-    ).map(
-      col => (col as Element).getAttribute('id').replace(/^better-bibtex-preferences-auto-export-/, '')
-    )
-
-    const on = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.on')
-    const off = Zotero.BetterBibTeX.getString('Preferences.auto-export.setting.off')
-
-    for (const ae of AutoExport.db.chain().simplesort('path').data()) {
-      const treeitem = exportlist.appendChild(document.createElement('treeitem'))
-      treeitem.setAttribute('autoexport', `${ae.$loki}`)
-
-      const treerow = treeitem.appendChild(document.createElement('treerow'))
-      // TODO: https://github.com/Microsoft/TypeScript/issues/19186
-      // TODO: https://github.com/Microsoft/TypeScript/issues/1260
-
-      for (const column of columns) {
-        debug('Preferences.AutoExport.refresh:', column)
-        const treecell = treerow.appendChild(document.createElement('treecell'))
-        treecell.setAttribute('editable', 'false')
-
-        switch (column) {
-          case 'collection':
-            const type = Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) || ae.type
-            treecell.setAttribute('label', `${type}: ${this.autoExportName(ae)}`)
-            break
-
-          case 'status':
-            let status = ae.error ? 'error' : ae.status
-            status = Zotero.BetterBibTeX.getString(`Preferences.auto-export.status.${status}`) || status
-            if (ae.error) status += `: ${ae.error}`
-            treecell.setAttribute('label', status)
-            break
-
-          case 'updated':
-            treecell.setAttribute('label', `${new Date(ae.meta.updated || ae.meta.created)}`)
-            break
-
-          case 'target':
-            treecell.setAttribute('label', ae.path)
-            break
-
-          case 'translator':
-            treecell.setAttribute('label', Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??')
-            break
-
-          case 'auto-abbrev':
-            treecell.setAttribute('label', ae.useJournalAbbreviation ? on : off)
-            break
-
-          case 'notes':
-            treecell.setAttribute('label', ae.exportNotes ? on : off)
-            break
-
-          default:
-            throw new Error(`Unexpected auto-export column ${column}`)
-        }
+  public refresh(reload = false) {
+    if (reload || !this.data) this.data = AutoExport.db.find()
+    debug('ae.prefs.refresh:', this.data)
+    const rows = []
+    let parent = 0
+    for (const ae of this.data) {
+      parent = rows.length
+      rows.push({ columns: { name: `${this.label[ae.type] || ae.type}: ${this.autoExportName(ae)}`, value: this.label[ae.status] || ae.status}, level: 0, parent: -1, open: !!ae.open, autoexport: ae })
+      if (ae.open) {
+        rows.push({ columns: { name: this.label.updated, value: `${new Date(ae.meta.updated || ae.meta.created)}`}, level: 1, parent, autoexport: ae })
+        if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.translator, value: Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??'}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae })
       }
     }
+    this.rowCount = rows.length
+    this.treeBox.rowCountChanged(0, rows.length - this.rows.length)
+    this.rows = rows
+    debug('ae.prefs.refresh:', this.rows)
+    this.treeBox.invalidate()
   }
+
+  public getCellText(row, column) {
+    column = column.id.split('-').slice(-1)[0]
+    debug('ae.prefs: getCellText', row, column, this.rows[row])
+    return this.rows[row].columns[column]
+  }
+
+  public isContainer(row) {
+    return this.rows[row].level === 0
+  }
+
+  public isContainerOpen(row) {
+    return this.rows[row].open
+  }
+
+  public isContainerEmpty(row) { return false }
+  public isSeparator(row) { return false }
+  public isSorted() { return false }
+  public isEditable(row, column) { return false }
+
+  public getParentIndex(row) {
+    return this.rows[row].parent
+  }
+
+  public getLevel(row) {
+    return this.rows[row].level
+  }
+
+  public hasNextSibling(row, after) {
+    const thisLevel = this.rows[row].level
+    for (row = after + 1; row < this.rows.length; row++) {
+      if (this.rows[row].level === thisLevel) return true
+      if (this.rows[row].level < thisLevel) return false
+    }
+    return false
+  }
+
+  public toggleOpenState(row) {
+    debug('ae.prefs.toggleOpenState', this.rows[row])
+    if (this.rows[row].level !== 0) return
+
+    this.rows[row].autoexport.open = !this.rows[row].autoexport.open
+    this.refresh()
+  }
+
+  public getImageSrc(row, column) { /* do nothing */ }
+  public getProgressMode(row, column) { /* do nothing */ }
+  public getCellValue(row, column) { /* do nothing */ }
+  public cycleHeader(col, elem) { /* do nothing */ }
+  public selectionChanged() { /* do nothing */ }
+  public cycleCell(row, column) { /* do nothing */ }
+  public performActionOnCell(action, index, column) { /* do nothing */ }
+  public getRowProperties(idx, prop) { /* do nothing */ }
+  public getCellProperties(idx, column, prop) { /* do nothing */ }
+  public getColumnProperties(column, element, prop) { /* do nothing */ }
+  public performAction(action) { /* do nothing */ }
 
   private autoExportNameCollectionPath(id) {
     if (!id) return ''
@@ -137,22 +144,22 @@ class AutoExportPrefPane {
 }
 
 export = new class PrefPane {
-  private AutoExport: AutoExportPrefPane // tslint:disable-line:variable-name
+  private exportlist: any
+  private exportlist_view: AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unavailable
+  private keyformat: any
 
   public getCitekeyFormat() {
     debug('prefs: fetching citekey for display...')
-    const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    keyformat.value = Prefs.get('citekeyFormat')
-    debug('prefs: fetched citekey for display:', keyformat.value)
+    this.keyformat.value = Prefs.get('citekeyFormat')
+    debug('prefs: fetched citekey for display:', this.keyformat.value)
   }
 
   public checkCitekeyFormat() {
-    const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    if (keyformat.disabled) return // itemTypes not available yet
+    if (this.keyformat.disabled) return // itemTypes not available yet
 
     let msg
     try {
-      Formatter.parsePattern(keyformat.value)
+      Formatter.parsePattern(this.keyformat.value)
       msg = ''
     } catch (err) {
       msg = err.message
@@ -160,22 +167,21 @@ export = new class PrefPane {
       debug('prefs: key format error:', msg)
     }
 
-    keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
-    keyformat.setAttribute('tooltiptext', msg)
+    this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
+    this.keyformat.setAttribute('tooltiptext', msg)
   }
 
   public saveCitekeyFormat() {
-    const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     try {
-      debug('prefs: saving new citekey format', keyformat.value)
-      Formatter.parsePattern(keyformat.value)
-      Prefs.set('citekeyFormat', keyformat.value)
+      debug('prefs: saving new citekey format', this.keyformat.value)
+      Formatter.parsePattern(this.keyformat.value)
+      Prefs.set('citekeyFormat', this.keyformat.value)
     } catch (error) {
       // restore previous value
-      debug('prefs: error saving new citekey format', keyformat.value, 'restoring previous')
+      debug('prefs: error saving new citekey format', this.keyformat.value, 'restoring previous')
       this.getCitekeyFormat()
-      keyformat.setAttribute('style', '')
-      keyformat.setAttribute('tooltiptext', '')
+      this.keyformat.setAttribute('style', '')
+      this.keyformat.setAttribute('tooltiptext', '')
     }
   }
 
@@ -206,12 +212,17 @@ export = new class PrefPane {
 
     if (typeof Zotero_Preferences === 'undefined') return
 
+    this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+
     // disable key format editing until DB clears because of course async
-    const keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-    keyformat.disabled = true
+    this.keyformat.disabled = true
     Zotero.BetterBibTeX.ready
       .then(() => {
-        keyformat.disabled = false
+        this.keyformat.disabled = false
+
+        this.exportlist = document.getElementById('better-bibtex-export-list')
+        this.exportlist.view = this.exportlist_view = new AutoExportTreeView
+
         this.getCitekeyFormat()
         this.update()
       })
@@ -226,8 +237,6 @@ export = new class PrefPane {
         window.clearInterval(timer)
       }
     }, 500) // tslint:disable-line:no-magic-numbers
-
-    this.AutoExport = new AutoExportPrefPane()
 
     // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
     document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
@@ -254,6 +263,34 @@ export = new class PrefPane {
     debug('prefs: ready')
 
     window.sizeToContent()
+  }
+
+  public aeSelected() {
+    if (!this.exportlist) return false
+    if (this.exportlist.currentIndex < 0) return false
+    return this.exportlist_view.rows[this.exportlist.currentIndex]
+  }
+  public aeRemove() {
+    const selected = this.aeSelected()
+    if (!selected) return
+
+    debug('AutoExport: removing', { selected })
+    AutoExport.db.remove(selected.autoexport)
+    this.aeRefresh()
+  }
+
+  public aeRun() {
+    const selected = this.aeSelected()
+    if (!selected) return
+
+    AutoExport.run(selected.autoexport.$loki)
+    this.aeRefresh()
+  }
+
+  public aeRefresh(reload = false) {
+    if (!this.exportlist) return
+
+    this.exportlist_view.refresh(reload)
   }
 
   private update() {
@@ -290,7 +327,7 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
-    this.AutoExport.refresh()
+    this.aeRefresh()
 
     window.sizeToContent()
   }
@@ -303,14 +340,6 @@ export = new class PrefPane {
     const styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
   }
-
-  /* Unused?
-  private display(id, text) {
-    const elt = document.getElementById(id)
-    elt.value = text
-    if (text !== '') elt.setAttribute('tooltiptext', text)
-  }
-  */
 }
 
 // otherwise this entry point won't be reloaded: https://github.com/webpack/webpack/issues/156

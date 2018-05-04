@@ -561,27 +561,17 @@
               <hbox>
                 <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false">
                   <treecols>
-                    <treecol id="better-bibtex-preferences-auto-export-collection" label="&better-bibtex.Preferences.auto-export.collection;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
+                    <treecol id="better-bibtex-export-list-name" label="&better-bibtex.Preferences.auto-export.collection;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
                     <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-status" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-updated" label="&better-bibtex.Preferences.auto-export.updated;" editable="false" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-target" label="&better-bibtex.Preferences.auto-export.target;" editable="false" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-translator" label="&better-bibtex.Preferences.auto-export.translator;" editable="false" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-auto-abbrev" label="&better-bibtex.Preferences.auto-export.auto-abbrev;" editable="false" flex="1" persist="width ordinal hidden"/>
-                    <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-preferences-auto-export-notes" label="&better-bibtex.Preferences.auto-export.notes;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <treecol id="better-bibtex-export-list-value" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden"/>
                   </treecols>
-                  <treechildren id="better-bibtex-auto-exports"/>
+                  <treechildren/>
                 </tree>
               </hbox>
               <hbox>
-                <button id="auto-export-remove" label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.remove()"/>
-                <button id="auto-export-mark" label="&better-bibtex.Preferences.auto-export.mark;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.mark()"/>
-                <button id="auto-export-refresh" label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.AutoExport.refresh()"/>
+                <button label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.aeRemove()"/>
+                <button label="&better-bibtex.Preferences.auto-export.run;" oncommand="Zotero.BetterBibTeX.Preferences.aeRun()"/>
+                <button label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.aeRefresh(true)"/>
               </hbox>
             </vbox>
           </tabpanel>
