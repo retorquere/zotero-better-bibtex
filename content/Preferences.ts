@@ -132,8 +132,11 @@ class AutoExportTreeView {
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (coll.parent) return `${this.autoExportNameCollectionPath(coll.parent)}/${coll.name}`
-    return coll.name
+    if (coll.parent) {
+      return `${this.autoExportNameCollectionPath(coll.parent)}/${coll.name}`
+    } else {
+      return `${Zotero.Libraries.getName(coll.libraryID)}:${coll.name}`
+    }
   }
 
   private autoExportName(ae) {
@@ -143,7 +146,7 @@ class AutoExportTreeView {
         name = Zotero.Libraries.getName(ae.id)
         break
       case 'collection':
-        name = '/<LibraryName>/' + this.autoExportNameCollectionPath(ae.id)
+        name = this.autoExportNameCollectionPath(ae.id)
         break
     }
     return name || ae.path
@@ -154,6 +157,7 @@ export = new class PrefPane {
   private exportlist: any
   private exportlist_view: AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unavailable
   private keyformat: any
+  private refreshTimer: number
 
   public getCitekeyFormat() {
     debug('prefs: fetching citekey for display...')
@@ -230,7 +234,7 @@ export = new class PrefPane {
         this.exportlist = document.getElementById('better-bibtex-export-list')
         this.exportlist.view = this.exportlist_view = new AutoExportTreeView
 
-        setInterval(() => { this.aeRefresh() }, 1000) // tslint:disable-line:no-magic-numbers
+        this.refreshTimer = setInterval(() => { this.aeRefresh() }, 1000) as any // tslint:disable-line:no-magic-numbers
 
         this.getCitekeyFormat()
         this.update()
@@ -272,6 +276,10 @@ export = new class PrefPane {
     debug('prefs: ready')
 
     window.sizeToContent()
+  }
+
+  public unload() {
+    if (this.refreshTimer) clearInterval(this.refreshTimer)
   }
 
   public aeSelected() {
