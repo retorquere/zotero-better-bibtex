@@ -19,9 +19,11 @@ class AutoExportTreeView {
 
   private label: { [key: string]: string }
   private treeBox: any
-  private data: any[]
+  private open: { [key: string]: boolean }
 
   constructor() {
+    this.open = {}
+
     this.label = {}
     for (const label of ['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes']) {
       this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.${label}`)
@@ -37,18 +39,23 @@ class AutoExportTreeView {
   public setTree(treeBox) {
     this.treeBox = treeBox
     debug('prefs: ae view set', !!this.treeBox)
-    this.refresh(true)
+    this.refresh()
   }
 
-  public refresh(reload = false) {
-    if (reload || !this.data) this.data = AutoExport.db.find()
-    debug('ae.prefs.refresh:', this.data)
+  public refresh() {
     const rows = []
     let parent = 0
-    for (const ae of this.data) {
+    for (const ae of AutoExport.db.find()) {
       parent = rows.length
-      rows.push({ columns: { name: `${this.label[ae.type] || ae.type}: ${this.autoExportName(ae)}`, value: this.label[ae.status] || ae.status}, level: 0, parent: -1, open: !!ae.open, autoexport: ae })
-      if (ae.open) {
+      rows.push({
+        columns: { value: this.autoExportName(ae), name: this.label[ae.status] || ae.status},
+        level: 0,
+        parent: -1,
+        open: !!this.open[ae.$loki],
+        autoexport: ae,
+      })
+
+      if (this.open[ae.$loki]) {
         rows.push({ columns: { name: this.label.updated, value: `${new Date(ae.meta.updated || ae.meta.created)}`}, level: 1, parent, autoexport: ae })
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
@@ -104,7 +111,7 @@ class AutoExportTreeView {
     debug('ae.prefs.toggleOpenState', this.rows[row])
     if (this.rows[row].level !== 0) return
 
-    this.rows[row].autoexport.open = !this.rows[row].autoexport.open
+    this.open[this.rows[row].autoexport.$loki] = !this.open[this.rows[row].autoexport.$loki]
     this.refresh()
   }
 
@@ -136,7 +143,7 @@ class AutoExportTreeView {
         name = Zotero.Libraries.getName(ae.id)
         break
       case 'collection':
-        name = this.autoExportNameCollectionPath(ae.id)
+        name = '/<LibraryName>/' + this.autoExportNameCollectionPath(ae.id)
         break
     }
     return name || ae.path
@@ -223,6 +230,8 @@ export = new class PrefPane {
         this.exportlist = document.getElementById('better-bibtex-export-list')
         this.exportlist.view = this.exportlist_view = new AutoExportTreeView
 
+        setInterval(() => { this.aeRefresh() }, 1000) // tslint:disable-line:no-magic-numbers
+
         this.getCitekeyFormat()
         this.update()
       })
@@ -287,10 +296,10 @@ export = new class PrefPane {
     this.aeRefresh()
   }
 
-  public aeRefresh(reload = false) {
+  public aeRefresh() {
     if (!this.exportlist) return
 
-    this.exportlist_view.refresh(reload)
+    this.exportlist_view.refresh()
   }
 
   private update() {

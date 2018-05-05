@@ -561,9 +561,9 @@
               <hbox>
                 <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false">
                   <treecols>
-                    <treecol id="better-bibtex-export-list-name" label="&better-bibtex.Preferences.auto-export.collection;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
+                    <treecol id="better-bibtex-export-list-name" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
                     <splitter class="tree-splitter"/>
-                    <treecol id="better-bibtex-export-list-value" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden"/>
+                    <treecol id="better-bibtex-export-list-value" label="&better-bibtex.Preferences.auto-export.collection;" editable="false" flex="1" persist="width ordinal hidden"/>
                   </treecols>
                   <treechildren/>
                 </tree>
@@ -571,7 +571,7 @@
               <hbox>
                 <button label="&better-bibtex.Preferences.auto-export.remove;" oncommand="Zotero.BetterBibTeX.Preferences.aeRemove()"/>
                 <button label="&better-bibtex.Preferences.auto-export.run;" oncommand="Zotero.BetterBibTeX.Preferences.aeRun()"/>
-                <button label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.aeRefresh(true)"/>
+                <!-- button label="&better-bibtex.Preferences.auto-export.refresh;" oncommand="Zotero.BetterBibTeX.Preferences.aeRefresh(true)"/ -->
               </hbox>
             </vbox>
           </tabpanel>
