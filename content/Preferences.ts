@@ -47,8 +47,10 @@ class AutoExportTreeView {
     let parent = 0
     for (const ae of AutoExport.db.find()) {
       parent = rows.length
+      const name = { short: this.autoExportName(ae, 'short'), long: this.autoExportName(ae, 'long') }
+
       rows.push({
-        columns: { value: this.autoExportName(ae), name: this.label[ae.status] || ae.status},
+        columns: { name: this.label[ae.status] || ae.status, value: name.short },
         level: 0,
         parent: -1,
         open: !!this.open[ae.$loki],
@@ -56,6 +58,7 @@ class AutoExportTreeView {
       })
 
       if (this.open[ae.$loki]) {
+        if (name.long !== name.short) rows.push({ columns: { name: this.label[ae.type] || ae.type, value: name.long }, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.updated, value: `${new Date(ae.meta.updated || ae.meta.created)}`}, level: 1, parent, autoexport: ae })
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
@@ -127,26 +130,26 @@ class AutoExportTreeView {
   public getColumnProperties(column, element, prop) { /* do nothing */ }
   public performAction(action) { /* do nothing */ }
 
-  private autoExportNameCollectionPath(id) {
+  private autoExportNameCollectionPath(id, form) {
     if (!id) return ''
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (coll.parent) {
-      return `${this.autoExportNameCollectionPath(coll.parent)}/${coll.name}`
+    if (form === 'long' && coll.parent) {
+      return `${this.autoExportNameCollectionPath(coll.parent, form)} / ${coll.name}`
     } else {
-      return `${Zotero.Libraries.getName(coll.libraryID)}:${coll.name}`
+      return `${Zotero.Libraries.getName(coll.libraryID)} : ${coll.name}`
     }
   }
 
-  private autoExportName(ae) {
+  private autoExportName(ae, form) {
     let name
     switch (ae.type) {
       case 'library':
         name = Zotero.Libraries.getName(ae.id)
         break
       case 'collection':
-        name = this.autoExportNameCollectionPath(ae.id)
+        name = this.autoExportNameCollectionPath(ae.id, form)
         break
     }
     return name || ae.path
@@ -155,7 +158,7 @@ class AutoExportTreeView {
 
 export = new class PrefPane {
   private exportlist: any
-  private exportlist_view: AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unavailable
+  // private exportlist_view: AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unavailable
   private keyformat: any
   private refreshTimer: number
 
@@ -232,7 +235,7 @@ export = new class PrefPane {
         this.keyformat.disabled = false
 
         this.exportlist = document.getElementById('better-bibtex-export-list')
-        this.exportlist.view = this.exportlist_view = new AutoExportTreeView
+        this.exportlist.view = this.exportlist._view = new AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unreachable
 
         this.refreshTimer = setInterval(() => { this.aeRefresh() }, 1000) as any // tslint:disable-line:no-magic-numbers
 
@@ -285,7 +288,7 @@ export = new class PrefPane {
   public aeSelected() {
     if (!this.exportlist) return false
     if (this.exportlist.currentIndex < 0) return false
-    return this.exportlist_view.rows[this.exportlist.currentIndex]
+    return this.exportlist._view.rows[this.exportlist.currentIndex]
   }
   public aeRemove() {
     const selected = this.aeSelected()
@@ -307,7 +310,7 @@ export = new class PrefPane {
   public aeRefresh() {
     if (!this.exportlist) return
 
-    this.exportlist_view.refresh()
+    this.exportlist._view.refresh()
   }
 
   private update() {
