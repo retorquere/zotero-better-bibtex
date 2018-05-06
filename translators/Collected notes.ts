@@ -22,10 +22,16 @@ function _collection(collection, level = 1) {
 }
 
 function _item(item) {
-  if (item.itemType === 'note') {
-    _note(item.note)
-  } else {
-    _reference(item)
+  switch (item.itemType) {
+    case 'note':
+      _note(item.note, false)
+      break
+    case 'attachment':
+      _attachment(item)
+      break
+    default:
+      _reference(item)
+      break
   }
 }
 
@@ -44,11 +50,20 @@ function _prune(collection) {
   return !keep
 }
 
-function _note(body) {
+function _attachment(att) {
+  // ignore for now
+}
+
+function _note(body, extra) {
   if (!body) return
   if (typeof body.note !== 'undefined') body = body.note
   if (!body) return
-  html.body += `<blockquote>${ body }</blockquote>\n`
+
+  if (extra) {
+    html.body += `<blockquote><pre>${ htmlEscape(body) }</pre></blockquote>\n`
+  } else {
+    html.body += `<blockquote>${ body }</blockquote>\n`
+  }
 }
 
 function _creator(cr) {
@@ -73,10 +88,14 @@ function _reference(item) {
 
   html.body += `<div>${ title.join(' ') }</div>\n`
 
-  _note(item.extra)
+  _note(item.extra, true)
 
   for (const note of item.notes || []) {
-    _note(note)
+    _note(note, false)
+  }
+
+  for (const att of item.attachments || []) {
+    _attachment(att)
   }
 }
 
@@ -91,12 +110,20 @@ function _reset(starting) {
   // return `counter-reset: h${ starting }counter;`
 }
 
+function _keep(item) {
+  if (item.extra) return true
+  if (item.itemType === 'note') return true
+  if (item.notes && item.notes.length) return true
+  return false
+}
+
 Translator.doExport = () => {
   // collect all notes
   const items = {}
   let z_item
   while (z_item = Zotero.nextItem()) {
-    if (z_item.itemType === 'note' || (z_item.notes || []).length || z_item.extra) items[z_item.itemID] = z_item
+    Object.assign(z_item, Zotero.BetterBibTeX.extractFields(z_item))
+    if (_keep(z_item)) items[z_item.itemID] = z_item
   }
 
   const filed = {}
