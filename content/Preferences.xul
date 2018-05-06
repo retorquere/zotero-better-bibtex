@@ -559,7 +559,7 @@
                 </menulist>
               </hbox>
               <hbox>
-                <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false">
+                <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false" ondblclick="Zotero.BetterBibTeX.Preferences.aeToggle(event)">
                   <treecols>
                     <treecol id="better-bibtex-export-list-name" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
                     <splitter class="tree-splitter"/>

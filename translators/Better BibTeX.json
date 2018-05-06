@@ -10,7 +10,7 @@
     "getCollections": true
   },
   "displayOptions": {
-    "exportNotes": true,
+    "exportNotes": false,
     "exportFileData": false,
     "useJournalAbbreviation": false,
     "keepUpdated": false

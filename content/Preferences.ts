@@ -43,6 +43,8 @@ class AutoExportTreeView {
   }
 
   public refresh() {
+    if (!this.treeBox) return
+
     const rows = []
     let parent = 0
     for (const ae of AutoExport.db.find()) {
@@ -63,8 +65,8 @@ class AutoExportTreeView {
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.translator, value: Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??'}, level: 1, parent, autoexport: ae })
-        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae })
-        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, toggle: 'useJournalAbbreviation' })
+        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, toggle: 'exportNotes' })
       }
     }
     this.rowCount = rows.length
@@ -303,6 +305,16 @@ export = new class PrefPane {
     const selected = this.aeSelected()
     if (!selected) return
 
+    AutoExport.run(selected.autoexport.$loki)
+    this.aeRefresh()
+  }
+
+  public aeToggle(event) {
+    const selected = this.aeSelected()
+    if (!selected || !selected.toggle) return
+
+    selected.autoexport[selected.toggle] = !selected.autoexport[selected.toggle]
+    AutoExport.db.update(selected.autoexport)
     AutoExport.run(selected.autoexport.$loki)
     this.aeRefresh()
   }
