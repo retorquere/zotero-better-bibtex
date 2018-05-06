@@ -46,8 +46,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "à la mise en veille">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "au changement">
 <!ENTITY better-bibtex.Preferences.auto-export.off "désactivée">
-<!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh list">
-<!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
+<!ENTITY better-bibtex.Preferences.auto-export.refresh "Rafraîchir la liste">
+<!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
