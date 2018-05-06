@@ -3,10 +3,17 @@ declare const Translator: ITranslator
 
 import { htmlEscape } from './lib/html-escape.ts'
 
+const html = {
+  levels: 0,
+  body: '',
+}
+
 function _collection(collection, level = 1) {
-  Zotero.write(`<h${ level }>${ htmlEscape(collection.name) }</h${ level }>\n`)
+  if (level > html.levels) html.levels = level
+
+  html.body += `<h${ level }>${ htmlEscape(collection.name) }</h${ level }>\n`
   for (const item of collection.items) {
-    _item(item, level)
+    _item(item)
   }
 
   for (const subcoll of collection.collections) {
@@ -14,11 +21,11 @@ function _collection(collection, level = 1) {
   }
 }
 
-function _item(item, level) {
+function _item(item) {
   if (item.itemType === 'note') {
     _note(item.note)
   } else {
-    _reference(item, level)
+    _reference(item)
   }
 }
 
@@ -38,16 +45,17 @@ function _prune(collection) {
 }
 
 function _note(body) {
+  if (!body) return
   if (typeof body.note !== 'undefined') body = body.note
   if (!body) return
-  Zotero.write(`<div>${ body.note || body }</div><hr/>\n`)
+  html.body += `<blockquote>${ body }</blockquote>\n`
 }
 
 function _creator(cr) {
   return [cr.lastName, cr.firstName, cr.name].filter(v => v).join(', ')
 }
 
-function _reference(item, level) {
+function _reference(item) {
   const creators = item.creators.map(_creator).filter(v => v).join(' and ')
 
   let date = null
@@ -59,13 +67,28 @@ function _reference(item, level) {
 
   const author = [creators, date].filter(v => v).join(', ')
 
-  const title = [item.title || '', author].filter(v => v).join(' ')
+  const title = []
+  if (item.title) title.push(`<i>${ htmlEscape(item.title) }</i>`)
+  if (author) title.push(`(${ htmlEscape(author) })`)
 
-  Zotero.write(`<h${ level + 1 }>${ htmlEscape(title) }</h${ level + 1 }>\n`)
+  html.body += `<div>${ title.join(' ') }</div>\n`
+
+  _note(item.extra)
 
   for (const note of item.notes || []) {
     _note(note)
   }
+}
+
+function _reset(starting) {
+  if (starting > html.levels) return ''
+
+  let reset = 'counter-reset:'
+  for (let level = starting; level <= html.levels; level++) {
+    reset += ` h${ level }counter 0`
+  }
+  return reset + ';'
+  // return `counter-reset: h${ starting }counter;`
 }
 
 Translator.doExport = () => {
@@ -86,16 +109,23 @@ Translator.doExport = () => {
   // prune empty branches
   const collections = Object.values(Translator.collections).filter(collection => !collection.parent && !_prune(collection))
 
-  Zotero.write('<html><body>')
+  html.body += '<html><body>'
 
   for (const item of (Object.values(items) as Array<{ itemID: number }>)) {
     if (filed[item.itemID]) continue
-    _item(item, 1)
+    _item(item)
   }
 
   for (const collection of collections) {
     _collection(collection)
   }
 
-  Zotero.write('</body></html>')
+  let style = `  body { ${ _reset(1) } }\n`
+  for (let level = 1; level <= html.levels; level++) {
+    style += `  h${ level } { ${ _reset(level + 1) } }\n`
+    const label = Array.from({length: level}, (x, i) => `counter(h${ i + 1 }counter)`).join(' "." ')
+    style += `  h${ level }:before { counter-increment: h${ level }counter; content: ${ label } ".\\0000a0\\0000a0"; }\n`
+  }
+
+  Zotero.write(`<html><head><style>${ style }</style></head><body>${ html.body }</body></html>`)
 }
