@@ -14,51 +14,51 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "je referentie slutels zullen er als volgt uitzien">
 
 <!ENTITY better-bibtex.FirstRun.exporting "Exporteren met behulp van BBT">
-<!ENTITY better-bibtex.FirstRun.exporting.explanation "Exporting using BBT works as usual in Zotero, but make sure you have the right format selected; in the list of formats, instead of 'BibTeX', select">
+<!ENTITY better-bibtex.FirstRun.exporting.explanation "Exporteren met BBT werkt ongewijzigd, maar zorg ervoor dat u het juiste formaat heeft geselecteerd; selecteer in de lijst met formaten in plaats van 'BibTeX',">
 
-<!ENTITY better-bibtex.FirstRun.dragndrop "Drag-and-drop citations">
-<!ENTITY better-bibtex.FirstRun.dragndrop.explanation "With BBT, you can drag-and-drop citations into your LaTeX editor of choice. Do you want to enable this now?">
-<!ENTITY better-bibtex.FirstRun.dragndrop.enable "Enable drag-and-drop citations">
+<!ENTITY better-bibtex.FirstRun.dragndrop "Referentiesleutels slepen">
+<!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Met BBT kunt u referentie sleutels slepen en neerzetten in uw LaTeX editor naar keuze. Wilt u dit nu inschakelen?">
+<!ENTITY better-bibtex.FirstRun.dragndrop.enable "Slepen en neerzetten van referentie sleutels inschakelen">
 
-<!ENTITY better-bibtex.FirstRun.done "All Done!">
-<!ENTITY better-bibtex.FirstRun.done.explanation "BBT is now set up for use. You can still change any of these settings by going into the Zotero preferences and opening the BBT tab.">
+<!ENTITY better-bibtex.FirstRun.done "Klaar!">
+<!ENTITY better-bibtex.FirstRun.done.explanation "BBT is nu ingesteld voor gebruik. U kunt deze instellingen altijd nog wijzigen door naar de Zotero voorkeuren te gaan en het BBT-tabblad te openen.">
 
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting an error report.">
-<!ENTITY better-bibtex.ErrorReport.context "Application context">
-<!ENTITY better-bibtex.ErrorReport.errors "Errors">
-<!ENTITY better-bibtex.ErrorReport.log "Debug log">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">
-<!ENTITY better-bibtex.ErrorReport.references "References">
-<!ENTITY better-bibtex.ErrorReport.reportID "Report ID:">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is momenteel uitgeschakeld. Probleem zijn beter te diagnostiseren als dit word ingeschakeld voordat u een foutrapport indient.">
+<!ENTITY better-bibtex.ErrorReport.context "Applicatie">
+<!ENTITY better-bibtex.ErrorReport.errors "Foutmeldingen">
+<!ENTITY better-bibtex.ErrorReport.log "Logboek foutopsporing">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Foutenrapporten kunnen niet worden ingezien tenzij deze worden vermeldt in de GitHub issue tracker.">
+<!ENTITY better-bibtex.ErrorReport.postToGitHub "Stuur aub een bericht naar de issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) met deze fout-ID, een beschrijving van het probleem en eventuele stappen nodig om het te reproduceren.">
+<!ENTITY better-bibtex.ErrorReport.references "Referenties">
+<!ENTITY better-bibtex.ErrorReport.reportID "Rapport ID:">
 <!ENTITY better-bibtex.ErrorReport.review "The data below is about to submitted to Better BibTeX for debugging. You can review the data to see whether there's sensitive information that you do not wish to send.
 
 If you are OK with sending this data, please click &quot;Next&quot; and post the debug ID presented in the next screen in the issue tracker at
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
+<!ENTITY better-bibtex.ItemPane.citekey_column	"Referentie sleutel">
 
-<!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
-<!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
-<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-abbrev "Automatisch afkorten tijdschrifttitel als deze niet expliciet is opgegeven">
+<!ENTITY better-bibtex.Preferences.auto-abbrev.style "Afkorting stijl:">
+<!ENTITY better-bibtex.Preferences.tab.auto-export "Automatische export">
 <!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
-<!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-export "Automatische export">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
-<!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
-<!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh list">
-<!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
-<!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
-<!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Uitgeschakeld">
+<!ENTITY better-bibtex.Preferences.auto-export.refresh "Lijst vernieuwen">
+<!ENTITY better-bibtex.Preferences.auto-export.run "Nu exporteren">
+<!ENTITY better-bibtex.Preferences.auto-export.remove "Verwijderen">
+<!ENTITY better-bibtex.Preferences.auto-export.collection "Collectie">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
-<!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">
-<!ENTITY better-bibtex.Preferences.citekey.citekeys "Citation keys">
+<!ENTITY better-bibtex.Preferences.tab.citekey "Referentie sleutels">
+<!ENTITY better-bibtex.Preferences.citekey.citekeys "Referentie sleutels">
 <!ENTITY better-bibtex.Preferences.citekey.fold "Force citation key to plain text">
 <!ENTITY better-bibtex.Preferences.citekey.format "Citation key format">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Cite Keys">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Referentie Sleutels">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.format "QuickCopy format">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.gitbook "GitBook">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "LaTeX command">
