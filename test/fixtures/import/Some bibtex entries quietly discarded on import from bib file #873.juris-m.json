@@ -328,7 +328,8 @@
       "volume": "12",
       "pages": "116-125",
       "date": "August 1977",
-      "extra": "bibtex: deKleer:77 \nbibtex[number=8]",
+      "extra": "bibtex: deKleer:77",
+      "issue": "8",
       "title": "AMORD: Explicit control of reasoning",
       "proceedingsTitle": "Proceedings of the Symposium on Artificial Intelligence and Programming Languages",
       "creators": [
@@ -622,7 +623,6 @@
 
       ],
       "itemID": 67,
-      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory",
       "number": "AI-TR-550",
       "seeAlso": [
 
@@ -971,7 +971,6 @@
 
       ],
       "itemID": 77,
-      "publisher": "University of Maryland Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -1002,7 +1001,6 @@
 
       ],
       "itemID": 78,
-      "publisher": "Stanford University Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -1218,7 +1216,6 @@
 
       ],
       "itemID": 85,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
