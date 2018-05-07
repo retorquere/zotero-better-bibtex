@@ -24,10 +24,10 @@ function _collection(collection, level = 1) {
 function _item(item) {
   switch (item.itemType) {
     case 'note':
-      _note(item.note, false)
+      _note(item.note, 'note')
       break
     case 'attachment':
-      _attachment(item)
+      _reference(item)
       break
     default:
       _reference(item)
@@ -50,19 +50,20 @@ function _prune(collection) {
   return !keep
 }
 
-function _attachment(att) {
-  // ignore for now
-}
-
-function _note(body, extra) {
-  if (!body) return
-  if (typeof body.note !== 'undefined') body = body.note
-  if (!body) return
-
-  if (extra) {
-    html.body += `<blockquote><pre>${ htmlEscape(body) }</pre></blockquote>\n`
-  } else {
-    html.body += `<blockquote>${ body }</blockquote>\n`
+function _note(note, type) {
+  switch (type) {
+    case 'extra':
+      if (!note) return
+      html.body += `<blockquote><pre>${ htmlEscape(note) }</pre></blockquote>\n`
+      break
+    case 'attachment':
+      if (!note.note) return
+      html.body += `<blockquote><div><samp>${ note.title }</samp></div>${ note.note }</blockquote>\n`
+      break
+    default:
+      if (!note.note) return
+      html.body += `<blockquote>${ note.note }</blockquote>\n`
+      break
   }
 }
 
@@ -71,31 +72,42 @@ function _creator(cr) {
 }
 
 function _reference(item) {
-  const creators = item.creators.map(_creator).filter(v => v).join(' and ')
+  let notes = []
+  let title = ''
 
-  let date = null
-  if (item.date) {
-    date = Zotero.BetterBibTeX.parseDate(item.date)
-    if (date.from) date = date.from
-    date = typeof date.year === 'number' ? date.year : item.date
+  if (item.itemType === 'attachment') {
+    if (item.note) notes = [ { note: item.note } ]
+    if (item.title) title = `<samp>${ htmlEscape(item.title) }</samp>`
+
+  } else {
+    notes = item.notes.filter(note => note.note)
+
+    const creators = item.creators.map(_creator).filter(v => v).join(' and ')
+
+    let date = null
+    if (item.date) {
+      date = Zotero.BetterBibTeX.parseDate(item.date)
+      if (date.from) date = date.from
+      date = typeof date.year === 'number' ? date.year : item.date
+    }
+
+    const author = [creators, date].filter(v => v).join(', ')
+
+    if (item.title) title += `<i>${ htmlEscape(item.title) }</i>`
+    if (author) title += `(${ htmlEscape(author) })`
+    title = title.trim()
   }
 
-  const author = [creators, date].filter(v => v).join(', ')
+  html.body += `<div>${ title }</div>\n`
 
-  const title = []
-  if (item.title) title.push(`<i>${ htmlEscape(item.title) }</i>`)
-  if (author) title.push(`(${ htmlEscape(author) })`)
+  _note(item.extra, 'extra')
 
-  html.body += `<div>${ title.join(' ') }</div>\n`
-
-  _note(item.extra, true)
-
-  for (const note of item.notes || []) {
-    _note(note, false)
+  for (const note of notes) {
+    _note(note, 'note')
   }
 
   for (const att of item.attachments || []) {
-    _attachment(att)
+    _note(att, 'attachment')
   }
 }
 
@@ -112,8 +124,9 @@ function _reset(starting) {
 
 function _keep(item) {
   if (item.extra) return true
-  if (item.itemType === 'note') return true
-  if (item.notes && item.notes.length) return true
+  if (item.note) return true
+  if (item.notes && item.notes.find(note => note.note)) return true
+  if (item.attachments && item.attachments.find(att => att.note)) return true
   return false
 }
 
@@ -153,6 +166,7 @@ Translator.doExport = () => {
     const label = Array.from({length: level}, (x, i) => `counter(h${ i + 1 }counter)`).join(' "." ')
     style += `  h${ level }:before { counter-increment: h${ level }counter; content: ${ label } ".\\0000a0\\0000a0"; }\n`
   }
+  style += '  blockquote { border-left: 1px solid gray; }\n'
 
   Zotero.write(`<html><head><style>${ style }</style></head><body>${ html.body }</body></html>`)
 }
