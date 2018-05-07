@@ -96,7 +96,7 @@ export function extract(item) {
 
     if (!value) return true // keep line
 
-    name = name.toLowerCase()
+    name = name.trim().toLowerCase().replace(/ +/g, '-')
     const cslType = cslVariables[name]
     debug('fieldExtract:', { name, value, cslType })
     if (cslType) {
