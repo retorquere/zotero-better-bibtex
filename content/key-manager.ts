@@ -353,7 +353,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       const data = JSON.parse(Zotero.File.getContents(legacy))
       for (const old of data.collections.find(c => c.name === 'keys').data) {
         const citekey = this.keys.findOne({ itemID: old.itemID })
-        if (citekey) {
+        debug(`migrating ${v4}, database ${citekey ? 'has' : 'does not have'}`, old)
+        if (citekey && !citekey.pinned) {
+          debug(`migrating ${v4}: applying`, citekey, { old: old.citekey })
           citekey.citekey = old.citekey
           this.keys.update(citekey)
         }
