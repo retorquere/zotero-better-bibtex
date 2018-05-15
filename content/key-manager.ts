@@ -132,7 +132,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     await this.rescan()
     this.migrate('db.json')
-    this.migrate('db.json.migrated')
 
     debug('KeyManager.init: done')
 
