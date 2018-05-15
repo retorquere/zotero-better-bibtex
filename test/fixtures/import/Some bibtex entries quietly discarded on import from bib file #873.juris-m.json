@@ -1274,22 +1274,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 87,
-      "publisher": "MIT Artificial Intelligence Laboratory",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "book",
@@ -1495,23 +1486,14 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 94,
-      "publisher": "Yale University Department of Computer Science",
       "number": "140",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "report",
@@ -1527,23 +1509,14 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 95,
-      "publisher": "Yale University Department of Computer Science",
       "number": "489",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "journalArticle",
@@ -1799,22 +1772,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 104,
-      "publisher": "MIT Artificial Intelligence Laboratory",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "book",
@@ -1859,22 +1823,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 106,
-      "publisher": "University of Edinburgh Department of Artificial Intelligence",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "book",
@@ -1951,22 +1906,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 109,
-      "publisher": "Bolt Beranek and Newman",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "book",
@@ -2045,22 +1991,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [ ],
       "dateAdded": "2018-01-16 16:28:47",
       "dateModified": "2018-01-16 16:28:47",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [ ],
+      "notes": [ ],
       "itemID": 112,
-      "publisher": "MIT Artificial Intelligence Laboratory",
-      "seeAlso": [
-
-      ]
+      "seeAlso": [ ]
     },
     {
       "itemType": "book",

@@ -2377,7 +2377,7 @@
       "date": "1979",
       "extra": "bibtex: Barstow:79",
       "title": "The roles of knowledge and deduction in program synthesis",
-      "numPages": "37–43",
+      "numPages": "37-43",
       "creators": [
         {
           "firstName": "David R.",
@@ -2408,7 +2408,7 @@
       "date": "1977",
       "extra": "bibtex: Fillmore:77 \nbibtex[booktitle=Syntax and Semantics 8: Grammatical Relations]",
       "title": "The case for case reopened",
-      "numPages": "59–81",
+      "numPages": "59-81",
       "creators": [
         {
           "firstName": "Charles J.",
@@ -2593,7 +2593,7 @@
       "date": "1972",
       "extra": "bibtex: Woods:72 \nbibtex[booktitle=Natural Language Processing]",
       "title": "An experimental parsing system for transition network grammars",
-      "numPages": "113–154",
+      "numPages": "113-154",
       "creators": [
         {
           "firstName": "William A.",
