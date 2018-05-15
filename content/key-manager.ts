@@ -14,6 +14,7 @@ import * as Citekey from './key-manager/get-set.ts'
 import { Formatter } from './key-manager/formatter.ts'
 import { DB } from './db/main.ts'
 import { AutoExport } from './auto-export.ts'
+import { createFile } from './create-file.ts'
 
 function timeout(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
@@ -130,6 +131,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     Formatter.update('init')
 
     await this.rescan()
+    this.migrate('db.json')
+    this.migrate('db.json.migrated')
 
     debug('KeyManager.init: done')
 
@@ -340,6 +343,26 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
       return { citekey: postfixed, pinned: false }
     }
+  }
+
+  private migrate(v4) {
+    const legacy = createFile(v4)
+    if (!legacy.exists()) return
+
+    try {
+      const data = JSON.parse(Zotero.File.getContents(legacy))
+      for (const old of data.collections.find(c => c.name === 'keys').data) {
+        const citekey = this.keys.findOne({ itemID: old.itemID })
+        if (citekey) {
+          citekey.citekey = old.citekey
+          this.keys.update(citekey)
+        }
+      }
+    } catch (err) {
+      debug('failed to migrate legacy DB:', v4, err)
+    }
+
+    legacy.moveTo(null, `${v4}.v4`)
   }
 
   private postfixZotero(n) {

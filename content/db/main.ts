@@ -237,24 +237,6 @@ DB.init = async () => {
       await item.saveTx()
     }
   }
-
-  const legacy = createFile('db.json')
-  if (legacy.exists()) {
-    try {
-      const data = JSON.parse(Zotero.File.getContents(legacy))
-      for (const old of data.collections.find(c => c.name === 'keys').data) {
-        const citekey = citekeys.findOne({ itemID: old.itemID })
-        if (citekey) {
-          citekey.citekey = old.citekey
-          citekeys.update(citekey)
-        }
-      }
-    } catch (err) {
-      debug('failed to migrate legacy DB:', err)
-    }
-
-    legacy.moveTo(null, 'db.json.migrated')
-  }
 }
 
 /* old junk, only for json-backed storage
