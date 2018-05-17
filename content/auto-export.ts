@@ -262,18 +262,38 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   private gitPush(path) {
+    debug('gitPush:', path)
     let repo = Zotero.File.pathToFile(path)
-    if (!repo.exists()) return null
+    if (!repo.exists()) {
+      debug('gitPush:', path, 'does not exist')
+      return null
+    }
+    if (!repo.exists()) return false
 
     if (!repo.isDirectory()) repo = repo.parent
+    if (!repo.exists()) {
+      debug('gitPush:', repo.path, 'does not exist')
+      return null
+    }
     if (!repo.exists()) return false
 
     const config_file = repo.clone()
     config_file.append('.git')
     config_file.append('config')
+    if (!repo.exists()) {
+      debug('gitPush: config', config_file.path, 'does not exist')
+      return null
+    }
     if (!config_file.exists()) return null
 
-    const config = ini.parse(Zotero.File.getContents(config_file))
+    let config = {}
+
+    try {
+      config = ini.parse(Zotero.File.getContents(config_file))
+      debug('gitPush: config=', config)
+    } catch (err) {
+      debug('gitPush: error parsing config', config_file, 'does not exist')
+    }
 
     // enable with 'git config zotero.betterbibtex.push true'
     const enabled = (config['zotero "betterbibtex"'] || {}).push
