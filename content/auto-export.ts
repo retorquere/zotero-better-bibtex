@@ -269,30 +269,25 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
 
   private _gitPush(path) {
     debug('gitPush:', path)
-    let repo = Zotero.File.pathToFile(path)
-    if (!repo.exists()) {
-      debug('gitPush:', path, 'does not exist')
+
+    const repo = Zotero.File.pathToFile(path).parent // assumes that we're handed a file, not a directory!
+
+    if (!repo.isDirectory()) {
+      debug('gitPush:', path, 'is not a directory')
       return null
     }
-    if (!repo.exists()) return false
+    // if (!repo.isDirectory()) return null
 
-    if (!repo.isDirectory()) repo = repo.parent
-    if (!repo.exists()) {
-      debug('gitPush:', repo.path, 'does not exist')
-      return null
-    }
-    if (!repo.exists()) return false
-
-    debug('gitPush: repo found at', repo.path)
+    debug('gitPush: potential repo found at', repo.path)
 
     const config_file = repo.clone()
     config_file.append('.git')
     config_file.append('config')
-    if (!repo.exists()) {
-      debug('gitPush: config', config_file.path, 'does not exist')
+    if (!config_file.isFile()) {
+      debug('gitPush: config', config_file.path, 'is not a file')
       return null
     }
-    if (!config_file.exists()) return null
+    // if (!config_file.isFile()) return null
 
     debug('gitPush: repo config found at', config_file.path)
 
