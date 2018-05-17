@@ -262,6 +262,12 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   private gitPush(path) {
+    const found = this._gitPush(path)
+    debug('gitPush::', { found })
+    return found
+  }
+
+  private _gitPush(path) {
     debug('gitPush:', path)
     let repo = Zotero.File.pathToFile(path)
     if (!repo.exists()) {
@@ -277,6 +283,8 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     }
     if (!repo.exists()) return false
 
+    debug('gitPush: repo found at', repo.path)
+
     const config_file = repo.clone()
     config_file.append('.git')
     config_file.append('config')
@@ -285,6 +293,8 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
       return null
     }
     if (!config_file.exists()) return null
+
+    debug('gitPush: repo config found at', config_file.path)
 
     let config = {}
 
