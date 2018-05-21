@@ -276,45 +276,54 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   private _gitPush(path) {
     debug('gitPush:', path)
 
-    const repo = Zotero.File.pathToFile(path).parent // assumes that we're handed a file, not a directory!
+    let repo = Zotero.File.pathToFile(path) // assumes that we're handed a file, not a directory!
+    let git = null
 
-    if (!repo.exists() || !repo.isDirectory()) {
-      debug('gitPush:', path, 'is not a directory')
+    while (repo.parent) {
+      repo = repo.parent
+
+      if (repo.exists() && repo.isDirectory()) {
+        git = repo.clone()
+        git.append('.git')
+
+        if (git.exists() && git.isDirectory()) {
+          break
+        } else {
+          git = null
+        }
+      }
+    }
+
+    if (!git) {
+      debug('gitPush:', path, 'is not in a repo')
       return null
     }
-    // if (!repo.isDirectory()) return null
 
-    debug('gitPush: potential repo found at', repo.path)
+    debug('gitPush: repo found at', repo.path)
 
-    const config_file = repo.clone()
-    debug('gitPush: looking for config at', config_file.path)
-    config_file.append('.git')
-    debug('gitPush: looking for config at', config_file.path)
-    config_file.append('config')
-    debug('gitPush: looking for config at', config_file.path, config_file.exists())
-    if (!config_file.exists() || !config_file.isFile()) {
-      debug('gitPush: config', config_file.path, 'is not a file')
+    git.append('config')
+    debug('gitPush: looking for config at', git.path, git.exists())
+    if (!git.exists() || !git.isFile()) {
+      debug('gitPush: config', git.path, 'is not a file')
       return null
     }
-    // if (!config_file.isFile()) return null
 
-    debug('gitPush: repo config found at', config_file.path)
+    debug('gitPush: repo config found at', git.path)
 
     let config = {}
 
     try {
-      config = ini.parse(Zotero.File.getContents(config_file))
+      config = ini.parse(Zotero.File.getContents(git))
       debug('gitPush: config=', config)
     } catch (err) {
-      debug('gitPush: error parsing config', config_file, 'does not exist')
+      debug('gitPush: error parsing config', git.path, err)
     }
 
     // enable with 'git config zotero.betterbibtex.push true'
     const enabled = (config['zotero "betterbibtex"'] || {}).push
     debug('git config found for', repo.path, 'enabled =', { enabled })
-    if (enabled === 'true') return repo.path
 
-    return null
+    return (enabled === 'true' || enabled === true) ? repo.path : null
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
