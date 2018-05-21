@@ -58,7 +58,7 @@ const scheduled = new Queue(
 
         debug('AutoExport.scheduled: starting export', ae)
 
-        const { repo, name } = this.gitPush(ae.path)
+        const { repo, name } = AutoExport.gitPush(ae.path) // tslint:disable-line:no-use-before-declare
         AutoExport.pull(repo) // tslint:disable-line:no-use-before-declare
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
         AutoExport.push(repo, name) // tslint:disable-line:no-use-before-declare
