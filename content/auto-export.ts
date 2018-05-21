@@ -261,7 +261,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     scheduled.push({ id: ae.$loki })
   }
 
-  private gitPush(path) {
+  public gitPush(path) {
     let found
     try {
       found = this._gitPush(path)
