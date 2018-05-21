@@ -19,7 +19,7 @@ If you plan to use BBT auto-export with a git repo, you can run `git config zote
 
 Note that the nature of git commit/push is not file-bound; if you made edits to other files, and added those, they will be committed and pushed along. If you want to be super-careful, the best way to go about it is to have a separate clone of your repo that BBT auto-exports to, and then another repo that you do your own edits in. I don't use it myself this way, but you have been warned.
 
-git auto-export works nicely with overleaf, which is where I use it myself, but any git service (gitlab, github, etc) should work exactly the same.
+git auto-export works nicely with overleaf, which is where I use it myself, but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/issues/939).
 
 ## Pull Export
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
