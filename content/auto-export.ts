@@ -311,7 +311,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
 
     // enable with 'git config zotero.betterbibtex.push true'
     const enabled = (config['zotero "betterbibtex"'] || {}).push
-    debug('git config found for', repo.path, 'enabled =', enabled)
+    debug('git config found for', repo.path, 'enabled =', { enabled })
     if (enabled === 'true') return repo.path
 
     return null
