@@ -287,8 +287,11 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     debug('gitPush: potential repo found at', repo.path)
 
     const config_file = repo.clone()
+    debug('gitPush: looking for config at', config_file.path)
     config_file.append('.git')
+    debug('gitPush: looking for config at', config_file.path)
     config_file.append('config')
+    debug('gitPush: looking for config at', config_file.path)
     if (!config_file.isFile()) {
       debug('gitPush: config', config_file.path, 'is not a file')
       return null
