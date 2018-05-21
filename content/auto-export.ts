@@ -58,9 +58,10 @@ const scheduled = new Queue(
 
         debug('AutoExport.scheduled: starting export', ae)
 
-        AutoExport.pull(ae.path) // tslint:disable-line:no-use-before-declare
+        const { repo, name } = this.gitPush(ae.path)
+        AutoExport.pull(repo) // tslint:disable-line:no-use-before-declare
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
-        AutoExport.push(ae.path) // tslint:disable-line:no-use-before-declare
+        AutoExport.push(repo, name) // tslint:disable-line:no-use-before-declare
 
         debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
@@ -190,18 +191,17 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public async pull(repo) {
-    repo = this.gitPush(repo)
-    if (repo) await this.exec(this.git, ['pull'], repo)
+    if (!repo) return
+
+    await this.exec(this.git, ['pull'], repo)
   }
 
-  public async push(path) {
-    const repo = this.gitPush(path)
-    if (repo) {
-      const name = Zotero.File.pathToFile(path).leafName
-      await this.exec(this.git, ['add', name], repo)
-      await this.exec(this.git, ['commit', '-m', name], repo)
-      await this.exec(this.git, ['push'], repo)
-    }
+  public async push(repo, name) {
+    if (!repo) return
+
+    await this.exec(this.git, ['add', name], repo)
+    await this.exec(this.git, ['commit', '-m', name], repo)
+    await this.exec(this.git, ['push'], repo)
   }
 
   public add(ae) {
@@ -209,7 +209,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
-    if (this.gitPush(ae.path)) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    if (this.gitPush(ae.path).repo) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
   }
 
   public changed(items) {
@@ -273,30 +273,39 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     return found
   }
 
+  private gitDir(repo) {
+    if (!repo.exists()) return null
+    if (!repo.isDirectory()) return null
+
+    const git = repo.clone()
+    git.append('.git')
+
+    if (!git.exists()) return null
+    if (!git.isDirectory()) return null
+
+    return git
+  }
+
   private _gitPush(path) {
     debug('gitPush:', path)
 
-    let repo = Zotero.File.pathToFile(path) // assumes that we're handed a file, not a directory!
+    const name = Zotero.File.pathToFile(path)
+    let repo = name.clone() // assumes that we're handed a bibfile!
     let git = null
 
+    /*
     while (repo.parent) {
       repo = repo.parent
-
-      if (repo.exists() && repo.isDirectory()) {
-        git = repo.clone()
-        git.append('.git')
-
-        if (git.exists() && git.isDirectory()) {
-          break
-        } else {
-          git = null
-        }
-      }
+      git = this.gitDir(repo)
+      if (git) break
     }
+    */
+    repo = repo.parent
+    git = this.gitDir(repo)
 
     if (!git) {
       debug('gitPush:', path, 'is not in a repo')
-      return null
+      return {}
     }
 
     debug('gitPush: repo found at', repo.path)
@@ -305,7 +314,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     debug('gitPush: looking for config at', git.path, git.exists())
     if (!git.exists() || !git.isFile()) {
       debug('gitPush: config', git.path, 'is not a file')
-      return null
+      return {}
     }
 
     debug('gitPush: repo config found at', git.path)
@@ -323,7 +332,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     const enabled = (config['zotero "betterbibtex"'] || {}).push
     debug('git config found for', repo.path, 'enabled =', { enabled })
 
-    return (enabled === 'true' || enabled === true) ? repo.path : null
+    return (enabled === 'true' || enabled === true) ? { repo: repo.path, name: name.leafName } : {}
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
