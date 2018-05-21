@@ -262,8 +262,14 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   private gitPush(path) {
-    const found = this._gitPush(path)
-    debug('gitPush::', { found })
+    let found
+    try {
+      found = this._gitPush(path)
+      debug('gitPush::', { found })
+    } catch (err) {
+      debug('gitPush::', err)
+      found = null
+    }
     return found
   }
 
