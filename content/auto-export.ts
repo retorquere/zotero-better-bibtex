@@ -293,15 +293,12 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     let repo = name.clone() // assumes that we're handed a bibfile!
     let git = null
 
-    /*
     while (repo.parent) {
       repo = repo.parent
       git = this.gitDir(repo)
-      if (git) break
+      // if (git) break
+      break
     }
-    */
-    repo = repo.parent
-    git = this.gitDir(repo)
 
     if (!git) {
       debug('gitPush:', path, 'is not in a repo')
