@@ -165,6 +165,7 @@ Events.on('preference-changed', pref => {
 export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
   private git: string
+  private onWindows: boolean
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -181,8 +182,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
 
     if (Prefs.get('autoExport') === 'immediate') { scheduler.resume() }
 
+    this.onWindows = Zotero.platform.toLowerCase().startsWith('win')
     try {
-      this.git = await Subprocess.pathSearch(`git${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
+      this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
     } catch (err) {
       debug('AutoExport.init: git not found:', err)
       this.git = null
@@ -287,6 +289,8 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   private _gitPush(path) {
+    if (!this.git) return {}
+
     debug('gitPush:', path)
 
     const name = Zotero.File.pathToFile(path)
@@ -296,8 +300,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     while (repo.parent) {
       repo = repo.parent
       git = this.gitDir(repo)
-      // if (git) break
-      break
+      if (git) break
     }
 
     if (!git) {
@@ -329,7 +332,16 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     const enabled = (config['zotero "betterbibtex"'] || {}).push
     debug('git config found for', repo.path, 'enabled =', { enabled })
 
-    return (enabled === 'true' || enabled === true) ? { repo: repo.path, name: name.leafName } : {}
+    if (enabled !== 'true' && enabled !== true) return {}
+
+    if (!this.normalizePath(name.path).startsWith(this.normalizePath(repo.path))) throw `${name.path} not in ${repo.path}?!`
+    if (name.path[repo.path.length + 1] !== (this.onWindows ? '\\' : '/')) throw `${name.path} not in directory ${repo.path}?!`
+
+    return { repo: repo.path, name: name.path.substring(repo.path.length) }
+  }
+
+  private normalizePath(path) {
+    return this.onWindows ? path.toLowerCase() : path
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
