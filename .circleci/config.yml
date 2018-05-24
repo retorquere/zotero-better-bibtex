@@ -83,10 +83,9 @@ jobs:
 
     steps:
     - run: *setenv
-    - checkout
-
     - attach_workspace:
         at: *working_directory
+    - checkout
 
     # - run: *apt_get
     - run: *ruby
@@ -146,9 +145,9 @@ jobs:
 
     steps:
     - run: *setenv
-    - checkout
     - attach_workspace:
         at: *working_directory
+    - checkout
     - run: yarn run release
 
   s3form:
