@@ -270,7 +270,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
       debug('gitPush::', { found })
     } catch (err) {
       debug('gitPush::', err)
-      found = null
+      found = {}
     }
     return found
   }
