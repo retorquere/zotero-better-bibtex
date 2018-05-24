@@ -59,6 +59,7 @@ jobs:
           - downloads
           - node_modules
           - vendor/bundle
+          - ".git"
 
     - run: yarn run build
 
