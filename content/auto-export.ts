@@ -335,9 +335,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     if (enabled !== 'true' && enabled !== true) return {}
 
     if (!this.normalizePath(name.path).startsWith(this.normalizePath(repo.path))) throw new Error(`${name.path} not in ${repo.path}?!`)
-    if (name.path[repo.path.length + 1] !== (this.onWindows ? '\\' : '/')) throw new Error(`${name.path} not in directory ${repo.path}?!`)
+    if (name.path[repo.path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${name.path} not in directory ${repo.path} (${name.path[repo.path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
 
-    return { repo: repo.path, name: name.path.substring(repo.path.length) }
+    return { repo: repo.path, name: name.path.substring(repo.path.length + 1) }
   }
 
   private normalizePath(path) {
