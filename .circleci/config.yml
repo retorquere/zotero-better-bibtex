@@ -75,6 +75,7 @@ jobs:
           - xpi
           - vendor/bundle
           - node_modules
+          - ".git"
 
   test:
     <<: *defaults
