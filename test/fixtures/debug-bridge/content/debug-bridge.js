@@ -17,7 +17,7 @@ if (!Zotero.DebugBridge) {
   
       init: async function (options) {
         Zotero.debug("debug-bridge: executing\n" + options.data);
-        let action = new AsyncFunction(options.data);
+        let action = new AsyncFunction('query', options.data);
         let response;
         let start = new Date()
         try {
