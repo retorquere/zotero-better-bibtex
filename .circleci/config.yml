@@ -41,11 +41,11 @@ jobs:
     - restore_cache:
         keys:
         # This branch if available
-        - v1-dep-{{ .Branch }}-
+        - v2-dep-{{ .Branch }}-
         # Default branch if not
-        - v1-dep-master-
+        - v2-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-        - v1-dep-
+        - v2-dep-
     - run: git submodule sync && git submodule update --init --recursive
     - run: *node
     - run: *ruby
@@ -53,7 +53,7 @@ jobs:
     - run: ./zotero5_installer.py --client zotero --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads
     - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir home    --replace --cache downloads
     - save_cache:
-        key: v1-dep-{{ .Branch }}-{{ epoch }}
+        key: v2-dep-{{ .Branch }}-{{ epoch }}
         paths:
           - citation-style-language-locales
           - downloads
