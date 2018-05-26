@@ -38,22 +38,22 @@ jobs:
     steps:
     - run: *setenv
     - checkout
+    - run: git submodule sync && git submodule update --init --recursive
     - restore_cache:
         keys:
         # This branch if available
-        - v2-dep-{{ .Branch }}-
+        - v3-dep-{{ .Branch }}-
         # Default branch if not
-        - v2-dep-master-
+        - v3-dep-master-
         # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
-        - v2-dep-
-    - run: git submodule sync && git submodule update --init --recursive
+        - v3-dep-
     - run: *node
     - run: *ruby
     - run: mkdir -p bin downloads
     - run: ./zotero5_installer.py --client zotero --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads
     - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir home    --replace --cache downloads
     - save_cache:
-        key: v2-dep-{{ .Branch }}-{{ epoch }}
+        key: v3-dep-{{ .Branch }}-{{ epoch }}
         paths:
           - citation-style-language-locales
           - downloads
@@ -82,6 +82,7 @@ jobs:
     steps:
     - run: *setenv
     - checkout
+
     - attach_workspace:
         at: *working_directory
 
