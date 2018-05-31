@@ -1067,10 +1067,10 @@ export class Reference {
 
   private _enc_creators_bibtex(name) {
     let family
-    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) {
+    if ((name.family.length > 1) && (name.family[0] === '"') && (name.family[name.family.length - 1] === '"')) { // quoted
       family = new String(name.family.slice(1, -1)) // tslint:disable-line:no-construct
     } else {
-      ({ family } = name)
+      family = name.family
     }
 
     if (name.given && (name.given.indexOf(this._enc_creators_initials_marker) >= 0)) {
@@ -1093,6 +1093,10 @@ export class Reference {
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // tslint:disable-line:no-construct
     if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
     family = this.enc_latex({value: family})
+
+    // https://github.com/retorquere/zotero-better-bibtex/issues/976#issuecomment-393442419
+    if (family[0] !== '{' && name.family.match(/[-\u2014\u2015\u2012\u2013]/)) family = `{${family}}`
+
     if (name['dropping-particle']) family = this.enc_latex({value: this._enc_creators_pad_particle(name['dropping-particle'], true)}) + family
 
     if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
