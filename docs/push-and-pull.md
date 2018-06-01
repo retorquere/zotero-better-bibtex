@@ -9,17 +9,17 @@ separate exports for separate papers for example if you have set up a collection
 
 ### git support
 
-If you plan to use BBT auto-export with a git repo, you can run `git config zotero.betterbibtex.push true` in that repo, and BBT will, at each auto-export update to that folder:
+BBT push-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found [here](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta)), but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/projects/2).
+
+To activate git support, first clone the repo that holds your article/thesis/whatnot, run `git config zotero.betterbibtex.push true` in a command shell in that repo, and set up an push export to that directory; at each update, BBT will now also push your library to the git service. For the technically curious, that means it does:
 
 1. `git pull`
-2. Perform the export
+2. Performs the export
 3. `git add <your library file>`
 4. `git commit -m <your library file>`
 5. `git push`
 
 Note that the nature of git commit/push is not file-bound; if you made edits to other files, and added those, they will be committed and pushed along. If you want to be super-careful, the best way to go about it is to have a separate clone of your repo that BBT auto-exports to, and then another repo that you do your own edits in. I don't use it myself this way, but you have been warned.
-
-git auto-export works nicely with overleaf, which is where I use it myself, but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/issues/939).
 
 ## Pull Export
 You can fetch your library as part of your build, using curl (for example by using the included zoterobib.yaml arara
