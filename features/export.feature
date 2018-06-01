@@ -103,13 +103,14 @@ Scenario Outline: BibLaTeX Export
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | Export unicode as plain text fails for Vietnamese characters #977                  | 1          |
      | Hyphenated last names not escaped properly (or at all) in BibTeX #976              | 1          |
      | Better BibTeX does not export collections #901                                     | 36         |
      | [authN_M] citation key syntax has off-by-one error #899                            | 1          |
