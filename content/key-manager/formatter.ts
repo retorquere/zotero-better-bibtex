@@ -28,7 +28,8 @@ class PatternFormatter {
     word: Zotero.Utilities.XRegExp('[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+(-[\\p{L}\\p{Nd}\\{Pc}\\p{M}]+)*', 'g'),
     zotero: {
       number: /^[0-9]+/,
-      citeKeyTitleBanned: /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span)>)/g,
+      citeKeyTitleBanned: /\b(a|an|the|some|from|on|in|to|of|do|with|der|die|das|ein|eine|einer|eines|einem|einen|un|une|la|le|l\'|el|las|los|al|uno|una|unos|unas|de|des|del|d\')(\s+|\b)|(<\/?(i|b|sup|sub|sc|span style=\"small-caps\"|span)>)/g,
+
       // citeKeyConversion: /%([a-zA-Z])/,
       citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
     },
@@ -148,17 +149,23 @@ class PatternFormatter {
     let key = ''
     const creator = (this.item.item.getCreators() || [])[0]
 
-    if (creator && creator.lastName) key += creator.lastName.toLowerCase().replace(RegExp(' ', 'g'), '_').replace(/,/g, '')
+    if (creator && creator.lastName) {
+      key += creator.lastName.toLowerCase().replace(/ /g, '_').replace(/,/g, '')
+    } else {
+      key += 'noauthor'
+    }
 
     key += '_'
 
     if (this.item.title) {
       key += this.item.title.toLowerCase().replace(this.re.zotero.citeKeyTitleBanned, '').split(/\s+/g)[0]
+    } else {
+      key += 'notitle'
     }
 
     key += '_'
 
-    let year = '????'
+    let year = 'nodate'
     if (this.item.date) {
       const date = Zotero.Date.strToDate(this.item.date)
       if (date.year && this.re.zotero.number.test(date.year)) year = date.year
