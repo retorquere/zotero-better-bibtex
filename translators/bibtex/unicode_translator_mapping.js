@@ -3026,7 +3026,7 @@ module.exports = {
       '\u210A': '\\mathscr{g}',
       '\u2116': '\\cyrchar\\textnumero{}',
       '\u2122': '\\texttrademark{}',
-      '\u212B': '\\AA{}',
+      '\u212B': '{\\AA}',
       '\u2212': '-',
       '\u2254': ':=',
       '\u2305': '\\barwedge{}',
