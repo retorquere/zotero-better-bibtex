@@ -2,6 +2,7 @@
 - [ ] I am posting a single question, bug or feature request
 - [ ] I have included a descriptive subject of the problem
 - [ ] I am available for follow-up questions and testing
+- [ ] If I am posting an export-related bug report, I have included an error-report by right-clicking the problematic reference and submitting an BBT error report
 
 # Bug classification
 
