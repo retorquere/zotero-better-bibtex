@@ -1092,7 +1092,9 @@ export class Reference {
 
     if (name['non-dropping-particle']) family = new String(this._enc_creators_pad_particle(name['non-dropping-particle']) + family) // tslint:disable-line:no-construct
     if (Zotero.Utilities.XRegExp.test(family, this.startsWithLowercase) || Zotero.Utilities.XRegExp.test(family, this.hasLowercaseWord)) family = new String(family) // tslint:disable-line:no-construct
-    family = this.enc_latex({value: family})
+
+    // https://github.com/retorquere/zotero-better-bibtex/issues/978 -- enc_latex can return null
+    family = this.enc_latex({value: family}) || ''
 
     // https://github.com/retorquere/zotero-better-bibtex/issues/976#issuecomment-393442419
     if (family[0] !== '{' && name.family.match(/[-\u2014\u2015\u2012\u2013]/)) family = `{${family}}`

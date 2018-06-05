@@ -1,0 +1,360 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.47",
+        "platform": "Linux x86_64",
+        "oscpu": "Linux x86_64",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.47",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.0.144"
+    },
+    "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": false,
+      "DOIandURL": "url",
+      "asciiBibLaTeX": true,
+      "asciiBibTeX": true,
+      "autoExport": "off",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [
+        "doi"
+      ],
+      "bibtexURL": "url",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "lockedInit": false,
+      "autoPin": false
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "itemType": "computerProgram",
+      "date": "June 5, 2016",
+      "extra": "DOI: 10.5281/zenodo.54844 \nbibtex: Waskom2016",
+      "libraryCatalog": "DataCite",
+      "company": "Zenodo",
+      "abstractNote": "v0.7.1 (June 2016)\n\n\nAdded the ability to put \"caps\" on the error bars that are drawn by barplot or pointplot (and, by extension, factorplot). Additionally, the line width of the error bars can now be controlled. These changes involve the new parameters capsize and errwidth. See the github pull request for examples of usage.\nImproved the row and column colors display in clustermap. It\nis now possible to pass Pandas objects for these elements and, when possible, the semantic information in the Pandas objects will be used to add labels to the plot. When Pandas objects are used, the color data is matched against the main heatmap based on the index, not on position. This is more accurate, but it may lead to different results if current code assumed positional matching.\nImproved the luminance calculation that determines the annotation color in heatmap.\nThe annot parameter of heatmap now accepts a rectangular dataset in addition to a boolean value. If a dataset is passed, its values will be used for the annotations, while the main dataset will be used for the heatmap cell colors.\nFixed a bug in FacetGrid that appeared when using col_wrap with missing col levels.\nMade it possible to pass a tick locator object to the heatmap colorbar.\nMade it possible to use different styles (e.g., step) for PairGrid histograms when there are multiple hue levels.\nFixed a bug in scipy-based univariate kernel density bandwidth calculation.\nThe reset_orig function (and, by extension, importing seaborn.apionly) resets matplotlib rcParams to their values at the time seaborn itself was imported, which should work better with rcParams changed by the jupyter notebook backend.\nRemoved some objects from the top-level seaborn namespace.\nImproved unicode compatibility in FacetGrid.",
+      "title": "Seaborn: V0.7.1 (June 2016)",
+      "shortTitle": "Seaborn",
+      "creators": [
+        {
+          "firstName": "Michael",
+          "lastName": "Waskom",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Olga",
+          "lastName": "Botvinnik",
+          "creatorType": "programmer"
+        },
+        {
+          "creatorType": "programmer",
+          "fieldMode": 1,
+          "lastName": "Drewokane"
+        },
+        {
+          "firstName": "Paul",
+          "lastName": "Hobson",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "David",
+          "lastName": "",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Yaroslav",
+          "lastName": "Halchenko",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Saulius",
+          "lastName": "Lukauskas",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "John B.",
+          "lastName": "Cole",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Jordi",
+          "lastName": "Warmenhoven",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Julian De",
+          "lastName": "Ruiter",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Stephan",
+          "lastName": "Hoyer",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Jake",
+          "lastName": "Vanderplas",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Santi",
+          "lastName": "Villalba",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Gero",
+          "lastName": "Kunter",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Eric",
+          "lastName": "Quintero",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Marcel",
+          "lastName": "Martin",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Alistair",
+          "lastName": "Miles",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Kyle",
+          "lastName": "Meyer",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Tom",
+          "lastName": "Augspurger",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Tal",
+          "lastName": "Yarkoni",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Pete",
+          "lastName": "Bachant",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Mike",
+          "lastName": "Williams",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Constantine",
+          "lastName": "Evans",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Clark",
+          "lastName": "Fitzgerald",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Brian",
+          "lastName": "",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Daniel",
+          "lastName": "Wehner",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Gregory",
+          "lastName": "Hitz",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Erik",
+          "lastName": "Ziegler",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Adel",
+          "lastName": "Qalieh",
+          "creatorType": "programmer"
+        },
+        {
+          "firstName": "Antony",
+          "lastName": "Lee",
+          "creatorType": "programmer"
+        }
+      ],
+      "tags": [],
+      "dateAdded": "2017-06-25 05:04:21",
+      "dateModified": "2017-06-25 05:04:48",
+      "attachments": [],
+      "notes": [],
+      "itemID": 3130,
+      "publisher": "Zenodo",
+      "seeAlso": []
+    }
+  ]
+}
