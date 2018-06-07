@@ -69,13 +69,13 @@
     "punycode": "^2.1.1",
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
-    "webpack-cli": "^3.0.2",
+    "webpack-cli": "^3.0.3",
     "xregexp": "^4.1.1",
-    "zotero-plugin": "0.0.31"
+    "zotero-plugin": "0.0.34"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.3.1",
+    "@types/node": "^10.3.2",
     "@types/webpack": "^4.4.0",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
@@ -111,7 +111,7 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.1",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.11.0",
+    "webpack": "^4.11.1",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
