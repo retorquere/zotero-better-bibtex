@@ -172,16 +172,21 @@ const htmlConverter = new class HTMLConverter {
     // add any missing closing phantom braces
     switch (braced) {
       case 0:
-        break // pass
-      case 1: latex += '\\vphantom\\}'; break
-      default: latex += `\\vphantom{${(new Array(braced + 1)).join('\\}')}}`
+        break
+      case 1:
+        latex += '\\vphantom\\}'
+        break
+      default:
+        latex += `\\vphantom{${(new Array(braced + 1)).join('\\}')}}`
+        break
     }
 
     // might still be in math mode at the end
     if (math) latex += '$'
 
     /* minor cleanup */
-    latex = latex.replace(/([^\\])({})+([^ 0-9a-z])/ig, '$1$3')
+    // latex = latex.replace(/([^\\])({})+([^ 0-9a-z])/ig, '$1$3')
+    latex = latex.replace(/({})+([\\.;,])/g, '$2')
 
     this.latex += latex
   }

@@ -82,4 +82,13 @@ for (const type of ['math', 'text']) {
   }
 }
 
+for (const base of ['ascii', 'unicode']) {
+  for (const type of ['math', 'text']) {
+    for (const [key, value] of Object.entries(bbt[base][type])) {
+      var m = value.match(/^{(\\[a-z]+)}$/i)
+      if (m) bbt[base][type][key] = `${m[1]}{}`;
+    }
+  }
+}
+
 fs.writeFileSync('../translators/bibtex/unicode_translator_mapping.js', `module.exports = ${jsesc(bbt, { compact: false, indent: '  ' })};\n`)
