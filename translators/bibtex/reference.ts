@@ -481,7 +481,7 @@ export class Reference {
       }
 
       // minor cleanup
-      value = value.replace(/({})+($|[$\/\\.;,])/g, '$2')
+      value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2')
 
       field.bibtex = `${value}`
     }
