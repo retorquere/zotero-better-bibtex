@@ -5,13 +5,13 @@ declare const Components: any
 import { flash } from '../flash.ts'
 import { Preferences as Prefs } from '../prefs.ts'
 import { debug } from '../debug.ts'
+import { JournalAbbrev } from '../journal-abbrev.ts'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser.ts'
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
-import { JournalAbbrev } from '../journal-abbrev.ts'
 
 class PatternFormatter {
   public generate: Function
@@ -34,6 +34,13 @@ class PatternFormatter {
       citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
     },
   }
+  private kuroshiro: any
+  private language = {
+    jp: 'japanese',
+    japanese: 'japanese',
+    de: 'german',
+    german: 'german',
+  }
 
   /*
    * three-letter month abbreviations. I assume these are the same ones that the
@@ -52,10 +59,12 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  public init(itemTypes) {
+  public init(kuroshiro, itemTypes) {
+    this.kuroshiro = kuroshiro
     this.itemTypes = itemTypes
     debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
+
   public update(reason) {
     if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
 
@@ -91,7 +100,9 @@ class PatternFormatter {
     this.item = {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
+      language: this.language[(item.getField('language') || '').toLowerCase()] || '',
     }
+
     if (['attachment', 'note'].includes(this.item.type)) return {}
 
     try {
@@ -531,23 +542,32 @@ class PatternFormatter {
   }
 
   private removeDiacritics(str, mode?: string) {
-    const replace = {
-      german: {
-        '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
-        '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
-        '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
-        '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
-        '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
-        '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
-      },
-    }[mode]
-    if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
+    mode = mode || this.item.language
 
-    str = transliterate(str || '', {
-      unknown: '\uFFFD', // unicode replacement char
-      replace,
-    })
+    if (mode === 'japanese') {
+      str = this.kuroshiro.convert(str, {to: 'romaji'})
+
+    } else {
+      const replace = {
+        german: {
+          '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
+          '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
+          '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
+          '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
+          '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
+          '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
+        },
+      }[mode]
+      if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
+
+      str = transliterate(str || '', {
+        unknown: '\uFFFD', // unicode replacement char
+        replace,
+      })
+    }
+
     str = fold2ascii(str)
+
     return str
   }
   private clean(str) {

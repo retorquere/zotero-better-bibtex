@@ -504,6 +504,12 @@ async@^2.0.0:
   dependencies:
     lodash "^4.14.0"
 
+async@^2.0.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/async/-/async-2.6.1.tgz#b245a23ca71930044ec53fa46aa00a3e87c6a610"
+  dependencies:
+    lodash "^4.17.10"
+
 asynckit@^0.4.0:
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/asynckit/-/asynckit-0.4.0.tgz#c79ed97f7f34cb8f2ba1bc9790bcc366474b4b79"
@@ -1456,6 +1462,10 @@ dotenv@^5.0.1:
 dotenv@^6.0.0:
   version "6.0.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.0.0.tgz#24e37c041741c5f4b25324958ebbc34bca965935"
+
+doublearray@0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/doublearray/-/doublearray-0.0.2.tgz#63186fe8d34413276d3621f6aa0ec5f79e227ef9"
 
 drange@^1.0.0:
   version "1.0.1"
@@ -2704,6 +2714,21 @@ kind-of@^5.0.0:
 kind-of@^6.0.0, kind-of@^6.0.2:
   version "6.0.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
+
+kuromoji@0.1.x:
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/kuromoji/-/kuromoji-0.1.2.tgz#293f0d6706df006112137980588d5daac26d0790"
+  dependencies:
+    async "^2.0.1"
+    doublearray "0.0.2"
+    zlibjs "^0.3.1"
+
+kuroshiro@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/kuroshiro/-/kuroshiro-0.2.4.tgz#8c51c76b02cc5b5f1bc2956489d7ae050adb3f28"
+  dependencies:
+    kuromoji "0.1.x"
+    wanakana "^3.0.0"
 
 latest-version@^3.0.0:
   version "3.1.0"
@@ -5398,6 +5423,10 @@ void-elements@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/void-elements/-/void-elements-2.0.1.tgz#c066afb582bb1cb4128d60ea92392e94d5e9dbec"
 
+wanakana@^3.0.0:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/wanakana/-/wanakana-3.1.1.tgz#6c87887ff79cafce923136c3aa87e069c60b0dce"
+
 watchpack@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/watchpack/-/watchpack-1.5.0.tgz#231e783af830a22f8966f65c4c4bacc814072eed"
@@ -5698,6 +5727,10 @@ zip-stream@^1.2.0:
     compress-commons "^1.2.0"
     lodash "^4.8.0"
     readable-stream "^2.0.0"
+
+zlibjs@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/zlibjs/-/zlibjs-0.3.1.tgz#50197edb28a1c42ca659cc8b4e6a9ddd6d444554"
 
 zotero-plugin@0.0.31:
   version "0.0.31"

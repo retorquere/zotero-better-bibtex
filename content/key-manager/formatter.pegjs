@@ -100,7 +100,7 @@ default_filter
   = '(' text:[^)]+ ')' { return text.join(''); }
 
 function_filter
-  = name:'fold' language:( [, =] ('german') )? {
+  = name:'fold' language:( [, =] ('german' / 'japanese') )? {
       // handle here so the user gets feedback as the pattern is being typed
       return { name: name, params: language ? [ language[1] ] : [] };
     }
