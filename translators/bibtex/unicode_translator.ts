@@ -186,7 +186,7 @@ const htmlConverter = new class HTMLConverter {
 
     /* minor cleanup */
     // latex = latex.replace(/([^\\])({})+([^ 0-9a-z])/ig, '$1$3')
-    latex = latex.replace(/({})+([\\.;,])/g, '$2')
+    latex = latex.replace(/({})+([$\\.;,])/g, '$2')
 
     this.latex += latex
   }
