@@ -480,8 +480,8 @@ export class Reference {
         if (!field.bare || (field.value as string).match(/\s/)) value = `{${value}}`
       }
 
-      // separation protection at end unnecesary
-      value = value.replace(/{}$/, '')
+      // minor cleanup
+      value = value.replace(/({})+($|[$\/\\.;,])/g, '$2')
 
       field.bibtex = `${value}`
     }
