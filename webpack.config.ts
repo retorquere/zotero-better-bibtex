@@ -130,13 +130,15 @@ for (const label of Object.keys(translators.byName)) {
   )
 }
 
-/*
-for (const minitest of ['pfunc']) {
+config.length = 0
+for (const minitest of ['kuro']) {
   config.push(
     _.merge({}, common, {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
-        BailPlugin,
+        new webpack.DefinePlugin({
+          'Zotero.debug': 'console.log',
+        })
       ],
       context: path.resolve(__dirname, './minitests'),
       entry: { [minitest]: `./${minitest}.ts` },
@@ -150,6 +152,5 @@ for (const minitest of ['pfunc']) {
     })
   )
 }
-*/
 
 export default config
