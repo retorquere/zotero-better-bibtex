@@ -12,12 +12,14 @@
         - LaTeX
         - Cite Keys
         - Pandoc
-        - Org-mode
+        - Org-mode (citekey)
+        - Org-mode (item ID)
         - org-ref
         - RTF Scan
         - 'Atom (https://atom.io/packages/zotero-citations)'
         - GitBook
-        - Select link
+        - Select link (citekey)
+        - Select link (item ID)
     LaTeX command:
       default: '"cite"'
       description: >-

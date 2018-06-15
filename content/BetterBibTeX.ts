@@ -92,18 +92,14 @@ if (Prefs.get('citeprocNoteCitekey')) {
     return cslItem
   })
 }
+
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
-$patch$(Zotero.Items, 'parseLibraryKeyHash', original => function parseLibraryKeyHash(id) {
+$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function(id) {
   try {
-    id = decodeURIComponent(id)
-    const m = id.match(/^bbt:(?:{([0-9]+)})?(.+)/)
-    debug('parseLibraryKeyHash:', id, m)
-    if (m) {
-      const [ , lib, citekey ] = m
-      const libraryID = (lib ? parseInt(lib) : 0) || Zotero.Libraries.userLibraryID
-      const item = KeyManager.keys.findOne({ libraryID, citekey})
-      debug('parseLibraryKeyHash:', libraryID, citekey, item)
-      if (item) return { libraryID, key: item.itemKey }
+    id = decodeURIComponent(id) // is this still required?
+    if (id[0] === '@') {
+      const item = KeyManager.keys.findOne({ citekey: id.substring(1) })
+      if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
   } catch (err) {
     debug('parseLibraryKeyHash:', id, err)
