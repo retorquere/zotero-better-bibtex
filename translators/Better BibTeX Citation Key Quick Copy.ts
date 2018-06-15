@@ -8,6 +8,8 @@ import { Exporter } from './lib/exporter.ts'
 import { debug } from './lib/debug.ts'
 
 function select_link(item) {
+  /*
+  debug('exporting', item)
   const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
   if (!m) throw new Error(`Malformed item uri ${item.uri}`)
 
@@ -17,15 +19,16 @@ function select_link(item) {
   switch (type) {
     case 'users':
       if (groupId.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-      id = key
+      id = `${Zotero.BetterBibTeX.userLibraryID}_${key}`
       break
     case 'groups':
       if (!groupId) throw new Error(`Missing groupId in ${item.uri}`)
       id = `${groupId}_${key}`
       break
   }
+  /*
 
-  return `zotero://select/items/${id}`
+  return `zotero://select/items/${item.itemID}`
 }
 
 const Mode = { // tslint:disable-line:variable-name
