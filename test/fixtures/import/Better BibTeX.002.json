@@ -48,5 +48,13 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
   },
-  "collections": {}
+  "collections": {
+    "Better BibTeX.002":{
+      "collections":[],
+      "items":[0,1],
+      "key":"Better BibTeX.002",
+      "name":"Better BibTeX.002",
+      "parent":false
+    }
+  }
 }
