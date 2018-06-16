@@ -183,13 +183,6 @@
     }
   },
   "collections":{
-    "Math markup to unicode not always imported correctly #472":{
-      "collections":[],
-      "items":[0,1,2],
-      "key":"Math markup to unicode not always imported correctly #472",
-      "name":"Math markup to unicode not always imported correctly #472",
-      "parent":false
-    }
   },
   "items": [
     {

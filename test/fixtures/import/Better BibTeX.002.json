@@ -49,12 +49,5 @@
     "label": "BetterBibTeX JSON"
   },
   "collections": {
-    "Better BibTeX.002":{
-      "collections":[],
-      "items":[0,1],
-      "key":"Better BibTeX.002",
-      "name":"Better BibTeX.002",
-      "parent":false
-    }
   }
 }
