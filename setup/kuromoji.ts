@@ -11,8 +11,9 @@ const dicts = 'node_modules/kuromoji/dict'
 const unzipped = 'build/resource/kuromoji'
 
 exec(`mkdir -p ${unzipped}`)
+console.log('copying kuromoji dicts...')
 for (const dict of fs.readdirSync(dicts)) {
-  console.log(dict)
+  console.log('  ', dict)
   const dat = dict.replace('.gz', '')
   exec(`zcat ${dicts}/${dict} > ${unzipped}/${dat}`)
 }

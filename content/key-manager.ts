@@ -2,7 +2,7 @@ declare const Zotero: any
 declare const window: any
 
 import ETA = require('node-eta')
-import * as kuroshiro from 'kuroshiro'
+import { kuroshiro } from './key-manager/kuroshiro.ts'
 
 import { debug } from './debug.ts'
 import { flash } from './flash.ts'
@@ -115,6 +115,10 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   public async init() {
     debug('KeyManager.init...')
 
+    debug('initializing kuroshiro')
+    await kuroshiro.init()
+    debug('kuroshiro initialized')
+
     this.keys = DB.getCollection('citekey')
     debug('KeyManager.init:', { keys: this.keys })
 
@@ -130,20 +134,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       this.query.type[type.typeName] = type.itemTypeID
     }
 
-    const kuroshiro_ready = () => {
-      return new Promise((resolve, reject) => {
-        kuroshiro.init(err => {
-          if (err) {
-            reject(err)
-          } else {
-            resolve()
-          }
-        })
-      })
-    }
-    await kuroshiro_ready()
-
-    Formatter.init(kuroshiro, new Set((await Zotero.DB.queryAsync('select typeName from itemTypes')).map(type => type.typeName.toLowerCase())))
+    Formatter.init(new Set((await Zotero.DB.queryAsync('select typeName from itemTypes')).map(type => type.typeName.toLowerCase())))
     Formatter.update('init')
 
     await this.rescan()

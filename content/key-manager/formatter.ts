@@ -6,6 +6,7 @@ import { flash } from '../flash.ts'
 import { Preferences as Prefs } from '../prefs.ts'
 import { debug } from '../debug.ts'
 import { JournalAbbrev } from '../journal-abbrev.ts'
+import { kuroshiro } from './kuroshiro.ts'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser.ts'
@@ -34,7 +35,6 @@ class PatternFormatter {
       citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
     },
   }
-  private kuroshiro: any
   private language = {
     jp: 'japanese',
     japanese: 'japanese',
@@ -59,8 +59,7 @@ class PatternFormatter {
   private fold: boolean
   private citekeyFormat: string
 
-  public init(kuroshiro, itemTypes) {
-    this.kuroshiro = kuroshiro
+  public init(itemTypes) {
     this.itemTypes = itemTypes
     debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
@@ -545,7 +544,7 @@ class PatternFormatter {
     mode = mode || this.item.language
 
     if (mode === 'japanese') {
-      str = this.kuroshiro.convert(str, {to: 'romaji'})
+      str = kuroshiro.convert(str, {to: 'romaji'})
 
     } else {
       const replace = {

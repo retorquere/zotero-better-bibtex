@@ -130,27 +130,29 @@ for (const label of Object.keys(translators.byName)) {
   )
 }
 
-config.length = 0
-for (const minitest of ['kuro']) {
-  config.push(
-    _.merge({}, common, {
-      plugins: [
-        new CircularDependencyPlugin({ failOnError: true }),
-        new webpack.DefinePlugin({
-          'Zotero.debug': 'console.log',
-        })
-      ],
-      context: path.resolve(__dirname, './minitests'),
-      entry: { [minitest]: `./${minitest}.ts` },
+// config.length = 0
+if (config.length === 0) {
+  for (const minitest of ['kuro']) {
+    config.push(
+      _.merge({}, common, {
+        plugins: [
+          new CircularDependencyPlugin({ failOnError: true }),
+          new webpack.DefinePlugin({
+            'Zotero.debug': 'console.log',
+          })
+        ],
+        context: path.resolve(__dirname, './minitests'),
+        entry: { [minitest]: `./${minitest}.ts` },
 
-      output: {
-        path: path.resolve(__dirname, './build/minitest'),
-        filename: '[name].js',
-        devtoolLineToLine: true,
-        pathinfo: true,
-      },
-    })
-  )
+        output: {
+          path: path.resolve(__dirname, './build/minitest'),
+          filename: '[name].js',
+          devtoolLineToLine: true,
+          pathinfo: true,
+        },
+      })
+    )
+  }
 }
 
 export default config
