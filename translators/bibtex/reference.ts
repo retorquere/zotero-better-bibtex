@@ -838,6 +838,8 @@ export class Reference {
         continue
       }
 
+      name = name.replace(/ and /g, ' {and} ')
+
       encoded.push(name.trim())
     }
 
