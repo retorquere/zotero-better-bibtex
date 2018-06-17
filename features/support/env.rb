@@ -450,6 +450,7 @@ module BBT
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
   profile['extensions.zotero.translators.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.kuroshiro'] = true
   profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
   profile['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth][shorttitle][year]' unless ENV['FIRST_RUN'] == 'true'
 

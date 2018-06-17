@@ -3,6 +3,7 @@ declare const Components: any
 import _kuroshiro = require('kuroshiro')
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import { debug } from '../debug.ts'
+import { Preferences as Prefs } from '../prefs.ts'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = url.replace(/^resource:\/\/?/, 'resource://') // kuromoji replaces the double-slash for some reason
@@ -28,18 +29,25 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
 }
 
 export let kuroshiro = new class {
-  private initialized = false
+  public enabled = false
 
   public init() {
-    debug('kuroshiri: initializing...')
+    debug('kuroshiro: initializing...')
+
     return new Promise((resolve, reject) => {
+      if (!Prefs.get('kuroshiro')) {
+        debug('kuroshiro: disabled')
+        resolve()
+        return
+      }
+
       _kuroshiro.init({ dicPath: 'resource://zotero-better-bibtex/kuromoji' }, err => {
         if (err) {
-          debug('kuroshiri: initializing failed')
+          debug('kuroshiro: initializing failed')
           reject(err)
         } else {
-          debug('kuroshiri: ready')
-          this.initialized = true
+          debug('kuroshiro: ready')
+          this.enabled = true
           resolve()
         }
       })
@@ -47,7 +55,7 @@ export let kuroshiro = new class {
   }
 
   public convert(str, options) {
-    if (!this.initialized) throw new Error('kuroshori not initialized')
+    if (!this.enabled) throw new Error('kuroshoro not initialized')
     return _kuroshiro.convert(str, options)
   }
 }

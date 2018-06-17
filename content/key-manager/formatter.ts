@@ -543,27 +543,24 @@ class PatternFormatter {
   private removeDiacritics(str, mode?: string) {
     mode = mode || this.item.language
 
-    if (mode === 'japanese') {
-      str = kuroshiro.convert(str, {to: 'romaji'})
+    if (mode === 'japanese') mode = null
+    const replace = {
+      german: {
+        '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
+        '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
+        '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
+        '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
+        '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
+        '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
+      },
+    }[mode]
+    if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
-    } else {
-      const replace = {
-        german: {
-          '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
-          '\u00F6': 'oe', // tslint:disable-line:object-literal-key-quotes
-          '\u00FC': 'ue', // tslint:disable-line:object-literal-key-quotes
-          '\u00C4': 'Ae', // tslint:disable-line:object-literal-key-quotes
-          '\u00D6': 'Oe', // tslint:disable-line:object-literal-key-quotes
-          '\u00DC': 'Ue', // tslint:disable-line:object-literal-key-quotes
-        },
-      }[mode]
-      if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
-
-      str = transliterate(str || '', {
-        unknown: '\uFFFD', // unicode replacement char
-        replace,
-      })
-    }
+    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+    str = transliterate(str || '', {
+      unknown: '\uFFFD', // unicode replacement char
+      replace,
+    })
 
     str = fold2ascii(str)
 
