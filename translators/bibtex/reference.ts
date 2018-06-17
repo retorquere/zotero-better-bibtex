@@ -834,11 +834,11 @@ export class Reference {
           name = this._enc_creators_biblatex(name)
         }
 
+        name = name.replace(/ and /g, ' {and} ')
+
       } else {
         continue
       }
-
-      name = name.replace(/ and /g, ' {and} ')
 
       encoded.push(name.trim())
     }
