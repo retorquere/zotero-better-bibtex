@@ -5,27 +5,13 @@ declare const Zotero: any
 import format = require('string-template')
 
 import { Exporter } from './lib/exporter.ts'
-import { debug } from './lib/debug.ts'
 
-function select_link(item) {
-  const m = item.uri.match(/\/(users|groups)\/([0-9]+|(?:local\/[^\/]+))\/items\/([A-Z0-9]{8})$/)
-  if (!m) throw new Error(`Malformed item uri ${item.uri}`)
-
-  const [ , type, groupId, key ] = m
-
-  let id
-  switch (type) {
-    case 'users':
-      if (groupId.indexOf('local') !== 0) debug(`Link to synced item ${item.uri}`)
-      id = key
-      break
-    case 'groups':
-      if (!groupId) throw new Error(`Missing groupId in ${item.uri}`)
-      id = `${groupId}_${key}`
-      break
+function select_link(item, mode) {
+  switch (mode) {
+    case 'id': return `zotero://select/items/${item.itemID}`
+    case 'citekey': return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
+    default: throw new Error(`Unsupported link mode ${mode}`)
   }
-
-  return `zotero://select/items/${id}`
 }
 
 const Mode = { // tslint:disable-line:variable-name
@@ -73,12 +59,20 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgmode(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_link(item)}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_link(item, 'id')}][@${item.citekey}]]`)
+    }
+  },
+  orgmode_citekey(items) {
+    for (const item of items) {
+      Zotero.write(`[[${select_link(item, 'citekey')}][@${item.citekey}]]`)
     }
   },
 
   selectLink(items) {
-    Zotero.write(items.map(select_link).join('\n'))
+    Zotero.write(items.map(item => select_link(item, 'id')).join('\n'))
+  },
+  selectLink_citekey(items) {
+    Zotero.write(items.map(item => select_link(item, 'citekey')).join('\n'))
   },
 
   rtfScan(items) {

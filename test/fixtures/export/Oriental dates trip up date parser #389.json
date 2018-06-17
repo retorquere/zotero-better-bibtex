@@ -14,8 +14,7 @@
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": true
+      "bibtexURL": "note"
     }
   },
   "collections": {

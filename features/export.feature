@@ -110,6 +110,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
+     | braces after textemdash followed by unicode #980                                   | 1          |
      | BetterBibtex export fails for missing last name #978                               | 1          |
      | Export unicode as plain text fails for Vietnamese characters #977                  | 1          |
      | Hyphenated last names not escaped properly (or at all) in BibTeX #976              | 1          |

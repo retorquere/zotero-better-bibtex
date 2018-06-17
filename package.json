@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.145",
+  "version": "5.0.147",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "license": "ISC",
@@ -43,7 +43,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "^6.5.0",
+    "ajv": "^6.5.1",
     "ajv-keywords": "^3.2.0",
     "barcoder": "^2.0.1",
     "better-queue": "^3.8.7",
@@ -70,13 +70,13 @@
     "punycode": "^2.1.1",
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
-    "webpack-cli": "^3.0.2",
-    "xregexp": "^4.1.1",
-    "zotero-plugin": "0.0.31"
+    "webpack-cli": "^3.0.8",
+    "xregexp": "^4.2.0",
+    "zotero-plugin": "0.0.34"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.3.1",
+    "@types/node": "^10.3.3",
     "@types/webpack": "^4.4.0",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
@@ -106,13 +106,13 @@
     "rimraf": "^2.6.2",
     "shelljs": "^0.8.2",
     "sqlite-sync": "^0.3.8",
-    "ts-loader": "^4.3.1",
-    "ts-node": "^6.1.0",
+    "ts-loader": "^4.4.1",
+    "ts-node": "^6.1.1",
     "tslint": "^5.10.0",
     "typedoc": "^0.11.1",
-    "typescript": "^2.9.1",
+    "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.11.0",
+    "webpack": "^4.12.0",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",

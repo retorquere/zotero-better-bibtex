@@ -159,7 +159,7 @@
       ],
       "warnBulkModify": 10,
       "postscript": "",
-      "jabrefFormat": 4,
+      "jabrefFormat": 0,
       "bibtexParticleNoOp": false,
       "biblatexExtendedNameFormat": true,
       "biblatexExtendedDateFormat": false,
