@@ -64,13 +64,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "Commande LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF Scan">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_id "Org-mode (item ID)">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Org-mode (citekey)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_id "Org-mode (ID du document)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Org-mode (clé de citation)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Org-ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Encadrer les citations 'Pandoc' avec des parenthèses">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "Select link (item ID)">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Select link (citekey)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "URL de sélection (ID du document)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "URL de sélection (clé de citation)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "conservées (risque de doublons)">
@@ -118,4 +118,4 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Show BibLaTeX server URL">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Afficher l’URL du serveur BibLaTeX">
