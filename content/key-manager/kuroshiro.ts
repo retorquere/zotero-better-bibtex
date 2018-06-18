@@ -16,7 +16,7 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
   xhr.onload = function() {
     debug('kuromoji: loaded', url, this.status)
     const err = this.status > 0 && this.status !== 200 // tslint:disable-line:no-magic-numbers
-    callback(err ? xhr.statusText : null, err ? null : this.response)
+    callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
   }
 
   xhr.onerror = function(err) { // tslint:disable-line:only-arrow-functions
