@@ -541,7 +541,7 @@
 
           <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
             <vbox>
-              <label forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
+              <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <listbox id="better-bibtex-abbrev-style" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
             </vbox>
