@@ -41,21 +41,18 @@ jobs:
     - run: git submodule sync && git submodule update --init --recursive
     - restore_cache:
         keys:
-        # This branch if available
-        - v3-dep-{{ .Branch }}-
-        # Default branch if not
-        - v3-dep-master-
-        # Any branch if there are none on the default branch - this should be unnecessary if you have your default branch configured correctly
+        - v3-dep-{{ checksum "package.json" }}
         - v3-dep-
     - run: *node
     - run: *ruby
     - run: mkdir -p bin downloads/zotero downloads/juris-m
+    - run: rm -f downloads/*.bz2
     - run: ls -l downloads/*
     - run: ./zotero5_installer.py --client zotero --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads/zotero
     - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir home    --replace --cache downloads/juris-m
     - run: ls -l downloads/*
     - save_cache:
-        key: v3-dep-{{ .Branch }}-
+        key: v3-dep-{{ checksum "package.json" }}
         paths:
           - citation-style-language-locales
           - downloads
