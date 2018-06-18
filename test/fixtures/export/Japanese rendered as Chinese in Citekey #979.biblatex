@@ -1,11 +1,12 @@
-@article{kanjitoretaratewotsunagoukasanarunohajinseinorainandremiriasaikou!2001,
-  author = {感じ取れたら手を繋ごう、重なるのは人生のライン {and} レミリア最高！, Nancy K},
-  date = {2001},
-  journaltitle = {Bulletin of Volcanology},
-  keywords = {Vulcanian eruptions,breadcrust,plinian},
-  langid = {japanese},
-  pages = {493--518},
-  title = {The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru},
-  volume = {62}
+@incollection{higuchinippongatahaigaishugiwomegurutoi2014,
+  author = {樋口, 直人},
+  booktitle = {日本型排外主義: 在特会・外国人参政権・東アジア地政学},
+  date = {2014},
+  isbn = {978-4-8158-0763-4},
+  keywords = {Japan,Jinshu sabetsu,Right-wing extremists,Shakaiteki haijo},
+  location = {{名古屋}},
+  pages = {9-28},
+  publisher = {{Nagoya Daigaku Shuppankai}},
+  title = {日本型排外主義をめぐる問い}
 }
 

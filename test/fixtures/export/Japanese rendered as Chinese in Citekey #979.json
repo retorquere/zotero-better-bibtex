@@ -1,36 +1,274 @@
 {
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.47m37",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.13",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.47m37",
+        "isZotero": false,
+        "isJurisM": true
+      },
+      "BetterBibTeX": "5.0.147.7053"
+    },
+    "preferences": {
+      "debug": false,
+      "rawLaTag": "#LaTeX",
+      "testing": false,
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "pandoc",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": true,
+      "citekeyFormat": "[auth.etal][veryshorttitle][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "preserveBibTeXVariables": false,
+      "bibtexParticleNoOp": false,
+      "skipFields": [],
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "lockedInit": false,
+      "autoPin": false,
+      "kuroshiro": false
+    },
+    "options": {
+      "exportNotes": true
+    }
+  },
+  "collections": {},
   "items": [
     {
-      "itemType": "journalArticle",
-      "language": "japanese",
+      "itemType": "bookSection",
+      "multi": {
+        "main": {
+          "place": "ja",
+          "publisher": "ja",
+          "title": "ja"
+        },
+        "_keys": {
+          "place": {
+            "ja-alalc97": "Nagoya"
+          },
+          "publisher": {
+            "ja-alalc97": "名古屋大学出版会"
+          },
+          "title": {
+            "ja-alalc97": "Nihongata-haigai-shugi wo meguru toi",
+            "en": "Questions about Japanese Xenophobia"
+          },
+          "bookTitle": {
+            "ja-alalc97": "Nihon-gata haigai shugi: Zaitokukai, gaikokujin sanseiken, Higashi Ajia chiseigaku"
+          }
+        }
+      },
+      "place": "名古屋",
+      "publisher": "Nagoya Daigaku Shuppankai",
+      "pages": "9-28",
+      "ISBN": "978-4-8158-0763-4",
+      "date": "2014",
+      "callNumber": "HN730.Z9 R3244 2014",
+      "libraryCatalog": "Library of Congress ISBN",
+      "title": "日本型排外主義をめぐる問い",
+      "bookTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
       "creators": [
         {
-          "firstName": "Nancy K",
-          "lastName": "感じ取れたら手を繋ごう、重なるのは人生のライン and レミリア最高！",
-          "creatorType": "author"
+          "firstName": "直人",
+          "lastName": "樋口",
+          "creatorType": "author",
+          "multi": {
+            "_key": {
+              "ja-alalc97": {
+                "firstName": "Naoto",
+                "lastName": "Higuchi"
+              }
+            },
+            "main": "ja"
+          }
         }
       ],
       "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
+        {
+          "tag": "Japan",
+          "type": 1
+        },
+        {
+          "tag": "Jinshu sabetsu",
+          "type": 1
+        },
+        {
+          "tag": "Right-wing extremists",
+          "type": 1
+        },
+        {
+          "tag": "Shakaiteki haijo",
+          "type": 1
+        }
       ],
-      "publicationTitle": "Bulletin of Volcanology",
-      "pages": "493–518",
-      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62",
-      "date": "2001"
+      "dateAdded": "2018-06-01 03:17:45",
+      "dateModified": "2018-06-01 03:28:46",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "樋口_2014_日本型排外主義をめぐる問い.pdf",
+          "tags": [],
+          "dateAdded": "2018-06-01 03:21:47",
+          "dateModified": "2018-06-01 03:21:47",
+          "seeAlso": [],
+          "mimeType": "application/pdf"
+        }
+      ],
+      "notes": [],
+      "itemID": 9663,
+      "publicationTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
+      "seeAlso": []
     }
-  ],
-  "config": {
-    "label": "BetterBibTeX JSON",
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "preferences": {
-      "citekeyFormat": "[auth:fold=japanese][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    }
-  },
-  "collections": {
-  }
+  ]
 }
