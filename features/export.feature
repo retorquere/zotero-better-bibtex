@@ -11,7 +11,7 @@ Scenario Outline: BibLaTeX Export
      | file                                                                                           | references  |
      | Dates incorrect when Zotero date field includes times #934                                     | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
-     | biblatex export of Presentation: Use type and venue fields #644                                | 2           |
+     | biblatex export of Presentation; Use type and venue fields #644                                | 2           |
      | Month showing up in year field on export #889                                                  | 1           |
      | urldate when only DOI is exported #869                                                         | 1           |
      | Citations have month and day next to year #868                                                 | 2           |
