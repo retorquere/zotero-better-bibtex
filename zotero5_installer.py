@@ -179,20 +179,21 @@ if args.version == 'cached':
     raise Exception('No cached ' + args.client + ' found in ' + args.cache)
   print('Using cached ' + tarball + ' without checking for newer versions')
 else:
-  tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
-
   if args.cache is None:
     tarball = tempfile.NamedTemporaryFile().name
   else:
     tarball = args.client + '-' + platform.machine() + '-' + args.version + '.tar.bz2'
+    print('Looking for ' + tarball)
     for junk in glob.glob(os.path.join(args.cache, args.client + '-*.tar.bz2')):
-      if os.path.basename(junk) != tarball: os.remove(junk)
+      if os.path.basename(junk) != tarball:
+        print('Removing obsolete ' + junk)
+        os.remove(junk)
     tarball = os.path.join(args.cache, tarball)
 
   if os.path.exists(tarball):
     print('Retaining ' + tarball)
   else:
-    print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' (' + tarball + ')')
+    print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' to ' + tarball)
     urlretrieve (args.url, tarball)
 
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
