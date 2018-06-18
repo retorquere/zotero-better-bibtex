@@ -62,7 +62,7 @@ export let kuroshiro = new class {
   }
 
   private isJapanese(str) {
-    for(const c of str) {
+    for (const c of str) {
       if (_kuroshiro.isKanji(c)) return true
       if (_kuroshiro.isHiragana(c)) return true
       if (_kuroshiro.isKatakana(c)) return true
