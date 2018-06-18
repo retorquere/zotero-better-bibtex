@@ -50,7 +50,6 @@ jobs:
     - run: *node
     - run: *ruby
     - run: mkdir -p bin downloads/zotero downloads/juris-m
-    - run: rm -f downloads/*.bz2
     - run: ls -l downloads/*
     - run: ./zotero5_installer.py --client zotero --version latest --location $CIRCLE_WORKING_DIR/bin --datadir profile --replace --cache downloads/zotero
     - run: ./zotero5_installer.py --client jurism --version latest --location $CIRCLE_WORKING_DIR/bin --datadir home    --replace --cache downloads/juris-m
