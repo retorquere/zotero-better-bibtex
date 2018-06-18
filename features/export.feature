@@ -2,13 +2,14 @@
 Feature: Export
 
 @test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf @689 @biblatex @644 @889 @482
+@573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | Japanese rendered as Chinese in Citekey #979                                                   | 1           |
      | Dates incorrect when Zotero date field includes times #934                                     | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
      | biblatex export of Presentation; Use type and venue fields #644                                | 2           |

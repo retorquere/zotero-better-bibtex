@@ -5,13 +5,14 @@ declare const Components: any
 import { flash } from '../flash.ts'
 import { Preferences as Prefs } from '../prefs.ts'
 import { debug } from '../debug.ts'
+import { JournalAbbrev } from '../journal-abbrev.ts'
+import { kuroshiro } from './kuroshiro.ts'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser.ts'
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')
-import { JournalAbbrev } from '../journal-abbrev.ts'
 
 class PatternFormatter {
   public generate: Function
@@ -33,6 +34,12 @@ class PatternFormatter {
       // citeKeyConversion: /%([a-zA-Z])/,
       citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
     },
+  }
+  private language = {
+    jp: 'japanese',
+    japanese: 'japanese',
+    de: 'german',
+    german: 'german',
   }
 
   /*
@@ -56,6 +63,7 @@ class PatternFormatter {
     this.itemTypes = itemTypes
     debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
+
   public update(reason) {
     if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
 
@@ -91,7 +99,9 @@ class PatternFormatter {
     this.item = {
       item,
       type: Zotero.ItemTypes.getName(item.itemTypeID),
+      language: this.language[(item.getField('language') || '').toLowerCase()] || '',
     }
+
     if (['attachment', 'note'].includes(this.item.type)) return {}
 
     try {
@@ -396,7 +406,7 @@ class PatternFormatter {
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref` */
-  public $title() { return this.titleWords(this.item.title).join('') }
+  public $title() { return (this.titleWords(this.item.title) || []).join('') }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value, find, replace) {
@@ -531,6 +541,9 @@ class PatternFormatter {
   }
 
   private removeDiacritics(str, mode?: string) {
+    mode = mode || this.item.language
+
+    if (mode === 'japanese') mode = null
     const replace = {
       german: {
         '\u00E4': 'ae', // tslint:disable-line:object-literal-key-quotes
@@ -543,11 +556,14 @@ class PatternFormatter {
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
+    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
     })
+
     str = fold2ascii(str)
+
     return str
   }
   private clean(str) {
@@ -556,11 +572,6 @@ class PatternFormatter {
 
   private safechars(str) {
     return Zotero.Utilities.XRegExp.replace(str, this.re.unsafechars, '', 'all')
-  }
-
-  private words(str) {
-    // 551
-    return (Zotero.Utilities.XRegExp.matchChain(this.innerText(str), [this.re.word]).filter(word => word !== '').map(word => this.clean(word).replace(/-/g, '')))
   }
 
   private padYear(year, length) {
@@ -584,7 +595,12 @@ class PatternFormatter {
 
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}) {
     if (!title) return null
-    let words = this.words(title)
+
+    title = this.innerText(title)
+    if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
+
+    // 551
+    let words = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]).map(word => this.clean(word).replace(/-/g, '')))
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)

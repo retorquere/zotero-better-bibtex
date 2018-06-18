@@ -1,10 +1,13 @@
 declare const Zotero: any
 declare const window: any
 
+import ETA = require('node-eta')
+import { kuroshiro } from './key-manager/kuroshiro.ts'
+
 import { debug } from './debug.ts'
 import { flash } from './flash.ts'
 import { Events } from './events.ts'
-import ETA = require('node-eta')
+
 import * as ZoteroDB from './db/zotero.ts'
 
 import { getItemsAsync } from './get-items-async.ts'
@@ -111,6 +114,10 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
   public async init() {
     debug('KeyManager.init...')
+
+    debug('initializing kuroshiro')
+    await kuroshiro.init()
+    debug('kuroshiro initialized')
 
     this.keys = DB.getCollection('citekey')
     debug('KeyManager.init:', { keys: this.keys })
