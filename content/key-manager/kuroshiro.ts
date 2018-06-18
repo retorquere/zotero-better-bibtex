@@ -56,6 +56,8 @@ export let kuroshiro = new class {
 
   public convert(str, options) {
     if (!this.enabled) throw new Error('kuroshoro not initialized')
-    return _kuroshiro.convert(str, options)
+    if (!str) return str
+    if (_kuroshiro.hasHiragana(str) || _kuroshiro.hasKatakana(str) || _kuroshiro.hasKanji(str)) return _kuroshiro.convert(str, options)
+    return str
   }
 }

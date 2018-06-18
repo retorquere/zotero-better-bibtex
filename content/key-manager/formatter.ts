@@ -406,7 +406,7 @@ class PatternFormatter {
   }
 
   /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref` */
-  public $title() { return this.titleWords(this.item.title).join('') }
+  public $title() { return (this.titleWords(this.item.title) || []).join('') }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value, find, replace) {
@@ -556,7 +556,7 @@ class PatternFormatter {
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
-    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji', mode: 'spaced'})
+    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
@@ -572,11 +572,6 @@ class PatternFormatter {
 
   private safechars(str) {
     return Zotero.Utilities.XRegExp.replace(str, this.re.unsafechars, '', 'all')
-  }
-
-  private words(str) {
-    // 551
-    return (Zotero.Utilities.XRegExp.matchChain(this.innerText(str), [this.re.word]).filter(word => word !== '').map(word => this.clean(word).replace(/-/g, '')))
   }
 
   private padYear(year, length) {
@@ -600,7 +595,12 @@ class PatternFormatter {
 
   private titleWords(title, options: { asciiOnly?: boolean, skipWords?: boolean} = {}) {
     if (!title) return null
-    let words = this.words(title)
+
+    title = this.innerText(title)
+    if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
+
+    // 551
+    let words = (Zotero.Utilities.XRegExp.matchChain(title, [this.re.word]).map(word => this.clean(word).replace(/-/g, '')))
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
