@@ -556,7 +556,7 @@ class PatternFormatter {
     }[mode]
     if (mode && !replace) throw new Error(`Unsupported fold mode "${mode}"`)
 
-    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji'})
+    if (kuroshiro.enabled) str = kuroshiro.convert(str, {to: 'romaji', mode: 'spaced'})
     str = transliterate(str || '', {
       unknown: '\uFFFD', // unicode replacement char
       replace,
