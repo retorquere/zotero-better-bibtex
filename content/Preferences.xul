@@ -283,7 +283,7 @@
           type="bool"
           default="false"/>
         <!--!
-          Generate quality reports for exported references. 
+          Generate quality reports for exported references.
         -->
 
         <preference
@@ -537,14 +537,12 @@
               <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
             </groupbox>
 
-          </tabpanel>
-
-          <tabpanel id="better-bibtex-prefs-journal-abbreviations" orient="vertical">
-            <vbox>
-              <label forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
+            <groupbox>
+              <caption label="&better-bibtex.Preferences.auto-abbrev.style;"/>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <listbox id="better-bibtex-abbrev-style" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
-            </vbox>
+            </groupbox>
+
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-journal-automatic-export" orient="vertical">
