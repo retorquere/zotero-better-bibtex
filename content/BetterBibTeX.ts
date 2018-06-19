@@ -323,6 +323,21 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
   return original.apply(this, arguments)
 })
 
+$patch$(pane, 'buildCollectionContextMenu', original => async function() {
+  await original.apply(this, arguments)
+
+  try {
+    const treeRow = this.collectionsView.selectedTreeRow
+    const hidden = !treeRow || treeRow.isFeed() || treeRow.isTrash() || treeRow.isUnfiled() || treeRow.isDuplicates()
+
+    document.getElementById('bbt-collectionmenu-separator').hidden = hidden
+    document.getElementById('bbt-collectionmenu-pull-url').hidden = hidden
+    document.getElementById('bbt-collectionmenu-report-errors').hidden = hidden
+  } catch (err) {
+    debug('ZoteroPane.buildCollectionContextMenu:', err)
+  }
+})
+
 /*
   EVENTS
 */
