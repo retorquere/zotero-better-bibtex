@@ -549,7 +549,10 @@
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
               <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
-              <listbox id="better-bibtex-abbrev-style" rows="5" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
+              <menulist id="better-bibtex-abbrev-style" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
+                <menupopup id="better-bibtex-abbrev-style-popup">
+                </menupopup>
+              </menulist>
             </groupbox>
 
           </tabpanel>

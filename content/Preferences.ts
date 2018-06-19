@@ -335,13 +335,13 @@ export = new class PrefPane {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)
 
-        const stylebox = document.getElementById('better-bibtex-abbrev-style')
+        const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0
         const selectedStyle = Prefs.get('autoAbbrevStyle')
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {
-            const itemNode = document.createElement('listitem')
+            const itemNode = document.createElement('menuitem')
             itemNode.setAttribute('value', style.styleID)
             itemNode.setAttribute('label', style.title)
             stylebox.appendChild(itemNode)
@@ -369,7 +369,7 @@ export = new class PrefPane {
   private styleChanged(index) {
     if (!ZoteroConfig.Zotero.isJurisM) return
 
-    const stylebox = document.getElementById('better-bibtex-abbrev-style')
+    const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
