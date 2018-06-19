@@ -327,11 +327,12 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
   await original.apply(this, arguments)
 
   try {
-    const collectionTreeRow = this.collectionsView.selectedTreeRow
-    const bbt = collectionTreeRow && (collectionTreeRow.isLibrary(true) || collectionTreeRow.isCollection())
+    const treeRow = this.collectionsView.selectedTreeRow
+    const hidden = !treeRow || treeRow.isFeed() || treeRow.isTrash() || treeRow.isUnfiled() || treeRow.isDuplicates()
 
-    document.getElementById('zotero-better-bibtex-pull-url').hidden = !bbt
-    document.getElementById('zotero-better-bibtex-report-errors').hidden = !bbt
+    document.getElementById('bbt-collectionmenu-separator').hidden = hidden
+    document.getElementById('bbt-collectionmenu-pull-url').hidden = hidden
+    document.getElementById('bbt-collectionmenu-report-errors').hidden = hidden
   } catch (err) {
     debug('ZoteroPane.buildCollectionContextMenu:', err)
   }

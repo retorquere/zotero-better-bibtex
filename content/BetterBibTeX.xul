@@ -15,14 +15,14 @@
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
-    <menuseparator/>
+    <menuseparator id="bbt-collectionmenu-separator"/>
     <menuitem
-      id="zotero-better-bibtex-pull-url"
+      id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
       oncommand="alert(Zotero.BetterBibTeX.pullExport() || '&better-bibtex.BetterBibTeX.server.disabled;')"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
     />
-    <menuitem id="zotero-better-bibtex-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
+    <menuitem id="bbt-collectionmenu-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
