@@ -113,6 +113,12 @@
         - 'no'
         - in a note field
         - in a URL field
+    'Abbreviation style:':
+      default: 'off'
+      description: >-
+        If set, generates journal abbreviations on export using the Zotero
+        journal abbreviator, according to the abbreviation style selected in the
+        list below the checkbox.
     'Include JabRef-specific metadata:':
       default: 'no'
       description: >-
@@ -133,15 +139,6 @@
         to store creator names. It's technically superior, but the LaTeX world
         moves slowly, so many people won't have it yet. But if you're an early
         adopter, you can enable it here
-- name: Journal abbreviations
-  description: ''
-  preferences:
-    Automatically abbreviate journal title if none is set explicitly:
-      default: 'off'
-      description: >-
-        If set, generates journal abbreviations on export using the Zotero
-        journal abbreviator, according to the abbreviation style selected in the
-        list below the checkbox.
 - name: Automatic export
   description: ''
   preferences:
