@@ -547,13 +547,17 @@
             <groupbox>
               <caption label="&better-bibtex.Preferences.export.journal-abbrev;"/>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
+              <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
               <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
-              <listbox id="better-bibtex-abbrev-style" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
+              <listbox id="better-bibtex-abbrev-style" rows="5" onselect="Zotero.BetterBibTeX.Preferences.styleChanged()"/>
             </groupbox>
+
+          </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-journal-automatic-export" orient="vertical">
             <vbox flex="1">
               <label>&better-bibtex.Preferences.auto-export.add;</label>
+              <separator class="thin"/>
               <hbox>
                 <label forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
                 <menulist preference="pref-better-bibtex-autoExport">
@@ -565,7 +569,7 @@
                 </menulist>
               </hbox>
               <hbox>
-                <tree id="better-bibtex-export-list" flex="1" seltype="single" height="200" editable="false" ondblclick="Zotero.BetterBibTeX.Preferences.aeToggle(event)">
+                <tree id="better-bibtex-export-list" flex="1" seltype="single" hidecolumnpicker="true" height="200" editable="false" ondblclick="Zotero.BetterBibTeX.Preferences.aeToggle(event)">
                   <treecols>
                     <treecol id="better-bibtex-export-list-name" label="&better-bibtex.Preferences.auto-export.status;" editable="false" flex="1" persist="width ordinal hidden" primary="true"/>
                     <splitter class="tree-splitter"/>

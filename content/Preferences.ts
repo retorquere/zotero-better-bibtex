@@ -259,6 +259,7 @@ export = new class PrefPane {
     // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
     document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
     document.getElementById('better-bibtex-abbrev-style-label').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
