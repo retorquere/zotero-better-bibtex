@@ -257,8 +257,9 @@ export = new class PrefPane {
     }, 500) // tslint:disable-line:no-magic-numbers
 
     // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('hidden', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
@@ -334,13 +335,13 @@ export = new class PrefPane {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
         debug('prefPane.update: found styles', styles)
 
-        const stylebox = document.getElementById('better-bibtex-abbrev-style')
+        const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0
         const selectedStyle = Prefs.get('autoAbbrevStyle')
         let selectedIndex = -1
         for (const [i, style] of styles.entries()) {
           if (refill) {
-            const itemNode = document.createElement('listitem')
+            const itemNode = document.createElement('menuitem')
             itemNode.setAttribute('value', style.styleID)
             itemNode.setAttribute('label', style.title)
             stylebox.appendChild(itemNode)
@@ -368,7 +369,7 @@ export = new class PrefPane {
   private styleChanged(index) {
     if (!ZoteroConfig.Zotero.isJurisM) return
 
-    const stylebox = document.getElementById('better-bibtex-abbrev-style')
+    const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem
     const styleID = selectedItem.getAttribute('value')
     Prefs.set('autoAbbrevStyle', styleID)
