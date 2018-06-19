@@ -327,12 +327,8 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
   await original.apply(this, arguments)
 
   try {
-    let bbt = false
-
     const collectionTreeRow = this.collectionsView.selectedTreeRow
-    if (collectionTreeRow) {
-      bbt = collectionTreeRow.isLibrary(true) || collectionTreeRow.isCollection()
-    }
+    const bbt = collectionTreeRow && (collectionTreeRow.isLibrary(true) || collectionTreeRow.isCollection())
 
     document.getElementById('zotero-better-bibtex-pull-url').hidden = !bbt
     document.getElementById('zotero-better-bibtex-report-errors').hidden = !bbt
