@@ -100,7 +100,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
-<!ENTITY better-bibtex.Preferences.tab.journal-abbrev "Journaux d'exportation">
+<!ENTITY better-bibtex.Preferences.export.journal-abbrev "Journal abbreviations">
 <!ENTITY better-bibtex.Preferences.tab.postscript "Postscript">
 <!ENTITY better-bibtex.Preferences.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
