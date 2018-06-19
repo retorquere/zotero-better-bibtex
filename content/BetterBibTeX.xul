@@ -17,6 +17,7 @@
   <menupopup id="zotero-collectionmenu">
     <menuseparator/>
     <menuitem
+      id="zotero-better-bibtex-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
       oncommand="alert(Zotero.BetterBibTeX.pullExport() || '&better-bibtex.BetterBibTeX.server.disabled;')"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
