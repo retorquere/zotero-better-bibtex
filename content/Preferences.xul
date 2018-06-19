@@ -598,13 +598,14 @@
               </tabs>
               <tabpanels>
                 <tabpanel orient="vertical">
-                  <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
+                  <textbox rows="10" flex="1" multiline="true" resizable="true"
+                        preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
                         onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                         oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                         onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
                 </tabpanel>
                 <tabpanel orient="vertical">
-                  <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-strings"/>
+                  <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-strings" resizable="true"/>
                 </tabpanel>
               </tabpanels>
             </tabbox>
