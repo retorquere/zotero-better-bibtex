@@ -103,7 +103,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
 
-    const m = id.match(/^bbt:({([0-9]+)})?(.*)/)
+    const m = id.match(/^bbt:(?:{([0-9]+)})?(.*)/)
     if (m) {
       let [libraryID, citekey] = m.slice(1)
       if (!libraryID || libraryID === 1) libraryID = Zotero.Libraries.userLibraryID
