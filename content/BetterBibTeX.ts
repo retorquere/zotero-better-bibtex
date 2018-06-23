@@ -108,6 +108,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
     if (m) {
       let [libraryID, citekey] = m.slice(1)
       if (!libraryID || libraryID === 1) libraryID = Zotero.Libraries.userLibraryID
+      libraryID = parseInt(libraryID)
       const item = KeyManager.keys.findOne({ libraryID, citekey })
       debug('parseLibraryKeyHash: bbt:', { libraryID, citekey, item })
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
