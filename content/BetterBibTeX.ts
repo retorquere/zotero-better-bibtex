@@ -96,6 +96,7 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function(id) {
   debug('parseLibraryKeyHash:', {id})
+  id = decodeURIComponent(id)
   try {
     if (id[0] === '@') {
       const item = KeyManager.keys.findOne({ citekey: id.substring(1) })
