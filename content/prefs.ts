@@ -52,7 +52,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     } catch (err) {
       debug('Prefs.clear', pref, err)
     }
-
+    return this.get(pref)
   }
 
   private key(pref) { return `${this.prefix}.${pref}` }

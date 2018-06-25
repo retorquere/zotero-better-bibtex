@@ -79,7 +79,7 @@ class PatternFormatter {
       }
 
       // the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly
-      this.citekeyFormat = Prefs.get('citekeyFormat').replace(/^\u200B/, '')
+      this.citekeyFormat = (Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')).replace(/^\u200B/, '')
 
       try {
         debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
