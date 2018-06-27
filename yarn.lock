@@ -69,9 +69,13 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
-"@types/node@*", "@types/node@^10.3.3":
+"@types/node@*":
   version "10.3.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.3.tgz#8798d9e39af2fa604f715ee6a6b19796528e46c3"
+
+"@types/node@^10.3.6":
+  version "10.3.6"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.3.6.tgz#ea8aab9439b59f40d19ec5f13b44642344872b11"
 
 "@types/node@^9.6.1":
   version "9.6.22"
@@ -94,9 +98,18 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/webpack@^4.1.3", "@types/webpack@^4.4.0":
+"@types/webpack@^4.1.3":
   version "4.4.0"
   resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.0.tgz#c0551b772be241d786c0548812dd75a932f8efb4"
+  dependencies:
+    "@types/node" "*"
+    "@types/tapable" "*"
+    "@types/uglify-js" "*"
+    source-map "^0.6.0"
+
+"@types/webpack@^4.4.3":
+  version "4.4.3"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.3.tgz#9424101def0d720747b3c059bf0f7eff2ea57b31"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
@@ -760,7 +773,7 @@ buffer-fill@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-fill/-/buffer-fill-1.0.0.tgz#f8f78b76789888ef39f205cd637f68e702122b2c"
 
-buffer-from@^1.0.0:
+buffer-from@^1.0.0, buffer-from@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/buffer-from/-/buffer-from-1.1.0.tgz#87fcaa3a298358e0ade6e442cfce840740d1ad04"
 
@@ -949,9 +962,9 @@ circular-dependency-plugin@^5.0.2:
   version "5.0.2"
   resolved "https://registry.yarnpkg.com/circular-dependency-plugin/-/circular-dependency-plugin-5.0.2.tgz#da168c0b37e7b43563fb9f912c1c007c213389ef"
 
-citeproc@^2.1.206:
-  version "2.1.206"
-  resolved "https://registry.yarnpkg.com/citeproc/-/citeproc-2.1.206.tgz#5bc6dd8cfd759fd1b456fd6bd3e310d8e7c88fb8"
+citeproc@^2.1.207:
+  version "2.1.207"
+  resolved "https://registry.yarnpkg.com/citeproc/-/citeproc-2.1.207.tgz#c8b4088979bf2a5437b08a10397dc65837f04126"
 
 class-utils@^0.3.5:
   version "0.3.6"
@@ -5067,11 +5080,12 @@ ts-node@^5.0.1:
     source-map-support "^0.5.3"
     yn "^2.0.0"
 
-ts-node@^6.1.1:
-  version "6.1.1"
-  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-6.1.1.tgz#19607140acb06150441fcdb61be11f73f7b6657e"
+ts-node@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/ts-node/-/ts-node-7.0.0.tgz#a94a13c75e5e1aa6b82814b84c68deb339ba7bff"
   dependencies:
     arrify "^1.0.0"
+    buffer-from "^1.1.0"
     diff "^3.1.0"
     make-error "^1.1.1"
     minimist "^1.2.0"
@@ -5415,7 +5429,37 @@ webpack-sources@^1.0.1, webpack-sources@^1.1.0:
     source-list-map "^2.0.0"
     source-map "~0.6.1"
 
-webpack@^4.12.0, webpack@^4.4.1:
+webpack@^4.12.2:
+  version "4.12.2"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.12.2.tgz#d2b8418eb40cedcbf2c1f5905d23a99546011ce9"
+  dependencies:
+    "@webassemblyjs/ast" "1.5.12"
+    "@webassemblyjs/helper-module-context" "1.5.12"
+    "@webassemblyjs/wasm-edit" "1.5.12"
+    "@webassemblyjs/wasm-opt" "1.5.12"
+    "@webassemblyjs/wasm-parser" "1.5.12"
+    acorn "^5.6.2"
+    acorn-dynamic-import "^3.0.0"
+    ajv "^6.1.0"
+    ajv-keywords "^3.1.0"
+    chrome-trace-event "^1.0.0"
+    enhanced-resolve "^4.0.0"
+    eslint-scope "^3.7.1"
+    json-parse-better-errors "^1.0.2"
+    loader-runner "^2.3.0"
+    loader-utils "^1.1.0"
+    memory-fs "~0.4.1"
+    micromatch "^3.1.8"
+    mkdirp "~0.5.0"
+    neo-async "^2.5.0"
+    node-libs-browser "^2.0.0"
+    schema-utils "^0.4.4"
+    tapable "^1.0.0"
+    uglifyjs-webpack-plugin "^1.2.4"
+    watchpack "^1.5.0"
+    webpack-sources "^1.0.1"
+
+webpack@^4.4.1:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/webpack/-/webpack-4.12.0.tgz#14758e035ae69747f68dd0edf3c5a572a82bdee9"
   dependencies:
@@ -5659,9 +5703,9 @@ zlibjs@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/zlibjs/-/zlibjs-0.3.1.tgz#50197edb28a1c42ca659cc8b4e6a9ddd6d444554"
 
-zotero-plugin@0.0.34:
-  version "0.0.34"
-  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.34.tgz#fcf0ff9252e0cc668bf2a11b774051760559891c"
+zotero-plugin@0.0.35:
+  version "0.0.35"
+  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.35.tgz#88751363892f0134d3845a2e3478da7b88c33f4a"
   dependencies:
     "@octokit/rest" "^15.2.6"
     "@rgrove/parse-xml" "^1.1.1"
