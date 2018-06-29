@@ -67,7 +67,7 @@ class DocFinder {
       if (pref.options && pref.options[pref.default]) {
         pref.default = pref.options[pref.default]
       } else if (typeof pref.default === 'boolean') {
-        pref.default = pref.default ? 'on' : 'off'
+        pref.default = pref.default ? 'true' : 'false'
       } else {
         pref.default = JSON.stringify(pref.default)
       }

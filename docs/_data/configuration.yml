@@ -27,7 +27,7 @@
         desired LaTeX citation command here. If you set this to `citep`,
         drag-and-drop citations will yield `\citep{key1,key2,...}`
     Surround Pandoc citations with brackets:
-      default: 'off'
+      default: 'false'
       description: >-
         Used for drag-and-drop/quick copy citations in `Pandoc` format. You can
         use this option to select whether you want to have these pandoc
@@ -38,7 +38,7 @@
         Set the pattern used to generate citation keys. The format of the keys
         is documented [here](citation-keys).
     Force citation key to plain text:
-      default: 'on'
+      default: 'true'
       description: >-
         If you have deviated from the default citation key format pattern by
         [specifying your own](citation-keys), you may wind up with non-ASCII
@@ -71,26 +71,26 @@
         - DOI
         - URL
     Export unicode as plain-text latex commands:
-      default: 'off'
+      default: 'false'
       description: >-
         BibLaTeX actually has really good Unicode support, so you generally want
         this off. But for some geezers such as me it is simply more pleasing to
         have things like accented characters translated to their equivalent
         LaTeX constructs on export.
     Export unicode as plain-text latex commands (recommended):
-      default: 'on'
+      default: 'true'
       description: >-
         BibTeX has really spotty Unicode support, so you generally want this on.
         It will translate things like accented characters to their equivalent
         LaTeX constructs on export.
     'Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces':
-      default: 'off'
+      default: 'false'
       description: >-
         When enabled, single-word strings will be assumed to be
         externally-defined @string vars, and thus not surrounded by braces. If
         you don't know what this means, leave it off.
     Disregard name prefixes when sorting:
-      default: 'off'
+      default: 'false'
       description: >-
         Name handling is a lot more complex than I had ever thought it to be. A
         *lot* more complex. BibTeX has really limited ways of dealing with names
@@ -114,7 +114,7 @@
         - in a note field
         - in a URL field
     'Abbreviation style:':
-      default: 'off'
+      default: 'false'
       description: >-
         If set, generates journal abbreviations on export using the Zotero
         journal abbreviator, according to the abbreviation style selected in the
@@ -129,10 +129,10 @@
         - for JabRef 3
         - for JabRef 4
     Include comments about potential problems with the references:
-      default: 'off'
+      default: 'false'
       description: Generate quality reports for exported references.
     Use BibLaTeX extended name format (requires biblatex 3.5):
-      default: 'off'
+      default: 'false'
       description: >-
         Use the extended biber 2.7 format for names with particles - only works
         in BibLaTeX 3.5 or later. This biblatex has a new (less ambiguous) way
@@ -218,10 +218,10 @@
         When language alternates are present in Juris-M, this is the language
         BBT will pick.
     biblatexExtendedDateFormat:
-      default: 'on'
+      default: 'true'
       description: Support for EDTF dates in biblatex
     suppressTitleCase:
-      default: 'off'
+      default: 'false'
       description: >-
         If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and
         the Zotero recommendations on title/sentence casing, set this preference
@@ -236,10 +236,10 @@
         sets the number of microseconds BBT should wait after being notified
         before acting on the changed references.
     parseParticles:
-      default: 'on'
+      default: 'true'
       description: Name particle handling
     citeprocNoteCitekey:
-      default: 'off'
+      default: 'false'
       description: >-
         Replaces the "note" field with the bibtex key during citation rendering
         in Word/Libreoffice. Main use-case is to help migrating word documents
@@ -250,13 +250,13 @@
         [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl))
         to make this work.
     scrubDatabase:
-      default: 'off'
+      default: 'false'
       description: >-
         Finds potential problems in the database and fixes those. This runs
         **extremely** slow at startup, don't unable this unless explicitly asked
         to.
     lockedInit:
-      default: 'off'
+      default: 'false'
       description: >-
         BBT locks the UI during startup because I have been told in no uncertain
         terms I am not to touch the Zotero database before I get an all-clear
@@ -283,12 +283,12 @@
         This is **EXPERIMENTAL** and this preference may disappear at any moment
         without notice.
     autoPin:
-      default: 'off'
+      default: 'false'
       description: >-
         When on, BBT will automatically pin the first citekey it generates for
         an item.
     kuroshiro:
-      default: 'off'
+      default: 'false'
       description: >-
         When on, BBT will load kuroshiro for romajization in citekeys. This uses
         a lot of memory, easily 100MB. If you don't have Japanese titles/names,
