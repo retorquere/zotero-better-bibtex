@@ -72,12 +72,12 @@
     "transliteration": "^1.6.2",
     "webpack-cli": "^3.0.8",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.36"
+    "zotero-plugin": "0.0.37"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.3.6",
-    "@types/webpack": "^4.4.3",
+    "@types/node": "^10.5.1",
+    "@types/webpack": "^4.4.4",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
@@ -106,13 +106,13 @@
     "rimraf": "^2.6.2",
     "shelljs": "^0.8.2",
     "sqlite-sync": "^0.3.8",
-    "ts-loader": "^4.4.1",
+    "ts-loader": "^4.4.2",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "typedoc": "^0.11.1",
     "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.12.2",
+    "webpack": "^4.14.0",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
@@ -123,6 +123,10 @@
     "url": "git+https://github.com/retorquere/zotero-better-bibtex.git"
   },
   "bugs": {
-    "url": "https://github.com/retorquere/zotero-better-bibtex/issues"
+    "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
+    "logs": {
+      "region": "eu-central-1",
+      "bucket": "better-bibtex-error-reports-62200312"
+    }
   }
 }
