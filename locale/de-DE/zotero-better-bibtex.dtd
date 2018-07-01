@@ -77,9 +77,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.update.conflict "Bei Konflikten, non-pinned Schlüssel werden">
 <!ENTITY better-bibtex.Preferences.citekey.update "Aktualisiere Zitier Schlüssel">
 <!ENTITY better-bibtex.Preferences.debug "Erweitert">
-<!ENTITY better-bibtex.Preferences.export.qualityReport "Kommentiere mögliche Probleme mit den Veerweisen">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Kommentiere mögliche Probleme mit den Verweisen">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Nutze JabRef spezifische Meta-Informationen:">
-<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Neine">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere unicode als einfache text latex Kommandos">
