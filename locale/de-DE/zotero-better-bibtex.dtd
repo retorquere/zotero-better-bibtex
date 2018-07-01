@@ -4,11 +4,11 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitier-Schlüssel">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT generiert Zitier-Schlüssel für ihre Einträge. Dieser Prozess ist hochgradig konfigurierbar und kann übergangen werden, aber Sie müssen jetzt einen default Wert setzen. Sie können die Auswahl jederzeit im Konfigurationsmenü ändern.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Ich habe BBT bereits benutzt">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Ich benutze BBT das erste mal, aber habe Zotero-generierte BibTeX Schlüssel benutzt">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Ich benutze BBT zum ersten Mal, aber habe bereits Zotero-generierte BibTeX Schlüssel benutzt">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.whatever "Ich habe Zotero bisher nicht für BibTeX Verwaltung benutzt">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Wählen sie diese Option, wenn sie Dokumente haben, die auf Schlüssel verweisen, die von BBT generiert wurden.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Hinweis">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5, BBT aktualisiert nicht automatisch die Schlüssel, wenn sie das Muster in den Einstellungen ändern. Wenn bestehende Eintragungen dem neuen Muster folgen solle, so müssen sie die Einträge markieren und aktualisieren.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5 aktualisiert BBT nicht mehr automatisch die Schlüssel, wenn sie das Muster in den Einstellungen ändern. Wenn bestehende Eintragungen dem neuen Muster folgen sollen, so müssen Sie die Einträge markieren und aktualisieren.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Wählen Sie diese Option, wenn Sie Dokumente haben, die auf Schlüssel verweisen, die von Zotero ohne BBT generiert wurden.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.whatever "Diese Option wählt das default-Format von BBT">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "Ihre Zitier-Schlüssel sehen folgendermaßen aus:">
@@ -26,11 +26,11 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging ist gegenwärtige ausgestellt. Die Fehlerbehebung wird leichter sein, wenn sie vor dem Einsenden die Option einstellen.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungs Kontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
-<!ENTITY better-bibtex.ErrorReport.log "Debug log">
+<!ENTITY better-bibtex.ErrorReport.log "Debug-Protokoll">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Fehlerberichte können nicht geprüft werden, sofern sie nicht im GitHub Issue tracker gepostet werden.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte posten Sie eine Nachricht im issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Report ID, einer Beschreibung des Problems, und alle notwendigen Schritte, um es zu reproduzieren.">
-<!ENTITY better-bibtex.ErrorReport.references "References">
-<!ENTITY better-bibtex.ErrorReport.reportID "Report ID:">
+<!ENTITY better-bibtex.ErrorReport.references "Verweise">
+<!ENTITY better-bibtex.ErrorReport.reportID "Bericht ID:">
 <!ENTITY better-bibtex.ErrorReport.review "Die unten stehenden Inhalte werden an Better BibTeX zu debugging Zwecken gesendet. Bitte prüfen Sie auf sensible Daten, die sie nicht senden wollen.
 
 Wenn Sie einverstanden mit dem Senden sind, klicken Sie bitte &quot;Weiter&quot; und posten Sie die ID im nächsten Fenster im issue tracker bei
@@ -64,7 +64,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "LaTeX Kommando">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF Scan">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_id "Org-mode (item ID)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_id "Org-mode (Item ID)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Org-mode (Zitier Schlüssel)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "org-ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Umschließe Pandoc Zitate mit eckigen Klammern">
@@ -103,16 +103,16 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.tab.strings "Importiere @string Definitionen">
-<!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
+<!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTex">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne Zitier Schlüssel">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Fehler melden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
-<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Pin BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Unpin BibTeX key">
+<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTex">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "BibTeX-Key anheften">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat links hinzu...">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Eintrag an TeXstudio senden">
