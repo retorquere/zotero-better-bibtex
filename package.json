@@ -43,7 +43,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "^6.5.1",
+    "ajv": "^6.5.2",
     "ajv-keywords": "^3.2.0",
     "barcoder": "^2.0.1",
     "better-queue": "^3.8.7",
