@@ -337,10 +337,14 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     debug(`KeyManager.propose: generating free citekey for ${item.id} from`, proposed, { libraryID: item.libraryID })
     const postfix = this[proposed.postfix === '0' ? 'postfixZotero' : 'postfixAlpha']
+
+    const conflictQuery = { libraryID: item.libraryID, itemID: { $ne: item.id } }
+    if (Prefs.get('keyScope') === 'global') delete conflictQuery.libraryID
+
     for (let n = -1; true; n += 1) {
       const postfixed = proposed.citekey + postfix(n)
 
-      const conflict = this.keys.findOne({ libraryID: item.libraryID, citekey: postfixed, itemID: { $ne: item.id } })
+      const conflict = this.keys.findOne({ ...conflictQuery, citekey: postfixed })
       if (conflict) {
         debug(`KeyManager.propose: <${postfixed}> in use by`, conflict)
         continue

@@ -131,6 +131,15 @@
           This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers.  if you keep the non-pinned key as-is, your library now has duplicate keys.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.keyScope"
+          id="pref-better-bibtex-keyScope"
+          type="string"
+          default="library"/>
+        <!--!
+          This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers.  if you keep the non-pinned key as-is, your library now has duplicate keys.
+        -->
+
         <!-- preference
           name="extensions.zotero.translators.better-bibtex.langID"
           id="pref-better-bibtex-langID"
@@ -461,8 +470,8 @@
             </groupbox>
 
             <groupbox>
-              <caption label="&better-bibtex.Preferences.citekey.update;"/>
-              <!-- description>&better-bibtex.Preferences.citekey.update.pin.description;</description -->
+              <caption label="&better-bibtex.Preferences.citekey.uniqueness;"/>
+              <!-- description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description -->
               <grid flex="1">
                 <columns>
                   <column/>
@@ -470,11 +479,20 @@
                 </columns>
                 <rows>
                   <row>
-                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.update.conflict;</label>
+                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
+                    <menulist preference="pref-better-bibtex-keyScope">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row>
+                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
                     <menulist preference="pref-better-bibtex-keyConflictPolicy">
                       <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.citekey.update.conflict.change;" value="change"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.update.conflict.keep;" value="keep"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep"/>
                       </menupopup>
                     </menulist>
                   </row>
