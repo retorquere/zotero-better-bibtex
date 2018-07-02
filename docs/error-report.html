@@ -1,0 +1,43 @@
+<h2>Submit debug log</h2>
+<form>
+</form>
+<script>
+  const cors = 'https://cors-anywhere.herokuapp.com/';
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function() { 
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      var params = JSON.parse(this.responseText);
+      console.log(params);
+
+      var h2 = document.getElementsByTagName('h2')[0];
+      h2.textContent = 'Generated on ' + params.fields['X-Amz-Date'];
+
+      var form = document.getElementsByTagName('form')[0];
+      form.setAttribute('action', params.action);
+      form.setAttribute('method', 'POST');
+      form.setAttribute('enctype', 'multipart/form-data');
+
+      var input;
+      for (var field in params.fields) {
+        input = document.createElement("input");
+        input.setAttribute('type', 'hidden');
+        input.setAttribute('value', params.fields[field]);
+        input.setAttribute('name', field);
+        form.appendChild(input);
+      }
+
+      input = document.createElement("input");
+      input.setAttribute('type', 'file');
+      input.setAttribute('name', params.filefield);
+      form.appendChild(input);
+
+      input = document.createElement("input");
+      input.setAttribute('type', 'submit');
+      input.setAttribute('value', 'Save');
+      form.appendChild(input);
+    }
+  }
+  console.log('here goes');
+  xmlhttp.open('GET', cors + 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/error-report.json', true);
+  xmlhttp.send(null);
+</script>
