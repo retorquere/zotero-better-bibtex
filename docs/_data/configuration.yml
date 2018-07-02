@@ -45,7 +45,7 @@
         characters in your citation keys. You can prevent that using the `fold`
         function at the appropriate place in your pattern, but checking this
         checkbox will just apply `fold` to all your keys.
-    'On conflict, non-pinned keys will be':
+    'On conflict with a pinned key, non-pinned keys will be':
       default: kept (causes key duplicates)
       description: >-
         This determines what happens if you pin a key to a value that is already
@@ -57,6 +57,18 @@
       options:
         - postfixed (causes key changes)
         - kept (causes key duplicates)
+    Keep keys unique:
+      default: within each library
+      description: >-
+        This determines what happens if you pin a key to a value that is already
+        in use in a different reference but not pinned there. Neither are ideal,
+        you just get to pick your poison. If you let BBT change the non-pinned
+        key by adding a postfix character, the citation key changes which could
+        be problematic for existing papers.  if you keep the non-pinned key
+        as-is, your library now has duplicate keys.
+      options:
+        - across all libraries
+        - within each library
 - name: Export
   description: ''
   preferences:

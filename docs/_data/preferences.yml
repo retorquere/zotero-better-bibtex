@@ -11,6 +11,7 @@ quickCopyPandocBrackets: false
 citekeyFormat: '​[auth:lower][shorttitle3_3][year]'
 citekeyFold: true
 keyConflictPolicy: keep
+keyScope: library
 preserveBibTeXVariables: false
 bibtexParticleNoOp: false
 skipFields: ''

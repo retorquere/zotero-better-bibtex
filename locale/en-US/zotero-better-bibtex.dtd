@@ -72,10 +72,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "Select link (item ID)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Select link (citekey)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Quick copy/drag-and-drop citations">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.change "postfixed (causes key changes)">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict.keep "kept (causes key duplicates)">
-<!ENTITY better-bibtex.Preferences.citekey.update.conflict "On conflict, non-pinned keys will be">
-<!ENTITY better-bibtex.Preferences.citekey.update "Updating Citation Keys">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixed (causes key changes)">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "kept (causes key duplicates)">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
 <!ENTITY better-bibtex.Preferences.debug "Advanced">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
