@@ -44,8 +44,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null): Promise<string> {
+    debug('Translators.translate', { translatorID, displayOptions, path })
     return new Promise((resolve, reject) => {
       const translation = new Zotero.Translate.Export()
+
+      debug('Translators.translate prepping', { translatorID, displayOptions, path })
 
       if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
@@ -67,11 +70,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
       translation.setHandler('done', (obj, success) => {
         if (success) {
+          debug('Translators.translate complete', { translatorID, displayOptions, path })
           return resolve(obj ? obj.string : undefined)
         } else {
+          debug('Translators.translate failed', { translatorID, displayOptions, path })
           return reject('translation failed')
         }
       })
+      debug('Translators.translate starting', { translatorID, displayOptions, path })
       translation.translate()
     })
   }
