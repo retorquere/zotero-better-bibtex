@@ -15,5 +15,12 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
     data['config']['preferences'].delete(key) unless supported.include?(key)
   }
 
+  if data['items'] && lib =~ /\/import\//
+    data['items'].each{|item|
+      next unless item['extra']
+      item['extra'].sub!(/(^|\n)bibtex:/, "\\1Citation Key:")
+    }
+  end
+
   File.open(lib, 'w'){|f| f.puts(JSON.pretty_generate(data)) }
 }

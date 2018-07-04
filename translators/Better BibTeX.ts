@@ -971,7 +971,7 @@ class ZoteroItem {
       }
     }
 
-    if (this.bibtex.entry_key) this.addToExtra(`bibtex: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
+    if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 
     const keys = Object.keys(this.biblatexdata)
     if (keys.length > 0) {

@@ -19,7 +19,7 @@
       "itemType": "book",
       "place": "London, UK",
       "publisher": "Freds Publishing",
-      "extra": "bibtex: Bert:2001:SQL",
+      "extra": "Citation Key: Bert:2001:SQL",
       "title": "SQL is great",
       "creators": [
         {

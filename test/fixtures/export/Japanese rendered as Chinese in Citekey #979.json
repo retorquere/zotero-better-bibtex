@@ -31,7 +31,9 @@
       "keyConflictPolicy": "keep",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "bibtexURL": "off",
       "warnBulkModify": 10,
       "postscript": "",
@@ -183,7 +185,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "bookSection",
@@ -258,17 +261,25 @@
         {
           "itemType": "attachment",
           "title": "樋口_2014_日本型排外主義をめぐる問い.pdf",
-          "tags": [],
+          "tags": [
+
+          ],
           "dateAdded": "2018-06-01 03:21:47",
           "dateModified": "2018-06-01 03:21:47",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 9663,
       "publicationTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }

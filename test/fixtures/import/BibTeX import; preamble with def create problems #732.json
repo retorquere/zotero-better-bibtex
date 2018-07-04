@@ -16,7 +16,9 @@
       "itemID": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 6: found &quot;1&quot;, expected &quot;}&quot;</li></ul>",
-      "tags":["#Better BibTeX import error"]
+      "tags": [
+        "#Better BibTeX import error"
+      ]
     },
     {
       "creators": [
@@ -31,7 +33,7 @@
           "lastName": "Kreǰćı"
         }
       ],
-      "extra": "bibtex: MR1870153",
+      "extra": "Citation Key: MR1870153",
       "itemID": 1,
       "itemType": "bookSection",
       "title": "Homogenization of scalar wave equation with hysteresis operator"

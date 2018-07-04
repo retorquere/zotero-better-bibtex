@@ -195,7 +195,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "conferencePaper",
@@ -248,26 +249,38 @@
         {
           "itemType": "attachment",
           "title": "ePrint IACR Full Text PDF",
-          "tags": [],
+          "tags": [
+
+          ],
           "dateAdded": "2018-05-30 21:07:24",
           "dateModified": "2018-05-30 21:07:24",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "application/pdf"
         },
         {
           "itemType": "attachment",
           "title": "ePrint IACR Snapshot",
-          "tags": [],
+          "tags": [
+
+          ],
           "dateAdded": "2018-05-30 21:07:23",
           "dateModified": "2018-05-30 21:07:23",
-          "seeAlso": [],
+          "seeAlso": [
+
+          ],
           "mimeType": "text/html"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 1124,
       "publicationTitle": "CRYPTO",
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }
