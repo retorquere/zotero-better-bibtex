@@ -43,37 +43,55 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const translation = new Zotero.Translate.Export()
+  public async translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
+    debug('Translators.translate', { translatorID, displayOptions, path })
 
-      if (!items) items = { library: Zotero.Libraries.userLibraryID }
+    await Zotero.BetterBibTeX.ready
 
-      if (items.library) translation.setLibraryID(items.library)
-      if (items.items) translation.setItems(items.items)
-      if (items.collection) translation.setCollection(typeof items.collection === 'number' ? Zotero.Collections.get(items.collection) : items.collection)
+    const deferred = Zotero.Promise.defer()
+    const translation = new Zotero.Translate.Export()
 
-      translation.setTranslator(translatorID)
-      if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
+    debug('Translators.translate prepping', { translatorID, displayOptions, path })
 
-      if (path) {
-        const file = Zotero.File.pathToFile(path)
+    if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
-        if (file.exists() && !file.isFile()) return reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
-        if (!file.parent || !file.parent.exists()) return reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
+    if (items.library) translation.setLibraryID(items.library)
+    if (items.items) translation.setItems(items.items)
+    if (items.collection) translation.setCollection(typeof items.collection === 'number' ? Zotero.Collections.get(items.collection) : items.collection)
 
-        translation.setLocation(file)
+    translation.setTranslator(translatorID)
+    if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
+
+    if (path) {
+      const file = Zotero.File.pathToFile(path)
+
+      if (file.exists() && !file.isFile()) {
+        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
+        return deferred.promise
       }
 
-      translation.setHandler('done', (obj, success) => {
-        if (success) {
-          return resolve(obj ? obj.string : undefined)
-        } else {
-          return reject('translation failed')
-        }
-      })
-      translation.translate()
+      if (!file.parent || !file.parent.exists()) {
+        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
+        return deferred.promise
+      }
+
+      translation.setLocation(file)
+    }
+
+    translation.setHandler('done', (obj, success) => {
+      if (success) {
+        debug('Translators.translate complete', { translatorID, displayOptions, path })
+        deferred.resolve(obj ? obj.string : undefined)
+      } else {
+        debug('Translators.translate failed', { translatorID, displayOptions, path })
+        deferred.reject('translation failed')
+      }
     })
+
+    debug('Translators.translate starting', { translatorID, displayOptions, path })
+    translation.translate()
+
+    return deferred.promise
   }
 
   public uninstall(label, id) {

@@ -5,6 +5,7 @@ import ETA = require('node-eta')
 import { kuroshiro } from './key-manager/kuroshiro.ts'
 
 import { debug } from './debug.ts'
+import { timeout } from './timeout.ts'
 import { flash } from './flash.ts'
 import { Events } from './events.ts'
 
@@ -18,10 +19,6 @@ import { Formatter } from './key-manager/formatter.ts'
 import { DB } from './db/main.ts'
 import { AutoExport } from './auto-export.ts'
 import { createFile } from './create-file.ts'
-
-function timeout(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms))
-}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name

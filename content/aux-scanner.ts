@@ -2,6 +2,7 @@ declare const Components: any
 declare const Zotero: any
 
 import { debug } from './debug.ts'
+import { timeout } from './timeout.ts'
 import { KeyManager } from './key-manager.ts'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
@@ -57,7 +58,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       let timestamp = ''
 
       while (siblings.has(name + timestamp)) {
-        await new Promise(resolve => setTimeout(resolve, 1500)) // tslint:disable-line:no-magic-numbers
+        await timeout(1500) // tslint:disable-line:no-magic-numbers
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
       name += timestamp

@@ -1,3 +1,4 @@
+declare const Zotero: any
 declare const Components: any
 
 import _kuroshiro = require('kuroshiro')
@@ -34,24 +35,25 @@ export let kuroshiro = new class {
   public init() {
     debug('kuroshiro: initializing...')
 
-    return new Promise((resolve, reject) => {
-      if (!Prefs.get('kuroshiro')) {
-        debug('kuroshiro: disabled')
-        resolve()
-        return
-      }
+    const deferred = Zotero.Promise.defer()
 
-      _kuroshiro.init({ dicPath: 'resource://zotero-better-bibtex/kuromoji' }, err => {
-        if (err) {
-          debug('kuroshiro: initializing failed')
-          reject(err)
-        } else {
-          debug('kuroshiro: ready')
-          this.enabled = true
-          resolve()
-        }
-      })
+    if (!Prefs.get('kuroshiro')) {
+      debug('kuroshiro: disabled')
+      return deferred.resolve()
+    }
+
+    _kuroshiro.init({ dicPath: 'resource://zotero-better-bibtex/kuromoji' }, err => {
+      if (err) {
+        debug('kuroshiro: initializing failed')
+        deferred.reject(err)
+      } else {
+        debug('kuroshiro: ready')
+        this.enabled = true
+        deferred.resolve()
+      }
     })
+
+    return deferred.promise
   }
 
   public convert(str, options) {

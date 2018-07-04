@@ -3,6 +3,7 @@ declare const Zotero_File_Interface: any
 declare const Components: any
 
 import { AutoExport } from './auto-export.ts'
+import { timeout } from './timeout.ts'
 import * as ZoteroDB from './db/zotero.ts'
 import { debug } from './debug.ts'
 import { KeyManager } from './key-manager.ts'
@@ -81,7 +82,7 @@ export = Prefs.get('testing') && {
     if (source.endsWith('.aux')) {
       await Zotero.BetterBibTeX.scanAUX(file)
       // for some reason, the imported collection shows up as empty right after the import >:
-      await new Promise(resolve => setTimeout(resolve, 1500)) // tslint:disable-line:no-magic-numbers
+      await timeout(1500) // tslint:disable-line:no-magic-numbers
     } else {
       await Zotero_File_Interface.importFile(file, !!createNewCollection)
     }
