@@ -43,8 +43,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null): Promise<string> {
+  public async translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
     debug('Translators.translate', { translatorID, displayOptions, path })
+
+    await Zotero.BetterBibTeX.ready
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
