@@ -31,9 +31,7 @@
       "keyConflictPolicy": "keep",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
+      "skipFields": [],
       "bibtexURL": "off",
       "warnBulkModify": 0,
       "postscript": "if (Translator.BetterBibTeX && this.has.title) {\n  delete this.has['language']\n}",
@@ -184,8 +182,7 @@
       "exportNotes": true
     }
   },
-  "collections": {
-  },
+  "collections": {},
   "items": [
     {
       "itemType": "journalArticle",
@@ -218,21 +215,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [],
       "dateAdded": "2018-06-07 08:55:34",
       "dateModified": "2018-06-07 08:55:34",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [],
+      "notes": [],
       "itemID": 1629,
-      "seeAlso": [
-
-      ]
+      "seeAlso": []
     }
   ]
 }

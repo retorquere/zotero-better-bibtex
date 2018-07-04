@@ -190,8 +190,7 @@
       "exportNotes": true
     }
   },
-  "collections": {
-  },
+  "collections": {},
   "items": [
     {
       "itemType": "journalArticle",
@@ -208,21 +207,13 @@
           "creatorType": "author"
         }
       ],
-      "tags": [
-
-      ],
+      "tags": [],
       "dateAdded": "2016-10-21 14:27:39",
       "dateModified": "2018-05-31 09:43:31",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "attachments": [],
+      "notes": [],
       "itemID": 198,
-      "seeAlso": [
-
-      ]
+      "seeAlso": []
     }
   ]
 }

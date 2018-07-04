@@ -8,7 +8,7 @@
           "lastName": "01e"
         }
       ],
-      "extra": "bibtex: 1e",
+      "extra": "Citation Key: 1e",
       "itemType": "journalArticle",
       "title": "Blah <i>emph</i> and “enquote”.",
       "itemID": 1
@@ -21,7 +21,7 @@
           "lastName": "01b"
         }
       ],
-      "extra": "bibtex: 1b",
+      "extra": "Citation Key: 1b",
       "itemType": "journalArticle",
       "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
       "itemID": 2
@@ -34,7 +34,7 @@
           "lastName": "02e"
         }
       ],
-      "extra": "bibtex: 2e",
+      "extra": "Citation Key: 2e",
       "itemType": "book",
       "title": "Blah <i>emph</i> and “enquote”.",
       "itemID": 3
@@ -47,7 +47,7 @@
           "lastName": "02b"
         }
       ],
-      "extra": "bibtex: 2b",
+      "extra": "Citation Key: 2b",
       "itemType": "book",
       "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
       "itemID": 4
@@ -61,7 +61,7 @@
         }
       ],
       "date": "2003",
-      "extra": "bibtex: Bennett2003",
+      "extra": "Citation Key: Bennett2003",
       "itemType": "thesis",
       "publisher": "University of London",
       "thesisType": "Ph.D.",
@@ -79,7 +79,7 @@
         }
       ],
       "date": "2013",
-      "extra": "bibtex: Cooper2013 \nbibtex[crossref=Classen2013]",
+      "extra": "Citation Key: Cooper2013 \nbibtex[crossref=Classen2013]",
       "itemType": "bookSection",
       "pages": "263-87",
       "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries",
@@ -94,7 +94,7 @@
         }
       ],
       "date": "1891",
-      "extra": "bibtex: Correns1891",
+      "extra": "Citation Key: Correns1891",
       "itemType": "journalArticle",
       "pages": "1-11",
       "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
@@ -112,7 +112,7 @@
         }
       ],
       "date": "1985",
-      "extra": "bibtex: Algar1985",
+      "extra": "Citation Key: Algar1985",
       "itemType": "encyclopediaArticle",
       "pages": "172-4",
       "publicationTitle": "Encyclopedia Iranica",
@@ -134,7 +134,7 @@
         }
       ],
       "date": "2012",
-      "extra": "bibtex: Arsdall2012",
+      "extra": "Citation Key: Arsdall2012",
       "itemType": "book",
       "place": "Burlington, VT",
       "publisher": "Ashgate",

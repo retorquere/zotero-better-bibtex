@@ -9,7 +9,7 @@
       ],
       "itemType": "book",
       "title": "Filename character test. Relative path",
-      "extra": "bibtex: id",
+      "extra": "Citation Key: id",
       "itemID": 0
     },
     {
@@ -21,7 +21,7 @@
       ],
       "itemType": "book",
       "title": "Filename character test. Absolute path",
-      "extra": "bibtex: id2",
+      "extra": "Citation Key: id2",
       "itemID": 1
     }
   ],
