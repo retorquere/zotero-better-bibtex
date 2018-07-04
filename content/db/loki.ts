@@ -1,4 +1,5 @@
 declare const Components: any
+declare const Zotero: any
 declare const AsyncShutdown: any
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
@@ -51,15 +52,30 @@ $patch$(Loki.prototype, 'close', original => function(callback) {
 })
 
 Loki.prototype.loadDatabaseAsync = function(options) {
-  return new Promise((resolve, reject) => this.loadDatabase(options, err => err ? reject(err) : resolve(null)))
+  const deferred = Zotero.Promise.defer()
+  this.loadDatabase(options, err => {
+    if (err) return deferred.reject(err)
+    deferred.resolve(null)
+  })
+  return deferred.promise
 }
 
 Loki.prototype.saveDatabaseAsync = function() {
-  return new Promise((resolve, reject) => this.saveDatabase(err => err ? reject(err) : resolve(null)))
+  const deferred = Zotero.Promise.defer()
+  this.saveDatabase(err => {
+    if (err) return deferred.reject(err)
+    deferred.resolve(null)
+  })
+  return deferred.promise
 }
 
 Loki.prototype.closeAsync = function() {
-  return new Promise((resolve, reject) => this.close(err => err ? reject(err) : resolve(null)))
+  const deferred = Zotero.Promise.defer()
+  this.close(err => {
+    if (err) return deferred.reject(err)
+    deferred.resolve(null)
+  })
+  return deferred.promise
 }
 
 class NullStore {

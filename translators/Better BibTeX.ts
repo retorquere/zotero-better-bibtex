@@ -514,6 +514,18 @@ class ZoteroItem {
       }
       this.item.creators.push(creator)
     }
+
+    // biblatex-csl-importer does not preserve field order, so sort on creator type, preserving order within creatorType
+    const creators = {
+      author: [],
+      editor: [],
+      translator: [],
+    }
+    for (const creator of this.item.creators) {
+      creators[creator.creatorType].push(creator)
+    }
+    this.item.creators = creators.author.concat(creators.editor, creators.translator)
+
     return true
   }
   protected $editor(value, field) { return this.$author(value, field) }

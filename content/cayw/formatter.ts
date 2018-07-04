@@ -1,10 +1,13 @@
 declare const Zotero: any
+declare const Components: any
+declare const AddonManager: any
+
+Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 import { Translators } from '../translators.ts'
 import { debug } from '../debug.ts'
 import { getItemsAsync } from '../get-items-async.ts'
 import { Preferences as Prefs } from '../prefs.ts'
-import { AsyncAddonManager } from '../addon-manager.ts'
 
 /*
     @config.citeprefix ||= ''
@@ -159,7 +162,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async 'scannable-cite'(citations) {
-    const odfScan = await AsyncAddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com')
+    const odfScan = await AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com')
     if (!odfScan || !odfScan.isActive) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     debug('scannable-cite:', citations)
