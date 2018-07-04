@@ -1,25 +1,26 @@
 {
-  "collections":{},
-  "items":[
+  "collections": {
+  },
+  "items": [
     {
-      "creators":[
+      "creators": [
         {
-          "creatorType":"author",
-          "firstName":"Drew V.",
-          "lastName":"McDermott"
+          "creatorType": "author",
+          "firstName": "Drew V.",
+          "lastName": "McDermott"
         },
         {
-          "creatorType":"author",
-          "firstName":"Gerald J.",
-          "lastName":"Sussman"
+          "creatorType": "author",
+          "firstName": "Gerald J.",
+          "lastName": "Sussman"
         }
       ],
-      "date":"1972-05",
-      "extra":"bibtex: McDermott:72",
-      "institution":"MIT Artificial Intelligence Laboratory",
-      "itemID":0,
-      "itemType":"report",
-      "title":"The CONNIVER Reference Manual"
+      "date": "1972-05",
+      "extra": "Citation Key: McDermott:72",
+      "institution": "MIT Artificial Intelligence Laboratory",
+      "itemID": 0,
+      "itemType": "report",
+      "title": "The CONNIVER Reference Manual"
     }
   ]
 }

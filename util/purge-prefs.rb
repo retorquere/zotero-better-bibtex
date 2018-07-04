@@ -9,11 +9,11 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
   next if lib =~ /\.csl.json$/
 
   data = JSON.parse(File.read(lib))
-  next unless data.is_a?(Hash) && data['config']
+  next unless data.is_a?(Hash)
 
   resave = false
 
-  if data['config']['preferences']
+  if data['config'] && data['config']['preferences']
     data['config']['preferences'].keys.each{|key|
       next if supported.include?(key)
       data['config']['preferences'].delete(key) 
