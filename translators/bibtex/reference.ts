@@ -897,7 +897,7 @@ export class Reference {
     if (tags.length === 0) return null
 
     // sort tags for stable tests
-    if (Translator.preferences.testing) tags.sort()
+    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort()
 
     tags = tags.map(tag => {
       if (Translator.BetterBibTeX) {
