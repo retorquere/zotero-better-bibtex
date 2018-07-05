@@ -315,6 +315,9 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
         expect(serialize(found.merge({'items' => []}))).to eq(serialize(expected.merge({'items' => []})))
         return compare(found['items'], expected['items'])
       end
+
+    else
+      open('exported.txt', 'w'){|f| f.puts(found) }
   end
 
   expect(found.strip).to eq(expected.strip)

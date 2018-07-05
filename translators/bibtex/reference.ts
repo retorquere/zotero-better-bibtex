@@ -749,7 +749,12 @@ export class Reference {
     ref += '\n}\n'
     ref += this.qualityReport()
     ref += '\n'
-    Zotero.write(ref)
+
+    if (Translator.preferences.sorted) {
+      Translator.references.push({ citekey: this.item.citekey, reference: ref })
+    } else {
+      Zotero.write(ref)
+    }
 
     this.data.DeclarePrefChars = Exporter.unique_chars(this.data.DeclarePrefChars)
 

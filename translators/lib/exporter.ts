@@ -41,7 +41,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       const cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options)
       if (cached) {
-        Zotero.write(cached.reference)
+        if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
+          Translator.references.push({ citekey: item.citekey, reference: cached.reference })
+        } else {
+          Zotero.write(cached.reference)
+        }
+
         if (cached.metadata && cached.metadata.DeclarePrefChars) this.preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars
         continue
       }
@@ -60,6 +65,15 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
   // TODO: move to bibtex-exporters
   public complete() {
+    debug('sorted:', { prefs: Translator.preferences, bbt: Translator.BetterBibTeX, bbl: Translator.BetterBibLaTeX })
+    if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
+      const order = Translator.references.map((ref, index) => ({ index, citekey: ref.citekey.toLowerCase() }))
+      order.sort((a, b) => a.citekey.localeCompare(b.citekey))
+      debug('sorted:', order)
+      const references = order.map(o => Translator.references[o.index].reference)
+      Zotero.write(references.join(''))
+    }
+
     debug('Exporter.complete: write JabRef groups')
     this.jabref.exportGroups()
 

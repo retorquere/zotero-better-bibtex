@@ -69,6 +69,7 @@ ${labels}
 ${headerSpec}  }
 
   collections: any[]
+  references: Array<{citekey: string, reference: string}>
 
   options: {
 ${options}
