@@ -72,12 +72,12 @@
     "transliteration": "^1.6.2",
     "webpack-cli": "^3.0.8",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.37"
+    "zotero-plugin": "0.0.39"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.5.1",
-    "@types/webpack": "^4.4.4",
+    "@types/node": "^10.5.2",
+    "@types/webpack": "^4.4.5",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
@@ -112,7 +112,7 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.14.0",
+    "webpack": "^4.15.1",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
