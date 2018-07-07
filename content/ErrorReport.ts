@@ -2,8 +2,6 @@ declare const window: any
 declare const document: any
 declare const Components: any
 declare const Zotero: any
-declare const FormData: any
-declare const Blob: any
 declare const Services: any
 
 import { Preferences as Prefs } from './prefs.ts'
@@ -21,6 +19,7 @@ export = new class ErrorReport {
 
   private key: string
   private timestamp: string
+  private bucket: string
   private params: any
 
   private errorlog: {
@@ -31,21 +30,6 @@ export = new class ErrorReport {
     full?: string,
     db?: string
   } = {}
-
-  private form: {
-    action?: string,
-    filefield?: string,
-    fields?: {
-      key: string,
-      acl: string,
-      'X-Amz-Credential': string,
-      'X-Amz-Algorithm': string,
-      'X-Amz-Date': string,
-      Policy: string,
-      'X-Amz-Signature': string,
-      success_action_status: string,
-    }
-  } = { }
 
   constructor() {
     window.addEventListener('load', () => this.init(), false)
@@ -59,9 +43,9 @@ export = new class ErrorReport {
     const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
 
     try {
-      await this.submit('errorlog.txt', errorlog)
-      await this.submit('db.json', this.errorlog.db)
-      if (this.errorlog.references) await this.submit('references.json', this.errorlog.references)
+      const logs = [this.submit('errorlog.txt', errorlog), this.submit('db.json', this.errorlog.db)]
+      if (this.errorlog.references) logs.push(this.submit('references.json', this.errorlog.references))
+      await Zotero.Promise.all(logs)
       wizard.advance()
       wizard.getButton('cancel').disabled = true
       wizard.canRewind = false
@@ -113,7 +97,7 @@ export = new class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = false
 
-    this.form = JSON.parse(Zotero.File.getContentsFromURL(PACKAGE.xpi.releaseURL + 'error-report.json'))
+    this.bucket = `https://s3.${PACKAGE.bugs.logs.region}.amazonaws.com/${PACKAGE.bugs.logs.bucket}`
     this.key = Zotero.Utilities.generateObjectKey()
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
@@ -178,36 +162,11 @@ export = new class ErrorReport {
     return info
   }
 
-  private submit(filename, data) {
-    const request_ok_range = 1000
-
-    return new Zotero.Promise((resolve, reject) => {
-      const fd = new FormData()
-      for (const [name, value] of Object.entries(this.form.fields)) {
-        fd.append(name, value)
-      }
-
-      const file = new Blob([data], { type: 'text/plain'})
-      fd.append('file', file, `${this.timestamp}-${this.key}-${filename}`)
-
-      const request = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1'].createInstance()
-      request.open('POST', this.form.action, true)
-
-      request.onload = () => {
-        if (!request.status || request.status > request_ok_range) {
-          return reject(`${Zotero.getString('errorReport.noNetworkConnection')}: ${request.status}`)
-        }
-
-        if (request.status !== parseInt(this.form.fields.success_action_status)) {
-          return reject(`${Zotero.getString('errorReport.invalidResponseRepository')}: ${request.status}, expected ${this.form.fields.success_action_status}\n${request.responseText}`)
-        }
-
-        return resolve()
-      }
-
-      request.onerror = () => reject(`${Zotero.getString('errorReport.noNetworkConnection')}: ${request.statusText}`)
-
-      request.send(fd)
+  private async submit(filename, data) {
+    await Zotero.HTTP.request('PUT', `${this.bucket}/${this.timestamp}-${this.key}/${this.key}-${filename}`, {
+      body: data,
+      dontCache: true,
+      debug: true,
     })
   }
 }
