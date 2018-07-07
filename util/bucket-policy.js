@@ -1,6 +1,9 @@
 #!/usr/bin/env node
 
-var user = process.argv[2].match(/^arn:aws:iam::([0-9]+):user\/([a-z]+)$/)
+require("dotenv/config")
+
+var arn = process.env.AWSARN || process.argv[2]
+var user = arn.match(/^arn:aws:iam::([0-9]+):user\/([a-z]+)$/)
 var pkg = require('../package.json')
 var fs = require('fs')
 
@@ -16,9 +19,8 @@ var policy = {
       Action: 's3:PutObject',
       Resource: `arn:aws:s3:::${pkg.bugs.logs.bucket}/*`,
       Condition: {
-        StringEquals: {
-          's3:x-amz-acl': 'bucket-owner-full-control'
-        }
+        StringEquals: { 's3:x-amz-acl': 'bucket-owner-full-control' },
+        StringLike: { 's3:x-amz-storage-class': 'STANDARD' },
       }
     },
     {
@@ -27,7 +29,7 @@ var policy = {
       NotPrincipal: {
         AWS: [
           `arn:aws:iam::${user[1]}:root`,
-          process.argv[2],
+          arn,
         ]
       },
       NotAction: [
