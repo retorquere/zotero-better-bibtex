@@ -18,7 +18,7 @@ export = new class ErrorReport {
   public static max_line_length = 80
 
   private key: string
-  private timestamp: string
+  // private timestamp: string
   private bucket: string
   private params: any
 
@@ -99,7 +99,7 @@ export = new class ErrorReport {
 
     this.bucket = `https://s3.${PACKAGE.bugs.logs.region}.amazonaws.com/${PACKAGE.bugs.logs.bucket}`
     this.key = Zotero.Utilities.generateObjectKey()
-    this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
+    // this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     this.errorlog = {
       info: await this.info(),
@@ -163,8 +163,9 @@ export = new class ErrorReport {
   }
 
   private async submit(filename, data) {
-    await Zotero.HTTP.request('PUT', `${this.bucket}/${this.timestamp}-${this.key}/${this.key}-${filename}`, {
+    await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}/${this.key}-${filename}`, {
       body: data,
+      headers: { 'x-amz-storage-class': 'ONEZONE_IA' },
       dontCache: true,
       debug: true,
     })
