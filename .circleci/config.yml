@@ -185,13 +185,13 @@ workflows:
       - release:
           requires:
             - test
-  s3form:
-    triggers:
-      - schedule:
-          cron: "0 0 * * *"
-          filters:  
-            branches:
-              only:
-                - master
-    jobs:
-      - s3form
+#  s3form:
+#    triggers:
+#      - schedule:
+#          cron: "0 0 * * *"
+#          filters:  
+#            branches:
+#              only:
+#                - master
+#    jobs:
+#      - s3form
