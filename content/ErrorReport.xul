@@ -17,7 +17,7 @@
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
   id="better-bibtex-error-report" title="&zotero.errorReport.title;"
-  width="550" height="450">
+  width="550" height="550">
 
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ErrorReport.js"/>
@@ -29,6 +29,8 @@
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.review;</description>
+    <textbox flex="1" id="better-bibtex-report-current" class="plain" readonly="true"/>
+    <textbox flex="1" id="better-bibtex-report-latest" class="plain textbox-emph" readonly="true"/>
     <tabbox flex="1" class="debug-on">
       <tabs>
         <tab label="&better-bibtex.ErrorReport.context;"/>

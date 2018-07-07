@@ -127,6 +127,21 @@ export = new class ErrorReport {
     if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines) + '...'
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
+    const current = require('../gen/version.js')
+    document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+
+    let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+    debug('ErrorReport.current:', latest)
+    latest = JSON.parse((await Zotero.HTTP.request('GET', latest)).responseText).tag_name.replace('v', '')
+    debug('ErrorReport.current:', latest)
+    const show_latest = document.getElementById('better-bibtex-report-latest')
+    if (current === latest) {
+      show_latest.hidden = true
+    } else {
+      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
+      show_latest.hidden = false
+    }
+
     continueButton.focus()
     continueButton.disabled = false
   }
@@ -163,12 +178,25 @@ export = new class ErrorReport {
   }
 
   private async submit(filename, data) {
+    const headers = {
+      'x-amz-storage-class': 'STANDARD',
+      'x-amz-acl': 'bucket-owner-full-control',
+    }
+
+    switch (filename.split('.').pop()) {
+      case 'txt':
+        headers['Content-Type'] = 'text/plain'
+        break
+
+      case 'txt':
+        headers['Content-Type'] = 'application/json'
+        break
+
+    }
+
     await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`, {
       body: data,
-      headers: {
-        'x-amz-storage-class': 'STANDARD',
-        'x-amz-acl': 'bucket-owner-full-control',
-      },
+      headers,
       dontCache: true,
       debug: true,
     })

@@ -13,7 +13,7 @@
     "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
-    "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html",
+    "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
