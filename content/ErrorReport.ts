@@ -166,7 +166,7 @@ export = new class ErrorReport {
     await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`, {
       body: data,
       headers: {
-        'x-amz-storage-class': 'ONEZONE_IA',
+        // 'x-amz-storage-class': 'ONEZONE_IA',
         'x-amz-acl': 'bucket-owner-full-control',
       },
       dontCache: true,
