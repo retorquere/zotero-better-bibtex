@@ -163,7 +163,7 @@ export = new class ErrorReport {
     }
     regions.sort((a, b) => a.ping - b.ping)
     const postfix = this.compact(regions[0].region)
-    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3.amazonaws.com`
+    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${regions[0].region}.amazonaws.com`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
 

@@ -57,4 +57,7 @@ for (const region of pkg.bugs.logs.regions) {
   }
 
   fs.writeFileSync(`${bucket}.json`, JSON.stringify(policy, null, 2), 'utf8')
+
+  const file = 'zotero.sqlite'
+  console.log(`curl -X PUT -T ${file} -H "x-amz-acl: bucket-owner-full-control" -H "x-amz-storage-class: STANDARD" https://${bucket}.s3-${region}.amazonaws.com/${file}`)
 }
