@@ -8,6 +8,7 @@ import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
 import { createFile } from './create-file.ts'
+const s3 = require('./s3.json')
 
 const PACKAGE = require('../package.json')
 
@@ -37,8 +38,9 @@ export = new class ErrorReport {
 
   public async send() {
     const wizard = document.getElementById('better-bibtex-error-report')
-    const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
+    wizard.getButton('next').disabled = true
+    wizard.getButton('cancel').disabled = true
+    wizard.canRewind = false
 
     const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
 
@@ -47,14 +49,12 @@ export = new class ErrorReport {
       if (this.errorlog.references) logs.push(this.submit('references.json', this.errorlog.references))
       await Zotero.Promise.all(logs)
       wizard.advance()
-      wizard.getButton('cancel').disabled = true
-      wizard.canRewind = false
 
-      document.getElementById('better-bibtex-report-id').setAttribute('value', this.key)
+      document.getElementById('better-bibtex-report-id').value = this.key
       document.getElementById('better-bibtex-report-result').hidden = false
     } catch (err) {
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), err)
+      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -95,10 +95,8 @@ export = new class ErrorReport {
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
-    continueButton.disabled = false
+    continueButton.disabled = true
 
-    this.bucket = `https://s3.${PACKAGE.bugs.logs.region}.amazonaws.com/${PACKAGE.bugs.logs.bucket}`
-    this.key = Zotero.Utilities.generateObjectKey()
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     this.errorlog = {
@@ -142,6 +140,23 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
+    const regions = []
+    for (const candidate of PACKAGE.bugs.logs.regions) {
+      const started = Date.now()
+      try {
+        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
+        regions.push({region: candidate, ping: Date.now() - started, ...s3[candidate]})
+      } catch (err) {
+        debug('ErrorReport.ping: could not reach', candidate, err)
+      }
+    }
+    regions.sort((a, b) => a.ping - b.ping)
+    const region = regions[0]
+    const postfix = region.short
+    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
+    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
+    debug('ErrorReport.ping:', regions, this.bucket, this.key)
+
     continueButton.focus()
     continueButton.disabled = false
   }
@@ -178,6 +193,9 @@ export = new class ErrorReport {
   }
 
   private async submit(filename, data) {
+    const started = Date.now()
+    debug('Errorlog.submit:', filename)
+
     const headers = {
       'x-amz-storage-class': 'STANDARD',
       'x-amz-acl': 'bucket-owner-full-control',
@@ -200,6 +218,8 @@ export = new class ErrorReport {
       dontCache: true,
       debug: true,
     })
+
+    debug('Errorlog.submit:', filename, Date.now() - started)
   }
 }
 

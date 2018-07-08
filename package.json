@@ -125,8 +125,8 @@
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
     "logs": {
-      "region": "eu-central-1",
-      "bucket": "better-bibtex-error-reports-62200312"
+      "bucket": "better-bibtex-error-reports-62200312",
+      "regions": [ "eu-central-1", "ap-southeast-1" ]
     }
   }
 }
