@@ -2,14 +2,13 @@ declare const window: any
 declare const document: any
 declare const Components: any
 declare const Zotero: any
-declare const FormData: any
-declare const Blob: any
 declare const Services: any
 
 import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
 import { createFile } from './create-file.ts'
+const s3 = require('./s3.json')
 
 const PACKAGE = require('../package.json')
 
@@ -21,6 +20,7 @@ export = new class ErrorReport {
 
   private key: string
   private timestamp: string
+  private bucket: string
   private params: any
 
   private errorlog: {
@@ -32,45 +32,29 @@ export = new class ErrorReport {
     db?: string
   } = {}
 
-  private form: {
-    action?: string,
-    filefield?: string,
-    fields?: {
-      key: string,
-      acl: string,
-      'X-Amz-Credential': string,
-      'X-Amz-Algorithm': string,
-      'X-Amz-Date': string,
-      Policy: string,
-      'X-Amz-Signature': string,
-      success_action_status: string,
-    }
-  } = { }
-
   constructor() {
     window.addEventListener('load', () => this.init(), false)
   }
 
   public async send() {
     const wizard = document.getElementById('better-bibtex-error-report')
-    const continueButton = wizard.getButton('next')
-    continueButton.disabled = true
+    wizard.getButton('next').disabled = true
+    wizard.getButton('cancel').disabled = true
+    wizard.canRewind = false
 
     const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
 
     try {
-      await this.submit('errorlog.txt', errorlog)
-      await this.submit('db.json', this.errorlog.db)
-      if (this.errorlog.references) await this.submit('references.json', this.errorlog.references)
+      const logs = [this.submit('errorlog.txt', errorlog), this.submit('db.json', this.errorlog.db)]
+      if (this.errorlog.references) logs.push(this.submit('references.json', this.errorlog.references))
+      await Zotero.Promise.all(logs)
       wizard.advance()
-      wizard.getButton('cancel').disabled = true
-      wizard.canRewind = false
 
-      document.getElementById('better-bibtex-report-id').setAttribute('value', this.key)
+      document.getElementById('better-bibtex-report-id').value = this.key
       document.getElementById('better-bibtex-report-result').hidden = false
     } catch (err) {
       const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
-      ps.alert(null, Zotero.getString('general.error'), err)
+      ps.alert(null, Zotero.getString('general.error'), `${err} (${this.key}, references: ${!!this.errorlog.references})`)
       if (wizard.rewind) wizard.rewind()
     }
   }
@@ -111,10 +95,8 @@ export = new class ErrorReport {
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
-    continueButton.disabled = false
+    continueButton.disabled = true
 
-    this.form = JSON.parse(Zotero.File.getContentsFromURL(PACKAGE.xpi.releaseURL + 'error-report.json'))
-    this.key = Zotero.Utilities.generateObjectKey()
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     this.errorlog = {
@@ -142,6 +124,38 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-error-log').value = this.errorlog.truncated
     if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines) + '...'
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
+
+    const current = require('../gen/version.js')
+    document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
+
+    let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
+    debug('ErrorReport.current:', latest)
+    latest = JSON.parse((await Zotero.HTTP.request('GET', latest)).responseText).tag_name.replace('v', '')
+    debug('ErrorReport.current:', latest)
+    const show_latest = document.getElementById('better-bibtex-report-latest')
+    if (current === latest) {
+      show_latest.hidden = true
+    } else {
+      show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
+      show_latest.hidden = false
+    }
+
+    const regions = []
+    for (const candidate of PACKAGE.bugs.logs.regions) {
+      const started = Date.now()
+      try {
+        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
+        regions.push({region: candidate, ping: Date.now() - started, ...s3[candidate]})
+      } catch (err) {
+        debug('ErrorReport.ping: could not reach', candidate, err)
+      }
+    }
+    regions.sort((a, b) => a.ping - b.ping)
+    const region = regions[0]
+    const postfix = region.short
+    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
+    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
+    debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
     continueButton.focus()
     continueButton.disabled = false
@@ -178,37 +192,34 @@ export = new class ErrorReport {
     return info
   }
 
-  private submit(filename, data) {
-    const request_ok_range = 1000
+  private async submit(filename, data) {
+    const started = Date.now()
+    debug('Errorlog.submit:', filename)
 
-    return new Zotero.Promise((resolve, reject) => {
-      const fd = new FormData()
-      for (const [name, value] of Object.entries(this.form.fields)) {
-        fd.append(name, value)
-      }
+    const headers = {
+      'x-amz-storage-class': 'STANDARD',
+      'x-amz-acl': 'bucket-owner-full-control',
+    }
 
-      const file = new Blob([data], { type: 'text/plain'})
-      fd.append('file', file, `${this.timestamp}-${this.key}-${filename}`)
+    switch (filename.split('.').pop()) {
+      case 'txt':
+        headers['Content-Type'] = 'text/plain'
+        break
 
-      const request = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1'].createInstance()
-      request.open('POST', this.form.action, true)
+      case 'txt':
+        headers['Content-Type'] = 'application/json'
+        break
 
-      request.onload = () => {
-        if (!request.status || request.status > request_ok_range) {
-          return reject(`${Zotero.getString('errorReport.noNetworkConnection')}: ${request.status}`)
-        }
+    }
 
-        if (request.status !== parseInt(this.form.fields.success_action_status)) {
-          return reject(`${Zotero.getString('errorReport.invalidResponseRepository')}: ${request.status}, expected ${this.form.fields.success_action_status}\n${request.responseText}`)
-        }
-
-        return resolve()
-      }
-
-      request.onerror = () => reject(`${Zotero.getString('errorReport.noNetworkConnection')}: ${request.statusText}`)
-
-      request.send(fd)
+    await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`, {
+      body: data,
+      headers,
+      dontCache: true,
+      debug: true,
     })
+
+    debug('Errorlog.submit:', filename, Date.now() - started)
   }
 }
 

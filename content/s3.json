@@ -1,0 +1,12 @@
+{
+  "ap-southeast-1": {
+    "tld": "",
+    "short": "apse",
+    "name": "Asia Pacific (Singapore)"
+  },
+  "eu-central-1": {
+    "tld": "",
+    "short": "euc",
+    "name": "EU (Frankfurt)"
+  }
+}

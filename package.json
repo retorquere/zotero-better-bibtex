@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.158",
+  "version": "5.0.165",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "license": "ISC",
@@ -13,7 +13,7 @@
     "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",
-    "updateInfoURL": "https://retorquere.github.io/zotero-better-bibtex/CHANGELOG.html",
+    "updateInfoURL": "https://github.com/retorquere/zotero-better-bibtex/releases/latest",
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
@@ -72,12 +72,12 @@
     "transliteration": "^1.6.2",
     "webpack-cli": "^3.0.8",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.37"
+    "zotero-plugin": "0.0.40"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.5.1",
-    "@types/webpack": "^4.4.4",
+    "@types/node": "^10.5.2",
+    "@types/webpack": "^4.4.5",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
@@ -112,7 +112,7 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.14.0",
+    "webpack": "^4.15.1",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
@@ -125,8 +125,11 @@
   "bugs": {
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
     "logs": {
-      "region": "eu-central-1",
-      "bucket": "better-bibtex-error-reports-62200312"
+      "bucket": "better-bibtex-error-reports-62200312",
+      "regions": [
+        "eu-central-1",
+        "ap-southeast-1"
+      ]
     }
   }
 }

@@ -82,11 +82,34 @@ for (const type of ['math', 'text']) {
   }
 }
 
+var m;
 for (const base of ['ascii', 'unicode']) {
   for (const type of ['math', 'text']) {
     for (const [key, value] of Object.entries(bbt[base][type])) {
-      var m = value.match(/^{(\\[a-z]+)}$/i)
-      if (m) bbt[base][type][key] = `${m[1]}{}`;
+      if (m = value.match(/^{(\\[a-z]+)}$/i)) {
+        bbt[base][type][key] = `${m[1]}{}`;
+        continue;
+      }
+
+      if (m = value.match(/^\\(['`"=~^])([a-zA-Z]){}$/)) { // \'o{} => \'o
+        bbt[base][type][key] = `\\${m[1]}${m[2]}`;
+        continue;
+      }
+
+      if (m = value.match(/^{\\(['`"=~^])([a-zA-Z])}$/)) { // {\'o} => \'o
+        bbt[base][type][key] = `\\${m[1]}${m[2]}`;
+        continue;
+      }
+
+      if (m = value.match(/^\\(['`"=~^]){([a-zA-Z])}$/)) { // \'{o} => \'o
+        bbt[base][type][key] = `\\${m[1]}${m[2]}`;
+        continue;
+      }
+
+      if (m = value.match(/^\\(['`"=~^]){\\([ij])}$/)) { // \'{\i} => \'i
+        bbt[base][type][key] = `\\${m[1]}${m[2]}`;
+        continue;
+      }
     }
   }
 }
