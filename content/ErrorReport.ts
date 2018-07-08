@@ -141,18 +141,19 @@ export = new class ErrorReport {
     }
 
     const regions = []
-    for (const region of PACKAGE.bugs.logs.regions) {
+    for (const candidate of PACKAGE.bugs.logs.regions) {
       const started = Date.now()
       try {
-        await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`)
-        regions.push({region, ping: Date.now() - started})
+        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
+        regions.push({region: candidate, ping: Date.now() - started, ...s3[candidate]})
       } catch (err) {
-        debug('ErrorReport.ping: could not reach', region, err)
+        debug('ErrorReport.ping: could not reach', candidate, err)
       }
     }
     regions.sort((a, b) => a.ping - b.ping)
-    const postfix = s3[regions[0].region].postfix
-    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${regions[0].region}.amazonaws.com`
+    const region = regions[0]
+    const postfix = region.short
+    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
