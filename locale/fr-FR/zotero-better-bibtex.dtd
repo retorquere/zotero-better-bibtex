@@ -73,7 +73,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "URL de sélection (clé de citation)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit avec une clé verrouillée, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "conservées (risque de doublons)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
@@ -85,7 +85,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en texte brut Unicode">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les commandes LaTeX en texte brut">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
 <!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTex en texte brut Unicode (recommandé)">
