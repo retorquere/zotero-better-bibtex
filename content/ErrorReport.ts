@@ -86,6 +86,18 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
+  private compact(region) {
+    return region
+      .replace('-northeast-', 'ne')
+      .replace('-south-', 's')
+      .replace('-southeast-', 'se')
+      .replace('-central-', 'c')
+      .replace('-north-', 'n')
+      .replace('-northwest-', 'nw')
+      .replace('-west-', 'w')
+      .replace('-east-', 'e')
+  }
+
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
@@ -150,7 +162,7 @@ export = new class ErrorReport {
       }
     }
     regions.sort((a, b) => a.ping - b.ping)
-    const postfix = regions[0].region.split('-').map(word => word[0]).join('')
+    const postfix = this.compact(regions[0].region)
     this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3.amazonaws.com`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)

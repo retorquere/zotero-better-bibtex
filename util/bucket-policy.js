@@ -7,8 +7,20 @@ var user = arn.match(/^arn:aws:iam::([0-9]+):user\/([a-z]+)$/)
 var pkg = require('../package.json')
 var fs = require('fs')
 
+function compact(region) {
+  return region
+    .replace('-northeast-', 'ne')
+    .replace('-south-', 's')
+    .replace('-southeast-', 'se')
+    .replace('-central-', 'c')
+    .replace('-north-', 'n')
+    .replace('-northwest-', 'nw')
+    .replace('-west-', 'w')
+    .replace('-east-', 'e')
+}
+
 for (const region of pkg.bugs.logs.regions) {
-  const bucket = pkg.bugs.logs.bucket + '-' + region.split('-').map(word => word[0]).join('')
+  const bucket = pkg.bugs.logs.bucket + '-' + compact(region)
 
   var policy = {
     Version: '2012-10-17',
