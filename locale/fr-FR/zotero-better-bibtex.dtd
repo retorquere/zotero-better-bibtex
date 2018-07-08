@@ -76,9 +76,9 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit avec une clé verrouillée, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "conservées (risque de doublons)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "S'assurer que les clés de citation soient uniques">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "dans chaque collection">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "dans toutes les collections">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
