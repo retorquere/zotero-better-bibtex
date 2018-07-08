@@ -72,23 +72,23 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "URL de sélection (ID du document)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "URL de sélection (clé de citation)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Copie rapide et glisser-déposer">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Keeping citation keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "On conflict with a pinned key, non-pinned keys will be">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Garder les clés de citation uniques">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "En cas de conflit, les clés non verrouillées seront">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "modifiées (risque de changements)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "conservées (risque de doublons)">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Conserver les clés de citation uniques dans">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "chaque collection">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "toutes les collections">
 <!ENTITY better-bibtex.Preferences.debug "Avancé">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportation BibLaTeX en texte brut Unicode">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les commandes LaTeX en texte brut">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportation BibTex en texte brut Unicode (recommandé)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exporter les commandes LaTeX en texte brut (recommandé)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">
