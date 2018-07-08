@@ -3,10 +3,9 @@
 require 'nokogiri'
 require 'open-uri'
 require 'json'
+require 'benchmark'
 
 page = Nokogiri::HTML(open('https://docs.aws.amazon.com/general/latest/gr/rande.html'))
-
-$package = JSON.parse(File.read('package.json'))
 
 tables = page.at('//h2[@id="s3_region"]').parent
 s3_region = false
@@ -18,12 +17,7 @@ tables.children.each{|node|
 }
 
 def compact(region)
-  if $package['bugs']['logs']['regions'].include?(region)
-    prefix = $package['bugs']['logs']['bucket'] + '-'
-  else
-    prefix = ''
-  end
-
+  region = '' + region
   region.sub!('-northeast-', 'ne')
   region.sub!('-south-', 's')
   region.sub!('-southeast-', 'se')
@@ -32,17 +26,31 @@ def compact(region)
   region.sub!('-northwest-', 'nw')
   region.sub!('-west-', 'w')
   region.sub!('-east-', 'e')
-
-  return prefix + region
+  return region
 end
 
-regions = []
+regions = {}
 table.xpath('.//tr').each{|tr|
   cells = tr.xpath('.//td')
   next if cells.length == 0
-  regions << [cells[1].text, compact(cells[1].text), cells[0].text]
-}
-regions.sort_by{|region| region[0]}.each{|region|
-  puts region.inspect
+
+  name = cells[0].text
+  id = cells[1].text
+
+  regions[id] = { postfix: compact(id), name: name }
 }
 
+puts "Total:\n" + Benchmark.measure {
+  regions.keys.each{|region|
+    puts "#{region} (#{regions[region][:name]})"
+    puts Benchmark.measure {
+      begin
+        ping = open("http://s3.#{region}.amazonaws.com/ping")
+      rescue => e
+        puts "#{e}: Skipping #{region}"
+        regions.delete(region)
+      end
+    }
+  }
+}.to_s
+File.open(File.join(File.dirname(__FILE__), '..', 'content', 's3.json'), 'w'){|f| f.puts(JSON.pretty_generate(regions)) }

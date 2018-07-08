@@ -1,0 +1,66 @@
+{
+  "us-east-2": {
+    "postfix": "use2",
+    "name": "US East (Ohio)"
+  },
+  "us-east-1": {
+    "postfix": "use1",
+    "name": "US East (N. Virginia)"
+  },
+  "us-west-1": {
+    "postfix": "usw1",
+    "name": "US West (N. California)"
+  },
+  "us-west-2": {
+    "postfix": "usw2",
+    "name": "US West (Oregon)"
+  },
+  "ca-central-1": {
+    "postfix": "cac1",
+    "name": "Canada (Central)"
+  },
+  "ap-south-1": {
+    "postfix": "aps1",
+    "name": "Asia Pacific (Mumbai)"
+  },
+  "ap-northeast-2": {
+    "postfix": "apne2",
+    "name": "Asia Pacific (Seoul)"
+  },
+  "ap-northeast-3": {
+    "postfix": "apne3",
+    "name": "Asia Pacific (Osaka-Local) ***"
+  },
+  "ap-southeast-1": {
+    "postfix": "apse1",
+    "name": "Asia Pacific (Singapore)"
+  },
+  "ap-southeast-2": {
+    "postfix": "apse2",
+    "name": "Asia Pacific (Sydney)"
+  },
+  "ap-northeast-1": {
+    "postfix": "apne1",
+    "name": "Asia Pacific (Tokyo)"
+  },
+  "eu-central-1": {
+    "postfix": "euc1",
+    "name": "EU (Frankfurt)"
+  },
+  "eu-west-1": {
+    "postfix": "euw1",
+    "name": "EU (Ireland)"
+  },
+  "eu-west-2": {
+    "postfix": "euw2",
+    "name": "EU (London)"
+  },
+  "eu-west-3": {
+    "postfix": "euw3",
+    "name": "EU (Paris)"
+  },
+  "sa-east-1": {
+    "postfix": "sae1",
+    "name": "South America (São Paulo)"
+  }
+}
