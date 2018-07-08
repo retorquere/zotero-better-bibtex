@@ -113,9 +113,9 @@ export = new class ErrorReport {
     if (Zotero.BetterBibTeX.ready && this.params.items) {
       await Zotero.BetterBibTeX.ready
 
-      debug('ErrorReport::init items', this.params.items)
+      debug('ErrorReport::init items', this.params.items.length)
       this.errorlog.references = await Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
-      debug('ErrorReport::init references', this.errorlog.references)
+      debug('ErrorReport::init references', this.errorlog.references.length)
     }
 
     debug('ErrorReport.init:', Object.keys(this.errorlog))
