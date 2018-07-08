@@ -97,8 +97,6 @@ export = new class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = false
 
-    this.bucket = `https://s3.${PACKAGE.bugs.logs.region}.amazonaws.com/${PACKAGE.bugs.logs.bucket}`
-    this.key = Zotero.Utilities.generateObjectKey()
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     this.errorlog = {
@@ -141,6 +139,22 @@ export = new class ErrorReport {
       show_latest.value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.latest', { version: latest })
       show_latest.hidden = false
     }
+
+    const regions = []
+    for (const region of PACKAGE.bugs.logs.regions) {
+      const started = Date.now()
+      try {
+        await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`)
+        regions.push({region, ping: Date.now() - started})
+      } catch (err) {
+        debug('ErrorReport.ping: could not reach', region, err)
+      }
+    }
+    regions.sort((a, b) => a.ping - b.ping)
+    const postfix = regions[0].region.split('-').map(word => word[0]).join('')
+    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3.amazonaws.com`
+    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
+    debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
     continueButton.focus()
     continueButton.disabled = false
