@@ -178,6 +178,9 @@ export = new class ErrorReport {
   }
 
   private async submit(filename, data) {
+    const started = Date.now()
+    debug('Errorlog.submit:', filename)
+
     const headers = {
       'x-amz-storage-class': 'STANDARD',
       'x-amz-acl': 'bucket-owner-full-control',
@@ -200,6 +203,8 @@ export = new class ErrorReport {
       dontCache: true,
       debug: true,
     })
+
+    debug('Errorlog.submit:', filename, Date.now() - started)
   }
 }
 
