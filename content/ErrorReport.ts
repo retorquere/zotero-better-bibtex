@@ -8,6 +8,7 @@ import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
 import { createFile } from './create-file.ts'
+const s3 = require('./s3.json')
 
 const PACKAGE = require('../package.json')
 
@@ -86,18 +87,6 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private compact(region) {
-    return region
-      .replace('-northeast-', 'ne')
-      .replace('-south-', 's')
-      .replace('-southeast-', 'se')
-      .replace('-central-', 'c')
-      .replace('-north-', 'n')
-      .replace('-northwest-', 'nw')
-      .replace('-west-', 'w')
-      .replace('-east-', 'e')
-  }
-
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
@@ -162,7 +151,7 @@ export = new class ErrorReport {
       }
     }
     regions.sort((a, b) => a.ping - b.ping)
-    const postfix = this.compact(regions[0].region)
+    const postfix = s3[regions[0].region].postfix
     this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${regions[0].region}.amazonaws.com`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
