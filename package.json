@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.164",
+  "version": "5.0.165",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "license": "ISC",
@@ -126,7 +126,10 @@
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
     "logs": {
       "bucket": "better-bibtex-error-reports-62200312",
-      "regions": [ "eu-central-1", "ap-southeast-1" ]
+      "regions": [
+        "eu-central-1",
+        "ap-southeast-1"
+      ]
     }
   }
 }
