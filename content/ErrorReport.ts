@@ -47,7 +47,7 @@ export = new class ErrorReport {
       const logs = [this.submit('errorlog.txt', errorlog), this.submit('db.json', this.errorlog.db)]
       if (this.errorlog.references) logs.push(this.submit('references.json', this.errorlog.references))
       await Zotero.Promise.all(logs)
-      if (wizard.advance) wizard.advance()
+      wizard.advance()
 
       document.getElementById('better-bibtex-report-id').value = this.key
       document.getElementById('better-bibtex-report-result').hidden = false
