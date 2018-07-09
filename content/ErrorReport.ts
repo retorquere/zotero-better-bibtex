@@ -15,8 +15,8 @@ const PACKAGE = require('../package.json')
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
-  public static max_log_lines = 5000
-  public static max_line_length = 80
+  private preview = 3000
+  private chunk = 100000
 
   private key: string
   private timestamp: string
@@ -24,7 +24,6 @@ export = new class ErrorReport {
   private params: any
 
   private errorlog: {
-    truncated?: string,
     references?: string,
     info?: string,
     errors?: string,
@@ -105,10 +104,6 @@ export = new class ErrorReport {
       full: await Zotero.Debug.get(),
       db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
-    let truncated = this.errorlog.full.split('\n')
-    truncated = truncated.slice(0, ErrorReport.max_log_lines)
-    truncated = truncated.map(line => Zotero.Utilities.ellipsize(line, ErrorReport.max_line_length, true))
-    this.errorlog.truncated = truncated.join('\n')
 
     if (Zotero.BetterBibTeX.ready && this.params.items) {
       await Zotero.BetterBibTeX.ready
@@ -121,8 +116,8 @@ export = new class ErrorReport {
     debug('ErrorReport.init:', Object.keys(this.errorlog))
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-log').value = this.errorlog.truncated
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, ErrorReport.max_log_lines) + '...'
+    document.getElementById('better-bibtex-error-log').value = this.errorlog.full.substring(0, this.preview) + '...'
+    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, this.preview) + '...'
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     const current = require('../gen/version.js')
@@ -153,7 +148,7 @@ export = new class ErrorReport {
     regions.sort((a, b) => a.ping - b.ping)
     const region = regions[0]
     const postfix = region.short
-    this.bucket = `https://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
+    this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
@@ -212,12 +207,31 @@ export = new class ErrorReport {
 
     }
 
-    await Zotero.HTTP.request('PUT', `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`, {
-      body: data,
-      headers,
-      dontCache: true,
-      debug: true,
-    })
+    const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
+    if (data.length < this.chunk) {
+      await Zotero.HTTP.request('PUT', url, {
+        body: data,
+        headers,
+        dontCache: true,
+        // debug: true,
+      })
+    } else {
+      let uploadId = await Zotero.HTTP.request('POST', `${url}?uploads`, { headers, dontCache: true })
+      uploadId = uploadId.match(/<UploadId>(.+)<\/UploadId>/)[1]
+
+      const chunks = []
+      for (let chunk = Math.ceil(data.length / this.chunk); chunk >= 0; chunk --) {
+        const start = chunk * this.chunk
+        if (start >= data.length) continue
+        chunks.push(Zotero.HTTP.request('PUT', `${url}?partNumber=${chunk + 1}uploadId=${uploadId}`, {
+          body: data.substr(start, this.chunk),
+          headers,
+          dontCache: true,
+        }))
+      }
+
+      await Zotero.Promise.all(chunks)
+    }
 
     debug('Errorlog.submit:', filename, Date.now() - started)
   }
