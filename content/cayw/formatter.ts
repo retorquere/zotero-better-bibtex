@@ -162,7 +162,9 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   }
 
   public async 'scannable-cite'(citations) {
-    const odfScan = await AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com')
+    const deferred = Zotero.Promise.defer()
+    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', deferred.resolve)
+    const odfScan = await deferred.promise
     if (!odfScan || !odfScan.isActive) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     debug('scannable-cite:', citations)
