@@ -749,7 +749,12 @@ export class Reference {
     ref += '\n}\n'
     ref += this.qualityReport()
     ref += '\n'
-    Zotero.write(ref)
+
+    if (Translator.preferences.sorted) {
+      Translator.references.push({ citekey: this.item.citekey, reference: ref })
+    } else {
+      Zotero.write(ref)
+    }
 
     this.data.DeclarePrefChars = Exporter.unique_chars(this.data.DeclarePrefChars)
 
@@ -892,7 +897,7 @@ export class Reference {
     if (tags.length === 0) return null
 
     // sort tags for stable tests
-    if (Translator.preferences.testing) tags.sort()
+    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort()
 
     tags = tags.map(tag => {
       if (Translator.BetterBibTeX) {

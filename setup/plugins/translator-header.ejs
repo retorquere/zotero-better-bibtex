@@ -22,6 +22,8 @@ var Translator = {
     if (stage == 'detectImport') {
       this.options = {}
     } else {
+      this.references = []
+
       for (var key in this.options) {
         this.options[key] = Zotero.getOption(key)
       }

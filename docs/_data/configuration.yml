@@ -305,3 +305,8 @@
         When on, BBT will load kuroshiro for romajization in citekeys. This uses
         a lot of memory, easily 100MB. If you don't have Japanese titles/names,
         keep this off.
+    sorted:
+      default: 'false'
+      description: >-
+        When on, BBT will sort references on the citekey. Comes at performance
+        and memory consumption cost.
