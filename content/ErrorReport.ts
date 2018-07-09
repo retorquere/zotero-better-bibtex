@@ -16,7 +16,7 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
   private preview = 3000
-  private chunk = 100000
+  private chunk = 1000
 
   private key: string
   private timestamp: string
@@ -231,6 +231,7 @@ export = new class ErrorReport {
       }
 
       await Zotero.Promise.all(chunks)
+      // TODO: complete multi-part bla bla etags
     }
 
     debug('Errorlog.submit:', filename, Date.now() - started)
