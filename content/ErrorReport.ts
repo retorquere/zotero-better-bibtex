@@ -9,6 +9,7 @@ import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
 import { createFile } from './create-file.ts'
 const s3 = require('./s3.json')
+import fastChunkString = require('fast-chunk-string')
 
 const PACKAGE = require('../package.json')
 
@@ -16,7 +17,7 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
   private preview = 3000
-  private chunk = 1000
+  private chunk = 10485760 // 10MB
 
   private key: string
   private timestamp: string
@@ -44,8 +45,8 @@ export = new class ErrorReport {
     const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
 
     try {
-      const logs = [this.submit('errorlog.txt', errorlog), this.submit('db.json', this.errorlog.db)]
-      if (this.errorlog.references) logs.push(this.submit('references.json', this.errorlog.references))
+      const logs = [this.submit('errorlog', 'text/plain', errorlog), this.submit('db', 'application/json', this.errorlog.db)]
+      if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
       await Zotero.Promise.all(logs)
       wizard.advance()
 
@@ -98,6 +99,7 @@ export = new class ErrorReport {
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
+    debug('ErrorReport.log:', Zotero.Debug.count())
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
@@ -187,51 +189,35 @@ export = new class ErrorReport {
     return info
   }
 
-  private async submit(filename, data) {
+  private async submit(filename, contentType, data) {
     const started = Date.now()
     debug('Errorlog.submit:', filename)
 
     const headers = {
       'x-amz-storage-class': 'STANDARD',
       'x-amz-acl': 'bucket-owner-full-control',
+      'Content-Type': contentType,
     }
 
-    switch (filename.split('.').pop()) {
-      case 'txt':
-        headers['Content-Type'] = 'text/plain'
+    let ext = ''
+    switch (contentType) {
+      case 'text/plain':
+        ext = 'txt'
         break
 
-      case 'txt':
-        headers['Content-Type'] = 'application/json'
+      case 'application/json':
+        ext = 'json'
         break
-
     }
 
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
     if (data.length < this.chunk) {
-      await Zotero.HTTP.request('PUT', url, {
-        body: data,
-        headers,
-        dontCache: true,
-        // debug: true,
-      })
+      await Zotero.HTTP.request('PUT', `${url}.${ext}`, { body: data, headers, dontCache: true })
     } else {
-      let uploadId = await Zotero.HTTP.request('POST', `${url}?uploads`, { headers, dontCache: true })
-      uploadId = uploadId.match(/<UploadId>(.+)<\/UploadId>/)[1]
+      const chunks = fastChunkString(data, { size: this.chunk })
+      const padding = (chunks.length + 1).toString().length
 
-      const chunks = []
-      for (let chunk = Math.ceil(data.length / this.chunk); chunk >= 0; chunk --) {
-        const start = chunk * this.chunk
-        if (start >= data.length) continue
-        chunks.push(Zotero.HTTP.request('PUT', `${url}?partNumber=${chunk + 1}uploadId=${uploadId}`, {
-          body: data.substr(start, this.chunk),
-          headers,
-          dontCache: true,
-        }))
-      }
-
-      await Zotero.Promise.all(chunks)
-      // TODO: complete multi-part bla bla etags
+      await Zotero.Promise.all(chunks.map((chunk, i) => Zotero.HTTP.request('PUT', `${url}.${(i + 1).toString().padStart(padding, '0')}.${ext}`, { body: chunk, headers, dontCache: true })))
     }
 
     debug('Errorlog.submit:', filename, Date.now() - started)

@@ -54,6 +54,7 @@
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
+    "fast-chunk-string": "^1.0.1",
     "fold-to-ascii": "^4.0.0",
     "global": "^4.3.2",
     "he": "^1.1.1",
@@ -126,7 +127,10 @@
     "url": "https://github.com/retorquere/zotero-better-bibtex/issues",
     "logs": {
       "bucket": "better-bibtex-error-reports-62200312",
-      "regions": [ "eu-central-1", "ap-southeast-1" ]
+      "regions": [
+        "eu-central-1",
+        "ap-southeast-1"
+      ]
     }
   }
 }
