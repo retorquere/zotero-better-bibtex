@@ -68,7 +68,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     debug('sorted:', { prefs: Translator.preferences, bbt: Translator.BetterBibTeX, bbl: Translator.BetterBibLaTeX })
     if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
       const order = Translator.references.map((ref, index) => ({ index, citekey: ref.citekey.toLowerCase() }))
-      order.sort((a, b) => a.citekey.localeCompare(b.citekey))
+      order.sort((a, b) => (a.citekey < b.citekey ? -1 : (a.citekey > b.citekey ? 1 : 0)))
       debug('sorted:', order)
       const references = order.map(o => Translator.references[o.index].reference)
       Zotero.write(references.join(''))
