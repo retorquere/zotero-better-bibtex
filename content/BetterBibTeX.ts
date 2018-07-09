@@ -204,6 +204,7 @@ import * as DateParser from './dateparser.ts'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check.ts'
 import { titleCase } from './title-case.ts'
+import { parse as parseHTML } from './htmlparser.ts'
 import { extract as varExtract } from './var-extract.ts'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
