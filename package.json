@@ -67,6 +67,7 @@
     "kuroshiro": "^0.2.4",
     "lokijs": "^1.5.5",
     "node-eta": "^0.9.0",
+    "parse5": "^5.0.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.1",
     "string-template": "^1.0.0",

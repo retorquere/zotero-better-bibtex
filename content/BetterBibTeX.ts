@@ -164,18 +164,23 @@ $patch$(Zotero.Item.prototype, 'setField', original => function(field, value, lo
 
 // To show the citekey in the reference list
 $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatted, includeBaseMapped) {
-  switch (field) {
-    case 'citekey':
-      const citekey = KeyManager.get(this.id)
-      if (citekey.retry) return '\uFFFD'
-      return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
+  debug('patched getField:', {field, unformatted, includeBaseMapped})
+  try {
+    switch (field) {
+      case 'citekey':
+        const citekey = KeyManager.get(this.id)
+        if (citekey.retry) return '\uFFFD'
+        return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 
-    case 'itemID':
-      return `${this.id}`
+      case 'itemID':
+        return `${this.id}`
 
-    default:
-      return original.apply(this, arguments)
+    }
+  } catch (err) {
+    debug('patched getField:', {field, unformatted, includeBaseMapped, err})
   }
+
+  return original.apply(this, arguments)
 })
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
@@ -204,7 +209,7 @@ import * as DateParser from './dateparser.ts'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check.ts'
 import { titleCase } from './title-case.ts'
-import { parse as parseHTML } from './htmlparser.ts'
+import { HTMLParser } from './markupparser.ts'
 import { extract as varExtract } from './var-extract.ts'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
@@ -214,6 +219,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
+  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   validFields(sandbox) { return Serializer.validFields },
   extractFields(sandbox, item) { return varExtract(item) },
@@ -267,6 +273,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   validFields(sandbox) { return Serializer.validFields },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
+  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {

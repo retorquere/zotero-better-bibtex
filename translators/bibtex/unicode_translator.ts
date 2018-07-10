@@ -3,7 +3,6 @@ declare const Translator: ITranslator
 declare const Zotero: any
 
 import { debug } from '../lib/debug.ts'
-import { MarkupParser } from '../lib/markupparser.ts'
 
 import HE = require('he')
 import unicodeMapping = require('./unicode_translator_mapping.js')
@@ -23,32 +22,36 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    const ast = MarkupParser.parse(html, this.options)
+    const ast: IZoteroMarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
     this.walk(ast)
-    return { latex: this.latex, raw: ast.name === 'pre' }
+    return { latex: this.latex, raw: ast.nodeName === 'pre' }
   }
 
-  private walk(tag) {
+  private walk(tag: IZoteroMarkupNode) {
     if (!tag) return
 
-    switch (tag.name) {
+    switch (tag.nodeName) {
       case '#text':
-        this.chars(tag.text)
+        this.chars(tag.value)
         return
       case 'pre':
-        this.latex += tag.text
+      case 'script':
+        this.latex += tag.value
         return
     }
 
     this.stack.unshift(tag)
 
     let latex = '...' // default to no-op
-    switch (tag.name) {
-      case 'i': case 'em': case 'italic':
+    switch (tag.nodeName) {
+      case 'i':
+      case 'em':
+      case 'italic':
         latex = '\\emph{...}'
         break
 
-      case 'b': case 'strong':
+      case 'b':
+      case 'strong':
         latex = '\\textbf{...}'
         break
 
@@ -72,12 +75,18 @@ const htmlConverter = new class HTMLConverter {
         latex += '\n...'
         break
 
-      case 'p': case 'div': case 'table': case 'tr':
+      case 'p':
+      case 'div':
+      case 'table':
+      case 'tr':
         latex = '\n\n...\n\n'
         break
 
-      case 'h1': case 'h2': case 'h3': case 'h4':
-        latex = `\n\n\\${(new Array(parseInt(tag.name[1]))).join('sub')}section{...}\n\n`
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+        latex = `\n\n\\${(new Array(parseInt(tag.nodeName[1]))).join('sub')}section{...}\n\n`
         break
 
       case 'ol':
@@ -108,11 +117,16 @@ const htmlConverter = new class HTMLConverter {
         latex = ' ... '
         break
 
-      case 'tbody': case '#document': case 'html': case 'head': case 'body':
+      case '#document':
+      case '#document-fragment':
+      case 'tbody':
+      case 'html':
+      case 'head':
+      case 'body':
         break // ignore
 
       default:
-        debug(`unexpected tag '${tag.name}' (${Object.keys(tag)})`)
+        debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
     }
 
     if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
@@ -123,7 +137,7 @@ const htmlConverter = new class HTMLConverter {
     const [prefix, postfix] = latex.split('...')
 
     this.latex += prefix
-    for (const child of tag.children) {
+    for (const child of tag.childNodes) {
       this.walk(child)
     }
     this.latex += postfix
@@ -189,7 +203,7 @@ const htmlConverter = new class HTMLConverter {
 }
 
 export function html2latex(html, options) {
-  if (!options.mode) options.mode = 'html'
+  if (typeof options.html === 'undefined') options.html = true
   const latex = htmlConverter.convert(html, options)
   latex.latex = latex.latex
     .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
@@ -198,7 +212,7 @@ export function html2latex(html, options) {
   return latex
 }
 
-export function text2latex(text, options: { caseConversion?: boolean, mode?: string } = {}) {
-  if (!options.mode) options.mode = 'text'
+export function text2latex(text, options: { caseConversion?: boolean, html?: boolean } = {}) {
+  if (typeof options.html === 'undefined') options.html = false
   return html2latex(text, options)
 }
