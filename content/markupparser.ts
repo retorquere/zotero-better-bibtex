@@ -2,7 +2,7 @@ import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { Preferences as Prefs } from './prefs.ts'
 import { titleCase } from './title-case.ts'
-import { debug } from './debug.ts'
+// import { debug } from './debug.ts'
 
 const re = {
   // Number, Letter
@@ -73,7 +73,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   public parse(html, options: { html?: boolean, caseConversion?: boolean } = {}): IZoteroMarkupNode {
     let doc
 
-    debug('markupparser:', typeof html, html, options)
+    // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
     this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
     this.sentenceStart = true
 
@@ -91,6 +91,8 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
 
     if (!options.html) {
+      this.html = this.html.replace(/&/g, '&amp;')
+
       this.html = this.html.replace(/<(\/?)([a-z]+)/g, (match, close, tag) => {
         switch (tag.toLowerCase()) {
           case 'span':
@@ -111,19 +113,26 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
 
     doc = this.walk(htmlParser.parseFragment(this.html))
-    doc.source = this.html
 
     if (this.caseConversion) {
       this.titleCased = titleCase(this.innerText(doc))
-      debug('markupparser.titleCase', this.titleCased)
+      // debug('markupparser.titleCase', this.titleCased)
       this.titleCase(doc)
-      this.unwrapNocase(doc)
+      doc = this.unwrapNocase(doc)
+      if (doc.length === 1) {
+        doc = doc[0]
+      } else {
+        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: doc }
+      }
+      this.cleanupNocase(doc)
     }
 
-    // spurious wrapping span
-    while (this.spuriousNode.has(doc.nodeName) && Object.keys(doc.attr).length === 0 && doc.childNodes.length === 1) doc = doc.childNodes[0]
+    // debug('markupparser:', doc)
 
-    debug('markupparser:', doc)
+    // spurious wrapping span
+    doc = this.unwrapSpurious(doc)
+    doc.source = this.html
+
     return doc
   }
 
@@ -149,34 +158,52 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private unwrapNocase(node: IZoteroMarkupNode) {
+  private unwrapSpurious(node: IZoteroMarkupNode) {
+    // debug('spurious:', { nodeName: node.nodeName, attrs: Object.keys(node.attr).length, nocase: node.nocase, childNodes: node.childNodes.length })
+
     if (node.nodeName === '#text') return node
 
-    const childNodes = node.childNodes.map(n => this.unwrapNocase(n))
-    node.childNodes = [].concat(...childNodes)
+    node.childNodes = node.childNodes.map(child => this.unwrapSpurious(child))
 
-    if (!node.childNodes.find(child => child.nocase)) return node
+    while (this.spuriousNode.has(node.nodeName) && Object.keys(node.attr).length === 0 && !node.nocase && node.childNodes.length === 1) node = node.childNodes[0]
 
-    const expanded = []
-    let last = null
-    for (const child of node.childNodes) {
-      const clone = JSON.parse(JSON.stringify(node))
+    return node
+  }
 
+  // BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396
+  private unwrapNocase(node: IZoteroMarkupNode): IZoteroMarkupNode[] {
+    if (node.nodeName === '#text') return [ node ]
+
+    // unwrap and flatten
+    node.childNodes = [].concat(...node.childNodes.map(child => this.unwrapNocase(child)))
+
+    // no nocase children? done
+    if (node.nocase || !node.childNodes.find(child => child.nocase)) return [ node ]
+
+    // expand nested nocase node to sibling of node
+    return node.childNodes.map(child => {
       if (child.nocase) {
-        clone.childNodes = child.childNodes
-        child.childNodes = [clone]
-        expanded.push(child)
-        last = null
-      } else if (last && !last.nocase) {
-        last.childNodes.push(child)
-      } else {
-        clone.childNodes = [child]
-        expanded.push(clone)
-        last = clone
+        return {
+          ...child,
+          childNodes: [ { ...node, childNodes: child.childNodes } ],
+        }
       }
-    }
 
-    return expanded
+      return {
+        ...node,
+        childNodes: [ child ],
+      }
+    })
+  }
+
+  private cleanupNocase(node: IZoteroMarkupNode, nocased = false): IZoteroMarkupNode[] {
+    if (node.nodeName === '#text') return
+
+    if (nocased) delete node.nocase
+
+    for (const child of node.childNodes) {
+      this.cleanupNocase(child, node.nocase || nocased)
+    }
   }
 
   private innerText(node: IZoteroMarkupNode, text = '') {
@@ -230,29 +257,38 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     })
   }
 
-  private walk(node, cancelNocase = false) {
+  private walk(node, isNocased = false) {
+    // debug('walk:', node.nodeName)
     const _node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [] }
     _node.attr = node.attrs ? node.attrs.reduce((acc, v) => (acc[v.name] = v.value) && acc, {}) : {}
     _node.class = _node.attr.class ? _node.attr.class.trim().split(/\s+/).reduce((acc, v) => (acc[v] = true) && acc, {}) : {}
 
     switch (node.nodeName) {
+      case '#document':
+      case '#document-fragment':
+        _node.nodeName = 'span'
+        break
+
       case 'nc':
         _node.nodeName = 'span'
-        _node.class.nocase = true
+        _node.attr.nocase = 'nocase'
+        break
 
       case 'sc':
         _node.nodeName = 'span'
-        _node.class.smallcaps = true
+        _node.attr.smallcaps = 'smallcaps'
         break
 
       case 'pre':
         _node.nodeName = 'script'
         break
     }
-    if (_node.attr.nocase || _node.class.nocase) _node.nocase = !cancelNocase
+
+    if (_node.attr.nocase || _node.class.nocase) _node.nocase = !isNocased
     if (_node.attr.relax || _node.class.relax) _node.relax = true
     if (_node.class.enquote || _node.attr.enquote) _node.enquote = true
-    if (_node.class.smallcaps || _node.attr.smallcaps || (_node.attr.style || '').match(/small-caps/i)) _node.smallcaps = true
+    if (!_node.attr.smallcaps && (_node.attr.style || '').match(/small-caps/i)) _node.attr.smallcaps = 'smallcaps'
+    if (_node.class.smallcaps || _node.attr.smallcaps) _node.smallcaps = true
 
     if (_node.nodeName === 'script') {
       if (!node.childNodes || node.childNodes.length !== 1 || node.childNodes[0].nodeName !== '#text') throw new Error(`Unexpected script body ${node.childNodes}`)
@@ -263,11 +299,12 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
       let m
       for (const child of node.childNodes) {
         if (child.nodeName !== '#text') {
-          _node.childNodes.push(this.walk(child, cancelNocase || _node.nocase))
+          _node.childNodes.push(this.walk(child, isNocased || _node.nocase))
           continue
         }
 
-        if (!this.caseConversion) {
+        // debug('walk.text:', child.nodeName)
+        if (!this.caseConversion || isNocased) {
           this.plaintext(_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
         }
