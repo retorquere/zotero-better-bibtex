@@ -80,6 +80,16 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
     this.html = html.replace(/<pre>/g, '<script>').replace(/<\/pre>/g, '</script>')
 
+    // add enquote tags.
+    const csquotes = Prefs.get('csquotes')
+    if (csquotes) {
+      const space = '\\s*'
+      for (const close of [0, 1]) {
+        const chars = csquotes.replace(/./g, (c, i) => [c, ''][(i + close) & 1]).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&') // tslint:disable-line:no-bitwise
+        this.html = this.html.replace(new RegExp(`${close ? space : ''}[${chars}]${close ? '' : space}`, 'g'), close ? '</span>' : '<span class="enquote">')
+      }
+    }
+
     if (!options.html) {
       this.html = this.html.replace(/<(\/?)([a-z]+)/g, (match, close, tag) => {
         switch (tag.toLowerCase()) {
@@ -87,11 +97,11 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
           case 'nc':
           case 'sc':
           case 'i':
+          case 'b':
           case 'sup':
           case 'sub':
           case 'script':
           case 'pre':
-          case 'b':
             return match
 
           default:
@@ -241,6 +251,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
     if (_node.attr.nocase || _node.class.nocase) _node.nocase = !cancelNocase
     if (_node.attr.relax || _node.class.relax) _node.relax = true
+    if (_node.class.enquote || _node.attr.enquote) _node.enquote = true
     if (_node.class.smallcaps || _node.attr.smallcaps || (_node.attr.style || '').match(/small-caps/i)) _node.smallcaps = true
 
     if (_node.nodeName === 'script') {

@@ -7,11 +7,16 @@ import { debug } from '../lib/debug.ts'
 import HE = require('he')
 import unicodeMapping = require('./unicode_translator_mapping.js')
 
+function repeat(s, n) {
+  if (!n) return ''
+  return ''.padStart(n * s.length, s)
+}
+
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
   private stack: any[]
-  private options: { caseConversion?: boolean, mode?: string }
+  private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
 
   public convert(html, options) {
@@ -86,7 +91,7 @@ const htmlConverter = new class HTMLConverter {
       case 'h2':
       case 'h3':
       case 'h4':
-        latex = `\n\n\\${(new Array(parseInt(tag.nodeName[1]))).join('sub')}section{...}\n\n`
+        latex = `\n\n\\${repeat(parseInt(tag.nodeName[1]) - 1, 'sub')}section{...}\n\n`
         break
 
       case 'ol':
@@ -97,14 +102,6 @@ const htmlConverter = new class HTMLConverter {
         break
       case 'li':
         latex = '\n\\item ...'
-        break
-
-      case 'enquote':
-        if (Translator.BetterBibTeX) {
-          latex = '\\enquote{...}'
-        } else {
-          latex = '\\mkbibquote{...}'
-        }
         break
 
       case 'span':
@@ -133,6 +130,13 @@ const htmlConverter = new class HTMLConverter {
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${latex}}`, true)
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
+    if (tag.enquote) {
+      if (Translator.BetterBibTeX) {
+        latex = `\\enquote{${latex}}`
+      } else {
+        latex = `\\mkbibquote{${latex}}`
+      }
+    }
 
     const [prefix, postfix] = latex.split('...')
 
@@ -160,7 +164,7 @@ const htmlConverter = new class HTMLConverter {
     let math = false
     let braced = 0
 
-    if (this.options.mode === 'html') text = HE.decode(text, { isAttributeValue: true })
+    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
       // in and out of math mode
@@ -169,7 +173,7 @@ const htmlConverter = new class HTMLConverter {
         math = !!this.mapping.math[c]
       }
 
-      /* balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed */
+      // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
       switch (c) {
         case '{': braced += 1; break
         case '}': braced -= 1; break
@@ -191,7 +195,7 @@ const htmlConverter = new class HTMLConverter {
         latex += '\\vphantom\\}'
         break
       default:
-        latex += `\\vphantom{${(new Array(braced + 1)).join('\\}')}}`
+        latex += `\\vphantom{${repeat(braced, '\\}')}}`
         break
     }
 
