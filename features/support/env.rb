@@ -529,7 +529,7 @@ module BBT
     end
 
     # test whether the existing references, if any, have gotten a cite key
-    exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore)
+    exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore) unless ENV['ZOTERO_BIGLY'].to_s != ''
     user_js = File.join(profile_tgt, 'user.js')
     File.unlink(user_js) if File.file?(user_js)
   }

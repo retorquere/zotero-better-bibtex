@@ -7,7 +7,9 @@ declare const Services: any
 import { Preferences as Prefs } from './prefs.ts'
 import { Translators } from './translators.ts'
 import { debug } from './debug.ts'
-import { createFile } from './create-file.ts'
+// import { createFile } from './create-file.ts'
+import { Logger } from './logger.ts'
+
 const s3 = require('./s3.json')
 import fastChunkString = require('fast-chunk-string')
 
@@ -16,8 +18,8 @@ const PACKAGE = require('../package.json')
 Components.utils.import('resource://gre/modules/Services.jsm')
 
 export = new class ErrorReport {
-  private preview = 3000
-  private chunk = 10485760 // 10MB
+  private previewSize = 10000
+  private chunkSize = 10485760 // 10MB
 
   private key: string
   private timestamp: string
@@ -25,12 +27,13 @@ export = new class ErrorReport {
   private params: any
 
   private errorlog: {
+    info: string,
+    errors: string,
+    zotero: string,
+    bbt: string,
     references?: string,
-    info?: string,
-    errors?: string,
-    full?: string,
     db?: string
-  } = {}
+  }
 
   constructor() {
     window.addEventListener('load', () => this.init(), false)
@@ -42,10 +45,12 @@ export = new class ErrorReport {
     wizard.getButton('cancel').disabled = true
     wizard.canRewind = false
 
-    const errorlog = [this.errorlog.info, this.errorlog.errors, this.errorlog.full].join('\n\n')
-
     try {
-      const logs = [this.submit('errorlog', 'text/plain', errorlog), this.submit('db', 'application/json', this.errorlog.db)]
+      const logs = [
+        this.submit('zotero', 'text/plain', [this.errorlog.info, this.errorlog.zotero].join('\n\n')),
+        this.submit('bbt', 'text/plain', this.errorlog.bbt),
+        // this.submit('db', 'application/json', this.errorlog.db)
+      ]
       if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
       await Zotero.Promise.all(logs)
       wizard.advance()
@@ -87,6 +92,26 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
+  private async log(kind) {
+    try {
+      switch (kind) {
+        case 'zotero':
+          return await Zotero.Debug.get()
+
+        case 'bbt':
+          return await Logger.flush()
+
+        default:
+          return `Unknown log ${kind}`
+      }
+
+    } catch (err) {
+      const preference = 'debug.store.limit'
+      return `Error getting Zotero log: ${err}; ${Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.oom', { preference, limit: Zotero.Prefs.get(preference) })}`
+
+    }
+  }
+
   private async init() {
     this.params = window.arguments[0].wrappedJSObject
 
@@ -103,8 +128,9 @@ export = new class ErrorReport {
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      full: await Zotero.Debug.get(),
-      db: Zotero.File.getContents(createFile('_better-bibtex.json')),
+      zotero: await this.log('zotero'),
+      bbt: await this.log('bbt'),
+      // db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.items) {
@@ -118,8 +144,9 @@ export = new class ErrorReport {
     debug('ErrorReport.init:', Object.keys(this.errorlog))
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-log').value = this.errorlog.full.substring(0, this.preview) + '...'
-    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.errorlog.references.substring(0, this.preview) + '...'
+    document.getElementById('better-bibtex-error-zotero').value = this.preview(this.errorlog.zotero)
+    document.getElementById('better-bibtex-error-bbt').value = this.preview(this.errorlog.bbt)
+    if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
     const current = require('../gen/version.js')
@@ -156,6 +183,11 @@ export = new class ErrorReport {
 
     continueButton.focus()
     continueButton.disabled = false
+  }
+
+  private preview(log) {
+    if (log.length <= this.previewSize) return log
+    return log.substring(0, this.previewSize) + '...'
   }
 
   // general state of Zotero
@@ -211,10 +243,10 @@ export = new class ErrorReport {
     }
 
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
-    if (data.length < this.chunk) {
+    if (data.length < this.chunkSize) {
       await Zotero.HTTP.request('PUT', `${url}.${ext}`, { body: data, headers, dontCache: true })
     } else {
-      const chunks = fastChunkString(data, { size: this.chunk })
+      const chunks = fastChunkString(data, { size: this.chunkSize })
       const padding = (chunks.length + 1).toString().length
 
       await Zotero.Promise.all(chunks.map((chunk, i) => Zotero.HTTP.request('PUT', `${url}.${(i + 1).toString().padStart(padding, '0')}.${ext}`, { body: chunk, headers, dontCache: true })))

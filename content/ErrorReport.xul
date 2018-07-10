@@ -35,25 +35,25 @@
       <tabs>
         <tab label="&better-bibtex.ErrorReport.context;"/>
         <tab label="&better-bibtex.ErrorReport.errors;"/>
-        <tab label="&better-bibtex.ErrorReport.log;"/>
+        <tab label="&better-bibtex.ErrorReport.zotero;"/>
+        <tab label="&better-bibtex.ErrorReport.bbt;"/>
         <tab label="&better-bibtex.ErrorReport.references;" id="better-bibtex-error-tab-references"/>
       </tabs>
 
       <tabpanels>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-context" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-context" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-errors" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
           <textbox id="better-bibtex-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-log" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
-          <textbox id="better-bibtex-error-log" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+          <textbox id="better-bibtex-error-zotero" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <!-- checkbox oncommand="BBTErrorReport.config();" id="zotero-error-include-references" label="&better-bibtex.ErrorReport.include;" checked="true"/ -->
+          <textbox id="better-bibtex-error-bbt" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+        </tabpanel>
+        <tabpanel orient="vertical">
           <textbox id="better-bibtex-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
       </tabpanels>

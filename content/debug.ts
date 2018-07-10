@@ -1,8 +1,8 @@
 declare const Zotero: any
 
-import { format } from './debug-formatter.ts'
+import { Logger } from './logger.ts'
 
 export function debug(...msg) {
   if (!Zotero.Debug.enabled) return
-  Zotero.debug(format('better-bibtex', msg))
+  Logger.log('better-bibtex', ...msg)
 }
