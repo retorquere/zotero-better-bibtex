@@ -130,15 +130,29 @@ for (const label of Object.keys(translators.byName)) {
   )
 }
 
-// config.length = 0
-if (config.length === 0) {
-  for (const minitest of ['kuro']) {
+if (process.env.MINITESTS) {
+  config.length = 0
+  for (const minitest of process.env.MINITESTS.split(' ')) {
     config.push(
       _.merge({}, common, {
         plugins: [
           new CircularDependencyPlugin({ failOnError: true }),
+          new webpack.NormalModuleReplacementPlugin(/.*/, function(resource) {
+            resource.request = resource.request
+              .replace(/\/prefs.ts$/, '/minitests/prefs.ts')
+              .replace(/\/title-case.ts$/, '/minitests/title-case.ts')
+          }),
           new webpack.DefinePlugin({
             'Zotero.debug': 'console.log',
+            'Zotero.Debug.enabled': 'true',
+            'Components.utils.import': 'console.log',
+            'ZOTERO_CONFIG': '{}',
+            'Services.appinfo.name': '"Zotero"',
+            'Services.appinfo.version': '"0.0"',
+            'Zotero.version': '"0.0"',
+            'Zotero.platform': '"node"',
+            'Zotero.oscpu': '"node"',
+            'Zotero.locale': '"locale"',
           })
         ],
         context: path.resolve(__dirname, './minitests'),

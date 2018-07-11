@@ -1,30 +1,30 @@
 declare const Translator: ITranslator
+declare const Zotero: any
 
 import YAML = require('js-yaml')
 
 import { debug } from './lib/debug.ts'
 import { CSLExporter as Exporter } from './csl/csl.ts'
-import { MarkupParser } from './lib/markupparser.ts'
 
 const htmlConverter = new class HTML {
   private markdown: string
 
   public convert(html) {
     this.markdown = ''
-    this.walk(MarkupParser.parse(html))
+    this.walk(Zotero.BetterBibTeX.parseHTML(html))
     return this.markdown
   }
 
-  private walk(tag) {
+  private walk(tag: IZoteroMarkupNode) {
     if (!tag) return
 
-    if (['#text', 'pre'].includes(tag.name)) {
-      this.markdown += tag.text.replace(/([\[*~^])/g, '\\$1')
+    if (['#text', 'pre', 'script'].includes(tag.nodeName)) {
+      this.markdown += tag.value.replace(/([\[*~^])/g, '\\$1')
       return
     }
 
     let span_attrs = ''
-    switch (tag.name) {
+    switch (tag.nodeName) {
       case 'i': case 'em': case 'italic':
         this.markdown += '*'
         break
@@ -58,18 +58,22 @@ const htmlConverter = new class HTML {
         if (span_attrs) this.markdown += `<span${span_attrs}>`
         break
 
-      case 'tbody': case '#document': case 'html': case 'head': case 'body':
+      case 'tbody':
+      case '#document':
+      case 'html':
+      case 'head':
+      case 'body':
         break // ignore
 
       default:
-        debug(`unexpected tag '${tag.name}'`)
+        debug(`unexpected tag '${tag.nodeName}'`)
     }
 
-    for (const child of tag.children) {
+    for (const child of tag.childNodes) {
       this.walk(child)
     }
 
-    switch (tag.name) {
+    switch (tag.nodeName) {
       case 'i': case 'italic': case 'em':
         this.markdown += '*'
         break

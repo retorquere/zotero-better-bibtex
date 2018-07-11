@@ -117,7 +117,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     debug('kuroshiro initialized')
 
     this.keys = DB.getCollection('citekey')
-    debug('KeyManager.init:', { keys: this.keys })
+    debug('KeyManager.init:', { keys: this.keys.data.length })
 
     this.query = {
       field: {},
@@ -185,10 +185,11 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     if (clean) this.keys.removeDataOnly()
 
-    debug('KeyManager.rescan:', {clean, keys: this.keys})
+    debug('KeyManager.rescan:', {clean, keys: this.keys.data.length})
 
     const marker = '\uFFFD'
 
+    let bench = this.bench('cleanup')
     const ids = []
     const items = await ZoteroDB.queryAsync(`
       SELECT item.itemID, item.libraryID, item.key, extra.value as extra, item.itemTypeID
@@ -202,30 +203,25 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       ids.push(item.itemID)
       // if no citekey is found, it will be '', which will allow it to be found right after this loop
       const citekey = Citekey.get(item.extra)
-      debug('KeyManager.rescan:', {itemID: item.itemID, citekey})
 
       const saved = clean ? null : this.keys.findOne({ itemID: item.itemID })
-      debug('KeyManager.rescan:', {saved})
       if (saved) {
         if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
-          debug('KeyManager.rescan: resetting pinned citekey', citekey.citekey, 'for', item.itemID)
           // tslint:disable-next-line:prefer-object-spread
           this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
         } else {
           // tslint:disable-next-line:prefer-object-spread
           if (!saved.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
-          debug('KeyManager.rescan: keeping', saved)
         }
       } else {
-        debug('KeyManager.rescan: clearing citekey for', item.itemID)
         this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
       }
     }
 
-    debug('KeyManager.rescan: found', this.keys.data.length)
     this.keys.findAndRemove({ itemID: { $nin: ids } })
-    debug('KeyManager.rescan: purged', this.keys.data.length)
+    this.bench(bench)
 
+    bench = this.bench('regenerate')
     // find all references without citekey
     this.scanning = this.keys.find({ citekey: marker })
 
@@ -243,7 +239,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         let key = this.scanning[done]
         const item = await getItemsAsync(key.itemID)
 
-        debug('KeyManager.rescan: fixing', key)
         if (key.citekey === marker) {
           if (key.pinned) {
             const parsed = Citekey.get(item.getField('extra'))
@@ -275,6 +270,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       // tslint:disable-next-line:no-magic-numbers
       progressWin.startCloseTimer(500)
     }
+    this.bench(bench)
 
     this.scanning = null
 
@@ -408,5 +404,10 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     }
 
     return [ids]
+  }
+
+  private bench(id) {
+    if (typeof id === 'string') return { id, start: Date.now() }
+    debug('KeyManager.bench:', id.id, Date.now() - id.start)
   }
 }

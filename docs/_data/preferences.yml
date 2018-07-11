@@ -40,3 +40,4 @@ lockedInit: false
 autoPin: false
 kuroshiro: false
 sorted: false
+debugLog: ''

@@ -95,12 +95,10 @@ if (Prefs.get('citeprocNoteCitekey')) {
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function(id) {
-  debug('parseLibraryKeyHash:', {id})
   id = decodeURIComponent(id)
   try {
     if (id[0] === '@') {
       const item = KeyManager.keys.findOne({ citekey: id.substring(1) })
-      debug('parseLibraryKeyHash: citekey', { item })
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
 
@@ -110,7 +108,6 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
       if (!libraryID || libraryID === 1) libraryID = Zotero.Libraries.userLibraryID
       libraryID = parseInt(libraryID)
       const item = KeyManager.keys.findOne({ libraryID, citekey })
-      debug('parseLibraryKeyHash: bbt:', { libraryID, citekey, item })
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
   } catch (err) {
@@ -164,18 +161,22 @@ $patch$(Zotero.Item.prototype, 'setField', original => function(field, value, lo
 
 // To show the citekey in the reference list
 $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatted, includeBaseMapped) {
-  switch (field) {
-    case 'citekey':
-      const citekey = KeyManager.get(this.id)
-      if (citekey.retry) return '\uFFFD'
-      return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
+  try {
+    switch (field) {
+      case 'citekey':
+        const citekey = KeyManager.get(this.id)
+        if (citekey.retry) return '\uFFFD'
+        return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 
-    case 'itemID':
-      return `${this.id}`
+      case 'itemID':
+        return `${this.id}`
 
-    default:
-      return original.apply(this, arguments)
+    }
+  } catch (err) {
+    debug('patched getField:', {field, unformatted, includeBaseMapped, err})
   }
+
+  return original.apply(this, arguments)
 })
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
@@ -185,10 +186,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
-    // debug('Zotero.ItemTreeView::getCellText: could not get key for', itemID, ', waiting for BBT.ready...')
     bbtReady.promise.then(() => {
-      debug('Zotero.ItemTreeView::getCellText: deferred update for', itemID)
-
       this._treebox.invalidateCell(row, column)
     })
   }
@@ -207,6 +205,8 @@ import * as DateParser from './dateparser.ts'
 // import CiteProc = require('./citeproc.ts')
 import { qualityReport } from './qr-check.ts'
 import { titleCase } from './title-case.ts'
+import { HTMLParser } from './markupparser.ts'
+import { Logger } from './logger.ts'
 import { extract as varExtract } from './var-extract.ts'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
@@ -216,22 +216,23 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
+  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   simplifyFields(sandbox, item) { return Serializer.simplify(item) },
   validFields(sandbox) { return Serializer.validFields },
   extractFields(sandbox, item) { return varExtract(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 
+  debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
+
   cacheFetch(sandbox, itemID, options) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) {
-      debug('cacheFetch:', sandbox.translator[0].label, 'not found')
       return false
     }
 
     const cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
     if (!cached) {
-      debug('cacheFetch: cache miss for', sandbox.translator[0].label)
       return false
     }
 
@@ -269,6 +270,9 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   validFields(sandbox) { return Serializer.validFields },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
+  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
+
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
@@ -288,8 +292,6 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     if (translatorID.translatorID) translatorID = translatorID.translatorID
 
     let capture = this._displayOptions && this._displayOptions.keepUpdated
-
-    debug('Zotero.Translate.Export::translate: ', translatorID, this._displayOptions, capture)
 
     if (capture) {
       // this should never occur -- keepUpdated should only be settable if you do a file export
@@ -363,7 +365,6 @@ function notify(event, handler) {
 }
 
 notify('item', (action, type, ids, extraData) => {
-  debug('item.notify', {action, type, ids, extraData})
 
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
@@ -389,7 +390,6 @@ notify('item', (action, type, ids, extraData) => {
   switch (action) {
     case 'delete':
     case 'trash':
-      debug(`event.${type}.${action}`, {ids, extraData})
       KeyManager.remove(ids)
       Events.emit('items-removed', ids)
       break
@@ -404,7 +404,6 @@ notify('item', (action, type, ids, extraData) => {
       break
 
     default:
-      debug('item.notify: unhandled', {action, type, ids, extraData})
       return
   }
 
@@ -595,8 +594,6 @@ export = new class BetterBibTeX {
   }
 
   public errorReport(includeReferences) {
-    debug('ErrorReport::start', includeReferences)
-
     let items = null
 
     switch (pane && includeReferences) {
@@ -619,10 +616,8 @@ export = new class BetterBibTeX {
 
     const params = {wrappedJSObject: { items }}
 
-    debug('ErrorReport::start popup', params)
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
-    debug('ErrorReport::start done')
   }
 
   public async scanAUX(path = null) {
