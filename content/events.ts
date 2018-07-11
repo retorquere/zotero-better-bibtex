@@ -2,8 +2,8 @@ declare const Zotero: any
 
 import EventEmitter = require('eventemitter4')
 
-import { debug } from './debug.ts'
-import { patch as $patch$ } from './monkey-patch.ts'
+import { debug } from './debug'
+import { patch as $patch$ } from './monkey-patch'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Events = new EventEmitter() // tslint:disable-line:variable-name

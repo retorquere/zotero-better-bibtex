@@ -1,4 +1,4 @@
-// import Citeproc = require('./citeproc.ts')
+// import Citeproc = require('./citeproc')
 declare const Zotero: any
 
 const state = {

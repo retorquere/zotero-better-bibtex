@@ -1,7 +1,7 @@
 declare const window: any
 declare const document: any
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 
 export = new class FirstRun {
   private prefix = 'better-bibtex-first-run-'

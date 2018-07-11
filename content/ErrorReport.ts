@@ -4,11 +4,11 @@ declare const Components: any
 declare const Zotero: any
 declare const Services: any
 
-import { Preferences as Prefs } from './prefs.ts'
-import { Translators } from './translators.ts'
-import { debug } from './debug.ts'
-// import { createFile } from './create-file.ts'
-import { Logger } from './logger.ts'
+import { Preferences as Prefs } from './prefs'
+import { Translators } from './translators'
+import { debug } from './debug'
+// import { createFile } from './create-file'
+import { Logger } from './logger'
 
 const s3 = require('./s3.json')
 import fastChunkString = require('fast-chunk-string')

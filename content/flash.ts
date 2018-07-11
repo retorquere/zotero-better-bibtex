@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 
 const seconds = 1000
 

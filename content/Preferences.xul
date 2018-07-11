@@ -413,6 +413,12 @@
           default=""/>
         <!--! !-->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.ajv"
+          type="bool"
+          default="true"/>
+        <!--! !-->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">

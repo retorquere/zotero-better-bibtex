@@ -3,9 +3,9 @@ declare const document: any
 declare const ZoteroItemPane: any
 declare const Zotero: any
 
-import { patch as $patch$ } from './monkey-patch.ts'
+import { patch as $patch$ } from './monkey-patch'
 
-import { KeyManager } from './key-manager.ts'
+import { KeyManager } from './key-manager'
 
 function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')

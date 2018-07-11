@@ -2,7 +2,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { debug } from './lib/debug.ts'
+import { debug } from './lib/debug'
 
 function node(id, label, style = null) {
   Zotero.write('  node [\n')

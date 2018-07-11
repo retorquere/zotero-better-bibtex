@@ -4,7 +4,7 @@ declare const Zotero: any
 
 import format = require('string-template')
 
-import { Exporter } from './lib/exporter.ts'
+import { Exporter } from './lib/exporter'
 
 function select_link(item, mode) {
   switch (mode) {

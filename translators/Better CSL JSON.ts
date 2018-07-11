@@ -1,6 +1,6 @@
 declare const Translator: ITranslator
 
-import { CSLExporter as Exporter } from './csl/csl.ts'
+import { CSLExporter as Exporter } from './csl/csl'
 
 function date2csl(date) {
   switch (date.type) {

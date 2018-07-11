@@ -3,8 +3,8 @@ declare const Components: any
 
 import _kuroshiro = require('kuroshiro')
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
-import { debug } from '../debug.ts'
-import { Preferences as Prefs } from '../prefs.ts'
+import { debug } from '../debug'
+import { Preferences as Prefs } from '../prefs'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = url.replace(/^resource:\/\/?/, 'resource://') // kuromoji replaces the double-slash for some reason

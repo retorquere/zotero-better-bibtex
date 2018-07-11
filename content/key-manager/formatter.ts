@@ -2,14 +2,14 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
-import { flash } from '../flash.ts'
-import { Preferences as Prefs } from '../prefs.ts'
-import { debug } from '../debug.ts'
-import { JournalAbbrev } from '../journal-abbrev.ts'
-import { kuroshiro } from './kuroshiro.ts'
+import { flash } from '../flash'
+import { Preferences as Prefs } from '../prefs'
+import { debug } from '../debug'
+import { JournalAbbrev } from '../journal-abbrev'
+import { kuroshiro } from './kuroshiro'
 
 const parser = require('./formatter.pegjs')
-import * as DateParser from '../dateparser.ts'
+import * as DateParser from '../dateparser'
 const { transliterate } = require('transliteration')
 const fold2ascii = require('fold-to-ascii').fold
 import PunyCode = require('punycode')

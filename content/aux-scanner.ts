@@ -1,9 +1,9 @@
 declare const Components: any
 declare const Zotero: any
 
-import { debug } from './debug.ts'
-import { timeout } from './timeout.ts'
-import { KeyManager } from './key-manager.ts'
+import { debug } from './debug'
+import { timeout } from './timeout'
+import { KeyManager } from './key-manager'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>

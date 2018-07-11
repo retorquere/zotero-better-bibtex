@@ -2,10 +2,10 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { Reference } from './bibtex/reference.ts'
-import { Exporter } from './lib/exporter.ts'
-import { debug } from './lib/debug.ts'
-import { htmlEscape } from './lib/html-escape.ts'
+import { Reference } from './bibtex/reference'
+import { Exporter } from './lib/exporter'
+import { debug } from './lib/debug'
+import { htmlEscape } from './lib/html-escape'
 
 import JSON5 = require('json5')
 const BibTeXParser = require('biblatex-csl-converter').BibLatexParser // tslint:disable-line:variable-name

@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Components: any
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 
 const a_rwx = 0o777
 

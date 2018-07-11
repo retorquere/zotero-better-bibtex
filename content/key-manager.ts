@@ -2,23 +2,23 @@ declare const Zotero: any
 declare const window: any
 
 import ETA = require('node-eta')
-import { kuroshiro } from './key-manager/kuroshiro.ts'
+import { kuroshiro } from './key-manager/kuroshiro'
 
-import { debug } from './debug.ts'
-import { timeout } from './timeout.ts'
-import { flash } from './flash.ts'
-import { Events } from './events.ts'
+import { debug } from './debug'
+import { timeout } from './timeout'
+import { flash } from './flash'
+import { Events } from './events'
 
-import * as ZoteroDB from './db/zotero.ts'
+import * as ZoteroDB from './db/zotero'
 
-import { getItemsAsync } from './get-items-async.ts'
+import { getItemsAsync } from './get-items-async'
 
-import { Preferences as Prefs } from './prefs.ts'
-import * as Citekey from './key-manager/get-set.ts'
-import { Formatter } from './key-manager/formatter.ts'
-import { DB } from './db/main.ts'
-import { AutoExport } from './auto-export.ts'
-import { createFile } from './create-file.ts'
+import { Preferences as Prefs } from './prefs'
+import * as Citekey from './key-manager/get-set'
+import { Formatter } from './key-manager/formatter'
+import { DB } from './db/main'
+import { AutoExport } from './auto-export'
+import { createFile } from './create-file'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name

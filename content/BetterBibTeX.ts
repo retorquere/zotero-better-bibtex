@@ -4,31 +4,31 @@ declare const Components: any
 declare const Zotero: any
 declare const AddonManager: any
 
-import { Preferences as Prefs } from './prefs.ts' // needs to be here early, initializes the prefs observer
-require('./pull-export.ts') // just require, initializes the pull-export end points
-require('./json-rpc.ts') // just require, initializes the json-rpc end point
+import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
+require('./pull-export') // just require, initializes the pull-export end points
+require('./json-rpc') // just require, initializes the json-rpc end point
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
 import { debug } from './debug'
-import { flash } from './flash.ts'
-import { Events } from './events.ts'
-import { ZoteroConfig } from './zotero-config.ts'
+import { flash } from './flash'
+import { Events } from './events'
+import { ZoteroConfig } from './zotero-config'
 
 debug('Loading Better BibTeX')
 
-import { Translators } from './translators.ts'
-import { DB } from './db/main.ts'
-import { DB as Cache } from './db/cache.ts'
-import { Serializer } from './serializer.ts'
-import { JournalAbbrev } from './journal-abbrev.ts'
-import { AutoExport } from './auto-export.ts'
-import { KeyManager } from './key-manager.ts'
-import { AUXScanner } from './aux-scanner.ts'
-import { TeXstudio } from './tex-studio.ts'
+import { Translators } from './translators'
+import { DB } from './db/main'
+import { DB as Cache } from './db/cache'
+import { Serializer } from './serializer'
+import { JournalAbbrev } from './journal-abbrev'
+import { AutoExport } from './auto-export'
+import { KeyManager } from './key-manager'
+import { AUXScanner } from './aux-scanner'
+import { TeXstudio } from './tex-studio'
 import format = require('string-template')
 
-import { patch as $patch$ } from './monkey-patch.ts'
+import { patch as $patch$ } from './monkey-patch'
 
 const bbtReady = Zotero.Promise.defer()
 const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
@@ -194,20 +194,20 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 })
 
-import * as CAYW from './cayw.ts'
+import * as CAYW from './cayw'
 $patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
   if (agent === 'BetterBibTeX') return CAYW.Application
   return original.apply(this, arguments)
 })
 
 /* bugger this, I don't want megabytes of shared code in the translators */
-import * as DateParser from './dateparser.ts'
+import * as DateParser from './dateparser'
 // import CiteProc = require('./citeproc.ts')
-import { qualityReport } from './qr-check.ts'
-import { titleCase } from './title-case.ts'
-import { HTMLParser } from './markupparser.ts'
-import { Logger } from './logger.ts'
-import { extract as varExtract } from './var-extract.ts'
+import { qualityReport } from './qr-check'
+import { titleCase } from './title-case'
+import { HTMLParser } from './markupparser'
+import { Logger } from './logger'
+import { extract as varExtract } from './var-extract'
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 

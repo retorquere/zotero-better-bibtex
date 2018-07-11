@@ -1,11 +1,11 @@
 declare const Zotero: any
 
-import { XULoki as Loki } from './loki.ts'
-import { debug } from '../debug.ts'
-import { Preferences as Prefs } from '../prefs.ts'
-import { getItemsAsync } from '../get-items-async.ts'
+import { XULoki as Loki } from './loki'
+import { debug } from '../debug'
+import { Preferences as Prefs } from '../prefs'
+import { getItemsAsync } from '../get-items-async'
 
-import { createFile } from '../create-file.ts'
+import { createFile } from '../create-file'
 
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)

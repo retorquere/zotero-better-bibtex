@@ -3,8 +3,8 @@ declare const Zotero: any
 
 import YAML = require('js-yaml')
 
-import { debug } from './lib/debug.ts'
-import { CSLExporter as Exporter } from './csl/csl.ts'
+import { debug } from './lib/debug'
+import { CSLExporter as Exporter } from './csl/csl'
 
 const htmlConverter = new class HTML {
   private markdown: string

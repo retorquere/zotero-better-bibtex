@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Logger } from './logger.ts'
+import { Logger } from './logger'
 
 export function debug(...msg) {
   if (!Zotero.Debug.enabled) return

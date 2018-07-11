@@ -1,8 +1,8 @@
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
-import { Preferences as Prefs } from './prefs.ts'
-import { titleCase } from './title-case.ts'
-// import { debug } from './debug.ts'
+import { Preferences as Prefs } from './prefs'
+import { titleCase } from './title-case'
+// import { debug } from './debug'
 
 const re = {
   // Number, Letter

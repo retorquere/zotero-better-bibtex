@@ -1,11 +1,11 @@
 declare const Zotero: any
 
-import { JournalAbbrev } from './journal-abbrev.ts'
-import { debug } from './debug.ts'
+import { JournalAbbrev } from './journal-abbrev'
+import { debug } from './debug'
 
-import { DB as Cache } from './db/cache.ts'
-import { KeyManager } from './key-manager.ts'
-import * as ZoteroDB from './db/zotero.ts'
+import { DB as Cache } from './db/cache'
+import { KeyManager } from './key-manager'
+import * as ZoteroDB from './db/zotero'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Serializer = new class { // tslint:disable-line:variable-name

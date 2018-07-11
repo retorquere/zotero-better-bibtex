@@ -4,15 +4,15 @@ declare const Subprocess: any
 
 Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
 import * as ini from 'ini'
-import { Events } from './events.ts'
-import { DB } from './db/main.ts'
-import { Translators } from './translators.ts'
-import { Preferences as Prefs } from './prefs.ts'
+import { Events } from './events'
+import { DB } from './db/main'
+import { Translators } from './translators'
+import { Preferences as Prefs } from './prefs'
 
 function queueHandler(kind, handler) {
   return (task, cb) => {

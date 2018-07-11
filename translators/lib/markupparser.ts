@@ -2,7 +2,7 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 
 /* From https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js */
 
