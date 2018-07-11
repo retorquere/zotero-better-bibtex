@@ -114,7 +114,7 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.15.1",
+    "webpack": "^4.16.0",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
