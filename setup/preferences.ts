@@ -55,7 +55,7 @@ class DocFinder {
     this.walk(prefsPane)
 
     for (const pref of Object.values(this.preferences)) {
-      if (pref.description[0] !== '!') this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
+      this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
 
       if (pref.label) pref.label = pref.label.trim()
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
