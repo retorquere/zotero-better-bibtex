@@ -224,11 +224,6 @@
       default: >-
         "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
       description: list of words to skip in title when generating citation keys
-    jurismPreferredLanguage:
-      default: '""'
-      description: >-
-        When language alternates are present in Juris-M, this is the language
-        BBT will pick.
     biblatexExtendedDateFormat:
       default: 'true'
       description: Support for EDTF dates in biblatex
@@ -239,14 +234,6 @@
         the Zotero recommendations on title/sentence casing, set this preference
         to "true" to suppress [title casing for English
         references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
-    itemObserverDelay:
-      default: '100'
-      description: >-
-        I've had reports where Zotero notifies extensions that references have
-        changed, but if BBT then actually retrieves those same references,
-        Zotero complains they "haven't been saved yet". Super. This preference
-        sets the number of microseconds BBT should wait after being notified
-        before acting on the changed references.
     parseParticles:
       default: 'true'
       description: Name particle handling
@@ -267,33 +254,6 @@
         Finds potential problems in the database and fixes those. This runs
         **extremely** slow at startup, don't unable this unless explicitly asked
         to.
-    lockedInit:
-      default: 'false'
-      description: >-
-        BBT locks the UI during startup because I have been told in no uncertain
-        terms I am not to touch the Zotero database before I get an all-clear
-        from Zotero. This all-clear takes a fair amount of time. As BBT needs
-        database access for generating keys, and *everything* in BBT depends on
-        the keys being present, it is absolutely safest to make sure BBT
-        initialization has completed before freeing the UI. I want to stress
-        that during most of the lock-time, BBT is simply waiting for Zotero to
-        complete its own initialization; try to do an export of any kind (not
-        just BBT) or to import new references directly after Zotero has started
-        and you'll notice that it may take a while before Zotero reacts. The
-        lockout just puts a face on this hidden init, and prevents nasty race
-        conditions between the BBT and Zotero initialization leading to
-        unpredictable breakage occasionally.
-
-
-        If you however cannot stand the lockout during startup and you want to
-        live dangerously, you can turn this off and hope that no race conditions
-        bite you. If you turn this on and experience problems, you are welcome
-        to file a bug report and I will see what I can do, but be prepared for
-        the answer to be "turn this back on for now".
-
-
-        This is **EXPERIMENTAL** and this preference may disappear at any moment
-        without notice.
     autoPin:
       default: 'false'
       description: >-
@@ -305,6 +265,3 @@
         When on, BBT will load kuroshiro for romajization in citekeys. This uses
         a lot of memory, easily 100MB. If you don't have Japanese titles/names,
         keep this off.
-    debugLog:
-      default: '""'
-      description: Don't change this unless asked to by @retorquere.

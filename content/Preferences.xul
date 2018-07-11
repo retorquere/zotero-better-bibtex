@@ -283,7 +283,7 @@
           type="string"
           default=""/>
         <!--!
-          When language alternates are present in Juris-M, this is the language BBT will pick.
+          ! When language alternates are present in Juris-M, this is the language BBT will pick.
         -->
 
         <preference
@@ -329,7 +329,7 @@
           type="int"
           default="100"/>
         <!--!
-          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+          ! I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
           retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
           the number of microseconds BBT should wait after being notified before acting on the changed references.
         -->
@@ -364,7 +364,7 @@
           type="bool"
           default="false"/>
         <!--!
-          BBT locks the UI during startup because I have been told in
+          ! BBT locks the UI during startup because I have been told in
           no uncertain terms I am not to touch the Zotero database
           before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
           access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
@@ -403,9 +403,7 @@
           name="extensions.zotero.translators.better-bibtex.debugLog"
           type="string"
           default=""/>
-        <!--!
-          Don't change this unless asked to by @retorquere.
-        -->
+        <!--! !-->
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
