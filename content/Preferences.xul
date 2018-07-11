@@ -399,6 +399,14 @@
           When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.debugLog"
+          type="string"
+          default=""/>
+        <!--!
+          Don't change this unless asked to by @retorquere.
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">

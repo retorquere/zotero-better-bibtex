@@ -17,9 +17,11 @@ const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
+const MB = 1048576
+
 export = new class ErrorReport {
   private previewSize = 10000
-  private chunkSize = 10485760 // 10MB
+  private chunkSize
 
   private key: string
   private timestamp: string
@@ -164,12 +166,25 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
+    // configure debug logging
+    const debugLog = {
+      chunkSize: null,
+      region: null,
+    }
+    const m = Prefs.get('debugLog').match(/^(?:(?:([-a-z0-9]+)\.([0-9]+))|([-a-z0-9]+)|([0-9]+))$/)
+    if (m) {
+      debugLog.region = m[1] || m[3] // tslint:disable-line:no-magic-numbers
+      debugLog.chunkSize = parseInt(m[2] || m[4] || 0)  // tslint:disable-line:no-magic-numbers
+    }
+
+    this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
+
     const regions = []
     for (const candidate of PACKAGE.bugs.logs.regions) {
       const started = Date.now()
       try {
         await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
-        regions.push({region: candidate, ping: Date.now() - started, ...s3[candidate]})
+        regions.push({region: candidate, ping: ((candidate === debugLog.region) ? -1 : 1) * (Date.now() - started), ...s3[candidate]})
       } catch (err) {
         debug('ErrorReport.ping: could not reach', candidate, err)
       }
@@ -186,8 +201,8 @@ export = new class ErrorReport {
   }
 
   private preview(log) {
-    if (log.length <= this.previewSize) return log
-    return log.substring(0, this.previewSize) + '...'
+    if (log.length <= (this.previewSize * 2)) return log
+    return `${log.substring(0, this.previewSize)} ... ${log.slice(-this.previewSize)}`
   }
 
   // general state of Zotero

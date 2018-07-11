@@ -39,3 +39,4 @@ scrubDatabase: false
 lockedInit: false
 autoPin: false
 kuroshiro: false
+debugLog: ''

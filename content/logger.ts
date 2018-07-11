@@ -37,12 +37,13 @@ export let Logger = new class { // tslint:disable-line:variable-name
     if (this.length < this.size) this.length++
   }
 
-  public array() {
-    return this.lines.slice(this.index, this.length).concat(this.lines.slice(0, this.index))
-  }
-
   public flush() {
-    const flushed = this.array().map(line => this.format(line.prefix, line.logged, line.msg)).join('\n')
+    for (let i = 0; i < this.length; i++) {
+      if (typeof this.lines[i].msg !== 'string') {
+        this.lines[i].msg = this.format(this.lines[i].prefix, this.lines[i].logged, this.lines[i].msg)
+      }
+    }
+    const flushed = this.lines.slice(this.index, this.length).concat(this.lines.slice(0, this.index)).map(line => line.msg).join('\n')
 
     // this.reset()
 
