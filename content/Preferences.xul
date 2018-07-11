@@ -437,6 +437,38 @@
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
             </groupbox>
+
+            <groupbox>
+              <caption label="&better-bibtex.Preferences.citekey.uniqueness;"/>
+              <!-- description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description -->
+              <grid flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
+                    <menulist preference="pref-better-bibtex-keyScope">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row>
+                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
+                    <menulist preference="pref-better-bibtex-keyConflictPolicy">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.quickCopy;"/>
               <grid flex="1">
@@ -483,36 +515,6 @@
               </grid>
             </groupbox>
 
-            <groupbox>
-              <caption label="&better-bibtex.Preferences.citekey.uniqueness;"/>
-              <!-- description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description -->
-              <grid flex="1">
-                <columns>
-                  <column/>
-                  <column flex="1"/>
-                </columns>
-                <rows>
-                  <row>
-                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
-                    <menulist preference="pref-better-bibtex-keyScope">
-                      <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library"/>
-                      </menupopup>
-                    </menulist>
-                  </row>
-                  <row>
-                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
-                    <menulist preference="pref-better-bibtex-keyConflictPolicy">
-                      <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep"/>
-                      </menupopup>
-                    </menulist>
-                  </row>
-                </rows>
-              </grid>
-            </groupbox>
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-export" orient="vertical">

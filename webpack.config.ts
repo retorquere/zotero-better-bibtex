@@ -34,6 +34,10 @@ const common = {
     // runtimeChunk: false,
   },
 
+  resolve: {
+    extensions: ['.ts', '.js'],
+  },
+
   node: { fs: 'empty' },
   resolveLoader: {
     alias: {

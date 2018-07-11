@@ -10,7 +10,7 @@ require('./json-rpc.ts') // just require, initializes the json-rpc end point
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-import { debug } from './debug.ts'
+import { debug } from './debug'
 import { flash } from './flash.ts'
 import { Events } from './events.ts'
 import { ZoteroConfig } from './zotero-config.ts'
