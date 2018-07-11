@@ -26,7 +26,8 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging ist gegenwärtige ausgestellt. Die Fehlerbehebung wird leichter sein, wenn sie vor dem Einsenden die Option einstellen.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungs Kontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
-<!ENTITY better-bibtex.ErrorReport.log "Debug-Protokoll">
+<!ENTITY better-bibtex.ErrorReport.zotero "Zotero log">
+<!ENTITY better-bibtex.ErrorReport.bbt "BBT log">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Fehlerberichte können nicht geprüft werden, sofern sie nicht im GitHub Issue tracker gepostet werden.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte posten Sie eine Nachricht im issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Report ID, einer Beschreibung des Problems, und alle notwendigen Schritte, um es zu reproduzieren.">
 <!ENTITY better-bibtex.ErrorReport.references "Verweise">
