@@ -742,7 +742,7 @@ export class Reference {
 
     const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
     // sort fields for stable tests
-    if (Translator.preferences.testing) fields.sort()
+    if (Translator.preferences.testing || Translator.preferences.sorted) fields.sort()
 
     let ref = `@${this.referencetype}{${this.item.citekey},\n`
     ref += fields.join(',\n')

@@ -2,8 +2,6 @@ declare const Zotero: any
 declare const Components: any
 declare const AddonManager: any
 
-Components.utils.import('resource://gre/modules/AddonManager.jsm')
-
 import { Translators } from '../translators'
 import { debug } from '../debug'
 import { getItemsAsync } from '../get-items-async'
@@ -24,29 +22,29 @@ import { Preferences as Prefs } from '../prefs'
 */
 
 const shortLabel = {
-    article: 'art.',
-    chapter: 'ch.',
-    subchapter: 'subch.',
-    column: 'col.',
-    figure: 'fig.',
-    line: 'l.',
-    note: 'n.',
-    issue: 'no.',
-    opus: 'op.',
-    page: 'p.',
-    paragraph: 'para.',
-    subparagraph: 'subpara.',
-    part: 'pt.',
-    rule: 'r.',
-    section: 'sec.',
-    subsection: 'subsec.',
-    Section: 'Sec.',
-    'sub verbo': 'sv.',
-    schedule: 'sch.',
-    title: 'tit.',
-    verse: 'vrs.',
-    volume: 'vol.',
-  }
+  article: 'art.',
+  chapter: 'ch.',
+  subchapter: 'subch.',
+  column: 'col.',
+  figure: 'fig.',
+  line: 'l.',
+  note: 'n.',
+  issue: 'no.',
+  opus: 'op.',
+  page: 'p.',
+  paragraph: 'para.',
+  subparagraph: 'subpara.',
+  part: 'pt.',
+  rule: 'r.',
+  section: 'sec.',
+  subsection: 'subsec.',
+  Section: 'Sec.',
+  'sub verbo': 'sv.',
+  schedule: 'sch.',
+  title: 'tit.',
+  verse: 'vrs.',
+  volume: 'vol.',
+}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Formatter = new class { // tslint:disable-line:variable-name
@@ -163,9 +161,10 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
   public async 'scannable-cite'(citations) {
     const deferred = Zotero.Promise.defer()
-    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', deferred.resolve)
+    Components.utils.import('resource://gre/modules/AddonManager.jsm')
+    AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => deferred.resolve(addon && addon.isActive))
     const odfScan = await deferred.promise
-    if (!odfScan || !odfScan.isActive) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
+    if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
