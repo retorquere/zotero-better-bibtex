@@ -94,14 +94,14 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private async log(kind) {
+  private log(kind) {
     try {
       switch (kind) {
         case 'zotero':
-          return await Zotero.Debug.get()
+          return Zotero.Debug.getConsoleViewerOutput().join('\n')
 
         case 'bbt':
-          return await Logger.flush()
+          return Logger.flush()
 
         default:
           return `Unknown log ${kind}`
