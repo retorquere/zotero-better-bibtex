@@ -202,19 +202,21 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     for (const item of items) {
       ids.push(item.itemID)
       // if no citekey is found, it will be '', which will allow it to be found right after this loop
-      const citekey = Citekey.get(item.extra)
+      const extra = Citekey.get(item.extra)
 
-      const saved = clean ? null : this.keys.findOne({ itemID: item.itemID })
-      if (saved) {
-        if (citekey.pinned && ((citekey.citekey !== saved.citekey) || !saved.pinned)) {
-          // tslint:disable-next-line:prefer-object-spread
-          this.keys.update(Object.assign(saved, { citekey: citekey.citekey, pinned: true, itemKey: item.key }))
-        } else {
-          // tslint:disable-next-line:prefer-object-spread
-          if (!saved.itemKey) this.keys.update(Object.assign(saved, { itemKey: item.key }))
-        }
-      } else {
-        this.keys.insert({ citekey: citekey.citekey || marker, pinned: citekey.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
+      // don't fetch when clean is active because the removeDataOnly will have done it already
+      const existing = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      if (!existing) {
+        // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
+        this.keys.insert({ citekey: extra.citekey || marker, pinned: extra.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
+
+      } else if (extra.pinned && ((extra.citekey !== existing.citekey) || !existing.pinned)) {
+        // we have an existing key in the DB, extra says it should be pinned to the extra value, but it's not.
+        // update the DB to have the itemkey if necessaru
+        this.keys.update({ ...existing, citekey: extra.citekey, pinned: true, itemKey: item.key })
+
+      } else if (!existing.itemKey) {
+        this.keys.update({ ...existing, itemKey: item.key })
       }
     }
 

@@ -468,7 +468,14 @@ module BBT
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
   if ENV['ZOTERO_BIGLY'].to_s != ''
     STDOUT.puts "Testing using bigly database #{ENV['ZOTERO_BIGLY']}!"
-    FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-#{ENV['ZOTERO_BIGLY']}.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
+    %w{zotero better-bibtex}.each{|db|
+      bigly = File.join(profile_tgt, 'zotero', "#{db}-#{ENV['ZOTERO_BIGLY']}.sqlite")
+      if !File.file?(bigly)
+        puts "#{bigly} not found, skipping"
+        next
+      end
+      FileUtils.cp(bigly, File.join(profile_tgt, 'zotero', "#{db}.sqlite"))
+    }
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV['ZOTERO']}.log") : '~/.BBTZ5TEST.log')
