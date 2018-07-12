@@ -176,7 +176,7 @@ export = new class ErrorReport {
     const region = regions[0]
     const postfix = region.short
     this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
-    this.key = `dbg-${Zotero.Utilities.generateObjectKey()}-${postfix}`
+    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
     continueButton.disabled = false
