@@ -4,10 +4,10 @@ declare const AddonManager: any
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-import { Translators } from '../translators.ts'
-import { debug } from '../debug.ts'
-import { getItemsAsync } from '../get-items-async.ts'
-import { Preferences as Prefs } from '../prefs.ts'
+import { Translators } from '../translators'
+import { debug } from '../debug'
+import { getItemsAsync } from '../get-items-async'
+import { Preferences as Prefs } from '../prefs'
 
 /*
     @config.citeprefix ||= ''

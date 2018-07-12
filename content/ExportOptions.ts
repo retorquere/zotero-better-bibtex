@@ -4,8 +4,8 @@ declare const MutationObserver: any
 declare const Zotero: any
 declare const Zotero_File_Interface_Export: any
 
-import { debug } from './debug.ts'
-import { patch as $patch$ } from './monkey-patch.ts'
+import { debug } from './debug'
+import { patch as $patch$ } from './monkey-patch'
 
 let DOM_OBSERVER = null
 let reset = true

@@ -39,13 +39,6 @@ var Translator = {
     this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
-    if (this.preferences.csquotes) {
-      var i, csquotes = { open: '', close: '' }
-      for (i = 0; i < this.preferences.csquotes.length; i++) {
-        csquotes[i % 2 == 0 ? 'open' : 'close'] += this.preferences.csquotes[i]
-      }
-      this.preferences.csquotes = csquotes
-    }
 
     this.collections = {}
     if (stage == 'doExport' && this.header.configOptions && this.header.configOptions.getCollections && Zotero.nextCollection) {

@@ -1,15 +1,15 @@
 declare const Zotero: any
 
-import { createFile } from '../create-file.ts'
-import { XULoki as Loki } from './loki.ts'
-import { debug } from '../debug.ts'
-import { Events } from '../events.ts'
-import { ZoteroConfig } from '../zotero-config.ts'
+import { createFile } from '../create-file'
+import { XULoki as Loki } from './loki'
+import { debug } from '../debug'
+import { Events } from '../events'
+import { ZoteroConfig } from '../zotero-config'
 
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
 
-import { Preferences as Prefs } from '../prefs.ts'
+import { Preferences as Prefs } from '../prefs'
 
 // tslint:disable-next-line:no-magic-numbers
 const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)

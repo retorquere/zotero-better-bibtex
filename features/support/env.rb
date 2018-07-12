@@ -431,6 +431,7 @@ module BBT
     profile["extensions.zotero.debug.log"] = true
     profile["extensions.zotero.debug.time"] = true
     profile['extensions.zotero.debug.store'] = true
+    #profile['extensions.zotero.debug.store.limit'] = 1000000
   end
 
   if ENV['ZOTERO_LOCALE'] == 'fr'
@@ -452,7 +453,8 @@ module BBT
   profile['extensions.zotero.firstRun2'] = false
   profile['extensions.zotero.firstRunGuidance'] = false
   profile['extensions.zotero.reportTranslationFailure'] = false
-  profile['extensions.zotero.translators.better-bibtex.testing'] = true
+  profile['extensions.zotero.translators.better-bibtex.testing'] = true unless ENV['MODE'] == 'production'
+  profile['extensions.zotero.translators.better-bibtex.debugLog'] = ENV['DEBUG_LOG'] if ENV['DEBUG_LOG'].to_s != ''
   profile['extensions.zotero.translators.better-bibtex.kuroshiro'] = true
   profile['extensions.zotero.translators.better-bibtex.lockedInit'] = false if ENV['LOCK'] == 'false'
   profile['extensions.zotero.translators.better-bibtex.citekeyFormat'] = '[auth][shorttitle][year]' unless ENV['FIRST_RUN'] == 'true'
@@ -464,9 +466,9 @@ module BBT
   
   FileUtils.rm_rf(profile_tgt)
   FileUtils.cp_r(profile.layout_on_disk, profile_tgt)
-  if ENV['ZOTERO_BIGLY'] == 'true'
-    STDOUT.puts "Testing using bigly database!"
-    FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-bigly.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
+  if ENV['ZOTERO_BIGLY'].to_s != ''
+    STDOUT.puts "Testing using bigly database #{ENV['ZOTERO_BIGLY']}!"
+    FileUtils.cp(File.join(fixtures, "profile/#{ENV['ZOTERO'] == 'jurism' ? 'jurism' : 'zotero'}/zotero/zotero-#{ENV['ZOTERO_BIGLY']}.sqlite"), File.join(profile_tgt, 'zotero', 'zotero.sqlite'))
   end
 
   logfile = File.expand_path(ENV['CIRCLE_ARTIFACTS'].to_s != '' ? File.join(ENV['CIRCLE_ARTIFACTS'], "#{ENV['ZOTERO']}.log") : '~/.BBTZ5TEST.log')
@@ -531,7 +533,7 @@ module BBT
     end
 
     # test whether the existing references, if any, have gotten a cite key
-    exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore)
+    exportLibrary(translator: 'Better BibTeX', displayOptions: {}, expected: :ignore) unless ENV['ZOTERO_BIGLY'].to_s != ''
     user_js = File.join(profile_tgt, 'user.js')
     File.unlink(user_js) if File.file?(user_js)
   }

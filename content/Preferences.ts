@@ -3,15 +3,15 @@ declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
 
-import { debug } from './debug.ts'
-import { ZoteroConfig } from './zotero-config.ts'
-import { patch as $patch$ } from './monkey-patch.ts'
+import { debug } from './debug'
+import { ZoteroConfig } from './zotero-config'
+import { patch as $patch$ } from './monkey-patch'
 
-import { Preferences as Prefs } from './prefs.ts'
-import { Formatter } from './key-manager/formatter.ts'
-import { KeyManager } from './key-manager.ts'
-import { AutoExport } from './auto-export.ts'
-import { Translators } from './translators.ts'
+import { Preferences as Prefs } from './prefs'
+import { Formatter } from './key-manager/formatter'
+import { KeyManager } from './key-manager'
+import { AutoExport } from './auto-export'
+import { Translators } from './translators'
 
 class AutoExportTreeView {
   public rowCount: number

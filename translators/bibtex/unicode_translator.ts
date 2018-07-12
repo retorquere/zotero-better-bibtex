@@ -2,17 +2,21 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { debug } from '../lib/debug.ts'
-import { MarkupParser } from '../lib/markupparser.ts'
+import { debug } from '../lib/debug'
 
 import HE = require('he')
 import unicodeMapping = require('./unicode_translator_mapping.js')
+
+function repeat(s, n) {
+  if (!n) return ''
+  return ''.padStart(n * s.length, s)
+}
 
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
   private stack: any[]
-  private options: { caseConversion?: boolean, mode?: string }
+  private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
 
   public convert(html, options) {
@@ -23,32 +27,36 @@ const htmlConverter = new class HTMLConverter {
 
     this.stack = []
 
-    const ast = MarkupParser.parse(html, this.options)
+    const ast: IZoteroMarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
     this.walk(ast)
-    return { latex: this.latex, raw: ast.name === 'pre' }
+    return { latex: this.latex, raw: ast.nodeName === 'pre' }
   }
 
-  private walk(tag) {
+  private walk(tag: IZoteroMarkupNode) {
     if (!tag) return
 
-    switch (tag.name) {
+    switch (tag.nodeName) {
       case '#text':
-        this.chars(tag.text)
+        this.chars(tag.value)
         return
       case 'pre':
-        this.latex += tag.text
+      case 'script':
+        this.latex += tag.value
         return
     }
 
     this.stack.unshift(tag)
 
     let latex = '...' // default to no-op
-    switch (tag.name) {
-      case 'i': case 'em': case 'italic':
+    switch (tag.nodeName) {
+      case 'i':
+      case 'em':
+      case 'italic':
         latex = '\\emph{...}'
         break
 
-      case 'b': case 'strong':
+      case 'b':
+      case 'strong':
         latex = '\\textbf{...}'
         break
 
@@ -72,12 +80,18 @@ const htmlConverter = new class HTMLConverter {
         latex += '\n...'
         break
 
-      case 'p': case 'div': case 'table': case 'tr':
+      case 'p':
+      case 'div':
+      case 'table':
+      case 'tr':
         latex = '\n\n...\n\n'
         break
 
-      case 'h1': case 'h2': case 'h3': case 'h4':
-        latex = `\n\n\\${(new Array(parseInt(tag.name[1]))).join('sub')}section{...}\n\n`
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+        latex = `\n\n\\${repeat(parseInt(tag.nodeName[1]) - 1, 'sub')}section{...}\n\n`
         break
 
       case 'ol':
@@ -90,14 +104,6 @@ const htmlConverter = new class HTMLConverter {
         latex = '\n\\item ...'
         break
 
-      case 'enquote':
-        if (Translator.BetterBibTeX) {
-          latex = '\\enquote{...}'
-        } else {
-          latex = '\\mkbibquote{...}'
-        }
-        break
-
       case 'span':
       case 'sc':
       case 'nc':
@@ -108,22 +114,34 @@ const htmlConverter = new class HTMLConverter {
         latex = ' ... '
         break
 
-      case 'tbody': case '#document': case 'html': case 'head': case 'body':
+      case '#document':
+      case '#document-fragment':
+      case 'tbody':
+      case 'html':
+      case 'head':
+      case 'body':
         break // ignore
 
       default:
-        debug(`unexpected tag '${tag.name}' (${Object.keys(tag)})`)
+        debug(`unexpected tag '${tag.nodeName}' (${Object.keys(tag)})`)
     }
 
     if (latex !== '...') latex = this.embrace(latex, latex.match(/^\\[a-z]+{\.\.\.}$/))
     if (tag.smallcaps) latex = this.embrace(`\\textsc{${latex}}`, true)
     if (tag.nocase) latex = `{{${latex}}}`
     if (tag.relax) latex = `{\\relax ${latex}}`
+    if (tag.enquote) {
+      if (Translator.BetterBibTeX) {
+        latex = `\\enquote{${latex}}`
+      } else {
+        latex = `\\mkbibquote{${latex}}`
+      }
+    }
 
     const [prefix, postfix] = latex.split('...')
 
     this.latex += prefix
-    for (const child of tag.children) {
+    for (const child of tag.childNodes) {
       this.walk(child)
     }
     this.latex += postfix
@@ -146,7 +164,7 @@ const htmlConverter = new class HTMLConverter {
     let math = false
     let braced = 0
 
-    if (this.options.mode === 'html') text = HE.decode(text, { isAttributeValue: true })
+    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
       // in and out of math mode
@@ -155,7 +173,7 @@ const htmlConverter = new class HTMLConverter {
         math = !!this.mapping.math[c]
       }
 
-      /* balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed */
+      // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
       switch (c) {
         case '{': braced += 1; break
         case '}': braced -= 1; break
@@ -177,7 +195,7 @@ const htmlConverter = new class HTMLConverter {
         latex += '\\vphantom\\}'
         break
       default:
-        latex += `\\vphantom{${(new Array(braced + 1)).join('\\}')}}`
+        latex += `\\vphantom{${repeat(braced, '\\}')}}`
         break
     }
 
@@ -189,7 +207,7 @@ const htmlConverter = new class HTMLConverter {
 }
 
 export function html2latex(html, options) {
-  if (!options.mode) options.mode = 'html'
+  if (typeof options.html === 'undefined') options.html = true
   const latex = htmlConverter.convert(html, options)
   latex.latex = latex.latex
     .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
@@ -198,7 +216,7 @@ export function html2latex(html, options) {
   return latex
 }
 
-export function text2latex(text, options: { caseConversion?: boolean, mode?: string } = {}) {
-  if (!options.mode) options.mode = 'text'
+export function text2latex(text, options: { caseConversion?: boolean, html?: boolean } = {}) {
+  if (typeof options.html === 'undefined') options.html = false
   return html2latex(text, options)
 }

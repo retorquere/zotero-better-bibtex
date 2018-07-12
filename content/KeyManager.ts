@@ -1,3 +1,3 @@
-import { KeyManager } from './key-manager.ts'
+import { KeyManager } from './key-manager'
 
 export = KeyManager

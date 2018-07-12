@@ -1,6 +1,6 @@
 declare const Translator: ITranslator
 
-import { debug } from '../lib/debug.ts'
+import { debug } from '../lib/debug'
 
 function pad(v, padding) {
   if (v.length >= padding.length) return v

@@ -283,7 +283,7 @@
           type="string"
           default=""/>
         <!--!
-          When language alternates are present in Juris-M, this is the language BBT will pick.
+          ! When language alternates are present in Juris-M, this is the language BBT will pick.
         -->
 
         <preference
@@ -329,7 +329,7 @@
           type="int"
           default="100"/>
         <!--!
-          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+          ! I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
           retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
           the number of microseconds BBT should wait after being notified before acting on the changed references.
         -->
@@ -364,7 +364,7 @@
           type="bool"
           default="false"/>
         <!--!
-          BBT locks the UI during startup because I have been told in
+          ! BBT locks the UI during startup because I have been told in
           no uncertain terms I am not to touch the Zotero database
           before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
           access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
@@ -407,6 +407,18 @@
           When on, BBT will sort references on the citekey. Comes at performance and memory consumption cost.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.debugLog"
+          type="string"
+          default=""/>
+        <!--! !-->
+
+        <preference
+          name="extensions.zotero.translators.better-bibtex.ajv"
+          type="bool"
+          default="true"/>
+        <!--! !-->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
@@ -431,6 +443,38 @@
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
             </groupbox>
+
+            <groupbox>
+              <caption label="&better-bibtex.Preferences.citekey.uniqueness;"/>
+              <!-- description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description -->
+              <grid flex="1">
+                <columns>
+                  <column/>
+                  <column flex="1"/>
+                </columns>
+                <rows>
+                  <row>
+                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
+                    <menulist preference="pref-better-bibtex-keyScope">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                  <row>
+                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
+                    <menulist preference="pref-better-bibtex-keyConflictPolicy">
+                      <menupopup>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
+                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep"/>
+                      </menupopup>
+                    </menulist>
+                  </row>
+                </rows>
+              </grid>
+            </groupbox>
+
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.quickCopy;"/>
               <grid flex="1">
@@ -477,36 +521,6 @@
               </grid>
             </groupbox>
 
-            <groupbox>
-              <caption label="&better-bibtex.Preferences.citekey.uniqueness;"/>
-              <!-- description>&better-bibtex.Preferences.citekey.uniqueness.pin.description;</description -->
-              <grid flex="1">
-                <columns>
-                  <column/>
-                  <column flex="1"/>
-                </columns>
-                <rows>
-                  <row>
-                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
-                    <menulist preference="pref-better-bibtex-keyScope">
-                      <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.library;" value="library"/>
-                      </menupopup>
-                    </menulist>
-                  </row>
-                  <row>
-                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
-                    <menulist preference="pref-better-bibtex-keyConflictPolicy">
-                      <menupopup>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
-                        <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.keep;" value="keep"/>
-                      </menupopup>
-                    </menulist>
-                  </row>
-                </rows>
-              </grid>
-            </groupbox>
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-export" orient="vertical">

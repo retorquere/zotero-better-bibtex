@@ -2,9 +2,9 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { Reference } from './bibtex/reference.ts'
-import { Exporter } from './lib/exporter.ts'
-import { debug } from './lib/debug.ts'
+import { Reference } from './bibtex/reference'
+import { Exporter } from './lib/exporter'
+import { debug } from './lib/debug'
 
 Reference.prototype.fieldEncoding = {
   url: 'url',

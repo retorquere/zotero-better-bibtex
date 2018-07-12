@@ -6,7 +6,7 @@ for _, months of locales.months
   citeproc.DateParser.addDateParserMonths(months)
 */
 
-// citeproc.debug = require('./debug.ts')
+// citeproc.debug = require('./debug')
 
 declare const Zotero: any
 const citeproc = Zotero.CiteProc.CSL

@@ -2,8 +2,8 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { JabRef } from '../bibtex/jabref.ts' // not so nice... BibTeX-specific code
-import { debug } from '../lib/debug.ts'
+import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
+import { debug } from '../lib/debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name

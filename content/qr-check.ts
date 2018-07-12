@@ -1,7 +1,7 @@
 import ISBN = require('isbnjs')
 import ISSN = require('issn')
 import EAN = require('barcoder')
-import * as DateParser from './dateparser.ts'
+import * as DateParser from './dateparser'
 
 const isnm_prefix = '9790'
 

@@ -1,7 +1,7 @@
 declare const Zotero: any
 
-import { Preferences as Prefs } from './prefs.ts'
-import { debug } from './debug.ts'
+import { Preferences as Prefs } from './prefs'
+import { debug } from './debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name

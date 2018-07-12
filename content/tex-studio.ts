@@ -4,8 +4,8 @@ declare const Zotero: any
 
 Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
-import { KeyManager } from './key-manager.ts'
-import { debug } from './debug.ts'
+import { KeyManager } from './key-manager'
+import { debug } from './debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let TeXstudio = new class { // tslint:disable-line:variable-name

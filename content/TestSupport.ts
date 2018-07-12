@@ -2,15 +2,15 @@ declare const Zotero: any
 declare const Zotero_File_Interface: any
 declare const Components: any
 
-import { AutoExport } from './auto-export.ts'
-import { timeout } from './timeout.ts'
-import * as ZoteroDB from './db/zotero.ts'
-import { debug } from './debug.ts'
-import { KeyManager } from './key-manager.ts'
-import { Preferences as Prefs } from './prefs.ts'
-import { Translators } from './translators.ts'
-import { Formatter as CAYWFormatter } from './cayw/formatter.ts'
-import { getItemsAsync } from './get-items-async.ts'
+import { AutoExport } from './auto-export'
+import { timeout } from './timeout'
+import * as ZoteroDB from './db/zotero'
+import { debug } from './debug'
+import { KeyManager } from './key-manager'
+import { Preferences as Prefs } from './prefs'
+import { Translators } from './translators'
+import { Formatter as CAYWFormatter } from './cayw/formatter'
+import { getItemsAsync } from './get-items-async'
 
 const pref_defaults = require('./../gen/preferences.json')
 

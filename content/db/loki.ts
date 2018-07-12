@@ -3,11 +3,11 @@ declare const Zotero: any
 declare const AsyncShutdown: any
 
 Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
-import { patch as $patch$ } from '../monkey-patch.ts'
+import { patch as $patch$ } from '../monkey-patch'
 
 import AJV = require('ajv')
-import { debug } from '../debug.ts'
-import { Preferences as Prefs } from '../prefs.ts'
+import { debug } from '../debug'
+import { Preferences as Prefs } from '../prefs'
 
 // tslint:disable-next-line:variable-name
 import Loki = require('lokijs')
@@ -23,7 +23,7 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 })
 
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
+  if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     debug('insert: validation failed for', doc, this.validate.errors, err)
     throw err
@@ -32,7 +32,7 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
-  if (this.validate && !this.validate(doc)) {
+  if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     debug('update: validation failed for', doc, this.validate.errors, err)
     throw err

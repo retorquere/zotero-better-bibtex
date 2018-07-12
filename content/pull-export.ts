@@ -4,7 +4,7 @@ const OK = 200
 const SERVER_ERROR = 500
 const NOT_FOUND = 404
 
-import { Translators } from './translators.ts'
+import { Translators } from './translators'
 
 function displayOptions(request) {
   const isTrue = new Set([ 'y', 'yes', 'true' ])

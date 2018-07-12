@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Translator: ITranslator
 
-import { htmlEscape } from './lib/html-escape.ts'
+import { htmlEscape } from './lib/html-escape'
 
 const html = {
   levels: 0,

@@ -91,7 +91,7 @@ class DocFinder {
     for (const tab of this.tabs) {
       _data.push({name: tab, description: '', preferences: {} })
       for (const pref of Object.values(this.preferences)) {
-        if (pref.tab !== tab) continue
+        if (pref.tab !== tab || pref.description[0] === '!') continue
 
         _data[_data.length - 1].preferences[pref.label] = {
           default: pref.default,
@@ -115,7 +115,7 @@ class DocFinder {
       preferences: {},
     })
     for (const pref of Object.values(this.preferences)) {
-      if (pref.tab) continue
+      if (pref.tab || pref.description[0] === '!') continue
 
       _data[_data.length - 1].preferences[pref.preference.replace(prefix, '')] = {
         default: pref.default,
@@ -142,7 +142,7 @@ class DocFinder {
         if (node.content[0] === '!') {
           if (this.tab !== -1) throw new Error('Doc block outside the prefs section')
 
-          const text = this.ungfm(dedent(node.content.substring(1)))
+          const text = this.ungfm(dedent(node.content.substring(1))).trim()
           if (this.preference) {
             if (this.preferences[this.preference].description) throw new Error(`Duplicate description for ${this.preference}`)
             this.preferences[this.preference].description = text

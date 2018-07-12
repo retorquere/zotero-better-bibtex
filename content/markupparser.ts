@@ -1,10 +1,8 @@
-declare const Translator: ITranslator
-
-declare const Zotero: any
-
-import { debug } from './debug'
-
-/* From https://raw.githubusercontent.com/Munawwar/neutron-html5parser/master/htmlparser.js */
+import parse5 = require('parse5/lib/parser')
+const htmlParser = new parse5({ sourceCodeLocationInfo: true })
+import { Preferences as Prefs } from './prefs'
+import { titleCase } from './title-case'
+// import { debug } from './debug'
 
 const re = {
   // Number, Letter
@@ -64,313 +62,169 @@ re.unprotectedWord = new RegExp(`^[${re.char}]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
 re.whitespace = new RegExp(`^[${re.Whitespace}]+`)
 
-interface IHTMLNode {
-  name: string
-  children?: IHTMLNode[]
-  attr?: { [key: string]: string }
-  class?: { [key: string]: boolean }
-  text?: string
-  smallcaps?: boolean
-  nocase?: boolean
-  relax?: boolean
-  pos?: number
-}
-
-class AST {
-  public root: IHTMLNode
-  private caseConversion: boolean
-  private elems: IHTMLNode[]
-  private sentenceStart: boolean
-
-  constructor(caseConversion) {
-    this.caseConversion = caseConversion
-    this.root = {name: 'span', children: [], attr: {}, class: {}}
-    this.elems = [this.root]
-    this.sentenceStart = true
-  }
-
-  public start(name, attr: { [key: string]: string }, unary = false) {
-    const tag: IHTMLNode = {name, attr, class: {}, children: []}
-    if (tag.attr.class) {
-      for (const cls of tag.attr.class.split(/\s+/)) {
-        tag.class[cls] = true
-      }
-    }
-    if (name === 'sc' || tag.class.smallcaps || tag.attr.smallcaps || (tag.attr.style || '').match(/small-caps/i)) tag.smallcaps = true
-    if (tag.attr.nocase || tag.class.nocase || name === 'nc') tag.nocase = true
-    if (tag.attr.relax || tag.class.relax) tag.relax = true
-
-    this.elems[0].children.push(tag)
-    this.elems.unshift(tag)
-  }
-
-  public end(tagName) {
-    if (tagName !== this.elems[0].name) debug('markupparser: Error:', tagName, '<->', this.elems[0])
-    this.elems.shift()
-  }
-
-  public pre(text) {
-    if (this.elems[0].name !== 'pre') throw new Error(`Expected 'pre' tag, found '${this.elems[0].name}'`)
-    if (this.elems[0].text) throw new Error('Text already set on pre tag')
-    if (this.elems[0].children && (this.elems[0].children.length > 0)) throw new Error('Pre must not have children')
-    this.elems[0].text = text
-  }
-
-  public chars(text, pos = null) {
-    if (!this.caseConversion || pos === null) {
-      this.elems[0].children.push({pos, name: '#text', text})
-      return
-    }
-
-    const length = text.length
-    while (text) {
-      let m
-      if (m = re.whitespace.exec(text)) {
-        this.plaintext(m[0], pos + (length - text.length))
-        text = text.substring(m[0].length)
-        continue
-      }
-
-      if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(text + ' '))) {
-        this.sentenceStart = false
-        this.plaintext(m[1], pos + (length - text.length))
-        text = text.substring(m[1].length)
-        continue
-      }
-
-      this.sentenceStart = false
-
-      if (m = re.protectedWords.exec(text)) {
-        this.elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
-        text = text.substring(m[0].length)
-
-      } else if (m = re.url.exec(text)) {
-        this.elems[0].children.push({name: 'span', nocase: true, children: [{pos: pos + (length - text.length), name: '#text', text: m[0]}], attr: {}, class: {}})
-        text = text.substring(m[0].length)
-
-      } else if (m = re.unprotectedWord.exec(text)) {
-        this.plaintext(m[0], pos + (length - text.length))
-        text = text.substring(m[0].length)
-
-      } else {
-        this.plaintext(text[0], pos + (length - text.length))
-        text = text.substring(1)
-      }
-    }
-  }
-
-  private plaintext(text, pos) {
-    const l = this.elems[0].children.length
-    if ((l === 0) || (this.elems[0].children[l - 1].name !== '#text')) {
-      this.elems[0].children.push({pos, name: '#text', text})
-    } else {
-      this.elems[0].children[l - 1].text += text
-    }
-
-  }
-}
-
-function makeMap(elts) {
-  return elts.split(/\s+/).reduce((map, elt) => { map[elt] = true; return map }, {})
-}
-
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let MarkupParser = new class { // tslint:disable-line:variable-name
-  // Regular Expressions for parsing tags and attributes
-  private re = {
-    startTag: /^<([-\w:]+)((?:\s+[^\s\/>"'=]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)\s*>/,
-    endTag: /^<\/([-\w:]+)[^>]*>/,
-    attr: /^\s+([^\s\/>"'=]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/,
-    pre: /^([\s\S]*?)<\/pre[^>]*>/i,
-  }
-
+export let HTMLParser = new class { // tslint:disable-line:variable-name
+  private caseConversion: boolean
+  private sentenceStart: boolean
+  private spuriousNode = new Set(['#document-fragment', '#document', 'div', 'span'])
   private titleCased: string
-  private handler: AST
-  private lastTag: string
-  private stack: string[]
+  private html: string
 
-  // supported elements -- sc == smallcaps
-  private minimal = makeMap('em italic i strong b nc sc enquote pre span sub sup')
-  private closeSelf = makeMap('colgroup dd dt li options p td tfoot th thead tr')
-  private empty = makeMap('area base basefont br col frame hr img input link meta param embed command keygen source track wbr')
+  public parse(html, options: { html?: boolean, caseConversion?: boolean } = {}): IZoteroMarkupNode {
+    let doc
 
-  public parse(html, options: { caseConversion?: boolean, mode?: string } = {}): IHTMLNode {
-    html = `${html}`
-    this.handler = new AST(options.caseConversion)
+    // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
+    this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
+    this.sentenceStart = true
 
-    if (options.mode === 'plain') {
-      if (options.caseConversion) throw new Error('No case conversion in plain mode')
-      this.handler.chars(html)
-      return this.handler.root
+    // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
+    this.html = html.replace(/<pre>/g, '<script>').replace(/<\/pre>/g, '</script>')
+
+    // add enquote tags.
+    const csquotes = Prefs.get('csquotes')
+    if (csquotes) {
+      const space = '\\s*'
+      for (const close of [0, 1]) {
+        const chars = csquotes.replace(/./g, (c, i) => [c, ''][(i + close) & 1]).replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&') // tslint:disable-line:no-bitwise
+        this.html = this.html.replace(new RegExp(`${close ? space : ''}[${chars}]${close ? '' : space}`, 'g'), close ? '</span>' : '<span class="enquote">')
+      }
     }
 
-    this.stack = []
-    const htmlMode = (options.mode === 'html')
-    let last = html
+    if (!options.html) {
+      this.html = this.html.replace(/&/g, '&amp;')
 
-    /* add enquote psuedo-tags. Pseudo-tags are used here because they're cleanly removable for the pre block */
-    if (Translator.preferences.csquotes) {
-      html = html.replace(new RegExp(`[${Translator.preferences.csquotes.open.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]\s*/g, '\\$&')}]\\s*`, 'g'), '\x0E')
-      html = html.replace(new RegExp(`\\s*[${Translator.preferences.csquotes.close.replace(/\s*[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&')}]`, 'g'), '\x0F')
+      this.html = this.html.replace(/<(\/?)([a-z]+)/g, (match, close, tag) => {
+        switch (tag.toLowerCase()) {
+          case 'span':
+          case 'nc':
+          case 'sc':
+          case 'i':
+          case 'b':
+          case 'sup':
+          case 'sub':
+          case 'script':
+          case 'pre':
+            return match
+
+          default:
+            return `&lt;${close ? close : ''}${tag}`
+        }
+      })
     }
 
-    const length = html.length
-    while (html) {
-      let match
-      let chars = true
+    doc = this.walk(htmlParser.parseFragment(this.html))
 
-      if (this.lastTag === 'pre') {
-        html = html.replace(this.re.pre, (all, text) => {
-          if (this.handler.pre) this.handler.pre(text.replace(/[\x0E\x0F]/g, ''))
-          return ''
-        })
-        chars = false
-        this.parseEndTag(this.lastTag)
-
-      } else if ((html.substring(0, 2) === '</') || (html[0] === '\x0F')) {
-        if (html[0] === '<') {
-          match = html.match(this.re.endTag)
-          // tslint:disable-next-line:no-magic-numbers
-          if (match && !htmlMode && (match[1] !== 'span') && (!this.minimal[match[1]] || (match[0][match[1].length + 2] !== '>'))) match = null
-        } else {
-          match = [html[0], 'enquote']
-        }
-
-        if (match) {
-          html = html.substring(match[0].length)
-          this.parseEndTag(match[1])
-        } else {
-          // ignore the angle bracket
-          if (this.handler.chars) this.handler.chars('<', length - html.length)
-          html = html.substring(1)
-        }
-        chars = false
-
-      } else if ((html[0] === '<') || (html[0] === '\x0E')) {
-        if (html[0] === '<') {
-          match = html.match(this.re.startTag)
-          // tslint:disable-next-line:no-magic-numbers
-          if (match && !htmlMode && (match[1] !== 'span') && !(this.minimal[match[1]] || (['/>', '>'].includes(match[0].substr(match[1].length + 1, 2))))) match = null
-        } else {
-          match = [html[0], 'enquote', '', '']
-        }
-
-        if (match) {
-          html = html.substring(match[0].length)
-          this.parseStartTag.apply(this, match)
-        } else {
-          // ignore the angle bracket
-          if (this.handler.chars) this.handler.chars('<', length - html.length)
-          html = html.substring(1)
-        }
-        chars = false
+    if (this.caseConversion) {
+      this.titleCased = titleCase(this.innerText(doc))
+      // debug('markupparser.titleCase', this.titleCased)
+      this.titleCase(doc)
+      doc = this.unwrapNocase(doc)
+      if (doc.length === 1) {
+        doc = doc[0]
+      } else {
+        doc = { nodeName: 'span', attr: {}, class: {}, childNodes: doc }
       }
-
-      if (chars) {
-        const index = html.search(/[<\x0E\x0F]/)
-        const pos = length - html.length
-        const text = index < 0 ? html : html.substring(0, index)
-        html = index < 0 ? '' : html.substring(index)
-        if (this.handler.chars) this.handler.chars(text, pos)
-      }
-      if (html === last) {
-        throw new Error(`Parse Error: ${html}`)
-      }
-      last = html
-    }
-    // Clean up any remaining tags
-    this.parseEndTag(null)
-
-    if (options.caseConversion) {
-      if (!Translator.preferences.suppressTitleCase) {
-        this.titleCased = Zotero.BetterBibTeX.titleCase(this.innerText(this.handler.root))
-        this.titleCase(this.handler.root)
-      }
-
-      this.simplify(this.handler.root)
-
-      /* BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396 */
-      // MUST come after simplify
-      this.unwrapNocase(this.handler.root)
+      this.cleanupNocase(doc)
     }
 
-    let root = this.handler.root
-    if (root.name !== 'span') throw new Error(`markupparser: Unexpected root node ${root.name}`)
+    // debug('markupparser:', doc)
+
     // spurious wrapping span
-    if (!Object.keys(root.attr).length && root.children.length === 1) root = root.children[0]
-    debug('markupparser:', root)
-    return root
+    doc = this.unwrapSpurious(doc)
+    doc.source = this.html
+
+    return doc
   }
 
-  private parseStartTag(tag, tagName, rest, unary) {
-    tagName = tagName.toLowerCase()
-
-    // TODO: In addition to lastTag === tagName, also check special case for th, td, tfoot, tbody, thead
-    if (this.closeSelf[tagName] && (this.lastTag === tagName)) this.parseEndTag(tagName)
-
-    unary = this.empty[tagName] || !!unary
-
-    if (!unary) {
-      this.stack.push(tagName)
-      this.lastTag = tagName
-    }
-
-    if (this.handler.start) {
-      let match
-      const attrs = {}
-      while ((match = rest.match(this.re.attr))) {
-        rest = rest.substr(match[0].length)
-        const name = match[1]
-        const value = match[2] || match[3] || match[4] || '' // tslint:disable-line:no-magic-numbers
-        attrs[name] = value
-      }
-      this.handler.start(tagName, attrs)
-    }
-  }
-
-  private parseEndTag(tagName) {
-    // If no tag name is provided, clean shop
-    let pos
-    if (!tagName) {
-      pos = 0
-    } else {
-      pos = this.stack.length - 1
-      while (pos >= 0) {
-        if (this.stack[pos] === tagName) {
-          break
+  private titleCase(node: IZoteroMarkupNode) {
+    if (node.nodeName === '#text') {
+      const spaces = new Set(['\u2003', '\u2004', '\u205F', '\u2009', '\u00A0'])
+      let recased = ''
+      const substr = this.titleCased.substr(node.offset, node.value.length).split('')
+      for (let i = 0; i < substr.length; i++) {
+        if (spaces.has(node.value[i])) {
+          recased += node.value[i]
+        } else {
+          recased += substr[i]
         }
-        pos -= 1
       }
-    }
-    if (pos >= 0) {
-      // Close all the open elements, up the stack
-      let i = this.stack.length - 1
-      while (i >= pos) {
-        if (this.handler.end) this.handler.end(this.stack[i])
-        i -= 1
+      node.value = recased
+
+    } else {
+      for (const child of node.childNodes) {
+        if (!child.nocase) this.titleCase(child)
       }
-      // Remove the open elements from the stack
-      this.stack.length = pos
-      this.lastTag = this.stack[pos - 1]
+
     }
   }
 
-  private innerText(node, text = '') {
-    switch (node.name) {
+  private unwrapSpurious(node: IZoteroMarkupNode) {
+    // debug('spurious:', { nodeName: node.nodeName, attrs: Object.keys(node.attr).length, nocase: node.nocase, childNodes: node.childNodes.length })
+
+    if (node.nodeName === '#text') return node
+
+    node.childNodes = node.childNodes.map(child => this.unwrapSpurious(child))
+
+    while (this.spuriousNode.has(node.nodeName) && Object.keys(node.attr).length === 0 && !node.nocase && node.childNodes.length === 1) node = node.childNodes[0]
+
+    return node
+  }
+
+  // BibLaTeX is beyond insane https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396
+  private unwrapNocase(node: IZoteroMarkupNode): IZoteroMarkupNode[] {
+    if (node.nodeName === '#text') return [ node ]
+
+    // unwrap and flatten
+    node.childNodes = [].concat(...node.childNodes.map(child => this.unwrapNocase(child)))
+
+    // no nocase children? done
+    if (node.nocase || !node.childNodes.find(child => child.nocase)) return [ node ]
+
+    // expand nested nocase node to sibling of node
+    return node.childNodes.map(child => {
+      if (child.nocase) {
+        return {
+          ...child,
+          childNodes: [ { ...node, childNodes: child.childNodes } ],
+        }
+      }
+
+      return {
+        ...node,
+        childNodes: [ child ],
+      }
+    })
+  }
+
+  private cleanupNocase(node: IZoteroMarkupNode, nocased = false): IZoteroMarkupNode[] {
+    if (node.nodeName === '#text') return
+
+    if (nocased) delete node.nocase
+
+    for (const child of node.childNodes) {
+      this.cleanupNocase(child, node.nocase || nocased)
+    }
+  }
+
+  private innerText(node: IZoteroMarkupNode, text = '') {
+    switch (node.nodeName) {
       case '#text':
-        // the Array construct makes sure that the text is placed at the exact position it has in the origin string,
+        // the padding makes sure that the text is placed at the exact position it has in the origin string,
         // adding spaces as necessary
-        if (typeof node.pos === 'number') text += Array((node.pos - text.length) + 1).join(' ') + node.text
+        text += ''.padStart(node.offset - text.length, ' ') + node.value
         break
+
       case 'pre':
+      case 'script':
         // don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
         // the CSL title caser would consider last words in a title that actually have a following <pre> block the last
         // word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
         // will be ignored by the BBT title caser, which only title-cases #text blocks
-        text += node.text.replace(/</g, '[').replace(/>/g, ']')
+        text += node.value.replace(/</g, '[').replace(/>/g, ']')
         break
+
       default:
-        for (const child of node.children) {
+        for (const child of node.childNodes) {
           text = this.innerText(child, text)
         }
     }
@@ -378,88 +232,121 @@ export let MarkupParser = new class { // tslint:disable-line:variable-name
     return text
   }
 
-  private unwrapNocase(node) {
-    if (node.name === '#text') return node
-
-    const children = node.children.map(n => this.unwrapNocase(n))
-    node.children = [].concat(...children)
-
-    if (!node.children.find(child => child.nocase)) return node
-
-    const expanded = []
-    let last = null
-    for (const child of node.children) {
-      const clone = JSON.parse(JSON.stringify(node))
-
-      if (child.nocase) {
-        clone.children = child.children
-        child.children = [clone]
-        expanded.push(child)
-        last = null
-      } else if (last && !last.nocase) {
-        last.children.push(child)
-      } else {
-        clone.children = [child]
-        expanded.push(clone)
-        last = clone
-      }
+  private plaintext(childNodes: IZoteroMarkupNode[], text, offset) {
+    const l = childNodes.length
+    if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
+      childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {} })
+    } else {
+      childNodes[l - 1].value += text
     }
-
-    return expanded
   }
 
-  private simplify(node, isNoCased = false) {
-    if (isNoCased) delete node.nocase
+  private nocase(childNodes, text, offset) {
+    childNodes.push({
+      nodeName: 'span',
+      nocase: true,
+      attr: {},
+      class: {},
+      childNodes: [{
+        nodeName: '#text',
+        offset,
+        value: text,
+        attr: {},
+        class: {},
+      }],
+    })
+  }
 
-    switch (node.name) {
-      case '#text':
-        break // pass
+  private walk(node, isNocased = false) {
+    // debug('walk:', node.nodeName)
+    const _node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [] }
+    _node.attr = node.attrs ? node.attrs.reduce((acc, v) => (acc[v.name] = v.value) && acc, {}) : {}
+    _node.class = _node.attr.class ? _node.attr.class.trim().split(/\s+/).reduce((acc, v) => (acc[v] = true) && acc, {}) : {}
 
-      case 'pre':
-        switch (node.children.length) {
-          case 0:
-            break // pass
-          case 1:
-            if (node.children[0].name !== '#text') throw new Error(`Pre node had unexpected child ${JSON.stringify(node.children[0])}`)
-            node.text = node.children[0].text
-            node.children = []
-            break
-          default:
-            throw new Error(`Pre node had unexpected children ${JSON.stringify(node.children)}`)
-        }
+    switch (node.nodeName) {
+      case '#document':
+      case '#document-fragment':
+        _node.nodeName = 'span'
         break
 
-      default:
-        for (const child of node.children) {
-          this.simplify(child, isNoCased || node.nocase)
-        }
+      case 'nc':
+        _node.nodeName = 'span'
+        _node.attr.nocase = 'nocase'
+        break
+
+      case 'sc':
+        _node.nodeName = 'span'
+        _node.attr.smallcaps = 'smallcaps'
+        break
+
+      case 'pre':
+        _node.nodeName = 'script'
+        break
     }
 
-  }
+    if (_node.attr.nocase || _node.class.nocase) _node.nocase = !isNocased
+    if (_node.attr.relax || _node.class.relax) _node.relax = true
+    if (_node.class.enquote || _node.attr.enquote) _node.enquote = true
+    if (!_node.attr.smallcaps && (_node.attr.style || '').match(/small-caps/i)) _node.attr.smallcaps = 'smallcaps'
+    if (_node.class.smallcaps || _node.attr.smallcaps) _node.smallcaps = true
 
-  private titleCase(node) {
-    if (node.name === '#text') {
-      // https://github.com/Juris-M/citeproc-js/issues/30
-      // node.text = @titleCased.substr(node.pos, node.text.length) if typeof node.pos == 'number'
-      if (typeof node.pos === 'number') {
-        const spaces = '\u2003\u2004\u205F\u2009\u00A0'.split('')
-        let recased = ''
-        const substr = this.titleCased.substr(node.pos, node.text.length).split('')
-        for (let i = 0; i < substr.length; i++) {
-          if (spaces.includes(node.text[i])) {
-            recased += node.text[i]
+    if (_node.nodeName === 'script') {
+      if (!node.childNodes || node.childNodes.length !== 1 || node.childNodes[0].nodeName !== '#text') throw new Error(`Unexpected script body ${node.childNodes}`)
+      _node.value =  node.childNodes[0].value
+      _node.childNodes = []
+
+    } else if (node.childNodes) {
+      let m
+      for (const child of node.childNodes) {
+        if (child.nodeName !== '#text') {
+          _node.childNodes.push(this.walk(child, isNocased || _node.nocase))
+          continue
+        }
+
+        // debug('walk.text:', child.nodeName)
+        if (!this.caseConversion || isNocased) {
+          this.plaintext(_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
+          continue
+        }
+
+        let text = child.value
+        const length = text.length
+        while (text) {
+          if (m = re.whitespace.exec(text)) {
+            this.plaintext(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[0].length)
+            continue
+          }
+
+          if (this.sentenceStart && (m = re.leadingUnprotectedWord.exec(text + ' '))) {
+            this.sentenceStart = false
+            this.plaintext(_node.childNodes, m[1], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[1].length)
+            continue
+          }
+
+          this.sentenceStart = false
+
+          if (m = re.protectedWords.exec(text)) {
+            this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[0].length)
+
+          } else if (m = re.url.exec(text)) {
+            this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[0].length)
+
+          } else if (m = re.unprotectedWord.exec(text)) {
+            this.plaintext(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(m[0].length)
+
           } else {
-            recased += substr[i]
+            this.plaintext(_node.childNodes, text[0], child.sourceCodeLocation.startOffset + (length - text.length))
+            text = text.substring(1)
           }
         }
-        node.text = recased
-      }
-
-    } else {
-      for (const child of node.children) {
-        if (!child.nocase) this.titleCase(child)
       }
     }
 
+    return _node
   }
 }

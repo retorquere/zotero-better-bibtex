@@ -1,10 +1,10 @@
 declare const Translator: ITranslator
 declare const Zotero: any
 
-import { Exporter } from '../lib/exporter.ts'
-import { text2latex } from './unicode_translator.ts'
-import { debug } from '../lib/debug.ts'
-import { datefield } from './datefield.ts'
+import { Exporter } from '../lib/exporter'
+import { text2latex } from './unicode_translator'
+import { debug } from '../lib/debug'
+import { datefield } from './datefield'
 
 interface IField {
   name: string
@@ -884,7 +884,7 @@ export class Reference {
     if (f.raw || raw) return f.value
 
     const caseConversion = !Translator.preferences.suppressTitleCase && (this.caseConversion[f.name] || f.caseConversion)
-    const latex = text2latex(f.value, {mode: (f.html ? 'html' : 'text'), caseConversion: caseConversion && this.english})
+    const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
     let value: String | string = latex.latex
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
 

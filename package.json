@@ -1,6 +1,6 @@
 {
   "name": "zotero-better-bibtex",
-  "version": "5.0.166",
+  "version": "5.0.168",
   "description": "Make Zotero useful for us LaTeX holdouts.",
   "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
   "license": "ISC",
@@ -54,6 +54,7 @@
     "edtfy": "0.0.8",
     "escape-string-regexp": "^1.0.5",
     "eventemitter4": "^0.2.4",
+    "fast-chunk-string": "^1.0.1",
     "fold-to-ascii": "^4.0.0",
     "global": "^4.3.2",
     "he": "^1.1.1",
@@ -66,13 +67,14 @@
     "kuroshiro": "^0.2.4",
     "lokijs": "^1.5.5",
     "node-eta": "^0.9.0",
+    "parse5": "^5.0.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.1",
     "string-template": "^1.0.0",
     "transliteration": "^1.6.2",
     "webpack-cli": "^3.0.8",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.40"
+    "zotero-plugin": "0.0.42"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
@@ -112,7 +114,7 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.2",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.15.1",
+    "webpack": "^4.16.0",
     "wrapper-webpack-plugin": "^2.0.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",

@@ -1,9 +1,9 @@
-import { debug } from './debug.ts'
+import { debug } from './debug'
 import JSON5 = require('json5')
 
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 const cslVariables = require('./csl-vars.json')
-import * as Citekey from './key-manager/get-set.ts'
+import * as Citekey from './key-manager/get-set'
 
 function cslCreator(value) {
   const creator = value.split(/\s*\|\|\s*/)
