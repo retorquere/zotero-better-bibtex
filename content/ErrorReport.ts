@@ -9,19 +9,20 @@ import { Translators } from './translators'
 import { debug } from './debug'
 // import { createFile } from './create-file'
 import { Logger } from './logger'
+import fastChunkString = require('fast-chunk-string')
 
 const s3 = require('./s3.json')
-import fastChunkString = require('fast-chunk-string')
 
 const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 
-const MB = 1048576
+const kB = 1024
+const MB = kB * kB
 
 export = new class ErrorReport {
-  private previewSize = 10000
   private chunkSize
+  private previewSize = 3 * kB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
 
   private key: string
   private timestamp: string
@@ -31,8 +32,8 @@ export = new class ErrorReport {
   private errorlog: {
     info: string,
     errors: string,
-    zotero: string,
-    bbt: string,
+    zotero: string | string[],
+    bbt: string | string[],
     references?: string,
     db?: string
   }
@@ -49,7 +50,7 @@ export = new class ErrorReport {
 
     try {
       const logs = [
-        this.submit('zotero', 'text/plain', [this.errorlog.info, this.errorlog.zotero].join('\n\n')),
+        this.submit('zotero', 'text/plain', this.errorlog.zotero, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
         this.submit('bbt', 'text/plain', this.errorlog.bbt),
         // this.submit('db', 'application/json', this.errorlog.db)
       ]
@@ -94,29 +95,7 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
-  private log(kind) {
-    try {
-      switch (kind) {
-        case 'zotero':
-          return Zotero.Debug.getConsoleViewerOutput().join('\n')
-
-        case 'bbt':
-          return Logger.flush()
-
-        default:
-          return `Unknown log ${kind}`
-      }
-
-    } catch (err) {
-      const preference = 'debug.store.limit'
-      return `Error getting Zotero log: ${err}; ${Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.oom', { preference, limit: Zotero.Prefs.get(preference) })}`
-
-    }
-  }
-
   private async init() {
-    this.params = window.arguments[0].wrappedJSObject
-
     const wizard = document.getElementById('better-bibtex-error-report')
 
     if (Zotero.Debug.enabled) wizard.pageIndex = 1
@@ -124,14 +103,41 @@ export = new class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
+    // configure debug logging
+    const debugLog = {
+      chunkSize: null,
+      region: null,
+    }
+    const m = Prefs.get('debugLog').match(/^([-a-z]+[0-9]?)|([-a-z]+[0-9]?)\.([0-9]+)|([0-9]+)$/)
+    if (m) {
+      debugLog.region = m[1] || m[2] // tslint:disable-line:no-magic-numbers
+      debugLog.chunkSize = parseInt(m[3] || m[4] || 0)  // tslint:disable-line:no-magic-numbers
+    }
+
+    this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
+    debug('ErrorReport.debuglog:', m, debugLog, this.chunkSize)
+
+    const regions = []
+    for (const candidate of PACKAGE.bugs.logs.regions) {
+      const started = Date.now()
+      try {
+        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
+        regions.push({region: candidate, ping: ((candidate === debugLog.region) ? -1 : 1) * (Date.now() - started), ...s3[candidate]})
+      } catch (err) {
+        debug('ErrorReport.ping: could not reach', candidate, err)
+      }
+    }
+
+    this.params = window.arguments[0].wrappedJSObject
+
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
     debug('ErrorReport.log:', Zotero.Debug.count())
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      zotero: await this.log('zotero'),
-      bbt: await this.log('bbt'),
+      zotero: Zotero.Debug.getConsoleViewerOutput(),
+      bbt: Logger.output(),
       // db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
 
@@ -166,43 +172,35 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
-    // configure debug logging
-    const debugLog = {
-      chunkSize: null,
-      region: null,
-    }
-    const m = Prefs.get('debugLog').match(/^(?:(?:([-a-z0-9]+)\.([0-9]+))|([-a-z0-9]+)|([0-9]+))$/)
-    if (m) {
-      debugLog.region = m[1] || m[3] // tslint:disable-line:no-magic-numbers
-      debugLog.chunkSize = parseInt(m[2] || m[4] || 0)  // tslint:disable-line:no-magic-numbers
-    }
-
-    this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
-
-    const regions = []
-    for (const candidate of PACKAGE.bugs.logs.regions) {
-      const started = Date.now()
-      try {
-        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
-        regions.push({region: candidate, ping: ((candidate === debugLog.region) ? -1 : 1) * (Date.now() - started), ...s3[candidate]})
-      } catch (err) {
-        debug('ErrorReport.ping: could not reach', candidate, err)
-      }
-    }
     regions.sort((a, b) => a.ping - b.ping)
     const region = regions[0]
     const postfix = region.short
     this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
-    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
+    this.key = `dbg-${Zotero.Utilities.generateObjectKey()}-${postfix}`
     debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
-    continueButton.focus()
     continueButton.disabled = false
+    continueButton.focus()
   }
 
   private preview(log) {
-    if (log.length <= (this.previewSize * 2)) return log
-    return `${log.substring(0, this.previewSize)} ... ${log.slice(-this.previewSize)}`
+    if (Array.isArray(log)) {
+      let preview = ''
+      for (const line of log) {
+        if (line.startsWith('(4)(+')) continue // DB statements
+
+        preview += line + '\n'
+        if (preview.length > this.previewSize) return preview + ' ...'
+      }
+
+      return preview
+
+    } else if (log.length > this.previewSize) {
+      return log.substr(0, this.previewSize) + ' ...'
+
+    }
+
+    return log
   }
 
   // general state of Zotero
@@ -236,7 +234,7 @@ export = new class ErrorReport {
     return info
   }
 
-  private async submit(filename, contentType, data) {
+  private async submit(filename, contentType, data, prefix = '') {
     const started = Date.now()
     debug('Errorlog.submit:', filename)
 
@@ -258,14 +256,40 @@ export = new class ErrorReport {
     }
 
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
-    if (data.length < this.chunkSize) {
-      await Zotero.HTTP.request('PUT', `${url}.${ext}`, { body: data, headers, dontCache: true })
-    } else {
-      const chunks = fastChunkString(data, { size: this.chunkSize })
-      const padding = (chunks.length + 1).toString().length
 
-      await Zotero.Promise.all(chunks.map((chunk, i) => Zotero.HTTP.request('PUT', `${url}.${(i + 1).toString().padStart(padding, '0')}.${ext}`, { body: chunk, headers, dontCache: true })))
+    const isArray = Array.isArray(data)
+    debug('ErrorReport.submit:', { filename, contentType, length: data.length, isArray })
+
+    let chunks = []
+    if (Array.isArray(data)) {
+      let chunk = prefix
+      for (const line of data) {
+        if (filename === 'zotero' && line.startsWith('(4)(+')) continue // DB statements
+
+        if ((chunk.length + line.length) > this.chunkSize) {
+          if (chunk.length !== 0) chunks.push(chunk)
+          chunk = line + '\n'
+
+        } else {
+          chunk += line + '\n'
+
+        }
+      }
+      if (chunk.length) chunks.push(chunk)
+
+    } else {
+      chunks = fastChunkString(prefix + data, { size: this.chunkSize })
+
     }
+
+    chunks = chunks.map((chunk, n) => ({ n: '.' + (n + 1).toString().padStart(4, '0'), body: chunk })) // tslint:disable-line:no-magic-numbers
+    if (chunks.length === 1) chunks[0].n = ''
+
+    await Promise.all(chunks.map(chunk => Zotero.HTTP.request('PUT', `${url}${chunk.n}.${ext}`, {
+      body: chunk.body,
+      headers,
+      dontCache: true,
+    })))
 
     debug('Errorlog.submit:', filename, Date.now() - started)
   }

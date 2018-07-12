@@ -43,13 +43,13 @@ export let Logger = new class { // tslint:disable-line:variable-name
     if (this.length < this.size) this.length++
   }
 
-  public flush() {
+  public output() {
     for (let i = 0; i < this.length; i++) {
       if (typeof this.lines[i].msg !== 'string') {
         this.lines[i].msg = this.format(this.lines[i])
       }
     }
-    const flushed = this.lines.slice(this.index, this.length).concat(this.lines.slice(0, this.index)).map(line => line.msg).join('\n')
+    const flushed = this.lines.slice(this.index, this.length).concat(this.lines.slice(0, this.index)).map(line => line.msg)
 
     // this.reset()
 
