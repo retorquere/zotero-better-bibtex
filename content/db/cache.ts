@@ -11,9 +11,6 @@ const translators = require('../../gen/translators.json')
 
 import { Preferences as Prefs } from '../prefs'
 
-// tslint:disable-next-line:no-magic-numbers
-const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
-
 class NoSuchFileError extends Error {
   public name = 'NoSuchFile'
 
@@ -32,7 +29,7 @@ class FileStore {
   public save(name, data) {
     debug('FileStore.save', name)
     const db = createFile(name + '.saving')
-    Zotero.File.putContents(db, stringify(data))
+    Zotero.File.putContents(db, JSON.stringify(data))
     db.moveTo(null, this.name(name))
     debug('FileStore.saved', name, 'to', this.name(name))
   }

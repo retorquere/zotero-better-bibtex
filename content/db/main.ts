@@ -7,9 +7,6 @@ import { getItemsAsync } from '../get-items-async'
 
 import { createFile } from '../create-file'
 
-// tslint:disable-next-line:no-magic-numbers
-const stringify = Prefs.get('testing') ? data => JSON.stringify(data, null, 2) : data => JSON.stringify(data)
-
 class DBStore {
   public mode = 'reference'
 
@@ -33,14 +30,14 @@ class DBStore {
           if (coll.dirty) {
             const name = `${dbname}.${coll.name}`
             debug('DBStore.exportDatabase:', name)
-            await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [name, stringify(coll)])
+            await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [name, JSON.stringify(coll)])
           }
         }
 
         // TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
         await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [
           dbname,
-          stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${dbname}.${coll.name}`)} }),
+          JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${dbname}.${coll.name}`)} }),
         ])
       })
       callback(null)
@@ -90,7 +87,7 @@ class DBStore {
         }
 
         const dump = createFile(`_${dbname}.json`)
-        Zotero.File.putContents(dump, stringify(db))
+        Zotero.File.putContents(dump, JSON.stringify(db))
 
         callback(db)
       })
