@@ -915,8 +915,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Laureano Ralon"
+          "name": "Laureano Ralon"
         }
       ],
       "dateAdded": "2017-11-07 22:29:38",
@@ -1213,8 +1212,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 101,
-      "publicationTitle": "Metametaphysics: New Essays on the Foundations of Ontology"
+      "itemID": 101
     },
     {
       "itemType": "bookSection",
@@ -1237,8 +1235,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 102,
-      "publicationTitle": "The Analytic Turn: Analysis in Early Analytic Philosophy and Phenomenology"
+      "itemID": 102
     },
     {
       "itemType": "bookSection",
@@ -1256,8 +1253,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 103,
-      "publicationTitle": "Free Software, Free Society: Selected Essays of Richard M. Stallman"
+      "itemID": 103
     },
     {
       "itemType": "book",
@@ -1295,8 +1291,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 105,
-      "publicationTitle": "InformationWeek"
+      "itemID": 105
     },
     {
       "itemType": "book",
@@ -1418,7 +1413,7 @@
       "date": "2005",
       "extra": "Citation Key: bostrom2005history",
       "journalAbbreviation": "J. Evol. Technol.",
-      "accessDate": "2013-09-27 08:15:45",
+      "accessDate": "2013-09-27 08:15:45Z",
       "libraryCatalog": "Google Scholar",
       "title": "A history of transhumanist thought",
       "creators": [
@@ -1448,8 +1443,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 112,
-      "publicationTitle": "Harvard Law Review"
+      "itemID": 112
     },
     {
       "itemType": "journalArticle",
@@ -1504,8 +1498,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 115,
-      "publicationTitle": "Converging Technologies for Improving Human Performance"
+      "itemID": 115
     },
     {
       "itemType": "book",
