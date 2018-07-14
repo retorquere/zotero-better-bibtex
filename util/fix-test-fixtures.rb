@@ -35,10 +35,18 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
 
   if data['items']
     data['items'].each{|item|
-      next unless item['relations']
+      if item['relations'] || item['collections']
+        resave = true
+        item.delete('relations')
+        item.delete('collections')
+      end
 
-      resave = true
-      item.delete('relations')
+      if item['itemType'] == 'note'
+        %w{uri uniqueFields seeAlso attachments key libraryID}.each{|key|
+          resave ||= item.key?(key)
+          item.delete(key)
+        }
+      end
     }
   end
 

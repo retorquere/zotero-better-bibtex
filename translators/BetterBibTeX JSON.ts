@@ -34,10 +34,11 @@ Translator.doImport = () => {
   const validFields = Zotero.BetterBibTeX.validFields()
 
   const items = new Set
+  debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
     if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {
-      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field}`)
+      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
     }
 
     const item = new Zotero.Item()

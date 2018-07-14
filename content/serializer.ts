@@ -59,7 +59,17 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
       ORDER BY 2
     `)
-    this.validFields = {}
+    this.validFields = {
+      note: {
+        itemType: true,
+        tags: true,
+        note: true,
+        id: true,
+        itemID: true,
+        dateAdded: true,
+        dateModified: true,
+      },
+    }
     for (const field of fields) {
       if (!this.validFields[field.typeName]) {
         this.validFields[field.typeName] = {
@@ -81,7 +91,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       if (field.fieldAlias) this.validFields[field.typeName][field.fieldAlias] = true
     }
 
-    debug('Serializer.init: done')
+    debug('Serializer.init: done', this.validFields)
   }
 
   public fetch(item, legacy, skipChildItems) {

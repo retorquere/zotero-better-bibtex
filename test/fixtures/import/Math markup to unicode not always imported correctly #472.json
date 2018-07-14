@@ -194,24 +194,9 @@
           "type": 0
         }
       ],
-      "collections": [
-        "BLZJA6PY"
-      ],
       "dateAdded": "2018-01-16 16:17:07",
       "dateModified": "2018-01-16 16:17:07",
-      "uri": "http://zotero.org/users/local/Nywl04ll/items/Y6FML8S8",
-      "uniqueFields": {
-        "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>"
-      },
-      "itemID": 56,
-      "key": "Y6FML8S8",
-      "libraryID": null,
-      "seeAlso": [
-
-      ],
-      "attachments": [
-
-      ]
+      "itemID": 56
     },
     {
       "itemType": "conferencePaper",
