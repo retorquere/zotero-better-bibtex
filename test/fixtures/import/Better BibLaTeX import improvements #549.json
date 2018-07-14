@@ -4,8 +4,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "01e"
+          "name": "01e"
         }
       ],
       "extra": "Citation Key: 1e",
@@ -17,8 +16,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "01b"
+          "name": "01b"
         }
       ],
       "extra": "Citation Key: 1b",
@@ -30,8 +28,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "02e"
+          "name": "02e"
         }
       ],
       "extra": "Citation Key: 2e",
@@ -43,8 +40,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "02b"
+          "name": "02b"
         }
       ],
       "extra": "Citation Key: 2b",
@@ -66,7 +62,6 @@
       "publisher": "University of London",
       "thesisType": "Ph.D.",
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
-      "type": "Ph.D.",
       "university": "University of London",
       "itemID": 5
     },

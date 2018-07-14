@@ -324,8 +324,7 @@
       ],
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
-      "itemID": 63,
-      "publicationTitle": "Harvard Journal of Law and Public Policy"
+      "itemID": 63
     },
     {
       "itemType": "journalArticle",
@@ -905,8 +904,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Laureano Ralon"
+          "name": "Laureano Ralon"
         }
       ],
       "dateAdded": "2017-11-07 19:46:15",
@@ -1438,8 +1436,7 @@
       ],
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
-      "itemID": 112,
-      "publicationTitle": "Harvard Law Review"
+      "itemID": 112
     },
     {
       "itemType": "journalArticle",
@@ -1494,8 +1491,7 @@
       ],
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
-      "itemID": 115,
-      "publicationTitle": "Converging Technologies for Improving Human Performance"
+      "itemID": 115
     },
     {
       "itemType": "book",
@@ -2638,8 +2634,7 @@
       ],
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
-      "itemID": 164,
-      "publicationTitle": "Converging Technologies for Improving Human Performance"
+      "itemID": 164
     },
     {
       "itemType": "bookSection",
@@ -3598,8 +3593,7 @@
       ],
       "dateAdded": "2017-11-07 19:46:15",
       "dateModified": "2017-11-07 19:46:15",
-      "itemID": 204,
-      "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS"
+      "itemID": 204
     },
     {
       "itemType": "book",

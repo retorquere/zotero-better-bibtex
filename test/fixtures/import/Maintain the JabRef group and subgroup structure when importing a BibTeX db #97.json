@@ -3129,8 +3129,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 113,
-      "publicationTitle": "Proceedings of the 23rd European Photovoltaic Solar Energy Conference, Valencia, Spain"
+      "itemID": 113
     },
     {
       "itemType": "journalArticle",
@@ -5049,8 +5048,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 167,
-      "publicationTitle": "IEEE International Electron Devices Meeting, 2005. IEDM Technical Digest"
+      "itemID": 167
     },
     {
       "itemType": "patent",
@@ -6848,8 +6846,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 214,
-      "publicationTitle": "“Crystal Growth of Novel Electronic Materials”, Ceramic Transactions"
+      "itemID": 214
     },
     {
       "itemType": "conferencePaper",
@@ -6883,8 +6880,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 215,
-      "publicationTitle": "“Mass and Charge Transport in Ceramics”, Ceramic Transactions"
+      "itemID": 215
     },
     {
       "itemType": "journalArticle",
@@ -7193,8 +7189,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 226,
-      "publicationTitle": "Prooceeding of the 13th IEEE Photovoltaic Specialists Conference"
+      "itemID": 226
     },
     {
       "itemType": "journalArticle",
@@ -7496,8 +7491,7 @@
           ]
         }
       ],
-      "itemID": 236,
-      "publicationTitle": "Proceedings of the International Conference on Semiconductor Physics (5th edition, Prague, 1960)"
+      "itemID": 236
     },
     {
       "itemType": "journalArticle",
@@ -11865,8 +11859,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 360,
-      "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
+      "itemID": 360
     },
     {
       "itemType": "journalArticle",
@@ -14568,8 +14561,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 424,
-      "publicationTitle": "Proceedings of the Technical Sessions of the Institute of Physics - Sri Lanka"
+      "itemID": 424
     },
     {
       "itemType": "journalArticle",
@@ -14718,8 +14710,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 427,
-      "publicationTitle": "Proceedings of the 22nd European Photovoltaic Solar Energy Conference, Milan, Italy"
+      "itemID": 427
     },
     {
       "itemType": "journalArticle",
@@ -16803,8 +16794,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 489,
-      "publicationTitle": "Proceedings of Second Cuprite Colloquium, University of Alberta, Edmonton, Canada"
+      "itemID": 489
     },
     {
       "itemType": "journalArticle",
@@ -18308,8 +18298,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 524,
-      "publicationTitle": "Proceedings of the 7th IEEE Conference on Nanotechnology IEEE-NANO 2007"
+      "itemID": 524
     },
     {
       "itemType": "journalArticle",
@@ -18391,8 +18380,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18432,8 +18420,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18473,8 +18460,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18514,8 +18500,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18555,8 +18540,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18596,8 +18580,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18637,8 +18620,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18678,8 +18660,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18719,8 +18700,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18760,8 +18740,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18801,8 +18780,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18842,8 +18820,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18883,8 +18860,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18924,8 +18900,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -20244,8 +20219,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 576,
-      "publicationTitle": "Proceedings of 21st European Photovoltaic Solar Energy Conference, Dresden, Germany"
+      "itemID": 576
     },
     {
       "itemType": "journalArticle",
@@ -20352,8 +20326,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 579,
-      "publicationTitle": "Proceedings of the Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series"
+      "itemID": 579
     },
     {
       "itemType": "journalArticle",
@@ -21874,8 +21847,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 621,
-      "publicationTitle": "Proceedings of the International Conference on the Physics of Semiconductors, Exeter"
+      "itemID": 621
     },
     {
       "itemType": "journalArticle",
@@ -22523,8 +22495,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 641,
-      "publicationTitle": "Proceedings of the 1st European Photovoltaic Solar Energy Conference, Luxembourg"
+      "itemID": 641
     },
     {
       "itemType": "journalArticle",
@@ -22993,8 +22964,7 @@
           ]
         }
       ],
-      "itemID": 658,
-      "publisher": "Arizona State University Tempe Dept. of Chemistry"
+      "itemID": 658
     },
     {
       "itemType": "journalArticle",
@@ -23383,8 +23353,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 669,
-      "publicationTitle": "Transactions of JWRI"
+      "itemID": 669
     },
     {
       "itemType": "journalArticle",
@@ -23569,8 +23538,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 674,
-      "publicationTitle": "Proceedings of the 11th IEEE Photovoltaic Specialists Conference"
+      "itemID": 674
     },
     {
       "itemType": "conferencePaper",
@@ -23594,8 +23562,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 675,
-      "publicationTitle": "Proceedings of the 13th IEEE Photovoltaic Specialists Conference"
+      "itemID": 675
     },
     {
       "itemType": "journalArticle",
@@ -23665,8 +23632,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 677,
-      "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
+      "itemID": 677
     },
     {
       "itemType": "journalArticle",
@@ -23827,8 +23793,7 @@
       "creators": [
         {
           "creatorType": "inventor",
-          "fieldMode": 1,
-          "lastName": "Osumi"
+          "name": "Osumi"
         }
       ],
       "dateAdded": "2017-11-13 09:26:05",
@@ -24008,8 +23973,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 688,
-      "publicationTitle": "Proceedings of the 5th Bulgarian--Greek Symposium in Semiconductors, Sofia"
+      "itemID": 688
     },
     {
       "itemType": "journalArticle",
@@ -24485,8 +24449,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 703,
-      "publicationTitle": "Proceedings of the IRE"
+      "itemID": 703
     },
     {
       "itemType": "journalArticle",
@@ -30321,8 +30284,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 876,
-      "publicationTitle": "Proceedings of 12th IEEE PhotoVoltaic Specialists Conference, Baton Rouge, LA, USA"
+      "itemID": 876
     },
     {
       "itemType": "report",
@@ -30365,7 +30327,6 @@
         }
       ],
       "itemID": 877,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "NSF-AER-75-23453-4"
     },
     {
@@ -30409,7 +30370,6 @@
         }
       ],
       "itemID": 879,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "NSF-AER-75-23453-5"
     },
     {
@@ -30458,8 +30418,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 881,
-      "publicationTitle": "Proceedings of 13th IEEE PhotoVoltaic Specialists Conference"
+      "itemID": 881
     },
     {
       "itemType": "report",
@@ -30512,7 +30471,6 @@
         }
       ],
       "itemID": 882,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ET/23010--T1"
     },
     {
@@ -30561,7 +30519,6 @@
         }
       ],
       "itemID": 884,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ET/23010--9"
     },
     {
@@ -30605,7 +30562,6 @@
         }
       ],
       "itemID": 886,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ET/23010--12"
     },
     {
@@ -30649,7 +30605,6 @@
         }
       ],
       "itemID": 888,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ET/23010--17"
     },
     {
@@ -30679,8 +30634,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 890,
-      "publicationTitle": "Proceedings of 15th IEEE Photovoltaic Specialists Conference, Kissimmee, FL, USA"
+      "itemID": 890
     },
     {
       "itemType": "report",
@@ -30723,7 +30677,6 @@
         }
       ],
       "itemID": 891,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ET/23010--T10"
     },
     {
@@ -30753,8 +30706,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 893,
-      "publicationTitle": "Proceedings of the 16th IEEE Photovoltaic Specialists Conference"
+      "itemID": 893
     },
     {
       "itemType": "report",
@@ -30797,7 +30749,6 @@
         }
       ],
       "itemID": 894,
-      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "number": "DOE/ER/10825--1"
     },
     {
@@ -30858,8 +30809,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 896,
-      "publicationTitle": "Defect and Diffusion Forum"
+      "itemID": 896
     },
     {
       "itemType": "journalArticle",
@@ -31450,8 +31400,7 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 915,
-      "publicationTitle": "Proocedings of the 14th IEEE Photovoltaic Specialists Conference"
+      "itemID": 915
     },
     {
       "itemType": "journalArticle",

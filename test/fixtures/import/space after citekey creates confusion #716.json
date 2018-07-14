@@ -16,8 +16,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Hoffmann"
+          "name": "Hoffmann"
         }
       ],
       "extra": "Citation Key: HoSp-87",
@@ -29,8 +28,7 @@
       "creators": [
         {
           "creatorType": "editor",
-          "fieldMode": 1,
-          "lastName": "Sprekels"
+          "name": "Sprekels"
         }
       ],
       "extra": "Citation Key: HoSp-90",

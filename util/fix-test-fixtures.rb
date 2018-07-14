@@ -23,13 +23,36 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
 
   if data['items'] && lib =~ /\/import\//
     data['items'].each{|item|
-      next unless item['extra']
+      if item['extra']
+        extra = item['extra']
+        item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
+        item['extra'].sub!(/^bibtex:/, "Citation Key:")
 
-      extra = item['extra']
-      item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
-      item['extra'].sub!(/^bibtex:/, "Citation Key:")
+        resave ||= (extra != item['extra'])
+      end
 
-      resave = (extra != item['extra'])
+      duplicates = {
+        'publisher' => %w{institution},
+        'publicationTitle' => %w{proceedingsTitle},
+        'type' => %w{thesisType},
+      }
+      duplicates.each_pair{|generic, specifics|
+        specifics.each{|specific|
+          if item[specific] && item[generic] == item[specific]
+            item.delete(generic)
+            resave = true
+          end
+        }
+      }
+
+      (item['creators'] || []).each{|creator|
+        if creator['fieldMode'] == 1
+          creator['name'] = creator['lastName']
+          creator.delete('lastName')
+          creator.delete('fieldMode')
+          resave = true
+        end
+      }
     }
   end
 

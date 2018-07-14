@@ -1413,7 +1413,7 @@
       "date": "2005",
       "extra": "Citation Key: bostrom2005history",
       "journalAbbreviation": "J. Evol. Technol.",
-      "accessDate": "2013-09-27 08:15:45Z",
+      "accessDate": "2013-09-27T08:15:45Z",
       "libraryCatalog": "Google Scholar",
       "title": "A history of transhumanist thought",
       "creators": [
@@ -2641,8 +2641,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 164,
-      "publicationTitle": "Converging Technologies for Improving Human Performance"
+      "itemID": 164
     },
     {
       "itemType": "bookSection",
@@ -3601,8 +3600,7 @@
       ],
       "dateAdded": "2017-11-07 22:29:38",
       "dateModified": "2017-11-07 22:29:38",
-      "itemID": 204,
-      "publicationTitle": "Workshop Moral Agency and Technical Artifacts, NIAS"
+      "itemID": 204
     },
     {
       "itemType": "book",

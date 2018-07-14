@@ -21,8 +21,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "others"
+          "name": "others"
         },
         {
           "creatorType": "editor",

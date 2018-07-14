@@ -349,7 +349,6 @@
 
       ],
       "itemID": 60,
-      "publicationTitle": "Proceedings of the Symposium on Artificial Intelligence and Programming Languages",
       "seeAlso": [
 
       ]
@@ -381,7 +380,6 @@
 
       ],
       "itemID": 61,
-      "publicationTitle": "Proceedings of the International Conference on Software Engineering",
       "seeAlso": [
 
       ]
@@ -475,7 +473,6 @@
 
       ],
       "itemID": 64,
-      "publicationTitle": "Proceedings of the Fall Joint Computer Conference",
       "seeAlso": [
 
       ]
@@ -642,7 +639,6 @@
 
       ],
       "itemID": 68,
-      "publicationTitle": "AAAI-91",
       "seeAlso": [
 
       ]
@@ -702,7 +698,6 @@
 
       ],
       "itemID": 70,
-      "publicationTitle": "IJCAI-75",
       "seeAlso": [
 
       ]
@@ -738,7 +733,6 @@
 
       ],
       "itemID": 71,
-      "publicationTitle": "IJCAI-73",
       "seeAlso": [
 
       ]
@@ -887,7 +881,6 @@
 
       ],
       "itemID": 75,
-      "publicationTitle": "Theoretical Issues in Natural Language Processing",
       "seeAlso": [
 
       ]
@@ -1426,7 +1419,6 @@
 
       ],
       "itemID": 92,
-      "publicationTitle": "IJCAI-77",
       "seeAlso": [
 
       ]
@@ -1458,7 +1450,6 @@
 
       ],
       "itemID": 93,
-      "publicationTitle": "IJCAI-77",
       "seeAlso": [
 
       ]
@@ -1586,7 +1577,6 @@
 
       ],
       "itemID": 97,
-      "publicationTitle": "COLING-90",
       "seeAlso": [
 
       ]
@@ -2199,7 +2189,6 @@
 
       ],
       "itemID": 117,
-      "publicationTitle": "ACL-87",
       "seeAlso": [
 
       ]
@@ -3967,7 +3956,6 @@
 
       ],
       "itemID": 168,
-      "publicationTitle": "IJCAI-81",
       "seeAlso": [
 
       ]
@@ -5743,7 +5731,6 @@
 
       ],
       "itemID": 221,
-      "publicationTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics",
       "seeAlso": [
 
       ]
@@ -5805,7 +5792,6 @@
 
       ],
       "itemID": 223,
-      "publisher": "MIT",
       "seeAlso": [
 
       ]
@@ -6012,7 +5998,6 @@
 
       ],
       "itemID": 229,
-      "publicationTitle": "AAAI-82",
       "seeAlso": [
 
       ]
@@ -6745,7 +6730,6 @@
 
       ],
       "itemID": 250,
-      "publisher": "National Academy of Sciences/National Research Council",
       "seeAlso": [
 
       ]
@@ -6988,7 +6972,6 @@
 
       ],
       "itemID": 258,
-      "publisher": "CSLI",
       "number": "CSLI-85-32",
       "seeAlso": [
 
@@ -7023,7 +7006,6 @@
 
       ],
       "itemID": 259,
-      "publicationTitle": "Proc. AAAI",
       "seeAlso": [
 
       ]
@@ -7081,7 +7063,6 @@
 
       ],
       "itemID": 261,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -7774,7 +7755,6 @@
 
       ],
       "itemID": 281,
-      "publisher": "Yale University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -7865,7 +7845,6 @@
 
       ],
       "itemID": 284,
-      "publisher": "MIT Department of Electrical Engineering and Computer Science",
       "seeAlso": [
 
       ]
@@ -7930,7 +7909,6 @@
 
       ],
       "itemID": 286,
-      "publisher": "Stanford University Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -8353,7 +8331,6 @@
 
       ],
       "itemID": 298,
-      "publisher": "University of Texas at Austin Department of Mathematics and Computer Sciences",
       "seeAlso": [
 
       ]
@@ -8518,7 +8495,6 @@
 
       ],
       "itemID": 303,
-      "publicationTitle": "AAAI-82",
       "seeAlso": [
 
       ]
@@ -8581,7 +8557,6 @@
 
       ],
       "itemID": 305,
-      "publisher": "MITAI",
       "number": "Working Paper 303",
       "seeAlso": [
 
@@ -8618,7 +8593,6 @@
 
       ],
       "itemID": 306,
-      "publicationTitle": "AAAI-88",
       "seeAlso": [
 
       ]
@@ -8876,7 +8850,6 @@
 
       ],
       "itemID": 313,
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
       "seeAlso": [
 
       ]
@@ -8912,7 +8885,6 @@
 
       ],
       "itemID": 314,
-      "publicationTitle": "AAAI-83",
       "seeAlso": [
 
       ]
@@ -8944,7 +8916,6 @@
 
       ],
       "itemID": 315,
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
       "seeAlso": [
 
       ]
@@ -9089,7 +9060,6 @@
 
       ],
       "itemID": 319,
-      "publisher": "University of Waterloo Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -9150,7 +9120,6 @@
 
       ],
       "itemID": 321,
-      "publisher": "Yale University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -9182,7 +9151,6 @@
 
       ],
       "itemID": 322,
-      "publicationTitle": "IJCAI-83",
       "seeAlso": [
 
       ]
@@ -9403,7 +9371,6 @@
 
       ],
       "itemID": 328,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -9572,7 +9539,6 @@
 
       ],
       "itemID": 333,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -9677,7 +9643,6 @@
 
       ],
       "itemID": 336,
-      "publisher": "University of British Columbia Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -10030,7 +9995,6 @@
 
       ],
       "itemID": 347,
-      "publisher": "Stanford University Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -10101,7 +10065,6 @@
 
       ],
       "itemID": 349,
-      "publisher": "University of Essex Computer Science Department",
       "seeAlso": [
 
       ]
@@ -10660,7 +10623,6 @@
 
       ],
       "itemID": 366,
-      "publicationTitle": "AAAI-80",
       "seeAlso": [
 
       ]
@@ -11030,7 +10992,6 @@
 
       ],
       "itemID": 378,
-      "publicationTitle": "AAAI-82",
       "seeAlso": [
 
       ]
@@ -11066,7 +11027,6 @@
 
       ],
       "itemID": 379,
-      "publicationTitle": "AAAI-88",
       "seeAlso": [
 
       ]
@@ -12086,8 +12046,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         },
         {
           "firstName": "Gerald J.",
@@ -12107,7 +12066,6 @@
 
       ],
       "itemID": 409,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -12121,8 +12079,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12137,7 +12094,6 @@
 
       ],
       "itemID": 410,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -12151,8 +12107,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12167,7 +12122,6 @@
 
       ],
       "itemID": 411,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -12182,8 +12136,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12198,7 +12151,6 @@
 
       ],
       "itemID": 412,
-      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -12213,8 +12165,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12229,7 +12180,6 @@
 
       ],
       "itemID": 413,
-      "publicationTitle": "IJCAI-77",
       "seeAlso": [
 
       ]
@@ -12245,8 +12195,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12275,8 +12224,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12305,8 +12253,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12321,7 +12268,6 @@
 
       ],
       "itemID": 416,
-      "publicationTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming",
       "seeAlso": [
 
       ]
@@ -12336,8 +12282,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12365,8 +12310,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12381,7 +12325,6 @@
 
       ],
       "itemID": 418,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -12435,8 +12378,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         },
         {
           "firstName": "John",
@@ -12470,8 +12412,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12486,7 +12427,6 @@
 
       ],
       "itemID": 421,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -12521,7 +12461,6 @@
 
       ],
       "itemID": 422,
-      "publicationTitle": "AAAI-82",
       "seeAlso": [
 
       ]
@@ -12535,8 +12474,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12551,7 +12489,6 @@
 
       ],
       "itemID": 423,
-      "publisher": "Yale University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -12566,8 +12503,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12582,7 +12518,6 @@
 
       ],
       "itemID": 424,
-      "publicationTitle": "AAAI-83",
       "seeAlso": [
 
       ]
@@ -12596,8 +12531,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12612,7 +12546,6 @@
 
       ],
       "itemID": 425,
-      "publisher": "Yale University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -12626,8 +12559,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12642,7 +12574,6 @@
 
       ],
       "itemID": 426,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -12658,8 +12589,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         },
         {
           "firstName": "J.",
@@ -12731,8 +12661,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12763,8 +12692,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12795,8 +12723,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12827,8 +12754,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12855,8 +12781,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -12937,7 +12862,6 @@
 
       ],
       "itemID": 434,
-      "publisher": "Yale Center for Computational Vision and Control",
       "number": "CVC TR-98-003",
       "seeAlso": [
 
@@ -12955,8 +12879,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -13008,8 +12931,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MCDERMOTT"
+          "name": "MCDERMOTT"
         }
       ],
       "tags": [
@@ -13059,7 +12981,6 @@
 
       ],
       "itemID": 438,
-      "publicationTitle": "IJCAI-81",
       "seeAlso": [
 
       ]
@@ -13150,7 +13071,6 @@
 
       ],
       "itemID": 441,
-      "publisher": "Yale University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -13165,8 +13085,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Miller, D., Firby, J."
+          "name": "Miller, D., Firby, J."
         },
         {
           "firstName": "T.",
@@ -13186,7 +13105,6 @@
 
       ],
       "itemID": 442,
-      "publicationTitle": "Proceedings of 9th IJCAI 1985",
       "seeAlso": [
 
       ]
@@ -13359,7 +13277,6 @@
 
       ],
       "itemID": 447,
-      "publisher": "SRI Artificial Intelligence Center",
       "seeAlso": [
 
       ]
@@ -13539,7 +13456,6 @@
 
       ],
       "itemID": 452,
-      "publisher": "University of Maryland, College Park",
       "type": "Technical Report",
       "number": "CS-TR-3981",
       "seeAlso": [
@@ -13761,7 +13677,6 @@
 
       ],
       "itemID": 457,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -14195,7 +14110,6 @@
 
       ],
       "itemID": 469,
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
       "seeAlso": [
 
       ]
@@ -14293,7 +14207,6 @@
 
       ],
       "itemID": 472,
-      "publicationTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming",
       "seeAlso": [
 
       ]
@@ -14482,8 +14395,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "REITER"
+          "name": "REITER"
         }
       ],
       "tags": [
@@ -14702,7 +14614,6 @@
 
       ],
       "itemID": 484,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -14769,7 +14680,6 @@
 
       ],
       "itemID": 486,
-      "publisher": "Syracuse University School of Computer and Information Sciences",
       "seeAlso": [
 
       ]
@@ -14942,7 +14852,6 @@
 
       ],
       "itemID": 491,
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "seeAlso": [
 
       ]
@@ -15076,7 +14985,6 @@
 
       ],
       "itemID": 495,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -15283,7 +15191,6 @@
 
       ],
       "itemID": 501,
-      "publisher": "Stanford University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -15520,7 +15427,6 @@
 
       ],
       "itemID": 508,
-      "publicationTitle": "IJCAI-77",
       "seeAlso": [
 
       ]
@@ -15963,8 +15869,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "WILKINS"
+          "name": "WILKINS"
         },
         {
           "firstName": "Karen L.",
@@ -16240,7 +16145,6 @@
 
       ],
       "itemID": 530,
-      "publicationTitle": "AAAI-83",
       "seeAlso": [
 
       ]
@@ -16302,7 +16206,6 @@
 
       ],
       "itemID": 532,
-      "publicationTitle": "AAAI-80",
       "seeAlso": [
 
       ]
@@ -16701,7 +16604,6 @@
 
       ],
       "itemID": 544,
-      "publisher": "University of Rochester Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -17119,7 +17021,6 @@
 
       ],
       "itemID": 557,
-      "publisher": "Department of Computer Science University of Illinois at",
       "seeAlso": [
 
       ]
@@ -17278,7 +17179,6 @@
 
       ],
       "itemID": 562,
-      "publisher": "Department of Computer Science, University of California at Berkeley",
       "seeAlso": [
 
       ]
@@ -17309,7 +17209,6 @@
 
       ],
       "itemID": 563,
-      "publicationTitle": "AAAI-87",
       "seeAlso": [
 
       ]
@@ -17406,7 +17305,6 @@
 
       ],
       "itemID": 566,
-      "publisher": "Department of Computer Science Yale University",
       "seeAlso": [
 
       ]
@@ -17537,7 +17435,6 @@
 
       ],
       "itemID": 570,
-      "publicationTitle": "IJCAI-83",
       "seeAlso": [
 
       ]
@@ -17568,7 +17465,6 @@
 
       ],
       "itemID": 571,
-      "publicationTitle": "ACL-86",
       "seeAlso": [
 
       ]
@@ -17677,7 +17573,6 @@
 
       ],
       "itemID": 574,
-      "publicationTitle": "AAAI-86",
       "seeAlso": [
 
       ]
@@ -17737,7 +17632,6 @@
 
       ],
       "itemID": 576,
-      "publisher": "Department of Computer Science, University of Rochester",
       "number": "TR 215",
       "seeAlso": [
 
@@ -17877,7 +17771,6 @@
 
       ],
       "itemID": 580,
-      "publicationTitle": "AAAI-86",
       "seeAlso": [
 
       ]
@@ -17907,7 +17800,6 @@
 
       ],
       "itemID": 581,
-      "publisher": "Univeristy of Rochester Computer Science Department",
       "seeAlso": [
 
       ]
@@ -17973,7 +17865,6 @@
 
       ],
       "itemID": 583,
-      "publisher": "Computer Systems Research Institute, University of Toronto",
       "seeAlso": [
 
       ]
@@ -18036,7 +17927,6 @@
 
       ],
       "itemID": 585,
-      "publicationTitle": "ACL-85",
       "seeAlso": [
 
       ]
@@ -18072,7 +17962,6 @@
 
       ],
       "itemID": 586,
-      "publicationTitle": "IJCAI-87",
       "seeAlso": [
 
       ]
@@ -18118,7 +18007,6 @@
 
       ],
       "itemID": 587,
-      "publicationTitle": "ACL-88",
       "seeAlso": [
 
       ]
@@ -18165,7 +18053,6 @@
 
       ],
       "itemID": 588,
-      "publisher": "Artificial Intelligence Center, SRI International",
       "number": "499",
       "seeAlso": [
 
@@ -18279,7 +18166,6 @@
 
       ],
       "itemID": 591,
-      "publisher": "CSLI",
       "number": "CSLI-86-63",
       "seeAlso": [
 
@@ -18358,7 +18244,6 @@
 
       ],
       "itemID": 593,
-      "publisher": "Artificial Intelligence Center,SRI International",
       "seeAlso": [
 
       ]
@@ -18452,7 +18337,6 @@
 
       ],
       "itemID": 596,
-      "publicationTitle": "Proceedings of the 21st Annual Meeting of the Association for Computational Linguistics",
       "seeAlso": [
 
       ]
@@ -18482,7 +18366,6 @@
 
       ],
       "itemID": 597,
-      "publisher": "Brown University Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -18741,7 +18624,6 @@
 
       ],
       "itemID": 605,
-      "publicationTitle": "AAAI-90",
       "seeAlso": [
 
       ]
@@ -18802,7 +18684,6 @@
 
       ],
       "itemID": 607,
-      "publicationTitle": "Proceedings of the AAAI Symposium on Abduction",
       "seeAlso": [
 
       ]
@@ -18865,7 +18746,6 @@
 
       ],
       "itemID": 609,
-      "publicationTitle": "Proceedings of the AAAI Symposium on Abduction",
       "seeAlso": [
 
       ]
@@ -19361,7 +19241,6 @@
 
       ],
       "itemID": 624,
-      "publicationTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop",
       "seeAlso": [
 
       ]
@@ -19463,7 +19342,6 @@
 
       ],
       "itemID": 627,
-      "publicationTitle": "Proceedings of the Third International Conference on Principles of Knowledge Representation and Reasoning",
       "seeAlso": [
 
       ]
@@ -19652,7 +19530,6 @@
         }
       ],
       "itemID": 632,
-      "publicationTitle": "Proceedings of the International Conference on Multi-Agent Systems",
       "seeAlso": [
 
       ]
@@ -19788,7 +19665,6 @@
 
       ],
       "itemID": 637,
-      "publicationTitle": "AAAI-88",
       "seeAlso": [
 
       ]
@@ -19821,7 +19697,6 @@
 
       ],
       "itemID": 638,
-      "publicationTitle": "IJCAI-89",
       "seeAlso": [
 
       ]
@@ -19911,7 +19786,6 @@
 
       ],
       "itemID": 640,
-      "publisher": "MIT Center for Cognitive Science",
       "type": "Occasional Paper",
       "number": "41",
       "seeAlso": [
@@ -19945,7 +19819,6 @@
 
       ],
       "itemID": 641,
-      "publisher": "MIT Laboratory for Computer Science",
       "number": "MIT/LCS/TR--504",
       "seeAlso": [
 
@@ -20212,7 +20085,6 @@
 
       ],
       "itemID": 649,
-      "publicationTitle": "Proceedings of IEEE International Conference on Robotics",
       "seeAlso": [
 
       ]
@@ -20242,7 +20114,6 @@
 
       ],
       "itemID": 650,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -20272,7 +20143,6 @@
 
       ],
       "itemID": 651,
-      "publicationTitle": "Proceedings of IEEE Workshop on Principles of Knowledge-Based Systems",
       "seeAlso": [
 
       ]
@@ -20302,7 +20172,6 @@
 
       ],
       "itemID": 652,
-      "publicationTitle": "Proceedings of CSCSI 84. Canadian Society for Computational Studies of Intelligence",
       "seeAlso": [
 
       ]
@@ -20332,7 +20201,6 @@
 
       ],
       "itemID": 653,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -20362,7 +20230,6 @@
 
       ],
       "itemID": 654,
-      "publisher": "Yale University Computer Science Department",
       "seeAlso": [
 
       ]
@@ -20393,7 +20260,6 @@
 
       ],
       "itemID": 655,
-      "publicationTitle": "IJCAI-85",
       "seeAlso": [
 
       ]
@@ -20424,7 +20290,6 @@
 
       ],
       "itemID": 656,
-      "publicationTitle": "Proceedings of the Workshop on Planning and Reasoning About Action",
       "seeAlso": [
 
       ]
@@ -20484,7 +20349,6 @@
 
       ],
       "itemID": 658,
-      "publicationTitle": "Proceedings of the Third International ACM Conference on Office Information Systems",
       "seeAlso": [
 
       ]
@@ -20548,7 +20412,6 @@
 
       ],
       "itemID": 660,
-      "publicationTitle": "IJCAI-87",
       "seeAlso": [
 
       ]
@@ -20583,7 +20446,6 @@
 
       ],
       "itemID": 661,
-      "publicationTitle": "AAAI-87",
       "seeAlso": [
 
       ]
@@ -20618,7 +20480,6 @@
 
       ],
       "itemID": 662,
-      "publisher": "Brown University, Department of Computer Science",
       "seeAlso": [
 
       ]
@@ -20654,7 +20515,6 @@
 
       ],
       "itemID": 663,
-      "publicationTitle": "AAAI-88",
       "seeAlso": [
 
       ]
@@ -21025,7 +20885,6 @@
 
       ],
       "itemID": 674,
-      "publisher": "Computer Science Department, Indiana University",
       "number": "363a",
       "seeAlso": [
 
@@ -21387,7 +21246,6 @@
 
       ],
       "itemID": 684,
-      "publisher": "Department of Computer and Information Science, University of Massachusetts, Amherst",
       "type": "COINS Technical Report",
       "number": "89--89",
       "seeAlso": [
@@ -21406,8 +21264,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "GINSBERG"
+          "name": "GINSBERG"
         }
       ],
       "tags": [
@@ -21746,7 +21603,6 @@
 
       ],
       "itemID": 695,
-      "publicationTitle": "AAAI-88",
       "seeAlso": [
 
       ]
@@ -21778,7 +21634,6 @@
 
       ],
       "itemID": 696,
-      "publicationTitle": "IJCAI-89",
       "seeAlso": [
 
       ]
@@ -21895,7 +21750,6 @@
 
       ],
       "itemID": 700,
-      "publisher": "Linköping University",
       "number": "LiTH-IDA-R-92-30",
       "seeAlso": [
 
@@ -21927,7 +21781,6 @@
 
       ],
       "itemID": 701,
-      "publisher": "Linköping University",
       "type": "Linköping Electronic Articles in Computer and Information Science",
       "seeAlso": [
 
@@ -22112,7 +21965,6 @@
 
       ],
       "itemID": 706,
-      "publisher": "Department of Computer Science and Engineering, University of Washington",
       "number": "93--09--06",
       "seeAlso": [
 
@@ -22230,7 +22082,6 @@
 
       ],
       "itemID": 709,
-      "publicationTitle": "Proceedings of the 1992 AAAI Spring Symposium on knowledge assimilation",
       "seeAlso": [
 
       ]
@@ -22476,7 +22327,6 @@
 
       ],
       "itemID": 716,
-      "publisher": "UDUB",
       "number": "93-06-04",
       "seeAlso": [
 
@@ -22644,7 +22494,6 @@
 
       ],
       "itemID": 720,
-      "publicationTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)",
       "seeAlso": [
 
       ]
@@ -22685,7 +22534,6 @@
 
       ],
       "itemID": 721,
-      "publicationTitle": "Proceedings of the Eleventh Conference on Uncertainty in Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -22717,7 +22565,6 @@
 
       ],
       "itemID": 722,
-      "publicationTitle": "Proceedings of the Tenth Conference on Uncertainty in Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -22759,7 +22606,6 @@
 
       ],
       "itemID": 723,
-      "publisher": "UDUB",
       "number": "93-06-03",
       "seeAlso": [
 
@@ -22844,7 +22690,6 @@
 
       ],
       "itemID": 725,
-      "publisher": "UDUB",
       "number": "93-12-04",
       "seeAlso": [
 
@@ -22926,7 +22771,6 @@
         }
       ],
       "itemID": 727,
-      "publicationTitle": "Proceedings of the AIAA Conference on Intelligent Robots in Field, Factory, Service and Space",
       "seeAlso": [
 
       ]
@@ -22959,7 +22803,6 @@
 
       ],
       "itemID": 729,
-      "publisher": "Department of Computer Science, Yale University",
       "type": "YALEU/CSD/RR",
       "number": "599",
       "seeAlso": [
@@ -23581,7 +23424,6 @@
 
       ],
       "itemID": 747,
-      "publisher": "ICSI",
       "number": "TR--93--027",
       "seeAlso": [
 
@@ -23833,7 +23675,6 @@
 
       ],
       "itemID": 754,
-      "publisher": "ICSI",
       "number": "TR-93-065",
       "seeAlso": [
 
@@ -23997,7 +23838,6 @@
 
       ],
       "itemID": 759,
-      "publisher": "University of Pennsylvania Institute for Research in Cognitive Science",
       "number": "IRCS--93--03",
       "seeAlso": [
 
@@ -24095,7 +23935,6 @@
 
       ],
       "itemID": 762,
-      "publisher": "The Institute for the Learning Sciences, Northwestern University",
       "number": "41",
       "seeAlso": [
 
@@ -24163,7 +24002,6 @@
 
       ],
       "itemID": 764,
-      "publisher": "The Institute for the Learning Sciences, Northwestern University",
       "number": "53",
       "seeAlso": [
 
@@ -24201,7 +24039,6 @@
 
       ],
       "itemID": 765,
-      "publicationTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)",
       "seeAlso": [
 
       ]
@@ -24329,7 +24166,6 @@
 
       ],
       "itemID": 769,
-      "publisher": "Computer Science Department, Stanford University",
       "type": "Logic Group Report",
       "number": "Logic-92-1",
       "seeAlso": [
@@ -24434,7 +24270,6 @@
 
       ],
       "itemID": 772,
-      "publicationTitle": "Proceedings of the AISB Summer Conference",
       "seeAlso": [
 
       ]
@@ -25301,7 +25136,6 @@
 
       ],
       "itemID": 798,
-      "publisher": "Bilkent University, Department of Computer Engineering and Information Science",
       "number": "BU-CEIS-94-30",
       "seeAlso": [
 
@@ -25627,7 +25461,6 @@
 
       ],
       "itemID": 806,
-      "publisher": "NASA Ames Research Center",
       "number": "FIA-93-17",
       "seeAlso": [
 
@@ -25845,7 +25678,6 @@
 
       ],
       "itemID": 813,
-      "publicationTitle": "IJCAI",
       "seeAlso": [
 
       ]
@@ -26013,7 +25845,6 @@
         }
       ],
       "itemID": 817,
-      "publicationTitle": "IJCAI Workshop on Agent Theories, Archietectures and Languages",
       "seeAlso": [
 
       ]
@@ -26173,7 +26004,6 @@
 
       ],
       "itemID": 823,
-      "publisher": "Computer Science Department, University of Maryland",
       "number": "CS-TR-3239 and UMIACS-TR-94-31",
       "seeAlso": [
 
@@ -26758,7 +26588,6 @@
 
       ],
       "itemID": 843,
-      "publisher": "Computer Science Dept., University of Sherbrooke",
       "number": "197",
       "seeAlso": [
 
@@ -26909,7 +26738,6 @@
 
       ],
       "itemID": 847,
-      "publicationTitle": "Proceedings of the Sixth Conference on Artificial Intelligence Application",
       "seeAlso": [
 
       ]
@@ -27023,7 +26851,6 @@
 
       ],
       "itemID": 850,
-      "publisher": "SRI",
       "number": "411",
       "seeAlso": [
 
@@ -27040,8 +26867,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "INGRAND"
+          "name": "INGRAND"
         },
         {
           "firstName": "Olivier",
@@ -27186,7 +27012,6 @@
         }
       ],
       "itemID": 855,
-      "publisher": "KSL",
       "number": "KSL 92-71",
       "seeAlso": [
 
@@ -27219,7 +27044,6 @@
 
       ],
       "itemID": 857,
-      "publisher": "KSL",
       "number": "KSL 93-04",
       "seeAlso": [
 
@@ -27413,7 +27237,6 @@
 
       ],
       "itemID": 862,
-      "publisher": "CMUSCS",
       "number": "CMU-CS-94-123",
       "seeAlso": [
 
@@ -27616,7 +27439,6 @@
 
       ],
       "itemID": 868,
-      "publicationTitle": "AAAI Technical Report SSS-96-04: Planning with Incomplete Information for Robot Problems",
       "seeAlso": [
 
       ]
@@ -27925,7 +27747,6 @@
 
       ],
       "itemID": 876,
-      "publisher": "Albert-Ludwigs-Universität, Institut für Informatik",
       "number": "89",
       "seeAlso": [
 
@@ -27961,7 +27782,6 @@
 
       ],
       "itemID": 877,
-      "publicationTitle": "IJCAI-97",
       "seeAlso": [
 
       ]
@@ -28213,7 +28033,6 @@
 
       ],
       "itemID": 884,
-      "publicationTitle": "Proceedings of the Thirteenth International Conference on Machine Learning",
       "seeAlso": [
 
       ]
@@ -28254,7 +28073,6 @@
 
       ],
       "itemID": 885,
-      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -28422,7 +28240,6 @@
 
       ],
       "itemID": 890,
-      "publisher": "Intelligent Systems Program, University of Pittsburgh",
       "seeAlso": [
 
       ]
@@ -28528,7 +28345,6 @@
 
       ],
       "itemID": 893,
-      "publicationTitle": "Fifteenth International Joint Conference on Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -28831,7 +28647,6 @@
 
       ],
       "itemID": 901,
-      "publisher": "AAII",
       "type": "Technical Note",
       "number": "26",
       "seeAlso": [
@@ -29206,7 +29021,6 @@
 
       ],
       "itemID": 913,
-      "publisher": "Department of Computer Science, Brown University",
       "number": "CS-90-37",
       "seeAlso": [
 
@@ -29243,7 +29057,6 @@
 
       ],
       "itemID": 914,
-      "publisher": "Computing Research Laboratory, New Mexico State University",
       "number": "MCCS-90-194",
       "seeAlso": [
 
@@ -29456,7 +29269,6 @@
 
       ],
       "itemID": 921,
-      "publisher": "School of Computer and Information Science, Syracuse University",
       "number": "SU-CIS-90-15",
       "seeAlso": [
 
@@ -29489,7 +29301,6 @@
 
       ],
       "itemID": 922,
-      "publisher": "School of Computer and Information Science, Syracuse University",
       "number": "SU-CIS-90-02",
       "seeAlso": [
 
@@ -29522,7 +29333,6 @@
 
       ],
       "itemID": 923,
-      "publisher": "School of Computer and Information Science, Syracuse University",
       "number": "SU-CIS-90-07",
       "seeAlso": [
 
@@ -29575,7 +29385,6 @@
 
       ],
       "itemID": 924,
-      "publisher": "Cognitive Science Laboratory, Princeton University",
       "type": "CSL Report",
       "number": "43",
       "seeAlso": [
@@ -29707,7 +29516,6 @@
 
       ],
       "itemID": 927,
-      "publicationTitle": "Proceedings of the American Control Conference (ACC)",
       "seeAlso": [
 
       ]
@@ -29763,8 +29571,7 @@
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "MPOLLACK"
+          "name": "MPOLLACK"
         },
         {
           "firstName": "Michael T.",
@@ -30120,7 +29927,6 @@
 
       ],
       "itemID": 941,
-      "publicationTitle": "Proceedings of ECP-99",
       "seeAlso": [
 
       ]
@@ -30172,7 +29978,6 @@
         }
       ],
       "itemID": 942,
-      "publisher": "Carnegie-Mellon University",
       "number": "CMU-CS-79-124",
       "seeAlso": [
 
@@ -30392,7 +30197,6 @@
 
       ],
       "itemID": 949,
-      "publicationTitle": "ACM SIGMOD International Conference on the Management of Data",
       "seeAlso": [
 
       ]
@@ -30610,7 +30414,6 @@
         }
       ],
       "itemID": 954,
-      "publicationTitle": "Proceedings of the First Goddard Workshop on Formal Approaches to Agent-Based Systems (FAABS'00)",
       "seeAlso": [
 
       ]
@@ -30769,7 +30572,6 @@
 
       ],
       "itemID": 959,
-      "publicationTitle": "Conference on Intelligent Information Processing (IIP 2000) of the International Federation for Information Processing World Computer Congress (WCC 2000)",
       "seeAlso": [
 
       ]
@@ -30809,7 +30611,6 @@
 
       ],
       "itemID": 960,
-      "publicationTitle": "Second International Conference on Knowledge Engineering and Knowledge Management (EKAW'2000)",
       "seeAlso": [
 
       ]
@@ -30850,7 +30651,6 @@
 
       ],
       "itemID": 961,
-      "publicationTitle": "Twelfth International Conference on Software Engineering and Knowledge Engineering (SEKE2000)",
       "seeAlso": [
 
       ]
@@ -30987,7 +30787,6 @@
 
       ],
       "itemID": 963,
-      "publicationTitle": "Proceedings of the First International Conference on Knowledge Capture (K-Cap'01)",
       "seeAlso": [
 
       ]
@@ -31265,7 +31064,6 @@
 
       ],
       "itemID": 971,
-      "publicationTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop",
       "seeAlso": [
 
       ]
@@ -31307,7 +31105,6 @@
 
       ],
       "itemID": 972,
-      "publicationTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop",
       "seeAlso": [
 
       ]
@@ -31440,7 +31237,6 @@
 
       ],
       "itemID": 975,
-      "publisher": "Computer Science Department, University of Maryland",
       "number": "CS-TR-4604, UMIACS-TR-2004-46",
       "seeAlso": [
 
@@ -31680,7 +31476,6 @@
 
       ],
       "itemID": 980,
-      "publicationTitle": "Proceedings of the 3rd International NASA Workshop on Planning and Scheduling for Space",
       "seeAlso": [
 
       ]
@@ -31722,7 +31517,6 @@
 
       ],
       "itemID": 981,
-      "publicationTitle": "Proceedings ICTAI",
       "seeAlso": [
 
       ]
@@ -31791,7 +31585,6 @@
 
       ],
       "itemID": 982,
-      "publicationTitle": "ICAPS",
       "seeAlso": [
 
       ]
@@ -31829,7 +31622,6 @@
 
       ],
       "itemID": 983,
-      "publisher": "Institut für Informatik, Universität Freiburg",
       "type": "report00195",
       "seeAlso": [
 
@@ -31871,7 +31663,6 @@
 
       ],
       "itemID": 984,
-      "publisher": "Insitut für Informatik, Universität Freiburg",
       "number": "199",
       "seeAlso": [
 
@@ -32152,7 +31943,6 @@
 
       ],
       "itemID": 991,
-      "publicationTitle": "Proceedings of the 10th IEEE International Conference on Tools with Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -32213,7 +32003,6 @@
         }
       ],
       "itemID": 992,
-      "publisher": "Department of Computer Science, The University of Huddersfield",
       "seeAlso": [
 
       ]
@@ -32248,7 +32037,6 @@
 
       ],
       "itemID": 994,
-      "publicationTitle": "AAAI Spring Symposium on Planning with Incomplete Information for Robot Problems",
       "seeAlso": [
 
       ]
@@ -32395,7 +32183,6 @@
         }
       ],
       "itemID": 997,
-      "publicationTitle": "Proceedings of the Thirteenth Florida Artificial Intelligence Research Symposium (FLAIRS00)",
       "seeAlso": [
 
       ]
@@ -32436,7 +32223,6 @@
 
       ],
       "itemID": 999,
-      "publicationTitle": "American Institute of Aeronautics and Astronautics",
       "seeAlso": [
 
       ]
@@ -32451,8 +32237,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "FREED"
+          "name": "FREED"
         },
         {
           "firstName": "P.",
@@ -32487,7 +32272,6 @@
 
       ],
       "itemID": 1000,
-      "publicationTitle": "Proceedings of the 1st Space Exploration Conference: Continuing the Voyage of Discovery",
       "seeAlso": [
 
       ]
@@ -32499,8 +32283,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "FREED"
+          "name": "FREED"
         }
       ],
       "tags": [
@@ -32529,8 +32312,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "FREED"
+          "name": "FREED"
         },
         {
           "firstName": "R.",
@@ -32555,7 +32337,6 @@
 
       ],
       "itemID": 1002,
-      "publicationTitle": "Working Notes of the AAAI Spring Symposium on Human Interaction with Autonomous System Over Extended Operations",
       "seeAlso": [
 
       ]
@@ -32683,7 +32464,6 @@
 
       ],
       "itemID": 1005,
-      "publicationTitle": "International Semantic Web Conference",
       "seeAlso": [
 
       ]
@@ -32754,7 +32534,6 @@
         }
       ],
       "itemID": 1006,
-      "publicationTitle": "Proceedings of Planning for Web Services Workshop in ICAPS 2003",
       "seeAlso": [
 
       ]
@@ -32811,7 +32590,6 @@
 
       ],
       "itemID": 1008,
-      "publicationTitle": "User Modeling",
       "seeAlso": [
 
       ]
@@ -32882,7 +32660,6 @@
 
       ],
       "itemID": 1010,
-      "publisher": "Dept. of Electronics for Automation, University of Brescia",
       "type": "Technical Report",
       "number": "RT 2005-08-47",
       "seeAlso": [
@@ -33277,7 +33054,6 @@
 
       ],
       "itemID": 1020,
-      "publicationTitle": "ICAPS",
       "seeAlso": [
 
       ]
@@ -33456,7 +33232,6 @@
 
       ],
       "itemID": 1025,
-      "publicationTitle": "IJCAI",
       "seeAlso": [
 
       ]
@@ -33604,7 +33379,6 @@
 
       ],
       "itemID": 1029,
-      "publicationTitle": "Proceedings of the ICAPS-07 Workshop on AI Planning and Learning",
       "seeAlso": [
 
       ]
@@ -33644,7 +33418,6 @@
 
       ],
       "itemID": 1030,
-      "publicationTitle": "Proceedings of the Fifth International Conference on Knowledge Capture (KCAP-09)",
       "seeAlso": [
 
       ]
@@ -33741,7 +33514,6 @@
 
       ],
       "itemID": 1033,
-      "publicationTitle": "ILP-05",
       "seeAlso": [
 
       ]
@@ -33776,7 +33548,6 @@
 
       ],
       "itemID": 1034,
-      "publicationTitle": "ICML-97",
       "seeAlso": [
 
       ]
@@ -33816,7 +33587,6 @@
 
       ],
       "itemID": 1035,
-      "publicationTitle": "ILP-09",
       "seeAlso": [
 
       ]
@@ -33872,7 +33642,6 @@
 
       ],
       "itemID": 1036,
-      "publicationTitle": "Proceedings of the 9th International Conference on Machine Learning",
       "seeAlso": [
 
       ]
@@ -33908,7 +33677,6 @@
 
       ],
       "itemID": 1037,
-      "publicationTitle": "Investigating Explanation-Based Learning",
       "seeAlso": [
 
       ]
@@ -33948,7 +33716,6 @@
 
       ],
       "itemID": 1038,
-      "publicationTitle": "ICML-06",
       "seeAlso": [
 
       ]
@@ -34056,7 +33823,6 @@
 
       ],
       "itemID": 1041,
-      "publicationTitle": "Proceedings of the Third International Workshop on Multi-Strategy Learning (MSL-96)",
       "seeAlso": [
 
       ]
@@ -34096,7 +33862,6 @@
 
       ],
       "itemID": 1042,
-      "publicationTitle": "AAAI-10",
       "seeAlso": [
 
       ]
@@ -34136,7 +33901,6 @@
 
       ],
       "itemID": 1043,
-      "publicationTitle": "IJCAI-09",
       "seeAlso": [
 
       ]
@@ -34176,7 +33940,6 @@
 
       ],
       "itemID": 1044,
-      "publicationTitle": "AAAI-08",
       "seeAlso": [
 
       ]
@@ -34297,7 +34060,6 @@
 
       ],
       "itemID": 1047,
-      "publicationTitle": "IJCAI Proceedings",
       "seeAlso": [
 
       ]
@@ -34335,7 +34097,6 @@
 
       ],
       "itemID": 1048,
-      "publicationTitle": "AAAI",
       "seeAlso": [
 
       ]
@@ -34378,7 +34139,6 @@
 
       ],
       "itemID": 1049,
-      "publicationTitle": "Proceedings of the Seventeenth International Conference on Automated Planning and Scheduling (ICAPS-07)",
       "seeAlso": [
 
       ]
@@ -34431,7 +34191,6 @@
 
       ],
       "itemID": 1050,
-      "publicationTitle": "ICAPS",
       "seeAlso": [
 
       ]
@@ -34471,7 +34230,6 @@
 
       ],
       "itemID": 1051,
-      "publicationTitle": "Proceedings of the 14th International Conference on Automated Planning and Scheduling ICAPS-04",
       "seeAlso": [
 
       ]
@@ -34507,7 +34265,6 @@
 
       ],
       "itemID": 1052,
-      "publicationTitle": "AIPS",
       "seeAlso": [
 
       ]
@@ -34543,7 +34300,6 @@
 
       ],
       "itemID": 1053,
-      "publicationTitle": "AIPS",
       "seeAlso": [
 
       ]
@@ -34743,7 +34499,6 @@
 
       ],
       "itemID": 1059,
-      "publicationTitle": "ICAPS Workshop on AI Planning and Learning",
       "seeAlso": [
 
       ]
@@ -34896,7 +34651,6 @@
 
       ],
       "itemID": 1063,
-      "publicationTitle": "IJCAI",
       "seeAlso": [
 
       ]
@@ -34934,7 +34688,6 @@
 
       ],
       "itemID": 1064,
-      "publicationTitle": "AAAI-99",
       "seeAlso": [
 
       ]
@@ -34969,7 +34722,6 @@
 
       ],
       "itemID": 1065,
-      "publicationTitle": "Proceedings AAAI",
       "seeAlso": [
 
       ]
@@ -35025,7 +34777,6 @@
         }
       ],
       "itemID": 1066,
-      "publicationTitle": "Proceedings of the 16th Conference on Very Large Databases, Morgan Kaufman pubs. (Los Altos CA), Brisbane",
       "seeAlso": [
 
       ]
@@ -35171,7 +34922,6 @@
 
       ],
       "itemID": 1071,
-      "publicationTitle": "PICAPS",
       "seeAlso": [
 
       ]
@@ -35321,7 +35071,6 @@
 
       ],
       "itemID": 1073,
-      "publicationTitle": "Web Intelligence and Intelligent Agent Technology (WI-IAT), 2010 IEEE/WIC/ACM International Conference on",
       "seeAlso": [
 
       ]
@@ -35410,7 +35159,6 @@
 
       ],
       "itemID": 1075,
-      "publicationTitle": "Proceedings ICAPS",
       "seeAlso": [
 
       ]
@@ -35544,7 +35292,6 @@
 
       ],
       "itemID": 1078,
-      "publicationTitle": "NIPS-2000",
       "seeAlso": [
 
       ]
@@ -35576,7 +35323,6 @@
 
       ],
       "itemID": 1079,
-      "publicationTitle": "Proceedings of the Sixth International Conference on Artificial Intelligence Planning Systems, April 23-27, 2002, Toulouse, France",
       "seeAlso": [
 
       ]
@@ -35659,7 +35405,6 @@
 
       ],
       "itemID": 1081,
-      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -35700,7 +35445,6 @@
 
       ],
       "itemID": 1082,
-      "publicationTitle": "Proceedings of the AAAI Spring Symposium: Formal Verification and Modeling in Human-Machine Systems",
       "seeAlso": [
 
       ]
@@ -35740,7 +35484,6 @@
 
       ],
       "itemID": 1083,
-      "publicationTitle": "Proceedings of the Twenty-Eighth AAAI Conference on Artificial Intelligence",
       "seeAlso": [
 
       ]
@@ -35854,7 +35597,6 @@
 
       ],
       "itemID": 1086,
-      "publicationTitle": "IJCAI",
       "seeAlso": [
 
       ]
@@ -35970,7 +35712,6 @@
 
       ],
       "itemID": 1088,
-      "publicationTitle": "AAAI",
       "seeAlso": [
 
       ]
@@ -36154,8 +35895,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "GINSBERG"
+          "name": "GINSBERG"
         }
       ],
       "tags": [
