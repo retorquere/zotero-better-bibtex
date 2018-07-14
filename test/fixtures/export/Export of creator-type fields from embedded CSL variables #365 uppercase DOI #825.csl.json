@@ -61,33 +61,24 @@
     "volume": "3"
   },
   {
-    "editor": [ { "family": "Xxx", "given": "", "isInstitution": 1 } ],
+    "editor": [ { "literal": "Xxx" } ],
     "id": "emptybook",
     "note": "{:X-genre: xxx}",
     "type": "entry-encyclopedia"
   },
   {
-    "DOI":"10.1093/ref:odnb/10183",
-    "URL":"http://www.oxforddnb.com/view/article/10183",
-    "accessed":{"date-parts":[[2014,6,13]]},
-    "author":[{"family":"Blair","given":"John"}],
-    "container-title":"Oxford dictionary of national biography",
-    "editor":[
-      {
-        "family":"Matthew",
-        "given":"H.C.G."
-      },
-      {
-        "family":"Harrison",
-        "given":"Brian Howard"
-      }
-    ],
-    "id":"Blair2004",
-    "issued":{"date-parts":[[2004]]},
-    "publisher":"Oxford University Press",
-    "publisher-place":"Oxford",
-    "source":"CrossRef",
-    "title":"Frithuswith (<i>d.</i> 727)",
-    "type":"entry-encyclopedia"
-	}
+    "DOI": "10.1093/ref:odnb/10183",
+    "URL": "http://www.oxforddnb.com/view/article/10183",
+    "accessed": { "date-parts": [ [ 2014, 6, 13 ] ] },
+    "author": [ { "family": "Blair", "given": "John" } ],
+    "container-title": "Oxford dictionary of national biography",
+    "editor": [ { "family": "Matthew", "given": "H.C.G." }, { "family": "Harrison", "given": "Brian Howard" } ],
+    "id": "Blair2004",
+    "issued": { "date-parts": [ [ 2004 ] ] },
+    "publisher": "Oxford University Press",
+    "publisher-place": "Oxford",
+    "source": "CrossRef",
+    "title": "Frithuswith (<i>d.</i> 727)",
+    "type": "entry-encyclopedia"
+  }
 ]
