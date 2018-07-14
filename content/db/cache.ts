@@ -9,8 +9,6 @@ import { ZoteroConfig } from '../zotero-config'
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
 
-import { Preferences as Prefs } from '../prefs'
-
 class NoSuchFileError extends Error {
   public name = 'NoSuchFile'
 
