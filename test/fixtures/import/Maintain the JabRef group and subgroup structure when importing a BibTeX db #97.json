@@ -2125,7 +2125,6 @@
       "itemType": "thesis",
       "date": "1965",
       "extra": "Citation Key: Assimos_1965_Mthesis \nbibtex[owner=Francesco]",
-      "university": "Wayne State University, Dept. of Chemistry",
       "title": "Investigation of slow changes in the electrical conductivity and Hall constant of single crystal cuprous oxide",
       "creators": [
         {
@@ -2136,7 +2135,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 82
+      "itemID": 82,
+      "publisher": "Wayne State University, Dept. of Chemistry"
     },
     {
       "itemType": "journalArticle",
@@ -2167,7 +2167,6 @@
       "itemType": "thesis",
       "date": "1973",
       "extra": "Citation Key: Assimos_1973_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "Wayne State University, Dept. of Chemistry",
       "title": "An investigation of the photoelectric threshold, work function and bulk Fermi level of single-crystal cuprous oxide, and the photovoltaic properties of single-crystal and polycrystalline cuprous oxide-copper contacts",
       "creators": [
         {
@@ -2202,7 +2201,8 @@
           ]
         }
       ],
-      "itemID": 84
+      "itemID": 84,
+      "publisher": "Wayne State University, Dept. of Chemistry"
     },
     {
       "itemType": "journalArticle",
@@ -3101,7 +3101,6 @@
       "extra": "Citation Key: Biccari_2008_proc \nbibtex[owner=Francesco]",
       "DOI": "10.4229/23rdEUPVSEC2008-1CV.2.54",
       "title": "Metastability Effects in Cu₂O Solar Cells",
-      "proceedingsTitle": "Proceedings of the 23rd European Photovoltaic Solar Energy Conference, Valencia, Spain",
       "creators": [
         {
           "firstName": "Francesco",
@@ -3127,7 +3126,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 113
+      "itemID": 113,
+      "publicationTitle": "Proceedings of the 23rd European Photovoltaic Solar Energy Conference, Valencia, Spain"
     },
     {
       "itemType": "journalArticle",
@@ -4078,7 +4078,6 @@
       "url": "http://pastel.paristech.org/00001604/",
       "date": "2005",
       "extra": "Citation Key: Bruneval_2005_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "Ecole Polytechnique, Palaiseau, France",
       "title": "Exchange and Correlation in the Electronic Structure of Solids, from Silicon to Cuprous Oxide: GW Approximation and beyond",
       "creators": [
         {
@@ -4089,7 +4088,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 143
+      "itemID": 143,
+      "publisher": "Ecole Polytechnique, Palaiseau, France"
     },
     {
       "itemType": "journalArticle",
@@ -4970,7 +4970,6 @@
       "extra": "Citation Key: Chen_2005 \nbibtex[owner=Francesco]",
       "DOI": "10.1109/IEDM.2005.1609461",
       "title": "Non-Volatile Resistive Switching for Advanced Memory Applications",
-      "proceedingsTitle": "IEEE International Electron Devices Meeting, 2005. IEDM Technical Digest",
       "creators": [
         {
           "firstName": "An",
@@ -5045,7 +5044,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 167
+      "itemID": 167,
+      "publicationTitle": "IEEE International Electron Devices Meeting, 2005. IEDM Technical Digest"
     },
     {
       "itemType": "patent",
@@ -6134,7 +6134,6 @@
       "url": "http://hdl.handle.net/2003/2334",
       "date": "2003",
       "extra": "Citation Key: Dasbach_2003_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "Dortmund University, Shaker, Aachen",
       "title": "Spectroscopy of Polaritonic Excitations in Semiconductors",
       "creators": [
         {
@@ -6145,7 +6144,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 195
+      "itemID": 195,
+      "publisher": "Dortmund University, Shaker, Aachen"
     },
     {
       "itemType": "journalArticle",
@@ -6822,7 +6822,6 @@
       "date": "1995",
       "extra": "97th Annual Meeting and Exposition of the American Ceramic Society, Cincinnati, Ohio, May 1995 \nCitation Key: Dieckmann_1995_proc \nbibtex[owner=Francesco]",
       "title": "Point Defects and Transport of Matter and Charge in Non-Stoichiometric Oxides",
-      "proceedingsTitle": "“Crystal Growth of Novel Electronic Materials”, Ceramic Transactions",
       "creators": [
         {
           "firstName": "R.",
@@ -6842,7 +6841,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 214
+      "itemID": 214,
+      "publicationTitle": "“Crystal Growth of Novel Electronic Materials”, Ceramic Transactions"
     },
     {
       "itemType": "conferencePaper",
@@ -6851,7 +6851,6 @@
       "date": "1996",
       "extra": "Proceedings of the Mass and Charge Transport in Ceramics Workshop, Nagoya, Japan (1996) \nCitation Key: Dieckmann_1996_proc \nbibtex[owner=Francesco]",
       "title": "Point Defects and Transport of Matter and Charge in Non-Stoichiometric Oxides (II)",
-      "proceedingsTitle": "“Mass and Charge Transport in Ceramics”, Ceramic Transactions",
       "creators": [
         {
           "firstName": "R.",
@@ -6876,7 +6875,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 215
+      "itemID": 215,
+      "publicationTitle": "“Mass and Charge Transport in Ceramics”, Ceramic Transactions"
     },
     {
       "itemType": "journalArticle",
@@ -7164,7 +7164,6 @@
       "date": "1978",
       "extra": "Citation Key: Drobny_1978_proc \nbibtex[owner=Francesco]",
       "title": "The photovoltaic properties of thin copper oxide films",
-      "proceedingsTitle": "Prooceeding of the 13th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "V. F.",
@@ -7185,7 +7184,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 226
+      "itemID": 226,
+      "publicationTitle": "Prooceeding of the 13th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "journalArticle",
@@ -7453,7 +7453,6 @@
       "date": "1961",
       "extra": "Citation Key: Elliott_1961_proc \nbibtex[owner=Francesco]",
       "title": "Theory of the Exciton Spectra in Cu₂O",
-      "proceedingsTitle": "Proceedings of the International Conference on Semiconductor Physics (5th edition, Prague, 1960)",
       "creators": [
         {
           "firstName": "R. J.",
@@ -7487,7 +7486,8 @@
           ]
         }
       ],
-      "itemID": 236
+      "itemID": 236,
+      "publicationTitle": "Proceedings of the International Conference on Semiconductor Physics (5th edition, Prague, 1960)"
     },
     {
       "itemType": "journalArticle",
@@ -8259,7 +8259,6 @@
       "url": "http://irs.ub.rug.nl/ppn/310415527",
       "date": "2008",
       "extra": "Citation Key: Fishman_2008_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "Zernike Institute for Advanced Materials, University of Groningen",
       "title": "Excitons in cuprous oxide",
       "creators": [
         {
@@ -8270,7 +8269,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 256
+      "itemID": 256,
+      "publisher": "Zernike Institute for Advanced Materials, University of Groningen"
     },
     {
       "itemType": "journalArticle",
@@ -8695,7 +8695,6 @@
       "date": "2005",
       "extra": "Citation Key: Franke_2005_LB_10757413_12 \nbibtex[owner=Francesco]",
       "title": "Cu--O",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "P.",
@@ -8720,7 +8719,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 270
+      "itemID": 270,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "journalArticle",
@@ -11833,7 +11833,6 @@
       "date": "1980",
       "extra": "Citation Key: Herion_1980_proc \nbibtex[owner=Francesco]",
       "title": "Metal oxide/cuprous oxide heterojunction solar cells",
-      "proceedingsTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "J.",
@@ -11853,7 +11852,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 360
+      "itemID": 360,
+      "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "journalArticle",
@@ -14277,7 +14277,6 @@
       "url": "https://i-share.carli.illinois.edu/uiu/cgi-bin/Pwebrecon.cgi?DB=local&v1=1&BBRecID=5193899",
       "date": "2005",
       "extra": "Citation Key: Jang_2005_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Illinois at Urbana-Champaign",
       "title": "Lifetimes of Excitons in Cuprous Oxide",
       "creators": [
         {
@@ -14288,7 +14287,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 416
+      "itemID": 416,
+      "publisher": "University of Illinois at Urbana-Champaign"
     },
     {
       "itemType": "journalArticle",
@@ -14534,7 +14534,6 @@
       "date": "2007",
       "extra": "Citation Key: Jayathileke_2007_proc \nbibtex[owner=Francesco]",
       "title": "Donor and Acceptor Density Variations in Electrodeposited Cuprous Oxide Thin Films",
-      "proceedingsTitle": "Proceedings of the Technical Sessions of the Institute of Physics - Sri Lanka",
       "creators": [
         {
           "firstName": "K. M. D. C.",
@@ -14554,7 +14553,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 424
+      "itemID": 424,
+      "publicationTitle": "Proceedings of the Technical Sessions of the Institute of Physics - Sri Lanka"
     },
     {
       "itemType": "journalArticle",
@@ -14673,7 +14673,6 @@
       "date": "2007",
       "extra": "Citation Key: Jeong_2007_proc \nbibtex[owner=Francesco]",
       "title": "ZnO/Cu₂O Solar Cells Made by Electrodeposition",
-      "proceedingsTitle": "Proceedings of the 22nd European Photovoltaic Solar Energy Conference, Milan, Italy",
       "creators": [
         {
           "firstName": "S. S.",
@@ -14703,7 +14702,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 427
+      "itemID": 427,
+      "publicationTitle": "Proceedings of the 22nd European Photovoltaic Solar Energy Conference, Milan, Italy"
     },
     {
       "itemType": "journalArticle",
@@ -16777,7 +16777,6 @@
       "pages": "Paper B",
       "date": "1968",
       "extra": "Citation Key: Kuzel_1968 \nbibtex[owner=Francesco]",
-      "proceedingsTitle": "Proceedings of Second Cuprite Colloquium, University of Alberta, Edmonton, Canada",
       "creators": [
         {
           "firstName": "Radomír",
@@ -16787,7 +16786,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 489
+      "itemID": 489,
+      "publicationTitle": "Proceedings of Second Cuprite Colloquium, University of Alberta, Edmonton, Canada"
     },
     {
       "itemType": "journalArticle",
@@ -17726,7 +17726,6 @@
       "url": "http://etd.library.pitt.edu/ETD/available/etd-08172004-103051/",
       "date": "2004",
       "extra": "Citation Key: Liu_2004_PhDthesis \nbibtex[owner=Francesco;refid=http://www.scientificcommons.org/7576697]",
-      "university": "University of Pittsburgh / PIT",
       "abstractNote": "There is a 40-year long history in the search for Bose-Einstein condensation (BEC) of excitons in semiconductors. This thesis presents research directed toward this goal in bulk crystal Cu2O in three dimensions and in GaAs-based coupled quantum wells (CQW) in two dimensions. The Auger recombination process in Cu2O plays a major role in limiting the density of the excitons. We find that the rate for this process increases with applied stress and lattice temperature. We create paraexcitons in Cu2O through a resonant two-photon excitation in a harmonic potential trap with the Auger recombination process as small as possible (at low temperature and low stress), and find that the exciton creation efficiency in the resonant two-photon excitation is greater for one-beam excitation than for two colliding pulses, but the colliding pulse method may be useful for direct creation of a condensate in the ground state. The paraexciton density in this work is about thirty times less than the required density for BEC of paraexcitons. One promising direction for BEC of excitons in Cu2O is that with higher laser power from stronger IR laser sources, or at lower temperature, the critical density can be approached under one-beam two-photon excitation resonant with the paraexciton state. In two dimensions, the CQW structure has been modified with four design strategies: highest possible barriers, introducing into the barriers a superlattice of 60 angstrom GaAs wells, p-i-n doping, and wider quantum wells, which provides indirect excitons low disorder and high mobility. With a cold near-resonant excitation, we conclude that the excitons act as a free gas, travelling distances of hundreds of microns. We also present observations of a narrow beam of emitted light, when the indirect excitons are confined in a two-dimensional harmonic potential trap, in a way quite similar to the first observations of BEC in alkali atoms. A beam-like emission has been suggested as a telltale for BEC of excitons. This opens the door to a whole range of investigations, including attempts to observe coherence of the emitted light, proof of superfludity of the excitons, and other fascinating effects.",
       "title": "Excitons at high density in Cuprous Oxide and coupled quantum wells",
       "creators": [
@@ -17738,7 +17737,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 513
+      "itemID": 513,
+      "publisher": "University of Pittsburgh / PIT"
     },
     {
       "itemType": "journalArticle",
@@ -18162,7 +18162,6 @@
       "DOI": "10.1109/NANO.2007.4601346",
       "abstractNote": "Cu<sub>2</sub>O nanorods with extraordinary large surface area are synthesized by polyol method successfully. Their photocatalytic property is evaluated by the photodegradation of brilliant red dye under visible light irradiation. For comparison, Cu<sub>2</sub>O nanocubes are synthesized and evaluated with photocatalytic property as well. The results show that the photocatalytic activity of the Cu<sub>2</sub>O nanorods is more than one time higher than that for Cu<sub>2</sub>O nanocubes under visible light. Additionally, the structure of the Cu<sub>2</sub>O nanorods is very stable and they can not be oxidized to CuO even during the photocatalytic reaction process. It is noticeable that this kind of Cu<sub>2</sub>O nanorods has remarkable large surface areas 47.6 m<sup>2</sup>/g, which is about forty times as large as that for as-prepared Cu<sub>2</sub>O nanocubes and it is also three times larger than that for the reported porous Cu<sub>2</sub>O nanoparticles. The large surface area of Cu<sub>2</sub>O nanorods leads to its higher adsorption ability to the brilliant red dye and excellent high photocatalytic activity under visible light. Since Cu<sub>2</sub>O nanorods are very stable and have high photocatalytic activity under visible light, they are expected to be used in photocatalytic oxidation technology practically in the future.",
       "title": "Cu₂O nanorods with large surface area for photodegradation of organic pollutant under visible light",
-      "proceedingsTitle": "Proceedings of the 7th IEEE Conference on Nanotechnology IEEE-NANO 2007",
       "creators": [
         {
           "firstName": "Lili",
@@ -18290,7 +18289,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 524
+      "itemID": 524,
+      "publicationTitle": "Proceedings of the 7th IEEE Conference on Nanotechnology IEEE-NANO 2007"
     },
     {
       "itemType": "journalArticle",
@@ -18363,7 +18363,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_56 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) crystal structure, lattice parameters",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18372,7 +18371,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18392,7 +18392,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 527
+      "itemID": 527,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18402,7 +18403,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_57 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) optical properties",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18411,7 +18411,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18431,7 +18432,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 528
+      "itemID": 528,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18441,7 +18443,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_58 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) dielectric constant",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18450,7 +18451,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18470,7 +18472,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 529
+      "itemID": 529,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18480,7 +18483,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_59 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) magnetic properties",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18489,7 +18491,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18509,7 +18512,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 530
+      "itemID": 530,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18519,7 +18523,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_60 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) Debye temperature, density, melting point",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18528,7 +18531,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18548,7 +18552,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 531
+      "itemID": 531,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18558,7 +18563,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_61 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) diffusion coefficients",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18567,7 +18571,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18587,7 +18592,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 532
+      "itemID": 532,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18597,7 +18603,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_62 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) band structure, band energies",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18606,7 +18611,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18626,7 +18632,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 533
+      "itemID": 533,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18636,7 +18643,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_63 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) effective masses",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18645,7 +18651,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18665,7 +18672,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 534
+      "itemID": 534,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18675,7 +18683,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_64 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) excitons",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18684,7 +18691,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18704,7 +18712,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 535
+      "itemID": 535,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18714,7 +18723,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_65 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) phonon dispersion, phonon frequencies",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18723,7 +18731,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18743,7 +18752,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 536
+      "itemID": 536,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18753,7 +18763,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_66 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) sound velocities, elastic moduli",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18762,7 +18771,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18782,7 +18792,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 537
+      "itemID": 537,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18792,7 +18803,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_67 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) Young's and shear moduli, compressibility",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18801,7 +18811,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18821,7 +18832,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 538
+      "itemID": 538,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18831,7 +18843,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_68 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) thermal expansion, Grüneisen parameter",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18840,7 +18851,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18860,7 +18872,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 539
+      "itemID": 539,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "bookSection",
@@ -18870,7 +18883,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_69 \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide (Cu₂O) transport properties",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "firstName": "O.",
@@ -18879,7 +18891,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "firstName": "O.",
@@ -18899,7 +18912,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 540
+      "itemID": 540,
+      "publicationTitle": "Landolt-Börnstein"
     },
     {
       "itemType": "journalArticle",
@@ -20171,7 +20185,6 @@
       "date": "2006",
       "extra": "Citation Key: Mittiga_2006_proc \nbibtex[owner=Francesco]",
       "title": "Characterization of Cu₂O Based Heterojunction Solar Cells",
-      "proceedingsTitle": "Proceedings of 21st European Photovoltaic Solar Energy Conference, Dresden, Germany",
       "creators": [
         {
           "firstName": "A.",
@@ -20197,7 +20210,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 576
+      "itemID": 576,
+      "publicationTitle": "Proceedings of 21st European Photovoltaic Solar Energy Conference, Dresden, Germany"
     },
     {
       "itemType": "journalArticle",
@@ -20279,7 +20293,6 @@
       "DOI": "10.1117/12.638649",
       "abstractNote": "The effect of a buffer layer and/or interface region on the photovoltaic properties of Al-doped ZnO (AZO)/Cu2O heterojunction solar cells was investigated. The I-V characteristics and photovoltaic properties in AZO/ZnO-In2O3/Cu2O devices were considerably improved by increasing the Zn content (Zn/(In+Zn atomic ratio)) of the ZnO-In2O3 thin-film buffer layer. In addition, the photovoltaic properties of AZO/Zn1-XMgXO/Cu2O devices were found to degrade significantly as the composition (X) was increased above approximately 0.1 because of the increase in resistivity of the buffer layer. Although the spectral response of photocurrent observed in AZO/Zn1-XMgXO/Cu2O devices was considerably affected by altering the value of X, the photo-generated hole in the buffer layer of these devices was not successfully injected into the Cu2O. AZO/Cu2O heterojunctions fabricated using Cu2O sheets with a sulfurized surface exhibited ohmic I-V characteristics.",
       "title": "Effect of a buffer layer on the photovoltaic properties of AZO/Cu₂O solar cells",
-      "proceedingsTitle": "Proceedings of the Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series",
       "creators": [
         {
           "firstName": "T.",
@@ -20304,7 +20317,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 579
+      "itemID": 579,
+      "publicationTitle": "Proceedings of the Society of Photo-Optical Instrumentation Engineers (SPIE) Conference Series"
     },
     {
       "itemType": "journalArticle",
@@ -21795,7 +21809,6 @@
       "pages": "409",
       "date": "1962",
       "extra": "Citation Key: Nikitine_1962_proc \nbibtex[owner=Francesco]",
-      "proceedingsTitle": "Proceedings of the International Conference on the Physics of Semiconductors, Exeter",
       "creators": [
         {
           "firstName": "S.",
@@ -21825,7 +21838,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 621
+      "itemID": 621,
+      "publicationTitle": "Proceedings of the International Conference on the Physics of Semiconductors, Exeter"
     },
     {
       "itemType": "journalArticle",
@@ -22079,7 +22093,6 @@
       "extra": "Citation Key: Nikitine_1975_book \nbibtex[owner=Francesco]",
       "abstractNote": "Without Abstract",
       "title": "“Introduction to exciton spectroscopy” in Excitons at High Density",
-      "bookTitle": "Excitons at High Density",
       "creators": [
         {
           "firstName": "S.",
@@ -22089,7 +22102,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 629
+      "itemID": 629,
+      "publicationTitle": "Excitons at High Density"
     },
     {
       "itemType": "journalArticle",
@@ -22274,7 +22288,6 @@
       "itemType": "thesis",
       "date": "1969",
       "extra": "Citation Key: Noguet_1969_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Strasbourg",
       "creators": [
         {
           "firstName": "Claude",
@@ -22308,7 +22321,8 @@
           ]
         }
       ],
-      "itemID": 636
+      "itemID": 636,
+      "publisher": "University of Strasbourg"
     },
     {
       "itemType": "journalArticle",
@@ -22392,7 +22406,6 @@
       "date": "1978",
       "extra": "Citation Key: Noguet_1978_proc \nbibtex[owner=Francesco]",
       "title": "Cuprous oxide as a photovoltaic converter",
-      "proceedingsTitle": "Proceedings of the 1st European Photovoltaic Solar Energy Conference, Luxembourg",
       "creators": [
         {
           "firstName": "C.",
@@ -22471,7 +22484,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 641
+      "itemID": 641,
+      "publicationTitle": "Proceedings of the 1st European Photovoltaic Solar Energy Conference, Luxembourg"
     },
     {
       "itemType": "journalArticle",
@@ -22720,7 +22734,6 @@
       "url": "http://research.physics.illinois.edu/Publications/theses/copies/OHara.pdf",
       "date": "1999",
       "extra": "Citation Key: O'Hara_1999_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Illinois at Urbana-Champaign",
       "title": "Relaxation Kinetics of Excitons in Cuprous Oxide",
       "creators": [
         {
@@ -22731,7 +22744,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 651
+      "itemID": 651,
+      "publisher": "University of Illinois at Urbana-Champaign"
     },
     {
       "itemType": "journalArticle",
@@ -22903,7 +22917,6 @@
       "url": "http://www.dtic.mil/srch/doc?collection=t3&id=AD0663435",
       "date": "1967",
       "extra": "Citation Key: O'Keeffe_1967_tr \nbibtex[owner=Francesco]",
-      "institution": "Arizona State University Tempe Dept. of Chemistry",
       "abstractNote": "The report summarizes the research on semiconducting properties of cuprous oxide performed under this grant. Contributions have been made to the understanding of the behavior of cuprous oxide at high temperatures with special reference to the electrical properties and defect structure. Interdiffusion studies by thermogravimetric means have been made on wustite and manganous oxide. Further work is being continued under another grant.. Presented at the International Symposium on Kinetics of Ionic Reactions, Alfred, N. Y.",
       "title": "Semi conducting properties of cuprous oxide and related research",
       "creators": [
@@ -22939,7 +22952,8 @@
           ]
         }
       ],
-      "itemID": 658
+      "itemID": 658,
+      "publisher": "Arizona State University Tempe Dept. of Chemistry"
     },
     {
       "itemType": "journalArticle",
@@ -23303,7 +23317,6 @@
       "date": "1985",
       "extra": "Citation Key: Okamoto_1985_proc \nbibtex[owner=Francesco]",
       "title": "Physical meaning of Wetting Curve Traced by Meniscograph Wettability Tester (Report II)",
-      "proceedingsTitle": "Transactions of JWRI",
       "creators": [
         {
           "firstName": "Ikuo",
@@ -23328,7 +23341,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 669
+      "itemID": 669,
+      "publicationTitle": "Transactions of JWRI"
     },
     {
       "itemType": "journalArticle",
@@ -23492,7 +23506,6 @@
       "extra": "Citation Key: Olsen_1975_proc \nbibtex[owner=Francesco]",
       "abstractNote": "Thin-film Schottky barriers based on Cu2O are being investigated for low-cost photovoltaic energy conversion. Current-voltage (I-V), capacitance-voltage (C-V) and photoresponse studies have been made with thermally grown, backwall Cu/Cu2O devices. I-V characteristics are explained very well with n-values typically greater than 2. As a result, it appears that Cu/Cu2O cells have a MIS structure. C-V data also imply a MIS configuration. Solar cell calculations have been carried out for Cu2O devices based on a MIS model. Calculations indicate that by utilizing MIS structures, power conversion efficiencies over 10% constitute reasonable goals for both frontwall and backwall cells.",
       "title": "Experimental and Theoretical Studies of Cu₂O Schottky Barrier Solar Cells",
-      "proceedingsTitle": "Proceedings of the 11th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "L. C.",
@@ -23513,7 +23526,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 674
+      "itemID": 674,
+      "publicationTitle": "Proceedings of the 11th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "conferencePaper",
@@ -23522,7 +23536,6 @@
       "extra": "Citation Key: Olsen_1978_proc \nbibtex[owner=Francesco]",
       "abstractNote": "Depth-concentration Profiles obtained with Auger electron spectroscopy are reported for Yb/Cu& Mg/Cu,O and Au/Cu10 contacts. The profiles for Yb/CuzO and Ng/Cu20 cells indicate that the Cu20 surface is reduced upon metal deposition, and that considerable Interdiffusion occurs at the interface. As a result, a copper- rich layer appearc to exist at the Cu20 interface in these Schottky barriers formed with low work function metals. On the other hand, the Au/Cu20 interface exhibits a'more \"normal\" structure. These results are utilized to explain the rel- atively low barrier heights obtained for Cu20 Schottky barriers, and the apparent \"efficiency plateau\" of 1% for Cu20 solar cells. The results are also compatible with the fact that Au forms essentially an ohmic contact on Cu,O.",
       "title": "Explanation of low barrier heights obtained for Cu₂O Schottky barrier solar cells",
-      "proceedingsTitle": "Proceedings of the 13th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "L. C.",
@@ -23537,7 +23550,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 675
+      "itemID": 675,
+      "publicationTitle": "Proceedings of the 13th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "journalArticle",
@@ -23587,7 +23601,6 @@
       "extra": "Citation Key: Olsen_1980_proc \nbibtex[owner=Francesco]",
       "abstractNote": "This paper includes discussion Of an approach used for cuzo substrate fabrication, electrical and optical properties of cu20,photocurrent analysis and experimental results for cuzo Solar cells. An AM1 photocurrent of 8.5 mA/cn? and AM1 efficiency of 1.8% has heen achieved for Cu-Cu MIS cells based on a tentatively identified I-layer of Cum. Studies Of MIS cells fabricated with an evaporated SO2 I-layer are discussed as well as preliminary results for Z S/CUZO and 7.nO/Cu20 heterojunctions.",
       "title": "Investigation of Cu₂O solar cells",
-      "proceedingsTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "L. C.",
@@ -23607,7 +23620,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 677
+      "itemID": 677,
+      "publicationTitle": "Proceedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "journalArticle",
@@ -23768,7 +23782,8 @@
       "creators": [
         {
           "creatorType": "inventor",
-          "name": "Osumi"
+          "lastName": "Osumi",
+          "fieldMode": 1
         }
       ],
       "dateAdded": "2017-11-13 09:26:05",
@@ -23782,7 +23797,6 @@
       "url": "http://www.rug.nl/zernike/education/topmasternanoscience/NS201Otter.pdf",
       "date": "2007",
       "extra": "Citation Key: Otter_2007_Mthesis \nbibtex[owner=Francesco]",
-      "university": "University of Groningen, Faculty of Mathematics and Natural Sciences",
       "title": "Lifetime of Paraexcitons in Cuprous Oxide",
       "creators": [
         {
@@ -23793,7 +23807,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 683
+      "itemID": 683,
+      "publisher": "University of Groningen, Faculty of Mathematics and Natural Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -23937,7 +23952,6 @@
       "date": "1984",
       "extra": "Citation Key: Papadimitriou_1984_proc \nbibtex[owner=Francesco]",
       "title": "Schottky barriers on Cu₂O and their performance as solar cells",
-      "proceedingsTitle": "Proceedings of the 5th Bulgarian--Greek Symposium in Semiconductors, Sofia",
       "creators": [
         {
           "firstName": "Leonidas",
@@ -23947,7 +23961,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 688
+      "itemID": 688,
+      "publicationTitle": "Proceedings of the 5th Bulgarian--Greek Symposium in Semiconductors, Sofia"
     },
     {
       "itemType": "journalArticle",
@@ -24408,7 +24423,6 @@
       "extra": "Citation Key: Pearson_1955_proc \nbibtex[owner=Francesco]",
       "DOI": "10.1109/JRPROC.1955.278042",
       "title": "History of Semiconductor Research",
-      "proceedingsTitle": "Proceedings of the IRE",
       "creators": [
         {
           "firstName": "G. L.",
@@ -24423,7 +24437,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 703
+      "itemID": 703,
+      "publicationTitle": "Proceedings of the IRE"
     },
     {
       "itemType": "journalArticle",
@@ -26045,7 +26060,6 @@
       "url": "http://www.lle.rochester.edu/03_publications/03_05_theses/index.php",
       "date": "1998",
       "extra": "Citation Key: Rodney_1998_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Rochester",
       "title": "The Photophysics of Ionic Semiconductors at Low Temperatures: Silver Bromide, Silver Iodide and Cuprous Oxide",
       "creators": [
         {
@@ -26056,7 +26070,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 755
+      "itemID": 755,
+      "publisher": "University of Rochester"
     },
     {
       "itemType": "journalArticle",
@@ -27729,7 +27744,6 @@
       "url": "http://irs.ub.rug.nl/ppn/316324507",
       "date": "2008",
       "extra": "Citation Key: Sirbu_2008_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Groningen",
       "abstractNote": "An optical spectrometer may be a tool unfamiliar to an outsider of the optics community. It can be regarded as a natural evolution of the way we perceive the surrounding environment. Light coming from the sun is reflected or transmitted by objects. The human eye, by measuring this reflected or transmitted light, gains some information about the objects themselves, such as their color, brightness, and shape. Using the same principles, an optical spectrometer is designed to gain even more information. It has a source of light used to send light on some objects, and a hi-tech detector to measure the transmitted or reflected light. After the material has been measured, a relation needs to be established between its optical response and its main physical properties. In this thesis we consider the case of solid state materials. These are materials where the atoms are in close proximity to each other, and arranged in repetitive patterns on macroscopic distances, to make a compact structures (a good example is NaCl, kitchen salt). To establish the above mentioned relation the following procedure is followed. First the optical response (transmission, reflectivity, absorption, etc.) at each frequency in the incident light is measured. The result in quantified in terms of the so called dielectric constant of the bulk ε(∞). In a second step, this function is related to the main physical propertied of the measured solid state material, using the knowledge of this particular structure, determined before by different type of measurements, such as for instance X-ray diffraction. Today, optical spectroscopy has become one of the most important standard tools for investigating novel condensed matter materials.\n\nThe aim of the work presented in this thesis is to investigate the low energy excitation spectra and the (induced) phase transitions in transition metal oxides.",
       "title": "Induced excitations in some metal oxides",
       "creators": [
@@ -27741,7 +27755,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 804
+      "itemID": 804,
+      "publisher": "University of Groningen"
     },
     {
       "itemType": "journalArticle",
@@ -29804,7 +29819,6 @@
       "url": "http://deposit.ddb.de/cgi-bin/dokserv?idn=955899796",
       "date": "1999",
       "extra": "Citation Key: Timm_1999_PhDthesis \nbibtex[owner=Francesco]",
-      "university": "University of Hannover",
       "title": "Thermodiffusion in binären und ternären Oxiden",
       "creators": [
         {
@@ -29815,7 +29829,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 862
+      "itemID": 862,
+      "publisher": "University of Hannover"
     },
     {
       "itemType": "journalArticle",
@@ -30220,7 +30235,6 @@
       "extra": "Citation Key: Trivich_1976 \nbibtex[owner=Francesco]",
       "abstractNote": "cu20 celle could be of importance in solar energy conversion because of the low cost and high availability The Cu20 is pre- of the mater3 and simple processing. pared by oxidation of copper sheet in air and the junctions\n\nOIL Cu20 are prepared by vacuum deposition of various metals. Typical values for current cells are J,, = 4 to 7 mA/cm2, ” = 0.3” and fill factors of 0.35 with cm- version effi%endes approaching 1%. Calculations show that efficiencies of 6 to 12% are possible. A thermionic emission model is proposed.",
       "title": "Cuprous Oxide Schottky Barrier Photovoltaic Cells",
-      "proceedingsTitle": "Proceedings of 12th IEEE PhotoVoltaic Specialists Conference, Baton Rouge, LA, USA",
       "creators": [
         {
           "firstName": "Dan",
@@ -30255,13 +30269,13 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 876
+      "itemID": 876,
+      "publicationTitle": "Proceedings of 12th IEEE PhotoVoltaic Specialists Conference, Baton Rouge, LA, USA"
     },
     {
       "itemType": "report",
       "date": "1976",
       "extra": "Citation Key: Trivich_1976_tr_4 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "NSF-AER-75-23453-4",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (fourth quaterly report)",
       "creators": [
@@ -30298,13 +30312,13 @@
         }
       ],
       "itemID": 877,
-      "number": "NSF-AER-75-23453-4"
+      "number": "NSF-AER-75-23453-4",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "report",
       "date": "1976",
       "extra": "Citation Key: Trivich_1976_tr_5 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "NSF-AER-75-23453-5",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (fifth quaterly report)",
       "creators": [
@@ -30341,7 +30355,8 @@
         }
       ],
       "itemID": 879,
-      "number": "NSF-AER-75-23453-5"
+      "number": "NSF-AER-75-23453-5",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "conferencePaper",
@@ -30350,7 +30365,6 @@
       "extra": "Citation Key: Trivich_1978 \nbibtex[owner=Francesco]",
       "abstractNote": "cuprous oxide, with a hand gap Of 2.0 e”, is an attractive material for Solar cells because Of low cast and great availability. ‘Ihe CUrrent con- version efficiency is 1, hut theoretical estimates are >13%. For various schottky barriers, e.g., A1,C”*O, it is proposed that the voc is limited by chemical conversion of the junctions to Cu/Cuy3 junctions, and the model is supported by auger and ESCA results. It is proposed to avoid. the reaction by use Of an oxide interlayer as in A1,A1 O ,C”ZO, which also gives an MIS structure, but only minimal S”CCBSS ha5 yet been achieved with the methods tried. Sh& and Sic& layers were explored. Another approach could be to use oxide tetero- junctions on Cup. Several were explored and mm/ cuzo was best. In and Cd are effective dopantS for C”@. With samples annealed at 5oov. diffusion lengths Of -4 Lull were measured by an SP” method. The spectra1 sensitivity Of C”,CUZO cells has a threshold at 630 nm and a maximum at 500 nm.",
       "title": "Cuprous oxide photovoltaic cells",
-      "proceedingsTitle": "Proceedings of 13th IEEE PhotoVoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "Dan",
@@ -30389,13 +30403,13 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 881
+      "itemID": 881,
+      "publicationTitle": "Proceedings of 13th IEEE PhotoVoltaic Specialists Conference"
     },
     {
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Trivich_1979_tr_1 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ET/23010--T1",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (first quarterly report)",
       "creators": [
@@ -30442,13 +30456,13 @@
         }
       ],
       "itemID": 882,
-      "number": "DOE/ET/23010--T1"
+      "number": "DOE/ET/23010--T1",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Trivich_1979_tr_2 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ET/23010--9",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (second quarterly report)",
       "creators": [
@@ -30490,13 +30504,13 @@
         }
       ],
       "itemID": 884,
-      "number": "DOE/ET/23010--9"
+      "number": "DOE/ET/23010--9",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Trivich_1980_tr_3 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ET/23010--12",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (third quarterly report)",
       "creators": [
@@ -30533,13 +30547,13 @@
         }
       ],
       "itemID": 886,
-      "number": "DOE/ET/23010--12"
+      "number": "DOE/ET/23010--12",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Trivich_1980_tr_4 \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ET/23010--17",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (fourth quarterly report)",
       "creators": [
@@ -30576,7 +30590,8 @@
         }
       ],
       "itemID": 888,
-      "number": "DOE/ET/23010--17"
+      "number": "DOE/ET/23010--17",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "conferencePaper",
@@ -30585,7 +30600,6 @@
       "extra": "Citation Key: Trivich_1981 \nbibtex[owner=Francesco]",
       "abstractNote": "Electron diffLlSicxl lengths, h, in cu*o schottky barrier cells were measured by relating the photocurrent, I,, to the depletion width, w, under various reverse biases, v,. The values of 41 were obtained as intercepts at I, = 0 Of linear plots of I, vs. w, using a wavelength of 600 \"Ia. The values Of 41 were 0.1 fO 1.6 p for CU/C\",O junctions with various doped samples of Cu20. capacitance measureme\"t8 were used to determine the dielectric constant and W. Plots of Cb2 VS. VR, which were linear, were used to obtain the built-in potential, yielding values of 0.1 to 0.45 v.",
       "title": "Measurement of minority carrier diffusion length in cuprous oxide",
-      "proceedingsTitle": "Proceedings of 15th IEEE Photovoltaic Specialists Conference, Kissimmee, FL, USA",
       "creators": [
         {
           "firstName": "Dan",
@@ -30605,13 +30619,13 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 890
+      "itemID": 890,
+      "publicationTitle": "Proceedings of 15th IEEE Photovoltaic Specialists Conference, Kissimmee, FL, USA"
     },
     {
       "itemType": "report",
       "date": "1981",
       "extra": "Citation Key: Trivich_1981_tr_final \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ET/23010--T10",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS (final report)",
       "creators": [
@@ -30648,7 +30662,8 @@
         }
       ],
       "itemID": 891,
-      "number": "DOE/ET/23010--T10"
+      "number": "DOE/ET/23010--T10",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "conferencePaper",
@@ -30657,7 +30672,6 @@
       "extra": "Citation Key: Trivich_1982 \nbibtex[owner=Francesco]",
       "abstractNote": "A new method for preparing C\"fCu20 cells involves bombardment of Cu2O by a beam of hydrogen ions. The cells have V,C up to 0.72 V, compared with 0.35 V for cells made by thermal evaporation of C\" on cu20. Auger studies show that the hydrogen bombardment reduces the top surface of the Cu20 to Cu, creating the Cu/Cu20 junction. The optimum pro- cessing conditions are bombardment at 250 V for 75s at 15 mA. The surface resistivity of the C\" film decreases with bombardment time, but 75s gives adequate continuity in the film. Electron diffraction shows the Cu is formed epitaxially on the Cu20. Encap- sulated cells are relatively stable. The conversion efficiency has reached 1.3% for 1 cm2 cells.",
       "title": "Cu/Cu₂O cells prepared by hydrogen bombardment",
-      "proceedingsTitle": "Proceedings of the 16th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "Dan",
@@ -30677,13 +30691,13 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 893
+      "itemID": 893,
+      "publicationTitle": "Proceedings of the 16th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "report",
       "date": "1982",
       "extra": "Citation Key: Trivich_1982_tr_final \nbibtex[owner=Francesco]",
-      "institution": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202",
       "reportNumber": "DOE/ER/10825--1",
       "title": "CUPROUS OXIDE PHOTOVOLTAIC CELLS FOR SOLAR-ENERGY CONVERSION (final report)",
       "creators": [
@@ -30720,7 +30734,8 @@
         }
       ],
       "itemID": 894,
-      "number": "DOE/ER/10825--1"
+      "number": "DOE/ER/10825--1",
+      "publisher": "Department of Chemistry, Wayne State University, Detroit, Michigan 48202"
     },
     {
       "itemType": "conferencePaper",
@@ -30730,7 +30745,6 @@
       "extra": "Proceedings of the Internation Conference 'DIMAT96', August 5-9, 1996, Nordkirchen, Germany \nCitation Key: Tsai_1996_proc \nbibtex[owner=Francesco]",
       "DOI": "10.4028/www.scientific.net/DDF.143-147.1183",
       "title": "Cation Tracer Diffusion in Oxides",
-      "proceedingsTitle": "Defect and Diffusion Forum",
       "creators": [
         {
           "firstName": "T.-L.",
@@ -30780,7 +30794,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 896
+      "itemID": 896,
+      "publicationTitle": "Defect and Diffusion Forum"
     },
     {
       "itemType": "journalArticle",
@@ -31341,7 +31356,6 @@
       "extra": "Citation Key: Wang_1980_proc \nbibtex[owner=Francesco]",
       "abstractNote": "Cuprous oxide MIS solar cells were made with SiO interfacial layers of thickness ranging from 10 0 100 A, and semi-transparent layers of Au, Cu, Ag and Al. Results from current-voltage measurements show that Au/SiO /Cu 0 MIS devices are ohmic in nature and have o I) otovoltaic ef- 6 a feet. Ag/SiO /Cu 0, Cu/SiO fCu2b and A1/SiOz/Cu20,??xhi&t rectifying and photovoltaic charac enstlcs. Capacitance-voltage measure- ments indicate that the space charge region is approximately .5 urn wide. The wavelength depen- dence of the open-circuit photovoltage has a peak at 2.56 eV which can be correlated with reported Cu20 absorption coefficients.",
       "title": "Cuprous Oxide MIS solar cells",
-      "proceedingsTitle": "Proocedings of the 14th IEEE Photovoltaic Specialists Conference",
       "creators": [
         {
           "firstName": "E. Y.",
@@ -31371,7 +31385,8 @@
       ],
       "dateAdded": "2017-11-13 09:26:05",
       "dateModified": "2017-11-13 09:26:05",
-      "itemID": 915
+      "itemID": 915,
+      "publicationTitle": "Proocedings of the 14th IEEE Photovoltaic Specialists Conference"
     },
     {
       "itemType": "journalArticle",

@@ -206,7 +206,6 @@
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
       "title": "Test Title With 100 μJ, 200 μJ Energy, and ±0.1% Accuracy, 0.2 mm² Size, and -50 dB Attenuation",
-      "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
           "firstName": "J.",
@@ -240,7 +239,8 @@
       "itemID": 57,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IEEE_J_PROC"
     },
     {
       "itemType": "conferencePaper",
@@ -250,7 +250,6 @@
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
       "title": "Test Title with space quad, space semi-colon, space colon, space comma, space nbsp",
-      "proceedingsTitle": "IEEE_J_PROC",
       "creators": [
         {
           "firstName": "J.",
@@ -284,7 +283,8 @@
       "itemID": 58,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IEEE_J_PROC"
     }
   ]
 }

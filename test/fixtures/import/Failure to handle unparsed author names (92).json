@@ -12,7 +12,6 @@
       "date": "1998",
       "extra": "Citation Key: Madelung_1998_LB_10681727_56 \nbibtex[owner=Francesco] \nDOI: 10.1007/10681727_56",
       "title": "Cuprous oxide (Cu₂O) crystal structure, lattice parameters",
-      "bookTitle": "Landolt-Börnstein",
       "creators": [
         {
           "creatorType": "author",
@@ -21,7 +20,8 @@
         },
         {
           "creatorType": "author",
-          "name": "others"
+          "lastName": "others",
+          "fieldMode": 1
         },
         {
           "creatorType": "editor",
@@ -39,7 +39,8 @@
           "lastName": "Schulz"
         }
       ],
-      "itemID": 0
+      "itemID": 0,
+      "publicationTitle": "Landolt-Börnstein"
     }
   ],
   "collections": {

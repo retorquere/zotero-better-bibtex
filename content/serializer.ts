@@ -43,9 +43,21 @@ export let Serializer = new class { // tslint:disable-line:variable-name
 
       simplify += `if (typeof item.${field.fieldAlias} != 'undefined') { item.${field.fieldName} = item.${field.fieldAlias}; delete item.${field.fieldAlias}; }\n`
     }
-    simplify += 'item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];\n'
-    simplify += 'item.notes = item.notes ? item.notes.map(function(note) { return note.note }) : [];\n'
-    simplify += 'return item;'
+    simplify += `
+      item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];
+      item.notes = item.notes ? item.notes.map(function(note) { return note.note }) : [];
+      if (item.creators) {
+        for (const creator of item.creators) {
+          if (creator.name) {
+            creator.lastName = creator.name;
+            creator.fieldMode = 1;
+            delete creator.name;
+          }
+        }
+      }
+
+      return item;
+    `
     debug('Serializer.init: simplify =\n', simplify)
     this.simplify = new Function('item', simplify)
 

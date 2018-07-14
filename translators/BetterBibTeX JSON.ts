@@ -36,6 +36,8 @@ Translator.doImport = async () => {
   const items = new Set
   debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
+    // Zotero.BetterBibTeX.simplifyFields(source)
+
     if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {
       if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
@@ -95,7 +97,10 @@ Translator.doExport = () => {
   const validAttachmentFields = new Set([ 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
+    Zotero.BetterBibTeX.simplifyFields(item)
+
     delete item.relations
+
     for (const field of Object.keys(item)) {
       if (validFields[item.itemType] && !validFields[item.itemType][field]) {
         delete item[field]

@@ -32,24 +32,30 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
       end
 
       duplicates = {
-        'publisher' => %w{institution},
-        'publicationTitle' => %w{proceedingsTitle},
+        'publisher' => %w{university institution},
+        'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
         'type' => %w{thesisType},
       }
       duplicates.each_pair{|generic, specifics|
         specifics.each{|specific|
-          if item[specific] && item[generic] == item[specific]
-            item.delete(generic)
+          if item[specific] && (item[generic] == item[specific] || !item[generic])
+            item[generic] = item[specific]
+            item.delete(specific)
             resave = true
           end
         }
       }
 
       (item['creators'] || []).each{|creator|
-        if creator['fieldMode'] == 1
-          creator['name'] = creator['lastName']
-          creator.delete('lastName')
-          creator.delete('fieldMode')
+        if creator['name']
+          creator['lastName'] = creator['name']
+          creator['fieldMode'] = 1
+          creator.delete('name')
+          resave = true
+        end
+
+        if creator['fieldMode'] == 1 && creator.key?('firstName')
+          creator.delete('firstName')
           resave = true
         end
       }

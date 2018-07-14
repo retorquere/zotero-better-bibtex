@@ -314,7 +314,6 @@
       "extra": "Citation Key: deKleer:77",
       "issue": "8",
       "title": "AMORD: Explicit control of reasoning",
-      "proceedingsTitle": "Proceedings of the Symposium on Artificial Intelligence and Programming Languages",
       "creators": [
         {
           "firstName": "Johan",
@@ -351,7 +350,8 @@
       "itemID": 60,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Symposium on Artificial Intelligence and Programming Languages"
     },
     {
       "itemType": "conferencePaper",
@@ -360,7 +360,6 @@
       "date": "1976",
       "extra": "Citation Key: Green:1976",
       "title": "The design of the PSI program synthesis system",
-      "proceedingsTitle": "Proceedings of the International Conference on Software Engineering",
       "creators": [
         {
           "firstName": "Cordell",
@@ -382,7 +381,8 @@
       "itemID": 61,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the International Conference on Software Engineering"
     },
     {
       "itemType": "conferencePaper",
@@ -453,7 +453,6 @@
       "date": "1968",
       "extra": "Citation Key: Guzman:68",
       "title": "The decomposition of a visual scene into three dimensional bodies",
-      "proceedingsTitle": "Proceedings of the Fall Joint Computer Conference",
       "creators": [
         {
           "firstName": "Adolfo",
@@ -475,7 +474,8 @@
       "itemID": 64,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Fall Joint Computer Conference"
     },
     {
       "itemType": "bookSection",
@@ -485,7 +485,6 @@
       "date": "1971",
       "extra": "Citation Key: Huffman:71",
       "title": "Impossible objects as nonsense sentences",
-      "bookTitle": "Machine Intelligence",
       "creators": [
         {
           "firstName": "David",
@@ -517,7 +516,8 @@
       "itemID": 65,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Intelligence"
     },
     {
       "itemType": "book",
@@ -580,7 +580,6 @@
       "place": "Cambridge, Mass.",
       "date": "January 1980",
       "extra": "Citation Key: McAllester:80",
-      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory",
       "reportNumber": "AI-TR-550",
       "title": "The Use of Equality in Deduction and Knowledge Representation",
       "creators": [
@@ -605,7 +604,8 @@
       "number": "AI-TR-550",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -613,7 +613,6 @@
       "date": "1991",
       "extra": "Citation Key: McAllester:91 \nbibtex[crossref=AAAI91]",
       "title": "Systematic Nonlinear Planning",
-      "proceedingsTitle": "AAAI-91",
       "creators": [
         {
           "firstName": "David",
@@ -640,7 +639,8 @@
       "itemID": 68,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-91"
     },
     {
       "itemType": "manuscript",
@@ -677,7 +677,6 @@
       "date": "1975",
       "extra": "Citation Key: Sacerdoti:75",
       "title": "The nonlinear nature of plans",
-      "proceedingsTitle": "IJCAI-75",
       "creators": [
         {
           "firstName": "Earl",
@@ -699,7 +698,8 @@
       "itemID": 70,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-75"
     },
     {
       "itemType": "conferencePaper",
@@ -707,7 +707,6 @@
       "date": "1973",
       "extra": "Citation Key: Woods:73",
       "title": "Mechanical inference problems in continuous speech understanding",
-      "proceedingsTitle": "IJCAI-73",
       "creators": [
         {
           "firstName": "William A.",
@@ -734,7 +733,8 @@
       "itemID": 71,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-73"
     },
     {
       "itemType": "book",
@@ -808,7 +808,6 @@
       "date": "1976",
       "extra": "Citation Key: Wilks:76",
       "title": "Parsing English II",
-      "bookTitle": "Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension",
       "creators": [
         {
           "firstName": "Yorick",
@@ -840,7 +839,8 @@
       "itemID": 74,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension"
     },
     {
       "itemType": "conferencePaper",
@@ -849,7 +849,6 @@
       "date": "1975",
       "extra": "Citation Key: Rieger:75",
       "title": "The commonsense algorithm as a basis for computer models of human memory, inference, belief and contextual language comprehension",
-      "proceedingsTitle": "Theoretical Issues in Natural Language Processing",
       "creators": [
         {
           "firstName": "Chuck",
@@ -881,7 +880,8 @@
       "itemID": 75,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Theoretical Issues in Natural Language Processing"
     },
     {
       "itemType": "bookSection",
@@ -890,7 +890,6 @@
       "date": "1975",
       "extra": "Republished in KR \nCitation Key: Minsky:Frames",
       "title": "A framework for representing knowledge",
-      "bookTitle": "The Psychology of Computer Vision",
       "creators": [
         {
           "firstName": "Marvin",
@@ -917,13 +916,13 @@
       "itemID": 76,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "The Psychology of Computer Vision"
     },
     {
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: London:78",
-      "institution": "University of Maryland Department of Computer Science",
       "title": "Dependency Networks as a Representation for Modeling in General Problem Solvers",
       "creators": [
         {
@@ -946,14 +945,14 @@
       "itemID": 77,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Maryland Department of Computer Science"
     },
     {
       "itemType": "report",
       "place": "Palo Alto, Calif.",
       "date": "1977",
       "extra": "Citation Key: Barstow:77",
-      "institution": "Stanford University Artificial Intelligence Laboratory",
       "title": "Automatic Construction of Algorithms and Data Structures Using a Knowledge Base of Programming Rules",
       "creators": [
         {
@@ -976,7 +975,8 @@
       "itemID": 78,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1045,7 +1045,6 @@
       "date": "1975",
       "extra": "Citation Key: Shirai:75",
       "title": "Analysing intensity arrays using knowledge about scenes",
-      "bookTitle": "The Psychology of Computer Vision",
       "creators": [
         {
           "firstName": "Yoshiaki",
@@ -1072,7 +1071,8 @@
       "itemID": 81,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "The Psychology of Computer Vision"
     },
     {
       "itemType": "book",
@@ -1167,7 +1167,6 @@
       "itemType": "report",
       "date": "1972",
       "extra": "Citation Key: Hewitt:72",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Description and Theoretical Analysis of PLANNER: A Language for Proving Theorems and Manipulating Models in a Robot",
       "creators": [
         {
@@ -1190,7 +1189,8 @@
       "itemID": 85,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -1227,7 +1227,6 @@
       "itemType": "report",
       "date": "1971",
       "extra": "Citation Key: Sussman:71",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Micro-Planner Reference Manual",
       "creators": [
         {
@@ -1260,7 +1259,8 @@
       "itemID": 87,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1395,7 +1395,6 @@
       "date": "1977",
       "extra": "Citation Key: Hayes:77",
       "title": "On semantic nets, frames and associations",
-      "proceedingsTitle": "IJCAI-77",
       "creators": [
         {
           "firstName": "Philip J.",
@@ -1417,7 +1416,8 @@
       "itemID": 92,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-77"
     },
     {
       "itemType": "conferencePaper",
@@ -1426,7 +1426,6 @@
       "date": "1977",
       "extra": "Citation Key: Hayes:77a",
       "title": "In defense of logic",
-      "proceedingsTitle": "IJCAI-77",
       "creators": [
         {
           "firstName": "Patrick J.",
@@ -1448,13 +1447,13 @@
       "itemID": 93,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-77"
     },
     {
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: Wilensky:thesis",
-      "institution": "Yale University Department of Computer Science",
       "reportNumber": "140",
       "title": "Understanding Goal-based Stories",
       "creators": [
@@ -1479,13 +1478,13 @@
       "number": "140",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
       "date": "December 1986",
       "extra": "Citation Key: Birnbaum:86",
-      "institution": "Yale University Department of Computer Science",
       "reportNumber": "489",
       "title": "Integrated Processing in Planning and Understanding",
       "creators": [
@@ -1510,7 +1509,8 @@
       "number": "489",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -1548,7 +1548,6 @@
       "date": "1990",
       "extra": "Citation Key: Norvig:90",
       "title": "A Critical Evaluation of Commensurable Abductive Models for Semantic Interpretation",
-      "proceedingsTitle": "COLING-90",
       "creators": [
         {
           "firstName": "Peter",
@@ -1575,7 +1574,8 @@
       "itemID": 97,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "COLING-90"
     },
     {
       "itemType": "manuscript",
@@ -1609,7 +1609,6 @@
       "itemType": "thesis",
       "date": "1978",
       "extra": "Citation Key: Cullingford:78",
-      "university": "Yale University Department of Computer Science",
       "title": "Script Application: Computer Understanding of Newspaper Stories",
       "creators": [
         {
@@ -1632,7 +1631,8 @@
       "itemID": 99,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "bookSection",
@@ -1755,7 +1755,6 @@
       "itemType": "report",
       "date": "1975",
       "extra": "Citation Key: Rubin:75",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Hypothesis Formation and Evaluation in Medical Diagnosis",
       "creators": [
         {
@@ -1778,7 +1777,8 @@
       "itemID": 104,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1814,7 +1814,6 @@
       "itemType": "report",
       "date": "1975",
       "extra": "Citation Key: Bundy:75",
-      "institution": "University of Edinburgh Department of Artificial Intelligence",
       "title": "Analysing Mathematical Proofs (Or Reading between the Lines)",
       "creators": [
         {
@@ -1837,7 +1836,8 @@
       "itemID": 106,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Edinburgh Department of Artificial Intelligence"
     },
     {
       "itemType": "book",
@@ -1905,7 +1905,6 @@
       "place": "Cambridge, Mass.",
       "date": "January 1978",
       "extra": "Citation Key: Woods:78",
-      "institution": "Bolt Beranek and Newman",
       "title": "Research in Natural Language Understanding: Quarterly Technical Progress Report No. 1,1",
       "creators": [
         {
@@ -1928,7 +1927,8 @@
       "itemID": 109,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "book",
@@ -1993,7 +1993,6 @@
       "itemType": "report",
       "date": "1977",
       "extra": "Citation Key: Roberts:77",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "The FRL Manual",
       "creators": [
         {
@@ -2021,7 +2020,8 @@
       "itemID": 112,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -2133,7 +2133,6 @@
       "itemType": "report",
       "date": "1973",
       "extra": "Citation Key: Martin:73",
-      "institution": "Project MAC, MIT",
       "title": "Translation of English into MAPL Using Winograd's Syntax, State Transition Networks, and a Semantic Case Grammar",
       "creators": [
         {
@@ -2156,7 +2155,8 @@
       "itemID": 116,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Project MAC, MIT"
     },
     {
       "itemType": "conferencePaper",
@@ -2164,7 +2164,6 @@
       "date": "1987",
       "extra": "Citation Key: Webber:87",
       "title": "The interpretation of tense in discourse",
-      "proceedingsTitle": "ACL-87",
       "creators": [
         {
           "firstName": "Bonnie Lynn",
@@ -2186,7 +2185,8 @@
       "itemID": 117,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ACL-87"
     },
     {
       "itemType": "conferencePaper",
@@ -2406,7 +2406,6 @@
       "date": "1973",
       "extra": "Citation Key: Schank:73",
       "title": "Identification of conceptualizations underlying natural language",
-      "bookTitle": "Computer Models of Thought and Language",
       "creators": [
         {
           "firstName": "Roger C.",
@@ -2438,7 +2437,8 @@
       "itemID": 124,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Computer Models of Thought and Language"
     },
     {
       "itemType": "book",
@@ -2515,7 +2515,6 @@
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Levin:79",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Instrumental With/ and the Control Relation in English",
       "creators": [
         {
@@ -2538,7 +2537,8 @@
       "itemID": 127,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -2757,7 +2757,6 @@
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Shipman",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Phrase Structure Rules for Parsifal",
       "creators": [
         {
@@ -2780,7 +2779,8 @@
       "itemID": 134,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -3294,7 +3294,6 @@
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: PhilHayes:78",
-      "institution": "University of Rochester Department of Computer Science",
       "title": "Mapping Input onto Schemas",
       "creators": [
         {
@@ -3317,13 +3316,13 @@
       "itemID": 149,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Schank:80",
-      "institution": "Yale University Department of Computer Science",
       "title": "Memory, Meaning, and Syntax",
       "creators": [
         {
@@ -3351,7 +3350,8 @@
       "itemID": 150,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -3496,7 +3496,6 @@
       "date": "1981",
       "extra": "Citation Key: CohenETAL:81",
       "title": "Beyond Question Answering",
-      "bookTitle": "Strategies for Natural Language Processing",
       "creators": [
         {
           "firstName": "Philip R.",
@@ -3559,7 +3558,8 @@
       "itemID": 155,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Strategies for Natural Language Processing"
     },
     {
       "itemType": "journalArticle",
@@ -3774,7 +3774,6 @@
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Sidner:79",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Towards a Computational Theory of Definite Anaphora Comprehension in English Discourse",
       "creators": [
         {
@@ -3797,7 +3796,8 @@
       "itemID": 163,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
@@ -3929,7 +3929,6 @@
       "date": "1981",
       "extra": "Citation Key: Wong:81",
       "title": "Language comprehension in a problem solver",
-      "proceedingsTitle": "IJCAI-81",
       "creators": [
         {
           "firstName": "Douglas",
@@ -3951,7 +3950,8 @@
       "itemID": 168,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-81"
     },
     {
       "itemType": "journalArticle",
@@ -3994,7 +3994,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Granger",
-      "institution": "Yale University Department of Computer Science",
       "reportNumber": "Research Report 171",
       "title": "Adaptive Understanding: Correcting Erroneous Inferences",
       "creators": [
@@ -4019,7 +4018,8 @@
       "number": "Research Report 171",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -4127,7 +4127,6 @@
       "date": "1973",
       "extra": "Citation Key: Montague:73",
       "title": "The proper treatment of quantification in ordinary English",
-      "bookTitle": "Approaches to Natural Language",
       "creators": [
         {
           "firstName": "Richard",
@@ -4159,13 +4158,13 @@
       "itemID": 174,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Approaches to Natural Language"
     },
     {
       "itemType": "report",
       "date": "1981",
       "extra": "Citation Key: Wong:tr81",
-      "institution": "Brown University Department of Computer Science",
       "title": "On the Unification of Language Comprehension with Problem Solving",
       "creators": [
         {
@@ -4188,7 +4187,8 @@
       "itemID": 175,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Brown University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -4600,7 +4600,6 @@
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: Hayes:78",
-      "institution": "Institute for Semantic and Cognitive Studies",
       "title": "Naive Physics I: Ontology for Liquids",
       "creators": [
         {
@@ -4623,7 +4622,8 @@
       "itemID": 188,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Institute for Semantic and Cognitive Studies"
     },
     {
       "itemType": "journalArticle",
@@ -4859,7 +4859,6 @@
       "date": "1975",
       "extra": "Citation Key: Gordon:75",
       "title": "Conversational postulates",
-      "bookTitle": "Syntax and Semantics 3: Speech acts",
       "creators": [
         {
           "firstName": "D.",
@@ -4896,7 +4895,8 @@
       "itemID": 196,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Syntax and Semantics 3: Speech acts"
     },
     {
       "itemType": "bookSection",
@@ -4906,7 +4906,6 @@
       "date": "1982",
       "extra": "Citation Key: Pople:82",
       "title": "Heuristic methods for imposing structure on ill-structured problems: The structuring of medical diagnostics",
-      "bookTitle": "Artificial Intelligence in Medicine",
       "creators": [
         {
           "firstName": "Harry",
@@ -4933,14 +4932,14 @@
       "itemID": 197,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Artificial Intelligence in Medicine"
     },
     {
       "itemType": "report",
       "place": "Cambridge, Mass.",
       "date": "1966",
       "extra": "Citation Key: Quillian:66",
-      "institution": "Bolt Beranek and Newman",
       "title": "Semantic Memory",
       "creators": [
         {
@@ -4963,7 +4962,8 @@
       "itemID": 198,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "journalArticle",
@@ -5701,7 +5701,6 @@
       "date": "1980",
       "extra": "Citation Key: Berwick:80",
       "title": "Computational analogues of constraints on grammars: A model of syntactic acquisition",
-      "proceedingsTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics",
       "creators": [
         {
           "firstName": "Robert C.",
@@ -5723,7 +5722,8 @@
       "itemID": 221,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics"
     },
     {
       "itemType": "journalArticle",
@@ -5761,7 +5761,6 @@
       "itemType": "report",
       "date": "1965",
       "extra": "Citation Key: Petrick:65",
-      "institution": "MIT",
       "title": "A Recognition Procedure for Transformational Grammars",
       "creators": [
         {
@@ -5784,7 +5783,8 @@
       "itemID": 223,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT"
     },
     {
       "itemType": "book",
@@ -5927,7 +5927,6 @@
       "place": "Cambridge, Mass.",
       "date": "1979",
       "extra": "Citation Key: Brachman:79",
-      "institution": "Bolt Beranek and Newman",
       "title": "An Introduction to KL-ONE",
       "creators": [
         {
@@ -5950,7 +5949,8 @@
       "itemID": 228,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "conferencePaper",
@@ -5958,7 +5958,6 @@
       "date": "1982",
       "extra": "Citation Key: Patil:82",
       "title": "Information acquisition in diagnosis",
-      "proceedingsTitle": "AAAI-82",
       "creators": [
         {
           "firstName": "Ramesh S",
@@ -5990,7 +5989,8 @@
       "itemID": 229,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-82"
     },
     {
       "itemType": "journalArticle",
@@ -6039,7 +6039,6 @@
       "place": "Stanford, CA",
       "date": "December 1986",
       "extra": "Citation Key: Pednault:86",
-      "university": "Stanford University",
       "title": "Toward a Mathematical Theory of Plan Synthesis",
       "creators": [
         {
@@ -6062,7 +6061,8 @@
       "itemID": 231,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Stanford University"
     },
     {
       "itemType": "journalArticle",
@@ -6297,7 +6297,6 @@
       "date": "1977",
       "extra": "Citation Key: Pauker:77",
       "title": "Analyzing and simulating taking the history of the present illness: context formation",
-      "bookTitle": "Computational Linguistics in Medicine",
       "creators": [
         {
           "firstName": "Stephen G.",
@@ -6334,7 +6333,8 @@
       "itemID": 239,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Computational Linguistics in Medicine"
     },
     {
       "itemType": "book",
@@ -6411,7 +6411,6 @@
       "extra": "Citation Key: Grice",
       "seriesNumber": "3",
       "title": "Logic and conversation",
-      "bookTitle": "Speech Acts",
       "creators": [
         {
           "firstName": "Paul",
@@ -6443,7 +6442,8 @@
       "itemID": 242,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Speech Acts"
     },
     {
       "itemType": "journalArticle",
@@ -6485,7 +6485,6 @@
       "date": "1978",
       "extra": "Citation Key: Grosz:78",
       "title": "Discourse knowledge",
-      "bookTitle": "Understanding Spoken language",
       "creators": [
         {
           "firstName": "Barbara J.",
@@ -6512,7 +6511,8 @@
       "itemID": 244,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Understanding Spoken language"
     },
     {
       "itemType": "journalArticle",
@@ -6695,7 +6695,6 @@
       "itemType": "report",
       "date": "1966",
       "extra": "Citation Key: Pierce:66",
-      "institution": "National Academy of Sciences/National Research Council",
       "title": "Language and Machines: Computers in Translation and Linguistics",
       "creators": [
         {
@@ -6718,7 +6717,8 @@
       "itemID": 250,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "National Academy of Sciences/National Research Council"
     },
     {
       "itemType": "book",
@@ -6936,7 +6936,6 @@
       "place": "Stanford University, Stanford, CA",
       "date": "September 1985",
       "extra": "Review of  Two-level Morphology \nCitation Key: Gazdar:85",
-      "institution": "CSLI",
       "reportNumber": "CSLI-85-32",
       "title": "Finite State Morphology: A review of Koskenniemi (1983)",
       "creators": [
@@ -6961,7 +6960,8 @@
       "number": "CSLI-85-32",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "CSLI"
     },
     {
       "itemType": "conferencePaper",
@@ -6972,7 +6972,6 @@
       "date": "1983",
       "extra": "Citation Key: Rich:83",
       "title": "Default reasoning as likelihood reasoning",
-      "proceedingsTitle": "Proc. AAAI",
       "creators": [
         {
           "firstName": "Elaine",
@@ -6994,7 +6993,8 @@
       "itemID": 259,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proc. AAAI"
     },
     {
       "itemType": "report",
@@ -7028,7 +7028,6 @@
       "itemType": "report",
       "date": "1975",
       "extra": "Citation Key: Moore:75",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Reasoning from Incomplete Knowledge in a Procedural Deduction System",
       "creators": [
         {
@@ -7051,7 +7050,8 @@
       "itemID": 261,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -7320,7 +7320,6 @@
       "date": "1990",
       "extra": "Citation Key: Schubert:90",
       "title": "Monotonic Solution of the Frame Problem in the situation calculus",
-      "bookTitle": "Knowledge Representation and Defeasible Reasoning",
       "creators": [
         {
           "firstName": "Lenhart",
@@ -7347,7 +7346,8 @@
       "itemID": 270,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Knowledge Representation and Defeasible Reasoning"
     },
     {
       "itemType": "journalArticle",
@@ -7719,7 +7719,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Selfridge:80",
-      "institution": "Yale University Department of Computer Science",
       "title": "A Process Model of Language Acquisition",
       "creators": [
         {
@@ -7742,7 +7741,8 @@
       "itemID": 281,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -7809,7 +7809,6 @@
       "itemType": "report",
       "date": "1982",
       "extra": "Citation Key: Berwick:82",
-      "institution": "MIT Department of Electrical Engineering and Computer Science",
       "title": "Locality Principles and the Acquisition of Syntactic Knowledge",
       "creators": [
         {
@@ -7832,7 +7831,8 @@
       "itemID": 284,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Department of Electrical Engineering and Computer Science"
     },
     {
       "itemType": "book",
@@ -7873,7 +7873,6 @@
       "itemType": "report",
       "date": "1972",
       "extra": "Citation Key: Agin:72",
-      "institution": "Stanford University Artificial Intelligence Laboratory",
       "title": "Representation and Description of Curved Objects",
       "creators": [
         {
@@ -7896,7 +7895,8 @@
       "itemID": 286,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
@@ -7906,7 +7906,6 @@
       "date": "1983",
       "extra": "Citation Key: JRAnderson:83",
       "title": "Acquisition of proof skills in geometry",
-      "bookTitle": "Machine Learning: An Artificial Intelligence Approach",
       "creators": [
         {
           "firstName": "John R.",
@@ -7943,7 +7942,8 @@
       "itemID": 287,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
     },
     {
       "itemType": "book",
@@ -8289,7 +8289,6 @@
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: Bledsoe:78",
-      "institution": "University of Texas at Austin Department of Mathematics and Computer Sciences",
       "title": "Unskolemizing",
       "creators": [
         {
@@ -8317,7 +8316,8 @@
       "itemID": 298,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Texas at Austin Department of Mathematics and Computer Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -8459,7 +8459,6 @@
       "date": "1982",
       "extra": "Citation Key: Brooks:82",
       "title": "Solving the find-path problem by good representation of space",
-      "proceedingsTitle": "AAAI-82",
       "creators": [
         {
           "firstName": "Rodney",
@@ -8481,7 +8480,8 @@
       "itemID": 303,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-82"
     },
     {
       "itemType": "journalArticle",
@@ -8519,7 +8519,6 @@
       "itemType": "report",
       "date": "September 1987",
       "extra": "Citation Key: Brooks:87",
-      "institution": "MITAI",
       "reportNumber": "Working Paper 303",
       "title": "Planning is just a way of avoiding figuring out what to do next",
       "creators": [
@@ -8544,7 +8543,8 @@
       "number": "Working Paper 303",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MITAI"
     },
     {
       "itemType": "conferencePaper",
@@ -8552,7 +8552,6 @@
       "date": "1988",
       "extra": "Citation Key: Brooks:88",
       "title": "Situated Vision in a Dynamic World: Chasing Objects",
-      "proceedingsTitle": "AAAI-88",
       "creators": [
         {
           "firstName": "Ian Douglas",
@@ -8579,7 +8578,8 @@
       "itemID": 306,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-88"
     },
     {
       "itemType": "journalArticle",
@@ -8814,7 +8814,6 @@
       "date": "1983",
       "extra": "Citation Key: Burstein:83",
       "title": "Concept formation by incremental analogical reasoning and debugging",
-      "proceedingsTitle": "Proceedings of the International Machine Learning Workshop",
       "creators": [
         {
           "firstName": "Mark",
@@ -8836,7 +8835,8 @@
       "itemID": 313,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
     },
     {
       "itemType": "conferencePaper",
@@ -8844,7 +8844,6 @@
       "date": "1983",
       "extra": "Citation Key: Campbell:83",
       "title": "A chess program that chunks",
-      "proceedingsTitle": "AAAI-83",
       "creators": [
         {
           "firstName": "Murray",
@@ -8871,7 +8870,8 @@
       "itemID": 314,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-83"
     },
     {
       "itemType": "conferencePaper",
@@ -8880,7 +8880,6 @@
       "date": "1983",
       "extra": "Citation Key: Carbonell:83",
       "title": "Derivational analogy in problem solving and knowledge acquisition",
-      "proceedingsTitle": "Proceedings of the International Machine Learning Workshop",
       "creators": [
         {
           "firstName": "Jaime",
@@ -8902,7 +8901,8 @@
       "itemID": 315,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
     },
     {
       "itemType": "book",
@@ -9018,7 +9018,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Pietrzykowski:1980",
-      "institution": "University of Waterloo Department of Computer Science",
       "title": "On Reverse Skolemization",
       "creators": [
         {
@@ -9046,7 +9045,8 @@
       "itemID": 319,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Waterloo Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -9083,7 +9083,6 @@
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: Davis:84",
-      "institution": "Yale University Department of Computer Science",
       "title": "Representing and Acquiring Geographic Knowledge",
       "creators": [
         {
@@ -9106,7 +9105,8 @@
       "itemID": 321,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -9115,7 +9115,6 @@
       "date": "1983",
       "extra": "Citation Key: Davis:83",
       "title": "The MERCATOR representation of spatial knowledge",
-      "proceedingsTitle": "IJCAI-83",
       "creators": [
         {
           "firstName": "Ernest",
@@ -9137,7 +9136,8 @@
       "itemID": 322,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-83"
     },
     {
       "itemType": "book",
@@ -9189,7 +9189,6 @@
       "date": "1979",
       "extra": "Citation Key: deKleer:1979",
       "title": "Qualitative and quantitative reasoning in classical mechanics",
-      "bookTitle": "Artificial Intelligence: An MIT Perspective",
       "creators": [
         {
           "firstName": "Johan",
@@ -9221,7 +9220,8 @@
       "itemID": 324,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Artificial Intelligence: An MIT Perspective"
     },
     {
       "itemType": "journalArticle",
@@ -9333,7 +9333,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Doyle:1980",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "A model for deliberation, action, and introspection",
       "creators": [
         {
@@ -9356,7 +9355,8 @@
       "itemID": 328,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9501,7 +9501,6 @@
       "itemType": "report",
       "date": "1981",
       "extra": "Citation Key: Forbus:1981",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "A Study of Qualitative and Geometric Knowledge in Reasoning about Motion",
       "creators": [
         {
@@ -9524,7 +9523,8 @@
       "itemID": 333,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9605,7 +9605,6 @@
       "itemType": "report",
       "date": "1976",
       "extra": "Citation Key: Funt:1976",
-      "institution": "University of British Columbia Department of Computer Science",
       "title": "WHISPER: A Computer Implementation Using Analogues in Reasoning",
       "creators": [
         {
@@ -9628,7 +9627,8 @@
       "itemID": 336,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of British Columbia Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -9957,7 +9957,6 @@
       "itemType": "report",
       "date": "1976",
       "extra": "Citation Key: Grossman:1976",
-      "institution": "Stanford University Artificial Intelligence Laboratory",
       "title": "Monte Carlo Simulation of Tolerancing in Discrete Parts Manufacturing and Assembly",
       "creators": [
         {
@@ -9980,7 +9979,8 @@
       "itemID": 347,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -10027,7 +10027,6 @@
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: Hayes:Manifesto",
-      "institution": "University of Essex Computer Science Department",
       "title": "The Naive Physics Manifesto",
       "creators": [
         {
@@ -10050,7 +10049,8 @@
       "itemID": 349,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Essex Computer Science Department"
     },
     {
       "itemType": "book",
@@ -10581,7 +10581,6 @@
       "date": "1980",
       "extra": "Citation Key: Konolige:80",
       "title": "Multiple-Agent Planning Systems",
-      "proceedingsTitle": "AAAI-80",
       "creators": [
         {
           "firstName": "Kurt",
@@ -10608,7 +10607,8 @@
       "itemID": 366,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-80"
     },
     {
       "itemType": "bookSection",
@@ -10618,7 +10618,6 @@
       "date": "1982",
       "extra": "Citation Key: Konolige:82 \nbibtex[chapter=2]",
       "title": "A first-order formalisation of knowledge and action for a multi-agent planning system",
-      "bookTitle": "Machine Intelligence 10",
       "creators": [
         {
           "firstName": "Kurt",
@@ -10650,7 +10649,8 @@
       "itemID": 367,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Intelligence 10"
     },
     {
       "itemType": "journalArticle",
@@ -10954,7 +10954,6 @@
       "date": "1982",
       "extra": "Citation Key: Kuipers:82",
       "title": "Getting the envisionment right",
-      "proceedingsTitle": "AAAI-82",
       "creators": [
         {
           "firstName": "Benjamin",
@@ -10976,7 +10975,8 @@
       "itemID": 378,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-82"
     },
     {
       "itemType": "conferencePaper",
@@ -10984,7 +10984,6 @@
       "date": "1988",
       "extra": "Citation Key: Kuipers:88",
       "title": "A robust, qualitative method for robot spatial reasoning",
-      "proceedingsTitle": "AAAI-88",
       "creators": [
         {
           "firstName": "Benjamin",
@@ -11011,7 +11010,8 @@
       "itemID": 379,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-88"
     },
     {
       "itemType": "book",
@@ -11979,7 +11979,6 @@
       "date": "1969",
       "extra": "Citation Key: McCarthy:69",
       "title": "Some philosophical problems from the standpoint of artificial intelligence",
-      "bookTitle": "Machine Intelligence",
       "creators": [
         {
           "firstName": "John",
@@ -12016,18 +12015,19 @@
       "itemID": 408,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Intelligence"
     },
     {
       "itemType": "report",
       "date": "1972-05",
       "extra": "Citation Key: McDermott:72",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "The CONNIVER Reference Manual",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         },
         {
           "firstName": "Gerald J.",
@@ -12049,18 +12049,19 @@
       "itemID": 409,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
       "date": "1974",
       "extra": "Citation Key: McDermott:74",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Assimilation of New Information by a Natural Language Understanding System",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12077,18 +12078,19 @@
       "itemID": 410,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
       "date": "1975",
       "extra": "Citation Key: McDermott:75",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Very Large Planner-Type Data Bases",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12105,19 +12107,20 @@
       "itemID": 411,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
       "place": "Cambridge, Mass.",
       "date": "June 1977",
       "extra": "Citation Key: McDermott:77",
-      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory",
       "title": "Flexibility and Efficiency in a Computer Program for Designing Circuits",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12134,7 +12137,8 @@
       "itemID": 412,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -12142,11 +12146,11 @@
       "date": "1977",
       "extra": "Citation Key: McDermott:77a",
       "title": "Vocabularies for problem-solver state descriptions",
-      "proceedingsTitle": "IJCAI-77",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12163,7 +12167,8 @@
       "itemID": 413,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-77"
     },
     {
       "itemType": "journalArticle",
@@ -12176,7 +12181,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12205,7 +12211,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12230,11 +12237,11 @@
       "date": "1980",
       "extra": "Citation Key: McDermott:80",
       "title": "An efficient environment allocation scheme in an interpreter for a lexically-scoped LISP",
-      "proceedingsTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12251,7 +12258,8 @@
       "itemID": 416,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming"
     },
     {
       "itemType": "conferencePaper",
@@ -12263,7 +12271,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12286,12 +12295,12 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: McDermott:80b",
-      "institution": "Yale University Computer Science Department",
       "title": "Spatial inferences with ground, metric formulas on simple objects",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12308,7 +12317,8 @@
       "itemID": 418,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -12355,11 +12365,11 @@
       "date": "1981",
       "extra": "Citation Key: McDermott:81",
       "title": "Artificial intelligence meets natural stupidity",
-      "bookTitle": "Mind design",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         },
         {
           "firstName": "John",
@@ -12381,18 +12391,19 @@
       "itemID": 420,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Mind design"
     },
     {
       "itemType": "report",
       "date": "1981",
       "extra": "Citation Key: McDermott:81a",
-      "institution": "Yale University Computer Science Department",
       "title": "Finding objects with given spatial properties",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12409,14 +12420,14 @@
       "itemID": 421,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
       "date": "1982",
       "extra": "Citation Key: McDermott:82a",
       "title": "Arby: diagnosis with shallow causal models",
-      "proceedingsTitle": "AAAI-82",
       "creators": [
         {
           "firstName": "Drew V.",
@@ -12443,18 +12454,19 @@
       "itemID": 422,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-82"
     },
     {
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: McDermott:83Duck",
-      "institution": "Yale University Department of Computer Science",
       "title": "Duck Reference Manual",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12471,7 +12483,8 @@
       "itemID": 423,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -12479,11 +12492,11 @@
       "date": "1983",
       "extra": "Citation Key: McDermott:83a",
       "title": "Data dependencies on inequalities",
-      "proceedingsTitle": "AAAI-83",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12500,18 +12513,19 @@
       "itemID": 424,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-83"
     },
     {
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: McDermott:83b",
-      "institution": "Yale University Department of Computer Science",
       "title": "The Nisp manual",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12528,18 +12542,19 @@
       "itemID": 425,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
       "date": "1984",
       "extra": "Citation Key: McDermott:84",
-      "institution": "Yale University Computer Science Department",
       "title": "Metric Time Maps",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12556,7 +12571,8 @@
       "itemID": 426,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "bookSection",
@@ -12565,11 +12581,11 @@
       "date": "1984",
       "extra": "Citation Key: McDermott:84a",
       "title": "Reasoning about plans",
-      "bookTitle": "Formal Theories of the Commonsense World",
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         },
         {
           "firstName": "J.",
@@ -12591,7 +12607,8 @@
       "itemID": 427,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Formal Theories of the Commonsense World"
     },
     {
       "itemType": "journalArticle",
@@ -12640,7 +12657,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12671,7 +12689,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12702,7 +12721,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12733,7 +12753,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12760,7 +12781,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12784,7 +12806,6 @@
       "place": "New Haven, CT",
       "date": "1998-10",
       "extra": "Citation Key: McDermott:98:pddl",
-      "institution": "Yale Center for Computational Vision and Control",
       "reportNumber": "CVC TR-98-003",
       "title": "PDDL -- The Planning Domain Definition Language",
       "creators": [
@@ -12844,7 +12865,8 @@
       "number": "CVC TR-98-003",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale Center for Computational Vision and Control"
     },
     {
       "itemType": "journalArticle",
@@ -12858,7 +12880,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12910,7 +12933,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "MCDERMOTT"
+          "lastName": "MCDERMOTT",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -12935,7 +12959,6 @@
       "date": "1981",
       "extra": "Citation Key: McKay:81",
       "title": "Using Active Connection Graphs for Reasoning with Recursive Rules",
-      "proceedingsTitle": "IJCAI-81",
       "creators": [
         {
           "firstName": "D.P.",
@@ -12962,7 +12985,8 @@
       "itemID": 438,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-81"
     },
     {
       "itemType": "bookSection",
@@ -13029,7 +13053,6 @@
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: Miller:83",
-      "institution": "Yale University Department of Computer Science",
       "title": "Scheduling Heuristics for Problem Solvers",
       "creators": [
         {
@@ -13052,7 +13075,8 @@
       "itemID": 441,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -13060,11 +13084,11 @@
       "date": "1985",
       "extra": "Citation Key: miller85 \nbibtex[organization=IJCAI]",
       "title": "Deadlines, Travel Time and Robot Problem Solving",
-      "proceedingsTitle": "Proceedings of 9th IJCAI 1985",
       "creators": [
         {
           "creatorType": "author",
-          "name": "Miller, D., Firby, J."
+          "lastName": "Miller, D., Firby, J.",
+          "fieldMode": 1
         },
         {
           "firstName": "T.",
@@ -13086,13 +13110,13 @@
       "itemID": 442,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of 9th IJCAI 1985"
     },
     {
       "itemType": "thesis",
       "date": "1985",
       "extra": "Citation Key: Miller:85a",
-      "university": "Yale University Department of Computer Science",
       "title": "Planning by Search Through Simulations",
       "creators": [
         {
@@ -13115,7 +13139,8 @@
       "itemID": 443,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -13155,7 +13180,6 @@
       "date": "1983",
       "extra": "Citation Key: Mitchell:83",
       "title": "Learning by experimentation: Acquiring and refining problem-solving heuristics",
-      "bookTitle": "Machine Learning: An Artificial Intelligence Approach",
       "creators": [
         {
           "firstName": "Tom M.",
@@ -13197,7 +13221,8 @@
       "itemID": 445,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
     },
     {
       "itemType": "book",
@@ -13233,7 +13258,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Moore:80",
-      "institution": "SRI Artificial Intelligence Center",
       "title": "Reasoning about Knowledge and Action",
       "creators": [
         {
@@ -13256,7 +13280,8 @@
       "itemID": 447,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "SRI Artificial Intelligence Center"
     },
     {
       "itemType": "bookSection",
@@ -13293,7 +13318,6 @@
       "date": "1983",
       "extra": "Citation Key: Mostow:83",
       "title": "Machine transformation of advice into a heuristic search procedure",
-      "bookTitle": "Machine Learning: An Artificial Intelligence Approach",
       "creators": [
         {
           "firstName": "D. Jack",
@@ -13325,7 +13349,8 @@
       "itemID": 449,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
     },
     {
       "itemType": "journalArticle",
@@ -13393,7 +13418,6 @@
       "itemType": "report",
       "date": "1999-01",
       "extra": "Citation Key: UMCP-CSD//CS-TR-3981 \nbibtex[bibdate=March 17, 1999]",
-      "institution": "University of Maryland, College Park",
       "reportType": "Technical Report",
       "abstractNote": "SHOP (Simple Hierarchical Ordered Planner) is a domain-independent HTN Planning system with the following characteristics. * SHOP plans for tasks in the same order that they will later be executed. This avoids some of the goal-interaction issues that arise in other HTN planners, thus making the planning algorithm relatively simple. * The planning algorithm is sound and complete over a large class of problems. * Since SHOP knows the complete world-state at each step of the planning process, it can use highly expressive domain representations. For example, it can do planning problems that require complex numeric computations. * In our tests, SHOP solved problems several orders of magnitude faster than Blackbox and TLplan. This occured even though SHOP is written in Lisp and the other planners are written in C. (Also cross-referenced as UMIACS-TR 99-04)",
       "reportNumber": "CS-TR-3981",
@@ -13436,7 +13460,8 @@
       "number": "CS-TR-3981",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Maryland, College Park"
     },
     {
       "itemType": "conferencePaper",
@@ -13632,7 +13657,6 @@
       "itemType": "report",
       "date": "1974",
       "extra": "Citation Key: Nevins:1974",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "Plane Geometry Theorem Proving Using Forward Chaining",
       "creators": [
         {
@@ -13655,7 +13679,8 @@
       "itemID": 457,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -14024,7 +14049,6 @@
       "date": "1983",
       "extra": "Citation Key: Quinlan:MLbook",
       "title": "Learning efficient classification procedures and their application to chess end games",
-      "bookTitle": "Machine Learning: An Artificial Intelligence Approach",
       "creators": [
         {
           "firstName": "J. Ross",
@@ -14056,7 +14080,8 @@
       "itemID": 468,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
     },
     {
       "itemType": "conferencePaper",
@@ -14065,7 +14090,6 @@
       "date": "1983",
       "extra": "Citation Key: Quinlan:83",
       "title": "Learning from noisy data",
-      "proceedingsTitle": "Proceedings of the International Machine Learning Workshop",
       "creators": [
         {
           "firstName": "J. Ross",
@@ -14087,7 +14111,8 @@
       "itemID": 469,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
     },
     {
       "itemType": "journalArticle",
@@ -14157,7 +14182,6 @@
       "date": "1982",
       "extra": "Citation Key: Rees:T",
       "title": "T: A dialect of LISP or, LAMBDA: The ultimate software tool",
-      "proceedingsTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming",
       "creators": [
         {
           "firstName": "Jonathan",
@@ -14184,7 +14208,8 @@
       "itemID": 472,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the ACM Symposium on Lisp and Functional Programming"
     },
     {
       "itemType": "book",
@@ -14366,11 +14391,11 @@
       "date": "1991",
       "extra": "Citation Key: reiter91frame",
       "title": "The Frame Problem in the Situation Calculus: A Simple Solution (Sometimes) and a Completeness Result for Goal Regression",
-      "bookTitle": "Artificial Intelligence and Mathematical Theory of Computation: Papers in Honor of John McCarthy, Vladimir Lifschitz (Ed.), Academic Press",
       "creators": [
         {
           "creatorType": "author",
-          "name": "REITER"
+          "lastName": "REITER",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -14387,7 +14412,8 @@
       "itemID": 478,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Artificial Intelligence and Mathematical Theory of Computation: Papers in Honor of John McCarthy, Vladimir Lifschitz (Ed.), Academic Press"
     },
     {
       "itemType": "book",
@@ -14567,7 +14593,6 @@
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: Riesbeck:1983",
-      "institution": "Yale University Computer Science Department",
       "title": "Knowledge Reorganization and Reasoning Style",
       "creators": [
         {
@@ -14590,7 +14615,8 @@
       "itemID": 484,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -14628,7 +14654,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Sibert:1980",
-      "institution": "Syracuse University School of Computer and Information Sciences",
       "title": "LOGLISP -- An alternative to PROLOG",
       "creators": [
         {
@@ -14656,7 +14681,8 @@
       "itemID": 486,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Syracuse University School of Computer and Information Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -14766,7 +14792,6 @@
       "date": "1979",
       "extra": "Citation Key: SchankCarbonell:1979",
       "title": "Re: The Gettysburg Address: Representing social and political acts",
-      "bookTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
       "creators": [
         {
           "firstName": "Roger C.",
@@ -14798,13 +14823,13 @@
       "itemID": 490,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer"
     },
     {
       "itemType": "report",
       "date": "1977",
       "extra": "Citation Key: Schatz:1977",
-      "institution": "MIT Artificial Intelligence Laboratory",
       "title": "The Computation of Immediate Texture Discrimination",
       "creators": [
         {
@@ -14827,7 +14852,8 @@
       "itemID": 491,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -14867,7 +14893,6 @@
       "date": "1979",
       "extra": "Citation Key: Shapiro:1979",
       "title": "The SNePS semantic network processing system",
-      "bookTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
       "creators": [
         {
           "firstName": "S.C.",
@@ -14894,7 +14919,8 @@
       "itemID": 493,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer"
     },
     {
       "itemType": "journalArticle",
@@ -14936,7 +14962,6 @@
       "itemType": "report",
       "date": "1981",
       "extra": "Citation Key: Shapiro:1981",
-      "institution": "Yale University Computer Science Department",
       "title": "Inductive Inference of Theories from Facts",
       "creators": [
         {
@@ -14959,7 +14984,8 @@
       "itemID": 495,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -15142,7 +15168,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Stefik:1980",
-      "institution": "Stanford University Computer Science Department",
       "title": "Planning with Constraints",
       "creators": [
         {
@@ -15165,7 +15190,8 @@
       "itemID": 501,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Stanford University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -15379,7 +15405,6 @@
       "date": "1977",
       "extra": "Citation Key: Tate:77",
       "title": "Generating project networks",
-      "proceedingsTitle": "IJCAI-77",
       "creators": [
         {
           "firstName": "Austin",
@@ -15401,7 +15426,8 @@
       "itemID": 508,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-77"
     },
     {
       "itemType": "journalArticle",
@@ -15841,7 +15867,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "WILKINS"
+          "lastName": "WILKINS",
+          "fieldMode": 1
         },
         {
           "firstName": "Karen L.",
@@ -16097,7 +16124,6 @@
       "date": "1983",
       "extra": "Citation Key: Winston:83",
       "title": "Learning physical descriptions from functional definitions, examples, and precedents",
-      "proceedingsTitle": "AAAI-83",
       "creators": [
         {
           "firstName": "Patrick H.",
@@ -16119,7 +16145,8 @@
       "itemID": 530,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-83"
     },
     {
       "itemType": "book",
@@ -16158,7 +16185,6 @@
       "date": "1980",
       "extra": "Citation Key: Witkin:80",
       "title": "A statistical technique for recovering surface orientation from texture in natural imagery",
-      "proceedingsTitle": "AAAI-80",
       "creators": [
         {
           "firstName": "Andrew P.",
@@ -16180,7 +16206,8 @@
       "itemID": 532,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-80"
     },
     {
       "itemType": "journalArticle",
@@ -16550,7 +16577,6 @@
       "itemType": "report",
       "date": "1977",
       "extra": "Citation Key: Sproull:1977",
-      "institution": "University of Rochester Department of Computer Science",
       "title": "Decision theory and artificial intelligence II: The hungry monkey",
       "creators": [
         {
@@ -16578,7 +16604,8 @@
       "itemID": 544,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -16972,7 +16999,6 @@
       "place": "Urbana Illinois",
       "date": "1980",
       "extra": "Citation Key: Finin:1980",
-      "institution": "Department of Computer Science University of Illinois at",
       "title": "The Semantic Interpretation of Nominal Compounds",
       "creators": [
         {
@@ -16995,7 +17021,8 @@
       "itemID": 557,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science University of Illinois at"
     },
     {
       "itemType": "journalArticle",
@@ -17130,7 +17157,6 @@
       "itemType": "report",
       "date": "1986",
       "extra": "Citation Key: Norvig:86",
-      "institution": "Department of Computer Science, University of California at Berkeley",
       "title": "Inference processes and knowledge representation for text understanding",
       "creators": [
         {
@@ -17153,7 +17179,8 @@
       "itemID": 562,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, University of California at Berkeley"
     },
     {
       "itemType": "conferencePaper",
@@ -17161,7 +17188,6 @@
       "date": "1987",
       "extra": "Citation Key: Norvig:aaai87",
       "title": "Inference in Text Understanding",
-      "proceedingsTitle": "AAAI-87",
       "creators": [
         {
           "firstName": "Peter",
@@ -17183,13 +17209,13 @@
       "itemID": 563,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-87"
     },
     {
       "itemType": "thesis",
       "date": "1987",
       "extra": "Citation Key: Norvig:thesis",
-      "university": "Computer Science Division (EECS), % University of California at Berkeley",
       "title": "Unified Theory of Inference for Text Understanding",
       "creators": [
         {
@@ -17212,7 +17238,8 @@
       "itemID": 564,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Division (EECS), % University of California at Berkeley"
     },
     {
       "itemType": "journalArticle",
@@ -17250,7 +17277,6 @@
       "itemType": "report",
       "date": "1985",
       "extra": "Citation Key: Riesbeck:tr85",
-      "institution": "Department of Computer Science Yale University",
       "title": "Direct memory access parsing",
       "creators": [
         {
@@ -17278,7 +17304,8 @@
       "itemID": 566,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science Yale University"
     },
     {
       "itemType": "journalArticle",
@@ -17386,7 +17413,6 @@
       "date": "1983",
       "extra": "Citation Key: Shieber:83",
       "title": "Sentence disambiguation by a shift-reduce parsing technique",
-      "proceedingsTitle": "IJCAI-83",
       "creators": [
         {
           "firstName": "Stuart M.",
@@ -17408,7 +17434,8 @@
       "itemID": 570,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-83"
     },
     {
       "itemType": "conferencePaper",
@@ -17416,7 +17443,6 @@
       "date": "1986",
       "extra": "Citation Key: Kosy:86",
       "title": "Parsing conjunctions deterministically",
-      "proceedingsTitle": "ACL-86",
       "creators": [
         {
           "firstName": "Donald W.",
@@ -17438,7 +17464,8 @@
       "itemID": 571,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ACL-86"
     },
     {
       "itemType": "bookSection",
@@ -17446,7 +17473,6 @@
       "date": "1985",
       "extra": "Citation Key: Kay:85",
       "title": "Parsing in functional unification grammar",
-      "bookTitle": "Natural Language Parsing",
       "creators": [
         {
           "firstName": "Martin",
@@ -17473,7 +17499,8 @@
       "itemID": 572,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Natural Language Parsing"
     },
     {
       "itemType": "journalArticle",
@@ -17518,7 +17545,6 @@
       "date": "1986",
       "extra": "Citation Key: Kautz:86",
       "title": "Generalized plan recognition",
-      "proceedingsTitle": "AAAI-86",
       "creators": [
         {
           "firstName": "Henry",
@@ -17545,7 +17571,8 @@
       "itemID": 574,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-86"
     },
     {
       "itemType": "conferencePaper",
@@ -17580,7 +17607,6 @@
       "place": "Rochester, NY",
       "date": "May 1987",
       "extra": "Citation Key: Kautz:thesis",
-      "institution": "Department of Computer Science, University of Rochester",
       "reportNumber": "TR 215",
       "title": "A Formal Theory of Plan Recognition",
       "creators": [
@@ -17605,7 +17631,8 @@
       "number": "TR 215",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, University of Rochester"
     },
     {
       "itemType": "bookSection",
@@ -17642,7 +17669,6 @@
       "date": "1991",
       "extra": "Citation Key: Kautz91Formal \nbibtex[chapter=2]",
       "title": "A Formal Theory of Plan Recognition and its Implementation",
-      "bookTitle": "Reasoning About Plans",
       "creators": [
         {
           "firstName": "Henry A.",
@@ -17684,7 +17710,8 @@
       "itemID": 578,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Reasoning About Plans"
     },
     {
       "itemType": "bookSection",
@@ -17720,7 +17747,6 @@
       "date": "1986",
       "extra": "Citation Key: Litman:86",
       "title": "Understanding plan ellipsis",
-      "proceedingsTitle": "AAAI-86",
       "creators": [
         {
           "firstName": "Diane",
@@ -17742,13 +17768,13 @@
       "itemID": 580,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-86"
     },
     {
       "itemType": "report",
       "date": "1985",
       "extra": "Citation Key: Fanty:85",
-      "institution": "Univeristy of Rochester Computer Science Department",
       "title": "Context-free parsing in connectionist networks",
       "creators": [
         {
@@ -17771,7 +17797,8 @@
       "itemID": 581,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Univeristy of Rochester Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -17813,7 +17840,6 @@
       "itemType": "report",
       "date": "1985",
       "extra": "Citation Key: Selman:1985",
-      "institution": "Computer Systems Research Institute, University of Toronto",
       "title": "Rule-based processing in a connectionist system for natural language understanding",
       "creators": [
         {
@@ -17836,7 +17862,8 @@
       "itemID": 583,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Systems Research Institute, University of Toronto"
     },
     {
       "itemType": "journalArticle",
@@ -17876,7 +17903,6 @@
       "date": "1985",
       "extra": "Citation Key: Hobbs:85",
       "title": "Ontological Promiscuity",
-      "proceedingsTitle": "ACL-85",
       "creators": [
         {
           "firstName": "Jerry R.",
@@ -17898,7 +17924,8 @@
       "itemID": 585,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ACL-85"
     },
     {
       "itemType": "conferencePaper",
@@ -17906,7 +17933,6 @@
       "date": "1987",
       "extra": "Citation Key: Hobbs:87",
       "title": "Local Pragmatics",
-      "proceedingsTitle": "IJCAI-87",
       "creators": [
         {
           "firstName": "Jerry R.",
@@ -17933,7 +17959,8 @@
       "itemID": 586,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-87"
     },
     {
       "itemType": "conferencePaper",
@@ -17941,7 +17968,6 @@
       "date": "1988",
       "extra": "Citation Key: Hobbs:88",
       "title": "Interpretation as Abduction",
-      "proceedingsTitle": "ACL-88",
       "creators": [
         {
           "firstName": "Jerry R.",
@@ -17978,14 +18004,14 @@
       "itemID": 587,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ACL-88"
     },
     {
       "itemType": "report",
       "place": "SRI-ADDRESS",
       "date": "December 1990",
       "extra": "Citation Key: Hobbs:IasATR",
-      "institution": "Artificial Intelligence Center, SRI International",
       "reportNumber": "499",
       "title": "Interpretation as Abduction",
       "creators": [
@@ -18025,7 +18051,8 @@
       "number": "499",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Artificial Intelligence Center, SRI International"
     },
     {
       "itemType": "journalArticle",
@@ -18108,7 +18135,6 @@
       "place": "CSLI-ADDRESS",
       "date": "October 1986",
       "extra": "Citation Key: Johnson:86",
-      "institution": "CSLI",
       "reportNumber": "CSLI-86-63",
       "title": "Discourse, Anaphora and Parsing",
       "creators": [
@@ -18138,7 +18164,8 @@
       "number": "CSLI-86-63",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "CSLI"
     },
     {
       "itemType": "bookSection",
@@ -18148,7 +18175,6 @@
       "date": "1981",
       "extra": "Citation Key: Kamp:81",
       "title": "A Theory of Truth and Semantic Representation",
-      "bookTitle": "Formal Methods in the Study of Language",
       "creators": [
         {
           "firstName": "Hans",
@@ -18185,13 +18211,13 @@
       "itemID": 592,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Formal Methods in the Study of Language"
     },
     {
       "itemType": "report",
       "date": "1988",
       "extra": "Citation Key: Stickel:88",
-      "institution": "Artificial Intelligence Center,SRI International",
       "title": "A Prolog-like Inference System for Computing Minimum-cost Abductive Explanations in Natural-language Interpretation",
       "creators": [
         {
@@ -18214,7 +18240,8 @@
       "itemID": 593,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Artificial Intelligence Center,SRI International"
     },
     {
       "itemType": "book",
@@ -18285,7 +18312,6 @@
       "date": "1983",
       "extra": "Citation Key: Hirst:acl83",
       "title": "A foundation for semantic interpretation",
-      "proceedingsTitle": "Proceedings of the 21st Annual Meeting of the Association for Computational Linguistics",
       "creators": [
         {
           "firstName": "Graeme",
@@ -18307,13 +18333,13 @@
       "itemID": 596,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 21st Annual Meeting of the Association for Computational Linguistics"
     },
     {
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: Hirst:83",
-      "institution": "Brown University Department of Computer Science",
       "title": "Semantic Interpretation against Ambiguity",
       "creators": [
         {
@@ -18336,7 +18362,8 @@
       "itemID": 597,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Brown University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -18471,7 +18498,6 @@
       "itemType": "thesis",
       "date": "1988",
       "extra": "Citation Key: Dasigi:thesis",
-      "university": "Department of Computer Science, University of Maryland at College Park",
       "title": "Word Sense Disambiguation in Descriptive text interpretation",
       "creators": [
         {
@@ -18494,7 +18520,8 @@
       "itemID": 602,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, University of Maryland at College Park"
     },
     {
       "itemType": "conferencePaper",
@@ -18571,7 +18598,6 @@
       "date": "1990",
       "extra": "Citation Key: Carberry:90",
       "title": "Incorporating Default Inferences Into Plan Recognition",
-      "proceedingsTitle": "AAAI-90",
       "creators": [
         {
           "firstName": "Sandra",
@@ -18593,7 +18619,8 @@
       "itemID": 605,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-90"
     },
     {
       "itemType": "book",
@@ -18631,7 +18658,6 @@
       "date": "1990",
       "extra": "Citation Key: Appelt:90",
       "title": "A Theory of Abduction based on model preference",
-      "proceedingsTitle": "Proceedings of the AAAI Symposium on Abduction",
       "creators": [
         {
           "firstName": "Douglas E.",
@@ -18653,7 +18679,8 @@
       "itemID": 607,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the AAAI Symposium on Abduction"
     },
     {
       "itemType": "conferencePaper",
@@ -18693,7 +18720,6 @@
       "date": "1990",
       "extra": "Citation Key: Hinkelman:90",
       "title": "Abductive Speech Act Recognition",
-      "proceedingsTitle": "Proceedings of the AAAI Symposium on Abduction",
       "creators": [
         {
           "firstName": "Elizabeth",
@@ -18715,7 +18741,8 @@
       "itemID": 609,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the AAAI Symposium on Abduction"
     },
     {
       "itemType": "manuscript",
@@ -19188,7 +19215,6 @@
       "date": "1987",
       "extra": "Citation Key: haas87case",
       "title": "The case for domain-specific frame axioms",
-      "proceedingsTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop",
       "creators": [
         {
           "firstName": "Andrew R.",
@@ -19210,7 +19236,8 @@
       "itemID": 624,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop"
     },
     {
       "itemType": "journalArticle",
@@ -19289,7 +19316,6 @@
       "date": "1992",
       "extra": "Citation Key: Maida:92",
       "title": "Knowledge Representation requirements for Description-based Communication",
-      "proceedingsTitle": "Proceedings of the Third International Conference on Principles of Knowledge Representation and Reasoning",
       "creators": [
         {
           "firstName": "Anthony S.",
@@ -19311,7 +19337,8 @@
       "itemID": 627,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Third International Conference on Principles of Knowledge Representation and Reasoning"
     },
     {
       "itemType": "journalArticle",
@@ -19451,7 +19478,6 @@
       "date": "1995-06",
       "extra": "Citation Key: Cohen:KQMLSemantics",
       "title": "Communicative Actions for Artificial Agents",
-      "proceedingsTitle": "Proceedings of the International Conference on Multi-Agent Systems",
       "creators": [
         {
           "firstName": "Philip R.",
@@ -19499,7 +19525,8 @@
       "itemID": 632,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the International Conference on Multi-Agent Systems"
     },
     {
       "itemType": "journalArticle",
@@ -19607,7 +19634,6 @@
       "date": "1988",
       "extra": "Citation Key: Pabon:88",
       "title": "Connectionist Networks for Learning Coordinated Motion in Autonomous Systems",
-      "proceedingsTitle": "AAAI-88",
       "creators": [
         {
           "firstName": "Jahir",
@@ -19634,7 +19660,8 @@
       "itemID": 637,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-88"
     },
     {
       "itemType": "conferencePaper",
@@ -19644,7 +19671,6 @@
       "date": "1989",
       "extra": "Citation Key: Ballard:89",
       "title": "Reference Frames for Animate Vision",
-      "proceedingsTitle": "IJCAI-89",
       "creators": [
         {
           "firstName": "Dana H.",
@@ -19666,7 +19692,8 @@
       "itemID": 638,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-89"
     },
     {
       "itemType": "manuscript",
@@ -19705,7 +19732,6 @@
       "place": "Cambridge, MA",
       "date": "November 1990",
       "extra": "Citation Key: Marcus:90",
-      "institution": "MIT Center for Cognitive Science",
       "reportType": "Occasional Paper",
       "reportNumber": "41",
       "title": "Overregularization",
@@ -19757,14 +19783,14 @@
       "number": "41",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Center for Cognitive Science"
     },
     {
       "itemType": "report",
       "place": "545 Technology Square, Cambridge, MA",
       "date": "June 1991",
       "extra": "Citation Key: Leong:91",
-      "institution": "MIT Laboratory for Computer Science",
       "reportNumber": "MIT/LCS/TR--504",
       "title": "Knowledge Representation for Supporting Decision Model Formulation in Medicine",
       "creators": [
@@ -19789,7 +19815,8 @@
       "number": "MIT/LCS/TR--504",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "MIT Laboratory for Computer Science"
     },
     {
       "itemType": "book",
@@ -20032,7 +20059,6 @@
       "date": "1984",
       "extra": "Citation Key: cheeseman84 \nbibtex[organization=IEEE]",
       "title": "A Representation of Time for Automatic Planning",
-      "proceedingsTitle": "Proceedings of IEEE International Conference on Robotics",
       "creators": [
         {
           "firstName": "P.",
@@ -20054,13 +20080,13 @@
       "itemID": 649,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of IEEE International Conference on Robotics"
     },
     {
       "itemType": "report",
       "date": "1983",
       "extra": "Citation Key: Dean:83",
-      "institution": "Yale University Computer Science Department",
       "title": "Time Map Maintenance",
       "creators": [
         {
@@ -20083,14 +20109,14 @@
       "itemID": 650,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
       "date": "December 1984",
       "extra": "Citation Key: dean84a \nbibtex[key=dean84a;organization=IEEE]",
       "title": "Planning and Temporal Reasoning Under Uncertainty",
-      "proceedingsTitle": "Proceedings of IEEE Workshop on Principles of Knowledge-Based Systems",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20112,14 +20138,14 @@
       "itemID": 651,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of IEEE Workshop on Principles of Knowledge-Based Systems"
     },
     {
       "itemType": "conferencePaper",
       "date": "1984",
       "extra": "Citation Key: Dean:84b \nbibtex[organization=CSCSI]",
       "title": "Managing Time Maps",
-      "proceedingsTitle": "Proceedings of CSCSI 84. Canadian Society for Computational Studies of Intelligence",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20141,13 +20167,13 @@
       "itemID": 652,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of CSCSI 84. Canadian Society for Computational Studies of Intelligence"
     },
     {
       "itemType": "report",
       "date": "1984",
       "extra": "Citation Key: Dean:84c",
-      "institution": "Yale University Computer Science Department",
       "title": "A TNMS User's Manual",
       "creators": [
         {
@@ -20170,13 +20196,13 @@
       "itemID": 653,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "report",
       "date": "1985",
       "extra": "Citation Key: dean85",
-      "institution": "Yale University Computer Science Department",
       "title": "Temporal imagery: an approach to reasoning about time for planning and problem solving",
       "creators": [
         {
@@ -20199,7 +20225,8 @@
       "itemID": 654,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -20207,7 +20234,6 @@
       "date": "August 1985",
       "extra": "Citation Key: dean85 \nbibtex[organization=IJCAI]",
       "title": "Temporal Reasoning Involving Counterfactuals and Disjunctions",
-      "proceedingsTitle": "IJCAI-85",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20229,7 +20255,8 @@
       "itemID": 655,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-85"
     },
     {
       "itemType": "conferencePaper",
@@ -20237,7 +20264,6 @@
       "date": "July 1986",
       "extra": "Citation Key: dean86 \nbibtex[organization=AAAI]",
       "title": "Intractability and time dependent planning",
-      "proceedingsTitle": "Proceedings of the Workshop on Planning and Reasoning About Action",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20259,7 +20285,8 @@
       "itemID": 656,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Workshop on Planning and Reasoning About Action"
     },
     {
       "itemType": "journalArticle",
@@ -20296,7 +20323,6 @@
       "date": "1986",
       "extra": "Citation Key: Dean86b",
       "title": "Decision Support for Coordinated Multi-Agent Planning",
-      "proceedingsTitle": "Proceedings of the Third International ACM Conference on Office Information Systems",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20318,7 +20344,8 @@
       "itemID": 658,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Third International ACM Conference on Office Information Systems"
     },
     {
       "itemType": "journalArticle",
@@ -20359,7 +20386,6 @@
       "date": "1987",
       "extra": "Citation Key: Dean:87a",
       "title": "Large temporal data bases",
-      "proceedingsTitle": "IJCAI-87",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20381,14 +20407,14 @@
       "itemID": 660,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-87"
     },
     {
       "itemType": "conferencePaper",
       "date": "1987",
       "extra": "Citation Key: Dean:87b",
       "title": "Incremental causal reasoning",
-      "proceedingsTitle": "AAAI-87",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20415,13 +20441,13 @@
       "itemID": 661,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-87"
     },
     {
       "itemType": "report",
       "date": "1987",
       "extra": "Citation Key: Dean:87c",
-      "institution": "Brown University, Department of Computer Science",
       "title": "Persistence and probabilistic inference",
       "creators": [
         {
@@ -20449,7 +20475,8 @@
       "itemID": 662,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Brown University, Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -20457,7 +20484,6 @@
       "date": "1988",
       "extra": "Citation Key: deanboddy88",
       "title": "An Analysis of Time-Dependent Planning",
-      "proceedingsTitle": "AAAI-88",
       "creators": [
         {
           "firstName": "Thomas",
@@ -20484,7 +20510,8 @@
       "itemID": 663,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-88"
     },
     {
       "itemType": "journalArticle",
@@ -20763,7 +20790,6 @@
       "place": "Providence, RI",
       "date": "1990-05",
       "extra": "Citation Key: Calistri:90",
-      "university": "Computer Science Department, Brown University",
       "title": "Classifying and Detecting Plan-based Misconceptions for Robust Plan Recognition",
       "creators": [
         {
@@ -20786,7 +20812,8 @@
       "itemID": 672,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Department, Brown University"
     },
     {
       "itemType": "journalArticle",
@@ -20829,7 +20856,6 @@
       "place": "Bloomington, IN",
       "date": "1992",
       "extra": "Citation Key: Mills:92",
-      "institution": "Computer Science Department, Indiana University",
       "reportNumber": "363a",
       "title": "Stiquito: A Small, simple, inexpensive hexapod robot; Part 1. Locomotion and Hard-wired control",
       "creators": [
@@ -20854,7 +20880,8 @@
       "number": "363a",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Department, Indiana University"
     },
     {
       "itemType": "conferencePaper",
@@ -21189,7 +21216,6 @@
       "place": "Amherst, MA",
       "date": "September 1989",
       "extra": "Citation Key: Barto:89",
-      "institution": "Department of Computer and Information Science, University of Massachusetts, Amherst",
       "reportType": "COINS Technical Report",
       "reportNumber": "89--89",
       "title": "Connectionist Learning for Control: An Overview",
@@ -21216,7 +21242,8 @@
       "number": "89--89",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer and Information Science, University of Massachusetts, Amherst"
     },
     {
       "itemType": "journalArticle",
@@ -21230,7 +21257,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "GINSBERG"
+          "lastName": "GINSBERG",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -21549,7 +21577,6 @@
       "date": "1988",
       "extra": "Citation Key: Winslett-88-AAAI",
       "title": "Reasoning about Actions using a Possible Models Approach",
-      "proceedingsTitle": "AAAI-88",
       "creators": [
         {
           "firstName": "Marianne",
@@ -21571,7 +21598,8 @@
       "itemID": 695,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-88"
     },
     {
       "itemType": "conferencePaper",
@@ -21580,7 +21608,6 @@
       "date": "1989",
       "extra": "Citation Key: Wobcke-89-IJCAI",
       "title": "A Schema-based Approach to Understanding Subjunctive Conditionals",
-      "proceedingsTitle": "IJCAI-89",
       "creators": [
         {
           "firstName": "Wayne",
@@ -21602,7 +21629,8 @@
       "itemID": 696,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-89"
     },
     {
       "itemType": "conferencePaper",
@@ -21636,7 +21664,6 @@
       "itemType": "thesis",
       "date": "1988",
       "extra": "Citation Key: Morgenstern:88",
-      "university": "New York University",
       "title": "Foundations of a Logic of Knowledge, Action, and Communication",
       "creators": [
         {
@@ -21659,7 +21686,8 @@
       "itemID": 698,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "New York University"
     },
     {
       "itemType": "manuscript",
@@ -21693,7 +21721,6 @@
       "itemType": "report",
       "date": "1992-09",
       "extra": "Preliminary version of Chapters 1-9 of a book \nCitation Key: Sandewall:92",
-      "institution": "Linköping University",
       "reportNumber": "LiTH-IDA-R-92-30",
       "title": "Features and Fluents",
       "creators": [
@@ -21718,13 +21745,13 @@
       "number": "LiTH-IDA-R-92-30",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Linköping University"
     },
     {
       "itemType": "report",
       "date": "1997",
       "extra": "+http://www.ep.liu.se/ea/cis/1997/019/ \nCitation Key: Sandewall:97",
-      "institution": "Linköping University",
       "reportType": "Linköping Electronic Articles in Computer and Information Science",
       "title": "Logic Based Modelling of Goal-directed Behavior",
       "creators": [
@@ -21749,7 +21776,8 @@
       "type": "Linköping Electronic Articles in Computer and Information Science",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Linköping University"
     },
     {
       "itemType": "book",
@@ -21893,7 +21921,6 @@
       "place": "Seattle, WA",
       "date": "February 1994",
       "extra": "Citation Key: Barrett:UCPOP",
-      "institution": "Department of Computer Science and Engineering, University of Washington",
       "reportNumber": "93--09--06",
       "title": "UCPOP User's Manual (Version 2.0)",
       "creators": [
@@ -21933,7 +21960,8 @@
       "number": "93--09--06",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science and Engineering, University of Washington"
     },
     {
       "itemType": "conferencePaper",
@@ -22022,7 +22050,6 @@
       "date": "1992",
       "extra": "Citation Key: Etzioni:Softbots",
       "title": "Softbots as Testbeds for Machine Learning",
-      "proceedingsTitle": "Proceedings of the 1992 AAAI Spring Symposium on knowledge assimilation",
       "creators": [
         {
           "firstName": "Oren",
@@ -22049,7 +22076,8 @@
       "itemID": 709,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 1992 AAAI Spring Symposium on knowledge assimilation"
     },
     {
       "itemType": "book",
@@ -22265,7 +22293,6 @@
       "place": "Seattle, WA",
       "date": "June 1993",
       "extra": "Citation Key: Haddawy:93",
-      "institution": "UDUB",
       "reportNumber": "93-06-04",
       "title": "Utility Models for Goal-directed Decision-theoretic Planners",
       "creators": [
@@ -22295,7 +22322,8 @@
       "number": "93-06-04",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "UDUB"
     },
     {
       "itemType": "manuscript",
@@ -22424,7 +22452,6 @@
       "date": "December 1995",
       "extra": "Citation Key: Ngo95:Probabilistic \nbibtex[key=Conference;organization=]",
       "title": "Probabilistic Logic Programming and Bayesian Networks",
-      "proceedingsTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)",
       "creators": [
         {
           "firstName": "Liem",
@@ -22461,7 +22488,8 @@
       "itemID": 720,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)"
     },
     {
       "itemType": "conferencePaper",
@@ -22469,7 +22497,6 @@
       "date": "August 1995",
       "extra": "Citation Key: Ngo95:Theoretical \nbibtex[key=Conference;organization=]",
       "title": "A Theoretical Framework for Context-Sensitive Temporal Probability Model Construction with Application to Plan Projection",
-      "proceedingsTitle": "Proceedings of the Eleventh Conference on Uncertainty in Artificial Intelligence",
       "creators": [
         {
           "firstName": "Liem",
@@ -22501,7 +22528,8 @@
       "itemID": 721,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Eleventh Conference on Uncertainty in Artificial Intelligence"
     },
     {
       "itemType": "conferencePaper",
@@ -22510,7 +22538,6 @@
       "date": "July 1994",
       "extra": "Citation Key: Haddawy94:Generating \nbibtex[key=Conference]",
       "title": "Generating Bayesian Networks from Probability Logic Knowledge Bases",
-      "proceedingsTitle": "Proceedings of the Tenth Conference on Uncertainty in Artificial Intelligence",
       "creators": [
         {
           "firstName": "Peter",
@@ -22532,14 +22559,14 @@
       "itemID": 722,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Tenth Conference on Uncertainty in Artificial Intelligence"
     },
     {
       "itemType": "report",
       "place": "Seattle, WA",
       "date": "June 1993",
       "extra": "This citation should be replaced with Kushmerick, et. al.,  Artificial Intelligence/, 1995 \nCitation Key: Kushmerick:93",
-      "institution": "UDUB",
       "reportNumber": "93-06-03",
       "title": "An Algorithm for Probabilistic Planning",
       "creators": [
@@ -22574,7 +22601,8 @@
       "number": "93-06-03",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "UDUB"
     },
     {
       "itemType": "journalArticle",
@@ -22623,7 +22651,6 @@
       "place": "Seattle, WA",
       "date": "December 1993",
       "extra": "Citation Key: Draper:93",
-      "institution": "UDUB",
       "reportNumber": "93-12-04",
       "title": "Probabilistic Planning with Information Gathering and Contingent Execution",
       "creators": [
@@ -22658,7 +22685,8 @@
       "number": "93-12-04",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "UDUB"
     },
     {
       "itemType": "conferencePaper",
@@ -22695,7 +22723,6 @@
       "date": "1994-03",
       "extra": "Citation Key: Schoppers:94",
       "title": "A Software Architecture for Hard Real-time execution of automatically synthesized plans or control laws",
-      "proceedingsTitle": "Proceedings of the AIAA Conference on Intelligent Robots in Field, Factory, Service and Space",
       "creators": [
         {
           "firstName": "Marcel",
@@ -22738,14 +22765,14 @@
       "itemID": 727,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the AIAA Conference on Intelligent Robots in Field, Factory, Service and Space"
     },
     {
       "itemType": "report",
       "place": "New Haven, CT",
       "date": "1987",
       "extra": "Citation Key: Col87",
-      "institution": "Department of Computer Science, Yale University",
       "reportType": "YALEU/CSD/RR",
       "reportNumber": "599",
       "title": "Plan creation: Using strategies as blueprints",
@@ -22772,7 +22799,8 @@
       "number": "599",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, Yale University"
     },
     {
       "itemType": "conferencePaper",
@@ -23100,7 +23128,6 @@
       "date": "1977",
       "extra": "Citation Key: Waldinger:Regression",
       "title": "Achieving Several goals Simultaneously",
-      "bookTitle": "Machine Intelligence",
       "creators": [
         {
           "firstName": "Richard",
@@ -23132,7 +23159,8 @@
       "itemID": 739,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Machine Intelligence"
     },
     {
       "itemType": "conferencePaper",
@@ -23312,7 +23340,6 @@
       "date": "1982",
       "extra": "Citation Key: Mason:82 \nbibtex[chapter=5]",
       "title": "Compliant Motion",
-      "bookTitle": "Robot Motion: Planning and Control",
       "creators": [
         {
           "firstName": "Matthew T.",
@@ -23359,13 +23386,13 @@
       "itemID": 746,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Robot Motion: Planning and Control"
     },
     {
       "itemType": "report",
       "date": "1993-05",
       "extra": "Citation Key: Thiebaux:93",
-      "institution": "ICSI",
       "reportNumber": "TR--93--027",
       "title": "A Stochastic Model of Actions and Plans for Anytime Planning Under Uncertainty",
       "creators": [
@@ -23390,7 +23417,8 @@
       "number": "TR--93--027",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "ICSI"
     },
     {
       "itemType": "journalArticle",
@@ -23616,7 +23644,6 @@
       "place": "Berkeley, CA",
       "date": "November 1993",
       "extra": "Citation Key: Stolcke:93",
-      "institution": "ICSI",
       "reportNumber": "TR-93-065",
       "title": "An Efficient Probabilistic Context-free Parsing Algorithm that Computes Prefix Probabilities",
       "creators": [
@@ -23641,7 +23668,8 @@
       "number": "TR-93-065",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "ICSI"
     },
     {
       "itemType": "conferencePaper",
@@ -23707,7 +23735,6 @@
       "date": "1990",
       "extra": "Citation Key: Plaisted:90",
       "title": "Mechanical Theorem Proving",
-      "bookTitle": "Formal Techniques in Artificial Intelligence",
       "creators": [
         {
           "firstName": "David A.",
@@ -23734,7 +23761,8 @@
       "itemID": 757,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Formal Techniques in Artificial Intelligence"
     },
     {
       "itemType": "conferencePaper",
@@ -23773,7 +23801,6 @@
       "place": "Philadelphia, PA",
       "date": "1993",
       "extra": "Citation Key: Siskind:93a",
-      "institution": "University of Pennsylvania Institute for Research in Cognitive Science",
       "reportNumber": "IRCS--93--03",
       "title": "Screamer: A Portable Efficient Implementation of Nondeterministic Common Lisp",
       "creators": [
@@ -23803,7 +23830,8 @@
       "number": "IRCS--93--03",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Pennsylvania Institute for Research in Cognitive Science"
     },
     {
       "itemType": "conferencePaper",
@@ -23870,7 +23898,6 @@
       "itemType": "report",
       "date": "June 1993",
       "extra": "Citation Key: Pryor:CassandraORIG",
-      "institution": "The Institute for the Learning Sciences, Northwestern University",
       "reportNumber": "41",
       "title": "Cassandra: Planning for Contingencies",
       "creators": [
@@ -23900,7 +23927,8 @@
       "number": "41",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "journalArticle",
@@ -23942,7 +23970,6 @@
       "itemType": "report",
       "date": "1994",
       "extra": "Citation Key: Pryor:94TR",
-      "institution": "The Institute for the Learning Sciences, Northwestern University",
       "reportNumber": "53",
       "title": "Opportunities and Planning in an Unpredictable World",
       "creators": [
@@ -23967,7 +23994,8 @@
       "number": "53",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "conferencePaper",
@@ -23976,7 +24004,6 @@
       "date": "1995",
       "extra": "Citation Key: Pryor:95AISB",
       "title": "Decisions, decisions: Knowledge goals in planning",
-      "proceedingsTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)",
       "creators": [
         {
           "firstName": "Louise",
@@ -24003,7 +24030,8 @@
       "itemID": 765,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)"
     },
     {
       "itemType": "conferencePaper",
@@ -24100,7 +24128,6 @@
       "itemType": "report",
       "date": "June 1992",
       "extra": "Citation Key: Genesereth:KIF3",
-      "institution": "Computer Science Department, Stanford University",
       "reportType": "Logic Group Report",
       "reportNumber": "Logic-92-1",
       "title": "Knowledge Interchange Format, Version 3.0 Reference Manual",
@@ -24132,7 +24159,8 @@
       "number": "Logic-92-1",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Department, Stanford University"
     },
     {
       "itemType": "journalArticle",
@@ -24212,7 +24240,6 @@
       "date": "1976",
       "extra": "Citation Key: WARPLAN-C",
       "title": "Generating Conditional Plans and Programs",
-      "proceedingsTitle": "Proceedings of the AISB Summer Conference",
       "creators": [
         {
           "firstName": "David H.D.",
@@ -24234,14 +24261,14 @@
       "itemID": 772,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the AISB Summer Conference"
     },
     {
       "itemType": "thesis",
       "place": "Edmonton, Alberta",
       "date": "Fall 1994",
       "extra": "Citation Key: Kondrak:BacktrackEval",
-      "university": "Department of Computing Science, University of Alberta",
       "title": "A Theoretical Evaluation of Selected Backtracking Algorithms",
       "creators": [
         {
@@ -24264,7 +24291,8 @@
       "itemID": 773,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computing Science, University of Alberta"
     },
     {
       "itemType": "manuscript",
@@ -25070,7 +25098,6 @@
       "itemType": "report",
       "date": "1994",
       "extra": "Citation Key: Ersan:94",
-      "institution": "Bilkent University, Department of Computer Engineering and Information Science",
       "reportNumber": "BU-CEIS-94-30",
       "title": "Situated Modeling of Epistemic Puzzles",
       "creators": [
@@ -25100,7 +25127,8 @@
       "number": "BU-CEIS-94-30",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Bilkent University, Department of Computer Engineering and Information Science"
     },
     {
       "itemType": "journalArticle",
@@ -25400,7 +25428,6 @@
       "itemType": "report",
       "date": "1993-06",
       "extra": "Citation Key: Lansky:93",
-      "institution": "NASA Ames Research Center",
       "reportNumber": "FIA-93-17",
       "title": "Localized Planning with Diversified Plan Construction Methods",
       "creators": [
@@ -25425,7 +25452,8 @@
       "number": "FIA-93-17",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "NASA Ames Research Center"
     },
     {
       "itemType": "journalArticle",
@@ -25614,7 +25642,6 @@
       "date": "2001",
       "extra": "Citation Key: NguyenRao01 \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/ijcai/2001]",
       "title": "Reviving Partial Order Planning.",
-      "proceedingsTitle": "IJCAI",
       "creators": [
         {
           "firstName": "XuanLong",
@@ -25641,7 +25668,8 @@
       "itemID": 813,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI"
     },
     {
       "itemType": "conferencePaper",
@@ -25740,7 +25768,6 @@
       "date": "1995-08",
       "extra": "Citation Key: Lesperance:95",
       "title": "Foundations of a Logical Approach to Agent Programming",
-      "proceedingsTitle": "IJCAI Workshop on Agent Theories, Archietectures and Languages",
       "creators": [
         {
           "firstName": "Yves",
@@ -25808,7 +25835,8 @@
       "itemID": 817,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI Workshop on Agent Theories, Archietectures and Languages"
     },
     {
       "itemType": "conferencePaper",
@@ -25933,7 +25961,6 @@
       "place": "College Park, MD",
       "date": "1994",
       "extra": "Citation Key: Erol:HTNSemantics",
-      "institution": "Computer Science Department, University of Maryland",
       "reportNumber": "CS-TR-3239 and UMIACS-TR-94-31",
       "title": "Semantics for Hierarchical Task-Network Planning",
       "creators": [
@@ -25968,13 +25995,13 @@
       "number": "CS-TR-3239 and UMIACS-TR-94-31",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "thesis",
       "date": "1995",
       "extra": "Available as UMCP technical report CS-TR-3624 \nCitation Key: Erol:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Thesis research directed by Dept. of Computer Science.; Thesis (Ph. D.)--University of Maryland at College Park, 1995.; Includes bibliographical references (leaves 247-256).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm35003840',subject:'Planning.; Artificial intelligence.'}",
-      "university": "University of Maryland at College Park",
       "abstractNote": "Planning is a central activity in many areas including robotics, manufacturing, space mission sequencing, and logistics. As the size and complexity of planning problems grow, there is great economic pressure to automate this process in order to reduce the cost of planning effort, and to improve the quality of produced plans. AI planning research has focused on general-purpose planning systems which can process the specifications of an application domain and generate solutions to planning problems in that domain. Unfortunately, there is a big gap between theoretical and application oriented work in AI planning. The theoretical work has been mostly based on state-based planning, which has limited practical applications. The application-oriented work has been based on hierarchical task network (HTN) planning, which lacks a theoretical foundation. As a result, in spite of many years of research, building planning applications remains a formidable task. The goal of this dissertation is to facilitate building reliable and effective planning applications. The methodology includes design of a mathematical framework for HTN planning, analysis of this framework, development of provably correct algorithms based on this analysis, and the implementation of these algorithms for further evaluation and exploration. The representation, analyses, and algorithms described in this thesis will make it easier to apply HTN planning techniques effectively and correctly to planning applications. The precise and mathematical nature of the descriptions will also help teaching about HTN planning, will clarify misconceptions in the literature, and will stimulate further research.",
       "title": "Hierarchical task network planning :--formalization, analysis, and implementation",
       "creators": [
@@ -26019,7 +26046,8 @@
       "itemID": 824,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Maryland at College Park"
     },
     {
       "itemType": "journalArticle",
@@ -26516,7 +26544,6 @@
       "itemType": "report",
       "date": "1997",
       "extra": "Citation Key: Kabanza:97TR",
-      "institution": "Computer Science Dept., University of Sherbrooke",
       "reportNumber": "197",
       "title": "Planning Control Rules for Reactive Agents",
       "creators": [
@@ -26551,7 +26578,8 @@
       "number": "197",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Dept., University of Sherbrooke"
     },
     {
       "itemType": "journalArticle",
@@ -26673,7 +26701,6 @@
       "date": "1990",
       "extra": "Citation Key: georgeff:90",
       "title": "Real-Time Reasoning: The Monitoring and Control of Spacecraft Systems",
-      "proceedingsTitle": "Proceedings of the Sixth Conference on Artificial Intelligence Application",
       "creators": [
         {
           "firstName": "Michael P.",
@@ -26700,7 +26727,8 @@
       "itemID": 847,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Sixth Conference on Artificial Intelligence Application"
     },
     {
       "itemType": "journalArticle",
@@ -26784,7 +26812,6 @@
       "place": "SRI-ADDRESS",
       "date": "1987-01",
       "extra": "Citation Key: Georgeff:87",
-      "institution": "SRI",
       "reportNumber": "411",
       "title": "Procedural Knowledge",
       "creators": [
@@ -26814,7 +26841,8 @@
       "number": "411",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "SRI"
     },
     {
       "itemType": "journalArticle",
@@ -26827,7 +26855,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "INGRAND"
+          "lastName": "INGRAND",
+          "fieldMode": 1
         },
         {
           "firstName": "Olivier",
@@ -26929,7 +26958,6 @@
       "place": "STANFORD-ADDRESS",
       "date": "1993-04",
       "extra": "revised version \nCitation Key: Gruber:93",
-      "institution": "KSL",
       "reportNumber": "KSL 92-71",
       "title": "A Translation Approach to Portable Ontology Specifications",
       "creators": [
@@ -26975,14 +27003,14 @@
       "number": "KSL 92-71",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "KSL"
     },
     {
       "itemType": "report",
       "place": "STANFORD-ADDRESS",
       "date": "1993-08",
       "extra": "revised version \nCitation Key: Gruber:93b",
-      "institution": "KSL",
       "reportNumber": "KSL 93-04",
       "title": "Toward Principles for the Design of Ontologies Used for Knowledge Sharing",
       "creators": [
@@ -27007,7 +27035,8 @@
       "number": "KSL 93-04",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "KSL"
     },
     {
       "itemType": "journalArticle",
@@ -27170,7 +27199,6 @@
       "place": "CMU-ADDRESS",
       "date": "1992-03",
       "extra": "Citation Key: Fink:92",
-      "institution": "CMUSCS",
       "reportNumber": "CMU-CS-94-123",
       "title": "Prodigy Planning Algorithm",
       "creators": [
@@ -27200,7 +27228,8 @@
       "number": "CMU-CS-94-123",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "CMUSCS"
     },
     {
       "itemType": "journalArticle",
@@ -27374,7 +27403,6 @@
       "date": "1996-03",
       "extra": "Citation Key: Gat:Trenches \nbibtex[organization=AAAI]",
       "title": "News From the Trenches: An Overview of Unmanned Spacecraft for AI",
-      "proceedingsTitle": "AAAI Technical Report SSS-96-04: Planning with Incomplete Information for Robot Problems",
       "creators": [
         {
           "firstName": "Erann",
@@ -27401,7 +27429,8 @@
       "itemID": 868,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI Technical Report SSS-96-04: Planning with Incomplete Information for Robot Problems"
     },
     {
       "itemType": "bookSection",
@@ -27410,7 +27439,6 @@
       "date": "1998",
       "extra": "Citation Key: Gat:TLAs",
       "title": "On Three-Layer Architectures",
-      "bookTitle": "Artificial Intelligence and Mobile Robots",
       "creators": [
         {
           "firstName": "Erann",
@@ -27468,7 +27496,8 @@
       "itemID": 869,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Artificial Intelligence and Mobile Robots"
     },
     {
       "itemType": "journalArticle",
@@ -27517,7 +27546,6 @@
       "itemType": "thesis",
       "date": "1993",
       "extra": "Available as University of Maryland Computer Science Technical Report CS-TR-3157 \nCitation Key: musliner:93thesis",
-      "university": "University of Michigan, Ann Arbor",
       "title": "CIRCA: The Cooperative Intelligent Real-Time Control Architecture",
       "creators": [
         {
@@ -27540,7 +27568,8 @@
       "itemID": 872,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Michigan, Ann Arbor"
     },
     {
       "itemType": "book",
@@ -27673,7 +27702,6 @@
       "place": "Freiburg, Germany",
       "date": "1997-04",
       "extra": "Citation Key: Nebel:97",
-      "institution": "Albert-Ludwigs-Universität, Institut für Informatik",
       "reportNumber": "89",
       "title": "Ignoring Irrelevant Facts and operators in plan generation",
       "creators": [
@@ -27708,14 +27736,14 @@
       "number": "89",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Albert-Ludwigs-Universität, Institut für Informatik"
     },
     {
       "itemType": "conferencePaper",
       "date": "1997-08",
       "extra": "Citation Key: Givan:97 \nbibtex[crossref=ijcai97]",
       "title": "Model Minimization, Regression and Propositional STRIPS Planning",
-      "proceedingsTitle": "IJCAI-97",
       "creators": [
         {
           "firstName": "Robert",
@@ -27742,7 +27770,8 @@
       "itemID": 877,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-97"
     },
     {
       "itemType": "conferencePaper",
@@ -27961,7 +27990,6 @@
       "date": "1996",
       "extra": "Citation Key: Boutilier96",
       "title": "Approximating Value Trees in Structured Dynamic Programming",
-      "proceedingsTitle": "Proceedings of the Thirteenth International Conference on Machine Learning",
       "creators": [
         {
           "firstName": "Craig",
@@ -27993,7 +28021,8 @@
       "itemID": 884,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Thirteenth International Conference on Machine Learning"
     },
     {
       "itemType": "conferencePaper",
@@ -28001,7 +28030,6 @@
       "date": "1995",
       "extra": "Citation Key: Boutilier95",
       "title": "Exploiting Structure in Policy Construction",
-      "proceedingsTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
       "creators": [
         {
           "firstName": "Craig",
@@ -28033,7 +28061,8 @@
       "itemID": 885,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence"
     },
     {
       "itemType": "journalArticle",
@@ -28177,7 +28206,6 @@
       "itemType": "report",
       "date": "1996-08",
       "extra": "Version 1.0 alpha 12 \nCitation Key: Young:96",
-      "institution": "Intelligent Systems Program, University of Pittsburgh",
       "title": "A Developer's Guide to the Longbow Discourse Planning System",
       "creators": [
         {
@@ -28200,7 +28228,8 @@
       "itemID": 890,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Intelligent Systems Program, University of Pittsburgh"
     },
     {
       "itemType": "conferencePaper",
@@ -28263,7 +28292,6 @@
       "date": "1997",
       "extra": "Citation Key: PellETAL:97",
       "title": "Robust Periodic Planning and Execution for Autonomous Spacecraft",
-      "proceedingsTitle": "Fifteenth International Joint Conference on Artificial Intelligence",
       "creators": [
         {
           "firstName": "Barney",
@@ -28305,7 +28333,8 @@
       "itemID": 893,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Fifteenth International Joint Conference on Artificial Intelligence"
     },
     {
       "itemType": "journalArticle",
@@ -28557,7 +28586,6 @@
       "place": "Carlton, AUSTRALIA",
       "date": "1993-06",
       "extra": "Revised version of 1993, original July, 1992 \nCitation Key: SonnenbergETAL:93",
-      "institution": "AAII",
       "reportType": "Technical Note",
       "reportNumber": "26",
       "title": "Planned Team Activity",
@@ -28609,7 +28637,8 @@
       "number": "26",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "AAII"
     },
     {
       "itemType": "manuscript",
@@ -28957,7 +28986,6 @@
       "itemType": "report",
       "date": "1990",
       "extra": "Citation Key: Yen:90",
-      "institution": "Department of Computer Science, Brown University",
       "reportNumber": "CS-90-37",
       "title": "CI2 -- A Logic for Plural representation",
       "creators": [
@@ -28982,13 +29010,13 @@
       "number": "CS-90-37",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, Brown University"
     },
     {
       "itemType": "report",
       "date": "unknown",
       "extra": "Citation Key: WilksFass",
-      "institution": "Computing Research Laboratory, New Mexico State University",
       "reportNumber": "MCCS-90-194",
       "title": "Preference Semantics: a family history",
       "creators": [
@@ -29018,13 +29046,13 @@
       "number": "MCCS-90-194",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computing Research Laboratory, New Mexico State University"
     },
     {
       "itemType": "thesis",
       "date": "1996-11",
       "extra": "Citation Key: Soutter:96",
-      "university": "Loughborough University",
       "title": "An Integrated Architecture for Operating Procedure Synthesis",
       "creators": [
         {
@@ -29047,13 +29075,13 @@
       "itemID": 915,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Loughborough University"
     },
     {
       "itemType": "thesis",
       "date": "1995",
       "extra": "Citation Key: Shattuck:95",
-      "university": "Ohio State University",
       "title": "Communication of Intent in Distributed Supervisory Control Systems",
       "creators": [
         {
@@ -29076,13 +29104,13 @@
       "itemID": 916,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Ohio State University"
     },
     {
       "itemType": "thesis",
       "date": "1994-11",
       "extra": "Citation Key: Sanders:94",
-      "university": "Department of Computer Science, Brown University",
       "title": "CHIRON: Planning in an Open-textured Domain",
       "creators": [
         {
@@ -29105,13 +29133,13 @@
       "itemID": 917,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, Brown University"
     },
     {
       "itemType": "thesis",
       "date": "1989-05",
       "extra": "Citation Key: Ram:89",
-      "university": "Department of Computer Science, Yale University",
       "title": "Question-driven Understanding: An integrated theory of story understanding, memory and learning",
       "creators": [
         {
@@ -29134,13 +29162,13 @@
       "itemID": 918,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, Yale University"
     },
     {
       "itemType": "thesis",
       "date": "1993",
       "extra": "Citation Key: Resnik:93",
-      "university": "Computer and Information Science, Penn University",
       "title": "Selection and Information: A Class-based Approach to Lexical Relationships",
       "creators": [
         {
@@ -29163,13 +29191,13 @@
       "itemID": 919,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer and Information Science, Penn University"
     },
     {
       "itemType": "thesis",
       "date": "1992-06",
       "extra": "Citation Key: Ng:92",
-      "university": "Artificial Intelligence Laboratory, University of Texas at Austin",
       "title": "A General Abductive System with Application to Plan Recognition and Diagnosis",
       "creators": [
         {
@@ -29192,14 +29220,14 @@
       "itemID": 920,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Artificial Intelligence Laboratory, University of Texas at Austin"
     },
     {
       "itemType": "report",
       "place": "Syracuse, NY",
       "date": "1990-09",
       "extra": "Citation Key: Purdy:90a",
-      "institution": "School of Computer and Information Science, Syracuse University",
       "reportNumber": "SU-CIS-90-15",
       "title": "Surface Reasoning",
       "creators": [
@@ -29224,14 +29252,14 @@
       "number": "SU-CIS-90-15",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
       "place": "Syracuse, NY",
       "date": "1990-07",
       "extra": "Citation Key: Purdy:90b",
-      "institution": "School of Computer and Information Science, Syracuse University",
       "reportNumber": "SU-CIS-90-02",
       "title": "A Logic for Natural Language",
       "creators": [
@@ -29256,14 +29284,14 @@
       "number": "SU-CIS-90-02",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
       "place": "Syracuse, NY",
       "date": "1990-05",
       "extra": "Citation Key: Purdy:90c",
-      "institution": "School of Computer and Information Science, Syracuse University",
       "reportNumber": "SU-CIS-90-07",
       "title": "A Lexical Extension of Montague Semantics",
       "creators": [
@@ -29288,13 +29316,13 @@
       "number": "SU-CIS-90-07",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
       "date": "1990-07",
       "extra": "Citation Key: MillerETAL:90",
-      "institution": "Cognitive Science Laboratory, Princeton University",
       "reportType": "CSL Report",
       "reportNumber": "43",
       "title": "Five Papers on WordNet",
@@ -29341,7 +29369,8 @@
       "number": "43",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Cognitive Science Laboratory, Princeton University"
     },
     {
       "itemType": "journalArticle",
@@ -29418,7 +29447,6 @@
       "date": "1998-06",
       "extra": "Citation Key: AtkinsETAL:98",
       "title": "Solus: An Autonomous Aircraft for Flight Control and Trajectory Planning Research",
-      "proceedingsTitle": "Proceedings of the American Control Conference (ACC)",
       "creators": [
         {
           "firstName": "E. M.",
@@ -29470,7 +29498,8 @@
       "itemID": 927,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the American Control Conference (ACC)"
     },
     {
       "itemType": "conferencePaper",
@@ -29523,7 +29552,8 @@
         },
         {
           "creatorType": "author",
-          "name": "MPOLLACK"
+          "lastName": "MPOLLACK",
+          "fieldMode": 1
         },
         {
           "firstName": "Michael T.",
@@ -29854,7 +29884,6 @@
       "date": "1999",
       "extra": "Paper accompanying invited talk  to be presented at the 1999 European  Conference on Planning (ECP-99). Available through http://afrodite.itc.it:1024/~leaf/ \nCitation Key: GiunchigliaTraverso:99",
       "title": "Planning as Model-checking",
-      "proceedingsTitle": "Proceedings of ECP-99",
       "creators": [
         {
           "firstName": "Fausto",
@@ -29881,13 +29910,13 @@
       "itemID": 941,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of ECP-99"
     },
     {
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Gaschnig:79",
-      "institution": "Carnegie-Mellon University",
       "reportNumber": "CMU-CS-79-124",
       "title": "Performance measurement and analysis of certain search algorithms",
       "creators": [
@@ -29933,7 +29962,8 @@
       "number": "CMU-CS-79-124",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Carnegie-Mellon University"
     },
     {
       "itemType": "conferencePaper",
@@ -30114,7 +30144,6 @@
       "date": "1989",
       "extra": "Citation Key: BorgidaETAL:89",
       "title": "CLASSIC: A Structural Data Model for Objects",
-      "proceedingsTitle": "ACM SIGMOD International Conference on the Management of Data",
       "creators": [
         {
           "firstName": "Alexander",
@@ -30151,7 +30180,8 @@
       "itemID": 949,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ACM SIGMOD International Conference on the Management of Data"
     },
     {
       "itemType": "journalArticle",
@@ -30325,7 +30355,6 @@
       "date": "2000",
       "extra": "Citation Key: gordon-apt",
       "title": "APT Agents: Agents That Are Adaptive, Predictable and Timely",
-      "proceedingsTitle": "Proceedings of the First Goddard Workshop on Formal Approaches to Agent-Based Systems (FAABS'00)",
       "creators": [
         {
           "firstName": "Diana F.",
@@ -30368,7 +30397,8 @@
       "itemID": 954,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the First Goddard Workshop on Formal Approaches to Agent-Based Systems (FAABS'00)"
     },
     {
       "itemType": "journalArticle",
@@ -30479,7 +30509,6 @@
       "date": "2000",
       "extra": "Citation Key: Protege:2000",
       "title": "Component-Based Support for Building Knowledge-Acquisition Systems",
-      "proceedingsTitle": "Conference on Intelligent Information Processing (IIP 2000) of the International Federation for Information Processing World Computer Congress (WCC 2000)",
       "creators": [
         {
           "firstName": "M. A.",
@@ -30526,14 +30555,14 @@
       "itemID": 959,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Conference on Intelligent Information Processing (IIP 2000) of the International Federation for Information Processing World Computer Congress (WCC 2000)"
     },
     {
       "itemType": "conferencePaper",
       "date": "2000",
       "extra": "Citation Key: Protege:2000a",
       "title": "The knowledge model of Protege-2000: Combining interoperability and flexibility",
-      "proceedingsTitle": "Second International Conference on Knowledge Engineering and Knowledge Management (EKAW'2000)",
       "creators": [
         {
           "firstName": "N. F.",
@@ -30565,7 +30594,8 @@
       "itemID": 960,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Second International Conference on Knowledge Engineering and Knowledge Management (EKAW'2000)"
     },
     {
       "itemType": "conferencePaper",
@@ -30573,7 +30603,6 @@
       "date": "2000",
       "extra": "Citation Key: Protege:2000b",
       "title": "Knowledge-Acquisition Interfaces for Domain Experts: An Empirical Evaluation of Protege-2000",
-      "proceedingsTitle": "Twelfth International Conference on Software Engineering and Knowledge Engineering (SEKE2000)",
       "creators": [
         {
           "firstName": "N. F.",
@@ -30605,7 +30634,8 @@
       "itemID": 961,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Twelfth International Conference on Software Engineering and Knowledge Engineering (SEKE2000)"
     },
     {
       "itemType": "journalArticle",
@@ -30669,7 +30699,6 @@
       "date": "2001",
       "extra": "Citation Key: Shaken:2000",
       "title": "Knowledge Entry as the Graphical Assembly of Components",
-      "proceedingsTitle": "Proceedings of the First International Conference on Knowledge Capture (K-Cap'01)",
       "creators": [
         {
           "firstName": "P.",
@@ -30741,7 +30770,8 @@
       "itemID": 963,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the First International Conference on Knowledge Capture (K-Cap'01)"
     },
     {
       "itemType": "conferencePaper",
@@ -30986,7 +31016,6 @@
       "date": "1996",
       "extra": "Citation Key: williamson96unified",
       "title": "Unified Information and Control Flow in Hierarchical Task Networks",
-      "proceedingsTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop",
       "creators": [
         {
           "firstName": "M.",
@@ -31018,7 +31047,8 @@
       "itemID": 971,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop"
     },
     {
       "itemType": "conferencePaper",
@@ -31027,7 +31057,6 @@
       "date": "1998",
       "extra": "Citation Key: desJardins:98 \nbibtex[number=WS-98-15;organization=AAAI]",
       "title": "Hybrid Planning: An Approach to Integrating Generative and Case-based Planning",
-      "proceedingsTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop",
       "creators": [
         {
           "firstName": "Marie",
@@ -31059,7 +31088,8 @@
       "itemID": 972,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop"
     },
     {
       "itemType": "journalArticle",
@@ -31132,7 +31162,6 @@
       "place": "College Park, MD",
       "date": "2004-06",
       "extra": "Citation Key: nau04:applicSHOP2",
-      "institution": "Computer Science Department, University of Maryland",
       "reportNumber": "CS-TR-4604, UMIACS-TR-2004-46",
       "title": "Applications of SHOP and SHOP2",
       "creators": [
@@ -31192,7 +31221,8 @@
       "number": "CS-TR-4604, UMIACS-TR-2004-46",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "journalArticle",
@@ -31403,7 +31433,6 @@
       "date": "2002",
       "extra": "http://www.dur.ac.uk/computer.science/research/stanstuff/html/dpgpublications.html \nCitation Key: fox02:_pddl",
       "title": "PDDL+: Modeling continuous time dependent effects",
-      "proceedingsTitle": "Proceedings of the 3rd International NASA Workshop on Planning and Scheduling for Space",
       "creators": [
         {
           "firstName": "Maria",
@@ -31430,7 +31459,8 @@
       "itemID": 980,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 3rd International NASA Workshop on Planning and Scheduling for Space"
     },
     {
       "itemType": "conferencePaper",
@@ -31439,7 +31469,6 @@
       "date": "2004",
       "extra": "Citation Key: howey04:_val \nbibtex[bibdate=2005-01-05;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ictai/ictai2004.html#HoweyLF04;crossref=DBLP:conf/ictai/2004]",
       "title": "VAL: Automatic Plan Validation, Continuous Effects and Mixed Initiative Planning Using PDDL",
-      "proceedingsTitle": "Proceedings ICTAI",
       "creators": [
         {
           "firstName": "Richard",
@@ -31471,7 +31500,8 @@
       "itemID": 981,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings ICTAI"
     },
     {
       "itemType": "conferencePaper",
@@ -31482,7 +31512,6 @@
       "date": "2006",
       "extra": "Citation Key: FoxGLS:Stability:06 \nbibtex[bibdate=2012-12-13;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2006.html#FoxGLS06]",
       "title": "Plan Stability: Replanning versus Plan Repair",
-      "proceedingsTitle": "ICAPS",
       "creators": [
         {
           "firstName": "Maria",
@@ -31539,14 +31568,14 @@
       "itemID": 982,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICAPS"
     },
     {
       "itemType": "report",
       "url": "ftp://ftp.informatik.uni-freiburg.de/documents/reports/report195/report00195.ps.gz",
       "date": "01 21 2004",
       "extra": "Citation Key: Edelkamp04",
-      "institution": "Institut für Informatik, Universität Freiburg",
       "reportType": "report00195",
       "abstractNote": "This document defines the language to be used in the classical part of the 4th International Planning Competition, IPC-4. The language comprises all of PDDL2.1 levels 1, 2, and 3, as defined by Maria Fox and Derek Long in fox:long:jair-03; parts of this document have been copied from that source. On top of this language, for IPC-4  derived predicates are re-introduced, and  timed initial literals are (newly) introduced into the competition language. We give the syntax and semantics of these constructs.",
       "title": "PDDL2.2: The Language for the Classical Part of the 4th International Planning Competition",
@@ -31577,13 +31606,13 @@
       "type": "report00195",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Institut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "report",
       "date": "2004-04",
       "extra": "Citation Key: trueg04:_apply_autom_plann_system_airpor",
-      "institution": "Insitut für Informatik, Universität Freiburg",
       "reportNumber": "199",
       "title": "Applying Automatic Planning Systems to Airport Ground-Traffic Control --- A Feasibility Study",
       "creators": [
@@ -31618,7 +31647,8 @@
       "number": "199",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Insitut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "journalArticle",
@@ -31870,7 +31900,6 @@
       "date": "1998",
       "extra": "Citation Key: mccluskey98toolsupported",
       "title": "A Tool-Supported Approach to Engineering HTN Planning Models",
-      "proceedingsTitle": "Proceedings of the 10th IEEE International Conference on Tools with Artificial Intelligence",
       "creators": [
         {
           "firstName": "T.",
@@ -31897,13 +31926,13 @@
       "itemID": 991,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 10th IEEE International Conference on Tools with Artificial Intelligence"
     },
     {
       "itemType": "report",
       "date": "1999",
       "extra": "Citation Key: mccluskey99:_ocl",
-      "institution": "Department of Computer Science, The University of Huddersfield",
       "title": "OCLₕ: a sound and supportive planning domain modelling language",
       "creators": [
         {
@@ -31957,14 +31986,14 @@
       "itemID": 992,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Department of Computer Science, The University of Huddersfield"
     },
     {
       "itemType": "conferencePaper",
       "date": "1996-03",
       "extra": "Citation Key: bonasso96:_using_layer_contr_archit_allev",
       "title": "Using a Layered Control Architecture to Alleviate Planning with Incomplete Information",
-      "proceedingsTitle": "AAAI Spring Symposium on Planning with Incomplete Information for Robot Problems",
       "creators": [
         {
           "firstName": "R. P.",
@@ -31991,7 +32020,8 @@
       "itemID": 994,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI Spring Symposium on Planning with Incomplete Information for Robot Problems"
     },
     {
       "itemType": "bookSection",
@@ -32001,7 +32031,6 @@
       "extra": "Citation Key: Ternovskaia1998IDS \nbibtex[coden=LNCSD9] \nISSN: 0302-9743",
       "abstractNote": "We explore the situation calculus within the framework of inductive definability. A consequence of this view of the situation calculus is to establish direct connections with different variants of the mu-calculus, structural operational semantics of concurrent processes, and logic programming. First we show that the induction principle on situations is implied by an inductive definition of the set of situations. Then we consider the frame problem from the point of view of inductive definability and by defining fluents inductively we obtain essentially the same form of successor state axioms as Reiter's. Our approach allows extending this result to the case where ramification constraints are present. Finally we demonstrate a method of applying inductive definitions for computing fixed point properties of GOLOG programs.",
       "title": "Inductive Definability and the Situation Calculus",
-      "bookTitle": "Transactions and Change in Logic Databases",
       "creators": [
         {
           "firstName": "Eugenia",
@@ -32043,7 +32072,8 @@
       "itemID": 995,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Transactions and Change in Logic Databases"
     },
     {
       "itemType": "journalArticle",
@@ -32093,7 +32123,6 @@
       "date": "2000",
       "extra": "Citation Key: freedman00",
       "title": "Using a Reactive Planner as the Basis for a Dialogue Agent",
-      "proceedingsTitle": "Proceedings of the Thirteenth Florida Artificial Intelligence Research Symposium (FLAIRS00)",
       "creators": [
         {
           "firstName": "Reva",
@@ -32136,7 +32165,8 @@
       "itemID": 997,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Thirteenth Florida Artificial Intelligence Research Symposium (FLAIRS00)"
     },
     {
       "itemType": "conferencePaper",
@@ -32144,7 +32174,6 @@
       "date": "2004",
       "extra": "Citation Key: freed04:auton_UAV_surveillance",
       "title": "Human vs. Autonomous Control of UAV Surveillance",
-      "proceedingsTitle": "American Institute of Aeronautics and Astronautics",
       "creators": [
         {
           "firstName": "Michael",
@@ -32176,7 +32205,8 @@
       "itemID": 999,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "American Institute of Aeronautics and Astronautics"
     },
     {
       "itemType": "conferencePaper",
@@ -32184,11 +32214,11 @@
       "date": "2005",
       "extra": "Citation Key: freed05:_trust_auton_spacef_system",
       "title": "Trusted Autonomy for Spaceflight Systems",
-      "proceedingsTitle": "Proceedings of the 1st Space Exploration Conference: Continuing the Voyage of Discovery",
       "creators": [
         {
           "creatorType": "author",
-          "name": "FREED"
+          "lastName": "FREED",
+          "fieldMode": 1
         },
         {
           "firstName": "P.",
@@ -32225,7 +32255,8 @@
       "itemID": 1000,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 1st Space Exploration Conference: Continuing the Voyage of Discovery"
     },
     {
       "itemType": "conferencePaper",
@@ -32234,7 +32265,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "FREED"
+          "lastName": "FREED",
+          "fieldMode": 1
         }
       ],
       "tags": [
@@ -32259,11 +32291,11 @@
       "date": "2004",
       "extra": "Citation Key: freed04:human_uav_auton_surveil",
       "title": "Human-interaction challenges in UAV-based Autonomous Surveillance",
-      "proceedingsTitle": "Working Notes of the AAAI Spring Symposium on Human Interaction with Autonomous System Over Extended Operations",
       "creators": [
         {
           "creatorType": "author",
-          "name": "FREED"
+          "lastName": "FREED",
+          "fieldMode": 1
         },
         {
           "firstName": "R.",
@@ -32290,7 +32322,8 @@
       "itemID": 1002,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Working Notes of the AAAI Spring Symposium on Human Interaction with Autonomous System Over Extended Operations"
     },
     {
       "itemType": "book",
@@ -32375,7 +32408,6 @@
       "date": "2003",
       "extra": "Citation Key: SHOP:WuPSHN03 \nbibtex[bibdate=2004-02-24;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/semweb/iswc2003.html#WuPSHN03]",
       "title": "Automating DAML-S Web Services Composition Using SHOP2",
-      "proceedingsTitle": "International Semantic Web Conference",
       "creators": [
         {
           "firstName": "Dan",
@@ -32417,14 +32449,14 @@
       "itemID": 1005,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "International Semantic Web Conference"
     },
     {
       "itemType": "conferencePaper",
       "date": "2003",
       "extra": "Citation Key: SHOP:WuSHNP03 \nbibtex[bibsource=Mindswap: http://www.mindswap.org/papers/?raw#mindswap:1\"]",
       "title": "Automatic Web Services Composition Using SHOP2",
-      "proceedingsTitle": "Proceedings of Planning for Web Services Workshop in ICAPS 2003",
       "creators": [
         {
           "firstName": "Dan",
@@ -32487,7 +32519,8 @@
       "itemID": 1006,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of Planning for Web Services Workshop in ICAPS 2003"
     },
     {
       "itemType": "conferencePaper",
@@ -32501,7 +32534,6 @@
       "date": "2005-07",
       "extra": "Citation Key: conf/um/BlaylockA05 \nbibtex[bibdate=2005-09-20;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/um/um2005.html#BlaylockA05]",
       "title": "Generating Artificial Corpora for Plan Recognition",
-      "proceedingsTitle": "User Modeling",
       "creators": [
         {
           "firstName": "Nate",
@@ -32543,7 +32575,8 @@
       "itemID": 1008,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "User Modeling"
     },
     {
       "itemType": "bookSection",
@@ -32583,7 +32616,6 @@
       "place": "Brescia, Italy",
       "date": "2005",
       "extra": "Citation Key: GereviniLong05:PDDL3",
-      "institution": "Dept. of Electronics for Automation, University of Brescia",
       "reportType": "Technical Report",
       "reportNumber": "RT 2005-08-47",
       "title": "Plan Constraints and Preferences in PDDL3",
@@ -32615,7 +32647,8 @@
       "number": "RT 2005-08-47",
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "Dept. of Electronics for Automation, University of Brescia"
     },
     {
       "itemType": "conferencePaper",
@@ -32897,7 +32930,6 @@
       "date": "2006",
       "extra": "Citation Key: bienvenu-etal:2006a \nbibtex{topic:'planning;preferences;qualitative-utility;temporal-reasoning;'}",
       "title": "Planning with Qualitative Temporal Preferences",
-      "bookTitle": "KR2006",
       "creators": [
         {
           "firstName": "Meghyn",
@@ -32944,7 +32976,8 @@
       "itemID": 1019,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "KR2006"
     },
     {
       "itemType": "conferencePaper",
@@ -32954,7 +32987,6 @@
       "date": "2005",
       "extra": "Citation Key: conf/aips/BoddyGHH05 \nbibtex[bibdate=2006-04-27;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2005.html#BoddyGHH05]",
       "title": "Course of Action Generation for Cyber Security Using Classical Planning",
-      "proceedingsTitle": "ICAPS",
       "creators": [
         {
           "firstName": "Mark S.",
@@ -33006,13 +33038,13 @@
       "itemID": 1020,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICAPS"
     },
     {
       "itemType": "thesis",
       "date": "1997",
       "extra": "Citation Key: golden:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Vita.; Thesis (Ph. D.)--University of Washington, 1997.; Includes bibliographical references (p. [166]-173).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm40149549',subject:'Intelligent agents (Computer software)'}",
-      "university": "University of Washington",
       "title": "Planning and knowledge representation for softbots",
       "creators": [
         {
@@ -33035,7 +33067,8 @@
       "itemID": 1021,
       "seeAlso": [
 
-      ]
+      ],
+      "publisher": "University of Washington"
     },
     {
       "itemType": "book",
@@ -33161,7 +33194,6 @@
       "pages": "509-515",
       "extra": "Citation Key: conf/ijcai/Levesque05 \nbibtex[bibdate=2005-12-09;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2005.html#Levesque05;crossref=IJCAI05]",
       "title": "Planning with Loops",
-      "proceedingsTitle": "IJCAI",
       "creators": [
         {
           "firstName": "Hector J.",
@@ -33183,7 +33215,8 @@
       "itemID": 1025,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI"
     },
     {
       "itemType": "conferencePaper",
@@ -33288,7 +33321,6 @@
       "date": "2007",
       "extra": "Citation Key: lee-urban07transfer",
       "title": "Transfer Learning of Hierarchical Task-Network Planning Methods in a Real-Time Strategy Game",
-      "proceedingsTitle": "Proceedings of the ICAPS-07 Workshop on AI Planning and Learning",
       "creators": [
         {
           "firstName": "S.",
@@ -33330,14 +33362,14 @@
       "itemID": 1029,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the ICAPS-07 Workshop on AI Planning and Learning"
     },
     {
       "itemType": "conferencePaper",
       "date": "2009",
       "extra": "Citation Key: nejati09goal",
       "title": "A Goal- and Dependency-Driven Algorithm for Learning Hierarchical Task Networks",
-      "proceedingsTitle": "Proceedings of the Fifth International Conference on Knowledge Capture (KCAP-09)",
       "creators": [
         {
           "firstName": "Negin",
@@ -33369,7 +33401,8 @@
       "itemID": 1030,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Fifth International Conference on Knowledge Capture (KCAP-09)"
     },
     {
       "itemType": "book",
@@ -33438,7 +33471,6 @@
       "date": "2005",
       "extra": "Citation Key: Choi2005",
       "title": "Learning teleoreactive logic programs from problem solving",
-      "proceedingsTitle": "ILP-05",
       "creators": [
         {
           "firstName": "D.",
@@ -33465,14 +33497,14 @@
       "itemID": 1033,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ILP-05"
     },
     {
       "itemType": "conferencePaper",
       "date": "1997",
       "extra": "Citation Key: Reddy1997",
       "title": "Learning Goal-Decomposition Rules using Exercises",
-      "proceedingsTitle": "ICML-97",
       "creators": [
         {
           "firstName": "C.",
@@ -33499,14 +33531,14 @@
       "itemID": 1034,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICML-97"
     },
     {
       "itemType": "conferencePaper",
       "date": "2009",
       "extra": "Citation Key: Konik:2009",
       "title": "Inductive Generalization of Analytically Learned Goal Hierarchies",
-      "proceedingsTitle": "ILP-09",
       "creators": [
         {
           "firstName": "T.",
@@ -33538,7 +33570,8 @@
       "itemID": 1035,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ILP-09"
     },
     {
       "itemType": "conferencePaper",
@@ -33546,7 +33579,6 @@
       "date": "1992",
       "extra": "Citation Key: Sammut:1992",
       "title": "Learning to fly",
-      "proceedingsTitle": "Proceedings of the 9th International Conference on Machine Learning",
       "creators": [
         {
           "firstName": "C.",
@@ -33593,7 +33625,8 @@
       "itemID": 1036,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 9th International Conference on Machine Learning"
     },
     {
       "itemType": "conferencePaper",
@@ -33601,7 +33634,6 @@
       "date": "1993",
       "extra": "Citation Key: Segre:1993",
       "title": "ARMS: Acquiring Robotic Assembly Plans",
-      "proceedingsTitle": "Investigating Explanation-Based Learning",
       "creators": [
         {
           "firstName": "A. M.",
@@ -33628,14 +33660,14 @@
       "itemID": 1037,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Investigating Explanation-Based Learning"
     },
     {
       "itemType": "conferencePaper",
       "date": "2006",
       "extra": "Citation Key: Nejati:2006",
       "title": "Learning Hierarchical Task Networks by Observation",
-      "proceedingsTitle": "ICML-06",
       "creators": [
         {
           "firstName": "N.",
@@ -33667,7 +33699,8 @@
       "itemID": 1038,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICML-06"
     },
     {
       "itemType": "journalArticle",
@@ -33747,7 +33780,6 @@
       "date": "1996",
       "extra": "Citation Key: estlin96integrating",
       "title": "Integrating EBL and ILP to Acquire Control Rules for Planning",
-      "proceedingsTitle": "Proceedings of the Third International Workshop on Multi-Strategy Learning (MSL-96)",
       "creators": [
         {
           "firstName": "Tara A.",
@@ -33774,14 +33806,14 @@
       "itemID": 1041,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Third International Workshop on Multi-Strategy Learning (MSL-96)"
     },
     {
       "itemType": "conferencePaper",
       "date": "2010",
       "extra": "Citation Key: hogg10learning",
       "title": "Learning Methods to Generate Good Plans: Integrating HTN Learning and Reinforcement Learning",
-      "proceedingsTitle": "AAAI-10",
       "creators": [
         {
           "firstName": "Chad",
@@ -33813,14 +33845,14 @@
       "itemID": 1042,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-10"
     },
     {
       "itemType": "conferencePaper",
       "date": "2009",
       "extra": "Citation Key: hogg09learning",
       "title": "Learning Hierarchical Task Networks for Nondeterministic Planning Domains",
-      "proceedingsTitle": "IJCAI-09",
       "creators": [
         {
           "firstName": "Chad",
@@ -33852,14 +33884,14 @@
       "itemID": 1043,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI-09"
     },
     {
       "itemType": "conferencePaper",
       "date": "2008",
       "extra": "Citation Key: hogg08htnmaker",
       "title": "HTN-MAKER: Learning HTNs with Minimal Additional Knowledge Engineering Required",
-      "proceedingsTitle": "AAAI-08",
       "creators": [
         {
           "firstName": "Chad",
@@ -33891,7 +33923,8 @@
       "itemID": 1044,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-08"
     },
     {
       "itemType": "book",
@@ -33979,7 +34012,6 @@
       "date": "January 2007",
       "extra": "Citation Key: bai-bac-mci-ijcai07",
       "title": "A Heuristic Search Approach to Planning with Temporally Extended Preferences",
-      "proceedingsTitle": "IJCAI Proceedings",
       "creators": [
         {
           "firstName": "J.",
@@ -34011,7 +34043,8 @@
       "itemID": 1047,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI Proceedings"
     },
     {
       "itemType": "conferencePaper",
@@ -34021,7 +34054,6 @@
       "date": "2006",
       "extra": "Citation Key: conf/aaai/BaierM06 \nbibtex[bibdate=2012-03-19;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2006.html#BaierM06]",
       "title": "Planning with First-Order Temporally Extended Goals using Heuristic Search",
-      "proceedingsTitle": "AAAI",
       "creators": [
         {
           "firstName": "Jorge A.",
@@ -34048,7 +34080,8 @@
       "itemID": 1048,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI"
     },
     {
       "itemType": "conferencePaper",
@@ -34058,7 +34091,6 @@
       "date": "September 22 - 26 2007",
       "extra": "Citation Key: bai-fri-mci-icaps07",
       "title": "Exploiting Procedural Domain Control Knowledge in State-of-the-Art Planners",
-      "proceedingsTitle": "Proceedings of the Seventeenth International Conference on Automated Planning and Scheduling (ICAPS-07)",
       "creators": [
         {
           "firstName": "Jorge A.",
@@ -34090,7 +34122,8 @@
       "itemID": 1049,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Seventeenth International Conference on Automated Planning and Scheduling (ICAPS-07)"
     },
     {
       "itemType": "conferencePaper",
@@ -34100,7 +34133,6 @@
       "date": "2007",
       "extra": "Citation Key: conf/aips/PalaciosG07 \nbibtex[bibdate=2008-08-15;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2007.html#PalaciosG07]",
       "title": "From Conformant into Classical Planning: Efficient Translations that May Be Complete Too",
-      "proceedingsTitle": "ICAPS",
       "creators": [
         {
           "firstName": "Héctor",
@@ -34142,14 +34174,14 @@
       "itemID": 1050,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICAPS"
     },
     {
       "itemType": "conferencePaper",
       "date": "2004",
       "extra": "Citation Key: JensenETAL:04",
       "title": "Fault Tolerant Planning: Toward Probabilistic Uncertainty Models in Symbolic Non-Deterministic Planning",
-      "proceedingsTitle": "Proceedings of the 14th International Conference on Automated Planning and Scheduling ICAPS-04",
       "creators": [
         {
           "firstName": "R. M.",
@@ -34181,7 +34213,8 @@
       "itemID": 1051,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 14th International Conference on Automated Planning and Scheduling ICAPS-04"
     },
     {
       "itemType": "conferencePaper",
@@ -34189,7 +34222,6 @@
       "date": "2000",
       "extra": "Citation Key: conf/aips/DoK00 \nbibtex[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#DoK00]",
       "title": "Solving Planning-Graph by Compiling It into CSP",
-      "proceedingsTitle": "AIPS",
       "creators": [
         {
           "firstName": "Minh Binh",
@@ -34216,7 +34248,8 @@
       "itemID": 1052,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AIPS"
     },
     {
       "itemType": "conferencePaper",
@@ -34224,7 +34257,6 @@
       "date": "2000",
       "extra": "Citation Key: conf/aips/HansenF00 \nbibtex[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#HansenF00]",
       "title": "Dynamic Programming for POMDPs Using a Factored State Representation",
-      "proceedingsTitle": "AIPS",
       "creators": [
         {
           "firstName": "Eric A.",
@@ -34251,7 +34283,8 @@
       "itemID": 1053,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AIPS"
     },
     {
       "itemType": "journalArticle",
@@ -34418,7 +34451,6 @@
       "date": "2007",
       "extra": "Citation Key: taylor07:transferLearning",
       "title": "Accelerating search with transferred heuristics",
-      "proceedingsTitle": "ICAPS Workshop on AI Planning and Learning",
       "creators": [
         {
           "firstName": "M.",
@@ -34450,7 +34482,8 @@
       "itemID": 1059,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "ICAPS Workshop on AI Planning and Learning"
     },
     {
       "itemType": "journalArticle",
@@ -34555,7 +34588,6 @@
       "date": "2007",
       "extra": "Citation Key: RaoETALDiversity:07 \nbibtex[crossref=IJCAI07]",
       "title": "Domain Independent Approaches for Finding Diverse Plans",
-      "proceedingsTitle": "IJCAI",
       "creators": [
         {
           "firstName": "Biplav",
@@ -34602,7 +34634,8 @@
       "itemID": 1063,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI"
     },
     {
       "itemType": "conferencePaper",
@@ -34612,7 +34645,6 @@
       "date": "07 ~18--22 1999",
       "extra": "Citation Key: AAAI/IAAI99*570",
       "title": "Generating Qualitatively Different Plans through Metatheoretic Biases",
-      "proceedingsTitle": "AAAI-99",
       "creators": [
         {
           "firstName": "Karen L.",
@@ -34639,14 +34671,14 @@
       "itemID": 1064,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI-99"
     },
     {
       "itemType": "conferencePaper",
       "date": "2011",
       "extra": "Citation Key: ComanMunozAvila:11",
       "title": "Generating Diverse Plans Using Quantitative and Qualitative Plan Distance Metrics",
-      "proceedingsTitle": "Proceedings AAAI",
       "creators": [
         {
           "firstName": "Alexandra",
@@ -34673,14 +34705,14 @@
       "itemID": 1065,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings AAAI"
     },
     {
       "itemType": "conferencePaper",
       "date": "1990-08",
       "extra": "Citation Key: HulYos90",
       "title": "ILOG: Declarative Creation and Manipulation of Object-Identifiers",
-      "proceedingsTitle": "Proceedings of the 16th Conference on Very Large Databases, Morgan Kaufman pubs. (Los Altos CA), Brisbane",
       "creators": [
         {
           "firstName": "R.",
@@ -34728,7 +34760,8 @@
       "itemID": 1066,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the 16th Conference on Very Large Databases, Morgan Kaufman pubs. (Los Altos CA), Brisbane"
     },
     {
       "itemType": "journalArticle",
@@ -34851,7 +34884,6 @@
       "date": "2014",
       "extra": "Citation Key: bryceICAPS14",
       "title": "Landmark-Based Plan Distance Measures for Diverse Planning",
-      "proceedingsTitle": "PICAPS",
       "creators": [
         {
           "firstName": "Daniel",
@@ -34873,7 +34905,8 @@
       "itemID": 1071,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "PICAPS"
     },
     {
       "itemType": "bookSection",
@@ -34887,7 +34920,6 @@
       "extra": "Citation Key: minock-kraus-LIAI02 \nDOI: 10.1007/3-540-45757-7_52",
       "language": "English",
       "title": "Z-log: Applying System-Z",
-      "bookTitle": "Logics in Artificial Intelligence",
       "creators": [
         {
           "firstName": "Michael",
@@ -34934,7 +34966,8 @@
       "itemID": 1072,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Logics in Artificial Intelligence"
     },
     {
       "itemType": "conferencePaper",
@@ -34944,7 +34977,6 @@
       "extra": "Citation Key: fujimoto-WIIAT2010",
       "DOI": "10.1109/WI-IAT.2010.240",
       "title": "An Investigation of Potency of eWOM Messages with a Focus on Subjective Rank Expressions",
-      "proceedingsTitle": "Web Intelligence and Intelligent Agent Technology (WI-IAT), 2010 IEEE/WIC/ACM International Conference on",
       "creators": [
         {
           "firstName": "K.",
@@ -35021,7 +35053,8 @@
       "itemID": 1073,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Web Intelligence and Intelligent Agent Technology (WI-IAT), 2010 IEEE/WIC/ACM International Conference on"
     },
     {
       "itemType": "journalArticle",
@@ -35066,7 +35099,6 @@
       "extra": "Citation Key: RobertsETAL:Diversity2014 \nbibtex[conference=International Conference on Automated Planning and Scheduling]",
       "abstractNote": "Applications that require alternative plans challenge the single solution, single quality metric assumptions upon which many classical planners are designed and evaluated. To evaluate the distinctness of alternative plans (i.e., plan sets), researchers have created diversity metrics that often measure the set difference between the actions of plans. Many approaches for generating plan sets embed the same diversity metric in a weighted evaluation function to guide the search mechanism, thus confounding the search process with its evaluation. We discover that two diversity metrics fail to distinguish similar plans from each other or to identify plans with extraneous actions, so we introduce two new diversity metrics, <i>uniqueness</i> and <i>overlap</i>, to capture these cases. We then examine the tradeoffs of producing diverse plans while we control for plan length and metric interaction and confirm that metric interaction can significantly impact search performance. We show that planners searching for plan sets must consider a third metric, <i>parsimony</i>, that prefers shorter plans while maximizing diversity.We evaluate three existing approaches for generating diverse plans and two new algorithms that are designed to explicitly manage diversity and interaction between the diversity and quality metrics. Our findings synthesize and extend recent results in plan diversity.",
       "title": "Evaluating Diversity in Classical Planning",
-      "proceedingsTitle": "Proceedings ICAPS",
       "creators": [
         {
           "firstName": "Mark",
@@ -35109,7 +35141,8 @@
       "itemID": 1075,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings ICAPS"
     },
     {
       "itemType": "book",
@@ -35210,7 +35243,6 @@
       "date": "2000",
       "extra": "Citation Key: apricodd",
       "title": "APRICODD: Approximate Policy Construction using Decision Diagrams",
-      "proceedingsTitle": "NIPS-2000",
       "creators": [
         {
           "firstName": "Robert",
@@ -35242,7 +35274,8 @@
       "itemID": 1078,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "NIPS-2000"
     },
     {
       "itemType": "conferencePaper",
@@ -35251,7 +35284,6 @@
       "date": "2002",
       "extra": "Citation Key: DBLP:conf/aips/Edelkamp02 \nbibtex[bibsource=dblp computer science bibliography, http://dblp.org;biburl=http://dblp.uni-trier.de/rec/bib/conf/aips/Edelkamp02;crossref=AIPS02]",
       "title": "Symbolic Pattern Databases in Heuristic Search Planning",
-      "proceedingsTitle": "Proceedings of the Sixth International Conference on Artificial Intelligence Planning Systems, April 23-27, 2002, Toulouse, France",
       "creators": [
         {
           "firstName": "Stefan",
@@ -35273,7 +35305,8 @@
       "itemID": 1079,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Sixth International Conference on Artificial Intelligence Planning Systems, April 23-27, 2002, Toulouse, France"
     },
     {
       "itemType": "journalArticle",
@@ -35323,7 +35356,6 @@
       "date": "08 20--25 1995",
       "extra": "Citation Key: LaborieGhallab:95",
       "title": "Planning with Sharable Resource Constraints",
-      "proceedingsTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
       "creators": [
         {
           "firstName": "Philippe",
@@ -35355,7 +35387,8 @@
       "itemID": 1081,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence"
     },
     {
       "itemType": "conferencePaper",
@@ -35363,7 +35396,6 @@
       "date": "2014",
       "extra": "Citation Key: humphreyAAAISS14",
       "title": "Formal Specification and Synthesis of Mission Plans for Unmanned Aerial Vehicles",
-      "proceedingsTitle": "Proceedings of the AAAI Spring Symposium: Formal Verification and Modeling in Human-Machine Systems",
       "creators": [
         {
           "firstName": "Laura R.",
@@ -35395,14 +35427,14 @@
       "itemID": 1082,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the AAAI Spring Symposium: Formal Verification and Modeling in Human-Machine Systems"
     },
     {
       "itemType": "conferencePaper",
       "date": "2014",
       "extra": "Citation Key: degiacomo14",
       "title": "Reasoning on LTL on Finite Traces: Insensitivity to Infiniteness",
-      "proceedingsTitle": "Proceedings of the Twenty-Eighth AAAI Conference on Artificial Intelligence",
       "creators": [
         {
           "firstName": "Giuseppe",
@@ -35434,7 +35466,8 @@
       "itemID": 1083,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Proceedings of the Twenty-Eighth AAAI Conference on Artificial Intelligence"
     },
     {
       "itemType": "journalArticle",
@@ -35515,7 +35548,6 @@
       "date": "2009",
       "extra": "Citation Key: conf/ijcai/NakhostM09 \nbibtex[bibdate=2009-12-21;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2009.html#NakhostM09]",
       "title": "Monte-Carlo Exploration for Deterministic Planning",
-      "proceedingsTitle": "IJCAI",
       "creators": [
         {
           "firstName": "Hootan",
@@ -35547,7 +35579,8 @@
       "itemID": 1086,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "IJCAI"
     },
     {
       "itemType": "bookSection",
@@ -35556,7 +35589,6 @@
       "date": "2011",
       "extra": "Citation Key: helmert2011fast \nbibtex[shortauthor=undefinedundefinedundefined]",
       "title": "Fast downward stone soup",
-      "bookTitle": "Seventh International Planning Competition",
       "creators": [
         {
           "firstName": "Malte",
@@ -35618,7 +35650,8 @@
       "itemID": 1087,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "Seventh International Planning Competition"
     },
     {
       "itemType": "conferencePaper",
@@ -35629,7 +35662,6 @@
       "date": "2015",
       "extra": "Citation Key: conf/aaai/Bresina15 \nbibtex[bibdate=2015-04-12;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2015.html#Bresina15]",
       "title": "Activity Planning for a Lunar Orbital Mission",
-      "proceedingsTitle": "AAAI",
       "creators": [
         {
           "firstName": "John L.",
@@ -35661,7 +35693,8 @@
       "itemID": 1088,
       "seeAlso": [
 
-      ]
+      ],
+      "publicationTitle": "AAAI"
     },
     {
       "itemType": "conferencePaper",
@@ -35842,7 +35875,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "GINSBERG"
+          "lastName": "GINSBERG",
+          "fieldMode": 1
         }
       ],
       "tags": [

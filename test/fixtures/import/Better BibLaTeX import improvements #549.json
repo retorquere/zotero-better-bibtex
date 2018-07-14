@@ -4,7 +4,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "01e"
+          "lastName": "01e",
+          "fieldMode": 1
         }
       ],
       "extra": "Citation Key: 1e",
@@ -16,7 +17,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "01b"
+          "lastName": "01b",
+          "fieldMode": 1
         }
       ],
       "extra": "Citation Key: 1b",
@@ -28,7 +30,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "02e"
+          "lastName": "02e",
+          "fieldMode": 1
         }
       ],
       "extra": "Citation Key: 2e",
@@ -40,7 +43,8 @@
       "creators": [
         {
           "creatorType": "author",
-          "name": "02b"
+          "lastName": "02b",
+          "fieldMode": 1
         }
       ],
       "extra": "Citation Key: 2b",
@@ -59,10 +63,10 @@
       "date": "2003",
       "extra": "Citation Key: Bennett2003",
       "itemType": "thesis",
-      "thesisType": "Ph.D.",
       "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
-      "university": "University of London",
-      "itemID": 5
+      "itemID": 5,
+      "publisher": "University of London",
+      "type": "Ph.D."
     },
     {
       "creators": [
@@ -97,7 +101,6 @@
       "itemID": 7
     },
     {
-      "encyclopediaTitle": "Encyclopedia Iranica",
       "creators": [
         {
           "creatorType": "author",
@@ -111,7 +114,8 @@
       "pages": "172-4",
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
       "volume": "4",
-      "itemID": 8
+      "itemID": 8,
+      "publicationTitle": "Encyclopedia Iranica"
     },
     {
       "creators": [
