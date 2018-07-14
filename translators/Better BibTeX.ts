@@ -1079,7 +1079,7 @@ Translator.initialize = () => {
   Translator.unicode = !Translator.preferences.asciiBibTeX
 }
 
-Translator.doImport = () => {
+Translator.doImport = async () => {
   let read
   let input = ''
   while ((read = Zotero.read(0x100000)) !== false) { // tslint:disable-line:no-magic-numbers
@@ -1114,7 +1114,7 @@ Translator.doImport = () => {
     }
     item.tags = ['#Better BibTeX import error']
     item.note += '</ul>'
-    item.complete()
+    await item.complete()
   }
 
   if (Translator.preferences.csquotes) {

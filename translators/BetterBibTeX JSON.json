@@ -4,7 +4,8 @@
   "description": "exports and imports references in BetterBibTeX debug format. Mostly for BBT-internal use",
   "creator": "Emiliano Heyns",
   "target": "json",
-  "minVersion": "3.0b3",
+  "minVersion": "4.0.27",
+  "async": true,
   "maxVersion": "",
   "configOptions": {
     "getCollections": true

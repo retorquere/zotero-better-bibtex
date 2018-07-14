@@ -23,7 +23,7 @@ Translator.detectImport = () => {
   return true
 }
 
-Translator.doImport = () => {
+Translator.doImport = async () => {
   let str
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
@@ -46,7 +46,7 @@ Translator.doImport = () => {
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
     }
-    item.complete()
+    await item.complete()
     items.add(source.itemID)
   }
 
