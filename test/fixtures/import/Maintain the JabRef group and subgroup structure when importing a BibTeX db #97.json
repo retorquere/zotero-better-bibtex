@@ -18371,8 +18371,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18411,8 +18410,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18451,8 +18449,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18491,8 +18488,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18531,8 +18527,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18571,8 +18566,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18611,8 +18605,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18651,8 +18644,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18691,8 +18683,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18731,8 +18722,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18771,8 +18761,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18811,8 +18800,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18851,8 +18839,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -18891,8 +18878,7 @@
         },
         {
           "creatorType": "author",
-          "lastName": "others",
-          "fieldMode": 1
+          "name": "others"
         },
         {
           "firstName": "O.",
@@ -23782,8 +23768,7 @@
       "creators": [
         {
           "creatorType": "inventor",
-          "lastName": "Osumi",
-          "fieldMode": 1
+          "name": "Osumi"
         }
       ],
       "dateAdded": "2017-11-13 09:26:05",

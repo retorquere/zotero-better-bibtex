@@ -36,8 +36,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Plato"
+          "name": "Plato"
         },
         {
           "creatorType": "editor",
@@ -62,8 +61,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Plato"
+          "name": "Plato"
         },
         {
           "creatorType": "editor",

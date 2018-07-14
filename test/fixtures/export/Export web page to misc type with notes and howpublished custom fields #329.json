@@ -31,8 +31,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "NTP.org"
+          "name": "NTP.org"
         }
       ],
       "attachments": [
@@ -53,8 +52,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "NTP.org"
+          "name": "NTP.org"
         }
       ],
       "attachments": [
@@ -75,8 +73,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "NTP.org"
+          "name": "NTP.org"
         }
       ],
       "attachments": [

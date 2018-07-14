@@ -184,7 +184,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "computerProgram",
@@ -208,8 +209,7 @@
         },
         {
           "creatorType": "programmer",
-          "fieldMode": 1,
-          "lastName": "Drewokane"
+          "name": "Drewokane"
         },
         {
           "firstName": "Paul",
@@ -347,14 +347,22 @@
           "creatorType": "programmer"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "dateAdded": "2017-06-25 05:04:21",
       "dateModified": "2017-06-25 05:04:48",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 3130,
       "publisher": "Zenodo",
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }

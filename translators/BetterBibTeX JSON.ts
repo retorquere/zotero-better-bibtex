@@ -36,7 +36,7 @@ Translator.doImport = async () => {
   const items = new Set
   debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
-    // Zotero.BetterBibTeX.simplifyFields(source)
+    Zotero.BetterBibTeX.simplifyFields(source)
 
     if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {

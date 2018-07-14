@@ -195,23 +195,19 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "One, Author"
+          "name": "One, Author"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Two, Author"
+          "name": "Two, Author"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Three, Author"
+          "name": "Three, Author"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Four, Author"
+          "name": "Four, Author"
         }
       ],
       "tags": [

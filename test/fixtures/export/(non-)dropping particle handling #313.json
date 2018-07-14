@@ -183,8 +183,7 @@
       "title": "bugreports_DemoPageFullCiteCruftOnSubsequent",
       "creators": [
         {
-          "lastName": "U.S. Bureau of the Census",
-          "fieldMode": 1
+          "name": "U.S. Bureau of the Census"
         }
       ],
       "extra": "bibtex: bugreports_DemoPageFullCiteCruftOnSubsequent",
@@ -272,8 +271,7 @@
       "title": "bugreports_YearSuffixInHarvard1",
       "creators": [
         {
-          "lastName": "Africa News",
-          "fieldMode": 1
+          "name": "Africa News"
         }
       ],
       "extra": "bibtex: bugreports_YearSuffixInHarvard1",
@@ -342,13 +340,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Caritas Europa",
-          "fieldMode": 1
+          "name": "Caritas Europa"
         },
         {
           "creatorType": "author",
-          "lastName": "JRS-Europe",
-          "fieldMode": 1
+          "name": "JRS-Europe"
         }
       ],
       "extra": "bibtex: disambiguate_FailWithYearSuffix",
@@ -449,8 +445,7 @@
       "title": "magic_SuppressDuplicateVariableRendering",
       "creators": [
         {
-          "lastName": "Blob",
-          "fieldMode": 1
+          "name": "Blob"
         }
       ],
       "extra": "bibtex: magic_SuppressDuplicateVariableRendering",
@@ -552,8 +547,7 @@
       "title": "name_Institution",
       "creators": [
         {
-          "lastName": "Multi-National United",
-          "fieldMode": 1
+          "name": "Multi-National United"
         }
       ],
       "extra": "bibtex: name_Institution",
@@ -566,8 +560,7 @@
       "title": "name_InstitutionDecoration",
       "creators": [
         {
-          "lastName": "São Paulo (Estado)",
-          "fieldMode": 1
+          "name": "São Paulo (Estado)"
         }
       ],
       "extra": "bibtex: name_InstitutionDecoration",
@@ -601,18 +594,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Alfred Benzon Foundation",
-          "fieldMode": 1
+          "name": "Alfred Benzon Foundation"
         },
         {
           "creatorType": "author",
-          "lastName": "James Benson Foundation",
-          "fieldMode": 1
+          "name": "James Benson Foundation"
         },
         {
           "creatorType": "author",
-          "lastName": "John Candy Foundation",
-          "fieldMode": 1
+          "name": "John Candy Foundation"
         }
       ],
       "extra": "bibtex: name_MultipleLiteral",
@@ -968,8 +958,7 @@
           "lastName": "Beijing Zoo"
         },
         {
-          "lastName": "Beijing Zoo",
-          "fieldMode": 1
+          "name": "Beijing Zoo"
         }
       ],
       "extra": "bibtex: sort_ChicagoYearSuffix1",

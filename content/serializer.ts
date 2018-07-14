@@ -44,14 +44,24 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       simplify += `if (typeof item.${field.fieldAlias} != 'undefined') { item.${field.fieldName} = item.${field.fieldAlias}; delete item.${field.fieldAlias}; }\n`
     }
     simplify += `
-      item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];
-      item.notes = item.notes ? item.notes.map(function(note) { return note.note }) : [];
+      if (mode == 'export') {
+        item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];
+        item.notes = item.notes ? item.notes.map(function(note) { return note.note || note }) : [];
+      }
       if (item.creators) {
+        // import & export translators expect different creator formats... nice
         for (const creator of item.creators) {
-          if (creator.name) {
-            creator.lastName = creator.name;
+          if (mode == 'export' && creator.fieldMode == 1) {
+            creator.name = creator.name || creator.lastName;
+            delete creator.lastName
+            delete creator.firstName;
+            delete creator.fieldMode;
+          }
+          if (mode == 'import' && creator.name) {
+            creator.lastName = creator.lastName || creator.name;
             creator.fieldMode = 1;
-            delete creator.name;
+            delete creator.firstName
+            delete creator.name
           }
         }
       }
@@ -59,7 +69,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       return item;
     `
     debug('Serializer.init: simplify =\n', simplify)
-    this.simplify = new Function('item', simplify)
+    this.simplify = new Function('item', 'mode', simplify)
 
     this.validFields = {}
     fields = await ZoteroDB.queryAsync(`

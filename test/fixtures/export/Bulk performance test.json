@@ -191,15 +191,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         }
       ],
       "attachments": [
@@ -345,9 +341,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -580,9 +574,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Velfærdsministeriet",
-          "fieldMode": 1
+          "name": "Velfærdsministeriet"
         }
       ],
       "attachments": [
@@ -724,9 +716,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "notes": [
@@ -771,9 +761,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -794,9 +782,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -820,15 +806,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Forsyning A/S",
-          "fieldMode": 1
+          "name": "Fredensborg Forsyning A/S"
         },
         {
           "creatorType": "author",
@@ -980,15 +962,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "COWI A/S",
-          "fieldMode": 1
+          "name": "COWI A/S"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         }
       ],
       "notes": [
@@ -1574,9 +1552,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -1898,9 +1874,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Ministeriet for By, Bolig og Landdistrikter",
-          "fieldMode": 1
+          "name": "Ministeriet for By, Bolig og Landdistrikter"
         }
       ],
       "attachments": [
@@ -2043,9 +2017,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -2330,9 +2302,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -2645,9 +2615,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo sogneråd",
-          "fieldMode": 1
+          "name": "Karlebo sogneråd"
         }
       ],
       "attachments": [
@@ -2670,9 +2638,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -2698,9 +2664,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         },
         {
           "creatorType": "author",
@@ -3082,9 +3046,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -3295,9 +3257,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -3324,9 +3284,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         },
         {
           "creatorType": "cartographer",
@@ -3530,9 +3488,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -3998,9 +3954,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -4077,9 +4031,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo sogneråd",
-          "fieldMode": 1
+          "name": "Karlebo sogneråd"
         }
       ],
       "attachments": [
@@ -4172,9 +4124,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "DHI",
-          "fieldMode": 1
+          "name": "DHI"
         }
       ],
       "attachments": [
@@ -4355,9 +4305,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Direktoratet for Matrikulsvæsenet",
-          "fieldMode": 1
+          "name": "Direktoratet for Matrikulsvæsenet"
         }
       ],
       "attachments": [
@@ -4379,21 +4327,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Orbicon",
-          "fieldMode": 1
+          "name": "Orbicon"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "SLA",
-          "fieldMode": 1
+          "name": "SLA"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Aalborg Universitet",
-          "fieldMode": 1
+          "name": "Aalborg Universitet"
         }
       ],
       "attachments": [
@@ -4438,9 +4380,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -4797,9 +4737,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -4954,9 +4892,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Matrikeldirektoratet",
-          "fieldMode": 1
+          "name": "Matrikeldirektoratet"
         }
       ],
       "attachments": [
@@ -5173,21 +5109,15 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Andreas Klarlund",
-          "fieldMode": 1
+          "name": "Andreas Klarlund"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Peder Boas Jensen",
-          "fieldMode": 1
+          "name": "Peder Boas Jensen"
         }
       ],
       "attachments": [
@@ -5412,9 +5342,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -5547,9 +5475,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -5942,9 +5868,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -6640,9 +6564,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         },
         {
           "creatorType": "author",
@@ -6775,21 +6697,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hausenberg",
-          "fieldMode": 1
+          "name": "Hausenberg"
         },
         {
           "creatorType": "author",
@@ -7358,9 +7274,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gruppe IV",
-          "fieldMode": 1
+          "name": "Gruppe IV"
         }
       ],
       "attachments": [
@@ -7744,15 +7658,11 @@
         },
         {
           "creatorType": "contributor",
-          "firstName": "",
-          "lastName": "Dansk Center for Byhistorie",
-          "fieldMode": 1
+          "name": "Dansk Center for Byhistorie"
         },
         {
           "creatorType": "contributor",
-          "firstName": "",
-          "lastName": "Museum Sønderjylland",
-          "fieldMode": 1
+          "name": "Museum Sønderjylland"
         }
       ],
       "attachments": [
@@ -7792,9 +7702,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -7819,9 +7727,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -7966,9 +7872,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Finn Larsen",
-          "fieldMode": 1
+          "name": "Finn Larsen"
         }
       ],
       "notes": [
@@ -7993,9 +7897,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -8097,9 +7999,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Byudviklingsudvalget for Københavns-egnen",
-          "fieldMode": 1
+          "name": "Byudviklingsudvalget for Københavns-egnen"
         }
       ],
       "attachments": [
@@ -8559,9 +8459,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -8588,9 +8486,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Arkitekten - redaktionen",
-          "fieldMode": 1
+          "name": "Arkitekten - redaktionen"
         }
       ],
       "attachments": [
@@ -8615,9 +8511,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -9194,9 +9088,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -9605,9 +9497,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -9781,9 +9671,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Kystbanen",
-          "fieldMode": 1
+          "name": "Kystbanen"
         }
       ],
       "notes": [
@@ -9897,9 +9785,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -10144,15 +10030,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Skaarup & Jespersen, arkitekter m.a.a",
-          "fieldMode": 1
+          "name": "Skaarup & Jespersen, arkitekter m.a.a"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune, teknisk forvaltning",
-          "fieldMode": 1
+          "name": "Karlebo Kommune, teknisk forvaltning"
         }
       ],
       "notes": [
@@ -10339,21 +10221,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Arkitektur Center DK2050",
-          "fieldMode": 1
+          "name": "Dansk Arkitektur Center DK2050"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "DAMVAD",
-          "fieldMode": 1
+          "name": "DAMVAD"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Kairos Future",
-          "fieldMode": 1
+          "name": "Kairos Future"
         }
       ],
       "attachments": [
@@ -10376,15 +10252,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "COWI A/S",
-          "fieldMode": 1
+          "name": "COWI A/S"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         }
       ],
       "attachments": [
@@ -10608,9 +10480,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hasløv og Kjærsgaard I/S",
-          "fieldMode": 1
+          "name": "Hasløv og Kjærsgaard I/S"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -10626,9 +10496,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -10656,9 +10524,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -10770,9 +10636,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gruppe V",
-          "fieldMode": 1
+          "name": "Gruppe V"
         }
       ],
       "attachments": [
@@ -10817,9 +10681,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -10883,9 +10745,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -11059,9 +10919,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Le Corbusier",
-          "fieldMode": 1
+          "name": "Le Corbusier"
         },
         {
           "creatorType": "translator",
@@ -11286,9 +11144,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -11478,9 +11334,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Foreningen Realdanmark",
-          "fieldMode": 1
+          "name": "Foreningen Realdanmark"
         }
       ],
       "attachments": [
@@ -11555,9 +11409,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Arbejderbo",
-          "fieldMode": 1
+          "name": "Arbejderbo"
         }
       ],
       "attachments": [
@@ -12007,9 +11859,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -12610,9 +12460,7 @@
         },
         {
           "creatorType": "contributor",
-          "firstName": "",
-          "lastName": "Indenrigs- og Socialministeriet",
-          "fieldMode": 1
+          "name": "Indenrigs- og Socialministeriet"
         }
       ],
       "notes": [
@@ -12681,9 +12529,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -12769,9 +12615,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -13120,9 +12964,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -13166,9 +13008,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         }
       ],
       "attachments": [
@@ -13191,9 +13031,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gruppe III",
-          "fieldMode": 1
+          "name": "Gruppe III"
         }
       ],
       "attachments": [
@@ -13474,9 +13312,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -13560,9 +13396,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gruppe II",
-          "fieldMode": 1
+          "name": "Gruppe II"
         }
       ],
       "attachments": [
@@ -13851,9 +13685,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Task Force for Klimatilpasning",
-          "fieldMode": 1
+          "name": "Task Force for Klimatilpasning"
         }
       ],
       "attachments": [
@@ -14008,9 +13840,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "DMI",
-          "fieldMode": 1
+          "name": "DMI"
         }
       ],
       "attachments": [
@@ -14059,9 +13889,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -14378,9 +14206,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -14993,9 +14819,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -15090,9 +14914,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Anne Galmar",
-          "fieldMode": 1
+          "name": "Anne Galmar"
         }
       ],
       "attachments": [
@@ -15114,9 +14936,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -15142,9 +14962,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "attachments": [
@@ -15306,9 +15124,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -15333,9 +15149,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rambøll",
-          "fieldMode": 1
+          "name": "Rambøll"
         }
       ],
       "tags": [
@@ -15650,33 +15464,23 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "VANDPLUS",
-          "fieldMode": 1
+          "name": "VANDPLUS"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Lokale og Anlægsfonden",
-          "fieldMode": 1
+          "name": "Lokale og Anlægsfonden"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "calberg/christensen",
-          "fieldMode": 1
+          "name": "calberg/christensen"
         }
       ],
       "attachments": [
@@ -16031,9 +15835,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -16056,9 +15858,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gruppe I",
-          "fieldMode": 1
+          "name": "Gruppe I"
         }
       ],
       "attachments": [
@@ -16256,15 +16056,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hausenberg",
-          "fieldMode": 1
+          "name": "Hausenberg"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -16428,9 +16224,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Gísli Pálsson",
-          "fieldMode": 1
+          "name": "Gísli Pálsson"
         }
       ],
       "notes": [
@@ -16626,9 +16420,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -16680,9 +16472,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fiskeøkologisk Laboratorium",
-          "fieldMode": 1
+          "name": "Fiskeøkologisk Laboratorium"
         }
       ],
       "notes": [
@@ -16828,9 +16618,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "language": "da"
@@ -16868,9 +16656,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Jim Johnson aka Bruno Latour",
-          "fieldMode": 1
+          "name": "Jim Johnson aka Bruno Latour"
         }
       ],
       "attachments": [
@@ -17070,15 +16856,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "SBS Byfornyelse",
-          "fieldMode": 1
+          "name": "SBS Byfornyelse"
         }
       ],
       "language": "da"
@@ -17208,9 +16990,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -17233,9 +17013,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -17321,9 +17099,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "language": "nb"
@@ -17421,9 +17197,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hausenberg",
-          "fieldMode": 1
+          "name": "Hausenberg"
         }
       ],
       "attachments": [
@@ -17582,9 +17356,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rådgivende ingeniør Kristian Rahbek F.R.I.",
-          "fieldMode": 1
+          "name": "Rådgivende ingeniør Kristian Rahbek F.R.I."
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -17632,9 +17404,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "language": "da"
@@ -17684,9 +17454,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -17710,15 +17478,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         }
       ],
       "notes": [
@@ -17788,9 +17552,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Vallgårda",
-          "fieldMode": 1
+          "name": "Vallgårda"
         },
         {
           "creatorType": "contributor",
@@ -17816,9 +17578,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -17976,9 +17736,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -18224,9 +17982,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Le Corbusier",
-          "fieldMode": 1
+          "name": "Le Corbusier"
         }
       ],
       "attachments": [
@@ -18789,9 +18545,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -18928,9 +18682,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -18964,9 +18716,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Society for Social Studies of Science",
-          "fieldMode": 1
+          "name": "Society for Social Studies of Science"
         }
       ]
     },
@@ -19057,9 +18807,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -19200,9 +18948,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -19623,15 +19369,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Arkitektur Center DK2050",
-          "fieldMode": 1
+          "name": "Dansk Arkitektur Center DK2050"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rambøll",
-          "fieldMode": 1
+          "name": "Rambøll"
         }
       ],
       "attachments": [
@@ -19821,9 +19563,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -20347,15 +20087,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -20703,9 +20439,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -20998,9 +20732,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Sadolin & Albæk A/S",
-          "fieldMode": 1
+          "name": "Sadolin & Albæk A/S"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -21791,9 +21523,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "attachments": [
@@ -21859,9 +21589,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -21941,9 +21669,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "attachments": [
@@ -22027,9 +21753,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "language": "da"
@@ -22363,9 +22087,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -22627,9 +22349,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -23167,9 +22887,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -23453,9 +23171,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -23480,9 +23196,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -23569,15 +23283,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hausenberg",
-          "fieldMode": 1
+          "name": "Hausenberg"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -23616,9 +23326,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -23642,39 +23350,27 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hørsholm Kommune",
-          "fieldMode": 1
+          "name": "Hørsholm Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rudersdal Kommune",
-          "fieldMode": 1
+          "name": "Rudersdal Kommune"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Forsyning A/S",
-          "fieldMode": 1
+          "name": "Fredensborg Forsyning A/S"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hørsholm Vand ApS",
-          "fieldMode": 1
+          "name": "Hørsholm Vand ApS"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Forsyningen Allerød Rudersdal A/S",
-          "fieldMode": 1
+          "name": "Forsyningen Allerød Rudersdal A/S"
         }
       ],
       "language": "da"
@@ -24562,9 +24258,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "notes": [
@@ -24617,9 +24311,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "notes": [
@@ -24796,9 +24488,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -24819,9 +24509,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -24876,9 +24564,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -24929,9 +24615,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Byudviklingsudvalget for Københavns-egnen",
-          "fieldMode": 1
+          "name": "Byudviklingsudvalget for Københavns-egnen"
         }
       ],
       "attachments": [
@@ -25115,9 +24799,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -25179,9 +24861,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Direktoratet for Matrikulsvæsenet",
-          "fieldMode": 1
+          "name": "Direktoratet for Matrikulsvæsenet"
         }
       ],
       "attachments": [
@@ -25246,9 +24926,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -25258,9 +24936,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Center for Byhistorie",
-          "fieldMode": 1
+          "name": "Dansk Center for Byhistorie"
         }
       ],
       "tags": [
@@ -25322,33 +24998,23 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Arkitektur Center DK2050",
-          "fieldMode": 1
+          "name": "Dansk Arkitektur Center DK2050"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "MUTOPIA",
-          "fieldMode": 1
+          "name": "MUTOPIA"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "WE architecture",
-          "fieldMode": 1
+          "name": "WE architecture"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "SLETH",
-          "fieldMode": 1
+          "name": "SLETH"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rambøll",
-          "fieldMode": 1
+          "name": "Rambøll"
         }
       ],
       "attachments": [
@@ -25464,9 +25130,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         },
         {
           "creatorType": "cartographer",
@@ -25545,21 +25209,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Lone Jansson",
-          "fieldMode": 1
+          "name": "Lone Jansson"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Torben Frølich",
-          "fieldMode": 1
+          "name": "Torben Frølich"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         }
       ],
       "attachments": [
@@ -25628,9 +25286,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Task Force for Klimatilpasning",
-          "fieldMode": 1
+          "name": "Task Force for Klimatilpasning"
         }
       ],
       "notes": [
@@ -25892,9 +25548,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Arkitektur Center DK2050",
-          "fieldMode": 1
+          "name": "Dansk Arkitektur Center DK2050"
         }
       ],
       "notes": [
@@ -26118,15 +25772,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hausenberg",
-          "fieldMode": 1
+          "name": "Hausenberg"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -26372,9 +26022,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -26395,9 +26043,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Schønherr",
-          "fieldMode": 1
+          "name": "Schønherr"
         }
       ],
       "attachments": [
@@ -26651,9 +26297,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -26706,21 +26350,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "klimatilpasning.dk",
-          "fieldMode": 1
+          "name": "klimatilpasning.dk"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljøministeriet",
-          "fieldMode": 1
+          "name": "Miljøministeriet"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         }
       ],
       "attachments": [
@@ -27017,9 +26655,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -27189,9 +26825,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -27300,9 +26934,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -27555,9 +27187,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -27688,9 +27318,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -28021,9 +27649,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo sogneråd",
-          "fieldMode": 1
+          "name": "Karlebo sogneråd"
         },
         {
           "creatorType": "author",
@@ -28187,9 +27813,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "notes": [
@@ -28425,9 +28049,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -28532,9 +28154,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Søren Rasmussen",
-          "fieldMode": 1
+          "name": "Søren Rasmussen"
         }
       ],
       "attachments": [
@@ -28556,9 +28176,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -28714,21 +28332,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Schønherr",
-          "fieldMode": 1
+          "name": "Schønherr"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rambøll",
-          "fieldMode": 1
+          "name": "Rambøll"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "BIG",
-          "fieldMode": 1
+          "name": "BIG"
         }
       ],
       "attachments": [
@@ -28753,9 +28365,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Egnsplankontoret",
-          "fieldMode": 1
+          "name": "Egnsplankontoret"
         }
       ],
       "attachments": [
@@ -29074,9 +28684,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Svava Riesto",
-          "fieldMode": 1
+          "name": "Svava Riesto"
         }
       ],
       "attachments": [
@@ -29119,9 +28727,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "DHI",
-          "fieldMode": 1
+          "name": "DHI"
         }
       ],
       "attachments": [
@@ -29180,9 +28786,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -29332,9 +28936,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -29857,9 +29459,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -29917,9 +29517,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -30307,9 +29905,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Planlægningsfirmaet Erik Agergård ApS",
-          "fieldMode": 1
+          "name": "Planlægningsfirmaet Erik Agergård ApS"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -30325,9 +29921,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -30410,9 +30004,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Dansk Byplanlaboratorium",
-          "fieldMode": 1
+          "name": "Dansk Byplanlaboratorium"
         },
         {
           "creatorType": "author",
@@ -30471,9 +30063,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "notes": [
@@ -30498,9 +30088,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Le Corbusier",
-          "fieldMode": 1
+          "name": "Le Corbusier"
         },
         {
           "creatorType": "translator",
@@ -30635,9 +30223,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -30792,9 +30378,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -30887,9 +30471,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Byudviklingsudvalget for Københavns-egnen",
-          "fieldMode": 1
+          "name": "Byudviklingsudvalget for Københavns-egnen"
         }
       ],
       "attachments": [
@@ -31556,9 +31138,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Schønherr",
-          "fieldMode": 1
+          "name": "Schønherr"
         }
       ],
       "language": "da"
@@ -31607,9 +31187,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -31640,21 +31218,15 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Larsen",
-          "fieldMode": 1
+          "name": "Larsen"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Mossin",
-          "fieldMode": 1
+          "name": "Mossin"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Kunstakademiets Arkitektskole",
-          "fieldMode": 1
+          "name": "Kunstakademiets Arkitektskole"
         }
       ],
       "notes": [
@@ -31692,9 +31264,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -32264,9 +31834,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Egnsplansekretariatet for Storkøbenhavn",
-          "fieldMode": 1
+          "name": "Egnsplansekretariatet for Storkøbenhavn"
         }
       ],
       "attachments": [
@@ -32371,15 +31939,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Rambøll Nyvig",
-          "fieldMode": 1
+          "name": "Rambøll Nyvig"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Søren Hansen",
-          "fieldMode": 1
+          "name": "Søren Hansen"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -32576,9 +32140,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -33107,9 +32669,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Le Corbusier",
-          "fieldMode": 1
+          "name": "Le Corbusier"
         }
       ]
     },
@@ -33166,9 +32726,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -33209,9 +32767,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -33260,9 +32816,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -33285,9 +32839,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -33310,9 +32862,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -33510,9 +33060,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -33855,9 +33403,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Hanne Lindegaard",
-          "fieldMode": 1
+          "name": "Hanne Lindegaard"
         }
       ],
       "language": "da"
@@ -34327,9 +33873,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -34822,9 +34366,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "language": "nb"
@@ -34839,9 +34381,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "attachments": [
@@ -35126,9 +34666,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -35168,9 +34706,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -35193,9 +34729,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Thora Arkitekter A/S",
-          "fieldMode": 1
+          "name": "Thora Arkitekter A/S"
         }
       ],
       "publisher": "Karlebo Kommune",
@@ -35382,15 +34916,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "COWI A/S",
-          "fieldMode": 1
+          "name": "COWI A/S"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS A/S",
-          "fieldMode": 1
+          "name": "NIRAS A/S"
         }
       ],
       "attachments": [
@@ -35413,9 +34943,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljø- og Teknikudvalget, Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Miljø- og Teknikudvalget, Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -35569,9 +35097,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "attachments": [
@@ -35821,9 +35347,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -35846,9 +35370,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Direktoratet for Matrikulsvæsenet",
-          "fieldMode": 1
+          "name": "Direktoratet for Matrikulsvæsenet"
         }
       ],
       "notes": [
@@ -35982,9 +35504,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         }
       ],
       "attachments": [
@@ -36067,9 +35587,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -36249,9 +35767,7 @@
         },
         {
           "creatorType": "contributor",
-          "firstName": "",
-          "lastName": "Forskningsprojektet Bykultur",
-          "fieldMode": 1
+          "name": "Forskningsprojektet Bykultur"
         }
       ]
     },
@@ -36562,9 +36078,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Klimatilpasning Kokkedal",
-          "fieldMode": 1
+          "name": "Klimatilpasning Kokkedal"
         }
       ],
       "attachments": [
@@ -36779,9 +36293,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Den Store Danske",
-          "fieldMode": 1
+          "name": "Den Store Danske"
         }
       ],
       "notes": [
@@ -36835,9 +36347,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Smith Innovation",
-          "fieldMode": 1
+          "name": "Smith Innovation"
         }
       ],
       "attachments": [
@@ -37086,9 +36596,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Miljøministeriet",
-          "fieldMode": 1
+          "name": "Miljøministeriet"
         }
       ],
       "attachments": [
@@ -37110,9 +36618,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Realdania",
-          "fieldMode": 1
+          "name": "Realdania"
         }
       ],
       "attachments": [
@@ -37409,9 +36915,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "tags": [
@@ -37428,9 +36932,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "notes": [
@@ -37544,9 +37046,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Kommune",
-          "fieldMode": 1
+          "name": "Karlebo Kommune"
         }
       ],
       "language": "da"
@@ -37584,9 +37084,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Fredensborg Kommune",
-          "fieldMode": 1
+          "name": "Fredensborg Kommune"
         }
       ],
       "attachments": [
@@ -37662,9 +37160,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Geodætisk Institut",
-          "fieldMode": 1
+          "name": "Geodætisk Institut"
         }
       ],
       "notes": [
@@ -37748,21 +37244,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "NIRAS Konsulenterne",
-          "fieldMode": 1
+          "name": "NIRAS Konsulenterne"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Naturstyrelsen",
-          "fieldMode": 1
+          "name": "Naturstyrelsen"
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Lokale og Anlægsfonden",
-          "fieldMode": 1
+          "name": "Lokale og Anlægsfonden"
         }
       ],
       "attachments": [
@@ -37808,9 +37298,7 @@
       "creators": [
         {
           "creatorType": "cartographer",
-          "firstName": "",
-          "lastName": "Direktoratet for Matrikulsvæsenet",
-          "fieldMode": 1
+          "name": "Direktoratet for Matrikulsvæsenet"
         }
       ],
       "attachments": [
@@ -37880,9 +37368,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Karlebo Byråd",
-          "fieldMode": 1
+          "name": "Karlebo Byråd"
         }
       ],
       "language": "da"
@@ -38306,9 +37792,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Lynge-Uggeløse sogneråd",
-          "fieldMode": 1
+          "name": "Lynge-Uggeløse sogneråd"
         }
       ],
       "attachments": [

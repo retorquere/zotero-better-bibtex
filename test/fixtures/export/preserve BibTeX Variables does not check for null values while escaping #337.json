@@ -32,18 +32,15 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Geophysics Study Committee"
+          "name": "Geophysics Study Committee"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Geophysics Research Board"
+          "name": "Geophysics Research Board"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Assembly of Mathematical and Physical Sciences, National Research Council"
+          "name": "Assembly of Mathematical and Physical Sciences, National Research Council"
         }
       ],
       "attachments": [

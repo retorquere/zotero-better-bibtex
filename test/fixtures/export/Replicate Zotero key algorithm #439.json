@@ -46,8 +46,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Firstname Retorquere"
+          "name": "Firstname Retorquere"
         }
       ],
       "itemID": 7,

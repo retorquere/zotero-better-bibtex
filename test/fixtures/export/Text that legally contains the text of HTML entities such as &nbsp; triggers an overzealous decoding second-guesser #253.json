@@ -44,13 +44,11 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "OECD"
+          "name": "OECD"
         },
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "UNDP"
+          "name": "UNDP"
         }
       ],
       "attachments": [

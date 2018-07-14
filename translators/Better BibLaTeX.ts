@@ -35,6 +35,7 @@ Reference.prototype.caseConversion = {
 Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
 Reference.prototype.addCreators = function() {
+  debug('addCreators:', this.item.creators)
   if (!this.item.creators || !this.item.creators.length) return
 
   const creators = {
@@ -60,27 +61,40 @@ Reference.prototype.addCreators = function() {
           kind = 'author'
         }
         break
-      case 'author': case 'interviewer': case 'programmer': case 'artist': case 'podcaster': case 'presenter':
+
+      case 'author':
+      case 'interviewer':
+      case 'programmer':
+      case 'artist':
+      case 'podcaster':
+      case 'presenter':
         kind = 'author'
         break
+
       case 'bookAuthor':
         kind = 'bookauthor'
         break
+
       case 'commenter':
         kind = 'commentator'
         break
+
       case 'editor':
         kind = 'editor'
         break
+
       case 'inventor':
         kind = 'holder'
         break
+
       case 'translator':
         kind = 'translator'
         break
+
       case 'seriesEditor':
         kind = 'editorb'
         break
+
       case 'scriptwriter':
         // 365.something
         if (['video', 'movie'].includes(this.referencetype)) {
@@ -96,6 +110,8 @@ Reference.prototype.addCreators = function() {
 
     creators[kind].push(creator)
   }
+
+  debug('addCreators:', creators)
 
   for (const [field, value] of Object.entries(creators)) {
     this.remove(field)

@@ -86,28 +86,23 @@
         },
         {
           "creatorType": "author",
-          "lastName": "American Heart Association Council on Quality of Care and Outcomes Research",
-          "fieldMode": 1
+          "name": "American Heart Association Council on Quality of Care and Outcomes Research"
         },
         {
           "creatorType": "author",
-          "lastName": "Emergency Cardiovascular Care Committee",
-          "fieldMode": 1
+          "name": "Emergency Cardiovascular Care Committee"
         },
         {
           "creatorType": "author",
-          "lastName": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation",
-          "fieldMode": 1
+          "name": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation"
         },
         {
           "creatorType": "author",
-          "lastName": "Council on Clinical Cardiology",
-          "fieldMode": 1
+          "name": "Council on Clinical Cardiology"
         },
         {
           "creatorType": "author",
-          "lastName": "Council on Cardiovascular Surgery and Anesthesia",
-          "fieldMode": 1
+          "name": "Council on Cardiovascular Surgery and Anesthesia"
         }
       ],
       "tags": [

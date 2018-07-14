@@ -217,7 +217,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
-  simplifyFields(sandbox, item) { return Serializer.simplify(item) },
+  simplifyFields(sandbox, item) { return Serializer.simplify(item, 'export') },
   validFields(sandbox) { return Serializer.validFields },
   extractFields(sandbox, item) { return varExtract(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
@@ -266,7 +266,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
 }
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  simplifyFields(sandbox, item) { return Serializer.simplify(item) },
+  simplifyFields(sandbox, item) { return Serializer.simplify(item, 'import') },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   validFields(sandbox) { return Serializer.validFields },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },

@@ -100,8 +100,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "National Aeronautics and Space Administration"
+          "name": "National Aeronautics and Space Administration"
         }
       ],
       "itemID": 306,
@@ -232,8 +231,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Marcus Aurelius"
+          "name": "Marcus Aurelius"
         }
       ],
       "itemID": 303,

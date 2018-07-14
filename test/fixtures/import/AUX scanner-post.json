@@ -915,8 +915,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Laureano Ralon",
-          "fieldMode": 1
+          "name": "Laureano Ralon"
         }
       ],
       "dateAdded": "2017-11-07 22:29:38",

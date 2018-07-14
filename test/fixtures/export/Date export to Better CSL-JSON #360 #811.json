@@ -254,8 +254,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Doe14"
+          "name": "Doe14"
         }
       ],
       "dateAdded": "2017-11-24 16:16:20",
@@ -270,8 +269,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "fieldMode": 1,
-          "lastName": "Doe15"
+          "name": "Doe15"
         }
       ],
       "dateAdded": "2017-11-24 16:16:20",

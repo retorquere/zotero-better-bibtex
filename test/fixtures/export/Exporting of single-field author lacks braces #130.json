@@ -44,9 +44,7 @@
         },
         {
           "creatorType": "author",
-          "firstName": "",
-          "lastName": "Wiley InterScience (Online service)",
-          "fieldMode": 1
+          "name": "Wiley InterScience (Online service)"
         }
       ],
       "attachments": [

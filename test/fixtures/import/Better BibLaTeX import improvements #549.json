@@ -4,8 +4,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "01e",
-          "fieldMode": 1
+          "name": "01e"
         }
       ],
       "extra": "Citation Key: 1e",
@@ -17,8 +16,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "01b",
-          "fieldMode": 1
+          "name": "01b"
         }
       ],
       "extra": "Citation Key: 1b",
@@ -30,8 +28,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "02e",
-          "fieldMode": 1
+          "name": "02e"
         }
       ],
       "extra": "Citation Key: 2e",
@@ -43,8 +40,7 @@
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "02b",
-          "fieldMode": 1
+          "name": "02b"
         }
       ],
       "extra": "Citation Key: 2b",

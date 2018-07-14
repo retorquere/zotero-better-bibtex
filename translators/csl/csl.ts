@@ -130,9 +130,13 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
           case 'creator':
             csl[name] = []
             for (let creator of value) {
-              creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: (creator.name ? 1 : undefined)}
-              Zotero.BetterBibTeX.parseParticles(creator)
-              csl[name].push(creator)
+              if (creator.name) {
+                csl[name].push({ literal: creator.name })
+              } else {
+                creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: ((creator.name || creator.fieldMode === 1) ? 1 : undefined)}
+                Zotero.BetterBibTeX.parseParticles(creator)
+                csl[name].push(creator)
+              }
             }
             break
 
