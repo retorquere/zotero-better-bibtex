@@ -94,6 +94,7 @@ Translator.doExport = () => {
   const validAttachmentFields = new Set([ 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
+    delete item.relations
     for (const field of Object.keys(item)) {
       if (validFields[item.itemType] && !validFields[item.itemType][field]) {
         delete item[field]
@@ -101,6 +102,7 @@ Translator.doExport = () => {
     }
 
     for (const att of item.attachments || []) {
+      delete att.relations
       att.path = att.localpath
       for (const field of Object.keys(att)) {
         if (!validAttachmentFields.has(field)) delete att[field]

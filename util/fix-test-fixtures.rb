@@ -24,9 +24,21 @@ Dir[File.join(root, 'test/fixtures/*/*.json')].each{|lib|
   if data['items'] && lib =~ /\/import\//
     data['items'].each{|item|
       next unless item['extra']
-      resave = true
+
+      extra = item['extra']
       item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
       item['extra'].sub!(/^bibtex:/, "Citation Key:")
+
+      resave = (extra != item['extra'])
+    }
+  end
+
+  if data['items']
+    data['items'].each{|item|
+      next unless item['relations']
+
+      resave = true
+      item.delete('relations')
     }
   end
 
