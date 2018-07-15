@@ -14,12 +14,6 @@ export let Serializer = new class { // tslint:disable-line:variable-name
 
   private collection = 'itemToExportFormat'
 
-//  # prune cache on old accessed
-//  prune: Zotero.Promise.coroutine(->
-//    ids = yield Zotero.DB.columnQueryAsync('select itemID from items where itemID not in (select itemID from deletedItems)')
-//    for id in ids
-//      delete cache[id] if entry.accessed
-
   public async init() {
     JournalAbbrev.init()
 
