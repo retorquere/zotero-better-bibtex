@@ -6,6 +6,7 @@ import stringify = require('json-stringify-safe')
 export let Logger = new class { // tslint:disable-line:variable-name
   public length: number
   public size: number
+  public enabled: true
 
   private logged: number
   private index: number
@@ -23,6 +24,8 @@ export let Logger = new class { // tslint:disable-line:variable-name
   }
 
   public log(prefix, ...msg) {
+    if (!this.enabled) return
+
     this.logged++
     let diff = null
     const now = Date.now()

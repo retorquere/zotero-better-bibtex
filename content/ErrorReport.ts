@@ -72,7 +72,7 @@ export = new class ErrorReport {
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
-    else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
+    else if (wizard.pageIndex === 1 && (Zotero.Debug.enabled || Logger.enabled)) wizard.canRewind = false
     else wizard.canRewind = true
   }
 
@@ -98,7 +98,7 @@ export = new class ErrorReport {
   private async init() {
     const wizard = document.getElementById('better-bibtex-error-report')
 
-    if (Zotero.Debug.enabled) wizard.pageIndex = 1
+    if (Zotero.Debug.enabled || Logger.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true

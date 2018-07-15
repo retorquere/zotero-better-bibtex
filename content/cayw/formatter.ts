@@ -7,20 +7,6 @@ import { debug } from '../debug'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
 
-/*
-    @config.citeprefix ||= ''
-    @config.citepostfix ||= ''
-    @config.keyprefix ||= ''
-    @config.keypostfix ||= ''
-    @config.separator ||= ','
-    @config.clipboard ||= false
-    @config.format ||= ''
-    @config.style ||= 'apa'
-    @config.translator
-    @config.exportNotes
-    @config.useJournalAbbreviation
-*/
-
 const shortLabel = {
   article: 'art.',
   chapter: 'ch.',
