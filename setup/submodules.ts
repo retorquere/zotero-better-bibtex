@@ -8,7 +8,7 @@ async function main() {
   try {
     await rp('https://github.com')
   } catch (err) {
-    console.log(err)
+    console.log('github offline')
     online = false
   }
 
