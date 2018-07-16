@@ -295,9 +295,15 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     if (_node.class.smallcaps || _node.attr.smallcaps) _node.smallcaps = true
 
     if (_node.nodeName === 'script') {
-      if (!node.childNodes || node.childNodes.length !== 1 || node.childNodes[0].nodeName !== '#text') throw new Error(`Unexpected script body ${stringify(node)}`)
-      _node.value =  node.childNodes[0].value
-      _node.childNodes = []
+      if (!node.childNodes || node.childNodes.length === 0) {
+        _node.value =  ''
+        _node.childNodes = []
+      } else if (node.childNodes.length === 1 && node.childNodes[0].nodeName === '#text') {
+        _node.value =  node.childNodes[0].value
+        _node.childNodes = []
+      } else {
+        throw new Error(`Unexpected script body ${stringify(node)}`)
+      }
 
     } else if (node.childNodes) {
       let m
