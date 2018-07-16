@@ -2,7 +2,7 @@ import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { Preferences as Prefs } from './prefs'
 import { titleCase } from './title-case'
-// import { debug } from './debug'
+import stringify = require('json-stringify-safe')
 
 const re = {
   // Number, Letter
@@ -291,7 +291,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     if (_node.class.smallcaps || _node.attr.smallcaps) _node.smallcaps = true
 
     if (_node.nodeName === 'script') {
-      if (!node.childNodes || node.childNodes.length !== 1 || node.childNodes[0].nodeName !== '#text') throw new Error(`Unexpected script body ${node.childNodes}`)
+      if (!node.childNodes || node.childNodes.length !== 1 || node.childNodes[0].nodeName !== '#text') throw new Error(`Unexpected script body ${stringify(node)}`)
       _node.value =  node.childNodes[0].value
       _node.childNodes = []
 
