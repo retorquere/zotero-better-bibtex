@@ -259,9 +259,13 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
   private walk(node, isNocased = false) {
     // debug('walk:', node.nodeName)
-    const _node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [] }
-    _node.attr = node.attrs ? node.attrs.reduce((acc, v) => (acc[v.name] = v.value) && acc, {}) : {}
-    _node.class = _node.attr.class ? _node.attr.class.trim().split(/\s+/).reduce((acc, v) => (acc[v] = true) && acc, {}) : {}
+    const _node: IZoteroMarkupNode = { nodeName: node.nodeName, childNodes: [], attr: {}, class: {} }
+    for (const {name, value} of (node.attrs || [])) {
+      _node.attr[name] = value
+    }
+    for (const cls of (_node.attr.class || '').trim().split(/\s+/)) {
+      if (cls) _node.class[cls] = true
+    }
 
     switch (node.nodeName) {
       case '#document':
