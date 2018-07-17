@@ -6,7 +6,7 @@
   eprinttype = {pmid},
   issn = {0261-4189 0261-4189},
   journaltitle = {The EMBO journal},
-  keywords = {Amino Acid Sequence,Binding Sites,Biosensing Techniques,Dynamins,Enzyme Activation/drug effects,GTP Phosphohydrolases/*chemistry/drug effects/genetics/*metabolism,Liposomes/metabolism,Magnetic Resonance Spectroscopy,Models; Molecular,Molecular Sequence Data,Mutagenesis; Site-Directed,Phosphatidylinositol 4;5-Diphosphate/metabolism,Phosphatidylinositol Phosphates/metabolism,Phosphatidylinositols/*metabolism,Protein Binding,Protein Structure; Tertiary,Protein-Tyrosine Kinases/*chemistry/*metabolism,Sequence Alignment},
+  keywords = {*Epitope Mapping,Antibodies; Monoclonal,Catalysis,Humans,Mutation,N-Acetyllactosamine Synthase/genetics/*immunology,beta-N-Acetylglucosaminylglycopeptide beta-1;4-Galactosyltransferase/genetics/*immunology},
   langid = {english},
   number = {22},
   pages = {6241--6250},

@@ -1,7 +1,7 @@
 @book{knoblauch_dialogen_1789-1,
   author = {family=Knoblauch, given=Karl, prefix=von, useprefix=false},
   date = {1789},
-  keywords = {Knoblauch,Monographie,Quelle,anonym},
+  keywords = {anonym,Knoblauch,Monographie,Quelle},
   langid = {german},
   location = {{[Marburg]}},
   options = {pseudoauthor=true},
