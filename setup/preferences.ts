@@ -80,7 +80,7 @@ class DocFinder {
     fs.ensureDirSync(path.join(root, 'build/defaults/preferences'))
     fs.ensureDirSync(path.join(root, 'docs/_data'))
     const js = Object.keys(this.defaults)
-    js.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+    js.sort((a, b) => a.localeCompare(b))
     fs.writeFileSync(
       path.join(root, 'build/defaults/preferences/defaults.js'),
       js.map(key => `pref(${JSON.stringify('extensions.zotero.translators.better-bibtex.' + key)}, ${JSON.stringify(this.defaults[key])});`).join('\n') + '\n',

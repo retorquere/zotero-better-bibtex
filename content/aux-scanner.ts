@@ -78,7 +78,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
 
     if (missing.length) {
-      missing.sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      missing.sort((a, b) => a.localeCompare(b))
       let report = '<html><div><p><b>BibTeX AUX scan</b></p><p>Missing references:</p><ul>'
       for (const citekey of missing) {
         report += `<li>${citekey.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/'/g, '&quot;').replace(/'/g, '&#039;')}</li>`
