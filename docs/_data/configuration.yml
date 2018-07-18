@@ -95,12 +95,6 @@
         BibTeX has really spotty Unicode support, so you generally want this on.
         It will translate things like accented characters to their equivalent
         LaTeX constructs on export.
-    'Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces':
-      default: 'false'
-      description: >-
-        When enabled, single-word strings will be assumed to be
-        externally-defined @string vars, and thus not surrounded by braces. If
-        you don't know what this means, leave it off.
     Disregard name prefixes when sorting:
       default: 'false'
       description: >-
@@ -172,6 +166,12 @@
 - name: Advanced
   description: ''
   preferences:
+    'Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces.':
+      default: 'false'
+      description: >-
+        When enabled, single-word strings will be assumed to be
+        externally-defined @string vars, and thus not surrounded by braces. If
+        you don't know what this means, leave it off.
     Warn me when changing citation keys in bulk:
       default: '10'
       description: >-
@@ -189,6 +189,12 @@
       description: >-
         If you have externally maintained @string vars paste them here and they
         will be resolved for subsequent imports
+    Deterministically order references and fields; primarily for version control.:
+      default: 'false'
+      description: >-
+        When on, BBT will deterministically order references on export. This is
+        primarily interesting if you keep the exported file under some kind of
+        version control. Comes at performance and memory consumption cost.
 - name: Hidden preferences
   description: >-
     The following settings are not exposed in the UI, but can be found under
@@ -265,8 +271,3 @@
         When on, BBT will load kuroshiro for romajization in citekeys. This uses
         a lot of memory, easily 100MB. If you don't have Japanese titles/names,
         keep this off.
-    sorted:
-      default: 'false'
-      description: >-
-        When on, BBT will sort references on the citekey. Comes at performance
-        and memory consumption cost.

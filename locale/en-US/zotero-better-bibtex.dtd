@@ -42,8 +42,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
 <!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
-<!ENTITY better-bibtex.Preferences.auto-export.add "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
+<!ENTITY better-bibtex.Preferences.auto-export.explanation "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
@@ -80,7 +80,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
-<!ENTITY better-bibtex.Preferences.debug "Advanced">
+<!ENTITY better-bibtex.Preferences.advanced "Advanced">
+<!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Include JabRef-specific metadata:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "no">
@@ -102,7 +103,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "When a reference has both a DOI and a URL, export">
 <!ENTITY better-bibtex.Preferences.export.fields "Fields">
-<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces">
+<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces.">
+<!ENTITY better-bibtex.Preferences.export.fields.sorted "Deterministically order references and fields; primarily for version control.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Journal abbreviations">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">

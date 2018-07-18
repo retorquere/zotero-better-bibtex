@@ -401,10 +401,11 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.sorted"
+          id="pref-better-bibtex-sorted"
           type="bool"
           default="false"/>
         <!--!
-          When on, BBT will sort references on the citekey. Comes at performance and memory consumption cost.
+          When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under some kind of version control. Comes at performance and memory consumption cost.
         -->
 
         <preference
@@ -425,7 +426,7 @@
           <tab label="&better-bibtex.Preferences.tab.citekey;"/>
           <tab label="&better-bibtex.Preferences.tab.export;"/>
           <tab id="better-bibtex-prefs-auto-export" label="&better-bibtex.Preferences.tab.auto-export;"/>
-          <tab label="&better-bibtex.Preferences.debug;"/>
+          <tab label="&better-bibtex.Preferences.advanced;"/>
         </tabs>
 
         <tabpanels id="better-bibtex-prefs-tabpanels">
@@ -548,7 +549,6 @@
 
             <groupbox>
               <caption label="&better-bibtex.Preferences.export.fields;"/>
-              <checkbox preference="pref-better-bibtex-preserveBibTeXVariables" label="&better-bibtex.Preferences.export.fields.preserveBibTeXVariables;"/>
               <grid>
                 <columns><column/><column flex="1"/></columns>
                 <rows>
@@ -599,7 +599,7 @@
 
           <tabpanel id="better-bibtex-prefs-journal-automatic-export" orient="vertical">
             <vbox flex="1">
-              <label>&better-bibtex.Preferences.auto-export.add;</label>
+              <label>&better-bibtex.Preferences.auto-export.explanation;</label>
               <separator class="thin"/>
               <hbox>
                 <label forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
@@ -630,6 +630,9 @@
           </tabpanel>
 
           <tabpanel id="better-bibtex-prefs-advanced" orient="vertical">
+            <description>&better-bibtex.Preferences.advanced.warning;</description>
+            <checkbox preference="pref-better-bibtex-preserveBibTeXVariables" label="&better-bibtex.Preferences.export.fields.preserveBibTeXVariables;"/>
+            <checkbox preference="pref-better-bibtex-sorted" label="&better-bibtex.Preferences.export.fields.sorted;"/>
 
             <tabbox>
               <tabs>
