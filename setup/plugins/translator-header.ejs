@@ -9,6 +9,8 @@ var Translator = {
   preferences: <%- JSON.stringify(preferences) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
+  stringCompare: (new Intl.Collator('en')).compare,
+
   configure: function(stage) {
     var version = Zotero.BetterBibTeX.version();
     this.isZotero = version.Zotero.isZotero;

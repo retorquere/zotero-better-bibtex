@@ -897,7 +897,7 @@ export class Reference {
     if (tags.length === 0) return null
 
     // sort tags for stable tests
-    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort((a, b) => a.localeCompare(b, 'en'))
+    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort((a, b) => Translator.stringCompare(a, b))
 
     tags = tags.map(tag => {
       if (Translator.BetterBibTeX) {
@@ -963,7 +963,7 @@ export class Reference {
     attachments.sort((a, b) => {
       if ((a.mimetype === 'text/html') && (b.mimetype !== 'text/html')) return 1
       if ((b.mimetype === 'text/html') && (a.mimetype !== 'text/html')) return -1
-      return a.path.localeCompare(b.path)
+      return Translator.stringCompare(a.path, b.path)
     })
 
     if (Translator.preferences.jabrefFormat) return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')

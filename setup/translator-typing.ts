@@ -84,5 +84,6 @@ ${options}
   detectImport: () => void
   doImport: () => void
   initialize: () => void
+  stringCompare: (a: string, b: string) => number
 }
 `)
