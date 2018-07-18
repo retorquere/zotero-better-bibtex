@@ -107,7 +107,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
             return match
 
           default:
-            return `&lt;${close ? close : ''}${tag}`
+            return `&lt;${close || ''}${tag}`
         }
       })
     }
