@@ -62,6 +62,8 @@ that BBT has learned to deal with. Did you know that
 * casing behavior over the *whole* reference field depends on [whether there's a slash-command at the first position](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274) of the title? 
 * [apparently](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396), to make sure that `Reading HLA Hart's: <i>The Concept of Law</i>` renders as expected means I have to output the astoundingly ugly `{% raw %}{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}{% endraw %}`?
 
+To make matters even more complex, so many people have in the past wrongly recommended to "just wrap everything in one extra set of braces" that biblatex now [ignores exactly that pattern].
+
 The double-bracing is the only unambiguous rule I could construct that consistently gets the rendered reference right (so far).
 
 Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to decide algorithmically. I try to keep the resulting file as pretty as I can (I'm sensitive to the aesthetics myself), but the target is best described as "given reasonable input, generate well-rendering output", and reasonable-to-well-rendering in the BBT case will have to include "follows Zotero recommendations for storing references" and "prefer intent-preserving LaTeX over pretty-looking LaTeX".
