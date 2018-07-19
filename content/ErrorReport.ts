@@ -6,9 +6,8 @@ declare const Services: any
 
 import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
-import { debug } from './debug'
+import * as log from './debug'
 // import { createFile } from './create-file'
-import { Logger } from './logger'
 import fastChunkString = require('fast-chunk-string')
 
 const s3 = require('./s3.json')
@@ -32,8 +31,7 @@ export = new class ErrorReport {
   private errorlog: {
     info: string,
     errors: string,
-    zotero: string | string[],
-    bbt: string | string[],
+    debug: string | string[],
     references?: string,
     db?: string
   }
@@ -50,8 +48,7 @@ export = new class ErrorReport {
 
     try {
       const logs = [
-        this.submit('zotero', 'text/plain', this.errorlog.zotero, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
-        this.submit('bbt', 'text/plain', this.errorlog.bbt),
+        this.submit('debug', 'text/plain', this.errorlog.debug, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
         // this.submit('db', 'application/json', this.errorlog.db)
       ]
       if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
@@ -72,7 +69,7 @@ export = new class ErrorReport {
 
     if (wizard.onLastPage) wizard.canRewind = false
     else if (wizard.pageIndex === 0) wizard.canRewind = false
-    else if (wizard.pageIndex === 1 && (Zotero.Debug.enabled || Logger.enabled)) wizard.canRewind = false
+    else if (wizard.pageIndex === 1 && Zotero.Debug.enabled) wizard.canRewind = false
     else wizard.canRewind = true
   }
 
@@ -98,7 +95,7 @@ export = new class ErrorReport {
   private async init() {
     const wizard = document.getElementById('better-bibtex-error-report')
 
-    if (Zotero.Debug.enabled || Logger.enabled) wizard.pageIndex = 1
+    if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
@@ -115,7 +112,7 @@ export = new class ErrorReport {
     }
 
     this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
-    debug('ErrorReport.debuglog:', m, debugLog, this.chunkSize)
+    log.debug('ErrorReport.debuglog:', m, debugLog, this.chunkSize)
 
     const regions = []
     for (const candidate of PACKAGE.bugs.logs.regions) {
@@ -124,7 +121,7 @@ export = new class ErrorReport {
         await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
         regions.push({region: candidate, ping: ((candidate === debugLog.region) ? -1 : 1) * (Date.now() - started), ...s3[candidate]})
       } catch (err) {
-        debug('ErrorReport.ping: could not reach', candidate, err)
+        log.error('ErrorReport.ping: could not reach', candidate, err)
       }
     }
 
@@ -132,28 +129,26 @@ export = new class ErrorReport {
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
-    debug('ErrorReport.log:', Zotero.Debug.count())
+    log.debug('ErrorReport.log:', Zotero.Debug.count())
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
-      zotero: Zotero.Debug.getConsoleViewerOutput(),
-      bbt: Logger.output(),
+      debug: Zotero.Debug.getConsoleViewerOutput(),
       // db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.items) {
       await Zotero.BetterBibTeX.ready
 
-      debug('ErrorReport::init items', this.params.items.length)
+      log.debug('ErrorReport::init items', this.params.items.length)
       this.errorlog.references = await Translators.translate(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true}, this.params.items)
-      debug('ErrorReport::init references', this.errorlog.references.length)
+      log.debug('ErrorReport::init references', this.errorlog.references.length)
     }
 
-    debug('ErrorReport.init:', Object.keys(this.errorlog))
+    log.debug('ErrorReport.init:', Object.keys(this.errorlog))
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
-    document.getElementById('better-bibtex-error-zotero').value = this.preview(this.errorlog.zotero)
-    document.getElementById('better-bibtex-error-bbt').value = this.preview(this.errorlog.bbt)
+    document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
     if (this.errorlog.references) document.getElementById('better-bibtex-error-references').value = this.preview(this.errorlog.references)
     document.getElementById('better-bibtex-error-tab-references').hidden = !this.errorlog.references
 
@@ -161,9 +156,9 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
     let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    debug('ErrorReport.current:', latest)
+    log.debug('ErrorReport.current:', latest)
     latest = JSON.parse((await Zotero.HTTP.request('GET', latest)).responseText).tag_name.replace('v', '')
-    debug('ErrorReport.current:', latest)
+    log.debug('ErrorReport.current:', latest)
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
@@ -177,16 +172,16 @@ export = new class ErrorReport {
     const postfix = region.short
     this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
-    debug('ErrorReport.ping:', regions, this.bucket, this.key)
+    log.debug('ErrorReport.ping:', regions, this.bucket, this.key)
 
     continueButton.disabled = false
     continueButton.focus()
   }
 
-  private preview(log) {
-    if (Array.isArray(log)) {
+  private preview(lines) {
+    if (Array.isArray(lines)) {
       let preview = ''
-      for (const line of log) {
+      for (const line of lines) {
         if (line.startsWith('(4)(+')) continue // DB statements
 
         preview += line + '\n'
@@ -195,12 +190,12 @@ export = new class ErrorReport {
 
       return preview
 
-    } else if (log.length > this.previewSize) {
-      return log.substr(0, this.previewSize) + ' ...'
+    } else if (lines.length > this.previewSize) {
+      return lines.substr(0, this.previewSize) + ' ...'
 
     }
 
-    return log
+    return lines
   }
 
   // general state of Zotero
@@ -236,7 +231,7 @@ export = new class ErrorReport {
 
   private async submit(filename, contentType, data, prefix = '') {
     const started = Date.now()
-    debug('Errorlog.submit:', filename)
+    log.debug('Errorlog.submit:', filename)
 
     const headers = {
       'x-amz-storage-class': 'STANDARD',
@@ -258,7 +253,7 @@ export = new class ErrorReport {
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
 
     const isArray = Array.isArray(data)
-    debug('ErrorReport.submit:', { filename, contentType, length: data.length, isArray })
+    log.debug('ErrorReport.submit:', { filename, contentType, length: data.length, isArray })
 
     let chunks = []
     if (Array.isArray(data)) {
@@ -291,7 +286,7 @@ export = new class ErrorReport {
       dontCache: true,
     })))
 
-    debug('Errorlog.submit:', filename, Date.now() - started)
+    log.debug('Errorlog.submit:', filename, Date.now() - started)
   }
 }
 

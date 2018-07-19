@@ -1,7 +1,7 @@
 declare const window: any
 declare const document: any
 
-import { debug } from './debug'
+import * as log from './debug'
 
 export = new class FirstRun {
   private prefix = 'better-bibtex-first-run-'
@@ -46,7 +46,7 @@ export = new class FirstRun {
   }
 
   public ok() {
-    debug('ok')
+    log.debug('ok')
   }
 }
 

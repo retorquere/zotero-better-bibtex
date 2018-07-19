@@ -4,7 +4,7 @@ declare const Zotero: any
 
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
-import { debug } from './debug'
+import * as log from './debug'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -113,7 +113,7 @@ class Document {
 
     options.style = options.style || 'apa'
     const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
-    debug('CAYW.document:', style)
+    log.debug('CAYW.document:', style)
     options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
     const data = new Zotero.Integration.DocumentData()
@@ -124,7 +124,7 @@ class Document {
     }
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
     data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
-    debug('CAYW.document:', data)
+    log.debug('CAYW.document:', data)
     this.data = data.serialize()
   }
 
@@ -234,7 +234,7 @@ class Document {
     if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
-      debug('CAYW.citation:', item)
+      log.debug('CAYW.citation:', item)
       return {
         id: item.id,
         locator: item.locator || '',
@@ -272,7 +272,7 @@ export let Application = new class { // tslint:disable-line:variable-name
    * @param {String|Number} id
    */
   public getDocument(id) {
-    debug('CAYW.getDocument', { id }, this.docs[id])
+    log.debug('CAYW.getDocument', { id }, this.docs[id])
     return this.docs[id]
   }
 
@@ -325,7 +325,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         }
       }
 
-      debug('CAYW: sending', citation)
+      log.debug('CAYW: sending', citation)
       return [this.OK, 'text/plain', citation]
     } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]

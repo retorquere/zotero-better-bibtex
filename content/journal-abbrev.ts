@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Preferences as Prefs } from './prefs'
-import { debug } from './debug'
+import * as log from './debug'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
@@ -22,16 +22,16 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
     Events.on('preference-changed', pref => {
       if (pref !== 'autoAbbrevStyle') return
 
-      debug('JournalAbbrev.preference-changed:', {pref})
+      log.debug('JournalAbbrev.preference-changed:', {pref})
       this.reset()
     })
 
     this.reset()
-    debug('JournalAbbrev.init: done')
+    log.debug('JournalAbbrev.init: done')
   }
 
   public reset() {
-    debug('JournalAbbrev.reset')
+    log.debug('JournalAbbrev.reset')
 
     this.style = Prefs.get('autoAbbrevStyle')
     if (ZoteroConfig.Zotero.isJurisM && !this.style) {
@@ -55,7 +55,7 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
       },
     }
 
-    debug('JournalAbbrev.reset:', {style: this.style})
+    log.debug('JournalAbbrev.reset:', {style: this.style})
   }
 
   public get(item, force = false) {
@@ -73,20 +73,20 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
 
     if (!['conferencePaper', 'journalArticle', 'bill', 'case', 'statute'].includes(item.getField ? Zotero.ItemTypes.getName(item.itemTypeID) : item.itemType)) return null
 
-    debug('JournalAbbrev.get: getting from', item.getField ? 'native' : 'serialised')
+    log.debug('JournalAbbrev.get: getting from', item.getField ? 'native' : 'serialised')
 
     for (const field of ['publicationTitle', 'reporter', 'code']) {
       try {
-        debug('JournalAbbrev.get: trying', field)
+        log.debug('JournalAbbrev.get: trying', field)
         journal = item.getField ? item.getField(field, false, true) : item[field]
         if (!journal) continue
         journal = journal.replace(/<\/?(sup|sub|i|b)>/g, '')
         if (!journal) continue
 
-        debug('JournalAbbrev.get: found', field, journal)
+        log.debug('JournalAbbrev.get: found', field, journal)
         break
       } catch (err) {
-        debug('JournalAbbrev.get: err', err)
+        log.error('JournalAbbrev.get: err', err)
       }
     }
 
@@ -98,7 +98,7 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
     }
     const abbr = this.abbrevs.default['container-title'][journal]
 
-    debug('JournalAbbrev.get: generated', abbr)
+    log.debug('JournalAbbrev.get: generated', abbr)
     if (abbr === journal) return null
     return abbr || journal
   }

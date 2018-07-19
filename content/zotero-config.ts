@@ -3,7 +3,7 @@ declare const Zotero: any
 declare const ZOTERO_CONFIG: any
 declare const Services: any
 
-import { debug } from './debug'
+import * as log from './debug'
 
 Components.utils.import('resource://zotero/config.js')
 Components.utils.import('resource://gre/modules/Services.jsm')
@@ -21,4 +21,4 @@ ZoteroConfig.Zotero = {
   isJurisM: ZoteroConfig.GUID === 'juris-m@juris-m.github.io',
 }
 
-debug('zotero config loaded:', ZoteroConfig)
+log.debug('zotero config loaded:', ZoteroConfig)

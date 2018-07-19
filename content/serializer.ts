@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { JournalAbbrev } from './journal-abbrev'
-import { debug } from './debug'
+import * as log from './debug'
 
 import { DB as Cache } from './db/cache'
 import { KeyManager } from './key-manager'
@@ -17,7 +17,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
   public async init() {
     JournalAbbrev.init()
 
-    debug('Serializer.init')
+    log.debug('Serializer.init')
 
     let fields = await ZoteroDB.queryAsync(`
       SELECT DISTINCT bf.fieldName, f.fieldName as fieldAlias
@@ -62,7 +62,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
 
       return item;
     `
-    debug('Serializer.init: simplify =\n', simplify)
+    log.debug('Serializer.init: simplify =\n', simplify)
     this.simplify = new Function('item', 'mode', simplify)
 
     this.validFields = {}
@@ -107,7 +107,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       if (field.fieldAlias) this.validFields[field.typeName][field.fieldAlias] = true
     }
 
-    debug('Serializer.init: done', this.validFields)
+    log.debug('Serializer.init: done', this.validFields)
   }
 
   public fetch(item, legacy, skipChildItems) {

@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { createFile } from '../create-file'
 import { XULoki as Loki } from './loki'
-import { debug } from '../debug'
+import * as log from '../debug'
 import { Events } from '../events'
 import { ZoteroConfig } from '../zotero-config'
 
@@ -25,16 +25,16 @@ class FileStore {
   public name(name) { return name + '.json' }
 
   public save(name, data) {
-    debug('FileStore.save', name)
+    log.debug('FileStore.save', name)
     const db = createFile(name + '.saving')
     Zotero.File.putContents(db, JSON.stringify(data))
     db.moveTo(null, this.name(name))
-    debug('FileStore.saved', name, 'to', this.name(name))
+    log.debug('FileStore.saved', name, 'to', this.name(name))
   }
 
   public load(name) {
     name = this.name(name)
-    debug('FileStore.load', name)
+    log.debug('FileStore.load', name)
     const db = createFile(name)
     if (!db.exists()) throw new NoSuchFileError(`${db.path} not found`)
     const data = JSON.parse(Zotero.File.getContents(db))
@@ -47,7 +47,7 @@ class FileStore {
   }
 
   public exportDatabase(name, dbref, callback) {
-    debug('FileStore.exportDatabase: saving', name)
+    log.debug('FileStore.exportDatabase: saving', name)
 
     try {
       for (const coll of dbref.collections) {
@@ -57,24 +57,24 @@ class FileStore {
       this.save(name, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}})
       this.collectionsMissing = false
     } catch (err) {
-      debug('LokiJS.FileStore.exportDatabase: save failed', err)
+      log.error('LokiJS.FileStore.exportDatabase: save failed', err)
     }
 
-    debug('LokiJS.FileStore.exportDatabase: save completed', name)
+    log.debug('LokiJS.FileStore.exportDatabase: save completed', name)
     return callback(null)
   }
 
   public loadDatabase(name, callback) {
-    debug('FileStore.loadDatabase: loading', name)
+    log.debug('FileStore.loadDatabase: loading', name)
 
     let db
     try {
       db = this.load(name)
     } catch (err) {
       if (err.name === 'NoSuchFile') {
-        debug('LokiJS.FileStore.loadDatabase: new database')
+        log.debug('LokiJS.FileStore.loadDatabase: new database')
       } else {
-        Zotero.logError(err)
+        log.error(err)
       }
       return callback(null)
     }
@@ -90,12 +90,12 @@ class FileStore {
           collections.push(data)
         } catch (err) {
           this.collectionsMissing = true
-          debug('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
+          log.error('LokiJS.FileStore.loadDatabase: collection load failed, proceeding', err)
         }
       }
       db.collections = collections
     } catch (err) {
-      debug('LokiJS.FileStore.loadDatabase: load failed', err)
+      log.error('LokiJS.FileStore.loadDatabase: load failed', err)
     }
 
     return callback(db)

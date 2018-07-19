@@ -4,7 +4,7 @@ declare const MutationObserver: any
 declare const Zotero: any
 declare const Zotero_File_Interface_Export: any
 
-import { debug } from './debug'
+import * as log from './debug'
 import { patch as $patch$ } from './monkey-patch'
 
 let DOM_OBSERVER = null
@@ -40,7 +40,7 @@ $patch$(Zotero_File_Interface_Export, 'updateOptions', original => function(opti
 })
 
 function mutex(e) {
-  debug('clicked', e.target.id)
+  log.debug('clicked', e.target.id)
   const exportFileData = document.getElementById('export-option-exportFileData')
   const keepUpdated = document.getElementById('export-option-keepUpdated')
 
@@ -69,7 +69,7 @@ function addEventHandlers() {
 
     if (node.getAttribute('better-bibtex')) return
 
-    debug('export-options add event handler for ', id)
+    log.debug('export-options add event handler for ', id)
     node.setAttribute('better-bibtex', 'true')
     node.addEventListener('command', mutex)
   }

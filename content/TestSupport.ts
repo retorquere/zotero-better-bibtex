@@ -5,7 +5,7 @@ declare const Components: any
 import { AutoExport } from './auto-export'
 import { timeout } from './timeout'
 import * as ZoteroDB from './db/zotero'
-import { debug } from './debug'
+import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
@@ -17,7 +17,7 @@ const pref_defaults = require('./../gen/preferences.json')
 export = Prefs.get('testing') && {
   async reset() {
     let collections
-    debug('TestSupport.reset: start')
+    log.debug('TestSupport.reset: start')
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(pref_defaults)) {
       if (['debug', 'testing'].includes(pref)) continue
@@ -26,9 +26,9 @@ export = Prefs.get('testing') && {
 
     Zotero.Prefs.set(prefix + 'debug', true)
     Zotero.Prefs.set(prefix + 'testing', true)
-    debug('TestSupport.reset: preferences reset')
+    log.debug('TestSupport.reset: preferences reset')
 
-    debug('TestSupport.reset: removing collections')
+    log.debug('TestSupport.reset: removing collections')
     // remove collections before items to work around https://github.com/zotero/zotero/issues/1317 and https://github.com/zotero/zotero/issues/1314
     // ^%&^%@#&^% you can't just loop and erase because subcollections are also deleted
     while ((collections = Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID, true) || []).length) {
@@ -41,16 +41,16 @@ export = Prefs.get('testing') && {
     while (items.length) {
       // tslint:disable-next-line:no-magic-numbers
       const chunk = items.splice(0, 100)
-      debug('TestSupport.reset: deleting', chunk.length, 'items')
+      log.debug('TestSupport.reset: deleting', chunk.length, 'items')
       await Zotero.Items.erase(chunk)
     }
 
-    debug('TestSupport.reset: empty trash')
+    log.debug('TestSupport.reset: empty trash')
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
-    debug('TestSupport.reset: done')
+    log.debug('TestSupport.reset: done')
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
@@ -60,15 +60,15 @@ export = Prefs.get('testing') && {
     preferences = preferences || {}
 
     if (Object.keys(preferences).length) {
-      debug(`importing references and preferences from ${source}`)
+      log.debug(`importing references and preferences from ${source}`)
       for (let [pref, value] of Object.entries(preferences)) {
-        debug(`${typeof pref_defaults[pref] === 'undefined' ? 'not ' : ''}setting preference ${pref} to ${value}`)
+        log.debug(`${typeof pref_defaults[pref] === 'undefined' ? 'not ' : ''}setting preference ${pref} to ${value}`)
         if (typeof pref_defaults[pref] === 'undefined') throw new Error(`Unsupported preference ${pref} in test case`)
         if (Array.isArray(value)) value = value.join(',')
         Zotero.Prefs.set(`translators.better-bibtex.${pref}`, value)
       }
     } else {
-      debug(`importing references from ${source}`)
+      log.debug(`importing references from ${source}`)
     }
 
     const file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
@@ -77,7 +77,7 @@ export = Prefs.get('testing') && {
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const before = items.length
 
-    debug(`starting import at ${new Date()}`)
+    log.debug(`starting import at ${new Date()}`)
 
     if (source.endsWith('.aux')) {
       await Zotero.BetterBibTeX.scanAUX(file)
@@ -86,25 +86,25 @@ export = Prefs.get('testing') && {
     } else {
       await Zotero_File_Interface.importFile(file, !!createNewCollection)
     }
-    debug(`import finished at ${new Date()}`)
+    log.debug(`import finished at ${new Date()}`)
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const after = items.length
 
-    debug(`import found ${after - before} items`)
+    log.debug(`import found ${after - before} items`)
     return (after - before)
   },
 
   async exportLibrary(translatorID, displayOptions, path, collection) {
     let items
-    debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
+    log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
     if (collection) {
       let name = collection
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
         if (collection.name === name) items = { collection: collection.id }
       }
-      debug('TestSupport.exportLibrary', { name, items })
+      log.debug('TestSupport.exportLibrary', { name, items })
       if (!items) throw new Error(`Collection '${name}' not found`)
     } else {
       items = null
@@ -122,7 +122,7 @@ export = Prefs.get('testing') && {
 
     // tslint:disable-next-line:no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
-      debug(`select ${field} = '${value}' = ${id}, attempt ${attempt}`)
+      log.debug(`select ${field} = '${value}' = ${id}, attempt ${attempt}`)
       const zoteroPane = Zotero.getActiveZoteroPane()
       zoteroPane.show()
       if (await zoteroPane.selectItem(id, true)) continue
@@ -131,13 +131,13 @@ export = Prefs.get('testing') && {
       try {
         selected = zoteroPane.getSelectedItems(true)
       } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-        debug('Could not get selected items:', err)
+        log.error('Could not get selected items:', err)
         selected = []
       }
 
-      debug('selected items = ', selected)
+      log.debug('selected items = ', selected)
       if ((selected.length === 1) && (id === selected[0])) return id
-      debug(`select: expected ${id}, got ${selected}`)
+      log.debug(`select: expected ${id}, got ${selected}`)
     }
     throw new Error(`failed to select ${id}`)
   },

@@ -1,7 +1,7 @@
 declare const Components: any
 declare const Zotero: any
 
-import { debug } from './debug'
+import * as log from './debug'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
@@ -19,7 +19,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     for (const pref of this.branch.getChildList('')) {
       switch (pref) {
         case 'jabrefGroups':
-          debug('Preferences: jabrefGroups -> jabrefFormat')
+          log.debug('Preferences: jabrefGroups -> jabrefFormat')
           this.set('jabrefFormat', this.get(pref))
           this.clear(pref)
       }
@@ -29,12 +29,12 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   }
 
   public observe(branch, topic, pref) {
-    debug('preference', pref, 'changed to', this.get(pref))
+    log.debug('preference', pref, 'changed to', this.get(pref))
     Events.emit('preference-changed', pref)
   }
 
   public set(pref, value) {
-    debug('Prefs.set', pref, value)
+    log.debug('Prefs.set', pref, value)
     Zotero.Prefs.set(this.key(pref), value)
   }
 
@@ -50,7 +50,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     try {
       Zotero.Prefs.clear(this.key(pref))
     } catch (err) {
-      debug('Prefs.clear', pref, err)
+      log.error('Prefs.clear', pref, err)
     }
     return this.get(pref)
   }

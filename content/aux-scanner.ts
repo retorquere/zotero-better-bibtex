@@ -1,7 +1,7 @@
 declare const Components: any
 declare const Zotero: any
 
-import { debug } from './debug'
+import * as log from './debug'
 import { timeout } from './timeout'
 import { KeyManager } from './key-manager'
 
@@ -26,7 +26,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private parse(file) {
-    debug('AUXScanner:', file.path)
+    log.debug('AUXScanner:', file.path)
 
     let m
     const contents = Zotero.File.getContents(file)
@@ -92,7 +92,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       found.push(item.id)
     }
 
-    debug('AUX scan: adding', found)
+    log.debug('AUX scan: adding', found)
 
     if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
   }

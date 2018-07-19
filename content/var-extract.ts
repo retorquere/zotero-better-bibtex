@@ -1,4 +1,4 @@
-import { debug } from './debug'
+import * as log from './debug'
 import JSON5 = require('json5')
 
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
@@ -33,7 +33,7 @@ export function extract(item) {
     for (const field of fields.split(';')) {
       const kv = field.match(/^([^=]+)(?:=)([\S\s]*)/)
       if (!kv) {
-        debug('fieldExtract: not a field', field)
+        log.debug('fieldExtract: not a field', field)
         return match
       }
 
@@ -42,7 +42,7 @@ export function extract(item) {
       legacy[name] = { name, value, raw: !cook }
     }
 
-    debug('var-extract:', legacy)
+    log.debug('var-extract:', legacy)
     Object.assign(extraFields.bibtex, legacy)
     return ''
   }).trim()
@@ -98,7 +98,7 @@ export function extract(item) {
 
     name = name.trim().toLowerCase().replace(/ +/g, '-')
     const cslType = cslVariables[name]
-    debug('fieldExtract:', { name, value, cslType })
+    log.debug('fieldExtract:', { name, value, cslType })
     if (cslType) {
       if (cslType === 'creator') {
         extraFields.csl[name] = extraFields.csl[name] || { type: cslType, value: [] }
@@ -118,6 +118,6 @@ export function extract(item) {
     return true
   }).join('\n')
 
-  debug('fieldExtract:', { extra, extraFields })
+  log.debug('fieldExtract:', { extra, extraFields })
   return { extra, extraFields }
 }

@@ -4,7 +4,7 @@ declare const Subprocess: any
 
 Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
-import { debug } from './debug'
+import * as log from './debug'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
@@ -16,13 +16,13 @@ import { Preferences as Prefs } from './prefs'
 
 function queueHandler(kind, handler) {
   return (task, cb) => {
-    debug('AutoExport.queue:', kind, task)
+    log.debug('AutoExport.queue:', kind, task)
 
     handler(task).then(() => {
-      debug('AutoExport.queue:', kind, task, 'completed')
+      log.debug('AutoExport.queue:', kind, task, 'completed')
       cb(null)
     }).catch(err => {
-      debug('AutoExport.queue:', kind, task, 'failed:', err)
+      log.error('AutoExport.queue:', kind, task, 'failed:', err)
       cb(err)
     })
 
@@ -39,7 +39,7 @@ const scheduled = new Queue(
       const ae = db.get(task.id)
       if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-      debug('AutoExport.scheduled:', ae)
+      log.debug('AutoExport.scheduled:', ae)
       ae.status = 'running'
       db.update(ae)
 
@@ -56,23 +56,23 @@ const scheduled = new Queue(
             items = null
         }
 
-        debug('AutoExport.scheduled: starting export', ae)
+        log.debug('AutoExport.scheduled: starting export', ae)
 
         const { repo, name } = AutoExport.gitPush(ae.path) // tslint:disable-line:no-use-before-declare
         AutoExport.pull(repo) // tslint:disable-line:no-use-before-declare
         await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
         AutoExport.push(repo, name) // tslint:disable-line:no-use-before-declare
 
-        debug('AutoExport.scheduled: export finished', ae)
+        log.debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
       } catch (err) {
-        debug('AutoExport.scheduled: failed', ae, err)
+        log.error('AutoExport.scheduled: failed', ae, err)
         ae.error = `${err}`
       }
 
       ae.status = 'done'
       db.update(ae)
-      debug('AutoExport.scheduled: completed', task, ae)
+      log.debug('AutoExport.scheduled: completed', task, ae)
     }
   ),
 
@@ -94,19 +94,19 @@ const scheduler = new Queue(
       const ae = db.get(task.id)
       if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-      debug('AutoExport.scheduler:', task, '->', ae, !!ae)
+      log.debug('AutoExport.scheduler:', task, '->', ae, !!ae)
       ae.status = 'scheduled'
       db.update(ae)
-      debug('AutoExport.scheduler: waiting...', task, ae)
+      log.debug('AutoExport.scheduler: waiting...', task, ae)
 
       await Zotero.Promise.delay(debounce_delay)
 
-      debug('AutoExport.scheduler: woken', task, ae)
+      log.debug('AutoExport.scheduler: woken', task, ae)
 
       if (task.cancelled) {
-        debug('AutoExport.scheduler: cancel', ae)
+        log.debug('AutoExport.scheduler: cancel', ae)
       } else {
-        debug('AutoExport.scheduler: start', ae)
+        log.debug('AutoExport.scheduler: start', ae)
         scheduled.push(task)
       }
     }
@@ -124,14 +124,14 @@ if (Prefs.get('autoExport') !== 'immediate') { scheduler.pause() }
 
 if (Zotero.Debug.enabled) {
   for (const event of [ 'empty', 'drain', 'task_queued', 'task_accepted', 'task_started', 'task_finish', 'task_failed', 'task_progress', 'batch_finish', 'batch_failed', 'batch_progress' ]) {
-    (e => scheduler.on(e, (...args) => { debug(`AutoExport.scheduler.${e}`, args) }))(event);
-    (e => scheduled.on(e, (...args) => { debug(`AutoExport.scheduled.${e}`, args) }))(event)
+    (e => scheduler.on(e, (...args) => { log.debug(`AutoExport.scheduler.${e}`, args) }))(event);
+    (e => scheduled.on(e, (...args) => { log.debug(`AutoExport.scheduled.${e}`, args) }))(event)
   }
 }
 
 const idleObserver = {
   observe(subject, topic, data) {
-    debug(`AutoExport.idle: ${topic}`)
+    log.debug(`AutoExport.idle: ${topic}`)
     if (Prefs.get('autoExport') !== 'idle') { return }
     switch (topic) {
       case 'back': case 'active':
@@ -150,7 +150,7 @@ idleService.addIdleObserver(idleObserver, Prefs.get('autoExportIdleWait'))
 Events.on('preference-changed', pref => {
   if (pref !== 'autoExport') { return }
 
-  debug('AutoExport: preference changed')
+  log.debug('AutoExport: preference changed')
 
   switch (Prefs.get('autoExport')) {
     case 'immediate':
@@ -186,10 +186,10 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     try {
       this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
     } catch (err) {
-      debug('AutoExport.init: git not found:', err)
+      log.error('AutoExport.init: git not found:', err)
       this.git = null
     }
-    if (this.git) debug('AutoExport: git found at', this.git)
+    if (this.git) log.debug('AutoExport: git found at', this.git)
   }
 
   public async pull(repo) {
@@ -207,7 +207,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public add(ae) {
-    debug('AutoExport.add', ae)
+    log.debug('AutoExport.add', ae)
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
@@ -238,15 +238,15 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public schedule(type, ids) {
-    debug('AutoExport.schedule:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    log.debug('AutoExport.schedule:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
-      debug('AutoExport.schedule: push', ae.$loki)
+      log.debug('AutoExport.schedule: push', ae.$loki)
       scheduler.push({ id: ae.$loki })
     }
   }
 
   public remove(type, ids) {
-    debug('AutoExport.remove:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
+    log.debug('AutoExport.remove:', type, ids, {db: this.db.data, state: Prefs.get('autoExport'), scheduler: !scheduler._stopped, scheduled: !scheduled._stopped})
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
       scheduled.cancel(ae.$loki)
       scheduler.cancel(ae.$loki)
@@ -257,7 +257,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   public run(ae) {
     if (typeof ae === 'number') { ae = this.db.get(ae) }
 
-    debug('Autoexport.run:', ae)
+    log.debug('Autoexport.run:', ae)
     ae.status = 'scheduled'
     this.db.update(ae)
     scheduled.push({ id: ae.$loki })
@@ -267,9 +267,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     let found
     try {
       found = this._gitPush(path)
-      debug('gitPush::', { found })
+      log.debug('gitPush::', { found })
     } catch (err) {
-      debug('gitPush::', err)
+      log.error('gitPush::', err)
       found = {}
     }
     return found
@@ -291,7 +291,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   private _gitPush(path) {
     if (!this.git) return {}
 
-    debug('gitPush:', path)
+    log.debug('gitPush:', path)
 
     const name = Zotero.File.pathToFile(path)
     let repo = name.clone() // assumes that we're handed a bibfile!
@@ -304,33 +304,33 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     }
 
     if (!git) {
-      debug('gitPush:', path, 'is not in a repo')
+      log.debug('gitPush:', path, 'is not in a repo')
       return {}
     }
 
-    debug('gitPush: repo found at', repo.path)
+    log.debug('gitPush: repo found at', repo.path)
 
     git.append('config')
-    debug('gitPush: looking for config at', git.path, git.exists())
+    log.debug('gitPush: looking for config at', git.path, git.exists())
     if (!git.exists() || !git.isFile()) {
-      debug('gitPush: config', git.path, 'is not a file')
+      log.debug('gitPush: config', git.path, 'is not a file')
       return {}
     }
 
-    debug('gitPush: repo config found at', git.path)
+    log.debug('gitPush: repo config found at', git.path)
 
     let config = {}
 
     try {
       config = ini.parse(Zotero.File.getContents(git))
-      debug('gitPush: config=', config)
+      log.debug('gitPush: config=', config)
     } catch (err) {
-      debug('gitPush: error parsing config', git.path, err)
+      log.debug('gitPush: error parsing config', git.path, err)
     }
 
     // enable with 'git config zotero.betterbibtex.push true'
     const enabled = (config['zotero "betterbibtex"'] || {}).push
-    debug('git config found for', repo.path, 'enabled =', { enabled })
+    log.debug('git config found for', repo.path, 'enabled =', { enabled })
 
     if (enabled !== 'true' && enabled !== true) return {}
 
@@ -351,6 +351,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
       arguments: args,
       workdir,
     })
-    debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
+    log.debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
   }
 }

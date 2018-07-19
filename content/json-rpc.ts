@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { debug } from './debug'
+import * as log from './debug'
 import { KeyManager } from './key-manager'
 import { getItemsAsync } from './get-items-async'
 
@@ -38,7 +38,7 @@ const $item = new class Item {
     /*
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    log.debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
     */
 
@@ -93,7 +93,7 @@ const api = new class API {
       if (Array.isArray(request.params)) return {jsonrpc: '2.0', result: await method.apply(null, request.params), id: request.id || null}
       return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
     } catch (err) {
-      debug('JSON-RPC:', err)
+      log.error('JSON-RPC:', err)
       return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: `${err}`}, id: null}
     }
   }
@@ -115,7 +115,7 @@ Zotero.Server.Endpoints['/better-bibtex/json-rpc'] = class {
     await Zotero.BetterBibTeX.ready
 
     if (typeof options.data === 'string') options.data = JSON.parse(options.data)
-    debug('json-rpc: execute', options.data)
+    log.debug('json-rpc: execute', options.data)
 
     try {
       return [OK, 'application/json', JSON.stringify(await api.handle(options.data))]

@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { XULoki as Loki } from './loki'
-import { debug } from '../debug'
+import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
 import { getItemsAsync } from '../get-items-async'
 
@@ -14,11 +14,11 @@ class DBStore {
   private validName = /^better-bibtex[-_a-zA-Z0-9]*$/
 
   public async exportDatabase(dbname, dbref, callback) {
-    debug('DBStore.exportDatabase:', dbname)
+    log.debug('DBStore.exportDatabase:', dbname)
 
     const conn = this.conn[dbname]
     if (conn === false) {
-      debug('DBStore: save of', dbname, 'attempted after close')
+      log.debug('DBStore: save of', dbname, 'attempted after close')
       return callback(null)
     }
 
@@ -29,7 +29,7 @@ class DBStore {
         for (const coll of dbref.collections) {
           if (coll.dirty) {
             const name = `${dbname}.${coll.name}`
-            debug('DBStore.exportDatabase:', name)
+            log.debug('DBStore.exportDatabase:', name)
             await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [name, JSON.stringify(coll)])
           }
         }
@@ -48,7 +48,7 @@ class DBStore {
 
   // this assumes Zotero.initializationPromise has resolved, will throw an error if not
   public async loadDatabase(dbname, callback) {
-    debug('DBStore.loadDatabase:', dbname)
+    log.debug('DBStore.loadDatabase:', dbname)
     if (!dbname.match(this.validName)) throw new Error(`Invalid database name '${dbname}'`)
     if (this.conn[dbname] === false) throw new Error(`Database '${dbname}' already closed`)
     if (this.conn[dbname]) throw new Error(`Database '${dbname}' already loaded`)
@@ -62,27 +62,27 @@ class DBStore {
         let db = null
         const collections = {}
         for (const row of await conn.queryAsync(`SELECT name, data FROM "${dbname}" ORDER BY name ASC`)) {
-          debug('DBStore.loadDatabase:', dbname, '.', row.name)
+          log.debug('DBStore.loadDatabase:', dbname, '.', row.name)
           if (row.name === dbname) {
-            debug(`DBStore.loadDatabase: loading ${dbname}`)
+            log.debug(`DBStore.loadDatabase: loading ${dbname}`)
             db = JSON.parse(row.data)
           } else {
             try {
-              debug(`DBStore.loadDatabase: loading ${row.name}`)
+              log.debug(`DBStore.loadDatabase: loading ${row.name}`)
               collections[row.name] = JSON.parse(row.data)
 
               collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
               collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
 
-              debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
+              log.debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
             } catch (err) {
-              debug(`DBStore.loadDatabase: failed to parse ${row.name}`)
+              log.error(`DBStore.loadDatabase: failed to parse ${row.name}`)
             }
           }
         }
 
         if (db) {
-          debug('DBStore.loadDatabase: restoring collections:', db.collections)
+          log.debug('DBStore.loadDatabase: restoring collections:', db.collections)
           db.collections = db.collections.filter(coll => collections[coll]).map(coll => collections[coll])
         }
 
@@ -92,13 +92,13 @@ class DBStore {
         callback(db)
       })
     } catch (err) {
-      debug('DBStore.loadDatabase: error loading', dbname, err)
+      log.error('DBStore.loadDatabase: error loading', dbname, err)
       callback(err)
     }
   }
 
   public async close(dbname, callback) {
-    debug('DBStore.close', dbname)
+    log.debug('DBStore.close', dbname)
 
     if (!this.conn[dbname]) return callback(null)
 
@@ -107,10 +107,10 @@ class DBStore {
 
     try {
       await conn.closeDatabase(true)
-      debug('DBStore.close OK', dbname)
+      log.debug('DBStore.close OK', dbname)
       callback(null)
     } catch (err) {
-      debug('DBStore.close FAILED', dbname, err)
+      log.error('DBStore.close FAILED', dbname, err)
       callback(err)
     }
   }
@@ -148,7 +148,7 @@ DB.init = async () => {
     },
   })
 
-  debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
+  log.debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
   if (Zotero.Libraries.userLibraryID) {
     for (const citekey of citekeys.where(ck => ck.libraryID === 1 || !ck.libraryID )) {
       citekey.libraryID = Zotero.Libraries.userLibraryID

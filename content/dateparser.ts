@@ -1,6 +1,6 @@
 import EDTF = require('edtf')
 import edtfy = require('edtfy')
-import { debug } from './debug'
+import * as log from './debug'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
@@ -88,7 +88,7 @@ export function parse(value, toplevel = true) {
 
   let parsed, m
 
-  debug('dateparser: parsing', value, toplevel)
+  log.debug('dateparser: parsing', value, toplevel)
 
   if (!toplevel && value === '') return { type: 'open' }
 
@@ -231,7 +231,7 @@ export function parse(value, toplevel = true) {
   if (toplevel && !parsed) {
     for (const sep of ['--', '-', '/', '_', '–']) {
       const split = value.split(sep)
-      debug('dateparser: trying date range from manual split:', value, split)
+      log.debug('dateparser: trying date range from manual split:', value, split)
       if (split.length === 2) {
         const from = parse(split[0], false)
         if (from.type !== 'date' && from.type !== 'season') continue
@@ -242,7 +242,7 @@ export function parse(value, toplevel = true) {
     }
   }
 
-  debug('parseDate:', value, parsed)
+  log.debug('parseDate:', value, parsed)
 
   return parsed || { type: 'verbatim', verbatim: value }
 
@@ -261,7 +261,7 @@ export function parse(value, toplevel = true) {
   }
 
   const cleaned = value.normalize('NFC').replace(months_re, (_ => months[_.toLowerCase()]))
-  debug('dateparser:', value, 'cleaned up to', cleaned)
+  log.debug('dateparser:', value, 'cleaned up to', cleaned)
 
   let approximate = false
   let uncertain = false

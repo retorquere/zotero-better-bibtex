@@ -1,12 +1,12 @@
 declare const Zotero: any
 
-import { debug } from './debug'
+import * as log from './debug'
 
 const seconds = 1000
 
 export function flash(title, body = null, timeout = 8) {
   try {
-    debug('flash:', {title, body})
+    log.debug('flash:', {title, body})
     const pw = new Zotero.ProgressWindow()
     pw.changeHeadline(`Better BibTeX: ${title}`)
     if (!body) body = title
@@ -15,6 +15,6 @@ export function flash(title, body = null, timeout = 8) {
     pw.show()
     pw.startCloseTimer(timeout * seconds)
   } catch (err) {
-    debug('@flash failed:', {title, body}, err)
+    log.error('@flash failed:', {title, body}, err)
   }
 }

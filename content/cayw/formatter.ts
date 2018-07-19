@@ -3,7 +3,7 @@ declare const Components: any
 declare const AddonManager: any
 
 import { Translators } from '../translators'
-import { debug } from '../debug'
+import * as log from '../debug'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
 
@@ -68,7 +68,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
         }
       }
 
-      debug('citations:', {citations, state})
+      log.debug('citations:', {citations, state})
       if (state.suffix === 0 && state.prefix === 0 && state.locator === 0 && (state.suppressAuthor === 0 || state.suppressAuthor === citations.length)) {
         return `\\${citations[0].suppressAuthor ? 'citeyear' : options.command}{${citations.map(citation => citation.citekey).join(',')}}`
       }
@@ -80,7 +80,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       formatted += citation.suppressAuthor ? 'citeyear' : options.command
       if (citation.prefix) formatted += `[${citation.prefix}]`
 
-      debug('citation:', citation)
+      log.debug('citation:', citation)
       if (citation.locator && citation.suffix) {
         const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
         formatted += `[${label}${citation.locator}, ${citation.suffix}]`
@@ -152,7 +152,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     const odfScan = await deferred.promise
     if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
-    debug('scannable-cite:', citations)
+    log.debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
     const labels = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
@@ -161,7 +161,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       return result
     }, {})
 
-    debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels)
+    log.debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels)
 
     if (citations.length !== Object.keys(labels).length) throw new Error(`Scannable Cite parse error: picked ${citations.length}, found ${Object.keys(labels).length}`)
 
@@ -181,14 +181,14 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
       citation += `{ ${enriched.trim()} }`
     }
-    debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels, 'generated=', citation)
+    log.debug('CAYW.scannable-cite: picked=', citations, 'formatted=', labels, 'generated=', citation)
     return citation
   }
 
   public async 'formatted-citation'(citations) {
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    log.debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
 
     const items = await getItemsAsync(citations.map(item => item.id))
@@ -199,7 +199,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
   public async 'formatted-bibliography'(citations) {
     const format = Zotero.Prefs.get('export.quickCopy.setting')
 
-    debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
+    log.debug('formatted-citations:', format, Zotero.QuickCopy.unserializeSetting(format))
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
 
     const items = await getItemsAsync(citations.map(item => item.id))
@@ -213,7 +213,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     const label = (options.translator || 'biblatex').replace(/\s/g, '').toLowerCase().replace('better', '')
     const translator = Object.keys(Translators.byId).find(id => Translators.byId[id].label.replace(/\s/g, '').toLowerCase().replace('better', '') === label) || options.translator
 
-    debug('cayw.translate:', {requested: options, got: translator})
+    log.debug('cayw.translate:', {requested: options, got: translator})
 
     const exportOptions = {
       exportNotes: ['yes', 'y', 'true'].includes((options.exportNotes || '').toLowerCase()),

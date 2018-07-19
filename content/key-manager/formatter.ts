@@ -4,7 +4,7 @@ declare const Components: any
 
 import { flash } from '../flash'
 import { Preferences as Prefs } from '../prefs'
-import { debug } from '../debug'
+import * as log from '../debug'
 import { JournalAbbrev } from '../journal-abbrev'
 import { kuroshiro } from './kuroshiro'
 
@@ -61,19 +61,19 @@ class PatternFormatter {
 
   public init(itemTypes) {
     this.itemTypes = itemTypes
-    debug('Formatter.itemTypes = ', Array.from(itemTypes))
+    log.debug('Formatter.itemTypes = ', Array.from(itemTypes))
   }
 
   public update(reason) {
     if (!this.itemTypes) throw new Error('PatternFormatter.update called before init')
 
-    debug('PatternFormatter.update:', reason)
+    log.debug('PatternFormatter.update:', reason)
     this.skipWords = new Set(Prefs.get('skipWords').split(',').map(word => word.trim()).filter(word => word))
     this.fold = Prefs.get('citekeyFold')
 
     for (const attempt of ['get', 'reset']) {
       if (attempt === 'reset') {
-        debug(`PatternFormatter.update: malformed citekeyFormat '${this.citekeyFormat}', resetting to default`)
+        log.debug(`PatternFormatter.update: malformed citekeyFormat '${this.citekeyFormat}', resetting to default`)
         flash(`Malformed citation pattern '${this.citekeyFormat}', resetting to default`)
         Prefs.clear('citekeyFormat')
       }
@@ -82,15 +82,15 @@ class PatternFormatter {
       this.citekeyFormat = (Prefs.get('citekeyFormat') || Prefs.clear('citekeyFormat')).replace(/^\u200B/, '')
 
       try {
-        debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
+        log.debug(`PatternFormatter.update: trying citekeyFormat ${this.citekeyFormat}...`)
         this.generate = new Function(this.parsePattern(this.citekeyFormat))
         break
       } catch (err) {
-        debug('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err)
+        log.error('PatternFormatter.update: Error parsing citekeyFormat ', {pattern: this.citekeyFormat}, err)
       }
     }
 
-    debug('PatternFormatter.update: citekeyFormat=', this.citekeyFormat, `${this.generate}`)
+    log.debug('PatternFormatter.update: citekeyFormat=', this.citekeyFormat, `${this.generate}`)
   }
 
   public parsePattern(pattern) { return parser.parse(pattern, this) }
@@ -207,7 +207,7 @@ class PatternFormatter {
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
   public $auth(onlyEditors, withInitials, joiner, n, m) {
     const authors = this.creators(onlyEditors, {withInitials})
-    debug('$auth:', { onlyEditors, withInitials, n, m, authors })
+    log.debug('$auth:', { onlyEditors, withInitials, n, m, authors })
     if (!authors || !authors.length) return ''
     let author = authors[m ? m - 1 : 0]
     if (author && n) author = author.substring(0, n)
@@ -317,7 +317,7 @@ class PatternFormatter {
     const authors = this.creators(onlyEditors, {withInitials})
     if (!authors || !authors.length) return ''
 
-    debug('auth_etal', {onlyEditors, withInitials, joiner, authors: authors.join(joiner || '.') })
+    log.debug('auth_etal', {onlyEditors, withInitials, joiner, authors: authors.join(joiner || '.') })
     // tslint:disable-next-line:no-magic-numbers
     if (authors.length === 2) return authors.join(joiner || '.')
     return authors.slice(0, 1).concat(authors.length > 1 ? ['etal'] : []).join(joiner || '.')

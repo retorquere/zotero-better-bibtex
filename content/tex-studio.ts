@@ -5,7 +5,7 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
 import { KeyManager } from './key-manager'
-import { debug } from './debug'
+import * as log from './debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let TeXstudio = new class { // tslint:disable-line:variable-name
@@ -16,11 +16,11 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
     try {
       this.texstudio = await Subprocess.pathSearch(`texstudio${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
     } catch (err) {
-      debug('TeXstudio: not found:', err)
+      log.error('TeXstudio: not found:', err)
       this.texstudio = null
     }
     this.enabled = !!this.texstudio
-    if (this.enabled) debug('TeXstudio: found at', this.texstudio)
+    if (this.enabled) log.debug('TeXstudio: found at', this.texstudio)
   }
 
   public async push() {
@@ -31,22 +31,22 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
     let items
     try {
       items = pane.getSelectedItems()
-      debug('TeXstudio:', items)
+      log.debug('TeXstudio:', items)
     } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-      debug('TeXstudio: Could not get selected items:', err)
+      log.error('TeXstudio: Could not get selected items:', err)
       return
     }
 
     const citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
     if (!citation) {
-      debug('TeXstudio: no items to cite')
+      log.debug('TeXstudio: no items to cite')
       return
     }
 
     try {
       await Zotero.Utilities.Internal.exec(this.texstudio, ['--insert-cite', citation])
     } catch (err) {
-      debug('TeXstudio: Could not get execute texstudio:', err)
+      log.error('TeXstudio: Could not get execute texstudio:', err)
     }
   }
 }

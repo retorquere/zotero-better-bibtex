@@ -1,7 +1,7 @@
 declare const Zotero: any
 
 import { Preferences as Prefs } from './prefs'
-import { debug } from './debug'
+import * as log from './debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -32,26 +32,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     if (reinit) {
-      debug('Translators.init: reinit translators...')
+      log.debug('Translators.init: reinit translators...')
       try {
-        debug('Translators.init: reinit start @', (new Date()).valueOf() - start)
+        log.debug('Translators.init: reinit start @', (new Date()).valueOf() - start)
         await Zotero.Translators.reinit()
-        debug('Translators.init: reinit ready @', (new Date()).valueOf() - start)
+        log.debug('Translators.init: reinit ready @', (new Date()).valueOf() - start)
       } catch (err) {
-        debug('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
+        log.error('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
       }
     }
   }
 
   public async translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
-    debug('Translators.translate', { translatorID, displayOptions, path })
+    log.debug('Translators.translate', { translatorID, displayOptions, path })
 
     await Zotero.BetterBibTeX.ready
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    debug('Translators.translate prepping', { translatorID, displayOptions, path })
+    log.debug('Translators.translate prepping', { translatorID, displayOptions, path })
 
     if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
@@ -80,15 +80,15 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     translation.setHandler('done', (obj, success) => {
       if (success) {
-        debug('Translators.translate complete', { translatorID, displayOptions, path })
+        log.debug('Translators.translate complete', { translatorID, displayOptions, path })
         deferred.resolve(obj ? obj.string : undefined)
       } else {
-        debug('Translators.translate failed', { translatorID, displayOptions, path })
+        log.error('Translators.translate failed', { translatorID, displayOptions, path })
         deferred.reject('translation failed')
       }
     })
 
-    debug('Translators.translate starting', { translatorID, displayOptions, path })
+    log.debug('Translators.translate starting', { translatorID, displayOptions, path })
     translation.translate()
 
     return deferred.promise
@@ -104,7 +104,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
         return true
       }
     } catch (err) {
-      debug(`Translators.uninstall: failed to remove ${label}:`, err)
+      log.error(`Translators.uninstall: failed to remove ${label}:`, err)
       return true
     }
 
@@ -118,22 +118,22 @@ export let Translators = new class { // tslint:disable-line:variable-name
     try {
       installed = Zotero.Translators.get(header.translatorID)
     } catch (err) {
-      debug('Translators.install', header, err)
+      log.error('Translators.install', header, err)
       installed = null
     }
 
-    debug('Translators.install: installed =', installed)
+    log.debug('Translators.install: installed =', installed)
 
     if (installed && installed.lastUpdated === header.lastUpdated) {
-      debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
+      log.debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
       return false
     } else if (installed) {
-      debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated)
+      log.debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated)
     } else {
-      debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated)
+      log.debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated)
     }
 
-    debug('Translators.install: saving translator', header.label)
+    log.debug('Translators.install: saving translator', header.label)
 
     try {
       const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
@@ -143,9 +143,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       delete header.description
       await Zotero.Translators.save(header, code)
 
-      debug('Translator.install', header, 'succeeded')
+      log.debug('Translator.install', header, 'succeeded')
     } catch (err) {
-      debug('Translator.install', header, 'failed:', err)
+      log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label, header.translatorID)
     }
 

@@ -3,7 +3,7 @@ declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
 
-import { debug } from './debug'
+import * as log from './debug'
 import { ZoteroConfig } from './zotero-config'
 import { patch as $patch$ } from './monkey-patch'
 
@@ -38,7 +38,7 @@ class AutoExportTreeView {
 
   public setTree(treeBox) {
     this.treeBox = treeBox
-    debug('prefs: ae view set', !!this.treeBox)
+    log.debug('prefs: ae view set', !!this.treeBox)
     this.refresh()
   }
 
@@ -72,13 +72,13 @@ class AutoExportTreeView {
     this.rowCount = rows.length
     this.treeBox.rowCountChanged(0, rows.length - this.rows.length)
     this.rows = rows
-    debug('ae.prefs.refresh:', this.rows)
+    log.debug('ae.prefs.refresh:', this.rows)
     this.treeBox.invalidate()
   }
 
   public getCellText(row, column) {
     column = column.id.split('-').slice(-1)[0]
-    debug('ae.prefs: getCellText', row, column, this.rows[row])
+    log.debug('ae.prefs: getCellText', row, column, this.rows[row])
     return this.rows[row].columns[column]
   }
 
@@ -113,7 +113,7 @@ class AutoExportTreeView {
   }
 
   public toggleOpenState(row) {
-    debug('ae.prefs.toggleOpenState', this.rows[row])
+    log.debug('ae.prefs.toggleOpenState', this.rows[row])
     if (this.rows[row].level !== 0) return
 
     this.open[this.rows[row].autoexport.$loki] = !this.open[this.rows[row].autoexport.$loki]
@@ -165,9 +165,9 @@ export = new class PrefPane {
   private refreshTimer: number
 
   public getCitekeyFormat() {
-    debug('prefs: fetching citekey for display...')
+    log.debug('prefs: fetching citekey for display...')
     this.keyformat.value = Prefs.get('citekeyFormat')
-    debug('prefs: fetched citekey for display:', this.keyformat.value)
+    log.debug('prefs: fetched citekey for display:', this.keyformat.value)
   }
 
   public checkCitekeyFormat() {
@@ -180,7 +180,7 @@ export = new class PrefPane {
     } catch (err) {
       msg = err.message
       if (err.location) msg += ` at ${err.location.start.offset + 1}`
-      debug('prefs: key format error:', msg)
+      log.error('prefs: key format error:', msg)
     }
 
     this.keyformat.setAttribute('style', (msg ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
@@ -189,12 +189,12 @@ export = new class PrefPane {
 
   public saveCitekeyFormat() {
     try {
-      debug('prefs: saving new citekey format', this.keyformat.value)
+      log.debug('prefs: saving new citekey format', this.keyformat.value)
       Formatter.parsePattern(this.keyformat.value)
       Prefs.set('citekeyFormat', this.keyformat.value)
     } catch (error) {
       // restore previous value
-      debug('prefs: error saving new citekey format', this.keyformat.value, 'restoring previous')
+      log.error('prefs: error saving new citekey format', this.keyformat.value, 'restoring previous')
       this.getCitekeyFormat()
       this.keyformat.setAttribute('style', '')
       this.keyformat.setAttribute('tooltiptext', '')
@@ -209,7 +209,7 @@ export = new class PrefPane {
       // don't care about the return value, just if it throws an error
       new Function(postscript.value) // tslint:disable-line:no-unused-expression
     } catch (err) {
-      debug('PrefPane.checkPostscript: error compiling postscript:', err)
+      log.error('PrefPane.checkPostscript: error compiling postscript:', err)
       error = `${err}`
     }
 
@@ -218,13 +218,13 @@ export = new class PrefPane {
   }
 
   public async rescanCitekeys() {
-    debug('starting manual key rescan')
+    log.debug('starting manual key rescan')
     await KeyManager.rescan()
-    debug('manual key rescan done')
+    log.debug('manual key rescan done')
   }
 
   public load() {
-    debug('prefs: loading...')
+    log.debug('prefs: loading...')
 
     if (typeof Zotero_Preferences === 'undefined') return
 
@@ -244,7 +244,7 @@ export = new class PrefPane {
         this.getCitekeyFormat()
         this.update()
       })
-      .catch(err => debug('preferences.load: BBT init failed', err))
+      .catch(err => log.error('preferences.load: BBT init failed', err))
 
     // no other way that I know of to know that I've just been selected
     const timer = window.setInterval(() => {
@@ -273,14 +273,14 @@ export = new class PrefPane {
     this.getCitekeyFormat()
     this.update()
 
-    debug('prefs: loaded @', document.location.hash)
+    log.debug('prefs: loaded @', document.location.hash)
 
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
       // tslint:disable-next-line:no-magic-numbers
       setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
-    debug('prefs: ready')
+    log.debug('prefs: ready')
 
     window.sizeToContent()
   }
@@ -298,7 +298,7 @@ export = new class PrefPane {
     const selected = this.aeSelected()
     if (!selected) return
 
-    debug('AutoExport: removing', { selected })
+    log.debug('AutoExport: removing', { selected })
     AutoExport.db.remove(selected.autoexport)
     this.aeRefresh()
   }
@@ -333,7 +333,7 @@ export = new class PrefPane {
     if (ZoteroConfig.Zotero.isJurisM) {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
-        debug('prefPane.update: found styles', styles)
+        log.debug('prefPane.update: found styles', styles)
 
         const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0

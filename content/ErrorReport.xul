@@ -35,8 +35,7 @@
       <tabs>
         <tab label="&better-bibtex.ErrorReport.context;"/>
         <tab label="&better-bibtex.ErrorReport.errors;"/>
-        <tab label="&better-bibtex.ErrorReport.zotero;"/>
-        <tab label="&better-bibtex.ErrorReport.bbt;"/>
+        <tab label="&better-bibtex.ErrorReport.debug;"/>
         <tab label="&better-bibtex.ErrorReport.references;" id="better-bibtex-error-tab-references"/>
       </tabs>
 
@@ -48,10 +47,7 @@
           <textbox id="better-bibtex-error-errors" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
-          <textbox id="better-bibtex-error-zotero" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
-        </tabpanel>
-        <tabpanel orient="vertical">
-          <textbox id="better-bibtex-error-bbt" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
+          <textbox id="better-bibtex-error-debug" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>
         </tabpanel>
         <tabpanel orient="vertical">
           <textbox id="better-bibtex-error-references" class="plain" readonly="true" multiline="true" flex="1" style="min-height: 8em;"/>

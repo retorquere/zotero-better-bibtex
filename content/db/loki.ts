@@ -6,7 +6,7 @@ Components.utils.import('resource://gre/modules/AsyncShutdown.jsm')
 import { patch as $patch$ } from '../monkey-patch'
 
 import AJV = require('ajv')
-import { debug } from '../debug'
+import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
 
 // tslint:disable-next-line:variable-name
@@ -25,7 +25,7 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
   if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
-    debug('insert: validation failed for', doc, this.validate.errors, err)
+    log.error('insert: validation failed for', doc, this.validate.errors, err)
     throw err
   }
   return original.apply(this, arguments)
@@ -34,7 +34,7 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
   if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
-    debug('update: validation failed for', doc, this.validate.errors, err)
+    log.error('update: validation failed for', doc, this.validate.errors, err)
     throw err
   }
   return original.apply(this, arguments)
@@ -93,11 +93,11 @@ idleService.addIdleObserver({
     for (const db of autoSaveOnIdle) {
       if (!db.autosaveDirty()) continue
 
-      debug('idle, saving', db.filename)
+      log.debug('idle, saving', db.filename)
       try {
         await db.saveDatabaseAsync()
       } catch (err) {
-        debug('idle, saving failed', db.filename, err)
+        log.error('idle, saving failed', db.filename, err)
       }
     }
   },
@@ -125,16 +125,16 @@ export class XULoki extends (Loki as { new(name, options): any }) {
 
     if (this.persistenceAdapter && !nullStore) {
       AsyncShutdown.profileBeforeChange.addBlocker(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`, async () => {
-        debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`)
+        log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closing ${name}`)
 
         // setTimeout is disabled during shutdown and throws errors
         this.throttledSaves = false
 
         try {
           await this.closeAsync()
-          debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed ${name}`)
+          log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed ${name}`)
         } catch (err) {
-          debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close ${name} failed`, err)
+          log.error(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: close ${name} failed`, err)
         }
       })
     }
@@ -146,7 +146,7 @@ export class XULoki extends (Loki as { new(name, options): any }) {
 
     if (options.logging && Prefs.get('testing')) {
       for (const event of ['insert', 'delete', 'update']) {
-        ((e, n, db) => coll.on(e, data => debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
+        ((e, n, db) => coll.on(e, data => log.debug(`DB Event: ${db}.${n}.${e}`, data)))(event, name, this.filename)
       }
     }
 

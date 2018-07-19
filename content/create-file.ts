@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Components: any
 
-import { debug } from './debug'
+import * as log from './debug'
 
 const a_rwx = 0o777
 
@@ -11,7 +11,7 @@ export function createFile(...paths) {
   const f = Zotero.File.pathToFile(Zotero.DataDirectory.dir)
 
   paths.unshift('better-bibtex') // only create files in the 'better-bibtex' directory
-  debug('createFile:', paths)
+  log.debug('createFile:', paths)
 
   const leaf = paths.pop()
   for (const path of paths) {

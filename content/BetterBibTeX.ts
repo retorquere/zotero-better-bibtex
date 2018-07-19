@@ -10,12 +10,12 @@ require('./json-rpc') // just require, initializes the json-rpc end point
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
-import { debug } from './debug'
+import * as log from './debug'
 import { flash } from './flash'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
-debug('Loading Better BibTeX')
+log.debug('Loading Better BibTeX')
 
 import { Translators } from './translators'
 import { DB } from './db/main'
@@ -40,7 +40,7 @@ const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pan
 AddonManager.addAddonListener({
   onUninstalling(addon, needsRestart) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return
-    debug('uninstall')
+    log.debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
     for (const [label, metadata] of (Object.entries(Translators.byName) as Array<[string, ITranslatorHeader]>)) {
@@ -111,7 +111,7 @@ $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => functio
       if (item) return { libraryID: item.libraryID, key: item.itemKey }
     }
   } catch (err) {
-    debug('parseLibraryKeyHash:', id, err)
+    log.error('parseLibraryKeyHash:', id, err)
   }
 
   return original.apply(this, arguments)
@@ -125,7 +125,7 @@ $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(
 
   let ids = yield original.call(this, false) || []
 
-  debug('search: looking for', searchText, 'from', this._conditions, 'to add to', ids)
+  log.debug('search: looking for', searchText, 'from', this._conditions, 'to add to', ids)
 
   ids = Array.from(new Set(ids.concat(KeyManager.keys.find({ citekey: { $regex: new RegExp(searchText.join('|'), 'i') } }).map(item => item.itemID))))
 
@@ -173,7 +173,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
 
     }
   } catch (err) {
-    debug('patched getField:', {field, unformatted, includeBaseMapped, err})
+    log.error('patched getField:', {field, unformatted, includeBaseMapped, err})
   }
 
   return original.apply(this, arguments)
@@ -272,14 +272,13 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
-
 }
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
   try {
     return Serializer.fetch(zoteroItem, legacy, skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), legacy, skipChildItems)
   } catch (err) { // fallback for safety for non-BBT
-    debug('Zotero.Utilities.Internal.itemToExportFormat', err)
+    log.error('Zotero.Utilities.Internal.itemToExportFormat', err)
   }
 
   return original.apply(this, arguments)
@@ -331,7 +330,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     }
 
   } catch (err) {
-    debug('Zotero.Translate.Export::translate error:', err)
+    log.error('Zotero.Translate.Export::translate error:', err)
   }
 
   return original.apply(this, arguments)
@@ -348,7 +347,7 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
     document.getElementById('bbt-collectionmenu-pull-url').hidden = hidden
     document.getElementById('bbt-collectionmenu-report-errors').hidden = hidden
   } catch (err) {
-    debug('ZoteroPane.buildCollectionContextMenu:', err)
+    log.error('ZoteroPane.buildCollectionContextMenu:', err)
   }
 })
 
@@ -437,7 +436,7 @@ notify('collection-item', (event, type, collection_items) => {
   INIT
 */
 
-debug('Loading Better BibTeX: setup done')
+log.debug('Loading Better BibTeX: setup done')
 
 class Progress {
   private timestamp: number
@@ -456,21 +455,21 @@ class Progress {
     this.timestamp = (new Date()).valueOf()
     this.msg = msg || 'Initializing'
 
-    debug(`${this.name}: waiting for Zotero locks...`)
+    log.debug(`${this.name}: waiting for Zotero locks...`)
 
     await Zotero.uiReadyPromise
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    debug(`${this.name}: ${msg}...`)
+    log.debug(`${this.name}: ${msg}...`)
     this.toggle(true)
-    debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
+    log.debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
 
   public update(msg) {
     this.bench(msg)
 
-    debug(`${this.name}: ${msg}...`)
+    log.debug(`${this.name}: ${msg}...`)
     if (this.locked) {
       Zotero.showZoteroPaneProgressMeter(`Better BibTeX: ${msg}...`)
     } else {
@@ -482,13 +481,13 @@ class Progress {
     this.bench(null)
 
     this.toggle(false)
-    debug(`${this.name}: done`)
+    log.debug(`${this.name}: done`)
   }
 
   private bench(msg) {
     const ts = (new Date()).valueOf()
     // tslint:disable-next-line:no-magic-numbers
-    if (this.msg) debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
   }
@@ -529,13 +528,13 @@ export = new class BetterBibTeX {
 
   constructor() {
     if (Zotero.BetterBibTeX) {
-      debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
+      log.debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
     } else {
       this.ready = bbtReady.promise
       window.addEventListener('load', () => {
         this.load().catch(err => {
           this.ready = false
-          debug('Better BibTeX failed to load:', err)
+          log.debug('Better BibTeX failed to load:', err)
         })
       }, false)
     }
@@ -606,7 +605,7 @@ export = new class BetterBibTeX {
         try {
           items = { items: pane.getSelectedItems() }
         } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-          debug('Could not get selected items:', err)
+          log.error('Could not get selected items:', err)
           items = {}
         }
 
@@ -627,7 +626,7 @@ export = new class BetterBibTeX {
 
   public getString(id, params = null) {
     if (!this.strings || typeof this.strings.getString !== 'function') {
-      debug('getString called before strings were loaded', id)
+      log.debug('getString called before strings were loaded', id)
       return id
     }
 
@@ -635,7 +634,7 @@ export = new class BetterBibTeX {
       const str = this.strings.getString(id)
       return params ? format(str, params) : str
     } catch (err) {
-      debug('getString', id, err)
+      log.debug('getString', id, err)
       return id
     }
   }
@@ -643,7 +642,7 @@ export = new class BetterBibTeX {
   private async load() {
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
-    debug('Loading Better BibTeX: starting...')
+    log.debug('Loading Better BibTeX: starting...')
 
     await TeXstudio.init()
 
@@ -660,7 +659,7 @@ export = new class BetterBibTeX {
       ww.openWindow(null, 'chrome://zotero-better-bibtex/content/FirstRun.xul', 'better-bibtex-first-run', 'chrome,centerscreen,modal', params)
       this.firstRun = params.wrappedJSObject
 
-      debug('firstRun:', this.firstRun)
+      log.debug('firstRun:', this.firstRun)
 
       Prefs.set('citekeyFormat', (this.firstRun.citekeyFormat === 'zotero') ? '[zotero:clean]' : citekeyFormat.substr(1))
     } else {
@@ -672,7 +671,7 @@ export = new class BetterBibTeX {
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
-    debug("Schema ready, let's roll!")
+    log.debug("Schema ready, let's roll!")
 
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     Cache.init() // oh FFS -- datadir is async now
