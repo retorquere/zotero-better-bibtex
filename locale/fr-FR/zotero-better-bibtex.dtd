@@ -26,8 +26,7 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
-<!ENTITY better-bibtex.ErrorReport.zotero "Zotero log">
-<!ENTITY better-bibtex.ErrorReport.bbt "BBT log">
+<!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Les rapports d'erreurs ne peuvent pas être vérifiés sauf s'ils sont référencés dans le programme de suivi des problèmes GitHub.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Veuillez envoyer un message dans le programme de suivi des problèmes GitHub (https://github.com/retorquere/zotero-better-bibtex/issues) en précisant l'ID de débogage, une description du problème et toutes les étapes nécessaires pour le reproduire.">
 <!ENTITY better-bibtex.ErrorReport.references "Références">
