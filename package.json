@@ -70,6 +70,7 @@
     "parse5": "^5.0.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.1",
+    "recast": "^0.15.2",
     "string-template": "^1.0.0",
     "transliteration": "^1.6.5",
     "webpack-cli": "^3.1.0",

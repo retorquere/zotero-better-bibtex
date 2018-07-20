@@ -25,6 +25,11 @@ _run:
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
+      if [[ "bcd" =~ "ab" ]]
+      git log --format=%B -n 1 $CIRCLE_SHA1 | grep '#trace' &> /dev/null
+      if [ $? == 0 ]; then
+        echo -e "export TRACE=true" >> $BASH_ENV
+      fi
   ruby: &ruby
     command: gem install bundler && gem update bundler && bundle config && (bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3)
     no_output_timeout: 180s
@@ -36,8 +41,8 @@ jobs:
     <<: *defaults
 
     steps:
-    - run: *setenv
     - checkout
+    - run: *setenv
     - run: git submodule sync && git submodule update --init --recursive
     - restore_cache:
         keys:
@@ -79,8 +84,8 @@ jobs:
     parallelism: 4
 
     steps:
-    - run: *setenv
     - checkout
+    - run: *setenv
 
     - attach_workspace:
         at: *working_directory
@@ -108,6 +113,7 @@ jobs:
 
         if [ "$NIGHTLY" = "true" -o "$CIRCLE_TAG" ]; then
           NIGHTLY_TAGS=""
+          export TRACE=true
         else
           NIGHTLY_TAGS="not @nightly and"
         fi
@@ -142,8 +148,8 @@ jobs:
     <<: *defaults
 
     steps:
-    - run: *setenv
     - checkout
+    - run: *setenv
     - attach_workspace:
         at: *working_directory
     - run: yarn run release
@@ -152,8 +158,8 @@ jobs:
     <<: *defaults
 
     steps:
-    - run: *setenv
     - checkout
+    - run: *setenv
     - run: *node
     - run: yarn run s3form
 

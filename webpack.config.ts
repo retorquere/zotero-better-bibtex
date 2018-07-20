@@ -43,6 +43,7 @@ const common = {
       'json-jsesc-loader': 'zotero-plugin/loader/json',
       'wrap-loader': 'zotero-plugin/loader/wrap',
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
+      'perf-loader': path.join(__dirname, './setup/loaders/performance.ts'),
     },
   },
   module: {
@@ -50,7 +51,7 @@ const common = {
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, type: 'javascript/auto', use: [ 'json-jsesc-loader' ] }, // https://github.com/webpack/webpack/issues/6572
       { test: /\.bcf$/, use: [ 'bcf-loader' ] },
-      { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'ts-loader' ] },
+      { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'wrap-loader', 'perf-loader', 'ts-loader' ].filter(loader => (process.env.TRACE === 'true' || loader !== 'perf-loader')) },
     ],
   },
 }
