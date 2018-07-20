@@ -5,7 +5,7 @@ export = function instrument(source) {
   const ast = recast.parse(source)
 
   const origin = this.resourcePath.substring(process.cwd().length + 1)
-  // fs.writeFileSync('loader/' + this.resourcePath.replace(/.*\//, ''), source, 'utf8')
+  // fs.writeFileSync('loader/' + origin.replace(/\//g, '-'), source, 'utf8')
 
   recast.visit(ast, {
     origin,
@@ -19,7 +19,7 @@ export = function instrument(source) {
     visitMethodDefinition: function(path) { // tslint:disable-line:object-literal-shorthand
       const parent = path.parent.parent.node
       const parentName = parent.type === 'ClassExpression' ? '<anonymous>' : parent.id.name
-      const name = `${parentName}.${path.value.key.name}`
+      const name = `${parentName}.${path.value.key.name || path.value.key.value}`
 
       this.insertLogger(path.value.value.body, name)
 
