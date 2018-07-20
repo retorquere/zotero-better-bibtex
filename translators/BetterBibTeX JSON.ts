@@ -50,7 +50,7 @@ Translator.doImport = async () => {
     }
     await item.complete()
     items.add(source.itemID)
-    Zotero.setProgress(items.size() / data.items.length * 100) // tslint:disable-line:no-magic-numbers
+    Zotero.setProgress(items.size / data.items.length * 100) // tslint:disable-line:no-magic-numbers
   }
   Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
 
