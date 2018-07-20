@@ -74,8 +74,7 @@
     "transliteration": "^1.6.5",
     "webpack-cli": "^3.1.0",
     "xregexp": "^4.2.0",
-    "grasp": "^0.6.0",
-    "zotero-plugin": "0.0.42"
+    "zotero-plugin": "0.0.44"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",

@@ -420,8 +420,8 @@ module BBT
   profile["devtools.errorconsole.enabled"] = true
   profile["devtools.source-map.locations.enabled"] = true
   profile["dom.disable_open_during_load"] = false
-  profile["dom.max_chrome_script_run_time"] = 30
-  profile["dom.max_script_run_time"] = 30
+  profile["dom.max_chrome_script_run_time"] = 0
+  profile["dom.max_script_run_time"] = 0
   profile["dom.report_all_js_exceptions"] = true
   profile["extensions.autoDisableScopes"] = 10
   profile["extensions.blocklist.enabled"] = false

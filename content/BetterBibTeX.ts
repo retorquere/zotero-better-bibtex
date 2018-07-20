@@ -61,11 +61,12 @@ AddonManager.addAddonListener({
     // tslint:disable-next-line:no-bitwise
     if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return
 
-    // tslint:disable-next-line:no-unused-variable
-    for (const [id, header] of Object.entries(Translators.byId)) {
+    for (const header of Object.values(Translators.byId)) {
       try {
         Translators.install(header)
-      } catch (error) {}
+      } catch (err) {
+        log.error(err)
+      }
     }
 
     delete Zotero.BetterBibTeX.uninstalled

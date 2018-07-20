@@ -478,8 +478,10 @@ class ZoteroItem {
       const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
       if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
     }
+  }
 
-    this.item.complete()
+  public async complete() {
+    await this.item.complete()
   }
 
   protected $title(value) {
@@ -1124,10 +1126,15 @@ Translator.doImport = async () => {
   const validFields = Zotero.BetterBibTeX.validFields()
 
   const itemIDS = {}
-  for (const [id, ref] of (Object.entries(bib.references) as any[][])) { // TODO: add typings to the npm package
+  let imported = 0
+  const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
+  for (const [id, ref] of references) {
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
-    new ZoteroItem(id, ref, bib.groups, validFields) // tslint:disable-line:no-unused-expression
+    await (new ZoteroItem(id, ref, bib.groups, validFields)).complete()
+    imported += 1
+    Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
   }
+  Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
 
   for (const group of bib.groups || []) {
     importGroup(group, itemIDS, true)

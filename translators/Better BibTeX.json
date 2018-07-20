@@ -5,9 +5,9 @@
   "creator": "Simon Kornblith, Richard Karnesky and Emiliano heyns",
   "target": "bib",
   "minVersion": "4.0.27",
-  "async": true,
   "maxVersion": "",
   "configOptions": {
+    "async": true,
     "getCollections": true
   },
   "displayOptions": {

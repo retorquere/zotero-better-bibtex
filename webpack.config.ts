@@ -2,8 +2,6 @@
 
 import * as webpack from 'webpack'
 import * as path from 'path'
-import * as fs from 'fs'
-import stringify = require('json-stringify-safe')
 
 // import BailPlugin from 'zotero-plugin/plugin/bail'
 

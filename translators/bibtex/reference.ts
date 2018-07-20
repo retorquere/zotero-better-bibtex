@@ -163,7 +163,7 @@ const Language = new class { // tslint:disable-line:variable-name
 
     // list of unique languages
     this.babelList = []
-    for (const [k, v] of Object.entries(this.babelMap)) { // tslint:disable-line:no-unused-variable
+    for (const v of Object.values(this.babelMap)) {
       for (const lang of v) {
         if (this.babelList.indexOf(lang) < 0) this.babelList.push(lang)
       }
@@ -192,7 +192,7 @@ const Language = new class { // tslint:disable-line:variable-name
       // consider a langcode matched if it is the prefix of exactly one language in the map
       const lc = langcode.toLowerCase()
       const matches = []
-      for (const [code, languages] of Object.entries(Language.babelMap)) { // tslint:disable-line:no-unused-variable
+      for (const languages of Object.values(Language.babelMap)) {
         for (const lang of languages) {
           if (lang.toLowerCase().indexOf(lc) !== 0) continue
           matches.push(languages)

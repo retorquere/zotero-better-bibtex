@@ -12,6 +12,12 @@ Before do |scenario|
   @explicitprefs = {}
 end
 
+After do |scenario|
+  if scenario.failed? && File.file?('exported.txt') && ENV['CIRCLE_ARTIFACTS']
+    FileUtils.mv('exported.txt', File.join(ENV['CIRCLE_ARTIFACTS'], scenario.name + '.txt'))
+  end
+end
+
 def preferenceValue(value)
   value.strip!
   return true if value == 'true'
