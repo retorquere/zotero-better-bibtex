@@ -25,7 +25,7 @@ _run:
         *)    echo -e "export ZOTERO=zotero" >> $BASH_ENV
               ;;
       esac
-      if [[ "bcd" =~ "ab" ]]
+
       git log --format=%B -n 1 $CIRCLE_SHA1 | grep '#trace' &> /dev/null
       if [ $? == 0 ]; then
         echo -e "export TRACE=true" >> $BASH_ENV
