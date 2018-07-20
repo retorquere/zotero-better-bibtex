@@ -50,9 +50,9 @@ Translator.doImport = async () => {
     }
     await item.complete()
     items.add(source.itemID)
-    Zotero.setProgress(items.size() / data.items.length * 100)
+    Zotero.setProgress(items.size() / data.items.length * 100) // tslint:disable-line:no-magic-numbers
   }
-  Zotero.setProgress(100)
+  Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
 
   const collections: any[] = Object.values(data.collections || {})
   for (const collection of collections) {
