@@ -9,6 +9,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Subscript in uppercase if last thing in title #1037                                            | 8           |
      | Japanese rendered as Chinese in Citekey #979                                                   | 1           |
      | Dates incorrect when Zotero date field includes times #934                                     | 1           |
      | Juris-M missing multi-lingual fields #482                                                      | 2           |
