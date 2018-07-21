@@ -31,22 +31,28 @@ Translator.doImport = async () => {
   }
 
   const data = JSON.parse(json)
-  const validFields = Zotero.BetterBibTeX.validFields()
 
   const items = new Set
   debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
     Zotero.BetterBibTeX.simplifyFields(source)
 
-    if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
+    // I do export these but the cannot be imported back
+    delete source.relations
+    delete source.citekey
+    delete source.uri
+
+    if (!Zotero.BetterBibTeX.validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {
-      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
+      if (!Zotero.BetterBibTeX.validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
     }
 
     const item = new Zotero.Item()
     Object.assign(item, source)
     for (const att of item.attachments || []) {
       if (att.url) delete att.path
+      delete att.relations
+      delete att.uri
     }
     await item.complete()
     items.add(source.itemID)
@@ -95,29 +101,35 @@ Translator.doExport = () => {
   }
   debug('header ready')
 
-  const validFields = Zotero.BetterBibTeX.validFields()
-  const validAttachmentFields = new Set([ 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
+  const validItemFields = new Set([
+    'citekey',
+    'uri',
+    'relations',
+  ])
+  const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
     Zotero.BetterBibTeX.simplifyFields(item)
-
-    delete item.relations
+    item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     for (const field of Object.keys(item)) {
-      if (validFields[item.itemType] && !validFields[item.itemType][field]) {
+      if (validItemFields.has(field)) continue
+
+      if (Zotero.BetterBibTeX.validFields[item.itemType] && !Zotero.BetterBibTeX.validFields[item.itemType][field]) {
+        debug('bbt json: delete', item.itemType, field, item[field])
         delete item[field]
       }
     }
 
     for (const att of item.attachments || []) {
-      delete att.relations
       att.path = att.localpath
       for (const field of Object.keys(att)) {
+        att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
         if (!validAttachmentFields.has(field)) delete att[field]
       }
     }
 
-    debug('adding item', item.itemID)
+    if (item.relations) debug('adding item', item)
     data.items.push(item)
   }
   debug('data ready')
