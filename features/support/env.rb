@@ -52,7 +52,7 @@ class HTTPNotFoundError < StandardError; end
 def execute(options)
   options = {script: options} if options.is_a?(String)
   options = {
-    timeout: 10,
+    timeout: ENV['NIGHTLY'] == 'true' ? : 300 : 10,
     headers: { 'Content-Type' => 'text/plain' },
   }.merge(options || {})
   args = options.delete(:args) || {}
