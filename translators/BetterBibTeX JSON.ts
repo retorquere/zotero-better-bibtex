@@ -31,6 +31,7 @@ Translator.doImport = async () => {
   }
 
   const data = JSON.parse(json)
+  const validFields = Zotero.BetterBibTeX.validFields()
 
   const items = new Set
   debug('importing', data.items.length, 'items')
@@ -42,9 +43,9 @@ Translator.doImport = async () => {
     delete source.citekey
     delete source.uri
 
-    if (!Zotero.BetterBibTeX.validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
+    if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {
-      if (!Zotero.BetterBibTeX.validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
+      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
     }
 
     const item = new Zotero.Item()
@@ -101,6 +102,7 @@ Translator.doExport = () => {
   }
   debug('header ready')
 
+  const validFields = Zotero.BetterBibTeX.validFields()
   const validItemFields = new Set([
     'citekey',
     'uri',
@@ -115,7 +117,7 @@ Translator.doExport = () => {
     for (const field of Object.keys(item)) {
       if (validItemFields.has(field)) continue
 
-      if (Zotero.BetterBibTeX.validFields[item.itemType] && !Zotero.BetterBibTeX.validFields[item.itemType][field]) {
+      if (validFields[item.itemType] && !validFields[item.itemType][field]) {
         debug('bbt json: delete', item.itemType, field, item[field])
         delete item[field]
       }
