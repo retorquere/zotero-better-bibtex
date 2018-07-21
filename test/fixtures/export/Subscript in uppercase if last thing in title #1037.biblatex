@@ -2,21 +2,18 @@
 @article{ref1,
   author = {Name, Name},
   date = {2018},
-  note = {1 O(sub)abcde(/sub)},
   title = {1 {{O}}{\textsubscript{abcde}}}
 }
 
 @article{ref2,
   author = {Name, Name},
   date = {2018},
-  note = {2 O(sub)abcde(/sub) test},
   title = {2 {{O}}{\textsubscript{abcde}} Test}
 }
 
 @article{ref3,
   author = {Name, Name},
   date = {2018},
-  note = {(span class="nocase")O(sub)abcde(/sub)(/span)},
   title = {{{O{\textsubscript{abcde}}}}}
 }
 
