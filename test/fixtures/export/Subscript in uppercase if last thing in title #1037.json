@@ -196,7 +196,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "1 O<sub>abcde</sub>",
-      "extra": "1 O(sub)abcde(/sub)",
+      "extra": "bibtex: ref1",
       "creators": [
         {
           "firstName": "Name",
@@ -226,7 +226,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "2 O<sub>abcde</sub> test",
-      "extra": "2 O(sub)abcde(/sub) test",
+      "extra": "bibtex: ref2",
       "creators": [
         {
           "firstName": "Name",
@@ -256,7 +256,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
-      "extra": "(span class=\"nocase\")O(sub)abcde(/sub)(/span)",
+      "extra": "bibtex: ref3",
       "creators": [
         {
           "firstName": "Name",
@@ -286,6 +286,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "O<sub>x</sub>",
+      "extra": "bibtex: ref4",
       "creators": [
         {
           "firstName": "Name",
@@ -315,6 +316,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "O<sub>x</sub> test",
+      "extra": "bibtex: ref5",
       "creators": [
         {
           "firstName": "Name",
@@ -344,6 +346,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "<span class=\"nocase\">O<sub>x</sub></span>",
+      "extra": "bibtex: ref6",
       "creators": [
         {
           "firstName": "Name",
@@ -373,6 +376,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "O<sub>7-x</sub>",
+      "extra": "bibtex: ref7",
       "creators": [
         {
           "firstName": "Name",
@@ -402,6 +406,7 @@
       "itemType": "journalArticle",
       "date": "2018",
       "title": "O<sub>7-x</sub> test",
+      "extra": "bibtex: ref8",
       "creators": [
         {
           "firstName": "Name",

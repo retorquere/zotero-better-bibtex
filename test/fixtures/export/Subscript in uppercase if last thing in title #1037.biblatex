@@ -1,50 +1,50 @@
 
-@article{NameOabcde2018,
+@article{ref1,
   author = {Name, Name},
   date = {2018},
   note = {1 O(sub)abcde(/sub)},
   title = {1 {{O}}{\textsubscript{abcde}}}
 }
 
-@article{NameOabcdetest2018,
+@article{ref2,
   author = {Name, Name},
   date = {2018},
   note = {2 O(sub)abcde(/sub) test},
   title = {2 {{O}}{\textsubscript{abcde}} Test}
 }
 
-@article{NameOabcde2018a,
+@article{ref3,
   author = {Name, Name},
   date = {2018},
   note = {(span class="nocase")O(sub)abcde(/sub)(/span)},
   title = {{{O{\textsubscript{abcde}}}}}
 }
 
-@article{NameOx2018,
+@article{ref4,
   author = {Name, Name},
   date = {2018},
   title = {O{\textsubscript{x}}}
 }
 
-@article{NameOxtest2018,
+@article{ref5,
   author = {Name, Name},
   date = {2018},
   title = {O{\textsubscript{x}} Test}
 }
 
-@article{NameOx2018a,
+@article{ref6,
   author = {Name, Name},
   date = {2018},
   title = {{{O{\textsubscript{x}}}}}
 }
 
-@article{NameO7x2018,
+@article{ref7,
   author = {Name, Name},
   date = {2018},
   title = {O{\textsubscript{7-X}}}
 }
 
-@article{NameO7xtest2018,
+@article{ref8,
   author = {Name, Name},
   date = {2018},
   title = {O{\textsubscript{7-x}} Test}
