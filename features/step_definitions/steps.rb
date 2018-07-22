@@ -22,7 +22,7 @@ After do |scenario|
   raise "Duplicate scenario name #{scenario.name.inspect}" if @runtimes[scenario.name]
   @runtimes[scenario.name] = {
     tags: scenario.source_tag_names,
-    scenario: scenario.scenario_outline ? scenario.scenario_outline.name : nil,
+    scenario: scenario.respond_to?(:scenario_outline) ? scenario.scenario_outline.name : nil,
     name: scenario.name,
     runtime: Time.now - @started,
   }
