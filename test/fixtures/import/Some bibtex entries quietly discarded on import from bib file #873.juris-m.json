@@ -580,7 +580,6 @@
       "place": "Cambridge, Mass.",
       "date": "January 1980",
       "extra": "Citation Key: McAllester:80",
-      "reportNumber": "AI-TR-550",
       "title": "The Use of Equality in Deduction and Knowledge Representation",
       "creators": [
         {
@@ -1454,7 +1453,6 @@
       "itemType": "report",
       "date": "1978",
       "extra": "Citation Key: Wilensky:thesis",
-      "reportNumber": "140",
       "title": "Understanding Goal-based Stories",
       "creators": [
         {
@@ -1485,7 +1483,6 @@
       "itemType": "report",
       "date": "December 1986",
       "extra": "Citation Key: Birnbaum:86",
-      "reportNumber": "489",
       "title": "Integrated Processing in Planning and Understanding",
       "creators": [
         {
@@ -3994,7 +3991,6 @@
       "itemType": "report",
       "date": "1980",
       "extra": "Citation Key: Granger",
-      "reportNumber": "Research Report 171",
       "title": "Adaptive Understanding: Correcting Erroneous Inferences",
       "creators": [
         {
@@ -6936,7 +6932,6 @@
       "place": "Stanford University, Stanford, CA",
       "date": "September 1985",
       "extra": "Review of  Two-level Morphology \nCitation Key: Gazdar:85",
-      "reportNumber": "CSLI-85-32",
       "title": "Finite State Morphology: A review of Koskenniemi (1983)",
       "creators": [
         {
@@ -8519,7 +8514,6 @@
       "itemType": "report",
       "date": "September 1987",
       "extra": "Citation Key: Brooks:87",
-      "reportNumber": "Working Paper 303",
       "title": "Planning is just a way of avoiding figuring out what to do next",
       "creators": [
         {
@@ -12784,7 +12778,6 @@
       "place": "New Haven, CT",
       "date": "1998-10",
       "extra": "Citation Key: McDermott:98:pddl",
-      "reportNumber": "CVC TR-98-003",
       "title": "PDDL -- The Planning Domain Definition Language",
       "creators": [
         {
@@ -13395,7 +13388,6 @@
       "extra": "Citation Key: UMCP-CSD//CS-TR-3981 \nbibtex[bibdate=March 17, 1999]",
       "reportType": "Technical Report",
       "abstractNote": "SHOP (Simple Hierarchical Ordered Planner) is a domain-independent HTN Planning system with the following characteristics. * SHOP plans for tasks in the same order that they will later be executed. This avoids some of the goal-interaction issues that arise in other HTN planners, thus making the planning algorithm relatively simple. * The planning algorithm is sound and complete over a large class of problems. * Since SHOP knows the complete world-state at each step of the planning process, it can use highly expressive domain representations. For example, it can do planning problems that require complex numeric computations. * In our tests, SHOP solved problems several orders of magnitude faster than Blackbox and TLplan. This occured even though SHOP is written in Lisp and the other planners are written in C. (Also cross-referenced as UMIACS-TR 99-04)",
-      "reportNumber": "CS-TR-3981",
       "title": "SHOP: Simple Hierarchical Ordered Planner",
       "creators": [
         {
@@ -17580,7 +17572,6 @@
       "place": "Rochester, NY",
       "date": "May 1987",
       "extra": "Citation Key: Kautz:thesis",
-      "reportNumber": "TR 215",
       "title": "A Formal Theory of Plan Recognition",
       "creators": [
         {
@@ -17985,7 +17976,6 @@
       "place": "SRI-ADDRESS",
       "date": "December 1990",
       "extra": "Citation Key: Hobbs:IasATR",
-      "reportNumber": "499",
       "title": "Interpretation as Abduction",
       "creators": [
         {
@@ -18108,7 +18098,6 @@
       "place": "CSLI-ADDRESS",
       "date": "October 1986",
       "extra": "Citation Key: Johnson:86",
-      "reportNumber": "CSLI-86-63",
       "title": "Discourse, Anaphora and Parsing",
       "creators": [
         {
@@ -19706,7 +19695,6 @@
       "date": "November 1990",
       "extra": "Citation Key: Marcus:90",
       "reportType": "Occasional Paper",
-      "reportNumber": "41",
       "title": "Overregularization",
       "creators": [
         {
@@ -19764,7 +19752,6 @@
       "place": "545 Technology Square, Cambridge, MA",
       "date": "June 1991",
       "extra": "Citation Key: Leong:91",
-      "reportNumber": "MIT/LCS/TR--504",
       "title": "Knowledge Representation for Supporting Decision Model Formulation in Medicine",
       "creators": [
         {
@@ -20829,7 +20816,6 @@
       "place": "Bloomington, IN",
       "date": "1992",
       "extra": "Citation Key: Mills:92",
-      "reportNumber": "363a",
       "title": "Stiquito: A Small, simple, inexpensive hexapod robot; Part 1. Locomotion and Hard-wired control",
       "creators": [
         {
@@ -21190,7 +21176,6 @@
       "date": "September 1989",
       "extra": "Citation Key: Barto:89",
       "reportType": "COINS Technical Report",
-      "reportNumber": "89--89",
       "title": "Connectionist Learning for Control: An Overview",
       "creators": [
         {
@@ -21693,7 +21678,6 @@
       "itemType": "report",
       "date": "1992-09",
       "extra": "Preliminary version of Chapters 1-9 of a book \nCitation Key: Sandewall:92",
-      "reportNumber": "LiTH-IDA-R-92-30",
       "title": "Features and Fluents",
       "creators": [
         {
@@ -21893,7 +21877,6 @@
       "place": "Seattle, WA",
       "date": "February 1994",
       "extra": "Citation Key: Barrett:UCPOP",
-      "reportNumber": "93--09--06",
       "title": "UCPOP User's Manual (Version 2.0)",
       "creators": [
         {
@@ -22265,7 +22248,6 @@
       "place": "Seattle, WA",
       "date": "June 1993",
       "extra": "Citation Key: Haddawy:93",
-      "reportNumber": "93-06-04",
       "title": "Utility Models for Goal-directed Decision-theoretic Planners",
       "creators": [
         {
@@ -22539,7 +22521,6 @@
       "place": "Seattle, WA",
       "date": "June 1993",
       "extra": "This citation should be replaced with Kushmerick, et. al.,  Artificial Intelligence/, 1995 \nCitation Key: Kushmerick:93",
-      "reportNumber": "93-06-03",
       "title": "An Algorithm for Probabilistic Planning",
       "creators": [
         {
@@ -22623,7 +22604,6 @@
       "place": "Seattle, WA",
       "date": "December 1993",
       "extra": "Citation Key: Draper:93",
-      "reportNumber": "93-12-04",
       "title": "Probabilistic Planning with Information Gathering and Contingent Execution",
       "creators": [
         {
@@ -22746,7 +22726,6 @@
       "date": "1987",
       "extra": "Citation Key: Col87",
       "reportType": "YALEU/CSD/RR",
-      "reportNumber": "599",
       "title": "Plan creation: Using strategies as blueprints",
       "creators": [
         {
@@ -23365,7 +23344,6 @@
       "itemType": "report",
       "date": "1993-05",
       "extra": "Citation Key: Thiebaux:93",
-      "reportNumber": "TR--93--027",
       "title": "A Stochastic Model of Actions and Plans for Anytime Planning Under Uncertainty",
       "creators": [
         {
@@ -23616,7 +23594,6 @@
       "place": "Berkeley, CA",
       "date": "November 1993",
       "extra": "Citation Key: Stolcke:93",
-      "reportNumber": "TR-93-065",
       "title": "An Efficient Probabilistic Context-free Parsing Algorithm that Computes Prefix Probabilities",
       "creators": [
         {
@@ -23773,7 +23750,6 @@
       "place": "Philadelphia, PA",
       "date": "1993",
       "extra": "Citation Key: Siskind:93a",
-      "reportNumber": "IRCS--93--03",
       "title": "Screamer: A Portable Efficient Implementation of Nondeterministic Common Lisp",
       "creators": [
         {
@@ -23870,7 +23846,6 @@
       "itemType": "report",
       "date": "June 1993",
       "extra": "Citation Key: Pryor:CassandraORIG",
-      "reportNumber": "41",
       "title": "Cassandra: Planning for Contingencies",
       "creators": [
         {
@@ -23942,7 +23917,6 @@
       "itemType": "report",
       "date": "1994",
       "extra": "Citation Key: Pryor:94TR",
-      "reportNumber": "53",
       "title": "Opportunities and Planning in an Unpredictable World",
       "creators": [
         {
@@ -24101,7 +24075,6 @@
       "date": "June 1992",
       "extra": "Citation Key: Genesereth:KIF3",
       "reportType": "Logic Group Report",
-      "reportNumber": "Logic-92-1",
       "title": "Knowledge Interchange Format, Version 3.0 Reference Manual",
       "creators": [
         {
@@ -25070,7 +25043,6 @@
       "itemType": "report",
       "date": "1994",
       "extra": "Citation Key: Ersan:94",
-      "reportNumber": "BU-CEIS-94-30",
       "title": "Situated Modeling of Epistemic Puzzles",
       "creators": [
         {
@@ -25400,7 +25372,6 @@
       "itemType": "report",
       "date": "1993-06",
       "extra": "Citation Key: Lansky:93",
-      "reportNumber": "FIA-93-17",
       "title": "Localized Planning with Diversified Plan Construction Methods",
       "creators": [
         {
@@ -25933,7 +25904,6 @@
       "place": "College Park, MD",
       "date": "1994",
       "extra": "Citation Key: Erol:HTNSemantics",
-      "reportNumber": "CS-TR-3239 and UMIACS-TR-94-31",
       "title": "Semantics for Hierarchical Task-Network Planning",
       "creators": [
         {
@@ -26516,7 +26486,6 @@
       "itemType": "report",
       "date": "1997",
       "extra": "Citation Key: Kabanza:97TR",
-      "reportNumber": "197",
       "title": "Planning Control Rules for Reactive Agents",
       "creators": [
         {
@@ -26784,7 +26753,6 @@
       "place": "SRI-ADDRESS",
       "date": "1987-01",
       "extra": "Citation Key: Georgeff:87",
-      "reportNumber": "411",
       "title": "Procedural Knowledge",
       "creators": [
         {
@@ -26929,7 +26897,6 @@
       "place": "STANFORD-ADDRESS",
       "date": "1993-04",
       "extra": "revised version \nCitation Key: Gruber:93",
-      "reportNumber": "KSL 92-71",
       "title": "A Translation Approach to Portable Ontology Specifications",
       "creators": [
         {
@@ -26982,7 +26949,6 @@
       "place": "STANFORD-ADDRESS",
       "date": "1993-08",
       "extra": "revised version \nCitation Key: Gruber:93b",
-      "reportNumber": "KSL 93-04",
       "title": "Toward Principles for the Design of Ontologies Used for Knowledge Sharing",
       "creators": [
         {
@@ -27170,7 +27136,6 @@
       "place": "CMU-ADDRESS",
       "date": "1992-03",
       "extra": "Citation Key: Fink:92",
-      "reportNumber": "CMU-CS-94-123",
       "title": "Prodigy Planning Algorithm",
       "creators": [
         {
@@ -27673,7 +27638,6 @@
       "place": "Freiburg, Germany",
       "date": "1997-04",
       "extra": "Citation Key: Nebel:97",
-      "reportNumber": "89",
       "title": "Ignoring Irrelevant Facts and operators in plan generation",
       "creators": [
         {
@@ -28558,7 +28522,6 @@
       "date": "1993-06",
       "extra": "Revised version of 1993, original July, 1992 \nCitation Key: SonnenbergETAL:93",
       "reportType": "Technical Note",
-      "reportNumber": "26",
       "title": "Planned Team Activity",
       "creators": [
         {
@@ -28957,7 +28920,6 @@
       "itemType": "report",
       "date": "1990",
       "extra": "Citation Key: Yen:90",
-      "reportNumber": "CS-90-37",
       "title": "CI2 -- A Logic for Plural representation",
       "creators": [
         {
@@ -28988,7 +28950,6 @@
       "itemType": "report",
       "date": "unknown",
       "extra": "Citation Key: WilksFass",
-      "reportNumber": "MCCS-90-194",
       "title": "Preference Semantics: a family history",
       "creators": [
         {
@@ -29199,7 +29160,6 @@
       "place": "Syracuse, NY",
       "date": "1990-09",
       "extra": "Citation Key: Purdy:90a",
-      "reportNumber": "SU-CIS-90-15",
       "title": "Surface Reasoning",
       "creators": [
         {
@@ -29231,7 +29191,6 @@
       "place": "Syracuse, NY",
       "date": "1990-07",
       "extra": "Citation Key: Purdy:90b",
-      "reportNumber": "SU-CIS-90-02",
       "title": "A Logic for Natural Language",
       "creators": [
         {
@@ -29263,7 +29222,6 @@
       "place": "Syracuse, NY",
       "date": "1990-05",
       "extra": "Citation Key: Purdy:90c",
-      "reportNumber": "SU-CIS-90-07",
       "title": "A Lexical Extension of Montague Semantics",
       "creators": [
         {
@@ -29295,7 +29253,6 @@
       "date": "1990-07",
       "extra": "Citation Key: MillerETAL:90",
       "reportType": "CSL Report",
-      "reportNumber": "43",
       "title": "Five Papers on WordNet",
       "creators": [
         {
@@ -29887,7 +29844,6 @@
       "itemType": "report",
       "date": "1979",
       "extra": "Citation Key: Gaschnig:79",
-      "reportNumber": "CMU-CS-79-124",
       "title": "Performance measurement and analysis of certain search algorithms",
       "creators": [
         {
@@ -31132,7 +31088,6 @@
       "place": "College Park, MD",
       "date": "2004-06",
       "extra": "Citation Key: nau04:applicSHOP2",
-      "reportNumber": "CS-TR-4604, UMIACS-TR-2004-46",
       "title": "Applications of SHOP and SHOP2",
       "creators": [
         {
@@ -31583,7 +31538,6 @@
       "itemType": "report",
       "date": "2004-04",
       "extra": "Citation Key: trueg04:_apply_autom_plann_system_airpor",
-      "reportNumber": "199",
       "title": "Applying Automatic Planning Systems to Airport Ground-Traffic Control --- A Feasibility Study",
       "creators": [
         {
@@ -32584,7 +32538,6 @@
       "date": "2005",
       "extra": "Citation Key: GereviniLong05:PDDL3",
       "reportType": "Technical Report",
-      "reportNumber": "RT 2005-08-47",
       "title": "Plan Constraints and Preferences in PDDL3",
       "creators": [
         {
