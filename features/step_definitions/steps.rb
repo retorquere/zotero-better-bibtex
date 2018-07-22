@@ -2,47 +2,47 @@ require 'fileutils'
 require 'neatjson'
 require 'json'
 
-class Runtimes
-  include Singleton
-
-  def initialize
-    @scenarios = {}
-    @failed = false
-
-  end
-
-  def log(start, scenario)
-    @failed ||= scenario.failed?
-
-    raise "Duplicate scenario name #{scenario.name.inspect}" if @scenarios[scenario.name]
-
-    @scenarios[scenario.name] = {
-      tags: scenario.source_tag_names,
-      name: scenario.name,
-      runtime: Time.now - start,
-    }
-  end
-
-  def save
-    return if @failed
-
-    if ENV['CIRCLE_ARTIFACTS']
-      #json = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
-      json = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
-    else
-      json = 'runtimes.json'
-    end
-
-    open(json, 'w'){|f| f.puts(JSON.pretty_generate(@scenarios)) }
-  end
-end
-at_exit do
-  Runtimes.instance.save
-end
+#class Runtimes
+#  include Singleton
+#
+#  def initialize
+#    @scenarios = {}
+#    @failed = false
+#
+#  end
+#
+#  def log(start, scenario)
+#    @failed ||= scenario.failed?
+#
+#    raise "Duplicate scenario name #{scenario.name.inspect}" if @scenarios[scenario.name]
+#
+#    @scenarios[scenario.name] = {
+#      tags: scenario.source_tag_names,
+#      name: scenario.name,
+#      runtime: Time.now - start,
+#    }
+#  end
+#
+#  def save
+#    return if @failed
+#
+#    if ENV['CIRCLE_ARTIFACTS']
+#      #json = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+#      json = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
+#    else
+#      json = 'runtimes.json'
+#    end
+#
+#    open(json, 'w'){|f| f.puts(JSON.pretty_generate(@scenarios)) }
+#  end
+#end
+#at_exit do
+#  Runtimes.instance.save
+#end
 
 
 Before do |scenario|
-  @started = Time.now
+#  @started = Time.now
   execute(
     timeout: 120,
     script: 'await Zotero.BetterBibTeX.TestSupport.reset()'
@@ -57,7 +57,7 @@ After do |scenario|
   if scenario.failed? && File.file?('exported.txt') && ENV['CIRCLE_ARTIFACTS']
     FileUtils.mv('exported.txt', File.join(ENV['CIRCLE_ARTIFACTS'], scenario.name + '.txt'))
   end
-  Runtimes.instance.log(@started, scenario)
+#  Runtimes.instance.log(@started, scenario)
 end
 
 def preferenceValue(value)

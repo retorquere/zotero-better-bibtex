@@ -17,7 +17,7 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
-    "test": "cucumber --fail-fast --no-color | tee cucumber.log",
+    "test": "cucumber --format json --out cucumber.json --format pretty --fail-fast",
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",

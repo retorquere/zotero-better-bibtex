@@ -53,6 +53,7 @@ end
 
 if runtimes.length > 1
   remaining = runtimes.values.collect{|scenario| scenario['runtime']}.sum / 2
+  puts "redistributing #{remaining}s"
   moved = 0
   runtimes.values.each{|test|
     break if moved > remaining
