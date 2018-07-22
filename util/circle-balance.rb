@@ -52,12 +52,17 @@ while runtimes.length > 0
 end
 
 if runtimes.length > 1
+  remaining = runtimes.values.collect{|scenario| scenario['runtime']}.sum / 2
+  moved = 0
   runtimes.values.each{|test|
+    break if moved > remaining
+
     if test['cluster'] % 2 == 0
       move = 'remove'
     else
       move = '   add'
     end
     puts "#{move} @test-cluster-1: #{test['name']}"
+    moved += test['runtime']
   }
 end
