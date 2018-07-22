@@ -27,7 +27,8 @@ After do |scenario|
     runtime: Time.now - @started,
   }
   if ENV['CIRCLE_ARTIFACTS']
-    runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+    #runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+    runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
   else
     runtimes = 'runtimes.json'
   end
