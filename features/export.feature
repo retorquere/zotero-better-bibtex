@@ -229,20 +229,17 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/two ISSN number are freezing browser #110.biblatex"
 
-@test-cluster-1
 @arXiv @85 @bbt
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/Square brackets in Publication field (85).json"
   Then an export using "Better BibTeX" should match "export/Square brackets in Publication field (85).bibtex"
 
-@test-cluster-1
 @86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I set preference .citekeyFormat to [auth+initials][year]
    And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then an export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
-@test-cluster-1
 @860
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
@@ -250,32 +247,27 @@ Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #8
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
-@test-cluster-1
 @922
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
   Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
 
-@test-cluster-1
 @856
 Scenario: Quotes around last names should be removed from citekeys #856
   When I import 1 reference from "export/Quotes around last names should be removed from citekeys #856.json"
   Then an export using "Better CSL JSON" should match "export/Quotes around last names should be removed from citekeys #856.csl.json"
 
-@test-cluster-1
 @372 @pandoc
 Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
   Then an export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
 
-@test-cluster-1
 @365 @pandoc @825
 Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
   When I import 7 references from "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.json"
   Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.biblatex"
   And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.csl.json"
 
-@test-cluster-1
 @587
 Scenario: Setting the item type via the cheater syntax #587
   When I import 5 references from "export/Setting the item type via the cheater syntax #587.json"
