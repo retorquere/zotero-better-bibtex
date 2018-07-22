@@ -1,7 +1,9 @@
 require 'fileutils'
 require 'neatjson'
+require 'json'
 
 Before do |scenario|
+  @started = Time.now
   execute(
     timeout: 120,
     script: 'await Zotero.BetterBibTeX.TestSupport.reset()'
@@ -16,6 +18,20 @@ After do |scenario|
   if scenario.failed? && File.file?('exported.txt') && ENV['CIRCLE_ARTIFACTS']
     FileUtils.mv('exported.txt', File.join(ENV['CIRCLE_ARTIFACTS'], scenario.name + '.txt'))
   end
+  @runtimes ||= {}
+  raise "Duplicate scenario name #{scenario.name.inspect}" if @runtimes[scenario.name]
+  @runtimes[scenario.name] = {
+    tags: scenario.source_tag_names,
+    scenario: scenario.scenario_outline ? scenario.scenario_outline.name : nil,
+    name: scenario.name,
+    runtime: Time.now - @started,
+  }
+  if ENV['CIRCLE_ARTIFACTS']
+    runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+  else
+    runtimes = 'runtimes.json'
+  end
+  open(runtimes, 'w'){|f| f.puts(JSON.pretty_generate(@runtimes)) }
 end
 
 def preferenceValue(value)
