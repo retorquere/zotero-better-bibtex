@@ -2,6 +2,31 @@ require 'fileutils'
 require 'neatjson'
 require 'json'
 
+class Runtimes
+  include Singleton
+
+  def initialize
+    @scenarios = {}
+
+    if ENV['CIRCLE_ARTIFACTS']
+      #runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+      @json = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
+    else
+      @json = 'runtimes.json'
+    end
+  end
+
+  def log(start, scenario)
+    raise "Duplicate scenario name #{scenario.name.inspect}" if @scenarios[scenario.name]
+    @scenarios[scenario.name] = {
+      tags: scenario.source_tag_names,
+      name: scenario.name,
+      runtime: Time.now - start,
+    }
+    open(@json, 'w'){|f| f.puts(JSON.pretty_generate(@scenarios)) }
+  end
+end
+
 Before do |scenario|
   @started = Time.now
   execute(
@@ -18,21 +43,7 @@ After do |scenario|
   if scenario.failed? && File.file?('exported.txt') && ENV['CIRCLE_ARTIFACTS']
     FileUtils.mv('exported.txt', File.join(ENV['CIRCLE_ARTIFACTS'], scenario.name + '.txt'))
   end
-  @runtimes ||= {}
-  raise "Duplicate scenario name #{scenario.name.inspect}" if @runtimes[scenario.name]
-  @runtimes[scenario.name] = {
-    tags: scenario.source_tag_names,
-    scenario: scenario.respond_to?(:scenario_outline) ? scenario.scenario_outline.name : nil,
-    name: scenario.name,
-    runtime: Time.now - @started,
-  }
-  if ENV['CIRCLE_ARTIFACTS']
-    #runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
-    runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
-  else
-    runtimes = 'runtimes.json'
-  end
-  open(runtimes, 'w'){|f| f.puts(JSON.pretty_generate(@runtimes)) }
+  Runtimes.instance.log(@started, scenario)
 end
 
 def preferenceValue(value)
