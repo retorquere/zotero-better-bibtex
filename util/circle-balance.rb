@@ -10,6 +10,7 @@ CircleCi.configure do |config|
 end
 
 runtimes = {}
+balance = [0, 0, 60, 60]
 build = CircleCi::Build.new 'retorquere', 'zotero-better-bibtex', nil, ARGV[0]
 build.artifacts.body.each{|artifact|
   next unless File.basename(artifact['path']) == 'runtimes.json'
@@ -22,26 +23,36 @@ build.artifacts.body.each{|artifact|
     name = "#{prefix}:#{k}"
     rt[name] = rt.delete(k)
     rt[name]['cluster'] = cluster
+    balance[cluster] += rt[name]['runtime']
   }
 
   runtimes = runtimes.merge(rt)
 }
 
-balance = [0, 0, 0, 0]
+puts balance.inspect
+
+if balance.each_with_index.max[1] < 2
+  puts 'optimizing for Zotero'
+  runtimes.reject!{|k, v| v['cluster'] > 1 }
+else
+  puts 'optimizing for Juris-M'
+  runtimes.reject!{|k, v| v['cluster'] < 2 }
+  runtimes.each_pair{|k, v| v['cluster'] -= 2 }
+end
+
+balance = [0, 0]
 
 while runtimes.length > 0
   scenario = runtimes.find{|k, v| v['cluster'] == (balance[0] < balance[1] ? 0 : 1) }
-  scenario ||= runtimes.find{|k, v| v['cluster'] == (balance[2] < balance[3] ? 2 : 3) }
   break if scenario.nil?
   name, scenario = scenario
 
   balance[scenario['cluster']] += scenario['runtime']
   runtimes.delete(name)
-
-  #puts balance.inspect
 end
 
-puts
+puts balance.inspect
+
 runtimes.values.each{|test|
   if test['cluster'] % 2 == 0
     move = 'remove'
