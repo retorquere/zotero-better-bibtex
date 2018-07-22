@@ -7,25 +7,39 @@ class Runtimes
 
   def initialize
     @scenarios = {}
+    @failed = false
 
-    if ENV['CIRCLE_ARTIFACTS']
-      #runtimes = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
-      @json = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
-    else
-      @json = 'runtimes.json'
-    end
   end
 
   def log(start, scenario)
+    @failed ||= scenario.failed?
+
     raise "Duplicate scenario name #{scenario.name.inspect}" if @scenarios[scenario.name]
+
     @scenarios[scenario.name] = {
       tags: scenario.source_tag_names,
       name: scenario.name,
       runtime: Time.now - start,
     }
-    open(@json, 'w'){|f| f.puts(JSON.pretty_generate(@scenarios)) }
+  end
+
+  def save
+    return if @failed
+
+    if ENV['CIRCLE_ARTIFACTS']
+      #json = File.join(ENV['CIRCLE_ARTIFACTS'], "runtimes-#{ENV['CIRCLE_BUILD_NUM']}-#{ENV['CIRCLE_NODE_INDEX']}.json")
+      json = File.join(ENV['CIRCLE_ARTIFACTS'], 'runtimes.json')
+    else
+      json = 'runtimes.json'
+    end
+
+    open(json, 'w'){|f| f.puts(JSON.pretty_generate(@scenarios)) }
   end
 end
+at_exit do
+  Runtimes.instance.save
+end
+
 
 Before do |scenario|
   @started = Time.now

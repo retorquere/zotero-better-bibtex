@@ -129,7 +129,6 @@ jobs:
         cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
         cp -r ~/.BBTZ5TEST/$ZOTERO/better* $CIRCLE_ARTIFACTS
         ls -lh $CIRCLE_ARTIFACTS/*
-        curl -H 'x-amz-storage-class: STANDARD' -H 'x-amz-acl: bucket-owner-full-control' -H 'Content-Type: application/json' --upload-file $CIRCLE_ARTIFACTS/runtimes.json http://better-bibtex-error-reports-62200312-euc.s3-eu-central-1.amazonaws.com/$CIRCLE_BUILD_NUM/runtimes-$CIRCLE_BUILD_NUM-$CIRCLE_NODE_INDEX.json
 
     - store_test_results:
         path: /tmp/circleci-test-results
