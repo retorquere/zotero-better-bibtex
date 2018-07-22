@@ -43,8 +43,6 @@ Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
-  Examples:
-  | file                                                                        | references  |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
@@ -59,6 +57,13 @@ Scenario Outline: Better BibTeX Import
   | Better BibLaTeX import improvements #549                                    | 9           |
   | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Math formatting lost on import #627                                         | 1           |
+
+Scenario Outline: Better BibTeX Import
+  When I import <references> reference from "import/<file>.bib"
+  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+
+  Examples:
+  | file                                                                        | references  |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |
   | Better BibTeX.003                                                           | 2           |

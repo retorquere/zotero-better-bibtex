@@ -10,7 +10,7 @@ CircleCi.configure do |config|
 end
 
 runtimes = {}
-balance = [0, 0, 60, 60]
+balance = [17, 17, 55, 55]
 build = CircleCi::Build.new 'retorquere', 'zotero-better-bibtex', nil, ARGV[0]
 build.artifacts.body.each{|artifact|
   next unless File.basename(artifact['path']) == 'runtimes.json'
@@ -51,13 +51,13 @@ while runtimes.length > 0
   runtimes.delete(name)
 end
 
-puts balance.inspect
-
-runtimes.values.each{|test|
-  if test['cluster'] % 2 == 0
-    move = 'remove'
-  else
-    move = '   add'
-  end
-  puts "#{move} @test-cluster-1: #{test['name']}"
-}
+if runtimes.length > 1
+  runtimes.values.each{|test|
+    if test['cluster'] % 2 == 0
+      move = 'remove'
+    else
+      move = '   add'
+    end
+    puts "#{move} @test-cluster-1: #{test['name']}"
+  }
+end
