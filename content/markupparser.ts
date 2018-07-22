@@ -3,6 +3,7 @@ const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { Preferences as Prefs } from './prefs'
 import { titleCase } from './title-case'
 import stringify = require('json-stringify-safe')
+// import * as log from './debug'
 
 const re = {
   // Number, Letter
@@ -145,7 +146,8 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
 
     for (const child of node.childNodes) {
-      if (!child.nocase) this.titleCase(child)
+      if (child.nocase || child.nodeName === 'sup' || child.nodeName === 'sub') continue
+      this.titleCase(child)
     }
   }
 
