@@ -208,7 +208,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
       case 'pre':
       case 'script':
-        // don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
+        // don't confuse the title caser with spurious markup. Without this,
         // the CSL title caser would consider last words in a title that actually have a following <pre> block the last
         // word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
         // will be ignored by the BBT title caser, which only title-cases #text blocks
