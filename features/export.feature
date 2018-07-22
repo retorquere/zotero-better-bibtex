@@ -1,8 +1,8 @@
 @export
 Feature: Export
 
-@test-cluster-1 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515
-@573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979
+@test-cluster-1
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
@@ -139,7 +139,8 @@ Scenario Outline: BibTeX Export
      | Better BibTeX.026                                                                  | 1          |
      | Better BibTeX.018                                                                  | 1          |
 
-@test-cluster-1 @131
+@test-cluster-1
+@131
 Scenario: Omit URL export when DOI present. #131
   When I import 3 references with 2 attachments from "export/Omit URL export when DOI present. #131.json" into a new collection
   And I set preference .DOIandURL to both
@@ -152,13 +153,15 @@ Scenario: Omit URL export when DOI present. #131
   And I set preference .DOIandURL to url
   Then an export using "Better BibLaTeX" should match "export/Omit URL export when DOI present. #131.prefer-url.biblatex"
 
-@test-cluster-1 @438 @bbt
+@test-cluster-1
+@438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/BibTeX name escaping has a million inconsistencies #438.json"
   And I set preference .relaxAuthors to true
   Then an export using "Better BibTeX" should match "export/BibTeX name escaping has a million inconsistencies #438.bibtex"
 
-@708 @test-cluster-1 @957
+@test-cluster-1
+@708 @957
 Scenario: Citekey generation failure #708 and sort references on export #957
   Given I set preference .sorted to true
   When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
@@ -167,7 +170,8 @@ Scenario: Citekey generation failure #708 and sort references on export #957
   And I import 6 references from "export/Citekey generation failure #708.json"
   Then an export using "Better BibLaTeX" should match "export/Citekey generation failure #708.biblatex"
 
-@117 @test-cluster-1
+@test-cluster-1
+@117
 Scenario: Bibtex key regenerating issue when trashing items #117
   When I import 1 reference from "export/Bibtex key regenerating issue when trashing items #117.json"
   And I select the first item where publicationTitle = "Genetics"
@@ -175,7 +179,8 @@ Scenario: Bibtex key regenerating issue when trashing items #117
   And I import 1 reference from "export/Bibtex key regenerating issue when trashing items #117.json" into "Second Import.json"
   Then an export using "Better BibLaTeX" should match "export/Bibtex key regenerating issue when trashing items #117.biblatex"
 
-@412 @bbt @test-cluster-1
+@test-cluster-1
+@412 @bbt
 Scenario: BibTeX URLs
   Given I import 1 reference from "export/BibTeX; URL missing in bibtex for Book Section #412.json"
   And I set preference .bibtexURL to "off"
@@ -185,7 +190,8 @@ Scenario: BibTeX URLs
   When I set preference .bibtexURL to "url"
   Then an export using "Better BibTeX" should match "export/BibTeX; URL missing in bibtex for Book Section #412.url.bibtex"
 
-@cayw @test-cluster-1
+@test-cluster-1
+@cayw
 Scenario: CAYW picker
   When I import 3 references from "export/cayw.json"
   And I pick "6 The time it takes: temporalities of planning" for CAYW:
@@ -200,19 +206,22 @@ Scenario: CAYW picker
   # And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 | | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 | | zu:0:ITEMKEY }"
   And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1)]"
 
-@307 @bbt @test-cluster-1
+@test-cluster-1
+@307 @bbt
 Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
   When I import 2 references from "export/thesis zotero entries always create @phdthesis bibtex entries #307.json"
   Then an export using "Better BibLaTeX" should match "export/thesis zotero entries always create @phdthesis bibtex entries #307.biblatex"
   And an export using "Better BibTeX" should match "export/thesis zotero entries always create @phdthesis bibtex entries #307.bibtex"
 
-@402 @bbt @test-cluster-1
+@test-cluster-1
+@402 @bbt
 Scenario: bibtex; url export does not survive underscores #402
   When I import 1 reference from "export/bibtex; url export does not survive underscores #402.json"
   Then an export using "Better BibLaTeX" should match "export/bibtex; url export does not survive underscores #402.biblatex"
   And an export using "Better BibTeX" should match "export/bibtex; url export does not survive underscores #402.bibtex"
 
-@110 @111 @test-cluster-1
+@test-cluster-1
+@110 @111
 Scenario: two ISSN number are freezing browser #110 / Generating keys and export broken #111
   When I import 1 reference from "export/two ISSN number are freezing browser #110.json"
   And I select the first item where publicationTitle = "Genetics"
@@ -220,45 +229,53 @@ Scenario: two ISSN number are freezing browser #110 / Generating keys and export
   And I refresh the citation key
   Then an export using "Better BibLaTeX" should match "export/two ISSN number are freezing browser #110.biblatex"
 
-@arXiv @85 @bbt @test-cluster-1
+@test-cluster-1
+@arXiv @85 @bbt
 Scenario: Square brackets in Publication field (85), and non-pinned keys must change when the pattern does
   When I import 1 references from "export/Square brackets in Publication field (85).json"
   Then an export using "Better BibTeX" should match "export/Square brackets in Publication field (85).bibtex"
 
-@86 @bbt @arXiv @test-cluster-1
+@test-cluster-1
+@86 @bbt @arXiv
 Scenario: Include first name initial(s) in cite key generation pattern (86)
   When I set preference .citekeyFormat to [auth+initials][year]
    And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then an export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
-@860 @test-cluster-1
+@test-cluster-1
+@860
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
-@922 @test-cluster-1
+@test-cluster-1
+@922
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
   Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
 
+@test-cluster-1
 @856
 Scenario: Quotes around last names should be removed from citekeys #856
   When I import 1 reference from "export/Quotes around last names should be removed from citekeys #856.json"
   Then an export using "Better CSL JSON" should match "export/Quotes around last names should be removed from citekeys #856.csl.json"
 
+@test-cluster-1
 @372 @pandoc
 Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
   When I import 1 reference from "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.json"
   Then an export using "Better CSL JSON" should match "export/BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372.csl.json"
 
+@test-cluster-1
 @365 @pandoc @825
 Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
   When I import 7 references from "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.json"
   Then an export using "Better BibLaTeX" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.biblatex"
   And an export using "Better CSL JSON" should match "export/Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825.csl.json"
 
+@test-cluster-1
 @587
 Scenario: Setting the item type via the cheater syntax #587
   When I import 5 references from "export/Setting the item type via the cheater syntax #587.json"
@@ -266,12 +283,14 @@ Scenario: Setting the item type via the cheater syntax #587
   And an export using "Better BibTeX" should match "export/Setting the item type via the cheater syntax #587.bibtex"
   And an export using "Better CSL JSON" should match "export/Setting the item type via the cheater syntax #587.csl.json"
 
+@test-cluster-1
 @360 @811 @pandoc
 Scenario: Date export to Better CSL-JSON #360 #811
   When I import 15 references from "export/Date export to Better CSL-JSON #360 #811.json"
   And an export using "Better CSL JSON" should match "export/Date export to Better CSL-JSON #360 #811.csl.json"
   And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
+@test-cluster-1
 @432 @447 @pandoc @598
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
@@ -283,6 +302,7 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
   And an export using "Better CSL YAML" should match "export/Pandoc Citation.csl.yml"
 #  And a schomd bibtex request using '[["Berndt1994"],{"translator":"biblatex"}]' should match "export/Pandoc Citation.schomd.json"
 
+@test-cluster-1
 @journal-abbrev @bbt
 Scenario: Journal abbreviations
   Given I set the following preferences:
@@ -293,6 +313,7 @@ Scenario: Journal abbreviations
   Then an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"
     | useJournalAbbreviation | true |
 
+@test-cluster-1
 @81 @bbt
 Scenario: Journal abbreviations exported in bibtex (81)
   Given I set the following preferences:
