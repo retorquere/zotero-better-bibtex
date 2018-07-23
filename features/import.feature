@@ -38,13 +38,11 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 986         |
   | Async import, large library #720                                            | 9057        |
 
-@i3
+@test-cluster-1
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
-  Examples:
-  | file                                                                        | references  |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
@@ -69,6 +67,13 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.009                                                           | 3           |
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
+
+Scenario Outline: Better BibTeX Import
+  When I import <references> reference from "import/<file>.bib"
+  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+
+  Examples:
+  | file                                                                        | references  |
   | Better BibTeX.013                                                           | 2           |
   # | Better BibTeX.014                                                           | 1           | # not supported by biblatex-csl-converter
   | Better BibTeX.015                                                           | 1           |

@@ -1,0 +1,50 @@
+
+@article{ref1,
+  author = {Name, Name},
+  date = {2018},
+  title = {1 {{O}}{\textsubscript{abcde}}}
+}
+
+@article{ref2,
+  author = {Name, Name},
+  date = {2018},
+  title = {2 {{O}}{\textsubscript{abcde}} Test}
+}
+
+@article{ref3,
+  author = {Name, Name},
+  date = {2018},
+  title = {{{O{\textsubscript{abcde}}}}}
+}
+
+@article{ref4,
+  author = {Name, Name},
+  date = {2018},
+  title = {O{\textsubscript{x}}}
+}
+
+@article{ref5,
+  author = {Name, Name},
+  date = {2018},
+  title = {O{\textsubscript{x}} Test}
+}
+
+@article{ref6,
+  author = {Name, Name},
+  date = {2018},
+  title = {{{O{\textsubscript{x}}}}}
+}
+
+@article{ref7,
+  author = {Name, Name},
+  date = {2018},
+  title = {O{\textsubscript{7-x}}}
+}
+
+@article{ref8,
+  author = {Name, Name},
+  date = {2018},
+  title = {O{\textsubscript{7-x}} Test}
+}
+
+

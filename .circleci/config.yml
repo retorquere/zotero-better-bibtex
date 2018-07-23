@@ -5,7 +5,7 @@ _defaults: &defaults
   shell: /bin/bash --login
   environment:
     CIRCLE_ARTIFACTS: /tmp/circleci-artifacts
-    CIRCLE_TEST_REPORTS: /tmp/circleci-test-results
+    CIRCLE_TEST_REPORTS: /tmp/circleci-artifacts/cucumber
 #  docker:
 #  - image: circleci/ruby:2.4.3-node
 #    command: /sbin/init
@@ -125,13 +125,13 @@ jobs:
                 ;;
         esac
 
-        bundle exec cucumber --strict --tags "$CIRCLE_TESTS"
+        bundle exec cucumber --format json --out $CIRCLE_TEST_REPORTS/zotero-better-bibtex.cucumber --format pretty --strict --tags "$CIRCLE_TESTS"
         cp xpi/zotero-better-bibtex-*.xpi $CIRCLE_ARTIFACTS
         cp -r ~/.BBTZ5TEST/$ZOTERO/better* $CIRCLE_ARTIFACTS
         ls -lh $CIRCLE_ARTIFACTS/*
 
     - store_test_results:
-        path: /tmp/circleci-test-results
+        path: /tmp/circleci-artifacts/cucumber
     - store_artifacts:
         path: /tmp/circleci-artifacts
 

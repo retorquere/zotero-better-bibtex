@@ -1,6 +1,8 @@
 // import Citeproc = require('./citeproc')
 declare const Zotero: any
 
+import * as log from './debug'
+
 const state = {
   opt: { lang: 'en' },
 
@@ -14,4 +16,8 @@ const state = {
   },
 }
 
-export function titleCase(text) { return Zotero.CiteProc.CSL.Output.Formatters.title(state, text) }
+export function titleCase(text) {
+  const titleCased = Zotero.CiteProc.CSL.Output.Formatters.title(state, text)
+  log.debug('titlecase:', {text, titleCased})
+  return titleCased
+}

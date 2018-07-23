@@ -11,6 +11,8 @@ interface IZoteroMarkupNode {
   enquote?: boolean
 
   offset?: number
+  titleCased?: number
+
   source?: string
 }
 

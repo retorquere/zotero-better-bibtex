@@ -3,6 +3,7 @@ const htmlParser = new parse5({ sourceCodeLocationInfo: true })
 import { Preferences as Prefs } from './prefs'
 import { titleCase } from './title-case'
 import stringify = require('json-stringify-safe')
+// import * as log from './debug'
 
 const re = {
   // Number, Letter
@@ -115,8 +116,10 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     doc = this.walk(htmlParser.parseFragment(this.html))
 
     if (this.caseConversion) {
-      this.titleCased = titleCase(this.innerText(doc))
-      // debug('markupparser.titleCase', this.titleCased)
+      this.titleCased = ''
+      this.collectText(doc)
+      this.titleCased = titleCase(this.titleCased)
+
       this.titleCase(doc)
       doc = this.unwrapNocase(doc)
       if (doc.length === 1) {
@@ -138,23 +141,13 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
   private titleCase(node: IZoteroMarkupNode) {
     if (node.nodeName === '#text') {
-      const spaces = new Set(['\u2003', '\u2004', '\u205F', '\u2009', '\u00A0'])
-      let recased = ''
-      const substr = this.titleCased.substr(node.offset, node.value.length).split('')
-      for (let i = 0; i < substr.length; i++) {
-        if (spaces.has(node.value[i])) {
-          recased += node.value[i]
-        } else {
-          recased += substr[i]
-        }
-      }
-      node.value = recased
+      node.value = this.titleCased.substr(node.titleCased, node.value.length)
+      return
+    }
 
-    } else {
-      for (const child of node.childNodes) {
-        if (!child.nocase) this.titleCase(child)
-      }
-
+    for (const child of node.childNodes) {
+      if (child.nocase || child.nodeName === 'sup' || child.nodeName === 'sub') continue
+      this.titleCase(child)
     }
   }
 
@@ -206,30 +199,27 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private innerText(node: IZoteroMarkupNode, text = '') {
+  private collectText(node: IZoteroMarkupNode) {
     switch (node.nodeName) {
       case '#text':
-        // the padding makes sure that the text is placed at the exact position it has in the origin string,
-        // adding spaces as necessary
-        text += ''.padStart(node.offset - text.length, ' ') + node.value
+        node.titleCased = this.titleCased.length
+        this.titleCased += node.value
         break
 
       case 'pre':
       case 'script':
-        // don't confuse the title caser with spurious markup, but MUST NOT change the string length. Without this,
+        // don't confuse the title caser with spurious markup. Without this,
         // the CSL title caser would consider last words in a title that actually have a following <pre> block the last
         // word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
         // will be ignored by the BBT title caser, which only title-cases #text blocks
-        text += node.value.replace(/</g, '[').replace(/>/g, ']')
+        this.titleCased += ''.padStart(node.value.length, 'latex')
         break
 
       default:
         for (const child of node.childNodes) {
-          text = this.innerText(child, text)
+          this.collectText(child)
         }
     }
-
-    return text
   }
 
   private plaintext(childNodes: IZoteroMarkupNode[], text, offset) {
