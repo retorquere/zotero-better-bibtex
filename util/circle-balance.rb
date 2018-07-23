@@ -4,6 +4,7 @@ require 'dotenv/load'
 require 'circleci'
 require 'json'
 require 'open-uri'
+require 'uri'
 
 CircleCi.configure do |config|
   config.token = ENV['CIRCLECI']
@@ -13,7 +14,7 @@ runtimes = {}
 balance = [17, 17, 55, 55]
 build = CircleCi::Build.new 'retorquere', 'zotero-better-bibtex', nil, ARGV[0]
 build.artifacts.body.each{|artifact|
-  next unless File.basename(artifact['path']) == 'runtimes.json'
+  next unless File.basename(artifact['path']) == 'zotero-better-bibtex.cucumber'
 
   cluster = artifact['node_index']
   prefix = (cluster < 2) ? 'zotero' : 'jurism'
