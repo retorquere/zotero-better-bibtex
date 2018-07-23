@@ -13385,7 +13385,6 @@
       "itemType": "report",
       "date": "1999-01",
       "extra": "Citation Key: UMCP-CSD//CS-TR-3981 \nbibtex[bibdate=March 17, 1999]",
-      "reportType": "Technical Report",
       "abstractNote": "SHOP (Simple Hierarchical Ordered Planner) is a domain-independent HTN Planning system with the following characteristics. * SHOP plans for tasks in the same order that they will later be executed. This avoids some of the goal-interaction issues that arise in other HTN planners, thus making the planning algorithm relatively simple. * The planning algorithm is sound and complete over a large class of problems. * Since SHOP knows the complete world-state at each step of the planning process, it can use highly expressive domain representations. For example, it can do planning problems that require complex numeric computations. * In our tests, SHOP solved problems several orders of magnitude faster than Blackbox and TLplan. This occured even though SHOP is written in Lisp and the other planners are written in C. (Also cross-referenced as UMIACS-TR 99-04)",
       "title": "SHOP: Simple Hierarchical Ordered Planner",
       "creators": [
@@ -19693,7 +19692,6 @@
       "place": "Cambridge, MA",
       "date": "November 1990",
       "extra": "Citation Key: Marcus:90",
-      "reportType": "Occasional Paper",
       "title": "Overregularization",
       "creators": [
         {
@@ -21174,7 +21172,6 @@
       "place": "Amherst, MA",
       "date": "September 1989",
       "extra": "Citation Key: Barto:89",
-      "reportType": "COINS Technical Report",
       "title": "Connectionist Learning for Control: An Overview",
       "creators": [
         {
@@ -21707,7 +21704,6 @@
       "itemType": "report",
       "date": "1997",
       "extra": "+http://www.ep.liu.se/ea/cis/1997/019/ \nCitation Key: Sandewall:97",
-      "reportType": "Linköping Electronic Articles in Computer and Information Science",
       "title": "Logic Based Modelling of Goal-directed Behavior",
       "creators": [
         {
@@ -22724,7 +22720,6 @@
       "place": "New Haven, CT",
       "date": "1987",
       "extra": "Citation Key: Col87",
-      "reportType": "YALEU/CSD/RR",
       "title": "Plan creation: Using strategies as blueprints",
       "creators": [
         {
@@ -24073,7 +24068,6 @@
       "itemType": "report",
       "date": "June 1992",
       "extra": "Citation Key: Genesereth:KIF3",
-      "reportType": "Logic Group Report",
       "title": "Knowledge Interchange Format, Version 3.0 Reference Manual",
       "creators": [
         {
@@ -28520,7 +28514,6 @@
       "place": "Carlton, AUSTRALIA",
       "date": "1993-06",
       "extra": "Revised version of 1993, original July, 1992 \nCitation Key: SonnenbergETAL:93",
-      "reportType": "Technical Note",
       "title": "Planned Team Activity",
       "creators": [
         {
@@ -29251,7 +29244,6 @@
       "itemType": "report",
       "date": "1990-07",
       "extra": "Citation Key: MillerETAL:90",
-      "reportType": "CSL Report",
       "title": "Five Papers on WordNet",
       "creators": [
         {
@@ -31500,7 +31492,6 @@
       "url": "ftp://ftp.informatik.uni-freiburg.de/documents/reports/report195/report00195.ps.gz",
       "date": "2004-01",
       "extra": "Citation Key: Edelkamp04",
-      "reportType": "report00195",
       "abstractNote": "This document defines the language to be used in the classical part of the 4th International Planning Competition, IPC-4. The language comprises all of PDDL2.1 levels 1, 2, and 3, as defined by Maria Fox and Derek Long in fox:long:jair-03; parts of this document have been copied from that source. On top of this language, for IPC-4  derived predicates are re-introduced, and  timed initial literals are (newly) introduced into the competition language. We give the syntax and semantics of these constructs.",
       "title": "PDDL2.2: The Language for the Classical Part of the 4th International Planning Competition",
       "creators": [
@@ -32536,7 +32527,6 @@
       "place": "Brescia, Italy",
       "date": "2005",
       "extra": "Citation Key: GereviniLong05:PDDL3",
-      "reportType": "Technical Report",
       "title": "Plan Constraints and Preferences in PDDL3",
       "creators": [
         {

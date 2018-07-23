@@ -31,7 +31,7 @@ def fixBBTJSON(lib, data)
       duplicates = {
         'publisher' => %w{university institution},
         'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
-        'type' => %w{thesisType},
+        'type' => %w{reportType thesisType},
         'number' => %w{reportNumber},
       }
       duplicates.each_pair{|generic, specifics|
