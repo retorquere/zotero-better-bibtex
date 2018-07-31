@@ -8,7 +8,7 @@ import { Exporter } from './lib/exporter'
 
 function select_link(item, mode) {
   switch (mode) {
-    case 'id': return `zotero://select/items/${item.itemID}`
+    case 'id': return item.libraryID > 1 ? `zotero://select/items/${item.libraryID}_${item.key}` : `zotero://select/items/${item.key}`
     case 'citekey': return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
     default: throw new Error(`Unsupported link mode ${mode}`)
   }

@@ -147,6 +147,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       default:
         serialized.citekey = KeyManager.get(item.id).citekey
         serialized.journalAbbreviation = JournalAbbrev.get(serialized)
+        serialized.libraryID = item.libraryID
         break
     }
     return serialized
