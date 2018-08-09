@@ -179,8 +179,9 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
   return original.apply(this, arguments)
 })
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
-  if (BBT.ready.isPending()) return original.apply(this, arguments) // tslint:disable-line:no-use-before-declare fixes #1042
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
+
+  if (BBT.ready.isPending()) return '\uFFFD'
 
   const obj = this.getRow(row)
   const itemID = obj.id
