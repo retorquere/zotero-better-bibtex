@@ -532,10 +532,14 @@ class BetterBibTeX {
       log.debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
     } else {
       window.addEventListener('load', () => {
-        this.load().catch(err => {
-          this.ready = false
-          log.debug('Better BibTeX failed to load:', err)
-        })
+        this.load()
+          .then(() => {
+            log.debug('Better BibTeX load finished successfully')
+          })
+          .catch(err => {
+            log.error('Better BibTeX load failed', err)
+            this.ready = false
+          })
       }, false)
     }
   }
@@ -708,5 +712,6 @@ class BetterBibTeX {
   }
 }
 
-// export singleton: https://k94n.com/es6-modules-single-instance-pattern
-export let BBT = new BetterBibTeX // tslint:disable-line:variable-name
+const BBT = new BetterBibTeX // tslint:disable-line:variable-name
+
+export = BBT

@@ -514,7 +514,11 @@ module BBT
             return false;
           }
           if (!Zotero.BetterBibTeX.ready) {
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
+            } else {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            }
             return false;
           }
 
