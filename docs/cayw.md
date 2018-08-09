@@ -23,7 +23,7 @@ noremap <leader>z "=ZoteroCite()<CR>p
 inoremap <C-z> <C-r>=ZoteroCite()<CR>
 ```
 
-This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or <leader>z (in normal, visual etc. modes, <leader> being backslash by default).
+This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or `<leader>`z (in normal, visual etc. modes, `<leader>` being backslash by default).
 
 ###  Zotero Citations for Atom
 
