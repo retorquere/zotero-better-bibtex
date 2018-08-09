@@ -15,5 +15,5 @@ console.log('copying kuromoji dicts...')
 for (const dict of fs.readdirSync(dicts)) {
   console.log('  ', dict)
   const dat = dict.replace('.gz', '')
-  exec(`zcat ${dicts}/${dict} > ${unzipped}/${dat}`)
+  exec(`gunzip -c  ${dicts}/${dict} > ${unzipped}/${dat}`)
 }
