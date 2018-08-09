@@ -30,7 +30,6 @@ import format = require('string-template')
 
 import { patch as $patch$ } from './monkey-patch'
 
-const bbtReady = Zotero.Promise.defer()
 const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
 
 /*
@@ -180,6 +179,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
   return original.apply(this, arguments)
 })
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
+  if (BBT.ready.isPending()) return original.apply(this, arguments) // tslint:disable-line:no-use-before-declare fixes #1042
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
   const obj = this.getRow(row)
@@ -187,7 +187,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(itemID)
 
   if (citekey.retry) {
-    bbtReady.promise.then(() => {
+    BBT.ready.then(() => { // tslint:disable-line:no-use-before-declare
       this._treebox.invalidateCell(row, column)
     })
   }
@@ -359,7 +359,7 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
-      bbtReady.promise.then(() => handler.apply(null, args))
+      BBT.ready.then(() => handler.apply(null, args)) // tslint:disable-line:no-use-before-declare
     },
   }, [event], 'BetterBibTeX', 1)
 }
@@ -522,7 +522,7 @@ class Progress {
   }
 }
 
-export = new class BetterBibTeX {
+class BetterBibTeX {
   public ready: any
   private strings: any
   private firstRun: { citekeyFormat: String, dragndrop: boolean }
@@ -531,7 +531,6 @@ export = new class BetterBibTeX {
     if (Zotero.BetterBibTeX) {
       log.debug("MacOS and its weird \"I'm sort of closed but not really\" app handling makes init run again...")
     } else {
-      this.ready = bbtReady.promise
       window.addEventListener('load', () => {
         this.load().catch(err => {
           this.ready = false
@@ -621,7 +620,7 @@ export = new class BetterBibTeX {
   }
 
   public async scanAUX(path = null) {
-    await bbtReady.promise
+    await this.ready
     await AUXScanner.scan(path)
   }
 
@@ -641,6 +640,10 @@ export = new class BetterBibTeX {
   }
 
   private async load() {
+    const deferred = Zotero.Promise.defer()
+    this.ready = deferred.promise
+    if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
+
     this.strings = document.getElementById('zotero-better-bibtex-strings')
 
     log.debug('Loading Better BibTeX: starting...')
@@ -695,7 +698,7 @@ export = new class BetterBibTeX {
 
     // should be safe to start tests at this point. I hate async.
 
-    bbtReady.resolve(true)
+    deferred.resolve(true)
 
     progress.done()
 
@@ -704,3 +707,6 @@ export = new class BetterBibTeX {
     Events.emit('loaded')
   }
 }
+
+// export singleton: https://k94n.com/es6-modules-single-instance-pattern
+export let BBT = new BetterBibTeX // tslint:disable-line:variable-name
