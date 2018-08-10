@@ -6,13 +6,24 @@ Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): 
 
 ### vim
 
-Create a script called (e.g.) `cite` in your path with the following content:
+Graciously supplied by David Lukes:
 
-`#!/bin/sh`
+paste it in your .vimrc (and modify to your liking):
 
-`curl -s http://localhost:23119/better-bibtex/cayw?format=citet`
+```
+function! ZoteroCite()
+  " pick a format based on the filetype (customize at will)
+  let format = &filetype =~ '.*tex' ? 'citep' : 'pandoc'
+  let api_call = 'http://localhost:23119/better-bibtex/cayw?format='.format.'&brackets=1'
+  let ref = system('curl -s '.shellescape(api_call))
+  return ref
+endfunction
 
-Now, in vi, you can execute `:r!cite` in command mode to get your references inserted
+noremap <leader>z "=ZoteroCite()<CR>p
+inoremap <C-z> <C-r>=ZoteroCite()<CR>
+```
+
+This inserts the citation at the cursor using the shortcut ctrl-z (in insert mode) or `<leader>`z (in normal, visual etc. modes, `<leader>` being backslash by default).
 
 ###  Zotero Citations for Atom
 

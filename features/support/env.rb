@@ -52,8 +52,8 @@ class HTTPNotFoundError < StandardError; end
 def execute(options)
   options = {script: options} if options.is_a?(String)
   options = {
-    timeout: ENV['NIGHTLY'] == 'true' ? 1200 : 10,
     headers: { 'Content-Type' => 'text/plain' },
+    timeout: ENV['NIGHTLY'] == 'true' ? 1200 : 10,
   }.merge(options || {})
   args = options.delete(:args) || {}
   options[:body] = "var args = #{args.to_json};\n" + options.delete(:script)
@@ -514,7 +514,11 @@ module BBT
             return false;
           }
           if (!Zotero.BetterBibTeX.ready) {
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
+            } else {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            }
             return false;
           }
 
