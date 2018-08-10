@@ -49,14 +49,11 @@ end
 class HTTPInternalError < StandardError; end
 class HTTPNotFoundError < StandardError; end
 
-module HTTParty
-  default_timeout (ENV['NIGHTLY'] == 'true' ? 1200 : 10)
-end
-
 def execute(options)
   options = {script: options} if options.is_a?(String)
   options = {
     headers: { 'Content-Type' => 'text/plain' },
+    timeout: ENV['NIGHTLY'] == 'true' ? 1200 : 10,
   }.merge(options || {})
   args = options.delete(:args) || {}
   options[:body] = "var args = #{args.to_json};\n" + options.delete(:script)
