@@ -1,17 +1,17 @@
 declare const Components: any
 
-import _kuroshiro = require('kuroshiro/src/coreSync')
+import Kuroshiro from 'kuroshiro/src/core-sync'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
-import KuromojiAnalyzer from './kuroshiro-analyzer-kuromoji'
+import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
-  url = url.replace(/^resource:\/\/?/, 'resource://') // kuromoji replaces the double-slash for some reason
+  url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
   log.debug('kuromoji: loading', url)
   const xhr = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1'].createInstance()
 
-  xhr.open('GET', url.replace(/\.gz$/, ''), true)
+  xhr.open('GET', url, true)
   xhr.responseType = 'arraybuffer'
 
   xhr.onload = function() {
@@ -31,6 +31,7 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
 
 export let kuroshiro = new class {
   public enabled = false
+  private kuroshiro: any
 
   public async init() {
     log.debug('kuroshiro: initializing...')
@@ -41,7 +42,8 @@ export let kuroshiro = new class {
     }
 
     try {
-      await _kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
+      this.kuroshiro = new Kuroshiro()
+      await this.kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
     } catch (err) {
       log.error('kuroshiro: initializing failed')
       throw err
@@ -53,15 +55,15 @@ export let kuroshiro = new class {
 
   public convert(str, options) {
     if (!this.enabled) throw new Error('kuroshoro not initialized')
-    if (str && this.isJapanese(str)) return _kuroshiro.convert(str, options)
+    if (str && this.isJapanese(str)) return this.kuroshiro.convert(str, options)
     return str
   }
 
   private isJapanese(str) {
     for (const c of str) {
-      if (_kuroshiro.isKanji(c)) return true
-      if (_kuroshiro.isHiragana(c)) return true
-      if (_kuroshiro.isKatakana(c)) return true
+      if (Kuroshiro.Util.isKanji(c)) return true
+      if (Kuroshiro.Util.isHiragana(c)) return true
+      if (Kuroshiro.Util.isKatakana(c)) return true
     }
     return false
   }
