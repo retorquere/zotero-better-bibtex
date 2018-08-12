@@ -8,7 +8,7 @@ import './translators'
 import './dateparser'
 import './preferences'
 import './translator-typing'
-import './kuromoji'
+import './kuroshiro'
 
 import 'zotero-plugin/copy-assets'
 import 'zotero-plugin/rdf'

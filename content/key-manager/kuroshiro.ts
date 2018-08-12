@@ -1,10 +1,10 @@
-declare const Zotero: any
 declare const Components: any
 
-import _kuroshiro = require('kuroshiro')
+import _kuroshiro = require('kuroshiro/src/coreSync')
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
+import KuromojiAnalyzer from './kuroshiro-analyzer-kuromoji'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = url.replace(/^resource:\/\/?/, 'resource://') // kuromoji replaces the double-slash for some reason
@@ -32,34 +32,28 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
 export let kuroshiro = new class {
   public enabled = false
 
-  public init() {
+  public async init() {
     log.debug('kuroshiro: initializing...')
-
-    const deferred = Zotero.Promise.defer()
 
     if (!Prefs.get('kuroshiro')) {
       log.debug('kuroshiro: disabled')
-      return deferred.resolve()
+      return
     }
 
-    _kuroshiro.init({ dicPath: 'resource://zotero-better-bibtex/kuromoji' }, err => {
-      if (err) {
-        log.error('kuroshiro: initializing failed')
-        deferred.reject(err)
-      } else {
-        log.debug('kuroshiro: ready')
-        this.enabled = true
-        deferred.resolve()
-      }
-    })
+    try {
+      await _kuroshiro.init(new KuromojiAnalyzer('resource://zotero-better-bibtex/kuromoji'))
+    } catch (err) {
+      log.error('kuroshiro: initializing failed')
+      throw err
+    }
 
-    return deferred.promise
+    log.debug('kuroshiro: ready')
+    this.enabled = true
   }
 
   public convert(str, options) {
     if (!this.enabled) throw new Error('kuroshoro not initialized')
-    if (!str) return str
-    if (this.isJapanese(str)) return _kuroshiro.convert(str, options)
+    if (str && this.isJapanese(str)) return _kuroshiro.convert(str, options)
     return str
   }
 

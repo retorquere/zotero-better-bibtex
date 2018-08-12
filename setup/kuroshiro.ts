@@ -19,3 +19,11 @@ for (const dict of fs.readdirSync(dicts)) {
   const dat = dict.replace('.gz', '')
   exec(`gunzip -c ${dicts}/${dict} > ${unzipped}/${dat}`)
 }
+
+console.log('patching kuroshiro')
+let kuroshiro = fs.readFileSync('node_modules/kuroshiro/src/core.js', 'utf8')
+kuroshiro = kuroshiro
+  .replace('@returns {Promise} Promise object represents the result of conversion', '@returns {Promise} result of conversion')
+  .replace('async convert(str, options)', 'convert(str, options)')
+  .replace('const tokens = await this._analyzer.parse(str);', 'const tokens = this._analyzer.parse(str);')
+fs.writeFileSync('node_modules/kuroshiro/src/coreSync.js', kuroshiro, 'utf8')

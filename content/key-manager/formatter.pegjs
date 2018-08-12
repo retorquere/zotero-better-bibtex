@@ -6,7 +6,7 @@ start
       var body = "var loop, citekey, postfix, chunk;\n"
 
       for (var pattern = 0; pattern < patterns.length; pattern++) {
-			  body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
+        body += "\nfor (loop = true; loop; loop=false) {\n  citekey = ''; postfix = 'a';\n\n"
         body += patterns[pattern] + "\n"
         body += "  citekey = citekey.replace(/[\\s{},]/g, '');\n"
         body += "  if (citekey) return {citekey: citekey, postfix: postfix};\n}\n"
