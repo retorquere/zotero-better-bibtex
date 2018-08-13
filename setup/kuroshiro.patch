@@ -1,20 +1,20 @@
---- node_modules/kuroshiro/src/core.js	2018-08-12 14:15:38.000000000 +0200
-+++ node_modules/kuroshiro/src/coreSync.js	2018-08-12 16:31:16.000000000 +0200
-@@ -60,9 +60,9 @@
-      * @param {string} [options.mode='normal'] Convert mode ['normal'|'spaced'|'okurigana'|'furigana']
-      * @param {string} [options.delimiter_start='('] Delimiter(Start)
-      * @param {string} [options.delimiter_end=')'] Delimiter(End)
+--- node_modules/kuroshiro/src/core.js	2018-08-13 12:57:57.000000000 +0200
++++ node_modules/kuroshiro/src/core-sync.js	2018-08-13 13:04:46.000000000 +0200
+@@ -64,9 +64,9 @@
+      * @param {string} [options.romajiSystem="hepburn"] Romanization System ["nippon"|"passport"|"hepburn"]
+      * @param {string} [options.delimiter_start="("] Delimiter(Start)
+      * @param {string} [options.delimiter_end=")"] Delimiter(End)
 -     * @returns {Promise} Promise object represents the result of conversion
-+     * @returns {Promise} result of conversion
++     * @returns {string} result of conversion
       */
 -    async convert(str, options) {
 +    convert(str, options) {
          options = options || {};
          options.to = options.to || "hiragana";
          options.mode = options.mode || "normal";
-@@ -71,7 +71,7 @@
-         options.delimiter_end = options.delimiter_end || ")";
-         str = str || "";
+@@ -88,7 +88,7 @@
+             throw new Error("Invalid Romanization System.");
+         }
  
 -        const tokens = await this._analyzer.parse(str);
 +        const tokens = this._analyzer.parse(str);
