@@ -118,7 +118,7 @@
       options:
         - 'no'
         - in a note field
-        - in a URL field
+        - in a URL field (requires custom style for url field support)
     'Abbreviation style:':
       default: 'false'
       description: >-
