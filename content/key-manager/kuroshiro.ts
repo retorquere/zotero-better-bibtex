@@ -54,8 +54,8 @@ export let kuroshiro = new class {
   }
 
   public convert(str, options) {
-    if (!this.enabled) throw new Error('kuroshoro not initialized')
-    if (str && Kuroshoro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
+    if (!this.enabled) throw new Error('kuroshiro not initialized')
+    if (str && Kuroshiro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
     return str
   }
 }
