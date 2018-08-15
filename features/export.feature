@@ -105,14 +105,13 @@ Scenario Outline: BibLaTeX Export
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @1043
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
-     | Unbalanced vphantom escapes #1043                                                  | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |
      | BetterBibtex export fails for missing last name #978                               | 1          |
      | Export unicode as plain text fails for Vietnamese characters #977                  | 1          |
@@ -322,6 +321,13 @@ Scenario: Post script
   Given I import 3 references from "export/Export web page to misc type with notes and howpublished custom fields #329.json"
   And I set preference .postscript to "export/Export web page to misc type with notes and howpublished custom fields #329.js"
   Then an export using "Better BibTeX" should match "export/Export web page to misc type with notes and howpublished custom fields #329.bibtex"
+
+@postscript @1043
+Scenario: Post script
+  Given I import 1 references from "export/Unbalanced vphantom escapes #1043.json"
+  Then an export using "Better BibTeX" should match "export/Unbalanced vphantom escapes #1043.bibtex"
+  When I set preference .postscript to "export/Detect and protect LaTeX math formulas.js"
+  Then an export using "Better BibTeX" should match "export/Unbalanced vphantom escapes #1043-mathmode.bibtex"
 
 @460
 Scenario: arXiv identifiers in BibLaTeX export #460

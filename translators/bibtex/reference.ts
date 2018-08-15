@@ -289,13 +289,15 @@ export class Reference {
   private hasLowercaseWord = new Zotero.Utilities.XRegExp('\\s[\\p{Ll}]')
   private whitespace = new Zotero.Utilities.XRegExp('\\p{Zs}')
 
+  private inPostscript = false
+
   public static installPostscript() {
     const postscript = Translator.preferences.postscript
 
     if (typeof postscript !== 'string' || postscript.trim() === '') return
 
     try {
-      Reference.prototype.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => void
+      Reference.prototype.postscript = new Function('reference', 'item', `this.inPostscript = true; ${postscript}; this.inPostscript = false;`) as (reference: any, item: any) => void
       Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
       Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
@@ -461,7 +463,7 @@ export class Reference {
     }
 
     if (this.has[field.name]) {
-      if (Translator.preferences.testing && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
+      if (!this.inPostscript && !field.replace) throw new Error(`duplicate field '${field.name}' for ${this.item.citekey}`)
       this.remove(field.name)
     }
 
