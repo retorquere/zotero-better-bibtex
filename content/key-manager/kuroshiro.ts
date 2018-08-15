@@ -55,16 +55,7 @@ export let kuroshiro = new class {
 
   public convert(str, options) {
     if (!this.enabled) throw new Error('kuroshoro not initialized')
-    if (str && this.isJapanese(str)) return this.kuroshiro.convert(str, options)
+    if (str && Kuroshoro.Util.hasJapanese(str)) return this.kuroshiro.convert(str, options)
     return str
-  }
-
-  private isJapanese(str) {
-    for (const c of str) {
-      if (Kuroshiro.Util.isKanji(c)) return true
-      if (Kuroshiro.Util.isHiragana(c)) return true
-      if (Kuroshiro.Util.isKatakana(c)) return true
-    }
-    return false
   }
 }
