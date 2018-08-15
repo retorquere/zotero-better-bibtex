@@ -322,6 +322,13 @@ Scenario: Post script
   And I set preference .postscript to "export/Export web page to misc type with notes and howpublished custom fields #329.js"
   Then an export using "Better BibTeX" should match "export/Export web page to misc type with notes and howpublished custom fields #329.bibtex"
 
+@postscript @1043
+Scenario: Post script
+  Given I import 1 references from "export/Unbalanced vphantom escapes #1043.json"
+  Then an export using "Better BibTeX" should match "export/Unbalanced vphantom escapes #1043.bibtex"
+  When I set preference .postscript to "export/Detect and protect LaTeX math formulas.js"
+  Then an export using "Better BibTeX" should match "export/Unbalanced vphantom escapes #1043-mathmode.bibtex"
+
 @460
 Scenario: arXiv identifiers in BibLaTeX export #460
   Given I import 3 references from "export/arXiv identifiers in BibLaTeX export #460.json"

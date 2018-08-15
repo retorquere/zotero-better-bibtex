@@ -7,11 +7,6 @@ import { debug } from '../lib/debug'
 import HE = require('he')
 import unicodeMapping = require('./unicode_translator_mapping.js')
 
-function repeat(s, n) {
-  if (!n) return ''
-  return ''.padStart(n * s.length, s)
-}
-
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
@@ -91,7 +86,7 @@ const htmlConverter = new class HTMLConverter {
       case 'h2':
       case 'h3':
       case 'h4':
-        latex = `\n\n\\${repeat(parseInt(tag.nodeName[1]) - 1, 'sub')}section{...}\n\n`
+        latex = `\n\n\\${'sub'.repeat(parseInt(tag.nodeName[1]) - 1)}section{...}\n\n`
         break
 
       case 'ol':
@@ -195,7 +190,7 @@ const htmlConverter = new class HTMLConverter {
         latex += '\\vphantom\\}'
         break
       default:
-        latex += `\\vphantom{${repeat(braced, '\\}')}}`
+        latex += `\\vphantom{${'\\}'.repeat(braced)}}`
         break
     }
 
