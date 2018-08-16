@@ -36,8 +36,8 @@ _script: &script
 
     xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
-after_failure:
-  - tail --lines=2000 ~/.BBTZ5TEST.log
+  after_failure:
+    - tail --lines=2000 ~/.BBTZ5TEST.log
 
 jobs:
   include:
