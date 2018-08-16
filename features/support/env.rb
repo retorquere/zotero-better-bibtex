@@ -331,7 +331,7 @@ module BBT
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
 
   if OS.linux?
-    home = ENV['CIRCLE_WORKING_DIR'] || '~'
+    home = ENV['CIRCLE_WORKING_DIR'] || ENV['TRAVIS_BUILD_DIR'] || '~'
     if ENV['ZOTERO'] == 'jurism'
       profiles = File.expand_path("~/.jurism/zotero")
       zotero = File.expand_path("#{home}/bin/jurism/jurism")
