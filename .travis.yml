@@ -30,7 +30,7 @@ _script: &script
     bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
     mkdir -p bin downloads/zotero downloads/juris-m
-    ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir profile --replace --cache downloads/zotero
+    ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
 
     yarn run build
 
