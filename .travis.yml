@@ -5,7 +5,7 @@ env:
   - ZOTERO=jurism CLUSTER="not @test-cluster-1"
 
 python:
-  - "2.7.9"
+  - "3.7.0"
 
 # is caching parallel-safe?
 cache:
@@ -16,17 +16,15 @@ cache:
     - vendor/bundle
     - download
 
-before_script:
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
-  - sleep 3 # give xvfb some time to start
-
 jobs:
   include:
     - stage: test
       script: |-
-        export DISPLAY=:1.0
-        git log --format=%B -n 1 $CIRCLE_SHA1 | grep '#trace' &> /dev/null
+        export DISPLAY=:99.0
+        sh -e /etc/init.d/xvfb start
+        sleep 3 # give xvfb some time to start
+
+        git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
         if [ $? == 0 ]; then
           export TRACE=true
         fi
