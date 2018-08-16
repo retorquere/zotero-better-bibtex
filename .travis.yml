@@ -11,14 +11,9 @@ _script: &script
     set -e
     set -x
 
-    export DISPLAY=:99.0
-    sh -e /etc/init.d/xvfb start
-    sleep 3 # give xvfb some time to start
-
-    #git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
-    #if [ $? == 0 ]; then
-    #  export TRACE=true
-    #fi
+    if [[ $TRAVIS_COMMIT_MESSAGE = *"#trace"* ]]; then
+      export TRACE=true
+    fi
 
     #git submodule sync && git submodule update --init --recursive
 
@@ -32,8 +27,6 @@ _script: &script
     mkdir -p bin downloads/zotero downloads/juris-m
     ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
 
-    yarn run build
-
     if [ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" ]; then
       export NIGHTLY=""
       export TRACE=true
@@ -41,7 +34,7 @@ _script: &script
       export NIGHTLY="not @nightly and"
     fi
 
-    bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+    xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
 jobs:
   include:
