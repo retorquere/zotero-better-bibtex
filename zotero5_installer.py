@@ -9,6 +9,7 @@ import os
 import sys
 import tempfile
 import socket
+import subprocess
 
 if sys.version_info[0] >= 3:
   from urllib.request import urlopen
