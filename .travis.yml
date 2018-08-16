@@ -64,5 +64,6 @@ jobs:
     - stage: release
       install: true
       script: |-
+        [[ "$TRAVIS_EVENT_TYPE" = "cron" ]] && exit
         yarn install
         yarn run release
