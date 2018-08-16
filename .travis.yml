@@ -15,12 +15,12 @@ _script: &script
     sh -e /etc/init.d/xvfb start
     sleep 3 # give xvfb some time to start
 
-    git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
-    if [ $? == 0 ]; then
-      export TRACE=true
-    fi
+    #git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
+    #if [ $? == 0 ]; then
+    #  export TRACE=true
+    #fi
 
-    git submodule sync && git submodule update --init --recursive
+    #git submodule sync && git submodule update --init --recursive
 
     yarn install
 
