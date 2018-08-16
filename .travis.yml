@@ -6,37 +6,38 @@ cache:
     - vendor/bundle
     - download
 
-_script: &script
-  script: |-
-    set -e
-    trap "tail --lines=2000 ~/.BBTZ5TEST.log" ERR
+install: |-
+  yarn install
 
-    set -x
+  gem install bundler
+  gem update bundler
+  bundle config
+  bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
-    if [[ $TRAVIS_COMMIT_MESSAGE = *"#trace"* ]]; then
-      export TRACE=true
-    fi
+  mkdir -p bin downloads/zotero downloads/juris-m
+  ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
 
-    #git submodule sync && git submodule update --init --recursive
+script: |-
+  set -e
+  set -x
 
-    yarn install
+  if [[ $TRAVIS_COMMIT_MESSAGE = *"#trace"* ]]; then
+    export TRACE=true
+  fi
 
-    gem install bundler
-    gem update bundler
-    bundle config
-    bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+  #git submodule sync && git submodule update --init --recursive
 
-    mkdir -p bin downloads/zotero downloads/juris-m
-    ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
+  if [ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" ]; then
+    export NIGHTLY=""
+    export TRACE=true
+  else
+    export NIGHTLY="not @nightly and"
+  fi
 
-    if [ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" ]; then
-      export NIGHTLY=""
-      export TRACE=true
-    else
-      export NIGHTLY="not @nightly and"
-    fi
+  xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
-    xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+after_failure:
+  tail --lines=2000 ~/.BBTZ5TEST.log
 
 jobs:
   include:
@@ -44,27 +45,24 @@ jobs:
       env:
       - ZOTERO=zotero
       - CLUSTER="@test-cluster-1"
-      <<: *script
 
     - stage: test
       env:
       - ZOTERO=zotero
       - CLUSTER="not @test-cluster-1"
-      <<: *script
 
     - stage: test
       env:
       - ZOTERO=jurism
       - CLUSTER="@test-cluster-1"
-      <<: *script
 
     - stage: test
       env:
       - ZOTERO=jurism
       - CLUSTER="not @test-cluster-1"
-      <<: *script
 
     - stage: release
+      install: true
       script: |-
         yarn install
         yarn run release
