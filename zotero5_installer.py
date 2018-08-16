@@ -195,8 +195,9 @@ else:
     print('Retaining ' + tarball)
   else:
     print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' to ' + tarball)
+    # python on Travis is positively ancient and cannot download https files...
     # urlretrieve(args.url, tarball)
-    print(subprocess.check_output(['curl', '-L', '-O', tarball, args.url]))
+    print(subprocess.check_output(['curl', '-L', '-o', tarball, args.url]))
 
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
 
