@@ -8,7 +8,7 @@ cache:
 
 _script: &script
   script: |-
-    set -eE
+    set -e
     trap "tail --lines=2000 ~/.BBTZ5TEST.log" ERR
 
     set -x
