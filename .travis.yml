@@ -5,7 +5,7 @@ env:
   - ZOTERO=jurism CLUSTER="not @test-cluster-1"
 
 python:
-  - "2.7"
+  - "2.7.9"
 
 # is caching parallel-safe?
 cache:
