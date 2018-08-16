@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rake'
+gem 'travis'
 gem 'cucumber'
 gem 'headless'
 gem 'os'
