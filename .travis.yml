@@ -8,7 +8,9 @@ cache:
 
 _script: &script
   script: |-
-    set -e
+    set -eE
+    trap "tail --lines=2000 ~/.BBTZ5TEST.log" ERR
+
     set -x
 
     if [[ $TRAVIS_COMMIT_MESSAGE = *"#trace"* ]]; then
@@ -35,9 +37,6 @@ _script: &script
     fi
 
     xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
-
-  after_failure:
-    - tail --lines=2000 ~/.BBTZ5TEST.log
 
 jobs:
   include:
