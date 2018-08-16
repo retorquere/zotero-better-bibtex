@@ -1,11 +1,12 @@
+language: python
+python:
+  - "3.7"
+
 env:
   - ZOTERO=zotero CLUSTER="@test-cluster-1" RELEASE=true
   - ZOTERO=zotero CLUSTER="not @test-cluster-1"
   - ZOTERO=jurism CLUSTER="@test-cluster-1"
   - ZOTERO=jurism CLUSTER="not @test-cluster-1"
-
-python:
-  - "3.7.0"
 
 # is caching parallel-safe?
 cache:
