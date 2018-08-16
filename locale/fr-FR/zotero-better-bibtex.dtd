@@ -80,7 +80,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "chaque collection">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "toutes les collections">
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
-<!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
+<!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Inclure les métadonnées spécifiques à JabRef :">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Non">
@@ -94,7 +94,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Non">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a URL field (requires custom style for url field support)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "dans un champ URL (nécessite un style personnalisé pour le support des URL)">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportation">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ne pas tenir compte des préfixes de noms lors du tri">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "les deux">
@@ -103,7 +103,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
-<!ENTITY better-bibtex.Preferences.export.fields.sorted "Deterministically order references and fields; primarily for version control.">
+<!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordonner de façon déterministe les références et champs ; principalement pour le contrôle de version.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abréviations de journaux">
 <!ENTITY better-bibtex.Preferences.tab.postscript "Postscript">
