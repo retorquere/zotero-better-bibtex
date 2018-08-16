@@ -2,9 +2,9 @@
 # yarn lockfile v1
 
 
-"@octokit/rest@^15.9.5":
-  version "15.9.5"
-  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-15.9.5.tgz#e356d202bd0b517e381f705ad77d98ccb84e0c65"
+"@octokit/rest@^15.9.6":
+  version "15.9.6"
+  resolved "https://registry.yarnpkg.com/@octokit/rest/-/rest-15.9.6.tgz#992a8b0fe17ac85f572e5b57d00ea5493be010ee"
   dependencies:
     before-after-hook "^1.1.0"
     btoa-lite "^1.0.0"
@@ -69,9 +69,13 @@
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.3.tgz#3dca0e3f33b200fc7d1139c0cd96c1268cadfd9d"
 
-"@types/node@*", "@types/node@^10.5.8":
+"@types/node@*":
   version "10.5.8"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.5.8.tgz#6f14ccecad1d19332f063a6a764f8907801fece0"
+
+"@types/node@^10.7.1":
+  version "10.7.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-10.7.1.tgz#b704d7c259aa40ee052eec678758a68d07132a2e"
 
 "@types/shelljs@0.7.8":
   version "0.7.8"
@@ -90,9 +94,9 @@
   dependencies:
     source-map "^0.6.1"
 
-"@types/webpack@^4.4.9":
-  version "4.4.9"
-  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.9.tgz#814721fb4cfaebe553ffdf2ae2c504494ec6613b"
+"@types/webpack@^4.4.10":
+  version "4.4.10"
+  resolved "https://registry.yarnpkg.com/@types/webpack/-/webpack-4.4.10.tgz#2ecf12589142bc531549140612815b7d8b076358"
   dependencies:
     "@types/node" "*"
     "@types/tapable" "*"
@@ -4041,9 +4045,9 @@ parse-asn1@^5.0.0:
     evp_bytestokey "^1.0.0"
     pbkdf2 "^3.0.3"
 
-parse5@^5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.0.0.tgz#4d02710d44f3c3846197a11e205d4ef17842b81a"
+parse5@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/parse5/-/parse5-5.1.0.tgz#c59341c9723f414c452975564c7c00a68d58acd2"
 
 pascalcase@^0.1.1:
   version "0.1.1"
@@ -5957,14 +5961,14 @@ zlibjs@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/zlibjs/-/zlibjs-0.3.1.tgz#50197edb28a1c42ca659cc8b4e6a9ddd6d444554"
 
-zotero-plugin@0.0.48:
-  version "0.0.48"
-  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.48.tgz#ff1fb83611c8af1288f0924cc243c9dff3160b78"
+zotero-plugin@0.0.49:
+  version "0.0.49"
+  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.49.tgz#0fd81e48b521931c8807151289f45a51dc38a67a"
   dependencies:
-    "@octokit/rest" "^15.9.5"
+    "@octokit/rest" "^15.9.6"
     "@rgrove/parse-xml" "^1.1.1"
-    "@types/node" "^10.5.8"
-    "@types/webpack" "^4.4.9"
+    "@types/node" "^10.7.1"
+    "@types/webpack" "^4.4.10"
     archiver "^2.1.1"
     aws-s3-form "^0.3.5"
     current-git-branch "^1.0.1"

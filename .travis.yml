@@ -53,4 +53,6 @@ jobs:
 
     - stage: release
       script: |-
-        [[ "$RELEASE" = "true" ]] && yarn run release
+        [[ "$RELEASE" != "true" ]] && exit
+        yarn install
+        yarn run release

@@ -28,6 +28,7 @@
     "minitest": "webpack && node ./minitests/build/dateparser.js",
     "start": "KILL=false cucumber --fail-fast --tags @none",
     "s3form": "zotero-plugin-s3form",
+    "prerelease": "yarn run build",
     "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
@@ -70,7 +71,7 @@
     "lokijs": "^1.5.5",
     "node-eta": "^0.9.0",
     "npm-check-updates": "^2.14.2",
-    "parse5": "^5.0.0",
+    "parse5": "^5.1.0",
     "pegjs": "^0.10.0",
     "punycode": "^2.1.1",
     "recast": "^0.15.3",
@@ -79,12 +80,12 @@
     "tslint": "5.11.0",
     "webpack-cli": "^3.1.0",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.48"
+    "zotero-plugin": "0.0.49"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.5.8",
-    "@types/webpack": "^4.4.9",
+    "@types/node": "^10.7.1",
+    "@types/webpack": "^4.4.10",
     "archiver": "^2.1.1",
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.1",
