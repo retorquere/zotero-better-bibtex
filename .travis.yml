@@ -1,10 +1,3 @@
-env:
-  - ZOTERO=zotero CLUSTER="@test-cluster-1" RELEASE=true
-  - ZOTERO=zotero CLUSTER="not @test-cluster-1"
-  - ZOTERO=jurism CLUSTER="@test-cluster-1"
-  - ZOTERO=jurism CLUSTER="not @test-cluster-1"
-
-# is caching parallel-safe?
 cache:
   yarn: true
   bundler: true
@@ -13,46 +6,69 @@ cache:
     - vendor/bundle
     - download
 
+_script: &script
+  script: |-
+    set -e
+
+    export DISPLAY=:99.0
+    sh -e /etc/init.d/xvfb start
+    sleep 3 # give xvfb some time to start
+
+    git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
+    if [ $? == 0 ]; then
+      export TRACE=true
+    fi
+
+    git submodule sync && git submodule update --init --recursive
+
+    yarn install
+
+    gem install bundler
+    gem update bundler
+    bundle config
+    bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+    mkdir -p bin downloads/zotero downloads/juris-m
+    ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir profile --replace --cache downloads/zotero
+
+    yarn run build
+
+    if [ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" ]; then
+      export NIGHTLY=""
+      export TRACE=true
+    else
+      export NIGHTLY="not @nightly and"
+    fi
+
+    bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+
 jobs:
   include:
     - stage: test
-      script: |-
-        set -e
+      env:
+      - ZOTERO=zotero
+      - CLUSTER="@test-cluster-1"
+      <<: *script
 
-        export DISPLAY=:99.0
-        sh -e /etc/init.d/xvfb start
-        sleep 3 # give xvfb some time to start
+    - stage: test
+      env:
+      - ZOTERO=zotero
+      - CLUSTER="not @test-cluster-1"
+      <<: *script
 
-        git log --format=%B -n 1 $TRAVIS_COMMIT | grep '#trace' &> /dev/null
-        if [ $? == 0 ]; then
-          export TRACE=true
-        fi
+    - stage: test
+      env:
+      - ZOTERO=jurism
+      - CLUSTER="@test-cluster-1"
+      <<: *script
 
-        git submodule sync && git submodule update --init --recursive
-
-        yarn install
-
-        gem install bundler
-        gem update bundler
-        bundle config
-        bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-
-        mkdir -p bin downloads/zotero downloads/juris-m
-        ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir profile --replace --cache downloads/zotero
-
-        yarn run build
-
-        if [ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" ]; then
-          export NIGHTLY=""
-          export TRACE=true
-        else
-          export NIGHTLY="not @nightly and"
-        fi
-
-        bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+    - stage: test
+      env:
+      - ZOTERO=jurism
+      - CLUSTER="not @test-cluster-1"
+      <<: *script
 
     - stage: release
       script: |-
-        [[ "$RELEASE" != "true" ]] && exit
         yarn install
         yarn run release
