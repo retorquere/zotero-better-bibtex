@@ -194,7 +194,8 @@ else:
     print('Retaining ' + tarball)
   else:
     print("Downloading " + args.client + ' ' + args.version + ' for ' + platform.machine() + ' from ' + args.url + ' to ' + tarball)
-    urlretrieve (args.url, tarball)
+    # urlretrieve(args.url, tarball)
+    print(subprocess.check_output(['curl', '-O', tarball, args.url])
 
 if os.path.exists(installdir) and not args.replace: raise Exception('Installation directory "' + installdir + '" exists')
 
