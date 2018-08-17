@@ -517,7 +517,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence",
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "book",
@@ -916,7 +916,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "report",
@@ -1071,7 +1071,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -2435,7 +2435,7 @@
 
       ],
       "publicationTitle": "Computer Models of Thought and Language",
-      "institution": "Freeman"
+      "publisher": "Freeman"
     },
     {
       "itemType": "book",
@@ -3556,7 +3556,7 @@
 
       ],
       "publicationTitle": "Strategies for Natural Language Processing",
-      "institution": "LEA"
+      "publisher": "LEA"
     },
     {
       "itemType": "journalArticle",
@@ -4155,7 +4155,7 @@
 
       ],
       "publicationTitle": "Approaches to Natural Language",
-      "institution": "Reidel"
+      "publisher": "Reidel"
     },
     {
       "itemType": "report",
@@ -4929,7 +4929,7 @@
 
       ],
       "publicationTitle": "Artificial Intelligence in Medicine",
-      "institution": "Westview Press"
+      "publisher": "Westview Press"
     },
     {
       "itemType": "report",
@@ -6439,7 +6439,7 @@
 
       ],
       "publicationTitle": "Speech Acts",
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -6508,7 +6508,7 @@
 
       ],
       "publicationTitle": "Understanding Spoken language",
-      "institution": "North-Holland"
+      "publisher": "North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -7342,7 +7342,7 @@
 
       ],
       "publicationTitle": "Knowledge Representation and Defeasible Reasoning",
-      "institution": "Kluwer Academic Publishers"
+      "publisher": "Kluwer Academic Publishers"
     },
     {
       "itemType": "journalArticle",
@@ -7938,7 +7938,7 @@
 
       ],
       "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "book",
@@ -9215,7 +9215,7 @@
 
       ],
       "publicationTitle": "Artificial Intelligence: An MIT Perspective",
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -10644,7 +10644,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence 10",
-      "institution": "Halstead"
+      "publisher": "Halstead"
     },
     {
       "itemType": "journalArticle",
@@ -12010,7 +12010,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence",
-      "institution": "Edinburgh University Press"
+      "publisher": "Edinburgh University Press"
     },
     {
       "itemType": "report",
@@ -12375,7 +12375,7 @@
 
       ],
       "publicationTitle": "Mind design",
-      "institution": "Bradford Books"
+      "publisher": "Bradford Books"
     },
     {
       "itemType": "report",
@@ -12585,7 +12585,7 @@
 
       ],
       "publicationTitle": "Formal Theories of the Commonsense World",
-      "institution": "Ablex"
+      "publisher": "Ablex"
     },
     {
       "itemType": "journalArticle",
@@ -13190,7 +13190,7 @@
 
       ],
       "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "book",
@@ -13318,7 +13318,7 @@
 
       ],
       "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -14047,7 +14047,7 @@
 
       ],
       "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "conferencePaper",
@@ -14789,7 +14789,7 @@
 
       ],
       "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "report",
@@ -14885,7 +14885,7 @@
 
       ],
       "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -17674,7 +17674,7 @@
 
       ],
       "publicationTitle": "Reasoning About Plans",
-      "institution": "Morgan Kaufmann"
+      "publisher": "Morgan Kaufmann"
     },
     {
       "itemType": "bookSection",
@@ -18173,7 +18173,7 @@
 
       ],
       "publicationTitle": "Formal Methods in the Study of Language",
-      "institution": "Mathematical Centre Tracts"
+      "publisher": "Mathematical Centre Tracts"
     },
     {
       "itemType": "report",
@@ -23106,7 +23106,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence",
-      "institution": "Ellis Horwood"
+      "publisher": "Ellis Horwood"
     },
     {
       "itemType": "conferencePaper",
@@ -23333,7 +23333,7 @@
 
       ],
       "publicationTitle": "Robot Motion: Planning and Control",
-      "institution": "MITP"
+      "publisher": "MITP"
     },
     {
       "itemType": "report",
@@ -23706,7 +23706,7 @@
 
       ],
       "publicationTitle": "Formal Techniques in Artificial Intelligence",
-      "institution": "ELSEVIER"
+      "publisher": "ELSEVIER"
     },
     {
       "itemType": "conferencePaper",
@@ -27427,7 +27427,7 @@
 
       ],
       "publicationTitle": "Artificial Intelligence and Mobile Robots",
-      "institution": "AAAI-PRESS"
+      "publisher": "AAAI-PRESS"
     },
     {
       "itemType": "journalArticle",
@@ -32887,7 +32887,7 @@
 
       ],
       "publicationTitle": "KR2006",
-      "institution": "AAAI Press"
+      "publisher": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
@@ -34877,7 +34877,7 @@
 
       ],
       "publicationTitle": "Logics in Artificial Intelligence",
-      "institution": "Springer Berlin Heidelberg"
+      "publisher": "Springer Berlin Heidelberg"
     },
     {
       "itemType": "conferencePaper",
@@ -35561,7 +35561,7 @@
 
       ],
       "publicationTitle": "Seventh International Planning Competition",
-      "institution": "ICAPS Foundation"
+      "publisher": "ICAPS Foundation"
     },
     {
       "itemType": "conferencePaper",

@@ -52,6 +52,11 @@ def fixBBTJSON(lib, data)
           end
         }
       }
+
+      if lib =~ /juris-m/ && %w{book bookSection}.include?(item['itemType']) && item['institution']
+        item['publisher'] = item['institution']
+        item.delete('institution')
+      end
     }
   end
 
