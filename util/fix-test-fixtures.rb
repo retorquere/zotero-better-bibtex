@@ -30,7 +30,6 @@ def fixBBTJSON(lib, data)
 
       if lib =~ /juris-m/
         duplicates = {
-          'publisher' => %w{university institution},
           'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
           'type' => %w{reportType thesisType},
           'number' => %w{reportNumber},
@@ -57,6 +56,11 @@ def fixBBTJSON(lib, data)
         item['publisher'] = item['institution']
         item.delete('institution')
         resave = 'institution'
+      end
+      if lib =~ /juris-m/ && %w{report}.include?(item['itemType']) && item['publisher']
+        item['institution'] = item['publisher']
+        item.delete('publisher')
+        resave = 'publisher'
       end
     }
   end
