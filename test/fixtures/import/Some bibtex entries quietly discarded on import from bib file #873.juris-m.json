@@ -4301,7 +4301,7 @@
       "seeAlso": [
 
       ],
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "book",
@@ -4331,7 +4331,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Mouton"
+      "publisher": "Mouton"
     },
     {
       "itemType": "book",
@@ -4361,7 +4361,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "book",
@@ -4396,7 +4396,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of California Press"
+      "publisher": "University of California Press"
     },
     {
       "itemType": "book",
@@ -4426,7 +4426,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Holt, Rinehart & Winston"
+      "publisher": "Holt, Rinehart & Winston"
     },
     {
       "itemType": "book",
@@ -4461,7 +4461,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Harper & Row"
+      "publisher": "Harper & Row"
     },
     {
       "itemType": "journalArticle",
@@ -4528,7 +4528,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -4750,7 +4750,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Oxford University Press"
+      "publisher": "Oxford University Press"
     },
     {
       "itemType": "book",
@@ -4780,7 +4780,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -4929,7 +4929,7 @@
 
       ],
       "publicationTitle": "Artificial Intelligence in Medicine",
-      "institution": "Westview Press"
+      "publisher": "Westview Press"
     },
     {
       "itemType": "report",
@@ -5031,7 +5031,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
