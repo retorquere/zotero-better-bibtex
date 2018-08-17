@@ -94,6 +94,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Add URLs to BibTeX export">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in a note field">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "no">
+<!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a URL field (requires custom style for url field support)">
 <!ENTITY better-bibtex.Preferences.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Disregard name prefixes when sorting">
