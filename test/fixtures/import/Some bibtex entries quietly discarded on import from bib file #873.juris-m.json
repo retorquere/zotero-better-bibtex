@@ -604,7 +604,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -945,7 +945,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Maryland Department of Computer Science"
+      "publisher": "University of Maryland Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -975,7 +975,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Stanford University Artificial Intelligence Laboratory"
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1189,7 +1189,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -1259,7 +1259,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1477,7 +1477,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -1507,7 +1507,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -1775,7 +1775,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1834,7 +1834,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Edinburgh Department of Artificial Intelligence"
+      "publisher": "University of Edinburgh Department of Artificial Intelligence"
     },
     {
       "itemType": "book",
@@ -1925,7 +1925,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Bolt Beranek and Newman"
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "book",
@@ -2018,7 +2018,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -2153,7 +2153,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Project MAC, MIT"
+      "publisher": "Project MAC, MIT"
     },
     {
       "itemType": "conferencePaper",
@@ -2535,7 +2535,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -2777,7 +2777,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -3314,7 +3314,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Rochester Department of Computer Science"
+      "publisher": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -3348,7 +3348,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -3794,7 +3794,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
@@ -4015,7 +4015,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -4184,7 +4184,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Brown University Department of Computer Science"
+      "publisher": "Brown University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -4619,7 +4619,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Institute for Semantic and Cognitive Studies"
+      "publisher": "Institute for Semantic and Cognitive Studies"
     },
     {
       "itemType": "journalArticle",
@@ -4959,7 +4959,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Bolt Beranek and Newman"
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "journalArticle",
@@ -5780,7 +5780,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT"
+      "publisher": "MIT"
     },
     {
       "itemType": "book",
@@ -5946,7 +5946,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Bolt Beranek and Newman"
+      "publisher": "Bolt Beranek and Newman"
     },
     {
       "itemType": "conferencePaper",
@@ -6714,7 +6714,7 @@
       "seeAlso": [
 
       ],
-      "institution": "National Academy of Sciences/National Research Council"
+      "publisher": "National Academy of Sciences/National Research Council"
     },
     {
       "itemType": "book",
@@ -6956,7 +6956,7 @@
       "seeAlso": [
 
       ],
-      "institution": "CSLI"
+      "publisher": "CSLI"
     },
     {
       "itemType": "conferencePaper",
@@ -7046,7 +7046,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -7737,7 +7737,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -7827,7 +7827,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Department of Electrical Engineering and Computer Science"
+      "publisher": "MIT Department of Electrical Engineering and Computer Science"
     },
     {
       "itemType": "book",
@@ -7891,7 +7891,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Stanford University Artificial Intelligence Laboratory"
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
@@ -8312,7 +8312,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Texas at Austin Department of Mathematics and Computer Sciences"
+      "publisher": "University of Texas at Austin Department of Mathematics and Computer Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -8538,7 +8538,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MITAI"
+      "publisher": "MITAI"
     },
     {
       "itemType": "conferencePaper",
@@ -9040,7 +9040,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Waterloo Department of Computer Science"
+      "publisher": "University of Waterloo Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -9100,7 +9100,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -9350,7 +9350,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9518,7 +9518,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9622,7 +9622,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of British Columbia Department of Computer Science"
+      "publisher": "University of British Columbia Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -9974,7 +9974,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Stanford University Artificial Intelligence Laboratory"
+      "publisher": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -10044,7 +10044,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Essex Computer Science Department"
+      "publisher": "University of Essex Computer Science Department"
     },
     {
       "itemType": "book",
@@ -12043,7 +12043,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12071,7 +12071,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12099,7 +12099,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12128,7 +12128,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -12302,7 +12302,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -12403,7 +12403,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -12465,7 +12465,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -12522,7 +12522,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -12550,7 +12550,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "bookSection",
@@ -12837,7 +12837,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale Center for Computational Vision and Control"
+      "publisher": "Yale Center for Computational Vision and Control"
     },
     {
       "itemType": "journalArticle",
@@ -13045,7 +13045,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Department of Computer Science"
+      "publisher": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -13249,7 +13249,7 @@
       "seeAlso": [
 
       ],
-      "institution": "SRI Artificial Intelligence Center"
+      "publisher": "SRI Artificial Intelligence Center"
     },
     {
       "itemType": "bookSection",
@@ -13427,7 +13427,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Maryland, College Park"
+      "publisher": "University of Maryland, College Park"
     },
     {
       "itemType": "conferencePaper",
@@ -13646,7 +13646,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -14581,7 +14581,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -14647,7 +14647,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Syracuse University School of Computer and Information Sciences"
+      "publisher": "Syracuse University School of Computer and Information Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -14818,7 +14818,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -14950,7 +14950,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -15156,7 +15156,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Stanford University Computer Science Department"
+      "publisher": "Stanford University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -16569,7 +16569,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Rochester Department of Computer Science"
+      "publisher": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -16986,7 +16986,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science University of Illinois at"
+      "publisher": "Department of Computer Science University of Illinois at"
     },
     {
       "itemType": "journalArticle",
@@ -17144,7 +17144,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science, University of California at Berkeley"
+      "publisher": "Department of Computer Science, University of California at Berkeley"
     },
     {
       "itemType": "conferencePaper",
@@ -17269,7 +17269,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science Yale University"
+      "publisher": "Department of Computer Science Yale University"
     },
     {
       "itemType": "journalArticle",
@@ -17595,7 +17595,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science, University of Rochester"
+      "publisher": "Department of Computer Science, University of Rochester"
     },
     {
       "itemType": "bookSection",
@@ -17761,7 +17761,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Univeristy of Rochester Computer Science Department"
+      "publisher": "Univeristy of Rochester Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -17826,7 +17826,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Systems Research Institute, University of Toronto"
+      "publisher": "Computer Systems Research Institute, University of Toronto"
     },
     {
       "itemType": "journalArticle",
@@ -18014,7 +18014,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Artificial Intelligence Center, SRI International"
+      "publisher": "Artificial Intelligence Center, SRI International"
     },
     {
       "itemType": "journalArticle",
@@ -18126,7 +18126,7 @@
       "seeAlso": [
 
       ],
-      "institution": "CSLI"
+      "publisher": "CSLI"
     },
     {
       "itemType": "bookSection",
@@ -18202,7 +18202,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Artificial Intelligence Center,SRI International"
+      "publisher": "Artificial Intelligence Center,SRI International"
     },
     {
       "itemType": "book",
@@ -18324,7 +18324,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Brown University Department of Computer Science"
+      "publisher": "Brown University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -19743,7 +19743,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Center for Cognitive Science"
+      "publisher": "MIT Center for Cognitive Science"
     },
     {
       "itemType": "report",
@@ -19774,7 +19774,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Laboratory for Computer Science"
+      "publisher": "MIT Laboratory for Computer Science"
     },
     {
       "itemType": "book",
@@ -20068,7 +20068,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -20155,7 +20155,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "report",
@@ -20184,7 +20184,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Computer Science Department"
+      "publisher": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -20434,7 +20434,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Brown University, Department of Computer Science"
+      "publisher": "Brown University, Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -20838,7 +20838,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Science Department, Indiana University"
+      "publisher": "Computer Science Department, Indiana University"
     },
     {
       "itemType": "conferencePaper",
@@ -21198,7 +21198,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer and Information Science, University of Massachusetts, Amherst"
+      "publisher": "Department of Computer and Information Science, University of Massachusetts, Amherst"
     },
     {
       "itemType": "journalArticle",
@@ -21699,7 +21699,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Linköping University"
+      "publisher": "Linköping University"
     },
     {
       "itemType": "report",
@@ -21729,7 +21729,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Linköping University"
+      "publisher": "Linköping University"
     },
     {
       "itemType": "book",
@@ -21912,7 +21912,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science and Engineering, University of Washington"
+      "publisher": "Department of Computer Science and Engineering, University of Washington"
     },
     {
       "itemType": "conferencePaper",
@@ -22273,7 +22273,7 @@
       "seeAlso": [
 
       ],
-      "institution": "UDUB"
+      "publisher": "UDUB"
     },
     {
       "itemType": "manuscript",
@@ -22551,7 +22551,7 @@
       "seeAlso": [
 
       ],
-      "institution": "UDUB"
+      "publisher": "UDUB"
     },
     {
       "itemType": "journalArticle",
@@ -22634,7 +22634,7 @@
       "seeAlso": [
 
       ],
-      "institution": "UDUB"
+      "publisher": "UDUB"
     },
     {
       "itemType": "conferencePaper",
@@ -22746,7 +22746,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science, Yale University"
+      "publisher": "Department of Computer Science, Yale University"
     },
     {
       "itemType": "conferencePaper",
@@ -23363,7 +23363,7 @@
       "seeAlso": [
 
       ],
-      "institution": "ICSI"
+      "publisher": "ICSI"
     },
     {
       "itemType": "journalArticle",
@@ -23613,7 +23613,7 @@
       "seeAlso": [
 
       ],
-      "institution": "ICSI"
+      "publisher": "ICSI"
     },
     {
       "itemType": "conferencePaper",
@@ -23774,7 +23774,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Pennsylvania Institute for Research in Cognitive Science"
+      "publisher": "University of Pennsylvania Institute for Research in Cognitive Science"
     },
     {
       "itemType": "conferencePaper",
@@ -23870,7 +23870,7 @@
       "seeAlso": [
 
       ],
-      "institution": "The Institute for the Learning Sciences, Northwestern University"
+      "publisher": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "journalArticle",
@@ -23936,7 +23936,7 @@
       "seeAlso": [
 
       ],
-      "institution": "The Institute for the Learning Sciences, Northwestern University"
+      "publisher": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "conferencePaper",
@@ -24099,7 +24099,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Science Department, Stanford University"
+      "publisher": "Computer Science Department, Stanford University"
     },
     {
       "itemType": "journalArticle",
@@ -25066,7 +25066,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Bilkent University, Department of Computer Engineering and Information Science"
+      "publisher": "Bilkent University, Department of Computer Engineering and Information Science"
     },
     {
       "itemType": "journalArticle",
@@ -25390,7 +25390,7 @@
       "seeAlso": [
 
       ],
-      "institution": "NASA Ames Research Center"
+      "publisher": "NASA Ames Research Center"
     },
     {
       "itemType": "journalArticle",
@@ -25932,7 +25932,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Science Department, University of Maryland"
+      "publisher": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "thesis",
@@ -26514,7 +26514,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Science Dept., University of Sherbrooke"
+      "publisher": "Computer Science Dept., University of Sherbrooke"
     },
     {
       "itemType": "journalArticle",
@@ -26776,7 +26776,7 @@
       "seeAlso": [
 
       ],
-      "institution": "SRI"
+      "publisher": "SRI"
     },
     {
       "itemType": "journalArticle",
@@ -26936,7 +26936,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KSL"
+      "publisher": "KSL"
     },
     {
       "itemType": "report",
@@ -26967,7 +26967,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KSL"
+      "publisher": "KSL"
     },
     {
       "itemType": "journalArticle",
@@ -27159,7 +27159,7 @@
       "seeAlso": [
 
       ],
-      "institution": "CMUSCS"
+      "publisher": "CMUSCS"
     },
     {
       "itemType": "journalArticle",
@@ -27666,7 +27666,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Albert-Ludwigs-Universität, Institut für Informatik"
+      "publisher": "Albert-Ludwigs-Universität, Institut für Informatik"
     },
     {
       "itemType": "conferencePaper",
@@ -28158,7 +28158,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Intelligent Systems Program, University of Pittsburgh"
+      "publisher": "Intelligent Systems Program, University of Pittsburgh"
     },
     {
       "itemType": "conferencePaper",
@@ -28565,7 +28565,7 @@
       "seeAlso": [
 
       ],
-      "institution": "AAII"
+      "publisher": "AAII"
     },
     {
       "itemType": "manuscript",
@@ -28937,7 +28937,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science, Brown University"
+      "publisher": "Department of Computer Science, Brown University"
     },
     {
       "itemType": "report",
@@ -28972,7 +28972,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computing Research Laboratory, New Mexico State University"
+      "publisher": "Computing Research Laboratory, New Mexico State University"
     },
     {
       "itemType": "thesis",
@@ -29177,7 +29177,7 @@
       "seeAlso": [
 
       ],
-      "institution": "School of Computer and Information Science, Syracuse University"
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29208,7 +29208,7 @@
       "seeAlso": [
 
       ],
-      "institution": "School of Computer and Information Science, Syracuse University"
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29239,7 +29239,7 @@
       "seeAlso": [
 
       ],
-      "institution": "School of Computer and Information Science, Syracuse University"
+      "publisher": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29290,7 +29290,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cognitive Science Laboratory, Princeton University"
+      "publisher": "Cognitive Science Laboratory, Princeton University"
     },
     {
       "itemType": "journalArticle",
@@ -29881,7 +29881,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Carnegie-Mellon University"
+      "publisher": "Carnegie-Mellon University"
     },
     {
       "itemType": "conferencePaper",
@@ -31139,7 +31139,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Computer Science Department, University of Maryland"
+      "publisher": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "journalArticle",
@@ -31523,7 +31523,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Institut für Informatik, Universität Freiburg"
+      "publisher": "Institut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "report",
@@ -31563,7 +31563,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Insitut für Informatik, Universität Freiburg"
+      "publisher": "Insitut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "journalArticle",
@@ -31902,7 +31902,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Department of Computer Science, The University of Huddersfield"
+      "publisher": "Department of Computer Science, The University of Huddersfield"
     },
     {
       "itemType": "conferencePaper",
@@ -32558,7 +32558,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Dept. of Electronics for Automation, University of Brescia"
+      "publisher": "Dept. of Electronics for Automation, University of Brescia"
     },
     {
       "itemType": "conferencePaper",
