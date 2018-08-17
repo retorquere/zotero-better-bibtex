@@ -517,7 +517,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence",
-      "publisher": "American Elsevier"
+      "institution": "American Elsevier"
     },
     {
       "itemType": "book",
@@ -916,7 +916,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "publisher": "McGraw-Hill"
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "report",
@@ -1071,7 +1071,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "publisher": "McGraw-Hill"
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -1629,7 +1629,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "bookSection",
@@ -2435,7 +2435,7 @@
 
       ],
       "publicationTitle": "Computer Models of Thought and Language",
-      "publisher": "Freeman"
+      "institution": "Freeman"
     },
     {
       "itemType": "book",
@@ -3556,7 +3556,7 @@
 
       ],
       "publicationTitle": "Strategies for Natural Language Processing",
-      "publisher": "LEA"
+      "institution": "LEA"
     },
     {
       "itemType": "journalArticle",
@@ -4155,7 +4155,7 @@
 
       ],
       "publicationTitle": "Approaches to Natural Language",
-      "publisher": "Reidel"
+      "institution": "Reidel"
     },
     {
       "itemType": "report",
@@ -4929,7 +4929,7 @@
 
       ],
       "publicationTitle": "Artificial Intelligence in Medicine",
-      "publisher": "Westview Press"
+      "institution": "Westview Press"
     },
     {
       "itemType": "report",
@@ -5296,7 +5296,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Freeman"
+      "publisher": "Freeman"
     },
     {
       "itemType": "journalArticle",
@@ -5430,7 +5430,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Pitman"
+      "publisher": "Pitman"
     },
     {
       "itemType": "journalArticle",
@@ -5491,7 +5491,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Basil Blackwell"
+      "publisher": "Basil Blackwell"
     },
     {
       "itemType": "book",
@@ -5521,7 +5521,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Chicago Press"
+      "publisher": "University of Chicago Press"
     },
     {
       "itemType": "book",
@@ -5556,7 +5556,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "book",
@@ -5597,7 +5597,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "book",
@@ -5627,7 +5627,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "journalArticle",
@@ -5688,7 +5688,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "conferencePaper",
@@ -5814,7 +5814,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Association for Computational Linguistics"
+      "publisher": "Association for Computational Linguistics"
     },
     {
       "itemType": "book",
@@ -5844,7 +5844,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Quarterly Progress Report 3878"
+      "publisher": "Quarterly Progress Report 3878"
     },
     {
       "itemType": "journalArticle",
@@ -5916,7 +5916,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "report",
@@ -6285,7 +6285,7 @@
       "seeAlso": [
 
       ],
-      "institution": "AFIPS Press"
+      "publisher": "AFIPS Press"
     },
     {
       "itemType": "bookSection",
@@ -6360,7 +6360,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "book",
@@ -6395,7 +6395,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "bookSection",
@@ -6744,7 +6744,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "book",
@@ -6774,7 +6774,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Basic Books"
+      "publisher": "Basic Books"
     },
     {
       "itemType": "book",
@@ -6804,7 +6804,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -6834,7 +6834,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Dickenson"
+      "publisher": "Dickenson"
     },
     {
       "itemType": "book",
@@ -6864,7 +6864,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Prentice-Hall"
+      "publisher": "Prentice-Hall"
     },
     {
       "itemType": "book",
@@ -6894,7 +6894,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Van Nostrand"
+      "publisher": "Van Nostrand"
     },
     {
       "itemType": "journalArticle",
@@ -7109,7 +7109,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Nobel Academy"
+      "publisher": "Nobel Academy"
     },
     {
       "itemType": "book",
@@ -7139,7 +7139,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Van Nostrand"
+      "publisher": "Van Nostrand"
     },
     {
       "itemType": "book",
@@ -7169,7 +7169,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Van Nostrand"
+      "publisher": "Van Nostrand"
     },
     {
       "itemType": "journalArticle",
@@ -7241,7 +7241,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -7433,7 +7433,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Regents"
+      "publisher": "Regents"
     },
     {
       "itemType": "book",
@@ -7484,7 +7484,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -7519,7 +7519,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -7565,7 +7565,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Edinburgh University Press"
+      "publisher": "Edinburgh University Press"
     },
     {
       "itemType": "journalArticle",
@@ -7798,7 +7798,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "report",
@@ -7862,7 +7862,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Harcourt Brace Jovanovich"
+      "publisher": "Harcourt Brace Jovanovich"
     },
     {
       "itemType": "report",
@@ -7973,7 +7973,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Prentice-Hall"
+      "publisher": "Prentice-Hall"
     },
     {
       "itemType": "book",
@@ -8018,7 +8018,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -8189,7 +8189,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "journalArticle",
@@ -8414,7 +8414,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -8644,7 +8644,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Wiley"
+      "publisher": "Wiley"
     },
     {
       "itemType": "book",
@@ -8685,7 +8685,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "book",
@@ -8714,7 +8714,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Hart Publishing Company"
+      "publisher": "Hart Publishing Company"
     },
     {
       "itemType": "book",
@@ -8760,7 +8760,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -8799,7 +8799,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Raven Press"
+      "publisher": "Raven Press"
     },
     {
       "itemType": "conferencePaper",
@@ -8931,7 +8931,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -8971,7 +8971,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Plenum Press"
+      "publisher": "Plenum Press"
     },
     {
       "itemType": "book",
@@ -9006,7 +9006,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "report",
@@ -9172,7 +9172,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "bookSection",
@@ -9321,7 +9321,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "report",
@@ -9458,7 +9458,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -9593,7 +9593,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Edinburgh University Press"
+      "publisher": "Edinburgh University Press"
     },
     {
       "itemType": "report",
@@ -9656,7 +9656,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Plenum Press"
+      "publisher": "Plenum Press"
     },
     {
       "itemType": "journalArticle",
@@ -9721,7 +9721,7 @@
       "seeAlso": [
 
       ],
-      "institution": "UNESCO"
+      "publisher": "UNESCO"
     },
     {
       "itemType": "journalArticle",
@@ -9813,7 +9813,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Houghton Mifflin"
+      "publisher": "Houghton Mifflin"
     },
     {
       "itemType": "journalArticle",
@@ -9906,7 +9906,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Prentice-Hall"
+      "publisher": "Prentice-Hall"
     },
     {
       "itemType": "journalArticle",
@@ -10079,7 +10079,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Edinburgh University Press"
+      "publisher": "Edinburgh University Press"
     },
     {
       "itemType": "bookSection",
@@ -10301,7 +10301,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Chicago Press"
+      "publisher": "University of Chicago Press"
     },
     {
       "itemType": "journalArticle",
@@ -10398,7 +10398,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "book",
@@ -10438,7 +10438,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Pergamon Press"
+      "publisher": "Pergamon Press"
     },
     {
       "itemType": "journalArticle",
@@ -10504,7 +10504,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Harcourt, Brace & World"
+      "publisher": "Harcourt, Brace & World"
     },
     {
       "itemType": "journalArticle",
@@ -10876,7 +10876,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Elsevier North-Holland"
+      "publisher": "Elsevier North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -11040,7 +11040,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Chicago Press"
+      "publisher": "University of Chicago Press"
     },
     {
       "itemType": "journalArticle",
@@ -11113,7 +11113,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -11218,7 +11218,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -11253,7 +11253,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -11390,7 +11390,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -11502,7 +11502,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Basil Blackwell"
+      "publisher": "Basil Blackwell"
     },
     {
       "itemType": "journalArticle",
@@ -11703,7 +11703,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "book",
@@ -11733,7 +11733,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Freeman"
+      "publisher": "Freeman"
     },
     {
       "itemType": "journalArticle",
@@ -11903,7 +11903,7 @@
       "seeAlso": [
 
       ],
-      "institution": "National Physical Laboratory"
+      "publisher": "National Physical Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -13138,7 +13138,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "bookSection",
@@ -13220,7 +13220,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Yale University Press"
+      "publisher": "Yale University Press"
     },
     {
       "itemType": "report",
@@ -13681,7 +13681,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -13802,7 +13802,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -13879,7 +13879,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "book",
@@ -13925,7 +13925,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -13965,7 +13965,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Halsted Press"
+      "publisher": "Halsted Press"
     },
     {
       "itemType": "book",
@@ -14005,7 +14005,7 @@
       "seeAlso": [
 
       ],
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "bookSection",
@@ -14215,7 +14215,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Plenum Press"
+      "publisher": "Plenum Press"
     },
     {
       "itemType": "journalArticle",
@@ -14423,7 +14423,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -14459,7 +14459,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "book",
@@ -14489,7 +14489,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -14747,7 +14747,7 @@
       "seeAlso": [
 
       ],
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "bookSection",
@@ -15067,7 +15067,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Ablex"
+      "publisher": "Ablex"
     },
     {
       "itemType": "journalArticle",
@@ -15229,7 +15229,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -15295,7 +15295,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Wiley"
+      "publisher": "Wiley"
     },
     {
       "itemType": "book",
@@ -15325,7 +15325,7 @@
       "seeAlso": [
 
       ],
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "journalArticle",
@@ -15495,7 +15495,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Xerox Corporation"
+      "publisher": "Xerox Corporation"
     },
     {
       "itemType": "journalArticle",
@@ -15629,7 +15629,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -15700,7 +15700,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -15790,7 +15790,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -15946,7 +15946,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -15981,7 +15981,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -16048,7 +16048,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -16140,7 +16140,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "conferencePaper",
@@ -16293,7 +16293,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -16360,7 +16360,7 @@
       "seeAlso": [
 
       ],
-      "institution": "North-Holland"
+      "publisher": "North-Holland"
     },
     {
       "itemType": "book",
@@ -16400,7 +16400,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -16465,7 +16465,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Carnegie-Mellon University Department of Computer Science"
+      "publisher": "Carnegie-Mellon University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -16599,7 +16599,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Addison-Wesley"
+      "publisher": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -16660,7 +16660,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Norton"
+      "publisher": "Norton"
     },
     {
       "itemType": "book",
@@ -16695,7 +16695,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -16858,7 +16858,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of Chicago Press"
+      "publisher": "University of Chicago Press"
     },
     {
       "itemType": "book",
@@ -16899,7 +16899,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "bookSection",
@@ -16956,7 +16956,7 @@
       "seeAlso": [
 
       ],
-      "institution": "LEA"
+      "publisher": "LEA"
     },
     {
       "itemType": "report",
@@ -17085,7 +17085,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Irvine Computational Intelligence Project"
+      "publisher": "Irvine Computational Intelligence Project"
     },
     {
       "itemType": "journalArticle",
@@ -18090,7 +18090,7 @@
       "seeAlso": [
 
       ],
-      "institution": "CSLI"
+      "publisher": "CSLI"
     },
     {
       "itemType": "report",
@@ -18232,7 +18232,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "conferencePaper",
@@ -18355,7 +18355,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -18612,7 +18612,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MITP"
+      "publisher": "MITP"
     },
     {
       "itemType": "conferencePaper",
@@ -18766,7 +18766,7 @@
       "seeAlso": [
 
       ],
-      "institution": "CSLI"
+      "publisher": "CSLI"
     },
     {
       "itemType": "book",
@@ -18798,7 +18798,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "book",
@@ -18830,7 +18830,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "conferencePaper",
@@ -18934,7 +18934,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MITP"
+      "publisher": "MITP"
     },
     {
       "itemType": "journalArticle",
@@ -19106,7 +19106,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -19804,7 +19804,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Harvard University Press"
+      "publisher": "Harvard University Press"
     },
     {
       "itemType": "journalArticle",
@@ -19902,7 +19902,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Benjamin / Cummings Publishing Company"
+      "publisher": "Benjamin / Cummings Publishing Company"
     },
     {
       "itemType": "journalArticle",
@@ -20010,7 +20010,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "conferencePaper",
@@ -20540,7 +20540,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
@@ -21769,7 +21769,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MITP"
+      "publisher": "MITP"
     },
     {
       "itemType": "conferencePaper",
@@ -23276,7 +23276,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Ellis Horwood, Ltd."
+      "publisher": "Ellis Horwood, Ltd."
     },
     {
       "itemType": "bookSection",
@@ -25664,7 +25664,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Kluwer Academic Publishers"
+      "publisher": "Kluwer Academic Publishers"
     },
     {
       "itemType": "manuscript",
@@ -27539,7 +27539,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Oxford University Press"
+      "publisher": "Oxford University Press"
     },
     {
       "itemType": "journalArticle",
@@ -30922,7 +30922,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "conferencePaper",
@@ -32274,7 +32274,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -33050,7 +33050,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Cambridge University Press"
+      "publisher": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -33224,7 +33224,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "conferencePaper",
@@ -33342,7 +33342,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Morgan Kaufmann"
+      "publisher": "Morgan Kaufmann"
     },
     {
       "itemType": "journalArticle",
@@ -33870,7 +33870,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Prentice-Hall"
+      "publisher": "Prentice-Hall"
     },
     {
       "itemType": "journalArticle",
@@ -35083,7 +35083,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic press"
+      "publisher": "Academic press"
     },
     {
       "itemType": "journalArticle",
@@ -35802,7 +35802,7 @@
       "seeAlso": [
 
       ],
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     }
   ]
 }
