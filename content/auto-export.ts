@@ -14,6 +14,8 @@ import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 
+const prefOverrides = ['asciiBibTeX', 'bibtexParticleNoOp', 'bibtexURL', 'asciiBibLaTeX', 'biblatexExtendedNameFormat', 'DOIandURL', 'qualityReport']
+
 function queueHandler(kind, handler) {
   return (task, cb) => {
     log.debug('AutoExport.queue:', kind, task)
@@ -64,7 +66,7 @@ const scheduled = new Queue(
           exportNotes: ae.exportNotes,
           useJournalAbbreviation: ae.useJournalAbbreviation,
         }
-        for (const pref of this.prefOverrides) {
+        for (const pref of prefOverrides) {
           displayOptions[`preference_${pref}`] = ae[pref]
         }
         await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
@@ -173,7 +175,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
   private git: string
   private onWindows: boolean
-  private prefOverrides = ['asciiBibTeX', 'bibtexParticleNoOp', 'bibtexURL', 'asciiBibLaTeX', 'biblatexExtendedNameFormat', 'DOIandURL', 'qualityReport']
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -215,7 +216,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public add(ae) {
-    for (const pref of this.prefOverrides) {
+    for (const pref of prefOverrides) {
       ae[pref] = Prefs.get(pref)
     }
     log.debug('AutoExport.add', ae)
