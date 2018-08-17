@@ -53,6 +53,7 @@ var Translator = {
     this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
+    Zotero.debug('prefs loaded: ' + JSON.stringify(this.preferences, null, 2))
 
     this.collections = {}
     if (stage == 'doExport' && this.header.configOptions && this.header.configOptions.getCollections && Zotero.nextCollection) {

@@ -6,6 +6,9 @@ import { ConcatSource } from 'webpack-sources'
 import version from 'zotero-plugin/version'
 import root from 'zotero-plugin/root'
 
+const preferences = require(path.join(root, 'gen/preferences.json'))
+const defaults = require(path.join(root, 'gen/defaults.json'))
+
 class TranslatorHeaderPlugin {
   private translator: string
 
@@ -18,8 +21,8 @@ class TranslatorHeaderPlugin {
       const header = require(path.join(root, 'translators', this.translator + '.json'))
       header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
       const overrides = {}
-      for (const [pref, meta] of Object.entries(require(path.join(root, 'gen/preferences.json')))) {
-        overrides[pref] = (meta as any).ae_override
+      for (const pref of Object.keys(defaults)) {
+        overrides[pref] = preferences[pref] ? preferences[pref].ae_override : false
       }
       const asset = this.translator + '.js'
       compilation.assets[asset] = new ConcatSource(
