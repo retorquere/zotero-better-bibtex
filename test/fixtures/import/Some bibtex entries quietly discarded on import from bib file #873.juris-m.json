@@ -3209,7 +3209,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Tioga"
+      "publisher": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -3285,7 +3285,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Reidel"
+      "publisher": "Reidel"
     },
     {
       "itemType": "report",
@@ -3556,7 +3556,7 @@
 
       ],
       "publicationTitle": "Strategies for Natural Language Processing",
-      "institution": "LEA"
+      "publisher": "LEA"
     },
     {
       "itemType": "journalArticle",
@@ -3667,7 +3667,7 @@
       "seeAlso": [
 
       ],
-      "institution": "North-Holland"
+      "publisher": "North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -4055,7 +4055,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "report",
@@ -4155,7 +4155,7 @@
 
       ],
       "publicationTitle": "Approaches to Natural Language",
-      "institution": "Reidel"
+      "publisher": "Reidel"
     },
     {
       "itemType": "report",
