@@ -168,8 +168,20 @@ DB.init = async () => {
         path: { type: 'string', minLength: 1 },
         status: { enum: [ 'scheduled', 'running', 'done', 'error' ] },
         translatorID: { type: 'string', minLength: 1 },
+
+        // options
         exportNotes: { type: 'boolean', default: false },
         useJournalAbbreviation: { type: 'boolean', default: false },
+
+        // prefs
+        asciiBibTeX: { type: 'boolean', default: true },
+        bibtexParticleNoOp: { type: 'boolean', default: false },
+        bibtexURL: { enum: ['no', 'note', 'url'], default: 'no' },
+        asciiBibLaTeX: { type: 'boolean', default: false },
+        biblatexExtendedNameFormat: { type: 'boolean', default: false },
+        DOIandURL: { enum: ['both', 'url', 'doi'], default: 'both' },
+        qualityReport: { type: 'boolean', default: false },
+
         error: { type: 'string', default: '' },
 
         // LokiJS
@@ -215,6 +227,13 @@ DB.init = async () => {
     if (ae.updated) {
       delete ae.updated
       autoexport.update(ae)
+    }
+
+    for (const pref of ['asciiBibTeX', 'bibtexParticleNoOp', 'bibtexURL', 'asciiBibLaTeX', 'biblatexExtendedNameFormat', 'DOIandURL', 'qualityReport']) {
+      if (typeof ae[pref] === 'undefined') {
+        ae[pref] = Prefs.get(pref)
+        autoexport.update(ae)
+      }
     }
   }
 

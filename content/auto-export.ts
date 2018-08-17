@@ -60,7 +60,14 @@ const scheduled = new Queue(
 
         const { repo, name } = AutoExport.gitPush(ae.path) // tslint:disable-line:no-use-before-declare
         AutoExport.pull(repo) // tslint:disable-line:no-use-before-declare
-        await Translators.translate(ae.translatorID, { exportNotes: ae.exportNotes, useJournalAbbreviation: ae.useJournalAbbreviation}, items, ae.path)
+        const displayOptions = {
+          exportNotes: ae.exportNotes,
+          useJournalAbbreviation: ae.useJournalAbbreviation,
+        }
+        for (const pref of this.prefOverrides) {
+          displayOptions[`preference_${pref}`] = ae[pref]
+        }
+        await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
         AutoExport.push(repo, name) // tslint:disable-line:no-use-before-declare
 
         log.debug('AutoExport.scheduled: export finished', ae)
@@ -166,6 +173,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
   private git: string
   private onWindows: boolean
+  private prefOverrides = ['asciiBibTeX', 'bibtexParticleNoOp', 'bibtexURL', 'asciiBibLaTeX', 'biblatexExtendedNameFormat', 'DOIandURL', 'qualityReport']
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -207,6 +215,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public add(ae) {
+    for (const pref of this.prefOverrides) {
+      ae[pref] = Prefs.get(pref)
+    }
     log.debug('AutoExport.add', ae)
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
