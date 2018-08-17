@@ -33,7 +33,7 @@ script: |
   fi
 
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
-after_failure: tail --lines=2000 ~/.BBTZ5TEST.log
+after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
 jobs:
   include:
