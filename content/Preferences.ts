@@ -13,6 +13,9 @@ import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 
+const preferences = require('../gen/preferences.json')
+const prefOverrides = Object.keys(preferences).filter(pref => preferences[pref].ae_override)
+
 class AutoExportTreeView {
   public rowCount: number
   public rows: Array<{ columns: { name: string, value: string}, level: number, parent: number, open?: boolean, autoexport: any }> = []
@@ -65,8 +68,19 @@ class AutoExportTreeView {
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.translator, value: Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??'}, level: 1, parent, autoexport: ae })
-        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, toggle: 'useJournalAbbreviation' })
-        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, toggle: 'exportNotes' })
+        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'useJournalAbbreviation' })
+        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'exportNotes' })
+
+        for (const pref of prefOverrides) {
+          const type = typeof preferences[pref].default
+          if (type === 'boolean') {
+              rows.push({ columns: { name: this.label[pref], value: ae[pref] ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: pref })
+          } else if (type === 'string' && preferences[pref].options) {
+              rows.push({ columns: { name: this.label[pref], value: preferences[pref].options[ae[pref]] }, level: 1, parent, autoexport: ae, cycle: pref, options: preferences[pref].option_order })
+          } else {
+            throw new Error(`Unexpected preference ${pref} of type ${type}`)
+          }
+        }
       }
     }
     this.rowCount = rows.length
@@ -311,11 +325,21 @@ export = new class PrefPane {
     this.aeRefresh()
   }
 
-  public aeToggle(event) {
+  public aeCycle(event) {
     const selected = this.aeSelected()
-    if (!selected || !selected.toggle) return
+    if (!selected || !selected.cycle) return
 
-    selected.autoexport[selected.toggle] = !selected.autoexport[selected.toggle]
+    if (selected.options) {
+      let option = selected.options.indexOf(selected.autoexport[selected.cycle])
+      if (option < 0) throw new Error(`value ${selected.autoexport[selected.cycle]} for preference override ${selected.cycle} not found in ${selected.options}`)
+      option = (option + 1) % selected.options.length
+      selected.autoexport[selected.cycle] = selected.options[option]
+
+    } else {
+      selected.autoexport[selected.cycle] = !selected.autoexport[selected.cycle]
+
+    }
+
     AutoExport.db.update(selected.autoexport)
     AutoExport.run(selected.autoexport.$loki)
     this.aeRefresh()

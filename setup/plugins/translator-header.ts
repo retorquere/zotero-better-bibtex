@@ -17,12 +17,15 @@ class TranslatorHeaderPlugin {
     compiler.hooks.emit.tap('TranslatorHeaderPlugin', compilation => {
       const header = require(path.join(root, 'translators', this.translator + '.json'))
       header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
-      const preferences = require(path.join(root, 'gen/preferences.json'))
+      const overrides = {}
+      for (const [pref, meta] of Object.entries(require(path.join(root, 'gen/preferences.json')))) {
+        overrides[pref] = (meta as any).ae_override
+      }
       const asset = this.translator + '.js'
       compilation.assets[asset] = new ConcatSource(
         ejs.render(
           fs.readFileSync(path.join(__dirname, 'translator-header.ejs'), 'utf8'),
-          {preferences, header, version}
+          {overrides, header, version}
         ),
         compilation.assets[asset]
       )

@@ -21,12 +21,14 @@ class DocFinder {
       id: string
       type: string
       preference: string
+      name: string
       tab?: string
       label?: string
       description?: string
       ae_override?: boolean
       default?: any,
       options?: { [key: string]: string },
+      option_order?: string[],
     }
   }
   private header: string
@@ -43,9 +45,9 @@ class DocFinder {
     this.tab = -1
     this.errors = 0
     this.defaults = {
-      debug: { default: false },
-      rawLaTag: { default: '#LaTeX' },
-      testing: { default: false },
+      debug: false,
+      rawLaTag: '#LaTeX',
+      testing: false,
     }
 
     const prefsPane = parseXML(fs.readFileSync(path.join(root, 'content/Preferences.xul'), 'utf8'), {
@@ -55,11 +57,18 @@ class DocFinder {
 
     this.walk(prefsPane)
 
+    const preferences = {}
     for (const pref of Object.values(this.preferences)) {
-      const shortName = pref.preference.replace(/.*\./, '')
-      this.defaults[shortName] = { default: pref.default }
-      if (pref.options && Object.keys(pref.options).length) this.defaults[shortName].options = pref.options
-      if (pref.ae_override) this.defaults[shortName].ae_override = true
+      if (pref.options && !Object.keys(pref.options).length) {
+        delete pref.options
+        delete pref.option_order
+      }
+      preferences[pref.name] = pref
+    }
+    fs.writeFileSync(path.join(root, 'gen/preferences.json'), JSON.stringify(preferences, null, 2))
+
+    for (const pref of Object.values(this.preferences)) {
+      this.defaults[pref.name] = pref.default
 
       if (pref.label) pref.label = pref.label.trim()
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
@@ -79,7 +88,7 @@ class DocFinder {
 
     if (this.errors) process.exit(1)
 
-    fs.writeFileSync(path.join(root, 'gen/preferences.json'), JSON.stringify(this.defaults, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/defaults.json'), JSON.stringify(this.defaults, null, 2))
 
     fs.ensureDirSync(path.join(root, 'build/defaults/preferences'))
     fs.ensureDirSync(path.join(root, 'docs/_data'))
@@ -200,6 +209,7 @@ class DocFinder {
               id: node.attributes.id,
               type,
               preference: node.attributes.name,
+              name: node.attributes.name.replace(/.*\./, ''),
               default: dflt,
             }
 
@@ -226,15 +236,18 @@ class DocFinder {
               if (!this.preferences[pref]) throw new Error(`There's an UI element for non-existent preference ${pref}`)
 
               this.preferences[pref].options = {}
+              this.preferences[pref].option_order = []
               if (node.name === 'radiogroup') {
                 for (const option of node.children.filter(child => child.name === 'radio'))  {
                   this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
+                  this.preferences[pref].option_order.push(option.attributes.value)
                 }
               }
               if (node.name === 'menulist') {
                 const menupopup = node.children.find(child => child.name === 'menupopup')
                 for (const option of menupopup.children.filter(child => child.name === 'menuitem'))  {
                   this.preferences[pref].options[option.attributes.value] = option.attributes.label.trim()
+                  this.preferences[pref].option_order.push(option.attributes.value)
                 }
               }
 

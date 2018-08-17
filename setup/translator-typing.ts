@@ -7,7 +7,7 @@ console.log('translator framework typings')
 
 import root from 'zotero-plugin/root'
 
-const preferences = require(path.join(root, 'gen/preferences.json'))
+const preferences = require(path.join(root, 'gen/defaults.json'))
 const translators = require(path.join(root, 'gen/translators.json'))
 const _ = require('lodash')
 
@@ -21,7 +21,7 @@ const prefs = Object.keys(preferences).map(pref => {
       return `    ${pref}: string[]`
 
     default:
-      return `    ${pref}: ${typeof preferences[pref].default}`
+      return `    ${pref}: ${typeof preferences[pref]}`
   }
 }).join('\n')
 const labels = Object.keys(translators.byLabel).map(tr => `  ${tr}?: boolean`).join('\n')

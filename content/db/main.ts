@@ -7,6 +7,9 @@ import { getItemsAsync } from '../get-items-async'
 
 import { createFile } from '../create-file'
 
+const preferences = require('../../gen/preferences.json')
+const prefOverrides = Object.keys(preferences).filter(pref => preferences[pref].ae_override)
+
 class DBStore {
   public mode = 'reference'
 
@@ -229,7 +232,7 @@ DB.init = async () => {
       autoexport.update(ae)
     }
 
-    for (const pref of ['asciiBibTeX', 'bibtexParticleNoOp', 'bibtexURL', 'asciiBibLaTeX', 'biblatexExtendedNameFormat', 'DOIandURL', 'qualityReport']) {
+    for (const pref of prefOverrides) {
       if (typeof ae[pref] === 'undefined') {
         ae[pref] = Prefs.get(pref)
         autoexport.update(ae)

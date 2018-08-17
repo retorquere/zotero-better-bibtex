@@ -6,7 +6,7 @@ var Translator = {
   <%- header.label.replace(/[^a-z]/ig, '') %>: true,
   // header == ZOTERO_TRANSLATOR_INFO -- maybe pick it from there
   header: <%- JSON.stringify(header) %>,
-  preferences: <%- JSON.stringify(preferences) %>,
+  override: <%- JSON.stringify(overrides) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
   stringCompare: (new Intl.Collator('en')).compare,
@@ -34,19 +34,20 @@ var Translator = {
       this.options.exportFilename = Zotero.getOption('exportFilename')
     }
 
-    for (key in this.preferences) {
-      let pref
+    this.preferences = {}
+    for (const [pref, override] of Object.entries(this.override)) {
+      let value = undefined
 
-      if (this.preferences[pref].ae_override) {
+      if (override) {
         try {
-          pref = Zotero.getOption(`preference_${key}`)
+          value = Zotero.getOption(`preference_${key}`)
         } catch (err) {
-          pref = undefined
+          value = undefined
         }
       }
 
-      if (typeof pref === 'undefined') pref = Zotero.getHiddenPref('better-bibtex.' + key)
-      this.preferences[key] = pref
+      if (typeof value === 'undefined') value = Zotero.getHiddenPref('better-bibtex.' + pref)
+      this.preferences[pref] = value
     }
     // special handling
     this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
