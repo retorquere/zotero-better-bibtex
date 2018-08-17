@@ -32,7 +32,9 @@
       "keyScope": "library",
       "preserveBibTeXVariables": false,
       "bibtexParticleNoOp": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "warnBulkModify": 10,
       "postscript": "",
       "strings": "",
@@ -209,8 +211,9 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "tags": [
+
+      ],
       "dateAdded": "2016-08-03T10:10:47Z",
       "dateModified": "2016-08-03T10:10:47Z",
       "uri": "http://zotero.org/users/3057968/items/EBVQ7HQC",
@@ -218,8 +221,12 @@
         {
           "itemType": "attachment",
           "title": "APS Snapshot",
-          "tags": [],
-          "relations": [],
+          "tags": [
+
+          ],
+          "relations": [
+
+          ],
           "dateAdded": "2016-08-03T10:10:51Z",
           "dateModified": "2016-08-03T10:10:51Z",
           "uri": "http://zotero.org/users/3057968/items/FZU8X6WT"
@@ -227,14 +234,20 @@
         {
           "itemType": "attachment",
           "title": "MiesF-1973-Molecular_Theory_of_Atomic_Collisions.pdf",
-          "tags": [],
-          "relations": [],
+          "tags": [
+
+          ],
+          "relations": [
+
+          ],
           "dateAdded": "2016-08-03T10:10:50Z",
           "dateModified": "2016-08-03T10:10:50Z",
           "uri": "http://zotero.org/users/3057968/items/5G8BQZWD"
         }
       ],
-      "notes": [],
+      "notes": [
+
+      ],
       "itemID": 550,
       "citekey": "mies1973"
     }

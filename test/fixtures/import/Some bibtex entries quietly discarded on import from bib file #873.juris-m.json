@@ -420,7 +420,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Garland Publishing Inc.",
       "date": "1979",
       "extra": "Citation Key: Green:1979",
       "title": "The Application of Theorem Proving to Question Answering",
@@ -445,7 +444,8 @@
       "itemID": 63,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Garland Publishing Inc."
     },
     {
       "itemType": "conferencePaper",
@@ -481,7 +481,6 @@
       "itemType": "bookSection",
       "volume": "6",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1971",
       "extra": "Citation Key: Huffman:71",
       "title": "Impossible objects as nonsense sentences",
@@ -517,12 +516,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Intelligence"
+      "publicationTitle": "Machine Intelligence",
+      "institution": "American Elsevier"
     },
     {
       "itemType": "book",
       "place": "Hillsdale, NJ",
-      "publisher": "Lawrence Erlbaum",
       "date": "1980",
       "extra": "Citation Key: Collins:80 \nbibtex[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
       "title": "Inference in text understanding",
@@ -573,7 +572,8 @@
       "itemID": 66,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "report",
@@ -738,7 +738,6 @@
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "ERLBAUM",
       "date": "1977",
       "extra": "Citation Key: Scripts",
       "title": "Scripts, Plans, Goals, and Understanding",
@@ -768,7 +767,8 @@
       "itemID": 72,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "ERLBAUM"
     },
     {
       "itemType": "journalArticle",
@@ -885,7 +885,6 @@
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1975",
       "extra": "Republished in KR \nCitation Key: Minsky:Frames",
       "title": "A framework for representing knowledge",
@@ -916,7 +915,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "The Psychology of Computer Vision"
+      "publicationTitle": "The Psychology of Computer Vision",
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "report",
@@ -980,7 +980,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1976",
       "extra": "Citation Key: Shortliffe:76",
       "title": "Computer-Based Medical Consultations: MYCIN",
@@ -1005,12 +1004,12 @@
       "itemID": 79,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "American Elsevier"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1971",
       "extra": "Citation Key: Nilsson:71",
       "title": "Problem Solving Methods in Artificial Intelligence",
@@ -1035,12 +1034,12 @@
       "itemID": 80,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1975",
       "extra": "Citation Key: Shirai:75",
       "title": "Analysing intensity arrays using knowledge about scenes",
@@ -1071,12 +1070,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "The Psychology of Computer Vision"
+      "publicationTitle": "The Psychology of Computer Vision",
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1972",
       "extra": "Citation Key: Winograd:72",
       "title": "Understanding Natural Language",
@@ -1101,7 +1100,8 @@
       "itemID": 82,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "report",
@@ -1259,12 +1259,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1979",
       "extra": "Citation Key: Fahlman:79",
       "title": "NETL: A System for Representing and Using Real-World Knowledge",
@@ -1289,12 +1288,12 @@
       "itemID": 88,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1969",
       "extra": "Citation Key: Ernst:69",
       "title": "GPS: A Case Study in Generality and Problem Solving",
@@ -1324,7 +1323,8 @@
       "itemID": 89,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -1477,7 +1477,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -1507,7 +1507,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -1629,7 +1629,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "bookSection",
@@ -1691,7 +1691,6 @@
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "Lawrence Erlbaum",
       "date": "1978",
       "extra": "Citation Key: Lehnert:78",
       "title": "The Process of Question Answering",
@@ -1716,7 +1715,8 @@
       "itemID": 102,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "journalArticle",
@@ -1775,12 +1775,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "place": "London",
-      "publisher": "Macmillan Co.",
       "date": "1970",
       "extra": "Citation Key: Niland:70",
       "title": "Production Planning, Scheduling, and Inventory Control",
@@ -1805,7 +1804,8 @@
       "itemID": 105,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Macmillan Co."
     },
     {
       "itemType": "report",
@@ -1834,12 +1834,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Edinburgh Department of Artificial Intelligence"
+      "institution": "University of Edinburgh Department of Artificial Intelligence"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Levi:78",
       "title": "The Syntax and Semantics of Complex Nominals",
@@ -1864,13 +1863,13 @@
       "itemID": 107,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
       "series": "Gothenburg Studies in English",
       "volume": "41",
-      "publisher": "Acta Universitatis Gothoburgen",
       "date": "1978",
       "extra": "Citation Key: Warren:78",
       "title": "Semantic Patterns of Noun-Noun Compound",
@@ -1895,7 +1894,8 @@
       "itemID": 108,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Acta Universitatis Gothoburgen"
     },
     {
       "itemType": "report",
@@ -1925,12 +1925,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Bolt Beranek and Newman"
+      "institution": "Bolt Beranek and Newman"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1980",
       "extra": "Citation Key: Marcus:80",
       "title": "A Theory of Syntactic Recognition for Natural Language",
@@ -1955,7 +1954,8 @@
       "itemID": 110,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "bookSection",
@@ -2018,12 +2018,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Holt, Rinehart, and Winston",
       "date": "1968",
       "extra": "Citation Key: Fillmore:68 \nbibtex[booktitle=Universals in Linguistic Theory]",
       "title": "The case for case",
@@ -2059,12 +2058,12 @@
       "itemID": 113,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Holt, Rinehart, and Winston"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1972",
       "extra": "Citation Key: Jackendoff:72",
       "title": "Semantic Interpretation in Generative Grammar",
@@ -2089,7 +2088,8 @@
       "itemID": 114,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -2153,7 +2153,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Project MAC, MIT"
+      "institution": "Project MAC, MIT"
     },
     {
       "itemType": "conferencePaper",
@@ -2216,7 +2216,6 @@
     {
       "itemType": "book",
       "place": "New York New York",
-      "publisher": "McGraw-Hill",
       "date": "1963",
       "extra": "Citation Key: Newell:63 \nbibtex[booktitle=Computers and Thought]",
       "title": "GPS, a program that simulates human thought",
@@ -2256,7 +2255,8 @@
       "itemID": 119,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -2291,7 +2291,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "MIT Artificial Intelligence Laboratory",
       "date": "1979",
       "extra": "Citation Key: Weinreb:79",
       "title": "Lisp Machine Manual",
@@ -2321,12 +2320,12 @@
       "itemID": 121,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "volume": "6",
-      "publisher": "Proc. Ijcai",
       "date": "1979",
       "extra": "Citation Key: Barstow:79",
       "title": "The roles of knowledge and deduction in program synthesis",
@@ -2352,12 +2351,12 @@
       "itemID": 122,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Proc. Ijcai"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1977",
       "extra": "Citation Key: Fillmore:77 \nbibtex[booktitle=Syntax and Semantics 8: Grammatical Relations]",
       "title": "The case for case reopened",
@@ -2393,12 +2392,12 @@
       "itemID": 123,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "bookSection",
       "place": "San Francisco",
-      "publisher": "Freeman",
       "pages": "187-248",
       "date": "1973",
       "extra": "Citation Key: Schank:73",
@@ -2435,12 +2434,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Computer Models of Thought and Language"
+      "publicationTitle": "Computer Models of Thought and Language",
+      "institution": "Freeman"
     },
     {
       "itemType": "book",
       "place": "Englewood Cliffs, NJ",
-      "publisher": "Prentice-Hall, Inc.",
       "date": "1976",
       "extra": "Citation Key: Mano:76",
       "title": "Computer System Architecture",
@@ -2465,7 +2464,8 @@
       "itemID": 125,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Prentice-Hall, Inc."
     },
     {
       "itemType": "journalArticle",
@@ -2535,12 +2535,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Algorithmics Press",
       "date": "1972",
       "extra": "Citation Key: Woods:72 \nbibtex[booktitle=Natural Language Processing]",
       "title": "An experimental parsing system for transition network grammars",
@@ -2571,7 +2570,8 @@
       "itemID": 128,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Algorithmics Press"
     },
     {
       "itemType": "journalArticle",
@@ -2684,7 +2684,6 @@
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1978",
       "extra": "Citation Key: Bresnan:78 \nbibtex[booktitle=Linguistic Theory and Psychological Reality]",
       "title": "A realistic transformational grammar",
@@ -2719,11 +2718,11 @@
       "itemID": 132,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "book",
-      "publisher": "University of California, Berkeley, Department of Computer Science",
       "date": "1979",
       "extra": "Citation Key: Foderaro",
       "title": "FRANZ LISP ... The Manual",
@@ -2748,7 +2747,8 @@
       "itemID": 133,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of California, Berkeley, Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -2777,7 +2777,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -2891,7 +2891,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Brown University Department of Computer Science",
       "date": "1980",
       "extra": "Citation Key: Foderaro:80",
       "title": "FRANZ LISP ... The Manual",
@@ -2921,12 +2920,12 @@
       "itemID": 138,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Brown University Department of Computer Science"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Wiley",
       "date": "1978",
       "extra": "Citation Key: Riesbeck:78 \nbibtex[booktitle=Studies in the Perception of Language]",
       "title": "Comprehension by computer: Expectation-based analysis of sentences in context",
@@ -2966,7 +2965,8 @@
       "itemID": 139,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Wiley"
     },
     {
       "itemType": "journalArticle",
@@ -3002,7 +3002,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1973",
       "extra": "Citation Key: Bransford:73 \nbibtex[booktitle=Visual Information Processing]",
       "title": "Considerations of some problems of comprehension",
@@ -3037,7 +3036,8 @@
       "itemID": 141,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -3184,7 +3184,6 @@
     {
       "itemType": "book",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "date": "1980",
       "extra": "Citation Key: Nilsson:80",
       "title": "Principles of Artificial Intelligence",
@@ -3209,7 +3208,8 @@
       "itemID": 146,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -3250,7 +3250,6 @@
     {
       "itemType": "book",
       "place": "Dordrecht",
-      "publisher": "Reidel",
       "date": "1981",
       "extra": "Citation Key: DWP:81",
       "title": "Introduction to Montague Semantics",
@@ -3285,7 +3284,8 @@
       "itemID": 148,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Reidel"
     },
     {
       "itemType": "report",
@@ -3314,7 +3314,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Rochester Department of Computer Science"
+      "institution": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -3348,7 +3348,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -3488,7 +3488,6 @@
     {
       "itemType": "bookSection",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "LEA",
       "pages": "245-274",
       "date": "1981",
       "extra": "Citation Key: CohenETAL:81",
@@ -3556,7 +3555,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Strategies for Natural Language Processing"
+      "publicationTitle": "Strategies for Natural Language Processing",
+      "institution": "LEA"
     },
     {
       "itemType": "journalArticle",
@@ -3637,7 +3637,6 @@
     {
       "itemType": "book",
       "place": "Amsterdam",
-      "publisher": "North-Holland",
       "date": "1975",
       "extra": "Citation Key: Rieger:75 \nbibtex[booktitle=Conceptual Information Processing]",
       "title": "Conceptual memory",
@@ -3667,7 +3666,8 @@
       "itemID": 159,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -3794,7 +3794,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
@@ -4015,12 +4015,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "Lawrence Erlbaum",
       "date": "1983",
       "extra": "Citation Key: Swinney:83 \nbibtex[booktitle=Methods and Tactics in Cognitive Science]",
       "title": "Theoretical and methodological issues in cognitive science: A psycholinguistic perspective",
@@ -4055,7 +4054,8 @@
       "itemID": 171,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "report",
@@ -4119,7 +4119,6 @@
     {
       "itemType": "bookSection",
       "place": "Dordrecht",
-      "publisher": "Reidel",
       "date": "1973",
       "extra": "Citation Key: Montague:73",
       "title": "The proper treatment of quantification in ordinary English",
@@ -4155,7 +4154,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Approaches to Natural Language"
+      "publicationTitle": "Approaches to Natural Language",
+      "institution": "Reidel"
     },
     {
       "itemType": "report",
@@ -4184,7 +4184,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Brown University Department of Computer Science"
+      "institution": "Brown University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -4261,7 +4261,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1968",
       "extra": "Citation Key: Thorne:68 \nbibtex[booktitle=Machine Intelligence 3]",
       "title": "The syntactic analysis of English by machine",
@@ -4301,12 +4300,12 @@
       "itemID": 178,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "American Elsevier"
     },
     {
       "itemType": "book",
       "place": "The Hague",
-      "publisher": "Mouton",
       "date": "1957",
       "extra": "Citation Key: Chomsky:57",
       "title": "Syntactic Structures",
@@ -4331,12 +4330,12 @@
       "itemID": 179,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Mouton"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1965",
       "extra": "Citation Key: Chomsky:65",
       "title": "Aspects of the Theory of Syntax",
@@ -4361,12 +4360,12 @@
       "itemID": 180,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "book",
       "place": "Berkeley",
-      "publisher": "University of California Press",
       "date": "1979",
       "extra": "Citation Key: Perlmutter:79",
       "title": "Syntactic Argumentation and the Structure of English",
@@ -4396,12 +4395,12 @@
       "itemID": 181,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of California Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Holt, Rinehart & Winston",
       "date": "1974",
       "extra": "Citation Key: Bach:74",
       "title": "Syntactic Theory",
@@ -4426,12 +4425,12 @@
       "itemID": 182,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Holt, Rinehart & Winston"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Harper & Row",
       "date": "1976",
       "extra": "Citation Key: Keyser:76",
       "title": "Beginning English Grammar",
@@ -4461,7 +4460,8 @@
       "itemID": 183,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Harper & Row"
     },
     {
       "itemType": "journalArticle",
@@ -4498,7 +4498,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1975",
       "extra": "Citation Key: Waltz:75 \nbibtex[booktitle=The Psychology of Computer Vision]",
       "title": "Understanding line drawings of scenes with shadows",
@@ -4528,7 +4527,8 @@
       "itemID": 185,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -4619,7 +4619,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Institute for Semantic and Cognitive Studies"
+      "institution": "Institute for Semantic and Cognitive Studies"
     },
     {
       "itemType": "journalArticle",
@@ -4725,7 +4725,6 @@
     {
       "itemType": "book",
       "place": "London",
-      "publisher": "Oxford University Press",
       "date": "1962",
       "extra": "Citation Key: Austin",
       "title": "How to Do Things with Words",
@@ -4750,12 +4749,12 @@
       "itemID": 192,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Oxford University Press"
     },
     {
       "itemType": "book",
       "place": "London",
-      "publisher": "Cambridge University Press",
       "date": "1969",
       "extra": "Citation Key: Searle:69",
       "title": "Speech Acts: An Essay in the Philosophy of Language",
@@ -4780,7 +4779,8 @@
       "itemID": 193,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -4897,7 +4897,6 @@
     {
       "itemType": "bookSection",
       "place": "Boulder, Colorado",
-      "publisher": "Westview Press",
       "pages": "119-190",
       "date": "1982",
       "extra": "Citation Key: Pople:82",
@@ -4929,7 +4928,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Artificial Intelligence in Medicine"
+      "publicationTitle": "Artificial Intelligence in Medicine",
+      "institution": "Westview Press"
     },
     {
       "itemType": "report",
@@ -4959,7 +4959,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Bolt Beranek and Newman"
+      "institution": "Bolt Beranek and Newman"
     },
     {
       "itemType": "journalArticle",
@@ -5001,7 +5001,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1980",
       "extra": "Citation Key: Moravcsik",
       "title": "Syntax and Semantics 13: Current Approaches to Syntax",
@@ -5031,7 +5030,8 @@
       "itemID": 200,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -5271,7 +5271,6 @@
     {
       "itemType": "book",
       "place": "San Francisco",
-      "publisher": "Freeman",
       "date": "1979",
       "extra": "Citation Key: McCorduck:79",
       "title": "Machines Who Think",
@@ -5296,7 +5295,8 @@
       "itemID": 208,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Freeman"
     },
     {
       "itemType": "journalArticle",
@@ -5399,7 +5399,6 @@
     {
       "itemType": "book",
       "place": "London",
-      "publisher": "Pitman",
       "date": "1953",
       "extra": "Citation Key: Turing:53 \nbibtex[booktitle=Faster Than Thought]",
       "title": "Part of Chapter 25",
@@ -5430,7 +5429,8 @@
       "itemID": 212,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Pitman"
     },
     {
       "itemType": "journalArticle",
@@ -5466,7 +5466,6 @@
     {
       "itemType": "book",
       "place": "Oxford",
-      "publisher": "Basil Blackwell",
       "date": "1953",
       "extra": "Citation Key: Wittgenstein:PI",
       "title": "Philosophical Investigations",
@@ -5491,12 +5490,12 @@
       "itemID": 214,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Basil Blackwell"
     },
     {
       "itemType": "book",
       "place": "Chicago",
-      "publisher": "University of Chicago Press",
       "date": "1967",
       "extra": "Citation Key: Rorty:67",
       "title": "The Linguistic Turn: Recent Essays in Philosophical Method",
@@ -5521,12 +5520,12 @@
       "itemID": 215,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of Chicago Press"
     },
     {
       "itemType": "book",
       "place": "Cambridge",
-      "publisher": "Cambridge University Press",
       "date": "1925",
       "extra": "Citation Key: Whitehead:Principia",
       "title": "Principia Mathematica",
@@ -5556,12 +5555,12 @@
       "itemID": 216,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Springer-Verlag",
       "date": "1977",
       "extra": "Citation Key: Slate:77 \nbibtex[booktitle=Chess Skill in Man and Machine]",
       "title": "CHESS 4.5 - the Northwestern University chess program",
@@ -5597,12 +5596,12 @@
       "itemID": 217,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "Lawrence Erlbaum",
       "date": "1976",
       "extra": "Citation Key: JRAnderson:76",
       "title": "Language, Memory, and Thought",
@@ -5627,7 +5626,8 @@
       "itemID": 218,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "journalArticle",
@@ -5663,7 +5663,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1976",
       "extra": "Citation Key: Emonds:76",
       "title": "A Transformational Approach to English Syntax: Root, Structure-preserving, and Local Transformations",
@@ -5688,11 +5687,11 @@
       "itemID": 220,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "Association for Computational Linguistics",
       "pages": "49-53",
       "date": "1980",
       "extra": "Citation Key: Berwick:80",
@@ -5719,7 +5718,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics"
+      "publicationTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics",
+      "institution": "Association for Computational Linguistics"
     },
     {
       "itemType": "journalArticle",
@@ -5780,11 +5780,10 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT"
+      "institution": "MIT"
     },
     {
       "itemType": "book",
-      "publisher": "Association for Computational Linguistics",
       "date": "1980",
       "extra": "Citation Key: PhilHayes:80 \nbibtex[booktitle=Proceedings of the 18th Conference of the Association for Computational Linguistics]",
       "title": "Flexible parsing",
@@ -5814,12 +5813,12 @@
       "itemID": 224,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Association for Computational Linguistics"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "Quarterly Progress Report 3878",
       "date": "1978",
       "extra": "Citation Key: RJBobrow:78 \nbibtex[booktitle=Bolt Beranek and Newman]",
       "title": "The RUS System",
@@ -5844,7 +5843,8 @@
       "itemID": 225,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Quarterly Progress Report 3878"
     },
     {
       "itemType": "journalArticle",
@@ -5886,7 +5886,6 @@
     {
       "itemType": "book",
       "place": "Cambridge Mass.",
-      "publisher": "MIT Press",
       "date": "1982",
       "extra": "Citation Key: Kaplan:82 \nbibtex[booktitle=The Mental Representation of Grammatical Relations]",
       "title": "Lexical-functional grammar: a formal system for grammatical representation",
@@ -5916,7 +5915,8 @@
       "itemID": 227,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "report",
@@ -5946,7 +5946,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Bolt Beranek and Newman"
+      "institution": "Bolt Beranek and Newman"
     },
     {
       "itemType": "conferencePaper",
@@ -6058,7 +6058,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Stanford University"
+      "institution": "Stanford University"
     },
     {
       "itemType": "journalArticle",
@@ -6250,7 +6250,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "AFIPS Press",
       "date": "1976",
       "extra": "Citation Key: Duda:76 \nbibtex[booktitle=Proceedings of the 1976 National Computer Conference]",
       "title": "Subjective Bayesian methods for rule-based inference systems",
@@ -6285,7 +6284,8 @@
       "itemID": 238,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "AFIPS Press"
     },
     {
       "itemType": "bookSection",
@@ -6335,7 +6335,6 @@
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1983",
       "extra": "Citation Key: Winograd:83",
       "title": "Language as a Cognitive Process, Volume I: Syntax",
@@ -6360,12 +6359,12 @@
       "itemID": 240,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "Lawrence Erlbaum",
       "date": "1974",
       "extra": "Citation Key: JMoore:74 \nbibtex[booktitle=Knowledge and Cognition]",
       "title": "How can Merlin understand?",
@@ -6395,13 +6394,13 @@
       "itemID": 241,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "bookSection",
       "series": "Syntax and Semantics",
       "place": "New York",
-      "publisher": "Academic Press",
       "pages": "41-58",
       "date": "1975",
       "extra": "Citation Key: Grice",
@@ -6439,7 +6438,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Speech Acts"
+      "publicationTitle": "Speech Acts",
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -6476,7 +6476,6 @@
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "North-Holland",
       "pages": "229-347",
       "date": "1978",
       "extra": "Citation Key: Grosz:78",
@@ -6508,7 +6507,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Understanding Spoken language"
+      "publicationTitle": "Understanding Spoken language",
+      "institution": "North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -6714,12 +6714,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "National Academy of Sciences/National Research Council"
+      "institution": "National Academy of Sciences/National Research Council"
     },
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1983",
       "extra": "Citation Key: Algorithms",
       "title": "Algorithms",
@@ -6744,12 +6743,12 @@
       "itemID": 251,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Basic Books",
       "date": "1977",
       "extra": "Citation Key: Boden:77",
       "title": "Artificial Intelligence and Natural Man",
@@ -6774,12 +6773,12 @@
       "itemID": 252,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Basic Books"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1983",
       "extra": "Citation Key: Rich:83",
       "title": "Artificial Intelligence",
@@ -6804,12 +6803,12 @@
       "itemID": 253,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "book",
       "place": "Belmont, Calif.",
-      "publisher": "Dickenson",
       "date": "1967",
       "extra": "Citation Key: Weissman:67",
       "title": "LISP 1.5 Primer",
@@ -6834,12 +6833,12 @@
       "itemID": 254,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Dickenson"
     },
     {
       "itemType": "book",
       "place": "Englewood Cliffs, NJ",
-      "publisher": "Prentice-Hall",
       "date": "1976",
       "extra": "Citation Key: Siklossy:76",
       "title": "Let's Talk LISP",
@@ -6864,12 +6863,12 @@
       "itemID": 255,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Prentice-Hall"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Van Nostrand",
       "date": "1979",
       "extra": "Citation Key: Shapiro:79",
       "title": "Techniques of Artificial Intelligence",
@@ -6894,7 +6893,8 @@
       "itemID": 256,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Van Nostrand"
     },
     {
       "itemType": "journalArticle",
@@ -6956,13 +6956,12 @@
       "seeAlso": [
 
       ],
-      "publisher": "CSLI"
+      "institution": "CSLI"
     },
     {
       "itemType": "conferencePaper",
       "volume": "3",
       "place": "Los Altos, Calif.",
-      "publisher": "William Kaufmann, Inc.",
       "pages": "348-351",
       "date": "1983",
       "extra": "Citation Key: Rich:83",
@@ -6989,7 +6988,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proc. AAAI"
+      "publicationTitle": "Proc. AAAI",
+      "institution": "William Kaufmann, Inc."
     },
     {
       "itemType": "report",
@@ -7046,7 +7046,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -7084,7 +7084,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Nobel Academy",
       "date": "1980",
       "extra": "Citation Key: Kay:80 \nbibtex[booktitle=Proceedings of the Symposium on Text Processing]",
       "title": "Algorithm schemata and data structures in syntactic processing",
@@ -7109,12 +7108,12 @@
       "itemID": 263,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Nobel Academy"
     },
     {
       "itemType": "book",
       "place": "Princeton, NJ",
-      "publisher": "Van Nostrand",
       "date": "1957",
       "extra": "Citation Key: Suppes:57",
       "title": "Introduction to Logic",
@@ -7139,12 +7138,12 @@
       "itemID": 264,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Van Nostrand"
     },
     {
       "itemType": "book",
       "place": "Princeton, NJ",
-      "publisher": "Van Nostrand",
       "date": "1964",
       "extra": "Citation Key: Mendelson:64",
       "title": "Introduction to Mathematical Logic",
@@ -7169,7 +7168,8 @@
       "itemID": 265,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Van Nostrand"
     },
     {
       "itemType": "journalArticle",
@@ -7205,7 +7205,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1963",
       "extra": "Citation Key: Turing:63 \nbibtex[booktitle=Computers and Thought]",
       "title": "Computing machinery and intelligence",
@@ -7241,7 +7240,8 @@
       "itemID": 267,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -7310,7 +7310,6 @@
     },
     {
       "itemType": "bookSection",
-      "publisher": "Kluwer Academic Publishers",
       "pages": "23-67",
       "date": "1990",
       "extra": "Citation Key: Schubert:90",
@@ -7342,7 +7341,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Knowledge Representation and Defeasible Reasoning"
+      "publicationTitle": "Knowledge Representation and Defeasible Reasoning",
+      "institution": "Kluwer Academic Publishers"
     },
     {
       "itemType": "journalArticle",
@@ -7408,7 +7408,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Regents",
       "date": "1981",
       "extra": "Citation Key: Frankenstein",
       "title": "Frankenstein",
@@ -7433,12 +7432,12 @@
       "itemID": 273,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Regents"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Duda:78 \nbibtex[booktitle=Pattern Directed Inference Systems]",
       "title": "Semantic network representations in rule-based inference systems",
@@ -7484,12 +7483,12 @@
       "itemID": 274,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Waterman:78",
       "title": "Pattern Directed Inference Systems",
@@ -7519,12 +7518,12 @@
       "itemID": 275,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
       "place": "Edinburgh",
-      "publisher": "Edinburgh University Press",
       "date": "1980",
       "extra": "Citation Key: Duda:80 \nbibtex[booktitle=Expert Systems in the Microelectronic Age]",
       "title": "Model design in the Prospector consultant system for mineral exploration",
@@ -7565,7 +7564,8 @@
       "itemID": 276,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Edinburgh University Press"
     },
     {
       "itemType": "journalArticle",
@@ -7737,7 +7737,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -7774,7 +7774,6 @@
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "extra": "Citation Key: Berwick:Computation",
       "title": "Computation and Language Acquisition",
       "creators": [
@@ -7798,7 +7797,8 @@
       "itemID": 283,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "report",
@@ -7827,12 +7827,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Department of Electrical Engineering and Computer Science"
+      "institution": "MIT Department of Electrical Engineering and Computer Science"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Harcourt Brace Jovanovich",
       "date": "1978",
       "extra": "Citation Key: Clark:78",
       "title": "Psychology and Language",
@@ -7862,7 +7861,8 @@
       "itemID": 285,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Harcourt Brace Jovanovich"
     },
     {
       "itemType": "report",
@@ -7891,12 +7891,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Stanford University Artificial Intelligence Laboratory"
+      "institution": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "bookSection",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "pages": "191-219",
       "date": "1983",
       "extra": "Citation Key: JRAnderson:83",
@@ -7938,12 +7937,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
+      "institution": "Tioga"
     },
     {
       "itemType": "book",
       "place": "Englewood Cliffs, NJ",
-      "publisher": "Prentice-Hall",
       "date": "1982",
       "extra": "Citation Key: Ballard:82",
       "title": "Computer Vision",
@@ -7973,12 +7972,12 @@
       "itemID": 288,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Prentice-Hall"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Barrow:78 \nbibtex[booktitle=Computer Vision Systems]",
       "title": "Recovering intrinsic scene characteristics from images",
@@ -8018,7 +8017,8 @@
       "itemID": 289,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -8158,7 +8158,6 @@
     {
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
-      "publisher": "Lawrence Erlbaum",
       "date": "1982",
       "extra": "Citation Key: Beck:82 \nbibtex[booktitle=Organization and Representation in Perception]",
       "title": "Textural segmentation",
@@ -8189,7 +8188,8 @@
       "itemID": 294,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "journalArticle",
@@ -8312,7 +8312,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Texas at Austin Department of Mathematics and Computer Sciences"
+      "institution": "University of Texas at Austin Department of Mathematics and Computer Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -8384,7 +8384,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1979",
       "extra": "Citation Key: Boyer:79",
       "title": "A Computational Logic",
@@ -8414,7 +8413,8 @@
       "itemID": 301,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -8538,7 +8538,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MITAI"
+      "institution": "MITAI"
     },
     {
       "itemType": "conferencePaper",
@@ -8609,7 +8609,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Wiley",
       "date": "1956",
       "extra": "Citation Key: BrunerETAL:1956",
       "title": "A Study of Thinking",
@@ -8644,12 +8643,12 @@
       "itemID": 308,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Wiley"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Springer-Verlag",
       "date": "1980",
       "extra": "Citation Key: Bruynooghe:1980 \nbibtex[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
       "title": "Analysis of dependencies to improve the behavior of logic programs",
@@ -8685,11 +8684,11 @@
       "itemID": 309,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "book",
-      "publisher": "Hart Publishing Company",
       "date": "1967",
       "extra": "Citation Key: Bryan:1967",
       "title": "Control Systems for Technicians",
@@ -8714,12 +8713,12 @@
       "itemID": 310,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Hart Publishing Company"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Mitchell:1978 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
       "title": "Model-directed learning of production rules",
@@ -8760,11 +8759,11 @@
       "itemID": 311,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
-      "publisher": "Raven Press",
       "date": "1979",
       "extra": "Citation Key: Buresova:1979 \nbibtex[booktitle=Brain Mechanisms in Memory and Learning: From the Single Neuron to Man]",
       "title": "Neurophysiological analysis of conditioned taste aversion",
@@ -8799,11 +8798,11 @@
       "itemID": 312,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Raven Press"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "University of Illinois",
       "pages": "19-25",
       "date": "1983",
       "extra": "Citation Key: Burstein:83",
@@ -8830,7 +8829,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
+      "institution": "University of Illinois"
     },
     {
       "itemType": "conferencePaper",
@@ -8869,7 +8869,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "University of Illinois",
       "pages": "12-18",
       "date": "1983",
       "extra": "Citation Key: Carbonell:83",
@@ -8896,12 +8895,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
+      "institution": "University of Illinois"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1973",
       "extra": "Citation Key: ChangLee",
       "title": "Symbolic Logic and Mechanical Theorem Proving",
@@ -8931,11 +8930,11 @@
       "itemID": 316,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
-      "publisher": "Plenum Press",
       "date": "1978",
       "extra": "Citation Key: Clark:1978 \nbibtex[booktitle=Logic and Databases]",
       "title": "Negation as failure",
@@ -8971,12 +8970,12 @@
       "itemID": 317,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Plenum Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Springer-Verlag",
       "date": "1981",
       "extra": "Citation Key: Clocksin:81",
       "title": "Programming in Prolog",
@@ -9006,7 +9005,8 @@
       "itemID": 318,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "report",
@@ -9040,7 +9040,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Waterloo Department of Computer Science"
+      "institution": "University of Waterloo Department of Computer Science"
     },
     {
       "itemType": "journalArticle",
@@ -9100,7 +9100,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -9136,7 +9136,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1982",
       "extra": "Citation Key: Davis:1982 \nbibtex[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
       "title": "Teiresias: Applications of meta-level knowledge",
@@ -9172,13 +9171,13 @@
       "itemID": 323,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "bookSection",
       "volume": "1",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "pages": "11-30",
       "date": "1979",
       "extra": "Citation Key: deKleer:1979",
@@ -9215,7 +9214,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Artificial Intelligence: An MIT Perspective"
+      "publicationTitle": "Artificial Intelligence: An MIT Perspective",
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -9291,7 +9291,6 @@
       "itemType": "book",
       "volume": "17",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1983",
       "extra": "Citation Key: Domjan:1983 \nbibtex[booktitle=Psychology of Learning and Motivation]",
       "title": "Biological constraints on instrumental and classical conditioning: Implications for general process theory",
@@ -9321,7 +9320,8 @@
       "itemID": 327,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "report",
@@ -9350,7 +9350,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9423,7 +9423,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1963",
       "extra": "Citation Key: Feigenbaum:1963 \nbibtex[booktitle=Computers and Thought]",
       "title": "The simulation of verbal learning behavior",
@@ -9458,7 +9457,8 @@
       "itemID": 331,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -9518,7 +9518,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -9552,7 +9552,6 @@
     {
       "itemType": "book",
       "place": "Edinburgh",
-      "publisher": "Edinburgh University Press",
       "date": "1976",
       "extra": "Citation Key: Wise:1976 \nbibtex[booktitle=Automata, Languages, and Programming]",
       "title": "CONS should not evaluate its arguments",
@@ -9593,7 +9592,8 @@
       "itemID": 335,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Edinburgh University Press"
     },
     {
       "itemType": "report",
@@ -9622,11 +9622,10 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of British Columbia Department of Computer Science"
+      "institution": "University of British Columbia Department of Computer Science"
     },
     {
       "itemType": "book",
-      "publisher": "Plenum Press",
       "date": "1978",
       "extra": "Citation Key: Minker:1978",
       "title": "Logic and Databases",
@@ -9656,7 +9655,8 @@
       "itemID": 337,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Plenum Press"
     },
     {
       "itemType": "journalArticle",
@@ -9696,7 +9696,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "UNESCO",
       "date": "1959",
       "extra": "Citation Key: Gelernter:1959 \nbibtex[booktitle=Information Processing: Proceedings of the International Conference on Information Processing]",
       "title": "Realization of a geometry theorem-proving machine",
@@ -9721,7 +9720,8 @@
       "itemID": 339,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "UNESCO"
     },
     {
       "itemType": "journalArticle",
@@ -9788,7 +9788,6 @@
     {
       "itemType": "book",
       "place": "Boston",
-      "publisher": "Houghton Mifflin",
       "date": "1950",
       "extra": "Citation Key: Gibson:1950",
       "title": "The Perception of the Visual World",
@@ -9813,7 +9812,8 @@
       "itemID": 342,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Houghton Mifflin"
     },
     {
       "itemType": "journalArticle",
@@ -9881,7 +9881,6 @@
     {
       "itemType": "book",
       "place": "Englewood Cliffs, NJ",
-      "publisher": "Prentice-Hall",
       "date": "1970",
       "extra": "Citation Key: Goldman:1970",
       "title": "A Theory of Human Action",
@@ -9906,7 +9905,8 @@
       "itemID": 345,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Prentice-Hall"
     },
     {
       "itemType": "journalArticle",
@@ -9974,7 +9974,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Stanford University Artificial Intelligence Laboratory"
+      "institution": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -10044,12 +10044,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Essex Computer Science Department"
+      "institution": "University of Essex Computer Science Department"
     },
     {
       "itemType": "book",
       "place": "Edinburgh",
-      "publisher": "Edinburgh University Press",
       "date": "1980",
       "extra": "Citation Key: Hayes:1980 \nbibtex[booktitle=Expert Systems in the Microelectronic Age]",
       "title": "The naive physics manifesto",
@@ -10079,7 +10078,8 @@
       "itemID": 350,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Edinburgh University Press"
     },
     {
       "itemType": "bookSection",
@@ -10276,7 +10276,6 @@
     {
       "itemType": "book",
       "place": "Chicago",
-      "publisher": "University of Chicago Press",
       "date": "1971",
       "extra": "Citation Key: Julesz:1971",
       "title": "Foundations of Cyclopean Perception",
@@ -10301,7 +10300,8 @@
       "itemID": 357,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of Chicago Press"
     },
     {
       "itemType": "journalArticle",
@@ -10373,7 +10373,6 @@
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1973",
       "extra": "Citation Key: Knuth:1973",
       "title": "Sorting and Searching",
@@ -10398,11 +10397,11 @@
       "itemID": 360,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "book",
-      "publisher": "Pergamon Press",
       "date": "1970",
       "extra": "Citation Key: Bendix:1970 \nbibtex[booktitle=Computational Problems in Abstract Algebra]",
       "title": "Simple word problems in universal algebras",
@@ -10438,7 +10437,8 @@
       "itemID": 361,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Pergamon Press"
     },
     {
       "itemType": "journalArticle",
@@ -10479,7 +10479,6 @@
     {
       "itemType": "book",
       "volume": "New York",
-      "publisher": "Harcourt, Brace & World",
       "date": "1935",
       "extra": "Citation Key: Koffka:1935",
       "title": "Principles of Gestalt Psychology",
@@ -10504,7 +10503,8 @@
       "itemID": 363,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Harcourt, Brace & World"
     },
     {
       "itemType": "journalArticle",
@@ -10607,7 +10607,6 @@
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "Halstead",
       "pages": "41-72",
       "date": "1982",
       "extra": "Citation Key: Konolige:82 \nbibtex[chapter=2]",
@@ -10644,7 +10643,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Intelligence 10"
+      "publicationTitle": "Machine Intelligence 10",
+      "institution": "Halstead"
     },
     {
       "itemType": "journalArticle",
@@ -10851,7 +10851,6 @@
     {
       "itemType": "book",
       "place": "Amsterdam",
-      "publisher": "Elsevier North-Holland",
       "date": "1979",
       "extra": "Citation Key: Kowalski:79",
       "title": "Logic for Problem Solving",
@@ -10876,7 +10875,8 @@
       "itemID": 375,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Elsevier North-Holland"
     },
     {
       "itemType": "journalArticle",
@@ -11010,7 +11010,6 @@
     {
       "itemType": "book",
       "place": "Chicago",
-      "publisher": "University of Chicago Press",
       "date": "1980",
       "extra": "Citation Key: Lakoff:80",
       "title": "Metaphors We Live By",
@@ -11040,7 +11039,8 @@
       "itemID": 380,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of Chicago Press"
     },
     {
       "itemType": "journalArticle",
@@ -11077,7 +11077,6 @@
       "itemType": "book",
       "volume": "2",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1979",
       "extra": "Citation Key: Lavin:1979 \nbibtex[booktitle=Artificial Intelligence: An MIT Perspective]",
       "title": "Analysis of scenes from a moving viewpoint",
@@ -11113,7 +11112,8 @@
       "itemID": 382,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -11182,7 +11182,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1982",
       "extra": "Citation Key: Lenat:1982 \nbibtex[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
       "title": "AM: Discovery in mathematics as heuristic search",
@@ -11218,12 +11217,12 @@
       "itemID": 385,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1982",
       "extra": "Citation Key: editors",
       "title": "Knowledge-Based Systems in Artificial Intelligence",
@@ -11253,7 +11252,8 @@
       "itemID": 386,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -11354,7 +11354,6 @@
     {
       "itemType": "book",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "date": "1983",
       "extra": "Citation Key: Lenat:1983c \nbibtex[booktitle=Machine Learning: An Artificial Intelligence Approach]",
       "title": "The role of heuristics in learning by discovery: Three case studies",
@@ -11390,7 +11389,8 @@
       "itemID": 390,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -11477,7 +11477,6 @@
     {
       "itemType": "book",
       "place": "Oxford",
-      "publisher": "Basil Blackwell",
       "date": "1973",
       "extra": "Citation Key: Lewis:73",
       "title": "Counterfactuals",
@@ -11502,7 +11501,8 @@
       "itemID": 393,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Basil Blackwell"
     },
     {
       "itemType": "journalArticle",
@@ -11678,7 +11678,6 @@
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1973",
       "extra": "Citation Key: Luenberger:1973",
       "title": "Introduction to Linear and Nonlinear Programming",
@@ -11703,12 +11702,12 @@
       "itemID": 399,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "book",
       "place": "San Francisco",
-      "publisher": "Freeman",
       "date": "1982",
       "extra": "Citation Key: Marr:1982",
       "title": "Vision",
@@ -11733,7 +11732,8 @@
       "itemID": 400,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Freeman"
     },
     {
       "itemType": "journalArticle",
@@ -11878,7 +11878,6 @@
     {
       "itemType": "book",
       "place": "Teddington, England",
-      "publisher": "National Physical Laboratory",
       "date": "1958",
       "extra": "Citation Key: McCarthy:1958 \nbibtex[booktitle=Proceedings of the Symposium on the Mechanization of Thought Processes]",
       "title": "Programs with common sense",
@@ -11903,7 +11902,8 @@
       "itemID": 405,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "National Physical Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -11969,7 +11969,6 @@
       "itemType": "bookSection",
       "volume": "4",
       "place": "Edinburgh",
-      "publisher": "Edinburgh University Press",
       "date": "1969",
       "extra": "Citation Key: McCarthy:69",
       "title": "Some philosophical problems from the standpoint of artificial intelligence",
@@ -12010,7 +12009,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Intelligence"
+      "publicationTitle": "Machine Intelligence",
+      "institution": "Edinburgh University Press"
     },
     {
       "itemType": "report",
@@ -12043,7 +12043,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12071,7 +12071,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12099,7 +12099,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "report",
@@ -12128,7 +12128,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -12302,7 +12302,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -12344,7 +12344,6 @@
     {
       "itemType": "bookSection",
       "place": "Montgomery, Vermont",
-      "publisher": "Bradford Books",
       "pages": "143-160",
       "date": "1981",
       "extra": "Citation Key: McDermott:81",
@@ -12375,7 +12374,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Mind design"
+      "publicationTitle": "Mind design",
+      "institution": "Bradford Books"
     },
     {
       "itemType": "report",
@@ -12403,7 +12403,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -12465,7 +12465,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -12522,7 +12522,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -12550,12 +12550,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "bookSection",
       "place": "Hillsdale, NJ",
-      "publisher": "Ablex",
       "date": "1984",
       "extra": "Citation Key: McDermott:84a",
       "title": "Reasoning about plans",
@@ -12585,7 +12584,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Formal Theories of the Commonsense World"
+      "publicationTitle": "Formal Theories of the Commonsense World",
+      "institution": "Ablex"
     },
     {
       "itemType": "journalArticle",
@@ -12837,7 +12837,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale Center for Computational Vision and Control"
+      "institution": "Yale Center for Computational Vision and Control"
     },
     {
       "itemType": "journalArticle",
@@ -13045,7 +13045,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -13108,12 +13108,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Department of Computer Science"
+      "institution": "Yale University Department of Computer Science"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1968",
       "extra": "Citation Key: Minsky:68",
       "title": "Semantic Information Processing",
@@ -13138,12 +13137,12 @@
       "itemID": 444,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "bookSection",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "pages": "163-190",
       "date": "1983",
       "extra": "Citation Key: Mitchell:83",
@@ -13190,12 +13189,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
+      "institution": "Tioga"
     },
     {
       "itemType": "book",
       "place": "New Haven, Conn.",
-      "publisher": "Yale University Press",
       "date": "1974",
       "extra": "Citation Key: Montague:1974",
       "title": "Formal Philosophy",
@@ -13220,7 +13219,8 @@
       "itemID": 446,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Yale University Press"
     },
     {
       "itemType": "report",
@@ -13249,7 +13249,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "SRI Artificial Intelligence Center"
+      "institution": "SRI Artificial Intelligence Center"
     },
     {
       "itemType": "bookSection",
@@ -13281,7 +13281,6 @@
     {
       "itemType": "bookSection",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "pages": "367-403",
       "date": "1983",
       "extra": "Citation Key: Mostow:83",
@@ -13318,7 +13317,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
+      "institution": "Tioga"
     },
     {
       "itemType": "journalArticle",
@@ -13427,7 +13427,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Maryland, College Park"
+      "institution": "University of Maryland, College Park"
     },
     {
       "itemType": "conferencePaper",
@@ -13646,12 +13646,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1979",
       "extra": "Citation Key: Sproull:1979",
       "title": "Principles of Interactive Computer Graphics",
@@ -13681,7 +13680,8 @@
       "itemID": 458,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -13777,7 +13777,6 @@
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1981",
       "extra": "Citation Key: Paul:1981",
       "title": "Robot Manipulators: Mathematics, Programming, and Control",
@@ -13802,7 +13801,8 @@
       "itemID": 462,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -13838,7 +13838,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Springer-Verlag",
       "date": "1980",
       "extra": "Citation Key: Porto:1980 \nbibtex[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
       "title": "Selective backtracking for logic programs",
@@ -13879,12 +13878,12 @@
       "itemID": 464,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1980",
       "extra": "Citation Key: Porto:1980 \nbibtex[booktitle=Logic Programming]",
       "title": "Selective backtracking",
@@ -13925,11 +13924,11 @@
       "itemID": 465,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
-      "publisher": "Halsted Press",
       "date": "1972",
       "extra": "Citation Key: Plotkin:1972 \nbibtex[booktitle=Machine Intelligence 7]",
       "title": "Building-in equational theories",
@@ -13965,12 +13964,12 @@
       "itemID": 466,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Halsted Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1971",
       "extra": "Citation Key: Pohl:1971 \nbibtex[booktitle=Machine Intelligence 6]",
       "title": "Bi-directional search",
@@ -14005,12 +14004,12 @@
       "itemID": 467,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "American Elsevier"
     },
     {
       "itemType": "bookSection",
       "place": "Palo Alto, Calif.",
-      "publisher": "Tioga",
       "pages": "463-482",
       "date": "1983",
       "extra": "Citation Key: Quinlan:MLbook",
@@ -14047,11 +14046,11 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach"
+      "publicationTitle": "Machine Learning: An Artificial Intelligence Approach",
+      "institution": "Tioga"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "University of Illinois",
       "pages": "58-64",
       "date": "1983",
       "extra": "Citation Key: Quinlan:83",
@@ -14078,7 +14077,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the International Machine Learning Workshop"
+      "publicationTitle": "Proceedings of the International Machine Learning Workshop",
+      "institution": "University of Illinois"
     },
     {
       "itemType": "journalArticle",
@@ -14179,7 +14179,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Plenum Press",
       "date": "1978",
       "extra": "Citation Key: Reiter:78 \nbibtex[booktitle=Logic and Databases]",
       "title": "On closed world data bases",
@@ -14215,7 +14214,8 @@
       "itemID": 473,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Plenum Press"
     },
     {
       "itemType": "journalArticle",
@@ -14383,7 +14383,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Wilcox:1978 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
       "title": "Pattern recognition and pattern-directed inference in a program for playing go",
@@ -14423,12 +14422,12 @@
       "itemID": 479,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1979",
       "extra": "Citation Key: Riesbeck:1979 \nbibtex[booktitle=Associative Networks: Representation and Use of Knowledge by Computer]",
       "title": "Representations to aid distributed understanding in a multiprogram system",
@@ -14459,12 +14458,12 @@
       "itemID": 480,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1979",
       "extra": "Citation Key: Findler:1979",
       "title": "Associative Networks: Representation and Use of Knowledge by Computer",
@@ -14489,7 +14488,8 @@
       "itemID": 481,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -14581,7 +14581,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -14647,7 +14647,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Syracuse University School of Computer and Information Sciences"
+      "institution": "Syracuse University School of Computer and Information Sciences"
     },
     {
       "itemType": "journalArticle",
@@ -14722,7 +14722,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1977",
       "extra": "Citation Key: Sacerdoti:77",
       "title": "A Structure for Plans and Behavior",
@@ -14747,12 +14746,12 @@
       "itemID": 489,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "American Elsevier"
     },
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "Academic Press",
       "pages": "327-362",
       "date": "1979",
       "extra": "Citation Key: SchankCarbonell:1979",
@@ -14789,7 +14788,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer"
+      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
+      "institution": "Academic Press"
     },
     {
       "itemType": "report",
@@ -14818,7 +14818,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",
@@ -14853,7 +14853,6 @@
     {
       "itemType": "bookSection",
       "place": "New York",
-      "publisher": "Academic Press",
       "pages": "179-203",
       "date": "1979",
       "extra": "Citation Key: Shapiro:1979",
@@ -14885,7 +14884,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer"
+      "publicationTitle": "Associative Networks: Representation and Use of Knowledge by Computer",
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -14950,7 +14950,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -15017,7 +15017,6 @@
     {
       "itemType": "book",
       "place": "Hillsdale, NJ",
-      "publisher": "Ablex",
       "date": "1982",
       "extra": "Citation Key: Soloway:82 \nbibtex[booktitle=Directions in Human-Computer Interactions]",
       "title": "What do novices know about programming?",
@@ -15067,7 +15066,8 @@
       "itemID": 498,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Ablex"
     },
     {
       "itemType": "journalArticle",
@@ -15156,7 +15156,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Stanford University Computer Science Department"
+      "institution": "Stanford University Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -15193,7 +15193,6 @@
       "itemType": "book",
       "volume": "2",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1979",
       "extra": "Citation Key: Stevens:1979 \nbibtex[booktitle=Artificial Intelligence: An MIT Perspective]",
       "title": "Representing and analyzing surface orientation",
@@ -15229,7 +15228,8 @@
       "itemID": 503,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -15265,7 +15265,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Wiley",
       "date": "1978",
       "extra": "Citation Key: Radcliffe:1978",
       "title": "Kinematics and Mechanisms Design",
@@ -15295,12 +15294,12 @@
       "itemID": 505,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Wiley"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "American Elsevier",
       "date": "1975",
       "extra": "Citation Key: Sussman:1975",
       "title": "A Computer Model of Skill Acquisition",
@@ -15325,7 +15324,8 @@
       "itemID": 506,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "American Elsevier"
     },
     {
       "itemType": "journalArticle",
@@ -15470,7 +15470,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Xerox Corporation",
       "date": "1978",
       "extra": "Citation Key: Teitelman:1978",
       "title": "Interlisp Reference Manual",
@@ -15495,7 +15494,8 @@
       "itemID": 511,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Xerox Corporation"
     },
     {
       "itemType": "journalArticle",
@@ -15593,7 +15593,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1978",
       "extra": "Citation Key: Vere:78 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
       "title": "Inductive learning of relational productions",
@@ -15629,7 +15628,8 @@
       "itemID": 515,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -15675,7 +15675,6 @@
     {
       "itemType": "book",
       "place": "AW-ADDRESS",
-      "publisher": "Addison-Wesley",
       "date": "1983",
       "extra": "Citation Key: Wilensky:83",
       "title": "Planning and Understanding",
@@ -15700,7 +15699,8 @@
       "itemID": 517,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -15765,7 +15765,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "KAUFMANN",
       "date": "1988",
       "extra": "Citation Key: Wilkins:88",
       "title": "Practical Planning",
@@ -15790,7 +15789,8 @@
       "itemID": 520,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -15921,7 +15921,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1975",
       "extra": "Citation Key: Winston:75",
       "title": "The Psychology of Computer Vision",
@@ -15946,12 +15945,12 @@
       "itemID": 525,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "book",
       "place": "Cambridge, Mass.",
-      "publisher": "MIT Press",
       "date": "1979",
       "extra": "Citation Key: Winston:79",
       "title": "Artificial Intelligence: An MIT Perspective, Vol. 2",
@@ -15981,7 +15980,8 @@
       "itemID": 526,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "journalArticle",
@@ -16018,7 +16018,6 @@
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1980",
       "extra": "Citation Key: Winston:80a",
       "title": "LISP",
@@ -16048,7 +16047,8 @@
       "itemID": 528,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -16115,7 +16115,6 @@
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1984",
       "extra": "Citation Key: Winston:84",
       "title": "Artificial Intelligence 2nd ed.",
@@ -16140,7 +16139,8 @@
       "itemID": 531,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "conferencePaper",
@@ -16268,7 +16268,6 @@
     {
       "itemType": "book",
       "place": "Cambridge",
-      "publisher": "Cambridge University Press",
       "date": "1982",
       "extra": "Citation Key: DynamicMemory",
       "title": "Dynamic Memory: A Theory of Learning in Computers and People",
@@ -16293,7 +16292,8 @@
       "itemID": 536,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -16335,7 +16335,6 @@
     {
       "itemType": "book",
       "place": "Amsterdam",
-      "publisher": "North-Holland",
       "date": "1975",
       "extra": "Citation Key: Schank:1975",
       "title": "Conceptual Information Processing",
@@ -16360,12 +16359,12 @@
       "itemID": 538,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "North-Holland"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Academic Press",
       "date": "1975",
       "extra": "Citation Key: Woods:1975 \nbibtex[booktitle=Representation and Understanding]",
       "title": "What's in a link? Foundations for semantic networks",
@@ -16400,7 +16399,8 @@
       "itemID": 539,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic Press"
     },
     {
       "itemType": "journalArticle",
@@ -16440,7 +16440,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Carnegie-Mellon University Department of Computer Science",
       "date": "1979",
       "extra": "Citation Key: Forgy:1979",
       "title": "On the efficient implementation of production systems",
@@ -16465,7 +16464,8 @@
       "itemID": 541,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Carnegie-Mellon University Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -16569,12 +16569,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Rochester Department of Computer Science"
+      "institution": "University of Rochester Department of Computer Science"
     },
     {
       "itemType": "book",
       "place": "Reading, Mass.",
-      "publisher": "Addison-Wesley",
       "date": "1968",
       "extra": "Citation Key: Raiffa:1968",
       "title": "Decision Analysis: Introductory Lectures on Choices under Uncertainty",
@@ -16599,7 +16598,8 @@
       "itemID": 545,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Addison-Wesley"
     },
     {
       "itemType": "journalArticle",
@@ -16635,7 +16635,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Norton",
       "date": "1984",
       "extra": "Citation Key: Wilensky:84",
       "title": "LISPcraft",
@@ -16660,12 +16659,12 @@
       "itemID": 547,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Norton"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1975",
       "extra": "Citation Key: Winston:1975 \nbibtex[booktitle=The Psychology of Computer Vision]",
       "title": "Learning structural descriptions from examples",
@@ -16695,7 +16694,8 @@
       "itemID": 548,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -16833,7 +16833,6 @@
     {
       "itemType": "book",
       "place": "Chicago",
-      "publisher": "University of Chicago Press",
       "date": "1962",
       "extra": "Citation Key: Kuhn:1962",
       "title": "The Structure of Scientific Revolutions",
@@ -16858,12 +16857,12 @@
       "itemID": 553,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "University of Chicago Press"
     },
     {
       "itemType": "book",
       "place": "Cambridge",
-      "publisher": "Cambridge University Press",
       "date": "1970",
       "extra": "Citation Key: Lakatos:1970 \nbibtex[booktitle=Criticism and the Growth of Knowledge]",
       "title": "Falsification and the methodology of scientific research programmes",
@@ -16899,7 +16898,8 @@
       "itemID": 554,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "bookSection",
@@ -16931,7 +16931,6 @@
     {
       "itemType": "book",
       "place": "Hillsdale, NJ",
-      "publisher": "LEA",
       "date": "1988",
       "extra": "Citation Key: Hendler:1988",
       "title": "Integrated Marker-Passing and Problem-Solving: A Spreading-Activation Approach to Improved Choice in Planning",
@@ -16956,7 +16955,8 @@
       "itemID": 556,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "LEA"
     },
     {
       "itemType": "report",
@@ -16986,7 +16986,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science University of Illinois at"
+      "institution": "Department of Computer Science University of Illinois at"
     },
     {
       "itemType": "journalArticle",
@@ -17050,7 +17050,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Irvine Computational Intelligence Project",
       "date": "1984",
       "extra": "Citation Key: Granger:84",
       "title": "Parsing with parallelism: a spreading-activation model of inference processing during text understanding",
@@ -17085,7 +17084,8 @@
       "itemID": 560,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Irvine Computational Intelligence Project"
     },
     {
       "itemType": "journalArticle",
@@ -17144,7 +17144,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, University of California at Berkeley"
+      "institution": "Department of Computer Science, University of California at Berkeley"
     },
     {
       "itemType": "conferencePaper",
@@ -17203,7 +17203,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Division (EECS), % University of California at Berkeley"
+      "institution": "Computer Science Division (EECS), % University of California at Berkeley"
     },
     {
       "itemType": "journalArticle",
@@ -17269,7 +17269,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science Yale University"
+      "institution": "Department of Computer Science Yale University"
     },
     {
       "itemType": "journalArticle",
@@ -17595,7 +17595,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, University of Rochester"
+      "institution": "Department of Computer Science, University of Rochester"
     },
     {
       "itemType": "bookSection",
@@ -17628,7 +17628,6 @@
     {
       "itemType": "bookSection",
       "place": "Los Altos, CA",
-      "publisher": "Morgan Kaufmann",
       "date": "1991",
       "extra": "Citation Key: Kautz91Formal \nbibtex[chapter=2]",
       "title": "A Formal Theory of Plan Recognition and its Implementation",
@@ -17674,7 +17673,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Reasoning About Plans"
+      "publicationTitle": "Reasoning About Plans",
+      "institution": "Morgan Kaufmann"
     },
     {
       "itemType": "bookSection",
@@ -17761,7 +17761,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Univeristy of Rochester Computer Science Department"
+      "institution": "Univeristy of Rochester Computer Science Department"
     },
     {
       "itemType": "journalArticle",
@@ -17826,7 +17826,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Systems Research Institute, University of Toronto"
+      "institution": "Computer Systems Research Institute, University of Toronto"
     },
     {
       "itemType": "journalArticle",
@@ -18014,7 +18014,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Artificial Intelligence Center, SRI International"
+      "institution": "Artificial Intelligence Center, SRI International"
     },
     {
       "itemType": "journalArticle",
@@ -18065,7 +18065,6 @@
     {
       "itemType": "book",
       "place": "CSLI-ADDRESS",
-      "publisher": "CSLI",
       "date": "1986",
       "extra": "Citation Key: Shieber:Unification",
       "title": "An Introduction to Unification-based Approaches to Grammar",
@@ -18090,7 +18089,8 @@
       "itemID": 590,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "CSLI"
     },
     {
       "itemType": "report",
@@ -18126,12 +18126,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "CSLI"
+      "institution": "CSLI"
     },
     {
       "itemType": "bookSection",
       "place": "Amsterdam",
-      "publisher": "Mathematical Centre Tracts",
       "pages": "277-322",
       "date": "1981",
       "extra": "Citation Key: Kamp:81",
@@ -18173,7 +18172,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Formal Methods in the Study of Language"
+      "publicationTitle": "Formal Methods in the Study of Language",
+      "institution": "Mathematical Centre Tracts"
     },
     {
       "itemType": "report",
@@ -18202,12 +18202,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Artificial Intelligence Center,SRI International"
+      "institution": "Artificial Intelligence Center,SRI International"
     },
     {
       "itemType": "book",
       "place": "Berlin",
-      "publisher": "Springer-Verlag",
       "date": "1981",
       "extra": "Citation Key: Hirst:81",
       "title": "Anaphora in Natural Language Understanding: A Survey",
@@ -18232,7 +18231,8 @@
       "itemID": 594,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "conferencePaper",
@@ -18324,13 +18324,12 @@
       "seeAlso": [
 
       ],
-      "publisher": "Brown University Department of Computer Science"
+      "institution": "Brown University Department of Computer Science"
     },
     {
       "itemType": "book",
       "series": "Studies in Natural Language Processing",
       "place": "Cambridge, England",
-      "publisher": "Cambridge University Press",
       "date": "1987",
       "extra": "Citation Key: Hirst:87",
       "title": "Semantic Interpretation and the Resolution of Ambiguity",
@@ -18355,7 +18354,8 @@
       "itemID": 598,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -18482,7 +18482,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, University of Maryland at College Park"
+      "institution": "Department of Computer Science, University of Maryland at College Park"
     },
     {
       "itemType": "conferencePaper",
@@ -18554,7 +18554,6 @@
     {
       "itemType": "conferencePaper",
       "place": "MITP-ADDRESS",
-      "publisher": "MITP",
       "pages": "471-478",
       "date": "1990",
       "extra": "Citation Key: Carberry:90",
@@ -18581,13 +18580,13 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "AAAI-90"
+      "publicationTitle": "AAAI-90",
+      "institution": "MITP"
     },
     {
       "itemType": "book",
       "series": "ACL-MIT Press Series in Natural Language Processing",
       "place": "MITP-ADDRESS",
-      "publisher": "MITP",
       "date": "1990",
       "extra": "Citation Key: Carberry:90b",
       "title": "Plan Recognition in Natural Language Dialogue",
@@ -18612,7 +18611,8 @@
       "itemID": 606,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MITP"
     },
     {
       "itemType": "conferencePaper",
@@ -18736,7 +18736,6 @@
       "itemType": "book",
       "series": "CSLI Lecture Notes",
       "place": "Stanford, CA",
-      "publisher": "CSLI",
       "date": "1987",
       "extra": "Citation Key: PandS",
       "title": "Prolog and Natural-Language Analysis",
@@ -18766,14 +18765,14 @@
       "itemID": 611,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "CSLI"
     },
     {
       "itemType": "book",
       "series": "Meaning and Speech Acts",
       "volume": "I",
       "place": "Cambridge",
-      "publisher": "Cambridge University Press",
       "date": "1990",
       "extra": "Citation Key: Vanderveken:90a",
       "title": "Principles of language use",
@@ -18798,14 +18797,14 @@
       "itemID": 612,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "book",
       "series": "Meaning and Speech Acts",
       "volume": "II",
       "place": "Cambridge",
-      "publisher": "Cambridge University Press",
       "date": "1990",
       "extra": "Citation Key: Vanderveken:90b",
       "title": "Formal semantics of success and satisfaction",
@@ -18830,7 +18829,8 @@
       "itemID": 613,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "conferencePaper",
@@ -18904,7 +18904,6 @@
     {
       "itemType": "book",
       "place": "MIT-ADDRESS",
-      "publisher": "MITP",
       "date": "1985",
       "extra": "Citation Key: Abelson:85",
       "title": "Structure and Interpretation of Computer Programs",
@@ -18934,7 +18933,8 @@
       "itemID": 616,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MITP"
     },
     {
       "itemType": "journalArticle",
@@ -19081,7 +19081,6 @@
     {
       "itemType": "book",
       "place": "KAUFMANN-ADDRESS",
-      "publisher": "KAUFMANN",
       "date": "1991",
       "extra": "Citation Key: Norvig:91",
       "title": "Paradigms of Artificial Intelligence Programming: Case Studies in Common Lisp",
@@ -19106,7 +19105,8 @@
       "itemID": 621,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -19172,7 +19172,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "Morgan Kaufmann",
       "date": "1987",
       "extra": "Citation Key: haas87case",
       "title": "The case for domain-specific frame axioms",
@@ -19198,7 +19197,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop"
+      "publicationTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop",
+      "institution": "Morgan Kaufmann"
     },
     {
       "itemType": "journalArticle",
@@ -19435,7 +19435,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "AAAI-PRESS",
       "date": "1995-06",
       "extra": "Citation Key: Cohen:KQMLSemantics",
       "title": "Communicative Actions for Artificial Agents",
@@ -19487,7 +19486,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the International Conference on Multi-Agent Systems"
+      "publicationTitle": "Proceedings of the International Conference on Multi-Agent Systems",
+      "institution": "AAAI-PRESS"
     },
     {
       "itemType": "journalArticle",
@@ -19627,7 +19627,6 @@
     {
       "itemType": "conferencePaper",
       "place": "KAUFMANN-ADDRESS",
-      "publisher": "KAUFMANN",
       "pages": "1635-1641",
       "date": "1989",
       "extra": "Citation Key: Ballard:89",
@@ -19654,7 +19653,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "IJCAI-89"
+      "publicationTitle": "IJCAI-89",
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "manuscript",
@@ -19743,7 +19743,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Center for Cognitive Science"
+      "institution": "MIT Center for Cognitive Science"
     },
     {
       "itemType": "report",
@@ -19774,12 +19774,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Laboratory for Computer Science"
+      "institution": "MIT Laboratory for Computer Science"
     },
     {
       "itemType": "book",
       "place": "Cambridge",
-      "publisher": "Harvard University Press",
       "date": "1987",
       "extra": "Citation Key: Bratman:87",
       "title": "Intention, Plans, and Practical Reason",
@@ -19804,7 +19803,8 @@
       "itemID": 642,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Harvard University Press"
     },
     {
       "itemType": "journalArticle",
@@ -19877,7 +19877,6 @@
     {
       "itemType": "book",
       "place": "Menlo Park, California",
-      "publisher": "Benjamin / Cummings Publishing Company",
       "date": "1987",
       "extra": "Citation Key: Allen:87book",
       "title": "Natural Lan­guage Un­der­stand­ing",
@@ -19902,7 +19901,8 @@
       "itemID": 645,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Benjamin / Cummings Publishing Company"
     },
     {
       "itemType": "journalArticle",
@@ -19969,7 +19969,6 @@
     {
       "itemType": "book",
       "place": "Hillsdale, NJ",
-      "publisher": "Lawrence Erlbaum",
       "date": "1980",
       "extra": "Citation Key: Bruce:80 \nbibtex[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
       "title": "Plans and Social Actions",
@@ -20010,7 +20009,8 @@
       "itemID": 648,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Lawrence Erlbaum"
     },
     {
       "itemType": "conferencePaper",
@@ -20068,7 +20068,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -20155,7 +20155,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "report",
@@ -20184,7 +20184,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Yale University Computer Science Department"
+      "institution": "Yale University Computer Science Department"
     },
     {
       "itemType": "conferencePaper",
@@ -20434,7 +20434,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Brown University, Department of Computer Science"
+      "institution": "Brown University, Department of Computer Science"
     },
     {
       "itemType": "conferencePaper",
@@ -20510,7 +20510,6 @@
     {
       "itemType": "book",
       "place": "KAUFMANN-ADDRESS",
-      "publisher": "KAUFMANN",
       "date": "1991",
       "extra": "Citation Key: Dean:91",
       "title": "Planning and Control",
@@ -20540,7 +20539,8 @@
       "itemID": 665,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
@@ -20771,7 +20771,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Department, Brown University"
+      "institution": "Computer Science Department, Brown University"
     },
     {
       "itemType": "journalArticle",
@@ -20838,7 +20838,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Department, Indiana University"
+      "institution": "Computer Science Department, Indiana University"
     },
     {
       "itemType": "conferencePaper",
@@ -21198,7 +21198,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer and Information Science, University of Massachusetts, Amherst"
+      "institution": "Department of Computer and Information Science, University of Massachusetts, Amherst"
     },
     {
       "itemType": "journalArticle",
@@ -21526,7 +21526,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "KAUFMANN",
       "pages": "89-93",
       "date": "1988",
       "extra": "Citation Key: Winslett-88-AAAI",
@@ -21553,11 +21552,11 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "AAAI-88"
+      "publicationTitle": "AAAI-88",
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "KAUFMANN",
       "pages": "1461-1466",
       "date": "1989",
       "extra": "Citation Key: Wobcke-89-IJCAI",
@@ -21584,7 +21583,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "IJCAI-89"
+      "publicationTitle": "IJCAI-89",
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
@@ -21641,7 +21641,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "New York University"
+      "institution": "New York University"
     },
     {
       "itemType": "manuscript",
@@ -21699,7 +21699,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Linköping University"
+      "institution": "Linköping University"
     },
     {
       "itemType": "report",
@@ -21729,12 +21729,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "Linköping University"
+      "institution": "Linköping University"
     },
     {
       "itemType": "book",
       "place": "MITP-ADDRESS",
-      "publisher": "MITP",
       "date": "1987",
       "extra": "Citation Key: Barton:87",
       "title": "Computational Complexity and Natural Language",
@@ -21769,7 +21768,8 @@
       "itemID": 702,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MITP"
     },
     {
       "itemType": "conferencePaper",
@@ -21912,7 +21912,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science and Engineering, University of Washington"
+      "institution": "Department of Computer Science and Engineering, University of Washington"
     },
     {
       "itemType": "conferencePaper",
@@ -22273,7 +22273,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "UDUB"
+      "institution": "UDUB"
     },
     {
       "itemType": "manuscript",
@@ -22397,7 +22397,6 @@
       "series": "Lecture Notes in Computer Science",
       "volume": "1023",
       "place": "Pathumthani, Thailand",
-      "publisher": "Springer-Verlag",
       "pages": "286-300",
       "date": "December 1995",
       "extra": "Citation Key: Ngo95:Probabilistic \nbibtex[key=Conference;organization=]",
@@ -22439,7 +22438,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)"
+      "publicationTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)",
+      "institution": "Springer-Verlag"
     },
     {
       "itemType": "conferencePaper",
@@ -22551,7 +22551,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "UDUB"
+      "institution": "UDUB"
     },
     {
       "itemType": "journalArticle",
@@ -22634,7 +22634,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "UDUB"
+      "institution": "UDUB"
     },
     {
       "itemType": "conferencePaper",
@@ -22746,7 +22746,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, Yale University"
+      "institution": "Department of Computer Science, Yale University"
     },
     {
       "itemType": "conferencePaper",
@@ -23069,7 +23069,6 @@
       "itemType": "bookSection",
       "volume": "8",
       "place": "Edinburgh, Scotland",
-      "publisher": "Ellis Horwood",
       "pages": "94-136",
       "date": "1977",
       "extra": "Citation Key: Waldinger:Regression",
@@ -23106,7 +23105,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Machine Intelligence"
+      "publicationTitle": "Machine Intelligence",
+      "institution": "Ellis Horwood"
     },
     {
       "itemType": "conferencePaper",
@@ -23163,7 +23163,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "NEW-AAAI-PUB",
       "pages": "689-695",
       "extra": "Citation Key: Scherl:93 \nbibtex[crossref=AAAI93]",
       "title": "The Frame Problem and Knowledge-producing Actions",
@@ -23214,7 +23213,8 @@
       "itemID": 742,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "NEW-AAAI-PUB"
     },
     {
       "itemType": "manuscript",
@@ -23251,7 +23251,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "Ellis Horwood, Ltd.",
       "date": "1984",
       "extra": "Citation Key: Turner:84",
       "title": "Logics for Artificial Intelligence",
@@ -23276,12 +23275,12 @@
       "itemID": 745,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Ellis Horwood, Ltd."
     },
     {
       "itemType": "bookSection",
       "place": "MITP-ADDRESS",
-      "publisher": "MITP",
       "pages": "305-322",
       "date": "1982",
       "extra": "Citation Key: Mason:82 \nbibtex[chapter=5]",
@@ -23333,7 +23332,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Robot Motion: Planning and Control"
+      "publicationTitle": "Robot Motion: Planning and Control",
+      "institution": "MITP"
     },
     {
       "itemType": "report",
@@ -23363,7 +23363,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "ICSI"
+      "institution": "ICSI"
     },
     {
       "itemType": "journalArticle",
@@ -23613,7 +23613,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "ICSI"
+      "institution": "ICSI"
     },
     {
       "itemType": "conferencePaper",
@@ -23675,7 +23675,6 @@
     },
     {
       "itemType": "bookSection",
-      "publisher": "ELSEVIER",
       "date": "1990",
       "extra": "Citation Key: Plaisted:90",
       "title": "Mechanical Theorem Proving",
@@ -23706,7 +23705,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Formal Techniques in Artificial Intelligence"
+      "publicationTitle": "Formal Techniques in Artificial Intelligence",
+      "institution": "ELSEVIER"
     },
     {
       "itemType": "conferencePaper",
@@ -23774,7 +23774,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Pennsylvania Institute for Research in Cognitive Science"
+      "institution": "University of Pennsylvania Institute for Research in Cognitive Science"
     },
     {
       "itemType": "conferencePaper",
@@ -23870,7 +23870,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "The Institute for the Learning Sciences, Northwestern University"
+      "institution": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "journalArticle",
@@ -23936,11 +23936,10 @@
       "seeAlso": [
 
       ],
-      "publisher": "The Institute for the Learning Sciences, Northwestern University"
+      "institution": "The Institute for the Learning Sciences, Northwestern University"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "IOS Press",
       "pages": "181-192",
       "date": "1995",
       "extra": "Citation Key: Pryor:95AISB",
@@ -23972,7 +23971,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)"
+      "publicationTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)",
+      "institution": "IOS Press"
     },
     {
       "itemType": "conferencePaper",
@@ -24099,7 +24099,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Department, Stanford University"
+      "institution": "Computer Science Department, Stanford University"
     },
     {
       "itemType": "journalArticle",
@@ -24231,7 +24231,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computing Science, University of Alberta"
+      "institution": "Department of Computing Science, University of Alberta"
     },
     {
       "itemType": "manuscript",
@@ -25066,7 +25066,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Bilkent University, Department of Computer Engineering and Information Science"
+      "institution": "Bilkent University, Department of Computer Engineering and Information Science"
     },
     {
       "itemType": "journalArticle",
@@ -25390,7 +25390,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "NASA Ames Research Center"
+      "institution": "NASA Ames Research Center"
     },
     {
       "itemType": "journalArticle",
@@ -25639,7 +25639,6 @@
     {
       "itemType": "book",
       "place": "Boston, Massachusetts",
-      "publisher": "Kluwer Academic Publishers",
       "date": "1983",
       "extra": "Citation Key: VanBenthemTL",
       "title": "The Logic of Time",
@@ -25664,7 +25663,8 @@
       "itemID": 815,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Kluwer Academic Publishers"
     },
     {
       "itemType": "manuscript",
@@ -25932,7 +25932,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Department, University of Maryland"
+      "institution": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "thesis",
@@ -25983,7 +25983,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Maryland at College Park"
+      "institution": "University of Maryland at College Park"
     },
     {
       "itemType": "journalArticle",
@@ -26514,7 +26514,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Dept., University of Sherbrooke"
+      "institution": "Computer Science Dept., University of Sherbrooke"
     },
     {
       "itemType": "journalArticle",
@@ -26776,7 +26776,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "SRI"
+      "institution": "SRI"
     },
     {
       "itemType": "journalArticle",
@@ -26936,7 +26936,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "KSL"
+      "institution": "KSL"
     },
     {
       "itemType": "report",
@@ -26967,7 +26967,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "KSL"
+      "institution": "KSL"
     },
     {
       "itemType": "journalArticle",
@@ -27159,7 +27159,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "CMUSCS"
+      "institution": "CMUSCS"
     },
     {
       "itemType": "journalArticle",
@@ -27365,7 +27365,6 @@
     {
       "itemType": "bookSection",
       "place": "AAAI-PRESS-ADDRESS",
-      "publisher": "AAAI-PRESS",
       "date": "1998",
       "extra": "Citation Key: Gat:TLAs",
       "title": "On Three-Layer Architectures",
@@ -27427,7 +27426,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Artificial Intelligence and Mobile Robots"
+      "publicationTitle": "Artificial Intelligence and Mobile Robots",
+      "institution": "AAAI-PRESS"
     },
     {
       "itemType": "journalArticle",
@@ -27499,12 +27499,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Michigan, Ann Arbor"
+      "institution": "University of Michigan, Ann Arbor"
     },
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "Oxford University Press",
       "date": "1997",
       "extra": "Citation Key: PooMacGoe97a \nbibtex[serial=poo97a]",
       "title": "Computational Intelligence: A Logical Approach",
@@ -27539,7 +27538,8 @@
       "itemID": 873,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Oxford University Press"
     },
     {
       "itemType": "journalArticle",
@@ -27666,7 +27666,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Albert-Ludwigs-Universität, Institut für Informatik"
+      "institution": "Albert-Ludwigs-Universität, Institut für Informatik"
     },
     {
       "itemType": "conferencePaper",
@@ -28158,7 +28158,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Intelligent Systems Program, University of Pittsburgh"
+      "institution": "Intelligent Systems Program, University of Pittsburgh"
     },
     {
       "itemType": "conferencePaper",
@@ -28565,7 +28565,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "AAII"
+      "institution": "AAII"
     },
     {
       "itemType": "manuscript",
@@ -28937,7 +28937,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, Brown University"
+      "institution": "Department of Computer Science, Brown University"
     },
     {
       "itemType": "report",
@@ -28972,7 +28972,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computing Research Laboratory, New Mexico State University"
+      "institution": "Computing Research Laboratory, New Mexico State University"
     },
     {
       "itemType": "thesis",
@@ -29001,7 +29001,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Loughborough University"
+      "institution": "Loughborough University"
     },
     {
       "itemType": "thesis",
@@ -29030,7 +29030,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Ohio State University"
+      "institution": "Ohio State University"
     },
     {
       "itemType": "thesis",
@@ -29059,7 +29059,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, Brown University"
+      "institution": "Department of Computer Science, Brown University"
     },
     {
       "itemType": "thesis",
@@ -29088,7 +29088,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, Yale University"
+      "institution": "Department of Computer Science, Yale University"
     },
     {
       "itemType": "thesis",
@@ -29117,7 +29117,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer and Information Science, Penn University"
+      "institution": "Computer and Information Science, Penn University"
     },
     {
       "itemType": "thesis",
@@ -29146,7 +29146,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Artificial Intelligence Laboratory, University of Texas at Austin"
+      "institution": "Artificial Intelligence Laboratory, University of Texas at Austin"
     },
     {
       "itemType": "report",
@@ -29177,7 +29177,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "School of Computer and Information Science, Syracuse University"
+      "institution": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29208,7 +29208,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "School of Computer and Information Science, Syracuse University"
+      "institution": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29239,7 +29239,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "School of Computer and Information Science, Syracuse University"
+      "institution": "School of Computer and Information Science, Syracuse University"
     },
     {
       "itemType": "report",
@@ -29290,7 +29290,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Cognitive Science Laboratory, Princeton University"
+      "institution": "Cognitive Science Laboratory, Princeton University"
     },
     {
       "itemType": "journalArticle",
@@ -29799,7 +29799,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "SPRINGER",
       "date": "1999",
       "extra": "Paper accompanying invited talk  to be presented at the 1999 European  Conference on Planning (ECP-99). Available through http://afrodite.itc.it:1024/~leaf/ \nCitation Key: GiunchigliaTraverso:99",
       "title": "Planning as Model-checking",
@@ -29830,7 +29829,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of ECP-99"
+      "publicationTitle": "Proceedings of ECP-99",
+      "institution": "SPRINGER"
     },
     {
       "itemType": "report",
@@ -29881,7 +29881,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Carnegie-Mellon University"
+      "institution": "Carnegie-Mellon University"
     },
     {
       "itemType": "conferencePaper",
@@ -30892,7 +30892,6 @@
     {
       "itemType": "book",
       "place": "Cambridge, Massachusetts",
-      "publisher": "MIT Press",
       "date": "1993",
       "extra": "Citation Key: Forbus+DeKleer:1993",
       "title": "Building Problem Solvers",
@@ -30922,13 +30921,13 @@
       "itemID": 970,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "MIT Press"
     },
     {
       "itemType": "conferencePaper",
       "url": "citeseer.nj.nec.com/article/williamson96unified.html",
       "place": "Menlo Park, California",
-      "publisher": "AAAI Press",
       "pages": "142-150",
       "ISBN": "1-57735-021-9",
       "date": "1996",
@@ -30966,12 +30965,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop"
+      "publicationTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop",
+      "institution": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
       "series": "AAAI Technical Report",
-      "publisher": "AAAI Press",
       "date": "1998",
       "extra": "Citation Key: desJardins:98 \nbibtex[number=WS-98-15;organization=AAAI]",
       "title": "Hybrid Planning: An Approach to Integrating Generative and Case-based Planning",
@@ -31007,7 +31006,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop"
+      "publicationTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop",
+      "institution": "AAAI Press"
     },
     {
       "itemType": "journalArticle",
@@ -31139,7 +31139,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Computer Science Department, University of Maryland"
+      "institution": "Computer Science Department, University of Maryland"
     },
     {
       "itemType": "journalArticle",
@@ -31423,7 +31423,6 @@
     {
       "itemType": "conferencePaper",
       "url": "http://www.aaai.org/Library/ICAPS/2006/icaps06-022.php",
-      "publisher": "AAAI",
       "pages": "212-221",
       "ISBN": "978-1-57735-270-9",
       "date": "2006",
@@ -31486,7 +31485,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "ICAPS"
+      "publicationTitle": "ICAPS",
+      "institution": "AAAI"
     },
     {
       "itemType": "report",
@@ -31523,7 +31523,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Institut für Informatik, Universität Freiburg"
+      "institution": "Institut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "report",
@@ -31563,7 +31563,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Insitut für Informatik, Universität Freiburg"
+      "institution": "Insitut für Informatik, Universität Freiburg"
     },
     {
       "itemType": "journalArticle",
@@ -31902,7 +31902,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Department of Computer Science, The University of Huddersfield"
+      "institution": "Department of Computer Science, The University of Huddersfield"
     },
     {
       "itemType": "conferencePaper",
@@ -32239,7 +32239,6 @@
     },
     {
       "itemType": "book",
-      "publisher": "KAUFMANN",
       "date": "2004",
       "extra": "Citation Key: ghallab04:planningBook",
       "title": "Automated Planning: Theory and Practice",
@@ -32274,7 +32273,8 @@
       "itemID": 1003,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "KAUFMANN"
     },
     {
       "itemType": "journalArticle",
@@ -32440,7 +32440,6 @@
       "series": "Lecture Notes in Computer Science",
       "volume": "3538",
       "place": "Edinburgh, Scotland, UK",
-      "publisher": "Springer",
       "pages": "179-188",
       "ISBN": "3-540-27885-0",
       "date": "2005-07",
@@ -32488,7 +32487,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "User Modeling"
+      "publicationTitle": "User Modeling",
+      "institution": "Springer"
     },
     {
       "itemType": "bookSection",
@@ -32558,7 +32558,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Dept. of Electronics for Automation, University of Brescia"
+      "institution": "Dept. of Electronics for Automation, University of Brescia"
     },
     {
       "itemType": "conferencePaper",
@@ -32835,7 +32835,6 @@
     {
       "itemType": "bookSection",
       "place": "Menlo Park, California",
-      "publisher": "AAAI Press",
       "pages": "134-144",
       "date": "2006",
       "extra": "Citation Key: bienvenu-etal:2006a \nbibtex{topic:'planning;preferences;qualitative-utility;temporal-reasoning;'}",
@@ -32887,11 +32886,11 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "KR2006"
+      "publicationTitle": "KR2006",
+      "institution": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "AAAI",
       "pages": "12-21",
       "ISBN": "1-57735-220-3",
       "date": "2005",
@@ -32949,7 +32948,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "ICAPS"
+      "publicationTitle": "ICAPS",
+      "institution": "AAAI"
     },
     {
       "itemType": "thesis",
@@ -32978,12 +32978,11 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Washington"
+      "institution": "University of Washington"
     },
     {
       "itemType": "book",
       "url": "http://titles.cambridge.org/catalogue.asp?ISBN=0521781760",
-      "publisher": "Cambridge University Press",
       "date": "2003",
       "extra": "Citation Key: BCMNS2003 \nbibtex[added-by=msteiner;offline=ISBN: 0521781760]",
       "abstractNote": "Description Logics are a family of knowledge representation languages that have been studied extensively in Artificial Intelligence over the last two decades. They are embodied in several knowledge-based systems and are used to develop various real-life applications. The Description Logic Handbook provides a thorough account of the subject, covering all aspects of research in this field, namely: theory, implementation, and applications. Its appeal will be broad, ranging from more theoretically-oriented readers, to those with more practically-oriented interests who need a sound and modern understanding of knowledge representation systems based on Description Logics. The chapters are written by some of the most prominent researchers in the field, introducing the basic technical material before taking the reader to the current state of the subject, and including comprehensive guides to the literature. In sum, the book will serve as a unique reference for the subject, and can also be used for self-study or in conjunction with Knowledge Representation and Artificial Intelligence courses.",
@@ -33050,7 +33049,8 @@
       "itemID": 1022,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Cambridge University Press"
     },
     {
       "itemType": "journalArticle",
@@ -33199,7 +33199,6 @@
     {
       "itemType": "book",
       "place": "New York",
-      "publisher": "McGraw-Hill",
       "date": "1997",
       "extra": "Citation Key: mitchell97machine",
       "title": "Machine Learning",
@@ -33224,7 +33223,8 @@
       "itemID": 1028,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "McGraw-Hill"
     },
     {
       "itemType": "conferencePaper",
@@ -33317,7 +33317,6 @@
     {
       "itemType": "book",
       "place": "San Mateo, CA",
-      "publisher": "Morgan Kaufmann",
       "date": "1988",
       "extra": "Citation Key: wilkins88practical",
       "title": "Practical Planning: Extending the Classical AI Planning Paradigm",
@@ -33342,7 +33341,8 @@
       "itemID": 1031,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Morgan Kaufmann"
     },
     {
       "itemType": "journalArticle",
@@ -33377,7 +33377,6 @@
     {
       "itemType": "conferencePaper",
       "place": "Bonn, Germany",
-      "publisher": "Springer",
       "date": "2005",
       "extra": "Citation Key: Choi2005",
       "title": "Learning teleoreactive logic programs from problem solving",
@@ -33408,7 +33407,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "ILP-05"
+      "publicationTitle": "ILP-05",
+      "institution": "Springer"
     },
     {
       "itemType": "conferencePaper",
@@ -33540,7 +33540,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "Kluwer, Boston",
       "date": "1993",
       "extra": "Citation Key: Segre:1993",
       "title": "ARMS: Acquiring Robotic Assembly Plans",
@@ -33571,7 +33570,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Investigating Explanation-Based Learning"
+      "publicationTitle": "Investigating Explanation-Based Learning",
+      "institution": "Kluwer, Boston"
     },
     {
       "itemType": "conferencePaper",
@@ -33839,7 +33839,6 @@
     {
       "itemType": "book",
       "edition": "Second",
-      "publisher": "Prentice-Hall",
       "ISBN": "0-13-790395-2",
       "date": "2003",
       "extra": "Citation Key: RussellNorvigBook:2003",
@@ -33870,7 +33869,8 @@
       "itemID": 1045,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Prentice-Hall"
     },
     {
       "itemType": "journalArticle",
@@ -33959,7 +33959,6 @@
     {
       "itemType": "conferencePaper",
       "url": "http://www.aaai.org/Library/AAAI/2006/aaai06-125.php",
-      "publisher": "AAAI Press",
       "pages": "788-795",
       "date": "2006",
       "extra": "Citation Key: conf/aaai/BaierM06 \nbibtex[bibdate=2012-03-19;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2006.html#BaierM06]",
@@ -33991,7 +33990,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "AAAI"
+      "publicationTitle": "AAAI",
+      "institution": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
@@ -34037,7 +34037,6 @@
     },
     {
       "itemType": "conferencePaper",
-      "publisher": "AAAI",
       "pages": "264-271",
       "ISBN": "978-1-57735-344-7",
       "date": "2007",
@@ -34085,7 +34084,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "ICAPS"
+      "publicationTitle": "ICAPS",
+      "institution": "AAAI"
     },
     {
       "itemType": "conferencePaper",
@@ -34550,7 +34550,6 @@
     {
       "itemType": "conferencePaper",
       "place": "Menlo Park, Cal.",
-      "publisher": "AAAI/MIT Press",
       "pages": "570-576",
       "date": "07 ~18--22 1999",
       "extra": "Citation Key: AAAI/IAAI99*570",
@@ -34582,7 +34581,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "AAAI-99"
+      "publicationTitle": "AAAI-99",
+      "institution": "AAAI/MIT Press"
     },
     {
       "itemType": "conferencePaper",
@@ -34823,7 +34823,6 @@
       "url": "http://dx.doi.org/10.1007/3-540-45757-7_52",
       "series": "Lecture Notes in Computer Science",
       "volume": "2424",
-      "publisher": "Springer Berlin Heidelberg",
       "pages": "545-548",
       "ISBN": "978-3-540-44190-8",
       "date": "2002",
@@ -34877,7 +34876,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Logics in Artificial Intelligence"
+      "publicationTitle": "Logics in Artificial Intelligence",
+      "institution": "Springer Berlin Heidelberg"
     },
     {
       "itemType": "conferencePaper",
@@ -35058,7 +35058,6 @@
       "itemType": "book",
       "series": "perspectives in AI",
       "place": "Boston",
-      "publisher": "Academic press",
       "date": "1989",
       "extra": "Citation Key: Hammond:1989",
       "title": "Case-Based Planning: viewing planning as a memory task",
@@ -35083,7 +35082,8 @@
       "itemID": 1076,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "Academic press"
     },
     {
       "itemType": "journalArticle",
@@ -35260,7 +35260,6 @@
     {
       "itemType": "conferencePaper",
       "place": "San Mateo",
-      "publisher": "Morgan Kaufmann",
       "pages": "1643-1651",
       "ISBN": "1-55860-363-8",
       "date": "08 20--25 1995",
@@ -35298,7 +35297,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence"
+      "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
+      "institution": "Morgan Kaufmann"
     },
     {
       "itemType": "conferencePaper",
@@ -35494,7 +35494,6 @@
     },
     {
       "itemType": "bookSection",
-      "publisher": "ICAPS Foundation",
       "pages": "38-45",
       "date": "2011",
       "extra": "Citation Key: helmert2011fast \nbibtex[shortauthor=undefinedundefinedundefined]",
@@ -35561,12 +35560,12 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "Seventh International Planning Competition"
+      "publicationTitle": "Seventh International Planning Competition",
+      "institution": "ICAPS Foundation"
     },
     {
       "itemType": "conferencePaper",
       "url": "http://www.aaai.org/Library/AAAI/aaai15contents.php",
-      "publisher": "AAAI Press",
       "pages": "3887-3895",
       "ISBN": "978-1-57735-698-1",
       "date": "2015",
@@ -35604,7 +35603,8 @@
       "seeAlso": [
 
       ],
-      "publicationTitle": "AAAI"
+      "publicationTitle": "AAAI",
+      "institution": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
@@ -35777,7 +35777,6 @@
     {
       "itemType": "book",
       "place": "KAUFMANN-ADDRESS",
-      "publisher": "KAUFMANN",
       "ISBN": "1-55860-221-6",
       "date": "1993",
       "extra": "Citation Key: books/mk/Ginsberg93 \nbibtex{topic:'AI-intro;AI-text;'}",
@@ -35802,7 +35801,8 @@
       "itemID": 1094,
       "seeAlso": [
 
-      ]
+      ],
+      "institution": "KAUFMANN"
     }
   ]
 }

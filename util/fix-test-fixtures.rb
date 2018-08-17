@@ -28,12 +28,21 @@ def fixBBTJSON(lib, data)
         resave ||= (extra != item['extra'])
       end
 
-      duplicates = {
-        'publisher' => %w{university institution},
-        'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
-        'type' => %w{reportType thesisType},
-        'number' => %w{reportNumber},
-      }
+      if lib =~ /juris-m/
+        duplicates = {
+          'institution' => %w{publisher},
+          'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
+          'type' => %w{reportType thesisType},
+          'number' => %w{reportNumber},
+        }
+      else
+        duplicates = {
+          'publisher' => %w{university institution},
+          'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
+          'type' => %w{reportType thesisType},
+          'number' => %w{reportNumber},
+        }
+      end
       duplicates.each_pair{|generic, specifics|
         specifics.each{|specific|
           if item[specific] && (item[generic] == item[specific] || !item[generic])
