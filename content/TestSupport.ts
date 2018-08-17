@@ -12,7 +12,11 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 
-const pref_defaults = require('./../gen/preferences.json')
+const _preferences = require('../gen/preferences.json')
+const pref_defaults = {}
+for (const [pref, meta] of Object.entries(_preferences)) {
+  pref_defaults[pref] = meta.default
+}
 
 export = Prefs.get('testing') && {
   async reset() {

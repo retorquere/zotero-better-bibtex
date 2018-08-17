@@ -24,6 +24,7 @@ class DocFinder {
       tab?: string
       label?: string
       description?: string
+      ae_override?: boolean
       default?: any,
       options?: { [key: string]: string },
     }
@@ -42,9 +43,9 @@ class DocFinder {
     this.tab = -1
     this.errors = 0
     this.defaults = {
-      debug: false,
-      rawLaTag: '#LaTeX',
-      testing: false,
+      debug: { default: false },
+      rawLaTag: { default: '#LaTeX' },
+      testing: { default: false },
     }
 
     const prefsPane = parseXML(fs.readFileSync(path.join(root, 'content/Preferences.xul'), 'utf8'), {
@@ -55,7 +56,10 @@ class DocFinder {
     this.walk(prefsPane)
 
     for (const pref of Object.values(this.preferences)) {
-      this.defaults[pref.preference.replace(/.*\./, '')] = pref.default
+      const shortName = pref.preference.replace(/.*\./, '')
+      this.defaults[shortName] = { default: pref.default }
+      if (pref.options && Object.keys(pref.options).length) this.defaults[shortName].options = pref.options
+      if (pref.ae_override) this.defaults[shortName].ae_override = true
 
       if (pref.label) pref.label = pref.label.trim()
       if (pref.tab && !pref.label) this.report(`${pref.preference} has no label`)
@@ -142,10 +146,12 @@ class DocFinder {
         if (node.content[0] === '!') {
           if (this.tab !== -1) throw new Error('Doc block outside the prefs section')
 
-          const text = this.ungfm(dedent(node.content.substring(1))).trim()
+          const ae_override = node.content[1] === '*'
+          const text = this.ungfm(dedent(node.content.substring(ae_override ? 2 : 1))).trim()
           if (this.preference) {
             if (this.preferences[this.preference].description) throw new Error(`Duplicate description for ${this.preference}`)
             this.preferences[this.preference].description = text
+            this.preferences[this.preference].ae_override = ae_override
           } else {
             if (this.header) throw new Error(`Duplicate header block ${text}`)
             this.header = text

@@ -21,7 +21,7 @@ const prefs = Object.keys(preferences).map(pref => {
       return `    ${pref}: string[]`
 
     default:
-      return `    ${pref}: ${typeof preferences[pref]}`
+      return `    ${pref}: ${typeof preferences[pref].default}`
   }
 }).join('\n')
 const labels = Object.keys(translators.byLabel).map(tr => `  ${tr}?: boolean`).join('\n')
