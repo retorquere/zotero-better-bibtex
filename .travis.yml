@@ -6,7 +6,10 @@ cache:
   - vendor/bundle
   - downloads
 
-install: |-
+script: |
+  #set -e
+  set -x
+
   yarn install
 
   gem install bundler
@@ -16,11 +19,6 @@ install: |-
 
   mkdir -p bin downloads/zotero downloads/juris-m
   ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
-
-script: |
-  set -e
-  set -x
-
   #git submodule sync && git submodule update --init --recursive
 
   if [[ "$TRAVIS_COMMIT_MESSAGE" == *"#trace"* ]]; then
