@@ -2,9 +2,9 @@ cache:
   yarn: true
   bundler: true
   directories:
-    - node_modules
-    - vendor/bundle
-    - download
+  - node_modules
+  - vendor/bundle
+  - downloads
 
 install: |-
   yarn install
@@ -17,17 +17,17 @@ install: |-
   mkdir -p bin downloads/zotero downloads/juris-m
   ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
 
-script: |-
+script: |
   set -e
   set -x
 
   #git submodule sync && git submodule update --init --recursive
 
-  if [[ $TRAVIS_COMMIT_MESSAGE = *"#trace"* ]]; then
+  if [[ "$TRAVIS_COMMIT_MESSAGE" == *"#trace"* ]]; then
     export TRACE=true
   fi
 
-  if [[ "$TRAVIS_EVENT_TYPE" = "cron" -o "$TRAVIS_TAG" -o $TRAVIS_COMMIT_MESSAGE = *"#nightly"* ]]; then
+  if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
     export NIGHTLY=""
     export TRACE=true
   else
@@ -35,35 +35,33 @@ script: |-
   fi
 
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
-
-after_failure:
-  tail --lines=2000 ~/.BBTZ5TEST.log
+after_failure: tail --lines=2000 ~/.BBTZ5TEST.log
 
 jobs:
   include:
-    - stage: test
-      env:
-      - ZOTERO=zotero
-      - CLUSTER="@test-cluster-1"
+  - stage: test
+    env:
+    - ZOTERO=zotero
+    - CLUSTER="@test-cluster-1"
 
-    - stage: test
-      env:
-      - ZOTERO=zotero
-      - CLUSTER="not @test-cluster-1"
+  - stage: test
+    env:
+    - ZOTERO=zotero
+    - CLUSTER="not @test-cluster-1"
 
-    - stage: test
-      env:
-      - ZOTERO=jurism
-      - CLUSTER="@test-cluster-1"
+  - stage: test
+    env:
+    - ZOTERO=jurism
+    - CLUSTER="@test-cluster-1"
 
-    - stage: test
-      env:
-      - ZOTERO=jurism
-      - CLUSTER="not @test-cluster-1"
+  - stage: test
+    env:
+    - ZOTERO=jurism
+    - CLUSTER="not @test-cluster-1"
 
-    - stage: release
-      install: true
-      script: |-
-        [[ "$TRAVIS_EVENT_TYPE" = "cron" ]] && exit
-        yarn install
-        yarn run release
+  - stage: release
+    install: true
+    script: |-
+      [[ "$TRAVIS_EVENT_TYPE" = "cron" ]] && exit
+      yarn install
+      yarn run release
