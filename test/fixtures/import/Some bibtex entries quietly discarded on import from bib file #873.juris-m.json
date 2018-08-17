@@ -445,7 +445,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Garland Publishing Inc."
+      "publisher": "Garland Publishing Inc."
     },
     {
       "itemType": "conferencePaper",
@@ -517,7 +517,7 @@
 
       ],
       "publicationTitle": "Machine Intelligence",
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "book",
@@ -573,7 +573,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Lawrence Erlbaum"
+      "publisher": "Lawrence Erlbaum"
     },
     {
       "itemType": "report",
@@ -768,7 +768,7 @@
       "seeAlso": [
 
       ],
-      "institution": "ERLBAUM"
+      "publisher": "ERLBAUM"
     },
     {
       "itemType": "journalArticle",
@@ -916,7 +916,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "report",
@@ -1005,7 +1005,7 @@
       "seeAlso": [
 
       ],
-      "institution": "American Elsevier"
+      "publisher": "American Elsevier"
     },
     {
       "itemType": "book",
@@ -1035,7 +1035,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "bookSection",
@@ -1071,7 +1071,7 @@
 
       ],
       "publicationTitle": "The Psychology of Computer Vision",
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "book",
@@ -1101,7 +1101,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "report",
