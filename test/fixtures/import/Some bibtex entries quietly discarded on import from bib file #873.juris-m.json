@@ -5719,7 +5719,7 @@
 
       ],
       "publicationTitle": "Proceedings of the 18th Conference of the Association for Computational Linguistics",
-      "institution": "Association for Computational Linguistics"
+      "publisher": "Association for Computational Linguistics"
     },
     {
       "itemType": "journalArticle",
@@ -6989,7 +6989,7 @@
 
       ],
       "publicationTitle": "Proc. AAAI",
-      "institution": "William Kaufmann, Inc."
+      "publisher": "William Kaufmann, Inc."
     },
     {
       "itemType": "report",
@@ -8830,7 +8830,7 @@
 
       ],
       "publicationTitle": "Proceedings of the International Machine Learning Workshop",
-      "institution": "University of Illinois"
+      "publisher": "University of Illinois"
     },
     {
       "itemType": "conferencePaper",
@@ -8896,7 +8896,7 @@
 
       ],
       "publicationTitle": "Proceedings of the International Machine Learning Workshop",
-      "institution": "University of Illinois"
+      "publisher": "University of Illinois"
     },
     {
       "itemType": "book",
@@ -14078,7 +14078,7 @@
 
       ],
       "publicationTitle": "Proceedings of the International Machine Learning Workshop",
-      "institution": "University of Illinois"
+      "publisher": "University of Illinois"
     },
     {
       "itemType": "journalArticle",
@@ -18581,7 +18581,7 @@
 
       ],
       "publicationTitle": "AAAI-90",
-      "institution": "MITP"
+      "publisher": "MITP"
     },
     {
       "itemType": "book",
@@ -19198,7 +19198,7 @@
 
       ],
       "publicationTitle": "The Frame Problem in Artificial Intelligence: Proceedings of the 1987 Workshop",
-      "institution": "Morgan Kaufmann"
+      "publisher": "Morgan Kaufmann"
     },
     {
       "itemType": "journalArticle",
@@ -19487,7 +19487,7 @@
 
       ],
       "publicationTitle": "Proceedings of the International Conference on Multi-Agent Systems",
-      "institution": "AAAI-PRESS"
+      "publisher": "AAAI-PRESS"
     },
     {
       "itemType": "journalArticle",
@@ -19654,7 +19654,7 @@
 
       ],
       "publicationTitle": "IJCAI-89",
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "manuscript",
@@ -21553,7 +21553,7 @@
 
       ],
       "publicationTitle": "AAAI-88",
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
@@ -21584,7 +21584,7 @@
 
       ],
       "publicationTitle": "IJCAI-89",
-      "institution": "KAUFMANN"
+      "publisher": "KAUFMANN"
     },
     {
       "itemType": "conferencePaper",
@@ -22439,7 +22439,7 @@
 
       ],
       "publicationTitle": "Algorithms, Concurrency and Knowledge (Proceedings ACSC95)",
-      "institution": "Springer-Verlag"
+      "publisher": "Springer-Verlag"
     },
     {
       "itemType": "conferencePaper",
@@ -23214,7 +23214,7 @@
       "seeAlso": [
 
       ],
-      "institution": "NEW-AAAI-PUB"
+      "publisher": "NEW-AAAI-PUB"
     },
     {
       "itemType": "manuscript",
@@ -23972,7 +23972,7 @@
 
       ],
       "publicationTitle": "Hybrid Problems, Hybrid Solutions (Proceedings of AISB-95)",
-      "institution": "IOS Press"
+      "publisher": "IOS Press"
     },
     {
       "itemType": "conferencePaper",
@@ -29830,7 +29830,7 @@
 
       ],
       "publicationTitle": "Proceedings of ECP-99",
-      "institution": "SPRINGER"
+      "publisher": "SPRINGER"
     },
     {
       "itemType": "report",
@@ -30966,7 +30966,7 @@
 
       ],
       "publicationTitle": "Theories of Action, Planning, and Robot Control: Bridging the Gap: Proceedings of the 1996 AAAI Workshop",
-      "institution": "AAAI Press"
+      "publisher": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
@@ -31007,7 +31007,7 @@
 
       ],
       "publicationTitle": "Case-Based Reasoning Integrations: Papers from the 1998 AAAI Workshop",
-      "institution": "AAAI Press"
+      "publisher": "AAAI Press"
     },
     {
       "itemType": "journalArticle",
@@ -31486,7 +31486,7 @@
 
       ],
       "publicationTitle": "ICAPS",
-      "institution": "AAAI"
+      "publisher": "AAAI"
     },
     {
       "itemType": "report",
@@ -32488,7 +32488,7 @@
 
       ],
       "publicationTitle": "User Modeling",
-      "institution": "Springer"
+      "publisher": "Springer"
     },
     {
       "itemType": "bookSection",
@@ -32949,7 +32949,7 @@
 
       ],
       "publicationTitle": "ICAPS",
-      "institution": "AAAI"
+      "publisher": "AAAI"
     },
     {
       "itemType": "thesis",
@@ -33408,7 +33408,7 @@
 
       ],
       "publicationTitle": "ILP-05",
-      "institution": "Springer"
+      "publisher": "Springer"
     },
     {
       "itemType": "conferencePaper",
@@ -33571,7 +33571,7 @@
 
       ],
       "publicationTitle": "Investigating Explanation-Based Learning",
-      "institution": "Kluwer, Boston"
+      "publisher": "Kluwer, Boston"
     },
     {
       "itemType": "conferencePaper",
@@ -33991,7 +33991,7 @@
 
       ],
       "publicationTitle": "AAAI",
-      "institution": "AAAI Press"
+      "publisher": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
@@ -34085,7 +34085,7 @@
 
       ],
       "publicationTitle": "ICAPS",
-      "institution": "AAAI"
+      "publisher": "AAAI"
     },
     {
       "itemType": "conferencePaper",
@@ -34582,7 +34582,7 @@
 
       ],
       "publicationTitle": "AAAI-99",
-      "institution": "AAAI/MIT Press"
+      "publisher": "AAAI/MIT Press"
     },
     {
       "itemType": "conferencePaper",
@@ -35298,7 +35298,7 @@
 
       ],
       "publicationTitle": "Proceedings of the Fourteenth International Joint Conference on Artificial Intelligence",
-      "institution": "Morgan Kaufmann"
+      "publisher": "Morgan Kaufmann"
     },
     {
       "itemType": "conferencePaper",
@@ -35604,7 +35604,7 @@
 
       ],
       "publicationTitle": "AAAI",
-      "institution": "AAAI Press"
+      "publisher": "AAAI Press"
     },
     {
       "itemType": "conferencePaper",
