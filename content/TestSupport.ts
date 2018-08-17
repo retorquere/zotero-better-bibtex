@@ -15,7 +15,7 @@ import { getItemsAsync } from './get-items-async'
 const _preferences = require('../gen/preferences.json')
 const pref_defaults = {}
 for (const [pref, meta] of Object.entries(_preferences)) {
-  pref_defaults[pref] = meta.default
+  pref_defaults[pref] = (meta as any).default
 }
 
 export = Prefs.get('testing') && {

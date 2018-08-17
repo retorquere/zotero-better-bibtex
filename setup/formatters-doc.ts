@@ -80,7 +80,7 @@ for (const filter of Object.keys(formatter._)) {
 const preferences = require('../gen/preferences.json')
 const defaults = {}
 for (const [pref, meta] of Object.entries(preferences)) {
-  defaults[pref] = meta.default
+  defaults[pref] = (meta as any).default
 }
 
 fs.writeFileSync('docs/_data/preferences.yml', yaml.safeDump(defaults))
