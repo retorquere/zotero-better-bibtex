@@ -35,7 +35,9 @@ var Translator = {
     }
 
     for (key in this.preferences) {
-      this.preferences[key] = Zotero.getHiddenPref('better-bibtex.' + key)
+      let pref = Zotero.getOption(`preference_${key}`)
+      if (typeof pref !== 'boolean') pref = Zotero.getHiddenPref('better-bibtex.' + key)
+      this.preferences[key] = pref
     }
     // special handling
     this.preferences.skipWords = this.preferences.skipWords.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
