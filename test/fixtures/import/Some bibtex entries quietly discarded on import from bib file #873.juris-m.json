@@ -604,7 +604,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "itemType": "conferencePaper",
@@ -945,7 +945,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "University of Maryland Department of Computer Science"
+      "institution": "Uni:ersity of Maryland Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -975,7 +975,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "Stanford University Artificial Intelligence Laboratory"
+      "institution": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -1189,7 +1189,7 @@
       "seeAlso": [
 
       ],
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "journalArticle",

@@ -8,13 +8,13 @@ $supported = JSON.parse(File.read(File.join(root, 'gen/preferences.json'))).keys
 def fixBBTJSON(lib, data)
   return unless data.is_a?(Hash)
 
-  resave = false
+  resave = nil
 
   if data['config'] && data['config']['preferences']
     data['config']['preferences'].keys.each{|key|
       next if $supported.include?(key)
       data['config']['preferences'].delete(key) 
-      resave = true
+      resave = key
     }
   end
 
@@ -25,12 +25,12 @@ def fixBBTJSON(lib, data)
         item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
         item['extra'].sub!(/^bibtex:/, "Citation Key:")
 
-        resave ||= (extra != item['extra'])
+        resave = 'extra' if extra != item['extra']
       end
 
       if lib =~ /juris-m/
         duplicates = {
-          'institution' => %w{publisher},
+          'publisher' => %w{university institution},
           'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
           'type' => %w{reportType thesisType},
           'number' => %w{reportNumber},
@@ -48,14 +48,15 @@ def fixBBTJSON(lib, data)
           if item[specific] && (item[generic] == item[specific] || !item[generic])
             item[generic] = item[specific]
             item.delete(specific)
-            resave = true
+            resave = specific
           end
         }
       }
 
-      if lib =~ /juris-m/ && %w{conferencePaper book bookSection report thesis}.include?(item['itemType']) && item['institution']
+      if lib =~ /juris-m/ && %w{conferencePaper book bookSection thesis}.include?(item['itemType']) && item['institution']
         item['publisher'] = item['institution']
         item.delete('institution')
+        resave = 'institution'
       end
     }
   end
@@ -68,19 +69,20 @@ def fixBBTJSON(lib, data)
           creator.delete('fieldMode')
           creator.delete('firstName')
           creator.delete('lastName')
-          resave = true
+          resave = 'creator'
         end
       }
 
       if item['relations'] || item['collections']
-        resave = true
+        resave = 'relations'
         item.delete('relations')
         item.delete('collections')
       end
 
       if item['itemType'] == 'note'
         %w{uri uniqueFields seeAlso attachments key libraryID}.each{|key|
-          resave ||= item.key?(key)
+          next unless item.key?(key)
+          resave = key
           item.delete(key)
         }
       end
@@ -89,7 +91,7 @@ def fixBBTJSON(lib, data)
 
   return unless resave
 
-  puts lib
+  puts "#{resave}: #{lib}"
 
   File.open(lib, 'w'){|f| f.puts(JSON.pretty_generate(data)) }
 end
