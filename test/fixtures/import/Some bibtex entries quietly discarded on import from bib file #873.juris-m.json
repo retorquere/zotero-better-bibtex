@@ -2256,7 +2256,7 @@
       "seeAlso": [
 
       ],
-      "institution": "McGraw-Hill"
+      "publisher": "McGraw-Hill"
     },
     {
       "itemType": "journalArticle",
@@ -2321,7 +2321,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory"
     },
     {
       "itemType": "book",
@@ -2352,7 +2352,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Proc. Ijcai"
+      "publisher": "Proc. Ijcai"
     },
     {
       "itemType": "book",
@@ -2393,7 +2393,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "bookSection",
@@ -2435,7 +2435,7 @@
 
       ],
       "publicationTitle": "Computer Models of Thought and Language",
-      "institution": "Freeman"
+      "publisher": "Freeman"
     },
     {
       "itemType": "book",
@@ -2465,7 +2465,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Prentice-Hall, Inc."
+      "publisher": "Prentice-Hall, Inc."
     },
     {
       "itemType": "journalArticle",
@@ -2571,7 +2571,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Algorithmics Press"
+      "publisher": "Algorithmics Press"
     },
     {
       "itemType": "journalArticle",
@@ -2719,7 +2719,7 @@
       "seeAlso": [
 
       ],
-      "institution": "MIT Press"
+      "publisher": "MIT Press"
     },
     {
       "itemType": "book",
@@ -2748,7 +2748,7 @@
       "seeAlso": [
 
       ],
-      "institution": "University of California, Berkeley, Department of Computer Science"
+      "publisher": "University of California, Berkeley, Department of Computer Science"
     },
     {
       "itemType": "report",
@@ -2921,7 +2921,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Brown University Department of Computer Science"
+      "publisher": "Brown University Department of Computer Science"
     },
     {
       "itemType": "book",
@@ -2966,7 +2966,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Wiley"
+      "publisher": "Wiley"
     },
     {
       "itemType": "journalArticle",
@@ -3037,7 +3037,7 @@
       "seeAlso": [
 
       ],
-      "institution": "Academic Press"
+      "publisher": "Academic Press"
     },
     {
       "itemType": "journalArticle",
