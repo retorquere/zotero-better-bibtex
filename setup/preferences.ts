@@ -59,15 +59,31 @@ class DocFinder {
 
     fs.ensureDirSync(path.join(root, 'gen/preferences'))
     const preferences = {}
+    const aeOverrides = []
+    const aeOverridesProperties = {}
     for (const pref of Object.values(this.preferences)) {
       if (pref.options && !Object.keys(pref.options).length) {
         delete pref.options
         delete pref.option_order
       }
       preferences[pref.name] = pref
+
+      if (pref.ae_override) {
+        aeOverrides.push(pref.name)
+        if (pref.type === 'boolean') {
+          aeOverridesProperties[pref.name] = { type: 'boolean', default: pref.default }
+
+        } else if (pref.type === 'string' && pref.options) {
+          aeOverridesProperties[pref.name] = { enum: pref.option_order, default: pref.default }
+
+        } else {
+          throw new Error(`Unexpected override ${pref.name} of type ${pref.type}`)
+        }
+      }
     }
     fs.writeFileSync(path.join(root, 'gen/preferences/preferences.json'), JSON.stringify(preferences, null, 2))
-    fs.writeFileSync(path.join(root, 'gen/preferences/auto-export-overrides.json'), JSON.stringify(Object.keys(preferences).filter(pref => preferences[pref].ae_override), null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences/auto-export-overrides.json'), JSON.stringify(aeOverrides, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences/auto-export-overrides-schema.json'), JSON.stringify(aeOverridesProperties, null, 2))
 
     for (const pref of Object.values(this.preferences)) {
       this.defaults[pref.name] = pref.default

@@ -9,6 +9,9 @@ import { ZoteroConfig } from '../zotero-config'
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
 
+const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
+const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
+
 class NoSuchFileError extends Error {
   public name = 'NoSuchFile'
 
@@ -169,14 +172,19 @@ DB.init = () => {
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
   for (const translator of Object.keys(translators.byName)) {
     coll = DB.schemaCollection(translator, {
-      indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation' ],
+      indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
       schema: {
         type: 'object',
         properties: {
           itemID: { type: 'integer' },
+          reference: { type: 'string' },
+
+          // options
           exportNotes: { type: 'boolean', default: false },
           useJournalAbbreviation: { type: 'boolean', default: false },
-          reference: { type: 'string' },
+
+          // prefs
+          ...prefOverridesSchema,
 
           // Optional
           metadata: { type: 'object', default: {} },
@@ -191,6 +199,9 @@ DB.init = () => {
       ttl,
       ttlInterval,
     })
+
+    // old cache, drop
+    if (coll.findOne({ [prefOverrides[0]]: undefined })) coll.removeDataOnly()
 
     clearOnUpgrade(coll, 'BetterBibTeX', version)
   }

@@ -150,6 +150,7 @@ export class XULoki extends (Loki as { new(name, options): any }) {
       }
     }
 
+    log.debug('installing schema for', name, options.schema)
     coll.validate = validator.compile(options.schema)
     return coll
   }

@@ -8,6 +8,7 @@ import { getItemsAsync } from '../get-items-async'
 import { createFile } from '../create-file'
 
 const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
+const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
 
 class DBStore {
   public mode = 'reference'
@@ -169,13 +170,7 @@ DB.init = async () => {
       'useJournalAbbreviation',
       'exportNotes',
 
-      'asciiBibTeX',
-      'bibtexParticleNoOp',
-      'bibtexURL',
-      'asciiBibLaTeX',
-      'biblatexExtendedNameFormat',
-      'DOIandURL',
-      'qualityReport',
+      ...prefOverrides,
     ],
     unique: [ 'path' ],
     logging: true,
@@ -193,13 +188,7 @@ DB.init = async () => {
         useJournalAbbreviation: { type: 'boolean', default: false },
 
         // prefs
-        asciiBibTeX: { type: 'boolean', default: true },
-        bibtexParticleNoOp: { type: 'boolean', default: false },
-        bibtexURL: { enum: ['off', 'note', 'url'], default: 'no' },
-        asciiBibLaTeX: { type: 'boolean', default: false },
-        biblatexExtendedNameFormat: { type: 'boolean', default: false },
-        DOIandURL: { enum: ['both', 'url', 'doi'], default: 'both' },
-        qualityReport: { type: 'boolean', default: false },
+        ...prefOverridesSchema,
 
         error: { type: 'string', default: '' },
 
@@ -207,7 +196,7 @@ DB.init = async () => {
         meta: { type: 'object' },
         $loki: { type: 'integer' },
       },
-      required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation' ],
+      required: [ 'type', 'id', 'path', 'status', 'translatorID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
 
       additionalProperties: false,
     },

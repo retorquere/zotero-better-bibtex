@@ -30,6 +30,8 @@ import format = require('string-template')
 
 import { patch as $patch$ } from './monkey-patch'
 
+const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+
 const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
 
 /*
@@ -210,6 +212,20 @@ import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
 import { Logger } from './logger'
 import { extract as varExtract } from './var-extract'
+
+function cacheSelector(itemID, options, prefs) {
+  const selector = {
+    itemID,
+
+    exportNotes: options.exportNotes,
+    useJournalAbbreviation: options.useJournalAbbreviation,
+  }
+  for (const pref of prefOverrides) {
+    selector[pref] = prefs[pref]
+  }
+  return selector
+}
+
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
@@ -233,20 +249,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       return false
     }
 
-    const cached = collection.findOne({
-      itemID,
-
-      exportNotes: options.exportNotes,
-      useJournalAbbreviation: options.useJournalAbbreviation,
-
-      asciiBibTeX: prefs.asciiBibTeX,
-      bibtexParticleNoOp: prefs.bibtexParticleNoOp,
-      bibtexURL: prefs.bibtexURL,
-      asciiBibLaTeX: prefs.asciiBibLaTeX,
-      biblatexExtendedNameFormat: prefs.biblatexExtendedNameFormat,
-      DOIandURL: prefs.DOIandURL,
-      qualityReport: prefs.qualityReport,
-    })
+    const cached = collection.findOne(cacheSelector(itemID, options, prefs))
 
     if (!cached) return false
 
@@ -261,20 +264,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
 
-    const selector = {
-      itemID,
-
-      exportNotes: options.exportNotes,
-      useJournalAbbreviation: options.useJournalAbbreviation,
-
-      asciiBibTeX: prefs.asciiBibTeX,
-      bibtexParticleNoOp: prefs.bibtexParticleNoOp,
-      bibtexURL: prefs.bibtexURL,
-      asciiBibLaTeX: prefs.asciiBibLaTeX,
-      biblatexExtendedNameFormat: prefs.biblatexExtendedNameFormat,
-      DOIandURL: prefs.DOIandURL,
-      qualityReport: prefs.qualityReport,
-    }
+    const selector = cacheSelector(itemID, options, prefs)
     const cached = collection.findOne(selector)
 
     if (cached) {
