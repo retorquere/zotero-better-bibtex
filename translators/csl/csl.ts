@@ -70,7 +70,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
       let cached
-      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options)) {
+      if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
         items.push(cached.reference)
         continue
       }
@@ -168,7 +168,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       csl = this.serialize(csl)
 
-      Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, csl)
+      Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
       items.push(csl)
     }

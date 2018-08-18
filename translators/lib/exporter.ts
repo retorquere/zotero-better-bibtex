@@ -39,7 +39,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       this.jabref.citekeys.set(item.itemID, item.citekey)
 
-      const cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options)
+      const cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)
       if (cached) {
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
           Translator.references.push({ citekey: item.citekey, reference: cached.reference })

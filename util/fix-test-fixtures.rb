@@ -3,7 +3,7 @@
 require 'json'
 
 root = File.join(File.dirname(__FILE__), '..')
-$supported = JSON.parse(File.read(File.join(root, 'gen/preferences.json'))).keys
+$supported = JSON.parse(File.read(File.join(root, 'gen/preferences/preferences.json'))).keys
 
 def fixBBTJSON(lib, data)
   return unless data.is_a?(Hash)

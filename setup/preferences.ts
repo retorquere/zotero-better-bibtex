@@ -57,6 +57,7 @@ class DocFinder {
 
     this.walk(prefsPane)
 
+    fs.ensureDirSync(path.join(root, 'gen/preferences'))
     const preferences = {}
     for (const pref of Object.values(this.preferences)) {
       if (pref.options && !Object.keys(pref.options).length) {
@@ -65,7 +66,8 @@ class DocFinder {
       }
       preferences[pref.name] = pref
     }
-    fs.writeFileSync(path.join(root, 'gen/preferences.json'), JSON.stringify(preferences, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences/preferences.json'), JSON.stringify(preferences, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences/auto-export-overrides.json'), JSON.stringify(Object.keys(preferences).filter(pref => preferences[pref].ae_override), null, 2))
 
     for (const pref of Object.values(this.preferences)) {
       this.defaults[pref.name] = pref.default
@@ -88,7 +90,7 @@ class DocFinder {
 
     if (this.errors) process.exit(1)
 
-    fs.writeFileSync(path.join(root, 'gen/defaults.json'), JSON.stringify(this.defaults, null, 2))
+    fs.writeFileSync(path.join(root, 'gen/preferences/defaults.json'), JSON.stringify(this.defaults, null, 2))
 
     fs.ensureDirSync(path.join(root, 'build/defaults/preferences'))
     fs.ensureDirSync(path.join(root, 'docs/_data'))

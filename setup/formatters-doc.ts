@@ -23,7 +23,7 @@ while (fields.length) {
   table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells).map(cell => cell || ''))
 }
 
-const preferences = require('../gen/defaults.json')
+const preferences = require('../gen/preferences/defaults.json')
 
 const formatter = {
   _: {},

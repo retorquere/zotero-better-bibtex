@@ -7,7 +7,7 @@ console.log('translator framework typings')
 
 import root from 'zotero-plugin/root'
 
-const preferences = require(path.join(root, 'gen/defaults.json'))
+const preferences = require(path.join(root, 'gen/preferences/defaults.json'))
 const translators = require(path.join(root, 'gen/translators.json'))
 const _ = require('lodash')
 

@@ -7,8 +7,7 @@ import { getItemsAsync } from '../get-items-async'
 
 import { createFile } from '../create-file'
 
-const preferences = require('../../gen/preferences.json')
-const prefOverrides = Object.keys(preferences).filter(pref => preferences[pref].ae_override)
+const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
 
 class DBStore {
   public mode = 'reference'
@@ -160,7 +159,24 @@ DB.init = async () => {
   }
 
   const autoexport = DB.schemaCollection('autoexport', {
-    indices: [ 'type', 'id', 'status', 'path', 'exportNotes', 'translatorID', 'useJournalAbbreviation'],
+    indices: [
+      'type',
+      'id',
+      'status',
+      'path',
+      'translatorID',
+
+      'useJournalAbbreviation',
+      'exportNotes',
+
+      'asciiBibTeX',
+      'bibtexParticleNoOp',
+      'bibtexURL',
+      'asciiBibLaTeX',
+      'biblatexExtendedNameFormat',
+      'DOIandURL',
+      'qualityReport',
+    ],
     unique: [ 'path' ],
     logging: true,
     schema: {

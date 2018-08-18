@@ -227,41 +227,64 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
 
-  cacheFetch(sandbox, itemID, options) {
+  cacheFetch(sandbox, itemID, options, prefs) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) {
       return false
     }
 
-    const cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
-    if (!cached) {
-      return false
-    }
+    const cached = collection.findOne({
+      itemID,
+
+      exportNotes: options.exportNotes,
+      useJournalAbbreviation: options.useJournalAbbreviation,
+
+      asciiBibTeX: prefs.asciiBibTeX,
+      bibtexParticleNoOp: prefs.bibtexParticleNoOp,
+      bibtexURL: prefs.bibtexURL,
+      asciiBibLaTeX: prefs.asciiBibLaTeX,
+      biblatexExtendedNameFormat: prefs.biblatexExtendedNameFormat,
+      DOIandURL: prefs.DOIandURL,
+      qualityReport: prefs.qualityReport,
+    })
+
+    if (!cached) return false
 
     collection.update(cached) // touches the cache object so it isn't reaped too early
 
     return cached
   },
 
-  cacheStore(sandbox, itemID, options, reference, metadata) {
+  cacheStore(sandbox, itemID, options, prefs, reference, metadata) {
     if (!metadata) metadata = {}
 
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
 
-    const cached = collection.findOne({ itemID, exportNotes: !!options.exportNotes, useJournalAbbreviation: !!options.useJournalAbbreviation })
+    const selector = {
+      itemID,
+
+      exportNotes: options.exportNotes,
+      useJournalAbbreviation: options.useJournalAbbreviation,
+
+      asciiBibTeX: prefs.asciiBibTeX,
+      bibtexParticleNoOp: prefs.bibtexParticleNoOp,
+      bibtexURL: prefs.bibtexURL,
+      asciiBibLaTeX: prefs.asciiBibLaTeX,
+      biblatexExtendedNameFormat: prefs.biblatexExtendedNameFormat,
+      DOIandURL: prefs.DOIandURL,
+      qualityReport: prefs.qualityReport,
+    }
+    const cached = collection.findOne(selector)
+
     if (cached) {
       cached.reference = reference
       cached.metadata = metadata
       collection.update(cached)
+
     } else {
-      collection.insert({
-        itemID,
-        exportNotes: options.exportNotes,
-        useJournalAbbreviation: options.useJournalAbbreviation,
-        reference,
-        metadata,
-      })
+      collection.insert({...selector, reference, metadata})
+
     }
 
     return true

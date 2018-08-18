@@ -12,7 +12,7 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 
-const pref_defaults = require('../gen/defaults.json')
+const pref_defaults = require('../gen/preferences/defaults.json')
 
 export = Prefs.get('testing') && {
   async reset() {

@@ -14,8 +14,7 @@ import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 
-const preferences = require('../gen/preferences.json')
-const prefOverrides = Object.keys(preferences).filter(pref => preferences[pref].ae_override)
+const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
 function queueHandler(kind, handler) {
   return (task, cb) => {

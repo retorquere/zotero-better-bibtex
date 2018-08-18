@@ -760,7 +760,7 @@ export class Reference {
 
     this.data.DeclarePrefChars = Exporter.unique_chars(this.data.DeclarePrefChars)
 
-    Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, ref, this.data)
+    Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.data)
 
     if (this.data.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.data.DeclarePrefChars
   }

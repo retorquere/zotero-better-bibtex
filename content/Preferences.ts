@@ -13,8 +13,8 @@ import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 
-const preferences = require('../gen/preferences.json')
-const prefOverrides = Object.keys(preferences).filter(pref => preferences[pref].ae_override)
+const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+const preferences = require('../gen/preferences/preferences.json')
 
 class AutoExportTreeView {
   public rowCount: number
@@ -84,7 +84,7 @@ class AutoExportTreeView {
           if (pref === 'bibtexParticleNoOp' && translator !== 'Better BibTeX') continue
           if (pref === 'bibtexURL' && translator !== 'Better BibTeX') continue
 
-          const type = typeof preferences[pref].default
+          const type = preferences[pref].type
           if (type === 'boolean') {
               rows.push({ columns: { name: this.label[pref], value: ae[pref] ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: pref })
           } else if (type === 'string' && preferences[pref].options) {
