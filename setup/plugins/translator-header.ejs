@@ -40,7 +40,7 @@ var Translator = {
 
       if (override) {
         try {
-          value = Zotero.getOption(`preference_${key}`)
+          value = Zotero.getOption(`preference_${pref}`)
         } catch (err) {
           value = undefined
         }
