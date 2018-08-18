@@ -179,7 +179,7 @@ DB.init = async () => {
         // prefs
         asciiBibTeX: { type: 'boolean', default: true },
         bibtexParticleNoOp: { type: 'boolean', default: false },
-        bibtexURL: { enum: ['no', 'note', 'url'], default: 'no' },
+        bibtexURL: { enum: ['off', 'note', 'url'], default: 'no' },
         asciiBibLaTeX: { type: 'boolean', default: false },
         biblatexExtendedNameFormat: { type: 'boolean', default: false },
         DOIandURL: { enum: ['both', 'url', 'doi'], default: 'both' },

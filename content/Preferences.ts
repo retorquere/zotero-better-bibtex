@@ -28,7 +28,7 @@ class AutoExportTreeView {
     this.open = {}
 
     this.label = {}
-    for (const label of ['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes']) {
+    for (const label of prefOverrides.concat(['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes'])) {
       this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.${label}`)
     }
     for (const label of ['collection', 'library']) {
@@ -63,15 +63,27 @@ class AutoExportTreeView {
       })
 
       if (this.open[ae.$loki]) {
+        const translator = Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??'
+
         if (name.long !== name.short) rows.push({ columns: { name: this.label[ae.type] || ae.type, value: name.long }, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.updated, value: `${new Date(ae.meta.updated || ae.meta.created)}`}, level: 1, parent, autoexport: ae })
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
-        rows.push({ columns: { name: this.label.translator, value: Translators.byId[ae.translatorID] ? Translators.byId[ae.translatorID].label : '??'}, level: 1, parent, autoexport: ae })
+        rows.push({ columns: { name: this.label.translator, value: translator }, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'useJournalAbbreviation' })
         rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'exportNotes' })
 
         for (const pref of prefOverrides) {
+          if (pref === 'DOIandURL' && translator !== 'Better BibTeX' && translator !== 'Better BibLaTeX') continue
+          if (pref === 'qualityReport' && translator !== 'Better BibTeX' && translator !== 'Better BibLaTeX') continue
+
+          if (pref === 'asciiBibLaTeX' && translator !== 'Better BibLaTeX') continue
+          if (pref === 'biblatexExtendedNameFormat' && translator !== 'Better BibLaTeX') continue
+
+          if (pref === 'asciiBibTeX' && translator !== 'Better BibTeX') continue
+          if (pref === 'bibtexParticleNoOp' && translator !== 'Better BibTeX') continue
+          if (pref === 'bibtexURL' && translator !== 'Better BibTeX') continue
+
           const type = typeof preferences[pref].default
           if (type === 'boolean') {
               rows.push({ columns: { name: this.label[pref], value: ae[pref] ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: pref })
