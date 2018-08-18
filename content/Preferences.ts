@@ -28,7 +28,7 @@ class AutoExportTreeView {
     this.open = {}
 
     this.label = {}
-    for (const label of prefOverrides.concat(['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes'])) {
+    for (const label of ['on', 'off', 'updated', 'target', 'translator', 'abbrev', 'notes', ...prefOverrides]) {
       this.label[label] = Zotero.BetterBibTeX.getString(`Preferences.auto-export.setting.${label}`)
     }
     for (const label of ['collection', 'library']) {
@@ -70,8 +70,8 @@ class AutoExportTreeView {
         if (ae.error) rows.push({ columns: { name: this.label.error, value: ae.error}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.target, value: ae.path}, level: 1, parent, autoexport: ae })
         rows.push({ columns: { name: this.label.translator, value: translator }, level: 1, parent, autoexport: ae })
-        rows.push({ columns: { name: this.label.abbrev, value: ae.useJournalAbbreviation ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'useJournalAbbreviation' })
-        rows.push({ columns: { name: this.label.notes, value: ae.exportNotes ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: 'exportNotes' })
+        rows.push({ columns: { name: this.label.abbrev, value: this.columnValue(ae.useJournalAbbreviation) }, level: 1, parent, autoexport: ae, cycle: 'useJournalAbbreviation' })
+        rows.push({ columns: { name: this.label.notes, value: this.columnValue(ae.exportNotes) }, level: 1, parent, autoexport: ae, cycle: 'exportNotes' })
 
         for (const pref of prefOverrides) {
           if (pref === 'DOIandURL' && translator !== 'Better BibTeX' && translator !== 'Better BibLaTeX') continue
@@ -86,9 +86,11 @@ class AutoExportTreeView {
 
           const type = preferences[pref].type
           if (type === 'boolean') {
-              rows.push({ columns: { name: this.label[pref], value: ae[pref] ? this.label.on : this.label.off}, level: 1, parent, autoexport: ae, cycle: pref })
+              rows.push({ columns: { name: this.label[pref], value: this.columnValue(ae[pref]) }, level: 1, parent, autoexport: ae, cycle: pref })
+
           } else if (type === 'string' && preferences[pref].options) {
-              rows.push({ columns: { name: this.label[pref], value: preferences[pref].options[ae[pref]] }, level: 1, parent, autoexport: ae, cycle: pref, options: preferences[pref].option_order })
+              rows.push({ columns: { name: this.label[pref], value: this.columnValue(ae[pref], pref) }, level: 1, parent, autoexport: ae, cycle: pref, options: preferences[pref].option_order })
+
           } else {
             throw new Error(`Unexpected preference ${pref} of type ${type}`)
           }
@@ -157,6 +159,18 @@ class AutoExportTreeView {
   public getCellProperties(idx, column, prop) { /* do nothing */ }
   public getColumnProperties(column, element, prop) { /* do nothing */ }
   public performAction(action) { /* do nothing */ }
+
+  private columnValue(selected, pref = null) {
+    let label: string[]
+    if (typeof selected === 'boolean') {
+      selected = selected ? this.label.on : this.label.off
+      label = [ this.label.on, this.label.off ]
+    } else {
+      selected = preferences[pref].options[selected]
+      label = preferences[pref].option_order.map(option => preferences[pref].options[option])
+    }
+    return label.map(option => option === selected ? option.toUpperCase() : option.toLowerCase()).join(' | ')
+  }
 
   private autoExportNameCollectionPath(id, form) {
     if (!id) return ''
