@@ -23,6 +23,8 @@
 <!ENTITY better-bibtex.FirstRun.done "All Done!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT is now set up for use. You can still change any of these settings by going into the Zotero preferences and opening the BBT tab.">
 
+<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Error Report">
+<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Restart with Logging Enabled…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting an error report.">
 <!ENTITY better-bibtex.ErrorReport.context "Application context">
 <!ENTITY better-bibtex.ErrorReport.errors "Errors">
@@ -36,6 +38,9 @@
 If you are OK with sending this data, please click &quot;Next&quot; and post the debug ID presented in the next screen in the issue tracker at
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the error report is submitted.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Your error report has been submitted.">
+
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Citation Key">
 
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
@@ -51,6 +56,12 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
+<!ENTITY better-bibtex.Preferences.auto-export.name "Exported">
+<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
+<!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export notes">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Use journal abbreviations">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.error "Error">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warn me when changing citation keys in bulk">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Citation keys">

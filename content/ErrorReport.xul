@@ -16,7 +16,7 @@
 ]>
 
 <wizard xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  id="better-bibtex-error-report" title="&zotero.errorReport.title;"
+  id="better-bibtex-error-report" title="&better-bibtex.ErrorReport.title;"
   width="550" height="550">
 
   <script src="chrome://zotero/content/include.js"/>
@@ -24,7 +24,7 @@
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
     <description style="white-space: pre-wrap;" class="header">&better-bibtex.ErrorReport.enableDebug;</description>
-    <button label="&debugOutputLogging.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
+    <button label="&better-bibtex.ErrorReport.restartWithLoggingEnabled;" oncommand="Zotero.BetterBibTeX.ErrorReport.restartWithDebugEnabled()"/>
   </wizardpage>
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
@@ -60,11 +60,11 @@
   </wizardpage>
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.send()" label=" ">
-    <description>&zotero.errorReport.submissionInProgress;</description>
+    <description>&better-bibtex.ErrorReport.submissionInProgress;</description>
   </wizardpage>
 
   <wizardpage onpageshow="Zotero.BetterBibTeX.ErrorReport.show()" label=" ">
-    <description>&zotero.errorReport.submitted;</description>
+    <description>&better-bibtex.ErrorReport.submitted;</description>
     <description id="better-bibtex-report-result" hidden="true">
       <description>
         &better-bibtex.ErrorReport.reportID; <textbox flex="1" id="better-bibtex-report-id" class="plain textbox-emph" readonly="true"/>

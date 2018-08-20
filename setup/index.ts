@@ -3,10 +3,8 @@ process.chdir(root)
 
 import './submodules'
 
-import './make-dirs'
 import './translators'
 import './dateparser'
-import './preferences'
 import './translator-typing'
 import './kuroshiro'
 

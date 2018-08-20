@@ -228,6 +228,7 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"
+          id="pref-better-bibtex-autoAbbrevStyle"
           type="string"
           default=""/>
         <!--!
@@ -239,7 +240,7 @@
           name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"
           type="int"
           default="10"/>
-        <!--!
+        <!--!!
           Number of seconds to wait after your system goes idle before kicking off auto-exports.
         -->
 
@@ -247,7 +248,7 @@
           name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"
           type="int"
           default="5"/>
-        <!--!
+        <!--!!
           How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
           your database is always saved when your computer goes idle, or when you exit Zotero.
         -->
@@ -256,7 +257,7 @@
           name="extensions.zotero.translators.better-bibtex.csquotes"
           type="string"
           default=""/>
-        <!--!
+        <!--!!
           if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
         -->
 
@@ -265,7 +266,7 @@
           type="string"
           default="a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
         />
-        <!--!
+        <!--!!
           list of words to skip in title when generating citation keys
         -->
 
@@ -282,8 +283,8 @@
           name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"
           type="string"
           default=""/>
-        <!--!
-          ! When language alternates are present in Juris-M, this is the language BBT will pick.
+        <!--!!
+          When language alternates are present in Juris-M, this is the language BBT will pick.
         -->
 
         <preference
@@ -299,7 +300,7 @@
           name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat"
           type="bool"
           default="true"/>
-        <!--!
+        <!--!!
           Support for EDTF dates in biblatex
         -->
 
@@ -319,7 +320,7 @@
           name="extensions.zotero.translators.better-bibtex.suppressTitleCase"
           type="bool"
           default="false"/>
-        <!--!
+        <!--!!
           If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
           casing, set this preference to "true" to suppress [title casing for English references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
         -->
@@ -328,8 +329,8 @@
           name="extensions.zotero.translators.better-bibtex.itemObserverDelay"
           type="int"
           default="100"/>
-        <!--!
-          ! I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+        <!--!!
+          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
           retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
           the number of microseconds BBT should wait after being notified before acting on the changed references.
         -->
@@ -338,7 +339,7 @@
           name="extensions.zotero.translators.better-bibtex.parseParticles"
           type="bool"
           default="true"/>
-        <!--!
+        <!--!!
           Name particle handling
         -->
 
@@ -346,7 +347,7 @@
           name="extensions.zotero.translators.better-bibtex.citeprocNoteCitekey"
           type="bool"
           default="false"/>
-        <!--!
+        <!--!!
           Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
           This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will want to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
         -->
@@ -355,7 +356,7 @@
           name="extensions.zotero.translators.better-bibtex.scrubDatabase"
           type="bool"
           default="false"/>
-        <!--!
+        <!--!!
           Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't unable this unless explicitly asked to.
         -->
 
@@ -363,8 +364,8 @@
           name="extensions.zotero.translators.better-bibtex.lockedInit"
           type="bool"
           default="false"/>
-        <!--!
-          ! BBT locks the UI during startup because I have been told in
+        <!--!!
+          BBT locks the UI during startup because I have been told in
           no uncertain terms I am not to touch the Zotero database
           before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
           access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
@@ -387,7 +388,7 @@
           name="extensions.zotero.translators.better-bibtex.autoPin"
           type="bool"
           default="false"/>
-        <!--!
+        <!--!!
           When on, BBT will automatically pin the first citekey it generates for an item.
         -->
 
@@ -395,7 +396,7 @@
           name="extensions.zotero.translators.better-bibtex.kuroshiro"
           type="bool"
           default="false"/>
-        <!--!
+        <!--!!
           When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
         -->
 
@@ -412,13 +413,13 @@
           name="extensions.zotero.translators.better-bibtex.debugLog"
           type="string"
           default=""/>
-        <!--! !-->
+        <!--!! !-->
 
         <preference
           name="extensions.zotero.translators.better-bibtex.ajv"
           type="bool"
           default="true"/>
-        <!--! !-->
+        <!--!! !-->
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
@@ -588,7 +589,7 @@
               <caption label="&better-bibtex.Preferences.export.journal-abbrev;"/>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
-              <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrev">&better-bibtex.Preferences.auto-abbrev.style;</label>
+              <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
               <menulist id="better-bibtex-abbrev-style" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
                 <menupopup id="better-bibtex-abbrev-style-popup">
                 </menupopup>
