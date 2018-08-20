@@ -279,8 +279,6 @@ export = new class PrefPane {
         this.exportlist = document.getElementById('better-bibtex-export-list')
         this.exportlist.view = this.exportlist._view = new AutoExportTreeView // because the verflixten Mozilla tree implementation proxies this object and makes the inner data unreachable
 
-        this.refreshTimer = setInterval(() => { this.aeRefresh() }, 1000) as any // tslint:disable-line:no-magic-numbers
-
         this.getCitekeyFormat()
         this.update()
       })
@@ -329,54 +327,6 @@ export = new class PrefPane {
     if (this.refreshTimer) clearInterval(this.refreshTimer)
   }
 
-  public aeSelected() {
-    if (!this.exportlist) return false
-    if (this.exportlist.currentIndex < 0) return false
-    return this.exportlist._view.rows[this.exportlist.currentIndex]
-  }
-  public aeRemove() {
-    const selected = this.aeSelected()
-    if (!selected) return
-
-    log.debug('AutoExport: removing', { selected })
-    AutoExport.db.remove(selected.autoexport)
-    this.aeRefresh()
-  }
-
-  public aeRun() {
-    const selected = this.aeSelected()
-    if (!selected) return
-
-    AutoExport.run(selected.autoexport.$loki)
-    this.aeRefresh()
-  }
-
-  public aeCycle(event) {
-    const selected = this.aeSelected()
-    if (!selected || !selected.cycle) return
-
-    if (selected.options) {
-      let option = selected.options.indexOf(selected.autoexport[selected.cycle])
-      if (option < 0) throw new Error(`value ${selected.autoexport[selected.cycle]} for preference override ${selected.cycle} not found in ${selected.options}`)
-      option = (option + 1) % selected.options.length
-      selected.autoexport[selected.cycle] = selected.options[option]
-
-    } else {
-      selected.autoexport[selected.cycle] = !selected.autoexport[selected.cycle]
-
-    }
-
-    AutoExport.db.update(selected.autoexport)
-    AutoExport.run(selected.autoexport.$loki)
-    this.aeRefresh()
-  }
-
-  public aeRefresh() {
-    if (!this.exportlist) return
-
-    this.exportlist._view.refresh()
-  }
-
   private update() {
     this.checkCitekeyFormat()
 
@@ -410,8 +360,6 @@ export = new class PrefPane {
     for (const [row, enabledFor] of [['citeCommand', 'latex'], ['quickCopyPandocBrackets', 'pandoc']]) {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
-
-    this.aeRefresh()
 
     window.sizeToContent()
   }
