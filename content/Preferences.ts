@@ -28,16 +28,11 @@ class AutoExportPane {
   public refresh() {
     if (Zotero.BetterBibTeX.ready.isPending()) return
 
-    log.debug('refreshing auto-exports')
+    log.debug('prefs.auto-export.refresh')
     const auto_exports = AutoExport.db.find()
 
-    const tabbox = document.getElementById('better-bibtex-prefs-tabbox')
-    if (auto_exports.length) {
-      tabbox.hidden = false
-    } else {
-      tabbox.hidden = true
-      return
-    }
+    document.getElementById('better-bibtex-prefs-auto-export-tabbox').setAttribute('hidden', !auto_exports.length)
+    if (!auto_exports.length) return
 
     const tabs = document.getElementById('better-bibtex-prefs-auto-export-tabs')
     const tabpanels = document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
@@ -47,47 +42,46 @@ class AutoExportPane {
       exports: auto_exports.map(ae => ae.$loki),
       rebuild: false,
     }
-    rebuild.rebuild = (rebuild.panels.length !== rebuild.exports.length) || !rebuild.panels.every(id => rebuild.exports.includes(id))
+    rebuild.rebuild = (rebuild.panels.length !== rebuild.exports.length) || (typeof rebuild.panels.find((id, index) => rebuild.exports[index] !== id) !== 'undefined')
 
-    log.debug('refreshing auto-exports:', auto_exports, rebuild)
+    log.debug('prefs.auto-export.refresh:', auto_exports, rebuild)
 
     if (rebuild.rebuild) {
-      while (tabs.firstChild) tabs.removeChild(tabs.firstChild)
-      while (tabpanels.firstChild) tabpanels.removeChild(tabpanels.firstChild)
+      while (tabs.children.length > 1) tabs.removeChild(tabs.firstChild)
+      while (tabpanels.children.length > 1) tabpanels.removeChild(tabpanels.firstChild)
+    }
 
-      const template = document.getElementById('better-bibtex-prefs-auto-export-tabpanel')
+    for (const [index, ae] of auto_exports.entries()) {
+      let tab, tabpanel
 
-      for (const ae of auto_exports) {
-        const tab = document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'tab')
-        tab.label = `${ae.$loki}`
+      if (rebuild.rebuild) {
+        // tab
+        log.debug('prefs.auto-export.refresh:', (index === 0 ? 're-using' : 'cloning'), 0)
+        tab = (index === 0 ? tabs.firstChild : tabs.appendChild(tabs.firstChild.cloneNode(true)))
         tab.setAttribute('ae-id', `${ae.$loki}`)
-        tab.setAttribute('id', `better-bibtex-prefs-auto-export-tab-${ae.$loki}`)
-        tabs.appendChild(tab)
 
-        const tabpanel = template.cloneNode(true)
-        tabpanel.setAttribute('id', `better-bibtex-prefs-auto-export-tabpanel-${ae.$loki}`)
+        // tabpanel
+        tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
         for (const node of Array.from(tabpanel.querySelectorAll('[ae-id]'))) {
           (node as Element).setAttribute('ae-id', `${ae.$loki}`)
         }
         for (const node of Array.from(tabpanel.getElementsByClassName(`autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`))) {
           (node as IXUL_Element).hidden = false
         }
-        tabpanels.appendChild(tabpanel)
+      } else {
+        log.debug('prefs.auto-export.refresh: re-using', index)
+        tab = tabs.children[index]
+        tabpanel = tabpanels.children[index]
       }
-    }
-    log.debug('refreshing auto-exports: panels ready')
-    return
-
-    for (const ae of auto_exports) {
-      log.debug('refreshing auto-exports:', ae.$loki)
-      const tabpanel = document.getElementById(`better-bibtex-prefs-auto-export-tabpanel-${ae.$loki}`)
-      const tab = document.getElementById(`better-bibtex-prefs-auto-export-tab-${ae.$loki}`)
+      log.debug('prefs.auto-export.refresh:', { id: ae.$loki, i: index + 1, n: auto_exports.length, tabs: tabs.children.length})
 
       tab.label = this.name(ae, 'short')
-      log.debug('refreshing auto-exports:', tab.label)
+      log.debug('prefs.auto-export.refresh:', tab.label)
 
       for (const node of Array.from(tabpanel.querySelectorAll('[ae-field]'))) {
         const field = (node as Element).getAttribute('ae-field')
+
+        log.debug('prefs.auto-export.refresh:', { tab: tab.label, field, value: ae[field] })
 
         switch (field) {
           case 'name':
@@ -111,7 +105,7 @@ class AutoExportPane {
             break
 
           case 'error':
-            (node as IXUL_Label).hidden = !!ae.error;
+            (node as IXUL_Label).hidden = !ae.error;
             (node as IXUL_Label).label = ae.error
             break
 
@@ -126,9 +120,7 @@ class AutoExportPane {
 
           case 'DOIandURL':
           case 'bibtexURL':
-            const menuitem = Array.from((node as IXUL_Menulist).children[0].children).find(mi => mi.value === ae[field])
-            if (!menuitem) throw new Error(`cannot find menuitem ${ae[field]} for ${field} in ${(node as IXUL_Menulist).children[0].children.length}`);
-            (node as IXUL_Menulist).selectedItem = menuitem
+            (node as IXUL_Menulist).value = ae[field]
             break
 
           default:
@@ -137,7 +129,7 @@ class AutoExportPane {
       }
     }
 
-    log.debug('refreshing auto-exports: done')
+    log.debug('prefs.auto-export.refresh: done')
   }
 
   public remove(node) {
@@ -166,7 +158,7 @@ class AutoExportPane {
 
       case 'DOIandURL':
       case 'bibtexURL':
-        ae[field] = node.selectedItem.value
+        ae[field] = node.value
         break
     }
 

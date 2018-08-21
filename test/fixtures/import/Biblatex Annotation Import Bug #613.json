@@ -14,7 +14,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth][year]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "both",
       "bibtexURL": "off",
       "csquotes": "",

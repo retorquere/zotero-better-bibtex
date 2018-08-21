@@ -15,7 +15,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[zotero]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "both",
       "bibtexURL": "off",
       "csquotes": "",

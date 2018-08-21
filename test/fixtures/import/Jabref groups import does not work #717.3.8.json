@@ -168,9 +168,6 @@
       "qualityReport": false,
       "suppressTitleCase": false,
       "parseParticles": true,
-      "debug": true,
-      "testing": true,
-      "rawLaTag": "#LaTeX",
       "jabrefFormat": 0
     },
     "options": {

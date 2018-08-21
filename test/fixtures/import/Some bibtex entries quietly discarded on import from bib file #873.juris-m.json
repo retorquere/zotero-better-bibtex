@@ -14,9 +14,6 @@
       "BetterBibTeX": "5.0.77.emile.manchineel"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": true,
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
@@ -30973,7 +30970,7 @@
       "series": "AAAI Technical Report",
       "date": "1998",
       "extra": "Citation Key: desJardins:98 \nbibtex[organization=AAAI]",
-      "issue":"WS-98-15",
+      "issue": "WS-98-15",
       "title": "Hybrid Planning: An Approach to Integrating Generative and Case-based Planning",
       "creators": [
         {

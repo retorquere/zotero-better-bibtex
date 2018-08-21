@@ -14,12 +14,14 @@ interface IXUL_Checkbox { // tslint:disable-line:class-name
 
 interface IXUL_Menuitem { // tslint:disable-line:class-name
   value: string
+  label: string
 }
 interface IXUL_Menupopup { // tslint:disable-line:class-name
   children: IXUL_Menuitem[] // menupopup
 }
 interface IXUL_Menulist { // tslint:disable-line:class-name
-  children: IXUL_Menupopup[] // menupopup
+  firstChild: IXUL_Menupopup
   selectedItem: IXUL_Menuitem
+  value: string
 }
 

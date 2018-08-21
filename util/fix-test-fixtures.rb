@@ -18,51 +18,68 @@ def fixBBTJSON(lib, data)
     }
   end
 
-  if data['items'] && lib =~ /\/import\//
-    data['items'].each{|item|
-      if item['extra']
-        extra = item['extra']
-        item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
-        item['extra'].sub!(/^bibtex:/, "Citation Key:")
-
-        resave = 'extra' if extra != item['extra']
-      end
-
-      if lib =~ /juris-m/
-        duplicates = {
-          'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
-          'type' => %w{reportType thesisType},
-          'number' => %w{reportNumber},
+  if data['items']
+    if lib =~ /\/import\//
+      data['items'].each{|item|
+        if item['extra']
+          extra = item['extra']
+          item['extra'].sub!(/\nbibtex:/, "\nCitation Key:")
+          item['extra'].sub!(/^bibtex:/, "Citation Key:")
+  
+          resave = 'extra' if extra != item['extra']
+        end
+  
+        if lib =~ /juris-m/
+          duplicates = {
+  #          'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
+  #          'type' => %w{reportType thesisType},
+  #          'number' => %w{reportNumber},
+          }
+        else
+          duplicates = {
+            'publisher' => %w{university institution},
+            'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
+            'type' => %w{reportType thesisType},
+            'number' => %w{reportNumber},
+          }
+        end
+        duplicates.each_pair{|generic, specifics|
+          specifics.each{|specific|
+            if item[specific] && (item[generic] == item[specific] || !item[generic])
+              item[generic] = item[specific]
+              item.delete(specific)
+              resave = specific
+            end
+          }
         }
-      else
-        duplicates = {
-          'publisher' => %w{university institution},
-          'publicationTitle' => %w{websiteTitle bookTitle encyclopediaTitle proceedingsTitle},
-          'type' => %w{reportType thesisType},
-          'number' => %w{reportNumber},
-        }
-      end
-      duplicates.each_pair{|generic, specifics|
-        specifics.each{|specific|
-          if item[specific] && (item[generic] == item[specific] || !item[generic])
-            item[generic] = item[specific]
-            item.delete(specific)
-            resave = specific
-          end
-        }
+  
+  #      if lib =~ /juris-m/ && %w{conferencePaper book bookSection thesis}.include?(item['itemType']) && item['institution']
+  #        item['publisher'] = item['institution']
+  #        item.delete('institution')
+  #        resave = 'institution'
+  #      end
+  #      if lib =~ /juris-m/ && %w{report}.include?(item['itemType']) && item['publisher']
+  #        item['institution'] = item['publisher']
+  #        item.delete('publisher')
+  #        resave = 'publisher'
+  #      end
       }
-
-      if lib =~ /juris-m/ && %w{conferencePaper book bookSection thesis}.include?(item['itemType']) && item['institution']
-        item['publisher'] = item['institution']
-        item.delete('institution')
-        resave = 'institution'
-      end
-      if lib =~ /juris-m/ && %w{report}.include?(item['itemType']) && item['publisher']
-        item['institution'] = item['publisher']
-        item.delete('publisher')
-        resave = 'publisher'
-      end
-    }
+    else
+      data['items'].each{|item|
+        if item['attachments']
+          subdir = File.basename(lib).sub(/(\.juris-m)?\.json$/, '')
+          item['attachments'].reject!{|att|
+            if att['path']
+              exists = File.file?(att['path']) || File.file?("test/fixtures/import/#{att['path']}") || File.file?("test/fixtures/import/#{subdir}/#{att['path']}")
+            else
+              exists = true
+            end
+            resave = 'attachment' unless exists
+            !exists
+          }
+        end
+      }
+    end
   end
 
   if data['items']

@@ -14,9 +14,6 @@
       "BetterBibTeX": "5.0.77.emile.manchineel"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": true,
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,

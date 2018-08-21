@@ -14,9 +14,6 @@
       "BetterBibTeX": "5.0.36.emile.java-cotton"
     },
     "preferences": {
-      "debug": true,
-      "rawLaTag": "#LaTeX",
-      "testing": true,
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,

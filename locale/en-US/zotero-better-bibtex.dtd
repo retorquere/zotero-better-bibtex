@@ -45,6 +45,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Automatically abbreviate journal title if none is set explicitly">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abbreviation style:">
+
 <!ENTITY better-bibtex.Preferences.tab.auto-export "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatic export">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "You can only review and remove exports here. To add an auto-export, perform an export as usual and check the 'Keep updated' option presented there.">
@@ -55,6 +56,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
+<!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
 <!ENTITY better-bibtex.Preferences.auto-export.name "Exported">
 <!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
