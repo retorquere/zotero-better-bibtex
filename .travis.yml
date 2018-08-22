@@ -37,7 +37,6 @@ script: |
   fi
 
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
-after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
 jobs:
   include:
@@ -45,25 +44,30 @@ jobs:
     env:
     - ZOTERO=zotero
     - CLUSTER="@test-cluster-1"
+    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=zotero
     - CLUSTER="not @test-cluster-1"
+    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=jurism
     - CLUSTER="@test-cluster-1"
+    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=jurism
     - CLUSTER="not @test-cluster-1"
+    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: release
     install: true
     script: |-
-      [[ "$TRAVIS_EVENT_TYPE" = "cron" ]] && exit
-      yarn install
-      yarn run release
+      if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
+        yarn install
+        yarn run release
+      fi
