@@ -2,8 +2,13 @@ interface IXUL_Element { // tslint:disable-line:class-name
   hidden: boolean
 }
 
-interface IXUL_Label { // tslint:disable-line:class-name
-  label: string
+interface IXUL_Textbox { // tslint:disable-line:class-name
+  value: string
+  hidden: boolean
+  readonly: boolean
+}
+
+interface IXUL_Element { // tslint:disable-line:class-name
   hidden: boolean
 }
 

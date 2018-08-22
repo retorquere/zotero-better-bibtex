@@ -615,29 +615,41 @@
             </vbox>
 
             <tabbox hidden="true" id="better-bibtex-prefs-auto-export-tabbox">
-              <!-- arrowscrollbox allowevents="true" class="tabbrowser-arrowscrollbox" orient="horizontal" -->
+              <arrowscrollbox allowevents="true" class="tabbrowser-arrowscrollbox" orient="horizontal">
                 <tabs id="better-bibtex-prefs-auto-export-tabs" style="overflow:hidden">
                   <tab label="auto-export"/>
                 </tabs>
-              <!-- /arrowscrollbox -->
+              </arrowscrollbox>
 
               <tabpanels id="better-bibtex-prefs-auto-export-tabpanels" flex="1">
                 <tabpanel flex="1" orient="vertical">
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.name;: </label><label ae-field="name" ae-id=""/>
-                  </hbox>
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.status;: </label><label ae-field="status" ae-id=""/>
-                  </hbox>
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.updated;: </label><label ae-field="updated" ae-id=""/>
-                  </hbox>
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.translator;: </label><label ae-field="translator"/>
-                  </hbox>
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.target;: </label><label ae-field="path"/>
-                  </hbox>
+                  <grid flex="1">
+                    <columns>
+                      <column/>
+                      <column flex="1"/>
+                    </columns>
+                    <rows>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.name;:</label><textbox class="plain" readonly="true" value="" ae-field="name" ae-id=""/>
+                      </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.status;:</label><textbox class="plain" readonly="true" value="" ae-field="status" ae-id=""/>
+                      </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.updated;:</label><textbox class="plain" readonly="true" value="" ae-field="updated" ae-id=""/>
+                      </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.translator;:</label><textbox class="plain" readonly="true" value="" ae-field="translator"/>
+                      </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.target;:</label><textbox class="plain" readonly="true" value="" ae-field="path"/>
+                      </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" ae-field="error" ae-id=""/>
+                      </row>
+                    </rows>
+                  </grid>
+
                   <vbox hidden="true" class="autoexport-BetterBibTeX">
                     <checkbox
                       ae-id=""
@@ -703,10 +715,6 @@
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                   </vbox>
-    
-                  <hbox>
-                    <label>&better-bibtex.Preferences.auto-export.fields.error;</label><label ae-field="error" ae-id=""/>
-                  </hbox>
     
                   <hbox>
                     <button label="&better-bibtex.Preferences.auto-export.remove;" ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.remove(event.target)"/>

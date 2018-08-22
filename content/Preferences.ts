@@ -28,26 +28,26 @@ class AutoExportPane {
   public refresh() {
     if (Zotero.BetterBibTeX.ready.isPending()) return
 
-    log.debug('prefs.auto-export.refresh')
     const auto_exports = AutoExport.db.find()
 
-    document.getElementById('better-bibtex-prefs-auto-export-tabbox').setAttribute('hidden', !auto_exports.length)
+    const tabbox = document.getElementById('better-bibtex-prefs-auto-export-tabbox')
+    tabbox.setAttribute('hidden', !auto_exports.length)
     if (!auto_exports.length) return
 
     const tabs = document.getElementById('better-bibtex-prefs-auto-export-tabs')
     const tabpanels = document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
 
     const rebuild = {
-      panels: Array.from(tabs.children).map(node => parseInt((node as Element).getAttribute('ae-id'))),
-      exports: auto_exports.map(ae => ae.$loki),
+      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('ae-updated')), id: parseInt(node.getAttribute('ae-id')) })),
+      exports: auto_exports.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
       rebuild: false,
+      update: false,
     }
-    rebuild.rebuild = (rebuild.panels.length !== rebuild.exports.length) || (typeof rebuild.panels.find((id, index) => rebuild.exports[index] !== id) !== 'undefined')
-
-    log.debug('prefs.auto-export.refresh:', auto_exports, rebuild)
+    rebuild.rebuild = (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].id !== tab.id) !== 'undefined')
+    rebuild.update = rebuild.rebuild || (rebuild.tabs.length !== rebuild.exports.length) || (typeof rebuild.tabs.find((tab, index) => rebuild.exports[index].updated !== tab.updated) !== 'undefined')
 
     if (rebuild.rebuild) {
-      while (tabs.children.length > 1) tabs.removeChild(tabs.firstChild)
+      while (tabs.children.length) tabs.removeChild(tabs.firstChild)
       while (tabpanels.children.length > 1) tabpanels.removeChild(tabpanels.firstChild)
     }
 
@@ -56,9 +56,9 @@ class AutoExportPane {
 
       if (rebuild.rebuild) {
         // tab
-        log.debug('prefs.auto-export.refresh:', (index === 0 ? 're-using' : 'cloning'), 0)
-        tab = (index === 0 ? tabs.firstChild : tabs.appendChild(tabs.firstChild.cloneNode(true)))
+        tab = tabs.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'tab'))
         tab.setAttribute('ae-id', `${ae.$loki}`)
+        tab.setAttribute('ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
         // tabpanel
         tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
@@ -69,44 +69,41 @@ class AutoExportPane {
           (node as IXUL_Element).hidden = false
         }
       } else {
-        log.debug('prefs.auto-export.refresh: re-using', index)
         tab = tabs.children[index]
         tabpanel = tabpanels.children[index]
       }
-      log.debug('prefs.auto-export.refresh:', { id: ae.$loki, i: index + 1, n: auto_exports.length, tabs: tabs.children.length})
 
-      tab.label = this.name(ae, 'short')
-      log.debug('prefs.auto-export.refresh:', tab.label)
+      tab.setAttribute('label', this.name(ae, 'short'))
 
       for (const node of Array.from(tabpanel.querySelectorAll('[ae-field]'))) {
         const field = (node as Element).getAttribute('ae-field')
 
-        log.debug('prefs.auto-export.refresh:', { tab: tab.label, field, value: ae[field] })
+        if (!rebuild.update && (node as IXUL_Textbox).readonly) continue
 
         switch (field) {
           case 'name':
-            (node as IXUL_Label).label = this.name(ae, 'long')
+            (node as IXUL_Textbox).value = this.name(ae, 'long')
             break
 
           case 'status':
-            (node as IXUL_Label).label = this.label[ae.status]
+            (node as IXUL_Textbox).value = this.label[ae.status]
             break
 
           case 'updated':
-            (node as IXUL_Label).label = `${new Date(ae.meta.updated || ae.meta.created)}`
+            (node as IXUL_Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
             break
 
           case 'translator':
-            (node as IXUL_Label).label = Translators.byId[ae.translatorID].label
+            (node as IXUL_Textbox).value = Translators.byId[ae.translatorID].label
             break
 
           case 'path':
-            (node as IXUL_Label).label = ae.path
+            (node as IXUL_Textbox).value = ae[field]
             break
 
           case 'error':
-            (node as IXUL_Label).hidden = !ae.error;
-            (node as IXUL_Label).label = ae.error
+            ((node as Element).parentElement as IXUL_Element).hidden = !ae[field];
+            (node as IXUL_Textbox).value = ae[field]
             break
 
           case 'exportNotes':
@@ -128,8 +125,6 @@ class AutoExportPane {
         }
       }
     }
-
-    log.debug('prefs.auto-export.refresh: done')
   }
 
   public remove(node) {
@@ -146,6 +141,7 @@ class AutoExportPane {
     const field = node.getAttribute('ae-field')
     const ae = AutoExport.db.findOne(parseInt(node.getAttribute('ae-id')))
 
+    log.debug('prefs.auto-export.edit:', field, ae)
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -163,15 +159,17 @@ class AutoExportPane {
     }
 
     AutoExport.db.update(ae)
+    AutoExport.run(ae.$loki)
+    this.refresh()
   }
 
-  private collection_path(id, form) {
-    if (!id) return ''
+  private collection(id, form) {
+    if (isNaN(parseInt(id))) return ''
     const coll = Zotero.Collections.get(id)
     if (!coll) return ''
 
-    if (form === 'long' && typeof coll.parentID !== 'undefined') {
-      return `${this.collection_path(coll.parentID, form)} / ${coll.name}`
+    if (form === 'long' && !isNaN(parseInt(coll.parentID))) {
+      return `${this.collection(coll.parentID, form)} / ${coll.name}`
     } else {
       return `${Zotero.Libraries.get(coll.libraryID).name} : ${coll.name}`
     }
@@ -183,7 +181,7 @@ class AutoExportPane {
         return Zotero.Libraries.get(ae.id).name
 
       case 'collection':
-        return this.collection_path(ae.id, form)
+        return this.collection(ae.id, form)
 
       default:
         return ae.path
