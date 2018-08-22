@@ -23,6 +23,8 @@
 <!ENTITY better-bibtex.FirstRun.done "Fertig!">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT ist bereit zur Nutzung. Sie können alle Einstellungen über die Zotero Einstellungen im BBT Reiter ändern.">
 
+<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Error Report">
+<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Restart with Logging Enabled…">
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging ist gegenwärtige ausgestellt. Die Fehlerbehebung wird leichter sein, wenn sie vor dem Einsenden die Option einstellen.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungs Kontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
@@ -36,21 +38,30 @@
 Wenn Sie einverstanden mit dem Senden sind, klicken Sie bitte &quot;Weiter&quot; und posten Sie die ID im nächsten Fenster im issue tracker bei
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the error report is submitted.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Your error report has been submitted.">
+
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Zitier Schlüssel">
 
 <!ENTITY better-bibtex.Preferences.auto-abbrev "Kürze Zeitschriftentitel automatisch ab, wenn kein Wert explizit gesetzt wurde">
 <!ENTITY better-bibtex.Preferences.auto-abbrev.style "Abkürzungsstil:">
+
 <!ENTITY better-bibtex.Preferences.tab.auto-export "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export "Automatischer Export">
 <!ENTITY better-bibtex.Preferences.auto-export.explanation "Sie können hier Exporte nur einsehen oder löschen. Um einen automatischen Export hinzuzufügen, führen Sie einen gewöhnlichen Export durch und wählen sie die dortige 'Halte aktuell' Option aus.">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "Wenn keine Beschäftigung">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "Bei Veränderung">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Ausgestellt">
-<!ENTITY better-bibtex.Preferences.auto-export.refresh "Liste aktualisieren">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Jetzt Exportieren">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Löschen">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Sammlung">
+<!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
+<!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
+<!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export notes">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Use journal abbreviations">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.error "Error">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitier Schlüssel">
