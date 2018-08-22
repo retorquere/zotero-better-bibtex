@@ -71,5 +71,6 @@ jobs:
     install: true
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
+        pip install -r requirements.txt
         yarn run release
       fi
