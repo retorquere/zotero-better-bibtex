@@ -647,6 +647,9 @@
                       <row>
                         <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" ae-field="error" ae-id=""/>
                       </row>
+                      <row>
+                        <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" ae-field="cached" ae-id=""/>
+                      </row>
                     </rows>
                   </grid>
 

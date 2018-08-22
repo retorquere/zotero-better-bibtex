@@ -6,6 +6,8 @@ declare const Zotero_Preferences: any
 import * as log from './debug'
 import { ZoteroConfig } from './zotero-config'
 import { patch as $patch$ } from './monkey-patch'
+import * as ZoteroDB from './db/zotero'
+import { DB as Cache } from './db/cache'
 
 import { Preferences as Prefs } from './prefs'
 import { Formatter } from './key-manager/formatter'
@@ -13,7 +15,11 @@ import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 
+const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+
 class AutoExportPane {
+  public items: { [key: string]: number[] } = {}
+
   private label: { [key: string]: string }
 
   constructor() {
@@ -105,6 +111,27 @@ class AutoExportPane {
             ((node as Element).parentElement as IXUL_Element).hidden = !ae[field];
             (node as IXUL_Textbox).value = ae[field]
             break
+
+          case 'cached':
+            const items = this.items[`${ae.type}=${ae.id}`] || []
+            let ratio = 100
+
+            if (items.length) {
+              const query = {
+                exportNotes: ae.exportNotes,
+                useJournalAbbreviation: ae.useJournalAbbreviation,
+                itemID: { $in: items },
+              }
+              for (const pref of prefOverrides) {
+                query[pref] = ae[pref]
+              }
+              const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
+              ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
+
+              // something weird going on with the query for booleans
+              if (ratio > 100) ratio = 100 // tslint:disable-line:no-magic-numbers
+            }
+            (node as IXUL_Textbox).value = `${ratio}%`
 
           case 'exportNotes':
           case 'useJournalAbbreviation':
@@ -253,58 +280,88 @@ export = new class PrefPane {
     log.debug('manual key rescan done')
   }
 
-  public async load() {
+  public load() {
+    this.loadAsync().catch(err => { log.error('Preferences.load:', err) })
+  }
+
+  public async loadAsync() {
     const tabbox = document.getElementById('better-bibtex-prefs-tabbox')
     tabbox.hidden = true
 
-    Zotero.BetterBibTeX.ready.then(() => {
-      tabbox.hidden = false
-      log.debug('prefs: loading...')
+    await Zotero.BetterBibTeX.ready
 
-      if (typeof Zotero_Preferences === 'undefined') {
-        log.error('Preferences.load: Zotero_Preferences not ready')
-        return
+    tabbox.hidden = false
+    log.debug('prefs: loading...')
+
+    if (typeof Zotero_Preferences === 'undefined') {
+      log.error('Preferences.load: Zotero_Preferences not ready')
+      return
+    }
+
+    this.autoexport = new AutoExportPane
+
+    let sql
+
+    sql = `
+      SELECT libraryID, itemID
+      FROM items item
+      WHERE
+        item.itemTypeID NOT IN (${KeyManager.query.type.attachment}, ${KeyManager.query.type.note})
+        AND
+        item.itemID NOT IN (select itemID from deletedItems)
+    `
+    for (const item of await ZoteroDB.queryAsync(sql)) {
+      const id = `library=${item.libraryID}`
+      this.autoexport.items[id] = this.autoexport.items[id] || []
+      this.autoexport.items[id].push(item.itemID)
+    }
+    sql = `
+      SELECT collectionID, itemID
+      FROM collectionItems item
+      WHERE
+        item.itemID NOT IN (SELECT itemID FROM items WHERE itemTypeID IN (${KeyManager.query.type.attachment}, ${KeyManager.query.type.note}))
+        AND
+        item.itemID NOT IN (select itemID from deletedItems)
+    `
+    for (const item of await ZoteroDB.queryAsync(sql)) {
+      const id = `collection=${item.collectionID}`
+      this.autoexport.items[id] = this.autoexport.items[id] || []
+      this.autoexport.items[id].push(item.itemID)
+    }
+
+    this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
+    this.keyformat.disabled = false
+
+    // no other way that I know of to know that I've just been selected
+    this.timer = window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
+
+    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').hidden = !ZoteroConfig.Zotero.isJurisM
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+
+    $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
+      if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
+        const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
+        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
+      } else {
+        original.apply(this, arguments)
       }
-
-      this.autoexport = new AutoExportPane
-
-      this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
-      this.keyformat.disabled = false
-
-      // no other way that I know of to know that I've just been selected
-      this.timer = window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
-
-      // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').hidden = !ZoteroConfig.Zotero.isJurisM
-      document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
-      document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
-      document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
-
-      $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
-        if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
-          const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
-          if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
-        } else {
-          original.apply(this, arguments)
-        }
-      })
-
-      this.getCitekeyFormat()
-      this.update()
-
-      log.debug('prefs: loaded @', document.location.hash)
-
-      if (document.location.hash === '#better-bibtex') {
-        // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
-        // tslint:disable-next-line:no-magic-numbers
-        setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
-      }
-      log.debug('prefs: ready')
-
-      window.sizeToContent()
-
-    }).catch(err => {
-      log.error('Preferences.load:', err)
     })
+
+    this.getCitekeyFormat()
+    this.update()
+
+    log.debug('prefs: loaded @', document.location.hash)
+
+    if (document.location.hash === '#better-bibtex') {
+      // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
+      // tslint:disable-next-line:no-magic-numbers
+      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
+    }
+    log.debug('prefs: ready')
+
+    window.sizeToContent()
   }
 
   private refresh() {

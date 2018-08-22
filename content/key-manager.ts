@@ -23,17 +23,16 @@ import { createFile } from './create-file'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
   public keys: any
-
-  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
-
-  private scanning: any[]
-  private query: {
+  public query: {
     field: { extra?: number }
     type: {
       note?: number,
       attachment?: number
     }
   }
+
+  private itemObserverDelay: number = Prefs.get('itemObserverDelay')
+  private scanning: any[]
 
   public async pin(ids) {
     ids = this.expandSelection(ids)
