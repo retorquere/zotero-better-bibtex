@@ -66,7 +66,7 @@ for string, panes in translations.items():
   for pane in panes:
     if not string.startswith(f'better-bibtex.{pane}.'):
       print(f'  {string} used in {pane}')
-sys.exit()
+
 print('extracting preferences')
 
 with open(os.path.join(root, 'content', 'Preferences.xul'), 'r') as xul:
