@@ -40,19 +40,33 @@ def dump(*paths):
   yield save
 
 print('checking XUL translations')
+translations = {}
 with open(os.path.join(root, 'locale', 'en-US', 'zotero-better-bibtex.dtd')) as dtd:
   entities = list(etree.DTD(dtd).entities())
+  for entity in entities:
+    translations[entity.name] = []
+
   for xul in glob.glob(os.path.join(root, 'content', '*.xul')):
     with open(xul, 'r') as xml:
       xml = xml.read()
       for entity in entities:
-        xml = xml.replace(f'&{entity.name};', entity.content)
+        _xml = xml.replace(f'&{entity.name};', entity.content)
+        if _xml != xml: translations[entity.name].append(os.path.splitext(os.path.basename(xul))[0])
+        xml = _xml
       try:
         etree.fromstring(xml)
       except etree.XMLSyntaxError as err:
         print(os.path.relpath(xul, root), ':', err)
         sys.exit(1)
 
+for string, panes in translations.items():
+  if len(panes) == 0:
+    print(f'  Unused translation string "{string}"')
+
+  for pane in panes:
+    if not string.startswith(f'better-bibtex.{pane}.'):
+      print(f'  {string} used in {pane}')
+sys.exit()
 print('extracting preferences')
 
 with open(os.path.join(root, 'content', 'Preferences.xul'), 'r') as xul:

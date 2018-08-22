@@ -52,13 +52,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.idle "When Idle">
 <!ENTITY better-bibtex.Preferences.auto-export.immediate "On Change">
 <!ENTITY better-bibtex.Preferences.auto-export.off "Disabled">
-<!ENTITY better-bibtex.Preferences.auto-export.refresh "Refresh list">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Export now">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Remove">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Output file">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
-<!ENTITY better-bibtex.Preferences.auto-export.name "Exported">
 <!ENTITY better-bibtex.Preferences.auto-export.updated "Updated">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Export notes">

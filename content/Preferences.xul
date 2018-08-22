@@ -630,7 +630,7 @@
                     </columns>
                     <rows>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.name;:</label><textbox class="plain" readonly="true" value="" ae-field="name" ae-id=""/>
+                        <label>&better-bibtex.Preferences.auto-export.collection;:</label><textbox class="plain" readonly="true" value="" ae-field="name" ae-id=""/>
                       </row>
                       <row>
                         <label>&better-bibtex.Preferences.auto-export.status;:</label><textbox class="plain" readonly="true" value="" ae-field="status" ae-id=""/>
