@@ -245,9 +245,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   cacheFetch(sandbox, itemID, options, prefs) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) {
-      return false
-    }
+    if (!collection) return false
 
     const query = cacheSelector(itemID, options, prefs)
     const cached = collection.findOne(query)

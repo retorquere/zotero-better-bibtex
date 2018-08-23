@@ -23,6 +23,8 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 })
 
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
+  if (this.compositeKey) this.compositeKey(doc)
+
   if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('insert: validation failed for', doc, this.validate.errors, err)
@@ -32,6 +34,8 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
+  if (this.compositeKey) this.compositeKey(doc)
+
   if (Prefs.get('ajv') && this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('update: validation failed for', doc, this.validate.errors, err)
@@ -152,6 +156,9 @@ export class XULoki extends (Loki as { new(name, options): any }) {
 
     log.debug('installing schema for', name, options.schema)
     coll.validate = validator.compile(options.schema)
+
+    if (options.compositeKey) coll.compositeKey = doc => { doc[options.compositeKey] = options.indices.map(field => `${field}=${doc[field]}`).join(';') }
+
     return coll
   }
 }

@@ -180,8 +180,8 @@ DB.init = () => {
           reference: { type: 'string' },
 
           // options
-          exportNotes: { type: 'boolean', default: false },
-          useJournalAbbreviation: { type: 'boolean', default: false },
+          exportNotes: { type: 'boolean' },
+          useJournalAbbreviation: { type: 'boolean' },
 
           // prefs
           ...prefOverridesSchema,
@@ -193,7 +193,7 @@ DB.init = () => {
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ],
+        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides, 'reference' ],
         additionalProperties: false,
       },
       ttl,

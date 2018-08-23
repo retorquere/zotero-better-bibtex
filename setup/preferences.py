@@ -212,9 +212,9 @@ with dump('gen/preferences/auto-export-overrides-schema.json') as save:
   schema = {}
   for pref in sorted(overrides, key=lambda p: p['name']):
     if pref['type'] == 'boolean':
-      schema[pref['name']] = { 'type': 'boolean', 'default': pref['default'] }
+      schema[pref['name']] = { 'type': 'boolean' }
     else:
-      schema[pref['name']] = { 'enum': list(pref['options'].keys()), 'default': pref['default'] }
+      schema[pref['name']] = { 'enum': list(pref['options'].keys()) }
   save(schema)
 
 with dump('docs/_data/preferences.yml') as save:

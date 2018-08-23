@@ -128,8 +128,7 @@ class AutoExportPane {
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
               ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
 
-              // something weird going on with the query for booleans
-              if (ratio > 100) ratio = 100 // tslint:disable-line:no-magic-numbers
+              log.debug('prefs.auto-export.cache', ratio, items, query, cached)
             }
             (node as IXUL_Textbox).value = `${ratio}%`
 
@@ -184,6 +183,7 @@ class AutoExportPane {
         ae[field] = node.value
         break
     }
+    log.debug('prefs.auto-export.edited:', field, ae)
 
     AutoExport.db.update(ae)
     AutoExport.run(ae.$loki)
