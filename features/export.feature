@@ -9,6 +9,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054    | 1           |
      | Don't title-case sup-subscripts #1037                                                          | 8           |
      | Japanese rendered as Chinese in Citekey #979                                                   | 1           |
      | Dates incorrect when Zotero date field includes times #934                                     | 1           |

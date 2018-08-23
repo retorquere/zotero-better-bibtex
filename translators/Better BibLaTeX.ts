@@ -21,6 +21,7 @@ Reference.prototype.fieldEncoding = {
   verbc: 'verbatim',
   institution: 'literal',
   publisher: 'literal',
+  organization: 'literal',
   location: 'literal',
 }
 Reference.prototype.caseConversion = {
@@ -377,6 +378,10 @@ Translator.doExport = () => {
       case 'hearing':
       case 'legal_case':
         ref.add({ name: 'institution', value: item.court })
+        break
+
+      case 'computerProgram':
+        ref.add({ name: 'organization', value: item.publisher })
         break
 
       default:
