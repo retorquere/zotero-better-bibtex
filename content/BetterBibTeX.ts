@@ -217,8 +217,8 @@ function cacheSelector(itemID, options, prefs) {
   const selector = {
     itemID,
 
-    exportNotes: options.exportNotes,
-    useJournalAbbreviation: options.useJournalAbbreviation,
+    exportNotes: !!options.exportNotes,
+    useJournalAbbreviation: !!options.useJournalAbbreviation,
   }
   for (const pref of prefOverrides) {
     selector[pref] = prefs[pref]
