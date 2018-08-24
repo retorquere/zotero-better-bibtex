@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth5][auth5_1][shortyear]",
       "citekeyFold": true,
-      "debug": false,
       "DOIandURL": "doi",
       "csquotes": "",
       "keyConflictPolicy": "change",

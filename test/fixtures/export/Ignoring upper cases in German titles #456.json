@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth][origyear]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "url",
       "csquotes": "",
       "keyConflictPolicy": "change",

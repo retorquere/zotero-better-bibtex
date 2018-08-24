@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[Auth:condense,_:lower]_[year]_[veryshorttitle:lower]",
       "citekeyFold": true,
-      "debug": false,
       "DOIandURL": "both",
       "bibtexURL": "off",
       "csquotes": "",

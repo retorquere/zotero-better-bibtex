@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[zotero][authors]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "both",
       "bibtexURL": "url",
       "csquotes": "",

@@ -165,8 +165,6 @@
       "jurismPreferredLanguage": "zh-alalc97",
       "qualityReport": false,
       "suppressTitleCase": false,
-      "debug": false,
-      "rawLaTag": "#LaTeX",
       "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     },

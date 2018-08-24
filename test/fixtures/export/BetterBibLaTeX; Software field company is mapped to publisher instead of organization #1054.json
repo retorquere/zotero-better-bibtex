@@ -17,7 +17,6 @@
     },
     "preferences": {
       "DOIandURL": "both",
-      "ajv": true,
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
@@ -35,7 +34,6 @@
       "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -50,9 +48,10 @@
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
       "scrubDatabase": false,
-      "skipFields": [],
+      "skipFields": [
+
+      ],
       "skipWords": [
         "a",
         "ab",
@@ -180,14 +179,14 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
     "options": {
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "computerProgram",
@@ -199,13 +198,18 @@
           "creatorType": "programmer"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "tags": [
+
+      ],
       "dateAdded": "2018-08-23T13:04:23Z",
       "dateModified": "2018-08-23T13:04:47Z",
       "uri": "http://zotero.org/users/4882007/items/ED3P3LJH",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 68,
       "citekey": "blup_bla_9265",
       "publisher": "BliBlaBlup"

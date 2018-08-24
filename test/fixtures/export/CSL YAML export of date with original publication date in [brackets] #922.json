@@ -14,9 +14,6 @@
       "BetterBibTeX": "5.0.92"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": false,
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
@@ -182,7 +179,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "book",
@@ -225,10 +223,16 @@
       ],
       "dateAdded": "2017-06-29 14:17:18",
       "dateModified": "2018-03-03 16:47:25",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 804,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }
