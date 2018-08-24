@@ -223,9 +223,21 @@ Translator.doExport = () => {
     }
 
     switch (item.referenceType) {
-      case 'thesis': ref.add({ name: 'school', value: item.publisher }); break
-      case 'report': ref.add({ name: 'institution', value: item.publisher }); break
-      default:       ref.add({ name: 'publisher', value: item.publisher })
+      case 'thesis':
+        ref.add({ name: 'school', value: item.publisher })
+        break
+
+      case 'report':
+        ref.add({ name: 'institution', value: item.publisher })
+        break
+
+      case 'computerProgram':
+        ref.add({ name: 'organization', value: item.publisher })
+        break
+
+      default:
+        ref.add({ name: 'publisher', value: item.publisher })
+        break
     }
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
