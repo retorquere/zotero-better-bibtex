@@ -2,6 +2,7 @@ declare const document: any
 declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
+// declare const Components: any
 
 import * as log from './debug'
 import { ZoteroConfig } from './zotero-config'
@@ -57,7 +58,11 @@ class AutoExportPane {
       while (tabpanels.children.length > 1) tabpanels.removeChild(tabpanels.firstChild)
     }
 
+    // log.debug('prefs.auto-update.refresh:', rebuild)
+
     for (const [index, ae] of auto_exports.entries()) {
+      // log.debug('prefs.auto-update.refresh:', ae)
+
       let tab, tabpanel
 
       if (rebuild.rebuild) {
@@ -128,7 +133,7 @@ class AutoExportPane {
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
               ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
 
-              log.debug('prefs.auto-export.cache', ratio, items, query, cached)
+              // log.debug('prefs.auto-export.cache', ratio, items, query, cached)
             }
             (node as IXUL_Textbox).value = `${ratio}%`
 
@@ -151,6 +156,13 @@ class AutoExportPane {
         }
       }
     }
+
+    /*
+    if (rebuild.rebuild) {
+      const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
+      log.debug(domSerializer.serializeToString(tabbox))
+    }
+    */
   }
 
   public remove(node) {
@@ -165,9 +177,11 @@ class AutoExportPane {
 
   public edit(node) {
     const field = node.getAttribute('ae-field')
-    const ae = AutoExport.db.findOne(parseInt(node.getAttribute('ae-id')))
+    const ae = AutoExport.db.get(parseInt(node.getAttribute('ae-id')))
 
-    log.debug('prefs.auto-export.edit:', field, ae)
+    // const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
+    // log.debug('prefs.auto-export.edit: pre', { [field]: ae[field] })
+
     switch (field) {
       case 'exportNotes':
       case 'useJournalAbbreviation':
@@ -182,8 +196,10 @@ class AutoExportPane {
       case 'bibtexURL':
         ae[field] = node.value
         break
+
+      default:
+        log.debug('unexpected field', field)
     }
-    log.debug('prefs.auto-export.edited:', field, ae)
 
     AutoExport.db.update(ae)
     AutoExport.run(ae.$loki)

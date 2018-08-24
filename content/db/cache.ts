@@ -151,8 +151,8 @@ DB.init = () => {
       type: 'object',
       properties: {
         itemID: { type: 'integer' },
-        legacy: { type: 'boolean', default: false },
-        skipChildItems: { type: 'boolean', default: false },
+        legacy: { type: 'boolean' },
+        skipChildItems: { type: 'boolean' },
         item: { type: 'object' },
 
         // LokiJS

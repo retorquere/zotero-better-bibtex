@@ -128,7 +128,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     serialized.key = item.key
 
     if (cache) {
-      cache.insert({itemID: item.id, legacy, skipChildItems, item: serialized})
+      cache.insert({itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems, item: serialized})
     } else {
       Zotero.logError(new Error('Serializer.store ignored, DB not yet loaded'))
     }

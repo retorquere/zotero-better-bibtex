@@ -293,7 +293,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
   try {
-    return Serializer.fetch(zoteroItem, legacy, skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), legacy, skipChildItems)
+    return Serializer.fetch(zoteroItem, !!legacy, !!skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), !!legacy, !!skipChildItems)
   } catch (err) { // fallback for safety for non-BBT
     log.error('Zotero.Utilities.Internal.itemToExportFormat', err)
   }
