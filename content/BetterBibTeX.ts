@@ -217,8 +217,8 @@ function cacheSelector(itemID, options, prefs) {
   const selector = {
     itemID,
 
-    exportNotes: options.exportNotes,
-    useJournalAbbreviation: options.useJournalAbbreviation,
+    exportNotes: !!options.exportNotes,
+    useJournalAbbreviation: !!options.useJournalAbbreviation,
   }
   for (const pref of prefOverrides) {
     selector[pref] = prefs[pref]
@@ -245,13 +245,15 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
   cacheFetch(sandbox, itemID, options, prefs) {
     const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) {
+    if (!collection) return false
+
+    const query = cacheSelector(itemID, options, prefs)
+    const cached = collection.findOne(query)
+
+    if (!cached) {
+      log.debug('cache miss:', query)
       return false
     }
-
-    const cached = collection.findOne(cacheSelector(itemID, options, prefs))
-
-    if (!cached) return false
 
     collection.update(cached) // touches the cache object so it isn't reaped too early
 
@@ -262,18 +264,23 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     if (!metadata) metadata = {}
 
     const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) return false
+    if (!collection) {
+      log.error('cacheStore: cache', sandbox.translator[0].label, 'not found')
+      return false
+    }
 
     const selector = cacheSelector(itemID, options, prefs)
-    const cached = collection.findOne(selector)
+    let cached = collection.findOne(selector)
 
     if (cached) {
       cached.reference = reference
       cached.metadata = metadata
-      collection.update(cached)
+      cached = collection.update(cached)
+      log.debug('cacheStore: update', collection.name, cached)
 
     } else {
-      collection.insert({...selector, reference, metadata})
+      cached = collection.insert({...selector, reference, metadata})
+      log.debug('cacheStore: insert', collection.name, cached)
 
     }
 
@@ -291,7 +298,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
 
 $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
   try {
-    return Serializer.fetch(zoteroItem, legacy, skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), legacy, skipChildItems)
+    return Serializer.fetch(zoteroItem, !!legacy, !!skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), !!legacy, !!skipChildItems)
   } catch (err) { // fallback for safety for non-BBT
     log.error('Zotero.Utilities.Internal.itemToExportFormat', err)
   }

@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[zotero]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "both",
       "csquotes": "",
       "keyConflictPolicy": "keep",

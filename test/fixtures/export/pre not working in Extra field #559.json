@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[authors2][year]:[Title:nopunct:skipwords:select,1,3:lower:condense,-]",
       "citekeyFold": true,
-      "debug": false,
       "DOIandURL": "both",
       "bibtexURL": "off",
       "csquotes": "",

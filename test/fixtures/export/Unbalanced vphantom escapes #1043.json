@@ -16,9 +16,6 @@
       "BetterBibTeX": "5.0.183"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": false,
       "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
@@ -180,8 +177,7 @@
       "autoPin": false,
       "kuroshiro": false,
       "sorted": false,
-      "debugLog": "",
-      "ajv": true
+      "debugLog": ""
     },
     "options": {
       "exportNotes": true

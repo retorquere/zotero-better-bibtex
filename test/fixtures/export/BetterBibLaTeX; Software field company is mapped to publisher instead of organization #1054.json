@@ -4,40 +4,54 @@
     "label": "BetterBibTeX JSON",
     "release": {
       "Zotero": {
-        "version": "5.0.34.4",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.13",
-        "locale": "de",
+        "version": "5.0.55",
+        "platform": "Win32",
+        "oscpu": "Windows NT 10.0; WOW64",
+        "locale": "en-US",
         "appName": "Zotero",
-        "appVersion": "5.0.34.4"
+        "appVersion": "5.0.55",
+        "isZotero": true,
+        "isJurisM": false
       },
-      "BetterBibTeX": "5.0.79.5455.issue-892"
+      "BetterBibTeX": "5.0.190"
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[authForeIni:upper][auth2:upper][shortyear]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
+      "autoExportIdleWait": 10,
+      "autoPin": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cacheFlushInterval": 5,
+      "citeCommand": "textcite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "debugLog": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "jurismPreferredLanguage": "",
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
       "skipFields": [
 
       ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
-      "quickCopyMode": "latex",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
       "skipWords": [
         "a",
         "ab",
@@ -162,17 +176,10 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "jurismPreferredLanguage": "",
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
+      "sorted": false,
+      "strings": "",
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
     "options": {
       "exportNotes": true
@@ -182,72 +189,30 @@
   },
   "items": [
     {
-      "itemType": "book",
-      "edition": "3. Aufl.",
-      "place": "Berlin [u.~a.]",
-      "publisher": "Springer",
-      "ISBN": "978-3-642-37365-7",
-      "date": "2014",
-      "libraryCatalog": "Library of Congress ISBN",
-      "language": "ger",
-      "title": "Tutorium Analysis 1 und Lineare Algebra 1. Mathematik von Studenten für Studenten erklärt und kommenteiert",
-      "shortTitle": "Tutorium",
+      "itemType": "computerProgram",
+      "date": "9265",
+      "title": "Bla",
       "creators": [
         {
-          "firstName": "Florian",
-          "lastName": "Modler",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Martin",
-          "lastName": "Kreh",
-          "creatorType": "author"
+          "name": "Blup",
+          "creatorType": "programmer"
         }
       ],
       "tags": [
 
       ],
-      "dateAdded": "2018-01-16 13:48:27",
-      "dateModified": "2018-01-16 14:09:51",
+      "dateAdded": "2018-08-23T13:04:23Z",
+      "dateModified": "2018-08-23T13:04:47Z",
+      "uri": "http://zotero.org/users/4882007/items/ED3P3LJH",
       "attachments": [
 
       ],
       "notes": [
 
       ],
-      "itemID": 320,
-      "seeAlso": [
-
-      ]
-    },
-    {
-      "itemType": "book",
-      "volume": "12",
-      "publisher": "Springer",
-      "date": "2013",
-      "title": "Analysis 1",
-      "creators": [
-        {
-          "firstName": "Otto",
-          "lastName": "Forster",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [
-
-      ],
-      "dateAdded": "2018-01-27 12:17:16",
-      "dateModified": "2018-01-27 12:19:02",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 60,
-      "seeAlso": [
-
-      ]
+      "itemID": 68,
+      "citekey": "blup_bla_9265",
+      "publisher": "BliBlaBlup"
     }
   ]
 }

@@ -14,9 +14,6 @@
       "BetterBibTeX": "5.0.88"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": false,
       "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,

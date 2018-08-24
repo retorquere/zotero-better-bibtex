@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
       "citekeyFold": true,
-      "debug": false,
       "DOIandURL": "both",
       "csquotes": "",
       "keyConflictPolicy": "keep",

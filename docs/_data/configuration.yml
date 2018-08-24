@@ -208,9 +208,6 @@
 '
   name: Hidden preferences
   preferences:
-    ajv:
-      default: 'True'
-      description: '!'
     autoExportIdleWait:
       default: '10'
       description: Number of seconds to wait after your system goes idle before kicking

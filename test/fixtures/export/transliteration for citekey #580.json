@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth][year]",
       "citekeyFold": true,
-      "debug": false,
       "DOIandURL": "both",
       "bibtexURL": "url",
       "csquotes": "",

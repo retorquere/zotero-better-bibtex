@@ -13,7 +13,6 @@
       "citeCommand": "cite",
       "citekeyFormat": "[auth:nopunct:condense,_][year][journal:nopunct][0]",
       "citekeyFold": true,
-      "debug": true,
       "DOIandURL": "both",
       "csquotes": "",
       "keyConflictPolicy": "keep",

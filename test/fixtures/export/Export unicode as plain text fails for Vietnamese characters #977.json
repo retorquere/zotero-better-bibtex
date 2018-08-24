@@ -16,9 +16,6 @@
       "BetterBibTeX": "5.0.142.6897.issue-977"
     },
     "preferences": {
-      "debug": false,
-      "rawLaTag": "#LaTeX",
-      "testing": false,
       "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
@@ -190,7 +187,8 @@
       "exportNotes": true
     }
   },
-  "collections": {},
+  "collections": {
+  },
   "items": [
     {
       "itemType": "journalArticle",
@@ -207,13 +205,21 @@
           "creatorType": "author"
         }
       ],
-      "tags": [],
+      "tags": [
+
+      ],
       "dateAdded": "2016-10-21 14:27:39",
       "dateModified": "2018-05-31 09:43:31",
-      "attachments": [],
-      "notes": [],
+      "attachments": [
+
+      ],
+      "notes": [
+
+      ],
       "itemID": 198,
-      "seeAlso": []
+      "seeAlso": [
+
+      ]
     }
   ]
 }

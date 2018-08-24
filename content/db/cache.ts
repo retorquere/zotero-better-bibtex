@@ -146,13 +146,14 @@ DB.init = () => {
   DB.loadDatabase()
   let coll = DB.schemaCollection('itemToExportFormat', {
     indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+    logging: true,
     cloneObjects: true,
     schema: {
       type: 'object',
       properties: {
         itemID: { type: 'integer' },
-        legacy: { type: 'boolean', default: false },
-        skipChildItems: { type: 'boolean', default: false },
+        legacy: { type: 'boolean' },
+        skipChildItems: { type: 'boolean' },
         item: { type: 'object' },
 
         // LokiJS
@@ -172,6 +173,7 @@ DB.init = () => {
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
   for (const translator of Object.keys(translators.byName)) {
     coll = DB.schemaCollection(translator, {
+      logging: true,
       indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
       schema: {
         type: 'object',
@@ -180,8 +182,8 @@ DB.init = () => {
           reference: { type: 'string' },
 
           // options
-          exportNotes: { type: 'boolean', default: false },
-          useJournalAbbreviation: { type: 'boolean', default: false },
+          exportNotes: { type: 'boolean' },
+          useJournalAbbreviation: { type: 'boolean' },
 
           // prefs
           ...prefOverridesSchema,
@@ -193,7 +195,7 @@ DB.init = () => {
           meta: { type: 'object' },
           $loki: { type: 'integer' },
         },
-        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', 'reference' ],
+        required: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides, 'reference' ],
         additionalProperties: false,
       },
       ttl,
@@ -212,6 +214,7 @@ Events.on('preference-changed', async () => {
   await Zotero.BetterBibTeX.ready
 
   for (const translator of Object.keys(translators.byName)) {
+    log.debug('DB Event: drop', translator)
     DB.getCollection(translator).removeDataOnly()
   }
 })
