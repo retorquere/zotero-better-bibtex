@@ -264,18 +264,23 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     if (!metadata) metadata = {}
 
     const collection = Cache.getCollection(sandbox.translator[0].label)
-    if (!collection) return false
+    if (!collection) {
+      log.error('cacheStore: cache', sandbox.translator[0].label, 'not found')
+      return false
+    }
 
     const selector = cacheSelector(itemID, options, prefs)
-    const cached = collection.findOne(selector)
+    let cached = collection.findOne(selector)
 
     if (cached) {
       cached.reference = reference
       cached.metadata = metadata
-      collection.update(cached)
+      cached = collection.update(cached)
+      log.debug('cacheStore: update', collection.name, cached)
 
     } else {
-      collection.insert({...selector, reference, metadata})
+      cached = collection.insert({...selector, reference, metadata})
+      log.debug('cacheStore: insert', collection.name, cached)
 
     }
 

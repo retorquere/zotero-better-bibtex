@@ -131,9 +131,10 @@ class AutoExportPane {
                 query[pref] = ae[pref]
               }
               const cached = Cache.getCollection(Translators.byId[ae.translatorID].label).find(query)
+              log.debug('DB Event: cache fetch', query, cached)
               ratio = Math.round((cached.length * 100) / items.length) // tslint:disable-line:no-magic-numbers
 
-              // log.debug('prefs.auto-export.cache', ratio, items, query, cached)
+              log.debug('prefs.auto-export.cache', ratio, items, query, cached)
             }
             (node as IXUL_Textbox).value = `${ratio}%`
 

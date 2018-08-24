@@ -146,6 +146,7 @@ DB.init = () => {
   DB.loadDatabase()
   let coll = DB.schemaCollection('itemToExportFormat', {
     indices: [ 'itemID', 'legacy', 'skipChildItems' ],
+    logging: true,
     cloneObjects: true,
     schema: {
       type: 'object',
@@ -172,6 +173,7 @@ DB.init = () => {
   const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
   for (const translator of Object.keys(translators.byName)) {
     coll = DB.schemaCollection(translator, {
+      logging: true,
       indices: [ 'itemID', 'exportNotes', 'useJournalAbbreviation', ...prefOverrides ],
       schema: {
         type: 'object',
@@ -212,6 +214,7 @@ Events.on('preference-changed', async () => {
   await Zotero.BetterBibTeX.ready
 
   for (const translator of Object.keys(translators.byName)) {
+    log.debug('DB Event: drop', translator)
     DB.getCollection(translator).removeDataOnly()
   }
 })
