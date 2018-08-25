@@ -122,7 +122,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.tab.strings "Importiere @string Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTex">
-<!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne Zitier Schlüssel">
+<!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Fehler melden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX Datei nach Verweisen durchsuchen...">
