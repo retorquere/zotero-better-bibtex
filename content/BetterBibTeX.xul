@@ -16,6 +16,13 @@
 
   <menupopup id="zotero-collectionmenu">
     <menuseparator id="bbt-collectionmenu-separator"/>
+
+    <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
+      <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
+        <menuitem label="" oncommand="Zotero.BetterBibTeX.startAutoExport(event);"/>
+      </menupopup>
+    </menu>
+
     <menuitem
       id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
@@ -32,8 +39,10 @@
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
         <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.addCitationLinks();"/>
+
         <menuseparator class="bbt-texstudio"/>
         <menuitem class="bbt-texstudio" label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.toTeXstudio()"/>
+
         <menuseparator/>
         <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('items')"/>
       </menupopup>
