@@ -62,6 +62,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportiere Notizen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Fehler">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitier Schlüssel">
