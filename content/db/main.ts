@@ -232,17 +232,21 @@ DB.init = async () => {
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/903
   for (const ae of autoexport.find()) {
+    let update = false
+
     if (ae.updated) {
       delete ae.updated
-      autoexport.update(ae)
+      update = true
     }
 
     for (const pref of prefOverrides) {
       if (typeof ae[pref] === 'undefined') {
         ae[pref] = Prefs.get(pref)
-        autoexport.update(ae)
+        update = true
       }
     }
+
+    if (update) autoexport.update(ae)
   }
 
   if (Prefs.get('scrubDatabase')) {
