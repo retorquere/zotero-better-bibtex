@@ -24,7 +24,7 @@ for header in glob.glob(os.path.join(root, 'translators/*.json')):
     header = Dict(json.load(f))
     header.lastUpdated = datetime.datetime.now().isoformat().replace('T', ' ').split('.')[0]
 
-    translators.byId[header.label] = header
+    translators.byId[header.translatorID] = header
     translators.byName[header.label] = header
     translators.byLabel[re.sub(r'[^a-zA-Z]', '', header.label)] = header
 
