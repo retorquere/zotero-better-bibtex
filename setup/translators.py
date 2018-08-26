@@ -8,6 +8,8 @@ import datetime
 import re
 from Cheetah.Template import Template
 
+print('translators')
+
 root = os.path.join(os.path.dirname(__file__), '..')
 
 translators = Dict()
@@ -19,9 +21,10 @@ def jstype(v):
   if type(v) == int: return 'number'
   raise ValueError(f'Unexpected type {type(v)}')
 
-for header in glob.glob(os.path.join(root, 'translators/*.json')):
+for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
   with open(header) as f:
     header = Dict(json.load(f))
+    print(f'  {header.label}')
     header.lastUpdated = datetime.datetime.now().isoformat().replace('T', ' ').split('.')[0]
 
     translators.byId[header.translatorID] = header

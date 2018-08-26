@@ -21,7 +21,7 @@ def dump(*paths):
 
   def save(data):
     for path in paths:
-      print('  ', path)
+      print(' ', path)
       path = os.path.join(root, path)
       os.makedirs(os.path.dirname(path), exist_ok=True)
       with open(path, 'w') as out:
