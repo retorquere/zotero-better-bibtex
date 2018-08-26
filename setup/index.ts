@@ -3,9 +3,7 @@ process.chdir(root)
 
 import './submodules'
 
-import './translators'
 import './dateparser'
-import './translator-typing'
 import './kuroshiro'
 
 import 'zotero-plugin/copy-assets'

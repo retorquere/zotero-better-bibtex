@@ -2,3 +2,4 @@
 
 import makedirs
 import preferences
+import translators

@@ -21,7 +21,8 @@
     "ae": "HEADLESS=false KILL=false cucumber --fail-fast --tags @ae",
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",
-    "prebuild": "yarn run lint && ./setup/setup.py && ts-node setup/index.ts && yarn run docs",
+    "setup": "./setup/setup.py && ts-node setup/index.ts",
+    "prebuild": "yarn run lint && yarn run docs",
     "build": "webpack",
     "postbuild": "zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "odfscan": "echo curl -L -o xpi/odfscan.xpi `curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '\"' -f 4`",
@@ -34,7 +35,7 @@
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "postversion": "git push --follow-tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "docs": "ts-node setup/readme.ts && ./setup/preferences.py && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ts-node setup/formatters-doc.ts",
+    "docs": "yarn run setup && ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ts-node setup/formatters-doc.ts",
     "ncu": "ncu -a",
     "reinstall": "rm -rf node_modules yarn* && yarn install"
   },

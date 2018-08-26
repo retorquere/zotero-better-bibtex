@@ -312,6 +312,14 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
 
+    if (this._displayOptions && this.location) {
+      if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
+        this._displayOptions.exportPath = this.location.path
+      } else {
+        this._displayOptions.exportPath = this.location.parent.path
+      }
+    }
+
     let capture = this._displayOptions && this._displayOptions.keepUpdated
 
     if (capture) {

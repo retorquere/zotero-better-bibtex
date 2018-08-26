@@ -953,6 +953,8 @@ export class Reference {
       if (Translator.preferences.testing) {
         Exporter.attachmentCounter += 1
         att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
+      } else if (Translator.exportPath && att.path.startsWith(Translator.exportPath)) {
+        att.path = att.path.slice(Translator.exportPath.length)
       }
 
       attachments.push(att)
