@@ -937,14 +937,25 @@ export class Reference {
       const att = {
         title: attachment.title,
         mimetype: attachment.contentType || '',
-        path: attachment.defaultPath || attachment.localPath,
+        path: '',
+      }
+
+      if (Translator.options.exportFileData) {
+        att.path = attachment.saveFile ? attachment.defaultPath : ''
+      } else if (attachment.localPath) {
+        att.path = attachment.localPath
       }
 
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      if (Translator.options.exportFileData && attachment.saveFile && attachment.defaultPath) attachment.saveFile(att.path, true)
+      debug('attachment::', Translator.options, att)
+
+      if (Translator.options.exportFileData) {
+        debug('saving attachment::', Translator.options, att)
+        attachment.saveFile(att.path, true)
+      }
 
       if (!att.title) att.title = att.path.replace(/.*[\\\/]/, '') || 'attachment'
 
@@ -953,8 +964,9 @@ export class Reference {
       if (Translator.preferences.testing) {
         Exporter.attachmentCounter += 1
         att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.exportPath && att.path.startsWith(Translator.exportPath)) {
-        att.path = att.path.slice(Translator.exportPath.length)
+      } else if (Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
+        att.path = att.path.slice(Translator.options.exportPath.length)
+        debug('clipped attachment::', Translator.options, att)
       }
 
       attachments.push(att)

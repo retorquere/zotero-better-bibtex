@@ -64,7 +64,7 @@ interface ITranslator {
   #end for
   }
 
-  options {
+  options: {
     quickCopyMode?: string
     exportPath?: string
     #for $key, $type in $displayOptions.items():
@@ -81,13 +81,13 @@ interface ITranslator {
     $key: $type
   #end for
 
-    displayOptions {
+    displayOptions: {
     #for $key, $type in $displayOptions.items():
       $key: $type
     #end for
     }
 
-    configOptions {
+    configOptions: {
     #for $key, $type in $configOptions.items():
       $key: $type
     #end for
