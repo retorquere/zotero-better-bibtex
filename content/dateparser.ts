@@ -4,7 +4,7 @@ import * as log from './debug'
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
-const months = require('../gen/dateparser-data.json')
+const months = require('../gen/dateparser-months.json')
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 /*
