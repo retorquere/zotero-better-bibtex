@@ -1,1 +1,41 @@
-{}
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
+  "collections": {
+  },
+  "items": [
+    {
+      "ISSN":"1612-4642",
+      "creators":[
+        {
+          "creatorType":"author",
+          "firstName":"Isabel",
+          "lastName":"Barrio"
+        },
+        {
+          "creatorType":"author",
+          "firstName":"Pelayo",
+          "lastName":"Acevedo"
+        },
+        {
+          "creatorType":"author",
+          "firstName":"Francisco",
+          "lastName":"Tortosa"
+        }
+      ],
+      "date":"2010",
+      "extra":"10.1007/s10344-009-0327-7 \nCitation Key: springerlink:10.1007/s10344-009-0327-7 \nbibtex[affiliation=University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain;owner=tiago;publisher=Springer Berlin / Heidelberg;subdatabase=distance]",
+      "issue":"3",
+      "itemID":0,
+      "itemType":"journalArticle",
+      "pages":"335-340",
+      "publicationTitle":"European Journal of Wildlife Research",
+      "tags":["Biomedical and Life Sciences"],
+      "title":"Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
+      "url":"http://dx.doi.org/10.1007/s10344-009-0327-7",
+      "volume":"56"
+    }
+  ]
+}

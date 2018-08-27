@@ -43,6 +43,8 @@ Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
+  Examples:
+  | file                                                                        | references  |
   | keywords import as bare string, not list, to unparse                        | 1           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
