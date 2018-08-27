@@ -851,6 +851,8 @@ class ZoteroItem {
 
     if (['string', 'number'].includes(typeof text)) return text
 
+    if (!Array.isArray(text)) text = [ text ]
+
     // split out sup/sub text that can be unicodified
     const chunks = []
     for (const node of text) {
