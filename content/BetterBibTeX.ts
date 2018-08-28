@@ -312,6 +312,14 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
 
+    if (this._displayOptions && this.location) {
+      if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
+        this._displayOptions.exportPath = this.location.path
+      } else {
+        this._displayOptions.exportPath = this.location.parent.path
+      }
+    }
+
     let capture = this._displayOptions && this._displayOptions.keepUpdated
 
     if (capture) {
@@ -368,6 +376,33 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
     document.getElementById('bbt-collectionmenu-separator').hidden = hidden
     document.getElementById('bbt-collectionmenu-pull-url').hidden = hidden
     document.getElementById('bbt-collectionmenu-report-errors').hidden = hidden
+
+    let query = null
+    if (Prefs.get('autoExport') === 'immediate') {
+      query = null
+
+    } else if (treeRow.isCollection()) {
+      query = { type: 'collection', id: treeRow.ref.id }
+
+    } else if (treeRow.isLibrary(true)) {
+      query = { type: 'library', id: treeRow.ref.libraryID }
+
+    }
+    const auto_exports = query ? AutoExport.db.find(query) : []
+
+    for (const node of [...document.getElementsByClassName('bbt-autoexport')]) {
+      node.hidden = auto_exports.length === 0
+    }
+
+    if (auto_exports.length !== 0) {
+      const menupopup = document.getElementById('zotero-itemmenu-BetterBibTeX-autoexport-menu')
+      while (menupopup.children.length > 1) menupopup.removeChild(menupopup.firstChild)
+      for (const [index, ae] of auto_exports.entries()) {
+        const menuitem = (index === 0 ? menupopup.firstChild : menupopup.appendChild(menupopup.firstChild.cloneNode(true)))
+        menuitem.label = ae.path
+      }
+    }
+
   } catch (err) {
     log.error('ZoteroPane.buildCollectionContextMenu:', err)
   }
@@ -594,6 +629,18 @@ class BetterBibTeX {
     }
 
     return ''
+  }
+
+  public startAutoExport(event) {
+    event.stopPropagation()
+    const path = event.target.getAttribute('label')
+    const ae = AutoExport.db.findOne({ path })
+
+    if (ae) {
+      AutoExport.run(ae.$loki)
+    } else {
+      log.error('cannot find ae for', { path })
+    }
   }
 
   public async addCitationLinks() {
