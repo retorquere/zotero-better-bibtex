@@ -191,7 +191,7 @@
   "items": [
     {
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 23: unknown reference type 'talk'</li></ul>",
+      "note": "Import errors found: <ul><li>line 24: unknown reference type 'talk'</li></ul>",
       "tags": [
         "#Better BibTeX import error"
       ],

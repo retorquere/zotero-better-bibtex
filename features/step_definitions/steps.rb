@@ -66,7 +66,8 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
     collection = :new
   end
 
-  source = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures', source))
+  fixtures = File.expand_path(File.join(File.dirname(__FILE__), '../../test/fixtures'))
+  source = File.join(fixtures, source)
 
   if source =~ /\.json$/i
     config = JSON.parse(File.read(source))['config'] || {}
@@ -92,6 +93,24 @@ When /^I import (\d+) references? (?:with (\d+) attachments? )?from "([^"]+)"(?:
       source = File.expand_path(File.join(dir, collection))
       FileUtils.cp(orig, source)
     end
+
+    if source =~ /\.bib/
+      copy = false
+      bib_ = ''
+      File.readlines(source).each{|line|
+        if line.downcase.start_with?('@comment{jabref-meta: filedirectory:')
+          bib_ += "@Comment{jabref-meta: fileDirectory:#{File.join(File.dirname(source), 'attachments')};}\n"
+          copy = true
+        else
+          bib_ += line
+        end
+      }
+      if copy
+        source += '_'
+        open(source, 'w'){|out| out.write(bib_) }
+      end
+    end
+
     imported = execute(
       timeout: 240,
       args: { filename: source, preferences: preferences, createNewCollection: !!collection },

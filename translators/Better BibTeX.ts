@@ -705,7 +705,7 @@ class ZoteroItem {
     }
 
     if (attachments.length === 0) {
-      debug('could not parse attachments', value)
+      debug('attachments parse error:', value)
       return false
     }
 
