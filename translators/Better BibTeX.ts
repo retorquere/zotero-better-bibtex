@@ -234,7 +234,7 @@ Translator.doExport = () => {
         break
 
       case 'computerProgram':
-        ref.add({ name: 'organization', value: item.publisher })
+        ref.add({ name: 'howpublished', value: item.publisher })
         break
 
       default:
