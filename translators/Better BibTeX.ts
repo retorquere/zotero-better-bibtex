@@ -684,9 +684,17 @@ class ZoteroItem {
   protected $file(value) {
     value = this.unparse(value)
 
+    const replace = {
+      '\\;':    '\u0011',
+      '\u0011': ';',
+      '\\:':    '\u0012',
+      '\u0012': ':',
+      '\\\\':   '\u0013',
+      '\u0013': '\\',
+    }
     const attachments = []
-    for (const att of value.replace(/&/g, '&#38;').replace(/\\;/g, '&#59;').replace(/\\:/g, '&#58;').replace(/\\\\/g, '&#92;').split(';')) {
-      const parts = att.split(':').map(str => str.replace(/&#(\d+);/g, (match, n) => String.fromCharCode(n)))
+    for (const att of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
+      const parts = att.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
       switch (parts.length) {
         case 1:
           attachments.unshift({ path: parts[0] })
