@@ -172,6 +172,7 @@ function importReferences(input) {
     groups: parser.groups,
     errors: parser.errors,
     warnings: parser.warnings,
+    jabrefMeta: parser.jabrefMeta,
   }
 }
 
@@ -470,14 +471,16 @@ class ZoteroItem {
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
   private validFields: { [key: string]: boolean }
+  private jabref: { [key: string]: string }
 
-  constructor(id, bibtex, groups, validFields) {
+  constructor(id, bibtex, groups, jabref, validFields) {
     this.id = id
     this.bibtex = bibtex
     this.groups = groups
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
     this.validFields = validFields[this.type]
+    this.jabref = jabref
 
     if (!this.validFields) this.error(`import error: unexpected item ${bibtex.entry_key} of type ${this.type}`)
 
@@ -690,6 +693,8 @@ class ZoteroItem {
     } else {
       path = value
     }
+
+    if (this.jabref.fileDirectory) path = `${this.jabref.fileDirectory}${Translator.pathSep}${path}`
 
     mimeType = (mimeType || '').toLowerCase()
     if (!mimeType && path.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf'
@@ -1145,7 +1150,7 @@ Translator.doImport = async () => {
   const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
   for (const [id, ref] of references) {
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
-    await (new ZoteroItem(id, ref, bib.groups, validFields)).complete()
+    await (new ZoteroItem(id, ref, bib.groups, bib.jabrefMeta, validFields)).complete()
     imported += 1
     Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
   }

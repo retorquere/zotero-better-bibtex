@@ -24,6 +24,8 @@ var Translator = {
     if (stage == 'detectImport') {
       this.options = {}
     } else {
+      if (stage == 'doImport') this.pathSep = (Zotero.BetterBibTeX.platform().toLowerCase().startsWith('win')) ? '\\' : '/'
+
       this.references = []
 
       for (var key in this.options) {
