@@ -1128,6 +1128,9 @@ Translator.doImport = async () => {
         case 'undefined_variable':
           item.note += `<li>line ${err.line}: undefined variable '${htmlEscape(err.variable)}'</li>`
           break
+        case 'unknown_type':
+          item.note += `<li>line ${err.line}: unknown reference type '${htmlEscape(err.type_name)}'</li>`
+          break
         default:
           if (Translator.preferences.testing) throw new Error('unhandled import error: ' + JSON.stringify(err))
           item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
