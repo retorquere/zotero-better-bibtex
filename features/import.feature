@@ -45,7 +45,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
-  | keywords import as bare string, not list, to unparse                        | 1           |
+  | Jabref fileDirectory, unexpected reference type #1058                       | 1           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
