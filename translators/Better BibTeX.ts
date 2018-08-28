@@ -682,26 +682,47 @@ class ZoteroItem {
   }
 
   protected $file(value) {
-    let m, mimeType, path, title
     value = this.unparse(value)
 
-    // :Better BibTeX.001/Users/heatherwright/Documents/Scientific Papers/AVX3W9~F.PDF:PDF
-    if (m = value.match(/^([^:]*):([^:]+):([^:]*)$/)) {
-      title = m[1]
-      path = m[2]
-      mimeType = m[3] // tslint:disable-line:no-magic-numbers
-    } else {
-      path = value
+    const attachments = []
+    for (const att of value.replace(/&/g, '&#38;').replace(/\\;/g, '&#59;').replace(/\\:/g, '&#58;').replace(/\\\\/g, '&#92;').split(';')) {
+      const parts = att.split(':').map(str => str.replace(/&#(\d+);/g, (match, n) => String.fromCharCode(n)))
+      switch (parts.length) {
+        case 1:
+          attachments.unshift({ path: parts[0] })
+          break
+
+        case 3: // tslint:disable-line:no-magic-numbers
+          attachments.unshift({ title: parts[0], path: parts[1], mimeType: parts[2] }) // tslint:disable-line:no-magic-numbers
+          break
+
+        default:
+          attachments.unshift({})
+          break
+      }
+
+      if (!attachments[0].path) attachments.splice(0, attachments.length) // empty array to signal error
     }
 
-    if (this.jabref.fileDirectory) path = `${this.jabref.fileDirectory}${Translator.pathSep}${path}`
+    if (attachments.length === 0) {
+      debug('could not parse attachments', value)
+      return false
+    }
 
-    mimeType = (mimeType || '').toLowerCase()
-    if (!mimeType && path.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf'
-    if (mimeType.toLowerCase() === 'pdf') mimeType = 'application/pdf'
-    if (!mimeType) mimeType = undefined
+    for (const att of attachments) {
+      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${Translator.pathSep}${att.path}`
 
-    this.item.attachments.push({ title, path, mimeType })
+      att.mimeType = (att.mimeType || '').toLowerCase()
+      if (!att.mimeType && att.path.toLowerCase().endsWith('.pdf')) att.mimeType = 'application/pdf'
+      if (att.mimeType.toLowerCase() === 'pdf') att.mimeType = 'application/pdf'
+      if (!att.mimeType) delete att.mimeType
+
+      att.title = att.title || att.path.replace(/\.[^.]+$/, '')
+      if (!att.title) delete att.title
+
+      this.item.attachments.push(att)
+    }
+
     return true
   }
 
