@@ -14,7 +14,7 @@ cache:
 
 script: |
   #set -e
-  set -x
+  #set -x
 
   yarn install
 

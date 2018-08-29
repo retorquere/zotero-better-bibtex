@@ -9,7 +9,7 @@
       ],
       "itemType": "book",
       "title": "Filename character test. Relative path",
-      "extra":"Citation Key: id \nbibtex{file:\",.\\\\;'[]\\\\{\\\\}`-=~!@\#$%^&()_+.pdf:Better BibTeX.013/files/32/,.\\\\;'[]\\\\{\\\\}`-=~!@\#$%^&()_+.pdf:application/pdf\"}",
+      "extra":"Citation Key: id",
       "itemID": 0
     },
     {
@@ -21,7 +21,7 @@
       ],
       "itemType": "book",
       "title": "Filename character test. Absolute path",
-      "extra":"Citation Key: id2 \nbibtex{file:\",.\\\\;'[]\\\\{\\\\}`-=~!@\#$%^&()_+.pdf:Better BibTeX.013/some/path/,.\\\\;'[]\\\\{\\\\}`-=~!@\#$%^&()_+.pdf:application/pdf\"}",
+      "extra":"Citation Key: id2",
       "itemID": 1
     }
   ],
