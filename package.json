@@ -84,7 +84,7 @@
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.9.2",
+    "@types/node": "^10.9.3",
     "@types/webpack": "^4.4.11",
     "archiver": "^3.0.0",
     "aws-s3-form": "^0.3.5",
