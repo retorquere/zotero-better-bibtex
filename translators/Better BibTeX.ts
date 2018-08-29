@@ -725,7 +725,7 @@ class ZoteroItem {
       if (att.mimeType.toLowerCase() === 'pdf') att.mimeType = 'application/pdf'
       if (!att.mimeType) delete att.mimeType
 
-      att.title = att.title || att.path.replace(/\.[^.]+$/, '')
+      att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
       if (!att.title) delete att.title
 
       this.item.attachments.push(att)
