@@ -1143,6 +1143,33 @@ Translator.doImport = async () => {
   const ignore = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
   const errors = bib.errors.concat(bib.warnings).filter(err => !ignore.has(err.type))
 
+  if (Translator.preferences.csquotes) {
+    ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
+  }
+
+  const validFields = Zotero.BetterBibTeX.validFields()
+
+  const itemIDS = {}
+  let imported = 0
+  const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
+  for (const [id, ref] of references) {
+    if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
+
+    try {
+      await (new ZoteroItem(id, ref, bib.groups, bib.jabrefMeta, validFields)).complete()
+    } catch (err) {
+      debug('bbt import error:', err)
+      errors.push({ type: 'bbt_error', error: err })
+    }
+
+    imported += 1
+    Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
+  }
+
+  for (const group of bib.groups || []) {
+    importGroup(group, itemIDS, true)
+  }
+
   if (errors.length) {
     const item = new Zotero.Item('note')
     item.note = 'Import errors found: <ul>'
@@ -1160,6 +1187,9 @@ Translator.doImport = async () => {
         case 'unknown_type':
           item.note += `<li>line ${err.line}: unknown reference type '${htmlEscape(err.type_name)}'</li>`
           break
+        case 'bbt_error':
+          item.note += `<li>Unhandled Better BibTeX error: '${htmlEscape(err.error.toString())}'</li>`
+          break
         default:
           if (Translator.preferences.testing) throw new Error('unhandled import error: ' + JSON.stringify(err))
           item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
@@ -1171,24 +1201,5 @@ Translator.doImport = async () => {
     await item.complete()
   }
 
-  if (Translator.preferences.csquotes) {
-    ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
-  }
-
-  const validFields = Zotero.BetterBibTeX.validFields()
-
-  const itemIDS = {}
-  let imported = 0
-  const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
-  for (const [id, ref] of references) {
-    if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
-    await (new ZoteroItem(id, ref, bib.groups, bib.jabrefMeta, validFields)).complete()
-    imported += 1
-    Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
-  }
   Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
-
-  for (const group of bib.groups || []) {
-    importGroup(group, itemIDS, true)
-  }
 }
