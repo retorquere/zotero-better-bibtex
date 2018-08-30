@@ -424,6 +424,14 @@ export class Reference {
         })
       }
 
+      if (field.value === 'today') {
+        return this.add({
+          ...field,
+          value: '<pre>\\today</pre>',
+          enc: 'verbatim',
+        })
+      }
+
       const date = Zotero.BetterBibTeX.parseDate(field.value)
 
       this.add(datefield(date, field))

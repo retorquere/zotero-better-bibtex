@@ -90,6 +90,11 @@ export function parse(value, toplevel = true) {
 
   log.debug('dateparser: parsing', value, toplevel)
 
+  if (value === 'today') {
+    const now = new Date
+    return { type: 'date', year: now.getFullYear(), month: now.getMonth() + 1, day: now.getDate() }
+  }
+
   if (!toplevel && value === '') return { type: 'open' }
 
   if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
