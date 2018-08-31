@@ -95,6 +95,7 @@ config.push(
     context: path.resolve(__dirname, './content'),
     entry: {
       BetterBibTeX: './BetterBibTeX.ts',
+      'BetterBibTeX.ZoteroPane': './ZoteroPane.ts',
       'BetterBibTeX.KeyManager': './KeyManager.ts',
       'BetterBibTeX.TestSupport': './TestSupport.ts',
       'BetterBibTeX.Preferences': './Preferences.ts',

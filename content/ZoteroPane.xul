@@ -11,7 +11,7 @@
     <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX()"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
-    <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport()"/>
+    <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>
   </menupopup>
 
   <menupopup id="zotero-collectionmenu">
@@ -19,17 +19,17 @@
 
     <menu class="bbt-autoexport" label="&better-bibtex.Preferences.tab.auto-export;">
       <menupopup id="zotero-itemmenu-BetterBibTeX-autoexport-menu">
-        <menuitem label="" oncommand="Zotero.BetterBibTeX.startAutoExport(event);"/>
+        <menuitem label="" oncommand="Zotero.BetterBibTeX.ZoteroPane.startAutoExport(event);"/>
       </menupopup>
     </menu>
 
     <menuitem
       id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
-      oncommand="alert(Zotero.BetterBibTeX.pullExport() || '&better-bibtex.BetterBibTeX.server.disabled;')"
+      oncommand="alert(Zotero.BetterBibTeX.ZoteroPane.pullExport() || '&better-bibtex.BetterBibTeX.server.disabled;')"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
     />
-    <menuitem id="bbt-collectionmenu-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('collection')"/>
+    <menuitem id="bbt-collectionmenu-report-errors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport('collection')"/>
   </menupopup>
 
   <menupopup id="zotero-itemmenu">
@@ -38,13 +38,13 @@
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.pin;" oncommand="Zotero.BetterBibTeX.KeyManager.pin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.unpin;" oncommand="Zotero.BetterBibTeX.KeyManager.unpin('selected');"/>
         <menuitem label="&better-bibtex.BetterBibTeX.citekey.refresh;" oncommand="Zotero.BetterBibTeX.KeyManager.refresh('selected', true);"/>
-        <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.addCitationLinks();"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.addCitationLinks;" oncommand="Zotero.BetterBibTeX.ZoteroPane.addCitationLinks();"/>
 
         <menuseparator class="bbt-texstudio"/>
-        <menuitem class="bbt-texstudio" label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.toTeXstudio()"/>
+        <menuitem class="bbt-texstudio" label="&better-bibtex.BetterBibTeX.TeXstudio;" oncommand="Zotero.BetterBibTeX.ZoteroPane.toTeXstudio()"/>
 
         <menuseparator/>
-        <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.errorReport('items')"/>
+        <menuitem label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport('items')"/>
       </menupopup>
     </menu>
   </menupopup>
@@ -68,6 +68,7 @@
   <script src="chrome://zotero/content/include.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
+  <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ZoteroPane.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.KeyManager.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.TestSupport.js"/>
 </overlay>
