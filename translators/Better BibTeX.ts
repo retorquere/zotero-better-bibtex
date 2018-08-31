@@ -478,9 +478,9 @@ class ZoteroItem {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
     this.validFields = parsed.validFields[this.type]
-    log.debug('new ZoteroItem:', parsed)
+    debug('new ZoteroItem:', parsed)
 
-    if (!this.validFields) this.error(`import error: unexpected item ${bibtex.entry_key} of type ${this.type}`)
+    if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.entry_key} of type ${this.type}`)
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
@@ -490,7 +490,7 @@ class ZoteroItem {
 
     if (Translator.preferences.testing) {
       const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
-      if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
+      if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.entry_key}: ${err}`)
     }
   }
 
