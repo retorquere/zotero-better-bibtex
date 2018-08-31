@@ -10,7 +10,6 @@ import { patch as $patch$ } from './monkey-patch'
 import { Preferences as Prefs } from './prefs'
 import { AutoExport } from './auto-export'
 import { flash } from './flash'
-import { AUXScanner } from './aux-scanner'
 import * as CAYW from './cayw'
 
 const pane = Zotero.getActiveZoteroPane()
@@ -170,12 +169,6 @@ export = new class ZoteroPane {
 
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)
-  }
-
-  public async scanAUX(path = null) {
-    if (!BetterBibTeX.ready) return
-    await BetterBibTeX.ready
-    await AUXScanner.scan(path)
   }
 }
 

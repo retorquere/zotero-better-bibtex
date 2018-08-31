@@ -5,6 +5,7 @@ declare const AddonManager: any
 import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
+import { AUXScanner } from './aux-scanner'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 
@@ -548,6 +549,12 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       log.debug('getString', id, err)
       return id
     }
+  }
+
+  public async scanAUX(path = null) {
+    if (!this.ready) return
+    await this.ready
+    await AUXScanner.scan(path)
   }
 
   // #init
