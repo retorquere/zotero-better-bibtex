@@ -84,7 +84,7 @@
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
-    "@types/node": "^10.9.3",
+    "@types/node": "^10.9.4",
     "@types/webpack": "^4.4.11",
     "archiver": "^3.0.0",
     "aws-s3-form": "^0.3.5",
@@ -116,7 +116,7 @@
     "ts-loader": "^4.5.0",
     "ts-node": "^7.0.1",
     "typedoc": "^0.12.0",
-    "typescript": "^3.0.1",
+    "typescript": "^3.0.3",
     "uri-templates": "^0.2.0",
     "webpack": "^4.17.1",
     "wrapper-webpack-plugin": "^2.0.0",
