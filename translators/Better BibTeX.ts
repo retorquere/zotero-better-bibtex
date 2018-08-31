@@ -1149,11 +1149,14 @@ Translator.doImport = async () => {
   const itemIDS = {}
   let imported = 0
   const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
-  for (const [id, ref] of references) {
-    if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
+  for (const [id, bibtex] of references) {
+
+    debug('parse reference:', bibtex.entry_key, Object.entries(bib).map(b => [b[0], typeof b[1]]))
+
+    if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem({ id, bibtex: ref, groups: bib.groups, jabref: bib.jabrefMeta, validFields })).complete()
+      await (new ZoteroItem({ id, bibtex, groups: bib.groups, jabref: bib.jabrefMeta, validFields })).complete()
     } catch (err) {
       debug('bbt import error:', err)
       errors.push({ type: 'bbt_error', error: err })
