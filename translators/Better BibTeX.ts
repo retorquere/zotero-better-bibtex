@@ -473,14 +473,12 @@ class ZoteroItem {
   private validFields: { [key: string]: boolean }
   private jabref: { [key: string]: string }
 
-  constructor(id, bibtex, groups, jabref, validFields) {
-    this.id = id
-    this.bibtex = bibtex
-    this.groups = groups
+  constructor(parsed) {
+    Object.assign(this, parsed)
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
-    this.validFields = validFields[this.type]
-    this.jabref = jabref
+    this.validFields = parsed.validFields[this.type]
+    log.debug('new ZoteroItem:', parsed)
 
     if (!this.validFields) this.error(`import error: unexpected item ${bibtex.entry_key} of type ${this.type}`)
 
@@ -1156,7 +1154,7 @@ Translator.doImport = async () => {
     if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem(id, ref, bib.groups, bib.jabrefMeta, validFields)).complete()
+      await (new ZoteroItem({ id, bibtex: ref, groups: bib.groups, jabref: bib.jabrefMeta, validFields })).complete()
     } catch (err) {
       debug('bbt import error:', err)
       errors.push({ type: 'bbt_error', error: err })
