@@ -478,7 +478,6 @@ class ZoteroItem {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
     this.validFields = parsed.validFields[this.type]
-    debug('new ZoteroItem:', parsed)
 
     if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.entry_key} of type ${this.type}`)
 
