@@ -8,7 +8,7 @@ import { debug } from './lib/debug'
 import { htmlEscape } from './lib/html-escape'
 
 import JSON5 = require('json5')
-const BibTeXParser = require('biblatex-csl-converter').BibLatexParser // tslint:disable-line:variable-name
+import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -156,24 +156,12 @@ Reference.prototype.typeMap = {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 function importReferences(input) {
-  const parser = new BibTeXParser(input, {
+  return biblatex.parse(input, {
     rawFields: true,
     processUnexpected: true,
     processUnknown: { comment: 'f_verbatim' },
     processInvalidURIs: true,
   })
-
-  /* this must be called before requesting warnings or errors -- this really, really weirds me out */
-  const references = parser.output
-
-  /* relies on side effect of calling '.output' */
-  return {
-    references,
-    groups: parser.groups,
-    errors: parser.errors,
-    warnings: parser.warnings,
-    jabrefMeta: parser.jabrefMeta,
-  }
 }
 
 Translator.doExport = () => {
@@ -287,7 +275,7 @@ Translator.doExport = () => {
 Translator.detectImport = () => {
   const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
   const bib = importReferences(input)
-  const found = Object.keys(bib.references).length > 0
+  const found = Object.keys(bib.entries).length > 0
   return found
 }
 
@@ -463,23 +451,21 @@ class ZoteroItem {
     t: '\u209C',
   }
 
-  private id: string
-  private bibtex: any // comes from biblatex parser
   private fields: any // comes from biblatex parser
   private type: string
   private hackyFields: string[]
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
   private validFields: { [key: string]: boolean }
-  private jabref: { [key: string]: string }
 
-  constructor(parsed) {
-    Object.assign(this, parsed)
+  constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }, validFields) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
-    this.validFields = parsed.validFields[this.type]
+    this.validFields = validFields[this.type]
 
     if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.entry_key} of type ${this.type}`)
+
+    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
@@ -715,7 +701,7 @@ class ZoteroItem {
     }
 
     for (const att of attachments) {
-      if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${Translator.pathSep}${att.path}`
+      if (this.jabref.meta.fileDirectory) att.path = `${this.jabref.meta.fileDirectory}${Translator.pathSep}${att.path}`
 
       att.mimeType = (att.mimeType || '').toLowerCase()
       if (!att.mimeType && att.path.toLowerCase().endsWith('.pdf')) att.mimeType = 'application/pdf'
@@ -997,7 +983,6 @@ class ZoteroItem {
 
   private import() {
     this.hackyFields = []
-    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
     for (const subtitle of ['titleaddon', 'subtitle']) {
       if (!this.fields.title && this.fields[subtitle]) {
@@ -1148,15 +1133,13 @@ Translator.doImport = async () => {
 
   const itemIDS = {}
   let imported = 0
-  const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
+  const references = (Object.entries(bib.entries) as any[][]) // TODO: add typings to the npm package
   for (const [id, bibtex] of references) {
-
-    debug('parse reference:', bibtex.entry_key, Object.entries(bib).map(b => [b[0], typeof b[1]]))
 
     if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem({ id, bibtex, groups: bib.groups, jabref: bib.jabrefMeta, validFields })).complete()
+      await (new ZoteroItem(id, bibtex, bib.jabref, validFields)).complete()
     } catch (err) {
       debug('bbt import error:', err)
       errors.push({ type: 'bbt_error', error: err })
@@ -1166,7 +1149,7 @@ Translator.doImport = async () => {
     Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
   }
 
-  for (const group of bib.groups || []) {
+  for (const group of bib.jabref.groups || []) {
     importGroup(group, itemIDS, true)
   }
 
