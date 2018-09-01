@@ -155,15 +155,6 @@ Reference.prototype.typeMap = {
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-function importReferences(input) {
-  return biblatex.parse(input, {
-    rawFields: true,
-    processUnexpected: true,
-    processUnknown: { comment: 'f_verbatim' },
-    processInvalidURIs: true,
-  })
-}
-
 Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
@@ -274,9 +265,12 @@ Translator.doExport = () => {
 
 Translator.detectImport = () => {
   const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
-  const bib = importReferences(input)
-  const found = Object.keys(bib.entries).length > 0
-  return found
+  const bib = biblatex.parse(input, {
+    processUnexpected: true,
+    processUnknown: { comment: 'f_verbatim' },
+    processInvalidURIs: true,
+  })
+  return Object.keys(bib.entries).length > 0
 }
 
 function importGroup(group, itemIDs, root = null) {
@@ -1120,7 +1114,13 @@ Translator.doImport = async () => {
   }
 
   if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
-  const bib = importReferences(input)
+
+  const bib = await biblatex.parse(input, {
+    processUnexpected: true,
+    processUnknown: { comment: 'f_verbatim' },
+    processInvalidURIs: true,
+    async: true,
+  })
 
   const ignore = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
   const errors = bib.errors.concat(bib.warnings).filter(err => !ignore.has(err.type))
