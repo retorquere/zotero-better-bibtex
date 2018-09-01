@@ -103,6 +103,7 @@ interface ITranslator {
   isJurisM: boolean
   isZotero: boolean
   unicode: boolean
+  pathSep: string
   debugEnabled: boolean
 
   doExport: () => void

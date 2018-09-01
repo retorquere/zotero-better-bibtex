@@ -306,6 +306,8 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
       return
 
     when '.json'
+      open('exported.json', 'w'){|f| f.puts(found) }
+
       found = normalizeJSON(JSON.parse(found))
       expected = normalizeJSON(JSON.parse(expected))
 

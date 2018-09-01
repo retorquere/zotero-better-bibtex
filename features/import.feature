@@ -38,14 +38,13 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 986         |
  # | Async import, large library #720                                            | 9057        |
 
-@test-cluster-1 @959
+@test-cluster-1 @959 @1058
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
-
   Examples:
   | file                                                                        | references  |
-  | keywords import as bare string, not list, to unparse                        | 1           |
+  | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
@@ -71,10 +70,10 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |
 
+@13
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
-
   Examples:
   | file                                                                        | references  |
   | Better BibTeX.013                                                           | 2           |

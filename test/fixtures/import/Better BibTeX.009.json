@@ -18,14 +18,6 @@
   },
   "items": [
     {
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>line 13: incomplete reference @emptyreference</li></ul>",
-      "tags": [
-        "#Better BibTeX import error"
-      ],
-      "itemID": 4
-    },
-    {
       "itemID": 1,
       "itemType": "journalArticle",
       "volume": "62",
@@ -134,6 +126,14 @@
         "breadcrust",
         "plinian"
       ]
+    },
+    {
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>line 13: incomplete reference @emptyreference</li></ul>",
+      "tags": [
+        "#Better BibTeX import error"
+      ],
+      "itemID": 4
     }
   ]
 }
