@@ -669,37 +669,41 @@ class ZoteroItem {
       '\\\\':   '\u0013',
       '\u0013': '\\',
     }
-    const attachments = []
-    for (const att of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
-      const parts = att.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
+
+    for (const record of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
+      const att = {
+        mimeType: '',
+        path: '',
+        title: '',
+      }
+
+      const parts = record.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
       switch (parts.length) {
         case 1:
-          attachments.unshift({ path: parts[0] })
+          att.path = parts[0]
           break
 
         case 3: // tslint:disable-line:no-magic-numbers
-          attachments.unshift({ title: parts[0], path: parts[1], mimeType: parts[2] }) // tslint:disable-line:no-magic-numbers
+          att.title = parts[0]
+          att.path = parts[1]
+          att.mimeType = parts[2] // tslint:disable-line:no-magic-numbers
           break
 
         default:
-          attachments.unshift({})
+          debug(`Unexpected number of parts in file record '${record}': ${parts.length}`)
           break
       }
 
-      if (!attachments[0].path) attachments.splice(0, attachments.length) // empty array to signal error
-    }
+      if (!att.path) {
+        debug(`file record '${record}' has no file path`)
+        continue
+      }
 
-    if (attachments.length === 0) {
-      debug('attachments parse error:', value)
-      return false
-    }
-
-    for (const att of attachments) {
       if (this.jabref.meta.fileDirectory) att.path = `${this.jabref.meta.fileDirectory}${Translator.pathSep}${att.path}`
 
-      att.mimeType = (att.mimeType || '').toLowerCase()
-      if (!att.mimeType && att.path.toLowerCase().endsWith('.pdf')) att.mimeType = 'application/pdf'
-      if (att.mimeType.toLowerCase() === 'pdf') att.mimeType = 'application/pdf'
+      if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
+        att.mimeType = 'application/pdf'
+      }
       if (!att.mimeType) delete att.mimeType
 
       att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')

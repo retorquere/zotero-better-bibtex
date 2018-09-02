@@ -23,8 +23,6 @@ while (fields.length) {
   table.push(fields.splice(0, cells).concat([...Array(cells)]).slice(0, cells).map(cell => cell || ''))
 }
 
-const preferences = require('../gen/preferences/defaults.json')
-
 const formatter = {
   _: {},
   $: {},
@@ -79,7 +77,6 @@ for (const filter of Object.keys(formatter._)) {
   delete formatter._[filter]
 }
 
-fs.writeFileSync('docs/_data/preferences.yml', yaml.safeDump(preferences))
 fs.writeFileSync('docs/_data/pattern/fields.yml', yaml.safeDump(table))
 fs.writeFileSync('docs/_data/pattern/functions.yml', yaml.safeDump(formatter.$))
 fs.writeFileSync('docs/_data/pattern/filters.yml', yaml.safeDump(formatter._))
