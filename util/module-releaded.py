@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import sys
 
 reload = {
   'content/BetterBibTeX.ts': True,
@@ -16,5 +17,6 @@ with open(os.path.expanduser('~/.BBTZ5TEST.log')) as log:
       reload[line] = False
     elif reload[line]:
       continue
-
-    raise ValueError(line)
+    else:
+      print(reload)
+      sys.exit(1)
