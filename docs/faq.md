@@ -69,3 +69,10 @@ The double-bracing is the only unambiguous rule I could construct that consisten
 Bib(La)TeX provides a never-ending stream of edge cases, which BBT tries to decide algorithmically. I try to keep the resulting file as pretty as I can (I'm sensitive to the aesthetics myself), but the target is best described as "given reasonable input, generate well-rendering output", and reasonable-to-well-rendering in the BBT case will have to include "follows Zotero recommendations for storing references" and "prefer intent-preserving LaTeX over pretty-looking LaTeX".
 
 Bib(La)TeX be crazy.
+
+## Importing JabRef databases
+
+JabRef import works generally well but has a few gotchas:
+
+* If you have dynamic (query-based) groups these will not be imported.
+* If you have set a default folder for the pdf files in your JabRef preferences, the file paths in your JabRef database will be relative to that directory, but BBT can't read those preferences, so all attachments will fail to import. You can fix this by going into Jabref and selecting `File` - `Library properties` option, then filling out the path to the attachments directory in `general file directory`.

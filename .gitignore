@@ -31,3 +31,4 @@ resource/reports/cacheActivity.txt
 .env
 webpack/tslint/noModuleExportsRule.js
 typedoc.json
+*.bib_

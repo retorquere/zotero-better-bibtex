@@ -183,19 +183,6 @@
   },
   "items": [
     {
-      "itemType": "note",
-      "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>",
-      "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 0
-        }
-      ],
-      "dateAdded": "2018-01-16 16:17:07",
-      "dateModified": "2018-01-16 16:17:07",
-      "itemID": 56
-    },
-    {
       "itemType": "conferencePaper",
       "pages": "300-301",
       "date": "2016-02",
@@ -282,6 +269,19 @@
 
       ],
       "publicationTitle": "IEEE_J_PROC"
+    },
+    {
+      "itemType": "note",
+      "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>",
+      "tags": [
+        {
+          "tag": "#Better BibTeX import error",
+          "type": 0
+        }
+      ],
+      "dateAdded": "2018-01-16 16:17:07",
+      "dateModified": "2018-01-16 16:17:07",
+      "itemID": 56
     }
   ]
 }

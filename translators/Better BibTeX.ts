@@ -8,7 +8,7 @@ import { debug } from './lib/debug'
 import { htmlEscape } from './lib/html-escape'
 
 import JSON5 = require('json5')
-const BibTeXParser = require('biblatex-csl-converter').BibLatexParser // tslint:disable-line:variable-name
+import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -155,26 +155,6 @@ Reference.prototype.typeMap = {
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-function importReferences(input) {
-  const parser = new BibTeXParser(input, {
-    rawFields: true,
-    processUnexpected: true,
-    processUnknown: { comment: 'f_verbatim' },
-    processInvalidURIs: true,
-  })
-
-  /* this must be called before requesting warnings or errors -- this really, really weirds me out */
-  const references = parser.output
-
-  /* relies on side effect of calling '.output' */
-  return {
-    references,
-    groups: parser.groups,
-    errors: parser.errors,
-    warnings: parser.warnings,
-  }
-}
-
 Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
@@ -285,9 +265,12 @@ Translator.doExport = () => {
 
 Translator.detectImport = () => {
   const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
-  const bib = importReferences(input)
-  const found = Object.keys(bib.references).length > 0
-  return found
+  const bib = biblatex.parse(input, {
+    processUnexpected: true,
+    processUnknown: { comment: 'f_verbatim' },
+    processInvalidURIs: true,
+  })
+  return Object.keys(bib.entries).length > 0
 }
 
 function importGroup(group, itemIDs, root = null) {
@@ -462,8 +445,6 @@ class ZoteroItem {
     t: '\u209C',
   }
 
-  private id: string
-  private bibtex: any // comes from biblatex parser
   private fields: any // comes from biblatex parser
   private type: string
   private hackyFields: string[]
@@ -471,15 +452,14 @@ class ZoteroItem {
   private biblatexdatajson: boolean
   private validFields: { [key: string]: boolean }
 
-  constructor(id, bibtex, groups, validFields) {
-    this.id = id
-    this.bibtex = bibtex
-    this.groups = groups
+  constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }, validFields) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
     this.validFields = validFields[this.type]
 
-    if (!this.validFields) this.error(`import error: unexpected item ${bibtex.entry_key} of type ${this.type}`)
+    if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.entry_key} of type ${this.type}`)
+
+    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
@@ -489,7 +469,7 @@ class ZoteroItem {
 
     if (Translator.preferences.testing) {
       const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
-      if (err) this.error(`import error: unexpected fields on ${this.type} ${bibtex.entry_key}: ${err}`)
+      if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.entry_key}: ${err}`)
     }
   }
 
@@ -679,24 +659,59 @@ class ZoteroItem {
   }
 
   protected $file(value) {
-    let m, mimeType, path, title
     value = this.unparse(value)
 
-    // :Better BibTeX.001/Users/heatherwright/Documents/Scientific Papers/AVX3W9~F.PDF:PDF
-    if (m = value.match(/^([^:]*):([^:]+):([^:]*)$/)) {
-      title = m[1]
-      path = m[2]
-      mimeType = m[3] // tslint:disable-line:no-magic-numbers
-    } else {
-      path = value
+    const replace = {
+      '\\;':    '\u0011',
+      '\u0011': ';',
+      '\\:':    '\u0012',
+      '\u0012': ':',
+      '\\\\':   '\u0013',
+      '\u0013': '\\',
     }
 
-    mimeType = (mimeType || '').toLowerCase()
-    if (!mimeType && path.toLowerCase().endsWith('.pdf')) mimeType = 'application/pdf'
-    if (mimeType.toLowerCase() === 'pdf') mimeType = 'application/pdf'
-    if (!mimeType) mimeType = undefined
+    for (const record of value.replace(/\\[\\;:]/g, escaped => replace[escaped]).split(';')) {
+      const att = {
+        mimeType: '',
+        path: '',
+        title: '',
+      }
 
-    this.item.attachments.push({ title, path, mimeType })
+      const parts = record.split(':').map(str => str.replace(/[\u0011\u0012\u0013]/g, escaped => replace[escaped]))
+      switch (parts.length) {
+        case 1:
+          att.path = parts[0]
+          break
+
+        case 3: // tslint:disable-line:no-magic-numbers
+          att.title = parts[0]
+          att.path = parts[1]
+          att.mimeType = parts[2] // tslint:disable-line:no-magic-numbers
+          break
+
+        default:
+          debug(`Unexpected number of parts in file record '${record}': ${parts.length}`)
+          break
+      }
+
+      if (!att.path) {
+        debug(`file record '${record}' has no file path`)
+        continue
+      }
+
+      if (this.jabref.meta.fileDirectory) att.path = `${this.jabref.meta.fileDirectory}${Translator.pathSep}${att.path}`
+
+      if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
+        att.mimeType = 'application/pdf'
+      }
+      if (!att.mimeType) delete att.mimeType
+
+      att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
+      if (!att.title) delete att.title
+
+      this.item.attachments.push(att)
+    }
+
     return true
   }
 
@@ -966,7 +981,6 @@ class ZoteroItem {
 
   private import() {
     this.hackyFields = []
-    this.fields = { ...(this.bibtex.fields || {}), ...(this.bibtex.unexpected_fields || {}), ...(this.bibtex.unknown_fields || {}) }
 
     for (const subtitle of ['titleaddon', 'subtitle']) {
       if (!this.fields.title && this.fields[subtitle]) {
@@ -1104,10 +1118,44 @@ Translator.doImport = async () => {
   }
 
   if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
-  const bib = importReferences(input)
+
+  const bib = await biblatex.parse(input, {
+    processUnexpected: true,
+    processUnknown: { comment: 'f_verbatim' },
+    processInvalidURIs: true,
+    async: true,
+  })
 
   const ignore = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
   const errors = bib.errors.concat(bib.warnings).filter(err => !ignore.has(err.type))
+
+  if (Translator.preferences.csquotes) {
+    ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
+  }
+
+  const validFields = Zotero.BetterBibTeX.validFields()
+
+  const itemIDS = {}
+  let imported = 0
+  const references = (Object.entries(bib.entries) as any[][]) // TODO: add typings to the npm package
+  for (const [id, bibtex] of references) {
+
+    if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
+
+    try {
+      await (new ZoteroItem(id, bibtex, bib.jabref, validFields)).complete()
+    } catch (err) {
+      debug('bbt import error:', err)
+      errors.push({ type: 'bbt_error', error: err })
+    }
+
+    imported += 1
+    Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
+  }
+
+  for (const group of bib.jabref.groups || []) {
+    importGroup(group, itemIDS, true)
+  }
 
   if (errors.length) {
     const item = new Zotero.Item('note')
@@ -1123,6 +1171,12 @@ Translator.doImport = async () => {
         case 'undefined_variable':
           item.note += `<li>line ${err.line}: undefined variable '${htmlEscape(err.variable)}'</li>`
           break
+        case 'unknown_type':
+          item.note += `<li>line ${err.line}: unknown reference type '${htmlEscape(err.type_name)}'</li>`
+          break
+        case 'bbt_error':
+          item.note += `<li>Unhandled Better BibTeX error: '${htmlEscape(err.error.toString())}'</li>`
+          break
         default:
           if (Translator.preferences.testing) throw new Error('unhandled import error: ' + JSON.stringify(err))
           item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
@@ -1134,24 +1188,5 @@ Translator.doImport = async () => {
     await item.complete()
   }
 
-  if (Translator.preferences.csquotes) {
-    ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
-  }
-
-  const validFields = Zotero.BetterBibTeX.validFields()
-
-  const itemIDS = {}
-  let imported = 0
-  const references = (Object.entries(bib.references) as any[][]) // TODO: add typings to the npm package
-  for (const [id, ref] of references) {
-    if (ref.entry_key) itemIDS[ref.entry_key] = id // Endnote has no citation keys
-    await (new ZoteroItem(id, ref, bib.groups, validFields)).complete()
-    imported += 1
-    Zotero.setProgress(imported / references.length * 100) // tslint:disable-line:no-magic-numbers
-  }
   Zotero.setProgress(100) // tslint:disable-line:no-magic-numbers
-
-  for (const group of bib.groups || []) {
-    importGroup(group, itemIDS, true)
-  }
 }

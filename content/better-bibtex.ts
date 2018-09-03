@@ -277,6 +277,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   validFields(sandbox) { return Serializer.validFields },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  platform(sandbox) { return Zotero.platform },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
 }
 
