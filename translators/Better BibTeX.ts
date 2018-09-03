@@ -699,6 +699,8 @@ class ZoteroItem {
         continue
       }
 
+      debug('$file:', att, this.jabref.meta)
+
       if (this.jabref.meta.fileDirectory) att.path = `${this.jabref.meta.fileDirectory}${Translator.pathSep}${att.path}`
 
       if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
