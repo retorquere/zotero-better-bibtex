@@ -29,13 +29,17 @@ if (process.env.TRACE === 'true') {
 ts_loaders.push('ts-loader')
 
 const common = {
-  mode: 'production',
+  mode: 'development',
+  devtool: false,
   optimization: {
+    flagIncludedChunks: true,
+    occurrenceOrder: false,
+    usedExports: true,
     minimize: false,
     concatenateModules: false,
     noEmitOnErrors: true,
-    // namedModules: true,
-    // namedChunks: true,
+    namedModules: true,
+    namedChunks: true,
     // runtimeChunk: false,
   },
 
