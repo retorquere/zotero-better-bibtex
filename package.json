@@ -80,7 +80,7 @@
     "tslint": "5.11.0",
     "webpack-cli": "^3.1.0",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.54"
+    "zotero-plugin": "0.0.55"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",

@@ -16,8 +16,6 @@ script: |
   #set -e
   #set -x
 
-  yarn install
-
   gem install bundler
   gem update bundler
   bundle config
@@ -73,7 +71,6 @@ jobs:
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
         pip install -r requirements.txt
-        yarn install
         yarn run release
         # curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
       fi
