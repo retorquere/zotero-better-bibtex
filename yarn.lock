@@ -6112,9 +6112,9 @@ zlibjs@^0.3.1:
   version "0.3.1"
   resolved "https://registry.yarnpkg.com/zlibjs/-/zlibjs-0.3.1.tgz#50197edb28a1c42ca659cc8b4e6a9ddd6d444554"
 
-zotero-plugin@0.0.52:
-  version "0.0.52"
-  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.52.tgz#0fbfe68038619591c53ed614e93f0ea65d708280"
+zotero-plugin@0.0.54:
+  version "0.0.54"
+  resolved "https://registry.yarnpkg.com/zotero-plugin/-/zotero-plugin-0.0.54.tgz#f13745926297b8029d40414d98a7ea821eaeea68"
   dependencies:
     "@octokit/rest" "^15.9.6"
     "@rgrove/parse-xml" "^1.1.1"
