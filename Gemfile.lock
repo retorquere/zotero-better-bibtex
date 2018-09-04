@@ -902,6 +902,7 @@ DEPENDENCIES
   deepsort
   dotenv
   facets
+  ffi (~> 1.9.24)
   github-pages
   headless
   httparty

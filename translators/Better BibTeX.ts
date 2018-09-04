@@ -699,6 +699,8 @@ class ZoteroItem {
         continue
       }
 
+      debug('$file:', att, this.jabref.meta)
+
       if (this.jabref.meta.fileDirectory) att.path = `${this.jabref.meta.fileDirectory}${Translator.pathSep}${att.path}`
 
       if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
@@ -708,6 +710,8 @@ class ZoteroItem {
 
       att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
       if (!att.title) delete att.title
+
+      debug('$file:*', att, this.jabref.meta)
 
       this.item.attachments.push(att)
     }
