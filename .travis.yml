@@ -75,5 +75,5 @@ jobs:
         pip install -r requirements.txt
         yarn install
         yarn run release
-        curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
+        # curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
       fi
