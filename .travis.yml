@@ -74,4 +74,5 @@ jobs:
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
         pip install -r requirements.txt
         yarn run release
+        curl --upload-file xpi/zotero-better-bibtex-*.xpi
       fi
