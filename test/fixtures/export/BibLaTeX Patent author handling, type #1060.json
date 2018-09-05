@@ -61,6 +61,99 @@
       "citekey": "InventorcombinatorialproblemstabilityIssueDate",
       "date": "Issue Date",
       "number": "Patent Number"
+    },
+    {
+      "itemType": "patent",
+      "url": "http://www.freepatentsonline.com/DE10361215.html",
+      "accessDate": "2018-09-05T14:27:59Z",
+      "assignee": "DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (München, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)",
+      "abstractNote": "Die\nErfindung betrifft eine elektrische Einrichtung mit einem Generator\n12, insbesondere für die\nVerwendung in dem Bordnetz 13 eines Kraftfahrzeugs, mit einem Regler\n12B für\ndie Regelung der Generatorspannung. Bei der Einrichtung sind ein\nBereich 30 für\ndie Regelung vorgesehen, in dem eine Spannungsregelung durchgeführt wird,\nund Bereiche 31, 32, in denen eine Momentenregelung durchgeführt wird.\nWeiterhin betrifft die Erfindung Verfahren für den Betrieb einer solchen\nEinrichtung.",
+      "applicationNumber": "DE10361215A",
+      "title": "Elektrische Einrichtung und Betriebsverfahren",
+      "filingDate": "2003-12-24 2003-12-24",
+      "creators": [
+        {
+          "firstName": "Xaver",
+          "lastName": "Laufenberg",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Dominique",
+          "lastName": "Eynius",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Helmut",
+          "lastName": "Suelzle",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Stephan",
+          "lastName": "Usbeck",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Matthias",
+          "lastName": "Spaeth",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Miriam",
+          "lastName": "Neuser-Hoffmann",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Christian",
+          "lastName": "Myrzik",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Manfred",
+          "lastName": "Schmid",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Franz",
+          "lastName": "Nietfeld",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Alexander",
+          "lastName": "Thiel",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Harald",
+          "lastName": "Braun",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Norbert",
+          "lastName": "Ebner",
+          "creatorType": "inventor"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2018-09-05T14:27:59Z",
+      "dateModified": "2018-09-05T14:27:59Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZC2UZHCP",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Snaptshot",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2018-09-05T14:28:00Z",
+          "dateModified": "2018-09-05T14:28:00Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/KTEAECRA"
+        }
+      ],
+      "notes": [],
+      "itemID": 100,
+      "citekey": "LaufenbergElektrischeEinrichtungund2005",
+      "date": "2005-07-28",
+      "number": "DE10361215"
     }
   ]
 }
