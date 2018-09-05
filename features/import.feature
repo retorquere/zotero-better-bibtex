@@ -44,6 +44,7 @@ Scenario Outline: Better BibTeX Import
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
+  | BibLaTeX Patent author handling & type #1060                                | 2           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
