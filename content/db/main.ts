@@ -122,7 +122,7 @@ class DBStore {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
   autosave: true,
-  autosaveInterval: 5000,
+  autosaveInterval: 3600000,
   autosaveOnIdle: true,
   adapter: new DBStore(),
 })
