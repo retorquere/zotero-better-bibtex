@@ -87,7 +87,7 @@ config.push(
         },
       },
       runtimeChunk: {
-        name: 'common'
+        name: 'webpack'
       },
     },
     plugins: [
