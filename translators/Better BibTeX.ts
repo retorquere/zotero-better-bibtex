@@ -767,11 +767,12 @@ class ZoteroItem {
   protected $howpublished(value, field) { return this.$url(value, field) }
 
   protected $type(value) {
-    for (const field of ['sessionType', 'websiteType', 'manuscriptType', 'genre', 'postType', 'sessionType', 'letterType', 'manuscriptType', 'mapType', 'presentationType', 'regulationType', 'reportType', 'thesisType', 'websiteType']) {
-      if (this.validFields[field]) {
-        this.set(field, this.unparse(value))
-        return true
-      }
+    // #1060, TODO: may want to add prefix to patent number or something
+    if (this.type === 'patent') return true
+
+    if (this.validFields.type) {
+      this.set('type', this.unparse(value))
+      return true
     }
     return false
   }
