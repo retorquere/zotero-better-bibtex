@@ -12,7 +12,7 @@
   year = {Issue Date}
 }
 
-@patent{LaufenbergElektrischeEinrichtungund2005,
+@patent{laufenbergElektrischeEinrichtungUnd2005,
   abstract = {Die
 Erfindung betrifft eine elektrische Einrichtung mit einem Generator
 12, insbesondere für die
@@ -26,7 +26,6 @@ Weiterhin betrifft die Erfindung Verfahren für den Betrieb einer solchen
 Einrichtung.},
   author = {Laufenberg, Xaver and Eynius, Dominique and Suelzle, Helmut and Usbeck, Stephan and Spaeth, Matthias and Neuser-Hoffmann, Miriam and Myrzik, Christian and Schmid, Manfred and Nietfeld, Franz and Thiel, Alexander and Braun, Harald and Ebner, Norbert},
   date = {2005-07-28},
-  file = {files/1/DE10361215.html},
   holder = {{DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (München, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)}},
   number = {10361215},
   title = {Elektrische {{Einrichtung}} Und {{Betriebsverfahren}}},
