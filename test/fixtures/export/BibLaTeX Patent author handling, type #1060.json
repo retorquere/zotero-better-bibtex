@@ -1,0 +1,66 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.55",
+        "platform": "Linux x86_64",
+        "oscpu": "Linux x86_64",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.55",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.0.197.emile.titanarum"
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "itemType": "patent",
+      "place": "Place",
+      "pages": "247–261",
+      "assignee": "Assignee",
+      "priorityNumbers": "Priority Numbers",
+      "references": "References",
+      "legalStatus": "Legal Status",
+      "country": "Country",
+      "applicationNumber": "Application Number",
+      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
+      "issuingAuthority": "Issueing Authority",
+      "filingDate": "0000-00-00 Filing date",
+      "creators": [
+        {
+          "firstName": "Some",
+          "lastName": "Inventor",
+          "creatorType": "inventor"
+        },
+        {
+          "firstName": "Some",
+          "lastName": "Attorney/Agent",
+          "creatorType": "attorneyAgent"
+        },
+        {
+          "firstName": "Some",
+          "lastName": "Contributer",
+          "creatorType": "contributor"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2018-03-04T10:57:40Z",
+      "dateModified": "2018-09-05T06:56:46Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS",
+      "attachments": [],
+      "notes": [
+        "<p>MR 46:7018</p>"
+      ],
+      "itemID": 32,
+      "citekey": "InventorcombinatorialproblemstabilityIssueDate",
+      "date": "Issue Date",
+      "number": "Patent Number"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+
+@patent{InventorcombinatorialproblemstabilityIssueDate,
+  editora = {Attorney/Agent, Some and Contributer, Some},
+  editoratype = {collaborator},
+  holder = {Inventor, Some},
+  location = {{Place}},
+  number = {Patent Number},
+  pages = {247--261},
+  title = {A Combinatorial Problem; Stability and Order for Models and Theories in Infinitary Languages},
+  year = {Issue Date}
+}
+
+

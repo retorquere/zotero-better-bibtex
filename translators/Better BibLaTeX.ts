@@ -417,6 +417,10 @@ Translator.doExport = () => {
         }
         break
 
+      case 'patent':
+        ref.add({ name: 'type', value: 'patent' + ({de: 'de', eu: 'eu', fr: 'fr', uk: 'uk', us: 'us'}[item.country] || '') })
+        break
+
       default:
         ref.add({ name: 'type', value: item.type })
     }

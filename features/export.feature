@@ -9,6 +9,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BibLaTeX Patent author handling, type #1060                                                    | 1           |
      | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054    | 1           |
      | Don't title-case sup-subscripts #1037                                                          | 8           |
      | Japanese rendered as Chinese in Citekey #979                                                   | 1           |
