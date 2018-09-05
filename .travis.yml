@@ -36,8 +36,6 @@ script: |
     export NIGHTLY="and not @nightly"
   fi
 
-  pip show lxml
-
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
 jobs:
