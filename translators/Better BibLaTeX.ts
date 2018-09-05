@@ -64,6 +64,7 @@ Reference.prototype.addCreators = function() {
         break
 
       case 'author':
+      case 'inventor':
       case 'interviewer':
       case 'programmer':
       case 'artist':
@@ -84,7 +85,7 @@ Reference.prototype.addCreators = function() {
         kind = 'editor'
         break
 
-      case 'inventor':
+      case 'assignee':
         kind = 'holder'
         break
 
@@ -388,6 +389,7 @@ Translator.doExport = () => {
         ref.add({ name: 'publisher', value: item.publisher })
     }
 
+    debug('adding type:', {item_type: item.type || '', item_referenceType: item.referenceType, referencetype: this.referencetype})
     switch (item.referenceType) {
       case 'letter':
       case 'personal_communication':
@@ -437,6 +439,14 @@ Translator.doExport = () => {
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
+    if (!item.creators) item.creators = []
+    // https://github.com/retorquere/zotero-better-bibtex/issues/1060
+    if (item.itemType === 'patent' && item.assignee && !item.creators.find(cr => cr.name === this.item.assignee || (cr.lastName === this.item.assignee && (cr.fieldMode === 1)))) {
+      item.creators.push({
+        name: item.assignee,
+        creatorType: 'assignee',
+      })
+    }
     ref.addCreators()
 
     // 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.

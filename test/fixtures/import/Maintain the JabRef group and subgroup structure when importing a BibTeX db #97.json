@@ -5047,8 +5047,7 @@
     {
       "itemType": "patent",
       "extra": "Citation Key: Chen_2006_patent \nbibtex[owner=Francesco;yearfiled=2005]",
-      "patentNumber": "US2006/0256608A1",
-      "issueDate": "2006",
+      "number": "US2006/0256608A1",
       "country": "United States",
       "title": "Resistive memory device with improved data retention and reduced power",
       "creators": [
@@ -10108,8 +10107,7 @@
     {
       "itemType": "patent",
       "extra": "Citation Key: Grondahl_1927_patent \nbibtex[owner=Francesco;yearfiled=1925]",
-      "patentNumber": "1640335",
-      "issueDate": "1927",
+      "number": "1640335",
       "country": "American",
       "title": "Unidirectional Current Carrying Device",
       "creators": [
@@ -15481,8 +15479,7 @@
     {
       "itemType": "patent",
       "extra": "Citation Key: Kaufman_1986_patent \nbibtex[day=15;dayfiled=11;monthfiled=January;owner=Francesco;yearfiled=1985]",
-      "patentNumber": "4582542",
-      "issueDate": "April 1986",
+      "number": "4582542",
       "language": "english",
       "country": "American",
       "title": "Ohmic copper--cuprous oxide contacts",
@@ -23757,8 +23754,7 @@
     {
       "itemType": "patent",
       "extra": "Citation Key: Osumi_1997_patent \nbibtex[owner=Francesco]",
-      "patentNumber": "0456513",
-      "issueDate": "1997",
+      "number": "0456513",
       "language": "french",
       "country": "European",
       "title": "Dispositif supraconducteur opto--électronique à base de Cu₂O à photoconductivité et supraconductivité conjuguées",

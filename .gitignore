@@ -32,3 +32,5 @@ resource/reports/cacheActivity.txt
 webpack/tslint/noModuleExportsRule.js
 typedoc.json
 *.bib_
+test/fixtures/profile/zotero/zotero/better-bibtex-12k.sqlite
+test/fixtures/profile/zotero/zotero/zotero-12k.sqlite

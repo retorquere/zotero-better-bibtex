@@ -9,7 +9,7 @@ import { datefield } from './datefield'
 interface IField {
   name: string
   verbatim?: string
-  value: string | string[] | number | null
+  value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; }
   enc?: string
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   preserveBibTeXVariables?: boolean

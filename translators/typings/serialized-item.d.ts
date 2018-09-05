@@ -1,78 +1,209 @@
 interface ISerializedItem {
-  DOI: any // [conferencePaper, journalArticle]
-  ISBN: any // [audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, encyclopediaArticle, map, videoRecording]
-  ISSN: any // [journalArticle, magazineArticle, newspaperArticle]
-  abstractNote: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  accessDate: any // [artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  applicationNumber: any // [patent]
-  archive: any // [artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording]
-  archiveLocation: any // [artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording]
-  artworkSize: any // [artwork]
-  assignee: any // [patent]
-  callNumber: any // [artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording]
-  code: any // [bill, statute]
-  codeNumber: any // [statute]
-  committee: any // [hearing]
-  conferenceName: any // [conferencePaper]
-  country: any // [patent]
-  court: any // [case]
-  date: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage] case.dateDecided, patent.issueDate, statute.dateEnacted
-  edition: any // [book, bookSection, dictionaryEntry, encyclopediaArticle, map, newspaperArticle]
-  extra: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  filingDate: any // [patent]
-  history: any // [bill, case, hearing, statute]
-  issue: any // [journalArticle, magazineArticle]
-  issuingAuthority: any // [patent]
-  journalAbbreviation: any // [journalArticle]
-  language: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  legalStatus: any // [patent]
-  legislativeBody: any // [bill, hearing]
-  libraryCatalog: any // [artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording]
-  medium: any // [artwork, audioRecording, film, interview, podcast, radioBroadcast, tvBroadcast, videoRecording] artwork.artworkMedium, audioRecording.audioRecordingFormat, film.videoRecordingFormat, interview.interviewMedium, podcast.audioFileType, radioBroadcast.audioRecordingFormat, tvBroadcast.videoRecordingFormat, videoRecording.videoRecordingFormat
-  meetingName: any // [presentation]
-  numPages: any // [book, manuscript, thesis]
-  number: any // [bill, case, hearing, patent, podcast, radioBroadcast, report, statute, tvBroadcast] bill.billNumber, case.docketNumber, hearing.documentNumber, patent.patentNumber, podcast.episodeNumber, radioBroadcast.episodeNumber, report.reportNumber, statute.publicLawNumber, tvBroadcast.episodeNumber
-  numberOfVolumes: any // [audioRecording, book, bookSection, dictionaryEntry, encyclopediaArticle, hearing, videoRecording]
-  pages: any // [bill, bookSection, case, conferencePaper, dictionaryEntry, encyclopediaArticle, hearing, journalArticle, magazineArticle, newspaperArticle, patent, report, statute] bill.codePages, case.firstPage
-  place: any // [audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, encyclopediaArticle, hearing, manuscript, map, newspaperArticle, patent, presentation, radioBroadcast, report, thesis, tvBroadcast, videoRecording]
-  priorityNumbers: any // [patent]
-  programmingLanguage: any // [computerProgram]
-  publicationTitle: any // [blogPost, bookSection, conferencePaper, dictionaryEntry, encyclopediaArticle, forumPost, journalArticle, magazineArticle, newspaperArticle, radioBroadcast, tvBroadcast, webpage] blogPost.blogTitle, bookSection.bookTitle, conferencePaper.proceedingsTitle, dictionaryEntry.dictionaryTitle, encyclopediaArticle.encyclopediaTitle, forumPost.forumTitle, radioBroadcast.programTitle, tvBroadcast.programTitle, webpage.websiteTitle
-  publisher: any // [audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, hearing, map, radioBroadcast, report, thesis, tvBroadcast, videoRecording] audioRecording.label, computerProgram.company, film.distributor, radioBroadcast.network, report.institution, thesis.university, tvBroadcast.network, videoRecording.studio
-  references: any // [patent]
-  reporter: any // [case]
-  rights: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  runningTime: any // [audioRecording, film, podcast, radioBroadcast, tvBroadcast, videoRecording]
-  scale: any // [map]
-  section: any // [bill, newspaperArticle, statute]
-  series: any // [book, bookSection, conferencePaper, dictionaryEntry, encyclopediaArticle, journalArticle]
-  seriesNumber: any // [book, bookSection, dictionaryEntry, encyclopediaArticle]
-  seriesText: any // [journalArticle]
-  seriesTitle: any // [audioRecording, computerProgram, journalArticle, map, podcast, report, videoRecording]
-  session: any // [bill, hearing, statute]
-  shortTitle: any // [artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  system: any // [computerProgram]
-  title: any // [artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage] case.caseName, email.subject, statute.nameOfAct
-  type: any // [blogPost, film, forumPost, letter, manuscript, map, presentation, report, thesis, webpage] blogPost.websiteType, film.genre, forumPost.postType, letter.letterType, manuscript.manuscriptType, map.mapType, presentation.presentationType, report.reportType, thesis.thesisType, webpage.websiteType
-  url: any // [artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage]
-  versionNumber: any // [computerProgram]
-  volume: any // [audioRecording, bill, book, bookSection, case, conferencePaper, dictionaryEntry, encyclopediaArticle, journalArticle, magazineArticle, videoRecording] bill.codeVolume, case.reporterVolume
-
-  itemType: string // artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
-  dateModified: string
+  itemID: string | number
+  itemType: string
   dateAdded: string
-  notes: string[]
+  dateModified: string
+  creators: { creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number }[]
   tags: string[]
-  collections: any[]
-  creators: any[]
-  attachments: any[]
-  itemID: any
-  multi: any
+  notes: string[]
+  attachments: { path: string, title?: string, mimeType?: string }
+  // exists only on 'note' items
+  note: string
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  abstractNote: string
 
+  // exists on artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  accessDate: string
+
+  // exists on patent
+  applicationNumber: string
+
+  // exists on artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  archive: string
+
+  // exists on artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  archiveLocation: string
+
+  // exists on artwork
+  artworkSize: string
+
+  // exists on patent
+  assignee: string
+
+  // exists on artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  callNumber: string
+
+  // exists on bill, statute
+  code: string
+
+  // exists on statute
+  codeNumber: string
+
+  // exists on hearing
+  committee: string
+
+  // exists on conferencePaper
+  conferenceName: string
+
+  // exists on patent
+  country: string
+
+  // exists on case
+  court: string
+
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  // also known as case.dateDecided, patent.issueDate, statute.dateEnacted
+  date: string
+
+  // exists on conferencePaper, journalArticle
+  DOI: string
+
+  // exists on book, bookSection, dictionaryEntry, encyclopediaArticle, map, newspaperArticle
+  edition: string
+
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  extra: string
+
+  // exists on patent
+  filingDate: string
+
+  // exists on bill, case, hearing, statute
+  history: string
+
+  // exists on audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, encyclopediaArticle, map, videoRecording
+  ISBN: string
+
+  // exists on journalArticle, magazineArticle, newspaperArticle
+  ISSN: string
+
+  // exists on journalArticle, magazineArticle
+  issue: string
+
+  // exists on patent
+  issuingAuthority: string
+
+  // exists on journalArticle
+  journalAbbreviation: string
+
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  language: string
+
+  // exists on patent
+  legalStatus: string
+
+  // exists on bill, hearing
+  legislativeBody: string
+
+  // exists on artwork, audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  libraryCatalog: string
+
+  // exists on artwork, audioRecording, film, interview, podcast, radioBroadcast, tvBroadcast, videoRecording
+  // also known as artwork.artworkMedium, audioRecording.audioRecordingFormat, film.videoRecordingFormat, interview.interviewMedium, podcast.audioFileType, radioBroadcast.audioRecordingFormat, tvBroadcast.videoRecordingFormat, videoRecording.videoRecordingFormat
+  medium: string
+
+  // exists on presentation
+  meetingName: string
+
+  // exists on bill, case, hearing, patent, podcast, radioBroadcast, report, statute, tvBroadcast
+  // also known as bill.billNumber, case.docketNumber, hearing.documentNumber, patent.patentNumber, podcast.episodeNumber, radioBroadcast.episodeNumber, report.reportNumber, statute.publicLawNumber, tvBroadcast.episodeNumber
+  number: string
+
+  // exists on audioRecording, book, bookSection, dictionaryEntry, encyclopediaArticle, hearing, videoRecording
+  numberOfVolumes: string
+
+  // exists on book, manuscript, thesis
+  numPages: string
+
+  // exists on bill, bookSection, case, conferencePaper, dictionaryEntry, encyclopediaArticle, hearing, journalArticle, magazineArticle, newspaperArticle, patent, report, statute
+  // also known as bill.codePages, case.firstPage
+  pages: string
+
+  // exists on audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, encyclopediaArticle, hearing, manuscript, map, newspaperArticle, patent, presentation, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  place: string
+
+  // exists on patent
+  priorityNumbers: string
+
+  // exists on computerProgram
+  programmingLanguage: string
+
+  // exists on blogPost, bookSection, conferencePaper, dictionaryEntry, encyclopediaArticle, forumPost, journalArticle, magazineArticle, newspaperArticle, radioBroadcast, tvBroadcast, webpage
+  // also known as blogPost.blogTitle, bookSection.bookTitle, conferencePaper.proceedingsTitle, dictionaryEntry.dictionaryTitle, encyclopediaArticle.encyclopediaTitle, forumPost.forumTitle, radioBroadcast.programTitle, tvBroadcast.programTitle, webpage.websiteTitle
+  publicationTitle: string
+
+  // exists on audioRecording, book, bookSection, computerProgram, conferencePaper, dictionaryEntry, document, encyclopediaArticle, film, hearing, map, radioBroadcast, report, thesis, tvBroadcast, videoRecording
+  // also known as audioRecording.label, computerProgram.company, film.distributor, radioBroadcast.network, report.institution, thesis.university, tvBroadcast.network, videoRecording.studio
+  publisher: string
+
+  // exists on patent
+  references: string
+
+  // exists on case
+  reporter: string
+
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  rights: string
+
+  // exists on audioRecording, film, podcast, radioBroadcast, tvBroadcast, videoRecording
+  runningTime: string
+
+  // exists on map
+  scale: string
+
+  // exists on bill, newspaperArticle, statute
+  section: string
+
+  // exists on book, bookSection, conferencePaper, dictionaryEntry, encyclopediaArticle, journalArticle
+  series: string
+
+  // exists on book, bookSection, dictionaryEntry, encyclopediaArticle
+  seriesNumber: string
+
+  // exists on journalArticle
+  seriesText: string
+
+  // exists on audioRecording, computerProgram, journalArticle, map, podcast, report, videoRecording
+  seriesTitle: string
+
+  // exists on bill, hearing, statute
+  session: string
+
+  // exists on artwork, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  shortTitle: string
+
+  // exists on computerProgram
+  system: string
+
+  // exists on artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  // also known as case.caseName, email.subject, statute.nameOfAct
+  title: string
+
+  // exists on blogPost, film, forumPost, letter, manuscript, map, presentation, report, thesis, webpage
+  // also known as blogPost.websiteType, film.genre, forumPost.postType, letter.letterType, manuscript.manuscriptType, map.mapType, presentation.presentationType, report.reportType, thesis.thesisType, webpage.websiteType
+  type: string
+
+  // exists on artwork, attachment, audioRecording, bill, blogPost, book, bookSection, case, computerProgram, conferencePaper, dictionaryEntry, document, email, encyclopediaArticle, film, forumPost, hearing, instantMessage, interview, journalArticle, letter, magazineArticle, manuscript, map, newspaperArticle, patent, podcast, presentation, radioBroadcast, report, statute, thesis, tvBroadcast, videoRecording, webpage
+  url: string
+
+  // exists on computerProgram
+  versionNumber: string
+
+  // exists on audioRecording, bill, book, bookSection, case, conferencePaper, dictionaryEntry, encyclopediaArticle, journalArticle, magazineArticle, videoRecording
+  // also known as bill.codeVolume, case.reporterVolume
+  volume: string
+
+  uri: string
   referenceType: string
   cslType: string
   cslVolumeTitle: string
   citekey: string
-  extraFields: { bibtex: { [key: string]: { name: string, type: string, value: any } }, csl: { [key: string]: { name: string, type: string, value: any } }, kv: { [key: string]: { name: string, type: string, value: string, raw?: boolean } } }
+  collections: string[]
+  extraFields: {
+    bibtex: { [key: string]: { name: string, type: string, value: any } }
+    csl: { [key: string]: { name: string, type: string, value: any } }
+    kv: { [key: string]: { name: string, type: string, value: string, raw?: boolean } }
+  }
   arXiv: { eprint: string, source?: string, id: string, primaryClass?: string }
+  // Juris-M extras
+  multi: any
 }
