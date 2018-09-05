@@ -66,6 +66,7 @@
   </treecols>
 
   <script src="chrome://zotero/content/include.js"/>
+  <script src="chrome://zotero-better-bibtex/content/webpack.js"/>
   <script src="chrome://zotero-better-bibtex/content/common.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.js"/>
   <script src="chrome://zotero-better-bibtex/content/BetterBibTeX.ZoteroPane.js"/>
