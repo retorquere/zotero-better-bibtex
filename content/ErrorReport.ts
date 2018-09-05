@@ -92,6 +92,11 @@ export = new class ErrorReport {
     if (index === 0) Zotero.Utilities.Internal.quit(true)
   }
 
+  private async ping(region) {
+    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`)
+    return { region, ...s3[region] }
+  }
+
   private async init() {
     const wizard = document.getElementById('better-bibtex-error-report')
 
@@ -113,17 +118,6 @@ export = new class ErrorReport {
 
     this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
     log.debug('ErrorReport.debuglog:', m, debugLog, this.chunkSize)
-
-    const regions = []
-    for (const candidate of PACKAGE.bugs.logs.regions) {
-      const started = Date.now()
-      try {
-        await Zotero.HTTP.request('GET', `http://s3.${candidate}.amazonaws.com/ping`)
-        regions.push({region: candidate, ping: ((candidate === debugLog.region) ? -1 : 1) * (Date.now() - started), ...s3[candidate]})
-      } catch (err) {
-        log.error('ErrorReport.ping: could not reach', candidate, err)
-      }
-    }
 
     this.params = window.arguments[0].wrappedJSObject
 
@@ -167,12 +161,10 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
-    regions.sort((a, b) => a.ping - b.ping)
-    const region = regions[0]
-    const postfix = region.short
-    this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${postfix}.s3-${region.region}.amazonaws.com${region.tld}`
-    this.key = `${Zotero.Utilities.generateObjectKey()}-${postfix}`
-    log.debug('ErrorReport.ping:', regions, this.bucket, this.key)
+    const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.filter(r => !debugLog.region || r === debugLog.region).map(this.ping))
+    this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
+    this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
+    log.debug('ErrorReport.ping:', this.bucket, this.key)
 
     continueButton.disabled = false
     continueButton.focus()
