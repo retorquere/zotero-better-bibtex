@@ -766,6 +766,13 @@ class ZoteroItem {
   }
   protected $howpublished(value, field) { return this.$url(value, field) }
 
+  protected $holder(value) {
+    if (this.type !== 'patent') return false
+
+    this.set('assignee', this.unparse(value))
+    return true
+  }
+
   protected $type(value) {
     // #1060, TODO: may want to add prefix to patent number or something
     if (this.type === 'patent') return true
