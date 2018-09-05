@@ -451,6 +451,7 @@ class ZoteroItem {
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
   private validFields: { [key: string]: boolean }
+  private numberPrefix: string
 
   constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }, validFields) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
@@ -757,8 +758,12 @@ class ZoteroItem {
   }
 
   protected $type(value) {
-    // #1060, TODO: may want to add prefix to patent number or something
-    if (this.type === 'patent') return true
+    value = this.unparse(value)
+
+    if (this.type === 'patent') {
+      this.numberPrefix = {patent: '', patentus: 'US', patenteu: 'EP', patentuk: 'GB', patentdede: 'DE', patentfr: 'FR' }[value.toLowerCase()]
+      return typeof this.numberPrefix !== 'undefined'
+    }
 
     if (this.validFields.type) {
       this.set('type', this.unparse(value))
@@ -1027,6 +1032,8 @@ class ZoteroItem {
           break
       }
     }
+
+    if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`
 
     if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 
