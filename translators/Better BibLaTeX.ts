@@ -445,7 +445,7 @@ Translator.doExport = () => {
 
     if (!item.creators) item.creators = []
     // https://github.com/retorquere/zotero-better-bibtex/issues/1060
-    if (item.itemType === 'patent' && item.assignee && !item.creators.find(cr => cr.name === this.item.assignee || (cr.lastName === this.item.assignee && (cr.fieldMode === 1)))) {
+    if (item.itemType === 'patent' && item.assignee && !item.creators.find(cr => cr.name === item.assignee || (cr.lastName === item.assignee && (cr.fieldMode === 1)))) {
       item.creators.push({
         name: item.assignee,
         creatorType: 'assignee',
