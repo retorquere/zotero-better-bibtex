@@ -28,6 +28,7 @@ class DBStore {
     if (!conn) throw new Error(`Database ${dbname} not loaded`)
 
     try {
+      const now = Date.now()
       await conn.executeTransaction(async () => {
         for (const coll of dbref.collections) {
           if (coll.dirty) {
@@ -43,6 +44,8 @@ class DBStore {
           JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${dbname}.${coll.name}`)} }),
         ])
       })
+      log.error(`DBStore.${dbname} took ${Date.now() - now}`)
+
       callback(null)
     } catch (err) {
       callback(err)
@@ -122,7 +125,7 @@ class DBStore {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
   autosave: true,
-  autosaveInterval: 3600000,
+  autosaveInterval: 5000,
   autosaveOnIdle: true,
   adapter: new DBStore(),
 })
