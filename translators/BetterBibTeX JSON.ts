@@ -111,7 +111,7 @@ Translator.doExport = () => {
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
-    if (item.itemType === 'attachment' || item.itemType === 'note') continue
+    if (item.itemType === 'attachment') continue
 
     Zotero.BetterBibTeX.simplifyFields(item)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
