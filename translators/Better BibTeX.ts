@@ -451,6 +451,7 @@ class ZoteroItem {
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
   private validFields: { [key: string]: boolean }
+  private numberPrefix: string
 
   constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }, validFields) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
@@ -493,22 +494,7 @@ class ZoteroItem {
   protected $subtitle(value) { return true } // handled by $title
 
   protected $author(value, field) {
-    for (const name of value) {
-      const creator: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType: field }
-
-      if (name.literal) {
-        creator.lastName = this.unparse(name.literal)
-        creator.fieldMode = 1
-      } else {
-        creator.firstName = this.unparse(name.given)
-        creator.lastName = this.unparse(name.family)
-        if (name.prefix) creator.lastName = `${this.unparse(name.prefix)} ${creator.lastName}`
-        if (name.suffix) creator.lastName = `${creator.lastName}, ${this.unparse(name.suffix)}`
-        // creator = Zotero.Utilities.cleanAuthor(creator, field, false)
-        if (creator.lastName && !creator.firstName) creator.fieldMode = 1
-      }
-      this.item.creators.push(creator)
-    }
+    this.item.creators.push.apply(this.item.creators, this.unparseNamelist(value, field))
 
     // biblatex-csl-importer does not preserve field order, so sort on creator type, preserving order within creatorType
     const creators = {
@@ -766,12 +752,22 @@ class ZoteroItem {
   }
   protected $howpublished(value, field) { return this.$url(value, field) }
 
+  protected $holder(value) {
+    this.set('assignee', this.unparseNamelist(value, 'assignee').map(assignee => assignee.fieldMode ? assignee.lastName : `${assignee.lastName}, ${assignee.firstName}`).join('; '))
+    return true
+  }
+
   protected $type(value) {
-    for (const field of ['sessionType', 'websiteType', 'manuscriptType', 'genre', 'postType', 'sessionType', 'letterType', 'manuscriptType', 'mapType', 'presentationType', 'regulationType', 'reportType', 'thesisType', 'websiteType']) {
-      if (this.validFields[field]) {
-        this.set(field, this.unparse(value))
-        return true
-      }
+    value = this.unparse(value)
+
+    if (this.type === 'patent') {
+      this.numberPrefix = {patent: '', patentus: 'US', patenteu: 'EP', patentuk: 'GB', patentdede: 'DE', patentfr: 'FR' }[value.toLowerCase()]
+      return typeof this.numberPrefix !== 'undefined'
+    }
+
+    if (this.validFields.type) {
+      this.set('type', this.unparse(value))
+      return true
     }
     return false
   }
@@ -983,6 +979,25 @@ class ZoteroItem {
     return condense ? html.replace(/[\t\r\n ]+/g, ' ') : html
   }
 
+  private unparseNamelist(names, creatorType): Array<{lastName?: string, firstName?: string, fieldMode?: number, creatorType: string }> {
+    return names.map(parsed => {
+      const name: {lastName?: string, firstName?: string, fieldMode?: number, creatorType: string } = { creatorType }
+
+      if (parsed.literal) {
+        name.lastName = this.unparse(parsed.literal)
+        name.fieldMode = 1
+      } else {
+        name.firstName = this.unparse(parsed.given)
+        name.lastName = this.unparse(parsed.family)
+        if (parsed.prefix) name.lastName = `${this.unparse(parsed.prefix)} ${name.lastName}`
+        if (parsed.suffix) name.lastName = `${name.lastName}, ${this.unparse(parsed.suffix)}`
+        // creator = Zotero.Utilities.cleanAuthor(creator, field, false)
+        if (name.lastName && !name.firstName) name.fieldMode = 1
+      }
+      return name
+    })
+  }
+
   private import() {
     this.hackyFields = []
 
@@ -1017,6 +1032,8 @@ class ZoteroItem {
           break
       }
     }
+
+    if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`
 
     if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 

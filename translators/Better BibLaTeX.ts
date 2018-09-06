@@ -64,6 +64,7 @@ Reference.prototype.addCreators = function() {
         break
 
       case 'author':
+      case 'inventor':
       case 'interviewer':
       case 'programmer':
       case 'artist':
@@ -84,7 +85,7 @@ Reference.prototype.addCreators = function() {
         kind = 'editor'
         break
 
-      case 'inventor':
+      case 'assignee':
         kind = 'holder'
         break
 
@@ -228,6 +229,36 @@ function looks_like_number_field(n) {
   }
 }
 
+const patent = new class {
+  private countries = ['de', 'eu', 'fr', 'uk', 'us']
+  private prefix = {us: 'us', ep: 'eu', gb: 'uk', de: 'de', fr: 'fr' }
+
+  public region(item) {
+    if (item.itemType !== 'patent') return ''
+
+    if (item.country) {
+      const country = item.country.toLowerCase()
+      if (this.countries.includes(country)) return country
+    }
+
+    if (item.number) {
+      const country = item.number.substr(0, 2).toLowerCase()
+      if (this.prefix[country]) return this.prefix[country]
+    }
+
+    return ''
+  }
+
+  public number(item) {
+    if (item.itemType !== 'patent' || !item.number) return ''
+
+    const country = item.number.substr(0, 2).toLowerCase()
+    if (this.prefix[country]) return item.number.substr(country.length)
+
+    return item.number
+  }
+}
+
 Translator.doExport = () => {
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
@@ -264,7 +295,19 @@ Translator.doExport = () => {
 
     ref.add({ name: 'langid', value: ref.language })
 
-    ref.add({ name: item.referenceType === 'presentation' ? 'venue' : 'location', value: item.place, enc: 'literal' })
+    switch (item.referenceType) {
+      case 'presentation':
+        ref.add({ name: 'venue', value: item.place, enc: 'literal' })
+        break
+
+      case 'patent':
+        if (item.country && !patent.region(item)) ref.add({ name: 'location', value: item.country })
+        break
+
+      default:
+        ref.add({ name: 'location', value: item.place, enc: 'literal' })
+        break
+    }
 
     /*
     if (ref.referencetype === 'inbook') {
@@ -289,7 +332,7 @@ Translator.doExport = () => {
     ref.add({ name: 'eventtitle', value: item.conferenceName })
     ref.add({ name: 'pagetotal', value: item.numPages })
 
-    ref.add({ name: 'number', value: item.number || item.seriesNumber })
+    ref.add({ name: 'number', value: patent.number(item) || item.number || item.seriesNumber })
     ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     switch (item.referenceType) {
@@ -388,6 +431,7 @@ Translator.doExport = () => {
         ref.add({ name: 'publisher', value: item.publisher })
     }
 
+    debug('adding type:', {item_type: item.type || '', item_referenceType: item.referenceType, referencetype: this.referencetype})
     switch (item.referenceType) {
       case 'letter':
       case 'personal_communication':
@@ -415,6 +459,10 @@ Translator.doExport = () => {
         }
         break
 
+      case 'patent':
+        ref.add({ name: 'type', value: 'patent' + patent.region(item) })
+        break
+
       default:
         ref.add({ name: 'type', value: item.type })
     }
@@ -437,6 +485,14 @@ Translator.doExport = () => {
 
     ref.add({ name: 'keywords', value: item.tags, enc: 'tags' })
 
+    if (!item.creators) item.creators = []
+    // https://github.com/retorquere/zotero-better-bibtex/issues/1060
+    if (item.itemType === 'patent' && item.assignee && !item.creators.find(cr => cr.name === item.assignee || (cr.lastName === item.assignee && (cr.fieldMode === 1)))) {
+      item.creators.push({
+        name: item.assignee,
+        creatorType: 'assignee',
+      })
+    }
     ref.addCreators()
 
     // 'juniorcomma' needs more thought, it isn't for *all* suffixes you want this. Or even at all.

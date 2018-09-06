@@ -4,7 +4,13 @@ import subprocess
 import urllib.request
 
 print('updating submodules')
-if urllib.request.urlopen('https://github.com').getcode() == 200:
+online = True
+try:
+  online = urllib.request.urlopen('https://github.com').getcode() == 200
+except:
+  online = False
+
+if online:
   submodules = subprocess.check_output('git submodule update --init --recursive --remote'.split(' ')).decode('utf-8')
   if submodules == '': submodules = 'up to date'
   print(f'  {submodules}')

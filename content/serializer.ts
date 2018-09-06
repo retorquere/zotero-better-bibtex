@@ -41,6 +41,7 @@ export let Serializer = new class { // tslint:disable-line:variable-name
       if (mode == 'export') {
         item.tags = item.tags ? item.tags.map(function(tag) { return tag.tag }) : [];
         item.notes = item.notes ? item.notes.map(function(note) { return note.note || note }) : [];
+        if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
       }
       if (item.creators) {
         // import & export translators expect different creator formats... nice
