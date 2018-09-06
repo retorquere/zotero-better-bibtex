@@ -596,8 +596,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     log.debug("Schema ready, let's roll!")
 
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
-    Cache.init() // oh FFS -- datadir is async now
-    await DB.init()
+    await Promise.all([Cache.init(), DB.init()])
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     await AutoExport.init()

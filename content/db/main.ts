@@ -5,129 +5,17 @@ import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
 import { getItemsAsync } from '../get-items-async'
 
-import { createFile } from '../create-file'
+import { FileStore } from './filestore'
 
 const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
 const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
-
-class DBStore {
-  public mode = 'reference'
-
-  private conn: any = {}
-  private validName = /^better-bibtex[-_a-zA-Z0-9]*$/
-
-  public async exportDatabase(dbname, dbref, callback) {
-    log.debug('DBStore.exportDatabase:', dbname)
-
-    const conn = this.conn[dbname]
-    if (conn === false) {
-      log.debug('DBStore: save of', dbname, 'attempted after close')
-      return callback(null)
-    }
-
-    if (!conn) throw new Error(`Database ${dbname} not loaded`)
-
-    try {
-      const now = Date.now()
-      await conn.executeTransaction(async () => {
-        for (const coll of dbref.collections) {
-          if (coll.dirty) {
-            const name = `${dbname}.${coll.name}`
-            log.debug('DBStore.exportDatabase:', name)
-            await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [name, JSON.stringify(coll)])
-          }
-        }
-
-        // TODO: only save if dirty? What about collection removal? Other data that may have changed on the DB?
-        await conn.queryAsync(`REPLACE INTO "${dbname}" (name, data) VALUES (?, ?)`, [
-          dbname,
-          JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${dbname}.${coll.name}`)} }),
-        ])
-      })
-      log.error(`DBStore.${dbname} took ${Date.now() - now}`)
-
-      callback(null)
-    } catch (err) {
-      callback(err)
-    }
-  }
-
-  // this assumes Zotero.initializationPromise has resolved, will throw an error if not
-  public async loadDatabase(dbname, callback) {
-    log.debug('DBStore.loadDatabase:', dbname)
-    if (!dbname.match(this.validName)) throw new Error(`Invalid database name '${dbname}'`)
-    if (this.conn[dbname] === false) throw new Error(`Database '${dbname}' already closed`)
-    if (this.conn[dbname]) throw new Error(`Database '${dbname}' already loaded`)
-
-    const conn = (this.conn[dbname] = new Zotero.DBConnection(dbname))
-
-    try {
-      await conn.executeTransaction(async () => {
-        await conn.queryAsync(`CREATE TABLE IF NOT EXISTS \"${dbname}\" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
-
-        let db = null
-        const collections = {}
-        for (const row of await conn.queryAsync(`SELECT name, data FROM "${dbname}" ORDER BY name ASC`)) {
-          log.debug('DBStore.loadDatabase:', dbname, '.', row.name)
-          if (row.name === dbname) {
-            log.debug(`DBStore.loadDatabase: loading ${dbname}`)
-            db = JSON.parse(row.data)
-          } else {
-            try {
-              log.debug(`DBStore.loadDatabase: loading ${row.name}`)
-              collections[row.name] = JSON.parse(row.data)
-
-              collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-              collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
-
-              log.debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
-            } catch (err) {
-              log.error(`DBStore.loadDatabase: failed to parse ${row.name}`)
-            }
-          }
-        }
-
-        if (db) {
-          log.debug('DBStore.loadDatabase: restoring collections:', db.collections)
-          db.collections = db.collections.filter(coll => collections[coll]).map(coll => collections[coll])
-        }
-
-        const dump = createFile(`_${dbname}.json`)
-        Zotero.File.putContents(dump, JSON.stringify(db))
-
-        callback(db)
-      })
-    } catch (err) {
-      log.error('DBStore.loadDatabase: error loading', dbname, err)
-      callback(err)
-    }
-  }
-
-  public async close(dbname, callback) {
-    log.debug('DBStore.close', dbname)
-
-    if (!this.conn[dbname]) return callback(null)
-
-    const conn = this.conn[dbname]
-    this.conn[dbname] = false
-
-    try {
-      await conn.closeDatabase(true)
-      log.debug('DBStore.close OK', dbname)
-      callback(null)
-    } catch (err) {
-      log.error('DBStore.close FAILED', dbname, err)
-      callback(err)
-    }
-  }
-}
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,
-  adapter: new DBStore(),
+  adapter: new FileStore({ versions: 4 }),
 })
 
 DB.init = async () => {
