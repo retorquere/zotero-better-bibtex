@@ -2,7 +2,6 @@ declare const document: any
 declare const window: any
 declare const Zotero: any
 declare const Zotero_Preferences: any
-// declare const Components: any
 
 import * as log from './debug'
 import { ZoteroConfig } from './zotero-config'
@@ -77,7 +76,7 @@ class AutoExportPane {
           (node as Element).setAttribute('ae-id', `${ae.$loki}`)
         }
         for (const node of Array.from(tabpanel.getElementsByClassName(`autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`))) {
-          (node as IXUL_Element).hidden = false
+          (node as XUL.Element).hidden = false
         }
       } else {
         tab = tabs.children[index]
@@ -89,32 +88,32 @@ class AutoExportPane {
       for (const node of Array.from(tabpanel.querySelectorAll('[ae-field]'))) {
         const field = (node as Element).getAttribute('ae-field')
 
-        if (!rebuild.update && (node as IXUL_Textbox).readonly) continue
+        if (!rebuild.update && (node as XUL.Textbox).readonly) continue
 
         switch (field) {
           case 'name':
-            (node as IXUL_Textbox).value = this.name(ae, 'long')
+            (node as XUL.Textbox).value = this.name(ae, 'long')
             break
 
           case 'status':
-            (node as IXUL_Textbox).value = this.label[ae.status]
+            (node as XUL.Textbox).value = this.label[ae.status]
             break
 
           case 'updated':
-            (node as IXUL_Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
+            (node as XUL.Textbox).value = `${new Date(ae.meta.updated || ae.meta.created)}`
             break
 
           case 'translator':
-            (node as IXUL_Textbox).value = Translators.byId[ae.translatorID].label
+            (node as XUL.Textbox).value = Translators.byId[ae.translatorID].label
             break
 
           case 'path':
-            (node as IXUL_Textbox).value = ae[field]
+            (node as XUL.Textbox).value = ae[field]
             break
 
           case 'error':
-            ((node as Element).parentElement as IXUL_Element).hidden = !ae[field];
-            (node as IXUL_Textbox).value = ae[field]
+            ((node as Element).parentElement as XUL.Element).hidden = !ae[field];
+            (node as XUL.Textbox).value = ae[field]
             break
 
           case 'cached':
@@ -136,7 +135,7 @@ class AutoExportPane {
 
               log.debug('prefs.auto-export.cache', ratio, items, query, cached)
             }
-            (node as IXUL_Textbox).value = `${ratio}%`
+            (node as XUL.Textbox).value = `${ratio}%`
 
           case 'exportNotes':
           case 'useJournalAbbreviation':
@@ -144,12 +143,12 @@ class AutoExportPane {
           case 'bibtexParticleNoOp':
           case 'asciiBibLaTeX':
           case 'biblatexExtendedNameFormat':
-            (node as IXUL_Checkbox).checked = ae[field]
+            (node as XUL.Checkbox).checked = ae[field]
             break
 
           case 'DOIandURL':
           case 'bibtexURL':
-            (node as IXUL_Menulist).value = ae[field]
+            (node as XUL.Menulist).value = ae[field]
             break
 
           default:

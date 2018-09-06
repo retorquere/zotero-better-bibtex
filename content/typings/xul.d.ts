@@ -1,32 +1,35 @@
-interface IXUL_Element { // tslint:disable-line:class-name
-  hidden: boolean
-}
+namespace XUL {
+  class Element {
+    public hidden: boolean
+  }
 
-interface IXUL_Textbox { // tslint:disable-line:class-name
-  value: string
-  hidden: boolean
-  readonly: boolean
-}
+  class Textbox {
+    public value: string
+    public hidden: boolean
+    public readonly: boolean
+  }
 
-interface IXUL_Element { // tslint:disable-line:class-name
-  hidden: boolean
-}
+  class Element {
+    public hidden: boolean
+  }
 
-interface IXUL_Checkbox { // tslint:disable-line:class-name
-  hidden: boolean
-  checked: boolean
-}
+  class Checkbox {
+    public hidden: boolean
+    public checked: boolean
+  }
 
-interface IXUL_Menuitem { // tslint:disable-line:class-name
-  value: string
-  label: string
-}
-interface IXUL_Menupopup { // tslint:disable-line:class-name
-  children: IXUL_Menuitem[] // menupopup
-}
-interface IXUL_Menulist { // tslint:disable-line:class-name
-  firstChild: IXUL_Menupopup
-  selectedItem: IXUL_Menuitem
-  value: string
-}
+  class Menuitem {
+    public value: string
+    public label: string
+  }
 
+  class Menupopup {
+    public children: Menuitem[] // menupopup
+  }
+
+  class Menulist {
+    public firstChild: Menupopup
+    public selectedItem: Menuitem
+    public value: string
+  }
+}

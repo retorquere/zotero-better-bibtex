@@ -28,6 +28,7 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting an error report.">
 <!ENTITY better-bibtex.ErrorReport.context "Application context">
 <!ENTITY better-bibtex.ErrorReport.errors "Errors">
+<!ENTITY better-bibtex.ErrorReport.includeCache "Send cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug log">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Error reports can not reviewed unless referred to in the GitHub issue tracker.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this Report ID, a description of the problem, and any steps necessary to reproduce it.">

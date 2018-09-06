@@ -2,7 +2,6 @@
 
 declare const Zotero: any
 declare const Components: any
-declare const OS: any
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
@@ -14,11 +13,9 @@ export class FileStore {
   private versions: number
   private renameAfterLoad: boolean
   private allowPartial: boolean
-  private root: string
 
   constructor(options: { renameAfterLoad?: boolean, allowPartial?: boolean, versions?: number }) {
     Object.assign(this, options)
-    this.root = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
   }
 
   public exportDatabase(name, dbref, callback) {
@@ -31,8 +28,14 @@ export class FileStore {
     await this.roll(name)
     const version = this.versions ? '.0' : ''
 
-    const parts = dbref.collections.map(coll => this.save(`${name}${version}.${coll.name}`, coll, coll.dirty))
-    parts.push(this.save(`${name}${version}`, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true))
+    log.debug('FileStore.exportDatabaseAsync', name, dbref.collections.map(coll => coll.name))
+    const parts = [
+      this.save(`${name}${version}`, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
+    ]
+    for (const coll of dbref.collections) {
+      log.debug('FileStore.exportDatabaseAsync', name, coll.name, coll.dirty)
+      parts.push(this.save(`${name}${version}.${coll.name}`, coll, coll.dirty))
+    }
 
     await Zotero.Promise.all(parts)
   }
@@ -41,7 +44,8 @@ export class FileStore {
     if (!this.versions) return
 
     const roll = []
-    await (new OS.File.DirectoryIterator(this.root)).forEach(entry => { // really weird half-promise thing
+
+    await (new OS.File.DirectoryIterator(Zotero.BetterBibTeX.dir)).forEach(entry => { // really weird half-promise thing
       if (!entry.name.endsWith('.json')) return
 
       const parts = entry.name.split('.')
@@ -55,7 +59,7 @@ export class FileStore {
         roll.push({ version, promise: OS.File.remove(entry.path, { ignoreAbsent: true }) })
       } else {
         parts[1] = `${version + 1}`
-        roll.push({ version, promise: OS.File.move(entry.path, OS.Path.join(this.root, parts.join('.'))) })
+        roll.push({ version, promise: OS.File.move(entry.path, OS.Path.join(Zotero.BetterBibTeX.dir, parts.join('.'))) })
       }
     })
 
@@ -72,12 +76,16 @@ export class FileStore {
   }
 
   private async save(name, data, dirty) {
-    log.debug('FileStore.save', name)
+    log.debug('FileStore.save', { name, dirty })
+    const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
+    log.debug('FileStore.save', { name, dirty, path })
+    const save = dirty || !(await OS.File.exists(path))
+    log.debug('FileStore.save', { name, dirty, path, save })
 
-    const path = OS.path.join(this.root, `${name}.json`)
-    if (!dirty && OS.Path.exists(path)) return
+    if (!save) return
 
     await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: path + '.tmp'})
+
     log.debug('FileStore.saved', name)
   }
 
@@ -107,8 +115,10 @@ export class FileStore {
   }
 
   private async migrate(name) {
-    const sqlite = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
-    if (!OS.File.exists(sqlite)) return null
+    const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
+    const exists = await OS.File.exists(path)
+    log.debug('FileStore.migrate:', { path, exists })
+    if (!exists) return null
 
     log.debug('FileStore.migrate:', name)
 
@@ -128,6 +138,7 @@ export class FileStore {
 
         collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
         collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+        collections[row.name].dirty = true
 
         log.debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
       }
@@ -146,7 +157,7 @@ export class FileStore {
     }
 
     await conn.closeDatabase(true)
-    await OS.File.move(sqlite, `${sqlite}.migrated`)
+    await OS.File.move(path, `${path}.migrated`)
     return db
   }
 
@@ -179,12 +190,14 @@ export class FileStore {
   }
 
   private async load(name) {
-    const path = OS.path.join(this.root, `${name}.json`)
-    log.debug('FileStore.load', path)
+    const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
+    const exists = await OS.File.exists(path)
 
-    if (!OS.Path.exists(path)) return null
+    log.debug('FileStore.load', { path, exists })
 
-    const data = JSON.parse(OS.File.read(path, { encoding: 'utf-8' }))
+    if (!exists) return null
+
+    const data = JSON.parse(await OS.File.read(path, { encoding: 'utf-8' }))
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start

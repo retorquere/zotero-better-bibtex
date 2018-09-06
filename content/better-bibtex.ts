@@ -524,6 +524,8 @@ class Progress {
 
 export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   public ready: any
+  public dir: string
+
   private strings: any
   private firstRun: { citekeyFormat: String, dragndrop: boolean }
   private document: any
@@ -593,6 +595,10 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
     await Zotero.Schema.schemaUpdatePromise
+
+    this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
+    await OS.File.makeDir(this.dir, { ignoreExisting: true })
+
     log.debug("Schema ready, let's roll!")
 
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))

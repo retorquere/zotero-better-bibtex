@@ -18,7 +18,6 @@ import * as Citekey from './key-manager/get-set'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { AutoExport } from './auto-export'
-import { createFile } from './create-file'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
@@ -134,7 +133,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     Formatter.update('init')
 
     await this.rescan()
-    this.migrate('db.json')
 
     log.debug('KeyManager.init: done')
 
@@ -347,28 +345,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       log.debug(`KeyManager.propose: found <${postfixed}> for ${item.id}`)
       return { citekey: postfixed, pinned: false }
     }
-  }
-
-  private migrate(v4) {
-    const legacy = createFile(v4)
-    if (!legacy.exists()) return
-
-    try {
-      const data = JSON.parse(Zotero.File.getContents(legacy))
-      for (const old of data.collections.find(c => c.name === 'keys').data) {
-        const citekey = this.keys.findOne({ itemID: old.itemID })
-        log.debug(`migrating ${v4}, database ${citekey ? 'has' : 'does not have'}`, old)
-        if (citekey && !citekey.pinned) {
-          log.debug(`migrating ${v4}: applying`, citekey, { old: old.citekey })
-          citekey.citekey = old.citekey
-          this.keys.update(citekey)
-        }
-      }
-    } catch (err) {
-      log.error('failed to migrate legacy DB:', v4, err)
-    }
-
-    legacy.moveTo(null, `${v4}.v4`)
   }
 
   private postfixZotero(n) {

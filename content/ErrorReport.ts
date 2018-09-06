@@ -7,7 +7,6 @@ declare const Services: any
 import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
 import * as log from './debug'
-// import { createFile } from './create-file'
 import fastChunkString = require('fast-chunk-string')
 
 const s3 = require('./s3.json')
@@ -15,6 +14,7 @@ const s3 = require('./s3.json')
 const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')
+Components.utils.import('resource://gre/modules/osfile.jsm')
 
 const kB = 1024
 const MB = kB * kB
@@ -49,8 +49,19 @@ export = new class ErrorReport {
     try {
       const logs = [
         this.submit('debug', 'text/plain', this.errorlog.debug, `${this.errorlog.info}\n\n${this.errorlog.errors}\n\n`),
-        // this.submit('db', 'application/json', this.errorlog.db)
       ]
+
+      if (document.getElementById('better-bibtex-error-report-include-db').checked) {
+        await (new OS.File.DirectoryIterator(OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex'))).forEach(entry => {
+          if (!entry.name.endsWith('.json') && !entry.name.endsWith('.json.bak')) return
+
+          const version = parseInt(entry.name.split('.')[1])
+          if (!isNaN(version) && version > 0) return
+
+          logs.push(this.submit(entry.name.replace(/\.json(\.bak)?$/, ''), 'application/json', OS.File.read(entry.path, { encoding: 'utf-8' })))
+        })
+      }
+
       if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
       await Zotero.Promise.all(logs)
       wizard.advance()
@@ -128,7 +139,6 @@ export = new class ErrorReport {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
       debug: Zotero.Debug.getConsoleViewerOutput(),
-      // db: Zotero.File.getContents(createFile('_better-bibtex.json')),
     }
 
     if (Zotero.BetterBibTeX.ready && this.params.items) {
@@ -225,6 +235,8 @@ export = new class ErrorReport {
     const started = Date.now()
     log.debug('Errorlog.submit:', filename)
 
+    if (data.then) data = await data
+
     const headers = {
       'x-amz-storage-class': 'STANDARD',
       'x-amz-acl': 'bucket-owner-full-control',
@@ -243,9 +255,6 @@ export = new class ErrorReport {
     }
 
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
-
-    const isArray = Array.isArray(data)
-    log.debug('ErrorReport.submit:', { filename, contentType, length: data.length, isArray })
 
     let chunks = []
     if (Array.isArray(data)) {

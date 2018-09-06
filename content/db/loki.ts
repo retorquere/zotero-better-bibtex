@@ -135,6 +135,7 @@ export class XULoki extends (Loki as { new(name, options): any }) {
         this.throttledSaves = false
 
         try {
+          await this.saveDatabaseAsync()
           await this.closeAsync()
           log.debug(`Loki.${this.persistenceAdapter.constructor.name || 'Unknown'}.shutdown: closed ${name}`)
         } catch (err) {
