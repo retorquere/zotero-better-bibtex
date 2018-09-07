@@ -115,8 +115,13 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     const cache = Cache.getCollection(this.collection)
     if (!cache) return null
 
-    const cached = cache.findOne({ itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems})
-    if (!cached) return null
+    const query = { itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems}
+    const cached = cache.findOne(query)
+    if (!cached) {
+      log.debug('cache miss:', query)
+      return null
+    }
+    log.debug('cache hit:', query)
 
     return this.enrich(cached.item, item)
   }

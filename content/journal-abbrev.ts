@@ -16,11 +16,11 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
   }
 
   public init() {
-    if (this.initialized) return
+    if (this.initialized) return null
     this.initialized = true
 
     Events.on('preference-changed', pref => {
-      if (pref !== 'autoAbbrevStyle') return
+      if (pref !== 'autoAbbrevStyle') return null
 
       log.debug('JournalAbbrev.preference-changed:', {pref})
       this.reset()

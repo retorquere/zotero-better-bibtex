@@ -36,7 +36,7 @@ const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
 AddonManager.addAddonListener({
   onUninstalling(addon, needsRestart) {
-    if (addon.id !== 'better-bibtex@iris-advies.com') return
+    if (addon.id !== 'better-bibtex@iris-advies.com') return null
     log.debug('uninstall')
 
     const quickCopy = Zotero.Prefs.get('export.quickCopy.setting')
@@ -54,9 +54,9 @@ AddonManager.addAddonListener({
   onDisabling(addon, needsRestart) { this.onUninstalling(addon, needsRestart) },
 
   onOperationCancelled(addon, needsRestart) {
-    if (addon.id !== 'better-bibtex@iris-advies.com') return
+    if (addon.id !== 'better-bibtex@iris-advies.com') return null
     // tslint:disable-next-line:no-bitwise
-    if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return
+    if (addon.pendingOperations & (AddonManager.PENDING_UNINSTALL | AddonManager.PENDING_DISABLE)) return null
 
     for (const header of Object.values(Translators.byId)) {
       try {
@@ -238,6 +238,8 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       log.debug('cache miss:', query)
       return false
     }
+
+    log.debug('cache hit:', query)
 
     collection.update(cached) // touches the cache object so it isn't reaped too early
 
@@ -555,9 +557,10 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   }
 
   public async scanAUX(path = null) {
-    if (!this.ready) return
-    await this.ready
-    await AUXScanner.scan(path)
+    if (this.ready) {
+      await this.ready
+      await AUXScanner.scan(path)
+    }
   }
 
   // #init

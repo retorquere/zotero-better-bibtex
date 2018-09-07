@@ -7,15 +7,41 @@ Components.utils.import('resource://gre/modules/osfile.jsm')
 
 import * as log from '../debug'
 
-export class FileStore {
+export class Store {
   public mode = 'reference'
 
   private versions: number
-  private renameAfterLoad: boolean
+  private deleteAfterLoad: boolean
   private allowPartial: boolean
+  private storage: string
 
-  constructor(options: { renameAfterLoad?: boolean, allowPartial?: boolean, versions?: number }) {
+  private conn: any = {}
+
+  constructor(options: { deleteAfterLoad?: boolean, allowPartial?: boolean, versions?: number, storage: string }) {
     Object.assign(this, options)
+    if (this.storage !== 'sqlite' && this.storage !== 'file') throw new Error(`Unsupported DBStore storage ${this.storage}`)
+    if (this.storage === 'sqlite' && this.versions) throw new Error('DBStore storage "sqlite" does not support versions')
+  }
+
+  public close(name, callback) {
+    if (this.storage !== 'sqlite') return callback(null)
+
+    log.error('FileStore.SQLite:', close, name)
+
+    if (!this.conn[name]) return callback(null)
+
+    const conn = this.conn[name]
+    this.conn[name] = false
+
+    conn.closeDatabase(true)
+      .then(() => {
+        log.debug('FileStore.SQLite.close OK', name)
+        callback(null)
+      })
+      .catch(err => {
+        log.error('FileStore.SQLite.close FAILED', name, err)
+        callback(err)
+      })
   }
 
   public exportDatabase(name, dbref, callback) {
@@ -25,6 +51,22 @@ export class FileStore {
   }
 
   private async exportDatabaseAsync(name, dbref) {
+    const start = Date.now()
+
+    switch (this.storage) {
+      case 'sqlite':
+        await this.exportDatabaseSQLiteAsync(name, dbref)
+        break
+
+      default:
+        await this.exportDatabaseFileAsync(name, dbref)
+        break
+    }
+
+    log.debug('FileStore.exportDatabaseAsync: took', { storage: this.storage, name, time: Date.now() - start})
+  }
+
+  private async exportDatabaseFileAsync(name, dbref) {
     await this.roll(name)
     const version = this.versions ? '.0' : ''
 
@@ -38,6 +80,41 @@ export class FileStore {
     }
 
     await Zotero.Promise.all(parts)
+  }
+
+  private async exportDatabaseSQLiteAsync(name, dbref) {
+    const conn = this.conn[name]
+
+    if (conn === false) {
+      log.error('FileStore.SQLite: save of', name, 'attempted after close')
+      return
+    }
+
+    if (!conn) {
+      log.error('FileStore.SQLite: save of', name, 'to unopened database')
+      return
+    }
+
+    await conn.executeTransaction(async () => {
+      const names = (await conn.queryAsync(`SELECT name FROM "${name}"`)).map(coll => coll.name)
+
+      const parts = []
+      for (const coll of dbref.collections) {
+        const collname = `${name}.${coll.name}`
+        if (coll.dirty || !names.includes(collname)) {
+          log.debug('FileStore.SQLite.exportDatabase:', collname)
+          parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
+        }
+      }
+
+      log.debug('FileStore.SQLite.exportDatabase:', name)
+      parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
+        name,
+        JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
+      ]))
+
+      await Promise.all(parts)
+    })
   }
 
   private async roll(name) {
@@ -82,7 +159,7 @@ export class FileStore {
     const save = dirty || !(await OS.File.exists(path))
     log.debug('FileStore.save', { name, dirty, path, save })
 
-    if (!save) return
+    if (!save) return null
 
     await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: path + '.tmp'})
 
@@ -99,30 +176,38 @@ export class FileStore {
     log.debug('FileStore.loadDatabase: loading', name)
 
     try {
-      const db = this.migrate(name)
+      const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
       if (db) return db
     } catch (err) {
       log.error('Filestore.migrate:', err)
     }
 
-    const versions = this.versions || 1
-    for (let version = 0; version < versions; version++) {
-      const db = await this.loadDatabaseVersionAsync(name, version)
-      if (db) return db
+    if (this.storage === 'file') {
+      const versions = this.versions || 1
+      for (let version = 0; version < versions; version++) {
+        const db = await this.loadDatabaseVersionAsync(name, version)
+        if (db) return db
+      }
     }
 
     return null
   }
 
-  private async migrate(name) {
+  private async loadDatabaseSQLiteAsync(name) {
     const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
     const exists = await OS.File.exists(path)
     log.debug('FileStore.migrate:', { path, exists })
-    if (!exists) return null
 
-    log.debug('FileStore.migrate:', name)
+    if (!exists) {
+      if (this.storage === 'sqlite') {
+        this.conn[name] = new Zotero.DBConnection(name)
+        await this.conn[name].queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
+      }
+      return null
+    }
 
     const conn = new Zotero.DBConnection(name)
+    if (this.storage === 'sqlite') this.conn[name] = conn
 
     let db = null
     const collections = {}
@@ -151,13 +236,18 @@ export class FileStore {
 
     db.collections = db.collections.map(coll => collections[coll] || coll)
     const missing = db.collections.find(coll => typeof coll === 'string')
-    if (missing) {
+    if (missing && !this.allowPartial) {
       log.error(`FileStore.migrate: could not find ${name}.${missing}`)
       return null
     }
 
-    await conn.closeDatabase(true)
-    await OS.File.move(path, `${path}.migrated`)
+    if (this.storage === 'file') { // migrate but move after
+      await conn.closeDatabase(true)
+      await OS.File.move(path, `${path}.migrated`)
+    }
+
+    if (this.storage === 'sqlite' && this.deleteAfterLoad) await this.conn[name].queryAsync(`DELETE FROM "${name}"`)
+
     return db
   }
 
@@ -201,7 +291,7 @@ export class FileStore {
 
     // this is intentional. If all is well, the database will be retained in memory until it's saved at
     // shutdown. If all is not well, this will make sure the caches are rebuilt from scratch on next start
-    if (this.renameAfterLoad) await OS.File.move(path, path + '.bak')
+    if (this.deleteAfterLoad) await OS.File.move(path, path + '.bak')
 
     return data
   }

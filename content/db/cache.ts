@@ -4,7 +4,7 @@ import { XULoki as Loki } from './loki'
 import * as log from '../debug'
 import { Events } from '../events'
 import { ZoteroConfig } from '../zotero-config'
-import { FileStore } from './filestore'
+import { Store } from './store'
 
 const version = require('../../gen/version.js')
 const translators = require('../../gen/translators.json')
@@ -15,7 +15,7 @@ const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let DB = new Loki('cache', { // tslint:disable-line:variable-name
   autosave: true,
-  adapter: new FileStore({ renameAfterLoad: true, allowPartial: true }),
+  adapter: new Store({ storage: 'file', deleteAfterLoad: true, allowPartial: true }),
 })
 
 const METADATA = 'Better BibTeX metadata'

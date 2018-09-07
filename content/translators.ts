@@ -44,9 +44,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public async translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
-    log.debug('Translators.translate', { translatorID, displayOptions, path })
-
     await Zotero.BetterBibTeX.ready
+
+    const start = Date.now()
+    log.debug('Translators.translate', { translatorID, displayOptions, path })
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
@@ -78,17 +79,18 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translation.setLocation(file)
     }
 
+    log.debug('Translators.translate starting', { translatorID, displayOptions, path })
+
     translation.setHandler('done', (obj, success) => {
       if (success) {
-        log.debug('Translators.translate complete', { translatorID, displayOptions, path })
+        log.debug('Translators.translate complete in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.resolve(obj ? obj.string : undefined)
       } else {
-        log.error('Translators.translate failed', { translatorID, displayOptions, path })
+        log.error('Translators.translate failed in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.reject('translation failed')
       }
     })
 
-    log.debug('Translators.translate starting', { translatorID, displayOptions, path })
     translation.translate()
 
     return deferred.promise

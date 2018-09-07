@@ -100,7 +100,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       if (item.date) {
         const parsed = Zotero.BetterBibTeX.parseDate(item.date)
-        csl.issued = this.date2CSL(parsed)
+        if (parsed.type) csl.issued = this.date2CSL(parsed) // possible for there to be an orig-date only
         if (parsed.orig) csl['original-date'] = this.date2CSL(parsed.orig)
       }
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))

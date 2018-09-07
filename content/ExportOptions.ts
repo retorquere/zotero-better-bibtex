@@ -44,7 +44,7 @@ function mutex(e) {
   const exportFileData = document.getElementById('export-option-exportFileData')
   const keepUpdated = document.getElementById('export-option-keepUpdated')
 
-  if (!exportFileData || !keepUpdated) return
+  if (!exportFileData || !keepUpdated) return null
 
   keepUpdated.disabled = exportFileData.checked
 
@@ -67,7 +67,7 @@ function addEventHandlers() {
       node.setAttribute('label', Zotero.BetterBibTeX.getString('exportOptions.keepUpdated'))
     }
 
-    if (node.getAttribute('better-bibtex')) return
+    if (node.getAttribute('better-bibtex')) return null
 
     log.debug('export-options add event handler for ', id)
     node.setAttribute('better-bibtex', 'true')

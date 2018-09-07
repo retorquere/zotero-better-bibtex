@@ -5,7 +5,7 @@ import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
 import { getItemsAsync } from '../get-items-async'
 
-import { FileStore } from './filestore'
+import { Store } from './store'
 
 const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
 const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
@@ -15,7 +15,7 @@ export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
   autosave: true,
   autosaveInterval: 5000,
   autosaveOnIdle: true,
-  adapter: new FileStore({ versions: 4 }),
+  adapter: new Store({ storage: 'sqlite' }),
 })
 
 DB.init = async () => {

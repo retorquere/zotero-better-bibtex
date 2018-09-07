@@ -97,9 +97,11 @@ var Translator = {
 
 <% if (header.translatorType & 2) { /* export */ %>
   function doExport() {
+    const start = Date.now()
     Translator.configure('doExport')
     Translator.initialize()
     Translator.doExport()
+    Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start))
   }
 <% } %>
 

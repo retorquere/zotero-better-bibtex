@@ -9,7 +9,7 @@ import { KeyManager } from './key-manager'
 
 function display(itemID) {
   const field = document.getElementById('better-bibtex-citekey-display')
-  if (field.getAttribute('itemID') !== `${itemID}`) return
+  if (field.getAttribute('itemID') !== `${itemID}`) return null
 
   const citekey = KeyManager.get(itemID)
   field.value = citekey.citekey
@@ -20,7 +20,7 @@ function display(itemID) {
 
 let observer = null
 function init() {
-  if (observer || !KeyManager.keys) return
+  if (observer || !KeyManager.keys) return null
 
   observer = KeyManager.keys.on(['update', 'insert'], citekey => {
     display(citekey.itemID)

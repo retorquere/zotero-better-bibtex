@@ -190,7 +190,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   }
 
   private cleanupNocase(node: IZoteroMarkupNode, nocased = false): IZoteroMarkupNode[] {
-    if (node.nodeName === '#text') return
+    if (node.nodeName === '#text') return null
 
     if (nocased) delete node.nocase
 

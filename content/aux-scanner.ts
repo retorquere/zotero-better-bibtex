@@ -46,7 +46,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private async save(source) {
-    if (!this.citekeys.size) return
+    if (!this.citekeys.size) return null
 
     let collection = Zotero.getActiveZoteroPane().getSelectedCollection()
 

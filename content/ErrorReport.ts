@@ -53,10 +53,10 @@ export = new class ErrorReport {
 
       if (document.getElementById('better-bibtex-error-report-include-db').checked) {
         await (new OS.File.DirectoryIterator(OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex'))).forEach(entry => {
-          if (!entry.name.endsWith('.json') && !entry.name.endsWith('.json.bak')) return
+          if (!entry.name.endsWith('.json') && !entry.name.endsWith('.json.bak')) return null
 
           const version = parseInt(entry.name.split('.')[1])
-          if (!isNaN(version) && version > 0) return
+          if (!isNaN(version) && version > 0) return null
 
           logs.push(this.submit(entry.name.replace(/\.json(\.bak)?$/, ''), 'application/json', OS.File.read(entry.path, { encoding: 'utf-8' })))
         })

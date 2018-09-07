@@ -32,13 +32,13 @@ class AutoExportPane {
   }
 
   public refresh() {
-    if (Zotero.BetterBibTeX.ready.isPending()) return
+    if (Zotero.BetterBibTeX.ready.isPending()) return null
 
     const auto_exports = AutoExport.db.find()
 
     const tabbox = document.getElementById('better-bibtex-prefs-auto-export-tabbox')
     tabbox.setAttribute('hidden', !auto_exports.length)
-    if (!auto_exports.length) return
+    if (!auto_exports.length) return null
 
     const tabs = document.getElementById('better-bibtex-prefs-auto-export-tabs')
     const tabpanels = document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
@@ -430,7 +430,7 @@ export = new class PrefPane {
   }
 
   private styleChanged(index) {
-    if (!ZoteroConfig.Zotero.isJurisM) return
+    if (!ZoteroConfig.Zotero.isJurisM) return null
 
     const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem

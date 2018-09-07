@@ -277,7 +277,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   }
 
   public update(item, current?) {
-    if (item.isNote() || item.isAttachment()) return
+    if (item.isNote() || item.isAttachment()) return null
 
     current = current || this.keys.findOne({ itemID: item.id })
 

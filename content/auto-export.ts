@@ -202,13 +202,13 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public async pull(repo) {
-    if (!repo) return
+    if (!repo) return null
 
     await this.exec(this.git, ['pull'], repo)
   }
 
   public async push(repo, name) {
-    if (!repo) return
+    if (!repo) return null
 
     await this.exec(this.git, ['add', name], repo)
     await this.exec(this.git, ['commit', '-m', name], repo)

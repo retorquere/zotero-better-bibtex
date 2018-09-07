@@ -7,9 +7,7 @@ export let Logger = new class { // tslint:disable-line:variable-name
   private timestamp: number
 
   public log(prefix, ...msg) {
-    if (!Zotero.Debug.enabled) return
-
-    this._log(Zotero.debug, prefix, msg)
+    if (Zotero.Debug.enabled) this._log(Zotero.debug, prefix, msg)
   }
 
   public error(prefix, ...msg) {
