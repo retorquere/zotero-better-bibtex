@@ -2,13 +2,14 @@
 Feature: Export
 
 @test-cluster-1
-@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979 @746
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | date ranges #747+#746                                                                          | 5           |
      | BibLaTeX Patent author handling, type #1060                                                    | 2           |
      | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054    | 1           |
      | Don't title-case sup-subscripts #1037                                                          | 8           |
@@ -24,7 +25,6 @@ Scenario Outline: BibLaTeX Export
      | Treat dash-connected words as a single word for citekey generation #619                        | 1           |
      | customized fields with curly brackets are not exported correctly anymore #775                  | 1           |
      | EDTF dates in BibLaTeX #590                                                                    | 27          |
-     | date ranges #747+#746                                                                          | 4           |
      | Better BibLaTeX.stable-keys                                                                    | 6           |
      | remove the field if the override is empty #303                                                 | 1           |
      | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
@@ -107,7 +107,7 @@ Scenario Outline: BibLaTeX Export
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
@@ -121,7 +121,7 @@ Scenario Outline: BibTeX Export
      | Better BibTeX does not export collections #901                                     | 36         |
      | [authN_M] citation key syntax has off-by-one error #899                            | 1          |
      | creating a key with [authForeIni] and [authN] not working properly #892            | 2          |
-     | date ranges #747+#746                                                              | 4          |
+     | date ranges #747+#746                                                              | 5          |
      | bibtex export of phdthesis does not case-protect -type- #435                       | 1          |
      | Empty bibtex clause in extra gobbles whatever follows #99                          | 1          |
      | Braces around author last name when exporting BibTeX #565                          | 5          |

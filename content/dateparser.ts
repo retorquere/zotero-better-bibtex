@@ -137,12 +137,12 @@ export function parse(value, toplevel = true) {
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }
 
-  // 746
-  if (toplevel && (m = /^([0-9]+)(?:--|-|–)([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
-    const [ , day1, day2, month, year ] = m
+  // 746, 22-26 June 2015, 29 June-1 July 2011
+  if (toplevel && (m = /^([0-9]+)\s*([a-zA-Z]+)?\s*(?:--|-|–)\s*([0-9]+)\s+([a-zA-Z]+)\s+([0-9]+)$/.exec(value))) {
+    const [ , day1, month1, day2, month2, year ] = m
 
-    const from = parse(`${month} ${day1} ${year}`, false)
-    const to = parse(`${month} ${day2} ${year}`, false)
+    const from = parse(`${month1 || month2} ${day1} ${year}`, false)
+    const to = parse(`${month2} ${day2} ${year}`, false)
 
     if (from.type === 'date' && to.type === 'date') return { type: 'interval', from, to }
   }

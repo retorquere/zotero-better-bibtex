@@ -300,6 +300,69 @@
       ],
       "itemID": 12093,
       "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)"
+    },
+    {
+      "itemType": "conferencePaper",
+      "pages": "103-108",
+      "date": "29 June-1 July 2011",
+      "DOI": "10.1109/FISTS.2011.5973643",
+      "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
+      "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
+      "title": "Identifying faulty traffic detectors with Floating Car Data",
+      "creators": [
+        {
+          "name": "P. Widhalm",
+          "creatorType": "author"
+        },
+        {
+          "name": "H. Koller",
+          "creatorType": "author"
+        },
+        {
+          "name": "W. Ponweiser",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "road traffic",
+        "Data models",
+        "traffic engineering computing",
+        "ITS",
+        "floating car data",
+        "fault detection",
+        "loop-quality",
+        "Detectors",
+        "Error analysis",
+        "Fault detection",
+        "fault diagnosis",
+        "faulty traffic detector",
+        "FCD traffic speed",
+        "microscopic traffic simulation",
+        "nonlinear regression model",
+        "regression analysis",
+        "statistical test",
+        "Training data",
+        "Vehicles"
+      ],
+      "relations": [],
+      "dateAdded": "2018-09-07T17:41:29Z",
+      "dateModified": "2018-09-07T17:42:55Z",
+      "uri": "http://zotero.org/groups/1844905/items/UV8GW56Y",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "P. Widhalm et al_2011_Identifying faulty traffic detectors with Floating Car Data.pdf",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2018-09-07T17:42:18Z",
+          "dateModified": "2018-09-07T17:42:18Z",
+          "uri": "http://zotero.org/groups/1844905/items/RKUG8YTJ"
+        }
+      ],
+      "notes": [],
+      "itemID": 504,
+      "citekey": "pwidhalmIdentifyingFaultyTraffic29",
+      "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems"
     }
   ],
   "config": {
