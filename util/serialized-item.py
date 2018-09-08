@@ -22,7 +22,10 @@ query = """
   JOIN fields f ON f.fieldID = itf.fieldID
   LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
   LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
-  ORDER BY 2, 1, 3
+
+  UNION
+
+  SELECT 'note', 'note', NULL
 """
 z.execute(query)
 
@@ -89,25 +92,29 @@ for imex in ['import', 'export']:
 
 with open(os.path.join(root, 'translators/typings/serialized-item.d.ts'), 'w') as typings:
   def add(s): print(textwrap.indent(s, '  '), file=typings)
+  def comment(s): print(textwrap.indent('\n'.join(textwrap.wrap(s, 100)), '  // '), file=typings)
   def addfield(name, tpe='any'): add(f'{name}: {types.pop(name, tpe)}')
 
   print('interface ISerializedItem {', file=typings)
 
+  comment('fields common to all items')
   for fieldName in 'itemID itemType dateAdded dateModified creators tags notes attachments'.split(' '):
     addfield(fieldName)
+  print('', file=typings)
 
-  add("// exists only on 'note' items")
-  addfield('note')
+  #comment("exists note")
+  #addfield('note')
+  #print('', file=typings)
 
   for (fieldName,) in list(z.execute('SELECT distinct fieldName FROM typings ORDER BY LOWER(fieldName)')):
     typeNames = [typeName for (typeName,) in list(z.execute('SELECT typeName FROM typings WHERE fieldName = ? ORDER BY typeName', [fieldName]))]
-    add(f'// exists on {", ".join(typeNames)}')
+    comment(f'exists on {", ".join(typeNames)}')
 
     aliases = [f'{typeName}.{fieldAlias}'
                for (typeName, fieldAlias)
                in list(z.execute('SELECT typeName, fieldAlias FROM typings WHERE fieldName = ? AND fieldAlias IS NOT NULL ORDER BY typeName', [fieldName]))
               ]
-    if len(aliases) > 0: add(f'// also known as {", ".join(aliases)}')
+    if len(aliases) > 0: comment(f'also known as {", ".join(aliases)}')
 
     addfield(fieldName)
     print('', file=typings)
@@ -125,7 +132,7 @@ with open(os.path.join(root, 'translators/typings/serialized-item.d.ts'), 'w') a
   ''').strip())
   addfield('arXiv', '{ eprint: string, source?: string, id: string, primaryClass?: string }')
 
-  add('// Juris-M extras')
+  comment('Juris-M extras')
   addfield('multi')
 
   print('}', file=typings)
