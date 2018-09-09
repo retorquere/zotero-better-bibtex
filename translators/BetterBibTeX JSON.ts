@@ -3,6 +3,7 @@ declare const Translator: ITranslator
 declare const Zotero: any
 
 import { debug } from './lib/debug'
+import * as itemfields from './lib/itemfields'
 
 const chunkSize = 0x100000
 
@@ -31,21 +32,29 @@ Translator.doImport = async () => {
   }
 
   const data = JSON.parse(json)
-  const validFields = Zotero.BetterBibTeX.validFields()
 
   const items = new Set
   debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
-    Zotero.BetterBibTeX.simplifyFields(source)
+    itemfields.simplifyForImport(source)
 
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
     delete source.uri
 
-    if (!validFields[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
+    const validFields = itemfields.valid.get(source.itemType)
+    if (!validFields) throw new Error(`unexpected item type '${source.itemType}'`)
     for (const field of Object.keys(source)) {
-      if (!validFields[source.itemType][field]) throw new Error(`unexpected ${source.itemType}.${field} in ${JSON.stringify(source)}`)
+      const valid = validFields.get(field)
+      if (valid) continue
+
+      const msg = `${valid}: unexpected ${source.itemType}.${field} for ${Translator.isZotero ? 'zotero' : 'juris-m'} in ${JSON.stringify(source)} / ${JSON.stringify([...validFields.entries()])}`
+      if (valid === false) {
+        debug(msg)
+      } else {
+        throw new Error(msg)
+      }
     }
 
     const item = new Zotero.Item()
@@ -102,7 +111,6 @@ Translator.doExport = () => {
   }
   debug('header ready')
 
-  const validFields = Zotero.BetterBibTeX.validFields()
   const validItemFields = new Set([
     'citekey',
     'uri',
@@ -113,13 +121,14 @@ Translator.doExport = () => {
   while ((item = Zotero.nextItem())) {
     if (item.itemType === 'attachment') continue
 
-    Zotero.BetterBibTeX.simplifyFields(item)
+    itemfields.simplifyForExport(item)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
+    const validFields = itemfields.valid.get(item.itemType)
     for (const field of Object.keys(item)) {
       if (validItemFields.has(field)) continue
 
-      if (validFields[item.itemType] && !validFields[item.itemType][field]) {
+      if (validFields && !validFields.get(field)) {
         debug('bbt json: delete', item.itemType, field, item[field])
         delete item[field]
       }

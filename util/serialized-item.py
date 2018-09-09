@@ -5,27 +5,42 @@ import glob
 import os
 import sqlite3
 import textwrap
+from Cheetah.Template import Template
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
-db = sqlite3.connect(os.path.join(root, 'test/fixtures/profile/zotero/zotero/zotero.sqlite'))
+db = sqlite3.connect(':memory:')
 z = db.cursor()
 
+query = []
+for client in ['zotero', 'jurism']:
+  z.execute(f'ATTACH DATABASE ? AS {client}', (os.path.join(root, f'test/fixtures/profile/{client}/{client}/{client}.sqlite'),))
+
+  query.append(f"""
+    SELECT '{client}' as client, it.typeName, COALESCE(bf.fieldName, f.fieldName) as fieldName, CASE WHEN bf.fieldName IS NULL THEN NULL ELSE f.fieldName END as fieldAlias
+    FROM {client}.itemTypes it
+    JOIN {client}.itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
+    JOIN fields f ON f.fieldID = itf.fieldID
+    LEFT JOIN {client}.baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
+    LEFT JOIN {client}.fields bf ON bf.fieldID = bfmc.baseFieldID
+  """)
+  query.append(f"SELECT '{client}', 'note', 'note', NULL")
+
+query = ' UNION '.join(query)
+query = 'CREATE TABLE fields AS ' + query
+z.execute(query)
+
+query = 'CREATE TABLE fieldsCounted AS SELECT typeName, fieldName, fieldAlias, MIN(client) as client, COUNT(client) as clients FROM fields GROUP BY typeName, fieldName, fieldAlias'
+z.execute(query)
+
 query = """
-  CREATE TEMPORARY TABLE typings
-  
-  AS
-
-  SELECT it.typeName, COALESCE(bf.fieldName, f.fieldName) as fieldName, CASE WHEN bf.fieldName IS NULL THEN NULL ELSE f.fieldName END as fieldAlias
-  FROM itemTypes it
-  JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
-  JOIN fields f ON f.fieldID = itf.fieldID
-  LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
-  LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
-
-  UNION
-
-  SELECT 'note', 'note', NULL
+CREATE TABLE typings AS 
+  SELECT
+    typeName,
+    fieldName,
+    fieldAlias,
+    CASE when clients = 2 THEN 'both' ELSE client END AS client
+  FROM fieldsCounted
 """
 z.execute(query)
 
@@ -49,11 +64,16 @@ types = {
   'session': 'string',
   'system': 'string',
   'versionNumber': 'string',
+  'websiteTitle': 'string',
+  'reporter': 'string',
+  'genre': 'string',
+  'institution': 'string',
 }
 
 rename = {}
 for (fieldName, fieldAlias) in z.execute('SELECT fieldName, fieldAlias FROM typings WHERE fieldAlias IS NOT NULL'):
   rename[fieldAlias] = fieldName
+
 for imex in ['import', 'export']:
   for fixture in glob.glob(os.path.join(root, 'test', 'fixtures', imex, '*.json')):
     if fixture.endswith('.csl.json') or fixture.endswith('.csl.juris-m.json'): continue
@@ -89,10 +109,9 @@ for imex in ['import', 'export']:
           elif types[key] != tpe:
             raise ValueError(f'{fixture}.{key}: {types[key]} vs {tpe}')
 
-
 with open(os.path.join(root, 'translators/typings/serialized-item.d.ts'), 'w') as typings:
   def add(s): print(textwrap.indent(s, '  '), file=typings)
-  def comment(s): print(textwrap.indent('\n'.join(textwrap.wrap(s, 100)), '  // '), file=typings)
+  def comment(s): print(textwrap.indent(textwrap.fill(s, width=100, initial_indent='', subsequent_indent='  '), '  // '), file=typings)
   def addfield(name, tpe='any'): add(f'{name}: {types.pop(name, tpe)}')
 
   print('interface ISerializedItem {', file=typings)
@@ -106,14 +125,18 @@ with open(os.path.join(root, 'translators/typings/serialized-item.d.ts'), 'w') a
   #addfield('note')
   #print('', file=typings)
 
-  for (fieldName,) in list(z.execute('SELECT distinct fieldName FROM typings ORDER BY LOWER(fieldName)')):
-    typeNames = [typeName for (typeName,) in list(z.execute('SELECT typeName FROM typings WHERE fieldName = ? ORDER BY typeName', [fieldName]))]
+  for (fieldName,) in list(z.execute('SELECT DISTINCT fieldName FROM typings ORDER BY LOWER(fieldName)')):
+    typeNames = []
+    for (client, typeName) in z.execute('SELECT DISTINCT client, typeName FROM typings WHERE fieldName = ? ORDER BY typeName', [fieldName]):
+      if client != 'both': typeName = f'{client}.{typeName}'
+      typeNames.append(typeName)
     comment(f'exists on {", ".join(typeNames)}')
 
-    aliases = [f'{typeName}.{fieldAlias}'
-               for (typeName, fieldAlias)
-               in list(z.execute('SELECT typeName, fieldAlias FROM typings WHERE fieldName = ? AND fieldAlias IS NOT NULL ORDER BY typeName', [fieldName]))
-              ]
+    aliases = []
+    for (client, typeName, fieldAlias) in z.execute('SELECT DISTINCT client, typeName, fieldAlias FROM typings WHERE fieldName = ? AND fieldAlias IS NOT NULL ORDER BY typeName', [fieldName]):
+      fieldAlias = f'{typeName}.{fieldAlias}'
+      if client != 'both': fieldAlias = f'{client}.{fieldAlias}'
+      aliases.append(fieldAlias)
     if len(aliases) > 0: comment(f'also known as {", ".join(aliases)}')
 
     addfield(fieldName)
@@ -138,3 +161,113 @@ with open(os.path.join(root, 'translators/typings/serialized-item.d.ts'), 'w') a
   print('}', file=typings)
 
 if len(types) != 0: raise ValueError(', '.join(types.keys()))
+
+###################### simplify
+
+# this REQUIRES the aliases to be sorted on field
+template = """
+// DO NOT EDIT BY HAND! GENERATED BY ${generator}
+// tslint:disable:one-line
+
+declare const Zotero: any
+
+// don't take this from Translator.isZotero because that initializes after library load
+const version = Zotero.BetterBibTeX.version()
+const zotero = version.Zotero.isZotero
+const jurism = version.isJurisM
+
+export const valid = new Map([
+  #for $typeName, $fields in $validFields.items()
+  ['$typeName', new Map([
+    #for $field, $valid in $fields.items()
+      ['$field', $valid],
+    #end for
+    ]),
+  ],
+  #end for
+])
+
+function unalias(item) {
+#set $current = None
+#for $client, $field, $alias in $aliases
+  #if $field != $current
+    #if $current is not None
+
+    #end if
+  // $field
+    #set $else_ = ''
+  #else
+    #set $else_ = 'else '
+  #end if
+  #if $client != 'both'
+    #set $client_ = $client + ' && '
+  #else
+    #set $client_ = ''
+  #end if
+  ${else_}if (${client_}typeof item.$alias !== 'undefined') { item.$field = item.$alias; delete item.$alias }
+  #set $current = $field
+#end for
+}
+
+// import & export translators expect different creator formats... nice
+
+export function simplifyForExport(item) {
+  unalias(item)
+
+  item.tags = item.tags ? item.tags.map(tag => tag.tag ) : []
+  item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
+  if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
+
+  if (item.creators) {
+    for (const creator of item.creators) {
+      if (creator.fieldMode) {
+        creator.name = creator.name || creator.lastName
+        delete creator.lastName
+        delete creator.firstName
+        delete creator.fieldMode
+      }
+    }
+  }
+
+  return item
+}
+
+export function simplifyForImport(item) {
+  unalias(item)
+
+  if (item.creators) {
+    for (const creator of item.creators) {
+      if (creator.name) {
+        creator.lastName = creator.lastName || creator.name
+        creator.fieldMode = 1
+        delete creator.firstName
+        delete creator.name
+      }
+    }
+  }
+
+  return item
+}
+"""
+
+with open(os.path.join(root, 'translators/lib/itemfields.ts'), 'w') as simplify:
+  validFields = {}
+
+  for (client, typeName, fieldName) in z.execute('SELECT DISTINCT client, typeName, fieldName FROM typings ORDER BY fieldName'):
+    if not typeName in validFields:
+      if typeName == 'note':
+        validFields[typeName] = {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')}
+      else:
+        validFields[typeName] = {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')}
+
+    if client == 'both':
+      validFields[typeName][fieldName] = 'true'
+    else:
+      validFields[typeName][fieldName] = client
+
+  simplify.write(str(Template(template, searchList=[{
+    'aliases': z.execute('SELECT DISTINCT client, fieldName, fieldAlias FROM typings WHERE fieldAlias IS NOT NULL ORDER BY fieldName, fieldAlias'),
+    'validFields': validFields,
+    'generator': os.path.basename(__file__) }
+  ])))
+

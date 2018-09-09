@@ -219,8 +219,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
-  simplifyFields(sandbox, item) { return Serializer.simplify(item, 'export') },
-  validFields(sandbox) { return Serializer.validFields },
   extractFields(sandbox, item) { return varExtract(item) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
@@ -274,9 +272,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   },
 }
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
-  simplifyFields(sandbox, item) { return Serializer.simplify(item, 'import') },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  validFields(sandbox) { return Serializer.validFields },
   version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   platform(sandbox) { return Zotero.platform },
@@ -614,7 +610,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await KeyManager.init() // inits the key cache by scanning the DB
 
     progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
-    await Serializer.init() // creates simplify et al
+    Serializer.init()
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()

@@ -9,6 +9,7 @@ import { htmlEscape } from './lib/html-escape'
 
 import JSON5 = require('json5')
 import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
+import { valid as validFields } from './lib/itemfields'
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -450,13 +451,13 @@ class ZoteroItem {
   private hackyFields: string[]
   private biblatexdata: { [key: string]: string }
   private biblatexdatajson: boolean
-  private validFields: { [key: string]: boolean }
+  private validFields: Map<string, boolean>
   private numberPrefix: string
 
-  constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }, validFields) {
+  constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
     this.type = this.typeMap[this.bibtex.bib_type] || 'journalArticle'
-    this.validFields = validFields[this.type]
+    this.validFields = validFields.get(this.type)
 
     if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.entry_key} of type ${this.type}`)
 
@@ -469,7 +470,7 @@ class ZoteroItem {
     this.import()
 
     if (Translator.preferences.testing) {
-      const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
+      const err = Object.keys(this.item).filter(name => !this.validFields.get(name)).join(', ')
       if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.entry_key}: ${err}`)
     }
   }
@@ -513,8 +514,8 @@ class ZoteroItem {
   protected $translator(value, field) { return this.$author(value, field) }
 
   protected $publisher(value, field) {
-    field = field === 'institution' && this.validFields.institution ? 'institution' : 'publisher' // Juris-M supports institution as a base field
-    if (!this.validFields[field]) return false
+    field = field === 'institution' && this.validFields.get('institution') ? 'institution' : 'publisher' // Juris-M supports institution as a base field
+    if (!this.validFields.get(field)) return false
 
     if (!this.item[field]) this.item[field] = ''
     if (this.item[field]) this.item[field] += ' / '
@@ -583,7 +584,7 @@ class ZoteroItem {
     if (!pages.length) return true
 
     for (const field of ['pages', 'numPages']) {
-      if (!this.validFields[field]) continue
+      if (!this.validFields.get(field)) continue
 
       this.set(field, pages.join(', '))
 
@@ -714,7 +715,7 @@ class ZoteroItem {
     value = this.unparse(value)
 
     for (const field of ['seriesNumber', 'number', 'issue']) {
-      if (!this.validFields[field]) continue
+      if (!this.validFields.get(field)) continue
 
       this.set(field, value)
 
@@ -726,7 +727,7 @@ class ZoteroItem {
   protected $issue(value) { return this.$number(value) }
 
   protected $issn(value) {
-    if (!this.validFields.ISSN) return false
+    if (!this.validFields.get('ISSN')) return false
 
     return this.set('ISSN', this.unparse(value))
   }
@@ -765,7 +766,7 @@ class ZoteroItem {
       return typeof this.numberPrefix !== 'undefined'
     }
 
-    if (this.validFields.type) {
+    if (this.validFields.get('type')) {
       this.set('type', this.unparse(value))
       return true
     }
@@ -1079,8 +1080,8 @@ class ZoteroItem {
   }
 
   private set(field, value) {
-    debug('import.set:', this.type, field, this.validFields[field])
-    if (!this.validFields[field]) return false
+    debug('import.set:', this.type, field, this.validFields.get(field))
+    if (!this.validFields.get(field)) return false
 
     if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.entry_key} (old: ${this.item[field]}, new: ${value})`)
@@ -1154,8 +1155,6 @@ Translator.doImport = async () => {
     ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
   }
 
-  const validFields = Zotero.BetterBibTeX.validFields()
-
   const itemIDS = {}
   let imported = 0
   const references = (Object.entries(bib.entries) as any[][]) // TODO: add typings to the npm package
@@ -1164,7 +1163,7 @@ Translator.doImport = async () => {
     if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
 
     try {
-      await (new ZoteroItem(id, bibtex, bib.jabref, validFields)).complete()
+      await (new ZoteroItem(id, bibtex, bib.jabref)).complete()
     } catch (err) {
       debug('bbt import error:', err)
       errors.push({ type: 'bbt_error', error: err })

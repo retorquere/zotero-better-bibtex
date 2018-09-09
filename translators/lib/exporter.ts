@@ -4,6 +4,7 @@ declare const Zotero: any
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import { debug } from '../lib/debug'
+import * as itemfields from '../lib/itemfields'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
@@ -51,9 +52,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
-      debug('pre-simplify', item)
-      Zotero.BetterBibTeX.simplifyFields(item)
-      debug('post-simplify', item)
+      itemfields.simplifyForExport(item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
 

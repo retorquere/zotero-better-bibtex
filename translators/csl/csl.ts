@@ -3,6 +3,7 @@ declare const Translator: ITranslator
 declare const Zotero: any
 
 import { debug } from '../lib/debug'
+import * as itemfields from '../lib/itemfields'
 
 const validCSLTypes = [
   'article',
@@ -75,7 +76,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
-      Zotero.BetterBibTeX.simplifyFields(item)
+      itemfields.simplifyForExport(item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?

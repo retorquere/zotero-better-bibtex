@@ -9,6 +9,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | date ranges #747+#746                                                                          | 5           |
      | BibLaTeX Patent author handling, type #1060                                                    | 2           |
      | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054    | 1           |
@@ -30,7 +31,6 @@ Scenario Outline: BibLaTeX Export
      | Extra semicolon in biblatexadata causes export failure #133                                    | 3           |
      | Spaces not stripped from citation keys #294                                                    | 1           |
      | Abbreviations in key generated for Conference Proceedings #548                                 | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | @jurisdiction; map court,authority to institution #326                                         | 1           |
      | Normalize date ranges in citekeys #356                                                         | 3           |
      | CSL status = biblatex pubstate #573                                                            | 1           |
