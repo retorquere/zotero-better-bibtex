@@ -514,7 +514,7 @@ class ZoteroItem {
   protected $translator(value, field) { return this.$author(value, field) }
 
   protected $publisher(value, field) {
-    field = field === 'institution' && this.validFields.get('institution') ? 'institution' : 'publisher' // Juris-M supports institution as a base field
+    field = (field === 'institution' && this.validFields.get('institution')) ? 'institution' : 'publisher' // Juris-M supports institution as a base field
     if (!this.validFields.get(field)) return false
 
     if (!this.item[field]) this.item[field] = ''

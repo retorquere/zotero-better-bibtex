@@ -5,9 +5,9 @@
 declare const Zotero: any
 
 // don't take this from Translator.isZotero because that initializes after library load
-const version = Zotero.BetterBibTeX.version()
-const zotero = version.Zotero.isZotero
-const jurism = version.isJurisM
+const client = Zotero.BetterBibTeX.version().Zotero
+const zotero = client.isZotero
+const jurism = client.isJurisM
 
 export const valid = new Map([
   ['conferencePaper', new Map([
