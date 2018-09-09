@@ -1,7 +1,7 @@
 {
 	"translatorID": "d921155f-0186-1684-615c-ca57682ced9b",
 	"label": "JSTOR",
-	"creator": "Simon Kornblith, Sean Takats, Michael Berkowitz, and Eli Osherovich",
+	"creator": "Simon Kornblith, Sean Takats, Michael Berkowitz, Eli Osherovich, czar",
 	"target": "^https?://([^/]+\\.)?jstor\\.org/(discover/|action/(showArticle|doBasicSearch|doAdvancedSearch|doLocatorSearch|doAdvancedResults|doBasicResults)|stable/|pss/|openurl\\?|sici\\?)",
 	"minVersion": "3.0.12",
 	"maxVersion": "",
@@ -9,11 +9,11 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-09-08 18:50:00"
+	"lastUpdated": "2018-08-11 15:33:55"
 }
 
 function detectWeb(doc, url) {
-	// See if this is a seach results page or Issue content
+	// See if this is a search results page or Issue content
 	if (doc.title == "JSTOR: Search Results") {
 		return getSearchResults(doc, true) ? "multiple" : false;
 	} else if (/stable|pss/.test(url) // Issues with DOIs can't be identified by URL
@@ -35,34 +35,18 @@ function detectWeb(doc, url) {
 }
 
 function getSearchResults(doc, checkOnly) {
-	// We have multiple results
-	var resultsBlock = doc.getElementsByClassName('list-searchResults')[0];
-	if (!resultsBlock) resultsBlock = doc.getElementById('results');
-	if (!resultsBlock) resultsBlock = doc.getElementsByClassName('toc-view')[0];
+	var resultsBlock = doc.querySelectorAll('.media-body.media-object-section');
 	if (!resultsBlock) return false;
-	var titles = ZU.xpath(resultsBlock, '//li//a[@class="title"]|\
-		//li//div[(@class="title" or @class="rw") and not(.//a[@class="title"]) and .//a[contains(@href, "10.2307") or contains(@href, "/stable/")]]');
 	var items = {}, found = false;
-	for (var i=0; i<titles.length; i++) {
-		var title = ZU.trimInternal(titles[i].textContent);
-		var jid;
-		if (titles[i].nodeName.toUpperCase() == 'A') {
-			jid = getJID(titles[i].href);
-		} else {
-			//this looks like it's the default now. Not sure how common the others are.
-			jid = ZU.xpathText(titles[i], './/a[1]/@href');
-			if (jid) jid = getJID(jid);
-		}
-		
+	for (let i=0; i<resultsBlock.length; i++) {
+		let title = resultsBlock[i].querySelector('.title, .small-heading').textContent.trim();
+		let jid = getJID(resultsBlock[i].querySelector('a').href);
 		if (!jid || !title) continue;
-		
 		if (checkOnly) return true;
 		found = true;
 		items[jid] = title;
-		
-		//Zotero.debug("Found title " + title+" with JID "+ jid);
+		//Zotero.debug("Found title "+ title +" with JID "+ jid);
 	}
-	
 	return found ? items : false;
 }
 
@@ -75,7 +59,7 @@ function getJID(url) {
 	var m = url.match(/(?:discover|pss|stable(?:\/info|\/pdf)?)\/(10\.\d+(?:%2F|\/)[^?]+|[a-z0-9.]*)/);
 	if (m) {
 		var jid = decodeURIComponent(m[1]);
-		if (jid.search(/10\.\d+\//) != 0) {
+		if (jid.search(/10\.\d+\//) !== 0) {
 			if (jid.substr(-4) == ".pdf") {
 				jid = jid.substr(0,jid.length-4);
 			}
@@ -204,6 +188,8 @@ function processRIS(text, jid) {
 		  	reviewedTitle = reviewedTitle.replace(/[\s.,]+$/, "");
 		  	item.title =  "Review of " + reviewedTitle
 		}
+		
+		item.url = item.url.replace('http:','https:'); // RIS still lists http addresses while JSTOR's stable URLs use https
 		
 		item.complete();
 	});

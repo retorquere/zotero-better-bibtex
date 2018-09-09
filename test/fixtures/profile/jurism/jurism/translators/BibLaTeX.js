@@ -15,7 +15,7 @@
 		"exportFileData": false,
 		"useJournalAbbreviation": false
 	},
-	"lastUpdated": "2017-08-28 10:55:00"
+	"lastUpdated": "2018-06-04 15:00:00"
 }
 
 
@@ -57,7 +57,8 @@ var revExtraIds = {
 	MR: 'mrnumber',
 	Zbl: 'zmnumber',
 	PMCID: 'pmcid',
-	PMID: 'pmid'
+	PMID: 'pmid',
+	DOI: 'doi'
 };
 
 // Imported by BibTeX. Exported by BibLaTeX only
@@ -353,13 +354,13 @@ var citeKeyConversions = {
 		if (item.creators && item.creators[0] && item.creators[0].lastName) {
 			return item.creators[0].lastName.toLowerCase().replace(/ /g, "_").replace(/,/g, "");
 		}
-		return "";
+		return "noauthor";
 	},
 	"t": function (flags, item) {
 		if (item["title"]) {
 			return item["title"].toLowerCase().replace(citeKeyTitleBannedRe, "").split(/\s+/g)[0];
 		}
-		return "";
+		return "notitle";
 	},
 	"y": function (flags, item) {
 		if (item.date) {
@@ -368,7 +369,7 @@ var citeKeyConversions = {
 				return date.year;
 			}
 		}
-		return "????";
+		return "nodate";
 	}
 }
 

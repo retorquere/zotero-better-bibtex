@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2016-11-03 09:21:03"
+	"lastUpdated": "2018-05-11 09:59:19"
 }
 
 /*
@@ -39,13 +39,20 @@
 */
 
 
+// For testing one has to first open starting page with user name, e.g.
+// https://www.juris.de/jportal/?action=JLoginUser&username=UNI_MANNHEIM
+// and only the old interface is working in Scaffold, which can be switched to
+// by visiting the website
+// https://www.juris.de/jportal/portal/t/dfj/page/jurisw.psml?r3switch=set_portal
+
+
 // Array with the different - recognized - types
 var mappingClassNameToItemType = {
 	'URTEIL' : 'case',
 	'URT.' : 'case',
 	'BESCHLUSS' : 'case',
 	'BESCHL.' : 'case'
-}
+};
 
 // most information in Juris is saved in tables where the description of the data is of class TD30 => gather this data
 var scrapeData = {};
@@ -73,11 +80,12 @@ function detectWeb(doc, url) {
 	}
 	if (scrapeData['Dokumenttyp'] && mappingClassNameToItemType[scrapeData['Dokumenttyp'].toUpperCase()]=='case') {
 		return 'case';
-	}		
+	}
+	Z.monitorDOMChanges(ZU.xpath(doc, '//div[@id="container"]/div')[0]);
 }
 
 function addNote(originalNote, newNote) {
-	if (originalNote.length == 0) {
+	if (originalNote.length === 0) {
 		originalNote = "Additional Metadata: "+newNote;
 	}
 	else
@@ -114,7 +122,7 @@ function scrapeArticle(doc, url) {
 		item.title = ZU.xpathText(doc, "//div[@class='docLayoutTitel']/h3/a");
 	}
 	
-	item.publicationTitle = ZU.xpathText(doc, '//table[@class="TableRahmenkpl"]//img[contains(@alt,"Abkürzung Fundstelle")]/@title');
+	item.publicationTitle = ZU.xpathText(doc, '(//table//img[contains(@alt,"Abkürzung Fundstelle")]/@title)[1]');
 	//scrape src
 	//example 1: "AfP 2014, 293-299"
 	//example 2: "ZStW 125, 259-298 (2013)"
@@ -141,12 +149,12 @@ function scrapeArticle(doc, url) {
 		note = addNote(note, "<h3>Normen</h3><p>" + ZU.trimInternal(citedRegulations) + "</p>");
 	}
 	
-	if (note.length != 0) {
+	if (note.length !== 0) {
 		item.notes.push( {note: note} );
 	}	
 	item.attachments = [{
 		title: "Snapshot",
-		document:doc
+		document: doc
 	}];
 	
 	item.complete();
@@ -165,11 +173,11 @@ function scrapeCase(doc, url) {
 
 	// add jurisdiction to item.extra - in accordance with citeproc-js - for compatability with Zotero-MLZ
 	item.extra = "";
-	if (item.court.indexOf('EuG') == 0) {
-		item.extra += "{:jurisdiction: europa.eu}";
+	if (item.court.indexOf('EuG') === 0) {
+		item.extra += "jurisdiction: europa.eu";
 	}
 	else {
-		item.extra += "{:jurisdiction: de}";
+		item.extra += "jurisdiction: de";
 	}
 	
 	// date
@@ -182,11 +190,11 @@ function scrapeCase(doc, url) {
 	// type of decision. Save this in item.extra according to citeproc-js
 	var decisionType = scrapeData['Dokumenttyp'];
 	if (/(Beschluss)|Beschl\./i.test(decisionType)) {
-		item.extra += "\n{:genre: Beschl.}";
+		item.extra += "\ngenre: Beschl.";
 	}
 	else {
 		if (/(Urteil)|(Urt\.)/i.test(decisionType)) {
-			item.extra += "\n{:genre: Urt.}";
+			item.extra += "\ngenre: Urt.";
 		}
 	}
 	
@@ -246,7 +254,7 @@ function doWeb (doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/e44/page/jurisw.psml?doc.hl=1&doc.id=SBLU000136614&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/e44/page/jurisw.psml?doc.hl=1&doc.id=SBLU000136614&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -281,7 +289,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/e4k/page/jurisw.psml?doc.hl=1&doc.id=SILU000241514&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/e4k/page/jurisw.psml?doc.hl=1&doc.id=SILU000241514&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -329,7 +337,7 @@ var testCases = [
 				"dateDecided": "2014-05-15",
 				"court": "BGH",
 				"docketNumber": "I ZB 71/13",
-				"extra": "{:jurisdiction: de}\n{:genre: Beschl.}",
+				"extra": "jurisdiction: de\ngenre: Beschl.",
 				"shortTitle": "Deus Ex",
 				"attachments": [
 					{
@@ -348,7 +356,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/h7p/page/jurisw.psml?doc.hl=1&doc.id=SBLU000100614&documentnumber=3&numberofresults=15000&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/h7p/page/jurisw.psml?doc.hl=1&doc.id=SBLU000100614&documentnumber=3&numberofresults=15000&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -391,7 +399,7 @@ var testCases = [
 				"dateDecided": "2014-11-04",
 				"court": "VG Frankfurt",
 				"docketNumber": "6 L 544/14.A, 6 L 544/14.A (PKH)",
-				"extra": "{:jurisdiction: de}\n{:genre: Beschl.}",
+				"extra": "jurisdiction: de\ngenre: Beschl.",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -409,7 +417,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/h5z/page/jurisw.psml?pid=Dokumentanzeige&showdoccase=1&js_peid=Trefferliste&documentnumber=1&numberofresults=15000&fromdoctodoc=yes&doc.id=jzs-B2-1422A-1283-1&doc.part=B&doc.price=0.0#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/h5z/page/jurisw.psml?pid=Dokumentanzeige&showdoccase=1&js_peid=Trefferliste&documentnumber=1&numberofresults=15000&fromdoctodoc=yes&doc.id=jzs-B2-1422A-1283-1&doc.part=B&doc.price=0.0#focuspoint",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -453,7 +461,7 @@ var testCases = [
 				"dateDecided": "2014-10-22",
 				"court": "LG Köln",
 				"docketNumber": "26 O 142/13",
-				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
+				"extra": "jurisdiction: de\ngenre: Urt.",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -471,7 +479,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/1rys/page/jurisw.psml?doc.hl=1&doc.id=jzs-B2-1401A-3-1&documentnumber=2&numberofresults=742&showdoccase=1&doc.part=B&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/1rys/page/jurisw.psml?doc.hl=1&doc.id=jzs-B2-1401A-3-1&documentnumber=2&numberofresults=742&showdoccase=1&doc.part=B&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -506,17 +514,16 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/5tw/page/jurisw.psml?doc.hl=1&doc.id=KORE310852014&documentnumber=1&numberofresults=2&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/5tw/page/jurisw.psml?doc.hl=1&doc.id=KORE310852014&documentnumber=1&numberofresults=2&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "case",
-				"title": "BGH, 08.01.2014 - I ZR 169/12 - BearShare",
+				"caseName": "BGH, 08.01.2014 - I ZR 169/12 - BearShare",
 				"creators": [],
 				"dateDecided": "2014-01-08",
 				"court": "BGH",
 				"docketNumber": "I ZR 169/12",
-				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
-				"libraryCatalog": "Juris",
+				"extra": "jurisdiction: de\ngenre: Urt.",
 				"shortTitle": "BearShare",
 				"attachments": [
 					{
@@ -535,17 +542,16 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/5tz/page/jurisw.psml?doc.hl=1&doc.id=KORE570922014&documentnumber=1&numberofresults=40&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/5tz/page/jurisw.psml?doc.hl=1&doc.id=KORE570922014&documentnumber=1&numberofresults=40&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "case",
-				"title": "EuGH, 27.03.2014 - C-314/12",
+				"caseName": "EuGH, 27.03.2014 - C-314/12",
 				"creators": [],
 				"dateDecided": "2014-03-27",
 				"court": "EuGH",
 				"docketNumber": "C-314/12",
-				"extra": "{:jurisdiction: europa.eu}\n{:genre: Urt.}",
-				"libraryCatalog": "Juris",
+				"extra": "jurisdiction: europa.eu\ngenre: Urt.",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -563,17 +569,16 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.juris.de/jportal/portal/t/kli/page/jurisw.psml?doc.hl=1&doc.id=KORE307572013&documentnumber=2&numberofresults=12&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/jportal/portal/t/kli/page/jurisw.psml?doc.hl=1&doc.id=KORE307572013&documentnumber=2&numberofresults=12&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
 		"items": [
 			{
 				"itemType": "case",
-				"title": "BGH, 15.11.2012 - I ZR 74/12 - Morpheus",
+				"caseName": "BGH, 15.11.2012 - I ZR 74/12 - Morpheus",
 				"creators": [],
 				"dateDecided": "2012-11-15",
 				"court": "BGH",
 				"docketNumber": "I ZR 74/12",
-				"extra": "{:jurisdiction: de}\n{:genre: Urt.}",
-				"libraryCatalog": "Juris",
+				"extra": "jurisdiction: de\ngenre: Urt.",
 				"shortTitle": "Morpheus",
 				"attachments": [
 					{

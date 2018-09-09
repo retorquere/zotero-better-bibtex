@@ -1,18 +1,18 @@
 {
 	"translatorID": "efd737c9-a227-4113-866e-d57fbc0684ca",
+	"translatorType": 1,
 	"label": "Primo Normalized XML",
 	"creator": "Philipp Zumstein",
 	"target": "xml",
 	"minVersion": "3.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
+	"inRepository": true,
+	"browserSupport": "gcsibv",
 	"configOptions": {
 		"dataMode": "xml/dom"
 	},
-	"inRepository": true,
-	"translatorType": 1,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-05 07:13:43"
+	"lastUpdated": "2018-07-28 14:15:00"
 }
 
 /*
@@ -291,7 +291,9 @@ function doImport() {
 	var library;
 	var source = ZU.xpathText(doc, '//p:control/p:sourceid', ns);
 	if (source) {
-		library = source.match(/^(.+?)_/);
+		//The HVD library code is now preceded by $$V01 -- not seeing this in other catalogs like Princeton or UQAM
+		//so making it optional
+		library = source.match(/^(?:\$\$V)?(?:\d+)?(.+?)_/);
 		if (library) library = library[1];
 	}
 	// Z.debug(library)
@@ -299,8 +301,10 @@ function doImport() {
 		if (ZU.xpathText(doc, '//p:display/p:lds01', ns)) {
 			item.extra = "HOLLIS number: " + ZU.xpathText(doc, '//p:display/p:lds01', ns);
 		}
-		if (ZU.xpathText(doc, '//p:display/p:lds03', ns)) {
-			item.attachments.push({url: ZU.xpathText(doc, '//p:display/p:lds03', ns), title: "HOLLIS Permalink", snapshot: false});		
+		for (let lds03 of ZU.xpath(doc, '//p:display/p:lds03', ns)) {
+			if (lds03.textContent.match(/href=\"(.+?)\"/)) {
+				item.attachments.push({url: lds03.textContent.match(/href=\"(.+?)\"/)[1], title: "HOLLIS Permalink", snapshot: false});
+			}
 		}
 	}
 	// End Harvard-specific code

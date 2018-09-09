@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-12-26 22:39:31"
+	"lastUpdated": "2018-03-05 00:00:22"
 }
 
 /*
@@ -100,13 +100,14 @@ function parseDocument(doc, url) {
 		// Attach the PDF
 		var scripts = ZU.xpath(doc, '//script');
 		var rawData = {};
-		const DATA_INDICATOR = 'var DATA =';
+		const DATA_INDICATOR = 'var DATA = \'';
 		for (let i = 0; i < scripts.length; i++) {
-		   if (scripts[i].innerHTML.startsWith(DATA_INDICATOR)) {
-		      let dataText = scripts[i].innerHTML.replace(DATA_INDICATOR, '').slice(0, -1);
-		      rawData = JSON.parse(dataText)[0].resultData.paper;
-		      break;
-		   }
+			if (scripts[i].innerHTML.startsWith(DATA_INDICATOR)) {
+				let dataText = scripts[i].innerHTML.replace(DATA_INDICATOR, '').slice(0, -2);
+				dataText = decodeURIComponent(atob(dataText));
+				rawData = JSON.parse(dataText)[0].resultData.paper;
+				break;
+			}
 		}
 		
 		if (item.pages) {

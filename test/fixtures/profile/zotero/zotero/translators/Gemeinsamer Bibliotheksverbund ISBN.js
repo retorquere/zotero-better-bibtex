@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 8,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-09-17 23:54:00"
+	"lastUpdated": "2018-04-13 13:41:00"
 }
 
 /*
@@ -40,10 +40,18 @@ function detectSearch(item) {
 }
 
 function doSearch(item) {
-	var queryISBN = ZU.cleanISBN(item.ISBN);
-	//search the ISBN over the SRU of the GBV, and take the result it as MARCXML
+	//search the ISBN or text over the SRU of the GBV, and take the result it as MARCXML
 	//documentation: https://www.gbv.de/wikis/cls/SRU
-	var url = "http://sru.gbv.de/gvk?version=1.1&operation=searchRetrieve&query=pica.isb=" + queryISBN + " AND pica.mat%3DB&maximumRecords=1";
+	
+	let url;
+	if (item.ISBN) {
+		var queryISBN = ZU.cleanISBN(item.ISBN);
+		url = "http://sru.gbv.de/gvk?version=1.1&operation=searchRetrieve&query=pica.isb=" + queryISBN + " AND pica.mat%3DB&maximumRecords=1";
+	}
+	else if (item.query) {
+		url = "http://sru.gbv.de/gvk?version=1.1&operation=searchRetrieve&query=" + encodeURIComponent(item.query) + "&maximumRecords=50";
+	}
+	
 	//Z.debug(url);
 	ZU.doGet(url, function (text) {
 		//Z.debug(text);

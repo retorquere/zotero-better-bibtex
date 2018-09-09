@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-08-13 08:57:34"
+	"lastUpdated": "2018-05-08 19:05:28"
 }
 
 /*
@@ -180,7 +180,7 @@ function doWeb(doc, url, noFollow) {
 		Zotero.selectItems(getSearchResults(doc, false, resultData), function (items) {
 			if (!items) return true;
 			
-			var articles = new Array();
+			var articles = [];
 			for(var item in items) {
 				articles.push(item);
 			}
@@ -212,7 +212,7 @@ function doWeb(doc, url, noFollow) {
 		var abstractTab = doc.getElementById('tab-AbstractRecord-null') // Seems like that null is a bug and it might change at some point
 			|| doc.getElementById('tab-Record-null'); // Shown as Details
 		if (!(abstractTab && !abstractTab.classList.contains('active'))) {
-			Zotero.debug("On Abstract page, scraping")
+			Zotero.debug("On Abstract page, scraping");
 			scrape(doc, url, type);
 		} else if (noFollow) {
 			Z.debug('Not following link again. Attempting to scrape');
@@ -223,7 +223,9 @@ function doWeb(doc, url, noFollow) {
 				throw new Error("Could not find the abstract/metadata link");
 			}
 			Zotero.debug("Going to the Abstract tab");
-			ZU.processDocuments(link.href, function(doc, url) { doWeb(doc, url, true) });
+			ZU.processDocuments(link.href, function(doc, url) {
+				doWeb(doc, url, true);
+			});
 		}
 	}
 }
@@ -395,6 +397,11 @@ function scrape(doc, url, type) {
 	//sometimes number of pages ends up in pages
 	if(!item.numPages) item.numPages = item.pages;
 	
+	//don't override the university with a publisher information for a thesis
+	if (item.itemType == "thesis" && item.university && item.publisher) {
+		delete item.publisher;
+	}
+	
 	//lanuguage is sometimes given as full word and abbreviation
 	if(item.language) item.language = item.language.split(/\s*;\s*/)[0];
 
@@ -419,10 +426,8 @@ function scrape(doc, url, type) {
 		item.date = date;
 	}
 
-	item.abstractNote = ZU.xpath(doc,
-		'//div[@id="abstractZone" or contains(@id,"abstractFull")]/p')
-		.map(function(p) { return ZU.trimInternal(p.textContent) }).join('\n');
-	
+	item.abstractNote = ZU.xpath(doc, '//div[contains(@id, "abstractSummary_")]/p')
+		.map(function(p) { return ZU.trimInternal(p.textContent); }).join('\n');
 
 	if(!item.tags.length && altKeywords.length) {
 		item.tags = altKeywords.join(',').split(/\s*(?:,|;)\s*/);

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-09-20 20:44:37"
+	"lastUpdated": "2018-08-16 00:52:54"
 }
 
 function detectWeb(doc, url) {
@@ -79,7 +79,7 @@ function doWeb(doc, url) {
 			for (var i in items) {
 				articles.push(i);
 			}
-			ZU.processDocuments(articles, scrape); 
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		if (url.indexOf("/search/") !== -1 || url.indexOf("/stamp/") !== -1 || url.indexOf("/ielx4/") !== -1 || url.indexOf("/ielx5/") !== -1) {
@@ -92,8 +92,7 @@ function doWeb(doc, url) {
 
 function scrape (doc, url) {
 	var arnumber = (url.match(/arnumber=(\d+)/) || url.match(/\/document\/(\d+)\//))[1];
-	var pdf = ZU.xpathText(doc, '//a[contains(@class, "stats-document-lh-action-downloadPdf_2")]/@href');
-	//Z.debug(pdf);
+	var pdf = "/stamp/stamp.jsp?tp=&arnumber=" + arnumber;
 	//Z.debug("arNumber = " + arnumber);
 	var post = "recordIds=" + arnumber + "&fromPage=&citations-format=citation-abstract&download-format=download-bibtex";
 	ZU.doPost('/xpl/downloadCitations', post, function(text) {
@@ -104,7 +103,7 @@ function scrape (doc, url) {
 		if (text.search(/^@null/)!=-1){
 			earlyaccess=true;
 			text = text.replace(/^@null/, "@article");
-		} 
+		}
 		var translator = Zotero.loadTranslator("import");
 		// Calling the BibTeX translator
 		translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");

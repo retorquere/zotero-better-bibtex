@@ -2,16 +2,15 @@
 	"translatorID": "caecaea0-5d06-11df-a08a-0800200c9a66",
 	"label": "Newsnet/Tamedia",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://((www\\.)?(tagesanzeiger|(bo\\.)?bernerzeitung|bazonline|derbund|lematin|24heures|landbote|zuonline|zsz)\\.ch/.)",
+	"target": "^https?://((www\\.)?(tagesanzeiger|(bo\\.)?bernerzeitung|bazonline|derbund|lematin|24heures|landbote|zuonline|zsz|tdg|letemps)\\.ch/.)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-07 09:02:05"
+	"lastUpdated": "2018-04-29 11:03:04"
 }
-
 
 /*
 	***** BEGIN LICENSE BLOCK *****
@@ -38,9 +37,11 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf("/story/") != -1) {
+	if (url.includes("/story/")) {
 		return "newspaperArticle";
-	} else if (url.indexOf("suche.html?") != -1 && getSearchResults(doc, true)) {
+	} else if (url.includes("letemps.ch") && ZU.xpathText(doc, '//meta[@property="og:type"]/@content')) {
+		return "newspaperArticle";
+	} else if (url.includes("suche.html?") && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
@@ -89,10 +90,14 @@ function scrape(doc, url) {
 	translator.setHandler('itemDone', function (obj, item) {
 		
 		
-		var authors = ZU.xpath(doc, '//div[@id="mainColLeft"]//div[contains(@class, "storyInfo")]/span[contains(@class, "author")]')
+		var authors = ZU.xpath(doc, '//div[@id="mainColLeft"]//div[contains(@class, "storyInfo")]/span[contains(@class, "author")]/a[1]');
+		if (!authors || authors.length===0) authors = ZU.xpath(doc, '//div[@id="mainColLeft"]//div[contains(@class, "storyInfo")]/span[contains(@class, "author")]');
+		if (!authors || authors.length===0) authors = ZU.xpath(doc, '(//section[contains(@class, "article-info")])[1]//a[contains(@class, "article-author")]');
 		if (authors) {
-			for (var i=0; i<authors.length; i++) {
-				item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
+			for (let i=0; i<authors.length; i++) {
+				// Delete "Par" = From in authors name
+				let author = authors[i].textContent.replace(/^Par /, '');
+				item.creators.push(ZU.cleanAuthor(author, "author"));
 			}
 		}
 		
@@ -104,22 +109,29 @@ function scrape(doc, url) {
 		
 		item.section = ZU.xpathText(doc, '//div[@id="mainNav"]/ul/li/a[contains(@class, "active")]');
 		
-		var newspaperName = ZU.xpathText(doc, '//img[@id="mainLogo"]/@alt');
+		var newspaperName = ZU.xpathText(doc, '(//img[@id="mainLogo"]/@alt)[1]');
 		if (newspaperName) {
 			item.publicationTitle = newspaperName;
 		}
 		
-		if (url.indexOf("24heures.ch")>-1 || url.indexOf("lematin.ch")>-1) {
-			item.language = "fr";
+		if (url.includes("24heures.ch")
+			|| url.includes("lematin.ch")
+			|| url.includes("tdg.ch")
+			|| url.includes("letemps.ch")) {
+				item.language = "fr";
 		} else {
 			item.language = "de";
+		}
+		
+		if (item.url && item.url.slice(0,2) == "//") {
+			item.url = "https:" + item.url;
 		}
 		
 		item.ISSN = issnMapping(url);
 		
 		var tags = ZU.xpath(doc, '//span[contains(@class, "tagWrapper")]');
 		if (tags) {
-			for (var i=0; i<tags.length; i++) {
+			for (let i=0; i<tags.length; i++) {
 				item.tags.push(tags[i].textContent.trim());
 			}
 		}
@@ -135,38 +147,44 @@ function scrape(doc, url) {
 
 
 function issnMapping(url) {
-	if (url.indexOf("tagesanzeiger.ch")>-1) return "1422-9994";
-	if (url.indexOf("bernerzeitung.ch")>-1) return "1424-1021";
-	if (url.indexOf("bazonline.ch")>-1) return "1420-3006";
-	if (url.indexOf("derbund.ch")>-1) return "0774-6156";
-	if (url.indexOf("lematin.ch")>-1) return "1018-3736";
-	if (url.indexOf("24heures.ch")>-1) return "1424-4039";
+	if (url.includes("tagesanzeiger.ch")) return "1422-9994";
+	if (url.includes("bernerzeitung.ch")) return "1424-1021";
+	if (url.includes("bazonline.ch")) return "1420-3006";
+	if (url.includes("derbund.ch")) return "0774-6156";
+	if (url.includes("lematin.ch")) return "1018-3736";
+	if (url.includes("24heures.ch")) return "1424-4039";
+	if (url.includes("tdg.ch")) return "1010-2248";
+	if (url.includes("letemps.ch")) return "1423-3967";
 }/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.tagesanzeiger.ch/wissen/natur/Duestere-Fakten-zum-Klimawandel/story/13137025",
+		"url": "https://www.tagesanzeiger.ch/wissen/natur/Duestere-Fakten-zum-Klimawandel/story/13137025",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
 				"title": "Düstere Fakten zum Klimawandel",
 				"creators": [],
-				"date": "2011-10-11",
+				"date": "2011-11-10",
 				"ISSN": "1422-9994",
 				"abstractNote": "Der neueste Bericht der Internationalen Energieagentur ist besorgniserregend. Das Klima könnte sich noch viel stärker erwärmen als bisher erwartet.",
 				"language": "de",
 				"libraryCatalog": "www.tagesanzeiger.ch",
 				"publicationTitle": "Tages-Anzeiger",
 				"section": "Wissen",
-				"url": "http://www.tagesanzeiger.ch/wissen/natur/Duestere-Fakten-zum-Klimawandel/story/13137025",
+				"url": "https://www.tagesanzeiger.ch/wissen/natur/Duestere-Fakten-zum-Klimawandel/story/13137025",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"IEA",
-					"Klimaschutz"
+					{
+						"tag": "IEA"
+					},
+					{
+						"tag": "Klimaschutz"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -175,12 +193,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.tagesanzeiger.ch/service/suche/suche.html?date=alle&order=date&key=arbeitsmarkt",
+		"url": "https://www.tagesanzeiger.ch/service/suche/suche.html?date=alle&order=date&key=arbeitsmarkt",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.bernerzeitung.ch/schweiz/wie-praegt-uns-die-reformation-heute-noch/story/28184086",
+		"url": "https://www.bernerzeitung.ch/schweiz/wie-praegt-uns-die-reformation-heute-noch/story/28184086",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -199,7 +217,7 @@ var testCases = [
 				"libraryCatalog": "www.bernerzeitung.ch",
 				"publicationTitle": "Berner Zeitung",
 				"section": "Schweiz",
-				"url": "http://www.bernerzeitung.ch/schweiz/wie-praegt-uns-die-reformation-heute-noch/story/28184086",
+				"url": "https://www.bernerzeitung.ch/schweiz/wie-praegt-uns-die-reformation-heute-noch/story/28184086",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -213,7 +231,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://bazonline.ch/wirtschaft/konjunktur/warum-die-nationalbank-zurueckhaltung-ueben-kann/story/15326375",
+		"url": "https://bazonline.ch/wirtschaft/konjunktur/warum-die-nationalbank-zurueckhaltung-ueben-kann/story/15326375",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -232,14 +250,16 @@ var testCases = [
 				"libraryCatalog": "bazonline.ch",
 				"publicationTitle": "Basler Zeitung",
 				"section": "Wirtschaft",
-				"url": "http://bazonline.ch/wirtschaft/konjunktur/warum-die-nationalbank-zurueckhaltung-ueben-kann/story/15326375",
+				"url": "https://bazonline.ch/wirtschaft/konjunktur/warum-die-nationalbank-zurueckhaltung-ueben-kann/story/15326375",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Franken"
+					{
+						"tag": "Franken"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -248,7 +268,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.derbund.ch/bern/stadt/der-letzte-stapi-geht/story/21950637",
+		"url": "https://www.derbund.ch/bern/stadt/der-letzte-stapi-geht/story/21950637",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -256,7 +276,7 @@ var testCases = [
 				"creators": [
 					{
 						"firstName": "Simon",
-						"lastName": "Preisig@simsimst",
+						"lastName": "Preisig",
 						"creatorType": "author"
 					}
 				],
@@ -267,16 +287,22 @@ var testCases = [
 				"libraryCatalog": "www.derbund.ch",
 				"publicationTitle": "Der Bund",
 				"section": "Bern",
-				"url": "http://www.derbund.ch/bern/stadt/der-letzte-stapi-geht/story/21950637",
+				"url": "https://www.derbund.ch/bern/stadt/der-letzte-stapi-geht/story/21950637",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Alec von Graffenried",
-					"Alexander Tschäppät",
-					"Ursula Wyss"
+					{
+						"tag": "Alec von Graffenried"
+					},
+					{
+						"tag": "Alexander Tschäppät"
+					},
+					{
+						"tag": "Ursula Wyss"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -285,7 +311,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.lematin.ch/monde/alep-prepare-reconstruction-titanesque/story/15949402",
+		"url": "https://www.lematin.ch/monde/alep-prepare-reconstruction-titanesque/story/15949402",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -297,7 +323,7 @@ var testCases = [
 				"language": "fr",
 				"libraryCatalog": "www.lematin.ch",
 				"publicationTitle": "Le Matin",
-				"url": "http://www.lematin.ch/monde/alep-prepare-reconstruction-titanesque/story/15949402",
+				"url": "https://www.lematin.ch/monde/alep-prepare-reconstruction-titanesque/story/15949402",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -311,7 +337,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.zuonline.ch/front/ein-steuerstreit-weniger-fuer-die-zkb/story/31314504",
+		"url": "https://www.zuonline.ch/front/ein-steuerstreit-weniger-fuer-die-zkb/story/31314504",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -328,7 +354,7 @@ var testCases = [
 				"language": "de",
 				"libraryCatalog": "www.zuonline.ch",
 				"publicationTitle": "Zürcher Unterländer",
-				"url": "http://www.zuonline.ch/front/ein-steuerstreit-weniger-fuer-die-zkb/story/31314504",
+				"url": "https://www.zuonline.ch/front/ein-steuerstreit-weniger-fuer-die-zkb/story/31314504",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -342,7 +368,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.zsz.ch/horgen/der-beste-elektroinstallateur-europas-kommt-aus-huetten/story/31921047",
+		"url": "https://www.zsz.ch/horgen/der-beste-elektroinstallateur-europas-kommt-aus-huetten/story/31921047",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -360,7 +386,114 @@ var testCases = [
 				"libraryCatalog": "www.zsz.ch",
 				"publicationTitle": "Zürichsee-Zeitung",
 				"section": "Horgen",
-				"url": "http://www.zsz.ch/horgen/der-beste-elektroinstallateur-europas-kommt-aus-huetten/story/31921047",
+				"url": "https://www.zsz.ch/horgen/der-beste-elektroinstallateur-europas-kommt-aus-huetten/story/31921047",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.tdg.ch/geneve/actu-genevoise/visite-pape-prepare-secret-geneve/story/24171745",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "La visite du pape se prépare en secret à Genève",
+				"creators": [
+					{
+						"firstName": "Sébastien",
+						"lastName": "Jubin",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-04-18",
+				"ISSN": "1010-2248",
+				"abstractNote": "Dans 64 jours, le pape François sera en visite à Genève. Discrètement, sa garde rapprochée a repéré les lieux cette semaine.",
+				"language": "fr",
+				"libraryCatalog": "www.tdg.ch",
+				"publicationTitle": "TDG",
+				"section": "Genève",
+				"url": "https://www.tdg.ch/geneve/actu-genevoise/visite-pape-prepare-secret-geneve/story/24171745",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.letemps.ch/suisse/cantons-alemaniques-veulent-raboter-montants-laide-sociale",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Des cantons alémaniques veulent raboter les montants de l’aide sociale",
+				"creators": [
+					{
+						"firstName": "Céline",
+						"lastName": "Zünd",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-04-17T18:33:00",
+				"ISSN": "1423-3967",
+				"abstractNote": "Le compromis intercantonal sur la définition du minimum vital est remis en question. Le sujet est au cœur de débats houleux dans plusieurs cantons, qui envisagent de réduire nettement les forfaits d’entretien",
+				"language": "fr",
+				"libraryCatalog": "www.letemps.ch",
+				"publicationTitle": "Le Temps",
+				"url": "https://www.letemps.ch/suisse/cantons-alemaniques-veulent-raboter-montants-laide-sociale",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Economie suisse"
+					},
+					{
+						"tag": "Finances publiques"
+					},
+					{
+						"tag": "Impôts"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.tdg.ch/editorial/surveillance-assures-reveil-tardif/story/27369648",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Surveillance des assurés: un réveil tardif",
+				"creators": [
+					{
+						"firstName": "Sophie",
+						"lastName": "Simon",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-04-27",
+				"ISSN": "1010-2248",
+				"language": "fr",
+				"libraryCatalog": "www.tdg.ch",
+				"publicationTitle": "TDG",
+				"shortTitle": "Surveillance des assurés",
+				"url": "https://www.tdg.ch/editorial/surveillance-assures-reveil-tardif/story/27369648",
 				"attachments": [
 					{
 						"title": "Snapshot"

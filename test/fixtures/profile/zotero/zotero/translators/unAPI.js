@@ -9,17 +9,18 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2015-06-04 03:25:27"
+	"lastUpdated": "2018-05-12 15:58:17"
 }
 
-var RECOGNIZABLE_FORMATS = ["rdf_zotero", "rdf_bibliontology", "mods", "marc", "unimarc", "ris",
-	"refer", "bibtex", "rdf_dc"];
+var RECOGNIZABLE_FORMATS = ["rdf_zotero", "rdf_bibliontology", "marc", 
+	"unimarc", "marcxml", "mods", "ris", "refer", "bibtex", "rdf_dc"];
 var FORMAT_GUIDS = {
 	"rdf_zotero":"5e3ad958-ac79-463d-812b-a86a9235c28f",
 	"rdf_bibliontology":"14763d25-8ba0-45df-8f52-b8d1108e7ac9",
 	"mods":"0e2235e7-babf-413c-9acf-f27cce5f059c",
 	"marc":"a6ee60df-1ddc-4aae-bb25-45e0537be973",
 	"unimarc":"a6ee60df-1ddc-4aae-bb25-45e0537be973",
+	"marcxml":"edd87d07-9194-42f8-b2ad-997c4c7deefd",
 	"ris":"32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7",
 	"refer":"881f60f2-0802-411a-9228-ce5f47b64c7d",
 	"bibtex":"9cb70025-a888-4a29-a210-93ec52da40d4",
@@ -42,7 +43,7 @@ UnAPIFormat = function(aXML) {
 	var parser = new DOMParser();
 	var doc = parser.parseFromString(aXML.replace(/<!DOCTYPE[^>]*>/, "").replace(/<\?xml[^>]*\?>/, ""), "text/xml");
 	
-	var foundFormat = new Object();
+	var foundFormat = {};
 	
 	// Loop through to determine format name
 	var nodes = doc.documentElement.getElementsByTagName("format");
@@ -53,7 +54,7 @@ UnAPIFormat = function(aXML) {
 		while(i in nodes) nNodes = ++i;
 	}
 	var node, name, lowerName, format;
-	for(var i=0; i<nNodes; i++) {
+	for(let i=0; i<nNodes; i++) {
 		node = nodes[i];
 		name = node.getAttribute("name");
 		lowerName = name.toLowerCase();
@@ -75,7 +76,11 @@ UnAPIFormat = function(aXML) {
 		} else if(lowerName.match(/^unimarc\b/)
 				|| node.getAttribute("type") === "application/unimarc") {
 			format = "unimarc";
-		} else if(node.getAttribute("docs") == "http://www.refman.com/support/risformat_intro.asp"
+		} else if(lowerName.match(/^marcxml\b/)
+				|| node.getAttribute("type") === "application/marcxml+xml"
+				|| node.getAttribute("docs") === "http://www.loc.gov/marcxml/") {
+			format = "marcxml";
+		} else if(node.getAttribute("docs") === "http://www.refman.com/support/risformat_intro.asp"
 				|| lowerName.match(/^ris\b/)) {
 			format = "ris";
 		}
@@ -84,7 +89,7 @@ UnAPIFormat = function(aXML) {
 	}
 	
 	// Loop through again to determine optimal supported format
-	for(var i=0; i<RECOGNIZABLE_FORMATS.length; i++) {
+	for(let i=0; i<RECOGNIZABLE_FORMATS.length; i++) {
 		if(foundFormat[RECOGNIZABLE_FORMATS[i]]) {
 			this.isSupported = true;
 			this.name = foundFormat[RECOGNIZABLE_FORMATS[i]];
@@ -94,7 +99,7 @@ UnAPIFormat = function(aXML) {
 	}
 	
 	this.isSupported = false;
-}
+};
 
 /**
  * A class encapsulating an UnAPI ID
@@ -107,7 +112,7 @@ UnAPIFormat = function(aXML) {
 UnAPIID = function(id) {
 	this.id = id;
 	unAPIIDs[id] = this;
-}
+};
 
 UnAPIID.prototype = {
 	/**
@@ -143,7 +148,7 @@ UnAPIID.prototype = {
 				callback([]);
 				return;
 			}
-			
+
 			Zotero.Utilities.HTTP.doGet(unAPIResolver+"?id="+me.id+"&format="+me.format.name, function(text) {
 				var translator = Zotero.loadTranslator("import");
 				translator.setTranslator(me.format.translatorID);
@@ -191,7 +196,7 @@ UnAPIID.prototype = {
 			}
 		});
 	}
-}
+};
 
 /**
  * This and the x: prefix in the XPath are to work around an issue with pages
@@ -296,10 +301,6 @@ function detectWeb(doc, url) {
 	var ids = getUnAPIIDs(doc);
 	if(!ids.length) return false;
 	
-	// now we need to see if the server actually gives us bibliographic metadata, and determine the
-	// type
-	Zotero.wait();
-	
 	if(!ids.length === 1) {
 		// Only one item, so we will just get its item type
 		ids[0].getItemType(Zotero.done);
@@ -322,14 +323,14 @@ function doWeb(doc, url) {
 			items[0].complete();
 		} else if(items.length > 0) {
 			// If multiple items, extract their titles
-			var itemTitles = [];
+			var itemTitles = {};
 			for(var i in items) {
 				itemTitles[i] = items[i].title;
 			}
 			
 			// Show item selection dialog
 			Zotero.selectItems(itemTitles, function(chosenItems) {
-				if(!chosenItems) return true
+				if(!chosenItems) return true;
 				
 				// Complete items
 				for(var i in chosenItems) {
@@ -346,32 +347,48 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=nimni+challenge+of+post-zionism&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
+		"url": "https://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=nimni+challenge+of+post-zionism&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "The challenge of Post-Zionism : alternatives to Israeli fundamentalist politics",
+				"title": "The challenge of Post-Zionism: alternatives to Israeli fundamentalist politics",
 				"creators": [
 					{
+						"firstName": "Ephraim",
 						"lastName": "Nimni",
-						"firstName": "Ephraim.",
-						"creatorType": "seriesEditor"
+						"creatorType": "editor"
 					}
 				],
 				"date": "2003",
-				"ISBN": "9781856498937",
-				"archiveLocation": "http://go.utlib.ca/cat/4908720",
+				"ISBN": "9781856498937 9781856498944",
+				"callNumber": "DS113.4 .C45 2003",
+				"extra": "OCLC: 50670646",
 				"libraryCatalog": "search.library.utoronto.ca",
-				"place": "New York",
+				"numPages": "209",
+				"place": "London ; New York",
 				"publisher": "Zed Books",
+				"series": "Postcolonial encounters",
 				"shortTitle": "The challenge of Post-Zionism",
-				"url": "http://www.loc.gov/catdir/description/hol032/2002190908.html",
 				"attachments": [],
 				"tags": [
-					"Israel -- Politics and government.",
-					"National characteristics, Israeli.",
-					"Post-Zionism.",
-					"Zionism -- Philosophy."
+					{
+						"tag": "Israel"
+					},
+					{
+						"tag": "National characteristics, Israeli"
+					},
+					{
+						"tag": "Philosophy"
+					},
+					{
+						"tag": "Politics and government"
+					},
+					{
+						"tag": "Post-Zionism"
+					},
+					{
+						"tag": "Zionism"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -380,8 +397,35 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=adam+smith&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
+		"url": "https://search.library.utoronto.ca/search?N=0&Ntk=Anywhere&Ntt=adam+smith&Ntx=mode%252Bmatchallpartial&Nu=p_work_normalized&Np=1&formName=search_form_simple",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://demo1.orex.es/cgi-bin/koha/opac-detail.pl?biblionumber=3",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Carlota Fainberg",
+				"creators": [
+					{
+						"firstName": "Antonio",
+						"lastName": "Muñoz Molina",
+						"creatorType": "author"
+					}
+				],
+				"date": "1999",
+				"ISBN": "9788420441610",
+				"libraryCatalog": "demo1.orex.es",
+				"numPages": "174",
+				"place": "Madrid",
+				"publisher": "Alfaguara",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

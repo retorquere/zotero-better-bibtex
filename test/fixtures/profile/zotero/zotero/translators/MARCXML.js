@@ -9,14 +9,14 @@
 	"inRepository": true,
 	"translatorType": 1,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2016-12-04 14:12:35"
+	"lastUpdated": "2018-05-19 14:10:27"
 }
 
 function detectImport() {
 	var line;
 	var i = 0;
 	while ((line = Zotero.read()) !== false) {
-		if (line != "") {
+		if (line !== "") {
 			if (line.match(/<(marc\:)?(collection|record) xmlns(\:marc)?=\"http:\/\/www\.loc\.gov\/MARC21\/slim\"/)) {
 				return true;
 			} else {
@@ -43,26 +43,28 @@ function doImport() {
 		var parser = new DOMParser();
 		var xml = parser.parseFromString(text, 'text/xml');
 		//define the marc namespace
-		ns = {
+		var ns = {
 			"marc": "http://www.loc.gov/MARC21/slim"
 		};
 		var records = ZU.xpath(xml, '//marc:record', ns);
-		for (var i in records) {
+		for (let i in records) {
 
 			//create one new item per record
 			var record = new marc.record();
 			var newItem = new Zotero.Item();
 			record.leader = ZU.xpathText(records[i], "./marc:leader", ns);
 			var fields = ZU.xpath(records[i], "./marc:datafield", ns);
-			for (var j in fields) {
+			for (let j in fields) {
 				//go through every datafield (corresponds to a MARC field)
 				var subfields = ZU.xpath(fields[j], "./marc:subfield", ns);
-				for (var k in subfields) {
+				var tag = "";
+				for (let k in subfields) {
 					//get the subfields and their codes...
-					var code = ZU.xpathText(subfields[k], "./@code", ns)
-					var sf = ZU.xpathText(subfields[k], "./text()", ns)
-					//set tag to an empty string if this is the first subfield
-					if (k == 0) var tag = "";
+					var code = ZU.xpathText(subfields[k], "./@code", ns);
+					var sf = ZU.xpathText(subfields[k], "./text()", ns);
+					//delete non-sorting symbols
+					//e.g. &#152;Das&#156; Adam-Smith-Projekt
+					sf = sf.replace(/[\x80-\x9F]/g,"");
 					//concat all subfields in one datafield, with subfield delimiter and code between them
 					tag = tag + marc.subfieldDelimiter + code + sf;
 				}
@@ -71,7 +73,7 @@ function doImport() {
 			record.translate(newItem);
 			newItem.complete();
 		}
-	}) //get Translator end
+	}); //get Translator end
 }
 /** BEGIN TEST CASES **/
 var testCases = [
@@ -96,9 +98,15 @@ var testCases = [
 				"place": "New York, N.Y",
 				"attachments": [],
 				"tags": [
-					"1951-1960",
-					"Jazz",
-					"Piano with jazz ensemble"
+					{
+						"tag": "1951-1960"
+					},
+					{
+						"tag": "Jazz"
+					},
+					{
+						"tag": "Piano with jazz ensemble"
+					}
 				],
 				"notes": [
 					{
@@ -128,11 +136,27 @@ var testCases = [
 				"publisher": "White House Web Team",
 				"attachments": [],
 				"tags": [
-					"Executive Office of the President",
-					"Office of the First Lady",
-					"Office of the Vice President",
-					"United States",
-					"White House (Washington, D.C.)"
+					{
+						"tag": "Executive Office of the President"
+					},
+					{
+						"tag": "Office of the First Lady"
+					},
+					{
+						"tag": "Office of the Vice President"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "White House (Washington, D.C.)"
+					}
 				],
 				"notes": [
 					{
@@ -243,18 +267,45 @@ var testCases = [
 				"series": "Perspektiven sonderpädagogischer Forschung",
 				"attachments": [],
 				"tags": [
-					"(Produktform)Book",
-					"(VLB-WN)1572: Hardcover, Softcover / Pädagogik/Bildungswesen",
-					"2015",
-					"Basel",
-					"Inklusion",
-					"Inklusive Pädagogik",
-					"Konferenzschrift",
-					"Lehrerbildung",
-					"Professionalisierung",
-					"Schulentwicklung",
-					"Sonderpädagogik",
-					"UN-Behindertenrechtskonvention"
+					{
+						"tag": "(Produktform)Book"
+					},
+					{
+						"tag": "(VLB-WN)1572: Hardcover, Softcover / Pädagogik/Bildungswesen"
+					},
+					{
+						"tag": "2015"
+					},
+					{
+						"tag": "Basel"
+					},
+					{
+						"tag": "Inklusion"
+					},
+					{
+						"tag": "Inklusive Pädagogik"
+					},
+					{
+						"tag": "Konferenzschrift"
+					},
+					{
+						"tag": "Lehrerbildung"
+					},
+					{
+						"tag": "Lehrerbildung"
+					},
+					{
+						"tag": "Professionalisierung"
+					},
+					{
+						"tag": "Schulentwicklung"
+					},
+					{
+						"tag": "Sonderpädagogik"
+					},
+					{
+						"tag": "UN-Behindertenrechtskonvention"
+					}
 				],
 				"notes": [
 					{

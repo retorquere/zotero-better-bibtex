@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-06-26 04:35:21"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2018-02-16 06:39:03"
 }
 
 /*
@@ -43,8 +43,7 @@ function detectWeb(doc,url) {
 }
 
 
-function doWeb(doc,url)
-{
+function doWeb(doc,url) {
 	if (detectWeb(doc, url) == "multiple") {
 		var hits = {};
 		var urls = [];
@@ -65,7 +64,7 @@ function doWeb(doc,url)
 			ZU.processDocuments(urls, scrape);
 		});
 	} else {
-		scrape(doc, url)
+		scrape(doc, url);
 	}
 }
 
@@ -84,12 +83,20 @@ function scrape(doc, url) {
 		item.place = "Rochester, NY";
 		if (abstract) item.abstractNote = abstract.trim(); 
 		//The pdfurl in the meta tag 'citation_pdf_url' is just pointing
-		//to the entry itself and there seems to be no stable, reliable
-		//one-click pdfurl anyhow. --> Delete this non-working attachment.
+		//to the entry itself --> Delete this non-working attachment.
 		for (var i=0; i<item.attachments.length; i++) {
 			if (item.attachments[i].title=="Full Text PDF") {
 				item.attachments.splice(i, 1);
 			}
+		}
+		//Extract the correct PDF URL from the download button
+		var download_xpath = ZU.xpath(doc, '//a[@id="downloadPdf"]');
+		if (download_xpath.length > 0) {
+			item.attachments.push({
+				title: "Full Text PDF",
+				url: download_xpath[0].href,
+				mimeType: "application/pdf"
+			});
 		}
 
 		item.complete();
@@ -98,11 +105,6 @@ function scrape(doc, url) {
 }
 /** BEGIN TEST CASES **/
 var testCases = [
-	{
-		"type": "web",
-		"url": "https://papers.ssrn.com/sol3/results.cfm?txtKey_Words=europe",
-		"items": "multiple"
-	},
 	{
 		"type": "web",
 		"url": "https://papers.ssrn.com/sol3/JELJOUR_Results.cfm?form_name=journalBrowse&journal_id=1747960",
@@ -135,6 +137,7 @@ var testCases = [
 				"date": "2009",
 				"abstractNote": "What explains the large variation in the time taken by different countries to ratify the 1948 Genocide Convention? The costs of ratiﬁcation would appear to be relatively low, yet many countries have waited for years, and even decades, before ratifying this symbolically important treaty. This study employs a \"nested analysis\" that combines a large-n event history analysis with a detailed study of an important outlying case in order to explain the main sources of this variation. The initial event history history produces a puzzling ﬁnding: countries appear to be less likely to ratify the treaty if relevant peer countries have already done so. We use the case of Japan -- which has not yet ratiﬁed the Genocide Convention, despite the predictions of the event history model -- to explore the proposed causes of ratiﬁcation in more detail. Based on these ﬁndings, we suggest that once the norms embodied in a treaty take on a sufﬁciently \"taken-for-granted\" character, many countries decide that the costs of ratiﬁcation outweigh its marginal beneﬁts. The pattern of ratiﬁcation of the Genocide Convention therefore does not appear to ﬁt the classic model of the \"norm cascade\" that has been used to explain the adoption of other human rights norms. We conclude with suggestions for how the validity of our theory could be tested through a combination of further large-n and small-n analysis.",
 				"institution": "Social Science Research Network",
+				"language": "en",
 				"libraryCatalog": "papers.ssrn.com",
 				"place": "Rochester, NY",
 				"reportNumber": "ID 1450387",
@@ -144,20 +147,46 @@ var testCases = [
 				"attachments": [
 					{
 						"title": "Snapshot"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
-					"Japan",
-					"event history analysis",
-					"genocide",
-					"hazard models",
-					"human rights",
-					"international law",
-					"international norms",
-					"mixed methods",
-					"nested analysis",
-					"norm cascades",
-					"survival models"
+					{
+						"tag": "Japan"
+					},
+					{
+						"tag": "event history analysis"
+					},
+					{
+						"tag": "genocide"
+					},
+					{
+						"tag": "hazard models"
+					},
+					{
+						"tag": "human rights"
+					},
+					{
+						"tag": "international law"
+					},
+					{
+						"tag": "international norms"
+					},
+					{
+						"tag": "mixed methods"
+					},
+					{
+						"tag": "nested analysis"
+					},
+					{
+						"tag": "norm cascades"
+					},
+					{
+						"tag": "survival models"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

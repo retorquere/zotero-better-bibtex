@@ -2,14 +2,14 @@
 	"translatorID": "ce7a3727-d184-407f-ac12-52837f3361ff",
 	"label": "NYTimes.com",
 	"creator": "Philipp Zumstein",
-	"target": "^https?://(query\\.nytimes\\.com/(search|gst)/(alternate/)?|(select\\.|www\\.|\\.blogs\\.)?nytimes\\.com/)",
-	"minVersion": "4.0",
+	"target": "^https?://(query\\.nytimes\\.com/(search|gst)/|(select\\.|www\\.|mobile\\.|[^\\/.]*\\.blogs\\.)?nytimes\\.com/)",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-09 03:45:18"
+	"lastUpdated": "2018-04-22 06:48:50"
 }
 
 /*
@@ -35,8 +35,9 @@
 	***** END LICENSE BLOCK *****
 */
 
-// attr()/text()
-function attr(doc,selector,attr,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.getAttribute(attr):null}var elem=doc.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(doc,selector,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.textContent:null}var elem=doc.querySelector(selector);return elem?elem.textContent:null}
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
 
 function detectWeb(doc, url) {
 	//we use another function name to avoid confusions with the
@@ -46,11 +47,8 @@ function detectWeb(doc, url) {
 
 
 function detectWebHere(doc, url) {
-	if (doc.getElementById("searchResults")) {
-		Z.monitorDOMChanges(doc.getElementById("searchResults"), {childList: true});
-		if (getSearchResults(doc, true)) {
-			return "multiple";
-		}
+	if (url.includes('/search/') && getSearchResults(doc, true)) {
+		return "multiple";
 	}
 	if (ZU.xpathText(doc, '//meta[@property="og:type" and @content="article"]/@content')) {
 		if (url.indexOf('blog')>-1) {
@@ -75,7 +73,8 @@ function scrape(doc, url) {
 		if (item.date) {
 			item.date = ZU.strToISO(item.date);
 		} else {
-			item.date = doc.querySelector('time').getAttribute('datetime');
+			item.date = attr(doc, 'time', 'datetime')
+				|| attr(doc, 'meta[itemprop="dateModified"]', 'content');
 		}
 		if (item.itemType == "blogPost") {
 			item.blogTitle = ZU.xpathText(doc, '//meta[@property="og:site_name"]/@content');
@@ -83,35 +82,41 @@ function scrape(doc, url) {
 			item.publicationTitle = "The New York Times";
 			item.ISSN = "0362-4331";
 		}
-		//Multiple authors are just put into the same Metadata field
-		var authors = attr(doc,'meta[name="author"]','content') || text(doc, 'span[class^="Byline-bylineAuthor--"]');
-		if (authors) {
+		//Multiple authors are (sometimes) just put into the same Metadata field
+		var authors = attr(doc,'meta[name="author"]', 'content') || attr(doc, 'meta[name="byl"]', 'content') || text(doc, '*[class^="Byline-bylineAuthor--"]');
+		if (authors && item.creators.length<=1) {
+			authors = authors.replace(/^By /, '');
 			if (authors == authors.toUpperCase()) // convert to title case if all caps
 				authors = ZU.capitalizeTitle(authors, true);
 			item.creators = [];
 			var authorsList = authors.split(/,|\band\b/);
-			for (var i=0; i<authorsList.length; i++) {
+			for (let i=0; i<authorsList.length; i++) {
 				item.creators.push(ZU.cleanAuthor(authorsList[i], "author"));
 			}
 		}
 		item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href') || url;
+		if (item.url && item.url.substr(0,2)=="//") {
+			item.url = "https:" + item.url;
+		}
 		item.libraryCatalog = "NYTimes.com";
 		// Convert all caps title of NYT archive pages to title case
 		if (item.title == item.title.toUpperCase())
 				item.title = ZU.capitalizeTitle(item.title, true);
 		// Only force all caps to title case when all tags are all caps
 		var allcaps = true;
-		for (i=0; i < item.tags.length; i++) {
+		for (let i=0; i < item.tags.length; i++) {
 			if (item.tags[i] != item.tags[i].toUpperCase()) {
 				allcaps = false;
 				break;
 			}
 		}
 		if (allcaps) {
-			for (i=0; i < item.tags.length; i++) {
+			for (let i=0; i < item.tags.length; i++) {
 				item.tags[i] = ZU.capitalizeTitle(item.tags[i], true);
 			}
 		}
+		/* TODO: Fix saving the PDF attachment which is currently broken
+		
 		// PDF attachments are in subURL with key & signature
 		var pdfurl = ZU.xpathText(doc, '//div[@id="articleAccess"]//span[@class="downloadPDF"]/a[contains(@href, "/pdf")]/@href | //a[@class="button download-pdf-button"]/@href');
 		if (pdfurl) {
@@ -135,9 +140,10 @@ function scrape(doc, url) {
 				}
 			);
 		} else {
+		*/
 			Z.debug("Not attempting PDF retrieval");
 			item.complete();
-		}
+		//}
 	});
 	
 	translator.getTranslatorObject(function(trans) {
@@ -153,10 +159,11 @@ function scrape(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '(//div[@id="search_results"]|//div[@id="searchResults"]|//div[@id="srchContent"])//li');
+	var rows = doc.querySelectorAll('li');// filter inside the loop
 	for (var i=0; i<rows.length; i++) {
+		if (!rows[i].className.includes('SearchResults-item')) continue;
 		var href = ZU.xpathText(rows[i], '(.//a)[1]/@href');
-		var title = ZU.trimInternal(rows[i].textContent);
+		var title = ZU.xpathText(rows[i], './/h4');
 		if (!href || !title) continue;
 		if (checkOnly) return true;
 		found = true;
@@ -187,19 +194,25 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://query.nytimes.com/gst/abstract.html?res=9C07E4DC143CE633A25756C0A9659C946396D6CF&legacy=true",
+		"url": "https://www.nytimes.com/1912/03/05/archives/two-money-inquiries-hearings-of-trust-charges-and-aldrich-plan-at.html",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
 				"title": "TWO MONEY INQUIRIES.; Hearings of Trust Charges and Aldrich Plan at the Same Time.",
-				"creators": [],
+				"creators": [
+					{
+						"firstName": "Special to The New York",
+						"lastName": "Times",
+						"creatorType": "author"
+					}
+				],
 				"date": "1912-03-05",
 				"ISSN": "0362-4331",
-				"abstractNote": "WASHINGTON, March 4. -- The Money Trust inquiry and consideration of the proposed Aldrich monetary legislation will probably be handled side by side by the House Banking and Currency Committee. The present tentative plan is to divide the committee into two parts, one of which, acting as a sub-committee, will investigate as far as it can those allegations of the Henry Money Trust resolution which fall within the jurisdiction of the Banking and Currency Committee.",
 				"language": "en-US",
 				"libraryCatalog": "NYTimes.com",
 				"publicationTitle": "The New York Times",
-				"url": "http://query.nytimes.com/gst/abstract.html?res=9C07E4DC143CE633A25756C0A9659C946396D6CF",
+				"section": "Archives",
+				"url": "https://www.nytimes.com/1912/03/05/archives/two-money-inquiries-hearings-of-trust-charges-and-aldrich-plan-at.html",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -209,9 +222,7 @@ var testCases = [
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [
-					""
-				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -258,7 +269,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://query.nytimes.com/search/sitesearch/#/marc+hauser",
+		"url": "https://www.nytimes.com/search/#/marc+hauser",
 		"defer": true,
 		"items": "multiple"
 	},
@@ -505,6 +516,169 @@ var testCases = [
 					"Mondelez International Inc",
 					"Oreo",
 					"Social Media"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://mobile.nytimes.com/2018/01/11/opinion/social-media-dumber-steven-pinker.html",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Opinion | Social Media Is Making Us Dumber. Here’s Exhibit A.",
+				"creators": [
+					{
+						"firstName": "Jesse",
+						"lastName": "Singal",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-01-11",
+				"ISSN": "0362-4331",
+				"abstractNote": "Steven Pinker is a liberal, Jewish professor. But social media convinced people that he’s a darling of the alt-right.",
+				"language": "en-US",
+				"libraryCatalog": "NYTimes.com",
+				"publicationTitle": "The New York Times",
+				"section": "Opinion",
+				"url": "https://www.nytimes.com/2018/01/11/opinion/social-media-dumber-steven-pinker.html",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Anti-Semitism"
+					},
+					{
+						"tag": "Fringe Groups and Movements"
+					},
+					{
+						"tag": "Harvard University"
+					},
+					{
+						"tag": "Jews and Judaism"
+					},
+					{
+						"tag": "Pinker, Steven"
+					},
+					{
+						"tag": "Social Media"
+					},
+					{
+						"tag": "Twitter"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.nytimes.com/interactive/2017/11/10/us/men-accused-sexual-misconduct-weinstein.html",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "After Weinstein: 71 Men Accused of Sexual Misconduct and Their Fall From Power",
+				"creators": [
+					{
+						"firstName": "Sarah",
+						"lastName": "Almukhtar",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Michael",
+						"lastName": "Gold",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Larry",
+						"lastName": "Buchanan",
+						"creatorType": "author"
+					}
+				],
+				"date": "2017-11-10",
+				"ISSN": "0362-4331",
+				"abstractNote": "A list of men who have resigned, been fired or otherwise lost power since the Harvey Weinstein scandal broke.",
+				"language": "en-US",
+				"libraryCatalog": "NYTimes.com",
+				"publicationTitle": "The New York Times",
+				"section": "U.S.",
+				"shortTitle": "After Weinstein",
+				"url": "https://www.nytimes.com/interactive/2017/11/10/us/men-accused-sexual-misconduct-weinstein.html, https://www.nytimes.com/interactive/2017/11/10/us/men-accused-sexual-misconduct-weinstein.html",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					{
+						"tag": "#MeToo Movement"
+					},
+					{
+						"tag": "Besh, John (1968- )"
+					},
+					{
+						"tag": "C K, Louis"
+					},
+					{
+						"tag": "Conyers, John Jr"
+					},
+					{
+						"tag": "Cornish, Tony"
+					},
+					{
+						"tag": "Franken, Al"
+					},
+					{
+						"tag": "Franks, Trent"
+					},
+					{
+						"tag": "Huff, Justin"
+					},
+					{
+						"tag": "Keillor, Garrison"
+					},
+					{
+						"tag": "Lauer, Matt"
+					},
+					{
+						"tag": "Levine, James"
+					},
+					{
+						"tag": "Lizza, Ryan"
+					},
+					{
+						"tag": "Masterson, Danny (1976- )"
+					},
+					{
+						"tag": "Price, Roy (1967- )"
+					},
+					{
+						"tag": "Rose, Charlie"
+					},
+					{
+						"tag": "Sex Crimes"
+					},
+					{
+						"tag": "Sexual Harassment"
+					},
+					{
+						"tag": "Simmons, Russell"
+					},
+					{
+						"tag": "Spacey, Kevin"
+					},
+					{
+						"tag": "Stein, Lorin"
+					},
+					{
+						"tag": "Weinstein, Harvey"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

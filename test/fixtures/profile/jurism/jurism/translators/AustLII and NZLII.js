@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-18 10:21:48"
+	"lastUpdated": "2018-03-02 09:46:09"
 }
 
 /*
@@ -54,6 +54,9 @@ function detectWeb(doc, url) {
 		return "journalArticle";
 	}
 	if (url.includes('nzlii.org/nz/cases/') && url.includes('.html')) {
+		return "case";
+	}
+	if (url.includes('austlii.edu.au/cgi-bin/sinodisp/au/cases/') && url.includes('.html')) {
 		return "case";
 	}
 	if (getSearchResults(doc, true)) {
@@ -113,6 +116,8 @@ function scrape(doc, url) {
 			var voliss = text(doc, 'head>title');
 			// e.g. C & M [2006] FamCA 212 (20 January 2006)
 			newItem.caseName = voliss.replace(/\s?\[.*$/, '');
+			newItem.title = newItem.caseName;
+			
 			var lastParenthesis = voliss.match(/\(([^\)]*)\)$/);
 			if (lastParenthesis) {
 				newItem.dateDecided = ZU.strToISO(lastParenthesis[1]);
@@ -365,6 +370,30 @@ var testCases = [
 		"type": "web",
 		"url": "http://www7.austlii.edu.au/cgi-bin/sinosrch.cgi?mask_path=;method=auto;query=adam%20smith;view=relevance&mask_path=au/cases/act/ACTCA",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "http://www8.austlii.edu.au/cgi-bin/sinodisp/au/cases/cth/AICmr/2017/20.html",
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "Cash World Gold Buyers Pty Ltd and Australian Taxation Office (Freedom of information)",
+				"creators": [],
+				"dateDecided": "2017-03-10",
+				"court": "AICmr",
+				"docketNumber": "20",
+				"url": "http://www8.austlii.edu.au/cgi-bin/sinodisp/au/cases/cth/AICmr/2017/20.html",
+				"attachments": [
+					{
+						"title": "Snapshot",
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

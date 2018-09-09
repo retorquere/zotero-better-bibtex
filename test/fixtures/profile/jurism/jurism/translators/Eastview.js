@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-11 21:25:13"
+	"lastUpdated": "2018-06-23 16:36:26"
 }
 
 /*
@@ -107,6 +107,10 @@ function scrape(doc, url) {
 			if (date) item.date = ZU.trimInternal(date[0]);
 			var pages = source.match(/page\(s\): (\d+(?:-\d+)?)/);
 			if (pages) item.page = pages[1];
+			if (!item.publicationTitle) {
+				var publication = source.match(/^(.+?),/);
+				if (publication) item.publicationTitle = publication[1];
+			}
 		}
 		if (!item.publicationTitle) {
 			item.publicationTitle = ZU.xpathText(metatable, './/td[@class="hdr" and text()="Title"]/following-sibling::td[@class="val"]');
@@ -127,13 +131,17 @@ function scrape(doc, url) {
 		var place = ZU.xpathText(doc, '//table[@id="metatable"]//td[@class="hdr" and contains(text(), "Place of Publication")]/following-sibling::td');
 		if (place) item.place = ZU.trimInternal(place);
 	} else {
-		var title = ZU.xpathText(doc, '//div[@class="change_font"]');
+		var title = ZU.xpathText(doc, '//div[@class="ArticleTitle"]');
 		//the "old" page format. We have very little structure here, doing the best we can.
 		//Z.debug(title);
 		var header = ZU.xpathText(doc, '//div[@class="Article"]/ul');
 		Z.debug(header);
 		var date = header.match(/Date:\s*(\d{2}-\d{2}-\d{2,4})/);
 		if (date) item.date = date[1];
+		if (!item.publicationTitle) {
+			var publication = header.match(/\"(.+?)\"/);
+			if (publication) item.publicationTitle = publication[1];
+		}
 	}
 
 	//see if we have a match for item type; default to newspaper otherwise.
@@ -234,8 +242,8 @@ var testCases = [
 				"title": "Moscow",
 				"creators": [],
 				"date": "02-11-98",
-				"libraryCatalog": "Russian Central Newspapers (Eastview)",
-				"publicationTitle": "ITAR-TASS  Daily",
+				"libraryCatalog": "Eastview",
+				"publicationTitle": "Itar-Tass Weekly News",
 				"attachments": [
 					{
 						"title": "Eastview Fulltext Snapshot",

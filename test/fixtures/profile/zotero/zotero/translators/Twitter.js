@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-01 20:30:42"
+	"lastUpdated": "2018-05-11 23:28:19"
 }
 
 /*
@@ -80,6 +80,8 @@ function doWeb(doc, url) {
 function scrape(doc, url) {
 	var item = new Zotero.Item("blogPost");
 	item.title = ZU.xpathText(doc, '//div[contains(@class,"permalink-tweet-container")]//p[contains(@class, "js-tweet-text")]');
+	// Don't set short title when tweet contains colon
+	item.shortTitle = false;
 	item.language = ZU.xpathText(doc, '//div[contains(@class,"permalink-tweet-container")]//p[contains(@class, "js-tweet-text")]/@lang');
 	var author = ZU.xpathText(doc, '//div[contains(@class,"permalink-header")]//strong[contains(@class,"fullname")]');
 	if (author) {
@@ -146,7 +148,6 @@ var testCases = [
 				"date": "2011-08-22T04:52",
 				"blogTitle": "@zotero",
 				"language": "en",
-				"shortTitle": "Zotero 3.0 beta is now available with duplicate detection and tons more. Runs outside Firefox with Chrome or Safari!  http",
 				"url": "https://twitter.com/zotero/status/105608278976905216",
 				"websiteType": "Tweet",
 				"attachments": [
@@ -181,7 +182,6 @@ var testCases = [
 				"date": "2018-01-31T12:00",
 				"blogTitle": "@DieZeitansage",
 				"language": "de",
-				"shortTitle": "Es ist 21",
 				"url": "https://twitter.com/DieZeitansage/status/958792005034930176",
 				"websiteType": "Tweet",
 				"attachments": [

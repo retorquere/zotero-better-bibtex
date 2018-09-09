@@ -1,66 +1,91 @@
 {
 	"translatorID": "66928fe3-1e93-45a7-8e11-9df6de0a11b3",
 	"label": "Max Planck Institute for the History of Science: Virtual Laboratory Library",
-	"creator": "Sean Takats",
+	"creator": "Sean Takats, Philipp Zumstein",
 	"target": "^https?://vlp\\.mpiwg-berlin\\.mpg\\.de/library/",
-	"minVersion": "1.0.0b3.r1",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2012-01-30 22:46:42"
+	"lastUpdated": "2018-01-31 23:20:18"
 }
 
-function detectWeb(doc, url){
-	var namespace = doc.documentElement.namespaceURI;
-		var nsResolver = namespace ? function(prefix) {
-				if (prefix == 'x') return namespace; else return null;
-		} : null;
-	var elmt = doc.evaluate('//base[contains(@href, "/library/data/lit")]', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext();
-	if (elmt){
-			return "book";
-	}
-	elmt = doc.evaluate('//span[starts-with(@title, "lit")] | //a[starts-with(@title, "lit")] | //p[starts-with(@title, "lit")]', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext();
-	if (elmt){
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2018 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
+function detectWeb(doc, url) {
+	if (url.includes('/library/data/lit')) {
+		return "book";
+	} else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
 
-function doWeb(doc, url){
 
-	var namespace = doc.documentElement.namespaceURI;
-		var nsResolver = namespace ? function(prefix) {
-				if (prefix == 'x') return namespace; else return null;
-		} : null;
-	var uris = new Array();
-	var baseElmt = doc.evaluate('//base[contains(@href, "/library/data/lit")]/@href', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext();
-	if (baseElmt){
-		var docID = baseElmt.nodeValue;
-		var idRe = /lit[0-9]+/;
-		var m = idRe.exec(docID);
-		uris.push("http://vlp.mpiwg-berlin.mpg.de/library/meta?id=" + m[0]);
-	} else {
-		var searchElmts = doc.evaluate('//span[starts-with(@title, "lit")] | //a[starts-with(@title, "lit")] | //p[starts-with(@title, "lit")]', doc, nsResolver, XPathResult.ANY_TYPE, null);
-		var searchElmt;
-		var links = new Array();
-		var availableItems = new Array();
-		var i = 0;
-		while (searchElmt = searchElmts.iterateNext()){
-			availableItems[i] = Zotero.Utilities.trimInternal(searchElmt.textContent);
-			var docID = doc.evaluate('./@title', searchElmt, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().nodeValue;
-			links.push("http://vlp.mpiwg-berlin.mpg.de/library/meta?id=" + docID);
-			i++;
-		}
-		var items = Zotero.selectItems(availableItems);
-		if(!items) {
-			return true;
-		}
-		var uris = new Array();
-		for(var i in items) {
-			uris.push(links[i]);
-		}
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('span[title], a[title], p[title]');
+	for (let i=0; i<rows.length; i++) {
+		let href = rows[i].title;
+		let title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (href.indexOf('lit') !== 0) continue;
+		if (checkOnly) return true;
+		found = true;
+		items['library/meta?id='+href] = title;
 	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			scrapeMeta(articles);
+		});
+	} else {
+		var m = url.match(/\/library\/data\/(lit\d+)\b/);
+		scrapeMeta("/library/meta?id=" + m[1]);
+	}
+}
+
+
+function scrapeMeta(uris) {
 	Zotero.Utilities.HTTP.doGet(uris, function(text) {
 		// load Refer translator
 		var translator = Zotero.loadTranslator("import");
@@ -71,9 +96,10 @@ function doWeb(doc, url){
 			item.complete();
 		});
 		translator.translate();
-	}, function() {Zotero.done();}, null);
-	Zotero.wait();
-}/** BEGIN TEST CASES **/
+	});
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",

@@ -69,8 +69,8 @@
       </term>
       <term name="ordinal">th</term>
       <term name="ordinal-01">st</term>
-      <term name="ordinal-02">d</term>
-      <term name="ordinal-03">d</term>
+      <term name="ordinal-02">nd</term>
+      <term name="ordinal-03">rd</term>
       <term name="ordinal-11">th</term>
       <term name="ordinal-12">th</term>
       <term name="ordinal-13">th</term>
@@ -793,7 +793,7 @@
       <if type="article-newspaper">
         <group delimiter=", ">
           <group delimiter=" ">
-            <number variable="edition"/>
+            <number variable="edition" form="ordinal"/>
             <text term="edition"/>
           </group>
           <group delimiter=" ">

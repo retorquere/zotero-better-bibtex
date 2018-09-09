@@ -17,7 +17,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcv",
-	"lastUpdated": "2017-07-05 19:32:38"
+	"lastUpdated": "2018-06-12 09:00:41"
 }
 
 function detectImport() {
@@ -446,6 +446,7 @@ var fieldMap = {
 	},
 	number: {
 		seriesNumber: ["bookSection", "book"],
+		issue: ["journalArticle", "magazineArticle"],
 		docketNumber: ["case"],
 		artworkSize: ["artwork"]
 	},

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-09-18 19:48:10"
+	"lastUpdated": "2018-05-21 10:14:37"
 }
 
 /*
@@ -65,14 +65,37 @@ function scrape(doc, url) {
 			snapshot: true
 		});
 
-
 		//********** Begin fixed-location variables **********
 
 		//Some variables always appear and appear at the same location in all document pages.
-		//title
-		newItem.title = ZU.xpathText(doc, '//*[@id="headerN1"]/h1');
+		
 		//abstract
-		newItem.abstractNote = ZU.xpathText(doc, '//*[@id="mainContentN1"]/p');
+		var abs = doc.getElementById("mainContentN1");
+		// The childrens of `abs` are the label "Abstract:" in a strong-tag,
+		// the abstract in several p-tags or text nodes directly, and possibly
+		// a note about other languages which begins also with a strong-tag.
+		if (abs) {
+			var children = abs.childNodes;
+			var abstractFound = false;
+			for (let child of children) {
+				if (child.tagName == "STRONG" || (child.nodeType == 1 && ZU.xpathText(child, './/strong'))) {
+					if (abstractFound) {
+						break;// stop when another strong tag is found
+					} else {
+						abstractFound = true;
+						continue;// exclude the label "Abstract"
+					}
+				}
+				if (newItem.abstractNote) {
+					if (newItem.abstractNote.slice(-1) !== "\n") {
+						newItem.abstractNote += "\n\n";
+					}
+					newItem.abstractNote += child.textContent;
+				} else {
+					newItem.abstractNote = child.textContent;
+				}
+			}
+		}
 		//attach PDF
 		var pdfUrl = ZU.xpath(doc, '//*[@id="mainRightN1"]/div[2]/a')[0].href;
 		newItem.attachments.push({
@@ -82,31 +105,37 @@ function scrape(doc, url) {
 		});
 		//url: remove 'http://' from pdfUrl
 		newItem.url = pdfUrl.slice(pdfUrl.indexOf('www'));
-		//language: according to the last letter of PDF file name
-		var lang = pdfUrl.charAt(pdfUrl.indexOf('pdf')-2);
-		switch(lang) {
-			case 'a': 
-				newItem.language = 'ar';
-				break;
-			case 'c':
-				newItem.language = 'zh';
-				break;
-			case 'e':
-				newItem.language = 'en';
-				break;
-			case 'f': 
-				newItem.language = 'fr';
-				break;
-			case 'r': 
-				newItem.language = 'ru';
-				break;
-			case 's': 
-				newItem.language = 'es';
-				break;
-			default: 
-				newItem.language = 'other';
+		//language: according to the last one (old format) or two (new format) letters of PDF file name
+		var lang_old = pdfUrl.charAt(pdfUrl.indexOf('pdf')-2);
+		var lang_new = pdfUrl.slice(pdfUrl.indexOf('pdf')-3, pdfUrl.indexOf('pdf')-1);
+		if ((lang_old == 'a') || (lang_new == 'AR') || (lang_new == 'ar')) {
+			newItem.language = 'ar';
+		} else if ((lang_old == 'c') || (lang_new == 'ZH') || (lang_new == 'zh')) {
+			newItem.language = 'zh';
+		} else if ((lang_old == 'e') || (lang_new == 'EN') || (lang_new == 'en')) {
+			newItem.language = 'en';
+		} else if ((lang_old == 'f') || (lang_new == 'FR') || (lang_new == 'fr')) {
+			newItem.language = 'fr';
+		} else if ((lang_old == 'r') || (lang_new == 'RU') || (lang_new == 'ru')) {
+			newItem.language = 'ru';
+		} else if ((lang_old == 's') || (lang_new == 'ES') || (lang_new == 'es')) {
+			newItem.language = 'es';
+		} else {
+			newItem.language = 'other';
 		}
-
+		//title: use colon to connect main title and subtitle (if subtitle exists)
+		var mainTitle = ZU.xpathText(doc, '//*[@id="headerN1"]/h1');
+		var subTitle = ZU.xpathText(doc, '//h4[@class="csc-firstHeader h1"]');
+		if (subTitle == null) {
+			newItem.title = mainTitle;
+		} else {
+			if (newItem.language == 'zh') {
+				newItem.title = mainTitle + '：' + subTitle;
+			} else {
+				newItem.title = mainTitle + ': ' + subTitle;				
+			}
+		}
+		
 		//********** End fixed-location variables **********
 
 
@@ -118,6 +147,7 @@ function scrape(doc, url) {
 		var textVariable = { //declarations for metadata names as appeared in document pages in different languages
 			date: ['سنة النشر', '出版年代', 'Year of publication', 'Année de publication', 'Год издания', 'Fecha de publicación'],
 			publisher: ['Publisher', 'Издательство'],
+			place: ['مكان النشر', '出版地點', 'Place of publication', 'Lieu de publication', 'Место публикации', 'Lugar de publicacion'],
 			pages: ['الصفحات', '页次', 'Pages', 'Страницы', 'Páginas'],
 			ISBN: ['الرقم الدولي الموحد للكتاب', 'ISBN'],
 			author: ['الكاتب', '作者', 'Author', 'Auteur', 'Автор', 'Autor'],
@@ -129,7 +159,7 @@ function scrape(doc, url) {
 			confCode: ['رمز/شفرة الاجتماع', '会议代码', 'Meeting symbol/code', 'Symbole/code de la réunion', 'Cимвол/код мероприятия', 'Código/Símbolo de la reunión'],
 			session: ['Session', 'undefined', 'session'], //web page bug: in Russian page, session name is 'undefined'
 			tags: ['المعجم الكلمات الموضوع', 'AGROVOC', 'Agrovoc', 'АГРОВОК']
-		}
+		};
 		var existingMeta = {};
 		for (var i = 0; i < metaText.length; i++) {
 			for (var key in textVariable) {
@@ -151,6 +181,10 @@ function scrape(doc, url) {
 			//publisher
 			if (key.includes('publisher')) {
 				newItem.publisher = metaResult;
+			}
+			//place
+			if (key.includes('place')) {
+				newItem.place = metaResult;
 			}
 			//number of pages
 			if (key.includes('pages')) {
@@ -205,6 +239,10 @@ function scrape(doc, url) {
 		if (newItem.publisher == null) {
 			newItem.publisher = 'FAO';
 		}
+		//If there's no place, use 'Rome, Italy' as place.
+		if (newItem.place == null) {
+			newItem.place = 'Rome, Italy';
+		}
 		//Write corporate author; if no individual or corporate author, use 'FAO' as author.
 		if (newItem.creators.length == 0) {
 			if (corpAuthorWeb && officeWeb) {
@@ -234,13 +272,6 @@ function scrape(doc, url) {
 		//********** End dynamic-location variables **********
 
 
-		//********** Others **********
-		//Place: not shown in page. Just differentiate Bangkok / Rome.
-		if (newItem.publisher.includes('Regional Office for Asia and the Pacific')) {
-			newItem.place = 'Bangkok';
-		} else {
-			newItem.place = 'Rome';
-		}
 	}
 	newItem.complete();
 }
@@ -252,7 +283,7 @@ function getSearchResults(doc, checkOnly) {
 	var found = false;
 	var rows = ZU.xpath(doc, '//*[@class="item-image"]');
 	for (var i = 0; i < rows.length; i++) {
-		var href = rows[i].href
+		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].text);
 		if (!href || !title) continue;
 		if (checkOnly) return true;
@@ -277,82 +308,31 @@ function doWeb(doc, url) {
 	} else {
 		scrape(doc, url);
 	}
-}/** BEGIN TEST CASES **/
+}
+
+//Note on test cases: Because the pages use dynamic elements (which is also why the translator doesn't work for multiple item pages), automatic test in Scaffold doesn't work. Every time a test is needed, use "New Web" to manually add it./** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.fao.org/documents/card/en/c/204a6894-b554-472e-9a9b-d84404dfcb9e/",
+		"url": "http://www.fao.org/documents/card/zh/c/d8a82e37-695b-4eca-b6f9-53c12758eb8e/",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "GLOBEFISH Highlights - Issue 2/2017",
-				"creators": [
-					{
-						"lastName": "Fisheries and Aquaculture Economics and Policy Division, Fisheries and Aquaculture Department",
-						"fieldMode": true
-					}
-				],
-				"date": "2017",
-				"ISBN": "9789251097786",
-				"abstractNote": "The publication contains a detailed quarterly update on market trends for a variety of major commodities. Combining the price information collected for the European Price Report with other market survey data collected by FAO GLOBEFISH, the report provides a detailed update on market trends for a variety of major commodities. Key market data is presented in a time series tabular or graphical form with written analysis of trends and key events and news affecting commodities such as tuna, groundfish, small pelagics, shrimp, salmon, fishmeal and fish oil, cephalopods, bivalves and crustacea.",
-				"language": "en",
-				"libraryCatalog": "FAO Publications",
-				"numPages": "80",
-				"place": "Rome",
-				"publisher": "FAO",
-				"series": "GLOBEFISH Highlights",
-				"seriesNumber": "2/2017",
-				"url": "www.fao.org/3/a-i7332e.pdf",
-				"attachments": [
-					{
-						"title": "FAO Document Record Snapshot",
-						"mimeType": "text/html",
-						"snapshot": true
-					},
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					}
-				],
-				"tags": [
-					"aquaculture statistics",
-					"fisheries",
-					"fishery resources",
-					"information dissemination",
-					"marine fisheries",
-					"markets",
-					"prices",
-					"salmon",
-					"seafoods",
-					"statistics",
-					"tuna"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://www.fao.org/documents/card/en/c/02682a52-0227-485b-8d2b-863e5b282e2d/",
-		"items": [
-			{
-				"itemType": "conferencePaper",
-				"title": "Rapport Intérimaire sur la Mise En Oeuvre Des Recommandations Formulées lors des Sessions Antérieures du Comité et du Programme de Travail Pluriannuel",
+				"title": "迁移、农业和农村发展：解决迁移的根源并利用迁移的潜力促进发展",
 				"creators": [
 					{
 						"lastName": "FAO",
 						"fieldMode": true
 					}
 				],
-				"date": "2014",
-				"conferenceName": "Committee on Forestry",
-				"language": "fr",
+				"date": "2016",
+				"abstractNote": "本文件针对的对象是成员国、联合国系统及所有其他潜在合作伙伴，阐明了农业和农村发展以及可持续自然资源管理能够在缓解农村迁移压力方面发挥作用。文件还概述了粮农组织参与国际工作、解决难民和移民全球性流动的主要切入点。粮农组织与合作伙伴合作，加大工作力度，致力于人道主义和发展环境下的迁移问题，并发挥自身在处理农业和农村发展问题方面的比较优势。\n\n其他語言版本:\n\n英語 俄语 西班牙语 法语 阿拉伯语",
+				"language": "zh",
 				"libraryCatalog": "FAO Publications",
-				"place": "Rome",
-				"proceedingsTitle": "COFO/2014/6.1",
+				"numPages": "20",
+				"place": "Rome, Italy",
 				"publisher": "FAO",
-				"url": "www.fao.org/3/a-mk192f.pdf",
+				"url": "www.fao.org/3/a-i6064c.pdf",
 				"attachments": [
 					{
 						"title": "FAO Document Record Snapshot",
@@ -365,7 +345,18 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"forest management"
+					{
+						"tag": "农业发展"
+					},
+					{
+						"tag": "农村发展"
+					},
+					{
+						"tag": "对于灾害和危机的适应与恢复能力"
+					},
+					{
+						"tag": "迁徙"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -374,39 +365,32 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fao.org/documents/card/en/c/78c1b49f-b5c2-43b5-abdf-e63bb6955f4f/",
+		"url": "http://www.fao.org/documents/card/en/c/I9069EN",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "A Regional Strategy for Sustainable Agricultural Mechanization. Sustainable Mechanization across Agri-Food Chains in Asia and the Pacific region",
+				"title": "Republic of Moldova Value Chain Gap Analysis",
 				"creators": [
 					{
-						"firstName": "R. S.",
-						"lastName": "Rolle",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "G.",
-						"lastName": "Mrema",
+						"firstName": "J.",
+						"lastName": "O'Connell",
 						"creatorType": "author"
 					},
 					{
 						"firstName": "P.",
-						"lastName": "Soni",
+						"lastName": "Kiparisov",
 						"creatorType": "author"
 					}
 				],
-				"date": "2015",
-				"ISBN": "9789251086766",
-				"abstractNote": "Draught animals have played a key role over many centuries in providing farm power for agricultural operations. Since the 1990s, the use of draught animals has declined appreciably in Asia and the Pacific region. In India, the number of draught animals in use is projected to decline from over 85 million in 1975 to 18 million by 2030. Similarly, it is projected that in China draught animals will be completely replaced by a combination of 2-wheel and 4-wheel tractors by 2025. This is indeed a great achievement. However, beginning in the late 1990s, the environmental impact of mechanization – especially that of tillage implements and practices – has become an issue of major concern.  This book outlines an agricultural mechanization strategy that contributes to agricultural sustainability and is environmentally sound, while generating economic development and inclusive growth.",
+				"date": "2018",
+				"ISBN": "9789251304839",
+				"abstractNote": "Agriculture and food industry sectors have a major importance for the Moldovan economy. The Republic of Moldova has one of the highest share of rural population among the countries in Europe and Central Asia, and its agriculture sector significantly contributes to the country’s gross domestic product.\n\nThis work is a part of a series of studies on the value chain development gaps and the environment for doing business for farmers. The goal of this study is to try to consolidate the information on countrywide value chain development gathered from various open sources and based on materials developed in a field mission by FAO officers with an emphasis on the plum and berry value chains. The authors did not aim at close examination of the selected value chains; rather, this paper is a general overview that will be a reference point for future field work in the country.\n\nTo get the results, the authors analysed the legislative history related to value chains, collected materials and statistics from open sources, conducted a field mission and interviewed stakeholders.\n\nThe first part of the report observes the overall situation in the Republic of Moldova with a focus on the agriculture sector, reviewing related legislation, the environment for doing business for farmers, and trade. The paper examines existing support measures for agriculture and covers the banking sector and trade policy. The second part examines value chain actors and overviews the selected value chains of plums and berries. The final part provides recommendations.",
 				"language": "en",
 				"libraryCatalog": "FAO Publications",
-				"numPages": "92",
-				"place": "Rome",
+				"numPages": "65",
+				"place": "Budapest, Hungary",
 				"publisher": "FAO",
-				"series": "RAP Publication",
-				"seriesNumber": "No. 2014/24",
-				"url": "www.fao.org/3/a-i4270e.pdf",
+				"url": "www.fao.org/3/i9069en/I9069EN.pdf",
 				"attachments": [
 					{
 						"title": "FAO Document Record Snapshot",
@@ -419,14 +403,24 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"agricultural development",
-					"agricultural statistics",
-					"appropriate technology",
-					"draught animals",
-					"mechanization",
-					"sustainable agriculture",
-					"tractors",
-					"working animals"
+					{
+						"tag": "Republic of Moldova"
+					},
+					{
+						"tag": "agricultural sector"
+					},
+					{
+						"tag": "economic analysis"
+					},
+					{
+						"tag": "economic infrastructure"
+					},
+					{
+						"tag": "economic situation"
+					},
+					{
+						"tag": "research"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -435,11 +429,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.fao.org/documents/card/zh/c/5317526a-77f2-4e9d-901a-20967f5b2753/",
+		"url": "http://www.fao.org/publications/card/en/c/4ca616af-0a4a-4232-bd3b-681b67471857/",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "森林和能源",
+				"title": "Save Food for a Better Climate: Converting the food loss and waste challenge into climate action",
 				"creators": [
 					{
 						"lastName": "FAO",
@@ -447,13 +441,15 @@ var testCases = [
 					}
 				],
 				"date": "2017",
-				"abstractNote": "森林是自然的动力源泉，是用于满足全球可再生能源需求的关键能源。",
-				"language": "zh",
+				"ISBN": "9789251099896",
+				"abstractNote": "This paper aims to inform on the interrelationship between food loss and waste and climate change. In this context, the paper highlights the related impacts, and outlines the recent global frameworks adopted by the international community, and how they have been translated into national priorities and targets. Climate technology options are explored, along with the challenges and opportunities related to financing needs. Finally, this paper will identify ways and enabling factors to reduce food loss and waste as part of the collective effort to enhance ambition for climate action while simultaneously delivering the other objectives of the sustainable development agenda.",
+				"language": "en",
 				"libraryCatalog": "FAO Publications",
-				"numPages": "1",
-				"place": "Rome",
-				"publisher": "粮农组织",
-				"url": "www.fao.org/3/a-i6928c.pdf",
+				"numPages": "38",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"shortTitle": "Save Food for a Better Climate",
+				"url": "www.fao.org/3/a-i8000e.pdf",
 				"attachments": [
 					{
 						"title": "FAO Document Record Snapshot",
@@ -466,11 +462,227 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"energy demand",
-					"可持续发展",
-					"木材能量",
-					"能源管理",
-					"薪炭材"
+					{
+						"tag": "agricultural development"
+					},
+					{
+						"tag": "agricultural wastes"
+					},
+					{
+						"tag": "climate change adaptation"
+					},
+					{
+						"tag": "climate change mitigation"
+					},
+					{
+						"tag": "climate-smart agriculture"
+					},
+					{
+						"tag": "food wastes"
+					},
+					{
+						"tag": "smallholders"
+					},
+					{
+						"tag": "sustainable agriculture"
+					},
+					{
+						"tag": "sustainable development"
+					},
+					{
+						"tag": "waste reduction"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/publications/card/fr/c/77dbd058-8dd4-4295-af77-23f6b28cc683/",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Vivre et se nourrir de la forêt en Afrique centrale",
+				"creators": [
+					{
+						"firstName": "O.",
+						"lastName": "Ndoye",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "P.",
+						"lastName": "Vantomme",
+						"creatorType": "author"
+					}
+				],
+				"date": "2016",
+				"ISBN": "9789252094890",
+				"abstractNote": "Ce livre nous emmène au cœur des zones de forêts denses et sahéliennes de l’Afrique centrale, un écosystème précieux et essentiel à la vie quotidienne de ses habitants, représentant l’un des trois principaux ensembles boisés tropicaux de la planète. Dix pays (Burundi, Cameroun, Congo, Gabon, Guinée Equatoriale, République Centrafricaine, République Démocratique du Congo, Rwanda, Sao Tomé & Principe, Tchad) abritent ces forêts et savanes, riches d’importantes ressources naturelles. Ils ont en commun une longue histoire liée à la colonisation, suivie d'une expérience de coopération multiforme depuis les indépendances qui évolue incontestablement vers une intégration économique et monétaire. De nos jours, alors que les équilibres séculaires entre l’homme et la nature semblent ébranlés, que la sécurité alimentaire, la lutte contre la pauvreté et la préservation de la biodiversité et des ressources forestières sont devenus des enjeux mondiaux ; à l’heure où la croissance démographique non maîtrisée fragilise le maintien des écosystèmes forestiers tout en accentuant les conflits liés à la recherche d’espace vital, le phénomène des changements climatiques vient davantage sonder le génie créateur des populations forestières dans la préservation et la gestion durable de la forêt et des produits forestiers non ligneux (PFNL) qui en sont issus. Cette publication est l’œuvre du personnel technique de la FAO, avec la contribution des partenaires internationaux et locaux engagés dans l’évolution des PFNL. Elle est un document précieux consacré au développement des peuples par la promotion des PFNL en Afrique centrale en vue du renforcement de la sécurité alimentaire et la lutte contre la pauvreté.\n\nVoir aussi la sommaire en version anglais\n\nEgalement disponible en:\n\nAnglais",
+				"language": "fr",
+				"libraryCatalog": "FAO Publications",
+				"numPages": "251",
+				"place": "Rome, Italy",
+				"publisher": "FAO",
+				"series": "Non-wood forest products working paper",
+				"seriesNumber": "No. 21",
+				"url": "www.fao.org/3/a-i6399f.pdf",
+				"attachments": [
+					{
+						"title": "FAO Document Record Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Afrique centrale"
+					},
+					{
+						"tag": "Aménagement forestier"
+					},
+					{
+						"tag": "Burundi"
+					},
+					{
+						"tag": "Cameroun"
+					},
+					{
+						"tag": "Congo"
+					},
+					{
+						"tag": "Connaissance indigène"
+					},
+					{
+						"tag": "Conservation de la diversité biologique"
+					},
+					{
+						"tag": "Forêt humide"
+					},
+					{
+						"tag": "Gabon"
+					},
+					{
+						"tag": "Gnetum"
+					},
+					{
+						"tag": "Guinée Équatoriale"
+					},
+					{
+						"tag": "Produit forestier non ligneux"
+					},
+					{
+						"tag": "Ricinodendron heudelotii"
+					},
+					{
+						"tag": "Rwanda"
+					},
+					{
+						"tag": "République centrafricaine"
+					},
+					{
+						"tag": "République démocratique du Congo"
+					},
+					{
+						"tag": "Sao Tomé-et-Principe"
+					},
+					{
+						"tag": "Tchad"
+					},
+					{
+						"tag": "Technologie traditionnelle"
+					},
+					{
+						"tag": "forest products derivation"
+					},
+					{
+						"tag": "méthode traditionnelle"
+					},
+					{
+						"tag": "sustainable forest management"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://www.fao.org/publications/card/en/c/MW029en",
+		"items": [
+			{
+				"itemType": "conferencePaper",
+				"title": "Multi-year Programme of Work (MYPOW) 2016-2019 for the FAO Regional Conference for Asia and the Pacific",
+				"creators": [
+					{
+						"firstName": "A.",
+						"lastName": "Quereshi",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018",
+				"abstractNote": "This document presents again the MYPOW for 2016-2019 for APRC. A report on how FAO's regional activities have addressed regional priorities during 2016-2017, as well as priorities and recommendations of the regional technical commissions, along with the plans and priorities of partners such as the Regional Economic Organizations, civil society organizations (CSOs) and the private sector, is presented in document APRC/18/6.\n\nAlso Available in:\n\nChinese French Russian",
+				"conferenceName": "FAO Regional Conference for Asia and the Pacific (APRC)",
+				"language": "en",
+				"libraryCatalog": "FAO Publications",
+				"place": "Bangkok, Thailand",
+				"proceedingsTitle": "APRC/18/8",
+				"publisher": "FAO",
+				"url": "www.fao.org/3/mw029en/MW029en.pdf",
+				"attachments": [
+					{
+						"title": "FAO Document Record Snapshot",
+						"mimeType": "text/html",
+						"snapshot": true
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Asia and the Pacific"
+					},
+					{
+						"tag": "FAO"
+					},
+					{
+						"tag": "Sustainable Development Goals"
+					},
+					{
+						"tag": "agricultural development"
+					},
+					{
+						"tag": "climate change"
+					},
+					{
+						"tag": "development indicators"
+					},
+					{
+						"tag": "development policies"
+					},
+					{
+						"tag": "food safety"
+					},
+					{
+						"tag": "food security"
+					},
+					{
+						"tag": "human nutrition"
+					},
+					{
+						"tag": "meetings"
+					},
+					{
+						"tag": "smallholders"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

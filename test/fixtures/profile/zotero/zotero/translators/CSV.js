@@ -12,7 +12,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 2,
-	"lastUpdated": "2016-06-21 08:45:20"
+	"lastUpdated": "2018-08-10 06:37:30"
 }
 
 /*
@@ -206,8 +206,8 @@ function getValue(item, field) {
 			}
 		break;
 		default:
-			if (item[field] || item.uniqueFields[field]) {
-				value += escapeValue('' + (item[field] || item.uniqueFields[field]));
+			if (item[field] || (item.uniqueFields && item.uniqueFields[field])) {
+				value += escapeValue('' + (item[field] || (item.uniqueFields && item.uniqueFields[field])));
 			}
 	}
 	return value + fieldWrapperCharacter;

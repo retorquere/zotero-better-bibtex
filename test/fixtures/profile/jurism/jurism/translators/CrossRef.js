@@ -1,7 +1,7 @@
 {
 	"translatorID": "11645bd1-0420-45c1-badb-53fb41eeb753",
 	"translatorType": 8,
-	"label": "CrossRef",
+	"label": "Crossref",
 	"creator": "Simon Kornblith",
 	"target": "^https?://partneraccess\\.oclc\\.org/",
 	"minVersion": "2.1.9",
@@ -9,7 +9,7 @@
 	"priority": 90,
 	"inRepository": true,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2017-06-03 10:05:00"
+	"lastUpdated": "2018-04-19 05:16:03"
 }
 
 /* CrossRef uses unixref; documentation at http://www.crossref.org/schema/documentation/unixref1.0/unixref.html */

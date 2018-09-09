@@ -31,7 +31,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2017-12-07T04:15:37+00:00</updated>
+    <updated>2017-10-12T12:00:00+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -39,14 +39,8 @@
       <term name="editor" form="verb-short">ed.</term>
       <term name="translator" form="verb-short">trans.</term>
       <term name="translator" form="short">trans.</term>
-      <term name="editortranslator" form="verb-short">
-        <single>ed. and trans.</single>
-        <multiple>ed. and trans.</multiple>
-      </term>
-      <term name="editortranslator" form="verb">
-        <single>Edited and translated by</single>
-        <multiple>Edited and translated by</multiple>
-      </term>
+      <term name="editortranslator" form="verb-short">ed. and trans.</term>
+      <term name="editortranslator" form="verb">Edited and translated by</term>
       <term name="translator" form="short">trans.</term>
     </terms>
   </locale>
@@ -764,10 +758,7 @@
     <choose>
       <if variable="issued">
         <choose>
-          <if type="graphic report" match="any">
-            <date variable="issued" form="text"/>
-          </if>
-          <else-if type="legal_case">
+          <if type="legal_case">
             <group delimiter=" ">
               <text variable="authority"/>
               <choose>
@@ -780,11 +771,16 @@
                 </else>
               </choose>
             </group>
-          </else-if>
-          <else-if type="book bill chapter graphic legislation motion_picture paper-conference report song thesis" match="any">
-            <date variable="issued">
-              <date-part name="year"/>
-            </date>
+          </if>
+          <else-if type="book bill chapter  legislation motion_picture paper-conference song thesis" match="any">
+            <choose>
+              <if is-uncertain-date="issued">
+                <date variable="issued" form="numeric" date-parts="year" prefix="[" suffix="?]"/>
+              </if>
+              <else>
+                <date variable="issued" form="numeric" date-parts="year"/>
+              </else>
+            </choose>
           </else-if>
           <else-if type="patent">
             <group delimiter=", ">
@@ -806,7 +802,14 @@
             </group>
           </else-if>
           <else>
-            <date variable="issued" form="text"/>
+            <choose>
+              <if is-uncertain-date="issued">
+                <date variable="issued" form="text" prefix="[" suffix="?]"/>
+              </if>
+              <else>
+                <date variable="issued" form="text"/>
+              </else>
+            </choose>
           </else>
         </choose>
       </if>
@@ -1074,6 +1077,17 @@
       <else-if type="article-newspaper">
         <text macro="issued"/>
       </else-if>
+      <else-if type="manuscript thesis speech" match="any">
+        <group delimiter=", " prefix="(" suffix=")">
+          <choose>
+            <if variable="title" match="any">
+              <text variable="genre"/>
+            </if>
+          </choose>
+          <text variable="publisher"/>
+          <text macro="issued"/>
+        </group>
+      </else-if>
       <else-if variable="publisher-place event-place publisher" match="any">
         <group prefix="(" suffix=")" delimiter=", ">
           <text macro="event-note"/>
@@ -1086,26 +1100,6 @@
           </group>
           <text macro="issued"/>
         </group>
-      </else-if>
-      <else-if variable="title" match="none">
-        <choose>
-          <if variable="genre">
-            <choose>
-              <if type="manuscript thesis speech" match="any">
-                <group delimiter=", " prefix="(" suffix=")">
-                  <text variable="genre"/>
-                  <text macro="issued"/>
-                </group>
-              </if>
-              <else>
-                <text macro="issued"/>
-              </else>
-            </choose>
-          </if>
-          <else>
-            <text macro="issued"/>
-          </else>
-        </choose>
       </else-if>
       <else>
         <text macro="issued"/>

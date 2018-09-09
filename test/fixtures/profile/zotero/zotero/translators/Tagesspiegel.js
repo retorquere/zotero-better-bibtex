@@ -3,13 +3,13 @@
 	"label": "Tagesspiegel",
 	"creator": "Martin Meyerhoff, Sebastian Karcher",
 	"target": "^https?://www\\.tagesspiegel\\.de",
-	"minVersion": "2.1.9",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-27 20:50:14"
+	"lastUpdated": "2018-01-28 18:07:21"
 }
 
 /*
@@ -32,7 +32,7 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 function detectWeb(doc, url) {
-	if (ZU.xpathText(doc, "//meta[@property='og:type']/@content")=="Article" ){ 
+	if (ZU.xpathText(doc, "//meta[@property='og:type']/@content")=="article" ){ 
 		return "newspaperArticle";
 	} else if (url.indexOf('/suchergebnis/')>-1){ 
 		return "multiple";
@@ -108,9 +108,8 @@ function scrape(doc, url) {
 	// Tags
 	var tags = ZU.xpathText(doc, "//meta[@name='news_keywords']/@content");
 	if (tags) var tags= tags.split(","); // this seems to work even if there's no |
-	for (var i in tags) {
-		tags[i] = tags[i].replace(/^\s*|\s*$/g, '') // remove whitespace around the tags
-		newItem.tags.push(tags[i]);
+	for (let tag of tags) {
+		newItem.tags.push(tag.trim());
 	}
 	newItem.publicationTitle = "Der Tagesspiegel Online";
 	newItem.language = "de-DE";
@@ -118,39 +117,7 @@ function scrape(doc, url) {
 	newItem.complete();
 	
 }
-	
 
-function doWeb2(doc, url) {
-	var articles = new Array();
-	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		
-		var titles = doc.evaluate("//*[@id='hcf-wrapper']/div[2]/div[contains(@class, 'hcf-main-col')]/div/ul/li/h2/a|//*[@id='hcf-wrapper']/div[@class='hcf-lower-hp']/div/ul/li/ul/li/a|//ul/li[contains(@class, 'hcf-teaser')]/h2/a", doc, null, XPathResult.ANY_TYPE, null);
-		
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			// The following conditions excludes the image galleries and videos.
-			if (next_title.href.match(/http\:\/\/www\.tagesspiegel\.de\/(?!mediacenter)/)) { 
-			items[next_title.href] = next_title.textContent;
-			}
-		}
-Zotero.selectItems(items, function (items) {
-			if (!items) {
-				return true;
-			}
-			for (var i in items) {
-				articles.push(i);
-			}
-			Zotero.Utilities.processDocuments(articles, scrape, function () {
-				Zotero.done();
-			});
-			Zotero.wait();	
-		});
-	}
-	else {
-		scrape(doc, url);
-	}
-}	
 /** BEGIN TEST CASES **/
 var testCases = [
 	{

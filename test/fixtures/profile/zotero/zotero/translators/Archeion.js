@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-09-03 12:04:29"
+	"lastUpdated": "2018-03-05 07:08:54"
 }
 
 /*
@@ -34,33 +34,73 @@
 	***** END LICENSE BLOCK *****
 */
 
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
 function detectWeb(doc, url) {
-	if (url.match(/;search\?/)) {
+	if (url.includes('/informationobject/browse?') && getSearchResults(doc, true)) {
 		return "multiple";
 	} else if (url.match(/;rad$/)|| ZU.xpathText(doc, '//section[@id="action-icons"]//a[contains(@href, ";dc?sf_format=xml")]/@href')) {
 		return "book";
 	}
 }
 
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('.search-result-description .title a');
+	for (let i=0; i<rows.length; i++) {
+		let href = rows[i].href;
+		let title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+	} else {
+		scrape(doc, url);
+	}
+}
+
+
 function scrape(doc, url) {
 	var dcUrl = url.replace(/;rad$/, "") + ";dc?sf_format=xml";
 	Zotero.Utilities.doGet(dcUrl, function (text) {
 		//Z.debug(text)
-		text = text.replace(/\&([^a])/, "&amp;$1")
-		text = text.replace(/xsi:type=\"dcterms:ISO639-3\"/, "")
+		text = text.replace(/\&([^a])/, "&amp;$1");
+		text = text.replace(/xsi:type=\"dcterms:ISO639-3\"/, "");
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("5e3ad958-ac79-463d-812b-a86a9235c28f");
 		translator.setString(text);
 		translator.setHandler("itemDone", function (obj, item) {
 			//the DC doesn't distinguish between personal and institutional authors - get them from the page and parse
 			var authors = ZU.xpath(doc, '//div[@id="archivalDescriptionArea"]//div[@class="field"]/h3[contains(text(), "Name of creator")]/following-sibling::div/a');
-			for (var i in authors) {
+			for (let i=0; i<authors.length; i++) {
 				//remove location (in parentheses) from creators, since it often contains a comma that messes with author parsing
 				item.creators[i] = ZU.cleanAuthor(authors[i].textContent.replace(/\(.+\)\s*$/, ""), "author", true);
 				if (!item.creators[i].firstName) item.creators[i].fieldMode = 1;
 			}
 			//The Archive gets mapped to the relations tag - we want its name, not the description in archeion
-			for (var i in item.seeAlso) {
+			for (let i=0; i<item.seeAlso.length; i++) {
 				if (item.seeAlso[i].indexOf("http://") == -1) {
 					item.archive = item.seeAlso[i];
 				}
@@ -68,7 +108,7 @@ function scrape(doc, url) {
 			item.seeAlso = [];
 			//the RDF translator doesn't get the full identifier - get it from the page
 			var loc = ZU.xpathText(doc, '//section[@id="titleAndStatementOfResponsibilityArea"]//div[@class="field"]/h3[contains(text(), "Reference code")]/following-sibling::div');
-			Z.debug(loc)
+			//Z.debug(loc)
 			item.archiveLocation = loc;
 			item.libraryCatalog = "Archeion - MemoryBC - Aberta on Record";
 			if (item.extra) item.notes.push(item.extra);
@@ -79,39 +119,15 @@ function scrape(doc, url) {
 		translator.getTranslatorObject(function(trans) {
 			trans.defaultUnknownType = 'book';
 			trans.doImport();
-	});
+		});
 	});
 }
 
-function doWeb(doc, url) {
-	if (detectWeb(doc, url) == "multiple") {
-		var articles = new Array();
-		var items = new Object();
-		var titles = ZU.xpath(doc, '//div[contains(@class, "search-results")]/h2/a|//div[contains(@class, "search-result")]/p[@class="title"]/a');
-		for (var i in titles) {
-			items[titles[i].href] = titles[i].textContent;
-		}
-		Zotero.selectItems(items, function (items) {
-			if (!items) {
-				return true;
-			}
-			for (var i in items) {
-				articles.push(i);
-			}
-			Zotero.Utilities.processDocuments(articles, scrape, function () {
-				Zotero.done();
-			});
-			Zotero.wait();
-		});
-	} else {
-		scrape(doc, url);
-	}
-}
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.archeion.ca/;search?query=montreal",
+		"url": "https://www.archeion.ca/informationobject/browse?topLod=0&query=montreal&repos=",
 		"items": "multiple"
 	},
 	{
@@ -178,7 +194,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.albertaonrecord.ca/;search?query=alphabet",
+		"url": "https://albertaonrecord.ca/informationobject/browse?topLod=0&query=alphabet&repos=",
 		"items": "multiple"
 	},
 	{
@@ -223,6 +239,11 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.archeion.ca/informationobject/browse?topLod=0&names=73890",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

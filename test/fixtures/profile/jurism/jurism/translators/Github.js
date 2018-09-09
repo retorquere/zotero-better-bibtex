@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-05-12 20:27:47"
+	"lastUpdated": "2018-04-14 12:00:32"
 }
 
 /**
@@ -32,7 +32,7 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf("/search?") != -1) {
+	if (url.includes("/search?")) {
 		if (getSearchResults(doc, true)) {
 			return "multiple";
 		}
@@ -93,11 +93,16 @@ function scrape(doc, url) {
 
 	item.rights = ZU.xpathText(doc, '//a[*[contains(@class, "octicon-law")]]');
 	
-	//api calls to /repos and /repos/../../stats/contribuors
+	//api calls for more information (owner, date, programming language)
 	var apiUrl = "https://api.github.com/";
 	ZU.doGet(apiUrl+"repos/"+repo, function(result) {
 		var json = JSON.parse(result);
 		//Z.debug(json);
+		if (json.message && json.message.includes("API rate limit exceeded")) {
+			//finish and stop in this case
+			item.complete();
+			return;
+		}
 		var name = json.name;
 		var owner = json.owner.login;
 		
@@ -109,14 +114,10 @@ function scrape(doc, url) {
 			var jsonUser = JSON.parse(user);
 			var ownerName = jsonUser.name || jsonUser.login;
 			if (jsonUser.type == "User") {
-				item.creators.push(ZU.cleanAuthor(ownerName, "author"));
+				item.creators.push(ZU.cleanAuthor(ownerName, "programmer"));
 			} else {
 				item.company = ownerName;
 			}
-			item.attachments.push({
-				title: "Snapshot",
-				document: doc
-			});
 			
 			item.complete();
 		});
@@ -151,19 +152,14 @@ var testCases = [
 				"itemType": "computerProgram",
 				"title": "zotero: Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources",
 				"creators": [],
-				"date": "2017-05-12T10:27:25Z",
+				"date": "2018-04-14T04:06:44Z",
 				"company": "zotero",
 				"extra": "original-date: 2011-10-27T07:46:48Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
-				"rights": "AGPL-3.0",
 				"shortTitle": "zotero",
 				"url": "https://github.com/zotero/zotero",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
+				"attachments": [],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -183,18 +179,14 @@ var testCases = [
 				"itemType": "computerProgram",
 				"title": "schema: DataCite Metadata Schema Repository",
 				"creators": [],
-				"date": "2016-10-27T14:19:05Z",
+				"date": "2018-03-22T14:50:46Z",
 				"company": "DataCite",
 				"extra": "original-date: 2011-04-13T07:08:41Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "Ruby",
 				"shortTitle": "schema",
 				"url": "https://github.com/datacite/schema",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
+				"attachments": [],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -212,22 +204,34 @@ var testCases = [
 					{
 						"firstName": "",
 						"lastName": "mittagessen",
-						"creatorType": "author"
+						"creatorType": "programmer"
 					}
 				],
-				"date": "2017-05-10T17:16:42Z",
+				"date": "2018-04-10T01:48:27Z",
 				"extra": "original-date: 2015-05-19T09:24:38Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "Python",
 				"rights": "Apache-2.0",
 				"shortTitle": "kraken",
 				"url": "https://github.com/mittagessen/kraken",
-				"attachments": [
+				"attachments": [],
+				"tags": [
 					{
-						"title": "Snapshot"
+						"tag": "alto-xml"
+					},
+					{
+						"tag": "hocr"
+					},
+					{
+						"tag": "lstm"
+					},
+					{
+						"tag": "neural-networks"
+					},
+					{
+						"tag": "ocr"
 					}
 				],
-				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -244,20 +248,16 @@ var testCases = [
 					{
 						"firstName": "Aurimas",
 						"lastName": "Vinckevicius",
-						"creatorType": "author"
+						"creatorType": "programmer"
 					}
 				],
-				"date": "2017-03-24T09:05:01Z",
+				"date": "2018-04-02T21:32:18Z",
 				"extra": "original-date: 2012-05-20T07:53:58Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
 				"shortTitle": "z2csl",
 				"url": "https://github.com/aurimasv/z2csl",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
+				"attachments": [],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []

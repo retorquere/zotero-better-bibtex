@@ -9,12 +9,11 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2017-08-28 07:22:19"
+	"lastUpdated": "2018-03-23 07:21:31"
 }
 
-
 // attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 
 function detectWeb(doc, url) {
@@ -215,10 +214,11 @@ function scrape(doc, url) {
 		//if(!authors.length) authors = baseNode.getElementsByClassName('contributorNameID');
 		if(!authors.length) authors = ZU.xpath(baseNode, '(.//*[@id="byline"]/span[contains(@class, "author")] | .//*[@id="byline"]/span[contains(@class, "author")]/span)/a[contains(@class, "a-link-normal")][1]');
 		if(!authors.length) authors = ZU.xpath(baseNode, './/span[@class="contributorNameTrigger"]/a[not(@href="#")]');
+		if(!authors.length) authors = ZU.xpath(baseNode, './/span[contains(@class, "author")]/a|.//span[contains(@class, "author")]/span/a');
 		if(!authors.length) authors = ZU.xpath(baseNode, './/a[following-sibling::*[1][@class="byLinePipe"]]');
 		if(!authors.length) authors = ZU.xpath(baseNode, './/a[contains(@href, "field-author=")]');
 		if(!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
-			if(!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
+		if(!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
 		for(var i=0; i<authors.length; i++) {
 			var role = ZU.xpathText(authors[i], '(.//following::text()[normalize-space(self::text())])[1]');
 			if(role) {
@@ -270,7 +270,7 @@ function scrape(doc, url) {
 	if(els.length) {
 		for(var i=0; i<els.length; i++) {
 			var el = els[i],
-				key = ZU.xpathText(el, 'b[1]').trim()
+				key = ZU.xpathText(el, 'b[1]').trim();
 			if(key) {
 				info[key.replace(/\s*:$/, "")] = el.textContent.substr(key.length+1).trim();
 			}
@@ -339,7 +339,7 @@ function scrape(doc, url) {
 	item.language = getField(info, 'Language');
 	// Music
 	item.label = getField(info, 'Label');
-	var department = ZU.xpathText(doc, '//li[contains(@class, "nav-category-button")]/a')
+	var department = ZU.xpathText(doc, '//li[contains(@class, "nav-category-button")]/a');
 	if(getField(info, 'Audio CD')) {
 		item.audioRecordingFormat = "Audio CD";
 	} else if(department && department.trim() == "Amazon MP3 Store") {

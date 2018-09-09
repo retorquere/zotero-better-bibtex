@@ -19,7 +19,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2017-12-27 22:23:20"
+	"lastUpdated": "2018-03-03 13:10:16"
 }
 
 function detectImport() {
@@ -117,8 +117,8 @@ var extraIdentifiers = {
 	//ssrn? http://cyber.law.harvard.edu/cybersecurity/Guidelines_for_adding_Bibliography_entries
 };
 
-// Make a reverse map for convenience
-var revExtraIds = {};
+// Make a reverse map for convenience with additional DOI handling
+var revExtraIds = {'DOI': 'doi'};
 for(var field in extraIdentifiers) {
 	revExtraIds[extraIdentifiers[field]] = field;
 }

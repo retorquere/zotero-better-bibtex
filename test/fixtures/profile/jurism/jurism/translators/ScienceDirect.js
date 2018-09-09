@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-01-07 22:17:42"
+	"lastUpdated": "2018-05-21 08:53:02"
 }
 
 // attr()/text() v2
@@ -65,6 +65,7 @@ function getPDFLink(doc, onDone) {
 	
 	// Some pages still have the PDF link available
 	var pdfURL = attr(doc, '#pdfLink', 'href');
+	if (!pdfURL) pdfURL = attr(doc, '[name="citation_pdf_url"]', 'content');
 	if (pdfURL && pdfURL != '#') {
 		parseIntermediatePDFPage(pdfURL, onDone);
 		return;
@@ -87,7 +88,7 @@ function getPDFLink(doc, onDone) {
 		// Just in case
 		try {
 			pdfLink.click();
-			intermediateURL = attr(doc, '.PdfDropDownMenu li a', 'href');
+			intermediateURL = attr(doc, '.PdfDropDownMenu a', 'href');
 			var clickEvent = doc.createEvent('MouseEvents');
 			clickEvent.initEvent('mousedown', true, true);
 			doc.dispatchEvent(clickEvent);
@@ -127,11 +128,14 @@ function parseIntermediatePDFPage(url, onDone) {
 		var dp = new DOMParser();
 		var doc = dp.parseFromString(html, 'text/html');
 		var pdfURL = attr(doc, 'meta[HTTP-EQUIV="Refresh"]', 'CONTENT');
+		var otherRedirect = attr(doc, '#redirect-message a', 'href');
 		//Zotero.debug("Meta refresh URL: " + pdfURL);
 		if (pdfURL) {
 			// Strip '0;URL='
 			var matches = pdfURL.match(/\d+;URL=(.+)/);
 			pdfURL = matches ? matches[1] : null;
+		} else if (otherRedirect) {
+			pdfURL = otherRedirect;
 		} else {
 			//Sometimes we are already on the PDF page here and therefore
 			//can simply use the original url as pdfURL.
@@ -399,7 +403,7 @@ function getArticleList(doc) {
 			|//td[@class="nonSerialResultsList"]/h3/a\
 			|//div[@id="bodyMainResults"]//li[contains(@class,"title")]//a\
 			|//h2/a[contains(@class, "result-list-title-link")]\
-			|//ol[@class="article-list"]//a[contains(@class, "article-content-title")]\
+			|//ol[contains(@class, "article-list") or contains(@class, "article-list-items")]//a[contains(@class, "article-content-title")]\
 		)\[not(contains(text(),"PDF (") or contains(text(), "Related Articles"))]');
 }
 

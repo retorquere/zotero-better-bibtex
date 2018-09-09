@@ -3,75 +3,91 @@
 	"label": "Code4Lib Journal",
 	"creator": "Michael Berkowitz",
 	"target": "^https?://journal\\.code4lib\\.org/",
-	"minVersion": "1.0.0b4.r5",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-01 16:52:07"
+	"lastUpdated": "2018-03-05 07:15:21"
 }
 
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
 function detectWeb(doc, url) {
-	if (doc.evaluate('//h2[@class="articletitle"]/a', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	if (getSearchResults(doc, true) {
 		return "multiple";
-	} else if (doc.evaluate('//h1[@class="articletitle"]', doc, null, XPathResult.ANY_TYPE, null).iterateNext()) {
+	} else if (text(doc, 'h1[class="articletitle"]')) {
 		return "journalArticle";
 	}
 }
 
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('div.article>h2.articletitle>a');
+	for (let i=0; i<rows.length; i++) {
+		let href = rows[i].href;
+		let title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
 function doWeb(doc, url) {
-	var items = new Object();
-	var articles = new Array();
-	var xpath = '//div[@class="article"]/h2[@class="articletitle"]/a';
 	if (detectWeb(doc, url) == "multiple") {
-		var xpath = '//div[@class="article"]/h2[@class="articletitle"]/a';
-		var titles = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
-		var next_title = titles.iterateNext();
-		while (next_title) {
-			items[next_title.href] = next_title.textContent;
-			next_title = titles.iterateNext();
-		}
-		Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			Zotero.Utilities.processDocuments(articles, scrape, function () {
-				Zotero.done();
-			});
-			Zotero.wait();	
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
 		scrape(doc, url);
 	}
 }
-	
+
+
 function scrape(doc, url){
-		var newItem = new Zotero.Item("journalArticle");
-		newItem.repository = "Code4Lib Journal";
-		newItem.publicationTitle = "The Code4Lib Journal";
-		newItem.ISSN = "1940-5758";
-		newItem.url = doc.location.href;
-		newItem.title = ZU.xpathText(doc, '//div[@class="article"]/h1[@class="articletitle"]');
-		newItem.abstractNote = ZU.xpathText(doc, '//div[@class="article"]/div[@class="abstract"]/p');
-		var issdate = ZU.xpathText(doc, '//p[@id="issueDesignation"]');
-		newItem.issue = issdate.match(/([^,]*)/)[0].match(/\d+/)[0];
-		newItem.date = issdate.match(/,\s+(.*)$/)[1];
-		
-		
-		var axpath = '//div[@class="article"]/div[@class="entry"]/p[1]';
-		var authors = ZU.xpathText(doc, axpath).replace(/By\s+/i, "");
-		var next_author = authors.split(/\s*and\s*|\s*,\s*/);
-		for (var i in next_author) {
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(next_author[i], "author"));
-		}
-		
-		newItem.attachments.push({url:doc.location.href, title:"Code4Lib Journal Snapshot", mimeType:"text/html"});
-		newItem.complete();
-	}/** BEGIN TEST CASES **/
+	var newItem = new Zotero.Item("journalArticle");
+	newItem.repository = "Code4Lib Journal";
+	newItem.publicationTitle = "The Code4Lib Journal";
+	newItem.ISSN = "1940-5758";
+	newItem.url = url;
+	newItem.title = ZU.xpathText(doc, '//div[@class="article"]/h1[@class="articletitle"]');
+	newItem.abstractNote = ZU.xpathText(doc, '//div[@class="article"]/div[@class="abstract"]/p');
+	
+	var issdate = ZU.xpathText(doc, '//p[@id="issueDesignation"]');
+	newItem.issue = issdate.match(/([^,]*)/)[0].match(/\d+/)[0];
+	newItem.date = issdate.match(/,\s+(.*)$/)[1];
+	
+	var axpath = '//div[@class="article"]/div[@class="entry"]/p[1]';
+	var authors = ZU.xpathText(doc, axpath).replace(/By\s+/i, "");
+	var next_author = authors.split(/\s*and\s*|\s*,\s*/);
+	for (var i in next_author) {
+		newItem.creators.push(Zotero.Utilities.cleanAuthor(next_author[i], "author"));
+	}
+	
+	newItem.attachments.push({
+		document: doc,
+		title: "Code4Lib Journal Snapshot",
+		mimeType: "text/html"
+	});
+	newItem.complete();
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",

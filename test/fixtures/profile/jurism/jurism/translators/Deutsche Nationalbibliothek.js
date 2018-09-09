@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2015-05-20 10:31:05"
+	"lastUpdated": "2018-05-14 19:08:02"
 }
 
 /*
@@ -98,7 +98,7 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var articles = new Array();
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
@@ -145,10 +145,6 @@ function scrape(doc, url) {
 
 
 function finalize(doc, item) {
-	//clean the title string (e.g. non-sorting symbols)
-	//e.g. &#152;Das&#156; Adam-Smith-Projekt
-	item.title = item.title.replace(/[\x80-\x9F]/g,"");
-	
 	var toc = ZU.xpath(doc, '//a[contains(@title, "Inhaltsverzeichnis")]');
 	if (toc.length) {
 		item.attachments.push( {
@@ -189,7 +185,7 @@ var testCases = [
 					{
 						"firstName": "Ulrich",
 						"lastName": "Nieß",
-						"creatorType": "editor"
+						"creatorType": "author"
 					},
 					{
 						"firstName": "Stadt",
@@ -202,14 +198,9 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Ulrich",
-						"lastName": "Nieß",
-						"creatorType": "author"
-					},
-					{
 						"firstName": "Susanne",
 						"lastName": "Schlösser",
-						"creatorType": "author"
+						"creatorType": "editor"
 					}
 				],
 				"date": "2013",
@@ -234,16 +225,36 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"(Produktform)Hardback",
-					"(VLB-WN)1558: Hardcover, Softcover / Geschichte/Regionalgeschichte, Ländergeschichte",
-					"Arisierung",
-					"Baden",
-					"Geschichte 1933-1969",
-					"Heimatgeschichte",
-					"Mannheim",
-					"Nachkriegszeit",
-					"Wiedergutmachung",
-					"Zweiter Weltkrieg"
+					{
+						"tag": "(Produktform)Hardback"
+					},
+					{
+						"tag": "(VLB-WN)1558: Hardcover, Softcover / Geschichte/Regionalgeschichte, Ländergeschichte"
+					},
+					{
+						"tag": "Arisierung"
+					},
+					{
+						"tag": "Baden"
+					},
+					{
+						"tag": "Geschichte 1933-1969"
+					},
+					{
+						"tag": "Heimatgeschichte"
+					},
+					{
+						"tag": "Mannheim"
+					},
+					{
+						"tag": "Nachkriegszeit"
+					},
+					{
+						"tag": "Wiedergutmachung"
+					},
+					{
+						"tag": "Zweiter Weltkrieg"
+					}
 				],
 				"notes": [
 					{
@@ -284,18 +295,48 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"(Produktform (spezifisch))Unsewn / adhesive bound",
-					"(Produktform)Paperback / softback",
-					"(VLB-WN)1684: Hardcover, Softcover / Technik/Elektronik, Elektrotechnik, Nachrichtentechnik",
-					"(Zielgruppe)Fachpublikum/ Wissenschaft",
-					"Approximationsalgorithmus",
-					"Digitale Signalverarbeitung",
-					"Drahtloses Sensorsystem",
-					"Elementare Funktion",
-					"Hardwareentwurf",
-					"Kundenspezifische Schaltung",
-					"Mikroelektronik",
-					"Mobilfunk"
+					{
+						"tag": "(Produktform (spezifisch))Unsewn / adhesive bound"
+					},
+					{
+						"tag": "(Produktform)Paperback / softback"
+					},
+					{
+						"tag": "(VLB-WN)1684: Hardcover, Softcover / Technik/Elektronik, Elektrotechnik, Nachrichtentechnik"
+					},
+					{
+						"tag": "(Zielgruppe)Fachpublikum/ Wissenschaft"
+					},
+					{
+						"tag": "Approximationsalgorithmus"
+					},
+					{
+						"tag": "Digitale Signalverarbeitung"
+					},
+					{
+						"tag": "Digitale Signalverarbeitung"
+					},
+					{
+						"tag": "Drahtloses Sensorsystem"
+					},
+					{
+						"tag": "Elementare Funktion"
+					},
+					{
+						"tag": "Hardwareentwurf"
+					},
+					{
+						"tag": "Hochschulschrift"
+					},
+					{
+						"tag": "Kundenspezifische Schaltung"
+					},
+					{
+						"tag": "Mikroelektronik"
+					},
+					{
+						"tag": "Mobilfunk"
+					}
 				],
 				"notes": [
 					{
@@ -313,7 +354,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://d-nb.info/1064805604",
+		"url": "https://portal.dnb.de/opac.htm?method=simpleSearch&cqlMode=true&query=idn%3D1064805604",
 		"items": [
 			{
 				"itemType": "book",
@@ -333,29 +374,118 @@ var testCases = [
 				"place": "Wiesbaden",
 				"publisher": "Springer Fachmedien Wiesbaden",
 				"shortTitle": "Das Adam-Smith-Projekt",
-				"url": "http://nbn-resolving.de/urn:nbn:de:1111-20150110128",
 				"attachments": [],
 				"tags": [
-					"(BIC Subject Heading)JPA",
-					"(Produktform)Electronic book text",
-					"(Zielgruppe)Fachpublikum/ Wissenschaft",
-					"(Zielgruppe)Professional/practitioner",
-					"Adam Smith",
-					"Foucault, Michel",
-					"Gouvernementalität",
-					"Liberalismus",
-					"Liberalismus",
-					"Macht",
-					"Michel Foucault",
-					"Politische Philosophie",
-					"Rechtsordnung",
-					"Smith, Adam",
-					"Theorie der Moralität",
-					"Wirtschaftsethik"
+					{
+						"tag": "(BIC Subject Heading)JPA"
+					},
+					{
+						"tag": "(Produktform)Electronic book text"
+					},
+					{
+						"tag": "(Zielgruppe)Fachpublikum/ Wissenschaft"
+					},
+					{
+						"tag": "(Zielgruppe)Professional/practitioner"
+					},
+					{
+						"tag": "Adam Smith"
+					},
+					{
+						"tag": "Foucault, Michel"
+					},
+					{
+						"tag": "Gouvernementalität"
+					},
+					{
+						"tag": "Liberalismus"
+					},
+					{
+						"tag": "Liberalismus"
+					},
+					{
+						"tag": "Macht"
+					},
+					{
+						"tag": "Michel Foucault"
+					},
+					{
+						"tag": "Politische Philosophie"
+					},
+					{
+						"tag": "Rechtsordnung"
+					},
+					{
+						"tag": "Smith, Adam"
+					},
+					{
+						"tag": "Theorie der Moralität"
+					},
+					{
+						"tag": "Wirtschaftsethik"
+					}
 				],
 				"notes": [
 					{
 						"note": "Lizenzpflichtig"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://portal.dnb.de/opac.htm?method=simpleSearch&cqlMode=true&query=idn%3D950884529",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Der stimmrechtslose GmbH-Geschäftsanteil",
+				"creators": [
+					{
+						"firstName": "Carsten",
+						"lastName": "Schäfer",
+						"creatorType": "author"
+					}
+				],
+				"date": "1997",
+				"ISBN": "9783504646431",
+				"language": "ger",
+				"libraryCatalog": "Deutsche Nationalbibliothek",
+				"numPages": "402",
+				"place": "Köln",
+				"publisher": "O. Schmidt",
+				"series": "Rechtsfragen der Handelsgesellschaften",
+				"seriesNumber": "Bd. 91",
+				"attachments": [
+					{
+						"title": "Table of Contents PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Ausschluss"
+					},
+					{
+						"tag": "Geschäftsanteil"
+					},
+					{
+						"tag": "Gesellschafter"
+					},
+					{
+						"tag": "GmbH"
+					},
+					{
+						"tag": "Hochschulschrift"
+					},
+					{
+						"tag": "Stimmrecht"
+					}
+				],
+				"notes": [
+					{
+						"note": "Zugl.: Heidelberg, Univ., Diss., 1997"
 					}
 				],
 				"seeAlso": []

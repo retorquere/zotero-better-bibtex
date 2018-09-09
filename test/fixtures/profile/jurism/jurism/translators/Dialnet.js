@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-08-29 18:16:26"
+	"lastUpdated": "2018-03-28 21:36:40"
 }
 
 /*
@@ -87,6 +87,21 @@ function scrape(doc, url) {
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
 	translator.setHandler('itemDone', function (obj, item) {
 		item.url = url;
+		// Delete generic abstract as "Información del artículo <title>"
+		if (item.abstractNote && item.abstractNote.includes(item.title) && item.abstractNote.length<item.title.length+30) {
+			delete item.abstractNote;
+		}
+		// in case of double issue e.g. "3-4" wrong issue number in Embedded Metadata e,g. "3" 
+		// clean issue number in case of multiple download
+		var issue = ZU.xpathText(doc, '//*[@id="informacion"]//a[contains(text(), "Nº.")]');
+		if (issue) {
+			// e.g. Vol. 89, Nº. 3-4, 2012
+			item.issue = issue.split('Nº.')[1].split(',')[0];
+		}
+ 		
+ 		// Delete generic keywords
+ 		if (item.tags);
+ 			delete item.tags;
 		item.complete();
 	});
 	translator.getTranslatorObject(function(trans) {
@@ -111,7 +126,6 @@ var testCases = [
 				],
 				"date": "2007",
 				"ISBN": "9788430945450",
-				"abstractNote": "Información del libro Libres, buenos y justos como miembros de un mismo cuerpo: lecciones de teoría del derecho y de derecho natural",
 				"language": "spa",
 				"libraryCatalog": "dialnet.unirioja.es",
 				"publisher": "Tecnos",
@@ -121,11 +135,6 @@ var testCases = [
 					{
 						"title": "Snapshot"
 					}
-				],
-				"tags": [
-					"Libres",
-					"Libro",
-					"buenos y justos como miembros de un mismo cuerpo: lecciones de teoría del derecho y de derecho natural"
 				],
 				"notes": [],
 				"seeAlso": []
@@ -170,11 +179,6 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"tags": [
-					"Ciencias sociales",
-					"Grupo D",
-					"Sociología. Población. Trabajo social"
-				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -189,6 +193,39 @@ var testCases = [
 		"type": "web",
 		"url": "https://dialnet.unirioja.es/ejemplar/381860",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://dialnet.unirioja.es/servlet/articulo?codigo=4251373",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Secularisation as a challenge for a contemporary order theology International Theological Symposium as part of the research project \"Transmission of Faith in social and Religious Transformation Processes\".",
+				"creators": [
+					{
+						"firstName": "Ulrich",
+						"lastName": "Engel",
+						"creatorType": "author"
+					}
+				],
+				"date": "2012",
+				"ISSN": "1123-5772",
+				"issue": "3-4",
+				"language": "mul",
+				"libraryCatalog": "dialnet.unirioja.es",
+				"pages": "659-666",
+				"publicationTitle": "Angelicum",
+				"url": "https://dialnet.unirioja.es/servlet/articulo?codigo=4251373",
+				"volume": "89",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

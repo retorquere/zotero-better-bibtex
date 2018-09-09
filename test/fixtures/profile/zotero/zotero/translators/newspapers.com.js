@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-11 10:44:00"
+	"lastUpdated": "2018-03-24 14:43:10"
 }
 
 /*
@@ -35,6 +35,11 @@
 	***** END LICENSE BLOCK *****
 */
 
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
 function detectWeb(doc, url) {  
 	return "newspaperArticle";
 }
@@ -48,20 +53,20 @@ function doWeb(doc, url) {
 			metaArr[metaTags[i].getAttribute("property")] = metaTags[i].getAttribute("content");
 		}
 	}
-	newItem.title = ZU.xpathText(doc, "//h1[1]");
+	newItem.title = doc.getElementById("spotTitle").textContent;
 	newItem.url = metaArr["og:url"];
 	
 	/*
 		The user can append the author to the title with a forward slash
 		e.g. "My Day / Eleanor Roosevelt"
 	*/
-	if (newItem.title.indexOf('/') >= 0) {
+	if (newItem.title.includes('/')) {
 		var tokens = newItem.title.split("/");
 		var author = tokens[1];
 		newItem.title = tokens[0].trim();
 		// multiple authors are separated with semicolons
 		var authors = author.split("; ");
-		for (var i=0; i<authors.length; i++) {
+		for (i=0; i<authors.length; i++) {
 			newItem.creators.push(Zotero.Utilities.cleanAuthor(authors[i], "author"));
 		}
 	}
@@ -80,39 +85,28 @@ function doWeb(doc, url) {
 		mimeType: "image/jpeg"
 	}];
 	
-	/*
-	The #printlocation span contains three or four links, from whose anchor texts
-	we extract metadata:
-		1. Newspaper title, plus location in brackets e.g. "The Evening News (Harrisburg, Pennsylvania)"
-		2. Date e.g. "28 Jun 1929, Fri"
-		3. (optional) Edition e.g. "Main Edition"
-		4. Page e.g. "Page 13"
+
+	newItem.publicationTitle = text(doc, '.location span[class="paper-title"]');
+	newItem.place = text(doc, '.location span[itemprop="location"]');
+	newItem.date = attr(doc, '.location time', 'datetime');
+	/* 
+	One or two more links follow after the publication date with information about
+		1. (optional) Edition e.g. "Main Edition"
+		2. Page e.g. "Page 13"
 	*/
-	
-	var citation = doc.getElementById("printlocation").getElementsByTagName("a");
-	var publication = citation[0].innerHTML;
-	var start = publication.indexOf("(");
-	if (start>-1) {
-		newItem.publicationTitle = publication.substr(0, start-1);
-		newItem.place = publication.substr(start+1,publication.length-start-2);
-	}
-	else { // no location given
-		newItem.publicationTitle = publication;
-	}
-	
-	var date = citation[1].innerHTML;
-	newItem.date = ZU.strToISO(date);
-	//newItem.date = date.replace(/(.*)\,.*/, "$1"); // remove weekday from end of date
-
-	var p = citation[citation.length-1].innerHTML;
-	newItem.pages = p.substring(p.indexOf(" "));
-
-	if (citation.length > 3) {
-		newItem.edition = citation[2].innerHTML;
+	var editionPages = ZU.xpath(doc, '//span[contains(@class, "location")]/a[time]/following-sibling::a');
+	for (let i=0; i<editionPages.length; i++) {
+		let value = editionPages[i].textContent;
+		if (value.includes("Page")) {
+			newItem.pages = value.replace("Page", '');
+		} else {
+			newItem.edition = value;
+		}
 	}
 	
 	newItem.complete();
 }
+
 
 /** BEGIN TEST CASES **/
 var testCases = [
@@ -120,36 +114,60 @@ var testCases = [
 		"type": "web",
 		"url": "https://www.newspapers.com/clip/7960447/my_day_eleanor_roosevelt/",
 		"items": [
-		   {
-			 "itemType": "newspaperArticle",
-			 "creators": [
-			   {
-				 "firstName": "Eleanor",
-				 "lastName": "Roosevelt",
-				 "creatorType": "author"
-			   }
-			 ],
-			 "notes": [],
-			 "tags": [],
-			 "seeAlso": [],
-			 "attachments": [
-			   {
-				 "title": "Image",
-				 "mimeType": "image/jpeg"
-			   }
-			 ],
-			 "title": "My Day",
-			 "url": "https://www.newspapers.com/clip/7960447/my_day_eleanor_roosevelt/",
-			 "publicationTitle": "The Akron Beacon Journal",
-                         "place": "Akron, Ohio",
-			 "date": "1939-10-30",
-			 "pages": "15",
-			 "edition": "Main Edition",
-			 "libraryCatalog": "newspapers.com",
-			 "accessDate": "CURRENT_TIMESTAMP"
-		   }
+			{
+				"itemType": "newspaperArticle",
+				"title": "My Day",
+				"creators": [
+					{
+						"firstName": "Eleanor",
+						"lastName": "Roosevelt",
+						"creatorType": "author"
+					}
+				],
+				"date": "1939-10-30",
+				"libraryCatalog": "newspapers.com",
+				"pages": "15",
+				"place": "Akron, Ohio",
+				"publicationTitle": "The Akron Beacon Journal",
+				"url": "https://www.newspapers.com/clip/7960447/my_day_eleanor_roosevelt/",
+				"attachments": [
+					{
+						"title": "Image",
+						"mimeType": "image/jpeg"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.newspapers.com/clip/18535448/the_sunday_leader/",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Clipped From The Sunday Leader",
+				"creators": [],
+				"date": "1887-07-17",
+				"edition": "Main Edition",
+				"libraryCatalog": "newspapers.com",
+				"pages": "5",
+				"place": "Wilkes-Barre, Pennsylvania",
+				"publicationTitle": "The Sunday Leader",
+				"url": "https://www.newspapers.com/clip/18535448/the_sunday_leader/",
+				"attachments": [
+					{
+						"title": "Image",
+						"mimeType": "image/jpeg"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
 		]
 	}
 ]
 /** END TEST CASES **/
-

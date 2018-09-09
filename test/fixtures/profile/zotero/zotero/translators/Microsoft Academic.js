@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-01-01 12:59:33"
+	"lastUpdated": "2018-03-04 19:36:45"
 }
 
 /*
@@ -38,40 +38,40 @@
 
 function detectWeb(doc, url) {
 	//The page can change from a search page to a single item page
-	//without loading the whole content as a new website and therfore
-	//we need to monitor these DOM changes all the time.
-	Z.monitorDOMChanges(ZU.xpath(doc, '//div[contains(@class, "entity-detail")]')[0], {childList: true});
-	//When we are on a single page and search for something, then
-	//the content will not vanish, but just set to invisible by
-	//the style element of a parent node. Thus, we need to monitor
-	//for that as well.
-	Z.monitorDOMChanges(ZU.xpath(doc, '//article[contains(@class, "author-page")]')[0], {attributes: true, attributeFilter: ['style']});
+	//without loading the whole content as a new website, but only
+	//parts of the page is disabled by style="display: none". Moreover,
+	//it is important that the subtree of search-page is loaded before
+	//getSearchResults will succeed, and the subtree of author-page
+	//has to be loaded before the detection of the websiteType.
+	//Therfore, we need to monitor these DOM changes all the time. 
+	Z.monitorDOMChanges(ZU.xpath(doc, '//article[contains(@class, "author-page")]')[0], {subtree: true, attributes: true, attributeFilter: ['style']});
+	Z.monitorDOMChanges(ZU.xpath(doc, '//article[contains(@class, "search-page")]')[0], {subtree: true, attributes: true, attributeFilter: ['style']});
 	
+	//For searches the node of class `search-page` is active and for
+	//everything else (details of one paper, journal page, author page,
+	//institution page, topic page) the node of class `author-page`
+	//is active. However, when switching from one to the other one of them
+	//become only inactive with style="display: none".
 	var visibility = ZU.xpathText(doc, '//article[contains(@class, "author-page")]/@style');
 	if (visibility && visibility.indexOf("none")>-1) {
 		if (getSearchResults(doc, url, true)) {
 			return 'multiple';
-		} else {
-			//It is possible that the content of the single page is already
-			//set to invisible, but the search results have not yet been
-			//loaded. Therefore we have to monitor that.
-			Z.monitorDOMChanges(ZU.xpath(doc, '//div[contains(@class, "search-page")]/div[contains(@class, "search-results")]')[0], {childList: true});
 		}
 	} else {
 		//The entity-detail DIV has all template code as SCRIPT childrens with some @id
 		//and one other (active) child, which will determine the websiteType,
-		//i.e. PAPER-DETAIL-ENTITY,  JOURNAL-DETAIL-ENTITY, AUTHOR-DETAIL-ENTITY,
-		//AFFILIATION-DETAIL-ENTITY, or, FOS-DETAIL-ENTITY
+		//i.e. MA-PAPER-DETAIL,  MA-JOURNAL-DETAIL, MA-AUTHOR-DETAIL,
+		//MA-AFFILIATION-DETAIL, or, MA-FOS-DETAIL
 		var child = ZU.xpath(doc, '//div[contains(@class, "entity-detail")]/*[not(@id)]');
 		if (child && child.length>0) {
 			var websiteType = child[0].tagName;
 			Z.debug(websiteType);
-			if (websiteType == 'PAPER-DETAIL-ENTITY') {
-				var conf = ZU.xpathText(doc, '//div[contains(@class, "entity-section")]//span[contains(@class, "semibold") and contains(., "Conference")]');
+			if (websiteType == 'MA-PAPER-DETAIL') {
+				var conf = ZU.xpathText(doc, '//article[contains(@class, "detail")]//section[contains(@class, "paper-venue")]//a[contains(@data-bind, "entityTypes.conference")]');
 				if (conf) {
 					return 'conferencePaper';
 				}
-				var jour = ZU.xpathText(doc, '//div[contains(@class, "entity-section")]//span[contains(@class, "semibold") and contains(., "Journal")]');
+				var jour = ZU.xpathText(doc, '//article[contains(@class, "detail")]//section[contains(@class, "paper-venue")]//a[contains(@data-bind, "entityTypes.journal")]');
 				if (!jour) {
 					return 'book';
 				}
@@ -83,7 +83,7 @@ function detectWeb(doc, url) {
 
 	}
 
-	//The automatic testing doe not work because of the monitoring.
+	//The automatic testing does not work because of the monitoring.
 	//Setting the correct type therefore here manually for three test cases:
 	if (url == "https://academic.microsoft.com/#/detail/2084324324") {
 		return 'journalArticle';
@@ -98,7 +98,7 @@ function detectWeb(doc, url) {
 	//  https://academic.microsoft.com/#/search?iq=%2540zotero%2540&q=zotero&filters=&from=0&sort=0
 	//  https://academic.microsoft.com/#/detail/975761300
 	//  https://academic.microsoft.com/#/detail/1337865506
-	//But test also to navigate in the website by clickin on the links to
+	//But test also to navigate in the website by clicking on the links to
 	//journal, author, affilation, subjects, or search something.
 }
 
@@ -110,9 +110,9 @@ function getSearchResults(doc, url, checkOnly) {
 	//The search results will sometimes stay invisible when switched to another
 	//page, and therefore we have to differentiate the xpath accordingly.
 	if (url.indexOf("#/search")>-1) {
-		rows = ZU.xpath(doc, '//div[contains(@class, "search-page")]//paper-tile/article//div[contains(@class, "title-bar")]//a');
+		rows = ZU.xpath(doc, '//article[contains(@class, "search-page")]//paper-tile/article//section[contains(@class, "paper-title")]//a');
 	} else {
-		rows = ZU.xpath(doc, '//article[contains(@class, "author-page")]//paper-tile/article//div[contains(@class, "title-bar")]//a');
+		rows = ZU.xpath(doc, '//article[contains(@class, "author-page")]//paper-tile/article//section[contains(@class, "paper-title")]//a');
 	}
 	for (var i=0; i<rows.length; i++) {
 		var href = rows[i].href;
@@ -147,7 +147,7 @@ function doWeb(doc, url) {
 //Scrape a list of urls by extracting the pubID in each url, call the
 //API to receive the data and create an item in Zotero out of this.
 function scrape(urlList) {
-	for (index in urlList) {
+	for (let index in urlList) {
 		var url = urlList[index];
 		var pubID = url.match(/\/detail\/(\d+)/)[1];
 		
@@ -155,6 +155,7 @@ function scrape(urlList) {
 			pubID + "&correlationId=undefined";
 		
 		ZU.doGet(apiUrl, function(text) {
+			//Z.debug(text)
 			var data = JSON.parse(text);
 			var type;
 			if (data.entity.c) {
@@ -166,28 +167,35 @@ function scrape(urlList) {
 			}
 			var item = new Zotero.Item(type);
 			item.itemID = pubID;
-			item.title = data.entityTitle;
+			item.title = data.entityTitle.replace(/\.$/, '');
 			item.date = data.entity.d;//alternatively ZU.strToISO(data.date);
-			item.abstractNote = data.abstract;
+			if (data.abstract && data.abstract.replace(/\W/g, '').length>0) {
+				//we don't want an abstract which contains only non-word characters
+				item.abstractNote = data.abstract;
+			}
 			
 			if (data.authors) {
-				for (var i=0; i<data.authors.length; i++) {
+				for (let i=0; i<data.authors.length; i++) {
 					item.creators.push(ZU.cleanAuthor(data.authors[i].lt, "author"));
 				}
 			}
-	
-			item.publicationTitle = data.entity.extended.vfn;
-			item.journalAbbreviation = data.entity.extended.vsn;
-			item.volume = data.entity.extended.v;
-			item.issue = data.entity.extended.i;
-			item.pages = data.entity.extended.fp;
-			if (data.entity.extended.lp) {
-				item.pages += "–" + data.entity.extended.lp;
+
+			if (data.entity.e) {
+				item.publicationTitle = data.entity.e.vfn;
+				item.journalAbbreviation = data.entity.e.vsn;
+				item.volume = data.entity.e.v;
+				item.issue = data.entity.e.i;
+				item.pages = data.entity.e.fp;
+				if (data.entity.e.lp) {
+					item.pages += "–" + data.entity.e.lp;
+				}
+				item.DOI = data.entity.e.doi;
 			}
-			item.DOI = data.entity.extended.doi;
+			
+			item.language = data.entity.l;
 			
 			if (data.fieldsOfStudy) {
-				for (var i=0; i<data.fieldsOfStudy.length; i++) {
+				for (let i=0; i<data.fieldsOfStudy.length; i++) {
 					item.tags.push(data.fieldsOfStudy[i].lt);
 				}
 			}
@@ -195,7 +203,7 @@ function scrape(urlList) {
 			//Save all links to the source in one HTML note.
 			var sourcesNote = "<p>Data sources found by Microsoft Academic search engine:</p>";
 			if (data.sources) {
-				for (var i=0; i<data.sources.length; i++) {
+				for (let i=0; i<data.sources.length; i++) {
 					sourcesNote += '<a href="' +data.sources[i].u+ '">'+data.sources[i].u+'</a><br/>';
 				}
 			}
@@ -206,8 +214,20 @@ function scrape(urlList) {
 				snapshot: false
 			});
 			
+			//add DOIs for books, but make this robust to addition of other item types
+			if (item.DOI && !ZU.fieldIsValidForType("DOI", item.itemType)) {
+				if(item.extra) {
+					if (item.extra.search(/^DOI:/) == -1) {
+						item.extra += '\nDOI: ' + item.DOI;
+					}
+				} else {
+					item.extra = 'DOI: ' + item.DOI;
+				}
+			}
 			/*
 			delete data.references;
+			delete data.sources;
+			delete data.related;
 			delete data.citations;
 			Z.debug(data);
 			*/
@@ -241,6 +261,7 @@ var testCases = [
 				"DOI": "10.1017/S1049096509090337",
 				"issue": 1,
 				"itemID": "2084324324",
+				"language": "en",
 				"libraryCatalog": "Microsoft Academic",
 				"pages": "167–172",
 				"publicationTitle": "PS Political Science & Politics",
@@ -251,15 +272,22 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"daylight saving time",
-					"multimedia",
-					"qualitative comparative analysis",
-					"social science",
-					"sociology"
+					{
+						"tag": "Indexation"
+					},
+					{
+						"tag": "Political Science"
+					},
+					{
+						"tag": "Public Administration"
+					},
+					{
+						"tag": "Public Relations"
+					}
 				],
 				"notes": [
 					{
-						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"http://www.jstor.org/stable/20452393\">http://www.jstor.org/stable/20452393</a><br/><a href=\"http://www.journals.cambridge.org/abstract_S1049096509090337\">http://www.journals.cambridge.org/abstract_S1049096509090337</a><br/><a href=\"http://eric.ed.gov/?id=EJ867276\">http://eric.ed.gov/?id=EJ867276</a><br/><a href=\"http://www.editlib.org/p/70972/share/\">http://www.editlib.org/p/70972/share/</a><br/><a href=\"http://www.researchgate.net/profile/Stephen_Yoder/publication/231965398_Out_of_Cite%21_How_Reference_Managers_Are_Taking_Research_to_the_Next_Level/links/0c96052958659e8f2a000000.pdf?disableCoverPage=true\">http://www.researchgate.net/profile/Stephen_Yoder/publication/231965398_Out_of_Cite%21_How_Reference_Managers_Are_Taking_Research_to_the_Next_Level/links/0c96052958659e8f2a000000.pdf?disableCoverPage=true</a><br/><a href=\"https://www.learntechlib.org/p/70972\">https://www.learntechlib.org/p/70972</a><br/>"
+						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"https://eric.ed.gov/?id=EJ867276\">https://eric.ed.gov/?id=EJ867276</a><br/><a href=\"http://www.journals.cambridge.org/abstract_S1049096509090337\">http://www.journals.cambridge.org/abstract_S1049096509090337</a><br/><a href=\"https://www.learntechlib.org/p/70972/\">https://www.learntechlib.org/p/70972/</a><br/>"
 					}
 				],
 				"seeAlso": []
@@ -275,13 +303,15 @@ var testCases = [
 				"title": "Introduction to graph theory",
 				"creators": [
 					{
-						"firstName": "Douglas B.",
+						"firstName": "Douglas Brent",
 						"lastName": "West",
 						"creatorType": "author"
 					}
 				],
-				"date": "2001-01-01",
+				"date": "1996-01-01",
+				"abstractNote": "1. Fundamental Concepts. What Is a Graph? Paths, Cycles, and Trails. Vertex Degrees and Counting. Directed Graphs. 2. Trees and Distance. Basic Properties. Spanning Trees and Enumeration. Optimization and Trees. 3. Matchings and Factors. Matchings and Covers. Algorithms and Applications. Matchings in General Graphs. 4. Connectivity and Paths. Cuts and Connectivity. k-connected Graphs. Network Flow Problems. 5. Coloring of Graphs. Vertex Colorings and Upper Bounds. Structure of k-chromatic Graphs. Enumerative Aspects. 6. Planar Graphs. Embeddings and Euler's Formula. Characterization of Planar Graphs. Parameters of Planarity. 7. Edges and Cycles. Line Graphs and Edge-Coloring. Hamiltonian Cycles. Planarity, Coloring, and Cycles. 8. Additional Topics (Optional). Perfect Graphs. Matroids. Ramsey Theory. More Extremal Problems. Random Graphs. Eigenvalues of Graphs. Appendix A: Mathematical Background. Appendix B: Optimization and Complexity. Appendix C: Hints for Selected Exercises. Appendix D: Glossary of Terms. Appendix E: Supplemental Reading. Appendix F: References. Indices.",
 				"itemID": "1479863711",
+				"language": "ja",
 				"libraryCatalog": "Microsoft Academic",
 				"attachments": [
 					{
@@ -289,30 +319,34 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"butterfly graph",
-					"clique width",
-					"complement graph",
-					"coxeter graph",
-					"crossing number",
-					"cubic graph",
-					"edge transitive graph",
-					"factor critical graph",
-					"friendship graph",
-					"graph labeling",
-					"graph property",
-					"line graph",
-					"null graph",
-					"quartic graph",
-					"simplex graph",
-					"strength of a graph",
-					"string graph",
-					"vertex transitive graph",
-					"voltage graph",
-					"windmill graph"
+					{
+						"tag": "1-Planar Graph"
+					},
+					{
+						"tag": "Chordal Graph"
+					},
+					{
+						"tag": "Clique-Sum"
+					},
+					{
+						"tag": "Combinatorics"
+					},
+					{
+						"tag": "Discrete Mathematics"
+					},
+					{
+						"tag": "Indifference Graph"
+					},
+					{
+						"tag": "Mathematics"
+					},
+					{
+						"tag": "Strong Perfect Graph Theorem"
+					}
 				],
 				"notes": [
 					{
-						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"http://home.ku.edu.tr/mudogan/public_html/Introduction%20to%20Graph%20Theory%202E%20-%20West.pdf\">http://home.ku.edu.tr/mudogan/public_html/Introduction%20to%20Graph%20Theory%202E%20-%20West.pdf</a><br/><a href=\"http://people.math.gatech.edu/~tetali/MATH4022/intro.pdf\">http://people.math.gatech.edu/~tetali/MATH4022/intro.pdf</a><br/><a href=\"http://pdfdirff.com/download/introduction-to-graph-theory.pdf\">http://pdfdirff.com/download/introduction-to-graph-theory.pdf</a><br/><a href=\"http://www.math.uri.edu/~adamgilbert/Documents/MathRigor/GamesOnGraphs.pdf\">http://www.math.uri.edu/~adamgilbert/Documents/MathRigor/GamesOnGraphs.pdf</a><br/><a href=\"http://bayanbox.ir/view/2051120523710881534/Introduction-to-graph-theory-solution-manual.pdf\">http://bayanbox.ir/view/2051120523710881534/Introduction-to-graph-theory-solution-manual.pdf</a><br/><a href=\"http://dehdarpour1.persiangig.com/document/pdf/Introduction%20to%20Graph%20Theory%202E%20-%20WestSolution%20Manual.pdf\">http://dehdarpour1.persiangig.com/document/pdf/Introduction%20to%20Graph%20Theory%202E%20-%20WestSolution%20Manual.pdf</a><br/><a href=\"http://www.math.uiuc.edu/~kostochk/math412/412F15.pdf\">http://www.math.uiuc.edu/~kostochk/math412/412F15.pdf</a><br/><a href=\"http://ehsanmoradi.ir/upload/m/moradiehsan/file/west_solution.pdf\">http://ehsanmoradi.ir/upload/m/moradiehsan/file/west_solution.pdf</a><br/><a href=\"https://math.la.asu.edu/~andrzej/teach/mat416/syllabus.pdf\">https://math.la.asu.edu/~andrzej/teach/mat416/syllabus.pdf</a><br/><a href=\"http://ci.nii.ac.jp/ncid/BA27008641\">http://ci.nii.ac.jp/ncid/BA27008641</a><br/>"
+						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"http://ci.nii.ac.jp/ncid/BA27008641\">http://ci.nii.ac.jp/ncid/BA27008641</a><br/>"
 					}
 				],
 				"seeAlso": []
@@ -342,7 +376,9 @@ var testCases = [
 				"DOI": "10.1145/777792.777839",
 				"abstractNote": "We address the problem of curvature estimation from sampled smooth surfaces. Building upon the theory of normal cycles, we derive a definition of the curvature tensor for polyhedral surfaces. This definition consists in a very simple and new formula. When applied to a polyhedral approximation of a smooth surface, it yields an efficient and reliable curvature estimation algorithm. Moreover, we bound the difference between the estimated curvature and the one of the smooth surface in the case of restricted Delaunay triangulations.",
 				"itemID": "2093027094",
+				"language": "en",
 				"libraryCatalog": "Microsoft Academic",
+				"pages": "312–321",
 				"proceedingsTitle": "Symposium on Computational Geometry",
 				"attachments": [
 					{
@@ -350,26 +386,34 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"combinatorics",
-					"constant mean curvature surface",
-					"constrained delaunay triangulation",
-					"curvature",
-					"delaunay triangulation",
-					"geometric measure theory",
-					"geometry",
-					"mathematics",
-					"mean curvature",
-					"mean curvature flow",
-					"principal curvature",
-					"radius of curvature",
-					"riemann curvature tensor",
-					"scalar curvature",
-					"sectional curvature",
-					"topology"
+					{
+						"tag": "Combinatorics"
+					},
+					{
+						"tag": "Constant-Mean-Curvature Surface"
+					},
+					{
+						"tag": "Curvature"
+					},
+					{
+						"tag": "Mathematics"
+					},
+					{
+						"tag": "Mean Curvature"
+					},
+					{
+						"tag": "Mean Curvature Flow"
+					},
+					{
+						"tag": "Scalar Curvature"
+					},
+					{
+						"tag": "Topology"
+					}
 				],
 				"notes": [
 					{
-						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"https://formaurbis.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf\">https://formaurbis.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf</a><br/><a href=\"http://dl.acm.org/ft_gateway.cfm?id=777839&type=pdf\">http://dl.acm.org/ft_gateway.cfm?id=777839&type=pdf</a><br/><a href=\"http://graphics.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf\">http://graphics.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf</a><br/><a href=\"http://www.cs.jhu.edu/~misha/Fall09/Steiner03.pdf\">http://www.cs.jhu.edu/~misha/Fall09/Steiner03.pdf</a><br/><a href=\"http://www.ann.jussieu.fr/~frey/papers/meshing/Cohen-Steiner%20D.,%20Restricted%20Delaunay%20triangulations%20and%20normal%20cycles.pdf\">http://www.ann.jussieu.fr/~frey/papers/meshing/Cohen-Steiner%20D.,%20Restricted%20Delaunay%20triangulations%20and%20normal%20cycles.pdf</a><br/><a href=\"https://dpt-info.u-strasbg.fr/~sauvage/Recherche/GT_geom_diff/CM03.pdf\">https://dpt-info.u-strasbg.fr/~sauvage/Recherche/GT_geom_diff/CM03.pdf</a><br/><a href=\"http://dl.acm.org/ft_gateway.cfm?id=777839&type=pdf&coll=portal&dl=ACM\">http://dl.acm.org/ft_gateway.cfm?id=777839&type=pdf&coll=portal&dl=ACM</a><br/><a href=\"http://dblp.uni-trier.de/db/conf/compgeom/compgeom2003.html#HASH#Cohen-SteinerM03\">http://dblp.uni-trier.de/db/conf/compgeom/compgeom2003.html#HASH#Cohen-SteinerM03</a><br/><a href=\"http://dl.acm.org/citation.cfm?id=777839&dl=ACM&coll=DL\">http://dl.acm.org/citation.cfm?id=777839&dl=ACM&coll=DL</a><br/><a href=\"http://portal.acm.org/citation.cfm?doid=777792.777839\">http://portal.acm.org/citation.cfm?doid=777792.777839</a><br/><a href=\"http://doi.acm.org/10.1145/777792.777839\">http://doi.acm.org/10.1145/777792.777839</a><br/>"
+						"note": "<p>Data sources found by Microsoft Academic search engine:</p><a href=\"https://graphics.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf\">https://graphics.stanford.edu/courses/cs468-03-fall/Papers/cohen_normalcycle.pdf</a><br/><a href=\"https://dpt-info.u-strasbg.fr/~sauvage/Recherche/GT_geom_diff/CM03.pdf\">https://dpt-info.u-strasbg.fr/~sauvage/Recherche/GT_geom_diff/CM03.pdf</a><br/><a href=\"http://dblp.uni-trier.de/db/conf/compgeom/compgeom2003.html#Cohen-SteinerM03\">http://dblp.uni-trier.de/db/conf/compgeom/compgeom2003.html#Cohen-SteinerM03</a><br/><a href=\"http://dl.acm.org/citation.cfm?doid=777792.777839\">http://dl.acm.org/citation.cfm?doid=777792.777839</a><br/><a href=\"http://doi.acm.org/10.1145/777792.777839\">http://doi.acm.org/10.1145/777792.777839</a><br/><a href=\"http://portal.acm.org/citation.cfm?doid=777792.777839\">http://portal.acm.org/citation.cfm?doid=777792.777839</a><br/>"
 					}
 				],
 				"seeAlso": []

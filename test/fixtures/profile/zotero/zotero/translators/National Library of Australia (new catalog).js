@@ -1,143 +1,131 @@
 {
 	"translatorID": "54ac4ec1-9d07-45d3-9d96-48bed3411fb6",
 	"label": "National Library of Australia (new catalog)",
-	"creator": "Mark Triggs, Steve McPhillips and Matt Burton",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://catalogue\\.nla\\.gov\\.au",
-	"minVersion": "1.0.0b4.r5",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-12-28 12:19:19"
+	"lastUpdated": "2018-01-30 09:40:11"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2018 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
 
 function detectWeb(doc, url) {
 	if (url.match("/Record/[0-9]+")) {
 		var format = doc.getElementById("myformat").textContent;
 		return computeFormat(format);
 		
-	} else if (url.match ("/Search/Home") && doc.getElementById ("resultItemLine1")) {
+	} else if (url.includes("/Search/Home") && doc.getElementById("resultItemLine1")) {
 		return "multiple";
 	}
 }
+
 
 // map the nla formats to zotero formats
 function computeFormat(format){
 	// clean up whitespace and remove commas from items with multiple formats
 	format = Zotero.Utilities.trimInternal(format.replace(',', ''));
-
-	if (format == "Audio") {
-		return "audioRecording";
-	}
-	else if (format == "Book") {
-		return "book";
-	}
-	else if (format == "Journal/Newspaper") {
-		return "journalArticle";
-	}
-	else if (format == "Manuscript") {
-		return "manuscript";
-	}
-	else if (format == "Map") {
-		return "map";
-	}
-	else if (format == "Music") {
-		return "audioRecording";
-	}
-	else if (format == "Online") {
-		return "webpage";
-	}
-	else if (format == "Picture") {
-		return "artwork";
-	}
-	else if (format == "Video") {
-		return "videoRecording";
-	}
-	else {
-		return "book";
-	}
-
+	if (format == "Audio") return "audioRecording";
+	if (format == "Book") return "book";
+	if (format == "Journal/Newspaper") return "journalArticle";
+	if (format == "Manuscript") return "manuscript";
+	if (format == "Map") return "map";
+	if (format == "Music") return "audioRecording";
+	if (format == "Online") return "webpage";
+	if (format == "Picture") return "artwork";
+	if (format == "Video") return "videoRecording";
+	// default
+	return "book";
 }
 
-function load_item(responseText, url, format) {
-	var metadata = JSON.parse(Zotero.Utilities.trimInternal(responseText));
-	var bibid = url.match("^.*\/Record/([0-9]+)")[1];
-	var newItem = new Zotero.Item(format[bibid]);
 
-	/* load in our authors */
-	if (metadata.authors) {
-		for (var i=0; i< metadata.authors.length ; i++) {
-			newItem.creators.push(Zotero.Utilities.cleanAuthor
-								  (metadata.authors[i], "author", true));
-		}
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('.resultitem a.title');
+	for (let i=0; i<rows.length; i++) {
+		let href = rows[i].href;
+		if (!/\/Record\/\d+/.test(href)) continue;
+		let title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
 	}
-
-	/* and our tags */
-	if (metadata.tags) {
-		for (var i=0; i< metadata.tags.length ; i++) {
-			newItem.tags.push(metadata.tags[i]);
-		}
-	}
-	
-	/* and our summary */
-	if (metadata.notes) {
-		newItem.notes.push ({"note": metadata.notes});
-	}
-
-	/* and everything else */
-	for (var attr in metadata) {
-		if (!newItem[attr] && attr!="authors") {
-			newItem[attr] = metadata[attr];
-		}
-	}
-	newItem.repository = "National Library of Australia";
-	newItem.complete();
+	return found ? items : false;
 }
+
 
 function doWeb(doc, url) {
-	var format = detectWeb(doc, url);
-	var items = {};
-	// does javascript have an easy way to test if object has properties?
-	var itemsHasProperties = false;
-	if (format == "multiple") {
-		for (var url in Zotero.selectItems((Zotero.Utilities.getItemArray
-											(doc, doc, "/Record/[0-9]+")))) {
-			var bibid = url.match("^.*\/Record/([0-9]+)")[1];
-			// grab the item type for that bibid so we don't have to make a processDocuments call for each
-			var xpath = "//div[contains(./div/a/@href, '"+bibid+"')]/div[@class = 'resultItemLine3']/span/text()";
-			var nlaFormat = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-			// populate an associative array with bibid -> format for the doGet
-			items[bibid] = computeFormat(nlaFormat);
-			itemsHasProperties = true; // items has stuff
-		}
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			processUrls(Object.keys(items));
+		});
 	} else {
-		var bibid = url.match("^.*\/Record/([0-9]+)")[1];
-		items[bibid] = format;
-		itemsHasProperties = true; // items has stuff
-	}
-	// only continue if there are items to create
-	if (itemsHasProperties) {
-		var urls = [];
-		for (var bibid in items) {
-			urls.push("http://catalogue.nla.gov.au/Record/" + bibid + "/Export?style=zotero");
-		}
-		// the bibid->format associative array prevents the need for a doGet nested in processDocs
-		Zotero.Utilities.HTTP.doGet(urls, 
-			function(text, obj, url) { load_item(text, url, items);},
-			function(){ Zotero.done();});
-		Zotero.wait();
+		processUrls([url]);
 	}
 }
+
+
+function processUrls(urls) {
+	for (let i=0; i<urls.length; i++) {
+		var bibid = urls[i].match(/\/Record\/(\d+)\b/);
+		if (bibid) {
+			var marcUrl = "/Record/" + bibid[1] + "/Export?style=marc";
+			ZU.doGet(marcUrl, scrapeMarc);
+		}
+	}
+}
+
+function scrapeMarc(text) {
+	var translator = Zotero.loadTranslator("import");
+	translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
+	translator.setString(text);
+	translator.translate();
+}
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://catalogue.nla.gov.au/Record/773336?lookfor=labor&offset=10&max=65985",
+		"url": "https://catalogue.nla.gov.au/Record/773336?lookfor=labor&offset=10&max=65985",
 		"items": [
 			{
 				"itemType": "book",
-				"title": "Labor : readings on major issues / [edited by] Richard A. Lester",
+				"title": "Labor: readings on major issues",
 				"creators": [
 					{
 						"firstName": "Richard Allen",
@@ -145,17 +133,26 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "New York : Random House, [1967]",
-				"callNumber": "331.082 L642",
-				"extra": "Bibliographical footnotes.",
-				"libraryCatalog": "National Library of Australia",
+				"date": "1967",
+				"callNumber": "331.082",
+				"libraryCatalog": "National Library of Australia (new catalog)",
 				"place": "New York",
 				"publisher": "Random House",
 				"shortTitle": "Labor",
 				"attachments": [],
 				"tags": [
-					"Labor unions -- United States.",
-					"Working class -- United States."
+					{
+						"tag": "Labor unions"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "Working class"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

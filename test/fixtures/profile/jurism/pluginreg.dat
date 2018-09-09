@@ -8,4 +8,6 @@ Arch:x86_64-gcc3:$
 
 [INVALID]
 /usr/lib/mozilla/plugins/libgnome-shell-browser-plugin.so:$
-1510175942000:$
+1533277104000:$
+/usr/lib/jvm/java-8-oracle/jre/lib/amd64/libnpjp2.so:$
+1535465857000:$

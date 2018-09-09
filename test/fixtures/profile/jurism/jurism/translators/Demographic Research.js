@@ -8,8 +8,8 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsb",
-	"lastUpdated": "2014-11-05 16:12:50"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2018-05-05 11:04:17"
 }
 
 /*
@@ -45,9 +45,9 @@ function detectWeb(doc, url) {
 }
 
 function doWeb(doc, url) {
-	var arts = new Array();
+	var arts = [];
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
+		var items = {};
 		var title;
 
 		var titles = doc.evaluate('//p[@class="articles_title"]/a|//div[@class="result_title"]/a', doc, null, XPathResult.ANY_TYPE, null);
@@ -83,6 +83,7 @@ function scrape(doc, url) {
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
 		translator.setHandler("itemDone", function (obj, item) {
+			item.ISSN = "1435-9871";
 			var pdfurl = item.url + item.volume + "-" + item.issue + ".pdf";
 			//Z.debug(pdfurl)
 			item.attachments.push({
@@ -99,7 +100,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.demographic-research.org/volumes/vol31/17/default.htm",
+		"url": "https://www.demographic-research.org/volumes/vol31/17/default.htm",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -128,13 +129,14 @@ var testCases = [
 				],
 				"date": "August 26, 2014",
 				"DOI": "10.4054/DemRes.2014.31.17",
+				"ISSN": "1435-9871",
 				"abstractNote": "Background: Rapid population aging and increasing racial/ethnic and immigrant/native diversity make a broad documentation of U.S. health patterns during both mid- and late life particularly important.\n\nObjective: We aim to better understand age- and gender-specific racial/ethnic and nativity differences in physical functioning and disability among adults aged 50 and above.\n\nMethods: We aggregate 14 years of data from the National Health Interview Survey and calculate age- and gender-specific proportions of physical functioning and two types of disability for each population subgroup.\n\nResults: Middle-aged foreign-born individuals in nearly every subgroup exhibit lower proportions of functional limitations and disability than U.S.-born whites. This pattern of immigrant advantage is generally reversed in later life. Moreover, most U.S.-born minority groups have significantly higher levels of functional limitations and disability than U.S.-born whites in both mid- and late life.\n\nConclusions: Higher levels of functional limitations and disability among U.S.-born minority groups and immigrant populations in older adulthood pose serious challenges for health providers and policymakers in a rapidly diversifying and aging population.",
 				"issue": "17",
 				"journalAbbreviation": "Demographic Research",
 				"libraryCatalog": "Demographic Research",
 				"pages": "497-510",
 				"publicationTitle": "Demographic Research",
-				"url": "http://www.demographic-research.org/volumes/vol31/17/",
+				"url": "https://www.demographic-research.org/volumes/vol31/17/",
 				"volume": "31",
 				"attachments": [
 					{
@@ -150,12 +152,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.demographic-research.org/volumes/vol31/default.htm",
+		"url": "https://www.demographic-research.org/volumes/vol31/default.htm",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://www.demographic-research.org/search/search.aspx?zoom_sort=0&zoom_xml=0&zoom_query=labor&zoom_per_page=10&zoom_and=0",
+		"url": "https://www.demographic-research.org/search/search.aspx?zoom_sort=0&zoom_xml=0&zoom_query=labor&zoom_per_page=10&zoom_and=0",
 		"items": "multiple"
 	}
 ]

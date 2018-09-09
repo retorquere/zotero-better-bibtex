@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-10 20:57:50"
+	"lastUpdated": "2018-04-15 16:59:35"
 }
 
 /*
@@ -36,13 +36,13 @@
 	***** END LICENSE BLOCK *****
 */
 
-// attr()/text()
-function attr(doc,selector,attr,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.getAttribute(attr):null}var elem=doc.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(doc,selector,index){if(index>0){var elem=doc.querySelectorAll(selector).item(index);return elem?elem.textContent:null}var elem=doc.querySelector(selector);return elem?elem.textContent:null}
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 function detectWeb(doc, url) {
 	if (/theintercept\.com\/\d{4}\/\d{2}\/\d{2}\//.test(url)) {
 		return "blogPost";
-	} else if (url.indexOf("/document/") != -1) {
+	} else if (url.includes("/document/")) {
 		return "document";
 	} else if (/(theintercept\.com\/search\/\?s=)|(theintercept\.com\/?$)/.test(url) && getSearchResults(doc, true) ) {
 		return "multiple";
@@ -58,7 +58,10 @@ function scrape(doc, url) {
 	item.title = ldjson.headline;
 	item.date = ldjson.dateCreated;
 	item.abstractNote = text(doc,'meta[name="description"]');
-	// no item.attachments: Snapshot doesn't work correctly with site
+	item.attachments.push({
+		document: doc,
+		title: "Snapshot"
+	});
 
 	// Authors
 	if (ldjson.authors.length) {
@@ -166,7 +169,11 @@ var testCases = [
 				"blogTitle": "The Intercept",
 				"language": "en-US",
 				"url": "https://theintercept.com/2017/06/05/top-secret-nsa-report-details-russian-hacking-effort-days-before-2016-election/",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
@@ -197,7 +204,11 @@ var testCases = [
 				"language": "en-US",
 				"shortTitle": "Manufacturing Terror",
 				"url": "https://theintercept.com/2015/11/19/an-fbi-informant-seduced-eric-mcdavid-into-a-bomb-plot-then-the-government-lied-about-it/",
-				"attachments": [],
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []

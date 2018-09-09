@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 12,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2014-05-24 08:05:07"
+	"lastUpdated": "2018-04-17 21:16:52"
 }
 
 function detectWeb(doc, url) {
@@ -36,14 +36,14 @@ function doWeb(doc, url) {
 		item.attachments.push({
 			title: 'Snapshot',
 			document: doc
-		})
+		});
 		
 		item.complete();
 	});
 }
 
 function scrape(docIDs, itemDoneHandler) {
-	var bibTeXUrl = buildQuery(docIDs)
+	var bibTeXUrl = buildQuery(docIDs);
 	ZU.doGet(bibTeXUrl, function(text) {
 		var translator = Zotero.loadTranslator("import");
 		// BibTeX
@@ -96,8 +96,8 @@ function scrape(docIDs, itemDoneHandler) {
 }
 
 function buildQuery(docIDs) {
-	var url = '/publication/ExportTo?ExportType=BibTex'
-		+ '&parameter=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16'
+	var url = 'http://www.airitilibrary.com/publication/ExportTo?ExportType=BibTex'
+		+ '&parameter=0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16';
 	for(var i=0; i<docIDs.length; i++) {
 		url += '&DocIDs[' + i + ']=' + encodeURIComponent(docIDs[i]);
 	}
@@ -140,71 +140,22 @@ function doSearch(items) {
 	var query = filterQuery(items);
 	var queryTracker = {};
 	var dois = [];
-	for(var i=0, n=query.length; i<n; i++) {
+	for(let i=0, n=query.length; i<n; i++) {
 		var doi = ZU.cleanDOI(query[i].DOI || query[i]);
-		queryTracker[doi] = query[i];
-		dois.push(doi);
+		followDOI(doi);
 	}
-	
-	if(!dois.length) return;
-	
-	gatherDocIDs(dois, queryTracker);
 }
 
-function gatherDocIDs(dois, queryTracker) {
-	var doi = dois.pop();
-	var query = queryTracker[doi];
-	ZU.processDocuments('http://doi.org/' + encodeURIComponent(doi), function(doc, url) {
-		var trans = Zotero.loadTranslator('web');
-		trans.setTranslator('5f0ca39b-898a-4b1e-b98d-8cd0d6ce9801');
-		trans.setDocument(doc);
-		trans.setHandler('itemDone', function(obj, item) {
-			if(!item.DOI) item.DOI = doi;
-			item.complete();
-		});
-		trans.translate();
-	// we can do better, but we need to first expose ZU.doHead to translators
-/*	ZU.doHead('http://doi.org/' + encodeURIComponent(doi), function(headers) {
-		if(!headers.url) return; // Probably not Firefox
-		var docID = getDocId(header.url);
+function followDOI(doi) {
+	ZU.processDocuments('https://doi.org/' + encodeURIComponent(doi), function(doc, url) {
+		//var redirectedUrl = ZU.xpathText(doc, '//meta[@name="citation_abstract_html_url"]/@content');
+		var docID = ZU.xpathText(doc, '//a/@docid');
 		if(!docID) return;
-		queryTracker[doi]._airitiDocID = docID;
-		queryTracker[doi]._airitiUrl = header.url;
-*/	}, function() {
-		if(dois.length) processDOIs(dois, queryTracker);
-		else processDocIDs(queryTracker);
+		scrape([docID]);
 	});
 }
 
-function processDocIDs(queryTracker) {
-	var docIdTracker = {}, docIDs = [];
-	for(var doi in queryTracker) {
-		if(queryTracker[doi]._airitiDocID) {
-			docIdTracker[queryTracker[doi]._airitiDocID] = doi;
-			docIDs.push(queryTracker[doi]._airitiDocID);
-		}
-	}
-	
-	if(docIDs.length) {
-		scrape(docIDs, function(item) {
-			var docID = item.itemID.match(/:([^:]+?)\s*$/);
-			if(docID) {
-				docID = docID[1];
-				doi = docIdTracker[docID];
-			}
-			
-			if(!item.DOI && docID) {
-				item.DOI = doi;
-			}
-			
-			if(!item.url && docID) {
-				item.url = queryTracker[doi]._airitiUrl;
-			}
-			
-			item.complete();
-		});
-	}
-}/** BEGIN TEST CASES **/
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",

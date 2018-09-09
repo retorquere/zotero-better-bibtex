@@ -13,7 +13,7 @@
 	"inRepository": true,
 	"translatorType": 1,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-10-28 21:15:21"
+	"lastUpdated": "2018-05-08 19:39:38"
 }
 
 /*
@@ -71,27 +71,32 @@ var n = {
 	eprints:"http://purl.org/eprint/terms/",
 	og:"http://ogp.me/ns#",				// Used for Facebook's OpenGraph Protocol
 	article:"http://ogp.me/ns/article#",
-	book:"http://ogp.me/ns/book#"
+	book:"http://ogp.me/ns/book#",
+	so:"http://schema.org/",
+	codemeta:"https://codemeta.github.io/terms/"
 };
 
 var callNumberTypes = [n.dcterms+"LCC", n.dcterms+"DDC", n.dcterms+"UDC"];
 
 // gets the first result set for a property that can be encoded in multiple
 // ontologies
-function getFirstResults(node, properties, onlyOneString) {
-	for(var i=0; i<properties.length; i++) {
-		var result = Zotero.RDF.getTargets(node, properties[i]);
-		if(result) {
-			if(onlyOneString) {
-				// onlyOneString means we won't return nsIRDFResources, only
-				// actual literals
-				if(typeof(result[0]) != "object") {
-					return result[0];
+function getFirstResults(nodes, properties, onlyOneString) {
+	if (!nodes.length) nodes = [nodes];
+	for (let node of nodes) {
+		for(var i=0; i<properties.length; i++) {
+			var result = Zotero.RDF.getTargets(node, properties[i]);
+			if(result) {
+				if(onlyOneString) {
+					// onlyOneString means we won't return nsIRDFResources, only
+					// actual literals
+					if(typeof(result[0]) != "object") {
+						return result[0];
+					} else {
+						return Zotero.RDF.getResourceURI(result[0]);
+					}
 				} else {
-					return Zotero.RDF.getResourceURI(result[0]);
+					return result;
 				}
-			} else {
-				return result;
 			}
 		}
 	}
@@ -106,57 +111,52 @@ function handleCreators(newItem, creators, creatorType) {
 	}
 	
 	if(typeof(creators[0]) != "string") {	// see if creators are in a container
+		let c;
 		try {
-			var c = Zotero.RDF.getContainerElements(creators[0]);
+			c = Zotero.RDF.getContainerElements(creators[0]);
 		} catch(e) {}
 		if(c && c.length) {
 			creators = c;
+		}
 	}
+
+	for (let c of creators){
+		let info = extractCreatorInfo(c);
+		if (info) newItem.creators.push(info);
 	}
 	
-	if(typeof(creators[0]) == "string") {	// support creators encoded as strings
-		for(var i in creators) {
-			if(typeof(creators[i]) != "object") {
-				// Use comma to split if present
-				if (creators[i].indexOf(',') !== -1) {
-					newItem.creators.push(Zotero.Utilities.cleanAuthor(creators[i], creatorType, true));
-				} else {
-					newItem.creators.push(Zotero.Utilities.cleanAuthor(creators[i], creatorType, false));
-				}
-			}
-		}
-	} else {								// also support foaf
-		for(var i in creators) {
-			var type = Zotero.RDF.getTargets(creators[i], rdf+"type");
-			if(type) {
-				type = Zotero.RDF.getResourceURI(type[0]);
-				if(type == n.foaf+"Person") {	// author is FOAF type person
-					var creator = new Object();
-					creator.lastName = getFirstResults(creators[i],
-						[n.foaf+"familyName", n.foaf+"lastName",
-						n.foaf+"surname", n.foaf+"family_name"], true); //unofficial
-					creator.firstName = getFirstResults(creators[i],
-						[n.foaf+"givenName", n.foaf+"firstName",
-						n.foaf+"givenname"], true);	//unofficial
-				   	 if (!creator.firstName){
-						creator.fieldMode=1;
-					}
-					creator.creatorType = creatorType;
-					newItem.creators.push(creator);
-				}
-			}
+	function extractCreatorInfo(obj){
+		if (typeof obj == "string") {
+			// Use comma to split if present
+			return ZU.cleanAuthor(obj, creatorType, obj.includes(','));
+		} else {
+			let c = { creatorType: creatorType };
+			c.lastName = getFirstResults(obj,
+				[ n.foaf+"familyName", n.foaf+"lastName",
+				  n.foaf+"surname", n.foaf+"family_name",
+				  n.so+"familyName" ], true);
+			c.firstName = getFirstResults(obj,
+				[ n.foaf+"givenName", n.foaf+"firstName",
+				  n.foaf+"givenname",
+				  n.so+"givenName" ], true);
+			if (!c.firstName) c.fieldMode = 1;
+			if (c.firstName || c.lastName) return c;
+
+			c = getFirstResults(obj, [n.so+"name"], true);
+			if (c) return ZU.cleanAuthor(c, creatorType);
 		}
 	}
+
 }
 
 // processes collections recursively
 function processCollection(node, collection) {
 	if(!collection) {
-		collection = new Array();
+		collection = [];
 	}
 	collection.type = "collection";
 	collection.name = getFirstResults(node, [n.dc+"title", n.dc1_0+"title", n.dcterms+"title"], true);
-	collection.children = new Array();
+	collection.children = [];
 	
 	// check for children
 	var children = getFirstResults(node, [n.dcterms+"hasPart"]);
@@ -186,10 +186,10 @@ function processCollection(node, collection) {
 }
 
 function processSeeAlso(node, newItem) {
-	var relations;
+	var relations = getFirstResults(node, [n.dc+"relation", n.dc1_0+"relation", n.dcterms+"relation"]);
 	newItem.itemID = Zotero.RDF.getResourceURI(node);
-	newItem.seeAlso = new Array();
-	if(relations = getFirstResults(node, [n.dc+"relation", n.dc1_0+"relation", n.dcterms+"relation"])) {
+	newItem.seeAlso = [];
+	if(relations) {
 		for (var i=0; i<relations.length; i++) {
 			newItem.seeAlso.push(Zotero.RDF.getResourceURI(relations[i]));
 		}
@@ -197,9 +197,9 @@ function processSeeAlso(node, newItem) {
 }
 
 function processTags(node, newItem) {
-	var subjects;
-	newItem.tags = new Array();
-	if(subjects = getFirstResults(node, [n.dc+"subject", n.dc1_0+"subject", n.dcterms+"subject"])) {
+	var subjects = getFirstResults(node, [n.dc+"subject", n.dc1_0+"subject", n.dcterms+"subject"]);
+	newItem.tags = [];
+	if(subjects) {
 		for (var i=0; i<subjects.length; i++) {
 			var subject = subjects[i];
 			if(typeof(subject) == "string") {	// a regular tag
@@ -233,7 +233,7 @@ function getNodeByType(nodes, type) {
 		var nodeType = Zotero.RDF.getTargets(node, rdf+"type");
 		if(nodeType) {
 			nodeType = Zotero.RDF.getResourceURI(nodeType[0]);
-			if(type.indexOf(nodeType) != -1) {	// we have a node of the correct type
+			if(type.includes(nodeType)) {	// we have a node of the correct type
 				return node;
 			}
 		}
@@ -265,20 +265,19 @@ function detectType(newItem, node, ret) {
 	
 	// also deal with type detection based on parts, so we can differentiate
 	// magazine and journal articles, and find container elements
-	var isPartOf = getFirstResults(node, [n.dcterms+"isPartOf"]);
+	var isPartOf = getFirstResults(node, [n.dcterms+"isPartOf", n.so+"isPartOf"]);
 	
 	// get parts of parts, because parts are sections of wholes.
 	if(isPartOf) {
 		//keep track of processed parts, so we don't end up in an infinite loop
-		var processedParts = isPartOf.slice(0);
+		var processedParts = [];
 		for(var i=0; i<isPartOf.length; i++) {
-			if(processedParts.indexOf(isPartOf[i]) !== -1) continue;
-			processedParts.push(isPartOf[i]);
-			
-			var subParts = getFirstResults(isPartOf[i], [n.dcterms+"isPartOf"]);
+			if(processedParts.includes(isPartOf[i])) continue;
+			var subParts = getFirstResults(isPartOf[i], [n.dcterms+"isPartOf", n.so+"isPartOf"]);
 			if(subParts) {
 				isPartOf = isPartOf.concat(subParts);
 			}
+			processedParts.push(isPartOf[i]);
 		}
 		
 		//remove self from parts
@@ -291,7 +290,11 @@ function detectType(newItem, node, ret) {
 	}
 	
 	var container;
-	var t = new Object();
+	// for schema.org we need several containers
+	var containerPeriodical;
+	var containerPublicationVolume;
+	var containerPublicationIssue;
+	var t = {};
 	// rdf:type
 	var type = getFirstResults(node, [rdf+"type"], true);
 	if(type) {
@@ -300,6 +303,8 @@ function detectType(newItem, node, ret) {
 			pref = n.bib;
 		} else if(type.substr(0,n.bibo.length) == n.bibo) {
 			pref = n.bibo;
+		} else if (type.substr(0,n.so.length) == n.so) {
+			pref = n.so;
 		} else if(type == n.z+"Attachment") {
 			pref = n.z;
 		}
@@ -312,10 +317,15 @@ function detectType(newItem, node, ret) {
 			case "interview":
 			case "report":
 			case "patent":
+			case "map":
 				//these are the same as zotero types,
 				//just start with lower case
-				t.bib = type;
+				if (pref==n.bib || pref==n.bibo) t.bib = type;
+				if (pref==n.z) t.z = type;
+				if (pref==n.so) t.so = type;
 			break;
+			
+			// bib, bibo types
 			case "booksection":
 				t.bib = 'bookSection';
 				container = getNodeByType(isPartOf, n.bib+"Book");
@@ -340,13 +350,90 @@ function detectType(newItem, node, ret) {
 				if(container = getNodeByType(isPartOf,
 						[n.bib+"CourtReporter", n.bibo+"CourtReporter"])) {
 					t.bib = "case";
+				} else if (getFirstResults(node, [n.bibo+"isbn10", n.bibo+"isbn13"], true)) {
+					t.bib = "book";
 				} else {
 					t.bib = "webpage";
 				}
 			break;
+			
+			// schema.org types
+			// subtypes of http://schema.org/CreativeWork and https://bib.schema.org/
+			case 'newsarticle':
+			case 'analysisnewsarticle':
+			case 'backgroundnewsarticle':
+			case 'opinionNewsarticle':
+			case 'reportagenewsarticle':
+			case 'reviewnewsarticle':
+				t.so = 'newspaperArticle'; break;
+			case 'scholarlyarticle':
+			case 'medicalscholarlyarticle':
+				t.so = 'journalArticle';
+				containerPublicationIssue = getNodeByType(isPartOf, [n.so+"PublicationIssue"]);
+				containerPublicationVolume = getNodeByType(isPartOf, [n.so+"PublicationVolume"]);
+				containerPeriodical = getNodeByType(isPartOf, [n.so+"Periodical"]);
+				container = getNodeByType(isPartOf, [n.so+"PublicationIssue", n.so+"PublicationVolume", n.so+"Periodical"]);
+				break;
+			case 'chapter':
+				t.so = 'bookSection';
+				container = getNodeByType(isPartOf, [n.so+"Book"]);
+				break;
+			case 'socialmediaposting':
+			case 'blogposting':
+			case 'liveblogposting':
+				t.so = 'blogPost';
+				break;
+			case 'discussionforumposting':
+				t.so = 'forumPost'; break;
+			case 'techarticle':
+			case 'apireference':
+				t.soGuess = 'report'; break;
+			case 'clip':
+			case 'movieclip':
+			case 'videogameclip':
+				t.soGuess = 'videoRecording'; break;
+			case 'tvclip':
+			case 'tvepisode':
+				t.so = 'tvBroadcast'; break;
+			case 'tvseries':
+			case 'episode':
+				t.soGuess = 'tvBroadcast'; break;
+			case 'radioclip':
+			case 'radioepisode':
+				t.so = 'radioBroadcast'; break;
+			case 'radioseries':
+				t.soGuess = 'radioBroadcast'; break;
+			case 'presentationdigitaldocument':
+				t.soGuess = 'presentation'; break;
+			case 'message':
+			case 'emailmessage':
+				t.so = 'email'; break;
+			case 'movie':
+				t.so = 'film'; break;
+			case 'musicrecording':
+			case 'musicalbum':
+			case 'audiobook':
+			case 'audioobject':
+				t.so = 'audioRecording'; break;
+			case 'softwareapplication':
+			case 'mobileapplication':
+			case 'videogame':
+			case 'webapplication':
+			case 'softwaresourcecode':
+				t.so = 'computerProgram'; break;
+			case 'painting':
+			case 'photograph':
+			case 'visualartwork':
+			case 'sculpture':
+				t.so = 'artwork'; break;
+			case 'datacatalog':
+			case 'dataset':
+				t.so = 'journalArticle'; break;  //until dataset gets implemented
+			
+			// specials cases
 			case "article":
 				// choose between journal, newspaper, and magazine articles
-			// use of container = (not container ==) is intentional
+				// use of container = (not container ==) is intentional
 				if(container = getNodeByType(isPartOf,
 						[n.bib+"Journal", n.bibo+"Journal"])) {
 					t.bib = "journalArticle";
@@ -356,6 +443,13 @@ function detectType(newItem, node, ret) {
 				} else if(container = getNodeByType(isPartOf,
 						[n.bib+"Newspaper", n.bibo+"Newspaper"])) {
 					t.bib = "newspaperArticle";
+				} else if (pref==n.so) {
+					if(container = getNodeByType(isPartOf,
+						[n.so+"PublicationIssue", n.so+"PublicationVolume"])) {
+							t.so = "journalArticle";
+					} else {
+						t.soGuess = 'magazineArticle';
+					}
 				}
 			break;
 			//zotero
@@ -681,10 +775,12 @@ function detectType(newItem, node, ret) {
 		break;
 	}
 
-	var itemType = t.zotero || t.bib || t.prism ||t.eprints|| t.og || t.dc || 
-		exports.defaultUnknownType || t.zoteroGuess || t.bibGuess || 
-		t.prismGuess || t.ogGuess || t.dcGuess ;
+	var itemType = t.zotero || t.bib || t.prism || t.eprints || t.og || t.dc ||
+		t.so ||
+		exports.defaultUnknownType || t.zoteroGuess || t.bibGuess ||
+		t.prismGuess || t.ogGuess || t.dcGuess || t.soGuess;
 
+	//Z.debug(t);
 	//in case we still don't have a container, double-check
 	//some are copied from above
 	if(!container) {
@@ -708,7 +804,7 @@ function detectType(newItem, node, ret) {
 				container = getNodeByType(isPartOf, [n.bib+"Journal", n.bibo+"Journal"]);
 			break;
 			case "magazineArticle":
-				container = getNodeByType(isPartOf, [n.bib+"Periodical", n.bibo+"Periodical"]);
+				container = getNodeByType(isPartOf, [n.bib+"Periodical", n.bibo+"Periodical", n.so+"Periodical"]);
 			break;
 			case "newspaperArticle":
 				container = getNodeByType(isPartOf, [n.bib+"Newspaper", n.bibo+"Newspaper"]);
@@ -716,14 +812,19 @@ function detectType(newItem, node, ret) {
 		}
 	}
 	
+	// fill return object which is passed as an argument
 	ret.container = container;
+	ret.containerPeriodical = containerPeriodical;
+	ret.containerPublicationVolume = containerPublicationVolume;
+	ret.containerPublicationIssue = containerPublicationVolume;
 	ret.isPartOf = isPartOf;
 
 	return 	itemType;
 }
-	
+
+
 function importItem(newItem, node) {
-	var ret = new Object();
+	var ret = {};
 	var itemType = detectType(newItem, node, ret);
 	var isZoteroRDF = false;
 	if (getFirstResults(node, [n.z+"itemType", n.z+"type"], true)) {
@@ -731,11 +832,15 @@ function importItem(newItem, node) {
 	}
 	newItem.itemType = exports.itemType || itemType;
 	var container = ret.container;
+	var containerPeriodical = ret.containerPeriodical;
+	var containerPublicationVolume = ret.containerPublicationVolume;
+	var containerPublicationIssue = ret.containerPublicationIssue;
 	var isPartOf = ret.isPartOf;
 
 	// title
 	newItem.title = getFirstResults(node, [n.dc+"title", n.dc1_0+"title", n.dcterms+"title",
-		n.eprints+"title", n.vcard2+"fn", n.og+"title"], true);
+		n.eprints+"title", n.vcard2+"fn", n.og+"title",
+		n.so+"headline"], true);
 	if(!newItem.itemType) {
 		if(!newItem.title) {	// require the title
 								// (if not a known type)
@@ -744,6 +849,9 @@ function importItem(newItem, node) {
 			// default to journalArticle
 			newItem.itemType = "journalArticle";
 		}
+	} else if (!newItem.title) {
+		// name is a generic property and not only for titles
+		newItem.title = getFirstResults(node, [n.so+"name"], true);
 	}
 	
 	// regular author-type creators
@@ -752,21 +860,24 @@ function importItem(newItem, node) {
 	for (var i=0; i<possibleCreatorTypes.length; i++) {
 		var creatorType = possibleCreatorTypes[i];
 		if(creatorType == "author") {
-			creators = getFirstResults(node, [n.bib+"authors", n.dc+"creator", n.dc1_0+"creator",
+			creators = getFirstResults(node, [n.bib+"authors", n.so+"author",
+				n.so+"creator", n.dc+"creator", n.dc1_0+"creator",
 				n.dcterms+"creator", n.eprints+"creators_name",
 				n.dc+"contributor", n.dc1_0+"contributor", n.dcterms+"contributor"]);
 		} else if(creatorType == "editor" || creatorType == "contributor") {
-			creators = getFirstResults(node, [n.bib+creatorType+"s", n.eprints+creatorType+"s_name"]);
+			creators = getFirstResults(node, [n.bib+creatorType+"s", n.eprints+creatorType+"s_name",
+				n.so+creatorType]);
 		//get presenters in unpublished conference papers on eprints
 		} else if(creatorType == "presenter") {
 			creators = getFirstResults(node, [n.z+creatorType+"s", n.eprints+"creators_name"]);
-
 		} else if(creatorType == "castMember") {
 			creators = getFirstResults(node, [n.video+"actor"]);
-
 		} else if(creatorType == "scriptwriter") {
 			creators = getFirstResults(node, [n.video+"writer"]);
-
+		} else if(creatorType == "producer") {
+			creators = getFirstResults(node, [n.so+"producer"]);
+		} else if(creatorType == "programmer") {
+			creators = getFirstResults(node, [n.so+"author", n.codemeta+"maintainer"]);
 		} else {
 			creators = getFirstResults(node, [n.z+creatorType+"s"]);
 		}
@@ -778,10 +889,17 @@ function importItem(newItem, node) {
 	// publicationTitle -- first try PRISM, then DC
 	newItem.publicationTitle = getFirstResults(node, [n.prism+"publicationName", n.prism2_0+"publicationName", n.prism2_1+"publicationName", n.eprints+"publication", n.eprints+"book_title",
 		n.dc+"source", n.dc1_0+"source", n.dcterms+"source", n.og+"site_name"], true);
-	
+	if (container) {
+		newItem.publicationTitle = getFirstResults(container, [n.dc+"title", n.dc1_0+"title", n.dcterms+"title", n.so+"name"], true);
+		// these fields mean the same thing
+		newItem.reporter = newItem.publicationTitle;
+	}
+	if (containerPeriodical) {
+		newItem.publicationTitle = getFirstResults([containerPeriodical, containerPublicationVolume], [n.so+"name"], true);
+	}
 
 	// rights
-	newItem.rights = getFirstResults(node, [n.prism+"copyright", n.prism2_0+"copyright", n.prism2_1+"copyright", n.dc+"rights", n.dc1_0+"rights", n.dcterms+"rights"], true);
+	newItem.rights = getFirstResults(node, [n.prism+"copyright", n.prism2_0+"copyright", n.prism2_1+"copyright", n.dc+"rights", n.dc1_0+"rights", n.dcterms+"rights", n.so+"license"], true);
 	
 	// section
 	var section = getNodeByType(isPartOf, n.bib+"Part");
@@ -789,14 +907,7 @@ function importItem(newItem, node) {
 		newItem.section = getFirstResults(section, [n.dc+"title", n.dc1_0+"title", n.dcterms+"title"], true);
 	}
 	if (!section) {
-		newItem.section = getFirstResults(node, [n.article+"section"], true);
-	}
-	
-	// publication
-	if(container) {
-		newItem.publicationTitle = getFirstResults(container, [n.dc+"title", n.dc1_0+"title", n.dcterms+"title"], true);
-		// these fields mean the same thing
-		newItem.reporter = newItem.publicationTitle;
+		newItem.section = getFirstResults(node, [n.article+"section", n.so+"genre"], true);
 	}
 	
 	// series
@@ -809,46 +920,36 @@ function importItem(newItem, node) {
 	}
 	
 	// volume
-	if(container) {
-		newItem.volume = getFirstResults(container, [n.prism+"volume", n.prism2_0+"volume", n.prism2_1+"volume",
-			n.eprints+"volume", n.bibo+"volume", n.dcterms+"citation.volume"], true);
-	}
-	if(!newItem.volume) {
-		 newItem.volume = getFirstResults(node, [n.prism+"volume", n.prism2_0+"volume", n.prism2_1+"volume",
-			n.eprints+"volume", n.bibo+"volume", n.dcterms+"citation.volume"], true);
-	}
+	newItem.volume = getFirstResults([container, node, containerPublicationVolume, containerPeriodical], [n.prism+"volume", n.prism2_0+"volume", n.prism2_1+"volume",
+			n.eprints+"volume", n.bibo+"volume", n.dcterms+"citation.volume", n.so+"volumeNumber"], true);
 	
 	// issue
 	if(container) {
-		newItem.issue = getFirstResults(container, [n.prism+"number", n.prism2_0+"number", n.prism2_1+"number",
-			n.eprints+"number", n.bibo+"issue", n.dcterms+"citation.issue"], true);
-	}
-	if(!newItem.issue) {
-		newItem.issue = getFirstResults(node, [n.prism+"number", n.prism2_0+"number", n.prism2_1+"number",
-			n.eprints+"number", n.bibo+"issue", n.dcterms+"citation.issue", n.eprints+"id_number"], true);
+		newItem.issue = getFirstResults([container, node], [n.prism+"number", n.prism2_0+"number", n.prism2_1+"number",
+			n.eprints+"number", n.bibo+"issue", n.dcterms+"citation.issue", n.so+"issueNumber"], true);
 	}
 
 	// these mean the same thing
 	newItem.patentNumber = newItem.number = newItem.issue;
 	
 	// edition
-	newItem.edition = getFirstResults(node, [n.prism+"edition", n.prism2_0+"edition", n.prism2_1+"edition", n.bibo+"edition"], true);
+	newItem.edition = getFirstResults(node, [n.prism+"edition", n.prism2_0+"edition", n.prism2_1+"edition", n.bibo+"edition", n.so+"bookEdition", n.so+"version"], true);
 	// these fields mean the same thing
-	newItem.version = newItem.edition;
+	newItem.versionNumber = newItem.edition;
 	
 	// pages
-	newItem.pages = getFirstResults(node, [n.bib+"pages", n.eprints+"pagerange", n.prism2_0+"pageRange", n.prism2_1+"pageRange", n.bibo+"pages"], true);
+	newItem.pages = getFirstResults(node, [n.bib+"pages", n.eprints+"pagerange", n.prism2_0+"pageRange", n.prism2_1+"pageRange", n.bibo+"pages", n.so+"pagination"], true);
 	if(!newItem.pages) {
 		var pages = [];
-		var spage = getFirstResults(node, [n.prism+"startingPage", n.prism2_0+"startingPage", n.prism2_1+"startingPage", n.bibo+"pageStart", n.dcterms+"relation.spage"], true),
-			epage = getFirstResults(node, [n.prism+"endingPage", n.prism2_0+"endingPage", n.prism2_1+"endingPage", n.bibo+"pageEnd", n.dcterms+"relation.epage"], true);
+		var spage = getFirstResults(node, [n.prism+"startingPage", n.prism2_0+"startingPage", n.prism2_1+"startingPage", n.bibo+"pageStart", n.dcterms+"relation.spage", n.so+"pageStart"], true),
+			epage = getFirstResults(node, [n.prism+"endingPage", n.prism2_0+"endingPage", n.prism2_1+"endingPage", n.bibo+"pageEnd", n.dcterms+"relation.epage", n.so+"pageEnd"], true);
 		if(spage) pages.push(spage);
 		if(epage) pages.push(epage);
 		if(pages.length) newItem.pages = pages.join("-");
 	}
 	
 	// numPages
-	newItem.numPages = getFirstResults(node, [n.bibo+"numPages", n.eprints+"pages"], true);
+	newItem.numPages = getFirstResults(node, [n.bibo+"numPages", n.eprints+"pages", n.so+"numberOfPages"], true);
 
 	// numberOfVolumes
 	newItem.numberOfVolumes = getFirstResults(node, [n.bibo+"numVolumes"], true);
@@ -859,23 +960,39 @@ function importItem(newItem, node) {
 	// mediums
 	newItem.artworkMedium = newItem.interviewMedium = getFirstResults(node, [n.dcterms+"medium"], true);
 	
+	// programmingLanguage
+	newItem.programmingLanguage = getFirstResults(node, [n.so+"programmingLanguage"], true);
+	
+	// system
+	newItem.system = getFirstResults(node, [n.so+"operatingSystem"], true);
+	
 	// publisher
-	var publisher = getFirstResults(node, [n.dc+"publisher", n.dc1_0+"publisher", n.dcterms+"publisher", n.vcard2+"org", n.eprints+"institution"]);
-	if(publisher) {
-		if(typeof(publisher[0]) == "string") {
+	var publisher = getFirstResults([node, containerPeriodical, containerPublicationVolume], [ n.dc+"publisher", n.dc1_0+"publisher",
+		n.dcterms+"publisher", n.vcard2+"org", n.eprints+"institution",
+		n.so+"publisher", n.so+"publishedBy" ]);
+	if (publisher) {
+		if (typeof(publisher[0]) == "string") {
 			newItem.publisher = publisher[0];
 		} else {
 			var type = Zotero.RDF.getTargets(publisher[0], rdf+"type");
-			if(type) {
+			if (type) {
 				type = Zotero.RDF.getResourceURI(type[0]);
-				if(type == n.foaf+"Organization" || type == n.foaf+"Agent") {	// handle foaf organizational publishers
-					newItem.publisher = getFirstResults(publisher[0], [n.foaf+"name"], true);
-					var place = getFirstResults(publisher[0], [n.vcard+"adr"]);
-					if(place) {
-						newItem.place = getFirstResults(place[0], [n.vcard+"locality"]);
-					}
-				} else if(type == n.vcard2+"Organization") {
-					newItem.publisher = getFirstResults(publisher[0], [n.vcard2+"organization-name"], true);
+				switch (type){
+					case n.foaf+"Organization":
+					case n.foaf+"Agent":
+						newItem.publisher = getFirstResults(publisher[0], [n.foaf+"name"], true);
+						var place = getFirstResults(publisher[0], [n.vcard+"adr"]);
+						if (place) {
+							newItem.place = getFirstResults(place[0], [n.vcard+"locality"]);
+						}
+						break;
+					case n.vcard2+"Organization":
+						newItem.publisher = getFirstResults(publisher[0], [n.vcard2+"organization-name"], true);
+						break;
+					default:
+						newItem.publisher = getFirstResults(publisher[0], [n.so+"name"], true);
+						newItem.place = getFirstResults(publisher[0], [n.so+"location"], true);
+						break;
 				}
 			}
 		}
@@ -894,11 +1011,13 @@ function importItem(newItem, node) {
 	newItem.date = getFirstResults(node, [n.eprints+"date", n.prism+"publicationDate", n.prism2_0+"publicationDate", n.prism2_1+"publicationDate",
 		n.og+"published_time", n.article+"published_time", n.book+"release_date", n.music+"release_date", n.video+"release_date",
 		n.dc+"date.issued", n.dcterms+"date.issued", n.dcterms+"issued", n.dc+"date", n.dc1_0+"date", n.dcterms+"date",
-		n.dcterms+"dateSubmitted", n.eprints+"datestamp"], true);
+		n.dcterms+"dateSubmitted", n.eprints+"datestamp",
+		n.so+"datePublished"], true);
 	// accessDate
 	newItem.accessDate = getFirstResults(node, [n.dcterms+"dateSubmitted"], true);
 	// lastModified
-	newItem.lastModified = getFirstResults(node, [n.dcterms+"modified"], true);
+	newItem.lastModified = getFirstResults(node, [n.dcterms+"modified",
+		n.so+"dateModified"], true);
 	
 	// identifier
 	var identifiers = getFirstResults(node, [n.dc+"identifier", n.dc1_0+"identifier", n.dcterms+"identifier"]);
@@ -947,17 +1066,18 @@ function importItem(newItem, node) {
 	}
 	
 	// ISSN, if encoded per PRISM (DC uses "identifier")
-	newItem.ISSN = getFirstResults((container ? container : node), [n.prism+"issn", n.prism2_0+"issn", n.prism2_1+"issn", n.eprints+"issn", n.bibo+"issn",
-		n.prism+"eIssn", n.prism2_0+"eIssn", n.prism2_1+"eIssn", n.bibo+"eissn"], true) || newItem.ISSN;
+	newItem.ISSN = getFirstResults([container, node, containerPeriodical, containerPublicationVolume], [n.prism+"issn", n.prism2_0+"issn", n.prism2_1+"issn", n.eprints+"issn", n.bibo+"issn",
+		n.prism+"eIssn", n.prism2_0+"eIssn", n.prism2_1+"eIssn", n.bibo+"eissn", n.so+"issn"], true) || newItem.ISSN;
 	// ISBN from PRISM or OG
-	newItem.ISBN = getFirstResults((container ? container : node), [n.prism2_1+"isbn", n.bibo+"isbn", n.bibo+"isbn13", n.bibo+"isbn10", n.book+"isbn"], true) || newItem.ISBN;
+	newItem.ISBN = getFirstResults((container ? container : node), [n.prism2_1+"isbn", n.bibo+"isbn", n.bibo+"isbn13", n.bibo+"isbn10", n.book+"isbn", n.so+"isbn"], true) || newItem.ISBN;
 	// ISBN from eprints
 	newItem.ISBN = getFirstResults(node, [n.eprints+"isbn"], true) || newItem.ISBN;
 	// DOI from PRISM
 	newItem.DOI = getFirstResults(node, [n.prism2_0+"doi", n.prism2_1+"doi", n.bibo+"doi"], true) || newItem.DOI;
 	
 	if(!newItem.url) {
-		var url = getFirstResults(node, [n.eprints+"official_url", n.vcard2+"url", n.og+"url", n.prism2_0+"url", n.prism2_1+"url", n.bibo+"uri"]);
+		var url = getFirstResults(node, [n.eprints+"official_url", n.vcard2+"url", n.og+"url", n.prism2_0+"url", n.prism2_1+"url", n.bibo+"uri",
+										 n.so+"url", n.so+"sameAs"]);
 		if(url) {
 			newItem.url = Zotero.RDF.getResourceURI(url[0]);
 		}
@@ -968,13 +1088,13 @@ function importItem(newItem, node) {
 	
 	// abstract
 	newItem.abstractNote = getFirstResults(node, [n.eprints+"abstract", n.prism+"teaser", n.prism2_0+"teaser", n.prism2_1+"teaser", n.og+"description",
-		n.bibo+"abstract", n.dcterms+"abstract", n.dc+"description.abstract", n.dcterms+"description.abstract", n.dc1_0+"description"], true);
+		n.bibo+"abstract", n.dcterms+"abstract", n.dc+"description.abstract", n.dcterms+"description.abstract", n.dc1_0+"description", n.so+"description"], true);
 	
 	// type
 	var type = getFirstResults(node, [n.dc+"type", n.dc1_0+"type", n.dcterms+"type"], true);
 	
 	/**CUSTOM ITEM TYPE  -- Currently only Dataset **/
-	if (type && type.toLowerCase() == "dataset") {
+	if (type && (type.toLowerCase() == "dataset" || type.toLowerCase() == "datacatalog")) {
 		if (newItem.extra) {
 			newItem.extra += "\ntype: dataset";
 		}
@@ -1022,7 +1142,7 @@ function importItem(newItem, node) {
 	newItem.journalAbbreviation = getFirstResults((container ? container : node), [n.dcterms+"alternative"], true);
 
 	//running Time
-	newItem.runningTime == getFirstResults(node, [n.video+"duration", n.song+"duration"], true);
+	newItem.runningTime = getFirstResults(node, [n.video+"duration", n.song+"duration", n.so+"duration"], true);
 
 	// address
 	var adr = getFirstResults(node, [n.vcard2+"adr"]);
@@ -1040,7 +1160,7 @@ function importItem(newItem, node) {
 	newItem.accepted = getFirstResults(node, [n.dcterms+"dateAccepted"], true);
 
 	// language
-	newItem.language = getFirstResults(node, [n.dc+"language", n.dc1_0+"language", n.dcterms+"language"], true);
+	newItem.language = getFirstResults(node, [n.dc+"language", n.dc1_0+"language", n.dcterms+"language", n.so+"inLanguage"], true);
 	
 	// see also
 	processSeeAlso(node, newItem);
@@ -1090,7 +1210,8 @@ function importItem(newItem, node) {
 	/** TAGS **/
 	
 	var subjects = getFirstResults(node, [n.dc+"subject", n.dc1_0+"subject", n.dcterms+"subject", n.article+"tag",
-		n.prism2_0+"keyword", n.prism2_1+"keyword", n.prism2_0+"object", n.prism2_1+"object", n.prism2_0+"organization", n.prism2_1+"organization", n.prism2_0+"person", n.prism2_1+"person"]);
+		n.prism2_0+"keyword", n.prism2_1+"keyword", n.prism2_0+"object", n.prism2_1+"object", n.prism2_0+"organization", n.prism2_1+"organization", n.prism2_0+"person", n.prism2_1+"person",
+		n.so+"keywords", n.so+"about"]);
 	if (subjects) {
 		for (var i=0; i<subjects.length; i++) {
 			var subject = subjects[i];
@@ -1100,7 +1221,7 @@ function importItem(newItem, node) {
 				var type = Zotero.RDF.getTargets(subject, rdf+"type");
 				if(type) {
 					type = Zotero.RDF.getResourceURI(type[0]);
-					if(callNumberTypes.indexOf(type) !== -1) {
+					if(callNumberTypes.includes(type)) {
 						newItem.callNumber = getFirstResults(subject, [rdf+"value"], true);
 					} else if(type == n.z+"AutomaticTag") {
 						newItem.tags.push({tag:getFirstResults(subject, [rdf+"value"], true), type:1});
@@ -1149,7 +1270,7 @@ function importItem(newItem, node) {
 function getNodes(skipCollections) {
 	var nodes = Zotero.RDF.getAllResources();
 
-	var goodNodes = new Array();
+	var goodNodes = [];
 	for (var i=0; i<nodes.length; i++) {
 		var node = nodes[i];
 		// figure out if this is a part of another resource, or a linked
@@ -1289,9 +1410,9 @@ var testCases = [
 				"title": "Das Adam-Smith-Projekt",
 				"creators": [
 					{
+						"creatorType": "author",
 						"lastName": "Ronge",
-						"firstName": "Bastian",
-						"creatorType": "author"
+						"firstName": "Bastian"
 					}
 				],
 				"date": "2015",
@@ -1301,17 +1422,184 @@ var testCases = [
 				"publisher": "Springer VS",
 				"attachments": [],
 				"tags": [
-					"Foucault, Michel",
-					"Liberalismus",
-					"Macht",
-					"Politische Philosophie",
-					"Rechtsordnung",
-					"Smith, Adam"
+					{
+						"tag": "Foucault, Michel"
+					},
+					{
+						"tag": "Liberalismus"
+					},
+					{
+						"tag": "Macht"
+					},
+					{
+						"tag": "Politische Philosophie"
+					},
+					{
+						"tag": "Rechtsordnung"
+					},
+					{
+						"tag": "Smith, Adam"
+					}
 				],
 				"notes": [],
 				"seeAlso": [
 					"http://d-nb.info/1064805604"
 				]
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rdf:RDF\n  xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n  xmlns:schema=\"http://schema.org/\"\n>\n  <schema:ScholarlyArticle rdf:nodeID=\"N523cd27ac2f84bbca7fe726b027db6d2\">\n    <schema:pageStart>360</schema:pageStart>\n    <schema:isPartOf rdf:resource=\"http://schema.org/Article#bib-2/issue\"/>\n    <schema:about>Catalog</schema:about>\n    <schema:about>Works</schema:about>\n    <schema:pageEnd>368</schema:pageEnd>\n    <schema:author>Smiraglia, Richard P.</schema:author>\n    <schema:name>Be Careful What You Wish For: FRBR, Some Lacunae, A Review</schema:name>\n    <schema:sameAs rdf:resource=\"http://dx.doi.org/10.1080/01639374.2012.682254\"/>\n    <schema:description>The library catalog as a catalog of works was an infectious idea, which together with research led to reconceptualization in the form of the FRBR conceptual model. Two categories of lacunae emerge--the expression entity, and gaps in the model such as aggregates and dynamic documents. Evidence needed to extend the FRBR model is available in contemporary research on instantiation. The challenge for the bibliographic community is to begin to think of FRBR as a form of knowledge organization system, adding a final dimension to classification. The articles in the present special issue offer a compendium of the promise of the FRBR model.</schema:description>\n  </schema:ScholarlyArticle>\n  <schema:PublicationIssue rdf:about=\"http://schema.org/Article#bib-2/issue\">\n    <schema:isPartOf>\n      <schema:Periodical rdf:about=\"http://schema.org/Article#bib-2/periodical\">\n        <schema:volumeNumber>50</schema:volumeNumber>\n        <schema:publisher>Taylor &amp; Francis Group</schema:publisher>\n        <schema:issn>1544-4554</schema:issn>\n        <schema:issn>0163-9374</schema:issn>\n        <schema:name>Cataloging &amp; Classification Quarterly</schema:name>\n        <rdf:type rdf:resource=\"http://schema.org/PublicationVolume\"/>\n      </schema:Periodical>\n    </schema:isPartOf>\n    <schema:issueNumber>5</schema:issueNumber>\n    <schema:datePublished rdf:datatype=\"http://schema.org/Date\">2012</schema:datePublished>\n  </schema:PublicationIssue>\n</rdf:RDF>",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Be Careful What You Wish For: FRBR, Some Lacunae, A Review",
+				"creators": [
+					{
+						"firstName": "Richard P.",
+						"lastName": "Smiraglia",
+						"creatorType": "author"
+					}
+				],
+				"ISSN": "1544-4554",
+				"abstractNote": "The library catalog as a catalog of works was an infectious idea, which together with research led to reconceptualization in the form of the FRBR conceptual model. Two categories of lacunae emerge--the expression entity, and gaps in the model such as aggregates and dynamic documents. Evidence needed to extend the FRBR model is available in contemporary research on instantiation. The challenge for the bibliographic community is to begin to think of FRBR as a form of knowledge organization system, adding a final dimension to classification. The articles in the present special issue offer a compendium of the promise of the FRBR model.",
+				"issue": "5",
+				"itemID": "_:n82",
+				"pages": "360-368",
+				"publicationTitle": "Cataloging & Classification Quarterly",
+				"url": "http://dx.doi.org/10.1080/01639374.2012.682254",
+				"volume": "50",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Catalog"
+					},
+					{
+						"tag": "Works"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n<rdf:RDF\n  xmlns:codemeta=\"https://codemeta.github.io/terms/\"\n  xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n  xmlns:schema=\"http://schema.org/\"\n>\n  <schema:SoftwareSourceCode rdf:nodeID=\"N7272101842f544e2a9a7508327eb329b\">\n    <schema:name>CodeMeta: Minimal metadata schemas for science software and code, in JSON-LD</schema:name>\n    <schema:description>CodeMeta is a concept vocabulary that can be used to standardize the exchange of software metadata across repositories and organizations.</schema:description>\n    <schema:dateCreated rdf:datatype=\"http://schema.org/Date\">2017-06-05</schema:dateCreated>\n    <schema:datePublished rdf:datatype=\"http://schema.org/Date\">2017-06-05</schema:datePublished>\n    <schema:version>2.0</schema:version>\n    <schema:softwareVersion>2.0</schema:softwareVersion>\n    <schema:programmingLanguage>JSON-LD</schema:programmingLanguage>\n    <schema:license rdf:resource=\"https://spdx.org/licenses/Apache-2.0\"/>\n    <codemeta:developmentStatus rdf:resource=\"file:///base/data/home/apps/s%7Erdf-translator/2.408516547054015808/active\"/>\n    <codemeta:funding>National Science Foundation Award #1549758; Codemeta: A Rosetta Stone for Metadata in Scientific Software</codemeta:funding>\n    <schema:codeRepository rdf:resource=\"https://github.com/codemeta/codemeta\"/>\n    <schema:downloadUrl rdf:resource=\"https://github.com/codemeta/codemeta/archive/2.0.zip\"/>\n    <codemeta:contIntegration rdf:resource=\"https://travis-ci.org/codemeta/codemeta\"/>\n    <schema:identifier rdf:resource=\"file:///base/data/home/apps/s%7Erdf-translator/2.408516547054015808/CodeMeta\"/>\n    <codemeta:issueTracker rdf:resource=\"https://github.com/codemeta/codemeta/issues\"/>\n    <schema:keywords>software</schema:keywords>\n    <schema:keywords>metadata</schema:keywords>\n    <codemeta:maintainer rdf:resource=\"http://orcid.org/0000-0002-1642-628X\"/>\n    <schema:author rdf:resource=\"http://orcid.org/0000-0002-1642-628X\"/>\n    <schema:author rdf:resource=\"http://orcid.org/0000-0003-0077-4738\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-4925-7248\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0001-5636-0433\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0002-9300-5278\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-1419-2405\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0002-8876-7606\"/>\n    <schema:contributor rdf:resource=\"N99ac8e31c13d4ae5994cbc8669e01866\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0001-8465-8341\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-4741-0309\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-2720-0339\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0002-1642-628X\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-1219-2137\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0002-3957-2474\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-3477-2845\"/>\n    <schema:contributor rdf:resource=\"Nefd7fe71736c433db9ada28e54018b34\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-1304-1939\"/>\n    <schema:contributor rdf:resource=\"Nc65fe076896346a9a8859f25f5e3bca9\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0003-4425-7097\"/>\n    <schema:contributor rdf:resource=\"http://orcid.org/0000-0002-2192-403X\"/>\n  </schema:SoftwareSourceCode>\n  \n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-4925-7248\">\n    <schema:familyName>Druskat</schema:familyName>\n    <schema:email>mail@sdruskat.net</schema:email>\n    <schema:givenName>Stephan</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0001-5636-0433\">\n    <schema:givenName>Ashley</schema:givenName>\n    <schema:familyName>Sands</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0002-9300-5278\">\n    <schema:givenName>Patricia</schema:givenName>\n    <schema:familyName>Cruse</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-1419-2405\">\n    <schema:givenName>Martin</schema:givenName>\n    <schema:familyName>Fenner</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0002-8876-7606\">\n    <schema:givenName>Neil</schema:givenName>\n    <schema:familyName>Chue Hong</schema:familyName>\n    <schema:email>n.chuehong@epcc.ed.ac.uk</schema:email>\n  </schema:Person>\n  <schema:Person rdf:nodeID=\"N99ac8e31c13d4ae5994cbc8669e01866\">\n    <schema:familyName>Nowak</schema:familyName>\n    <schema:givenName>Krzysztof</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0001-8465-8341\">\n    <schema:familyName>Gil</schema:familyName>\n    <schema:email>GIL@ISI.EDU</schema:email>\n    <schema:givenName>Yolanda</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-4741-0309\">\n    <schema:familyName>Hahnel</schema:familyName>\n    <schema:givenName>Mark</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-2720-0339\">\n    <schema:email>dskatz@illinois.edu</schema:email>\n    <schema:givenName>Dan</schema:givenName>\n    <schema:familyName>Katz</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0002-1642-628X\">\n    <schema:givenName>Carl</schema:givenName>\n    <schema:familyName>Boettiger</schema:familyName>\n    <schema:email>cboettig@gmail.com</schema:email>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-1219-2137\">\n    <schema:email>carole.goble@manchester.ac.uk</schema:email>\n    <schema:familyName>Goble</schema:familyName>\n    <schema:givenName>Carole</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0002-3957-2474\">\n    <schema:familyName>Smith</schema:familyName>\n    <schema:givenName>Arfon</schema:givenName>\n    <schema:email>arfon.smith@gmail.com</schema:email>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-3477-2845\">\n    <schema:givenName>Alice</schema:givenName>\n    <schema:email>aallen@ascl.net</schema:email>\n    <schema:familyName>Allen</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:nodeID=\"Nefd7fe71736c433db9ada28e54018b34\">\n    <schema:email>abbycabs@gmail.com</schema:email>\n    <schema:givenName>Abby Cabunoc</schema:givenName>\n    <schema:familyName>Mayes</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-1304-1939\">\n    <schema:givenName>Mercè</schema:givenName>\n    <schema:familyName>Crosas</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"Nc65fe076896346a9a8859f25f5e3bca9\">\n    <schema:email>luke.coy@rit.edu</schema:email>\n    <schema:familyName>Coy</schema:familyName>\n    <schema:givenName>Luke</schema:givenName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-4425-7097\">\n    <schema:givenName>Kyle</schema:givenName>\n    <schema:email>Kyle.Niemeyer@oregonstate.edu</schema:email>\n    <schema:familyName>Niemeyer</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0002-2192-403X\">\n    <schema:givenName>Peter</schema:givenName>\n    <schema:email>slaughter@nceas.ucsb.edu</schema:email>\n    <schema:familyName>Slaughter</schema:familyName>\n  </schema:Person>\n  <schema:Person rdf:about=\"http://orcid.org/0000-0003-0077-4738\">\n    <schema:givenName>Matthew B.</schema:givenName>\n    <schema:familyName>Jones</schema:familyName>\n    <schema:email>jones@nceas.ucsb.edu</schema:email>\n  </schema:Person>\n</rdf:RDF>",
+		"items": [
+			{
+				"itemType": "computerProgram",
+				"title": "CodeMeta: Minimal metadata schemas for science software and code, in JSON-LD",
+				"creators": [
+					{
+						"creatorType": "programmer",
+						"lastName": "Boettiger",
+						"firstName": "Carl"
+					},
+					{
+						"creatorType": "programmer",
+						"lastName": "Jones",
+						"firstName": "Matthew B."
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Druskat",
+						"firstName": "Stephan"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Sands",
+						"firstName": "Ashley"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Cruse",
+						"firstName": "Patricia"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Fenner",
+						"firstName": "Martin"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Chue Hong",
+						"firstName": "Neil"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Gil",
+						"firstName": "Yolanda"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Hahnel",
+						"firstName": "Mark"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Katz",
+						"firstName": "Dan"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Boettiger",
+						"firstName": "Carl"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Goble",
+						"firstName": "Carole"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Smith",
+						"firstName": "Arfon"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Allen",
+						"firstName": "Alice"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Crosas",
+						"firstName": "Mercè"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Coy",
+						"firstName": "Luke"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Niemeyer",
+						"firstName": "Kyle"
+					},
+					{
+						"creatorType": "contributor",
+						"lastName": "Slaughter",
+						"firstName": "Peter"
+					}
+				],
+				"date": "2017-06-05",
+				"abstractNote": "CodeMeta is a concept vocabulary that can be used to standardize the exchange of software metadata across repositories and organizations.",
+				"itemID": "_:n79",
+				"programmingLanguage": "JSON-LD",
+				"rights": "https://spdx.org/licenses/Apache-2.0",
+				"versionNumber": "2.0",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "metadata"
+					},
+					{
+						"tag": "software"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
 	}

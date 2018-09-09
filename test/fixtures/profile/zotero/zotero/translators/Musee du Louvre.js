@@ -1,7 +1,7 @@
 {
 	"translatorID": "22d17fb9-ae32-412e-bcc4-7650ed3359bc",
 	"label": "Musee du Louvre",
-	"creator": "Adam Crymble",
+	"creator": "Philipp Zumstein",
 	"target": "^https?://www\\.louvre\\.fr/",
 	"minVersion": "3.0",
 	"maxVersion": "",
@@ -9,171 +9,126 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-12-27 14:54:34"
+	"lastUpdated": "2018-03-05 07:35:01"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2018 Philipp Zumstein
+	
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
 
 function detectWeb(doc, url) {
-	if (doc.location.href.match("recherche")) {
-		return "multiple";
-	} else if (url.indexOf('oeuvre')>-1) {
+	if (url.includes('/oeuvre')) {
 		return "artwork";
+	} else if (url.includes('recherche') && getSearchResults(doc, true)) {
+		return "multiple";
 	}
-	
 }
 
-//Translator Musee du Louvre. Code by Adam Crymble
 
-function scrape(doc, url) {
-
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == 'x') return namespace; else return null;
-	} : null;	
-	
-	var dataTags = new Object();
-	var tagsContent = new Array();
-	
-	var newItem = new Zotero.Item("artwork");
-
-	//tags	
-		var metaTagHTML = doc.getElementsByTagName("meta");
-		for (var i = 0 ; i < metaTagHTML.length ; i++) {
-			dataTags[metaTagHTML[i].getAttribute("name")] = Zotero.Utilities.cleanTags(metaTagHTML[i].getAttribute("content"));
-		}
-		
-		newItem.abstractNote = dataTags["description"];
-		
-		if (dataTags["keywords"]) {
-			if (dataTags["keywords"].match(", ")) {
-				tagsContent = tagsContent = dataTags["keywords"].split(", ");
-			} else if (dataTags["keywords"].split("、")) {
-				tagsContent = dataTags["keywords"].split("、");
-			}
-		}
-		
-		for (var i = 0; i < tagsContent.length; i++) {
-			newItem.tags[i] = tagsContent[i];
-		}
-		
-	//date	
-		var xPathDate = '//td[@class="txtContent"]/span[@class="txtContentSmall"]';
-		
-		if (doc.evaluate(xPathDate, doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext()) {
-			
-			newItem.date = doc.evaluate(xPathDate, doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-		}
-	
-	//creator	
-		var xPathCreator = '//td[@class="txtContent"]/strong';
-		if (doc.evaluate(xPathCreator, doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext()) {
-			var creator = doc.evaluate(xPathCreator, doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent.toLowerCase();
-		
-			var comma = 0;
-			var parenthesis = 0;
-			var commaSpot;
-			var parenthesisSpot;
-			
-			if (creator.match(", ")) {
-				comma = 1;
-				commaSpot = creator.indexOf(",");
-			}
-			
-			if (creator.match(/\(/)) {
-				parenthesis = 1;
-				parenthesisSpot = creator.indexOf(" (");
-			} 
-			
-			if (comma == 1 && parenthesis == 1) {
-				if (commaSpot < parenthesisSpot) {
-					creator = creator.substr(0, commaSpot);
-				} else {
-					creator = creator.substr(0, parenthesisSpot);
-				}
-			} else if (comma == 1 && parenthesis == 0) {
-				creator = creator.substr(0, commaSpot);	
-			} else if (comma == 0 && parenthesis == 1) {
-				creator = creator.substr(0, parenthesisSpot);
-			}
-		
-			var words = creator.split(" ");
-			
-			for (var j in words) {
-				if (words[j] != "" && words[j] != ' ') {
-					if (words[j].match("-")) {
-						Zotero.debug(words[j]);
-						var hyphen = words[j].split("-");
-						hyphen[0] = hyphen[0][0].toUpperCase() + hyphen[0].substr(1).toLowerCase() + "-";
-						hyphen[1] = hyphen[1][0].toUpperCase() + hyphen[1].substr(1).toLowerCase();
-						words[j] = hyphen[0] + hyphen[1];
-					} else {
-						words[j] = words[j][0].toUpperCase() + words[j].substr(1).toLowerCase();
-					}
-				}
-			}
-			creator = words.join(" ");
-			newItem.creators.push(Zotero.Utilities.cleanAuthor(creator, "artist"));
-		}
-		
-	
-	//title
-		var title1 = doc.title.split(" |");
-		Zotero.debug(title1[0]);
-		newItem.title = title1[0];	
-		
-	//extra
-		if (doc.evaluate('//h1', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext()) {
-		
-			var collection1 = doc.evaluate('//h1', doc, nsResolver, XPathResult.ANY_TYPE, null).iterateNext().textContent;
-			newItem.extra = collection1.replace(/^\s*|\s*$/g, '');
-		}
-		
-		newItem.repository = "Musée du Louvre";
-		newItem.url = doc.location.href;
-	
-		newItem.complete();
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('a[href*="/oeuvre"]');
+	for (let i=0; i<rows.length; i++) {
+		let href = rows[i].href;
+		let title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
 }
+
 
 function doWeb(doc, url) {
-	var namespace = doc.documentElement.namespaceURI;
-	var nsResolver = namespace ? function(prefix) {
-		if (prefix == 'x') return namespace; else return null;
-	} : null;
-	
-	var articles = new Array();
-	
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-
-		var links = doc.evaluate('//h4/a[@class="lien"]', doc, nsResolver, XPathResult.ANY_TYPE, null);
-		var titles = doc.evaluate('//h4/a/@title', doc, nsResolver, XPathResult.ANY_TYPE, null);
-		
-		var next_title;
-		while (next_title = titles.iterateNext()) {
-			items[links.iterateNext().href] = next_title.textContent;
-		}
-		items = Zotero.selectItems(items);
-		for (var i in items) {
-			articles.push(i);
-		}
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
+			for (var i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
 	} else {
-		articles = [url];
+		scrape(doc, url);
 	}
-	Zotero.Utilities.processDocuments(articles, scrape, function() {Zotero.done();});
-	Zotero.wait();	
-}/** BEGIN TEST CASES **/
+}
+
+
+function scrape(doc, url) {
+	var item = new Zotero.Item("artwork");
+	
+	var box = doc.querySelector('.box-cartel ul');
+	var artist = text(box, 'li p', 0);
+	if (artist) {
+		artist = artist.replace(/\(.*\)/, '');
+		item.creators.push({
+			lastName: ZU.trimInternal(artist),
+			creatorType: "artist"
+		});
+	}
+	item.title = text(doc, 'h1>span');
+	if (!item.title) {
+		item.title = text(box, 'li p', 1);
+	}
+	item.date = text(box, 'li p', 2);
+	item.artworkMedium = text(box, 'li:nth-child(2) p', 0);
+	item.artworkSize = text(box, 'li:nth-child(2) p', 1);
+	item.callNumber = text(box, 'li:nth-child(3) p', 2);
+	
+	item.archive = "Louvre";
+	
+	item.abstractNote = text(doc, '.col-desc strong');
+	item.url = url;
+	
+	item.complete();
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
+		"url": "https://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
 		"items": [
 			{
 				"itemType": "artwork",
 				"title": "Stèle figurant la déesse Ishtar",
 				"creators": [],
-				"abstractNote": "Stèle : déesse Ishtar . Provenance : Tell Ahmar, antique Til Barsip. Epoque néo-assyrienne, VIIIe siècle av. J.-C. - Département des Antiquités orientales",
-				"extra": "Œuvre Stèle figurant la déesse Ishtar",
-				"libraryCatalog": "Musée du Louvre",
-				"url": "http://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
+				"date": "VIIIe siècle avant J.-C.",
+				"abstractNote": "Cette stèle figurant la déesse Ishtar témoigne de l'art provincial de l'empire assyrien au sommet de sa puissance et de son expansion. Souvent représentée dans l'art du Proche-Orient, la déesse revêt ici un caractère guerrier, peu attesté sur des oeuvres monumentales telles que celle-ci.",
+				"archive": "Louvre",
+				"artworkMedium": "Brèche",
+				"callNumber": "AO 11503",
+				"libraryCatalog": "Musee du Louvre",
+				"url": "https://www.louvre.fr/oeuvre-notices/stele-figurant-la-deesse-ishtar",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -183,15 +138,20 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
+		"url": "https://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
 		"items": [
 			{
 				"itemType": "artwork",
 				"title": "Stele with warrior god",
 				"creators": [],
-				"extra": "Work Stele with warrior god",
-				"libraryCatalog": "Musée du Louvre",
-				"url": "http://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
+				"date": "Late Bronze Age or Iron Age? (c. 1200 or 800 BC)",
+				"abstractNote": "This basalt stele, sometimes called the Shihan stele, was the oldest monument from the Holy Land to be found in the Louvre's collection until the inter-war excavations bore their fruit. The figure represented on the stele, for a long time identified as a king or prince, might also be a warrior god. The dating of the work, however, still poses many questions, with the current estimate ranging from the Late Bronze (c. 1200 BC), to the Iron Age (c. 800 BC).",
+				"archive": "Louvre",
+				"artworkMedium": "Stone",
+				"artworkSize": "H. 13 cm; W. 58 cm",
+				"callNumber": "AO 5055",
+				"libraryCatalog": "Musee du Louvre",
+				"url": "https://www.louvre.fr/en/oeuvre-notices/stele-warrior-god",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
@@ -201,21 +161,36 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
+		"url": "https://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
 		"items": [
 			{
 				"itemType": "artwork",
 				"title": "Mona Lisa – Portrait of Lisa Gherardini, wife of Francesco del Giocondo",
-				"creators": [],
-				"extra": "Work Mona Lisa – Portrait of Lisa Gherardini, wife of Francesco del Giocondo",
-				"libraryCatalog": "Musée du Louvre",
-				"url": "http://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
+				"creators": [
+					{
+						"lastName": "Leonardo di ser Piero da Vinci, known as LEONARDO DA VINCI",
+						"creatorType": "artist"
+					}
+				],
+				"date": "c. 1503–19",
+				"abstractNote": "This portrait was doubtless started in Florence around 1503. It is thought to be of Lisa Gherardini, wife of a Florentine cloth merchant named Francesco del Giocondo - hence the alternative title, La Gioconda. However, Leonardo seems to have taken the completed portrait to France rather than giving it to the person who commissioned it. After his death, the painting entered François I's collection.",
+				"archive": "Louvre",
+				"artworkMedium": "Wood (poplar)",
+				"artworkSize": "H. 0.77 m; W. 0.53 m",
+				"callNumber": "INV. 779",
+				"libraryCatalog": "Musee du Louvre",
+				"url": "https://www.louvre.fr/en/oeuvre-notices/mona-lisa-portrait-lisa-gherardini-wife-francesco-del-giocondo?sous_dept=1",
 				"attachments": [],
 				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.louvre.fr/en/recherche-globale?f_search_cles=lisa&f_search_univers=",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/
