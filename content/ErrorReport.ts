@@ -9,12 +9,14 @@ import { Translators } from './translators'
 import * as log from './debug'
 import fastChunkString = require('fast-chunk-string')
 
+import { DB } from './db/main'
+import { DB as Cache } from './db/cache'
+
 const s3 = require('./s3.json')
 
 const PACKAGE = require('../package.json')
 
 Components.utils.import('resource://gre/modules/Services.jsm')
-Components.utils.import('resource://gre/modules/osfile.jsm')
 
 const kB = 1024
 const MB = kB * kB
@@ -52,14 +54,8 @@ export = new class ErrorReport {
       ]
 
       if (document.getElementById('better-bibtex-error-report-include-db').checked) {
-        await (new OS.File.DirectoryIterator(OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex'))).forEach(entry => {
-          if (!entry.name.endsWith('.json') && !entry.name.endsWith('.json.bak')) return null
-
-          const version = parseInt(entry.name.split('.')[1])
-          if (!isNaN(version) && version > 0) return null
-
-          logs.push(this.submit(entry.name.replace(/\.json(\.bak)?$/, ''), 'application/json', OS.File.read(entry.path, { encoding: 'utf-8' })))
-        })
+        logs.push(this.submit('DB', 'application/json', DB.serialize({ serializationMethod: 'pretty' })))
+        logs.push(this.submit('Cache', 'application/json', Cache.serialize({ serializationMethod: 'pretty' })))
       }
 
       if (this.errorlog.references) logs.push(this.submit('references', 'application/json', this.errorlog.references))
