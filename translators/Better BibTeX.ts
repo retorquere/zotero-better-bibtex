@@ -514,7 +514,7 @@ class ZoteroItem {
   protected $translator(value, field) { return this.$author(value, field) }
 
   protected $publisher(value) {
-    const field = ['institution', 'publisher'].find(f => this.validFields.get(f)) // difference between jurism and zotero
+    const field = ['publisher', 'institution'].find(f => this.validFields.get(f)) // difference between jurism and zotero
     if (!field) return false
 
     if (!this.item[field]) this.item[field] = ''
