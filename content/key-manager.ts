@@ -347,6 +347,39 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     }
   }
 
+  public async tagDuplicates(libraryID) {
+    const tag = '#duplicate-key'
+    const scope = Prefs.get('keyScope')
+
+    const tagged = (await ZoteroDB.queryAsync(`
+      SELECT items.itemID
+      FROM items
+      JOIN itemTags ON itemTags.itemID = items.itemID
+      JOIN tags ON tags.tagID = itemTags.tagID
+      WHERE (items.libraryID = ? OR 'global' = ?) AND tags.name = ? AND items.itemID NOT IN (select itemID from deletedItems)
+    `, [ libraryID, scope, tag ])).map(item => item.itemID)
+
+    const citekeys: {[key: string]: any[]} = {}
+    for (const item of this.keys.find(scope === 'global' ? undefined : { libraryID })) {
+      if (!citekeys[item.citekey]) citekeys[item.citekey] = []
+      citekeys[item.citekey].push({ itemID: item.itemID, tagged: tagged.includes(item.itemID), duplicate: false })
+      if (citekeys[item.citekey].length > 1) citekeys[item.citekey].forEach(i => i.duplicate = true)
+    }
+
+    log.debug('tagDuplicates:', {libraryID, scope, tagged, citekeys})
+
+    const mistagged = Object.values(citekeys).reduce((acc, val) => acc.concat(val), []).filter(i => i.tagged !== i.duplicate).map(i => i.itemID)
+    for (const item of await getItemsAsync(mistagged)) {
+      if (tagged.includes(item.id)) {
+        item.removeTag(tag)
+      } else {
+        item.addTag(tag)
+      }
+
+      await item.saveTx()
+    }
+  }
+
   private postfixZotero(n) {
     if (n < 0) return ''
 
