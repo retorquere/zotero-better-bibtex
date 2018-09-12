@@ -1,6 +1,9 @@
 @export
 Feature: Export
 
+Background:
+  Given I set preference .primeExportCache to 10
+
 @test-cluster-1
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979 @746
 Scenario Outline: BibLaTeX Export

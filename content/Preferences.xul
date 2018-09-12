@@ -401,6 +401,13 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.primeExportCache"
+          type="int"
+          default="0"/>
+        <!--!!
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.sorted"
           id="pref-better-bibtex-sorted"
           type="bool"

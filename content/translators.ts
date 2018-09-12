@@ -2,6 +2,9 @@ declare const Zotero: any
 
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
+import { DB as Cache } from './db/cache'
+
+const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -56,9 +59,19 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
-    if (items.library) translation.setLibraryID(items.library)
-    if (items.items) translation.setItems(items.items)
-    if (items.collection) translation.setCollection(typeof items.collection === 'number' ? Zotero.Collections.get(items.collection) : items.collection)
+    if (items.library) {
+      translation.setLibraryID(items.library)
+
+    } else if (items.items) {
+      translation.setItems(items.items)
+
+    } else if (items.collection) {
+      if (typeof items.collection === 'number') items.collection = Zotero.Collections.get(items.collection)
+      translation.setCollection(items.collection)
+
+    }
+
+    await this.primeCache(translatorID, displayOptions, items)
 
     translation.setTranslator(translatorID)
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
@@ -152,5 +165,50 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     return true
+  }
+
+  public async primeCache(translatorID, displayOptions, scope) {
+    let sql: string
+    let items: any[]
+    let itemIDs: number[]
+
+    const threshold: number = Prefs.get('primeExportCache')
+    const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
+
+    log.debug('priming cache:', { threshold, cache: !!cache, displayOptions })
+    if (!threshold || !cache || displayOptions.exportFileData) return
+
+    if (scope.library) {
+      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
+
+    } else if (scope.items) {
+      items = scope.items
+      itemIDs = scope.items.map(item => item.id)
+
+    } else if (scope.collection) {
+      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id}`
+    }
+
+    if (sql) itemIDs = (await Zotero.DB.queryAsync(sql)).map(item => item.itemID)
+
+    const query = {
+      exportNotes: !!displayOptions.exportNotes,
+      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
+    }
+    for (const pref of prefOverrides) {
+      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
+    }
+
+    const cached = new Set(cache.find(query).map(item => item.itemID))
+    const uncached = itemIDs.filter(id => !cached.has(id))
+
+    if (uncached.length < threshold) return
+
+    log.debug('priming cache:', uncached.length, 'uncached items')
+
+    if (!items) items = await Zotero.Items.getAsync(uncached)
+    await Promise.all(items.map(item => this.translate(translatorID, displayOptions, { items: [ item ] })))
+
+    log.debug('priming cache: done ')
   }
 }
