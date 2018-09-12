@@ -19,20 +19,29 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
 
   try {
     const treeRow = this.collectionsView.selectedTreeRow
-    const hidden = !treeRow || treeRow.isFeed() || treeRow.isTrash() || treeRow.isUnfiled() || treeRow.isDuplicates()
+    const isLibrary = treeRow && treeRow.isLibrary(true)
+    const isCollection = treeRow && treeRow.isLibrary(true)
 
-    document.getElementById('bbt-collectionmenu-separator').hidden = hidden
-    document.getElementById('bbt-collectionmenu-pull-url').hidden = hidden
-    document.getElementById('bbt-collectionmenu-report-errors').hidden = hidden
+    document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
+    document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)
+    document.getElementById('bbt-collectionmenu-report-errors').hidden = !(isLibrary || isCollection)
+
+    const tagDuplicates = document.getElementById('bbt-collectionmenu-tag-duplicates')
+    if (isLibrary) {
+      tagDuplicates.hidden = false
+      tagDuplicates.setAttribute('libraryID', treeRow.ref.libraryID.toString())
+    } else {
+      tagDuplicates.hidden = true
+    }
 
     let query = null
     if (Prefs.get('autoExport') === 'immediate') {
       query = null
 
-    } else if (treeRow.isCollection()) {
+    } else if (isCollection) {
       query = { type: 'collection', id: treeRow.ref.id }
 
-    } else if (treeRow.isLibrary(true)) {
+    } else if (isLibrary) {
       query = { type: 'library', id: treeRow.ref.libraryID }
 
     }
