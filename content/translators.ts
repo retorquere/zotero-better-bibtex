@@ -174,9 +174,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     const threshold: number = Prefs.get('primeExportCache')
     const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
+    const jabrefFormat = Prefs.get('jabrefFormat')
 
-    log.debug('priming cache:', { threshold, cache: !!cache, displayOptions })
-    if (!threshold || !cache || displayOptions.exportFileData) return
+    log.debug('priming cache:', { jabrefFormat, threshold, cache: !!cache, displayOptions })
+    if (!threshold || !cache || jabrefFormat || displayOptions.exportFileData) return
 
     if (scope.library) {
       sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
