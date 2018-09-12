@@ -9,7 +9,6 @@ import * as itemfields from '../lib/itemfields'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
-  public attachmentCounter = 0
   public caching: boolean
   public jabref: JabRef
 

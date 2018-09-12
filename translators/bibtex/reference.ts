@@ -970,8 +970,7 @@ export class Reference {
       if (!att.mimetype && (att.path.slice(-4).toLowerCase() === '.pdf')) att.mimetype = 'application/pdf' // tslint:disable-line:no-magic-numbers
 
       if (Translator.preferences.testing) {
-        Exporter.attachmentCounter += 1
-        att.path = `files/${Exporter.attachmentCounter}/${att.path.replace(/.*[\/\\]/, '')}`
+        att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
       } else if (Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
         att.path = att.path.slice(Translator.options.exportPath.length)
         debug('clipped attachment::', Translator.options, att)
