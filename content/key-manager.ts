@@ -348,7 +348,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   }
 
   public async tagDuplicates(libraryID) {
-    const tag = '#duplicate-key'
+    const tag = '#duplicate-citation-key'
     const scope = Prefs.get('keyScope')
 
     const tagged = (await ZoteroDB.queryAsync(`
