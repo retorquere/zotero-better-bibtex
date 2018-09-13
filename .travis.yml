@@ -14,22 +14,6 @@ cache:
   - xpi
 
 script: |
-  #set -e
-  #set -x
-
-  gem install bundler
-  gem update bundler
-  bundle config
-  bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-
-  mkdir -p bin downloads/zotero downloads/juris-m
-  ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
-  #git submodule sync && git submodule update --init --recursive
-
-  if [[ "$TRAVIS_COMMIT_MESSAGE" == *"#trace"* ]]; then
-    export TRACE=true
-  fi
-
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
     export NIGHTLY=""
     export TRACE=true
@@ -41,36 +25,53 @@ script: |
 
 jobs:
   include:
+  - stage: build
+    script: |-
+      gem install bundler
+      gem update bundler
+      bundle config
+      bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+
+      mkdir -p bin downloads/zotero downloads/juris-m
+      ./zotero5_installer.py --client $ZOTERO --version latest --location $TRAVIS_BUILD_DIR/bin --datadir home --replace --cache downloads/$CLIENT
+
+      if [[ "$TRAVIS_COMMIT_MESSAGE" == *"#trace"* ]]; then
+        export TRACE=true
+      fi
+      yarn run build
+
   - stage: test
+    install: true
     env:
     - ZOTERO=zotero
     - CLUSTER="@test-cluster-1"
     after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
+    install: true
     env:
     - ZOTERO=zotero
     - CLUSTER="not @test-cluster-1"
     after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
+    install: true
     env:
     - ZOTERO=jurism
     - CLUSTER="@test-cluster-1"
     after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
+    install: true
     env:
     - ZOTERO=jurism
     - CLUSTER="not @test-cluster-1"
     after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: release
-    install: true
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
         ls -l xpi
-        pip install -r requirements.txt
         yarn run release
         rm -rf xpi
       fi

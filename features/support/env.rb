@@ -326,7 +326,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  if (ENV['CIRCLE_STAGE'] || 'build') == 'build'
+  if (ENV['CIRCLE_STAGE'] || ENV['TRAVIS_BUILD_STAGE_NAME'] || 'build').downcase == 'build'
     system("yarn run build") || raise("Build failed")
   end
 
