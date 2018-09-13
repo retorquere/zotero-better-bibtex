@@ -11,6 +11,7 @@ cache:
   - vendor/bundle
   - downloads
   - .cache/pip
+  - xpi
 
 script: |
   #set -e
@@ -68,6 +69,7 @@ jobs:
     install: true
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
+        ls xpi
         pip install -r requirements.txt
         yarn run release
         # curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
