@@ -69,7 +69,7 @@ jobs:
     install: true
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" ]]; then
-        ls xpi
+        ls -l xpi
         pip install -r requirements.txt
         yarn run release
         rm -rf xpi
