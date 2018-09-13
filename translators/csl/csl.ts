@@ -70,7 +70,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     while (item = Zotero.nextItem()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
-      let cached
+      let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
         items.push(cached.reference)
         continue

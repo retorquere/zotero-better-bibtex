@@ -269,7 +269,7 @@ const Language = new class { // tslint:disable-line:variable-name
  */
 export class Reference {
   public raw: boolean
-  public has: { [key: string]: any }
+  public has: { [key: string]: any } = {}
   public item: ISerializedItem
   public referencetype: string
   public useprefix: boolean
@@ -282,6 +282,8 @@ export class Reference {
   public typeMap: { csl: { [key: string]: string | { type: string, subtype?: string } }, zotero: { [key: string]: string | { type: string, subtype?: string } } }
   public lint: Function
   public addCreators: Function
+
+  private cachable = true
 
   // private nonLetters = new Zotero.Utilities.XRegExp('[^\\p{Letter}]', 'g')
   private punctuationAtEnd = new Zotero.Utilities.XRegExp('[\\p{Punctuation}]$')
@@ -308,14 +310,12 @@ export class Reference {
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
   private isBibVarRE = /^[a-z][a-z0-9_]*$/i
-  private data: { DeclarePrefChars: string }
+  private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false }
   private juniorcomma: boolean
 
   constructor(item) {
     this.item = item
-    this.has = {}
     this.raw = (Translator.preferences.rawLaTag === '*') || (this.item.tags.includes(Translator.preferences.rawLaTag))
-    this.data = {DeclarePrefChars: ''}
 
     if (!this.item.language) {
       this.english = true
@@ -766,11 +766,12 @@ export class Reference {
       Zotero.write(ref)
     }
 
-    this.data.DeclarePrefChars = Exporter.unique_chars(this.data.DeclarePrefChars)
+    this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
-    Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.data)
+    if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
-    if (this.data.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.data.DeclarePrefChars
+    if (this.metadata.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.metadata.DeclarePrefChars
+    if (this.metadata.noopsort) Exporter.preamble.noopsort = true
   }
 
   /*
@@ -972,6 +973,7 @@ export class Reference {
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
       } else if (Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
+        this.cachable = false
         att.path = att.path.slice(Translator.options.exportPath.length)
         debug('clipped attachment::', Translator.options, att)
       }
@@ -1027,7 +1029,7 @@ export class Reference {
     if (particle[particle.length - 1] === ' ') return particle
 
     if (Translator.BetterBibLaTeX) {
-      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.data.DeclarePrefChars += particle[particle.length - 1]
+      if (Zotero.Utilities.XRegExp.test(particle, this.punctuationAtEnd)) this.metadata.DeclarePrefChars += particle[particle.length - 1]
       // if BBLT, always add a space if it isn't there
       return particle + ' '
     }
@@ -1133,7 +1135,7 @@ export class Reference {
 
     if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
       family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()})}}}${family}`
-      Exporter.preamble.noopsort = true
+      this.metadata.noopsort = Exporter.preamble.noopsort = true
     }
 
     if (name.given) name.given = this.enc_latex({value: name.given})

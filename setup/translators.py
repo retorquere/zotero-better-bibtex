@@ -78,6 +78,10 @@ interface ITranslator {
   #for $label in $labels
   $label?: boolean
   #end for
+  TeX: boolean
+  CSL: boolean
+
+  caching: boolean
 
   header: {
   #for $key, $type in $header.items():

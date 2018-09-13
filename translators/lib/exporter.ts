@@ -9,12 +9,10 @@ import * as itemfields from '../lib/itemfields'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
-  public caching: boolean
   public jabref: JabRef
 
   constructor() {
     this.preamble = {DeclarePrefChars: ''}
-    this.caching = !Translator.options.exportFileData
     this.jabref = new JabRef()
   }
 
@@ -39,7 +37,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       this.jabref.citekeys.set(item.itemID, item.citekey)
 
-      const cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)
+      const cached: Types.DB.Cache.ExportedItem = Translator.caching && Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)
       if (cached) {
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
           Translator.references.push({ citekey: item.citekey, reference: cached.reference })
@@ -47,7 +45,10 @@ export let Exporter = new class { // tslint:disable-line:variable-name
           Zotero.write(cached.reference)
         }
 
-        if (cached.metadata && cached.metadata.DeclarePrefChars) this.preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars
+        if (cached.metadata) {
+          if (cached.metadata.DeclarePrefChars) this.preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars
+          if (cached.metadata.noopsort) this.preamble.noopsort = true
+        }
         continue
       }
 

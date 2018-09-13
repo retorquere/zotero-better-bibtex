@@ -97,7 +97,7 @@ DB.init = async () => {
           ...prefOverridesSchema,
 
           // Optional
-          metadata: { type: 'object', default: {} },
+          metadata: { type: 'object' },
 
           // LokiJS
           meta: { type: 'object' },

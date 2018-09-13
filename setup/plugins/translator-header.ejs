@@ -4,6 +4,8 @@ var Translator = {
   initialize: function () {},
   version: <%- JSON.stringify(version) %>,
   <%- header.label.replace(/[^a-z]/ig, '') %>: true,
+  BetterTeX: <%- ['Better BibTeX', 'Better BibLaTeX'].includes(header.label) %>,
+  BetterCSL: <%- ['Better CSL JSON', 'Better CSL YAML'].includes(header.label) %>,
   // header == ZOTERO_TRANSLATOR_INFO -- maybe pick it from there
   header: <%- JSON.stringify(header) %>,
   override: <%- JSON.stringify(overrides) %>,
@@ -60,6 +62,8 @@ var Translator = {
     this.preferences.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(function(s) { return s })
     if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
     Zotero.debug('prefs loaded: ' + JSON.stringify(this.preferences, null, 2))
+
+    this.caching = !this.options.exportFileData && (!this.BetterTeX || this.preferences.jabrefFormat !== 4)
 
     this.collections = {}
     if (stage == 'doExport' && this.header.configOptions && this.header.configOptions.getCollections && Zotero.nextCollection) {

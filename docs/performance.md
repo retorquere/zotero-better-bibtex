@@ -27,6 +27,8 @@ Here are some numbers from a test with a library consisting of 1241 references w
 | Better BibTeX, empty cache  | 53.0s                |
 | Better BibTeX, filled cache |  3.7s                |
 
+**note**: if you have 'Export files' enabled during export, or set the JabRef export format to `4`, the cache will not be active. If you do large (auto)exports, avoid these.
+
 # Caching
 
 

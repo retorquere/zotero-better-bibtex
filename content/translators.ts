@@ -177,7 +177,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const jabrefFormat = Prefs.get('jabrefFormat')
 
     log.debug('priming cache:', { jabrefFormat, threshold, cache: !!cache, displayOptions })
-    if (!threshold || !cache || jabrefFormat || displayOptions.exportFileData) return
+    if (!threshold || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
 
     if (scope.library) {
       sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
