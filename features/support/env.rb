@@ -326,7 +326,10 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
 end
 
 module BBT
-  if (ENV['CIRCLE_STAGE'] || ENV['TRAVIS_BUILD_STAGE_NAME'] || 'build').downcase == 'build'
+  plugins = Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/*.xpi'))]
+  plugins += Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/extra/*.xpi'))]
+
+  if ENV['CI'] != 'true' || plugins.length == 0
     system("yarn run build") || raise("Build failed")
   end
 
