@@ -14,7 +14,8 @@ cache:
   - xpi
 
 env:
-  - CACHE_NAME=$TRAVIS_BRANCH
+  global:
+    - CACHE_NAME=$TRAVIS_BRANCH
 
 script: |
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
