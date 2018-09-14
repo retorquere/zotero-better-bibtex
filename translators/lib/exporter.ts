@@ -4,7 +4,7 @@ declare const Zotero: any
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import { debug } from '../lib/debug'
-import * as itemfields from '../lib/itemfields'
+import * as itemfields from '../../gen/itemfields'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name

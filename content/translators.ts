@@ -172,12 +172,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let items: any[]
     let itemIDs: number[]
 
-    const threshold: number = Prefs.get('primeExportCache') || 0
+    let threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
     const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
     const jabrefFormat = Prefs.get('jabrefFormat')
 
     log.debug('priming cache:', { jabrefFormat, threshold, cache: !!cache, displayOptions })
-    if (threshold < 10 || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
+    if (!threshold || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
+
+    threshold = Math.max(threshold, 10) // tslint:disable-line:no-magic-numbers
 
     if (scope.library) {
       sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
@@ -209,7 +211,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (!items) items = await Zotero.Items.getAsync(uncached)
 
-    const batchSize = Math.floor(threshold / 2)
+    const batchSize = Math.min(Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10), threshold) // tslint:disable-line:no-magic-numbers
     const batches = items.reduce((acc, item, index, array) => !(index % batchSize) ? acc.concat([array.slice(index, index + batchSize)]) : acc, [])
     await Promise.all(batches.map(batch => this.translate(translatorID, displayOptions, { items: batch })))
 

@@ -5,6 +5,8 @@ autoAbbrev: false
 autoAbbrevStyle: ''
 autoExport: immediate
 autoExportIdleWait: 10
+autoExportPrimeExportCacheBatch: 10
+autoExportPrimeExportCacheThreshold: 0
 autoPin: false
 biblatexExtendedDateFormat: true
 biblatexExtendedNameFormat: false
@@ -27,7 +29,6 @@ lockedInit: false
 parseParticles: true
 postscript: ''
 preserveBibTeXVariables: false
-primeExportCache: 0
 qualityReport: false
 quickCopyMode: latex
 quickCopyPandocBrackets: false

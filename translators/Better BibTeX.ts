@@ -9,7 +9,7 @@ import { htmlEscape } from './lib/html-escape'
 
 import JSON5 = require('json5')
 import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
-import { valid as validFields } from './lib/itemfields'
+import { valid as validFields } from '../gen/itemfields'
 
 Reference.prototype.caseConversion = {
   title: true,

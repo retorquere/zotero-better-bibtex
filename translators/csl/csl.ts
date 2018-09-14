@@ -3,7 +3,7 @@ declare const Translator: ITranslator
 declare const Zotero: any
 
 import { debug } from '../lib/debug'
-import * as itemfields from '../lib/itemfields'
+import * as itemfields from '../../gen/itemfields'
 
 const validCSLTypes = [
   'article',
