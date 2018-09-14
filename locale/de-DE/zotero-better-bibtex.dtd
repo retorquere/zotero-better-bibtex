@@ -134,6 +134,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat links hinzu...">
+<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tag duplicate citation keys">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Eintrag an TeXstudio senden">
 <!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
