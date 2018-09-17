@@ -26,7 +26,7 @@ var Translator = {
     if (stage == 'detectImport') {
       this.options = {}
     } else {
-      if (stage == 'doImport') this.pathSep = (Zotero.BetterBibTeX.platform().toLowerCase().startsWith('win')) ? '\\' : '/'
+      this.pathSep = (Zotero.BetterBibTeX.platform().toLowerCase().startsWith('win')) ? '\\' : '/'
 
       this.references = []
 
@@ -38,8 +38,11 @@ var Translator = {
         }
       }
       // special handling
-      this.options.exportPath = Zotero.getOption('exportPath')
-      this.options.exportFilename = Zotero.getOption('exportFilename')
+
+      if (stage === 'doExport') {
+        this.options.exportPath = Zotero.getOption('exportPath')
+        if (this.options.exportPath && !this.options.exportPath.endsWith(this.pathSep)) this.options.exportPath += this.pathSep
+      }
     }
 
     this.preferences = {}
