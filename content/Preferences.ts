@@ -166,7 +166,9 @@ class AutoExportPane {
   }
 
   public remove(node) {
-    AutoExport.db.remove(parseInt(node.getAttribute('ae-id')))
+    const ae = AutoExport.db.get(parseInt(node.getAttribute('ae-id')))
+    Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
+    AutoExport.db.remove(ae)
     this.refresh()
   }
 
@@ -178,6 +180,7 @@ class AutoExportPane {
   public edit(node) {
     const field = node.getAttribute('ae-field')
     const ae = AutoExport.db.get(parseInt(node.getAttribute('ae-id')))
+    Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     // const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)
     // log.debug('prefs.auto-export.edit: pre', { [field]: ae[field] })
