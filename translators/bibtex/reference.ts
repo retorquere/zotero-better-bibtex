@@ -972,7 +972,7 @@ export class Reference {
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
+      } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
         this.cachable = false
         att.path = att.path.slice(Translator.options.exportPath.length)
         debug('clipped attachment::', Translator.options, att)

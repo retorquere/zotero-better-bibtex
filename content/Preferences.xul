@@ -280,14 +280,6 @@
         -->
 
         <preference
-          name="extensions.zotero.translators.better-bibtex.jurismPreferredLanguage"
-          type="string"
-          default=""/>
-        <!--!!
-          When language alternates are present in Juris-M, this is the language BBT will pick.
-        -->
-
-        <preference
           name="extensions.zotero.translators.better-bibtex.qualityReport"
           id="pref-better-bibtex-qualityReport"
           type="bool"
@@ -413,6 +405,14 @@
           default="10"/>
         <!--!!
           If cache priming is kicked off (see `autoExportPrimeExportCacheThreshold`), the cache will be primed in batches of `autoExportPrimeExportCacheBatch`. The lower this number is, the longer the priming will take (there's a fixed per-prime overhead), but (since the priming uses exports under the hood) the larger it is, the longer the priming actions will lock the UI. The batch size is capped to the value of `autoExportPrimeExportCacheThreshold`.
+        -->
+
+        <preference
+          name="extensions.zotero.translators.better-bibtex.relativeFilePaths"
+          type="bool"
+          default="false"/>
+        <!--!!
+          When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths to those attachments. Caching is disabled when this option is on, so it affects performance.
         -->
 
         <preference

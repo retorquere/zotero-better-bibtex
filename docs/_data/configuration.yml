@@ -272,10 +272,6 @@
 
         the number of microseconds BBT should wait after being notified before acting
         on the changed references.'
-    jurismPreferredLanguage:
-      default: ''
-      description: When language alternates are present in Juris-M, this is the language
-        BBT will pick.
     kuroshiro:
       default: 'False'
       description: When on, BBT will load kuroshiro for romajization in citekeys.
@@ -326,6 +322,12 @@
     parseParticles:
       default: 'True'
       description: Name particle handling
+    relativeFilePaths:
+      default: 'False'
+      description: When exporting a Bib(La)TeX file, if the attachments are stored
+        anywhere under the directory the bibliography is exported to, use relative
+        paths to those attachments. Caching is disabled when this option is on, so
+        it affects performance.
     scrubDatabase:
       default: 'False'
       description: Finds potential problems in the database and fixes those. This
