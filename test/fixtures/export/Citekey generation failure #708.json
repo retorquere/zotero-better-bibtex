@@ -162,7 +162,6 @@
       "biblatexExtendedDateFormat": false,
       "quickCopyMode": "pandoc",
       "quickCopyPandocBrackets": true,
-      "jurismPreferredLanguage": "zh-alalc97",
       "qualityReport": false,
       "suppressTitleCase": false,
       "citekeyFormat": "[auth][year]",
