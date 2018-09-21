@@ -1,19 +1,11 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.55",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.195.emile.titanarum"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -34,7 +26,6 @@
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": true,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -48,7 +39,6 @@
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
       "scrubDatabase": false,
       "skipFields": [],
       "skipWords": [
@@ -178,94 +168,101 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": false,
-      "exportFileData": false
+    "release": {
+      "BetterBibTeX": "5.0.195.emile.titanarum",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.55",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.55"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
-      "volume": "56",
-      "issue": "3",
-      "pages": "335-340",
-      "publicationTitle": "European Journal of Wildlife Research",
       "ISSN": "1612-4642",
-      "date": "2010",
-      "extra": "10.1007/s10344-009-0327-7 \nCitation Key: springerlink:10.1007/s10344-009-0327-7 \nbibtex[affiliation=University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain;owner=tiago;publisher=Springer Berlin / Heidelberg;subdatabase=distance]",
-      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
+      "attachments": [],
+      "citekey": "springerlink:10.1007/s10344-009-0327-7",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Isabel",
-          "lastName": "Barrio",
-          "creatorType": "author"
+          "lastName": "Barrio"
         },
         {
+          "creatorType": "author",
           "firstName": "Pelayo",
-          "lastName": "Acevedo",
-          "creatorType": "author"
+          "lastName": "Acevedo"
         },
         {
+          "creatorType": "author",
           "firstName": "Francisco",
-          "lastName": "Tortosa",
-          "creatorType": "author"
+          "lastName": "Tortosa"
         }
       ],
+      "date": "2010",
+      "dateAdded": "2018-08-28T14:44:57Z",
+      "dateModified": "2018-08-28T14:44:57Z",
+      "extra": "10.1007/s10344-009-0327-7 \nCitation Key: springerlink:10.1007/s10344-009-0327-7 \nbibtex[affiliation=University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 C\u00c3\u00b3rdoba Spain;owner=tiago;publisher=Springer Berlin / Heidelberg;subdatabase=distance]",
+      "issue": "3",
+      "itemID": 101,
+      "itemType": "journalArticle",
+      "notes": [],
+      "pages": "335-340",
+      "publicationTitle": "European Journal of Wildlife Research",
+      "relations": [],
       "tags": [
         "Biomedical and Life Sciences"
       ],
-      "relations": [],
-      "dateAdded": "2018-08-28T14:44:57Z",
-      "dateModified": "2018-08-28T14:44:57Z",
+      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/XFMH9KNW",
-      "attachments": [],
-      "notes": [],
-      "itemID": 101,
-      "citekey": "springerlink:10.1007/s10344-009-0327-7"
+      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
+      "volume": "56"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2011",
-      "extra": "Citation Key: Afonso2011 \nbibtex[location=Poster apresentado no Congresso da SPE;owner=tiago]",
-      "title": "Amostragem em duas fases adaptativa para estimar a abundância de populações raras",
+      "attachments": [],
+      "citekey": "Afonso2011",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Anabela",
-          "lastName": "Afonso",
-          "creatorType": "author"
+          "lastName": "Afonso"
         },
         {
+          "creatorType": "author",
           "firstName": "Russell",
-          "lastName": "Alpizar-Jara",
-          "creatorType": "author"
+          "lastName": "Alpizar-Jara"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "2011",
       "dateAdded": "2018-08-28T14:44:57Z",
       "dateModified": "2018-08-28T14:44:57Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/D9YQ23UD",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: Afonso2011 \nbibtex[location=Poster apresentado no Congresso da SPE;owner=tiago]",
       "itemID": 102,
-      "citekey": "Afonso2011"
+      "itemType": "journalArticle",
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/D9YQ23UD"
     },
     {
+      "dateAdded": "2018-08-28T14:44:57Z",
+      "dateModified": "2018-08-28T14:44:57Z",
+      "itemID": 100,
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 24: unknown reference type 'talk'</li></ul>",
+      "relations": [],
       "tags": [
         "#Better BibTeX import error"
       ],
-      "relations": [],
-      "dateAdded": "2018-08-28T14:44:57Z",
-      "dateModified": "2018-08-28T14:44:57Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5PA5EEGC",
-      "itemID": 100
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5PA5EEGC"
     }
   ]
 }

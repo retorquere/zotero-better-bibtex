@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.55",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.197.emile.titanarum"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "exportPath": "/home/emile/github/better-bibtex"
     },
     "preferences": {
       "DOIandURL": "both",
@@ -34,7 +27,6 @@
       "citekeyFormat": "[auth][shorttitle][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -48,7 +40,6 @@
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
       "scrubDatabase": false,
       "skipFields": [],
       "skipWords": [
@@ -178,130 +169,136 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true,
-      "exportFileData": false,
-      "exportPath": "/home/emile/github/better-bibtex"
+    "release": {
+      "BetterBibTeX": "5.0.197.emile.titanarum",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.55",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.55"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "patent",
-      "url": "http://v3.espacenet.com/textdoc?IDX=EP1700367",
-      "extra": "Citation Key: laufenberg",
       "assignee": "Robert Bosch GmbH; Daimler Chrysler AG; Bayerische Motoren Werke AG",
-      "title": "Elektrische Einrichtung und Betriebsverfahren",
+      "attachments": [],
+      "citekey": "laufenberg",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Xaver",
-          "lastName": "Laufenberg",
-          "creatorType": "inventor"
+          "lastName": "Laufenberg"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Dominique",
-          "lastName": "Eynius",
-          "creatorType": "inventor"
+          "lastName": "Eynius"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Helmut",
-          "lastName": "Suelzle",
-          "creatorType": "inventor"
+          "lastName": "Suelzle"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Stephan",
-          "lastName": "Usbeck",
-          "creatorType": "inventor"
+          "lastName": "Usbeck"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Matthias",
-          "lastName": "Spaeth",
-          "creatorType": "inventor"
+          "lastName": "Spaeth"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Miriam",
-          "lastName": "Neuser-Hoffmann",
-          "creatorType": "inventor"
+          "lastName": "Neuser-Hoffmann"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Christian",
-          "lastName": "Myrzik",
-          "creatorType": "inventor"
+          "lastName": "Myrzik"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Manfred",
-          "lastName": "Schmid",
-          "creatorType": "inventor"
+          "lastName": "Schmid"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Franz",
-          "lastName": "Nietfeld",
-          "creatorType": "inventor"
+          "lastName": "Nietfeld"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Alexander",
-          "lastName": "Thiel",
-          "creatorType": "inventor"
+          "lastName": "Thiel"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Harald",
-          "lastName": "Braun",
-          "creatorType": "inventor"
+          "lastName": "Braun"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Norbert",
-          "lastName": "Ebner",
-          "creatorType": "inventor"
+          "lastName": "Ebner"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "2006-09-13",
       "dateAdded": "2018-09-05T16:34:32Z",
       "dateModified": "2018-09-05T16:34:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MU42LHUX",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: laufenberg",
       "itemID": 100,
-      "citekey": "laufenberg",
-      "date": "2006-09-13",
-      "number": "EP1700367"
+      "itemType": "patent",
+      "notes": [],
+      "number": "EP1700367",
+      "relations": [],
+      "tags": [],
+      "title": "Elektrische Einrichtung und Betriebsverfahren",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MU42LHUX",
+      "url": "http://v3.espacenet.com/textdoc?IDX=EP1700367"
     },
     {
-      "itemType": "patent",
-      "extra": "Citation Key: sorace",
       "assignee": "Hughes Aircraft Company",
-      "title": "High-Speed Digital-to-RF Converter",
+      "attachments": [],
+      "citekey": "sorace",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Ronald E.",
-          "lastName": "Sorace",
-          "creatorType": "inventor"
+          "lastName": "Sorace"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Victor S.",
-          "lastName": "Reinhardt",
-          "creatorType": "inventor"
+          "lastName": "Reinhardt"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Steven A.",
-          "lastName": "Vaughn",
-          "creatorType": "inventor"
+          "lastName": "Vaughn"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "1997-09-16",
       "dateAdded": "2018-09-05T16:34:32Z",
       "dateModified": "2018-09-05T16:34:32Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3Z44AJUI",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: sorace",
       "itemID": 101,
-      "citekey": "sorace",
-      "date": "1997-09-16",
-      "number": "US5668842"
+      "itemType": "patent",
+      "notes": [],
+      "number": "US5668842",
+      "relations": [],
+      "tags": [],
+      "title": "High-Speed Digital-to-RF Converter",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3Z44AJUI"
     }
   ]
 }
