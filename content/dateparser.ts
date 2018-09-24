@@ -97,6 +97,10 @@ export function parse(value, toplevel = true) {
 
   if (!toplevel && value === '') return { type: 'open' }
 
+  // https://forums.zotero.org/discussion/73729/name-and-year-import-issues-with-new-nasa-ads#latest
+  if (m = (/^(-?[0-9]+)-00-00$/.exec(value) || /^(-?[0-9]+-[0-9]+)-00$/.exec(value))) return parse(m[1], toplevel)
+
+  // '[origyear] year'
   if (toplevel && (m = /^\[(.+)\]\s*(.+)$/.exec(value))) {
     const [ , _orig, _year ] = m
     const year = parse(_year, false)
@@ -104,6 +108,7 @@ export function parse(value, toplevel = true) {
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
+  // 'year [origyear]'
   if (toplevel && (m = /^(-?[0-9]+)\s*\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _year, _orig ] = m
     const year = parse(_year, false)
@@ -111,13 +116,14 @@ export function parse(value, toplevel = true) {
     if (year.type === 'date' && orig.type === 'date') return {...year, ...{ orig } }
   }
 
+  // '[origyear]'
   if (toplevel && (m = /^\[(-?[0-9]+)\]$/.exec(value))) {
     const [ , _orig ] = m
     const orig = parse(_orig, false)
     if (orig.type === 'date') return { ...{ orig } }
   }
 
-  // 747
+  // 747 'jan 20-22 1977'
   if (toplevel && (m = /^([a-zA-Z]+)\s+([0-9]+)(?:--|-|–)([0-9]+)[, ]\s*([0-9]+)$/.exec(value))) {
     const [ , month, day1, day2, year ] = m
 

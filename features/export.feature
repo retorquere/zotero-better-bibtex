@@ -12,6 +12,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | date ranges #747+#746                                                                          | 5           |
      | BibLaTeX Patent author handling, type #1060                                                    | 2           |
