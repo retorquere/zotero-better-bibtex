@@ -197,11 +197,14 @@ Translator.doExport = () => {
     }
 
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
-      ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+      ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, preserveBibTeXVariables: true })
+
     } else if (ref.isBibVar(item.publicationTitle)) {
       ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
+
     } else {
       ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
+
     }
 
     switch (item.referenceType) {

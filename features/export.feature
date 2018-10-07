@@ -111,13 +111,14 @@ Scenario Outline: BibLaTeX Export
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746 @1069
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | No booktitle field when exporting references from conference proceedings #1069     | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |
      | BetterBibtex export fails for missing last name #978                               | 1          |
      | Export unicode as plain text fails for Vietnamese characters #977                  | 1          |
