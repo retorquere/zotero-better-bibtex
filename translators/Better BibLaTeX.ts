@@ -336,10 +336,15 @@ Translator.doExport = () => {
     ref.add({ name: looks_like_number_field(item.issue) ? 'number' : 'issue', value: item.issue })
 
     switch (item.referenceType) {
-      case 'case': case 'gazette': case 'legal_case':
+      case 'case':
+      case 'gazette':
+      case 'legal_case':
         ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
         break
-      case 'statute': case 'bill': case 'legislation':
+
+      case 'statute':
+      case 'bill':
+      case 'legislation':
         ref.add({ name: 'journaltitle', value: item.code, preserveBibTeXVariables: true })
         break
     }
@@ -355,12 +360,17 @@ Translator.doExport = () => {
           ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           break
 
-        case 'magazineArticle': case 'newspaperArticle': case 'article-magazine': case 'article-newspaper':
+        case 'magazineArticle':
+        case 'newspaperArticle':
+        case 'article-magazine':
+        case 'article-newspaper':
           ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
           if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
           break
 
-        case 'journalArticle': case 'article': case 'article-journal':
+        case 'journalArticle':
+        case 'article':
+        case 'article-journal':
           if (ref.isBibVar(item.publicationTitle)) {
             ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
           } else {
@@ -549,7 +559,8 @@ Translator.doExport = () => {
           if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'hdl' })
           break
 
-        case 'googlebooks': case 'google books':
+        case 'googlebooks':
+        case 'google books':
           if (!ref.has.eprinttype) ref.add({ name: 'eprinttype', value: 'googlebooks' })
           break
 

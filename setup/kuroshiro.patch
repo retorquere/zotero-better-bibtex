@@ -1,6 +1,6 @@
---- node_modules/kuroshiro/src/core.js	2018-08-13 12:57:57.000000000 +0200
-+++ node_modules/kuroshiro/src/core-sync.js	2018-08-13 13:04:46.000000000 +0200
-@@ -64,9 +64,9 @@
+--- node_modules/kuroshiro/src/core.js	2018-08-28 15:27:38.423000000 +0200
++++ node_modules/kuroshiro/src/core-sync.js	2018-10-11 19:38:16.760664739 +0200
+@@ -66,9 +66,9 @@
       * @param {string} [options.romajiSystem="hepburn"] Romanization System ["nippon"|"passport"|"hepburn"]
       * @param {string} [options.delimiter_start="("] Delimiter(Start)
       * @param {string} [options.delimiter_end=")"] Delimiter(End)
@@ -12,7 +12,7 @@
          options = options || {};
          options.to = options.to || "hiragana";
          options.mode = options.mode || "normal";
-@@ -88,7 +88,7 @@
+@@ -90,7 +90,7 @@
              throw new Error("Invalid Romanization System.");
          }
  

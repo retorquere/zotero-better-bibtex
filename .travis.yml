@@ -38,31 +38,30 @@ script: |
 
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
+after_failure:
+  curl --data-binary @~/.BBTZ5TEST.log https://eigenstate.org/newpaste
+
 jobs:
   include:
   - stage: test
     env:
     - ZOTERO=zotero
     - CLUSTER="@test-cluster-1"
-    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=zotero
     - CLUSTER="not @test-cluster-1"
-    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=jurism
     - CLUSTER="@test-cluster-1"
-    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: test
     env:
     - ZOTERO=jurism
     - CLUSTER="not @test-cluster-1"
-    after_failure: curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST-$TRAVIS_BUILD_NUMBER.txt
 
   - stage: release
     install: true
@@ -72,3 +71,4 @@ jobs:
         yarn run release
         # curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
       fi
+    after_failure: true

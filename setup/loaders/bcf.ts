@@ -10,7 +10,7 @@ import _ = require('lodash')
 
 const _select = xpath.useNamespaces({ bcf: 'https://sourceforge.net/projects/biblatex' })
 function select(selector, node) {
-  return _select(selector, node) as Node[]
+  return _select(selector, node) as Element[]
 }
 
 export = source => {
@@ -110,7 +110,7 @@ export = source => {
       case 1:
         BCF.required[setname] = { types, fields: []}
 
-        for (const constraint of Array.from(mandatory[0].childNodes)) {
+        for (const constraint of (Array.from(mandatory[0].childNodes) as Element[])) {
           switch (constraint.localName || '#text') {
             case '#text':
               break
