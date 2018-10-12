@@ -173,7 +173,7 @@ if args.client == 'zotero':
     args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
   if args.version == 'fallback':
-    args.url = 'https://transfer.sh/mgtBm/jurism.zip'
+    args.url = 'https://transfer.sh/wQJQD/jurism.fallback.tar.bz2'
   else:
     args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
 
