@@ -1,152 +1,138 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    }
+  },
   "items": [
     {
-      "itemType": "journalArticle",
-      "creators": [
+      "attachments": [
         {
-          "firstName": "Nancy K",
-          "lastName": "Adams",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Self",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Guido",
-          "lastName": "Salas",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Schubring",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Jason L",
-          "lastName": "Permenter",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Kendra",
-          "lastName": "Arbesman",
-          "creatorType": "author"
+          "mimeType": "application/pdf",
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "title": "Attachment"
         }
       ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
+        }
+      ],
+      "date": "2001",
       "extra": "bibtex: Adams2001\n{:issued:2014-12-31/2015-01-01}",
+      "itemType": "journalArticle",
+      "pages": "493\u2013518",
+      "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         "Vulcanian eruptions",
         "breadcrust",
         "plinian"
       ],
-      "attachments": [
-        {
-          "path": "attachments/Adams_Huaynaputina.pdf",
-          "mimeType": "application/pdf",
-          "title": "Attachment"
-        }
-      ],
-      "publicationTitle": "Bulletin of Volcanology",
-      "pages": "493–518",
       "title": "The physical volcanology of the 1600 eruption of <b>Huaynaputina</b>, southern Peru",
-      "volume": "62",
-      "date": "2001"
+      "volume": "62"
     },
     {
-      "itemType": "journalArticle",
-      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
-      "volume": "34",
-      "pages": "5–32",
-      "publicationTitle": "Sacris Erudiri",
-      "date": "1994",
       "DOI": "10.1484/J.SE.2.303788",
       "accessDate": "2014-10-02 00:07:46",
-      "libraryCatalog": "MetaPress",
-      "language": "German",
-      "title": "Skizze zur Auslegungsgeschichte der Bücher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendländischen Kirche",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Berndt",
-          "firstName": "Rainer"
+          "firstName": "Rainer",
+          "lastName": "Berndt"
         }
       ],
-      "attachments": [
-        {
-          "path": "/Users/Andrew/Library/Application Support/Zotero/Profiles/muvdg23m.default/zotero/storage/6K3REIPN/Berndt - 1994 - Skizze zur Auslegungsgeschichte der Bücher Prouerb.pdf",
-          "title": "MetaPress Full Text PDF",
-          "mimeType": "application/pdf",
-          "url": "http://brepols.metapress.com.myaccess.library.utoronto.ca/content/h38158wr4wx74p82/fulltext.pdf"
-        },
-        {
-          "path": "/Users/Andrew/Library/Application Support/Zotero/Profiles/muvdg23m.default/zotero/storage/SZDCF5C9/H38158WR4WX74P82.html",
-          "title": "MetaPress Snapshot",
-          "mimeType": "text/html",
-          "url": "http://brepols.metapress.com/content/H38158WR4WX74P82"
-        }
-      ],
-      "itemID": 5451
+      "date": "1994",
+      "itemID": 5451,
+      "itemType": "journalArticle",
+      "language": "German",
+      "libraryCatalog": "MetaPress",
+      "pages": "5\u201332",
+      "publicationTitle": "Sacris Erudiri",
+      "title": "Skizze zur Auslegungsgeschichte der B\u00fccher <i>Prouerbia</i> und <i>Ecclesiastes</i> in der abendl\u00e4ndischen Kirche",
+      "url": "http://dx.doi.org/10.1484/J.SE.2.303788",
+      "volume": "34"
     },
     {
-      "itemType": "book",
-      "tags": [
-        "Vulgate"
-      ],
-      "url": "https://archive.org/details/gospelaccording00goog",
-      "series": "Old-Latin Biblical Texts",
-      "place": "Oxford",
-      "publisher": "Clarendon Press",
-      "date": "1883",
       "accessDate": "2014-04-29 13:50:49",
-      "seriesNumber": "1",
-      "libraryCatalog": "Internet Archive",
-      "language": "English",
-      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
-      "shortTitle": "The Gospel according to St. Matthew",
-      "numPages": "139",
       "creators": [
         {
           "creatorType": "editor",
-          "lastName": "Wordsworth",
-          "firstName": "John"
+          "firstName": "John",
+          "lastName": "Wordsworth"
         }
       ],
-      "itemID": 947
+      "date": "1883",
+      "itemID": 947,
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Internet Archive",
+      "numPages": "139",
+      "place": "Oxford",
+      "publisher": "Clarendon Press",
+      "series": "Old-Latin Biblical Texts",
+      "seriesNumber": "1",
+      "shortTitle": "The Gospel according to St. Matthew",
+      "tags": [
+        "Vulgate"
+      ],
+      "title": "The Gospel according to St. Matthew, from the St. Germain ms. (g<sub>1</sub>), now numbered Lat. 11553 in the National Library at Paris",
+      "url": "https://archive.org/details/gospelaccording00goog"
     },
     {
-      "itemType": "book",
-      "series": "Toronto Medieval Latin Texts",
-      "place": "Toronto",
-      "publisher": "Pontifical Institute of Mediaeval Studies",
-      "date": "2016",
-      "seriesNumber": "33",
-      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>",
-      "shortTitle": "Notes from the school of William de Montibus",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Dunning",
-          "firstName": "Andrew N.J."
+          "firstName": "Andrew N.J.",
+          "lastName": "Dunning"
         }
       ],
-      "itemID": 5725
+      "date": "2016",
+      "itemID": 5725,
+      "itemType": "book",
+      "place": "Toronto",
+      "publisher": "Pontifical Institute of Mediaeval Studies",
+      "series": "Toronto Medieval Latin Texts",
+      "seriesNumber": "33",
+      "shortTitle": "Notes from the school of William de Montibus",
+      "title": "Samuel Presbiter: Notes from the school of William de Montibus. <span class=\"nocase\">Collecta ex diuersis auditis in scola magistri Willelmi de Monte</span>"
     }
-  ],
-  "config": {
-    "label": "BetterBibTeX JSON",
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    }
-  },
-  "collections": {
-  }
+  ]
 }

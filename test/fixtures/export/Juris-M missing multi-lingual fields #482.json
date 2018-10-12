@@ -34,14 +34,7 @@
   "items": [
     {
       "accessDate": "2016-04-20 13:56:34",
-      "attachments": [
-        {
-          "mimeType": "text/html",
-          "path": "/Users/halalpha/Library/Application Support/Firefox/Profiles/sklfgs3h.default/zotero/storage/ZF99V7IR/imgres.html",
-          "title": "Google-Ergebnis f\u00fcr http://crossasia.org/uploads/tx_sbbtyponewsletter/rte/RTEmagicC_erudition.png.png",
-          "url": "http://images.google.de/imgres?imgurl=http%3A%2F%2Fcrossasia.org%2Fuploads%2Ftx_sbbtyponewsletter%2Frte%2FRTEmagicC_erudition.png.png&imgrefurl=http%3A%2F%2Fcrossasia.org%2F%3Fid%3D87%26uid%3D9%26mode%3Dshow&h=320&w=400&tbnid=or5rTkD9cHD4fM%3A&docid=plbH3vbR5bRz7M&itg=1&ei=uoAXV-q3O8LWarr9vogB&tbm=isch&iact=rc&uact=3&dur=472&page=3&start=44&ndsp=21&ved=0ahUKEwjq_JOApp3MAhVCqxoKHbq-DxEQMwiaASg8MDw&bih=616&biw=1277"
-        }
-      ],
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",

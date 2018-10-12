@@ -11,38 +11,7 @@
   },
   "items": [
     {
-      "attachments": [
-        {
-          "accessDate": "2017-10-30 19:05:54",
-          "charset": "utf-8",
-          "contentType": "text/html",
-          "dateAdded": "2017-10-30 19:05:54",
-          "dateModified": "2017-10-30 19:05:54",
-          "filename": "seely-RTMworm-89.html",
-          "itemID": 12198,
-          "itemType": "attachment",
-          "key": "I9DDEA67",
-          "libraryID": null,
-          "linkMode": 1,
-          "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html",
-          "mimeType": "text/html",
-          "parentItem": "FSB6XCJF",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "FSB6XCJF",
-          "tags": [],
-          "title": "A Tour of the Worm",
-          "uniqueFields": {
-            "accessDate": "2017-10-30 19:05:54",
-            "linkMode": 1,
-            "mimeType": "text/html",
-            "title": "A Tour of the Worm",
-            "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html"
-          },
-          "uri": "http://zotero.org/users/10604/items/I9DDEA67",
-          "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html"
-        }
-      ],
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -180,96 +149,7 @@
       "DOI": "10.1145/637069.637096",
       "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
       "accessDate": "2017-10-20 19:37:10",
-      "attachments": [
-        {
-          "accessDate": "2017-10-20 19:47:23",
-          "charset": "",
-          "contentType": "application/pdf",
-          "dateAdded": "2017-10-20 19:47:23",
-          "dateModified": "2017-10-20 19:47:24",
-          "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "itemID": 12104,
-          "itemType": "attachment",
-          "key": "4AKSDDN5",
-          "libraryID": null,
-          "linkMode": 1,
-          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "mimeType": "application/pdf",
-          "parentItem": "NBDZHC39",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "NBDZHC39",
-          "tags": [],
-          "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "uniqueFields": {
-            "accessDate": "2017-10-20 19:47:23",
-            "linkMode": 1,
-            "mimeType": "application/pdf",
-            "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-            "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf"
-          },
-          "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
-          "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf"
-        },
-        {
-          "accessDate": "2017-10-20 19:46:16",
-          "charset": "windows-1252",
-          "contentType": "text/html",
-          "dateAdded": "2017-10-20 19:46:16",
-          "dateModified": "2017-10-20 19:46:16",
-          "itemID": 12105,
-          "itemType": "attachment",
-          "key": "DJPHEG7J",
-          "libraryID": null,
-          "linkMode": 3,
-          "mimeType": "text/html",
-          "parentItem": "NBDZHC39",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "NBDZHC39",
-          "tags": [],
-          "title": "Language/Action Perspective",
-          "uniqueFields": {
-            "accessDate": "2017-10-20 19:46:16",
-            "linkMode": 3,
-            "mimeType": "text/html",
-            "title": "Language/Action Perspective",
-            "url": "https://hci.stanford.edu/winograd/papers/language-action.html"
-          },
-          "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
-          "url": "https://hci.stanford.edu/winograd/papers/language-action.html"
-        },
-        {
-          "accessDate": "2017-10-20 19:38:08",
-          "charset": "",
-          "contentType": "application/pdf",
-          "dateAdded": "2017-10-20 19:38:08",
-          "dateModified": "2017-10-20 19:38:09",
-          "filename": "p203-winograd.pdf",
-          "itemID": 12106,
-          "itemType": "attachment",
-          "key": "U7EAP63X",
-          "libraryID": null,
-          "linkMode": 1,
-          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf",
-          "mimeType": "application/pdf",
-          "parentItem": "NBDZHC39",
-          "relations": {},
-          "seeAlso": [],
-          "sourceItemKey": "NBDZHC39",
-          "tags": [],
-          "title": "p203-winograd.pdf",
-          "uniqueFields": {
-            "accessDate": "2017-10-20 19:38:08",
-            "linkMode": 1,
-            "mimeType": "application/pdf",
-            "title": "p203-winograd.pdf",
-            "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72"
-          },
-          "uri": "http://zotero.org/users/10604/items/U7EAP63X",
-          "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72"
-        }
-      ],
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",

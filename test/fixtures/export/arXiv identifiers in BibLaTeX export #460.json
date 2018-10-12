@@ -1,39 +1,59 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.31-travis-2383",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "autoExportIdleWait": 10,
+      "bibtexURL": "note",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[auth][year:prefix,.][0][Title:nopunct:fold:skipwords:select,1,1:alphanum:prefix,.]",
       "citekeyFold": true,
-      "DOIandURL": "both",
+      "citekeyFormat": "[auth][year:prefix,.][0][Title:nopunct:fold:skipwords:select,1,1:alphanum:prefix,.]",
       "csquotes": "",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "postscript": "",
       "preserveBibTeXVariables": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.31-travis-2383"
   },
   "items": [
     {
+      "DOI": "10.1007/JHEP02(2016)087",
+      "ISSN": "1029-8479",
+      "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
+      "accessDate": "2016-04-17 05:57:20",
+      "attachments": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Ashoke",
+          "lastName": "Sen"
+        }
+      ],
+      "date": "2/2016",
+      "extra": "arXiv: 1508.05387",
+      "issue": "2",
+      "itemID": 19002,
       "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
+      "notes": [
+        "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
+      ],
+      "publicationTitle": "Journal of High Energy Physics",
       "tags": [
         "Batalin-Vilkoviski formalism",
         "_tablet",
@@ -43,168 +63,108 @@
         "printed",
         "superstring field theory"
       ],
-      "url": "http://arxiv.org/abs/1508.05387",
-      "volume": "2016",
-      "issue": "2",
-      "publicationTitle": "Journal of High Energy Physics",
-      "ISSN": "1029-8479",
-      "date": "2/2016",
-      "extra": "arXiv: 1508.05387",
-      "DOI": "10.1007/JHEP02(2016)087",
-      "accessDate": "2016-04-17 05:57:20",
-      "libraryCatalog": "arXiv.org",
-      "abstractNote": "We construct the quantum BV master action for heterotic and type II string field theories.",
       "title": "BV Master Action for Heterotic and Type II String Field Theories",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Sen",
-          "firstName": "Ashoke"
-        }
-      ],
-      "attachments": [
-        {
-          "path": "/mnt/data/Connaissances/Zotero/storage/WK3MP2RG/1508.html",
-          "title": "arXiv.org Snapshot",
-          "mimeType": "text/html",
-          "url": "http://arxiv.org/abs/1508.05387"
-        },
-        {
-          "path": "/mnt/data/Connaissances/Zotero/storage/IADTNUN4/sen_2015_bv_master_action_for_heterotic_and_type_ii_string_field_theories.pdf",
-          "title": "sen_2015_bv_master_action_for_heterotic_and_type_ii_string_field_theories.pdf",
-          "mimeType": "application/pdf",
-          "url": "http://arxiv.org/pdf/1508.05387v3"
-        }
-      ],
-      "notes": [
-        "<p>27/03/16 - overview - studying the papers of Ashoke</p>\n<p>This paper is of great importance because it constructs a fully consistent quantum action for (covariant) superstring field theory, including the Ramond sector. The idea is to introduce extra dynamical fields which are free (they don't even couple to gravity) and so they can be consistently decoupled.</p>"
-      ],
-      "itemID": 19002
+      "url": "http://arxiv.org/abs/1508.05387",
+      "volume": "2016"
     },
     {
-      "itemType": "journalArticle",
-      "tags": [
-        "Quantum Physics"
-      ],
-      "url": "http://arxiv.org/abs/1305.4904",
-      "publicationTitle": "arXiv:1305.4904 [quant-ph]",
-      "date": "2013-05-21",
-      "extra": "arXiv: 1305.4904",
-      "accessDate": "2016-04-18 23:47:42",
-      "libraryCatalog": "arXiv.org",
       "abstractNote": "A pair of recent articles concluded that the D-Wave One machine actually operates in the quantum regime, rather than performing some classical evolution. Here we give a classical model that leads to the same behaviors used in those works to infer quantum effects. Thus, the evidence presented does not demonstrate the presence of quantum effects.",
-      "title": "Classical signature of quantum annealing",
+      "accessDate": "2016-04-18 23:47:42",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Smolin",
-          "firstName": "John A."
+          "firstName": "John A.",
+          "lastName": "Smolin"
         },
         {
           "creatorType": "author",
-          "lastName": "Smith",
-          "firstName": "Graeme"
+          "firstName": "Graeme",
+          "lastName": "Smith"
         }
       ],
-      "attachments": [
-        {
-          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/HT7FUWAJ/Smolin and Smith - 2013 - Classical signature of quantum annealing.pdf",
-          "title": "arXiv:1305.4904 PDF",
-          "mimeType": "application/pdf",
-          "url": "http://www.arxiv.org/pdf/1305.4904.pdf"
-        },
-        {
-          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/6ANP3H3A/1305.html",
-          "title": "arXiv.org Snapshot",
-          "mimeType": "text/html",
-          "url": "http://arxiv.org/abs/1305.4904"
-        }
-      ],
+      "date": "2013-05-21",
+      "extra": "arXiv: 1305.4904",
+      "itemID": 4,
+      "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
       "notes": [
         "Comment: 8 pages, 3 pdf figures"
       ],
-      "itemID": 4
-    },
-    {
-      "itemType": "journalArticle",
+      "publicationTitle": "arXiv:1305.4904 [quant-ph]",
       "tags": [
         "Quantum Physics"
       ],
-      "url": "http://arxiv.org/abs/1401.2910",
-      "volume": "345",
-      "issue": "6195",
-      "pages": "420–424",
-      "publicationTitle": "Science",
-      "ISSN": "0036-8075, 1095-9203",
-      "date": "2014-07-25",
-      "extra": "arXiv: 1401.2910 [quant-ph]",
+      "title": "Classical signature of quantum annealing",
+      "url": "http://arxiv.org/abs/1305.4904"
+    },
+    {
       "DOI": "10.1126/science.1252319",
-      "accessDate": "2016-04-18 23:47:51",
-      "libraryCatalog": "arXiv.org",
+      "ISSN": "0036-8075, 1095-9203",
       "abstractNote": "The development of small-scale digital and analog quantum devices raises the question of how to fairly assess and compare the computational power of classical and quantum devices, and of how to detect quantum speedup. Here we show how to define and measure quantum speedup in various scenarios, and how to avoid pitfalls that might mask or fake quantum speedup. We illustrate our discussion with data from a randomized benchmark test on a D-Wave Two device with up to 503 qubits. Comparing the performance of the device on random spin glass instances with limited precision to simulated classical and quantum annealers, we find no evidence of quantum speedup when the entire data set is considered, and obtain inconclusive results when comparing subsets of instances on an instance-by-instance basis. Our results for one particular benchmark do not rule out the possibility of speedup for other classes of problems and illustrate that quantum speedup is elusive and can depend on the question posed.",
-      "title": "Defining and detecting quantum speedup",
+      "accessDate": "2016-04-18 23:47:51",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Rønnow",
-          "firstName": "Troels F."
+          "firstName": "Troels F.",
+          "lastName": "R\u00f8nnow"
         },
         {
           "creatorType": "author",
-          "lastName": "Wang",
-          "firstName": "Zhihui"
+          "firstName": "Zhihui",
+          "lastName": "Wang"
         },
         {
           "creatorType": "author",
-          "lastName": "Job",
-          "firstName": "Joshua"
+          "firstName": "Joshua",
+          "lastName": "Job"
         },
         {
           "creatorType": "author",
-          "lastName": "Boixo",
-          "firstName": "Sergio"
+          "firstName": "Sergio",
+          "lastName": "Boixo"
         },
         {
           "creatorType": "author",
-          "lastName": "Isakov",
-          "firstName": "Sergei V."
+          "firstName": "Sergei V.",
+          "lastName": "Isakov"
         },
         {
           "creatorType": "author",
-          "lastName": "Wecker",
-          "firstName": "David"
+          "firstName": "David",
+          "lastName": "Wecker"
         },
         {
           "creatorType": "author",
-          "lastName": "Martinis",
-          "firstName": "John M."
+          "firstName": "John M.",
+          "lastName": "Martinis"
         },
         {
           "creatorType": "author",
-          "lastName": "Lidar",
-          "firstName": "Daniel A."
+          "firstName": "Daniel A.",
+          "lastName": "Lidar"
         },
         {
           "creatorType": "author",
-          "lastName": "Troyer",
-          "firstName": "Matthias"
+          "firstName": "Matthias",
+          "lastName": "Troyer"
         }
       ],
-      "attachments": [
-        {
-          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/CD99MNXZ/Rønnow et al. - 2014 - Defining and detecting quantum speedup.pdf",
-          "title": "arXiv:1401.2910 PDF",
-          "mimeType": "application/pdf",
-          "url": "http://www.arxiv.org/pdf/1401.2910.pdf"
-        },
-        {
-          "path": "/Users/anurag/Library/Application Support/Firefox/Profiles/62nu48op.Test Biblatex/zotero/storage/R9J23QVR/1401.html",
-          "title": "arXiv.org Snapshot",
-          "mimeType": "text/html",
-          "url": "http://arxiv.org/abs/1401.2910"
-        }
+      "date": "2014-07-25",
+      "extra": "arXiv: 1401.2910 [quant-ph]",
+      "issue": "6195",
+      "itemID": 8,
+      "itemType": "journalArticle",
+      "libraryCatalog": "arXiv.org",
+      "pages": "420\u2013424",
+      "publicationTitle": "Science",
+      "tags": [
+        "Quantum Physics"
       ],
-      "itemID": 8
+      "title": "Defining and detecting quantum speedup",
+      "url": "http://arxiv.org/abs/1401.2910",
+      "volume": "345"
     }
   ]
 }

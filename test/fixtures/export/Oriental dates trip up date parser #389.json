@@ -23,14 +23,7 @@
       "DOI": "10.1364/AO.15.001040",
       "abstractNote": "Because they are not proper spectral modes, leaky modes do not obey the usual power orthogonality relations for an ideal waveguide. Two methods for circumventing this problem are presented in this paper. One approach is to use the fact that weakly leaky modes are approximately power orthogonal within a restricted region of space to define a new set of slightly coupled modes. The other is to abandon power orthogonality in favor of a more general, mathematically exact orthogonality relation. The relative merits of these two approaches are discussed.",
       "accessDate": "2015-04-02 02:09:00",
-      "attachments": [
-        {
-          "mimeType": "text/html",
-          "path": "/home/zzs/.zotero/zotero/pz8s4cva.default/zotero/storage/7XA9GC8B/abstract.html",
-          "title": "Appl. Opt. Snapshot",
-          "url": "http://www.opticsinfobase.org/ao/abstract.cfm?uri=ao-15-4-1040"
-        }
-      ],
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",

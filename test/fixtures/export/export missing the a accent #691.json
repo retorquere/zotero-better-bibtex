@@ -1,85 +1,70 @@
 {
+  "cache": {},
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.100",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "itemObserverDelay": 100,
-      "citeCommand": "cite",
-      "citekeyFormat": "[auth:lower]_[year][0]_[shorttitle]",
-      "citekeyFold": false,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
-      "csquotes": "",
-      "keyConflictPolicy": "change",
-      "preserveBibTeXVariables": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:lower]_[year][0]_[shorttitle]",
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 4,
+      "keyConflictPolicy": "change",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": true,
-      "qualityReport": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "suppressTitleCase": false,
-      "jabrefFormat": 4
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.100"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "https://arc.aiaa.org/doi/pdf/10.2514/1.48168",
-      "volume": "27",
-      "issue": "1",
-      "pages": "246",
-      "publicationTitle": "Journal of Propulsion and Power",
-      "date": "2011",
-      "extra": "00005 \nbibtex: sanjurjo-rivo_2011_EnergyAnalysisBare",
-      "libraryCatalog": "Google Scholar",
-      "title": "Energy Analysis of Bare Electrodynamic Tethers",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Sanjurjo-Rivo",
-          "firstName": "Manuel"
+          "firstName": "Manuel",
+          "lastName": "Sanjurjo-Rivo"
         },
         {
           "creatorType": "author",
-          "lastName": "Peláez",
-          "firstName": "J."
+          "firstName": "J.",
+          "lastName": "Pel\u00e1ez"
         }
       ],
-      "attachments": [
-        {
-          "path": "F:\\zoterobib\\storage\\3XFWI4HC\\Sanjurjo-Rivo_Peláez_2011_Energy Analysis of Bare Electrodynamic Tethers.pdf",
-          "title": "Sanjurjo-Rivo_Peláez_2011_Energy Analysis of Bare Electrodynamic Tethers.pdf",
-          "mimeType": "application/pdf",
-          "url": "http://oa.upm.es/15305/1/sanjurjo.pdf"
-        },
-        {
-          "path": "F:\\zoterobib\\storage\\T43SBW5K\\1.html",
-          "title": "Snapshot",
-          "mimeType": "text/html",
-          "url": "https://arc.aiaa.org/doi/pdf/10.2514/1.48168"
-        }
-      ],
-      "itemID": 209
+      "date": "2011",
+      "extra": "00005 \nbibtex: sanjurjo-rivo_2011_EnergyAnalysisBare",
+      "issue": "1",
+      "itemID": 209,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Google Scholar",
+      "pages": "246",
+      "publicationTitle": "Journal of Propulsion and Power",
+      "title": "Energy Analysis of Bare Electrodynamic Tethers",
+      "url": "https://arc.aiaa.org/doi/pdf/10.2514/1.48168",
+      "volume": "27"
     }
-  ],
-  "cache": {
-  }
+  ]
 }

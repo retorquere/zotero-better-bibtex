@@ -1,80 +1,65 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.7.33",
+    "options": {
+      "Export collections": true,
+      "exportFileData": false,
+      "exportNotes": false
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
-      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
-      "DOIandURL": "both",
-      "skipFields": "abstract,note,file",
       "bibtexURL": "note",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth:nopunct][year][Title:skipwords:nopunct:select,1,2:capitalize:fold:alphanum]",
+      "jabrefFormat": 0,
+      "skipFields": "abstract,note,file"
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "Export collections": true
-    }
+    "release": "0.7.33"
   },
   "items": [
     {
-      "itemID": 94,
-      "itemType": "thesis",
-      "type": "mastersthesis",
-      "date": "2011",
-      "language": "norsk",
-      "title": "Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Sune Brøndum",
-          "lastName": "Wøller",
-          "fieldMode": ""
+          "fieldMode": "",
+          "firstName": "Sune Br\u00f8ndum",
+          "lastName": "W\u00f8ller"
         }
       ],
+      "date": "2011",
+      "itemID": 94,
+      "itemType": "thesis",
+      "language": "norsk",
       "notes": [
         "<p>CTR-Projekt</p>"
       ],
-      "attachments": [
-        {
-          "path": "/home/sune/Dropbox/Articles/Wøller/Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
-          "title": "Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
-      ]
+      "title": "Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
+      "type": "mastersthesis"
     },
     {
-      "itemID": 94,
-      "itemType": "thesis",
-      "type": "phdthesis",
-      "date": "2011",
-      "language": "norsk",
-      "title": "CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
-          "firstName": "Sune Brøndum",
-          "lastName": "Wøller",
-          "fieldMode": ""
+          "fieldMode": "",
+          "firstName": "Sune Br\u00f8ndum",
+          "lastName": "W\u00f8ller"
         }
       ],
+      "date": "2011",
+      "itemID": 94,
+      "itemType": "thesis",
+      "language": "norsk",
       "notes": [
         "<p>CTR-Projekt</p>"
       ],
-      "attachments": [
-        {
-          "path": "/home/sune/Dropbox/Articles/Wøller/Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
-          "title": "Woller - 2011 - Det multiple arkaeologiske objekt.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
-      ]
+      "title": "CTR Det multiple ark\u00e6ologiske objekt. Et studie af materialitet og ark\u00e6ologiske tekstiler",
+      "type": "phdthesis"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

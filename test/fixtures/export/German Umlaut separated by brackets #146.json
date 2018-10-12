@@ -1,58 +1,50 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.7.11",
+    "options": {
+      "Export collections": true,
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "skipFields": "keywords,abstract,file",
       "autoAbbrevStyle": "http://www.zotero.org/styles/ieee",
       "bibtexURL": "note",
-      "jabrefFormat": 0
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0,
+      "skipFields": "keywords,abstract,file"
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "Export collections": true
-    }
-  },
-  "collections": {
+    "release": "0.7.11"
   },
   "items": [
     {
-      "itemID": 8,
-      "itemType": "book",
-      "place": "Berlin; Frankfurt am Main",
-      "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizitätswerke",
       "ISBN": "3800721414  9783800721412  3802204697  9783802204692",
-      "date": "1995",
-      "libraryCatalog": "Open WorldCat",
-      "language": "German",
-      "title": "Planung öffentlicher Elektrizitätsverteilungs-Systeme",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Wolfgang",
-          "lastName": "Kaufmann",
-          "fieldMode": ""
+          "lastName": "Kaufmann"
         }
       ],
+      "date": "1995",
+      "itemID": 8,
+      "itemType": "book",
+      "language": "German",
+      "libraryCatalog": "Open WorldCat",
       "notes": [
-        "<p>\"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde<br />aus Messungen statistisch ermittelt [2.3]. Eine gute Näherung für die Praxis<br />ist die Gleichung (2.5) :\" (S. 2.3)</p>\n<p>Keine Notwendigkeit, in ihrem Grundlegendem Charakter völlig verschiedenartige Belastungen (PV, Wärmepumpe) in dieses Schema zu pressen.</p>"
+        "<p>\"Der Gleichzeitigkeitsgrad g (n) der Spitzenlastanteile Ps von Wohnungen wurde<br />aus Messungen statistisch ermittelt [2.3]. Eine gute N\u00e4herung f\u00fcr die Praxis<br />ist die Gleichung (2.5) :\" (S. 2.3)</p>\n<p>Keine Notwendigkeit, in ihrem Grundlegendem Charakter v\u00f6llig verschiedenartige Belastungen (PV, W\u00e4rmepumpe) in dieses Schema zu pressen.</p>"
       ],
-      "attachments": [
-        {
-          "path": "/home/paul/.zotero/zotero/mkdppg69.default/zotero/storage/ABWG6PHI/KAUFMANN PLANUNG OFFENTLICHER ELEKTRIZITATSVERTEILUNGSSYSTEME.pdf",
-          "title": "KAUFMANN PLANUNG OFFENTLICHER ELEKTRIZITATSVERTEILUNGSSYSTEME.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
-      ],
+      "place": "Berlin; Frankfurt am Main",
+      "publisher": "VDE-Verl. ; Verl.- und Wirtschaftsges. der Elektrizita\u0308tswerke",
       "tags": [
         "Gleichzeitigkeitsfaktor",
         "Niederspannung",
         "Verteilnetz"
-      ]
+      ],
+      "title": "Planung o\u0308ffentlicher Elektrizit\u00e4tsverteilungs-Systeme"
     }
   ]
 }

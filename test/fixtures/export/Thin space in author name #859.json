@@ -1,30 +1,40 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.33",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.11",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.33"
-      },
-      "BetterBibTeX": "5.0.64"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
-      "citekeyFold": false,
-      "keyConflictPolicy": "change",
-      "preserveBibTeXVariables": false,
+      "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": false,
+      "citekeyFormat": "[auth:lower][year][veryshorttitle:lower]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "change",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
       "skipFields": [
         "extra",
         "note",
@@ -33,15 +43,6 @@
         "abstract",
         "urldate"
       ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "quickCopyMode": "latex",
-      "autoAbbrev": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
       "skipWords": [
         "a",
         "ab",
@@ -166,225 +167,152 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.64",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.33",
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.11",
+        "platform": "MacIntel",
+        "version": "5.0.33"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "https://link.aps.org/doi/10.1103/PhysRevLett.115.250401",
-      "volume": "115",
-      "issue": "25",
-      "pages": "250401",
-      "publicationTitle": "Physical Review Letters",
-      "date": "December 16, 2015",
-      "journalAbbreviation": "Phys. Rev. Lett.",
       "DOI": "10.1103/PhysRevLett.115.250401",
+      "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell\u2019s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell\u2019s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74\u00d710\u221231, corresponding to an 11.5 standard deviation effect.",
       "accessDate": "2017-12-29 18:37:20",
-      "libraryCatalog": "APS",
-      "abstractNote": "Local realism is the worldview in which physical properties of objects exist independently of measurement and where physical influences cannot travel faster than the speed of light. Bell’s theorem states that this worldview is incompatible with the predictions of quantum mechanics, as is expressed in Bell’s inequalities. Previous experiments convincingly supported the quantum predictions. Yet, every experiment requires assumptions that provide loopholes for a local realist explanation. Here, we report a Bell test that closes the most significant of these loopholes simultaneously. Using a well-optimized source of entangled photons, rapid setting generation, and highly efficient superconducting detectors, we observe a violation of a Bell inequality with high statistical significance. The purely statistical probability of our results to occur under local realism does not exceed 3.74×10−31, corresponding to an 11.5 standard deviation effect.",
-      "title": "Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons",
+      "attachments": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Marissa",
-          "lastName": "Giustina",
-          "creatorType": "author"
+          "lastName": "Giustina"
         },
         {
-          "firstName": "Marijn A. M.",
-          "lastName": "Versteegh",
-          "creatorType": "author"
+          "creatorType": "author",
+          "firstName": "Marijn A.\u2009M.",
+          "lastName": "Versteegh"
         },
         {
-          "firstName": "Sören",
-          "lastName": "Wengerowsky",
-          "creatorType": "author"
+          "creatorType": "author",
+          "firstName": "S\u00f6ren",
+          "lastName": "Wengerowsky"
         },
         {
+          "creatorType": "author",
           "firstName": "Johannes",
-          "lastName": "Handsteiner",
-          "creatorType": "author"
+          "lastName": "Handsteiner"
         },
         {
+          "creatorType": "author",
           "firstName": "Armin",
-          "lastName": "Hochrainer",
-          "creatorType": "author"
+          "lastName": "Hochrainer"
         },
         {
+          "creatorType": "author",
           "firstName": "Kevin",
-          "lastName": "Phelan",
-          "creatorType": "author"
+          "lastName": "Phelan"
         },
         {
+          "creatorType": "author",
           "firstName": "Fabian",
-          "lastName": "Steinlechner",
-          "creatorType": "author"
+          "lastName": "Steinlechner"
         },
         {
+          "creatorType": "author",
           "firstName": "Johannes",
-          "lastName": "Kofler",
-          "creatorType": "author"
+          "lastName": "Kofler"
         },
         {
-          "firstName": "Jan-Åke",
-          "lastName": "Larsson",
-          "creatorType": "author"
+          "creatorType": "author",
+          "firstName": "Jan-\u00c5ke",
+          "lastName": "Larsson"
         },
         {
+          "creatorType": "author",
           "firstName": "Carlos",
-          "lastName": "Abellán",
-          "creatorType": "author"
+          "lastName": "Abell\u00e1n"
         },
         {
+          "creatorType": "author",
           "firstName": "Waldimar",
-          "lastName": "Amaya",
-          "creatorType": "author"
+          "lastName": "Amaya"
         },
         {
+          "creatorType": "author",
           "firstName": "Valerio",
-          "lastName": "Pruneri",
-          "creatorType": "author"
+          "lastName": "Pruneri"
         },
         {
+          "creatorType": "author",
           "firstName": "Morgan W.",
-          "lastName": "Mitchell",
-          "creatorType": "author"
+          "lastName": "Mitchell"
         },
         {
-          "firstName": "Jörn",
-          "lastName": "Beyer",
-          "creatorType": "author"
+          "creatorType": "author",
+          "firstName": "J\u00f6rn",
+          "lastName": "Beyer"
         },
         {
+          "creatorType": "author",
           "firstName": "Thomas",
-          "lastName": "Gerrits",
-          "creatorType": "author"
+          "lastName": "Gerrits"
         },
         {
+          "creatorType": "author",
           "firstName": "Adriana E.",
-          "lastName": "Lita",
-          "creatorType": "author"
+          "lastName": "Lita"
         },
         {
+          "creatorType": "author",
           "firstName": "Lynden K.",
-          "lastName": "Shalm",
-          "creatorType": "author"
+          "lastName": "Shalm"
         },
         {
+          "creatorType": "author",
           "firstName": "Sae Woo",
-          "lastName": "Nam",
-          "creatorType": "author"
+          "lastName": "Nam"
         },
         {
+          "creatorType": "author",
           "firstName": "Thomas",
-          "lastName": "Scheidl",
-          "creatorType": "author"
+          "lastName": "Scheidl"
         },
         {
+          "creatorType": "author",
           "firstName": "Rupert",
-          "lastName": "Ursin",
-          "creatorType": "author"
+          "lastName": "Ursin"
         },
         {
+          "creatorType": "author",
           "firstName": "Bernhard",
-          "lastName": "Wittmann",
-          "creatorType": "author"
+          "lastName": "Wittmann"
         },
         {
+          "creatorType": "author",
           "firstName": "Anton",
-          "lastName": "Zeilinger",
-          "creatorType": "author"
+          "lastName": "Zeilinger"
         }
       ],
+      "date": "December 16, 2015",
       "dateAdded": "2017-12-29 18:37:20",
       "dateModified": "2017-12-29 18:37:20",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.115.250401",
-          "accessDate": "2017-12-29 18:37:27",
-          "title": "APS Snapshot",
-          "parentItem": "ISYSWZVR",
-          "linkMode": 1,
-          "contentType": "text/html",
-          "charset": "utf-8",
-          "filename": "PhysRevLett.115.html",
-          "tags": [
-
-          ],
-          "relations": {
-          },
-          "dateAdded": "2017-12-29 18:37:27",
-          "dateModified": "2017-12-29 18:37:28",
-          "uri": "http://zotero.org/users/1699682/items/6STJ3PD5",
-          "uniqueFields": {
-            "url": "https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.115.250401",
-            "accessDate": "2017-12-29 18:37:27",
-            "title": "APS Snapshot",
-            "linkMode": 1,
-            "mimeType": "text/html"
-          },
-          "itemID": 1770,
-          "key": "6STJ3PD5",
-          "libraryID": null,
-          "sourceItemKey": "ISYSWZVR",
-          "seeAlso": [
-
-          ],
-          "mimeType": "text/html",
-          "localPath": "/Users/Eden/Dropbox/zotero/storage/6STJ3PD5/PhysRevLett.115.html"
-        },
-        {
-          "itemType": "attachment",
-          "url": "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.115.250401",
-          "accessDate": "2017-12-29 18:37:22",
-          "title": "Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf",
-          "parentItem": "ISYSWZVR",
-          "linkMode": 1,
-          "contentType": "application/pdf",
-          "charset": "",
-          "filename": "Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf",
-          "tags": [
-
-          ],
-          "relations": {
-          },
-          "dateAdded": "2017-12-29 18:37:22",
-          "dateModified": "2017-12-29 18:37:22",
-          "uri": "http://zotero.org/users/1699682/items/TG95AQ8P",
-          "uniqueFields": {
-            "url": "https://journals.aps.org/prl/pdf/10.1103/PhysRevLett.115.250401",
-            "accessDate": "2017-12-29 18:37:22",
-            "title": "Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf",
-            "linkMode": 1,
-            "mimeType": "application/pdf"
-          },
-          "itemID": 1768,
-          "key": "TG95AQ8P",
-          "libraryID": null,
-          "sourceItemKey": "ISYSWZVR",
-          "seeAlso": [
-
-          ],
-          "mimeType": "application/pdf",
-          "localPath": "/Users/Eden/Dropbox/zotero/storage/TG95AQ8P/Giustina et al_2015_Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons.pdf"
-        }
-      ],
-      "itemID": 1766
+      "issue": "25",
+      "itemID": 1766,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Phys. Rev. Lett.",
+      "libraryCatalog": "APS",
+      "pages": "250401",
+      "publicationTitle": "Physical Review Letters",
+      "title": "Significant-Loophole-Free Test of Bell's Theorem with Entangled Photons",
+      "url": "https://link.aps.org/doi/10.1103/PhysRevLett.115.250401",
+      "volume": "115"
     }
   ]
 }

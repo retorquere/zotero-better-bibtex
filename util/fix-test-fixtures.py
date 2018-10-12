@@ -51,7 +51,6 @@ class Fixer:
         pass
 
     def valid_att(att):
-      if 'url' in att: return True
       if not 'path' in att: return False
       if re.match(r'^(\/|([a-z]:\\))', att.get('path'), flags=re.IGNORECASE): return False
       if not os.path.exists(os.path.join(os.path.dirname(lib), att['path'])): return False
@@ -60,7 +59,6 @@ class Fixer:
     for item in data['items']:
       attachments = item.get('attachments', [])
       if '/export/' in lib and len(attachments) != 0:
-
         attachments = [att for att in attachments if valid_att(att)]
 
         if attachments != item['attachments']:

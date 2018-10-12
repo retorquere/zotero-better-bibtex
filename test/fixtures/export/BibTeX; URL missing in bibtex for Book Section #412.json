@@ -1,87 +1,79 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.15",
-    "preferences": {
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "citekeyFormat": "[authorsAlpha:lower][year]",
-      "csquotes": "",
-      "DOIandURL": "both",
-      "postscript": "",
-      "preserveBibTeXVariables": false,
-      "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "bibtexURL": "note",
+      "citekeyFormat": "[authorsAlpha:lower][year]",
+      "csquotes": "",
+      "jabrefFormat": 0,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate"
+    },
+    "release": "1.6.15"
   },
   "items": [
     {
+      "ISBN": "978-3-642-11217-1 978-3-642-11218-8",
+      "abstractNote": "Summary The traveling salesman problem (TSP) is a challenging problem in combinatorial optimization. In this paper we consider the multiobjective TSP for which the aim is to obtain or to approximate the set of efficient solutions. In a first step, we classify and describe briefly the existing works, that are essentially based on the use of metaheuristics. In a second step, we propose a new method, called two-phase Pareto local search. In the first phase of this method, an initial population composed of an approximation to the extreme supported efficient solutions is generated. The second phase is a Pareto local search applied to all solutions of the initial population. The method does not use any numerical parameter. We show that using the combination of these two techniques\u2014good initial population generation and Pareto local search\u2014gives, on the majority of the instances tested, better results than state-of-the-art algorithms.",
+      "accessDate": "2015-12-07 20:34:28",
+      "attachments": [],
+      "bookTitle": "Advances in Multi-Objective Nature Inspired Computing",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Thibaut",
+          "lastName": "Lust"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jacques",
+          "lastName": "Teghem"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Carlos A. Coello",
+          "lastName": "Coello"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Clarisse",
+          "lastName": "Dhaenens"
+        },
+        {
+          "creatorType": "editor",
+          "firstName": "Laetitia",
+          "lastName": "Jourdan"
+        }
+      ],
+      "date": "2010",
+      "extra": "DOI: 10.1007/978-3-642-11218-8_6",
+      "itemID": 7501,
       "itemType": "bookSection",
+      "language": "en",
+      "libraryCatalog": "link.springer.com",
+      "pages": "119\u2013141",
+      "publicationTitle": "Advances in Multi-Objective Nature Inspired Computing",
+      "publisher": "Springer Berlin Heidelberg",
+      "rights": "\u00a92010 Springer-Verlag Berlin Heidelberg",
+      "series": "Studies in Computational Intelligence",
+      "seriesNumber": "272",
+      "shortTitle": "The Multiobjective Traveling Salesman Problem",
       "tags": [
         "Appl.Mathematics/Computational Methods of Engineering",
         "Artificial Intelligence (incl. Robotics)"
       ],
-      "url": "http://link.springer.com/chapter/10.1007/978-3-642-11218-8_6",
-      "rights": "©2010 Springer-Verlag Berlin Heidelberg",
-      "series": "Studies in Computational Intelligence",
-      "publisher": "Springer Berlin Heidelberg",
-      "pages": "119–141",
-      "ISBN": "978-3-642-11217-1 978-3-642-11218-8",
-      "date": "2010",
-      "extra": "DOI: 10.1007/978-3-642-11218-8_6",
-      "accessDate": "2015-12-07 20:34:28",
-      "seriesNumber": "272",
-      "libraryCatalog": "link.springer.com",
-      "language": "en",
-      "abstractNote": "Summary The traveling salesman problem (TSP) is a challenging problem in combinatorial optimization. In this paper we consider the multiobjective TSP for which the aim is to obtain or to approximate the set of efficient solutions. In a first step, we classify and describe briefly the existing works, that are essentially based on the use of metaheuristics. In a second step, we propose a new method, called two-phase Pareto local search. In the first phase of this method, an initial population composed of an approximation to the extreme supported efficient solutions is generated. The second phase is a Pareto local search applied to all solutions of the initial population. The method does not use any numerical parameter. We show that using the combination of these two techniques—good initial population generation and Pareto local search—gives, on the majority of the instances tested, better results than state-of-the-art algorithms.",
       "title": "The Multiobjective Traveling Salesman Problem: A Survey and a New Approach",
-      "bookTitle": "Advances in Multi-Objective Nature Inspired Computing",
-      "shortTitle": "The Multiobjective Traveling Salesman Problem",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Lust",
-          "firstName": "Thibaut"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Teghem",
-          "firstName": "Jacques"
-        },
-        {
-          "creatorType": "editor",
-          "lastName": "Coello",
-          "firstName": "Carlos A. Coello"
-        },
-        {
-          "creatorType": "editor",
-          "lastName": "Dhaenens",
-          "firstName": "Clarisse"
-        },
-        {
-          "creatorType": "editor",
-          "lastName": "Jourdan",
-          "firstName": "Laetitia"
-        }
-      ],
-      "attachments": [
-        {
-          "path": "E:\\RES\\Lib\\Bib\\Zotero\\storage\\PZ82CEFB\\Lust and Teghem - 2010 - The Multiobjective Traveling Salesman Problem A S.pdf",
-          "title": "Full Text PDF",
-          "mimeType": "application/pdf",
-          "url": "http://link.springer.com/content/pdf/10.1007%2F978-3-642-11218-8_6.pdf"
-        }
-      ],
-      "itemID": 7501,
-      "publicationTitle": "Advances in Multi-Objective Nature Inspired Computing"
+      "url": "http://link.springer.com/chapter/10.1007/978-3-642-11218-8_6"
     }
   ]
 }

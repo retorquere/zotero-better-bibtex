@@ -1,46 +1,30 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.0.9",
-    "preferences": {
-      "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]",
-      "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum",
-      "skipFields": "",
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "DOIandURL": "doi",
-      "preserveBibTeXVariables": false,
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "doi",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth:fold:lower][Title:fold:nopunct:skipwords:select,1,1:lower:prefix,_][year:prefix,_][0]",
+      "jabrefFormat": 0,
+      "preserveBibTeXVariables": false,
+      "skipFields": "",
+      "skipWords": "a,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,das,de,del,der,des,despite,die,do,down,during,ein,eine,einem,einen,einer,eines,el,except,for,from,in,inside,into,is,l,la,las,le,les,like,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,while,with,within,without,yet,zu,zum"
+    },
+    "release": "1.0.9"
   },
   "items": [
     {
-      "itemType": "book",
-      "tags": [
-        "aid",
-        "cooperation",
-        "development",
-        "evaluation",
-        "monitoring"
-      ],
-      "url": "http://www.oecd-ilibrary.org/content/book/9789264209305-en",
-      "place": "Paris",
-      "publisher": "Organisation for Economic Co-operation and Development",
       "ISBN": "978-92-64-20929-9",
-      "date": "Apr 03 2014",
-      "extra": "00000",
-      "accessDate": "2014-05-26 16:10:24",
-      "libraryCatalog": "OECD",
-      "language": "en",
       "abstractNote": "In 2011 the international development community committed to make development co-operation more effective to deliver better results for the world&#8217;s poor. At the mid-point between commitments endorsed in the High-Level Forum in Busan, Korea in 2011 and the 2015 target date of the Millennium Development Goals,&nbsp; this report takes stock of how far we have come and where urgent challenges lie. This report - a first snapshot of the state-of-play since Busan - reveals both successes and shortfalls. It draws on the ten indicators of the Global Partnership monitoring framework. Despite global economic turbulence, changing political landscapes and domestic budgetary pressure, commitment to effective development co-operation principles remains strong. Longstanding efforts to change the way that development co-operation is delivered are paying off. Past achievements on important aid effectiveness commitments that date back to 2005 have been sustained. Nevertheless, much more needs to be done to translate political commitments into concrete action. This report highlights where targeted efforts are needed to make further progress and to reach existing targets for more effective development co-operation by 2015.",
-      "title": "Making development co-operation more effective",
+      "accessDate": "2014-05-26 16:10:24",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -51,63 +35,23 @@
           "name": "UNDP"
         }
       ],
-      "attachments": [
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/26W9883X/432014021x1g001.xls",
-          "title": "432014021x1g001.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g001.xls?expires=1401121717&id=id&accname=guest&checksum=29387E679626FCD8C5F5B3A13523FE44"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/TGIBV9JF/432014021x1g002.xls",
-          "title": "432014021x1g002.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g002.xls?expires=1401121726&id=id&accname=guest&checksum=13EE8E3A32CBE7D09160A44AFFBC7A61"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/EPU2A36I/432014021x1g003.xls",
-          "title": "432014021x1g003.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g003.xls?expires=1401121733&id=id&accname=guest&checksum=B20D9E2831E448B5B40BFA2F8D492A95"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/5952UUFW/432014021x1g004.xls",
-          "title": "432014021x1g004.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g004.xls?expires=1401121745&id=id&accname=guest&checksum=C1DD06A5B4EAC551110434CF40931786"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/NIFEBNCT/432014021x1g005.xls",
-          "title": "432014021x1g005.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g005.xls?expires=1401121754&id=id&accname=guest&checksum=97689341CECA42EF1375193EED28BA55"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/QPRAMFI2/432014021x1g006.xls",
-          "title": "432014021x1g006.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g006.xls?expires=1401121768&id=id&accname=guest&checksum=5EA87AE882811B37F01D331997BC8BAB"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/9XJSTBKG/432014021x1g007.xls",
-          "title": "432014021x1g007.xls",
-          "mimeType": "application/vnd.ms-excel",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/432014021x1g007.xls?expires=1401121777&id=id&accname=guest&checksum=6BA72E029E1C8DECEB4E0E02D4076436"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/9PHNEHUC/making-development-co-operation-more-effective_9789264209305-en.html",
-          "title": "Making Development Co-operation More Effective - Books - OECD iLibrary",
-          "mimeType": "text/html",
-          "url": "http://www.oecd-ilibrary.org/development/making-development-co-operation-more-effective_9789264209305-en"
-        },
-        {
-          "path": "/Users/jrennstich/Library/Application Support/Firefox/Profiles/q25khvcw.default/zotero/storage/C5K9782I/OECD UNDP_2014_Making Development Co-operation More Effective.pdf",
-          "title": "OECD UNDP_2014_Making Development Co-operation More Effective.pdf",
-          "mimeType": "application/pdf",
-          "url": "http://www.oecd-ilibrary.org/docserver/download/4314021e.pdf?expires=1401121522&id=id&accname=guest&checksum=890A7D0833279E48F9BC6E02BDCF093C"
-        }
+      "date": "Apr 03 2014",
+      "extra": "00000",
+      "itemID": 8462,
+      "itemType": "book",
+      "language": "en",
+      "libraryCatalog": "OECD",
+      "place": "Paris",
+      "publisher": "Organisation for Economic Co-operation and Development",
+      "tags": [
+        "aid",
+        "cooperation",
+        "development",
+        "evaluation",
+        "monitoring"
       ],
-      "itemID": 8462
+      "title": "Making development co-operation more effective",
+      "url": "http://www.oecd-ilibrary.org/content/book/9789264209305-en"
     }
   ]
 }

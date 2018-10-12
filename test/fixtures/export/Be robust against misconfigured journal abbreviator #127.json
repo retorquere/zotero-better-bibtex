@@ -1,59 +1,51 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.6.63",
+    "options": {
+      "Export collections": true,
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "autoAbbrevStyle": "http://www.zotero.org/styles/american-physics-society",
       "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "Export collections": true
-    }
-  },
-  "collections": {
+    "release": "0.6.63"
   },
   "items": [
     {
-      "itemID": 2028,
-      "itemType": "journalArticle",
-      "url": "http://www.sciencedirect.com/science/article/pii/0092640X85900166",
-      "volume": "32",
-      "issue": "1",
-      "pages": "1–155",
-      "publicationTitle": "Atomic data and nuclear data tables",
-      "date": "1985",
-      "extra": "bibtex: Yeh1985",
       "accessDate": "2013-01-11 09:39:35",
-      "libraryCatalog": "Google Scholar",
-      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1⩽< <span class=\"nocase\">i</span>> <span class=\"nocase\">Z</span>⩽ 103",
-      "shortTitle": "Atomic subshell photoionization cross sections and asymmetry parameters",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "J. J.",
-          "lastName": "Yeh",
-          "fieldMode": ""
+          "lastName": "Yeh"
         },
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "I.",
-          "lastName": "Lindau",
-          "fieldMode": ""
+          "lastName": "Lindau"
         }
       ],
-      "attachments": [
-        {
-          "path": "C:\\Users\\busse\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\krntet4f.default\\zotero\\storage\\JX2J6CEG\\Yeh1985.pdf",
-          "title": "Yeh1985.pdf",
-          "mimeType": "application/pdf",
-          "url": ""
-        }
-      ]
+      "date": "1985",
+      "extra": "bibtex: Yeh1985",
+      "issue": "1",
+      "itemID": 2028,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Google Scholar",
+      "pages": "1\u2013155",
+      "publicationTitle": "Atomic data and nuclear data tables",
+      "shortTitle": "Atomic subshell photoionization cross sections and asymmetry parameters",
+      "title": "Atomic subshell photoionization cross sections and asymmetry parameters: 1\u2a7d< <span class=\"nocase\">i</span>> <span class=\"nocase\">Z</span>\u2a7d 103",
+      "url": "http://www.sciencedirect.com/science/article/pii/0092640X85900166",
+      "volume": "32"
     }
   ]
 }
