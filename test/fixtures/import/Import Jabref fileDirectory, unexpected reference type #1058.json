@@ -257,7 +257,7 @@
       "dateModified": "2018-08-28T14:44:57Z",
       "itemID": 100,
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 24: unknown reference type 'talk'</li></ul>",
+      "note": "Import errors found: <ul><li>line 23: unknown reference type 'talk'</li></ul>",
       "relations": [],
       "tags": [
         "#Better BibTeX import error"
