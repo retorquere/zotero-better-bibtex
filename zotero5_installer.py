@@ -43,8 +43,6 @@ def jurism_latest():
       return 'cached'
     else:
       raise e
-  except TimeoutError:
-    return 'fallback'
 
   release = release.getresponse()
   release = release.getheader('Location')
@@ -172,10 +170,7 @@ if args.client == 'zotero':
   else:
     args.url = "https://www.zotero.org/download/client/dl?channel=release&platform=linux-" + platform.machine() + '&version=' + args.version
 else:
-  if args.version == 'fallback':
-    args.url = 'https://transfer.sh/wQJQD/jurism.fallback.tar.bz2'
-  else:
-    args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
+  args.url = 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=release&platform=linux-' + platform.machine() + '&version=' + args.version
 
 if args.version == 'cached':
   tarball = None

@@ -53,15 +53,15 @@ jobs:
     - ZOTERO=zotero
     - CLUSTER="not @test-cluster-1"
 
-  - stage: test
-    env:
-    - ZOTERO=jurism
-    - CLUSTER="@test-cluster-1"
-
-  - stage: test
-    env:
-    - ZOTERO=jurism
-    - CLUSTER="not @test-cluster-1"
+#  - stage: test
+#    env:
+#    - ZOTERO=jurism
+#    - CLUSTER="@test-cluster-1"
+#
+#  - stage: test
+#    env:
+#    - ZOTERO=jurism
+#    - CLUSTER="not @test-cluster-1"
 
   - stage: release
     install: true
