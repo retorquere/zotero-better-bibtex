@@ -271,7 +271,7 @@
     },
     {
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 18: undefined variable 'IEEE_J_PROC'</li></ul>",
+      "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 17: undefined variable 'IEEE_J_PROC'</li></ul>",
       "tags": [
         {
           "tag": "#Better BibTeX import error",
