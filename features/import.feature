@@ -77,7 +77,6 @@ Scenario Outline: Better BibTeX Import
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
-  | Better BibTeX.013                                                           | 2           |
   # | Better BibTeX.014                                                           | 1           | # not supported by biblatex-csl-converter
   | Better BibTeX.015                                                           | 1           |
   | Problem when importing BibTeX entries with square brackets #94              | 1           |
