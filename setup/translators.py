@@ -69,6 +69,7 @@ interface ITranslator {
 
   options: {
     quickCopyMode?: string
+    dropAttachments?: boolean
     exportPath?: string
     #for $key, $type in $displayOptions.items():
     $key?: $type

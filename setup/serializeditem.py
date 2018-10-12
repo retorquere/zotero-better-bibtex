@@ -213,7 +213,7 @@ function unalias(item) {
 
 // import & export translators expect different creator formats... nice
 
-export function simplifyForExport(item) {
+export function simplifyForExport(item, dropAttachments = false) {
   unalias(item)
 
   item.tags = item.tags ? item.tags.map(tag => tag.tag ) : []
@@ -230,6 +230,8 @@ export function simplifyForExport(item) {
       }
     }
   }
+
+  if (dropAttachments) item.attachments = []
 
   return item
 }

@@ -121,7 +121,7 @@ Translator.doExport = () => {
   while ((item = Zotero.nextItem())) {
     if (item.itemType === 'attachment') continue
 
-    itemfields.simplifyForExport(item)
+    itemfields.simplifyForExport(item, Translator.options.dropAttachments)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
 
     const validFields = itemfields.valid.get(item.itemType)
