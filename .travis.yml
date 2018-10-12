@@ -39,7 +39,7 @@ script: |
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
 after_failure:
-  curl --data-binary @~/.BBTZ5TEST.log https://eigenstate.org/newpaste
+  curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST.log
 
 jobs:
   include:
