@@ -1,328 +1,325 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    }
+  },
   "items": [
     {
-      "itemType": "conferencePaper",
-      "place": "San Diego, California, USA",
-      "publisher": "USENIX",
-      "pages": "287–304",
-      "date": "January 30–February 3, 1989",
-      "title": "A tour of the worm",
-      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
-      "creators": [
-        {
-          "firstName": "Donn",
-          "lastName": "Seeley",
-          "creatorType": "author"
-        }
-      ],
-      "dateAdded": "2017-10-30 19:04:48",
-      "dateModified": "2017-11-03 19:06:17",
       "attachments": [
         {
-          "itemType": "attachment",
-          "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
           "accessDate": "2017-10-30 19:05:54",
-          "title": "A Tour of the Worm",
-          "parentItem": "FSB6XCJF",
-          "linkMode": 1,
-          "contentType": "text/html",
           "charset": "utf-8",
-          "filename": "seely-RTMworm-89.html",
-          "tags": [
-
-          ],
-          "relations": {
-          },
+          "contentType": "text/html",
           "dateAdded": "2017-10-30 19:05:54",
           "dateModified": "2017-10-30 19:05:54",
-          "uri": "http://zotero.org/users/10604/items/I9DDEA67",
-          "uniqueFields": {
-            "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html",
-            "accessDate": "2017-10-30 19:05:54",
-            "title": "A Tour of the Worm",
-            "linkMode": 1,
-            "mimeType": "text/html"
-          },
+          "filename": "seely-RTMworm-89.html",
           "itemID": 12198,
+          "itemType": "attachment",
           "key": "I9DDEA67",
           "libraryID": null,
-          "sourceItemKey": "FSB6XCJF",
-          "seeAlso": [
-
-          ],
-          "mimeType": "text/html",
-          "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html"
-        }
-      ],
-      "itemID": 12181,
-      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference"
-    },
-    {
-      "itemType": "journalArticle",
-      "creators": [
-        {
-          "firstName": "Nancy K",
-          "lastName": "Adams",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Self",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Guido",
-          "lastName": "Salas",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Schubring",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Jason L",
-          "lastName": "Permenter",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Kendra",
-          "lastName": "Arbesman",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
-      ],
-      "attachments": [
-        {
-          "path": "attachments/Adams_Huaynaputina.pdf",
-          "mimeType": "application/pdf",
-          "title": "Attachment"
-        }
-      ],
-      "publicationTitle": "Bulletin of Volcanology",
-      "pages": "493–518",
-      "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62",
-      "date": "June 18–23, 2017"
-    },
-    {
-      "itemType": "journalArticle",
-      "creators": [
-        {
-          "firstName": "Nancy K",
-          "lastName": "Adams",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Self",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Guido",
-          "lastName": "Salas",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Steven",
-          "lastName": "Schubring",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Jason L",
-          "lastName": "Permenter",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Kendra",
-          "lastName": "Arbesman",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
-      ],
-      "attachments": [
-        {
-          "path": "attachments/Adams_Huaynaputina.pdf",
-          "mimeType": "application/pdf",
-          "title": "Attachment"
-        }
-      ],
-      "publicationTitle": "Bulletin of Volcanology",
-      "pages": "493–518",
-      "title": "746: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62",
-      "date": "22-26 June 2015"
-    },
-    {
-      "itemType": "conferencePaper",
-      "url": "http://doi.acm.org/10.1145/637069.637096",
-      "place": "Austin, TX",
-      "publisher": "ACM",
-      "pages": "203–220",
-      "date": "December 3-5, 1986",
-      "DOI": "10.1145/637069.637096",
-      "accessDate": "2017-10-20 19:37:10",
-      "libraryCatalog": "ACM Digital Library",
-      "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
-      "title": "A language/action perspective on the design of cooperative work",
-      "proceedingsTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
-      "creators": [
-        {
-          "firstName": "Terry",
-          "lastName": "Winograd",
-          "creatorType": "author"
-        }
-      ],
-      "dateAdded": "2017-10-20 19:37:10",
-      "dateModified": "2017-10-20 19:37:59",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "accessDate": "2017-10-20 19:47:23",
-          "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "parentItem": "NBDZHC39",
           "linkMode": 1,
-          "contentType": "application/pdf",
-          "charset": "",
-          "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-          "tags": [
-
-          ],
-          "relations": {
+          "localPath": "C:\\Users\\mainland\\AppData\\Roaming\\Mozilla\\Firefox\\Profiles\\p1wzkbhx.default-1410963170532\\zotero\\storage\\I9DDEA67\\seely-RTMworm-89.html",
+          "mimeType": "text/html",
+          "parentItem": "FSB6XCJF",
+          "relations": {},
+          "seeAlso": [],
+          "sourceItemKey": "FSB6XCJF",
+          "tags": [],
+          "title": "A Tour of the Worm",
+          "uniqueFields": {
+            "accessDate": "2017-10-30 19:05:54",
+            "linkMode": 1,
+            "mimeType": "text/html",
+            "title": "A Tour of the Worm",
+            "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html"
           },
+          "uri": "http://zotero.org/users/10604/items/I9DDEA67",
+          "url": "http://www.cs.unc.edu/~jeffay/courses/nidsS05/attacks/seely-RTMworm-89.html"
+        }
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Donn",
+          "lastName": "Seeley"
+        }
+      ],
+      "date": "January 30\u2013February 3, 1989",
+      "dateAdded": "2017-10-30 19:04:48",
+      "dateModified": "2017-11-03 19:06:17",
+      "itemID": 12181,
+      "itemType": "conferencePaper",
+      "pages": "287\u2013304",
+      "place": "San Diego, California, USA",
+      "proceedingsTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "publicationTitle": "Proceedings of the Winter 1989 USENIX Conference",
+      "publisher": "USENIX",
+      "title": "A tour of the worm"
+    },
+    {
+      "attachments": [
+        {
+          "mimeType": "application/pdf",
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "title": "Attachment"
+        }
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
+        }
+      ],
+      "date": "June 18\u201323, 2017",
+      "itemType": "journalArticle",
+      "pages": "493\u2013518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "title": "747: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62"
+    },
+    {
+      "attachments": [
+        {
+          "mimeType": "application/pdf",
+          "path": "attachments/Adams_Huaynaputina.pdf",
+          "title": "Attachment"
+        }
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
+        }
+      ],
+      "date": "22-26 June 2015",
+      "itemType": "journalArticle",
+      "pages": "493\u2013518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
+      "title": "746: The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62"
+    },
+    {
+      "DOI": "10.1145/637069.637096",
+      "abstractNote": "In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.",
+      "accessDate": "2017-10-20 19:37:10",
+      "attachments": [
+        {
+          "accessDate": "2017-10-20 19:47:23",
+          "charset": "",
+          "contentType": "application/pdf",
           "dateAdded": "2017-10-20 19:47:23",
           "dateModified": "2017-10-20 19:47:24",
-          "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
-          "uniqueFields": {
-            "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-            "accessDate": "2017-10-20 19:47:23",
-            "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
-            "linkMode": 1,
-            "mimeType": "application/pdf"
-          },
+          "filename": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
           "itemID": 12104,
+          "itemType": "attachment",
           "key": "4AKSDDN5",
           "libraryID": null,
-          "sourceItemKey": "NBDZHC39",
-          "seeAlso": [
-
-          ],
+          "linkMode": 1,
+          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf",
           "mimeType": "application/pdf",
-          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\4AKSDDN5\\b8754398c87c719729ef33cbb6d145ccae2f.pdf"
+          "parentItem": "NBDZHC39",
+          "relations": {},
+          "seeAlso": [],
+          "sourceItemKey": "NBDZHC39",
+          "tags": [],
+          "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+          "uniqueFields": {
+            "accessDate": "2017-10-20 19:47:23",
+            "linkMode": 1,
+            "mimeType": "application/pdf",
+            "title": "b8754398c87c719729ef33cbb6d145ccae2f.pdf",
+            "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf"
+          },
+          "uri": "http://zotero.org/users/10604/items/4AKSDDN5",
+          "url": "https://ai2-s2-pdfs.s3.amazonaws.com/b321/b8754398c87c719729ef33cbb6d145ccae2f.pdf"
         },
         {
-          "itemType": "attachment",
-          "url": "https://hci.stanford.edu/winograd/papers/language-action.html",
           "accessDate": "2017-10-20 19:46:16",
-          "title": "Language/Action Perspective",
-          "parentItem": "NBDZHC39",
-          "linkMode": 3,
-          "contentType": "text/html",
           "charset": "windows-1252",
-          "tags": [
-
-          ],
-          "relations": {
-          },
+          "contentType": "text/html",
           "dateAdded": "2017-10-20 19:46:16",
           "dateModified": "2017-10-20 19:46:16",
-          "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
-          "uniqueFields": {
-            "url": "https://hci.stanford.edu/winograd/papers/language-action.html",
-            "accessDate": "2017-10-20 19:46:16",
-            "title": "Language/Action Perspective",
-            "linkMode": 3,
-            "mimeType": "text/html"
-          },
           "itemID": 12105,
+          "itemType": "attachment",
           "key": "DJPHEG7J",
           "libraryID": null,
+          "linkMode": 3,
+          "mimeType": "text/html",
+          "parentItem": "NBDZHC39",
+          "relations": {},
+          "seeAlso": [],
           "sourceItemKey": "NBDZHC39",
-          "seeAlso": [
-
-          ],
-          "mimeType": "text/html"
+          "tags": [],
+          "title": "Language/Action Perspective",
+          "uniqueFields": {
+            "accessDate": "2017-10-20 19:46:16",
+            "linkMode": 3,
+            "mimeType": "text/html",
+            "title": "Language/Action Perspective",
+            "url": "https://hci.stanford.edu/winograd/papers/language-action.html"
+          },
+          "uri": "http://zotero.org/users/10604/items/DJPHEG7J",
+          "url": "https://hci.stanford.edu/winograd/papers/language-action.html"
         },
         {
-          "itemType": "attachment",
-          "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72",
           "accessDate": "2017-10-20 19:38:08",
-          "title": "p203-winograd.pdf",
-          "parentItem": "NBDZHC39",
-          "linkMode": 1,
-          "contentType": "application/pdf",
           "charset": "",
-          "filename": "p203-winograd.pdf",
-          "tags": [
-
-          ],
-          "relations": {
-          },
+          "contentType": "application/pdf",
           "dateAdded": "2017-10-20 19:38:08",
           "dateModified": "2017-10-20 19:38:09",
-          "uri": "http://zotero.org/users/10604/items/U7EAP63X",
-          "uniqueFields": {
-            "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72",
-            "accessDate": "2017-10-20 19:38:08",
-            "title": "p203-winograd.pdf",
-            "linkMode": 1,
-            "mimeType": "application/pdf"
-          },
+          "filename": "p203-winograd.pdf",
           "itemID": 12106,
+          "itemType": "attachment",
           "key": "U7EAP63X",
           "libraryID": null,
-          "sourceItemKey": "NBDZHC39",
-          "seeAlso": [
-
-          ],
+          "linkMode": 1,
+          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf",
           "mimeType": "application/pdf",
-          "localPath": "C:\\Users\\mainland\\Zotero\\storage\\U7EAP63X\\p203-winograd.pdf"
+          "parentItem": "NBDZHC39",
+          "relations": {},
+          "seeAlso": [],
+          "sourceItemKey": "NBDZHC39",
+          "tags": [],
+          "title": "p203-winograd.pdf",
+          "uniqueFields": {
+            "accessDate": "2017-10-20 19:38:08",
+            "linkMode": 1,
+            "mimeType": "application/pdf",
+            "title": "p203-winograd.pdf",
+            "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72"
+          },
+          "uri": "http://zotero.org/users/10604/items/U7EAP63X",
+          "url": "http://delivery.acm.org/10.1145/640000/637096/p203-winograd.pdf?ip=144.118.77.80&id=637096&acc=ACTIVE%20SERVICE&key=A792924B58C015C1%2EE0B7266DB2A396BF%2E2531B72D62A5BC18%2E4D4702B0C3E38B35&CFID=821046436&CFTOKEN=55182682&__acm__=1508528581_99ba188ed5944441d078a3d7a12bde72"
         }
       ],
-      "itemID": 12093,
-      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)"
-    },
-    {
-      "itemType": "conferencePaper",
-      "pages": "103-108",
-      "date": "29 June-1 July 2011",
-      "DOI": "10.1109/FISTS.2011.5973643",
-      "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
-      "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
-      "title": "Identifying faulty traffic detectors with Floating Car Data",
       "creators": [
         {
-          "name": "P. Widhalm",
-          "creatorType": "author"
-        },
-        {
-          "name": "H. Koller",
-          "creatorType": "author"
-        },
-        {
-          "name": "W. Ponweiser",
-          "creatorType": "author"
+          "creatorType": "author",
+          "firstName": "Terry",
+          "lastName": "Winograd"
         }
       ],
+      "date": "December 3-5, 1986",
+      "dateAdded": "2017-10-20 19:37:10",
+      "dateModified": "2017-10-20 19:37:59",
+      "itemID": 12093,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "ACM Digital Library",
+      "pages": "203\u2013220",
+      "place": "Austin, TX",
+      "proceedingsTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
+      "publicationTitle": "Proceedings of the 1986 ACM Conference on Computer-supported Cooperative Work (CSCW '86)",
+      "publisher": "ACM",
+      "title": "A language/action perspective on the design of cooperative work",
+      "url": "http://doi.acm.org/10.1145/637069.637096"
+    },
+    {
+      "DOI": "10.1109/FISTS.2011.5973643",
+      "abstractNote": "Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.",
+      "attachments": [],
+      "citekey": "pwidhalmIdentifyingFaultyTraffic29",
+      "conferenceName": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "P. Widhalm"
+        },
+        {
+          "creatorType": "author",
+          "name": "H. Koller"
+        },
+        {
+          "creatorType": "author",
+          "name": "W. Ponweiser"
+        }
+      ],
+      "date": "29 June-1 July 2011",
+      "dateAdded": "2018-09-07T17:41:29Z",
+      "dateModified": "2018-09-07T17:42:55Z",
+      "itemID": 504,
+      "itemType": "conferencePaper",
+      "notes": [],
+      "pages": "103-108",
+      "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems",
+      "relations": [],
       "tags": [
         "road traffic",
         "Data models",
@@ -344,36 +341,8 @@
         "Training data",
         "Vehicles"
       ],
-      "relations": [],
-      "dateAdded": "2018-09-07T17:41:29Z",
-      "dateModified": "2018-09-07T17:42:55Z",
-      "uri": "http://zotero.org/groups/1844905/items/UV8GW56Y",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "P. Widhalm et al_2011_Identifying faulty traffic detectors with Floating Car Data.pdf",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2018-09-07T17:42:18Z",
-          "dateModified": "2018-09-07T17:42:18Z",
-          "uri": "http://zotero.org/groups/1844905/items/RKUG8YTJ"
-        }
-      ],
-      "notes": [],
-      "itemID": 504,
-      "citekey": "pwidhalmIdentifyingFaultyTraffic29",
-      "publicationTitle": "2011 IEEE Forum on Integrated and Sustainable Transportation Systems"
+      "title": "Identifying faulty traffic detectors with Floating Car Data",
+      "uri": "http://zotero.org/groups/1844905/items/UV8GW56Y"
     }
-  ],
-  "config": {
-    "label": "BetterBibTeX JSON",
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    }
-  },
-  "collections": {
-  }
+  ]
 }

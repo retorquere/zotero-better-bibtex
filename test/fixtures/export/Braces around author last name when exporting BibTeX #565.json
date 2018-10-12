@@ -1,103 +1,115 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.75",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "off",
       "autoExportIdleWait": 10,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[auth5:lower][shortyear]",
       "citekeyFold": false,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
+      "citekeyFormat": "[auth5:lower][shortyear]",
       "csquotes": "",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "change",
+      "postscript": "",
       "preserveBibTeXVariables": false,
+      "quickCopyMode": "latex",
       "skipFields": "keywords,file,URL",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "quickCopyMode": "latex",
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.75"
   },
   "items": [
     {
+      "DOI": "10.1007/s10988-006-9008-0",
+      "ISSN": "0165-0157, 1573-0549",
+      "accessDate": "2012-10-31 11:47:24",
+      "attachments": [
+        {
+          "mimeType": "application/pdf",
+          "path": "/Users/melania/Library/Application Support/Firefox/Profiles/jdv2s4sq.default/zotero/storage/4FA9IGJW/kennedy2007_vagueness and.pdf",
+          "title": "kennedy2007_vagueness and.pdf",
+          "url": "http://semantics.uchicago.edu/kennedy/docs/vg-epub.pdf"
+        }
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Christopher",
+          "lastName": "Kennedy"
+        }
+      ],
+      "date": "2007",
+      "issue": "1",
+      "itemID": 115,
       "itemType": "journalArticle",
+      "libraryCatalog": "CrossRef",
+      "pages": "1\u201345",
+      "publicationTitle": "Linguistics and Philosophy",
+      "shortTitle": "Vagueness and grammar",
       "tags": [
         "adjectives",
         "degree",
         "gradability",
         "vagueness"
       ],
-      "url": "http://www.springerlink.com/index/10.1007/s10988-006-9008-0",
-      "volume": "30",
-      "issue": "1",
-      "pages": "1–45",
-      "publicationTitle": "Linguistics and Philosophy",
-      "ISSN": "0165-0157, 1573-0549",
-      "date": "2007",
-      "DOI": "10.1007/s10988-006-9008-0",
-      "accessDate": "2012-10-31 11:47:24",
-      "libraryCatalog": "CrossRef",
       "title": "Vagueness and grammar: The semantics of relative and absolute gradable adjectives",
-      "shortTitle": "Vagueness and grammar",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Kennedy",
-          "firstName": "Christopher"
-        }
-      ],
-      "attachments": [
-        {
-          "path": "/Users/melania/Library/Application Support/Firefox/Profiles/jdv2s4sq.default/zotero/storage/4FA9IGJW/kennedy2007_vagueness and.pdf",
-          "title": "kennedy2007_vagueness and.pdf",
-          "mimeType": "application/pdf",
-          "url": "http://semantics.uchicago.edu/kennedy/docs/vg-epub.pdf"
-        }
-      ],
-      "itemID": 115
+      "url": "http://www.springerlink.com/index/10.1007/s10988-006-9008-0",
+      "volume": "30"
     },
     {
-      "itemType": "thesis",
-      "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf",
-      "date": "1994",
       "accessDate": "2014-04-20 20:08:43",
-      "libraryCatalog": "Google Scholar",
-      "university": "University of Massachusetts",
-      "title": "Restrictions on Quantifier Domains",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "von Fintel",
-          "firstName": "Kai"
-        }
-      ],
       "attachments": [
         {
+          "mimeType": "application/pdf",
           "path": "/Users/melania/Library/Application Support/Firefox/Profiles/jdv2s4sq.default/zotero/storage/66FDNTK5/von fintel1994_restrictions.pdf",
           "title": "von fintel1994_restrictions.pdf",
-          "mimeType": "application/pdf",
           "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf"
         }
       ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Kai",
+          "lastName": "von Fintel"
+        }
+      ],
+      "date": "1994",
       "itemID": 227,
-      "publisher": "University of Massachusetts"
+      "itemType": "thesis",
+      "libraryCatalog": "Google Scholar",
+      "publisher": "University of Massachusetts",
+      "title": "Restrictions on Quantifier Domains",
+      "university": "University of Massachusetts",
+      "url": "http://www.semanticsarchive.net/Archive/jA3N2IwN/fintel-1994-thesis.pdf"
     },
     {
+      "abstractNote": "It is a well-known but little-studied fact that evaluativeadverbs - adverbs indicating the attitude of the speaker towards theinformation she is conveying - can modify degree ('incredibly tall','ridiculously expensive'...). This thesis offers a syntactosemanticaccount of evaluative degree modi fication of both gradable adjectivesand gradable nouns.Following Morzycki (2004), I propose that evaluative degreemodi fication involves a covert operator (which I will call EVAL);however, my proposal differs from that of Morzycki in several crucialrespects. Most importantly, I argue that evaluative degreeconstructions should not be analysed as embedded exclamatives.Furthermore, I show how their syntactic behaviour illuminates theirsemantic composition, using evidence from different phenomena in bothEnglish and Dutch.Subsequently, I examine the linguistic evidence for the gradability ofcertain nouns, like 'idiot', 'nerd', 'genius', 'Barbie dollenthusiast', and 'weirdo', and conclude that they, like gradableadjectives, have a degree argument. I show how this class of gradablenouns may be defined in prototype-theoretic terms. Morzycki (2009)has shown that gradable nouns can be modified by size adjectives like'big' and 'enormous'; I extend his account by including degreemodification by evaluative adjectives.Finally, several suggestions for further research are offered.",
+      "attachments": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hanna",
+          "lastName": "de Vries"
+        }
+      ],
+      "date": "2010",
+      "itemID": 547,
       "itemType": "thesis",
+      "numPages": "80",
+      "publisher": "Universiteit Utrecht",
       "tags": [
         "adjectives",
         "degree",
@@ -106,79 +118,59 @@
         "modification",
         "nouns"
       ],
-      "date": "2010",
-      "type": "Master's Thesis",
-      "university": "Universiteit Utrecht",
-      "abstractNote": "It is a well-known but little-studied fact that evaluativeadverbs - adverbs indicating the attitude of the speaker towards theinformation she is conveying - can modify degree ('incredibly tall','ridiculously expensive'...). This thesis offers a syntactosemanticaccount of evaluative degree modi fication of both gradable adjectivesand gradable nouns.Following Morzycki (2004), I propose that evaluative degreemodi fication involves a covert operator (which I will call EVAL);however, my proposal differs from that of Morzycki in several crucialrespects. Most importantly, I argue that evaluative degreeconstructions should not be analysed as embedded exclamatives.Furthermore, I show how their syntactic behaviour illuminates theirsemantic composition, using evidence from different phenomena in bothEnglish and Dutch.Subsequently, I examine the linguistic evidence for the gradability ofcertain nouns, like 'idiot', 'nerd', 'genius', 'Barbie dollenthusiast', and 'weirdo', and conclude that they, like gradableadjectives, have a degree argument. I show how this class of gradablenouns may be defined in prototype-theoretic terms. Morzycki (2009)has shown that gradable nouns can be modified by size adjectives like'big' and 'enormous'; I extend his account by including degreemodification by evaluative adjectives.Finally, several suggestions for further research are offered.",
       "title": "Evaluative Degree Modification of Adjectives and Nouns",
-      "numPages": "80",
+      "type": "Master's Thesis",
+      "university": "Universiteit Utrecht"
+    },
+    {
+      "ISBN": "978-90-6831-748-0",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "de Vries",
-          "firstName": "Hanna"
+          "firstName": "Dani\u00e8le",
+          "lastName": "van de Velde"
         }
       ],
-      "attachments": [
-        {
-          "path": "/Users/melania/Library/Application Support/Firefox/Profiles/jdv2s4sq.default/zotero/storage/29S5BTCS/de vries2010_evaluative.pdf",
-          "title": "de vries2010_evaluative.pdf",
-          "mimeType": "application/pdf"
-        }
-      ],
-      "itemID": 547,
-      "type": "Master's Thesis",
-      "publisher": "Universiteit Utrecht"
-    },
-    {
+      "date": "1995",
+      "itemID": 1638,
       "itemType": "book",
+      "language": "French",
+      "libraryCatalog": "Amazon.com",
       "place": "Paris",
       "publisher": "Peeters",
-      "ISBN": "978-90-6831-748-0",
-      "date": "1995",
-      "libraryCatalog": "Amazon.com",
-      "language": "French",
-      "title": "Le spectre nominal. Des noms de matières aux noms d'abstractions",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "van de Velde",
-          "firstName": "Danièle"
-        }
-      ],
-      "itemID": 1638
+      "title": "Le spectre nominal. Des noms de mati\u00e8res aux noms d'abstractions"
     },
     {
-      "itemType": "journalArticle",
-      "url": "http://link.springer.com.are.uab.cat/article/10.1023/A%3A1005916004600",
-      "volume": "16",
-      "issue": "2",
-      "pages": "347–385",
-      "publicationTitle": "Natural Language & Linguistic Theory",
-      "ISSN": "0167-806X, 1573-0859",
-      "date": "1998",
-      "journalAbbreviation": "Natural Language & Linguistic Theory",
       "DOI": "10.1023/A:1005916004600",
+      "ISSN": "0167-806X, 1573-0859",
       "accessDate": "2015-10-09 11:08:12",
-      "libraryCatalog": "link.springer.com.are.uab.cat",
-      "language": "en",
-      "title": "Aspect Shift and Coercion",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "de Swart",
-          "firstName": "Henriëtte"
-        }
-      ],
       "attachments": [
         {
+          "mimeType": "application/pdf",
           "path": "/Users/melania/Library/Application Support/Firefox/Profiles/jdv2s4sq.default/zotero/storage/FBWTP96A/swartaspect shift.pdf",
           "title": "swartaspect shift.pdf",
-          "mimeType": "application/pdf",
           "url": "http://link.springer.com.are.uab.cat/content/pdf/10.1023%2FA%3A1005916004600.pdf"
         }
       ],
-      "itemID": 2000
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Henri\u00ebtte",
+          "lastName": "de Swart"
+        }
+      ],
+      "date": "1998",
+      "issue": "2",
+      "itemID": 2000,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Natural Language & Linguistic Theory",
+      "language": "en",
+      "libraryCatalog": "link.springer.com.are.uab.cat",
+      "pages": "347\u2013385",
+      "publicationTitle": "Natural Language & Linguistic Theory",
+      "title": "Aspect Shift and Coercion",
+      "url": "http://link.springer.com.are.uab.cat/article/10.1023/A%3A1005916004600",
+      "volume": "16"
     }
   ]
 }

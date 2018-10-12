@@ -1,159 +1,149 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "release": {
+      "BetterBibTeX": "5.0.197.emile.titanarum",
       "Zotero": {
-        "version": "5.0.55",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
         "appName": "Zotero",
         "appVersion": "5.0.55",
+        "isJurisM": false,
         "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.197.emile.titanarum"
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.55"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "patent",
-      "place": "Place",
-      "pages": "247–261",
-      "assignee": "Assignee",
-      "priorityNumbers": "Priority Numbers",
-      "references": "References",
-      "legalStatus": "Legal Status",
-      "country": "Country",
       "applicationNumber": "Application Number",
-      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
-      "issuingAuthority": "Issueing Authority",
-      "filingDate": "0000-00-00 Filing date",
+      "assignee": "Assignee",
+      "attachments": [],
+      "citekey": "InventorcombinatorialproblemstabilityIssueDate",
+      "country": "Country",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Some",
-          "lastName": "Inventor",
-          "creatorType": "inventor"
+          "lastName": "Inventor"
         },
         {
+          "creatorType": "attorneyAgent",
           "firstName": "Some",
-          "lastName": "Attorney/Agent",
-          "creatorType": "attorneyAgent"
+          "lastName": "Attorney/Agent"
         },
         {
+          "creatorType": "contributor",
           "firstName": "Some",
-          "lastName": "Contributer",
-          "creatorType": "contributor"
+          "lastName": "Contributer"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "Issue Date",
       "dateAdded": "2018-03-04T10:57:40Z",
       "dateModified": "2018-09-05T06:56:46Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS",
-      "attachments": [],
+      "filingDate": "0000-00-00 Filing date",
+      "issuingAuthority": "Issueing Authority",
+      "itemID": 32,
+      "itemType": "patent",
+      "legalStatus": "Legal Status",
       "notes": [
         "<p>MR 46:7018</p>"
       ],
-      "itemID": 32,
-      "citekey": "InventorcombinatorialproblemstabilityIssueDate",
-      "date": "Issue Date",
-      "number": "Patent Number"
+      "number": "Patent Number",
+      "pages": "247\u2013261",
+      "place": "Place",
+      "priorityNumbers": "Priority Numbers",
+      "references": "References",
+      "relations": [],
+      "tags": [],
+      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS"
     },
     {
-      "itemType": "patent",
-      "url": "http://www.freepatentsonline.com/DE10361215.html",
+      "abstractNote": "Die\nErfindung betrifft eine elektrische Einrichtung mit einem Generator\n12, insbesondere f\u00fcr die\nVerwendung in dem Bordnetz 13 eines Kraftfahrzeugs, mit einem Regler\n12B f\u00fcr\ndie Regelung der Generatorspannung. Bei der Einrichtung sind ein\nBereich 30 f\u00fcr\ndie Regelung vorgesehen, in dem eine Spannungsregelung durchgef\u00fchrt wird,\nund Bereiche 31, 32, in denen eine Momentenregelung durchgef\u00fchrt wird.\nWeiterhin betrifft die Erfindung Verfahren f\u00fcr den Betrieb einer solchen\nEinrichtung.",
       "accessDate": "2018-09-05T14:27:59Z",
-      "assignee": "DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (München, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)",
-      "abstractNote": "Die\nErfindung betrifft eine elektrische Einrichtung mit einem Generator\n12, insbesondere für die\nVerwendung in dem Bordnetz 13 eines Kraftfahrzeugs, mit einem Regler\n12B für\ndie Regelung der Generatorspannung. Bei der Einrichtung sind ein\nBereich 30 für\ndie Regelung vorgesehen, in dem eine Spannungsregelung durchgeführt wird,\nund Bereiche 31, 32, in denen eine Momentenregelung durchgeführt wird.\nWeiterhin betrifft die Erfindung Verfahren für den Betrieb einer solchen\nEinrichtung.",
       "applicationNumber": "DE10361215A",
-      "title": "Elektrische Einrichtung und Betriebsverfahren",
-      "filingDate": "2003-12-24 2003-12-24",
+      "assignee": "DaimlerChrysler AG (Stuttgart, 70567, DE) Bayerische Motoren Werke AG (M\u00fcnchen, 80809, DE) Robert Bosch GmbH (Stuttgart, 70469, DE)",
+      "attachments": [],
+      "citekey": "LaufenbergElektrischeEinrichtungund2005",
       "creators": [
         {
+          "creatorType": "inventor",
           "firstName": "Xaver",
-          "lastName": "Laufenberg",
-          "creatorType": "inventor"
+          "lastName": "Laufenberg"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Dominique",
-          "lastName": "Eynius",
-          "creatorType": "inventor"
+          "lastName": "Eynius"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Helmut",
-          "lastName": "Suelzle",
-          "creatorType": "inventor"
+          "lastName": "Suelzle"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Stephan",
-          "lastName": "Usbeck",
-          "creatorType": "inventor"
+          "lastName": "Usbeck"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Matthias",
-          "lastName": "Spaeth",
-          "creatorType": "inventor"
+          "lastName": "Spaeth"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Miriam",
-          "lastName": "Neuser-Hoffmann",
-          "creatorType": "inventor"
+          "lastName": "Neuser-Hoffmann"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Christian",
-          "lastName": "Myrzik",
-          "creatorType": "inventor"
+          "lastName": "Myrzik"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Manfred",
-          "lastName": "Schmid",
-          "creatorType": "inventor"
+          "lastName": "Schmid"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Franz",
-          "lastName": "Nietfeld",
-          "creatorType": "inventor"
+          "lastName": "Nietfeld"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Alexander",
-          "lastName": "Thiel",
-          "creatorType": "inventor"
+          "lastName": "Thiel"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Harald",
-          "lastName": "Braun",
-          "creatorType": "inventor"
+          "lastName": "Braun"
         },
         {
+          "creatorType": "inventor",
           "firstName": "Norbert",
-          "lastName": "Ebner",
-          "creatorType": "inventor"
+          "lastName": "Ebner"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "2005-07-28",
       "dateAdded": "2018-09-05T14:27:59Z",
       "dateModified": "2018-09-05T14:27:59Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZC2UZHCP",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Snaptshot",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2018-09-05T14:28:00Z",
-          "dateModified": "2018-09-05T14:28:00Z",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/KTEAECRA"
-        }
-      ],
-      "notes": [],
+      "filingDate": "2003-12-24 2003-12-24",
       "itemID": 100,
-      "citekey": "LaufenbergElektrischeEinrichtungund2005",
-      "date": "2005-07-28",
-      "number": "DE10361215"
+      "itemType": "patent",
+      "notes": [],
+      "number": "DE10361215",
+      "relations": [],
+      "tags": [],
+      "title": "Elektrische Einrichtung und Betriebsverfahren",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZC2UZHCP",
+      "url": "http://www.freepatentsonline.com/DE10361215.html"
     }
   ]
 }

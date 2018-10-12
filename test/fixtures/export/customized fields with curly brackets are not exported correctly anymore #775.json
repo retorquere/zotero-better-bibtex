@@ -1,38 +1,38 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.24",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.13",
-        "locale": "de",
-        "appName": "Zotero",
-        "appVersion": "5.0.24"
-      },
-      "BetterBibTeX": "5.0.32"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "itemObserverDelay": 100,
-      "citeCommand": "cite",
-      "citekeyFormat": "[auth:fold:lower]_[Title:nopunct:skipwords:select,1,1:lower]_[year]",
-      "citekeyFold": true,
-      "DOIandURL": "both",
+      "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": true,
+      "bibtexParticleNoOp": false,
       "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth:fold:lower]_[Title:nopunct:skipwords:select,1,1:lower]_[year]",
       "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "parseParticles": true,
+      "postscript": "",
       "preserveBibTeXVariables": false,
-      "skipFields": [
-
-      ],
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -157,42 +157,42 @@
         "zu",
         "zum"
       ],
-      "warnBulkModify": 10,
-      "postscript": "",
-      "jabrefFormat": 0,
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": true,
-      "biblatexExtendedDateFormat": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "qualityReport": false,
       "suppressTitleCase": false,
-      "parseParticles": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.32",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.24",
+        "locale": "de",
+        "oscpu": "Intel Mac OS X 10.13",
+        "platform": "MacIntel",
+        "version": "5.0.24"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "book",
-      "place": "[Marburg]",
-      "publisher": "Krieger",
-      "date": "1789",
-      "extra": "bibtex[options=pseudoauthor=true] \nbibtex: knoblauch_dialogen_1789-1",
-      "language": "german",
-      "title": "Dialogen über einige Gegenstände der politischen Oekonomie und Philosophie",
-      "shortTitle": "Dialogen",
-      "numPages": "72",
+      "attachments": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Karl von",
-          "lastName": "Knoblauch",
-          "creatorType": "author"
+          "lastName": "Knoblauch"
         }
       ],
+      "date": "1789",
+      "dateAdded": "2014-01-28 12:51:16",
+      "dateModified": "2017-04-25 11:54:13",
+      "extra": "bibtex[options=pseudoauthor=true] \nbibtex: knoblauch_dialogen_1789-1",
+      "itemID": 423,
+      "itemType": "book",
+      "language": "german",
+      "numPages": "72",
+      "place": "[Marburg]",
+      "publisher": "Krieger",
+      "shortTitle": "Dialogen",
       "tags": [
         {
           "tag": "Quelle",
@@ -211,42 +211,7 @@
           "type": 0
         }
       ],
-      "dateAdded": "2014-01-28 12:51:16",
-      "dateModified": "2017-04-25 11:54:13",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Dialogen_über_einige_Gegenstände_der_p.pdf",
-          "parentItem": "CWRTF2J8",
-          "linkMode": 0,
-          "contentType": "application/pdf",
-          "charset": "",
-          "filename": "Dialogen_über_einige_Gegenstände_der_p.pdf",
-          "tags": [
-
-          ],
-          "relations": {
-          },
-          "dateAdded": "2014-03-04 13:18:23",
-          "dateModified": "2014-03-04 13:18:23",
-          "uri": "http://zotero.org/users/1772795/items/BDQ8IKHS",
-          "uniqueFields": {
-            "title": "Dialogen_über_einige_Gegenstände_der_p.pdf",
-            "linkMode": 0,
-            "mimeType": "application/pdf"
-          },
-          "itemID": 1240,
-          "key": "BDQ8IKHS",
-          "libraryID": null,
-          "sourceItemKey": "CWRTF2J8",
-          "seeAlso": [
-
-          ],
-          "mimeType": "application/pdf",
-          "localPath": "/Users/ml/Zotero/storage/BDQ8IKHS/Dialogen_über_einige_Gegenstände_der_p.pdf"
-        }
-      ],
-      "itemID": 423
+      "title": "Dialogen \u00fcber einige Gegenst\u00e4nde der politischen Oekonomie und Philosophie"
     }
   ]
 }

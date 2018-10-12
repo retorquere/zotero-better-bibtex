@@ -1,45 +1,43 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.47m37",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.13",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.47m37",
-        "isZotero": false,
-        "isJurisM": true
-      },
-      "BetterBibTeX": "5.0.147.7053"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "pandoc",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": true,
-      "citekeyFormat": "[auth.etal][veryshorttitle][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
       "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "autoPin": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth.etal][veryshorttitle][year]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true,
+      "scrubDatabase": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -164,64 +162,35 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
+      "strings": "",
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false,
-      "autoPin": false,
-      "kuroshiro": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.147.7053",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.47m37",
+        "isJurisM": true,
+        "isZotero": false,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.13",
+        "platform": "MacIntel",
+        "version": "5.0.47m37"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "bookSection",
-      "multi": {
-        "main": {
-          "place": "ja",
-          "publisher": "ja",
-          "title": "ja"
-        },
-        "_keys": {
-          "place": {
-            "ja-alalc97": "Nagoya"
-          },
-          "publisher": {
-            "ja-alalc97": "名古屋大学出版会"
-          },
-          "title": {
-            "ja-alalc97": "Nihongata-haigai-shugi wo meguru toi",
-            "en": "Questions about Japanese Xenophobia"
-          },
-          "bookTitle": {
-            "ja-alalc97": "Nihon-gata haigai shugi: Zaitokukai, gaikokujin sanseiken, Higashi Ajia chiseigaku"
-          }
-        }
-      },
-      "place": "名古屋",
-      "publisher": "Nagoya Daigaku Shuppankai",
-      "pages": "9-28",
       "ISBN": "978-4-8158-0763-4",
-      "date": "2014",
+      "attachments": [],
+      "bookTitle": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9: \u5728\u7279\u4f1a\u30fb\u5916\u56fd\u4eba\u53c2\u653f\u6a29\u30fb\u6771\u30a2\u30b8\u30a2\u5730\u653f\u5b66",
       "callNumber": "HN730.Z9 R3244 2014",
-      "libraryCatalog": "Library of Congress ISBN",
-      "title": "日本型排外主義をめぐる問い",
-      "bookTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
       "creators": [
         {
-          "firstName": "直人",
-          "lastName": "樋口",
           "creatorType": "author",
+          "firstName": "\u76f4\u4eba",
+          "lastName": "\u6a0b\u53e3",
           "multi": {
             "_key": {
               "ja-alalc97": {
@@ -233,6 +202,40 @@
           }
         }
       ],
+      "date": "2014",
+      "dateAdded": "2018-06-01 03:17:45",
+      "dateModified": "2018-06-01 03:28:46",
+      "itemID": 9663,
+      "itemType": "bookSection",
+      "libraryCatalog": "Library of Congress ISBN",
+      "multi": {
+        "_keys": {
+          "bookTitle": {
+            "ja-alalc97": "Nihon-gata haigai shugi: Zaitokukai, gaikokujin sanseiken, Higashi Ajia chiseigaku"
+          },
+          "place": {
+            "ja-alalc97": "Nagoya"
+          },
+          "publisher": {
+            "ja-alalc97": "\u540d\u53e4\u5c4b\u5927\u5b66\u51fa\u7248\u4f1a"
+          },
+          "title": {
+            "en": "Questions about Japanese Xenophobia",
+            "ja-alalc97": "Nihongata-haigai-shugi wo meguru toi"
+          }
+        },
+        "main": {
+          "place": "ja",
+          "publisher": "ja",
+          "title": "ja"
+        }
+      },
+      "notes": [],
+      "pages": "9-28",
+      "place": "\u540d\u53e4\u5c4b",
+      "publicationTitle": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9: \u5728\u7279\u4f1a\u30fb\u5916\u56fd\u4eba\u53c2\u653f\u6a29\u30fb\u6771\u30a2\u30b8\u30a2\u5730\u653f\u5b66",
+      "publisher": "Nagoya Daigaku Shuppankai",
+      "seeAlso": [],
       "tags": [
         {
           "tag": "Japan",
@@ -251,31 +254,7 @@
           "type": 1
         }
       ],
-      "dateAdded": "2018-06-01 03:17:45",
-      "dateModified": "2018-06-01 03:28:46",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "樋口_2014_日本型排外主義をめぐる問い.pdf",
-          "tags": [
-
-          ],
-          "dateAdded": "2018-06-01 03:21:47",
-          "dateModified": "2018-06-01 03:21:47",
-          "seeAlso": [
-
-          ],
-          "mimeType": "application/pdf"
-        }
-      ],
-      "notes": [
-
-      ],
-      "itemID": 9663,
-      "publicationTitle": "日本型排外主義: 在特会・外国人参政権・東アジア地政学",
-      "seeAlso": [
-
-      ]
+      "title": "\u65e5\u672c\u578b\u6392\u5916\u4e3b\u7fa9\u3092\u3081\u3050\u308b\u554f\u3044"
     }
   ]
 }

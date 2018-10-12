@@ -1,35 +1,28 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
+      "Export collections": false,
       "exportFileData": false,
-      "exportNotes": false,
-      "Export collections": false
+      "exportNotes": false
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
     }
   },
   "items": [
     {
-      "itemType": "book",
-      "url": "http://ptolemy.org/books/Systems",
-      "publisher": "Ptolemy.org",
+      "attachments": [],
       "date": "2014",
       "extra": "bibtex: \nbiblatexdata[ptolemaeus:14:systemdesigneditor=Claudius Ptolemaeus]",
+      "itemType": "book",
+      "publisher": "Ptolemy.org",
       "title": "System design, modeling, and simulation using Ptolemy II",
-      "attachments": [
-        {
-          "path": "/home/abhishek/.zotero/zotero/41my9n7e.default/zotero/storage/3ICED3XD/ModelingTimedSystems.pdf",
-          "title": "ModelingTimedSystems.pdf",
-          "mimeType": "application/pdf"
-        }
-      ]
+      "url": "http://ptolemy.org/books/Systems"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

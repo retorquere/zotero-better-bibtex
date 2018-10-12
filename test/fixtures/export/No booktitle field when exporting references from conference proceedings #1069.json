@@ -1,19 +1,11 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.55",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.1"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -36,7 +28,6 @@
       "citekeyFormat": "[auth:lower][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -50,7 +41,6 @@
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
       "relativeFilePaths": false,
       "scrubDatabase": false,
       "skipFields": [
@@ -192,73 +182,61 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true,
-      "exportFileData": false
+    "release": {
+      "BetterBibTeX": "5.1.1",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.55",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.55"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "conferencePaper",
-      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Kendall_PoseNet_A_Convolutional_ICCV_2015_paper.html",
-      "pages": "2938-2946",
-      "date": "2015",
       "accessDate": "2018-10-06T03:54:36Z",
-      "libraryCatalog": "www.cv-foundation.org",
+      "attachments": [],
+      "citekey": "kendall2015",
       "conferenceName": "Proceedings of the IEEE International Conference on Computer Vision",
-      "title": "PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization",
-      "shortTitle": "PoseNet",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Alex",
-          "lastName": "Kendall",
-          "creatorType": "author"
+          "lastName": "Kendall"
         },
         {
+          "creatorType": "author",
           "firstName": "Matthew",
-          "lastName": "Grimes",
-          "creatorType": "author"
+          "lastName": "Grimes"
         },
         {
+          "creatorType": "author",
           "firstName": "Roberto",
-          "lastName": "Cipolla",
-          "creatorType": "author"
+          "lastName": "Cipolla"
         }
       ],
+      "date": "2015",
+      "dateAdded": "2018-10-06T03:54:36Z",
+      "dateModified": "2018-10-06T05:19:31Z",
+      "itemID": 109,
+      "itemType": "conferencePaper",
+      "libraryCatalog": "www.cv-foundation.org",
+      "notes": [],
+      "pages": "2938-2946",
+      "relations": [],
+      "shortTitle": "PoseNet",
       "tags": [
         "read"
       ],
-      "relations": [],
-      "dateAdded": "2018-10-06T03:54:36Z",
-      "dateModified": "2018-10-06T05:19:31Z",
+      "title": "PoseNet: A Convolutional Network for Real-Time 6-DOF Camera Relocalization",
       "uri": "http://zotero.org/users/5206226/items/VCJPTZRJ",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Full Text PDF",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2018-10-06T03:54:41Z",
-          "dateModified": "2018-10-06T03:54:41Z",
-          "uri": "http://zotero.org/users/5206226/items/4ZVRA94H"
-        },
-        {
-          "itemType": "attachment",
-          "title": "Snapshot",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2018-10-06T03:54:41Z",
-          "dateModified": "2018-10-06T03:54:41Z",
-          "uri": "http://zotero.org/users/5206226/items/V56ZR24J"
-        }
-      ],
-      "notes": [],
-      "itemID": 109,
-      "citekey": "kendall2015"
+      "url": "https://www.cv-foundation.org/openaccess/content_iccv_2015/html/Kendall_PoseNet_A_Convolutional_ICCV_2015_paper.html"
     }
   ]
 }

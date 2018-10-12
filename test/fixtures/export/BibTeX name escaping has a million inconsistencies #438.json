@@ -1,64 +1,62 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.33-4600-1453239236",
+    "options": {
+      "exportFileData": false,
+      "exportFilename": "Exported Items.json",
+      "exportNotes": false
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "bibtexURL": "note",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:nopunct][0]",
       "citekeyFold": true,
-      "DOIandURL": "both",
+      "citekeyFormat": "[auth:nopunct:condense,_][year][journal:nopunct][0]",
       "csquotes": "",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "postscript": "",
       "preserveBibTeXVariables": true,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportPath": "/Users/emile/Downloads",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": false
-    }
-  },
-  "collections": {
+    "release": "1.6.33-4600-1453239236"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "date": "2014",
-      "title": "Why Is Apple Launching a New Version of the iPod?",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Nöme",
-          "firstName": "Name"
+          "firstName": "Name",
+          "lastName": "N\u00f6me"
         }
       ],
-      "itemID": 3
+      "date": "2014",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "title": "Why Is Apple Launching a New Version of the iPod?"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2014",
-      "title": "Why Is Apple Launching a New Version of the iPod?",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "van Gögh",
-          "firstName": "Vincent"
+          "firstName": "Vincent",
+          "lastName": "van G\u00f6gh"
         }
       ],
-      "itemID": 3
+      "date": "2014",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "title": "Why Is Apple Launching a New Version of the iPod?"
     }
   ]
 }

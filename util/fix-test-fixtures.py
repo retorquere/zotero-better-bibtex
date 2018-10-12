@@ -3,6 +3,7 @@
 import json
 import os
 import glob
+import re
 
 class Fixer:
   def __init__(self):
@@ -14,7 +15,7 @@ class Fixer:
       return json.load(_f)
 
   def fix(self, lib):
-    if lib.endswith('.csl.json'):
+    if lib.endswith('.csl.json') or lib.endswith('.schomd.json'):
       pass
       return
 
@@ -39,6 +40,32 @@ class Fixer:
         resave = key
     except KeyError:
       pass
+
+    if '/export/' in lib:
+      try:
+        for key in list(data['config']['options'].keys()):
+          if key in ['exportPath']:
+            del data['config']['options'][key]
+            resave = key
+      except KeyError:
+        pass
+
+    def valid_att(att):
+      if 'url' in att: return True
+      if not 'path' in att: return False
+      if re.match(r'^(\/|([a-z]:\\))', att.get('path'), flags=re.IGNORECASE): return False
+      if not os.path.exists(os.path.join(os.path.dirname(lib), att['path'])): return False
+      return True
+
+    for item in data['items']:
+      attachments = item.get('attachments', [])
+      if '/export/' in lib and len(attachments) != 0:
+
+        attachments = [att for att in attachments if valid_att(att)]
+
+        if attachments != item['attachments']:
+          item['attachments'] = attachments
+          resave = 'attachments'
 
     if not resave: return
 

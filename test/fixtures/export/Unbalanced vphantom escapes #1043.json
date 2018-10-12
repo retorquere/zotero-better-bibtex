@@ -2,44 +2,41 @@
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.53",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.53",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.183"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "citep",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth:lower][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "change",
-      "keyScope": "library",
-      "preserveBibTeXVariables": false,
-      "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
       "autoAbbrev": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/vancouver",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "autoPin": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
       "cacheFlushInterval": 5,
+      "citeCommand": "citep",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth:lower][year]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
+      "debugLog": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "change",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -164,87 +161,57 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false,
-      "autoPin": false,
-      "kuroshiro": false,
       "sorted": false,
-      "debugLog": ""
+      "strings": "",
+      "suppressTitleCase": false,
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.183",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.53",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.53"
+      }
     }
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
-      "volume": "7",
-      "issue": "3",
-      "pages": "957-967",
-      "publicationTitle": "Physical Review A",
-      "date": "March 1, 1973",
-      "extra": "bibtex: mies1973",
-      "journalAbbreviation": "Phys. Rev. A",
       "DOI": "10.1103/PhysRevA.7.957",
+      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj\u2192j\u2032,m\u2032j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and \u03a32 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj\u2192j,\u2212mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12\u2192j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
       "accessDate": "2016-08-03T10:10:47Z",
-      "libraryCatalog": "APS",
-      "abstractNote": "The results of a close-coupling calculation of the fine-structure transitions (j,mj→j′,m′j) are presented for collisions between photons and F(Pj,mj2). The theory is formulated in the perturbed-stationary-state approximation using accurate molecular wave functions for the ground II2 and Σ2 states of HF+. Comparison is made to the predictions of the Born approximation. The magnetic selection rule (j,mj→j,−mj) is strongly violated in the j=32 state and less strongly violated in the j=12 state. It is concluded that the important region of interaction for the j=12→j=32 transition is at short-to-intermediate distances where accurate molecular potentials are required and close-coupling effects are dominant.",
-      "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for ${\\mathrm{H}}^{+}+\\mathrm{F}(^{2}P)$",
-      "shortTitle": "Molecular Theory of Atomic Collisions",
+      "attachments": [],
+      "citekey": "mies1973",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "F. H.",
-          "lastName": "Mies",
-          "creatorType": "author"
+          "lastName": "Mies"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "March 1, 1973",
       "dateAdded": "2016-08-03T10:10:47Z",
       "dateModified": "2016-08-03T10:10:47Z",
-      "uri": "http://zotero.org/users/3057968/items/EBVQ7HQC",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "APS Snapshot",
-          "tags": [
-
-          ],
-          "relations": [
-
-          ],
-          "dateAdded": "2016-08-03T10:10:51Z",
-          "dateModified": "2016-08-03T10:10:51Z",
-          "uri": "http://zotero.org/users/3057968/items/FZU8X6WT"
-        },
-        {
-          "itemType": "attachment",
-          "title": "MiesF-1973-Molecular_Theory_of_Atomic_Collisions.pdf",
-          "tags": [
-
-          ],
-          "relations": [
-
-          ],
-          "dateAdded": "2016-08-03T10:10:50Z",
-          "dateModified": "2016-08-03T10:10:50Z",
-          "uri": "http://zotero.org/users/3057968/items/5G8BQZWD"
-        }
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: mies1973",
+      "issue": "3",
       "itemID": 550,
-      "citekey": "mies1973"
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Phys. Rev. A",
+      "libraryCatalog": "APS",
+      "notes": [],
+      "pages": "957-967",
+      "publicationTitle": "Physical Review A",
+      "shortTitle": "Molecular Theory of Atomic Collisions",
+      "tags": [],
+      "title": "Molecular Theory of Atomic Collisions: Calculated Cross Sections for ${\\mathrm{H}}^{+}+\\mathrm{F}(^{2}P)$",
+      "uri": "http://zotero.org/users/3057968/items/EBVQ7HQC",
+      "url": "http://link.aps.org/doi/10.1103/PhysRevA.7.957",
+      "volume": "7"
     }
   ]
 }

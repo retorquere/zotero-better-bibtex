@@ -1,30 +1,40 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.33",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.33"
-      },
-      "BetterBibTeX": "5.0.70"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[authors][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
+      "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
       "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[authors][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
       "skipFields": [
         "issn",
         "isbn",
@@ -34,15 +44,6 @@
         "shortjournal",
         "abstract"
       ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "quickCopyMode": "pandoc",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
       "skipWords": [
         "a",
         "ab",
@@ -167,87 +168,53 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.70",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.33",
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.33"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4975.1984.tb00073.x/abstract",
-      "volume": "9",
-      "issue": "1",
-      "pages": "478–489",
-      "publicationTitle": "Midwest Studies In Philosophy",
-      "ISSN": "1475-4975",
-      "date": "September 1, 1984",
       "DOI": "10.1111/j.1475-4975.1984.tb00073.x",
+      "ISSN": "1475-4975",
+      "abstractNote": "The association between the smell and the bacon is \u201c.natural\u201d., that is to say it is not the result of any human behavhior. But the association between the word \u201c.breakfast\u201d. and breakfast is a social matter, which exists only for English speaking people.\u2014B. Russell, \u201c.An Inquiry into Meaning and Truth\u201d.",
       "accessDate": "2016-08-03 11:36:08",
-      "libraryCatalog": "Wiley Online Library",
-      "abstractNote": "The association between the smell and the bacon is “.natural”., that is to say it is not the result of any human behavhior. But the association between the word “.breakfast”. and breakfast is a social matter, which exists only for English speaking people.—B. Russell, “.An Inquiry into Meaning and Truth”.",
-      "title": "Semantical anthropology",
+      "attachments": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Joseph",
-          "lastName": "Almog",
-          "creatorType": "author"
+          "lastName": "Almog"
         }
       ],
+      "date": "September 1, 1984",
+      "dateAdded": "2016-08-03 11:36:08",
+      "dateModified": "2018-01-09 12:37:54",
+      "issue": "1",
+      "itemID": 1100,
+      "itemType": "journalArticle",
+      "libraryCatalog": "Wiley Online Library",
+      "pages": "478\u2013489",
+      "publicationTitle": "Midwest Studies In Philosophy",
       "tags": [
         {
           "tag": "read",
           "type": 0
         }
       ],
-      "dateAdded": "2016-08-03 11:36:08",
-      "dateModified": "2018-01-09 12:37:54",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Almog_1984_Semantical_anthropology.pdf",
-          "parentItem": "ZHMVIPGP",
-          "linkMode": 0,
-          "contentType": "application/pdf",
-          "charset": "",
-          "filename": "Almog_1984_Semantical_anthropology.pdf",
-          "tags": [
-
-          ],
-          "relations": {
-          },
-          "dateAdded": "2016-11-14 11:03:12",
-          "dateModified": "2018-01-02 20:10:00",
-          "uri": "http://zotero.org/users/1354388/items/NGD6CH85",
-          "uniqueFields": {
-            "title": "Almog_1984_Semantical_anthropology.pdf",
-            "linkMode": 0,
-            "mimeType": "application/pdf"
-          },
-          "itemID": 1764,
-          "key": "NGD6CH85",
-          "libraryID": null,
-          "sourceItemKey": "ZHMVIPGP",
-          "seeAlso": [
-
-          ],
-          "mimeType": "application/pdf",
-          "localPath": "/home/t/Zotero/storage/NGD6CH85/Almog_1984_Semantical_anthropology.pdf"
-        }
-      ],
-      "itemID": 1100
+      "title": "Semantical anthropology",
+      "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1475-4975.1984.tb00073.x/abstract",
+      "volume": "9"
     }
   ]
 }

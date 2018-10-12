@@ -1,68 +1,56 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
+      "Export collections": true,
       "exportFileData": false,
-      "exportNotes": true,
-      "Export collections": true
+      "exportNotes": true
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
     }
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "http://link.aps.org/doi/10.1103/PhysRevLett.97.120405",
-      "volume": "97",
-      "issue": "12",
-      "pages": "120405",
-      "publicationTitle": "Physical Review Letters",
-      "date": "September 20, 2006",
-      "extra": "biblatexcitekey[Acin2006-105]",
-      "journalAbbreviation": "Phys. Rev. Lett.",
       "DOI": "10.1103/PhysRevLett.97.120405",
-      "accessDate": "2014-08-20 19:33:00",
-      "libraryCatalog": "APS",
       "abstractNote": "The first step in any quantum key distribution (QKD) protocol consists of sequences of measurements that produce correlated classical data. We show that these correlation data must violate some Bell inequality in order to contain distillable secrecy, if not they could be produced by quantum measurements performed on a separable state of larger dimension. We introduce a new QKD protocol and prove its security against any individual attack by an adversary only limited by the no-signaling condition.",
-      "title": "From Bell’s Theorem to secure quantum key distribution",
+      "accessDate": "2014-08-20 19:33:00",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Antonio",
-          "lastName": "Acín",
-          "fieldMode": ""
+          "lastName": "Ac\u00edn"
         },
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Nicolas",
-          "lastName": "Gisin",
-          "fieldMode": ""
+          "lastName": "Gisin"
         },
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Lluis",
-          "lastName": "Masanes",
-          "fieldMode": ""
+          "lastName": "Masanes"
         }
       ],
-      "attachments": [
-        {
-          "path": "/home/janla64/Desktop/Forskning/Zotero/storage/QSSDJKC3/PhysRevLett.97.html",
-          "title": "APS Snapshot",
-          "mimeType": "text/html"
-        },
-        {
-          "path": "/home/janla64/Desktop/Forskning/Zotero/storage/JC7A9J99/Acín m. fl. - 2006 - From Bell’s Theorem to Secure Quantum Key Distribu.pdf",
-          "title": "Full Text PDF",
-          "mimeType": "application/pdf"
-        }
-      ]
+      "date": "September 20, 2006",
+      "extra": "biblatexcitekey[Acin2006-105]",
+      "issue": "12",
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Phys. Rev. Lett.",
+      "libraryCatalog": "APS",
+      "pages": "120405",
+      "publicationTitle": "Physical Review Letters",
+      "title": "From Bell\u2019s Theorem to secure quantum key distribution",
+      "url": "http://link.aps.org/doi/10.1103/PhysRevLett.97.120405",
+      "volume": "97"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

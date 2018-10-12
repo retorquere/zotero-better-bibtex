@@ -1,66 +1,60 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.3",
     "preferences": {
-      "skipFields": [
-        ""
-      ],
-      "postscript": "",
-      "csquotes": "",
       "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
+      "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note"
-    }
-  },
-  "collections": {
+      "csquotes": "",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "skipFields": [
+        ""
+      ]
+    },
+    "release": "1.6.3"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "url": "http://ao.osa.org/abstract.cfm?URI=ao-15-4-1040",
-      "volume": "15",
-      "issue": "4",
-      "pages": "1040–1044",
-      "publicationTitle": "Applied Optics",
-      "date": "四月 1, 1976",
-      "journalAbbreviation": "Appl. Opt.",
       "DOI": "10.1364/AO.15.001040",
-      "accessDate": "2015-04-02 02:09:00",
-      "libraryCatalog": "Optical Society of America",
       "abstractNote": "Because they are not proper spectral modes, leaky modes do not obey the usual power orthogonality relations for an ideal waveguide. Two methods for circumventing this problem are presented in this paper. One approach is to use the fact that weakly leaky modes are approximately power orthogonal within a restricted region of space to define a new set of slightly coupled modes. The other is to abandon power orthogonality in favor of a more general, mathematically exact orthogonality relation. The relative merits of these two approaches are discussed.",
-      "title": "Leaky modes on a dielectric waveguide: orthogonality and excitation",
-      "shortTitle": "Leaky modes on a dielectric waveguide",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Sammut",
-          "firstName": "Rowland"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Snyder",
-          "firstName": "Allan W."
-        }
-      ],
+      "accessDate": "2015-04-02 02:09:00",
       "attachments": [
         {
-          "path": "/home/zzs/.zotero/zotero/pz8s4cva.default/zotero/storage/SPUXS7GC/ao-15-4-1040.pdf",
-          "title": "ao-15-4-1040.pdf",
-          "mimeType": "application/pdf"
-        },
-        {
+          "mimeType": "text/html",
           "path": "/home/zzs/.zotero/zotero/pz8s4cva.default/zotero/storage/7XA9GC8B/abstract.html",
           "title": "Appl. Opt. Snapshot",
-          "mimeType": "text/html",
           "url": "http://www.opticsinfobase.org/ao/abstract.cfm?uri=ao-15-4-1040"
         }
       ],
-      "itemID": 844
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Rowland",
+          "lastName": "Sammut"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Allan W.",
+          "lastName": "Snyder"
+        }
+      ],
+      "date": "\u56db\u6708 1, 1976",
+      "issue": "4",
+      "itemID": 844,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Appl. Opt.",
+      "libraryCatalog": "Optical Society of America",
+      "pages": "1040\u20131044",
+      "publicationTitle": "Applied Optics",
+      "shortTitle": "Leaky modes on a dielectric waveguide",
+      "title": "Leaky modes on a dielectric waveguide: orthogonality and excitation",
+      "url": "http://ao.osa.org/abstract.cfm?URI=ao-15-4-1040",
+      "volume": "15"
     }
   ]
 }

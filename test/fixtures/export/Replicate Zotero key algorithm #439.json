@@ -1,95 +1,93 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.33-898-1454054774",
+    "options": {
+      "exportFileData": false,
+      "exportFilename": "Exported Items.json",
+      "exportNotes": false
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "bibtexURL": "note",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[zotero]",
       "citekeyFold": true,
-      "DOIandURL": "both",
+      "citekeyFormat": "[zotero]",
       "csquotes": "",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "postscript": "",
       "preserveBibTeXVariables": true,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportPath": "/Users/emile/zotero/better-bibtex",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": false
-    }
-  },
-  "collections": {
+    "release": "1.6.33-898-1454054774"
   },
   "items": [
     {
-      "itemType": "webpage",
-      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
-      "date": "2015",
-      "accessDate": "2016-01-29 08:03:56",
       "abstractNote": "zotero-better-bibtex - Make Zotero effective for us LaTeX holdouts",
-      "websiteTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
+      "accessDate": "2016-01-29 08:03:56",
       "creators": [
         {
           "creatorType": "author",
           "name": "Firstname Retorquere"
         }
       ],
+      "date": "2015",
       "itemID": 7,
-      "publicationTitle": "GitHub"
+      "itemType": "webpage",
+      "publicationTitle": "GitHub",
+      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
+      "websiteTitle": "GitHub"
     },
     {
-      "itemType": "webpage",
-      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
-      "date": "2016",
-      "accessDate": "2016-01-29 08:03:56",
       "abstractNote": "zotero-better-bibtex - Make Zotero effective for us LaTeX holdouts",
-      "websiteTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
+      "accessDate": "2016-01-29 08:03:56",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Retorquere",
-          "firstName": "Firstname"
+          "firstName": "Firstname",
+          "lastName": "Retorquere"
         },
         {
           "creatorType": "author",
-          "lastName": "Retorquere2",
-          "firstName": "Firstname2"
+          "firstName": "Firstname2",
+          "lastName": "Retorquere2"
         }
       ],
+      "date": "2016",
       "itemID": 5,
-      "publicationTitle": "GitHub"
+      "itemType": "webpage",
+      "publicationTitle": "GitHub",
+      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
+      "websiteTitle": "GitHub"
     },
     {
-      "itemType": "webpage",
-      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
-      "accessDate": "2016-01-29 08:03:56",
       "abstractNote": "zotero-better-bibtex - Make Zotero effective for us LaTeX holdouts",
-      "websiteTitle": "GitHub",
-      "title": "Replicate Zotero key algorithm · Issue #439 · retorquere/zotero-better-bibtex",
+      "accessDate": "2016-01-29 08:03:56",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Retorquere-Double",
-          "firstName": "First-Double"
+          "firstName": "First-Double",
+          "lastName": "Retorquere-Double"
         }
       ],
       "itemID": 23,
-      "publicationTitle": "GitHub"
+      "itemType": "webpage",
+      "publicationTitle": "GitHub",
+      "title": "Replicate Zotero key algorithm \u00b7 Issue #439 \u00b7 retorquere/zotero-better-bibtex",
+      "url": "https://github.com/retorquere/zotero-better-bibtex/issues/439",
+      "websiteTitle": "GitHub"
     }
   ]
 }
