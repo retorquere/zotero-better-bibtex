@@ -39,7 +39,7 @@ def released(client):
 outdated = False
 for client in ['zotero', 'jurism']:
   installed = os.popen("dpkg -s " + client + " | grep '^Version:'").read().strip().split(':')[1].strip()
-  online = released(client)
+  online = 'v' + released(client)
 
   if installed == online:
     print('found ' + client + ' ' + installed)

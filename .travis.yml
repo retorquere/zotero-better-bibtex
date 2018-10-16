@@ -7,6 +7,7 @@ before_install:
   - sudo curl --silent -L -A "Debian APT-HTTP/1.3" -o /etc/apt/sources.list.d/zotero.list https://sourceforge.net/projects/zotero-deb/files/repo/zotero.list
   - sudo apt-get update -q
   - sudo apt-get install zotero jurism
+  - ./check-latest-zotero.py
 
 cache:
   yarn: true
@@ -21,8 +22,6 @@ cache:
 script: |
   #set -e
   #set -x
-
-  ./check-latest-zotero.py || exit 1
 
   gem install bundler
   gem update bundler
