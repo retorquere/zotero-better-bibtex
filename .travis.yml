@@ -22,7 +22,7 @@ script: |
   #set -e
   #set -x
 
-  ./check-latest-zotero.py
+  ./check-latest-zotero.py || exit 1
 
   gem install bundler
   gem update bundler
