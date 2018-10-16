@@ -3,7 +3,7 @@ python:
   - 3.6
 
 before_install:
-  - os=ubuntu dist=bionic curl -s https://packagecloud.io/install/repositories/retorquere/zotero/script.deb.sh | sudo bash
+  - curl -s https://packagecloud.io/install/repositories/retorquere/zotero/script.deb.sh | os=ubuntu dist=bionic sudo bash
   - sudo apt-get update -q
   - sudo apt-get install zotero
   - sudo apt-get install jurism
