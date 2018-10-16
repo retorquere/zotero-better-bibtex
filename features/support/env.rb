@@ -339,10 +339,10 @@ module BBT
     home = ENV['CIRCLE_WORKING_DIR'] || ENV['TRAVIS_BUILD_DIR'] || '~'
     if ENV['ZOTERO'] == 'jurism'
       profiles = File.expand_path("~/.jurism/zotero")
-      zotero = File.expand_path("#{home}/bin/jurism/jurism")
+      zotero = File.expand_path("/usr/lib/jurism/jurism")
     else
       profiles = File.expand_path("~/.zotero/zotero")
-      zotero = File.expand_path("#{home}/bin/zotero/zotero")
+      zotero = File.expand_path("/usr/lib/zotero/zotero")
     end
   elsif OS.mac?
     profiles = File.expand_path('~/Library/Application Support/Zotero')
