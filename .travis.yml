@@ -6,8 +6,7 @@ before_install:
   - curl --silent -L -A "Debian APT-HTTP/1.3" https://sourceforge.net/projects/zotero-deb/files/repo/key/deb.gpg.key | sudo apt-key add -
   - sudo curl --silent -L -A "Debian APT-HTTP/1.3" -o /etc/apt/sources.list.d/zotero.list https://sourceforge.net/projects/zotero-deb/files/repo/zotero.list
   - sudo apt-get update -q
-  - sudo apt-get install zotero
-  - sudo apt-get install jurism
+  - sudo apt-get install zotero jurism
 
 cache:
   yarn: true
