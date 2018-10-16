@@ -2,6 +2,12 @@ language: python
 python:
   - 3.6
 
+before_install:
+  - curl -s https://packagecloud.io/install/repositories/retorquere/zotero/script.deb.sh | sudo bash
+  - sudo apt-get update -q
+  - sudo apt-get install zotero
+  - sudo apt-get install jurism
+
 cache:
   yarn: true
   bundler: true
