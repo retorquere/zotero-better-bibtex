@@ -22,6 +22,8 @@ script: |
   #set -e
   #set -x
 
+  ./check-latest-zotero.py
+
   gem install bundler
   gem update bundler
   bundle config
