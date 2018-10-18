@@ -3,8 +3,7 @@ python:
   - 3.6
 
 before_install:
-  - curl --silent -L -A "Debian APT-HTTP/1.3" https://sourceforge.net/projects/zotero-deb/files/repo/key/deb.gpg.key | sudo apt-key add -
-  - sudo curl --silent -L -A "Debian APT-HTTP/1.3" -o /etc/apt/sources.list.d/zotero.list https://sourceforge.net/projects/zotero-deb/files/repo/zotero.list
+  - curl --silent -L https://sourceforge.net/projects/zotero-deb/files/repo/install-trusty.sh | sudo bash
   - sudo apt-get update -q
   - sudo apt-get install zotero jurism || sudo apt-get install zotero jurism || sudo apt-get install zotero jurism
   - ./check-latest-zotero.py
