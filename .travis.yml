@@ -4,7 +4,7 @@ python:
 
 before_install:
   - curl --silent -L https://sourceforge.net/projects/zotero-deb/files/install.sh | sudo bash
-  - (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism)
+  - (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism) || (sudo apt-get update -q && sudo apt-get install zotero jurism)
   - ./check-latest-zotero.py
 
 cache:
