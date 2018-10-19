@@ -21,6 +21,8 @@ export let DB = new Loki('better-bibtex', { // tslint:disable-line:variable-name
 DB.init = async () => {
   await DB.loadDatabaseAsync()
 
+  const scrub = Prefs.get('scrubDatabase')
+
   const citekeys = DB.schemaCollection('citekey', {
     indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
     unique: [ 'itemID' ],
@@ -43,10 +45,12 @@ DB.init = async () => {
   })
 
   // https://github.com/retorquere/zotero-better-bibtex/issues/1073
-  for (const citekey of citekeys.find()) {
-    if (typeof(citekey.extra) !== 'undefined') {
-      delete citekey.extra
-      citekeys.update(citekey)
+  if (scrub) {
+    for (const citekey of citekeys.find()) {
+      if (typeof(citekey.extra) !== 'undefined') {
+        delete citekey.extra
+        citekeys.update(citekey)
+      }
     }
   }
 
@@ -101,54 +105,54 @@ DB.init = async () => {
     },
   })
 
-  // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
-  const length = autoexport.data.length
-  autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
-  if (length !== autoexport.data.length) {
-    autoexport.ensureId()
-    autoexport.ensureAllIndexes(true)
-  }
-
-  // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-  for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
-    let corrupt
-    try {
-      corrupt = coll.checkAllIndexes({ repair: true })
-    } catch (err) {
-      corrupt = [ '*' ]
-      coll.ensureAllIndexes(true)
+  if (scrub) {
+    // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
+    const length = autoexport.data.length
+    autoexport.data = autoexport.data.filter(doc => typeof doc.$loki === 'number' && typeof doc.meta === 'object')
+    if (length !== autoexport.data.length) {
+      autoexport.ensureId()
+      autoexport.ensureAllIndexes(true)
     }
-    if (corrupt.length > 0) {
-      for (const index of corrupt) {
-        if (index === '*') {
-          Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
-        } else {
-          Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+
+    // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+    for (const [name, coll] of Object.entries({ citekeys, autoexport })) {
+      let corrupt
+      try {
+        corrupt = coll.checkAllIndexes({ repair: true })
+      } catch (err) {
+        corrupt = [ '*' ]
+        coll.ensureAllIndexes(true)
+      }
+      if (corrupt.length > 0) {
+        for (const index of corrupt) {
+          if (index === '*') {
+            Zotero.logError(new Error(`LokiJS: rebuilt index ${name}.${index}`))
+          } else {
+            Zotero.logError(new Error(`LokiJS: corrupt index ${name}.${index} repaired`))
+          }
         }
       }
     }
-  }
 
-  // https://github.com/retorquere/zotero-better-bibtex/issues/903
-  for (const ae of autoexport.find()) {
-    let update = false
+    for (const ae of autoexport.find()) {
+      let update = false
 
-    if (ae.updated) {
-      delete ae.updated
-      update = true
-    }
-
-    for (const pref of prefOverrides) {
-      if (typeof ae[pref] === 'undefined') {
-        ae[pref] = Prefs.get(pref)
+      if (ae.updated) {
+        delete ae.updated
         update = true
       }
+
+      for (const pref of prefOverrides) {
+        if (typeof ae[pref] === 'undefined') {
+          ae[pref] = Prefs.get(pref)
+          update = true
+        }
+      }
+
+      if (update) autoexport.update(ae)
     }
 
-    if (update) autoexport.update(ae)
-  }
-
-  if (Prefs.get('scrubDatabase')) {
+    // old bibtex*: entries
     const re = /(?:^|\s)bibtex\*:[^\S\n]*([^\s]*)(?:\s|$)/
     const itemIDs = await Zotero.DB.columnQueryAsync('SELECT itemID FROM items')
     const items = await getItemsAsync(itemIDs)
