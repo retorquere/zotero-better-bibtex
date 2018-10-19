@@ -42,6 +42,14 @@ DB.init = async () => {
     },
   })
 
+  // https://github.com/retorquere/zotero-better-bibtex/issues/1073
+  for (const citekey of citekeys.find()) {
+    if (typeof(citekey.extra) !== 'undefined') {
+      delete citekey.extra
+      citekeys.update(citekey)
+    }
+  }
+
   log.debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
   if (Zotero.Libraries.userLibraryID) {
     for (const citekey of citekeys.where(ck => ck.libraryID === 1 || !ck.libraryID )) {
@@ -157,26 +165,3 @@ DB.init = async () => {
     }
   }
 }
-
-/* old junk, only for json-backed storage
-DB.removeCollection('metadata') if DB.getCollection('metadata')
-DB.removeCollection('keys') if DB.getCollection('keys')
-*/
-
-/* only for json-backed storage
-for ae in autoexports.data()
-  * upgrade old autoexports
-  if ae.collection
-    [ ae.type, ae.id ] = ae.collection.split(':')
-    ae.id ?= Zotero.Libraries.userLibraryID
-    delete ae.collection
-    autoexports.update(ae)
-
-  * interrupted at start
-  if ae.status == 'running'
-    ae.scheduled = new Date()
-    ae.status = 'done'
-  else
-    delete ae.scheduled
-  autoexports.update(ae)
-*/
