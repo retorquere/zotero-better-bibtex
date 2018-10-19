@@ -30,11 +30,14 @@ def released(client):
       return versions['standaloneVersions']['linux-' + platform.machine()]
 
   else:
-    release = HTTPSConnection('our.law.nagoya-u.ac.jp')
-    release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
-    release = release.getresponse()
-    release = release.getheader('Location')
-    return release.split('/')[-2]
+    #release = HTTPSConnection('our.law.nagoya-u.ac.jp')
+    #release.request('GET', '/jurism/dl?channel=release&platform=linux-' + platform.machine())
+    #release = release.getresponse()
+    #release = release.getheader('Location')
+    #return release.split('/')[-2]
+    release = json.loads(urlopen('https://api.github.com/repos/juris-m/assets/releases').read())
+    release = sorted([rel['tag_name'].split('/')[-1] for rel in release if 'tag_name' in rel and rel['tag_name'].startswith('client/release/')])
+    return release[-1]
 
 outdated = False
 for client in ['zotero', 'jurism']:
