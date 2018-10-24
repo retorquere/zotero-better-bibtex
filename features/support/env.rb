@@ -330,7 +330,7 @@ module BBT
   plugins += Dir[File.expand_path(File.join(File.dirname(__FILE__), '../../xpi/extra/*.xpi'))]
 
   if ENV['CI'] != 'true' || plugins.length == 0
-    system("yarn run build") || raise("Build failed")
+    system("npm run build") || raise("Build failed")
   end
 
   TRANSLATORS.merge!(JSON.parse(File.read(File.join(File.dirname(__FILE__), '../../gen/translators.json'))))
