@@ -488,7 +488,7 @@ class Progress {
   private bench(msg) {
     const ts = (new Date()).valueOf()
     // tslint:disable-next-line:no-magic-numbers
-    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    if (this.msg) log.error(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
   }
@@ -600,7 +600,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
 
-    log.debug("Schema ready, let's roll!")
+    log.debug("Zotero ready, let's roll!")
 
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await Promise.all([Cache.init(), DB.init()])

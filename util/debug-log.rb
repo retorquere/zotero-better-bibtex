@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
+require 'dotenv/load'
 require 'rubygems'
 require 'aws-sdk'
 require 'json'
-
 
 def readJSON(path)
   return JSON.parse(File.read(File.join(File.dirname(__FILE__), '..', path)))
