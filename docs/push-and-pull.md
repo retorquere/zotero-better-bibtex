@@ -9,7 +9,7 @@ separate exports for separate papers for example if you have set up a collection
 
 ### git support
 
-BBT push-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found [here](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta)), but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/projects/2).
+BBT push-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found [here](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta) -- note these instructions are for Overleaf V1 projects, not V2 projects, which will get git support only late 2018), but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/projects/2).
 
 To activate git support, first clone the repo that holds your article/thesis/whatnot, run `git config zotero.betterbibtex.push true` in a command shell in that repo, and set up an push export to that directory; at each update, BBT will now also push your library to the git service. For the technically curious, that means it does:
 
