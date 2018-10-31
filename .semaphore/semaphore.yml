@@ -12,7 +12,9 @@ blocks:
       - name: Build
         commands:
           - checkout
-          - echo mkdir -p ~/.cache && mkdir -p $SEMAPHORE_CACHE_DIR/pip && ln -s $SEMAPHORE_CACHE_DIR/pip ~/.cache
+          - mkdir -p ~/.cache
+          - mkdir -p $SEMAPHORE_CACHE_DIR/pip 
+          - ln -s $SEMAPHORE_CACHE_DIR/pip ~/.cache
           - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
           - install-package zotero jurism
           - pip install --user -r requirements.txt
