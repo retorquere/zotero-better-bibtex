@@ -8,20 +8,23 @@ agent:
 blocks:
   - name: "Build"
     task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
       jobs:
-      - name: Docker build
+      - name: Build
         commands:
           - checkout
-          - ls -1
-          - echo $APP_ENV
-          - echo "Docker build..."
-          - echo "done"
+          - mkdir -p ~/.cache && mkdir -p $SEMAPHORE_CACHE_DIR/pip && ln -s $SEMAPHORE_CACHE_DIR/pip ~/.cache
+          - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
+          - install-package zotero jurism
+          - pip install -r requirements.txt
+          - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+          - npm install
+          - npm run build
 
   - name: "Smoke tests"
     task:
+      env_vars:
+        - name: APP_ENV
+          value: prod
       jobs:
       - name: Smoke
         commands:
