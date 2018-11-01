@@ -8,9 +8,6 @@ agent:
 blocks:
   - name: "Build"
     task:
-      env_vars:
-        - name: PYTHONPATH
-          value: $SEMAPHORE_GIT_DIR/pip
       jobs:
       - name: Build
         commands:
@@ -24,9 +21,9 @@ blocks:
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
           - cache store ruby vendor/bundle
 
-          - cache restore python
-          - pip install --target=$SEMAPHORE_GIT_DIR/pip -r requirements.txt
-          - cache store python $SEMAPHORE_GIT_DIR/pip
+          - echo cache restore python
+          - pip install -r requirements.txt
+          - echo cache store python $SEMAPHORE_GIT_DIR/pip
 
           - cache restore node-$SEMAPHORE_GIT_BRANCH
           - npm install
