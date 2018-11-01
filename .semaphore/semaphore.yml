@@ -14,7 +14,7 @@ blocks:
       jobs:
       - name: Build
         commands:
-          - sem-version python 3.6
+          - sem-version python 3.7
           - sem-version ruby 2.5.1
           - sem-version node 8.12.0
 
@@ -25,7 +25,7 @@ blocks:
           - cache store ruby vendor/bundle
 
           - cache restore python
-          - mkdir -p $PYTHONPATH/lib/python3.6/site-packages && pip install --install-option="--prefix=$PYTHONPATH" -r requirements.txt
+          - mkdir -p $PYTHONPATH/lib/python3.7/site-packages && pip install --install-option="--prefix=$PYTHONPATH" -r requirements.txt
           - cache store pip
 
           - cache restore node-$SEMAPHORE_GIT_BRANCH
