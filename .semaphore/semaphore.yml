@@ -33,9 +33,10 @@ blocks:
           - cache store node-$SEMAPHORE_GIT_BRANCH node_modules
 
           - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
-          - apt-get install zotero jurism
+          - sudo apt-get install zotero jurism
 
           - npm run build
+          - cache store xpi-$SEMAPHORE_JOB_ID xpi
 
   - name: "Smoke tests"
     task:
@@ -46,6 +47,7 @@ blocks:
       - name: Smoke
         commands:
           - checkout
+          - cache delete xpi-$SEMAPHORE_JOB_ID
           - echo "make smoke"
 
   - name: "Unit tests"
