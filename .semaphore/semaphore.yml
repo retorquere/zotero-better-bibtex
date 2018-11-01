@@ -24,7 +24,6 @@ blocks:
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
           - cache store ruby vendor/bundle
 
-          - pyenv help
           - cache restore python
           - mkdir -p $PYTHONPATH/lib/python3.7/site-packages && pip install --install-option="--prefix=$PYTHONPATH" -r requirements.txt
           - cache store pip
@@ -34,6 +33,7 @@ blocks:
           - cache store node-$SEMAPHORE_GIT_BRANCH node_modules
 
           - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
+          - sudo apt-get update
           - sudo apt-get install zotero jurism
 
           - npm run build
