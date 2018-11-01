@@ -24,7 +24,7 @@ blocks:
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
           - cache store ruby vendor/bundle
 
-          - set | grep PYENV
+          - pyenv help
           - cache restore python
           - mkdir -p $PYTHONPATH/lib/python3.7/site-packages && pip install --install-option="--prefix=$PYTHONPATH" -r requirements.txt
           - cache store pip
