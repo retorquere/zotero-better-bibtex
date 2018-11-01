@@ -36,24 +36,13 @@ blocks:
           - npm run build
           - cache store xpi-$SEMAPHORE_JOB_ID xpi
 
-  - name: "Smoke tests"
-    task:
-      env_vars:
-        - name: APP_ENV
-          value: prod
-      jobs:
-      - name: Smoke
-        commands:
-          - checkout
-          - cache delete xpi-$SEMAPHORE_JOB_ID
-          - echo "make smoke"
-
-  - name: "Unit tests"
+  - name: Test
     task:
       jobs:
       - name: RSpec
         commands:
           - checkout
+          - cache delete xpi-$SEMAPHORE_JOB_ID
           - echo "make rspec"
 
       - name: Lint code
@@ -65,14 +54,6 @@ blocks:
         commands:
           - checkout
           - echo "make security"
-
-  - name: "Integration tests"
-    task:
-      jobs:
-      - name: Cucumber
-        commands:
-          - checkout
-          - echo "make cucumber"
 
   - name: "Push Image"
     task:
