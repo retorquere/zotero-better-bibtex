@@ -3,7 +3,7 @@ python:
   - 3.6
 
 before_install:
-  - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash && sudo apt-get -o Debug::Acquire::Http=true -o Debug::Acquire::Https=true update && sudo apt-get -o Debug::Acquire::Http=true -o Debug::Acquire::Https=true install zotero jurism
+  - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash && sudo apt-get update && sudo install zotero jurism
   - ./check-latest-zotero.py
 
 cache:
