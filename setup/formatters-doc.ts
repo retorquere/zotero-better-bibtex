@@ -17,6 +17,8 @@ const query = `
 const fields = sqlite.run(query).map(row => row.fieldName[0].toUpperCase() + row.fieldName.slice(1))
 fields.sort()
 
+const typeNames = sqlite.run('SELECT DISTINCT typeName FROM itemTypes ORDER BY typeName').map(row => row.typeName)
+
 const cells = 4
 const table = []
 while (fields.length) {
@@ -78,5 +80,6 @@ for (const filter of Object.keys(formatter._)) {
 }
 
 fs.writeFileSync('docs/_data/pattern/fields.yml', yaml.safeDump(table))
+fs.writeFileSync('docs/_data/pattern/typeNames.yml', yaml.safeDump(typeNames))
 fs.writeFileSync('docs/_data/pattern/functions.yml', yaml.safeDump(formatter.$))
 fs.writeFileSync('docs/_data/pattern/filters.yml', yaml.safeDump(formatter._))
