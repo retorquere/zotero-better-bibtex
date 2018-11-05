@@ -21,9 +21,9 @@ blocks:
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
           - cache store ruby vendor/bundle
 
-          - echo cache restore python
+          - cd && cache restore pip %% cd -
           - pip install -r requirements.txt
-          - echo cache store python $SEMAPHORE_GIT_DIR/pip
+          - cd && cache store pip .pip_download_cache && cd -
 
           - cache restore node-$SEMAPHORE_GIT_BRANCH
           - npm install
@@ -34,31 +34,68 @@ blocks:
           - sudo apt-get install zotero jurism
 
           - npm run build
-          - cache store xpi-$SEMAPHORE_JOB_ID xpi
+          - cache store xpi-$SEMAPHORE_PIPELINE_ID xpi
 
   - name: Test
     task:
       jobs:
-      - name: RSpec
-        commands:
+      - name: Zotero cluster 1
+        env_vars:
+          - name: ZOTERO
+            value: zotero
+          - name: CLUSTER
+            value: "@test-cluster-1"
+        commands: &commands
           - checkout
-          - cache delete xpi-$SEMAPHORE_JOB_ID
-          - echo "make rspec"
+          - cache restore ruby
+          - cache restore xpi-$SEMAPHORE_PIPELINE_ID
+          - git submodule sync && git submodule update --init --recursive
+          - |
+            if [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#trace"* ]]; then
+              export TRACE=true
+            fi
 
-      - name: Lint code
-        commands:
-          - checkout
-          - echo "make lint"
+            if [[ "$SEMAPHORE_TRIGGER_SOURCE" = "scheduler" ]] || [[ ! -z "$SEMAPHORE_TAG" ]] || [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#nightly"* ]]; then
+              export NIGHTLY=""
+              export TRACE=true
+            else
+              export NIGHTLY="and not @nightly"
+            fi
 
-      - name: Check security
-        commands:
-          - checkout
-          - echo "make security"
+            bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
-  - name: "Push Image"
+      - name: Zotero not cluster 1
+        env_vars:
+          - name: ZOTERO
+            value: zotero
+          - name: CLUSTER
+            value: "not @test-cluster-1"
+        commands: *commands
+
+      - name: Juris-M cluster 1
+        env_vars:
+          - name: ZOTERO
+            value: jurism
+          - name: CLUSTER
+            value: "@test-cluster-1"
+        commands: *commands
+
+      - name: Juris-M not cluster 1
+        env_vars:
+          - name: ZOTERO
+            value: jurism
+          - name: CLUSTER
+            value: "not @test-cluster-1"
+        commands: *commands
+
+  - name: Publish
     task:
       jobs:
-      - name: Push
+      - name: Publish
         commands:
           - checkout
-          - echo "make docker.push"
+          - cache restore xpi-$SEMAPHORE_PIPELINE_ID
+          - npm run release
+      epilogue:
+        commands:
+          - cache delete xpi-$SEMAPHORE_PIPELINE_ID
