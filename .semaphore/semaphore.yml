@@ -29,10 +29,6 @@ blocks:
           - npm install
           - cache store node-$SEMAPHORE_GIT_BRANCH node_modules
 
-          - curl --silent --location https://downloads.sourceforge.net/project/zotero-deb/install.sh | sudo bash
-          - sudo apt-get update
-          - sudo apt-get install zotero jurism
-
           - npm run build
           - cache store xpi-$SEMAPHORE_PIPELINE_ID xpi
 
@@ -50,6 +46,13 @@ blocks:
           - cache restore ruby
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - git submodule sync && git submodule update --init --recursive
+
+          - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+          - sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+          - sudo apt-get install zotero jurism
+          - ./check-latest-zotero.py
+
+
           - |
             if [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#trace"* ]]; then
               export TRACE=true
