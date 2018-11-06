@@ -26,12 +26,13 @@ blocks:
           - pip install -r requirements.txt
           - cd && cache store pip .pip_download_cache && cd -
 
-          - cache restore node-$SEMAPHORE_GIT_BRANCH
+          - cache restore node-modules-$(checksum package-lock.json)
           - npm install
-          - cache store node-$SEMAPHORE_GIT_BRANCH node_modules
+          - cache store node-modules-$(checksum package-lock.json) node_modules
 
           - npm run build
           - cache store xpi-$SEMAPHORE_PIPELINE_ID xpi
+          - cache store gen-$SEMAPHORE_PIPELINE_ID gen
 
   - name: Test
     task:
@@ -47,11 +48,12 @@ blocks:
           - echo SEMAPHORE_GIT_TAG=$SEMAPHORE_GIT_TAG SEMAPHORE_GIT_MSG=$SEMAPHORE_GIT_MSG
 
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
+          - cache restore gen-$SEMAPHORE_PIPELINE_ID
           - git submodule sync && git submodule update --init --recursive
 
-          - cache restore ruby
+          - cache restore ruby-$(checksum Gemfile.lock)
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-          - cache store ruby vendor/bundle
+          - cache store ruby-$(checksum Gemfile.lock) vendor/bundle
 
           - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
           - sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
@@ -104,7 +106,9 @@ blocks:
       - name: Publish
         commands:
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
+          - cache restore gen-$SEMAPHORE_PIPELINE_ID
           - npm run release
       epilogue:
         commands:
           - cache delete xpi-$SEMAPHORE_PIPELINE_ID
+          - cache delete gen-$SEMAPHORE_PIPELINE_ID
