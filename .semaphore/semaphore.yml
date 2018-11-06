@@ -10,6 +10,7 @@ blocks:
     task:
       prologue: &prologue
         commands:
+          - checkout
           - export SEMAPHORE_GIT_TAG=`git tag -l --points-at $SEMAPHORE_GIT_SHA`
           - export SEMAPHORE_GIT_MSG=`git log -1 --pretty=%B`
       jobs:
@@ -19,8 +20,6 @@ blocks:
           - sem-version python 3.7
           - sem-version ruby 2.5.1
           - sem-version node 8.12.0
-
-          - checkout
 
           - cache restore ruby
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
@@ -49,7 +48,6 @@ blocks:
             value: "@test-cluster-1"
         commands: &commands
           - echo SEMAPHORE_GIT_TAG=$SEMAPHORE_GIT_TAG SEMAPHORE_GIT_MSG=$SEMAPHORE_GIT_MSG
-          - checkout
           - cache restore ruby
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - git submodule sync && git submodule update --init --recursive
@@ -104,7 +102,6 @@ blocks:
       jobs:
       - name: Publish
         commands:
-          - checkout
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - npm run release
       epilogue:
