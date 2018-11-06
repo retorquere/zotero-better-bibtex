@@ -8,9 +8,14 @@ agent:
 blocks:
   - name: "Build"
     task:
+      prologue: &prologue
+        commands:
+          - export SEMAPHORE_GIT_TAG=`git tag -l --points-at $SEMAPHORE_GIT_SHA`
+          - export SEMAPHORE_GIT_MSG=`git log -1 --pretty=%B`
       jobs:
       - name: Build
         commands:
+          - echo $SEMAPHORE_GIT_TAG $SEMAPHORE_GIT_MSG
           - sem-version python 3.7
           - sem-version ruby 2.5.1
           - sem-version node 8.12.0
@@ -34,6 +39,7 @@ blocks:
 
   - name: Test
     task:
+      prologue: *prologue
       jobs:
       - name: Zotero cluster 1
         env_vars:
@@ -42,6 +48,7 @@ blocks:
           - name: CLUSTER
             value: "@test-cluster-1"
         commands: &commands
+          - echo $SEMAPHORE_GIT_TAG $SEMAPHORE_GIT_MSG
           - checkout
           - cache restore ruby
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
@@ -93,6 +100,7 @@ blocks:
 
   - name: Publish
     task:
+      prologue: *prologue
       jobs:
       - name: Publish
         commands:
