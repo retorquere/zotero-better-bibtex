@@ -15,7 +15,7 @@ blocks:
       jobs:
       - name: Build
         commands:
-          - echo $SEMAPHORE_GIT_TAG $SEMAPHORE_GIT_MSG
+          - echo SEMAPHORE_GIT_TAG=$SEMAPHORE_GIT_TAG SEMAPHORE_GIT_MSG=$SEMAPHORE_GIT_MSG
           - sem-version python 3.7
           - sem-version ruby 2.5.1
           - sem-version node 8.12.0
@@ -26,7 +26,7 @@ blocks:
           - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
           - cache store ruby vendor/bundle
 
-          - cd && cache restore pip %% cd -
+          - cd && cache restore pip && cd -
           - pip install -r requirements.txt
           - cd && cache store pip .pip_download_cache && cd -
 
@@ -48,7 +48,7 @@ blocks:
           - name: CLUSTER
             value: "@test-cluster-1"
         commands: &commands
-          - echo $SEMAPHORE_GIT_TAG $SEMAPHORE_GIT_MSG
+          - echo SEMAPHORE_GIT_TAG=$SEMAPHORE_GIT_TAG SEMAPHORE_GIT_MSG=$SEMAPHORE_GIT_MSG
           - checkout
           - cache restore ruby
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
