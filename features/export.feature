@@ -12,6 +12,7 @@ Scenario Outline: BibLaTeX Export
 
   Examples:
      | file                                                                                           | references  |
+     | Do not use more than three initials in case of authshort key #1079                             | 1           |
      | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
      | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | date ranges #747+#746                                                                          | 5           |
