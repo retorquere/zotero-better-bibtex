@@ -57,20 +57,9 @@ blocks:
           - sudo apt-get install zotero jurism
           - ./check-latest-zotero.py
 
-
-          - |
-            if [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#trace"* ]]; then
-              export TRACE=true
-            fi
-
-            if [[ "$SEMAPHORE_TRIGGER_SOURCE" = "scheduler" ]] || [[ ! -z "$SEMAPHORE_TAG" ]] || [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#nightly"* ]]; then
-              export NIGHTLY=""
-              export TRACE=true
-            else
-              export NIGHTLY="and not @nightly"
-            fi
-
-            bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+          - if [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#trace"* ]]; then export TRACE=true; fi
+          - if [[ "$SEMAPHORE_TRIGGER_SOURCE" = "scheduler" ]] || [[ ! -z "$SEMAPHORE_TAG" ]] || [[ "$SEMAPHORE_COMMIT_MESSAGE" == *"#nightly"* ]]; then export NIGHTLY=""; export TRACE=true; else export NIGHTLY="and not @nightly"; fi
+          - bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
       - name: Zotero not cluster 1
         env_vars:
