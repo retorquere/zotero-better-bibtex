@@ -337,7 +337,7 @@ class PatternFormatter {
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('.') + (authors.length > 3 ? '+' : '')
     }
   }
 
