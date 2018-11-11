@@ -38,12 +38,13 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 986         |
  # | Async import, large library #720                                            | 9057        |
 
-@test-cluster-1 @959 @1058 @871
+@test-cluster-1 @959 @1058 @871 @1081
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
+  | Spaces lost when expanding string variables during import #1081             | 1           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibLaTeX Patent author handling, type #1060                                 | 2           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
