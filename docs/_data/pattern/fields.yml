@@ -1,60 +1,60 @@
-- - AbstractNote
-  - AccessDate
-  - ApplicationNumber
+- - Abstractnote
+  - Accessdate
+  - Applicationnumber
   - Archive
-- - ArchiveLocation
-  - ArtworkSize
+- - Archivelocation
+  - Artworksize
   - Assignee
-  - CallNumber
+  - Callnumber
 - - Code
-  - CodeNumber
+  - Codenumber
   - Committee
-  - ConferenceName
+  - Conferencename
 - - Country
   - Court
-  - DOI
   - Date
+  - Doi
 - - Edition
   - Extra
-  - FilingDate
+  - Filingdate
   - History
-- - ISBN
-  - ISSN
+- - Isbn
+  - Issn
   - Issue
-  - IssuingAuthority
-- - JournalAbbreviation
+  - Issuingauthority
+- - Journalabbreviation
   - Language
-  - LegalStatus
-  - LegislativeBody
-- - LibraryCatalog
+  - Legalstatus
+  - Legislativebody
+- - Librarycatalog
   - Medium
-  - MeetingName
-  - NumPages
-- - Number
-  - NumberOfVolumes
+  - Meetingname
+  - Number
+- - Numberofvolumes
+  - Numpages
   - Pages
   - Place
-- - PriorityNumbers
-  - ProgrammingLanguage
-  - PublicationTitle
+- - Prioritynumbers
+  - Programminglanguage
+  - Publicationtitle
   - Publisher
 - - References
   - Reporter
   - Rights
-  - RunningTime
+  - Runningtime
 - - Scale
   - Section
   - Series
-  - SeriesNumber
-- - SeriesText
-  - SeriesTitle
+  - Seriesnumber
+- - Seriestext
+  - Seriestitle
   - Session
-  - ShortTitle
+  - Shorttitle
 - - System
   - Title
   - Type
   - Url
-- - VersionNumber
+- - Versionnumber
   - Volume
   - ''
   - ''

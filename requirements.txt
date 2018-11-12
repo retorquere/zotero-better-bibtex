@@ -1,4 +1,6 @@
+ruamel.yaml
 lxml
 ruamel.yaml
 Cheetah3
 addict
+namedtupled

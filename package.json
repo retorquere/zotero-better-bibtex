@@ -36,7 +36,7 @@
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
     "postversion": "git push --follow-tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
-    "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ts-node setup/formatters-doc.ts",
+    "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/formatters-doc.py",
     "ncu": "ncu -a",
     "reinstall": "rm -rf node_modules yarn* && npm install"
   },
@@ -81,7 +81,7 @@
     "tslint": "5.11.0",
     "webpack-cli": "^3.1.2",
     "xregexp": "^4.2.0",
-    "zotero-plugin": "0.0.59"
+    "zotero-plugin": "0.0.60"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "^1.1.1",
@@ -91,7 +91,7 @@
     "aws-s3-form": "^0.3.5",
     "bluebird": "^3.5.3",
     "circular-dependency-plugin": "^5.0.2",
-    "clean-webpack-plugin": "^0.1.19",
+    "clean-webpack-plugin": "^1.0.0",
     "current-git-branch": "^1.1.0",
     "dedent-js": "^1.0.1",
     "dotenv": "^6.1.0",
@@ -113,7 +113,6 @@
     "request-promise": "^4.2.2",
     "rimraf": "^2.6.2",
     "shelljs": "^0.8.2",
-    "sqlite-sync": "^0.3.8",
     "ts-loader": "^5.3.0",
     "ts-node": "^7.0.1",
     "typedoc": "^0.13.0",
