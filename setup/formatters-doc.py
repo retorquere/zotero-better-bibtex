@@ -19,7 +19,8 @@ query = '''
   LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
   LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
 '''
-fields = sorted([row['fieldName'].capitalize() for row in profile.execute(query)])
+
+fields = sorted([row['fieldName'][0].capitalize() + row['fieldName'][1:] for row in profile.execute(query)])
 
 typeNames = [row['typeName'] for row in profile.execute('SELECT DISTINCT typeName FROM itemTypes ORDER BY typeName')]
 
