@@ -30,7 +30,6 @@
     "start": "KILL=false cucumber --fail-fast --tags @none",
     "ae": "KILL=false cucumber --fail-fast --tags @ae",
     "s3form": "zotero-plugin-s3form",
-    "prerelease": "npm run build",
     "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
     "branches": "zotero-plugin-branches",
     "prefs": "ts-node zotero-webpack/script/prefs.ts",
