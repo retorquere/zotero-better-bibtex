@@ -8,10 +8,14 @@ from ruamel.yaml import YAML
 yaml=YAML()
 yaml.default_flow_style = False
 
-profile = sqlite3.connect('test/fixtures/profile/zotero/zotero/zotero.sqlite')
-profile.row_factory = sqlite3.Row
-# fetch fieldnames and capitalize them
-query = '''
+def split_and_mark(names):
+  common = set(names['zotero']).intersection(names['jurism'])
+  for stars, client in enumerate(['zotero', 'jurism']):
+    stars = '*' * (stars + 1)
+    names[client] = [field + stars for field in set(names[client]) - common]
+  return sorted(names['zotero'] + names['jurism'] + list(common))
+
+fieldQuery = '''
   SELECT DISTINCT COALESCE(bf.fieldName, f.fieldName) as fieldName
   FROM itemTypes it
   JOIN itemTypeFields itf ON it.itemTypeID = itf.itemTypeID
@@ -19,10 +23,18 @@ query = '''
   LEFT JOIN baseFieldMappingsCombined bfmc ON it.itemTypeID = bfmc.itemTypeID AND f.fieldID = bfmc.fieldID
   LEFT JOIN fields bf ON bf.fieldID = bfmc.baseFieldID
 '''
+fields = {}
+typeNames = {}
+for client in ['zotero', 'jurism']:
+  profile = sqlite3.connect(f'test/fixtures/profile/{client}/{client}/{client}.sqlite')
+  profile.row_factory = sqlite3.Row
 
-fields = sorted([row['fieldName'][0].capitalize() + row['fieldName'][1:] for row in profile.execute(query)])
+  # capitalize fieldnames for pattern formatters
+  fields[client] = [row['fieldName'][0].capitalize() + row['fieldName'][1:] for row in profile.execute(fieldQuery)]
 
-typeNames = [row['typeName'] for row in profile.execute('SELECT DISTINCT typeName FROM itemTypes ORDER BY typeName')]
+  typeNames[client] = [row['typeName'] for row in profile.execute('SELECT DISTINCT typeName FROM itemTypes ORDER BY typeName')]
+fields = split_and_mark(fields)
+typeNames = split_and_mark(typeNames)
 
 cells = 4
 table = []

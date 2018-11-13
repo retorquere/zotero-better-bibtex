@@ -1,60 +1,88 @@
 - - AbstractNote
   - AccessDate
+  - AdoptionDate**
   - ApplicationNumber
-  - Archive
-- - ArchiveLocation
+- - Archive
+  - ArchiveLocation
   - ArtworkSize
-  - Assignee
+  - AssemblyNumber**
+- - Assignee
   - CallNumber
-- - Code
+  - Code
   - CodeNumber
-  - Committee
+- - Committee
+  - ConferenceDate**
   - ConferenceName
-- - Country
-  - Court
+  - Country
+- - Court
   - DOI
   - Date
-- - Edition
+  - DateAmended**
+- - DocumentName**
+  - Edition
   - Extra
   - FilingDate
+- - GazetteFlag**
+  - Genre**
   - History
-- - ISBN
-  - ISSN
+  - ISBN
+- - ISSN
+  - Institution**
   - Issue
   - IssuingAuthority
 - - JournalAbbreviation
+  - Jurisdiction**
   - Language
   - LegalStatus
-  - LegislativeBody
-- - LibraryCatalog
+- - LegislativeBody
+  - LibraryCatalog
   - Medium
   - MeetingName
+- - MeetingNumber**
+  - NewsCaseDate**
   - NumPages
-- - Number
-  - NumberOfVolumes
-  - Pages
+  - Number
+- - NumberOfVolumes
+  - OpeningDate**
+  - Opus**
+  - OriginalDate**
+- - Pages
+  - ParentTreaty**
   - Place
+  - PriorityDate**
 - - PriorityNumbers
   - ProgrammingLanguage
-  - PublicationTitle
+  - PublicationDate**
+  - PublicationNumber**
+- - PublicationTitle
   - Publisher
-- - References
+  - References
+  - RegnalYear**
+- - Reign**
   - Reporter
+  - ResolutionLabel**
   - Rights
-  - RunningTime
-- - Scale
+- - RunningTime
+  - Scale
   - Section
   - Series
-  - SeriesNumber
-- - SeriesText
+- - SeriesNumber
+  - SeriesText
   - SeriesTitle
   - Session
-  - ShortTitle
+- - ShortTitle
+  - SigningDate**
+  - Status**
+  - SupplementName**
 - - System
   - Title
   - Type
   - Url
 - - VersionNumber
   - Volume
+  - VolumeTitle**
+  - WebsiteTitle**
+- - YearAsVolume**
+  - ''
   - ''
   - ''
