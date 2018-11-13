@@ -85,6 +85,8 @@ blocks:
 
   - name: Publish
     task:
+      secrets:
+        - name: bbt-secrets
       prologue: *prologue
       jobs:
       - name: Publish
