@@ -91,6 +91,7 @@ blocks:
       jobs:
       - name: Publish
         commands:
+          - cache restore node-modules-$(checksum package-lock.json)
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - cache restore gen-$SEMAPHORE_PIPELINE_ID
           - npm run release
