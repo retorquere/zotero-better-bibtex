@@ -73,6 +73,7 @@ jobs:
     script: |-
       if [[ "$TRAVIS_EVENT_TYPE" != "cron" && "$TRAVIS_EVENT_TYPE" != "pull_request" ]]; then
         pip install -r requirements.txt
+        npm run build
         npm run release
         # curl --upload-file xpi/zotero-better-bibtex*.xpi https://transfer.sh/zotero-better-bibtex.xpi
       fi
