@@ -24,9 +24,8 @@ blocks:
           - pip install -r requirements.txt
           - cd && cache store pip .pip_download_cache && cd -
 
-          - cache restore node-modules-$(checksum package.json)
-          - npm install
-          - cache store node-modules-$(checksum package.json) node_modules
+          - cache restore node_modules-$(checksum package-lock.json)
+          - cache has_key node_modules-$(checksum package-lock.json) || (npm ci && cache store node_modules-$(checksum package-lock.json) node_modules)
 
           - git submodule sync && git submodule update --init --recursive
 
@@ -49,8 +48,7 @@ blocks:
           - cache restore gen-$SEMAPHORE_PIPELINE_ID
 
           - cache restore ruby-$(checksum Gemfile.lock)
-          - gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-          - cache store ruby-$(checksum Gemfile.lock) vendor/bundle
+          - cache has_key node-$(checksum Gemfile.lock) || (gem install bundler && gem update bundler && bundle config && bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3 && cache store ruby-$(checksum Gemfile.lock) vendor/bundle)
 
           - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
           - sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
@@ -91,7 +89,7 @@ blocks:
       jobs:
       - name: Publish
         commands:
-          - cache restore node-modules-$(checksum package.json)
+          - cache restore node_modules-$(checksum package-lock.json)
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - cache restore gen-$SEMAPHORE_PIPELINE_ID
           - npm run release
