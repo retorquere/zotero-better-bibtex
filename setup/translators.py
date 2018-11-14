@@ -12,6 +12,8 @@ print('translators')
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
+lastUpdated = datetime.datetime.now().isoformat().replace('T', ' ').split('.')[0]
+
 translators = Dict()
 variables = Dict()
 
@@ -25,7 +27,7 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
   with open(header) as f:
     header = Dict(json.load(f))
     print(f'  {header.label}')
-    header.lastUpdated = datetime.datetime.now().isoformat().replace('T', ' ').split('.')[0]
+    header.lastUpdated = lastUpdated
 
     translators.byId[header.translatorID] = header
     translators.byName[header.label] = header

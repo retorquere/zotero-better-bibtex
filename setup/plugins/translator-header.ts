@@ -11,6 +11,8 @@ const prefs = {
   defaults: require(path.join(root, 'gen/preferences/defaults.json')),
 }
 
+const translators = require(path.join(root, 'gen/translators.json'))
+
 class TranslatorHeaderPlugin {
   private translator: string
 
@@ -20,8 +22,7 @@ class TranslatorHeaderPlugin {
 
   public apply(compiler) {
     compiler.hooks.emit.tap('TranslatorHeaderPlugin', compilation => {
-      const header = require(path.join(root, 'translators', this.translator + '.json'))
-      header.lastUpdated = (new Date).toISOString().replace('T', ' ').replace(/\..*/, '')
+      const header = translators.byName[this.translator]
       const overrides = {}
       for (const pref of Object.keys(prefs.defaults)) {
         overrides[pref] = prefs.overrides.includes(pref)
