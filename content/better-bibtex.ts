@@ -169,9 +169,10 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
 
   if (BetterBibTeX.ready.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
 
-  const obj = this.getRow(row)
-  const itemID = obj.id
-  const citekey = KeyManager.get(itemID)
+  const item = this.getRow(row).ref
+  if (item.isNote() || item.isAttachment()) return ''
+
+  const citekey = KeyManager.get(item.id)
 
   if (citekey.retry) {
     BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
