@@ -94,7 +94,7 @@ blocks:
           - cache restore node_modules-$(checksum package-lock.json)
           - cache restore xpi-$SEMAPHORE_PIPELINE_ID
           - cache restore gen-$SEMAPHORE_PIPELINE_ID
-          - npm run release
+          - echo npm run release
       epilogue:
         commands:
           - cache delete xpi-$SEMAPHORE_PIPELINE_ID
