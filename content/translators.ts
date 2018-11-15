@@ -36,6 +36,22 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (reinit) {
       log.debug('Translators.init: reinit translators...')
+
+      if (!Prefs.get('testing')) {
+        const ps = Services.prompt
+        const index = ps.confirmEx(
+          null,
+          Zotero.getString('zotero.debugOutputLogging'),
+          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new'),
+          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'),
+          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
+          Zotero.getString('general.restartNow'), Zotero.getString('general.restartLater'),
+          null, {}
+        )
+
+        if (index === 0) Zotero.Utilities.Internal.quit(true)
+      }
+
       try {
         log.debug('Translators.init: reinit start @', (new Date()).valueOf() - start)
         await Zotero.Translators.reinit()
