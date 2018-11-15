@@ -23,9 +23,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let reinit = false
 
     if (Prefs.get('removeStock')) {
-      this.uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')
-      this.uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')
-      reinit = true
+      if (this.uninstall('BibLaTeX', 'b6e39b57-8942-4d11-8259-342c46ce395f')) reinit = true
+      if (this.uninstall('BibTeX', '9cb70025-a888-4a29-a210-93ec52da40d4')) reinit = true
     }
 
     // cleanup old translators
@@ -41,13 +40,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
       if (!Prefs.get('testing')) {
         const ps = Services.prompt
         const index = ps.confirmEx(
-          null,
-          Zotero.getString('zotero.debugOutputLogging'),
-          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new'),
-          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'),
-          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
-          Zotero.getString('general.restartNow'), Zotero.getString('general.restartLater'),
-          null, {}
+          null, // parent
+          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new'), // dialogTitle
+          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
+          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT, // button flags
+          Zotero.getString('general.restartNow'), Zotero.getString('general.restartLater'), null, // button messages
+          null, // check message
+          {} // check state
         )
 
         if (index === 0) Zotero.Utilities.Internal.quit(true)
