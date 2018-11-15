@@ -1,4 +1,5 @@
 declare const Zotero: any
+declare const Services: any
 
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
