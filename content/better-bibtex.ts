@@ -164,10 +164,17 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
 
   return original.apply(this, arguments)
 })
+
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
-  if (BetterBibTeX.loaded.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
+  if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
+    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
+      this._treebox.invalidateCell(row, column)
+    })
+
+    return '\uFFFD'
+  }
 
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
@@ -626,8 +633,9 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     deferred.loaded.resolve(true)
 
     // this is what really takes long
-    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
+    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
     await Zotero.Schema.schemaUpdatePromise
+    progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
