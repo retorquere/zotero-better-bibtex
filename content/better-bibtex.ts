@@ -625,16 +625,17 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 
+    deferred.loaded.resolve(true)
+    // this is what really takes long
+    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
+    await Zotero.Schema.schemaUpdatePromise
+
     progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
     Serializer.init()
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
-    deferred.loaded.resolve(true)
 
-    // this is what really takes long
-    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
-    await Zotero.Schema.schemaUpdatePromise
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
