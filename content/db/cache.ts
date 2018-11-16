@@ -119,7 +119,7 @@ DB.init = async () => {
 
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', async () => {
-  await Zotero.BetterBibTeX.ready
+  await Zotero.BetterBibTeX.loaded
 
   for (const translator of Object.keys(translators.byName)) {
     log.debug('DB Event: drop', translator)

@@ -290,7 +290,7 @@ export let Application = new class { // tslint:disable-line:variable-name
 }
 
 export async function pick(options) {
-  await Zotero.BetterBibTeX.ready
+  await Zotero.BetterBibTeX.loaded
 
   const doc = Application.createDocument(options)
   await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)

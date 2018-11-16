@@ -167,7 +167,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
-  if (BetterBibTeX.ready.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
+  if (BetterBibTeX.loaded.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
 
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
@@ -175,7 +175,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
   const citekey = KeyManager.get(item.id)
 
   if (citekey.retry) {
-    BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
+    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
       this._treebox.invalidateCell(row, column)
     })
   }
@@ -359,7 +359,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
-      BetterBibTeX.ready.then(() => handler.apply(null, args)) // tslint:disable-line:no-use-before-declare
+      BetterBibTeX.loaded.then(() => handler.apply(null, args)) // tslint:disable-line:no-use-before-declare
     },
   }, [event], 'BetterBibTeX', 1)
 }
@@ -525,6 +525,7 @@ class Progress {
 
 export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   public ready: any
+  public loaded: any
   public dir: string
 
   private strings: any
@@ -537,7 +538,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     this.strings = this.document.getElementById('zotero-better-bibtex-strings')
 
-    if (!this.ready) await this.init()
+    if (!this.loaded) await this.init()
   }
 
   public getString(id, params = null) {
@@ -556,16 +557,21 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
   }
 
   public async scanAUX(path = null) {
-    if (this.ready) {
-      await this.ready
+    if (this.loaded) {
+      await this.loaded
       await AUXScanner.scan(path)
     }
   }
 
   // #init
   private async init() {
-    const deferred = Zotero.Promise.defer()
-    this.ready = deferred.promise
+    const deferred = {
+      loaded: Zotero.Promise.defer(),
+      ready: Zotero.Promise.defer(),
+    }
+    this.ready = deferred.ready.promise
+    this.loaded = deferred.loaded.promise
+
     if (typeof this.ready.isPending !== 'function') throw new Error('Zotero.Promise is not using Bluebird')
 
     log.debug('Loading Better BibTeX: starting...')
@@ -596,7 +602,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 
     // Zotero startup is a hot mess; https://groups.google.com/d/msg/zotero-dev/QYNGxqTSpaQ/uvGObVNlCgAJ
-    await Zotero.Schema.schemaUpdatePromise
+    await Zotero.Schema.initializationPromise
 
     this.dir = OS.Path.join(Zotero.DataDirectory.dir, 'better-bibtex')
     await OS.File.makeDir(this.dir, { ignoreExisting: true })
@@ -617,13 +623,16 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
+    deferred.loaded.resolve(true)
 
+    // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
+    await Zotero.Schema.schemaUpdatePromise
     await Translators.init()
 
     // should be safe to start tests at this point. I hate async.
 
-    deferred.resolve(true)
+    deferred.ready.resolve(true)
 
     progress.done()
 
