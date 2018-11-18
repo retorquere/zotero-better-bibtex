@@ -2,4 +2,6 @@
 ignore:
 - chatter
 - deferred
-reopen: '*'
+reopen:
+- "*"
+- "-question"
