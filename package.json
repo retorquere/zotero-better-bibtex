@@ -2,7 +2,7 @@
   "name": "zotero-better-bibtex",
   "version": "5.1.12",
   "description": "Make Zotero useful for us LaTeX holdouts.",
-  "homepage": "https://github.com/retorquere/zotero-better-bibtex/wiki",
+  "homepage": "https://retorque.re/zotero-better-bibtex",
   "license": "ISC",
   "author": {
     "name": "Emiliano Heyns",

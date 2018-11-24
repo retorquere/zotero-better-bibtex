@@ -362,7 +362,7 @@ export = new class PrefPane {
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
         const id = document.getElementById('better-bibtex-prefs-tabbox').selectedPanel.id
-        if (id) this.openURL(`https://github.com/retorquere/zotero-better-bibtex/wiki/Configuration#${id.replace('better-bibtex-prefs-', '')}`)
+        if (id) this.openURL(`https://retorque.re/zotero-better-bibtex/configuration/#${id.replace('better-bibtex-prefs-', '')}`)
       } else {
         original.apply(this, arguments)
       }
