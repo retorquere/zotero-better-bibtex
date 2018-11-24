@@ -185,17 +185,6 @@ Translator.doExport = () => {
     ref.add({ name: 'number', value: item.number || item.issue || item.seriesNumber })
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
-    switch (Translator.preferences.bibtexURL) {
-      case 'url':
-        ref.add({ name: 'url', value: item.url })
-        break
-      case 'note':
-        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
-        break
-      default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
-    }
-
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
       ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, preserveBibTeXVariables: true })
 
@@ -223,6 +212,17 @@ Translator.doExport = () => {
       default:
         ref.add({ name: 'publisher', value: item.publisher })
         break
+    }
+
+    switch (Translator.preferences.bibtexURL) {
+      case 'url':
+        ref.add({ name: 'url', value: item.url })
+        break
+      case 'note':
+        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
+        break
+      default:
+        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
     }
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {

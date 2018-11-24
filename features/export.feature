@@ -119,7 +119,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
-     | error on exporting note with pre tags #1092                                        | 1          |
+     | error on exporting note with pre tags; duplicate field howpublished #1092          | 2          |
      | No booktitle field when exporting references from conference proceedings #1069     | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |
      | BetterBibtex export fails for missing last name #978                               | 1          |
