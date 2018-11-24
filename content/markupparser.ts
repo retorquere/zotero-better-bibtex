@@ -72,14 +72,13 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   private html: string
 
   public parse(html, options: { html?: boolean, caseConversion?: boolean } = {}): IZoteroMarkupNode {
+    this.html = html
+
     let doc
 
     // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
     this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
     this.sentenceStart = true
-
-    // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
-    this.html = html.replace(/<pre>/g, '<script>').replace(/<\/pre>/g, '</script>')
 
     // add enquote tags.
     const csquotes = Prefs.get('csquotes')
@@ -104,8 +103,12 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
           case 'sup':
           case 'sub':
           case 'script':
-          case 'pre':
             return match
+
+          case 'pre':
+            // I should have used script from the start
+            // I think pre follows different rules where it still interprets what's inside; script just gives whatever is in there as-is
+            return `<${close || ''}script`
 
           default:
             return `&lt;${close || ''}${tag}`
@@ -206,11 +209,10 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
         this.titleCased += node.value
         break
 
-      case 'pre':
       case 'script':
         // don't confuse the title caser with spurious markup. Without this,
-        // the CSL title caser would consider last words in a title that actually have a following <pre> block the last
-        // word and would capitalize it. The prevents that behavior by adding the contents of the <pre> block, but it
+        // the CSL title caser would consider last words in a title that actually have a following <script> block the last
+        // word and would capitalize it. The prevents that behavior by adding the contents of the <script> block, but it
         // will be ignored by the BBT title caser, which only title-cases #text blocks
         this.titleCased += ''.padStart(node.value.length, 'latex')
         break
@@ -260,6 +262,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     switch (node.nodeName) {
       case '#document':
       case '#document-fragment':
+      case 'pre':
         _node.nodeName = 'span'
         break
 
@@ -271,10 +274,6 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
       case 'sc':
         _node.nodeName = 'span'
         _node.attr.smallcaps = 'smallcaps'
-        break
-
-      case 'pre':
-        _node.nodeName = 'script'
         break
     }
 
