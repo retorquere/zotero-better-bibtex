@@ -205,9 +205,10 @@ export function html2latex(html, options) {
   if (typeof options.html === 'undefined') options.html = true
   const latex = htmlConverter.convert(html, options)
   latex.latex = latex.latex
-    .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n')
-    .replace(/\n\n\n+/g, '\n\n')
-    .replace(/{}([}])/g, '$1')
+    // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
+    .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
+    .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
+    // .replace(/{}([}])/g, '$1') // seems to have become obsolete
   return latex
 }
 

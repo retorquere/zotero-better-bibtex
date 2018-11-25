@@ -476,24 +476,25 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      let value
-
       if ((typeof field.value === 'number') || (field.preserveBibTeXVariables && this.isBibVar(field.value))) {
-        value = `${field.value}`
+        field.bibtex = `${field.value}`
+
       } else {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
-        value = this[`enc_${enc}`](field, this.raw)
+        let value = this[`enc_${enc}`](field, this.raw)
 
         if (!value) return
 
         value = value.trim()
-        if (!field.bare || (field.value as string).match(/\s/)) value = `{${value}}`
+        if (!field.bare || (field.value as string).match(/\s/)) {
+          // clean up unnecesary {} when followed by a char that safely terminates the command before
+          // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
+          value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
+          value = `{${value}}`
+        }
+
+        field.bibtex = value
       }
-
-      // minor cleanup
-      value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2')
-
-      field.bibtex = `${value}`
     }
 
     this.has[field.name] = field
