@@ -119,8 +119,8 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
-     | error on exporting note with pre tags #1092                                        | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
+     | error on exporting note with pre tags; duplicate field howpublished #1092          | 2          |
      | No booktitle field when exporting references from conference proceedings #1069     | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |
      | BetterBibtex export fails for missing last name #978                               | 1          |
