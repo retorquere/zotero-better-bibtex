@@ -890,7 +890,7 @@ export class Reference {
 
     if (Array.isArray(f.value)) {
       if (f.value.length === 0) return null
-      return f.value.map(word => this.enc_latex(this.clone(f, word), raw)).join(f.sep || '')
+      return f.value.map(elt => this.enc_latex({...f, bibtex: undefined, value: elt}, raw)).join(f.sep || '')
     }
 
     if (f.raw || raw) return f.value
@@ -1009,20 +1009,6 @@ export class Reference {
     }
 
     this.add({ ...field, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
-  }
-
-  /*
-   * Return a copy of the given `field` with a new value
-   *
-   * @param {field} field to be cloned
-   * @param {value} value to be assigned
-   * @return {Object} copy of field settings with new value
-   */
-  private clone(f, value) {
-    const clone = JSON.parse(JSON.stringify(f))
-    delete clone.bibtex
-    clone.value = value
-    return clone
   }
 
   private _enc_creators_pad_particle(particle, relax = false) {
