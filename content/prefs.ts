@@ -22,6 +22,11 @@ export let Preferences = new class { // tslint:disable-line:variable-name
           log.debug('Preferences: jabrefGroups -> jabrefFormat')
           this.set('jabrefFormat', this.get(pref))
           this.clear(pref)
+          break
+
+        case 'ZotFile':
+          this.clear(pref)
+          break
       }
     }
 
