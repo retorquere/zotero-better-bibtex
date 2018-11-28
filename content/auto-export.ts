@@ -70,48 +70,68 @@ class Git {
 
     if (!this.git) return repo
 
-    /*
-    make async
-    try {
-      const path = Zotero.File.pathToFile(bib).parent.path
-      repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
-      if (!repo.enabled) return repo
+    switch (Prefs.get('git')) {
+      case 'off':
+        return repo
 
-      repo.path = (await this.exec(this.git, ['rev-parse', '--show-toplevel'], path)).trim()
+      case 'always':
+        try {
+          repo.path = Zotero.File.pathToFile(bib).parent.path
+        } catch (err) {
+          log.error('git.repo:', err)
+          return repo
+        }
+        break
 
-    } catch (err) {
-      log.error('git.repo:', err)
-      repo.enabled = false
+      case 'per-repo':
+        const path = Zotero.File.pathToFile(bib)
+        let root = path.clone() // assumes that we're handed a bibfile!
+        let config = null
 
-    }
-    */
+        while (root.parent) {
+          root = root.parent
 
-    const path = Zotero.File.pathToFile(bib)
-    let root = path.clone() // assumes that we're handed a bibfile!
-    let config = null
+          if (!root.exists() || !root.isDirectory()) return repo
 
-    while (root.parent) {
-      root = root.parent
+          config = root.clone()
+          config.append('.git')
+          if (config.exists() && config.isDirectory()) break
+          config = null
+        }
+        if (!config) return repo
+        repo.path = root.path
 
-      if (!root.exists() || !root.isDirectory()) return repo
+        config.append('config')
+        if (!config.exists() || !config.isFile()) return repo
 
-      config = root.clone()
-      config.append('.git')
-      if (config.exists() && config.isDirectory()) break
-      config = null
-    }
-    if (!config) return repo
-    repo.path = root.path
+        try {
+          const enabled = (ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"'] || {}).push
+          if (enabled !== 'true' && enabled !== true) return repo
+        } catch (err) {
+          log.debug('git.repo: error parsing config', config.path, err)
+          return repo
+        }
+        break
+        /*
+        make async
+        try {
+          const path = Zotero.File.pathToFile(bib).parent.path
+          repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
+          if (!repo.enabled) return repo
 
-    config.append('config')
-    if (!config.exists() || !config.isFile()) return repo
+          repo.path = (await this.exec(this.git, ['rev-parse', '--show-toplevel'], path)).trim()
 
-    try {
-      const enabled = (ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"'] || {}).push
-      if (enabled !== 'true' && enabled !== true) return repo
-    } catch (err) {
-      log.debug('git.repo: error parsing config', config.path, err)
-      return repo
+        } catch (err) {
+          log.error('git.repo:', err)
+          repo.enabled = false
+          return repo
+
+        }
+        */
+
+      default:
+        log.error('Unexpected git config', Prefs.get('git'))
+        return repo
     }
 
     repo.enabled = true

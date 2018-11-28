@@ -425,6 +425,15 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.git"
+          id="pref-better-bibtex-sorted"
+          type="string"
+          default="on"/>
+        <!--!
+          Can be 'off', 'per-repo' or 'always'
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.debugLog"
           type="string"
           default=""/>
