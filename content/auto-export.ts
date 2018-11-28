@@ -84,22 +84,15 @@ class Git {
         break
 
       case 'config':
-        const path = Zotero.File.pathToFile(bib)
-        let root = path.clone() // assumes that we're handed a bibfile!
         let config = null
-
-        while (root.parent) {
-          root = root.parent
-
-          if (!root.exists() || !root.isDirectory()) return repo
-
+        for (let root = Zotero.File.pathToFile(bib).parent; root && root.exists() && root.isDirectory(); root = root.parent) {
           config = root.clone()
           config.append('.git')
           if (config.exists() && config.isDirectory()) break
           config = null
         }
         if (!config) return repo
-        repo.path = root.path
+        repo.path = config.parent.path
 
         config.append('config')
         if (!config.exists() || !config.isFile()) return repo
@@ -112,8 +105,9 @@ class Git {
           return repo
         }
         break
-        /*
-        make async
+
+      /* async
+      case 'config':
         try {
           const path = Zotero.File.pathToFile(bib).parent.path
           repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
@@ -127,7 +121,7 @@ class Git {
           return repo
 
         }
-        */
+      */
 
       default:
         log.error('Unexpected git config', Prefs.get('git'))
