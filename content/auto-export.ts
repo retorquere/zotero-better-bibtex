@@ -83,7 +83,7 @@ class Git {
         }
         break
 
-      case 'per-repo':
+      case 'config':
         const path = Zotero.File.pathToFile(bib)
         let root = path.clone() // assumes that we're handed a bibfile!
         let config = null
@@ -134,11 +134,11 @@ class Git {
         return repo
     }
 
-    repo.enabled = true
-    repo.bib = bib.substring(path.length + 1)
+    const sep = this.onWindows ? '\\' : '/'
+    if (bib[repo.path.length] !== sep) throw new Error(`${bib} not in directory ${repo.path} (${bib[repo.path.length]} vs ${sep})?!`)
 
-    if (!this.normalizePath(bib).startsWith(this.normalizePath(path))) throw new Error(`${bib} not in ${path}?!`)
-    if (bib[path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${bib} not in directory ${path} (${bib[path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
+    repo.enabled = true
+    repo.bib = bib.substring(repo.path.length + 1)
 
     return repo
   }
@@ -178,10 +178,6 @@ class Git {
     const exitCode = await proc.wait()
     log.debug('git.exec:', { cmd, args, workdir }, ':', exitCode, output)
     return output
-  }
-
-  private normalizePath(path) {
-    return this.onWindows ? path.toLowerCase() : path
   }
 }
 const git = new Git()

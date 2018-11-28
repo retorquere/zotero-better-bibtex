@@ -426,11 +426,11 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.git"
-          id="pref-better-bibtex-sorted"
+          id="pref-better-bibtex-git"
           type="string"
-          default="on"/>
-        <!--!
-          Can be 'off', 'per-repo' or 'always'
+          default="config"/>
+        <!--!!
+          Can be 'off', 'config' or 'always'
         -->
 
         <preference

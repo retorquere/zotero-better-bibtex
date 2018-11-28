@@ -19,6 +19,7 @@ citekeyFormat: ​[auth:lower][shorttitle3_3][year]
 citeprocNoteCitekey: false
 csquotes: ''
 debugLog: ''
+git: config
 itemObserverDelay: 100
 jabrefFormat: 0
 keyConflictPolicy: keep

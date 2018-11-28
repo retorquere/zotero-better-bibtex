@@ -262,6 +262,9 @@
     debugLog:
       default: ''
       description: '!'
+    git:
+      default: config
+      description: Can be 'off', 'config' or 'always'
     itemObserverDelay:
       default: '100'
       description: 'I''ve had reports where Zotero notifies extensions that references
