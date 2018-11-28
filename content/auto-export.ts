@@ -12,6 +12,7 @@ import { Events } from './events'
 import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
+import * as ini from 'ini'
 
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
@@ -64,11 +65,13 @@ class Git {
     return this
   }
 
-  public async repo(bib): Promise<Git> {
+  public repo(bib): Git {
     const repo = new Git(this)
 
     if (!this.git) return repo
 
+    /*
+    make async
     try {
       const path = Zotero.File.pathToFile(bib).parent.path
       repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
@@ -76,16 +79,46 @@ class Git {
 
       repo.path = (await this.exec(this.git, ['rev-parse', '--show-toplevel'], path)).trim()
 
-      if (!this.normalizePath(bib).startsWith(this.normalizePath(path))) throw new Error(`${bib} not in ${path}?!`)
-      if (bib[path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${bib} not in directory ${path} (${bib[path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
-
-      repo.bib = bib.substring(path.length + 1)
-
     } catch (err) {
       log.error('git.repo:', err)
       repo.enabled = false
 
     }
+    */
+
+    const path = Zotero.File.pathToFile(bib)
+    let root = path.clone() // assumes that we're handed a bibfile!
+    let config = null
+
+    while (root.parent) {
+      root = root.parent
+
+      if (!root.exists() || !root.isDirectory()) return repo
+
+      config = root.clone()
+      config.append('.git')
+      if (config.exists() && config.isDirectory()) break
+      config = null
+    }
+    if (!config) return repo
+    repo.path = root.path
+
+    config.append('config')
+    if (!config.exists() || !config.isFile()) return repo
+
+    try {
+      const enabled = (ini.parse(Zotero.File.getContents(config))['zotero "betterbibtex"'] || {}).push
+      if (enabled !== 'true' && enabled !== true) return repo
+    } catch (err) {
+      log.debug('git.repo: error parsing config', config.path, err)
+      return repo
+    }
+
+    repo.enabled = true
+    repo.bib = bib.substring(path.length + 1)
+
+    if (!this.normalizePath(bib).startsWith(this.normalizePath(path))) throw new Error(`${bib} not in ${path}?!`)
+    if (bib[path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${bib} not in directory ${path} (${bib[path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
 
     return repo
   }
@@ -159,7 +192,7 @@ const scheduled = new Queue(
 
         log.debug('AutoExport.scheduled: starting export', ae)
 
-        const repo = await git.repo(ae.path)
+        const repo = git.repo(ae.path)
         await repo.pull()
         const displayOptions = {
           exportNotes: ae.exportNotes,
@@ -298,9 +331,7 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
-    git.repo(ae.path).then(repo => {
-      if (repo.enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
-    })
+    if (git.repo(ae.path).enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
   }
 
   public changed(items) {
