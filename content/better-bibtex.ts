@@ -378,7 +378,7 @@ notify('item', (action, type, ids, extraData) => {
     if (!ids.length) return
   }
 
-  Cache.remove(ids)
+  Cache.remove(ids, `item ${ids} changed`)
 
   // safe to use Zotero.Items.get(...) rather than Zotero.Items.getAsync here
   // https://groups.google.com/forum/#!topic/zotero-dev/99wkhAk-jm0
@@ -391,7 +391,7 @@ notify('item', (action, type, ids, extraData) => {
 
     return true
   })
-  if (parents.length) Cache.remove(parents)
+  if (parents.length) Cache.remove(parents, `parent items ${parents} changed`)
 
   switch (action) {
     case 'delete':

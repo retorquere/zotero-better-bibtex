@@ -8,7 +8,6 @@ import * as log from './debug'
 
 import Queue = require('better-queue')
 import MemoryStore = require('better-queue-memory')
-import * as ini from 'ini'
 import { Events } from './events'
 import { DB } from './db/main'
 import { Translators } from './translators'
@@ -33,6 +32,106 @@ function queueHandler(kind, handler) {
     }
   }
 }
+
+class Git {
+  public enabled: boolean
+  public path: string
+  public bib: string
+
+  private git: string
+  private onWindows: boolean
+
+  constructor(parent?: Git) {
+    this.enabled = false
+
+    if (parent) {
+      this.git = parent.git
+      this.onWindows = parent.onWindows
+    }
+  }
+
+  public async init() {
+    this.onWindows = Zotero.platform.toLowerCase().startsWith('win')
+
+    try {
+      this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
+      log.debug('git: git found at', this.git)
+    } catch (err) {
+      log.error('git.init: git not found:', err)
+      this.git = null
+    }
+
+    return this
+  }
+
+  public async repo(bib): Promise<Git> {
+    const repo = new Git(this)
+
+    if (!this.git) return repo
+
+    try {
+      const path = Zotero.File.pathToFile(bib).parent.path
+      repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
+      if (!repo.enabled) return repo
+
+      repo.path = (await this.exec(this.git, ['rev-parse', '--show-toplevel'], path)).trim()
+
+      if (!this.normalizePath(bib).startsWith(this.normalizePath(path))) throw new Error(`${bib} not in ${path}?!`)
+      if (bib[path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${bib} not in directory ${path} (${bib[path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
+
+      repo.bib = bib.substring(path.length + 1)
+
+    } catch (err) {
+      log.error('git.repo:', err)
+      repo.enabled = false
+
+    }
+
+    return repo
+  }
+
+  public async pull() {
+    if (!this.enabled) return
+
+    try {
+      await this.exec(this.git, ['pull'], this.path)
+    } catch (err) {
+      log.error(`could not pull in ${this.path}: ${Object.keys(err)}/${err}`)
+      this.enabled = false
+    }
+  }
+
+  public async push() {
+    if (!this.enabled) return
+
+    try {
+      await this.exec(this.git, ['add', this.bib], this.path)
+      await this.exec(this.git, ['commit', '-m', this.bib], this.path)
+      await this.exec(this.git, ['push'], this.path)
+    } catch (err) {
+      log.error(`could not push ${this.bib} in ${this.path}: ${Object.keys(err)}/${err}`)
+      this.enabled = false
+    }
+  }
+
+  // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
+  private async exec(cmd, args, workdir) {
+    const proc = await Subprocess.call({
+      command: cmd,
+      arguments: args,
+      workdir,
+    })
+    const output = await proc.stdout.readString()
+    const exitCode = await proc.wait()
+    log.debug('git.exec:', { cmd, args, workdir }, ':', exitCode, output)
+    return output
+  }
+
+  private normalizePath(path) {
+    return this.onWindows ? path.toLowerCase() : path
+  }
+}
+const git = new Git()
 
 const scheduled = new Queue(
   queueHandler('scheduled',
@@ -60,8 +159,8 @@ const scheduled = new Queue(
 
         log.debug('AutoExport.scheduled: starting export', ae)
 
-        const { repo, name } = AutoExport.gitPush(ae.path) // tslint:disable-line:no-use-before-declare
-        AutoExport.pull(repo) // tslint:disable-line:no-use-before-declare
+        const repo = await git.repo(ae.path)
+        await repo.pull()
         const displayOptions = {
           exportNotes: ae.exportNotes,
           useJournalAbbreviation: ae.useJournalAbbreviation,
@@ -70,7 +169,7 @@ const scheduled = new Queue(
           displayOptions[`preference_${pref}`] = ae[pref]
         }
         await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
-        AutoExport.push(repo, name) // tslint:disable-line:no-use-before-declare
+        await repo.push()
 
         log.debug('AutoExport.scheduled: export finished', ae)
         ae.error = ''
@@ -173,8 +272,6 @@ Events.on('preference-changed', pref => {
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let AutoExport = new class { // tslint:disable-line:variable-name
   public db: any
-  private git: string
-  private onWindows: boolean
 
   constructor() {
     Events.on('libraries-changed', ids => this.schedule('library', ids))
@@ -184,35 +281,13 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public async init() {
+    await git.init()
     this.db = DB.getCollection('autoexport')
     for (const ae of this.db.find({ status: { $ne: 'done' } })) {
       scheduler.push({ id: ae.$loki })
     }
 
     if (Prefs.get('autoExport') === 'immediate') { scheduler.resume() }
-
-    this.onWindows = Zotero.platform.toLowerCase().startsWith('win')
-    try {
-      this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
-    } catch (err) {
-      log.error('AutoExport.init: git not found:', err)
-      this.git = null
-    }
-    if (this.git) log.debug('AutoExport: git found at', this.git)
-  }
-
-  public async pull(repo) {
-    if (!repo) return null
-
-    await this.exec(this.git, ['pull'], repo)
-  }
-
-  public async push(repo, name) {
-    if (!repo) return null
-
-    await this.exec(this.git, ['add', name], repo)
-    await this.exec(this.git, ['commit', '-m', name], repo)
-    await this.exec(this.git, ['push'], repo)
   }
 
   public add(ae) {
@@ -223,7 +298,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
-    if (this.gitPush(ae.path).repo) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    git.repo(ae.path).then(repo => {
+      if (repo.enabled) this.schedule(ae.type, [ae.id]) // causes initial push to overleaf at the cost of a unnecesary extra export
+    })
   }
 
   public changed(items) {
@@ -273,96 +350,5 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     ae.status = 'scheduled'
     this.db.update(ae)
     scheduled.push({ id: ae.$loki })
-  }
-
-  public gitPush(path) {
-    let found
-    try {
-      found = this._gitPush(path)
-      log.debug('gitPush::', { found })
-    } catch (err) {
-      log.error('gitPush::', err)
-      found = {}
-    }
-    return found
-  }
-
-  private gitDir(repo) {
-    if (!repo.exists()) return null
-    if (!repo.isDirectory()) return null
-
-    const git = repo.clone()
-    git.append('.git')
-
-    if (!git.exists()) return null
-    if (!git.isDirectory()) return null
-
-    return git
-  }
-
-  private _gitPush(path) {
-    if (!this.git) return {}
-
-    log.debug('gitPush:', path)
-
-    const name = Zotero.File.pathToFile(path)
-    let repo = name.clone() // assumes that we're handed a bibfile!
-    let git = null
-
-    while (repo.parent) {
-      repo = repo.parent
-      git = this.gitDir(repo)
-      if (git) break
-    }
-
-    if (!git) {
-      log.debug('gitPush:', path, 'is not in a repo')
-      return {}
-    }
-
-    log.debug('gitPush: repo found at', repo.path)
-
-    git.append('config')
-    log.debug('gitPush: looking for config at', git.path, git.exists())
-    if (!git.exists() || !git.isFile()) {
-      log.debug('gitPush: config', git.path, 'is not a file')
-      return {}
-    }
-
-    log.debug('gitPush: repo config found at', git.path)
-
-    let config = {}
-
-    try {
-      config = ini.parse(Zotero.File.getContents(git))
-      log.debug('gitPush: config=', config)
-    } catch (err) {
-      log.debug('gitPush: error parsing config', git.path, err)
-    }
-
-    // enable with 'git config zotero.betterbibtex.push true'
-    const enabled = (config['zotero "betterbibtex"'] || {}).push
-    log.debug('git config found for', repo.path, 'enabled =', { enabled })
-
-    if (enabled !== 'true' && enabled !== true) return {}
-
-    if (!this.normalizePath(name.path).startsWith(this.normalizePath(repo.path))) throw new Error(`${name.path} not in ${repo.path}?!`)
-    if (name.path[repo.path.length] !== (this.onWindows ? '\\' : '/')) throw new Error(`${name.path} not in directory ${repo.path} (${name.path[repo.path.length]} vs ${this.onWindows ? '\\' : '/'})?!`)
-
-    return { repo: repo.path, name: name.path.substring(repo.path.length + 1) }
-  }
-
-  private normalizePath(path) {
-    return this.onWindows ? path.toLowerCase() : path
-  }
-
-  // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
-  private async exec(cmd, args, workdir) {
-    const proc = await Subprocess.call({
-      command: cmd,
-      arguments: args,
-      workdir,
-    })
-    log.debug('AutoExport.exec:', { cmd, args, workdir }, ':', await proc.stdout.readString())
   }
 }

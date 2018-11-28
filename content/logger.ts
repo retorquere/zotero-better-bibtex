@@ -28,8 +28,9 @@ export let Logger = new class { // tslint:disable-line:variable-name
           _msg += m
         } else if (m instanceof Error) {
           _msg += `<Error: ${m.message || m.name}${m.stack ? `\n${m.stack}` : ''}>`
-        } else if (m && type === 'object' && m.stack) { // mozilla exception, no idea on the actual instance type
-          _msg += `<Error: ${m}#\n${m.stack}>`
+        } else if (m && type === 'object' && m.message) { // mozilla exception, no idea on the actual instance type
+          // message,fileName,lineNumber,column,stack,errorCode
+          _msg += `<Error: ${m.message}#\n${m.stack}>`
         } else {
           _msg += stringify(m)
         }
