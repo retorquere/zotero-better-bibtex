@@ -366,7 +366,10 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
 function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
-      BetterBibTeX.loaded.then(() => handler.apply(null, args)) // tslint:disable-line:no-use-before-declare
+      BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
+        log.trigger()
+        handler.apply(null, args)
+      })
     },
   }, [event], 'BetterBibTeX', 1)
 }
@@ -642,6 +645,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     // should be safe to start tests at this point. I hate async.
 
     deferred.ready.resolve(true)
+    log.trigger()
 
     progress.done()
 

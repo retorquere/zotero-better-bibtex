@@ -1,6 +1,5 @@
 var Translator = {
   initialize: function () {},
-  version: <%- JSON.stringify(version) %>,
   <%- header.label.replace(/[^a-z]/ig, '') %>: true,
   BetterTeX: <%- ['Better BibTeX', 'Better BibLaTeX'].includes(header.label) %>,
   BetterCSL: <%- ['Better CSL JSON', 'Better CSL YAML'].includes(header.label) %>,
