@@ -108,7 +108,8 @@ export = new class ErrorReport {
   private async init() {
     const wizard = document.getElementById('better-bibtex-error-report')
 
-    if (Zotero.Debug.enabled || Logger.errors) wizard.pageIndex = 1
+    // 100 is arbitary here
+    if (Zotero.Debug.enabled || Logger.errors > 100) wizard.pageIndex = 1 // tslint:disable-line:no-magic-numbers
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
