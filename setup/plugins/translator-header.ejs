@@ -1,13 +1,11 @@
-<%- JSON.stringify(header, null, 2) %>
-
 var Translator = {
   initialize: function () {},
   version: <%- JSON.stringify(version) %>,
   <%- header.label.replace(/[^a-z]/ig, '') %>: true,
   BetterTeX: <%- ['Better BibTeX', 'Better BibLaTeX'].includes(header.label) %>,
   BetterCSL: <%- ['Better CSL JSON', 'Better CSL YAML'].includes(header.label) %>,
-  // header == ZOTERO_TRANSLATOR_INFO -- maybe pick it from there
-  header: <%- JSON.stringify(header) %>,
+  header: ZOTERO_TRANSLATOR_INFO,
+  // header: < %- JSON.stringify(header) % >,
   override: <%- JSON.stringify(overrides) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 

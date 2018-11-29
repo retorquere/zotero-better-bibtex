@@ -155,23 +155,24 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     log.debug('Translators.install: installed =', installed)
 
-    if (installed && installed.lastUpdated === header.lastUpdated) {
-      log.debug('Translators.install:', header.label, 'not reinstalling', header.lastUpdated)
+    const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
+    const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
+    header = JSON.parse(metadata)
+    delete header.description // why did I have this?
+
+    if (installed && installed.configOptions && installed.configOptions.hash === header.configOptions.hash) {
+      log.debug('Translators.install:', header.label, 'not reinstalling', header.configOptions.hash)
       return false
+
     } else if (installed) {
-      log.debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated)
+      log.debug('Translators.install:', header.label, 'replacing', installed.lastUpdated, 'with', header.lastUpdated, `(${header.configOptions.hash})`)
+
     } else {
-      log.debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated)
+      log.debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated, `(${header.configOptions.hash})`)
+
     }
 
-    log.debug('Translators.install: saving translator', header.label)
-
     try {
-      const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
-      const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
-
-      header = JSON.parse(metadata)
-      delete header.description
       await Zotero.Translators.save(header, code)
 
       log.debug('Translator.install', header, 'succeeded')
