@@ -147,6 +147,7 @@ export class XULoki extends (Loki as { new(name, options): any }) {
 
   public schemaCollection(name, options) {
     options.cloneObjects = true
+    options.clone = true
     const coll = this.getCollection(name) || this.addCollection(name, options)
 
     if (options.logging && Prefs.get('testing')) {
