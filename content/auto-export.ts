@@ -12,6 +12,7 @@ import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import Loki = require('lokijs')
+import { Logger } from './logger'
 
 class Git {
   public enabled: boolean
@@ -209,11 +210,13 @@ const queue = new class {
   public async run(task) {
     if (task.canceled) return
 
+    log.debug('AutoExport.queue.run:', task)
+
     const db = DB.getCollection('autoexport')
     const ae = db.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-    log.debug('AutoExport.scheduled:', ae)
+    log.debug('AutoExport.queue.run:', ae)
     ae.status = 'running'
     db.update(ae)
 
@@ -230,7 +233,7 @@ const queue = new class {
           items = null
       }
 
-      log.debug('AutoExport.scheduled: starting export', ae)
+      log.debug('AutoExport.queue.run: starting export', ae)
 
       const repo = git.repo(ae.path)
       await repo.pull()
@@ -244,16 +247,16 @@ const queue = new class {
       await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
       await repo.push()
 
-      log.debug('AutoExport.scheduled: export finished', ae)
+      log.debug('AutoExport.queue.run: export finished', ae)
       ae.error = ''
     } catch (err) {
-      log.error('AutoExport.scheduled: failed', ae, err)
+      log.error('AutoExport.queue.run: failed', ae, err)
       ae.error = `${err}`
     }
 
     ae.status = 'done'
     db.update(ae)
-    log.debug('AutoExport.scheduled: completed', task, ae)
+    log.debug('AutoExport.queue.run: completed', task, ae)
   }
 
   // idle observer
@@ -356,7 +359,9 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public run(ae) {
-    queue.run({id: ae.$loki})
+  public run(id) {
+    logger.trigger()
+    log.debug('Autoexport.run:', id)
+    queue.run({id})
   }
 }
