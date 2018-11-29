@@ -499,7 +499,7 @@ class Progress {
   private bench(msg) {
     const ts = (new Date()).valueOf()
     // tslint:disable-next-line:no-magic-numbers
-    if (this.msg) log.error(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
+    if (this.msg) log.debug(`${this.name}:`, this.msg, 'took', (ts - this.timestamp) / 1000.0, 's')
     this.msg = msg
     this.timestamp = ts
   }

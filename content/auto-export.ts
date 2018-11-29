@@ -58,7 +58,7 @@ class Git {
       this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
       log.debug('git: git found at', this.git)
     } catch (err) {
-      log.error('git.init: git not found:', err)
+      log.debug('git.init: git not found:', err)
       this.git = null
     }
 
