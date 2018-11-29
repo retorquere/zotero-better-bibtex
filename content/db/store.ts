@@ -62,20 +62,16 @@ export class Store {
         await this.exportDatabaseFileAsync(name, dbref)
         break
     }
-
-    log.debug('FileStore.exportDatabaseAsync: took', { storage: this.storage, name, time: Date.now() - start})
   }
 
   private async exportDatabaseFileAsync(name, dbref) {
     await this.roll(name)
     const version = this.versions ? '.0' : ''
 
-    log.debug('FileStore.exportDatabaseAsync', name, dbref.collections.map(coll => coll.name))
     const parts = [
       this.save(`${name}${version}`, {...dbref, ...{collections: dbref.collections.map(coll => coll.name)}}, true),
     ]
     for (const coll of dbref.collections) {
-      log.debug('FileStore.exportDatabaseAsync', name, coll.name, coll.dirty)
       parts.push(this.save(`${name}${version}.${coll.name}`, coll, coll.dirty))
     }
 
@@ -102,12 +98,10 @@ export class Store {
       for (const coll of dbref.collections) {
         const collname = `${name}.${coll.name}`
         if (coll.dirty || !names.includes(collname)) {
-          log.debug('FileStore.SQLite.exportDatabase:', collname)
           parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [collname, JSON.stringify(coll)]))
         }
       }
 
-      log.debug('FileStore.SQLite.exportDatabase:', name)
       parts.push(conn.queryAsync(`REPLACE INTO "${name}" (name, data) VALUES (?, ?)`, [
         name,
         JSON.stringify({ ...dbref, ...{collections: dbref.collections.map(coll => `${name}.${coll.name}`)} }),
@@ -153,17 +147,12 @@ export class Store {
   }
 
   private async save(name, data, dirty) {
-    log.debug('FileStore.save', { name, dirty })
     const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
-    log.debug('FileStore.save', { name, dirty, path })
     const save = dirty || !(await OS.File.exists(path))
-    log.debug('FileStore.save', { name, dirty, path, save })
 
     if (!save) return null
 
     await OS.File.writeAtomic(path, JSON.stringify(data), { encoding: 'utf-8', tmpPath: path + '.tmp'})
-
-    log.debug('FileStore.saved', name)
   }
 
   public loadDatabase(name, callback) {
@@ -173,8 +162,6 @@ export class Store {
   }
 
   public async loadDatabaseAsync(name) {
-    log.debug('FileStore.loadDatabase: loading', name)
-
     try {
       const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
       if (db) return db
@@ -212,20 +199,14 @@ export class Store {
     let db = null
     const collections = {}
     for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
-      log.debug('DBStore.loadDatabase:', name, '.', row.name)
-
       if (row.name === name) {
-        log.debug(`DBStore.loadDatabase: loading ${name}`)
         db = JSON.parse(row.data)
       } else {
-        log.debug(`DBStore.loadDatabase: loading ${row.name}`)
         collections[row.name] = JSON.parse(row.data)
 
         collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
         collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
         collections[row.name].dirty = true
-
-        log.debug(`DBStore.loadDatabase: ${row.name} has`, collections[row.name].data.length, 'records')
       }
     }
 
@@ -274,16 +255,12 @@ export class Store {
         throw new Error(msg)
       }
     })).filter(coll => coll)
-
-    log.debug('FileStore: loaded', name, version)
     return db
   }
 
   private async load(name) {
     const path = OS.Path.join(Zotero.BetterBibTeX.dir, `${name}.json`)
     const exists = await OS.File.exists(path)
-
-    log.debug('FileStore.load', { path, exists })
 
     if (!exists) return null
 
