@@ -6,8 +6,8 @@ import stringify = require('json-stringify-safe')
 export let Logger = new class { // tslint:disable-line:variable-name
   private timestamp: number
   private _trigger: number
-  // 10 seconds after `change` is reset, log messages as errors
-  private too_long = 10 * 1000 // tslint:disable-line:no-magic-numbers
+  // `n` seconds after `change` is reset, log messages as errors
+  private too_long = 30 * 1000 // tslint:disable-line:no-magic-numbers
 
   public trigger() {
     this._trigger = Date.now()
@@ -17,7 +17,7 @@ export let Logger = new class { // tslint:disable-line:variable-name
     const working = typeof this._trigger === 'undefined' ? 0 : Date.now() - this._trigger
 
     if (working > this.too_long) {
-      this._log(Zotero.logError, `${prefix}/${working}!`, msg)
+      this._log(Zotero.logError, `${working} >> ${prefix}`, msg)
     } else if (Zotero.Debug.enabled) {
       this._log(Zotero.debug, prefix, msg)
     }
