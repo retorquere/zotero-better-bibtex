@@ -139,7 +139,7 @@ class Git {
       log.error(`could not push ${this.bib} in ${this.path}: ${Object.keys(err)}/${err}`)
       this.enabled = false
     }
-    log.error(`git.push: pushed ${this.bib} in ${this.path}`)
+    log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
