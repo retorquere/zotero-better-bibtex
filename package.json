@@ -44,7 +44,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "6.5.5",
+    "ajv": "6.6.0",
     "ajv-keywords": "3.2.0",
     "barcoder": "2.0.1",
     "better-queue": "3.8.10",
@@ -100,6 +100,7 @@
     "ignore-loader": "0.1.2",
     "indent-string": "3.2.0",
     "jsesc": "2.5.2",
+    "json-stable-stringify": "^1.0.1",
     "loader-utils": "1.1.0",
     "lodash": "4.17.11",
     "moment": "2.22.2",
