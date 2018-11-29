@@ -51,8 +51,6 @@ export class Store {
   }
 
   private async exportDatabaseAsync(name, dbref) {
-    const start = Date.now()
-
     switch (this.storage) {
       case 'sqlite':
         await this.exportDatabaseSQLiteAsync(name, dbref)
