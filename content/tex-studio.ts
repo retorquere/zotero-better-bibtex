@@ -14,7 +14,7 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
 
   public async init() {
     try {
-      this.texstudio = await Subprocess.pathSearch(`texstudio${Zotero.platform.toLowerCase().startsWith('win') ? '.exe' : ''}`)
+      this.texstudio = await Subprocess.pathSearch(`texstudio${Zotero.isWin ? '.exe' : ''}`)
     } catch (err) {
       log.debug('TeXstudio: not found:', err)
       this.texstudio = null

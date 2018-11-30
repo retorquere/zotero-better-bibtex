@@ -20,22 +20,18 @@ class Git {
   public bib: string
 
   private git: string
-  private onWindows: boolean
 
   constructor(parent?: Git) {
     this.enabled = false
 
     if (parent) {
       this.git = parent.git
-      this.onWindows = parent.onWindows
     }
   }
 
   public async init() {
-    this.onWindows = Zotero.platform.toLowerCase().startsWith('win')
-
     try {
-      this.git = await Subprocess.pathSearch(`git${this.onWindows ? '.exe' : ''}`)
+      this.git = await Subprocess.pathSearch(`git${Zotero.isWin ? '.exe' : ''}`)
       log.debug('git: git found at', this.git)
     } catch (err) {
       log.debug('git.init: git not found:', err)
@@ -108,7 +104,7 @@ class Git {
         return repo
     }
 
-    const sep = this.onWindows ? '\\' : '/'
+    const sep = Zotero.isWin ? '\\' : '/'
     if (bib[repo.path.length] !== sep) throw new Error(`${bib} not in directory ${repo.path} (${bib[repo.path.length]} vs ${sep})?!`)
 
     repo.enabled = true
