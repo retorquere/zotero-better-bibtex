@@ -158,12 +158,17 @@ const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 const queue = new class {
   private tasks = new Loki('autoexport').addCollection('tasks')
   private paused: Set<number>
+  private autoexports: any
 
   constructor() {
     this.paused = Prefs.get('autoExport') === 'immediate' ? null : new Set([])
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
+  }
+
+  public init(autoexports) {
+    this.autoexports = autoexports
   }
 
   public pause() {
@@ -209,13 +214,12 @@ const queue = new class {
 
     log.debug('AutoExport.queue.run:', task)
 
-    const db = DB.getCollection('autoexport')
-    const ae = db.get(task.id)
+    const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
     log.debug('AutoExport.queue.run:', ae)
     ae.status = 'running'
-    db.update(ae)
+    this.autoexports.update(ae)
 
     try {
       let items
@@ -252,7 +256,7 @@ const queue = new class {
     }
 
     ae.status = 'done'
-    db.update(ae)
+    this.autoexports.update(ae)
     log.debug('AutoExport.queue.run: completed', task, ae)
   }
 
@@ -300,7 +304,10 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
 
   public async init() {
     await git.init()
+
     this.db = DB.getCollection('autoexport')
+    queue.init(this.db)
+
     for (const ae of this.db.find({ status: { $ne: 'done' } })) {
       queue.add(ae)
     }
