@@ -156,29 +156,29 @@ const git = new Git()
 const debounce_delay = 1000
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 const queue = new class {
-  public paused = false
-
   private tasks = new Loki('autoexport').addCollection('tasks')
-  private held: Set<number>
+  private paused: Set<number>
 
   constructor() {
-    this.paused = Prefs.get('autoExport') !== 'immediate'
-    this.held = new Set([])
+    this.paused = Prefs.get('autoExport') === 'immediate' ? null : new Set([])
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
   }
 
   public pause() {
-    this.paused = true
+    if (!this.paused) this.paused = new Set([])
   }
 
   public resume() {
-    this.paused = false
-    for (const ae of this.held.values()) {
+    if (!this.paused) return
+
+    const ids = this.paused.values()
+    this.paused = null
+
+    for (const ae of ids) {
       this.add(ae)
     }
-    this.held = new Set([])
   }
 
   public add(ae) {
@@ -186,7 +186,7 @@ const queue = new class {
 
     this.cancel(id)
 
-    if (this.paused) return this.held.add(id)
+    if (this.paused) return this.paused.add(id)
 
     const task = this.tasks.insert({id})
 
