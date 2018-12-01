@@ -212,7 +212,7 @@ const queue = new class {
   public async run(task) {
     if (task.canceled) return
 
-    log.debug('AutoExport.queue.run:', task)
+    log.debug('AutoExport.queue.run:', task, this.autoexports)
 
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)

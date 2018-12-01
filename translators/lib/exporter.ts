@@ -28,7 +28,6 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     let item
     while (item = Zotero.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
-      debug('fetched item:', item)
 
       if (!item.citekey) {
         debug(new Error('No citation key found in'), item)

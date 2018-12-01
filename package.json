@@ -44,7 +44,7 @@
     "test": "test"
   },
   "dependencies": {
-    "ajv": "6.6.0",
+    "ajv": "6.6.1",
     "ajv-keywords": "3.2.0",
     "barcoder": "2.0.1",
     "biblatex-csl-converter": "1.6.2",
@@ -82,8 +82,8 @@
   },
   "devDependencies": {
     "@rgrove/parse-xml": "1.1.1",
-    "@types/node": "10.12.10",
-    "@types/webpack": "4.4.19",
+    "@types/node": "10.12.11",
+    "@types/webpack": "4.4.20",
     "archiver": "3.0.0",
     "bluebird": "3.5.3",
     "circular-dependency-plugin": "5.0.2",
@@ -113,7 +113,7 @@
     "ts-loader": "5.3.1",
     "ts-node": "7.0.1",
     "typedoc": "0.13.0",
-    "typescript": "3.1.6",
+    "typescript": "3.2.1",
     "uri-templates": "0.2.0",
     "webpack": "4.26.1",
     "wrapper-webpack-plugin": "2.0.0",
