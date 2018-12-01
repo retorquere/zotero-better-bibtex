@@ -130,8 +130,9 @@ class Git {
 
     try {
       await this.exec(this.git, ['pull'], this.path)
+      log.debug(`git.pull: pulled in ${this.path}`)
     } catch (err) {
-      log.error(`could not pull in ${this.path}: ${Object.keys(err)}/${err}`)
+      log.error(`could not pull in ${this.path}:`, err)
       this.enabled = false
     }
   }
@@ -143,11 +144,11 @@ class Git {
       await this.exec(this.git, ['add', this.bib], this.path)
       await this.exec(this.git, ['commit', '-m', this.bib], this.path)
       await this.exec(this.git, ['push'], this.path)
+      log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
     } catch (err) {
-      log.error(`could not push ${this.bib} in ${this.path}: ${Object.keys(err)}/${err}`)
+      log.error(`could not push ${this.bib} in ${this.path}`, err)
       this.enabled = false
     }
-    log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
