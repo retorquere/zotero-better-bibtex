@@ -14,18 +14,6 @@ import * as ini from 'ini'
 import Loki = require('lokijs')
 import { Logger } from './logger'
 
-function timeout(ms, message) {
-  return new Promise((resolve, reject) => {
-    const err = {
-      message,
-      code: 'ETIMEDOUT',
-    }
-    Error.captureStackTrace(err, timeout)
-
-    setTimeout(reject, ms, err)
-  })
-}
-
 class Git {
   public enabled: boolean
   public path: string
@@ -94,23 +82,6 @@ class Git {
         }
         break
 
-      /* async
-      case 'config':
-        try {
-          const path = Zotero.File.pathToFile(bib).parent.path
-          repo.enabled = (await this.exec(this.git, ['config', 'zotero.betterbibtex.push'], path)).trim() === 'true'
-          if (!repo.enabled) return repo
-
-          repo.path = (await this.exec(this.git, ['rev-parse', '--show-toplevel'], path)).trim()
-
-        } catch (err) {
-          log.error('git.repo:', err)
-          repo.enabled = false
-          return repo
-
-        }
-      */
-
       default:
         log.error('Unexpected git config', Prefs.get('git'))
         return repo
@@ -129,7 +100,7 @@ class Git {
     if (!this.enabled) return
 
     try {
-      await this.exec(this.git, ['pull'], this.path)
+      await this.exec(this.git, ['-C', this.path, 'pull'])
       log.debug(`git.pull: pulled in ${this.path}`)
     } catch (err) {
       log.error(`could not pull in ${this.path}:`, err)
@@ -141,9 +112,9 @@ class Git {
     if (!this.enabled) return
 
     try {
-      await this.exec(this.git, ['add', this.bib], this.path)
-      await this.exec(this.git, ['commit', '-m', this.bib], this.path)
-      await this.exec(this.git, ['push'], this.path)
+      await this.exec(this.git, ['-C', this.path, 'add', this.bib])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', this.bib])
+      await this.exec(this.git, ['-C', this.path, 'push'])
       log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
     } catch (err) {
       log.error(`could not push ${this.bib} in ${this.path}`, err)
@@ -151,29 +122,15 @@ class Git {
     }
   }
 
-  // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
-  private async _exec(cmd, args, workdir) {
-    log.debug('git.exec:', { cmd, args, workdir })
-    const proc = Subprocess.call({ command: cmd, arguments: args, workdir })
-    let output = ''
-    let partial
-    while (partial = await proc.stdout.readString()) {
-      output += partial
-    }
-    proc.stdin.close()
-    proc.stdout.close()
-    const { exitCode } = await proc.wait()
-    log.debug('git.exec:', { cmd, args, workdir }, ':', exitCode, output)
-    return output
-  }
+  private async exec(cmd, args) {
+    const timeout = 60000
 
-  private async exec(cmd, args, workdir) {
-    const max_runtime = 30000
-
-    return await Zotero.Promise.race([
-      this._exec(cmd, args, workdir),
-      timeout(max_runtime, `git.exec: ${cmd} ${args} @ ${workdir} timed out after ${max_runtime}ms`),
+    log.debug('git.exec:', { cmd, args })
+    await Zotero.Promise.race([
+      Zotero.Utilities.Internal.exec(cmd, args),
+      new Zotero.Promise((resolve, reject) => { setTimeout(reject, timeout,  { message: `git.exec: ${cmd} ${args} timed out after ${timeout}ms`, code: 'ETIMEDOUT' }) }),
     ])
+    log.debug('git.exec:', { cmd, args }, 'finished')
   }
 }
 const git = new Git()
