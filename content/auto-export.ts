@@ -14,6 +14,18 @@ import * as ini from 'ini'
 import Loki = require('lokijs')
 import { Logger } from './logger'
 
+function timeout(ms, message) {
+  return new Promise((resolve, reject) => {
+    const err = {
+      message,
+      code: 'ETIMEDOUT',
+    }
+    Error.captureStackTrace(err, timeout)
+
+    setTimeout(reject, ms, err)
+  })
+}
+
 class Git {
   public enabled: boolean
   public path: string
@@ -139,16 +151,28 @@ class Git {
   }
 
   // https://firefox-source-docs.mozilla.org/toolkit/modules/subprocess/toolkit_modules/subprocess/index.html
-  private async exec(cmd, args, workdir) {
-    const proc = await Subprocess.call({
-      command: cmd,
-      arguments: args,
-      workdir,
-    })
-    const output = await proc.stdout.readString()
-    const exitCode = await proc.wait()
+  private async _exec(cmd, args, workdir) {
+    log.debug('git.exec:', { cmd, args, workdir })
+    const proc = Subprocess.call({ command: cmd, arguments: args, workdir })
+    let output = ''
+    let partial
+    while (partial = await proc.stdout.readString()) {
+      output += partial
+    }
+    proc.stdin.close()
+    proc.stdout.close()
+    const { exitCode } = await proc.wait()
     log.debug('git.exec:', { cmd, args, workdir }, ':', exitCode, output)
     return output
+  }
+
+  private async exec(cmd, args, workdir) {
+    const max_runtime = 30000
+
+    return await Zotero.Promise.race([
+      this._exec(cmd, args, workdir),
+      timeout(max_runtime, `git.exec: ${cmd} ${args} @ ${workdir} timed out after ${max_runtime}ms`),
+    ])
   }
 }
 const git = new Git()

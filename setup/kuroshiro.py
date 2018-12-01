@@ -26,8 +26,8 @@ for dic in sorted(glob.glob(os.path.join(root, 'node_modules/kuromoji/dict/*.gz'
 print('patching kuroshiro')
 run('patch -u -p0 -o node_modules/kuroshiro/src/core-sync.js < setup/kuroshiro.patch')
 run('patch -u -p0 -o node_modules/kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync.js < setup/kuroshiro-analyzer-kuromoji-sync.patch')
-print('patching lokijs')
-try:
-  run('patch --forward -u -p0 < setup/lokijs.patch')
-except:
-  pass
+#print('patching lokijs')
+#try:
+#  run('patch --forward -u -p0 < setup/lokijs.patch')
+#except:
+#  pass
