@@ -36,7 +36,7 @@
     "postversion": "git push --follow-tags",
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/formatters-doc.py",
-    "ncu": "ncu -a",
+    "ncu": "ncu -a && npm install",
     "reinstall": "rm -rf node_modules yarn* && npm install"
   },
   "main": "index.js",
@@ -78,7 +78,7 @@
     "tslint": "5.11.0",
     "webpack-cli": "3.1.2",
     "xregexp": "4.2.0",
-    "zotero-plugin": "0.0.61"
+    "zotero-plugin": "0.0.63"
   },
   "devDependencies": {
     "@rgrove/parse-xml": "1.1.1",
