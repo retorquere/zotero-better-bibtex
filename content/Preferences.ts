@@ -83,7 +83,7 @@ class AutoExportPane {
         tabpanel = tabpanels.children[index]
       }
 
-      tab.setAttribute('label', this.name(ae, 'short'))
+      tab.setAttribute('label', `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`)
 
       for (const node of Array.from(tabpanel.querySelectorAll('[ae-field]'))) {
         const field = (node as Element).getAttribute('ae-field')
@@ -91,6 +91,10 @@ class AutoExportPane {
         if (!rebuild.update && (node as XUL.Textbox).readonly) continue
 
         switch (field) {
+          case 'type':
+            (node as XUL.Textbox).value = Zotero.BetterBibTeX.getString(`Preferences.auto-export.type.${ae.type}`) + ':'
+            break
+
           case 'name':
             (node as XUL.Textbox).value = this.name(ae, 'long')
             break
