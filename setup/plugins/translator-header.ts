@@ -25,20 +25,22 @@ class TranslatorHeaderPlugin {
 
   public apply(compiler) {
     compiler.hooks.emit.tap('TranslatorHeaderPlugin', compilation => {
+      const asset = this.translator + '.js'
+
       const header = JSON.parse(JSON.stringify(translators.byName[this.translator]))
       const overrides = {}
       for (const pref of Object.keys(prefs.defaults)) {
         overrides[pref] = prefs.overrides.includes(pref)
       }
 
-      const translator = ejs.render(
+      const headerCode = ejs.render(
         fs.readFileSync(path.join(__dirname, 'translator-header.ejs'), 'utf8'),
         {overrides, header, version}
       )
 
       delete header.description
       header.configOptions = header.configOptions || {}
-      header.configOptions.hash = crypto.createHash('md5').update(translator).digest('hex')
+      header.configOptions.hash = crypto.createHash('md5').update(headerCode + compilation.assets[asset].source()).digest('hex')
 
       // because Zotero doesn't allow headers that have a object at the last key, so put lastUpdated at the end as a safeguard
       const header_order = [
@@ -72,8 +74,7 @@ class TranslatorHeaderPlugin {
         },
       }) + '\n\n'
 
-      const asset = this.translator + '.js'
-      compilation.assets[asset] = new ConcatSource(json_header + translator, compilation.assets[asset])
+      compilation.assets[asset] = new ConcatSource(json_header + headerCode, compilation.assets[asset])
     })
   }
 }

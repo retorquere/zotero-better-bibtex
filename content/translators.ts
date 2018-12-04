@@ -4,6 +4,7 @@ declare const Services: any
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
+import { DB } from './db/main'
 
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
@@ -170,6 +171,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
     } else {
       log.debug('Translators.install:', header.label, 'not installed, installing', header.lastUpdated, `(${header.configOptions.hash})`)
 
+    }
+
+    const cache = Cache.getCollection(header.label)
+    cache.removeDataOnly()
+    // importing AutoExports would be circular, so access DB directly
+    const autoexports = DB.getCollection('autoexport')
+    for (const ae of autoexports.find({ translatorID: header.translatorID })) {
+      autoexports.update({ ...ae, status: 'scheduled' })
     }
 
     try {
