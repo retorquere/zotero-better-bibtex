@@ -56,6 +56,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.run "Exporter maintenant">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Supprimer">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Collection">
+<!ENTITY better-bibtex.Preferences.auto-export.library "Bibliothèque">
 <!ENTITY better-bibtex.Preferences.auto-export.target "Fichier de sortie">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Statut">
 <!ENTITY better-bibtex.Preferences.auto-export.updated "Mis à jour">
