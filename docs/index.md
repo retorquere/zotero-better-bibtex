@@ -1,5 +1,5 @@
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
-# Better Bib(La)TeX for Zotero [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
+# Better BibTeX for Zotero [![Circle CI](https://circleci.com/gh/retorquere/zotero-better-bibtex.svg?style=shield)](https://circleci.com/gh/retorquere/zotero-better-bibtex)
 
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -7,7 +7,7 @@ This extension aims to make Zotero (and soon Juris-M) effective for us text-base
 currently, that translates to the LaTeX/Markdown crowd. To get started, read the
 [Installation](https://retorquere.github.io/zotero-better-bibtex/installation) instructions. At its core,
 it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
-you'll find *Better Bib(La)TeX* listed as one of the choices.  If nothing else, you could keep your existing workflow as-is,
+you'll find *Better X* listed as one of the choices.  If nothing else, you could keep your existing workflow as-is,
 and just enjoy the improved LaTeX &harr; unicode translation on import and export and more accurate field mapping. 
 
 Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
@@ -33,7 +33,7 @@ have to if you use BibLaTeX, which has fairly good Unicode support). With BBT yo
 * Automatic [journal abbreviation](https://retorquere.github.io/zotero-better-bibtex/citation-keys).
 
 
-Better Bib(La)TeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
+Better BibTeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
 BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
 [The Biblatex Package](http://ctan.mirrorcatalogs.com/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX

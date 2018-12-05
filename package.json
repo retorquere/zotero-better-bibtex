@@ -9,7 +9,7 @@
     "email": "Emiliano.Heyns@iris-advies.com"
   },
   "xpi": {
-    "name": "Zotero Better Bib(La)Tex",
+    "name": "Better BibTex for Zotero",
     "iconURL": "chrome://zotero-better-bibtex/skin/better-bibtex.svg",
     "optionsURL": "chrome://zotero/content/preferences/preferences.xul#better-bibtex",
     "updateLink": "https://github.com/retorquere/zotero-better-bibtex/releases/download/v{version}/zotero-better-bibtex-{version}.xpi",

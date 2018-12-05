@@ -1,6 +1,6 @@
 ## Push Export / Auto-Export
 
-When exporting using Better Bib(La)Tex you will be offered a new export option: `Keep updated`. Checking this option
+When exporting using Better BibTex you will be offered a new export option: `Keep updated`. Checking this option
 registers the export for automation; any changes to the collection after you've completed the current export will
 trigger an automatic re-export to update the bib file. You can review/remove exports from the BBT preferences.  While
 I've gone to some lengths to make sure performance is OK, don't go overboard with the number of auto-exports you have
