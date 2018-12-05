@@ -113,7 +113,7 @@ class Git {
 
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', this.bib])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', 'Bibliography updated by Better BibTeX for Zotero'])
       await this.exec(this.git, ['-C', this.path, 'push'])
       log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
     } catch (err) {
