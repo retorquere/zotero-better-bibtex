@@ -108,12 +108,12 @@ class Git {
     }
   }
 
-  public async push() {
+  public async push(msg) {
     if (!this.enabled) return
 
     try {
       await this.exec(this.git, ['-C', this.path, 'add', this.bib])
-      await this.exec(this.git, ['-C', this.path, 'commit', '-m', 'Bibliography updated by Better BibTeX for Zotero'])
+      await this.exec(this.git, ['-C', this.path, 'commit', '-m', msg])
       await this.exec(this.git, ['-C', this.path, 'push'])
       log.debug(`git.push: pushed ${this.bib} in ${this.path}`)
     } catch (err) {
@@ -228,7 +228,7 @@ const queue = new class {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
       await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
-      await repo.push()
+      await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       log.debug('AutoExport.queue.run: export finished', ae)
       ae.error = ''

@@ -1,3 +1,6 @@
 {
-    "extends": "zotero-plugin/tslint.json"
+  "extends": "zotero-plugin/tslint.json",
+  "rules": {
+    "no-console" :false
+  }
 }
