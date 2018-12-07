@@ -63,7 +63,16 @@ var Translator = {
     if (!this.preferences.rawLaTag) this.preferences.rawLaTag = '#LaTeX'
     Zotero.debug('prefs loaded: ' + JSON.stringify(this.preferences, null, 2))
 
-    this.caching = !this.options.exportFileData && (!this.BetterTeX || this.preferences.jabrefFormat !== 4)
+    this.caching = !(
+      // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+      this.options.exportFileData
+
+      // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+      || (this.BetterTeX && this.preferences.jabrefFormat === 4)
+
+      // if you're looking at Translator.options.exportPath in the postscript you're probably outputting something different based on it
+      || ((Translator.preferences.postscript || '').indexOf('Translator.options.exportPath') >= 0)
+    )
 
     this.collections = {}
     if (stage == 'doExport' && this.header.configOptions && this.header.configOptions.getCollections && Zotero.nextCollection) {

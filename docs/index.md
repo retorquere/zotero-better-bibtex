@@ -7,7 +7,7 @@ This extension aims to make Zotero (and soon Juris-M) effective for us text-base
 currently, that translates to the LaTeX/Markdown crowd. To get started, read the
 [Installation](https://retorquere.github.io/zotero-better-bibtex/installation) instructions. At its core,
 it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
-you'll find *Better X* listed as one of the choices.  If nothing else, you could keep your existing workflow as-is,
+you'll find *Better X* listed among the choices.  If nothing else, you could keep your existing workflow as-is,
 and just enjoy the improved LaTeX &harr; unicode translation on import and export and more accurate field mapping. 
 
 Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
