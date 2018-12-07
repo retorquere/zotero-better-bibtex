@@ -201,10 +201,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     let threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
     const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
     const jabrefFormat = Prefs.get('jabrefFormat')
-    const relativePaths = Prefs.get('jabrefFormat')
 
     log.debug('priming cache:', { jabrefFormat, threshold, cache: !!cache, displayOptions })
-    if (relativePaths || !threshold || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
+    // no caching means priming is useless
+    if (!threshold || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
 
     threshold = Math.max(threshold, 10) // tslint:disable-line:no-magic-numbers
 
