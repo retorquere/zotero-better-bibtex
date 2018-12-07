@@ -111,23 +111,23 @@ var Translator = {
 };
 
 <% if (header.translatorType & 2) { /* export */ %>
-  function doExport() {
-    const start = Date.now()
-    Translator.configure('doExport')
-    Translator.initialize()
-    Translator.doExport()
-    Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start))
-  }
+function doExport() {
+  const start = Date.now()
+  Translator.configure('doExport')
+  Translator.initialize()
+  Translator.doExport()
+  Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start))
+}
 <% } %>
 
 <% if (header.translatorType & 1) { /* import */ %>
-  function detectImport() {
-    Translator.configure('detectImport')
-    return Translator.detectImport()
-  }
-  function doImport() {
-    Translator.configure('doImport')
-    Translator.initialize()
-    return Translator.doImport()
-  }
+function detectImport() {
+  Translator.configure('detectImport')
+  return Translator.detectImport()
+}
+function doImport() {
+  Translator.configure('doImport')
+  Translator.initialize()
+  return Translator.doImport()
+}
 <% } %>
