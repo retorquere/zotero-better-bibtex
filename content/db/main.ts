@@ -105,6 +105,24 @@ DB.init = async () => {
     },
   })
 
+  for (const ae of autoexport.find()) {
+    let update = false
+
+    if (ae.updated) {
+      delete ae.updated
+      update = true
+    }
+
+    for (const pref of prefOverrides) {
+      if (typeof ae[pref] === 'undefined') {
+        ae[pref] = Prefs.get(pref)
+        update = true
+      }
+    }
+
+    if (update) autoexport.update(ae)
+  }
+
   if (scrub) {
     // directly change the data objects and rebuild indexes https://github.com/techfort/LokiJS/issues/660
     const length = autoexport.data.length
@@ -132,24 +150,6 @@ DB.init = async () => {
           }
         }
       }
-    }
-
-    for (const ae of autoexport.find()) {
-      let update = false
-
-      if (ae.updated) {
-        delete ae.updated
-        update = true
-      }
-
-      for (const pref of prefOverrides) {
-        if (typeof ae[pref] === 'undefined') {
-          ae[pref] = Prefs.get(pref)
-          update = true
-        }
-      }
-
-      if (update) autoexport.update(ae)
     }
 
     // old bibtex*: entries
