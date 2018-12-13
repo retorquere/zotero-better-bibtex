@@ -584,7 +584,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
         let name = aux.leafName
         name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
         const tag = { value: name }
-        if (!ps.prompt(null, this.getString('BetterBibTeX.startup.aux.title'), this.getString('BetterBibTeX.startup.aux.prompt'), tag, null, {})) return
+        if (!ps.prompt(null, this.getString('BetterBibTeX.auxScan.title'), this.getString('BetterBibTeX.auxScan.prompt'), tag, null, {})) return
         if (!tag.value) return
 
         await AUXScanner.scan(aux, tag.value)
