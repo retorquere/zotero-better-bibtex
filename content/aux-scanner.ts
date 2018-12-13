@@ -53,13 +53,16 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   private async saveToCollection(source) {
     if (!this.citekeys.size) return null
 
-    let collection = Zotero.getActiveZoteroPane().getSelectedCollection()
+    const azp = Zotero.getActiveZoteroPane()
+
+    let collection = azp.getSelectedCollection()
+    const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
 
     log.debug('AUXScanner.saveToCollection', source, { parent: collection ? collection.id : null })
 
     // if no collection is selected, or the selected collection contains references, create a new subcollection
     if (!collection || collection.getChildItems(true).length) {
-      const siblings = new Set((collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)).map(coll => coll.name))
+      const siblings = new Set((collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(libraryID)).map(coll => coll.name))
 
       let name = source.lastIndexOf('.') > 0 ? source.substr(0, source.lastIndexOf('.')) : source
       let timestamp = ''
@@ -71,7 +74,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       name += timestamp
       collection = new Zotero.Collection({
         name,
-        libraryID: collection ? collection.libraryID : Zotero.Libraries.userLibraryID,
+        libraryID,
         parentID: collection ? collection.id : undefined,
       })
 
@@ -82,7 +85,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     const missing = []
     const found = []
     for (const citekey of Array.from(this.citekeys)) {
-      const item = KeyManager.keys.findOne({libraryID: collection.libraryID, citekey})
+      const item = KeyManager.keys.findOne({libraryID, citekey})
       if (item) {
         found.push(item.itemID)
       } else {
@@ -99,7 +102,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       report += '</ul></div></html>'
 
       const item = new Zotero.Item('note')
-      item.libraryID = collection.libraryID
+      item.libraryID = libraryID
       item.setNote(report)
       await item.saveTx()
       found.push(item.id)
