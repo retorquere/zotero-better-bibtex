@@ -81,7 +81,7 @@ export = Prefs.get('testing') && {
     log.debug(`starting import at ${new Date()}`)
 
     if (source.endsWith('.aux')) {
-      await AUXScanner.scan(source)
+      await AUXScanner.scan(file)
       // for some reason, the imported collection shows up as empty right after the import >:
       await timeout(1500) // tslint:disable-line:no-magic-numbers
     } else {
