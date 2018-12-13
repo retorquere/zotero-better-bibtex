@@ -20,7 +20,7 @@ $patch$(pane, 'buildCollectionContextMenu', original => async function() {
   try {
     const treeRow = this.collectionsView.selectedTreeRow
     const isLibrary = treeRow && treeRow.isLibrary(true)
-    const isCollection = treeRow && treeRow.isLibrary(true)
+    const isCollection = treeRow && treeRow.isCollection()
 
     document.getElementById('bbt-collectionmenu-separator').hidden = !(isLibrary || isCollection)
     document.getElementById('bbt-collectionmenu-pull-url').hidden = !(isLibrary || isCollection)

@@ -16,6 +16,10 @@ const prefs = {
 
 const translators = require(path.join(root, 'gen/translators.json'))
 
+function hash(str) {
+  return crypto.createHash('md5').update(str).digest('hex')
+}
+
 class TranslatorHeaderPlugin {
   private translator: string
 
@@ -41,7 +45,8 @@ class TranslatorHeaderPlugin {
       delete header.description
       header.configOptions = header.configOptions || {}
       // header.configOptions.hash = crypto.createHash('md5').update(headerCode + compilation.assets[asset].source()).digest('hex')
-      header.configOptions.hash = [crypto.createHash('md5').update(headerCode).digest('hex')].concat(compilation.chunks.map(chunk => chunk.hash)).join('-')
+      // header.configOptions.hash = [crypto.createHash('md5').update(headerCode).digest('hex')].concat(compilation.chunks.map(chunk => chunk.hash)).join('-')
+      header.configOptions.hash = [headerCode, compilation.assets[asset].source()].map(hash).join('-')
 
       // because Zotero doesn't allow headers that have a object at the last key, so put lastUpdated at the end as a safeguard
       const header_order = [
