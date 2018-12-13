@@ -11,6 +11,7 @@ import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
+import { AUXScanner } from './aux-scanner'
 
 const pref_defaults = require('../gen/preferences/defaults.json')
 
@@ -80,7 +81,7 @@ export = Prefs.get('testing') && {
     log.debug(`starting import at ${new Date()}`)
 
     if (source.endsWith('.aux')) {
-      await Zotero.BetterBibTeX.scanAUX(file)
+      await AUXScanner.scan(source)
       // for some reason, the imported collection shows up as empty right after the import >:
       await timeout(1500) // tslint:disable-line:no-magic-numbers
     } else {

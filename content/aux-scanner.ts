@@ -10,19 +10,24 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citationRE = /(?:\\citation|@cite){([^}]+)}/g
   private includeRE = /\\@input{([^}]+)}/g
 
-  public async scan(file = null) {
-    if (!file) {
-      const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
-      fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
-      fp.appendFilter('AUX file', '*.aux')
-      const rv = fp.show()
-      if (![Components.interfaces.nsIFilePicker.returnOK, Components.interfaces.nsIFilePicker.returnReplace].includes(rv)) return false
-      file = fp.file
-    }
+  public pick() {
+    const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
+    fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
+    fp.appendFilter('AUX file', '*.aux')
+    const rv = fp.show()
+    if (![Components.interfaces.nsIFilePicker.returnOK, Components.interfaces.nsIFilePicker.returnReplace].includes(rv)) return false
+    return fp.file
+  }
 
+  public async scan(file, tag = null) {
     this.citekeys = new Set
     this.parse(file)
-    await this.save(file.leafName)
+
+    if (tag) {
+      await this.saveToTag(tag)
+    } else {
+      await this.saveToCollection(file.leafName)
+    }
   }
 
   private parse(file) {
@@ -45,10 +50,12 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private async save(source) {
+  private async saveToCollection(source) {
     if (!this.citekeys.size) return null
 
     let collection = Zotero.getActiveZoteroPane().getSelectedCollection()
+
+    log.debug('AUXScanner.saveToCollection', source, { parent: collection ? collection.id : null })
 
     // if no collection is selected, or the selected collection contains references, create a new subcollection
     if (!collection || collection.getChildItems(true).length) {
@@ -62,8 +69,14 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         timestamp = (new Date).toLocaleDateString('nl', { year: 'numeric', month: 'numeric', day: 'numeric', hour: 'numeric', minute: 'numeric', second: 'numeric', hour12: false })
       }
       name += timestamp
-      collection = new Zotero.Collection({name, parentID: collection ? collection.id : undefined})
+      collection = new Zotero.Collection({
+        name,
+        libraryID: collection ? collection.libraryID : Zotero.Libraries.userLibraryID,
+        parentID: collection ? collection.id : undefined,
+      })
+
       await collection.saveTx()
+      log.debug('AUXScanner.saveToCollection', source, { collection: collection.id })
     }
 
     const missing = []
@@ -95,5 +108,28 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     log.debug('AUX scan: adding', found)
 
     if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
+  }
+
+  private async saveToTag(tag) {
+    const cited = new Set(KeyManager.keys.find({ citekey: { $in: Array.from(this.citekeys) } }).map(item => item.itemID))
+    const tagged = new Set(await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag]))
+
+    // cited but not tagged
+    let itemIDs = [...cited].filter(item => !tagged.has(item))
+    if (itemIDs.length) {
+      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+        item.addTag(tag, 1)
+        await item.saveTx()
+      }
+    }
+
+    // tagged but not cited
+    itemIDs = [...tagged].filter(item => !cited.has(item))
+    if (itemIDs.length) {
+      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+        item.removeTag(tag)
+        await item.saveTx()
+      }
+    }
   }
 }

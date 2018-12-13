@@ -8,7 +8,7 @@
   </stringbundleset>
 
   <menupopup id="menu_ToolsPopup">
-    <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX()"/>
+    <menuitem label="&better-bibtex.BetterBibTeX.auxScanner;" oncommand="Zotero.BetterBibTeX.scanAUX('tag')"/>
   </menupopup>
   <menupopup id="menu_HelpPopup">
     <menuitem insertafter="reportErrors" label="&better-bibtex.BetterBibTeX.reportErrors;" oncommand="Zotero.BetterBibTeX.ZoteroPane.errorReport()"/>
@@ -27,6 +27,12 @@
       id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
       oncommand="event.stopPropagation(); alert(Zotero.BetterBibTeX.ZoteroPane.pullExport())"
+      class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
+    />
+    <menuitem
+      id="bbt-collectionmenu-scan-aux"
+      label="&better-bibtex.BetterBibTeX.auxScanner;"
+      oncommand="event.stopPropagation(); Zotero.BetterBibTeX.scanAUX('collection')"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
     />
     <menuitem

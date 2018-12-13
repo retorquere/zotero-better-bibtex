@@ -566,10 +566,33 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public async scanAUX(path = null) {
-    if (this.loaded) {
-      await this.loaded
-      await AUXScanner.scan(path)
+  public async scanAUX(target) {
+    if (!this.loaded) return
+    await this.loaded
+
+    const aux = AUXScanner.pick()
+    if (!aux) return
+
+    switch (target) {
+      case 'collection':
+        await AUXScanner.scan(aux)
+        break
+
+      case 'tag':
+        const ps = Components.classes['@mozilla.org/embedcomp/prompt-service;1'].getService(Components.interfaces.nsIPromptService)
+
+        let name = aux.leafName
+        name = name.lastIndexOf('.') > 0 ? name.substr(0, name.lastIndexOf('.')) : name
+        const tag = { value: name }
+        if (!ps.prompt(null, this.getString('BetterBibTeX.startup.aux.title'), this.getString('BetterBibTeX.startup.aux.prompt'), tag, null, {})) return
+        if (!tag.value) return
+
+        await AUXScanner.scan(aux, tag.value)
+        break
+
+      default:
+        flash(`Unsupported aux-scan target ${target}`)
+        break
     }
   }
 
