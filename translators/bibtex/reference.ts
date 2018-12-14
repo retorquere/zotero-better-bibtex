@@ -793,8 +793,9 @@ export class Reference {
    */
   protected enc_url(f) {
     const value = this.enc_verbatim(f)
+
     if (Translator.BetterBibTeX) {
-      return `\\url{${this.enc_verbatim(f)}}`
+      return `\\url{${value}}`
     } else {
       return value
     }
@@ -1140,9 +1141,9 @@ export class Reference {
   private toVerbatim(text) {
     let value
     if (Translator.BetterBibTeX) {
-      value = (`${text}`).replace(/([#\\%&{}])/g, '\\$1')
+      value = `${text}`.replace(/([#\\%&{}])/g, '\\$1')
     } else {
-      value = (`${text}`).replace(/([\\{}])/g, '\\$1')
+      value = `${text}`.replace(/([\\{}])/g, '\\$1')
     }
     if (!Translator.unicode) value = value.replace(/[^\x21-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
     return value
