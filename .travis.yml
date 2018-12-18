@@ -4,8 +4,8 @@ python:
 
 before_install:
   - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-  - sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
-  - sudo apt-get install zotero jurism
+  - travis_retry sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
+  - travis_retry sudo apt-get install zotero jurism
   - ./check-latest-zotero.py
 
 cache:
