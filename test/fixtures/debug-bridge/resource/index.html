@@ -7,12 +7,12 @@
   <script>
     function zotero() {
       var xhr = new XMLHttpRequest();
-	    xhr.onreadystatechange = function() {
+      xhr.onreadystatechange = function() {
         if (xhr.readyState !== 4) return;
 
         document.getElementById('response').innerText = '' + xhr.status;
         document.getElementById('result').innerText = '' + xhr.responseText;
-	    };
+      };
       xhr.open('POST', 'http://127.0.0.1:23119/debug-bridge/execute' + params);
       xhr.send(document.getElementById('code').value);
 
