@@ -3,7 +3,7 @@ if (!Zotero.DebugBridge) {
   Zotero.debug('Installing debug-bridge');
 
   (async () => {
-    await Zotero.initializationPromise;
+    await Zotero.Schema.schemaUpdatePromise;
 
     var AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
 
