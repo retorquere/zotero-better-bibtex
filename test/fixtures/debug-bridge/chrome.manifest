@@ -1,4 +1,5 @@
-content	zotero-debug-bridge				content/
+content	  zotero-debug-bridge				content/
+resource  zotero-debug-bridge       resource/
 overlay chrome://zotero/content/zoteroPane.xul  chrome://zotero-debug-bridge/content/overlay.xul
 
 locale	zotero-debug-bridge	en-US		locale/en-US/

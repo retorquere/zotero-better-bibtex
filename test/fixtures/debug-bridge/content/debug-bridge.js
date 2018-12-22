@@ -8,6 +8,7 @@ if (!Zotero.DebugBridge) {
     var AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
 
     Zotero.DebugBridge = {};
+
     Zotero.DebugBridge.Execute = function() {};
     Zotero.Server.Endpoints["/debug-bridge/execute"] = Zotero.DebugBridge.Execute;
     Zotero.DebugBridge.Execute.prototype = {
@@ -17,10 +18,10 @@ if (!Zotero.DebugBridge) {
   
       init: async function (options) {
         Zotero.debug("debug-bridge: executing\n" + options.data);
-        let action = new AsyncFunction('query', options.data);
-        let response;
         let start = new Date()
+        let response;
         try {
+          let action = new AsyncFunction('query', options.data);
           response = await action(options.query);
           if (typeof response === 'undefined') response = null;
           response = JSON.stringify(response);
@@ -32,6 +33,19 @@ if (!Zotero.DebugBridge) {
         return [201, "application/json", response];
       }
     };
+
+    Zotero.DebugBridge.Form = function() {};
+    Zotero.Server.Endpoints["/debug-bridge"] = Zotero.DebugBridge.Form;
+    Zotero.DebugBridge.Form.prototype = {
+      supportedMethods: ["GET"],
+      supportedDataTypes: '*',
+      permitBookmarklet: false,
+  
+      init: function (options) {
+        return [200, "text/html", Zotero.File.getContentsFromURL('resource://zotero-debug-bridge/index.html')];
+      }
+    };
+
     Zotero.debug('debug-bridge: endpoint installed');
   })();
 }

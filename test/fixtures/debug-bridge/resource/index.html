@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+</head>
+<body>
+  <script>
+    function zotero() {
+      var xhr = new XMLHttpRequest();
+	    xhr.onreadystatechange = function() {
+        if (xhr.readyState !== 4) return;
+
+        document.getElementById('response').innerText = '' + xhr.status;
+        document.getElementById('result').innerText = '' + xhr.responseText;
+	    };
+      xhr.open('POST', 'http://127.0.0.1:23119/debug-bridge/execute' + params);
+      xhr.send(document.getElementById('code').value);
+
+      return false;
+    }
+  </script>
+
+  <form action="" onsubmit="return zotero()">
+    <pre>async function execute(query) {</pre>
+    <textarea id="code" cols="80" rows="24" placeholder="Enter your code here"></textarea>
+    <pre>};</pre>
+    <input id="execute" type="SUBMIT" VALUE="">
+  </form>
+  <hr/>
+  Response: <span id="response"></span><br/>
+  <pre id="result">
+  </pre>
+
+  <script>
+    var query = {};
+    var params = (new URL(window.location.href)).searchParams
+    for (var p of params) {
+      query[p[0]] = p[1];
+    }
+    if (Object.keys(query).length === 0) {
+      params = '';
+      query = null;
+    } else {
+      params = '?' + params.toString();
+    }
+
+    var exec = document.getElementById('execute');
+    exec.setAttribute('value', 'return await execute(' + JSON.stringify(query) + ');');
+  </script>
+</body>
+</html>
