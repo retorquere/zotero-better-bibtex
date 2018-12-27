@@ -19,8 +19,7 @@ Translator.detectImport = () => {
   // a failure to parse will throw an error which a) is actually logged, and b) will count as "false"
   const data = JSON.parse(json)
 
-  if (!data.config || (data.config.id !== Translator.header.translatorID)) throw new Error(`ID mismatch: got ${data.config && data.config.id}, expected ${Translator.header.translatorID}`)
-  if (!data.items || !data.items.length) throw new Error('No items')
+  if (!data.config || (data.config.id !== Translator.header.translatorID)) return false
   return true
 }
 
@@ -32,6 +31,7 @@ Translator.doImport = async () => {
   }
 
   const data = JSON.parse(json)
+  if (!data.items || !data.items.length) return
 
   const items = new Set
   debug('importing', data.items.length, 'items')
