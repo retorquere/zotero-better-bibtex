@@ -367,7 +367,6 @@ function notify(event, handler) {
   Zotero.Notifier.registerObserver({
     notify(...args) {
       BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
-        log.trigger()
         handler.apply(null, args)
       })
     },
@@ -668,7 +667,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     // should be safe to start tests at this point. I hate async.
 
     deferred.ready.resolve(true)
-    log.trigger()
 
     progress.done()
 

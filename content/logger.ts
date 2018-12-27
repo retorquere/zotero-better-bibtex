@@ -4,30 +4,13 @@ import stringify = require('json-stringify-safe')
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Logger = new class { // tslint:disable-line:variable-name
-  public errors = 0
-
   private timestamp: number
-  private _trigger: number
-  // `n` seconds after `change` is reset, log messages as errors
-  private too_long = 30 * 1000 // tslint:disable-line:no-magic-numbers
-
-  public trigger() {
-    this._trigger = Date.now()
-  }
 
   public log(prefix, ...msg) {
-    const working = typeof this._trigger === 'undefined' ? 0 : Date.now() - this._trigger
-
-    if (working > this.too_long) {
-      this.errors += 1
-      this._log(Zotero.logError, `${working} >> ${prefix}`, msg)
-    } else if (Zotero.Debug.enabled) {
-      this._log(Zotero.debug, prefix, msg)
-    }
+    if (Zotero.Debug.enabled) this._log(Zotero.debug, prefix, msg)
   }
 
   public error(prefix, ...msg) {
-    this.errors += 1
     this._log(Zotero.logError, `${prefix}!`, msg)
   }
 

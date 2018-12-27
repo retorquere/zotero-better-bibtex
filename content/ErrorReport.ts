@@ -7,7 +7,6 @@ declare const Services: any
 import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
 import * as log from './debug'
-import { Logger } from './logger'
 import fastChunkString = require('fast-chunk-string')
 
 import { DB } from './db/main'
@@ -108,8 +107,7 @@ export = new class ErrorReport {
   private async init() {
     const wizard = document.getElementById('better-bibtex-error-report')
 
-    // 100 is arbitary here
-    if (Zotero.Debug.enabled || Logger.errors > 100) wizard.pageIndex = 1 // tslint:disable-line:no-magic-numbers
+    if (Zotero.Debug.enabled) wizard.pageIndex = 1
 
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true

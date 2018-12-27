@@ -7,7 +7,3 @@ export function debug(...msg) {
 export function error(...msg) {
   Logger.error('better-bibtex', ...msg)
 }
-
-export function trigger() {
-  Logger.trigger()
-}

@@ -12,7 +12,6 @@ import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import Loki = require('lokijs')
-import { Logger } from './logger'
 
 class Git {
   public enabled: boolean
@@ -346,7 +345,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public run(id) {
-    Logger.trigger()
     log.debug('Autoexport.run:', id)
     queue.run({id})
   }
