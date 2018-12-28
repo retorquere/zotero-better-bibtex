@@ -1,6 +1,5 @@
 declare const Components: any
 declare const Zotero: any
-declare const AddonManager: any
 
 import { Preferences as Prefs } from './prefs' // needs to be here early, initializes the prefs observer
 require('./pull-export') // just require, initializes the pull-export end points
@@ -8,6 +7,7 @@ require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
+declare const AddonManager: any
 
 import * as log from './debug'
 import { flash } from './flash'
