@@ -21,6 +21,12 @@ Components.utils.import('resource://gre/modules/Services.jsm')
 const kB = 1024
 const MB = kB * kB
 
+const httpRequestOptions = {
+  followRedirects: true,
+  dontCache: true,
+  foreground: true,
+}
+
 export = new class ErrorReport {
   private chunkSize
   private previewSize = 3 * kB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
@@ -100,7 +106,7 @@ export = new class ErrorReport {
   }
 
   private async ping(region) {
-    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`)
+    await Zotero.HTTP.request('GET', `http://s3.${region}.amazonaws.com/ping`, httpRequestOptions)
     return { region, ...s3[region] }
   }
 
@@ -157,7 +163,7 @@ export = new class ErrorReport {
 
     let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
     log.debug('ErrorReport.current:', latest)
-    latest = JSON.parse((await Zotero.HTTP.request('GET', latest)).responseText).tag_name.replace('v', '')
+    latest = JSON.parse((await Zotero.HTTP.request('GET', latest, httpRequestOptions)).responseText).tag_name.replace('v', '')
     log.debug('ErrorReport.current:', latest)
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
@@ -278,9 +284,9 @@ export = new class ErrorReport {
     if (chunks.length === 1) chunks[0].n = ''
 
     await Promise.all(chunks.map(chunk => Zotero.HTTP.request('PUT', `${url}${chunk.n}.${ext}`, {
+      ...httpRequestOptions,
       body: chunk.body,
       headers,
-      dontCache: true,
     })))
 
     log.debug('Errorlog.submit:', filename, Date.now() - started)
