@@ -57,7 +57,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.remove "Löschen">
 <!ENTITY better-bibtex.Preferences.auto-export.collection "Sammlung">
 <!ENTITY better-bibtex.Preferences.auto-export.library "Bibliothek">
-<!ENTITY better-bibtex.Preferences.auto-export.target "Dateiname">
+<!ENTITY better-bibtex.Preferences.auto-export.target "Zieldatei">
 <!ENTITY better-bibtex.Preferences.auto-export.status "Status">
 <!ENTITY better-bibtex.Preferences.auto-export.updated "Aktualisiert">
 <!ENTITY better-bibtex.Preferences.auto-export.translator "Format">
@@ -69,7 +69,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitierschlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.citekeys "Zitierschlüssel">
-<!ENTITY better-bibtex.Preferences.citekey.fold "Zwinge Zitier Schlüssel als einfachen Text">
+<!ENTITY better-bibtex.Preferences.citekey.fold "Erzwinge Plaintext-Format bei Zitierschlüsseln">
 <!ENTITY better-bibtex.Preferences.citekey.format "Zitierschlüssel-Format">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Zitierschlüssel">
@@ -86,7 +86,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "Link auswählen (Item-ID)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Link auswählen (Zitierschlüssel)">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Schnelle Copy-/Drag-and-Drop-Zitate">
-<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Zitierschlüssel eindeutig halten">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "nachbearbeitet (führt zu Änderungen der Zitierschlüssel)">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "beibehalten (führt zu Duplikaten von Zitierschlüsseln)">
