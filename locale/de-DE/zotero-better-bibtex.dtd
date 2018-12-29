@@ -1,7 +1,7 @@
 <!ENTITY better-bibtex.FirstRun.title "Willkommen bei Better BibTeX for Zotero">
-<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (oder BBT wie es für gewöhnlich abgekürzt wird) macht Zotero nützlicher für LaTeX und Markdown Verweigerer. Es gibt viele Konfigurationsmöglichkeiten für BBT -- werfen Sie einen Blick in die Konigurationseinstellungen -- aber fangen wir mit einer einfachen Auswahl an.">
+<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX for Zotero (oder BBT, wie es allgemein genannt wird) macht Zotero nützlicher für LaTeX- und Markdown-Holdouts. Es gibt viele Konfigurationsmöglichkeiten für BBT -- werfen Sie einen Blick in die Konigurationseinstellungen, wenn Sie neugierig sind -- aber lassen Sie uns mit einer einfachen Auswahl beginnen.">
 
-<!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitier-Schlüssel">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitierschlüssel">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT generiert Zitier-Schlüssel für ihre Einträge. Dieser Prozess ist hochgradig konfigurierbar und kann übergangen werden, aber Sie müssen jetzt einen default Wert setzen. Sie können die Auswahl jederzeit im Konfigurationsmenü ändern.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Ich habe BBT bereits benutzt">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Ich benutze BBT zum ersten Mal, aber habe bereits Zotero-generierte BibTeX Schlüssel benutzt">
