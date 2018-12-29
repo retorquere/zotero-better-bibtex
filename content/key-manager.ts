@@ -9,6 +9,7 @@ import { timeout } from './timeout'
 import { flash } from './flash'
 import { Events } from './events'
 import { arXiv } from './arXiv'
+import { extract as varExtract } from './var-extract'
 
 import * as ZoteroDB from './db/zotero'
 
@@ -43,29 +44,13 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      const parsed = Citekey.get(item.getField('extra'))
-      if (parsed.pinned && !inspireHEP) continue
-
       try {
+        let parsed
         let citekey
 
         if (inspireHEP) {
-          let key = item.getField('DOI')
-          if (!key) {
-            for (const line of parsed.extra.split('\n')) {
-              if (line.toLowerCase().startsWith('DOI:')) {
-                key = line.substr('DOI:'.length).trim()
-                if (key) break
-              }
-
-              const arxiv = arXiv.parse(line.trim())
-              if (arxiv) {
-                key = arxiv.id
-                break
-              }
-            }
-          }
-
+          parsed = varExtract({ extra: item.getField('extra') })
+          const key = parsed.extraKeys.csl.DOI || item.getField('DOI') || (arXiv.parse(parsed.extraKeys.kv.arxiv) || { id: null}).id
           if (!key) throw new Error(`No DOI or arXiv ID for ${item.getField('title')}`)
 
           const results = JSON.parse((await Zotero.HTTP.request('GET', inspireSearch + encodeURIComponent(key))).responseText)
@@ -74,6 +59,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
           citekey = results[0].system_control_number.find(i => i.institute.endsWith('TeX') && i.value).value
 
         } else {
+          parsed = Citekey.get(item.getField('extra'))
+          if (parsed.pinned) continue
 
           citekey = this.get(item.id).citekey || this.update(item)
         }
