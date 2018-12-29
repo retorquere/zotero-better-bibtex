@@ -28,7 +28,7 @@
 <!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging ist gegenwärtige ausgestellt. Die Fehlerbehebung wird leichter sein, wenn sie vor dem Einsenden die Option einstellen.">
 <!ENTITY better-bibtex.ErrorReport.context "Anwendungs Kontext">
 <!ENTITY better-bibtex.ErrorReport.errors "Fehler">
-<!ENTITY better-bibtex.ErrorReport.includeCache "Send cache">
+<!ENTITY better-bibtex.ErrorReport.includeCache "Sende Zwischenspeicher">
 <!ENTITY better-bibtex.ErrorReport.debug "Debug-Protokoll">
 <!ENTITY better-bibtex.ErrorReport.notReviewed "Fehlerberichte können nicht geprüft werden, sofern sie nicht im GitHub Issue tracker gepostet werden.">
 <!ENTITY better-bibtex.ErrorReport.postToGitHub "Bitte posten Sie eine Nachricht im issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) mit dieser Report ID, einer Beschreibung des Problems, und alle notwendigen Schritte, um es zu reproduzieren.">
@@ -64,7 +64,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportiere Notizen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Fehler">
-<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Cached">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Zwischengespeichert">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "Warne mich, wenn mehrere Schlüssel auf einmal geändert werden">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Zitier Schlüssel">
@@ -109,7 +109,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in einem Notizfeld">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Nein">
 <!-- https://texfaq.org/FAQ-citeURL -->
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in a URL field (requires custom style for url field support)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in einem &quot;URL&quot;-Feld (erfordert benutzerdefinierten Stil für die Unterstützung des URL-Felds)">
 <!ENTITY better-bibtex.Preferences.tab.export "Exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignoriere Namens-Präfixe beim Sortieren">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "beide">
@@ -118,13 +118,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Wenn ein Eintrag über DOI und URL verfügt, exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
 <!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Einzelne Wörter als extern definierte @string variablen behandeln (nicht mit geschweiften Klammern umgeben)">
-<!ENTITY better-bibtex.Preferences.export.fields.sorted "Deterministically order references and fields; primarily for version control.">
+<!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordne Referenzen und Felder deterministisch; hauptsächlich für Versionskontrolle.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.tab.strings "Importiere @string Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTex">
-<!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
+<!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
 <!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Fehler melden...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX Datei nach Verweisen durchsuchen...">
@@ -135,7 +135,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat links hinzu...">
-<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Tag duplicate citation keys">
+<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Eintrag an TeXstudio senden">
 <!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
