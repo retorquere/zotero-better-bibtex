@@ -100,13 +100,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "für JabRef 4">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere unicode als einfache text latex Kommandos">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Verwende das erweiterte Namensformat von BibLaTeX (benötigt biblatex 3.5)">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportiere unicode als einfache text latex Kommandos (empfohlen)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportiere Latex-Befehle im Unicode-Format als Plaintext (empfohlen)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX Export hinzu">
-<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in einem Notizfeld">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Füge URLs zu BibTeX-Export hinzu">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "in einem &quot;Note&quot;-Feld">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "Nein">
 <!-- https://texfaq.org/FAQ-citeURL -->
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "in einem &quot;URL&quot;-Feld (erfordert benutzerdefinierten Stil für die Unterstützung des URL-Felds)">
@@ -117,26 +117,26 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Wenn ein Eintrag über DOI und URL verfügt, exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
-<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Einzelne Wörter als extern definierte @string variablen behandeln (nicht mit geschweiften Klammern umgeben)">
+<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Einzelne Wörter als extern definierte @string-Variablen behandeln und nicht mit geschweiften Klammern umgeben.">
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordne Referenzen und Felder deterministisch; hauptsächlich für Versionskontrolle.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
-<!ENTITY better-bibtex.Preferences.tab.strings "Importiere @string Definitionen">
+<!ENTITY better-bibtex.Preferences.tab.strings "Importiere @string-Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTex">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Better BibTeX Fehler melden...">
-<!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX Datei nach Verweisen durchsuchen...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Fehler in Better BibTex melden...">
+<!ENTITY better-bibtex.BetterBibTeX.auxScanner "BibTeX AUX-Datei nach Verweisen durchsuchen...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Sie ändern mehr als {treshold} Einträge auf einmal. Sind sie sicher?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTex">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "BibTeX-Key anheften">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
-<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat links hinzu...">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat-Links hinzu...">
 <!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Markiere doppelte Zitierschlüssel">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Eintrag an TeXstudio senden">
 <!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Zeige BibLaTeX server URL">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Zeige BibLaTeX-Server-URL">
