@@ -53,6 +53,11 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
           let key = item.getField('DOI')
           if (!key) {
             for (const line of parsed.extra.split('\n')) {
+              if (line.toLowerCase().startsWith('DOI:')) {
+                key = line.substr('DOI:'.length).trim()
+                if (key) break
+              }
+
               const arxiv = arXiv.parse(line.trim())
               if (arxiv) {
                 key = arxiv.id
