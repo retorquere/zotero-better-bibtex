@@ -132,6 +132,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTex">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "BibTeX-Key anheften">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Pin BibTeX key from InspireHEP">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat-Links hinzu...">
