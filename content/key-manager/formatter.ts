@@ -368,6 +368,11 @@ class PatternFormatter {
     return this.item.tags[n] || ''
   }
 
+  /** internal alphanumeric zotero item key */
+  public $key() {
+    return this.item.item.key
+  }
+
   /** The first `N` (default: 3) words of the title, first `M` (default: 0) capitalized */
   public $shorttitle(n = 3, m = 0) { // tslint:disable-line:no-magic-numbers
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
