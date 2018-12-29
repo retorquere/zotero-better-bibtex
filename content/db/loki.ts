@@ -23,8 +23,6 @@ $patch$(Loki.Collection.prototype, 'findOne', original => function() {
 })
 
 $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
-  if (this.compositeKey) this.compositeKey(doc)
-
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`insert: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('insert: validation failed for', doc, this.validate.errors, err)
@@ -34,8 +32,6 @@ $patch$(Loki.Collection.prototype, 'insert', original => function(doc) {
 })
 
 $patch$(Loki.Collection.prototype, 'update', original => function(doc) {
-  if (this.compositeKey) this.compositeKey(doc)
-
   if (this.validate && !this.validate(doc)) {
     const err = new Error(`update: validation failed for ${JSON.stringify(doc)} (${JSON.stringify(this.validate.errors)})`)
     log.error('update: validation failed for', doc, this.validate.errors, err)
@@ -54,33 +50,6 @@ $patch$(Loki.prototype, 'close', original => function(callback) {
     }
   })
 })
-
-Loki.prototype.loadDatabaseAsync = function(options) {
-  const deferred = Zotero.Promise.defer()
-  this.loadDatabase(options, err => {
-    if (err) return deferred.reject(err)
-    deferred.resolve(null)
-  })
-  return deferred.promise
-}
-
-Loki.prototype.saveDatabaseAsync = function() {
-  const deferred = Zotero.Promise.defer()
-  this.saveDatabase(err => {
-    if (err) return deferred.reject(err)
-    deferred.resolve(null)
-  })
-  return deferred.promise
-}
-
-Loki.prototype.closeAsync = function() {
-  const deferred = Zotero.Promise.defer()
-  this.close(err => {
-    if (err) return deferred.reject(err)
-    deferred.resolve(null)
-  })
-  return deferred.promise
-}
 
 class NullStore {
   public mode = 'reference'
@@ -108,9 +77,8 @@ idleService.addIdleObserver({
 }, 5) // tslint:disable-line:no-magic-numbers
 
 // https://github.com/Microsoft/TypeScript/issues/17032
-export class XULoki extends (Loki as { new(name, options): any }) {
+export class XULoki extends Loki {
   constructor(name, options: any = {}) {
-
     const nullStore = !options.adapter
     options.adapter = options.adapter || new NullStore()
     options.env = 'XUL-Chrome'
@@ -145,6 +113,33 @@ export class XULoki extends (Loki as { new(name, options): any }) {
     }
   }
 
+  public loadDatabaseAsync(options = {}) {
+    const deferred = Zotero.Promise.defer()
+    this.loadDatabase(options, err => {
+      if (err) return deferred.reject(err)
+      deferred.resolve(null)
+    })
+    return deferred.promise
+  }
+
+  public saveDatabaseAsync() {
+    const deferred = Zotero.Promise.defer()
+    this.saveDatabase(err => {
+      if (err) return deferred.reject(err)
+      deferred.resolve(null)
+    })
+    return deferred.promise
+  }
+
+  public closeAsync() {
+    const deferred = Zotero.Promise.defer()
+    this.close(err => {
+      if (err) return deferred.reject(err)
+      deferred.resolve(null)
+    })
+    return deferred.promise
+  }
+
   public schemaCollection(name, options) {
     options.cloneObjects = true
     options.clone = true
@@ -156,10 +151,9 @@ export class XULoki extends (Loki as { new(name, options): any }) {
       }
     }
 
-    log.debug('installing schema for', name, options.schema)
-    coll.validate = validator.compile(options.schema)
+    log.debug('installing schema for', name, options.schema);
 
-    if (options.compositeKey) coll.compositeKey = doc => { doc[options.compositeKey] = options.indices.map(field => `${field}=${doc[field]}`).join(';') }
+    (coll as any).validate = validator.compile(options.schema)
 
     return coll
   }
