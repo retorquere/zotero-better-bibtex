@@ -1043,7 +1043,7 @@ class ZoteroItem {
 
     if (this.eprint.slaccitation) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
-      const arxiv = m ? arXiv.parse(`arxiv:${m[1].trim().replace(/^arxiv:/i, '')}`) : null
+      const arxiv = m ? arXiv.parse(m[1].trim(), true) : null
 
       if (arxiv) {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'
