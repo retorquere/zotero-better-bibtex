@@ -809,7 +809,8 @@ export class Reference {
     for (const creator of f.value) {
       let name
       if (creator.name || (creator.lastName && (creator.fieldMode === 1))) {
-        name = raw ? `{${creator.name || creator.lastName}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(creator.name || creator.lastName))}) // tslint:disable-line:no-construct
+        name = creator.name || creator.lastName
+        if (name !== 'others') name = raw ? `{${name}}` : this.enc_latex({value: new String(this._enc_creators_scrub_name(name))}) // tslint:disable-line:no-construct
 
       } else if (raw) {
         name = [creator.lastName || '', creator.firstName || ''].join(', ')
