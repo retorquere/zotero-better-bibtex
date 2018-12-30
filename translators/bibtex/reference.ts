@@ -715,7 +715,8 @@ export class Reference {
       debug('Reference.postscript failed:', err)
     }
 
-    if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && this.item.arXiv && !this.has.SLACcitation) {
+    // https://web.archive.org/web/20041026075722/http://www.slac.stanford.edu:80/spires/hep/latex.html
+    if (Translator.preferences.SLACcitation && this.item.arXiv && !this.has.SLACcitation) {
       const prefix = this.item.arXiv.style === 'new' ? 'ARXIV:' : ''
       this.add({ name: 'SLACcitation', value: `%%CITATION = ${prefix}${this.item.arXiv.eprint.toUpperCase()};%%`, raw: true })
     }
