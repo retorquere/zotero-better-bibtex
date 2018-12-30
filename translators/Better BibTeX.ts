@@ -10,6 +10,7 @@ import { htmlEscape } from './lib/html-escape'
 import JSON5 = require('json5')
 import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
 import { valid as validFields } from '../gen/itemfields'
+import { arXiv } from '../content/arXiv'
 
 Reference.prototype.caseConversion = {
   title: true,
@@ -453,8 +454,7 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[]
   private eprint: { [key: string]: string }
-  private biblatexdata: { [key: string]: string }
-  private biblatexdatajson: boolean
+  private extra: { data: { [key: string]: string }, json: boolean, raw: { [key: string]: string } }
   private validFields: Map<string, boolean>
   private numberPrefix: string
 
@@ -469,7 +469,7 @@ class ZoteroItem {
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
-    this.biblatexdata = {}
+    this.extra = { data: {}, json: false, raw: {} }
 
     this.import()
 
@@ -851,6 +851,8 @@ class ZoteroItem {
     return true
   }
   protected $eprintclass(value, field) { return this.$eprint(value, field) }
+  protected $primaryclass(value, field) { return this.$eprint(value, 'eprintclass') }
+  protected $slaccitation(value, field) { return this.$eprint(value, field) }
 
   protected $nationality(value) { return this.set('country', this.unparse(value)) }
 
@@ -1039,6 +1041,20 @@ class ZoteroItem {
 
     if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 
+    if (this.eprint.slaccitation) {
+      const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
+      const arxiv = m ? arXiv.parse(`arxiv:${m[1].trim().replace(/^arxiv:/i, '')}`) : null
+
+      if (arxiv) {
+        this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'
+        if (!this.eprint.archiveprefix) this.eprint.archiveprefix = 'arXiv'
+        if (!this.eprint.eprintclass && arxiv.eprintClass) this.eprint.eprintclass = arxiv.eprintClass
+
+      } else {
+        this.extra.raw.SLACcitation = this.eprint.slaccitation
+      }
+    }
+
     if (this.eprint.eprintType && this.eprint.eprint) {
       const eprintclass = this.eprint.eprintType === 'arXiv' && this.eprint.eprintclass ? ` [${this.eprint.eprintclass}]` : ''
       this.hackyFields.push(`${this.eprint.eprintType}: ${this.eprint.eprint}${eprintclass}`)
@@ -1050,22 +1066,24 @@ class ZoteroItem {
       }
     }
 
-    const keys = Object.keys(this.biblatexdata)
+    const keys = Object.keys(this.extra.data)
     if (keys.length > 0) {
-      let biblatexdata
+      let extraData
       if (Translator.preferences.testing) keys.sort()
-      if (this.biblatexdatajson && Translator.preferences.testing) {
-        biblatexdata = `bibtex{${keys.map(k => JSON5.stringify({[k]: this.biblatexdata[k]}).slice(1, -1))}}`
+      if (this.extra.json && Translator.preferences.testing) {
+        extraData = `bibtex{${keys.map(k => JSON5.stringify({[k]: this.extra.data[k]}).slice(1, -1))}}`
 
-      } else if (this.biblatexdatajson) {
-        biblatexdata = `bibtex${JSON5.stringify(this.biblatexdata)}`
+      } else if (this.extra.json) {
+        extraData = `bibtex${JSON5.stringify(this.extra.data)}`
 
       } else {
-        biblatexdata = `bibtex[${keys.map(key => `${key}=${this.biblatexdata[key]}`).join(';')}]`
+        extraData = `bibtex[${keys.map(key => `${key}=${this.extra.data[key]}`).join(';')}]`
       }
 
-      this.addToExtra(biblatexdata)
+      this.addToExtra(extraData)
     }
+
+    if (Object.keys(this.extra.raw).length > 0) this.addToExtra(`bibtex*${JSON5.stringify(this.extra.raw)}`)
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()
@@ -1087,8 +1105,8 @@ class ZoteroItem {
   }
 
   private addToExtraData(key, value) {
-    this.biblatexdata[key] = this.unparse(value)
-    if (key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)) this.biblatexdatajson = true
+    this.extra.data[key] = this.unparse(value)
+    if (key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)) this.extra.json = true
   }
 
   private set(field, value) {

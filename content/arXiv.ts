@@ -16,10 +16,10 @@ export let arXiv = new class {
     if (!id) return undefined
 
     if (m = this.new.exec(id)) {
-      return { id, eprint: m[1], primaryClass: m[4] } // tslint:disable-line:no-magic-numbers
+      return { id, eprint: m[1], eprintClass: m[4] } // tslint:disable-line:no-magic-numbers
     }
     if (m = this.old.exec(id)) {
-      return { id, eprint: m[1], primaryClass: m[4] } // tslint:disable-line:no-magic-numbers
+      return { id, eprint: m[1], eprintClass: m[4] } // tslint:disable-line:no-magic-numbers
     }
     if (m = this.bare.exec(id)) {
       return { id, eprint: m[1] }

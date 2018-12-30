@@ -357,7 +357,7 @@ export class Reference {
       this.add({ name: 'archivePrefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.eprint })
-      this.add({ name: 'primaryClass', value: this.item.arXiv.primaryClass })
+      this.add({ name: 'eprintclass', value: this.item.arXiv.eprintClass })
       delete this.item.extraFields.kv.arxiv
     }
   }
@@ -713,6 +713,11 @@ export class Reference {
       this.postscript(this, this.item)
     } catch (err) {
       debug('Reference.postscript failed:', err)
+    }
+
+    if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && !this.has.SLACcitation) {
+      const prefix = this.item.arXiv.eprintClass ? this.item.arXiv.eprintClass.toUpperCase() + '/' : 'ARXIV'
+      this.add({ name: 'SLACcitation', value: `%%CITATION = ${prefix}${this.item.arXiv.eprint};%%`, raw: true })
     }
 
     for (const name of Translator.preferences.skipFields) {
