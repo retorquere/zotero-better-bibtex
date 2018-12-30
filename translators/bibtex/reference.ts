@@ -362,7 +362,7 @@ export class Reference {
         let slaccitation = ''
         if (this.item.arXiv.primaryClass) slaccitation += this.item.arXiv.primaryClass.toUpperCase() + '/'
         slaccitation += this.item.arXiv.eprint
-        this.add({ name: 'SLACcitation', value: `%%CITATION = ${slaccitation};%%`, raw: true }) // because sure, why not choose percentage signs for markers REVTeX?
+        this.add({ name: 'SLACcitation', value: `%%CITATION = ARXIV:${slaccitation};%%`, raw: true }) // because sure, why not choose percentage signs for markers REVTeX?
       }
       delete this.item.extraFields.kv.arxiv
     }
