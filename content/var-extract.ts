@@ -49,10 +49,10 @@ export function extract(item) {
 
   let m
   // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
-  if (m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(extra)) {
+  while (m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(extra)) {
     let json = null
     const prefix = m[1] + (m[2] || '') // tslint:disable-line:no-magic-numbers
-    const raw = !m[2] // tslint:disable-line:no-magic-numbers
+    const cook = !m[2] // tslint:disable-line:no-magic-numbers
     let data = m[3] // tslint:disable-line:no-magic-numbers
     // minimize the chunk
     while (data.indexOf('}') >= 0) {
@@ -68,8 +68,8 @@ export function extract(item) {
     if (json) {
       extra = extra.replace(prefix + data, '').trim()
       for (let [name, value] of Object.entries(json)) {
-        name = name.toLowerCase()
-        extraFields.bibtex[name] = {name, value, raw }
+        if (name !== 'SLACcitation') name = name.toLowerCase()
+        extraFields.bibtex[name] = {name, value, raw: !cook }
       }
     }
   }

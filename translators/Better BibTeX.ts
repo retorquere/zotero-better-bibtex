@@ -1052,6 +1052,7 @@ class ZoteroItem {
 
       } else {
         this.extra.raw.SLACcitation = this.eprint.slaccitation
+        delete this.eprint.slaccitation
       }
     }
 

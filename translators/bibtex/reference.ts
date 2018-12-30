@@ -650,9 +650,13 @@ export class Reference {
       debug('extraFields: bibtex', name, field)
 
       // psuedo-var, sets the reference type
-      if (name === 'referencetype') {
-        this.referencetype = field.value
-        continue
+      switch (name) {
+        case 'referencetype':
+          this.referencetype = field.value
+          continue
+
+        case 'SLACcitation': // some damn poor decision making https://github.com/retorquere/zotero-better-bibtex/issues/1110#issuecomment-450574745
+          field.bibtex = `"${field.value}"`
       }
 
       debug('extraFields: bibtex')
@@ -715,19 +719,10 @@ export class Reference {
       debug('Reference.postscript failed:', err)
     }
 
-    if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && !this.has.SLACcitation) {
-      let prefix = ''
-
-      switch (this.item.arXiv.style) {
-        case 'new':
-          prefix = 'ARXIV:'
-          break
-
-        case 'old':
-          if (this.item.arXiv.eprintClass) prefix = this.item.arXiv.eprintClass.toUpperCase() + '/'
-          break
-      }
-      this.add({ name: 'SLACcitation', value: `%%CITATION = ${prefix}${this.item.arXiv.eprint};%%`, raw: true })
+    if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && this.item.arXiv && !this.has.SLACcitation) {
+      const prefix = this.item.arXiv.style === 'new' ? 'ARXIV:' : ''
+      // holy crap that's some poor decision making right there https://github.com/retorquere/zotero-better-bibtex/issues/1110#issuecomment-450574745
+      this.add({ name: 'SLACcitation', value: '', bibtex: `"%%CITATION = ${prefix}${this.item.arXiv.eprint.toUpperCase()};%%"` })
     }
 
     for (const name of Translator.preferences.skipFields) {
