@@ -454,7 +454,7 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[]
   private eprint: { [key: string]: string }
-  private extra: { data: { [key: string]: string }, json: boolean }
+  private extra: { data: { [key: string]: string }, json: boolean, raw: { [key: string]: string } }
   private validFields: Map<string, boolean>
   private numberPrefix: string
 
@@ -469,7 +469,7 @@ class ZoteroItem {
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
-    this.extra = { data: {}, json: false }
+    this.extra = { data: {}, json: false, raw: {} }
 
     this.import()
 
@@ -1051,7 +1051,7 @@ class ZoteroItem {
         if (!this.eprint.eprintclass && arxiv.eprintClass) this.eprint.eprintclass = arxiv.eprintClass
 
       } else {
-        this.extra.data.SLACcitation = this.eprint.slaccitation
+        this.extra.raw.SLACcitation = this.eprint.slaccitation
         delete this.eprint.slaccitation
       }
     }
@@ -1083,6 +1083,8 @@ class ZoteroItem {
 
       this.addToExtra(extraData)
     }
+
+    if (Object.keys(this.extra.raw).length) this.addToExtra(`bibtex${JSON5.stringify(this.extra.raw)}`)
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()

@@ -650,13 +650,9 @@ export class Reference {
       debug('extraFields: bibtex', name, field)
 
       // psuedo-var, sets the reference type
-      switch (name) {
-        case 'referencetype':
+      if (name === 'referencetype') {
           this.referencetype = field.value
           continue
-
-        case 'SLACcitation': // some damn poor decision making https://github.com/retorquere/zotero-better-bibtex/issues/1110#issuecomment-450574745
-          field.bibtex = `"${field.value}"`
       }
 
       debug('extraFields: bibtex')
@@ -721,8 +717,7 @@ export class Reference {
 
     if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && this.item.arXiv && !this.has.SLACcitation) {
       const prefix = this.item.arXiv.style === 'new' ? 'ARXIV:' : ''
-      // holy crap that's some poor decision making right there https://github.com/retorquere/zotero-better-bibtex/issues/1110#issuecomment-450574745
-      this.add({ name: 'SLACcitation', value: '', bibtex: `"%%CITATION = ${prefix}${this.item.arXiv.eprint.toUpperCase()};%%"` })
+      this.add({ name: 'SLACcitation', value: `%%CITATION = ${prefix}${this.item.arXiv.eprint.toUpperCase()};%%`, raw: true })
     }
 
     for (const name of Translator.preferences.skipFields) {
