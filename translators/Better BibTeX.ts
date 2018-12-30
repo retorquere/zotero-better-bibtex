@@ -454,7 +454,7 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[]
   private eprint: { [key: string]: string }
-  private extra: { data: { [key: string]: string }, json: boolean, raw: { [key: string]: string } }
+  private extra: { data: { [key: string]: string }, json: boolean }
   private validFields: Map<string, boolean>
   private numberPrefix: string
 
@@ -469,7 +469,7 @@ class ZoteroItem {
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
-    this.extra = { data: {}, json: false, raw: {} }
+    this.extra = { data: {}, json: false }
 
     this.import()
 
@@ -1051,7 +1051,7 @@ class ZoteroItem {
         if (!this.eprint.eprintclass && arxiv.eprintClass) this.eprint.eprintclass = arxiv.eprintClass
 
       } else {
-        this.extra.raw.SLACcitation = this.eprint.slaccitation
+        this.extra.data.SLACcitation = this.eprint.slaccitation
         delete this.eprint.slaccitation
       }
     }
@@ -1072,19 +1072,17 @@ class ZoteroItem {
       let extraData
       if (Translator.preferences.testing) keys.sort()
       if (this.extra.json && Translator.preferences.testing) {
-        extraData = `bibtex{${keys.map(k => JSON5.stringify({[k]: this.extra.data[k]}).slice(1, -1))}}`
+        extraData = `bibtex*{${keys.map(k => JSON5.stringify({[k]: this.extra.data[k]}).slice(1, -1))}}`
 
       } else if (this.extra.json) {
-        extraData = `bibtex${JSON5.stringify(this.extra.data)}`
+        extraData = `bibtex*${JSON5.stringify(this.extra.data)}`
 
       } else {
-        extraData = `bibtex[${keys.map(key => `${key}=${this.extra.data[key]}`).join(';')}]`
+        extraData = `bibtex*[${keys.map(key => `${key}=${this.extra.data[key]}`).join(';')}]`
       }
 
       this.addToExtra(extraData)
     }
-
-    if (Object.keys(this.extra.raw).length > 0) this.addToExtra(`bibtex*${JSON5.stringify(this.extra.raw)}`)
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()

@@ -370,7 +370,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "232-239",
-      "extra": "Citation Key: Green:75 \nbibtex[crossref=IJCAI85]",
+      "extra": "Citation Key: Green:75 \nbibtex*[crossref=IJCAI85]",
       "title": "Some rules for the automatic synthesis of programs",
       "creators": [
         {
@@ -506,7 +506,7 @@
       "itemType": "book",
       "place": "Hillsdale, NJ",
       "date": "1980",
-      "extra": "Citation Key: Collins:80 \nbibtex[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
+      "extra": "Citation Key: Collins:80 \nbibtex*[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
       "title": "Inference in text understanding",
       "numPages": "385-408",
       "creators": [
@@ -593,7 +593,7 @@
       "itemType": "conferencePaper",
       "pages": "634-639",
       "date": "1991",
-      "extra": "Citation Key: McAllester:91 \nbibtex[crossref=AAAI91]",
+      "extra": "Citation Key: McAllester:91 \nbibtex*[crossref=AAAI91]",
       "title": "Systematic Nonlinear Planning",
       "creators": [
         {
@@ -1314,7 +1314,7 @@
       "issue": "64",
       "publicationTitle": "Sigart Newsletter",
       "date": "August 1977",
-      "extra": "Citation Key: Kant:77 \nbibtex[booktitle=Proceeding of the Symposium on Artificial Intelligence and Programming Languages]",
+      "extra": "Citation Key: Kant:77 \nbibtex*[booktitle=Proceeding of the Symposium on Artificial Intelligence and Programming Languages]",
       "title": "The selection of efficient implementations for a high-level language",
       "creators": [
         {
@@ -1618,7 +1618,7 @@
       "itemType": "bookSection",
       "pages": "75-89",
       "date": "1981",
-      "extra": "Citation Key: Cullingford:81 \nbibtex[crossref=ICU]",
+      "extra": "Citation Key: Cullingford:81 \nbibtex*[crossref=ICU]",
       "title": "SAM",
       "creators": [
         {
@@ -1646,7 +1646,7 @@
     {
       "itemType": "bookSection",
       "pages": "197-209",
-      "extra": "Citation Key: Meehan:TALE-SPIN \nbibtex[chapter=9;crossref=ICU]",
+      "extra": "Citation Key: Meehan:TALE-SPIN \nbibtex*[chapter=9;crossref=ICU]",
       "title": "TALE-SPIN",
       "creators": [
         {
@@ -1944,7 +1944,7 @@
       "itemType": "bookSection",
       "place": "New York",
       "pages": "3-50",
-      "extra": "Republished in KR \nCitation Key: Brachman:79 \nbibtex[crossref=Findler]",
+      "extra": "Republished in KR \nCitation Key: Brachman:79 \nbibtex*[crossref=Findler]",
       "title": "On the epistemological status of semantic networks",
       "creators": [
         {
@@ -2007,7 +2007,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1968",
-      "extra": "Citation Key: Fillmore:68 \nbibtex[booktitle=Universals in Linguistic Theory]",
+      "extra": "Citation Key: Fillmore:68 \nbibtex*[booktitle=Universals in Linguistic Theory]",
       "title": "The case for case",
       "numPages": "1-88",
       "creators": [
@@ -2171,7 +2171,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "102-109",
-      "extra": "Citation Key: Mellish:89 \nbibtex[crossref=ACL-89]",
+      "extra": "Citation Key: Mellish:89 \nbibtex*[crossref=ACL-89]",
       "title": "Some Chart-based Techniques for Parsing Ill-formed Input",
       "creators": [
         {
@@ -2200,7 +2200,7 @@
       "itemType": "book",
       "place": "New York New York",
       "date": "1963",
-      "extra": "Citation Key: Newell:63 \nbibtex[booktitle=Computers and Thought]",
+      "extra": "Citation Key: Newell:63 \nbibtex*[booktitle=Computers and Thought]",
       "title": "GPS, a program that simulates human thought",
       "creators": [
         {
@@ -2341,7 +2341,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1977",
-      "extra": "Citation Key: Fillmore:77 \nbibtex[booktitle=Syntax and Semantics 8: Grammatical Relations]",
+      "extra": "Citation Key: Fillmore:77 \nbibtex*[booktitle=Syntax and Semantics 8: Grammatical Relations]",
       "title": "The case for case reopened",
       "numPages": "59-81",
       "creators": [
@@ -2524,7 +2524,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1972",
-      "extra": "Citation Key: Woods:72 \nbibtex[booktitle=Natural Language Processing]",
+      "extra": "Citation Key: Woods:72 \nbibtex*[booktitle=Natural Language Processing]",
       "title": "An experimental parsing system for transition network grammars",
       "numPages": "113-154",
       "creators": [
@@ -2668,7 +2668,7 @@
       "itemType": "book",
       "place": "Cambridge, Mass.",
       "date": "1978",
-      "extra": "Citation Key: Bresnan:78 \nbibtex[booktitle=Linguistic Theory and Psychological Reality]",
+      "extra": "Citation Key: Bresnan:78 \nbibtex*[booktitle=Linguistic Theory and Psychological Reality]",
       "title": "A realistic transformational grammar",
       "creators": [
         {
@@ -2910,7 +2910,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Riesbeck:78 \nbibtex[booktitle=Studies in the Perception of Language]",
+      "extra": "Citation Key: Riesbeck:78 \nbibtex*[booktitle=Studies in the Perception of Language]",
       "title": "Comprehension by computer: Expectation-based analysis of sentences in context",
       "creators": [
         {
@@ -2986,7 +2986,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1973",
-      "extra": "Citation Key: Bransford:73 \nbibtex[booktitle=Visual Information Processing]",
+      "extra": "Citation Key: Bransford:73 \nbibtex*[booktitle=Visual Information Processing]",
       "title": "Considerations of some problems of comprehension",
       "creators": [
         {
@@ -3139,7 +3139,7 @@
       "itemType": "journalArticle",
       "pages": "63-79",
       "date": "1974",
-      "extra": "Citation Key: Hayes:74 \nbibtex[booktitle=Proceedings of the AISB Summer Conference]",
+      "extra": "Citation Key: Hayes:74 \nbibtex*[booktitle=Proceedings of the AISB Summer Conference]",
       "title": "Some problems and non-problems in representation theory",
       "creators": [
         {
@@ -3581,7 +3581,7 @@
       "itemType": "book",
       "series": "Philosophy of language",
       "date": "1976",
-      "extra": "Citation Key: Wilks:76 \nbibtex[booktitle=Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension]",
+      "extra": "Citation Key: Wilks:76 \nbibtex*[booktitle=Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension]",
       "title": "Computational Semantics: An Introduction to Artificial Intelligence and Natural Language Comprehension",
       "numPages": "205-233",
       "creators": [
@@ -3621,7 +3621,7 @@
       "itemType": "book",
       "place": "Amsterdam",
       "date": "1975",
-      "extra": "Citation Key: Rieger:75 \nbibtex[booktitle=Conceptual Information Processing]",
+      "extra": "Citation Key: Rieger:75 \nbibtex*[booktitle=Conceptual Information Processing]",
       "title": "Conceptual memory",
       "creators": [
         {
@@ -3782,7 +3782,7 @@
     {
       "itemType": "bookSection",
       "pages": "267-330",
-      "extra": "Citation Key: Sidner:83 \nbibtex[crossref=BradyandBerwick]",
+      "extra": "Citation Key: Sidner:83 \nbibtex*[crossref=BradyandBerwick]",
       "title": "Focusing in the Comprehension of Definite Anaphora",
       "creators": [
         {
@@ -3842,7 +3842,7 @@
     {
       "itemType": "bookSection",
       "pages": "331-371",
-      "extra": "Citation Key: Webber:83 \nbibtex[crossref=BradyandBerwick]",
+      "extra": "Citation Key: Webber:83 \nbibtex*[crossref=BradyandBerwick]",
       "title": "So what can we talk about now?",
       "creators": [
         {
@@ -4004,7 +4004,7 @@
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
       "date": "1983",
-      "extra": "Citation Key: Swinney:83 \nbibtex[booktitle=Methods and Tactics in Cognitive Science]",
+      "extra": "Citation Key: Swinney:83 \nbibtex*[booktitle=Methods and Tactics in Cognitive Science]",
       "title": "Theoretical and methodological issues in cognitive science: A psycholinguistic perspective",
       "creators": [
         {
@@ -4245,7 +4245,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1968",
-      "extra": "Citation Key: Thorne:68 \nbibtex[booktitle=Machine Intelligence 3]",
+      "extra": "Citation Key: Thorne:68 \nbibtex*[booktitle=Machine Intelligence 3]",
       "title": "The syntactic analysis of English by machine",
       "creators": [
         {
@@ -4482,7 +4482,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1975",
-      "extra": "Citation Key: Waltz:75 \nbibtex[booktitle=The Psychology of Computer Vision]",
+      "extra": "Citation Key: Waltz:75 \nbibtex*[booktitle=The Psychology of Computer Vision]",
       "title": "Understanding line drawings of scenes with shadows",
       "creators": [
         {
@@ -5091,7 +5091,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Hinton:86 \nbibtex[crossref=PDP2]",
+      "extra": "Citation Key: Hinton:86 \nbibtex*[crossref=PDP2]",
       "title": "Learning and Relearning in Boltzmann Machines",
       "creators": [
         {
@@ -5383,7 +5383,7 @@
       "itemType": "book",
       "place": "London",
       "date": "1953",
-      "extra": "Citation Key: Turing:53 \nbibtex[booktitle=Faster Than Thought]",
+      "extra": "Citation Key: Turing:53 \nbibtex*[booktitle=Faster Than Thought]",
       "title": "Part of Chapter 25",
       "numPages": "288-295",
       "creators": [
@@ -5545,7 +5545,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1977",
-      "extra": "Citation Key: Slate:77 \nbibtex[booktitle=Chess Skill in Man and Machine]",
+      "extra": "Citation Key: Slate:77 \nbibtex*[booktitle=Chess Skill in Man and Machine]",
       "title": "CHESS 4.5 - the Northwestern University chess program",
       "numPages": "82-118",
       "creators": [
@@ -5768,7 +5768,7 @@
     {
       "itemType": "book",
       "date": "1980",
-      "extra": "Citation Key: PhilHayes:80 \nbibtex[booktitle=Proceedings of the 18th Conference of the Association for Computational Linguistics]",
+      "extra": "Citation Key: PhilHayes:80 \nbibtex*[booktitle=Proceedings of the 18th Conference of the Association for Computational Linguistics]",
       "title": "Flexible parsing",
       "creators": [
         {
@@ -5803,7 +5803,7 @@
       "itemType": "book",
       "place": "Cambridge, Mass.",
       "date": "1978",
-      "extra": "Citation Key: RJBobrow:78 \nbibtex[booktitle=Bolt Beranek and Newman]",
+      "extra": "Citation Key: RJBobrow:78 \nbibtex*[booktitle=Bolt Beranek and Newman]",
       "title": "The RUS System",
       "creators": [
         {
@@ -5870,7 +5870,7 @@
       "itemType": "book",
       "place": "Cambridge Mass.",
       "date": "1982",
-      "extra": "Citation Key: Kaplan:82 \nbibtex[booktitle=The Mental Representation of Grammatical Relations]",
+      "extra": "Citation Key: Kaplan:82 \nbibtex*[booktitle=The Mental Representation of Grammatical Relations]",
       "title": "Lexical-functional grammar: a formal system for grammatical representation",
       "creators": [
         {
@@ -6078,7 +6078,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "55-59",
-      "extra": "Citation Key: Pednault:88a \nbibtex[crossref=AAAI88]",
+      "extra": "Citation Key: Pednault:88a \nbibtex*[crossref=AAAI88]",
       "title": "Extending Conventional Planning Techniques to Handle Actions with Context-dependent effects",
       "creators": [
         {
@@ -6106,7 +6106,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1989",
-      "extra": "Citation Key: Pednault:89 \nbibtex[crossref=KR:89]",
+      "extra": "Citation Key: Pednault:89 \nbibtex*[crossref=KR:89]",
       "title": "Adl: Exploring the middle ground between Strips and the situation calculus",
       "creators": [
         {
@@ -6134,7 +6134,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1991",
-      "extra": "Citation Key: Pednault:91 \nbibtex[crossref=ijcai91]",
+      "extra": "Citation Key: Pednault:91 \nbibtex*[crossref=ijcai91]",
       "title": "Generalizing non-linear planning to handle complex goals and actions with context-dependent effects",
       "creators": [
         {
@@ -6234,7 +6234,7 @@
     {
       "itemType": "book",
       "date": "1976",
-      "extra": "Citation Key: Duda:76 \nbibtex[booktitle=Proceedings of the 1976 National Computer Conference]",
+      "extra": "Citation Key: Duda:76 \nbibtex*[booktitle=Proceedings of the 1976 National Computer Conference]",
       "title": "Subjective Bayesian methods for rule-based inference systems",
       "creators": [
         {
@@ -6349,7 +6349,7 @@
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
       "date": "1974",
-      "extra": "Citation Key: JMoore:74 \nbibtex[booktitle=Knowledge and Cognition]",
+      "extra": "Citation Key: JMoore:74 \nbibtex*[booktitle=Knowledge and Cognition]",
       "title": "How can Merlin understand?",
       "creators": [
         {
@@ -6531,7 +6531,7 @@
     {
       "itemType": "bookSection",
       "pages": "353-362",
-      "extra": "Citation Key: Grosz:86a \nbibtex[chapter=21;crossref=NLPReadings]",
+      "extra": "Citation Key: Grosz:86a \nbibtex*[chapter=21;crossref=NLPReadings]",
       "title": "The Representation and Use of Focus in a System for Understanding Dialogs",
       "creators": [
         {
@@ -7035,7 +7035,7 @@
       "itemType": "journalArticle",
       "pages": "310-319",
       "date": "1983",
-      "extra": "Citation Key: Halpern:83 \nbibtex[booktitle=ACM Symposium on Theoretical Computer Science]",
+      "extra": "Citation Key: Halpern:83 \nbibtex*[booktitle=ACM Symposium on Theoretical Computer Science]",
       "title": "A logic to reason about likelihood",
       "creators": [
         {
@@ -7068,7 +7068,7 @@
     {
       "itemType": "book",
       "date": "1980",
-      "extra": "Citation Key: Kay:80 \nbibtex[booktitle=Proceedings of the Symposium on Text Processing]",
+      "extra": "Citation Key: Kay:80 \nbibtex*[booktitle=Proceedings of the Symposium on Text Processing]",
       "title": "Algorithm schemata and data structures in syntactic processing",
       "creators": [
         {
@@ -7189,7 +7189,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1963",
-      "extra": "Citation Key: Turing:63 \nbibtex[booktitle=Computers and Thought]",
+      "extra": "Citation Key: Turing:63 \nbibtex*[booktitle=Computers and Thought]",
       "title": "Computing machinery and intelligence",
       "numPages": "1-35",
       "creators": [
@@ -7261,7 +7261,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "444-458",
-      "extra": "Citation Key: Schubert:89 \nbibtex[crossref=KR:89]",
+      "extra": "Citation Key: Schubert:89 \nbibtex*[crossref=KR:89]",
       "title": "An Episodic Knowledge Representation for Narrative Texts",
       "creators": [
         {
@@ -7422,7 +7422,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Duda:78 \nbibtex[booktitle=Pattern Directed Inference Systems]",
+      "extra": "Citation Key: Duda:78 \nbibtex*[booktitle=Pattern Directed Inference Systems]",
       "title": "Semantic network representations in rule-based inference systems",
       "numPages": "203-221",
       "creators": [
@@ -7508,7 +7508,7 @@
       "itemType": "book",
       "place": "Edinburgh",
       "date": "1980",
-      "extra": "Citation Key: Duda:80 \nbibtex[booktitle=Expert Systems in the Microelectronic Age]",
+      "extra": "Citation Key: Duda:80 \nbibtex*[booktitle=Expert Systems in the Microelectronic Age]",
       "title": "Model design in the Prospector consultant system for mineral exploration",
       "numPages": "153-167",
       "creators": [
@@ -7962,7 +7962,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Barrow:78 \nbibtex[booktitle=Computer Vision Systems]",
+      "extra": "Citation Key: Barrow:78 \nbibtex*[booktitle=Computer Vision Systems]",
       "title": "Recovering intrinsic scene characteristics from images",
       "creators": [
         {
@@ -8142,7 +8142,7 @@
       "itemType": "book",
       "place": "ERLBAUM-ADDRESS",
       "date": "1982",
-      "extra": "Citation Key: Beck:82 \nbibtex[booktitle=Organization and Representation in Perception]",
+      "extra": "Citation Key: Beck:82 \nbibtex*[booktitle=Organization and Representation in Perception]",
       "title": "Textural segmentation",
       "numPages": "285-317",
       "creators": [
@@ -8206,7 +8206,7 @@
     {
       "itemType": "journalArticle",
       "date": "1971",
-      "extra": "Citation Key: Binford:71 \nbibtex[booktitle=IEEE Conference on Systems and Control]",
+      "extra": "Citation Key: Binford:71 \nbibtex*[booktitle=IEEE Conference on Systems and Control]",
       "title": "Visual perception by computer",
       "creators": [
         {
@@ -8633,7 +8633,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1980",
-      "extra": "Citation Key: Bruynooghe:1980 \nbibtex[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
+      "extra": "Citation Key: Bruynooghe:1980 \nbibtex*[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
       "title": "Analysis of dependencies to improve the behavior of logic programs",
       "numPages": "293-305",
       "creators": [
@@ -8703,7 +8703,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Mitchell:1978 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
+      "extra": "Citation Key: Mitchell:1978 \nbibtex*[booktitle=Pattern-Directed Inference Systems]",
       "title": "Model-directed learning of production rules",
       "numPages": "297-312",
       "creators": [
@@ -8748,7 +8748,7 @@
     {
       "itemType": "book",
       "date": "1979",
-      "extra": "Citation Key: Buresova:1979 \nbibtex[booktitle=Brain Mechanisms in Memory and Learning: From the Single Neuron to Man]",
+      "extra": "Citation Key: Buresova:1979 \nbibtex*[booktitle=Brain Mechanisms in Memory and Learning: From the Single Neuron to Man]",
       "title": "Neurophysiological analysis of conditioned taste aversion",
       "creators": [
         {
@@ -8919,7 +8919,7 @@
     {
       "itemType": "book",
       "date": "1978",
-      "extra": "Citation Key: Clark:1978 \nbibtex[booktitle=Logic and Databases]",
+      "extra": "Citation Key: Clark:1978 \nbibtex*[booktitle=Logic and Databases]",
       "title": "Negation as failure",
       "numPages": "293-322",
       "creators": [
@@ -9120,7 +9120,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1982",
-      "extra": "Citation Key: Davis:1982 \nbibtex[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
+      "extra": "Citation Key: Davis:1982 \nbibtex*[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
       "title": "Teiresias: Applications of meta-level knowledge",
       "numPages": "227-490",
       "creators": [
@@ -9275,7 +9275,7 @@
       "volume": "17",
       "place": "New York",
       "date": "1983",
-      "extra": "Citation Key: Domjan:1983 \nbibtex[booktitle=Psychology of Learning and Motivation]",
+      "extra": "Citation Key: Domjan:1983 \nbibtex*[booktitle=Psychology of Learning and Motivation]",
       "title": "Biological constraints on instrumental and classical conditioning: Implications for general process theory",
       "creators": [
         {
@@ -9407,7 +9407,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1963",
-      "extra": "Citation Key: Feigenbaum:1963 \nbibtex[booktitle=Computers and Thought]",
+      "extra": "Citation Key: Feigenbaum:1963 \nbibtex*[booktitle=Computers and Thought]",
       "title": "The simulation of verbal learning behavior",
       "creators": [
         {
@@ -9536,7 +9536,7 @@
       "itemType": "book",
       "place": "Edinburgh",
       "date": "1976",
-      "extra": "Citation Key: Wise:1976 \nbibtex[booktitle=Automata, Languages, and Programming]",
+      "extra": "Citation Key: Wise:1976 \nbibtex*[booktitle=Automata, Languages, and Programming]",
       "title": "CONS should not evaluate its arguments",
       "numPages": "257-284",
       "creators": [
@@ -9680,7 +9680,7 @@
     {
       "itemType": "book",
       "date": "1959",
-      "extra": "Citation Key: Gelernter:1959 \nbibtex[booktitle=Information Processing: Proceedings of the International Conference on Information Processing]",
+      "extra": "Citation Key: Gelernter:1959 \nbibtex*[booktitle=Information Processing: Proceedings of the International Conference on Information Processing]",
       "title": "Realization of a geometry theorem-proving machine",
       "creators": [
         {
@@ -9895,7 +9895,7 @@
       "itemType": "journalArticle",
       "pages": "88-97",
       "date": "1982",
-      "extra": "Citation Key: GrissETAL:1982 \nbibtex[booktitle=Proceedings of the ACM Symposium on Lisp and Functional Programming]",
+      "extra": "Citation Key: GrissETAL:1982 \nbibtex*[booktitle=Proceedings of the ACM Symposium on Lisp and Functional Programming]",
       "title": "PSL: A portable LISP system",
       "creators": [
         {
@@ -10033,7 +10033,7 @@
       "itemType": "book",
       "place": "Edinburgh",
       "date": "1980",
-      "extra": "Citation Key: Hayes:1980 \nbibtex[booktitle=Expert Systems in the Microelectronic Age]",
+      "extra": "Citation Key: Hayes:1980 \nbibtex*[booktitle=Expert Systems in the Microelectronic Age]",
       "title": "The naive physics manifesto",
       "creators": [
         {
@@ -10066,7 +10066,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Hayes:2ndManifesto \nbibtex[crossref=FTCW]",
+      "extra": "Citation Key: Hayes:2ndManifesto \nbibtex*[crossref=FTCW]",
       "title": "The second naive physics manifesto",
       "creators": [
         {
@@ -10093,7 +10093,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Hayes:84 \nbibtex[crossref=FTCW]",
+      "extra": "Citation Key: Hayes:84 \nbibtex*[crossref=FTCW]",
       "title": "Liquids",
       "creators": [
         {
@@ -10122,7 +10122,7 @@
       "itemType": "journalArticle",
       "pages": "95-103",
       "date": "1976",
-      "extra": "Citation Key: Morris:1976 \nbibtex[booktitle=Proceedings of the 3rd ACM Symposium on Principles of Programming Languages]",
+      "extra": "Citation Key: Morris:1976 \nbibtex*[booktitle=Proceedings of the 3rd ACM Symposium on Principles of Programming Languages]",
       "title": "A lazy evaluator",
       "creators": [
         {
@@ -10386,7 +10386,7 @@
     {
       "itemType": "book",
       "date": "1970",
-      "extra": "Citation Key: Bendix:1970 \nbibtex[booktitle=Computational Problems in Abstract Algebra]",
+      "extra": "Citation Key: Bendix:1970 \nbibtex*[booktitle=Computational Problems in Abstract Algebra]",
       "title": "Simple word problems in universal algebras",
       "numPages": "263-297",
       "creators": [
@@ -10592,7 +10592,7 @@
       "place": "New York",
       "pages": "41-72",
       "date": "1982",
-      "extra": "Citation Key: Konolige:82 \nbibtex[chapter=2]",
+      "extra": "Citation Key: Konolige:82 \nbibtex*[chapter=2]",
       "title": "A first-order formalisation of knowledge and action for a multi-agent planning system",
       "creators": [
         {
@@ -10774,7 +10774,7 @@
     {
       "itemType": "journalArticle",
       "date": "1974",
-      "extra": "Citation Key: Kowalski:1974 \nbibtex[booktitle=Proceedings of the IFIP Congress]",
+      "extra": "Citation Key: Kowalski:1974 \nbibtex*[booktitle=Proceedings of the IFIP Congress]",
       "title": "Predicate logic as programming language",
       "creators": [
         {
@@ -11061,7 +11061,7 @@
       "volume": "2",
       "place": "Cambridge, Mass.",
       "date": "1979",
-      "extra": "Citation Key: Lavin:1979 \nbibtex[booktitle=Artificial Intelligence: An MIT Perspective]",
+      "extra": "Citation Key: Lavin:1979 \nbibtex*[booktitle=Artificial Intelligence: An MIT Perspective]",
       "title": "Analysis of scenes from a moving viewpoint",
       "numPages": "185-208",
       "creators": [
@@ -11166,7 +11166,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1982",
-      "extra": "Citation Key: Lenat:1982 \nbibtex[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
+      "extra": "Citation Key: Lenat:1982 \nbibtex*[booktitle=Knowledge-Based Systems in Artificial Intelligence]",
       "title": "AM: Discovery in mathematics as heuristic search",
       "numPages": "1-225",
       "creators": [
@@ -11338,7 +11338,7 @@
       "itemType": "book",
       "place": "Palo Alto, Calif.",
       "date": "1983",
-      "extra": "Citation Key: Lenat:1983c \nbibtex[booktitle=Machine Learning: An Artificial Intelligence Approach]",
+      "extra": "Citation Key: Lenat:1983c \nbibtex*[booktitle=Machine Learning: An Artificial Intelligence Approach]",
       "title": "The role of heuristics in learning by discovery: Three case studies",
       "numPages": "243-306",
       "creators": [
@@ -11628,7 +11628,7 @@
       "itemType": "journalArticle",
       "pages": "710-716",
       "date": "1977",
-      "extra": "Citation Key: LozanoPerez:77 \nbibtex[booktitle=IJCAI-77]",
+      "extra": "Citation Key: LozanoPerez:77 \nbibtex*[booktitle=IJCAI-77]",
       "title": "LAMA: A language for automatic mechanical assembly",
       "creators": [
         {
@@ -11862,7 +11862,7 @@
       "itemType": "book",
       "place": "Teddington, England",
       "date": "1958",
-      "extra": "Citation Key: McCarthy:1958 \nbibtex[booktitle=Proceedings of the Symposium on the Mechanization of Thought Processes]",
+      "extra": "Citation Key: McCarthy:1958 \nbibtex*[booktitle=Proceedings of the Symposium on the Mechanization of Thought Processes]",
       "title": "Programs with common sense",
       "creators": [
         {
@@ -11923,7 +11923,7 @@
       "itemType": "journalArticle",
       "pages": "21-28",
       "date": "1962",
-      "extra": "Citation Key: McCarthy:62 \nbibtex[booktitle=Proceedings of the IFIP Congress]",
+      "extra": "Citation Key: McCarthy:62 \nbibtex*[booktitle=Proceedings of the IFIP Congress]",
       "title": "Towards a Mathematical Theory of Computation",
       "creators": [
         {
@@ -12235,7 +12235,7 @@
       "volume": "1",
       "pages": "246-248",
       "date": "1980",
-      "extra": "Citation Key: McDermott:80a \nbibtex[bootitle=AAAI-80]",
+      "extra": "Citation Key: McDermott:80a \nbibtex*[bootitle=AAAI-80]",
       "title": "A theory of metric spatial inference",
       "creators": [
         {
@@ -12732,7 +12732,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "142-149",
-      "extra": "Citation Key: McDermott:96 \nbibtex[crossref=AIPS96]",
+      "extra": "Citation Key: McDermott:96 \nbibtex*[crossref=AIPS96]",
       "title": "A Heuristic Estimator for Means-Ends Analysis in Planning",
       "creators": [
         {
@@ -12944,7 +12944,7 @@
       "itemType": "bookSection",
       "pages": "83-134",
       "date": "1983",
-      "extra": "Citation Key: Michalski:83 \nbibtex[crossref=Michalski:Learning]",
+      "extra": "Citation Key: Michalski:83 \nbibtex*[crossref=Michalski:Learning]",
       "title": "A theory and methodology of inductive learning",
       "creators": [
         {
@@ -13034,7 +13034,7 @@
       "itemType": "conferencePaper",
       "pages": "1052-1054",
       "date": "1985",
-      "extra": "Citation Key: miller85 \nbibtex[organization=IJCAI]",
+      "extra": "Citation Key: miller85 \nbibtex*[organization=IJCAI]",
       "title": "Deadlines, Travel Time and Robot Problem Solving",
       "creators": [
         {
@@ -13236,7 +13236,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Reprinted in PlanReadings. \nCitation Key: Moore:84 \nbibtex[crossref=FTCW]",
+      "extra": "Reprinted in PlanReadings. \nCitation Key: Moore:84 \nbibtex*[crossref=FTCW]",
       "title": "A Formal Thoery of Knowledge and Action",
       "creators": [
         {
@@ -13368,7 +13368,7 @@
     {
       "itemType": "report",
       "date": "1999-01",
-      "extra": "Citation Key: UMCP-CSD//CS-TR-3981 \nbibtex[bibdate=March 17, 1999]",
+      "extra": "Citation Key: UMCP-CSD//CS-TR-3981 \nbibtex*[bibdate=March 17, 1999]",
       "abstractNote": "SHOP (Simple Hierarchical Ordered Planner) is a domain-independent HTN Planning system with the following characteristics. * SHOP plans for tasks in the same order that they will later be executed. This avoids some of the goal-interaction issues that arise in other HTN planners, thus making the planning algorithm relatively simple. * The planning algorithm is sound and complete over a large class of problems. * Since SHOP knows the complete world-state at each step of the planning process, it can use highly expressive domain representations. For example, it can do planning problems that require complex numeric computations. * In our tests, SHOP solved problems several orders of magnitude faster than Blackbox and TLplan. This occured even though SHOP is written in Lisp and the other planners are written in C. (Also cross-referenced as UMIACS-TR 99-04)",
       "title": "SHOP: Simple Hierarchical Ordered Planner",
       "creators": [
@@ -13415,7 +13415,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "425-430",
-      "extra": "Citation Key: IJCAI01*425 \nbibtex[crossref=IJCAI01]",
+      "extra": "Citation Key: IJCAI01*425 \nbibtex*[crossref=IJCAI01]",
       "title": "Total-Order Planning with Partially Ordered Subtasks",
       "creators": [
         {
@@ -13467,7 +13467,7 @@
       "pages": "91-94",
       "publicationTitle": "AIM",
       "date": "2001",
-      "extra": "Citation Key: nau-etal:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
+      "extra": "Citation Key: nau-etal:2001a \nbibtex*{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "The Shop Planning System",
       "creators": [
         {
@@ -13700,7 +13700,7 @@
     {
       "itemType": "journalArticle",
       "date": "1983",
-      "extra": "Citation Key: Nishihara:1983 \nbibtex[booktitle=Proceedings of the Cambridge Symposium on Optical and Electro-Optical Engineering]",
+      "extra": "Citation Key: Nishihara:1983 \nbibtex*[booktitle=Proceedings of the Cambridge Symposium on Optical and Electro-Optical Engineering]",
       "title": "PRISM: A practical realtime imaging stereo matcher",
       "creators": [
         {
@@ -13822,7 +13822,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1980",
-      "extra": "Citation Key: Porto:1980 \nbibtex[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
+      "extra": "Citation Key: Porto:1980 \nbibtex*[booktitle=Proceedings of the 5th Conference on Automated Deduction]",
       "title": "Selective backtracking for logic programs",
       "numPages": "306-317",
       "creators": [
@@ -13868,7 +13868,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1980",
-      "extra": "Citation Key: Porto:1980 \nbibtex[booktitle=Logic Programming]",
+      "extra": "Citation Key: Porto:1980 \nbibtex*[booktitle=Logic Programming]",
       "title": "Selective backtracking",
       "numPages": "107-114",
       "creators": [
@@ -13913,7 +13913,7 @@
     {
       "itemType": "book",
       "date": "1972",
-      "extra": "Citation Key: Plotkin:1972 \nbibtex[booktitle=Machine Intelligence 7]",
+      "extra": "Citation Key: Plotkin:1972 \nbibtex*[booktitle=Machine Intelligence 7]",
       "title": "Building-in equational theories",
       "numPages": "73-90",
       "creators": [
@@ -13954,7 +13954,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1971",
-      "extra": "Citation Key: Pohl:1971 \nbibtex[booktitle=Machine Intelligence 6]",
+      "extra": "Citation Key: Pohl:1971 \nbibtex*[booktitle=Machine Intelligence 6]",
       "title": "Bi-directional search",
       "creators": [
         {
@@ -14163,7 +14163,7 @@
     {
       "itemType": "book",
       "date": "1978",
-      "extra": "Citation Key: Reiter:78 \nbibtex[booktitle=Logic and Databases]",
+      "extra": "Citation Key: Reiter:78 \nbibtex*[booktitle=Logic and Databases]",
       "title": "On closed world data bases",
       "numPages": "55-76",
       "creators": [
@@ -14367,7 +14367,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Wilcox:1978 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
+      "extra": "Citation Key: Wilcox:1978 \nbibtex*[booktitle=Pattern-Directed Inference Systems]",
       "title": "Pattern recognition and pattern-directed inference in a program for playing go",
       "creators": [
         {
@@ -14412,7 +14412,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1979",
-      "extra": "Citation Key: Riesbeck:1979 \nbibtex[booktitle=Associative Networks: Representation and Use of Knowledge by Computer]",
+      "extra": "Citation Key: Riesbeck:1979 \nbibtex*[booktitle=Associative Networks: Representation and Use of Knowledge by Computer]",
       "title": "Representations to aid distributed understanding in a multiprogram system",
       "numPages": "409-424",
       "creators": [
@@ -14677,7 +14677,7 @@
       "itemType": "conferencePaper",
       "pages": "331-337",
       "date": "1981",
-      "extra": "Citation Key: Rosenschein:PDLPlan \nbibtex[crossref=ijcai81]",
+      "extra": "Citation Key: Rosenschein:PDLPlan \nbibtex*[crossref=ijcai81]",
       "title": "Plan synthesis: A logical perspective",
       "creators": [
         {
@@ -15001,7 +15001,7 @@
       "itemType": "book",
       "place": "Hillsdale, NJ",
       "date": "1982",
-      "extra": "Citation Key: Soloway:82 \nbibtex[booktitle=Directions in Human-Computer Interactions]",
+      "extra": "Citation Key: Soloway:82 \nbibtex*[booktitle=Directions in Human-Computer Interactions]",
       "title": "What do novices know about programming?",
       "creators": [
         {
@@ -15087,7 +15087,7 @@
       "itemType": "journalArticle",
       "pages": "98-107",
       "date": "1982",
-      "extra": "Citation Key: Steele:1982 \nbibtex[booktitle=Proceedings of the ACM Symposium on Lisp and Functional Programming]",
+      "extra": "Citation Key: Steele:1982 \nbibtex*[booktitle=Proceedings of the ACM Symposium on Lisp and Functional Programming]",
       "title": "An overview of Common LISP",
       "creators": [
         {
@@ -15177,7 +15177,7 @@
       "volume": "2",
       "place": "Cambridge, Mass.",
       "date": "1979",
-      "extra": "Citation Key: Stevens:1979 \nbibtex[booktitle=Artificial Intelligence: An MIT Perspective]",
+      "extra": "Citation Key: Stevens:1979 \nbibtex*[booktitle=Artificial Intelligence: An MIT Perspective]",
       "title": "Representing and analyzing surface orientation",
       "numPages": "103-125",
       "creators": [
@@ -15577,7 +15577,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1978",
-      "extra": "Citation Key: Vere:78 \nbibtex[booktitle=Pattern-Directed Inference Systems]",
+      "extra": "Citation Key: Vere:78 \nbibtex*[booktitle=Pattern-Directed Inference Systems]",
       "title": "Inductive learning of relational productions",
       "numPages": "281-295",
       "creators": [
@@ -15620,7 +15620,7 @@
       "issue": "8",
       "publicationTitle": "Sigplan Notices",
       "date": "1977",
-      "extra": "Citation Key: WarrenETAL:1977 \nbibtex[booktitle=Proceedings of the Symposium on Artificial Intelligence and Programming Languages]",
+      "extra": "Citation Key: WarrenETAL:1977 \nbibtex*[booktitle=Proceedings of the Symposium on Artificial Intelligence and Programming Languages]",
       "title": "PROLOG -- The language and its implementation compared with LISP",
       "creators": [
         {
@@ -15810,7 +15810,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "154-162",
-      "extra": "Citation Key: WilkinsMyers:98 \nbibtex[crossref=AIPS98]",
+      "extra": "Citation Key: WilkinsMyers:98 \nbibtex*[crossref=AIPS98]",
       "title": "A Multiagent planning architecture",
       "creators": [
         {
@@ -16349,7 +16349,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1975",
-      "extra": "Citation Key: Woods:1975 \nbibtex[booktitle=Representation and Understanding]",
+      "extra": "Citation Key: Woods:1975 \nbibtex*[booktitle=Representation and Understanding]",
       "title": "What's in a link? Foundations for semantic networks",
       "creators": [
         {
@@ -16649,7 +16649,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1975",
-      "extra": "Citation Key: Winston:1975 \nbibtex[booktitle=The Psychology of Computer Vision]",
+      "extra": "Citation Key: Winston:1975 \nbibtex*[booktitle=The Psychology of Computer Vision]",
       "title": "Learning structural descriptions from examples",
       "creators": [
         {
@@ -16847,7 +16847,7 @@
       "itemType": "book",
       "place": "Cambridge",
       "date": "1970",
-      "extra": "Citation Key: Lakatos:1970 \nbibtex[booktitle=Criticism and the Growth of Knowledge]",
+      "extra": "Citation Key: Lakatos:1970 \nbibtex*[booktitle=Criticism and the Growth of Knowledge]",
       "title": "Falsification and the methodology of scientific research programmes",
       "numPages": "91-196",
       "creators": [
@@ -16886,7 +16886,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Carbonell \nbibtex[crossref=Strategies4NLP]",
+      "extra": "Citation Key: Carbonell \nbibtex*[crossref=Strategies4NLP]",
       "title": "Metaphor: an inescapable phenomenon in natural-language comprehension",
       "creators": [
         {
@@ -17006,7 +17006,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "65-69",
-      "extra": "Citation Key: Alterman:86 \nbibtex[crossref=aaai86]",
+      "extra": "Citation Key: Alterman:86 \nbibtex*[crossref=aaai86]",
       "title": "An Adaptive Planner",
       "creators": [
         {
@@ -17524,7 +17524,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "401-405",
-      "extra": "Citation Key: Kautz:ParkingLot \nbibtex[crossref=aaai86]",
+      "extra": "Citation Key: Kautz:ParkingLot \nbibtex*[crossref=aaai86]",
       "title": "The Logic of Persistence",
       "creators": [
         {
@@ -17583,7 +17583,7 @@
     {
       "itemType": "bookSection",
       "pages": "105-133",
-      "extra": "Citation Key: Kautz:90 \nbibtex[chapter=6;crossref=Intentions]",
+      "extra": "Citation Key: Kautz:90 \nbibtex*[chapter=6;crossref=Intentions]",
       "title": "A Circumscriptive Theory of Plan Recognition",
       "creators": [
         {
@@ -17612,7 +17612,7 @@
       "itemType": "bookSection",
       "place": "Los Altos, CA",
       "date": "1991",
-      "extra": "Citation Key: Kautz91Formal \nbibtex[chapter=2]",
+      "extra": "Citation Key: Kautz91Formal \nbibtex*[chapter=2]",
       "title": "A Formal Theory of Plan Recognition and its Implementation",
       "creators": [
         {
@@ -17662,7 +17662,7 @@
     {
       "itemType": "bookSection",
       "pages": "15-31",
-      "extra": "Citation Key: Bratman:90 \nbibtex[chapter=2;crossref=Intentions]",
+      "extra": "Citation Key: Bratman:90 \nbibtex*[chapter=2;crossref=Intentions]",
       "title": "What is Intention?",
       "creators": [
         {
@@ -18005,7 +18005,7 @@
       "pages": "69-142",
       "publicationTitle": "Artificial Intelligence",
       "date": "1993",
-      "extra": "Citation Key: hobbs-etal:1993a \nbibtex{topic:'nl-interpretation; abduction'}",
+      "extra": "Citation Key: hobbs-etal:1993a \nbibtex*{topic:'nl-interpretation; abduction'}",
       "title": "Interpretation as Abduction",
       "creators": [
         {
@@ -18221,7 +18221,7 @@
       "itemType": "conferencePaper",
       "volume": "2",
       "date": "1982",
-      "extra": "Citation Key: Hirst:82 \nbibtex[crossref=AAAI-82]",
+      "extra": "Citation Key: Hirst:82 \nbibtex*[crossref=AAAI-82]",
       "title": "Word sense and case slot disambiguation",
       "creators": [
         {
@@ -18377,7 +18377,7 @@
     {
       "itemType": "bookSection",
       "pages": "149-176",
-      "extra": "Citation Key: FRUMP \nbibtex[crossref=Strategies4NLP]",
+      "extra": "Citation Key: FRUMP \nbibtex*[crossref=Strategies4NLP]",
       "title": "An Overview of the FRUMP system",
       "creators": [
         {
@@ -18470,7 +18470,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "140-145",
-      "extra": "Citation Key: Peng:86 \nbibtex[crossref=aaai86]",
+      "extra": "Citation Key: Peng:86 \nbibtex*[crossref=aaai86]",
       "title": "Plausibility of Diagnostic Hypotheses: the nature of simplicity",
       "creators": [
         {
@@ -18504,7 +18504,7 @@
       "itemType": "conferencePaper",
       "pages": "3-9",
       "date": "1986",
-      "extra": "Citation Key: Harper:86 \nbibtex[crossref=ACL-86]",
+      "extra": "Citation Key: Harper:86 \nbibtex*[crossref=ACL-86]",
       "title": "Time and Tense in English",
       "creators": [
         {
@@ -18629,7 +18629,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "640-647",
-      "extra": "Citation Key: Appelt:87 \nbibtex[crossref=ijcai87]",
+      "extra": "Citation Key: Appelt:87 \nbibtex*[crossref=ijcai87]",
       "title": "A Computational Model of Referring",
       "creators": [
         {
@@ -18818,7 +18818,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "328-333",
-      "extra": "Reprinted in NONMON. \nCitation Key: hanks:YSP \nbibtex[crossref=aaai86]",
+      "extra": "Reprinted in NONMON. \nCitation Key: hanks:YSP \nbibtex*[crossref=aaai86]",
       "title": "Default reasoning, nonmonotonic logics, and the frame problem",
       "creators": [
         {
@@ -19349,7 +19349,7 @@
     {
       "itemType": "bookSection",
       "pages": "33-69",
-      "extra": "Citation Key: Cohen:90 \nbibtex[chapter=3;crossref=Intentions]",
+      "extra": "Citation Key: Cohen:90 \nbibtex*[chapter=3;crossref=Intentions]",
       "title": "Persistence, Intention, and Commitment",
       "creators": [
         {
@@ -19547,7 +19547,7 @@
     {
       "itemType": "bookSection",
       "pages": "713-728",
-      "extra": "Citation Key: Kaelbling:90 \nbibtex[crossref=PlanReadings]",
+      "extra": "Citation Key: Kaelbling:90 \nbibtex*[crossref=PlanReadings]",
       "title": "An Architecture for Intelligent Reactive Systems",
       "creators": [
         {
@@ -19953,7 +19953,7 @@
       "itemType": "book",
       "place": "Hillsdale, NJ",
       "date": "1980",
-      "extra": "Citation Key: Bruce:80 \nbibtex[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
+      "extra": "Citation Key: Bruce:80 \nbibtex*[booktitle=Theoretical Issues in Reading Comprehension: Perspectives from Cognitive Science, Linguistics, Artificial Intelligence and Education]",
       "title": "Plans and Social Actions",
       "numPages": "367-384",
       "creators": [
@@ -19998,7 +19998,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1984",
-      "extra": "Citation Key: cheeseman84 \nbibtex[organization=IEEE]",
+      "extra": "Citation Key: cheeseman84 \nbibtex*[organization=IEEE]",
       "title": "A Representation of Time for Automatic Planning",
       "creators": [
         {
@@ -20056,7 +20056,7 @@
     {
       "itemType": "conferencePaper",
       "date": "December 1984",
-      "extra": "Citation Key: dean84a \nbibtex[key=dean84a;organization=IEEE]",
+      "extra": "Citation Key: dean84a \nbibtex*[key=dean84a;organization=IEEE]",
       "title": "Planning and Temporal Reasoning Under Uncertainty",
       "creators": [
         {
@@ -20085,7 +20085,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1984",
-      "extra": "Citation Key: Dean:84b \nbibtex[organization=CSCSI]",
+      "extra": "Citation Key: Dean:84b \nbibtex*[organization=CSCSI]",
       "title": "Managing Time Maps",
       "creators": [
         {
@@ -20173,7 +20173,7 @@
       "itemType": "conferencePaper",
       "pages": "1060-1062",
       "date": "August 1985",
-      "extra": "Citation Key: dean85 \nbibtex[organization=IJCAI]",
+      "extra": "Citation Key: dean85 \nbibtex*[organization=IJCAI]",
       "title": "Temporal Reasoning Involving Counterfactuals and Disjunctions",
       "creators": [
         {
@@ -20203,7 +20203,7 @@
       "itemType": "conferencePaper",
       "pages": "143-164",
       "date": "July 1986",
-      "extra": "Citation Key: dean86 \nbibtex[organization=AAAI]",
+      "extra": "Citation Key: dean86 \nbibtex*[organization=AAAI]",
       "title": "Intractability and time dependent planning",
       "creators": [
         {
@@ -20529,7 +20529,7 @@
       "itemType": "conferencePaper",
       "pages": "574-579",
       "date": "1993",
-      "extra": "Citation Key: Dean:93 \nbibtex[crossref=aaai93]",
+      "extra": "Citation Key: Dean:93 \nbibtex*[crossref=aaai93]",
       "title": "Planning with Deadlines in Stochastic Domains",
       "creators": [
         {
@@ -20662,7 +20662,7 @@
       "itemType": "conferencePaper",
       "pages": "309-316",
       "date": "1993",
-      "extra": "Citation Key: DeanETAL:93 \nbibtex[crossref=UAI93]",
+      "extra": "Citation Key: DeanETAL:93 \nbibtex*[crossref=UAI93]",
       "title": "Deliberation scheduling for time-critical sequential decision making",
       "creators": [
         {
@@ -20827,7 +20827,7 @@
       "itemType": "conferencePaper",
       "pages": "464-470",
       "date": "1991",
-      "extra": "Citation Key: Vilain:91 \nbibtex[crossref=AAAI91]",
+      "extra": "Citation Key: Vilain:91 \nbibtex*[crossref=AAAI91]",
       "title": "Deduction as Parsing",
       "creators": [
         {
@@ -20855,7 +20855,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "190-197",
-      "extra": "Citation Key: Vilain:90 \nbibtex[crossref=AAAI90]",
+      "extra": "Citation Key: Vilain:90 \nbibtex*[crossref=AAAI90]",
       "title": "Getting Serious about Parsing Plans: A Grammatical Analysis of Plan Recognition",
       "creators": [
         {
@@ -21217,7 +21217,7 @@
     {
       "itemType": "journalArticle",
       "date": "1995",
-      "extra": "Citation Key: Ginsberg95special \nbibtex[text=M. Ginsberg. Approximate Planning. Artificial Intelligence, special issue on Planning and Scheduling. Vol. 76. 1995.]",
+      "extra": "Citation Key: Ginsberg95special \nbibtex*[text=M. Ginsberg. Approximate Planning. Artificial Intelligence, special issue on Planning and Scheduling. Vol. 76. 1995.]",
       "title": "special issue on Planning and Scheduling",
       "creators": [
         {
@@ -21250,7 +21250,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "80-86",
-      "extra": "Citation Key: Ginsberg-85-IJCAI \nbibtex[crossref=IJCAI-85]",
+      "extra": "Citation Key: Ginsberg-85-IJCAI \nbibtex*[crossref=IJCAI-85]",
       "title": "Counterfactuals",
       "creators": [
         {
@@ -21309,7 +21309,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "233-258",
-      "extra": "Citation Key: Ginsberg-Smith-87-FPW-1 \nbibtex[crossref=Brown:FPW]",
+      "extra": "Citation Key: Ginsberg-Smith-87-FPW-1 \nbibtex*[crossref=Brown:FPW]",
       "title": "Reasoning about Action I: A Possible Worlds Approach",
       "creators": [
         {
@@ -21342,7 +21342,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "259-287",
-      "extra": "Citation Key: Ginsberg-Smith-87-FPW-2 \nbibtex[crossref=Brown:FPW]",
+      "extra": "Citation Key: Ginsberg-Smith-87-FPW-2 \nbibtex*[crossref=Brown:FPW]",
       "title": "Reasoning about Action II: The Qualification Problem",
       "creators": [
         {
@@ -21572,7 +21572,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "867-874",
-      "extra": "Citation Key: Morgenstern:87 \nbibtex[crossref=ijcai87]",
+      "extra": "Citation Key: Morgenstern:87 \nbibtex*[crossref=ijcai87]",
       "title": "Knowledge Preconditions for Actions and Plans",
       "creators": [
         {
@@ -21758,7 +21758,7 @@
       "itemType": "conferencePaper",
       "pages": "138-144",
       "date": "1990",
-      "extra": "Citation Key: Drummond:90 \nbibtex[crossref=AAAI90]",
+      "extra": "Citation Key: Drummond:90 \nbibtex*[crossref=AAAI90]",
       "title": "Anytime Synthetic Projection: Maximizing the Probability of Goal Satisfaction",
       "creators": [
         {
@@ -21792,7 +21792,7 @@
       "itemType": "conferencePaper",
       "pages": "28-36",
       "date": "1992",
-      "extra": "Citation Key: Chrisman:92 \nbibtex[crossref=aips92]",
+      "extra": "Citation Key: Chrisman:92 \nbibtex*[crossref=aips92]",
       "title": "Abstract Probabilistic Modeling of Action",
       "creators": [
         {
@@ -21821,7 +21821,7 @@
       "itemType": "conferencePaper",
       "pages": "103-114",
       "date": "1992",
-      "extra": "Citation Key: Penberthy:92 \nbibtex[crossref=KR:92]",
+      "extra": "Citation Key: Penberthy:92 \nbibtex*[crossref=KR:92]",
       "title": "UCPOP: A Sound, Complete, Partial Order Planner for ADL",
       "creators": [
         {
@@ -21900,7 +21900,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "533-540",
-      "extra": "Citation Key: Etzioni:91 \nbibtex[crossref=AAAI91]",
+      "extra": "Citation Key: Etzioni:91 \nbibtex*[crossref=AAAI91]",
       "title": "STATIC: A Problem-space compiler for PRODIGY",
       "creators": [
         {
@@ -21929,7 +21929,7 @@
       "itemType": "conferencePaper",
       "pages": "115-125",
       "date": "1992",
-      "extra": "Citation Key: Etzioni:92 \nbibtex[crossref=KR:92]",
+      "extra": "Citation Key: Etzioni:92 \nbibtex*[crossref=KR:92]",
       "title": "An Approach to Planning with Incomplete Information",
       "creators": [
         {
@@ -22129,7 +22129,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "178-189",
-      "extra": "Citation Key: Etzioni:94 \nbibtex[crossref=KR:94]",
+      "extra": "Citation Key: Etzioni:94 \nbibtex*[crossref=KR:94]",
       "title": "Tractable Closed World Reasoning with Updates",
       "creators": [
         {
@@ -22298,7 +22298,7 @@
       "pages": "147-177",
       "publicationTitle": "Theoretical Computer Science",
       "date": "1997",
-      "extra": "Citation Key: Ngo97:Answering \nbibtex[key=Article]",
+      "extra": "Citation Key: Ngo97:Answering \nbibtex*[key=Article]",
       "title": "Answering Queries from Context-Sensitive Probabilistic Knowledge Bases",
       "creators": [
         {
@@ -22382,7 +22382,7 @@
       "place": "Pathumthani, Thailand",
       "pages": "286-300",
       "date": "December 1995",
-      "extra": "Citation Key: Ngo95:Probabilistic \nbibtex[key=Conference;organization=]",
+      "extra": "Citation Key: Ngo95:Probabilistic \nbibtex*[key=Conference;organization=]",
       "title": "Probabilistic Logic Programming and Bayesian Networks",
       "creators": [
         {
@@ -22428,7 +22428,7 @@
       "itemType": "conferencePaper",
       "pages": "419-426",
       "date": "August 1995",
-      "extra": "Citation Key: Ngo95:Theoretical \nbibtex[key=Conference;organization=]",
+      "extra": "Citation Key: Ngo95:Theoretical \nbibtex*[key=Conference;organization=]",
       "title": "A Theoretical Framework for Context-Sensitive Temporal Probability Model Construction with Application to Plan Projection",
       "creators": [
         {
@@ -22469,7 +22469,7 @@
       "place": "Seattle",
       "pages": "262-269",
       "date": "July 1994",
-      "extra": "Citation Key: Haddawy94:Generating \nbibtex[key=Conference]",
+      "extra": "Citation Key: Haddawy94:Generating \nbibtex*[key=Conference]",
       "title": "Generating Bayesian Networks from Probability Logic Knowledge Bases",
       "creators": [
         {
@@ -22623,7 +22623,7 @@
       "itemType": "conferencePaper",
       "pages": "1039-1046",
       "date": "1987",
-      "extra": "Citation Key: UPlan \nbibtex[crossref=ijcai87]",
+      "extra": "Citation Key: UPlan \nbibtex*[crossref=ijcai87]",
       "title": "Universal Plans for Reactive Robots in Unpredictable Environments",
       "creators": [
         {
@@ -22735,7 +22735,7 @@
       "itemType": "conferencePaper",
       "pages": "375-380",
       "date": "1992",
-      "extra": "Citation Key: Collins:92 \nbibtex[crossref=AAAI92]",
+      "extra": "Citation Key: Collins:92 \nbibtex*[crossref=AAAI92]",
       "title": "Achieving the functionality of filter conditions in a Partial order planner",
       "creators": [
         {
@@ -22768,7 +22768,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "83-92",
-      "extra": "Citation Key: Minton:92 \nbibtex[crossref=KR:92]",
+      "extra": "Citation Key: Minton:92 \nbibtex*[crossref=KR:92]",
       "title": "Total Order vs./ Partial Order Planning: Factors Influencing Performance",
       "creators": [
         {
@@ -22851,7 +22851,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: Minton:91 \nbibtex[crossref=ijcai91]",
+      "extra": "Citation Key: Minton:91 \nbibtex*[crossref=ijcai91]",
       "title": "Commitment Strategies in Planning: A Comparative Analysis",
       "creators": [
         {
@@ -22889,7 +22889,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "462-473",
-      "extra": "Citation Key: Sadek:92 \nbibtex[crossref=KR:92]",
+      "extra": "Citation Key: Sadek:92 \nbibtex*[crossref=KR:92]",
       "title": "A Study in the Logic of Intention",
       "creators": [
         {
@@ -22917,7 +22917,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "59-70",
-      "extra": "Citation Key: McCarty:92 \nbibtex[crossref=KR:92]",
+      "extra": "Citation Key: McCarty:92 \nbibtex*[crossref=KR:92]",
       "title": "Reasoning about Indefinite Actions",
       "creators": [
         {
@@ -22951,7 +22951,7 @@
       "itemType": "conferencePaper",
       "pages": "189-197",
       "date": "1992",
-      "extra": "Citation Key: CNLP \nbibtex[crossref=aips92]",
+      "extra": "Citation Key: CNLP \nbibtex*[crossref=aips92]",
       "title": "Conditional Nonlinear Planning",
       "creators": [
         {
@@ -22985,7 +22985,7 @@
       "itemType": "conferencePaper",
       "pages": "136-144",
       "date": "1992",
-      "extra": "Citation Key: OlawskyAIPS \nbibtex[crossref=aips92]",
+      "extra": "Citation Key: OlawskyAIPS \nbibtex*[crossref=aips92]",
       "title": "An Empirical Study of Sensing and Defaulting in Planning",
       "creators": [
         {
@@ -23023,7 +23023,7 @@
     {
       "itemType": "bookSection",
       "pages": "523-530",
-      "extra": "Reprinted from  Reasoning about Actions and Plans/ \nCitation Key: Lifschitz:STRIPS \nbibtex[crossref=PlanReadings]",
+      "extra": "Reprinted from  Reasoning about Actions and Plans/ \nCitation Key: Lifschitz:STRIPS \nbibtex*[crossref=PlanReadings]",
       "title": "On the Semantics of STRIPS",
       "creators": [
         {
@@ -23093,7 +23093,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: Frisch:kr91 \nbibtex[crossref=KR:91]",
+      "extra": "Citation Key: Frisch:kr91 \nbibtex*[crossref=KR:91]",
       "title": "A General Framework for Modal Deduction",
       "creators": [
         {
@@ -23147,7 +23147,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "689-695",
-      "extra": "Citation Key: Scherl:93 \nbibtex[crossref=AAAI93]",
+      "extra": "Citation Key: Scherl:93 \nbibtex*[crossref=AAAI93]",
       "title": "The Frame Problem and Knowledge-producing Actions",
       "creators": [
         {
@@ -23266,7 +23266,7 @@
       "place": "MITP-ADDRESS",
       "pages": "305-322",
       "date": "1982",
-      "extra": "Citation Key: Mason:82 \nbibtex[chapter=5]",
+      "extra": "Citation Key: Mason:82 \nbibtex*[chapter=5]",
       "title": "Compliant Motion",
       "creators": [
         {
@@ -23602,7 +23602,7 @@
       "itemType": "conferencePaper",
       "pages": "1024-1030",
       "date": "1991",
-      "extra": "Citation Key: Trost:91 \nbibtex[crossref=ijcai91]",
+      "extra": "Citation Key: Trost:91 \nbibtex*[crossref=ijcai91]",
       "title": "X2MORF: A Morphological Component Based on Augmented Two-level Morphology",
       "creators": [
         {
@@ -23631,7 +23631,7 @@
       "itemType": "conferencePaper",
       "pages": "1196-1202",
       "date": "1991",
-      "extra": "Citation Key: Kyburg:91 \nbibtex[crossref=ijcai91]",
+      "extra": "Citation Key: Kyburg:91 \nbibtex*[crossref=ijcai91]",
       "title": "Evidential Probability",
       "creators": [
         {
@@ -23693,7 +23693,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: Siskind:93 \nbibtex[crossref=AAAI93]",
+      "extra": "Citation Key: Siskind:93 \nbibtex*[crossref=AAAI93]",
       "title": "Nondeterministic Lisp as a Substrate for Constraint Logic Programming",
       "creators": [
         {
@@ -23762,7 +23762,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "221-226",
-      "extra": "Citation Key: Bessiere:91 \nbibtex[crossref=AAAI91]",
+      "extra": "Citation Key: Bessiere:91 \nbibtex*[crossref=AAAI91]",
       "title": "Arc-consistency in dynamic constraint satisfaction problems",
       "creators": [
         {
@@ -23790,7 +23790,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "215-220",
-      "extra": "Citation Key: Bowen:91 \nbibtex[crossref=AAAI91]",
+      "extra": "Citation Key: Bowen:91 \nbibtex*[crossref=AAAI91]",
       "title": "Conditional Existence of Variables in generalized Constraint Networks",
       "creators": [
         {
@@ -23960,7 +23960,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "1567-1573",
-      "extra": "Citation Key: Pryor:CassandraIjcai \nbibtex[crossref=ijcai95]",
+      "extra": "Citation Key: Pryor:CassandraIjcai \nbibtex*[crossref=ijcai95]",
       "title": "Planning under uncertainty: Some Key Issues",
       "creators": [
         {
@@ -24252,7 +24252,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "79-86",
-      "extra": "Citation Key: Goldweic:PlanLoops \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Goldweic:PlanLoops \nbibtex*[crossref=PlanInit1]",
       "title": "Towards a Content Theory of Loops",
       "creators": [
         {
@@ -24285,7 +24285,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "99-109",
-      "extra": "Citation Key: Tate:OPlanConstraints \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Tate:OPlanConstraints \nbibtex*[crossref=PlanInit1]",
       "title": "Reasoning with Constraints within O-Plan2",
       "creators": [
         {
@@ -24323,7 +24323,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "145-154",
-      "extra": "Citation Key: Smith:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Smith:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Toward the Development of Flexible Mixed-initiative Scheduling Tools",
       "creators": [
         {
@@ -24356,7 +24356,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "155-164",
-      "extra": "Citation Key: Sycara:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Sycara:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Evaluation and improvement of schedules according to interactively acquired user-defined criteria",
       "creators": [
         {
@@ -24389,7 +24389,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "133-143",
-      "extra": "Citation Key: Oates:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Oates:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Mixed-initiative schedule maintenance: a first step towards plan steering",
       "creators": [
         {
@@ -24422,7 +24422,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "205-216",
-      "extra": "Citation Key: DSmith:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: DSmith:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Transformational approach to transportation scheduling",
       "creators": [
         {
@@ -24455,7 +24455,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "191-203",
-      "extra": "Citation Key: Sadeh:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Sadeh:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Micro-boss: towards a new generation of manufacturing scheduling shells",
       "creators": [
         {
@@ -24483,7 +24483,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "179-190",
-      "extra": "Citation Key: Greenwald:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Greenwald:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Monte Carlo Simulation and Bottleneck-centered Heuristics for Time-critical scheduling in stochastic domains",
       "creators": [
         {
@@ -24516,7 +24516,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "467-483",
-      "extra": "Citation Key: Burstein:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Burstein:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Mixed-initiative Military Planning",
       "creators": [
         {
@@ -24549,7 +24549,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "169-177",
-      "extra": "Citation Key: Bonissone:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Bonissone:PI \nbibtex*[crossref=PlanInit1]",
       "title": "A Case Study in Integration of Case-based and Temporal reasoning using CAFE and Tachyon",
       "creators": [
         {
@@ -24582,7 +24582,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "263-272",
-      "extra": "Citation Key: desJardins:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: desJardins:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Machine Learning of Planning Knowledge for SOCAP",
       "creators": [
         {
@@ -24610,7 +24610,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "375-384",
-      "extra": "Citation Key: Pastor:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Pastor:PI \nbibtex*[crossref=PlanInit1]",
       "title": "View-concepts: Persistent Storage for planning and scheduling",
       "creators": [
         {
@@ -24643,7 +24643,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "498-503",
-      "extra": "Citation Key: Hendler:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Hendler:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Mixed-initiative planning: An Open Information Systems Approach",
       "creators": [
         {
@@ -24671,7 +24671,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "512-516",
-      "extra": "Citation Key: Tate:PIPosition \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Tate:PIPosition \nbibtex*[crossref=PlanInit1]",
       "title": "Mixed-initiative planning in O-Plan2",
       "creators": [
         {
@@ -24699,7 +24699,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "504-508",
-      "extra": "Citation Key: Kaelbling:PI \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: Kaelbling:PI \nbibtex*[crossref=PlanInit1]",
       "title": "Notes on mixed initiative planning and execution: A multi-agent view",
       "creators": [
         {
@@ -24727,7 +24727,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "519-536",
-      "extra": "Citation Key: PIEvaluation \nbibtex[crossref=PlanInit1]",
+      "extra": "Citation Key: PIEvaluation \nbibtex*[crossref=PlanInit1]",
       "title": "Handbook of Evaluation for the ARPA/Rome Lab Planning Initiative",
       "creators": [
         {
@@ -24843,7 +24843,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1993",
-      "extra": "Citation Key: Pereira:93 \nbibtex[crossref=ACL-93]",
+      "extra": "Citation Key: Pereira:93 \nbibtex*[crossref=ACL-93]",
       "title": "Distributional Clustering of English Words",
       "creators": [
         {
@@ -24880,7 +24880,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Malone:Enterprise \nbibtex[crossref=EcologyOfComp]",
+      "extra": "Citation Key: Malone:Enterprise \nbibtex*[crossref=EcologyOfComp]",
       "title": "Enterprise: A Market-like Task Scheduler for Distributed Computing Environments",
       "creators": [
         {
@@ -24922,7 +24922,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Drexler:Incentives \nbibtex[crossref=EcologyOfComp]",
+      "extra": "Citation Key: Drexler:Incentives \nbibtex*[crossref=EcologyOfComp]",
       "title": "Incentive Engineering for Computational Resource Management",
       "creators": [
         {
@@ -24954,7 +24954,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Miller:Agoric \nbibtex[crossref=EcologyOfComp]",
+      "extra": "Citation Key: Miller:Agoric \nbibtex*[crossref=EcologyOfComp]",
       "title": "Markets and Computation: Agoric Open Systems",
       "creators": [
         {
@@ -24986,7 +24986,7 @@
     },
     {
       "itemType": "bookSection",
-      "extra": "Citation Key: Lenat:88 \nbibtex[crossref=EcologyOfComp]",
+      "extra": "Citation Key: Lenat:88 \nbibtex*[crossref=EcologyOfComp]",
       "title": "Why am and Eurisko appear to work",
       "creators": [
         {
@@ -25499,7 +25499,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "882-888",
-      "extra": "Citation Key: rao:_hybrid_plann_partial_hierar_domain \nbibtex[crossref=AAAI98]",
+      "extra": "Citation Key: rao:_hybrid_plann_partial_hierar_domain \nbibtex*[crossref=AAAI98]",
       "abstractNote": "Hierarchical task network and action-based planning approaches have traditionally been studied separately. In many domains, human expertise in the form of hierarchical reduction schemas exists, but is incomplete. In such domains, hybrid approaches that use both HTN and action-based planning techniques are needed. In this paper, we extend our previous work on refinement planning to include hierarchical planning. Specifically, we provide a generalized plan-space refinement that is capable of handling non-primitive actions. The generalization provides a principled way of handling partially hierarchical domains, while preserving systematicity, and respecting the user-intent inherent in the reduction schemas. Our general account also puts into perspective the many surface differences between the HTN and action-based planners, and could support the transfer of progress between HTN and action-based planning approaches.",
       "title": "Hybrid Planning for Partially Hierarchical Domains",
       "creators": [
@@ -25560,7 +25560,7 @@
       "itemType": "conferencePaper",
       "pages": "459-466",
       "date": "2001",
-      "extra": "Citation Key: NguyenRao01 \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/ijcai/2001]",
+      "extra": "Citation Key: NguyenRao01 \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/ijcai/2001]",
       "title": "Reviving Partial Order Planning.",
       "creators": [
         {
@@ -25594,7 +25594,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "94-101",
-      "extra": "Citation Key: Blythe:94 \nbibtex[crossref=UAI94]",
+      "extra": "Citation Key: Blythe:94 \nbibtex*[crossref=UAI94]",
       "title": "Planning with External Events",
       "creators": [
         {
@@ -25761,7 +25761,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "249-254",
-      "extra": "Citation Key: Erol:94a \nbibtex[crossref=AIPS94]",
+      "extra": "Citation Key: Erol:94a \nbibtex*[crossref=AIPS94]",
       "title": "UMCP: A Sound and Complete Procedure for Hierarchical Task Network Planning",
       "creators": [
         {
@@ -25820,7 +25820,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "1123-1128",
-      "extra": "Citation Key: Erol:94b \nbibtex[crossref=AAAI94]",
+      "extra": "Citation Key: Erol:94b \nbibtex*[crossref=AAAI94]",
       "title": "HTN Planning: Complexity and Expressivity",
       "creators": [
         {
@@ -25920,7 +25920,7 @@
     {
       "itemType": "thesis",
       "date": "1995",
-      "extra": "Available as UMCP technical report CS-TR-3624 \nCitation Key: Erol:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Thesis research directed by Dept. of Computer Science.; Thesis (Ph. D.)--University of Maryland at College Park, 1995.; Includes bibliographical references (leaves 247-256).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm35003840',subject:'Planning.; Artificial intelligence.'}",
+      "extra": "Available as UMCP technical report CS-TR-3624 \nCitation Key: Erol:thesis \nbibtex*{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Thesis research directed by Dept. of Computer Science.; Thesis (Ph. D.)--University of Maryland at College Park, 1995.; Includes bibliographical references (leaves 247-256).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm35003840',subject:'Planning.; Artificial intelligence.'}",
       "abstractNote": "Planning is a central activity in many areas including robotics, manufacturing, space mission sequencing, and logistics. As the size and complexity of planning problems grow, there is great economic pressure to automate this process in order to reduce the cost of planning effort, and to improve the quality of produced plans. AI planning research has focused on general-purpose planning systems which can process the specifications of an application domain and generate solutions to planning problems in that domain. Unfortunately, there is a big gap between theoretical and application oriented work in AI planning. The theoretical work has been mostly based on state-based planning, which has limited practical applications. The application-oriented work has been based on hierarchical task network (HTN) planning, which lacks a theoretical foundation. As a result, in spite of many years of research, building planning applications remains a formidable task. The goal of this dissertation is to facilitate building reliable and effective planning applications. The methodology includes design of a mathematical framework for HTN planning, analysis of this framework, development of provably correct algorithms based on this analysis, and the implementation of these algorithms for further evaluation and exploration. The representation, analyses, and algorithms described in this thesis will make it easier to apply HTN planning techniques effectively and correctly to planning applications. The precise and mathematical nature of the descriptions will also help teaching about HTN planning, will clarify misconceptions in the literature, and will stimulate further research.",
       "title": "Hierarchical task network planning :--formalization, analysis, and implementation",
       "creators": [
@@ -26242,7 +26242,7 @@
       "itemType": "conferencePaper",
       "pages": "196-201",
       "date": "1987",
-      "extra": "Citation Key: FirbyAAAI-87 \nbibtex[crossref=AAAI87]",
+      "extra": "Citation Key: FirbyAAAI-87 \nbibtex*[crossref=AAAI87]",
       "title": "An Investigation in Reactive Planning in Complex Domains",
       "creators": [
         {
@@ -26270,7 +26270,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "32-38",
-      "extra": "Citation Key: StephanBiundo:93 \nbibtex[crossref=ijcai93]",
+      "extra": "Citation Key: StephanBiundo:93 \nbibtex*[crossref=ijcai93]",
       "title": "A New Logical Framework for Deductive Planning",
       "creators": [
         {
@@ -26303,7 +26303,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "213-220",
-      "extra": "Citation Key: StephanBiundo:96 \nbibtex[crossref=AIPS96]",
+      "extra": "Citation Key: StephanBiundo:96 \nbibtex*[crossref=AIPS96]",
       "title": "Deduction-Based Refinement Planning",
       "creators": [
         {
@@ -26336,7 +26336,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "288-293",
-      "extra": "Citation Key: Baker:AAAI94 \nbibtex[crossref=AAAI94]",
+      "extra": "Citation Key: Baker:AAAI94 \nbibtex*[crossref=AAAI94]",
       "title": "The Hazards of Fancy Backtracking",
       "creators": [
         {
@@ -26385,7 +26385,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "607-613",
-      "extra": "Citation Key: Harvey:IJCAI95 \nbibtex[crossref=ijcai95]",
+      "extra": "Citation Key: Harvey:IJCAI95 \nbibtex*[crossref=ijcai95]",
       "title": "Limited Discrepancy Search",
       "creators": [
         {
@@ -26434,7 +26434,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "86-94",
-      "extra": "Citation Key: Kabanza:96 \nbibtex[crossref=Actions:96]",
+      "extra": "Citation Key: Kabanza:96 \nbibtex*[crossref=Actions:96]",
       "title": "On the Synthesis of Situation Control Rules under Exogenous Events",
       "creators": [
         {
@@ -26545,7 +26545,7 @@
       "itemType": "conferencePaper",
       "pages": "640-645",
       "date": "1991-07",
-      "extra": "Citation Key: Godefroid:91 \nbibtex[crossref=AAAI91;dbasekey=godefroid:91]",
+      "extra": "Citation Key: Godefroid:91 \nbibtex*[crossref=AAAI91;dbasekey=godefroid:91]",
       "title": "An Efficient Reactive Planner for Synthesizing Reactive Plans",
       "creators": [
         {
@@ -26578,7 +26578,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "791-798",
-      "extra": "Citation Key: Kabanza:95 \nbibtex[crossref=ijcai95]",
+      "extra": "Citation Key: Kabanza:95 \nbibtex*[crossref=ijcai95]",
       "title": "Synthesizing Plant Controllers Using Real-time Goals",
       "creators": [
         {
@@ -26765,7 +26765,7 @@
       "itemType": "journalArticle",
       "url": "http://citeseer.ist.psu.edu/507370.html;  http://www.informatik.uni-ulm.de/ki/biundo/ECP-Papers/61-despouys.ps.gz",
       "date": "1999-08",
-      "extra": "Citation Key: ingrand99:_propice_plan \nbibtex[citeseer-isreferncedby=oai:CiteSeerPSU:80136;oai=oai:CiteSeerPSU:507370;rights=unrestricted;subject=Francois F'elix Ingr,Olivier Despouys Propice-Plan: Toward a Unified Framework for Planning and Execution]",
+      "extra": "Citation Key: ingrand99:_propice_plan \nbibtex*[citeseer-isreferncedby=oai:CiteSeerPSU:80136;oai=oai:CiteSeerPSU:507370;rights=unrestricted;subject=Francois F'elix Ingr,Olivier Despouys Propice-Plan: Toward a Unified Framework for Planning and Execution]",
       "language": "English",
       "abstractNote": "In this paper, we investigate the links between planning and plans execution. We propose a new approach (Propice-Plan) which integrates both activities. It implements supervision and execution capabilities, combined with different planning techniques: -- plan synthesis to complement existing operational plans; and -- anticipation planning to advise the execution for the best option to take when facing choices (by anticipating plans execution), and to forecast problems that may arise due to unforeseen situations.",
       "title": "Propice-Plan: Toward a Unified Framework for Planning and Execution",
@@ -27063,7 +27063,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "460-466",
-      "extra": "Citation Key: Bauer:93 \nbibtex[crossref=ijcai93]",
+      "extra": "Citation Key: Bauer:93 \nbibtex*[crossref=ijcai93]",
       "title": "PHI --- A Logic-based Tool for Intelligent Help Systems",
       "creators": [
         {
@@ -27215,7 +27215,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1994",
-      "extra": "Citation Key: RaoKR-94 \nbibtex[crossref=KR:94]",
+      "extra": "Citation Key: RaoKR-94 \nbibtex*[crossref=KR:94]",
       "title": "Refinement Search as a Unifying Framework for Analyzing Planning Algorithms",
       "creators": [
         {
@@ -27314,7 +27314,7 @@
       "itemType": "conferencePaper",
       "url": "http://www-aig.jpl.nasa.gov/home/gat/gp.html",
       "date": "1996-03",
-      "extra": "Citation Key: Gat:Trenches \nbibtex[organization=AAAI]",
+      "extra": "Citation Key: Gat:Trenches \nbibtex*[organization=AAAI]",
       "title": "News From the Trenches: An Overview of Unmanned Spacecraft for AI",
       "creators": [
         {
@@ -27488,7 +27488,7 @@
       "itemType": "book",
       "place": "New York",
       "date": "1997",
-      "extra": "Citation Key: PooMacGoe97a \nbibtex[serial=poo97a]",
+      "extra": "Citation Key: PooMacGoe97a \nbibtex*[serial=poo97a]",
       "title": "Computational Intelligence: A Logical Approach",
       "creators": [
         {
@@ -27569,7 +27569,7 @@
       "pages": "197-227",
       "publicationTitle": "Journal of Experimental and Theoretical AI",
       "date": "1995",
-      "extra": "Citation Key: wilkins95:_plann_react_uncer_dynam_envir \nbibtex[publisher=Taylor & Francis]",
+      "extra": "Citation Key: wilkins95:_plann_react_uncer_dynam_envir \nbibtex*[publisher=Taylor & Francis]",
       "abstractNote": "Agents situated in dynamic and uncertain environments require several capabilities for successful operation. Such agents must monitor the world and respond appropriately to important events. The agents should be able to accept goals, synthesize complex plans for achieving those goals, and execute the plans while continuing to be responsive to changes in the world. As events render some current activities obsolete, the agents should be able to modify their plans while continuing activities unaffected by those events. The CYPRESS system is a domain-independent framework for defining persistent agents with this full range of behavior. CYPRESS has been used for several demanding applications, including military operations, real-time tracking, and fault diagnosis.",
       "title": "Planning and Reacting in Uncertain and Dynamic Environments",
       "creators": [
@@ -27654,7 +27654,7 @@
     {
       "itemType": "conferencePaper",
       "date": "1997-08",
-      "extra": "Citation Key: Givan:97 \nbibtex[crossref=ijcai97]",
+      "extra": "Citation Key: Givan:97 \nbibtex*[crossref=ijcai97]",
       "title": "Model Minimization, Regression and Propositional STRIPS Planning",
       "creators": [
         {
@@ -27688,7 +27688,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "106-111",
-      "extra": "Citation Key: Dean:97a \nbibtex[crossref=AAAI97]",
+      "extra": "Citation Key: Dean:97a \nbibtex*[crossref=AAAI97]",
       "title": "Model Minimization in Markov Decision Processes",
       "creators": [
         {
@@ -27757,7 +27757,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "49-56",
-      "extra": "Citation Key: AtkinsDurfeeShin:96 \nbibtex[crossref=UAI96]",
+      "extra": "Citation Key: AtkinsDurfeeShin:96 \nbibtex*[crossref=UAI96]",
       "title": "Plan Development Using Local Probabilistic Models",
       "creators": [
         {
@@ -28051,7 +28051,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "971-978",
-      "extra": "Citation Key: WilliamsNayak:96 \nbibtex[crossref=AAAI96]",
+      "extra": "Citation Key: WilliamsNayak:96 \nbibtex*[crossref=AAAI96]",
       "title": "A Model-based Approach to Reactive Self-configuring Systems",
       "creators": [
         {
@@ -28146,7 +28146,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "1139-1146",
-      "extra": "Citation Key: Levesque:96 \nbibtex[crossref=AAAI96]",
+      "extra": "Citation Key: Levesque:96 \nbibtex*[crossref=AAAI96]",
       "title": "What is planning in the presence of sensing?",
       "creators": [
         {
@@ -28285,7 +28285,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "714-719",
-      "extra": "Citation Key: Bonet:97 \nbibtex[crossref=AAAI97]",
+      "extra": "Citation Key: Bonet:97 \nbibtex*[crossref=AAAI97]",
       "title": "A Robust and Fast Action Selection Mechanism for Planning",
       "creators": [
         {
@@ -28323,7 +28323,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "52-61",
-      "extra": "Citation Key: BG00:incomplete \nbibtex[crossref=AIPS00]",
+      "extra": "Citation Key: BG00:incomplete \nbibtex*[crossref=AIPS00]",
       "title": "Planning with Incomplete Information as Heuristic Search in Belief Space",
       "creators": [
         {
@@ -28356,7 +28356,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "142-151",
-      "extra": "Citation Key: bonetGeffner:06LDFS \nbibtex[crossref=ICAPS-06]",
+      "extra": "Citation Key: bonetGeffner:06LDFS \nbibtex*[crossref=ICAPS-06]",
       "title": "Learning Depth-First Search: A Unified Approach to Heuristic Search in Deterministic and Non-Deterministic Settings, and its application to MDPs",
       "creators": [
         {
@@ -28389,7 +28389,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "1704-1710",
-      "extra": "Citation Key: LeshEtzioni:95 \nbibtex[crossref=ijcai95]",
+      "extra": "Citation Key: LeshEtzioni:95 \nbibtex*[crossref=ijcai95]",
       "title": "A sound and fast goal recognizer",
       "creators": [
         {
@@ -28421,7 +28421,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: LeshEtzioni:96 \nbibtex[crossref=KR:96]",
+      "extra": "Citation Key: LeshEtzioni:96 \nbibtex*[crossref=KR:96]",
       "title": "Scaling up goal recognition",
       "creators": [
         {
@@ -29407,7 +29407,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "571-576",
-      "extra": "Citation Key: AtkinsETAL:97 \nbibtex[crossref=AAAI97]",
+      "extra": "Citation Key: AtkinsETAL:97 \nbibtex*[crossref=AAAI97]",
       "title": "Detecting and Reacting to Unplanned-for World States",
       "creators": [
         {
@@ -29445,7 +29445,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "171-179",
-      "extra": "Citation Key: VelosoPollackCox:98 \nbibtex[crossref=AIPS98]",
+      "extra": "Citation Key: VelosoPollackCox:98 \nbibtex*[crossref=AIPS98]",
       "title": "Rationale-based monitoring for planning in dynamic environments",
       "creators": [
         {
@@ -29503,7 +29503,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "163-170",
-      "extra": "Citation Key: BeetzGrosskreutz:98 \nbibtex[crossref=AIPS98]",
+      "extra": "Citation Key: BeetzGrosskreutz:98 \nbibtex*[crossref=AIPS98]",
       "title": "Causal Models of Mobile Service Robot Behavior",
       "creators": [
         {
@@ -29868,7 +29868,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: CoradeschiVidal:99 \nbibtex[crossref=ijcai99]",
+      "extra": "Citation Key: CoradeschiVidal:99 \nbibtex*[crossref=ijcai99]",
       "title": "Highly reactive decison making: a game with Time",
       "creators": [
         {
@@ -29994,7 +29994,7 @@
     {
       "itemType": "bookSection",
       "pages": "401-456",
-      "extra": "Citation Key: BrachmanETAL:91 \nbibtex[chapter=14;crossref=Sowa:91]",
+      "extra": "Citation Key: BrachmanETAL:91 \nbibtex*[chapter=14;crossref=Sowa:91]",
       "title": "Living with Classic: When and How to use a Kl-One-like Language",
       "creators": [
         {
@@ -30677,7 +30677,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "1215-1222",
-      "extra": "Citation Key: aaai96-2*1215 \nbibtex[crossref=AAAI96]",
+      "extra": "Citation Key: aaai96-2*1215 \nbibtex*[crossref=AAAI96]",
       "title": "Planning for Temporally Extended Goals",
       "creators": [
         {
@@ -30714,7 +30714,7 @@
       "pages": "123-191",
       "publicationTitle": "Artificial Intelligence",
       "date": "2000",
-      "extra": "Citation Key: bacchus-kabanza:2000a \nbibtex{topic:'procedural-control;temporal-logic;'}",
+      "extra": "Citation Key: bacchus-kabanza:2000a \nbibtex*{topic:'procedural-control;temporal-logic;'}",
       "title": "Using Temporal Logics to Express Search Control Knowledge for Planning",
       "creators": [
         {
@@ -30847,7 +30847,7 @@
       "pages": "47-56",
       "publicationTitle": "AIM",
       "date": "2001",
-      "extra": "Citation Key: bacchus:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
+      "extra": "Citation Key: bacchus:2001a \nbibtex*{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "AIPS'00 Planning Competition",
       "creators": [
         {
@@ -30955,7 +30955,7 @@
       "itemType": "conferencePaper",
       "series": "AAAI Technical Report",
       "date": "1998",
-      "extra": "Citation Key: desJardins:98 \nbibtex[organization=AAAI]",
+      "extra": "Citation Key: desJardins:98 \nbibtex*[organization=AAAI]",
       "issue": "WS-98-15",
       "title": "Hybrid Planning: An Approach to Integrating Generative and Case-based Planning",
       "creators": [
@@ -31133,7 +31133,7 @@
       "pages": "34-41",
       "publicationTitle": "IEEE Intelligent Systems",
       "date": "2005",
-      "extra": "Citation Key: journals/expert/NauAIKMMWY05 \nbibtex[bibdate=2005-10-05;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/expert/expert20.html#NauAIKMMWY05]",
+      "extra": "Citation Key: journals/expert/NauAIKMMWY05 \nbibtex*[bibdate=2005-10-05;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/expert/expert20.html#NauAIKMMWY05]",
       "title": "Applications of SHOP and SHOP2",
       "creators": [
         {
@@ -31197,7 +31197,7 @@
       "itemType": "journalArticle",
       "url": "citeseer.nj.nec.com/ghallab98pddl.html",
       "date": "1998",
-      "extra": "Citation Key: ghallab98pddl \nbibtex{text:'Ghallab, M.; Howe, A.; Knoblock, C.; McDermott, D.; Ram, A.; Veloso, M.; Weld, D.; and Wilkins, D. 1998. PDDL---The Planning Domain Definition Language. AIPS-98 Planning Committee.'}",
+      "extra": "Citation Key: ghallab98pddl \nbibtex*{text:'Ghallab, M.; Howe, A.; Knoblock, C.; McDermott, D.; Ram, A.; Veloso, M.; Weld, D.; and Wilkins, D. 1998. PDDL---The Planning Domain Definition Language. AIPS-98 Planning Committee.'}",
       "title": "PDDL---The Planning Domain Definition Language",
       "creators": [
         {
@@ -31263,7 +31263,7 @@
       "pages": "61-124",
       "publicationTitle": "JAIR",
       "date": "2003",
-      "extra": "Citation Key: fox03:_pddl2 \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://www.cs.washington.edu/research/jair/abstracts/fox03a.html]",
+      "extra": "Citation Key: fox03:_pddl2 \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://www.cs.washington.edu/research/jair/abstracts/fox03a.html]",
       "title": "PDDL2.1: An Extension to PDDL for Expressing Temporal Planning Domains.",
       "creators": [
         {
@@ -31299,7 +31299,7 @@
       "pages": "1-59",
       "publicationTitle": "JAIR",
       "date": "2003",
-      "extra": "Citation Key: long03:_inter_plann_compet \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://www.cs.washington.edu/research/jair/abstracts/long03a.html]",
+      "extra": "Citation Key: long03:_inter_plann_compet \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://www.cs.washington.edu/research/jair/abstracts/long03a.html]",
       "title": "The 3rd International Planning Competition: Results and Analysis.",
       "creators": [
         {
@@ -31368,7 +31368,7 @@
       "url": "http://doi.ieeecomputersociety.org/10.1109/ICTAI.2004.120",
       "pages": "294-301",
       "date": "2004",
-      "extra": "Citation Key: howey04:_val \nbibtex[bibdate=2005-01-05;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ictai/ictai2004.html#HoweyLF04;crossref=DBLP:conf/ictai/2004]",
+      "extra": "Citation Key: howey04:_val \nbibtex*[bibdate=2005-01-05;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ictai/ictai2004.html#HoweyLF04;crossref=DBLP:conf/ictai/2004]",
       "title": "VAL: Automatic Plan Validation, Continuous Effects and Mixed Initiative Planning Using PDDL",
       "creators": [
         {
@@ -31410,7 +31410,7 @@
       "pages": "212-221",
       "ISBN": "978-1-57735-270-9",
       "date": "2006",
-      "extra": "Citation Key: FoxGLS:Stability:06 \nbibtex[bibdate=2012-12-13;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2006.html#FoxGLS06]",
+      "extra": "Citation Key: FoxGLS:Stability:06 \nbibtex*[bibdate=2012-12-13;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2006.html#FoxGLS06]",
       "title": "Plan Stability: Replanning versus Plan Repair",
       "creators": [
         {
@@ -31645,7 +31645,7 @@
       "pages": "453-541",
       "publicationTitle": "JAIR",
       "date": "2006",
-      "extra": "Citation Key: HoffmannETALT06 \nbibtex[bibdate=2014-07-31;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair26.html#HoffmannETELT06;shortauthor=undefinedundefinedundefined]",
+      "extra": "Citation Key: HoffmannETALT06 \nbibtex*[bibdate=2014-07-31;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair26.html#HoffmannETELT06;shortauthor=undefinedundefinedundefined]",
       "title": "Engineering Benchmarks for Planning: the Domains Used in the Deterministic Part of IPC-4",
       "creators": [
         {
@@ -31762,7 +31762,7 @@
       "itemType": "book",
       "place": "Menlo Park, CA",
       "date": "September 1997",
-      "extra": "Citation Key: AICPub215:1997 \nbibtex[organization=Artificial Intelligence Center, SRI International]",
+      "extra": "Citation Key: AICPub215:1997 \nbibtex*[organization=Artificial Intelligence Center, SRI International]",
       "abstractNote": "The Act formalism provides a medium in which to express knowledge about actions for both the SIPE-2 plan generation system and the PRS plan execution system. This document describes the Act-Editor, which provides a graphical user interface for creating and manipulating Acts. The document is designed for individuals who are already familiar with the Act formalism. The Act-Editor runs on Sun workstations with either Allegro Common Lisp 4.2/4.3 with CLIM 2.0/2.1, or Lucid Lisp 4.1 with CLIM 1.1., as well as Symbolics Lisp Machines.",
       "title": "The Act-Editor User's Guide: A Manual for Version 2.2",
       "creators": [
@@ -31927,7 +31927,7 @@
       "series": "LNCS",
       "volume": "1472",
       "date": "1998",
-      "extra": "Citation Key: Ternovskaia1998IDS \nbibtex[coden=LNCSD9] \nISSN: 0302-9743",
+      "extra": "Citation Key: Ternovskaia1998IDS \nbibtex*[coden=LNCSD9] \nISSN: 0302-9743",
       "abstractNote": "We explore the situation calculus within the framework of inductive definability. A consequence of this view of the situation calculus is to establish direct connections with different variants of the mu-calculus, structural operational semantics of concurrent processes, and logic programming. First we show that the induction principle on situations is implied by an inductive definition of the set of situations. Then we consider the frame problem from the point of view of inductive definability and by defining fluents inductively we obtain essentially the same form of successor state axioms as Reiter's. Our approach allows extending this result to the case where ramification constraints are present. Finally we demonstrate a method of applying inductive definitions for computing fixed point properties of GOLOG programs.",
       "title": "Inductive Definability and the Situation Calculus",
       "creators": [
@@ -31981,7 +31981,7 @@
       "pages": "91-118",
       "publicationTitle": "Journal for Approximate Reasoning",
       "date": "1998-01",
-      "extra": "A version of this paper is also available as UMass Computer Science Technical Report 1997-59 \nCitation Key: WagnerETAL:98 \nbibtex[publisher=Elsevier Science Inc.]",
+      "extra": "A version of this paper is also available as UMass Computer Science Technical Report 1997-59 \nCitation Key: WagnerETAL:98 \nbibtex*[publisher=Elsevier Science Inc.]",
       "title": "Criteria Directed Task Scheduling",
       "creators": [
         {
@@ -32158,7 +32158,7 @@
     },
     {
       "itemType": "conferencePaper",
-      "extra": "Citation Key: freed98:apex \nbibtex[crossref=AAAI98]",
+      "extra": "Citation Key: freed98:apex \nbibtex*[crossref=AAAI98]",
       "title": "Managing multiple tasks in complex, dynamic environments",
       "creators": [
         {
@@ -32267,7 +32267,7 @@
       "pages": "405-430",
       "publicationTitle": "JAIR",
       "date": "2003",
-      "extra": "Citation Key: younes03:_vhpop \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de]",
+      "extra": "Citation Key: younes03:_vhpop \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de]",
       "title": "VHPOP: Versatile Heuristic Partial Order Planner.",
       "creators": [
         {
@@ -32302,7 +32302,7 @@
       "url": "http://springerlink.metapress.com/openurl.asp?genre=article&amp;issn=0302-9743&amp;volume=2870&amp;spage=195",
       "pages": "195-210",
       "date": "2003",
-      "extra": "Citation Key: SHOP:WuPSHN03 \nbibtex[bibdate=2004-02-24;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/semweb/iswc2003.html#WuPSHN03]",
+      "extra": "Citation Key: SHOP:WuPSHN03 \nbibtex*[bibdate=2004-02-24;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/semweb/iswc2003.html#WuPSHN03]",
       "title": "Automating DAML-S Web Services Composition Using SHOP2",
       "creators": [
         {
@@ -32351,7 +32351,7 @@
     {
       "itemType": "conferencePaper",
       "date": "2003",
-      "extra": "Citation Key: SHOP:WuSHNP03 \nbibtex[bibsource=Mindswap: http://www.mindswap.org/papers/?raw#mindswap:1\"]",
+      "extra": "Citation Key: SHOP:WuSHNP03 \nbibtex*[bibsource=Mindswap: http://www.mindswap.org/papers/?raw#mindswap:1\"]",
       "title": "Automatic Web Services Composition Using SHOP2",
       "creators": [
         {
@@ -32427,7 +32427,7 @@
       "pages": "179-188",
       "ISBN": "3-540-27885-0",
       "date": "2005-07",
-      "extra": "Citation Key: conf/um/BlaylockA05 \nbibtex[bibdate=2005-09-20;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/um/um2005.html#BlaylockA05]",
+      "extra": "Citation Key: conf/um/BlaylockA05 \nbibtex*[bibdate=2005-09-20;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/um/um2005.html#BlaylockA05]",
       "title": "Generating Artificial Corpora for Plan Recognition",
       "creators": [
         {
@@ -32477,7 +32477,7 @@
     {
       "itemType": "bookSection",
       "pages": "3-32",
-      "extra": "Citation Key: BlaylockAllen:2014 \nbibtex[chapter=1;crossref=sukthankar-etal:2014a]",
+      "extra": "Citation Key: BlaylockAllen:2014 \nbibtex*[chapter=1;crossref=sukthankar-etal:2014a]",
       "title": "Hierarchical Goal Recognition",
       "creators": [
         {
@@ -32548,7 +32548,7 @@
       "itemType": "conferencePaper",
       "place": "Lake District of the United Kingdom",
       "pages": "134-144",
-      "extra": "Citation Key: conf/kr/BienvenuFM06 \nbibtex[bibdate=2006-06-09;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/kr/kr2006.html#BienvenuFM06;crossref=KR-2006]",
+      "extra": "Citation Key: conf/kr/BienvenuFM06 \nbibtex*[bibdate=2006-06-09;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/kr/kr2006.html#BienvenuFM06;crossref=KR-2006]",
       "title": "Planning with Qualitative Temporal Preferences",
       "creators": [
         {
@@ -32586,7 +32586,7 @@
     {
       "itemType": "journalArticle",
       "url": "http://citeseer.ist.psu.edu/525546.html;  http://www.cs.toronto.edu/cogrobo/Papers/htn-opw.ps",
-      "extra": "Appeared in the working notes of the AIPS workshop on On-Line Planning and Scheduling \nCitation Key: Gabaldon:2002 \nbibtex[bibsource=OAI-PMH server at cs1.ist.psu.edu;oai=oai:CiteSeerPSU:525546;rights=unrestricted]",
+      "extra": "Appeared in the working notes of the AIPS workshop on On-Line Planning and Scheduling \nCitation Key: Gabaldon:2002 \nbibtex*[bibsource=OAI-PMH server at cs1.ist.psu.edu;oai=oai:CiteSeerPSU:525546;rights=unrestricted]",
       "date": "2002-07",
       "language": "English",
       "abstractNote": "Hierarchical Task Network (HTN) planning (Sacerdoti 1974) is an approach to planning where problem-specific knowledge is used to remedy the computational intractability of classical planning. This knowledge is in the form of task decomposition directives, i.e. the planner is given a set of methods that tell it how a high-level task can be decomposed into lower-level tasks. The HTN planning problem consists in computing a sequence of primitive tasks that corresponds to performing the initial set of high-level tasks. Our purpose in this prthis paper is 1) to give an account of HTNplanning as high-level programming in the situation calculus (McCarthy 1963) based languages Golog/ConGolog (Levesque et al. 1997; De Giacomo, Lesperance, & Levesque 2000) and 2) to illustrate our approach with a ConGolog encoding of a logistics domain HTN-planning problem. The Golog/ConGolog languages have been extended to deal with explicit time, sensing actions, exogenous events, execution monitoring, incomplete knowledge of the initial state, stochastic actions and others. Thus the range of problems that can be tackled with this approach is potentially much larger. As an example, we modified the logistics domain encoding to execute on-line and deal with run-time exogenous delivery requests",
@@ -32638,7 +32638,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "2-11",
-      "extra": "Citation Key: Petrick-Bacchus-icaps:04 \nbibtex[crossref=ICAPS-04]",
+      "extra": "Citation Key: Petrick-Bacchus-icaps:04 \nbibtex*[crossref=ICAPS-04]",
       "title": "Extending the Knowledge-Based Approach to Planning with Incomplete Information and Sensing",
       "creators": [
         {
@@ -32672,7 +32672,7 @@
       "itemType": "conferencePaper",
       "pages": "70-77",
       "date": "1998",
-      "extra": "Citation Key: Golden98 \nbibtex[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips1998.html#Golden98;crossref=AIPS98]",
+      "extra": "Citation Key: Golden98 \nbibtex*[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips1998.html#Golden98;crossref=AIPS98]",
       "title": "Leap Before You Look: Information Gathering in the PUCCINI Planner",
       "creators": [
         {
@@ -32704,7 +32704,7 @@
       "pages": "113-148",
       "publicationTitle": "AIJ",
       "date": "1997",
-      "extra": "Citation Key: Etzioni-etal:1997a \nbibtex{acontentnote:'Abstract: Closed-world inference-an essential component of many planning algorithms-is the process of determining that a logical sentence is false based on its absence from a knowledge base, or the inability to derive it. We describe a novel method for closed-world inference and update over the first-order theories of action used by planning algorithms such as NONLIN, TWEAK, and UCPOP. We show the method to be sound and efficient, but incomplete. In our experiments, closed-world inference consistently averaged about 2 milliseconds while updates averaged approximately 1.2 milliseconds. Furthermore, we demonstrate that incompleteness is nonproblematic in practice, since our mechanism makes over 99% of the desired inferences. We incorporated our method into the XII planner, which supports our Internet Softbot (software robot). The technique cut the number of actions executed by the Softbot by a factor of one hundred, and resulted in a corresponding speedup to XII.',topic:'planning;circumscription;closed-world-reasoning;'}",
+      "extra": "Citation Key: Etzioni-etal:1997a \nbibtex*{acontentnote:'Abstract: Closed-world inference-an essential component of many planning algorithms-is the process of determining that a logical sentence is false based on its absence from a knowledge base, or the inability to derive it. We describe a novel method for closed-world inference and update over the first-order theories of action used by planning algorithms such as NONLIN, TWEAK, and UCPOP. We show the method to be sound and efficient, but incomplete. In our experiments, closed-world inference consistently averaged about 2 milliseconds while updates averaged approximately 1.2 milliseconds. Furthermore, we demonstrate that incompleteness is nonproblematic in practice, since our mechanism makes over 99% of the desired inferences. We incorporated our method into the XII planner, which supports our Internet Softbot (software robot). The technique cut the number of actions executed by the Softbot by a factor of one hundred, and resulted in a corresponding speedup to XII.',topic:'planning;circumscription;closed-world-reasoning;'}",
       "title": "Sound and Efficient Closed-World Reasoning for Planning",
       "creators": [
         {
@@ -32746,7 +32746,7 @@
       "pages": "193-258",
       "publicationTitle": "AIJ",
       "date": "1992",
-      "extra": "Citation Key: kambhampati-hendler:1992a \nbibtex{topic:'planning;plan-reuse;'}",
+      "extra": "Citation Key: kambhampati-hendler:1992a \nbibtex*{topic:'planning;plan-reuse;'}",
       "title": "A Validation Structure-Based Theory of Plan Modification and Reuse",
       "creators": [
         {
@@ -32781,7 +32781,7 @@
       "volume": "abs/1104.5069",
       "publicationTitle": "CoRR",
       "date": "2011",
-      "extra": "Citation Key: DBLP:journals/corr/abs-1104-5069 \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://arxiv.org/abs/1104.5069]",
+      "extra": "Citation Key: DBLP:journals/corr/abs-1104-5069 \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;ee=http://arxiv.org/abs/1104.5069]",
       "title": "Synthesizing Robust Plans under Incomplete Domain Models",
       "creators": [
         {
@@ -32821,7 +32821,7 @@
       "place": "Menlo Park, California",
       "pages": "134-144",
       "date": "2006",
-      "extra": "Citation Key: bienvenu-etal:2006a \nbibtex{topic:'planning;preferences;qualitative-utility;temporal-reasoning;'}",
+      "extra": "Citation Key: bienvenu-etal:2006a \nbibtex*{topic:'planning;preferences;qualitative-utility;temporal-reasoning;'}",
       "title": "Planning with Qualitative Temporal Preferences",
       "creators": [
         {
@@ -32878,7 +32878,7 @@
       "pages": "12-21",
       "ISBN": "1-57735-220-3",
       "date": "2005",
-      "extra": "Citation Key: conf/aips/BoddyGHH05 \nbibtex[bibdate=2006-04-27;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2005.html#BoddyGHH05]",
+      "extra": "Citation Key: conf/aips/BoddyGHH05 \nbibtex*[bibdate=2006-04-27;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2005.html#BoddyGHH05]",
       "title": "Course of Action Generation for Cyber Security Using Classical Planning",
       "creators": [
         {
@@ -32938,7 +32938,7 @@
     {
       "itemType": "thesis",
       "date": "1997",
-      "extra": "Citation Key: golden:thesis \nbibtex{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Vita.; Thesis (Ph. D.)--University of Washington, 1997.; Includes bibliographical references (p. [166]-173).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm40149549',subject:'Intelligent agents (Computer software)'}",
+      "extra": "Citation Key: golden:thesis \nbibtex*{bibsource:'OAI-PMH server at alcme.oclc.org',description:'Vita.; Thesis (Ph. D.)--University of Washington, 1997.; Includes bibliographical references (p. [166]-173).',oai:'oai:xtcat.oclc.org:OCLCNo/ocm40149549',subject:'Intelligent agents (Computer software)'}",
       "title": "Planning and knowledge representation for softbots",
       "creators": [
         {
@@ -32968,7 +32968,7 @@
       "itemType": "book",
       "url": "http://titles.cambridge.org/catalogue.asp?ISBN=0521781760",
       "date": "2003",
-      "extra": "Citation Key: BCMNS2003 \nbibtex[added-by=msteiner;offline=ISBN: 0521781760]",
+      "extra": "Citation Key: BCMNS2003 \nbibtex*[added-by=msteiner;offline=ISBN: 0521781760]",
       "abstractNote": "Description Logics are a family of knowledge representation languages that have been studied extensively in Artificial Intelligence over the last two decades. They are embodied in several knowledge-based systems and are used to develop various real-life applications. The Description Logic Handbook provides a thorough account of the subject, covering all aspects of research in this field, namely: theory, implementation, and applications. Its appeal will be broad, ranging from more theoretically-oriented readers, to those with more practically-oriented interests who need a sound and modern understanding of knowledge representation systems based on Description Logics. The chapters are written by some of the most prominent researchers in the field, introducing the basic technical material before taking the reader to the current state of the subject, and including comprehensive guides to the literature. In sum, the book will serve as a unique reference for the subject, and can also be used for self-study or in conjunction with Knowledge Representation and Artificial Intelligence courses.",
       "title": "The Description Logic Handbook --- Theory, Implementation and Applications",
       "creators": [
@@ -33086,7 +33086,7 @@
       "itemType": "conferencePaper",
       "url": "http://www.ijcai.org/papers/0305.pdf",
       "pages": "509-515",
-      "extra": "Citation Key: conf/ijcai/Levesque05 \nbibtex[bibdate=2005-12-09;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2005.html#Levesque05;crossref=IJCAI05]",
+      "extra": "Citation Key: conf/ijcai/Levesque05 \nbibtex*[bibdate=2005-12-09;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2005.html#Levesque05;crossref=IJCAI05]",
       "title": "Planning with Loops",
       "creators": [
         {
@@ -33115,7 +33115,7 @@
     {
       "itemType": "conferencePaper",
       "pages": "991-997",
-      "extra": "Citation Key: conf/aaai/SrivastavaIZ08 \nbibtex[bibdate=2008-08-15;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2008.html#SrivastavaIZ08;crossref=AAAI05]",
+      "extra": "Citation Key: conf/aaai/SrivastavaIZ08 \nbibtex*[bibdate=2008-08-15;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2008.html#SrivastavaIZ08;crossref=AAAI05]",
       "title": "Learning Generalized Plans Using Abstract Counting",
       "creators": [
         {
@@ -33155,7 +33155,7 @@
       "url": "http://www.cs.umd.edu/users/musliner/papers/salsa.ps",
       "pages": "1036-1041",
       "date": "1994-08",
-      "extra": "Citation Key: musliner:94a \nbibtex[crossref=AAAI94;dbasekey=musliner:94a]",
+      "extra": "Citation Key: musliner:94a \nbibtex*[crossref=AAAI94;dbasekey=musliner:94a]",
       "title": "Using Abstraction and Nondeterminism to Plan Reaction Loops",
       "creators": [
         {
@@ -33945,7 +33945,7 @@
       "url": "http://www.aaai.org/Library/AAAI/2006/aaai06-125.php",
       "pages": "788-795",
       "date": "2006",
-      "extra": "Citation Key: conf/aaai/BaierM06 \nbibtex[bibdate=2012-03-19;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2006.html#BaierM06]",
+      "extra": "Citation Key: conf/aaai/BaierM06 \nbibtex*[bibdate=2012-03-19;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2006.html#BaierM06]",
       "title": "Planning with First-Order Temporally Extended Goals using Heuristic Search",
       "creators": [
         {
@@ -34024,7 +34024,7 @@
       "pages": "264-271",
       "ISBN": "978-1-57735-344-7",
       "date": "2007",
-      "extra": "Citation Key: conf/aips/PalaciosG07 \nbibtex[bibdate=2008-08-15;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2007.html#PalaciosG07]",
+      "extra": "Citation Key: conf/aips/PalaciosG07 \nbibtex*[bibdate=2008-08-15;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/icaps2007.html#PalaciosG07]",
       "title": "From Conformant into Classical Planning: Efficient Translations that May Be Complete Too",
       "creators": [
         {
@@ -34114,7 +34114,7 @@
       "itemType": "conferencePaper",
       "pages": "82-91",
       "date": "2000",
-      "extra": "Citation Key: conf/aips/DoK00 \nbibtex[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#DoK00]",
+      "extra": "Citation Key: conf/aips/DoK00 \nbibtex*[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#DoK00]",
       "title": "Solving Planning-Graph by Compiling It into CSP",
       "creators": [
         {
@@ -34149,7 +34149,7 @@
       "itemType": "conferencePaper",
       "pages": "130-139",
       "date": "2000",
-      "extra": "Citation Key: conf/aips/HansenF00 \nbibtex[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#HansenF00]",
+      "extra": "Citation Key: conf/aips/HansenF00 \nbibtex*[bibdate=2002-01-03;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aips/aips2000.html#HansenF00]",
       "title": "Dynamic Programming for POMDPs Using a Factored State Representation",
       "creators": [
         {
@@ -34187,7 +34187,7 @@
       "pages": "127-177",
       "publicationTitle": "JAIR",
       "date": "2010",
-      "extra": "Citation Key: journals/jair/RichterW10 \nbibtex[bibdate=2010-11-24;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair39.html#RichterW10]",
+      "extra": "Citation Key: journals/jair/RichterW10 \nbibtex*[bibdate=2010-11-24;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair39.html#RichterW10]",
       "title": "The LAMA Planner: Guiding Cost-Based Anytime Planning with Landmarks",
       "creators": [
         {
@@ -34224,7 +34224,7 @@
       "pages": "57-62",
       "publicationTitle": "The AI Magazine",
       "date": "2001",
-      "extra": "Citation Key: hoffman_j:2001a \nbibtex{topic:'planning;planning-algorithms;planning-systems;'}",
+      "extra": "Citation Key: hoffman_j:2001a \nbibtex*{topic:'planning;planning-algorithms;planning-systems;'}",
       "title": "FF: The Fast-Forward PLanning System",
       "creators": [
         {
@@ -34256,7 +34256,7 @@
       "pages": "191-246",
       "publicationTitle": "JAIR",
       "date": "2006",
-      "extra": "Citation Key: journals/jair/Helmert06 \nbibtex[bibdate=2010-06-11;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair26.html#Helmert06]",
+      "extra": "Citation Key: journals/jair/Helmert06 \nbibtex*[bibdate=2010-06-11;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/jair/jair26.html#Helmert06]",
       "title": "The Fast Downward Planning System",
       "creators": [
         {
@@ -34285,7 +34285,7 @@
       "itemType": "journalArticle",
       "url": "http://ipc.informatik.uni-freiburg.de/PddlExtension",
       "date": "2011-09",
-      "extra": "Citation Key: haslum11:pddl3.1 \nbibtex[howpublished=From IPC 2008 website]",
+      "extra": "Citation Key: haslum11:pddl3.1 \nbibtex*[howpublished=From IPC 2008 website]",
       "title": "Changes in PDDL 3.1",
       "creators": [
         {
@@ -34314,7 +34314,7 @@
       "itemType": "journalArticle",
       "url": "http://preview.tinyurl.com/788yv78",
       "date": "2011",
-      "extra": "Citation Key: kovacs11:bnf_pddl3.1 \nbibtex[howpublished=From IPC 2011 web site]",
+      "extra": "Citation Key: kovacs11:bnf_pddl3.1 \nbibtex*[howpublished=From IPC 2011 web site]",
       "title": "BNF definition of PDDL 3.1",
       "creators": [
         {
@@ -34383,7 +34383,7 @@
       "itemType": "journalArticle",
       "url": "http://code.google.com/p/europa-pso/wiki/NDDLReference",
       "date": "2011",
-      "extra": "Citation Key: NDDL \nbibtex[institution=NASA Ames Research Center;key=NASA]",
+      "extra": "Citation Key: NDDL \nbibtex*[institution=NASA Ames Research Center;key=NASA]",
       "title": "NDDL Reference",
       "creators": [
 
@@ -34447,7 +34447,7 @@
       "pages": "565-620",
       "publicationTitle": "JAIR",
       "date": "2007",
-      "extra": "Citation Key: prob-ff \nbibtex[publisher=AI Access Foundation]",
+      "extra": "Citation Key: prob-ff \nbibtex*[publisher=AI Access Foundation]",
       "title": "Probabilistic planning via heuristic forward search and weighted model counting",
       "creators": [
         {
@@ -34480,7 +34480,7 @@
     {
       "itemType": "conferencePaper",
       "date": "2007",
-      "extra": "Citation Key: RaoETALDiversity:07 \nbibtex[crossref=IJCAI07]",
+      "extra": "Citation Key: RaoETALDiversity:07 \nbibtex*[crossref=IJCAI07]",
       "title": "Domain Independent Approaches for Finding Diverse Plans",
       "creators": [
         {
@@ -34664,7 +34664,7 @@
       "pages": "35-62",
       "publicationTitle": "Artificial Intelligence",
       "date": "2001",
-      "extra": "Citation Key: hansen_ea-zilberstein:2001b \nbibtex{topic:'heuristics;search;dynamic-programming;Markov-decision-processes;'}",
+      "extra": "Citation Key: hansen_ea-zilberstein:2001b \nbibtex*{topic:'heuristics;search;dynamic-programming;Markov-decision-processes;'}",
       "title": "LAO*: A Heuristic-Search Algorithm that Finds Solutions with Loops",
       "creators": [
         {
@@ -34696,7 +34696,7 @@
     },
     {
       "itemType": "journalArticle",
-      "extra": "Citation Key: NguyenETAL:DiversityAIJ \nbibtex[crossref=journals/ai/NguyenDGSSK12]",
+      "extra": "Citation Key: NguyenETAL:DiversityAIJ \nbibtex*[crossref=journals/ai/NguyenDGSSK12]",
       "creators": [
 
       ],
@@ -34723,7 +34723,7 @@
       "pages": "1-31",
       "publicationTitle": "AIJ",
       "date": "2012",
-      "extra": "Citation Key: journals/ai/NguyenDGSSK12 \nbibtex[bibdate=2012-11-12;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/ai/ai190.html#NguyenDGSSK12]",
+      "extra": "Citation Key: journals/ai/NguyenDGSSK12 \nbibtex*[bibdate=2012-11-12;bibsource=DBLP, http://dblp.uni-trier.de/db/journals/ai/ai190.html#NguyenDGSSK12]",
       "title": "Generating diverse plans to handle unknown and partially known user preferences",
       "creators": [
         {
@@ -34990,7 +34990,7 @@
       "itemType": "conferencePaper",
       "url": "http://www.aaai.org/ocs/index.php/ICAPS/ICAPS14/paper/view/7947",
       "date": "2014",
-      "extra": "Citation Key: RobertsETAL:Diversity2014 \nbibtex[conference=International Conference on Automated Planning and Scheduling]",
+      "extra": "Citation Key: RobertsETAL:Diversity2014 \nbibtex*[conference=International Conference on Automated Planning and Scheduling]",
       "abstractNote": "Applications that require alternative plans challenge the single solution, single quality metric assumptions upon which many classical planners are designed and evaluated. To evaluate the distinctness of alternative plans (i.e., plan sets), researchers have created diversity metrics that often measure the set difference between the actions of plans. Many approaches for generating plan sets embed the same diversity metric in a weighted evaluation function to guide the search mechanism, thus confounding the search process with its evaluation. We discover that two diversity metrics fail to distinguish similar plans from each other or to identify plans with extraneous actions, so we introduce two new diversity metrics, <i>uniqueness</i> and <i>overlap</i>, to capture these cases. We then examine the tradeoffs of producing diverse plans while we control for plan length and metric interaction and confirm that metric interaction can significantly impact search performance. We show that planners searching for plan sets must consider a third metric, <i>parsimony</i>, that prefers shorter plans while maximizing diversity.We evaluate three existing approaches for generating diverse plans and two new algorithms that are designed to explicitly manage diversity and interaction between the diversity and quality metrics. Our findings synthesize and extend recent results in plan diversity.",
       "title": "Evaluating Diversity in Classical Planning",
       "creators": [
@@ -35077,7 +35077,7 @@
       "publicationTitle": "Theoretical Computer Science",
       "ISSN": "0304-3975 (print), 1879-2294 (electronic)",
       "date": "1983-07",
-      "extra": "Citation Key: Bagchi:1983:AHS \nbibtex[acknowledgement=Nelson H. F. Beebe, University of Utah, Department of Mathematics, 110 LCB, 155 S 1400 E RM 233, Salt Lake City, UT 84112-0090, USA, Tel: +1 801 581 5254, FAX: +1 801 581 4148, e-mail: |beebe@math.utah.edu|, |beebe@acm.org|, |beebe@ieee.org| (Internet), URL: |http://www.math.utah.edu/ beebe/|;bibdate=Sat Nov 22 13:36:07 MST 1997;bibsource=http://www.math.utah.edu/pub/tex/bib/tcs1980.bib;classification=C1230 (Artificial intelligence);coden=TCSCDI;corpsource=Indian Inst. of Management, Calcutta, India;fjournal=Theoretical Computer Science;issn-l=0304-3975;journal-url=http://www.sciencedirect.com/science/journal/03043975/;pubcountry=Netherlands;treatment=T Theoretical or Mathematical]",
+      "extra": "Citation Key: Bagchi:1983:AHS \nbibtex*[acknowledgement=Nelson H. F. Beebe, University of Utah, Department of Mathematics, 110 LCB, 155 S 1400 E RM 233, Salt Lake City, UT 84112-0090, USA, Tel: +1 801 581 5254, FAX: +1 801 581 4148, e-mail: |beebe@math.utah.edu|, |beebe@acm.org|, |beebe@ieee.org| (Internet), URL: |http://www.math.utah.edu/ beebe/|;bibdate=Sat Nov 22 13:36:07 MST 1997;bibsource=http://www.math.utah.edu/pub/tex/bib/tcs1980.bib;classification=C1230 (Artificial intelligence);coden=TCSCDI;corpsource=Indian Inst. of Management, Calcutta, India;fjournal=Theoretical Computer Science;issn-l=0304-3975;journal-url=http://www.sciencedirect.com/science/journal/03043975/;pubcountry=Netherlands;treatment=T Theoretical or Mathematical]",
       "title": "Admissible heuristic search in AND∕OR graphs",
       "creators": [
         {
@@ -35176,7 +35176,7 @@
       "url": "http://www.aaai.org/Library/AIPS/2002/aips02-028.php",
       "pages": "274-283",
       "date": "2002",
-      "extra": "Citation Key: DBLP:conf/aips/Edelkamp02 \nbibtex[bibsource=dblp computer science bibliography, http://dblp.org;biburl=http://dblp.uni-trier.de/rec/bib/conf/aips/Edelkamp02;crossref=AIPS02]",
+      "extra": "Citation Key: DBLP:conf/aips/Edelkamp02 \nbibtex*[bibsource=dblp computer science bibliography, http://dblp.org;biburl=http://dblp.uni-trier.de/rec/bib/conf/aips/Edelkamp02;crossref=AIPS02]",
       "title": "Symbolic Pattern Databases in Heuristic Search Planning",
       "creators": [
         {
@@ -35210,7 +35210,7 @@
       "pages": "767-798",
       "publicationTitle": "AIJ",
       "date": "2010",
-      "extra": "Citation Key: DBLP:journals/ai/KatzD10 \nbibtex[bibsource=dblp computer science bibliography, http://dblp.org;biburl=http://dblp.uni-trier.de/rec/bib/journals/ai/KatzD10]",
+      "extra": "Citation Key: DBLP:journals/ai/KatzD10 \nbibtex*[bibsource=dblp computer science bibliography, http://dblp.org;biburl=http://dblp.uni-trier.de/rec/bib/journals/ai/KatzD10]",
       "DOI": "10.1016/j.artint.2010.04.021",
       "title": "Optimal admissible composition of abstraction heuristics",
       "creators": [
@@ -35440,7 +35440,7 @@
       "url": "http://ijcai.org/papers09/Papers/IJCAI09-294.pdf",
       "pages": "1766-1771",
       "date": "2009",
-      "extra": "Citation Key: conf/ijcai/NakhostM09 \nbibtex[bibdate=2009-12-21;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2009.html#NakhostM09]",
+      "extra": "Citation Key: conf/ijcai/NakhostM09 \nbibtex*[bibdate=2009-12-21;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/ijcai/ijcai2009.html#NakhostM09]",
       "title": "Monte-Carlo Exploration for Deterministic Planning",
       "creators": [
         {
@@ -35480,7 +35480,7 @@
       "itemType": "bookSection",
       "pages": "38-45",
       "date": "2011",
-      "extra": "Citation Key: helmert2011fast \nbibtex[shortauthor=undefinedundefinedundefined]",
+      "extra": "Citation Key: helmert2011fast \nbibtex*[shortauthor=undefinedundefinedundefined]",
       "title": "Fast downward stone soup",
       "creators": [
         {
@@ -35553,7 +35553,7 @@
       "pages": "3887-3895",
       "ISBN": "978-1-57735-698-1",
       "date": "2015",
-      "extra": "Citation Key: conf/aaai/Bresina15 \nbibtex[bibdate=2015-04-12;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2015.html#Bresina15]",
+      "extra": "Citation Key: conf/aaai/Bresina15 \nbibtex*[bibdate=2015-04-12;bibsource=DBLP, http://dblp.uni-trier.de/db/conf/aaai/aaai2015.html#Bresina15]",
       "title": "Activity Planning for a Lunar Orbital Mission",
       "creators": [
         {
@@ -35763,7 +35763,7 @@
       "place": "KAUFMANN-ADDRESS",
       "ISBN": "1-55860-221-6",
       "date": "1993",
-      "extra": "Citation Key: books/mk/Ginsberg93 \nbibtex{topic:'AI-intro;AI-text;'}",
+      "extra": "Citation Key: books/mk/Ginsberg93 \nbibtex*{topic:'AI-intro;AI-text;'}",
       "title": "Essentials of Artificial Intelligence",
       "creators": [
         {

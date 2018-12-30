@@ -4,7 +4,7 @@
       "itemType": "conferencePaper",
       "pages": "25-30",
       "date": "2010",
-      "extra": "svm liniowe najlepsze \nCitation Key: Klassen2010 \nbibtex[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/cata/2010;owner=sstudent]",
+      "extra": "svm liniowe najlepsze \nCitation Key: Klassen2010 \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/cata/2010;owner=sstudent]",
       "title": "Empirical Study of Support Vector Machine Kernels with Applications to Microarray Data",
       "creators": [
         {

@@ -233,7 +233,7 @@
     {
       "itemType": "journalArticle",
       "date": "2017",
-      "extra": "Citation Key: Doe-2017 \nbibtex[owner=klein]",
+      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein]",
       "title": "The paper in subgroup",
       "creators": [
         {
@@ -248,7 +248,7 @@
     },
     {
       "itemType": "journalArticle",
-      "extra": "Citation Key: Other- \nbibtex[owner=klein]",
+      "extra": "Citation Key: Other- \nbibtex*[owner=klein]",
       "title": "The article in my other subgroup",
       "creators": [
         {
@@ -263,7 +263,7 @@
     },
     {
       "itemType": "journalArticle",
-      "extra": "Citation Key: Unkonw- \nbibtex[owner=klein]",
+      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein]",
       "title": "the paper not in a group",
       "creators": [
         {

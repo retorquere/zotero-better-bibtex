@@ -16,7 +16,7 @@
       ],
       "title": "Some publication title",
       "pages": "330—331",
-      "extra": "Citation Key: author:06 \nbibtex[crossref=conference:06]",
+      "extra": "Citation Key: author:06 \nbibtex*[crossref=conference:06]",
       "itemID": 0
     },
     {
@@ -35,7 +35,7 @@
       ],
       "title": "Proceedings of the Xth Conference on XYZ",
       "date": "2006-10",
-      "extra": "Citation Key: conference:06 \nbibtex[booktitle=Proceedings of the Xth Conference on XYZ (Book)]",
+      "extra": "Citation Key: conference:06 \nbibtex*[booktitle=Proceedings of the Xth Conference on XYZ (Book)]",
       "itemID": 1
     }
   ],

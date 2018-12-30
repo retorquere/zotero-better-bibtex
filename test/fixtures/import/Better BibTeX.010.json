@@ -59,7 +59,7 @@
           "creatorType": "editor"
         }
       ],
-      "extra": "Citation Key: Hulse2009 \nbibtex[biburl=http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp;crossref=conf/icdm/2009w;description=dblp;ee=http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35;interhash=aad604c231737dbf8f6155082e3535ae;intrahash=c97a29e90fbd958a0990360f70252458;owner=sstudent]",
+      "extra": "Citation Key: Hulse2009 \nbibtex*[biburl=http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp;crossref=conf/icdm/2009w;description=dblp;ee=http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35;interhash=aad604c231737dbf8f6155082e3535ae;intrahash=c97a29e90fbd958a0990360f70252458;owner=sstudent]",
       "tags": [
         "dblp"
       ],

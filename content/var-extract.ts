@@ -52,7 +52,7 @@ export function extract(item) {
   while (m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(extra)) {
     let json = null
     const prefix = m[1] + (m[2] || '') // tslint:disable-line:no-magic-numbers
-    const cook = !m[2] // tslint:disable-line:no-magic-numbers
+    const cook = m[2] // tslint:disable-line:no-magic-numbers
     let data = m[3] // tslint:disable-line:no-magic-numbers
     // minimize the chunk
     while (data.indexOf('}') >= 0) {
