@@ -1049,6 +1049,7 @@ class ZoteroItem {
       this.hackyFields.push(`${this.eprint.eprintType}: ${this.eprint.eprint}${eprintclass}`)
 
     } else {
+      delete this.eprint.eprintType
       for (const [k, v] of Object.entries(this.eprint)) {
         this.addToExtraData(k, v)
       }
