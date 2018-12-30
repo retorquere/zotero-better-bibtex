@@ -850,7 +850,6 @@ class ZoteroItem {
     this.eprint[field] = this.unparse(value)
     return true
   }
-  protected $slaccitation(value, field) { return this.$eprint(value, field) }
   protected $eprintclass(value, field) { return this.$eprint(value, field) }
 
   protected $nationality(value) { return this.set('country', this.unparse(value)) }
@@ -1040,12 +1039,8 @@ class ZoteroItem {
 
     if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 
-    const eprintclass = this.eprint.eprintType === 'arXiv' && this.eprint.eprintclass ? ` [${this.eprint.eprintclass}]` : ''
-    let m
-    if (m = (this.eprint.slaccitation || '').match(/^%%CITATION = ARXIV:(.+);%%$/)) {
-      this.hackyFields.push(`arXiv: ${m[1]}${eprintclass}`)
-
-    } else if (this.eprint.eprintType && this.eprint.eprint) {
+    if (this.eprint.eprintType && this.eprint.eprint) {
+      const eprintclass = this.eprint.eprintType === 'arXiv' && this.eprint.eprintclass ? ` [${this.eprint.eprintclass}]` : ''
       this.hackyFields.push(`${this.eprint.eprintType}: ${this.eprint.eprint}${eprintclass}`)
 
     } else {

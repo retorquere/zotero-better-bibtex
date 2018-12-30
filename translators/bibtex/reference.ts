@@ -358,12 +358,6 @@ export class Reference {
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.eprint })
       this.add({ name: 'primaryClass', value: this.item.arXiv.primaryClass })
-      if (Translator.BetterBibTeX && Translator.preferences.SLACcitation) {
-        let slaccitation = ''
-        if (this.item.arXiv.primaryClass) slaccitation += this.item.arXiv.primaryClass.toUpperCase() + '/'
-        slaccitation += this.item.arXiv.eprint
-        this.add({ name: 'SLACcitation', value: `%%CITATION = ARXIV:${slaccitation};%%`, raw: true }) // because sure, why not choose percentage signs for markers REVTeX?
-      }
       delete this.item.extraFields.kv.arxiv
     }
   }
