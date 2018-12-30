@@ -51,7 +51,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         if (inspireHEP) {
           parsed = varExtract({ extra: item.getField('extra') })
 
-          let key = parsed.extraKeys.csl.DOI || item.getField('DOI') || (arXiv.parse(`arxiv:${parsed.extraKeys.kv.arxiv}`) || { id: null}).id
+          let key = parsed.extraFields.csl.DOI || item.getField('DOI') || (arXiv.parse(`arxiv:${parsed.extraFields.kv.arxiv}`) || { id: null}).id
           if (!key && ['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) key = arXiv.parse(item.getField('publicationTitle'))
           if (!key) throw new Error(`No DOI or arXiv ID for ${item.getField('title')}`)
 
@@ -59,6 +59,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
           if (results.length !== 1) throw new Error(`Expected 1 inspire result for ${item.getField('title')}, got ${results.length}`)
 
           citekey = results[0].system_control_number.find(i => i.institute.endsWith('TeX') && i.value).value
+
+          if (parsed.extraFields.citekey.citekey === citekey && parsed.extraFields.citekey.pinned) continue
 
         } else {
           parsed = Citekey.get(item.getField('extra'))
