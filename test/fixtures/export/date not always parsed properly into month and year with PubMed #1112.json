@@ -1,0 +1,418 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.59",
+        "platform": "Linux x86_64",
+        "oscpu": "Linux x86_64",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.59",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.33.emile.titanarum"
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 10,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoPin": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "debug": false,
+      "debugLog": "",
+      "git": "config",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": true,
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
+      "skipFields": [],
+      "skipWords": [
+        "a",
+        "ab",
+        "aboard",
+        "about",
+        "above",
+        "across",
+        "after",
+        "against",
+        "al",
+        "along",
+        "amid",
+        "among",
+        "an",
+        "and",
+        "anti",
+        "around",
+        "as",
+        "at",
+        "before",
+        "behind",
+        "below",
+        "beneath",
+        "beside",
+        "besides",
+        "between",
+        "beyond",
+        "but",
+        "by",
+        "d",
+        "da",
+        "das",
+        "de",
+        "del",
+        "dell",
+        "dello",
+        "dei",
+        "degli",
+        "della",
+        "dell",
+        "delle",
+        "dem",
+        "den",
+        "der",
+        "des",
+        "despite",
+        "die",
+        "do",
+        "down",
+        "du",
+        "during",
+        "ein",
+        "eine",
+        "einem",
+        "einen",
+        "einer",
+        "eines",
+        "el",
+        "en",
+        "et",
+        "except",
+        "for",
+        "from",
+        "gli",
+        "i",
+        "il",
+        "in",
+        "inside",
+        "into",
+        "is",
+        "l",
+        "la",
+        "las",
+        "le",
+        "les",
+        "like",
+        "lo",
+        "los",
+        "near",
+        "nor",
+        "of",
+        "off",
+        "on",
+        "onto",
+        "or",
+        "over",
+        "past",
+        "per",
+        "plus",
+        "round",
+        "save",
+        "since",
+        "so",
+        "some",
+        "sur",
+        "than",
+        "the",
+        "through",
+        "to",
+        "toward",
+        "towards",
+        "un",
+        "una",
+        "unas",
+        "under",
+        "underneath",
+        "une",
+        "unlike",
+        "uno",
+        "unos",
+        "until",
+        "up",
+        "upon",
+        "versus",
+        "via",
+        "von",
+        "while",
+        "with",
+        "within",
+        "without",
+        "yet",
+        "zu",
+        "zum"
+      ],
+      "sorted": false,
+      "strings": "",
+      "suppressTitleCase": false,
+      "testing": true,
+      "warnBulkModify": 10
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "exportPath": "/home/emile/github/better-bibtex/"
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "itemType": "journalArticle",
+      "volume": "27",
+      "issue": "9",
+      "pages": "1608-1617",
+      "publicationTitle": "Human Molecular Genetics",
+      "ISSN": "1460-2083",
+      "date": "05 01, 2018",
+      "extra": "PMID: 29474540\nPMCID: PMC5905626",
+      "journalAbbreviation": "Hum. Mol. Genet.",
+      "DOI": "10.1093/hmg/ddy068",
+      "libraryCatalog": "PubMed",
+      "language": "eng",
+      "abstractNote": "Centronuclear myopathies (CNM) are a subtype of congenital myopathies (CM) characterized by skeletal muscle weakness and an increase in the number of central myonuclei. We have previously identified three CNM probands, two with associated dilated cardiomyopathy, carrying striated preferentially expressed gene (SPEG) mutations. Currently, the role of SPEG in skeletal muscle function is unclear as constitutive SPEG-deficient mice developed severe dilated cardiomyopathy and died in utero. We have generated a conditional Speg-KO mouse model and excised Speg by crosses with striated muscle-specific cre-expressing mice (MCK-Cre). The resulting litters had a delay in Speg excision consistent with cre expression starting in early postnatal life and, therefore, an extended lifespan up to a few months. KO mice were significantly smaller and weaker than their littermate-matched controls. Histopathological skeletal muscle analysis revealed smaller myofibers, marked fiber-size variability, and poor integrity and low number of triads. Further, SPEG-deficient muscle fibers were weaker by physiological and in vitro studies and exhibited abnormal Ca2+ handling and excitation-contraction (E-C) coupling. Overall, SPEG deficiency in skeletal muscle is associated with fewer and abnormal triads, and defective calcium handling and excitation-contraction coupling, suggesting that therapies targeting calcium signaling may be beneficial in such patients.",
+      "title": "SPEG-deficient skeletal muscles exhibit abnormal triad and defective calcium handling",
+      "creators": [
+        {
+          "firstName": "Virginia",
+          "lastName": "Huntoon",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jeffrey J.",
+          "lastName": "Widrick",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Colline",
+          "lastName": "Sanchez",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Samantha M.",
+          "lastName": "Rosen",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Candice",
+          "lastName": "Kutchukian",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Siqi",
+          "lastName": "Cao",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Christopher R.",
+          "lastName": "Pierson",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Xiaoli",
+          "lastName": "Liu",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Mark A.",
+          "lastName": "Perrella",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Alan H.",
+          "lastName": "Beggs",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Vincent",
+          "lastName": "Jacquemond",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Pankaj B.",
+          "lastName": "Agrawal",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "relations": [],
+      "dateAdded": "2018-12-30T15:34:36Z",
+      "dateModified": "2018-12-30T15:34:36Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9B6E853J",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "PubMed entry",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2018-12-30T15:34:37Z",
+          "dateModified": "2018-12-30T15:34:37Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/3FBT5XKY"
+        }
+      ],
+      "notes": [],
+      "itemID": 100,
+      "citekey": "HuntoonSPEGdeficientskeletalmuscles2018"
+    },
+    {
+      "itemType": "journalArticle",
+      "volume": "14",
+      "issue": "3",
+      "pages": "e1007226",
+      "publicationTitle": "PLoS genetics",
+      "ISSN": "1553-7404",
+      "date": "03 2018",
+      "extra": "PMID: 29518074\nPMCID: PMC5843160",
+      "journalAbbreviation": "PLoS Genet.",
+      "DOI": "10.1371/journal.pgen.1007226",
+      "libraryCatalog": "PubMed",
+      "language": "eng",
+      "abstractNote": "Gene expression in a tissue-specific context depends on the combined efforts of epigenetic, transcriptional and post-transcriptional processes that lead to the production of specific proteins that are important determinants of cellular identity. Ribosomes are a central component of the protein biosynthesis machinery in cells; however, their regulatory roles in the translational control of gene expression in skeletal muscle remain to be defined. In a genetic screen to identify critical regulators of myogenesis, we identified a DEAD-Box RNA helicase, DDX27, that is required for skeletal muscle growth and regeneration. We demonstrate that DDX27 regulates ribosomal RNA (rRNA) maturation, and thereby the ribosome biogenesis and the translation of specific transcripts during myogenesis. These findings provide insight into the translational regulation of gene expression in myogenesis and suggest novel functions for ribosomes in regulating gene expression in skeletal muscles.",
+      "title": "RNA helicase, DDX27 regulates skeletal muscle growth and regeneration by modulation of translational processes",
+      "creators": [
+        {
+          "firstName": "Alexis H.",
+          "lastName": "Bennett",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Marie-Francoise",
+          "lastName": "O'Donohue",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Stacey R.",
+          "lastName": "Gundry",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Aye T.",
+          "lastName": "Chan",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jeffrey",
+          "lastName": "Widrick",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Isabelle",
+          "lastName": "Draper",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Anirban",
+          "lastName": "Chakraborty",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Yi",
+          "lastName": "Zhou",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Leonard I.",
+          "lastName": "Zon",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Pierre-Emmanuel",
+          "lastName": "Gleizes",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Alan H.",
+          "lastName": "Beggs",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Vandana A.",
+          "lastName": "Gupta",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Animals",
+        "Animals, Genetically Modified",
+        "Cell Line",
+        "Cell Nucleolus",
+        "Cell Proliferation",
+        "DEAD-box RNA Helicases",
+        "Embryo, Nonmammalian",
+        "Mice",
+        "Muscle Development",
+        "Muscle, Skeletal",
+        "Myoblasts",
+        "PAX2 Transcription Factor",
+        "Protein Biosynthesis",
+        "Regeneration",
+        "RNA, Ribosomal",
+        "Zebrafish",
+        "Zebrafish Proteins"
+      ],
+      "relations": [],
+      "dateAdded": "2018-12-30T15:35:12Z",
+      "dateModified": "2018-12-30T15:35:12Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VDZANJE6",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Full Text",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2018-12-30T15:36:11Z",
+          "dateModified": "2018-12-30T15:36:11Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/4IXQYRPK"
+        },
+        {
+          "itemType": "attachment",
+          "title": "PubMed entry",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2018-12-30T15:35:13Z",
+          "dateModified": "2018-12-30T15:35:13Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/IDBYTFAU"
+        }
+      ],
+      "notes": [],
+      "itemID": 102,
+      "citekey": "BennettRNAhelicaseDDX272018"
+    }
+  ]
+}
