@@ -21,13 +21,13 @@ export let arXiv = new class {
     if (!prefixed && prefix_optional) id = `arxiv:${id}`
 
     if (m = this.new.exec(id)) {
-      return { id, eprint: m[1], eprintClass: m[4] } // tslint:disable-line:no-magic-numbers
+      return { id, eprint: m[1], eprintClass: m[4], style: 'new' } // tslint:disable-line:no-magic-numbers
     }
     if (m = this.old.exec(id)) {
-      return { id, eprint: m[1], eprintClass: m[4] } // tslint:disable-line:no-magic-numbers
+      return { id, eprint: m[1], eprintClass: m[4], style: 'old' } // tslint:disable-line:no-magic-numbers
     }
     if (prefixed && (m = this.bare.exec(id))) {
-      return { id, eprint: m[1] }
+      return { id, eprint: m[1] , style: 'bare' }
     }
 
     return undefined

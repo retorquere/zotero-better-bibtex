@@ -156,7 +156,7 @@ with open(os.path.join(root, 'gen/typings/serialized-item.d.ts'), 'w') as typing
       kv: { [key: string]: { name: string, type: string, value: string, raw?: boolean } }
     }
   ''').strip())
-  addfield('arXiv', '{ eprint: string, source?: string, id: string, eprintClass?: string }')
+  addfield('arXiv', '{ eprint: string, source?: string, id: string, eprintClass?: string, style?: string }')
 
   comment('Juris-M extras')
   addfield('multi')

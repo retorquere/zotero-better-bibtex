@@ -716,7 +716,17 @@ export class Reference {
     }
 
     if (Translator.BetterBibTeX && Translator.preferences.SLACcitation && !this.has.SLACcitation) {
-      const prefix = this.item.arXiv.eprintClass ? this.item.arXiv.eprintClass.toUpperCase() + '/' : 'ARXIV:'
+      let prefix = ''
+
+      switch (this.item.arXiv.style) {
+        case 'new':
+          prefix = 'ARXIV:'
+          break
+
+        case 'old':
+          if (this.item.arXiv.eprintClass) prefix = this.item.arXiv.eprintClass.toUpperCase() + '/'
+          break
+      }
       this.add({ name: 'SLACcitation', value: `%%CITATION = ${prefix}${this.item.arXiv.eprint};%%`, raw: true })
     }
 
