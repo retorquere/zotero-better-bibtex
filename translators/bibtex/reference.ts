@@ -357,7 +357,7 @@ export class Reference {
       this.add({ name: 'archivePrefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.eprint })
-      this.add({ name: 'eprintclass', value: this.item.arXiv.eprintClass })
+      this.add({ name: 'primaryclass', value: this.item.arXiv.eprintClass })
       delete this.item.extraFields.kv.arxiv
     }
   }
