@@ -261,15 +261,6 @@
           if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
         -->
 
-        <!-- https://web.archive.org/web/20041026075722/http://www.slac.stanford.edu:80/spires/hep/latex.html -->
-        <preference
-          name="extensions.zotero.translators.better-bibtex.SLACcitation"
-          type="bool"
-          default="false"/>
-        <!--!!
-          REVTeX adds new fields for arXiv support. (AFAICT), unless you use REVTeX, you don't need this.
-        -->
-
         <preference
           name="extensions.zotero.translators.better-bibtex.skipWords"
           type="string"

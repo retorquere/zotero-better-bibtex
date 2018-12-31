@@ -67,8 +67,7 @@ export function extract(item) {
 
     if (json) {
       extra = extra.replace(prefix + data, '').trim()
-      for (let [name, value] of Object.entries(json)) {
-        if (name !== 'SLACcitation') name = name.toLowerCase()
+      for (const [name, value] of Object.entries(json)) {
         extraFields.bibtex[name] = {name, value, raw: !cook }
       }
     }

@@ -120,7 +120,6 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
-     | inspire-hep citekey and SLACcitation #1110                                         | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
      | date not always parsed properly into month and year with PubMed #1112              | 2          |
      | error on exporting note with pre tags; duplicate field howpublished #1092          | 2          |

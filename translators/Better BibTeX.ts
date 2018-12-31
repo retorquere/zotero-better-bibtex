@@ -454,7 +454,7 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[]
   private eprint: { [key: string]: string }
-  private extra: { data: { [key: string]: string }, json: boolean, raw: { [key: string]: string } }
+  private extra: { data: { [key: string]: string }, json: boolean }
   private validFields: Map<string, boolean>
   private numberPrefix: string
 
@@ -469,7 +469,7 @@ class ZoteroItem {
 
     this.item = new Zotero.Item(this.type)
     this.item.itemID = this.id
-    this.extra = { data: {}, json: false, raw: {} }
+    this.extra = { data: {}, json: false }
 
     this.import()
 
@@ -1041,7 +1041,7 @@ class ZoteroItem {
 
     if (this.bibtex.entry_key) this.addToExtra(`Citation Key: ${this.bibtex.entry_key}`) // Endnote has no citation keys in their bibtex
 
-    if (this.eprint.slaccitation) {
+    if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
       const arxiv = m ? arXiv.parse(m[1].trim(), true) : null
 
@@ -1049,18 +1049,16 @@ class ZoteroItem {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'
         if (!this.eprint.archiveprefix) this.eprint.archiveprefix = 'arXiv'
         if (!this.eprint.eprintclass && arxiv.eprintClass) this.eprint.eprintclass = arxiv.eprintClass
-
-      } else {
-        this.extra.raw.SLACcitation = this.eprint.slaccitation
-        delete this.eprint.slaccitation
       }
     }
+    delete this.eprint.slaccitation
 
     if (this.eprint.eprintType && this.eprint.eprint) {
       const eprintclass = this.eprint.eprintType === 'arXiv' && this.eprint.eprintclass ? ` [${this.eprint.eprintclass}]` : ''
       this.hackyFields.push(`${this.eprint.eprintType}: ${this.eprint.eprint}${eprintclass}`)
 
     } else {
+
       delete this.eprint.eprintType
       for (const [k, v] of Object.entries(this.eprint)) {
         this.addToExtraData(k, v)
@@ -1083,8 +1081,6 @@ class ZoteroItem {
 
       this.addToExtra(extraData)
     }
-
-    if (Object.keys(this.extra.raw).length) this.addToExtra(`bibtex${JSON5.stringify(this.extra.raw)}`)
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()

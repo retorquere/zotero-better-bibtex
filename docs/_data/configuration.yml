@@ -208,10 +208,6 @@
 '
   name: Hidden preferences
   preferences:
-    SLACcitation:
-      default: 'False'
-      description: REVTeX adds new fields for arXiv support. (AFAICT), unless you
-        use REVTeX, you don't need this.
     autoExportIdleWait:
       default: '10'
       description: Number of seconds to wait after your system goes idle before kicking
