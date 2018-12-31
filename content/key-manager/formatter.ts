@@ -201,7 +201,7 @@ class PatternFormatter {
   /** returns the name of the shared group library, or nothing if the reference is in your personal library */
   public $library() {
     if (this.item.item.libraryID === Zotero.Libraries.userLibraryID) return ''
-    return Zotero.Libraries.getName(this.item.item.libraryID)
+    return Zotero.Libraries.get(this.item.item.libraryID).name
   }
 
   /** The first `N` (default: all) characters of the `M`th (default: first) author's last name. */
