@@ -345,11 +345,11 @@ export class Reference {
       }
     }
 
-    if (['arxiv.org', 'arxiv'].includes((this.item.libraryCatalog || '').toLowerCase()) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle))) {
+    if (['arxiv.org', 'arxiv'].includes((this.item.libraryCatalog || '').toLowerCase()) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
 
-    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(`arxiv:${this.item.extraFields.kv.arxiv}`))) {
+    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(`arxiv:${this.item.extraFields.kv.arxiv}`)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
     }
 

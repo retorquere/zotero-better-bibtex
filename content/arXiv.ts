@@ -3,10 +3,10 @@ export let arXiv = new class {
   // new-style IDs
   // arXiv:0707.3168 [hep-th]
   // arXiv:YYMM.NNNNv# [category]
-  private post2007Id = /(?:^|\s|\/)((?:arXiv:)?\d{4}\.\d{4,5}(?:v\d+)?)(\s\[a-z][-\.a-z]+[a-z]\])?(?=$|\s)/gi
+  private post2007Id = /(?:^|\s|\/)((?:arXiv:\s*)?\d{4}\.\d{4,5}(?:v\d+)?)(?:\s\[(.*?)\])?(?=$|\s)/gi
 
   // arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
-  private pre2007Id = /(?:^|\s|\/)((?:arXiv:)?[a-z-]+(?:\.[A-Z]{2})?\/\d{2}(?:0[1-9]|1[012])\d{3}(?:v\d+)?(?=$|\s))/gi
+  private pre2007Id = /(?:^|\s|\/)((?:arXiv:\s*)?[a-z-]+(?:\.[A-Z]{2})?\/\d{2}(?:0[1-9]|1[012])\d{3}(?:v\d+)?(?=$|\s))/gi
 
   private prefix = /^arxiv:/i
 
