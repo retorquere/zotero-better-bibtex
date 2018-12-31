@@ -1112,13 +1112,15 @@ export class Reference {
   private postscript(reference, item) {} // tslint:disable-line:no-empty
 
   private toVerbatim(text) {
+    text = text || ''
+
     let value
     if (Translator.BetterBibTeX) {
-      value = `${text}`.replace(/([#\\%&{}])/g, '\\$1')
+      value = text.replace(/([#\\%&{}])/g, '\\$1')
     } else {
-      value = `${text}`.replace(/([\\{}])/g, '\\$1')
+      value = text.replace(/([\\{}])/g, '\\$1')
     }
-    if (!Translator.unicode) value = value.replace(/[^\x21-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
+    if (!Translator.unicode) value = value.replace(/[^\x20-\x7E]/g, (chr => `\\%${`00${chr.charCodeAt(0).toString(16).slice(-2)}`}`)) // tslint:disable-line:no-magic-numbers
     return value
   }
 
