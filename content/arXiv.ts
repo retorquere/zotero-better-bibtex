@@ -3,33 +3,23 @@ export let arXiv = new class {
   // new-style IDs
   // arXiv:0707.3168 [hep-th]
   // arXiv:YYMM.NNNNv# [category]
-  private new = /^arxiv:([0-9]{4}\.[0-9]+)(v[0-9]+)?([^\S\n]+\[(.*)\])?$/i
+  private post2007Id = /(?:^|\s|\/)((?:arXiv:)?\d{4}\.\d{4,5}(?:v\d+)?)(\s\[a-z][-\.a-z]+[a-z]\])?(?=$|\s)/gi
 
   // arXiv:arch-ive/YYMMNNNv# or arXiv:arch-ive/YYMMNNNv# [category]
-  private old = /^arxiv:([a-z]+-[a-z]+\/[0-9]{7})(v[0-9]+)?([^\S\n]+\[(.*)\])?$/i
+  private pre2007Id = /(?:^|\s|\/)((?:arXiv:)?[a-z-]+(?:\.[A-Z]{2})?\/\d{2}(?:0[1-9]|1[012])\d{3}(?:v\d+)?(?=$|\s))/gi
 
-  // bare
-  private bare = /^arxiv:[^\S\n]*([\S]+)/i
+  public parse(id): { id: string, category?: string } {
+    if (!id) return { id: null }
 
-  private prefixed = /^arxiv:/i
+    let match
 
-  public parse(id, prefix_optional = false) {
-    let m
-    if (!id) return undefined
-
-    const prefixed = this.prefixed.exec(id)
-    if (!prefixed && prefix_optional) id = `arxiv:${id}`
-
-    if (m = this.new.exec(id)) {
-      return { id, eprint: m[1], eprintClass: m[4], style: 'new' } // tslint:disable-line:no-magic-numbers
+    while (match = this.post2007Id.exec(id)) {
+      return { id: match[1], category: match[2] && match[2].trim() }
     }
-    if (m = this.old.exec(id)) {
-      return { id, eprint: m[1], eprintClass: m[4], style: 'old' } // tslint:disable-line:no-magic-numbers
-    }
-    if (prefixed && (m = this.bare.exec(id))) {
-      return { id, eprint: m[1] , style: 'bare' }
+    while (match = this.pre2007Id.exec(id)) {
+      return { id: match[1] }
     }
 
-    return undefined
+    if (!id) return { id: null }
   }
 }
