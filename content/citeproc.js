@@ -3304,7 +3304,7 @@ CSL.Doppeler = function(rexStr, stringMangler) {
     this.join = join;
     var matchRex = new RegExp("(" + rexStr + ")", "g");
     var splitRex = new RegExp(rexStr, "g");
-    function split(str) {
+    function _split(str) {
         if (stringMangler) {
             str = stringMangler(str);
         }
@@ -3328,6 +3328,11 @@ CSL.Doppeler = function(rexStr, stringMangler) {
             strings: split,
             origStrings: split.slice()
         }
+    }
+    function split(str) {
+        const res = _split(str)
+        Zotero.debug('CSL.Doppeler.split:' + JSON.stringify(str) + ' = ' + JSON.stringify(res))
+        return res
     }
     function join(obj) {
         var lst = obj.strings.slice(-1);
