@@ -345,20 +345,24 @@ export class Reference {
       }
     }
 
-    if (['arxiv.org', 'arxiv'].includes((this.item.libraryCatalog || '').toLowerCase()) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle))) {
+    if ((this.item.libraryCatalog || '').match(/^arxiv(\.org)?$/i) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
 
-    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(`arxiv:${this.item.extraFields.kv.arxiv}`))) {
+    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
+
+    } else {
+      this.item.arXiv = null
+
     }
 
     if (this.item.arXiv) {
+      delete this.item.extraFields.kv.arxiv
       this.add({ name: 'archivePrefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
-      this.add({ name: 'eprint', value: this.item.arXiv.eprint })
-      this.add({ name: 'primaryClass', value: this.item.arXiv.eprintClass })
-      delete this.item.extraFields.kv.arxiv
+      this.add({ name: 'eprint', value: this.item.arXiv.id })
+      this.add({ name: 'primaryClass', value: this.item.arXiv.category })
     }
   }
 

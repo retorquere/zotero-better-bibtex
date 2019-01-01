@@ -51,8 +51,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         if (inspireHEP) {
           parsed = varExtract({ extra: item.getField('extra') })
 
-          let key = parsed.extraFields.csl.DOI || item.getField('DOI') || (arXiv.parse(`arxiv:${parsed.extraFields.kv.arxiv}`) || { id: null}).id
-          if (!key && ['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) key = arXiv.parse(item.getField('publicationTitle'))
+          let key = parsed.extraFields.csl.DOI || item.getField('DOI') || arXiv.parse(parsed.extraFields.kv.arxiv).id
+          if (!key && ['arxiv.org', 'arxiv'].includes((item.getField('libraryCatalog') || '').toLowerCase())) key = arXiv.parse(item.getField('publicationTitle')).id
           if (!key) throw new Error(`No DOI or arXiv ID for ${item.getField('title')}`)
 
           const results = JSON.parse((await Zotero.HTTP.request('GET', inspireSearch + encodeURIComponent(key))).responseText)

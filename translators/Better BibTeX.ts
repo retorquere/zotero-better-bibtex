@@ -1043,12 +1043,13 @@ class ZoteroItem {
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
-      const arxiv = m ? arXiv.parse(m[1].trim(), true) : null
+      const arxiv = arXiv.parse(m && m[1].trim())
 
-      if (arxiv) {
+      if (arxiv.id) {
         this.eprint.eprintType = this.eprint.eprinttype = 'arXiv'
         if (!this.eprint.archiveprefix) this.eprint.archiveprefix = 'arXiv'
-        if (!this.eprint.eprintclass && arxiv.eprintClass) this.eprint.eprintclass = arxiv.eprintClass
+        this.eprint.eprint = arxiv.id
+        if (!this.eprint.eprintclass && arxiv.category) this.eprint.eprintclass = arxiv.category
       }
     }
     delete this.eprint.slaccitation
