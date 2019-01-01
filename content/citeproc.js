@@ -3316,6 +3316,7 @@ CSL.Doppeler = function(rexStr, stringMangler) {
             };
         }
         var split = str.split(splitRex);
+        Zotero.debug('CSL.Doppeler._split:' + JSON.stringify(str) + ' = ' + JSON.stringify(split))
         for (var i=match.length-1; i> -1; i--) {
             var tag = match[i];
             if (tag === "\'" && split[i+1].length > 0) {
@@ -3331,7 +3332,7 @@ CSL.Doppeler = function(rexStr, stringMangler) {
     }
     function split(str) {
         const res = _split(str)
-        Zotero.debug('CSL.Doppeler.split:' + JSON.stringify(str) + ' = ' + JSON.stringify(res))
+        Zotero.debug('CSL.Doppeler.split:' + JSON.stringify(str) + ' / ' + JSON.stringify(rexStr) + ' = ' + JSON.stringify(res))
         return res
     }
     function join(obj) {
