@@ -1,34 +1,44 @@
-declare const Zotero: any
+// declare const Zotero: any
 declare const Components: any
 
 import * as log from './debug'
 import { patch as $patch$ } from './monkey-patch'
 
 // import Citeproc = require('./citeproc')
-const citeproc = { CSL: null }
-// const citeproc = { CSL: Zotero.CiteProc.CSL }
+const CiteProc = { CSL: null } // tslint:disable-line:variable-name
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 declare const Services: any
-if (!citeproc.CSL) Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/citeproc.js', citeproc, 'UTF-8')
+if (!CiteProc.CSL) Services.scriptloader.loadSubScript('chrome://zotero-better-bibtex/content/citeproc.js', CiteProc, 'UTF-8')
 
-$patch$(citeproc.CSL.Doppeler, 'split', original => function split(str) {
-  const res = original.apply(this, arguments)
-  let fixed = false
+CiteProc.CSL.Doppeler = (function(cls) { // tslint:disable-line:only-arrow-functions
+  function extend() {
+    cls.apply(this, arguments)
 
-  res.strings = res.strings.map(s => {
-    if (typeof s === 'number') {
-      if (!fixed) log.error('Zotero.Citeproc.CSL.Doppeler.split: expected string array, found number', { str, split: res })
-      fixed = true
-      return ''
-    }
-    return s
-  })
+    $patch$(this, 'split', original => function(str) {
+      const res = original.apply(this, arguments)
+      let fixed = false
 
-  if (fixed && res.origStrings) res.origStrings = res.origStrings.map(s => typeof s === 'number' ? '' : s)
+      res.strings = res.strings.map(s => {
+        if (typeof s === 'number') {
+          if (!fixed) log.error('Zotero.Citeproc.CSL.Doppeler.split: expected string array, found number', { str, split: res })
+          fixed = true
+          return ''
+        }
+        return s
+      })
 
-  return res
-})
+      if (fixed && res.origStrings) res.origStrings = res.origStrings.map(s => typeof s === 'number' ? '' : s)
+
+      return res
+    })
+  }
+
+  extend.prototype = Object.create(cls.prototype)
+
+  return extend
+
+})(CiteProc.CSL.Doppeler)
 
 const state = {
   opt: { lang: 'en' },
@@ -36,15 +46,15 @@ const state = {
   locale: {
     en: {
       opts: {
-        'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS,
-        'skip-words-regexp': new RegExp(`(?:(?:[?!:]*\\s+|-|^)(?:${Zotero.CiteProc.CSL.SKIP_WORDS.slice().join('|')})(?=[!?:]*\\s+|-|$))`, 'g'),
+        'skip-words': CiteProc.CSL.SKIP_WORDS,
+        'skip-words-regexp': new RegExp( '(?:(?:[?!:]*\\s+|-|^)(?:' + CiteProc.CSL.SKIP_WORDS.join('|') + ')(?=[!?:]*\\s+|-|$))', 'g'), // tslint:disable-line:prefer-template
       },
     },
   },
 }
 
 export function titleCase(text) {
-  const titleCased = citeproc.CSL.Output.Formatters.title(state, text)
+  const titleCased = CiteProc.CSL.Output.Formatters.title(state, text)
   log.debug('titlecase:', {text, titleCased})
   return titleCased
 }
