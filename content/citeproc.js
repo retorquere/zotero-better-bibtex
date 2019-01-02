@@ -3304,7 +3304,7 @@ CSL.Doppeler = function(rexStr, stringMangler) {
     this.join = join;
     var matchRex = new RegExp("(" + rexStr + ")", "g");
     var splitRex = new RegExp(rexStr, "g");
-    function _split(str) {
+    function split(str) {
         if (stringMangler) {
             str = stringMangler(str);
         }
@@ -3336,11 +3336,6 @@ CSL.Doppeler = function(rexStr, stringMangler) {
             strings: split,
             origStrings: split.slice()
         }
-    }
-    function split(str) {
-        const res = _split(str)
-        Zotero.debug('CSL.Doppeler.split:' + JSON.stringify(str) + ' / ' + JSON.stringify(rexStr) + ' = ' + JSON.stringify(res))
-        return res
     }
     function join(obj) {
         var lst = obj.strings.slice(-1);
@@ -15258,7 +15253,6 @@ CSL.Output.Formatters = new function () {
             config.doppel.strings[0] = config.capitaliseWords(config.doppel.strings[0], 0, config.doppel.tags[0]);
         }
     	for (var i=0,ilen=config.doppel.tags.length;i<ilen;i++) {
-            Zotero.debug('_textcaseEngine@' + i + ': ' + JSON.stringify(config.doppel));
             var tag = config.doppel.tags[i];
             var str = config.doppel.strings[i+1];
             if (config.tagState !== null) {
