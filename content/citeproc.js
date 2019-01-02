@@ -3316,7 +3316,14 @@ CSL.Doppeler = function(rexStr, stringMangler) {
             };
         }
         var split = str.split(splitRex);
-        Zotero.debug('CSL.Doppeler._split:' + JSON.stringify(str) + ' = ' + JSON.stringify(split))
+        split = split.map(function(s) {
+          if (typeof s === 'number') {
+            Zotero.debug('CSL.Doppeler._split: got number!' + JSON.stringify(str) + ' = ' + JSON.stringify(split))
+            return ''
+          }
+
+          return s
+        })
         for (var i=match.length-1; i> -1; i--) {
             var tag = match[i];
             if (tag === "\'" && split[i+1].length > 0) {
