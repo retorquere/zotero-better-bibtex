@@ -233,6 +233,24 @@ export = new class ErrorReport {
     return info
   }
 
+  private async put(url, options) {
+    let error = null
+
+    for (let attempt = 0; attempt < 5; attempt++) { // tslint:disable-line:no-magic-numbers
+      try {
+        await Zotero.HTTP.request('PUT', url, options)
+        return
+
+      } catch (err) {
+        log.error('ErrorReport: failed to PUT to', url, attempt)
+        error = err
+
+      }
+    }
+
+    throw error
+  }
+
   private async submit(filename, contentType, data, prefix = '') {
     const started = Date.now()
     log.debug('Errorlog.submit:', filename)
@@ -283,7 +301,7 @@ export = new class ErrorReport {
     chunks = chunks.map((chunk, n) => ({ n: '.' + (n + 1).toString().padStart(4, '0'), body: chunk })) // tslint:disable-line:no-magic-numbers
     if (chunks.length === 1) chunks[0].n = ''
 
-    await Promise.all(chunks.map(chunk => Zotero.HTTP.request('PUT', `${url}${chunk.n}.${ext}`, {
+    await Promise.all(chunks.map(chunk => this.put(`${url}${chunk.n}.${ext}`, {
       ...httpRequestOptions,
       body: chunk.body,
       headers,
