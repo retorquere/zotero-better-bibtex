@@ -2,10 +2,11 @@
 // declare const Components: any
 
 import * as log from './debug'
-import * as CiteProc from 'citeproc'
+import * as CSL from 'citeproc'
 
 // const CiteProc = { CSL: null } // tslint:disable-line:variable-name
 // const CiteProc = { CSL: Zotero.CiteProc.CSL } // tslint:disable-line:variable-name
+const CiteProc = { CSL } // tslint:disable-line:variable-name
 
 // Components.utils.import('resource://gre/modules/Services.jsm')
 // declare const Services: any
