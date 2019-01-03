@@ -8,7 +8,7 @@
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.whatever "Ich habe Zotero bisher nicht für die BibTeX-Verwaltung verwendet">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Wählen sie diese Option, wenn sie Dokumente haben, die auf von BBT generierte Schlüssel verweisen">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Hinweis">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5 aktualisiert BBT nicht mehr automatisch die Zitierschlüssel, wenn sie das Muster in den Einstellungen ändern. Wenn bestehende Eintragungen dem neuen Muster folgen sollen, so müssen Sie die Einträge markieren und aktualisieren.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5 aktualisiert BBT nicht mehr automatisch die Zitierschlüssel, wenn Sie das Muster in den Einstellungen ändern. Wenn bestehende Eintragungen dem neuen Muster folgen sollen, müssen Sie die Einträge markieren und aktualisieren.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Wählen Sie diese Option, wenn Sie Dokumente haben, die auf nicht mit BBT generierte Schlüssel verweisen">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.whatever "Diese Option wählt das Default-Format von BBT">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "Ihre Zitier-Schlüssel sehen folgendermaßen aus:">
@@ -132,7 +132,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK, nicht noch mal fragen">
 <!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTex">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.pin "BibTeX-Key anheften">
-<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Pin BibTeX key from InspireHEP">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Hefte BibTeX-Schlüssel aus InspireHEP an">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "BibTeX-Key lösen">
 <!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Aktualisiere BibTeX key">
 <!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Füge Zitat-Links hinzu...">
