@@ -16,6 +16,6 @@
   },
   "translatorType": 3,
   "browserSupport": "gcsv",
-  "priority": 100,
+  "priority": 99,
   "inRepository": false
 }

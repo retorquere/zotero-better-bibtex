@@ -174,7 +174,7 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 
 ```
 if (Translator.BetterBibTeX && this.has.title) {
-  this.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<pre>$1</pre>'), replace: true });
+  this.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>$1</script>'), replace: true });
 }
 ```
 
