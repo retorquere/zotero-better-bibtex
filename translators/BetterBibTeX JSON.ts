@@ -16,8 +16,12 @@ Translator.detectImport = () => {
     if (json[0] !== '{') return false
   }
 
-  // a failure to parse will throw an error which a) is actually logged, and b) will count as "false"
-  const data = JSON.parse(json)
+  let data
+  try {
+    data = JSON.parse(json)
+  } catch (err) {
+    return false
+  }
 
   if (!data.config || (data.config.id !== Translator.header.translatorID)) return false
   return true
