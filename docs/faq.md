@@ -62,7 +62,7 @@ that BBT has learned to deal with. Did you know that
 * casing behavior over the *whole* reference field depends on [whether there's a slash-command at the first position](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240156274) of the title? 
 * [apparently](https://github.com/retorquere/zotero-better-bibtex/issues/541#issuecomment-240999396), to make sure that `Reading HLA Hart's: <i>The Concept of Law</i>` renders as expected means I have to output the astoundingly ugly `{% raw %}{Reading {{HLA Hart}}'s: {{{\emph{The Concept}}}}{\emph{ of }}{{{\emph{Law}}}}}{% endraw %}`?
 
-To make matters even more complex, so many people have in the past wrongly recommended to "just wrap everything in one extra set of braces" that biblatex now [ignores exactly that pattern].
+To make matters even more complex, so many people have in the past wrongly recommended to "just wrap everything in one extra set of braces" that biblatex now ignores exactly that pattern (see [here](https://tex.stackexchange.com/a/327387/27603) and [here](https://tex.stackexchange.com/a/233976/27603)).
 
 The double-bracing is the only unambiguous rule I could construct that consistently gets the rendered reference right (so far).
 
