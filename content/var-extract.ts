@@ -54,14 +54,15 @@ export function extract(item) {
 
   const bibtexJSON = /(biblatexdata|bibtex|biblatex)(\*)?{/
   let marker = 0
+  const validTypes = new Set(['string', 'number'])
   while ((marker = indexOfRE(extra, bibtexJSON, marker)) >= 0) {
     const start = extra.indexOf('{', marker)
-    const cook = extra[start - 1] === '*'
+    const raw = extra[start - 1] !== '*'
 
     // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
     let end = extra.lastIndexOf('}')
 
-    log.debug('var-extract: biblatexdata marker found', { marker, start, end, cook })
+    log.debug('var-extract: biblatexdata marker found', { marker, start, end, raw })
 
     let json = null
     while (end > start) {
@@ -74,8 +75,13 @@ export function extract(item) {
         extra = extra.substring(0, marker) + extra.substring(end + 1)
 
         for (const [name, value] of Object.entries(json)) {
-          extraFields.bibtex[name] = {name, value, raw: !cook }
+          if (validTypes.has(typeof value)) {
+            extraFields.bibtex[name] = {name, value, raw }
+          } else {
+            log.error(`"extra" has invalid biblatexdata field ${name} of type ${typeof value} (${JSON.stringify(value)})`)
+          }
         }
+
         break
 
       } catch (err) {
