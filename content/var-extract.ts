@@ -14,6 +14,11 @@ function cslCreator(value) {
   }
 }
 
+function indexOfRE(str, re, start) {
+  const index = str.substring(start).search(re)
+  return (index >= 0) ? (index + start) : index
+}
+
 export function extract(item) {
   let extra = item.extra || ''
 
@@ -47,29 +52,42 @@ export function extract(item) {
     return ''
   }).trim()
 
-  let m
-  // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
-  while (m = /(biblatexdata|bibtex|biblatex)(\*)?({[\s\S]+})/.exec(extra)) {
-    let json = null
-    const prefix = m[1] + (m[2] || '') // tslint:disable-line:no-magic-numbers
-    const cook = m[2] // tslint:disable-line:no-magic-numbers
-    let data = m[3] // tslint:disable-line:no-magic-numbers
-    // minimize the chunk
-    while (data.indexOf('}') >= 0) {
-      try {
-        json = JSON5.parse(data)
-        break
-      } catch (error) { }
+  const bibtexJSON = /(biblatexdata|bibtex|biblatex)(\*)?{/
+  let marker = 0
+  while ((marker = indexOfRE(extra, bibtexJSON, marker)) >= 0) {
+    const start = extra.indexOf('{', marker)
+    const cook = extra[start - 1] === '*'
 
-      // remove the last '}'
-      data = data.replace(/[^}]*}$/, '')
+    // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
+    let end = extra.lastIndexOf('}')
+
+    log.debug('var-extract: biblatexdata marker found', { marker, start, end, cook })
+
+    let json = null
+    while (end > start) {
+      try {
+        log.debug('var-extract: biblatexdata trying', { start, end, candidate: extra.substring(start, end + 1) })
+        json = JSON5.parse(extra.substring(start, end + 1))
+
+        if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
+
+        extra = extra.substring(0, marker) + extra.substring(end + 1)
+
+        for (const [name, value] of Object.entries(json)) {
+          extraFields.bibtex[name] = {name, value, raw: !cook }
+        }
+        break
+
+      } catch (err) {
+        json = null
+      }
+
+      end = extra.lastIndexOf('}', end - 1)
     }
 
-    if (json) {
-      extra = extra.replace(prefix + data, '').trim()
-      for (const [name, value] of Object.entries(json)) {
-        extraFields.bibtex[name] = {name, value, raw: !cook }
-      }
+    if (!json) {
+      log.debug('var-extract: biblatexdata ignoring', { marker, start })
+      marker = start
     }
   }
 
