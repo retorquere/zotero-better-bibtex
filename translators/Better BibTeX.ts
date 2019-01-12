@@ -14,6 +14,7 @@ import { arXiv } from '../content/arXiv'
 
 Reference.prototype.caseConversion = {
   title: true,
+  series: true,
   shorttitle: true,
   booktitle: true,
   type: true,
