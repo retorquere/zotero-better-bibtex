@@ -306,11 +306,11 @@ export class Reference {
         if (match[0].sim >= 0.9) { // tslint:disable-line:no-magic-numbers
           this.language = match[0].lang
         } else {
-          this.language = this.item.language.toLowerCase()
+          this.language = this.item.language
         }
       }
 
-      this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language)
+      this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language.toLowerCase())
       debug('detected language:', {language: this.language, english: this.english})
     }
 
