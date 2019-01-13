@@ -6,7 +6,7 @@
   location = {{Oxford}},
   maintitle = {Opera},
   publisher = {{Clarendon Press}},
-  series = {Oxford classical texts CSL-VAR},
+  series = {Oxford Classical Texts {{CSL}}-{{VAR}}},
   title = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
   volume = {4}
 }
@@ -21,7 +21,7 @@
   maintitle = {Opera},
   pages = {327--621},
   publisher = {{Clarendon Press}},
-  series = {Oxford classical texts},
+  series = {Oxford Classical Texts},
   title = {Republic},
   volume = {4}
 }
