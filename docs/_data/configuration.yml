@@ -208,6 +208,12 @@
 '
   name: Hidden preferences
   preferences:
+    autoExportDelay:
+      default: '1'
+      description: If you have auto-exports set up, BBT will wait this many seconds
+        before actually kicking off the exports to buffer multiple changes in quick
+        succession setting off an unreasonable number of auto-exports. Minimum is
+        1 second. Changes to this preference take effect after restarting Zotero.
     autoExportIdleWait:
       default: '10'
       description: Number of seconds to wait after your system goes idle before kicking

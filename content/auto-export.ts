@@ -134,15 +134,19 @@ class Git {
 }
 const git = new Git()
 
-const debounce_delay = 1000
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 const queue = new class {
   private tasks = new Loki('autoexport').addCollection('tasks')
   private paused: Set<number>
   private autoexports: any
+  private debounce_delay: number
 
   constructor() {
     this.paused = Prefs.get('autoExport') === 'immediate' ? null : new Set([])
+
+    this.debounce_delay = Prefs.get('autoExportDelay')
+    if (this.debounce_delay < 1) this.debounce_delay = 1
+    this.debounce_delay = this.debounce_delay * 1000 // tslint:disable-line:no-magic-numbers
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
@@ -176,7 +180,7 @@ const queue = new class {
 
     const task = this.tasks.insert({id})
 
-    Zotero.Promise.delay(debounce_delay)
+    Zotero.Promise.delay(this.debounce_delay)
       .then(() => this.run(task))
       .catch(err => log.error('autoexport failed:', {id}, err))
       .finally(() => this.tasks.remove(task))

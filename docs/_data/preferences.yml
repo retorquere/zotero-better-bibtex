@@ -4,6 +4,7 @@ asciiBibTeX: true
 autoAbbrev: false
 autoAbbrevStyle: ''
 autoExport: immediate
+autoExportDelay: 1
 autoExportIdleWait: 10
 autoExportPrimeExportCacheBatch: 10
 autoExportPrimeExportCacheThreshold: 0

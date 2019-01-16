@@ -13,7 +13,7 @@ gem 'httparty'
 gem 'reverse_markdown'
 gem 'deepsort'
 gem "sqlite3"
-#gem 'aws-sdk'
+gem 'aws-sdk'
 gem 'dedent'
 gem 'liquid'
 gem 'facets'
