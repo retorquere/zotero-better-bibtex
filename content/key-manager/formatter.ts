@@ -2,6 +2,10 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
+const fold2ascii = require('fold-to-ascii').fold
+import PunyCode = require('punycode')
+import { transliterate } from 'transliteration/dist/node/src/node' // https://github.com/webpack/webpack/issues/5756
+
 import { flash } from '../flash'
 import { Preferences as Prefs } from '../prefs'
 import * as log from '../debug'
@@ -10,9 +14,6 @@ import { kuroshiro } from './kuroshiro'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
-const { transliterate } = require('transliteration')
-const fold2ascii = require('fold-to-ascii').fold
-import PunyCode = require('punycode')
 
 class PatternFormatter {
   public generate: Function
