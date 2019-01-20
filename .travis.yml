@@ -9,7 +9,7 @@ ignore_install:
   - ./check-latest-zotero.py
 
 before_install:
-  - sudo add-apt-repository ppa:retorquere/zotero
+  - sudo add-apt-repository --yes ppa:retorquere/zotero
   - sudo apt-get update
   - sudo apt-get install zotero jurism
   - ./check-latest-zotero.py
