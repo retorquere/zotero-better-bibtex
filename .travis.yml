@@ -2,10 +2,16 @@ language: python
 python:
   - 3.6
 
-before_install:
+ignore_install:
   - curl --silent --location https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update -o Dir::Etc::sourcelist="sources.list.d/zotero.list" -o Dir::Etc::sourceparts="-" -o APT::Get::List-Cleanup="0"
   - travis_retry sudo apt-get install zotero jurism
+  - ./check-latest-zotero.py
+
+before_install:
+  - sudo add-apt-repository ppa:retorquere/zotero
+  - sudo apt-get update
+  - sudo apt-get install zotero jurism
   - ./check-latest-zotero.py
 
 cache:
