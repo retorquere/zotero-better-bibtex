@@ -1,9 +1,6 @@
-declare const Components: any
-declare const Subprocess: any
 declare const Zotero: any
 
-Components.utils.import('resource://gre/modules/Subprocess.jsm')
-
+import { pathSearch } from './path-search'
 import { KeyManager } from './key-manager'
 import * as log from './debug'
 
@@ -14,8 +11,7 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
 
   public async init() {
     try {
-      // this.texstudio = await Subprocess.pathSearch(`texstudio${Zotero.isWin ? '.exe' : ''}`)
-      this.texstudio = await Subprocess.pathSearch('texstudio')
+      this.texstudio = await pathSearch('texstudio')
     } catch (err) {
       log.debug('TeXstudio: not found:', err)
       this.texstudio = null

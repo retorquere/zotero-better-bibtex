@@ -1,8 +1,5 @@
 declare const Zotero: any
 declare const Components: any
-declare const Subprocess: any
-
-Components.utils.import('resource://gre/modules/Subprocess.jsm')
 
 import * as log from './debug'
 
@@ -11,6 +8,7 @@ import { DB } from './db/main'
 import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
+import { pathSearch } from './path-search'
 import Loki = require('lokijs')
 
 class Git {
@@ -30,9 +28,7 @@ class Git {
 
   public async init() {
     try {
-      // this.git = await Subprocess.pathSearch(`git${Zotero.isWin ? '.exe' : ''}`)
-      this.git = await Subprocess.pathSearch('git')
-      log.debug('git: git found at', this.git)
+      this.git = await pathSearch('git')
     } catch (err) {
       log.debug('git.init: git not found:', err)
       this.git = null
