@@ -30,7 +30,8 @@ class Git {
 
   public async init() {
     try {
-      this.git = await Subprocess.pathSearch(`git${Zotero.isWin ? '.exe' : ''}`)
+      // this.git = await Subprocess.pathSearch(`git${Zotero.isWin ? '.exe' : ''}`)
+      this.git = await Subprocess.pathSearch('git')
       log.debug('git: git found at', this.git)
     } catch (err) {
       log.debug('git.init: git not found:', err)
