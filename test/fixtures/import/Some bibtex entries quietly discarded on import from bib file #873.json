@@ -26763,7 +26763,7 @@
     {
       "itemType": "journalArticle",
       "url": "http://citeseer.ist.psu.edu/507370.html;  http://www.informatik.uni-ulm.de/ki/biundo/ECP-Papers/61-despouys.ps.gz",
-      "date": "1999-08",
+      "date": "1999-08-13",
       "extra": "Citation Key: ingrand99:_propice_plan \nbibtex*[citeseer-isreferncedby=oai:CiteSeerPSU:80136;oai=oai:CiteSeerPSU:507370;rights=unrestricted;subject=Francois F'elix Ingr,Olivier Despouys Propice-Plan: Toward a Unified Framework for Planning and Execution]",
       "language": "English",
       "abstractNote": "In this paper, we investigate the links between planning and plans execution. We propose a new approach (Propice-Plan) which integrates both activities. It implements supervision and execution capabilities, combined with different planning techniques: -- plan synthesis to complement existing operational plans; and -- anticipation planning to advise the execution for the best option to take when facing choices (by anticipating plans execution), and to forecast problems that may arise due to unforeseen situations.",
