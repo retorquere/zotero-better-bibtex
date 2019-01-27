@@ -281,6 +281,10 @@ export = new class PrefPane {
     }
   }
 
+  public checkJabRef(node = null) {
+    document.getElementById('better-bibtex-cache-warn-jabrefFormat').setAttribute('hidden', (node ? parseInt(node.value) : Prefs.get('jabrefFormat')) !== 4) // tslint:disable-line:no-magic-numbers
+  }
+
   public checkPostscript() {
     const postscript = document.getElementById('zotero-better-bibtex-postscript')
 
@@ -295,6 +299,8 @@ export = new class PrefPane {
 
     postscript.setAttribute('style', (error ? '-moz-appearance: none !important; background-color: DarkOrange' : ''))
     postscript.setAttribute('tooltiptext', error)
+
+    document.getElementById('better-bibtex-cache-warn-postscript').setAttribute('hidden', (postscript.value || '').indexOf('Translator.options.exportPath') < 0)
   }
 
   public async rescanCitekeys() {
@@ -401,6 +407,8 @@ export = new class PrefPane {
 
   private update() {
     this.checkCitekeyFormat()
+    this.checkPostscript()
+    this.checkJabRef()
 
     if (ZoteroConfig.Zotero.isJurisM) {
       Zotero.Styles.init().then(() => {

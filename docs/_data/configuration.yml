@@ -117,11 +117,9 @@
         as `note` for example), add a list of them here, separated by comma's.
     Include JabRef-specific metadata:
       default: no
-      description: 'Export JabRef-specific information fields; timetamps and groups
+      description: Export JabRef-specific information fields; timetamps and groups
         for collections. Note that format "4" will disable caching in exports, and
-        if set to "4", it will be off
-
-        in auto-exports for performance reasons.'
+        if set to "4", it will be ignored in auto-exports for performance reasons.
       options:
       - no
       - for JabRef 3

@@ -6,6 +6,7 @@
 <?xml-stylesheet href="chrome://zotero/skin/zotero.css"?>
 <?xml-stylesheet href="chrome://zotero-platform/content/overlay.css"?>
 <?xml-stylesheet href="chrome://zotero-better-bibtex/skin/preferences.css"?>
+<?xml-stylesheet href="chrome://zotero-better-bibtex/skin/error-report.css" type="text/css"?>
 
 <!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
 
@@ -276,7 +277,7 @@
           type="int"
           default="0"/>
         <!--!
-          Export JabRef-specific information fields; timetamps and groups for collections. Note that format "4" will disable caching in exports, and if set to "4", it will be off in auto-exports for performance reasons.
+          Export JabRef-specific information fields; timetamps and groups for collections. Note that format "4" will disable caching in exports, and if set to "4", it will be ignored in auto-exports for performance reasons.
         -->
 
         <preference
@@ -596,9 +597,8 @@
                       onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
                   <row>
-                    <label
-                    forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
-                    <menulist preference="pref-better-bibtex-jabrefFormat" preference-editable="true">
+                    <label forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
+                    <menulist preference="pref-better-bibtex-jabrefFormat" preference-editable="true" oncommand="Zotero.BetterBibTeX.Preferences.checkJabRef(event.currentTarget)">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
                         <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.3;" value="3"/>
@@ -608,6 +608,7 @@
                   </row>
                 </rows>
               </grid>
+              <textbox flex="1" id="better-bibtex-cache-warn-jabrefFormat" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.export.jabrefFormat.4.warn;"/>
               <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
             </groupbox>
 
@@ -772,6 +773,7 @@
                         onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                         oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                         onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
+                  <textbox rows="2" multiline="true" flex="1" id="better-bibtex-cache-warn-postscript" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.tab.postscript.warn;"/>
                 </tabpanel>
                 <tabpanel orient="vertical">
                   <textbox rows="10" flex="1" multiline="true" preference="pref-better-bibtex-strings"/>
