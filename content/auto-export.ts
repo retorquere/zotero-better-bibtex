@@ -252,7 +252,8 @@ const queue = new class {
         3. Since it's not in the cache, whatever we choose here will not matter, because any other exports will bypass the cache and generate fresh jabrefFormat 4 items
         4. If you change the jabrefFormat to anything but 4, all caches will be dropped anyhow, and we will follow that cache format from that point on
       */
-      if (Prefs.get('autoExport') === 'immediate' && Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
+      // if (Prefs.get('autoExport') === 'immediate' && Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
+      if (Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
 
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
