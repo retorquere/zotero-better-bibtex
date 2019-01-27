@@ -1,6 +1,9 @@
 declare const Zotero: any
 declare const Components: any
 
+Components.utils.import('resource://gre/modules/FileUtils.jsm')
+declare const FileUtils: any
+
 import * as log from './debug'
 
 import { Events } from './events'
@@ -119,14 +122,30 @@ class Git {
   }
 
   private async exec(cmd, args) {
-    const timeout = 60000
+    if (typeof cmd === 'string') cmd = new FileUtils.File(cmd)
 
-    log.debug('git.exec:', { cmd, args })
-    await Zotero.Promise.race([
-      Zotero.Utilities.Internal.exec(cmd, args),
-      new Zotero.Promise((resolve, reject) => { setTimeout(reject, timeout,  { message: `git.exec: ${cmd} ${args} timed out after ${timeout}ms`, code: 'ETIMEDOUT' }) }),
-    ])
-    log.debug('git.exec:', { cmd, args }, 'finished')
+    if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
+
+    const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
+    proc.startHidden = true
+    proc.init(cmd)
+
+    log.debug(`Running ${cmd.path} ${args.map(arg => `'${arg}'`).join(' ')}`)
+
+    const deferred = Zotero.Promise.defer()
+    proc.runwAsync(args, args.length, {
+      observe(subject, topic) {
+        if (topic !== 'process-finished') {
+          deferred.reject(new Error(`${cmd.path} failed`))
+        } else if (proc.exitValue !== 0) {
+          deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
+        } else {
+          deferred.resolve(true)
+        }
+      },
+    })
+
+    return deferred.promise
   }
 }
 const git = new Git()
