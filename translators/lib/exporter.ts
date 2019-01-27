@@ -36,8 +36,10 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       this.jabref.citekeys.set(item.itemID, item.citekey)
 
+      debug('caching:', Translator.caching)
       const cached: Types.DB.Cache.ExportedItem = Translator.caching && Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)
       if (cached) {
+        debug('cache hit for', item.itemID)
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
           Translator.references.push({ citekey: item.citekey, reference: cached.reference })
         } else {
@@ -51,6 +53,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
+      debug('cache miss for', item.itemID)
       itemfields.simplifyForExport(item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
