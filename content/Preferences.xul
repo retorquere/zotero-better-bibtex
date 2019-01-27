@@ -276,7 +276,8 @@
           type="int"
           default="0"/>
         <!--!
-          Export JabRef-specific information fields; timetamps and groups for collections. Note that format "4" will disable caching.
+          Export JabRef-specific information fields; timetamps and groups for collections. Note that format "4" will disable caching in exports, and if set to "4", it will be off
+          in auto-exports for performance reasons.
         -->
 
         <preference
