@@ -5,7 +5,7 @@ var Translator = {
   BetterCSL: <%- ['Better CSL JSON', 'Better CSL YAML'].includes(header.label) %>,
   header: ZOTERO_TRANSLATOR_INFO,
   // header: < %- JSON.stringify(header) % >,
-  override: <%- JSON.stringify(overrides) %>,
+  preferences: <%- JSON.stringify(preferences) %>,
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
   stringCompare: (new Intl.Collator('en')).compare,
@@ -43,15 +43,13 @@ var Translator = {
     }
 
     this.preferences = {}
-    for (const [pref, override] of Object.entries(this.override)) {
+    for (const pref of Object.keys(this.preferences)) {
       let value = undefined
 
-      if (override) {
-        try {
-          value = Zotero.getOption(`preference_${pref}`)
-        } catch (err) {
-          value = undefined
-        }
+      try {
+        value = Zotero.getOption(`preference_${pref}`)
+      } catch (err) {
+        value = undefined
       }
 
       if (typeof value === 'undefined') value = Zotero.getHiddenPref('better-bibtex.' + pref)

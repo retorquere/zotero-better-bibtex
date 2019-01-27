@@ -118,7 +118,7 @@
     Include JabRef-specific metadata:
       default: no
       description: Export JabRef-specific information fields; timetamps and groups
-        for collections.
+        for collections. Note that format "4" will disable caching.
       options:
       - no
       - for JabRef 3

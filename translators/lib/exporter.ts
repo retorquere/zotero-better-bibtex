@@ -36,8 +36,8 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
       this.jabref.citekeys.set(item.itemID, item.citekey)
 
-      debug('caching:', Translator.caching)
-      const cached: Types.DB.Cache.ExportedItem = Translator.caching && Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)
+      // this is not automatically lazy-evaluated?!?!
+      const cached: Types.DB.Cache.ExportedItem = Translator.caching ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       if (cached) {
         debug('cache hit for', item.itemID)
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {

@@ -239,10 +239,21 @@ const queue = new class {
 
       const repo = git.repo(ae.path)
       await repo.pull()
-      const displayOptions = {
+      const displayOptions: any = {
         exportNotes: ae.exportNotes,
         useJournalAbbreviation: ae.useJournalAbbreviation,
       }
+
+      /*
+        the reason this is reasonable and works is the following:
+
+        1. If you have an auto-export, you really want to use the cache. Trust me.
+        2. If you have jabrefFormat set to 4, BBT will not cache because the contents of any given item is dependent on which groups you happen to export (BTW Jabref: booh)
+        3. Since it's not in the cache, whatever we choose here will not matter, because any other exports will bypass the cache and generate fresh jabrefFormat 4 items
+        4. If you change the jabrefFormat to anything but 4, all caches will be dropped anyhow, and we will follow that cache format
+      */
+      if (Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
+
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }

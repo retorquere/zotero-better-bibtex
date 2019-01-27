@@ -9,11 +9,7 @@ import root from 'zotero-plugin/root'
 
 import stringify = require('json-stable-stringify')
 
-const prefs = {
-  overrides: require(path.join(root, 'gen/preferences/auto-export-overrides.json')),
-  defaults: require(path.join(root, 'gen/preferences/defaults.json')),
-}
-
+const preferences = require(path.join(root, 'gen/preferences/defaults.json'))
 const translators = require(path.join(root, 'gen/translators.json'))
 
 function hash(str) {
@@ -32,14 +28,9 @@ class TranslatorHeaderPlugin {
       const asset = this.translator + '.js'
 
       const header = JSON.parse(JSON.stringify(translators.byName[this.translator]))
-      const overrides = {}
-      for (const pref of Object.keys(prefs.defaults)) {
-        overrides[pref] = prefs.overrides.includes(pref)
-      }
-
       const headerCode = ejs.render(
         fs.readFileSync(path.join(__dirname, 'translator-header.ejs'), 'utf8'),
-        {overrides, header, version}
+        {preferences, header, version}
       )
 
       delete header.description
