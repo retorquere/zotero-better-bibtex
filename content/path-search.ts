@@ -7,13 +7,19 @@ declare const Subprocess: any
 import * as log from './debug'
 
 export async function pathSearch(bin) {
-  const env = Subprocess.getEnvironment()
+  let env
   if (Zotero.isWin) {
+    env = {}
     // "PATH" on windows is case-insensitive, but https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 looks specifically for PATH
-    for (const [k, v] of Object.entries(env)) {
+    // and this object cannot be modified in place because it's a WrappedNative https://github.com/retorquere/zotero-better-bibtex/issues/972#issuecomment-458291368
+    for (const [k, v] of Object.entries(Subprocess.getEnvironment())) {
       const uk = k.toUpperCase()
       if (k !== uk && !env[uk]) env[uk] = v
     }
+
+  } else {
+    env = Subprocess.getEnvironment()
+
   }
 
   log.debug('pathSearch: looking for', bin, 'in', env.PATH)
