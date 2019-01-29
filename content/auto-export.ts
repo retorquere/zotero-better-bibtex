@@ -124,7 +124,7 @@ class Git {
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
     proc.init(cmd)
-    proc.startHidden = true
+    // proc.startHidden = true // won't work until Zotero upgrades to post-55 Firefox
 
     log.debug(`Running ${cmd.path} ${JSON.stringify(args).slice(1, -1)}`)
 
