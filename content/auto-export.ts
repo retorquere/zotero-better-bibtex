@@ -30,12 +30,8 @@ class Git {
   }
 
   public async init() {
-    try {
-      this.git = await pathSearch('git')
-    } catch (err) {
-      log.debug('git.init: git not found:', err)
-      this.git = null
-    }
+    this.git = await pathSearch('git')
+    if (!this.git) log.debug('git.init: git not found')
 
     return this
   }

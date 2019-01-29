@@ -7,23 +7,26 @@ declare const Subprocess: any
 import * as log from './debug'
 
 export async function pathSearch(bin) {
-  let env
-  if (Zotero.isWin) {
-    env = {}
-    // "PATH" on windows is case-insensitive, but https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 looks specifically for PATH
-    // and this object cannot be modified in place because it's a WrappedNative https://github.com/retorquere/zotero-better-bibtex/issues/972#issuecomment-458291368
-    for (const [k, v] of Object.entries(Subprocess.getEnvironment())) {
-      const uk = k.toUpperCase()
-      if (k !== uk && !env[uk]) env[uk] = v
-    }
+  log.debug('pathSearch: looking for', bin)
 
-  } else {
-    env = Subprocess.getEnvironment()
+  const env = Subprocess.getEnvironment()
 
+  // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 looks for these variables only in uppercase
+  if (!env.PATH) {
+    log.error('pathSearch: PATH not set')
+    return null
+  }
+  if (Zotero.isWin && !env.PATHEXT) {
+    log.error('pathSearch: PATHEXT not set')
+    return null
   }
 
-  log.debug('pathSearch: looking for', bin, 'in', env.PATH)
-  const path = await Subprocess.pathSearch(bin, env)
-  log.debug('pathSearch:', bin, 'found at', path)
-  return path
+  try {
+    const path = await Subprocess.pathSearch(bin, env)
+    log.debug('pathSearch:', bin, 'found at', path)
+    return path
+  } catch (err) {
+    log.debug('pathSearch:', bin, 'not found:', err)
+    return null
+  }
 }

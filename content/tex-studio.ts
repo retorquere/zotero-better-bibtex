@@ -10,14 +10,13 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
   public texstudio: string
 
   public async init() {
-    try {
-      this.texstudio = await pathSearch('texstudio')
-    } catch (err) {
-      log.debug('TeXstudio: not found:', err)
-      this.texstudio = null
-    }
+    this.texstudio = await pathSearch('texstudio')
     this.enabled = !!this.texstudio
-    if (this.enabled) log.debug('TeXstudio: found at', this.texstudio)
+    if (this.enabled) {
+      log.debug('TeXstudio: found at', this.texstudio)
+    } else {
+      log.debug('TeXstudio: not found')
+    }
   }
 
   public async push() {
