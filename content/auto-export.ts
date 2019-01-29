@@ -123,8 +123,8 @@ class Git {
     if (!cmd.isExecutable()) throw new Error(`${cmd.path} is not an executable`)
 
     const proc = Components.classes['@mozilla.org/process/util;1'].createInstance(Components.interfaces.nsIProcess)
-    proc.startHidden = true
     proc.init(cmd)
+    proc.startHidden = true
 
     log.debug(`Running ${cmd.path} ${JSON.stringify(args).slice(1, -1)}`)
 
