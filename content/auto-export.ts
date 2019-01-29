@@ -126,20 +126,18 @@ class Git {
     proc.startHidden = true
     proc.init(cmd)
 
-    log.debug(`Running ${cmd.path} ${args.map(arg => `'${arg}'`).join(' ')}`)
+    log.debug(`Running ${cmd.path} ${JSON.stringify(args).slice(1, -1)}`)
 
     const deferred = Zotero.Promise.defer()
-    proc.runwAsync(args, args.length, {
-      observe(subject, topic) {
-        if (topic !== 'process-finished') {
-          deferred.reject(new Error(`${cmd.path} failed`))
-        } else if (proc.exitValue !== 0) {
-          deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
-        } else {
-          deferred.resolve(true)
-        }
-      },
-    })
+    proc.runwAsync(args, args.length, { observe: function(subject, topic) { // tslint:disable-line:object-literal-shorthand only-arrow-functions
+      if (topic !== 'process-finished') {
+        deferred.reject(new Error(`${cmd.path} failed`))
+      } else if (proc.exitValue !== 0) {
+        deferred.reject(new Error(`${cmd.path} returned exit status ${proc.exitValue}`))
+      } else {
+        deferred.resolve(true)
+      }
+    }})
 
     return deferred.promise
   }
