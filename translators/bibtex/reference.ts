@@ -345,12 +345,12 @@ export class Reference {
       }
     }
 
-    if ((this.item.libraryCatalog || '').match(/^arxiv(\.org)?$/i) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
+    if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv)) && this.item.arXiv.id) {
+      this.item.arXiv.source = 'extra'
+
+    } else if ((this.item.libraryCatalog || '').match(/^arxiv(\.org)?$/i) && (this.item.arXiv = arXiv.parse(this.item.publicationTitle)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
-
-    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv)) && this.item.arXiv.id) {
-      this.item.arXiv.source = 'extra'
 
     } else {
       this.item.arXiv = null
@@ -495,6 +495,24 @@ export class Reference {
   }
 
   public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
+
+  public override(field: IField) {
+    const itemtype_name = field.name.split('.')
+    let name
+    if (itemtype_name.length === 2) {
+      if (this.referencetype !== itemtype_name[0]) return
+      name = itemtype_name[1]
+    } else {
+      name = itemtype_name
+    }
+
+    if ((typeof field.value === 'string') && (field.value.trim() === '')) {
+      this.remove(name)
+      return
+    }
+
+    this.add({ ...field, name, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
+  }
 
   public complete() {
     if (Translator.preferences.DOIandURL !== 'both') {
@@ -972,21 +990,6 @@ export class Reference {
 
     if (Translator.preferences.jabrefFormat) return attachments.map(att => [att.title, att.path, att.mimetype].map(part => part.replace(/([\\{}:;])/g, '\\$1')).join(':')).join(';')
     return attachments.map(att => att.path.replace(/([\\{};])/g, '\\$1')).join(';')
-  }
-
-  private override(field: IField) {
-    const name = field.name.split('.')
-    if (name.length > 1) {
-      if (this.referencetype !== name[0]) return
-      field.name = name[1]
-    }
-
-    if ((typeof field.value === 'string') && (field.value.trim() === '')) {
-      this.remove(field.name)
-      return
-    }
-
-    this.add({ ...field, replace: (typeof field.replace !== 'boolean' && typeof field.fallback !== 'boolean') || field.replace })
   }
 
   private _enc_creators_pad_particle(particle, relax = false) {

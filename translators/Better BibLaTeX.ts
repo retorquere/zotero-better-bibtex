@@ -274,22 +274,28 @@ Translator.doExport = () => {
 
     let m
     if (item.url && (m = item.url.match(/^http:\/\/www.jstor.org\/stable\/([\S]+)$/i))) {
-      ref.add({ name: 'eprinttype', value: 'jstor'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.override({ name: 'eprinttype', value: 'jstor'})
+      ref.override({ name: 'eprint', value: m[1] })
+      ref.remove('archivePrefix')
+      ref.remove('primaryClass')
       delete item.url
       ref.remove('url')
     }
 
     if (item.url && (m = item.url.match(/^http:\/\/books.google.com\/books?id=([\S]+)$/i))) {
-      ref.add({ name: 'eprinttype', value: 'googlebooks'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.override({ name: 'eprinttype', value: 'googlebooks'})
+      ref.override({ name: 'eprint', value: m[1] })
+      ref.remove('archivePrefix')
+      ref.remove('primaryClass')
       delete item.url
       ref.remove('url')
     }
 
     if (item.url && (m = item.url.match(/^http:\/\/www.ncbi.nlm.nih.gov\/pubmed\/([\S]+)$/i))) {
-      ref.add({ name: 'eprinttype', value: 'pubmed'})
-      ref.add({ name: 'eprint', value: m[1] })
+      ref.override({ name: 'eprinttype', value: 'pubmed'})
+      ref.override({ name: 'eprint', value: m[1] })
+      ref.remove('archivePrefix')
+      ref.remove('primaryClass')
       delete item.url
       ref.remove('url')
     }
