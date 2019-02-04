@@ -44,6 +44,7 @@ Scenario Outline: Better BibTeX Import
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
+  | Import location to event-place for conference papers                        | 1           |
   | Wrong ring-above import #1115                                               | 1           |
   | Spaces lost when expanding string variables during import #1081             | 1           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |

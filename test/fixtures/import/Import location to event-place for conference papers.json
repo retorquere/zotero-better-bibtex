@@ -191,29 +191,5 @@
   },
   "collections": {},
   "items": [
-    {
-      "creators":[
-        {
-          "creatorType":"author",
-          "firstName":"Radim",
-          "lastName":"Řehůřek"
-        },
-        {
-          "creatorType":"author",
-          "firstName":"Petr",
-          "lastName":"Sojka"
-        }
-      ],
-      "date":"2010-05",
-      "extra":"Citation Key: rehurek_lrec \nbibtex*[day=22] \nevent-place: Valletta, Malta",
-      "itemID":0,
-      "itemType":"conferencePaper",
-      "language":"English",
-      "pages":"45-50",
-      "publicationTitle":"Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks",
-      "publisher":"ELRA",
-      "title":"Software Framework for Topic Modelling with Large Corpora",
-      "url":"http://is.muni.cz/publication/884893/en"
-    }
   ]
 }
