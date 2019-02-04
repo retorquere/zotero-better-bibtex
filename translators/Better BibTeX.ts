@@ -531,7 +531,14 @@ class ZoteroItem {
   protected $school(value) { return this.$publisher(value) }
 
   protected $address(value) { return this.set('place', this.unparse(value)) }
-  protected $location(value) { return this.$address(value) }
+  protected $location(value) {
+    if (this.type === 'conferencePaper') {
+      this.hackyFields.push(`event-place: ${this.unparse(value)}`)
+      return true
+    }
+
+    return this.$address(value)
+  }
 
   protected $edition(value) { return this.set('edition', this.unparse(value)) }
 
