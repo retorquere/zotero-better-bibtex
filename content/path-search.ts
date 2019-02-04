@@ -18,12 +18,41 @@ function permutations(word) {
   }
   return permutater(config)
 }
-const PATH = permutations('PATH')
-const PATHEXT = permutations('PATHEXT')
+
+const alias: { [key: string]: string } = {}
+function getEnv(variable) {
+  const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
+  const value = ENV.get(variable)
+  if (value || !Zotero.isWin) return value
+
+  if (typeof alias[variable] === 'undefined') {
+    alias[variable] = ''
+    for (const permutation of permutations(variable)) {
+      if (ENV.get(permutation)) {
+        alias[variable] = permutation
+        break
+      }
+    }
+  }
+
+  if (!alias[variable]) return ''
+  return ENV.get(alias[variable])
+}
+
+function expandWinVars(value) {
+  let more = true
+  while (more) {
+    more = false
+    value = value.replace(/%([A-Zaz]+)%/g, (match, variable) => {
+      more = true
+      return getEnv(variable)
+    })
+  }
+  return value
+}
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
 export async function pathSearch(bin) {
-  const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
   const env = {
     path: [],
     pathext: [],
@@ -33,24 +62,15 @@ export async function pathSearch(bin) {
   if (Zotero.isWin) {
     env.sep = '\\'
 
-    for (const varname of PATH) {
-      const path = ENV.get(varname)
-      if (!path) continue
-      env.path = path.split(';').filter(p => p)
-      break
-    }
-    for (const varname of PATHEXT) {
-      const pathext = ENV.get(varname)
-      if (!pathext) continue
-      env.pathext = pathext.split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
-      break
-    }
+    env.path = getEnv('PATH').split(';').filter(p => p).map(expandWinVars)
+    env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
     if (!env.pathext.length) {
       log.error('pathSearch: PATHEXT not set')
       return null
     }
 
   } else {
+    const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
     env.sep = '/'
     env.path = (ENV.get('PATH') || '').split(':').filter(p => p)
     env.pathext = ['']
@@ -65,10 +85,14 @@ export async function pathSearch(bin) {
 
   for (const path of env.path) {
     for (const pathext of env.pathext) {
-      const cmd = new FileUtils.File(`${path}${env.sep}${bin}${pathext}`)
-      if (cmd.exists() && cmd.isFile() && cmd.isExecutable()) {
-        log.debug(`pathSearch: ${bin}${pathext} found at ${cmd.path}`)
-        return cmd.path
+      try {
+        const cmd = new FileUtils.File(`${path}${env.sep}${bin}${pathext}`)
+        if (cmd.exists() && cmd.isFile() && cmd.isExecutable()) {
+          log.debug(`pathSearch: ${bin}${pathext} found at ${cmd.path}`)
+          return cmd.path
+        }
+      } catch (err) {
+        log.error('pathSearch:', err)
       }
     }
   }
