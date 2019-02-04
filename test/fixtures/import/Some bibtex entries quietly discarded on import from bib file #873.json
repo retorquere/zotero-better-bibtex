@@ -6943,11 +6943,10 @@
     {
       "itemType": "conferencePaper",
       "volume": "3",
-      "place": "Los Altos, Calif.",
       "publisher": "William Kaufmann, Inc.",
       "pages": "348-351",
       "date": "1983",
-      "extra": "Citation Key: Rich:83",
+      "extra": "Citation Key: Rich:83 \nevent-place: Los Altos, Calif.",
       "title": "Default reasoning as likelihood reasoning",
       "creators": [
         {
