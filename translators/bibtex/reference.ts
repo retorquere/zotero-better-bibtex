@@ -731,11 +731,14 @@ export class Reference {
       this.add({ name: annotation, value: notes, html: true })
     }
 
+    let cache
     try {
-      this.postscript(this, this.item)
+      cache = this.postscript(this, this.item)
     } catch (err) {
       debug('Reference.postscript failed:', err)
+      cache = false
     }
+    this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)
 
     for (const name of Translator.preferences.skipFields) {
       this.remove(name)

@@ -165,11 +165,11 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      this.postscript(csl, item)
+      const cache = this.postscript(csl, item)
 
       csl = this.serialize(csl)
 
-      Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
+      if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
       items.push(csl)
     }
