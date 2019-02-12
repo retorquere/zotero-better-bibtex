@@ -363,9 +363,9 @@ class PatternFormatter {
     return lastpage[0] || ''
   }
 
-  /** Tag number `N`. Note that the tag order is just as Zotero hands it to BBT -- no guarantees */
+  /** Tag number `N` */
   public $keyword(n) {
-    this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag)
+    this.item.tags = this.item.tags || this.item.item.getTags().map(tag => tag.tag).sort((a, b) => a.localeCompare(b))
     return this.item.tags[n] || ''
   }
 

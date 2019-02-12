@@ -32,8 +32,7 @@
   \ If 'automatic journal abbreviation' is enabled in the BBT settings,\nit will use\
   \ the same abbreviation filter Zotero uses in the wordprocessor integration. You\
   \ might want to use the `abbr` filter on this."
-'`keywordN`': Tag number `N`. Note that the tag order is just as Zotero hands it to
-  BBT -- no guarantees
+'`keywordN`': Tag number `N`
 '`lastpage`': The number of the last page of the publication (See the remark on `firstpage`)
 '`library`': returns the name of the shared group library, or nothing if the reference
   is in your personal library
