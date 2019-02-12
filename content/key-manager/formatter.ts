@@ -155,7 +155,7 @@ class PatternFormatter {
     return citekey
   }
 
-  /** Generates citation keys as the stock Zotero Bib(La)TeX export does */
+  /** Generates citation keys as the stock Zotero Bib(La)TeX export does. Note that this pattern inherits all the problems of the original Zotero citekey generation -- you should really only use this if you have existing papers that rely on this behavior. */
   public $zotero() {
     let key = ''
     const creator = (this.item.item.getCreators() || [])[0]

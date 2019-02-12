@@ -47,4 +47,7 @@
 '`veryshorttitleN_M`': 'The first `N` (default: 1) words of the title, first `M` (default:
   0) capitalized'
 '`year`': The year of the publication
-'`zotero`': Generates citation keys as the stock Zotero Bib(La)TeX export does
+'`zotero`': Generates citation keys as the stock Zotero Bib(La)TeX export does. Note
+  that this pattern inherits all the problems of the original Zotero citekey generation
+  -- you should really only use this if you have existing papers that rely on this
+  behavior.
