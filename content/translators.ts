@@ -63,16 +63,40 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public async translate(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
+  public async importString(str) {
+    const translation = new Zotero.Translate.Import()
+    translation.setString(str)
+
+    const zp = Zotero.getActiveZoteroPane()
+
+    if (!zp.collectionsView.editable) {
+      await zp.collectionsView.selectLibrary()
+    }
+
+    const translators = await translation.getTranslators()
+
+    if (!translators.length) throw new Error('No translators found')
+
+    const libraryID = zp.getSelectedLibraryID()
+    await zp.collectionsView.selectLibrary(libraryID)
+
+    translation.setTranslator(translators[0])
+
+    await translation.translate({ libraryID })
+
+    log.debug('imported', translation.newItems.length, 'item(s)')
+  }
+
+  public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
-    log.debug('Translators.translate', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems', { translatorID, displayOptions, path })
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    log.debug('Translators.translate prepping', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems prepping', { translatorID, displayOptions, path })
 
     if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
@@ -109,14 +133,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translation.setLocation(file)
     }
 
-    log.debug('Translators.translate starting', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems starting', { translatorID, displayOptions, path })
 
     translation.setHandler('done', (obj, success) => {
       if (success) {
-        log.debug('Translators.translate complete in', { time: Date.now() - start, translatorID, displayOptions, path })
+        log.debug('Translators.exportItems complete in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.resolve(obj ? obj.string : undefined)
       } else {
-        log.error('Translators.translate failed in', { time: Date.now() - start, translatorID, displayOptions, path })
+        log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.reject('translation failed')
       }
     })
@@ -240,7 +264,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     const batchSize = Math.min(Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10), threshold) // tslint:disable-line:no-magic-numbers
     const batches = items.reduce((acc, item, index, array) => !(index % batchSize) ? acc.concat([array.slice(index, index + batchSize)]) : acc, [])
-    await Promise.all(batches.map(batch => this.translate(translatorID, displayOptions, { items: batch })))
+    await Promise.all(batches.map(batch => this.exportItems(translatorID, displayOptions, { items: batch })))
 
     log.debug('priming cache: done ')
   }

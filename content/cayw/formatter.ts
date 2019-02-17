@@ -155,7 +155,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     log.debug('scannable-cite:', citations)
     const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
-    const labels = (await Translators.translate('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
+    const labels = (await Translators.exportItems('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
       const [ , text, , , id ] = item.split('|').map(v => v.trim())
       result[id] = text
       return result
@@ -220,6 +220,6 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       useJournalAbbreviation: ['yes', 'y', 'true'].includes((options.useJournalAbbreviation || '').toLowerCase()),
     }
 
-    return await Translators.translate(translator, exportOptions, items)
+    return await Translators.exportItems(translator, exportOptions, items)
   }
 }

@@ -251,7 +251,7 @@ const queue = new class {
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      await Translators.translate(ae.translatorID, displayOptions, items, ae.path)
+      await Translators.exportItems(ae.translatorID, displayOptions, items, ae.path)
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       log.debug('AutoExport.queue.run: export finished', ae)

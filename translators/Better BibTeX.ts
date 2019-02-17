@@ -1182,19 +1182,26 @@ Translator.doImport = async () => {
     processUnknown: { comment: 'f_verbatim' },
     processInvalidURIs: true,
     async: true,
+    processComments: true,
   })
 
-  const ignore = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
-  const errors = bib.errors.concat(bib.warnings).filter(err => !ignore.has(err.type))
+  const ignoreErrors = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
+  const errors = bib.errors.concat(bib.warnings).filter(err => !ignoreErrors.has(err.type))
 
   if (Translator.preferences.csquotes) {
     ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
   }
 
+  const whitelist = bib.comments
+    .filter(comment => comment.startsWith('zotero-better-bibtex:whitelist:'))
+    .map(comment => comment.toLowerCase().replace(/\s/g, '').split(':').pop().split(',').filter(key => key))[0]
+
   const itemIDS = {}
   let imported = 0
   const references = (Object.entries(bib.entries) as any[][]) // TODO: add typings to the npm package
   for (const [id, bibtex] of references) {
+
+    if (bibtex.entry_key && whitelist && !whitelist.includes(bibtex.entry_key.toLowerCase())) continue
 
     if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
 

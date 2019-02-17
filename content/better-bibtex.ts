@@ -387,7 +387,7 @@ notify('item', (action, type, ids, extraData) => {
   const parents = []
   const items = action === 'delete' ? [] : Zotero.Items.get(ids).filter(item => {
     if (item.isNote() || item.isAttachment()) {
-      parents.push(item.parentID)
+      if (typeof item.parentID !== 'boolean') parents.push(item.parentID)
       return false
     }
 

@@ -110,7 +110,7 @@ export = Prefs.get('testing') && {
     } else {
       items = null
     }
-    return await Translators.translate(translatorID, displayOptions, items, path)
+    return await Translators.exportItems(translatorID, displayOptions, items, path)
   },
 
   async select(field, value) {

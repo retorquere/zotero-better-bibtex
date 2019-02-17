@@ -54,7 +54,6 @@ const common = {
       'json-jsesc-loader': 'zotero-plugin/loader/json',
       'wrap-loader': 'zotero-plugin/loader/wrap',
       'bcf-loader': path.join(__dirname, './setup/loaders/bcf.ts'),
-      'perf-loader': path.join(__dirname, './setup/loaders/performance.ts'),
     },
   },
   module: {

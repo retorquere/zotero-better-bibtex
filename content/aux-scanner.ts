@@ -1,14 +1,20 @@
 declare const Components: any
 declare const Zotero: any
 
+Components.utils.import('resource://gre/modules/osfile.jsm')
+declare const OS: any
+
 import * as log from './debug'
 import { timeout } from './timeout'
 import { KeyManager } from './key-manager'
+import { Translators } from './translators'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>
   private citationRE = /(?:\\citation|@cite){([^}]+)}/g
+  private bibdataRE = /\\bibdata{([^}]+)}/g
   private includeRE = /\\@input{([^}]+)}/g
+  private bibdata: string[] = []
 
   public pick() {
     const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
@@ -21,20 +27,43 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
 
   public async scan(file, tag = null) {
     this.citekeys = new Set
-    this.parse(file)
+    await this.parse(file)
+
+    const azp = Zotero.getActiveZoteroPane()
+    const collection = azp.getSelectedCollection()
+    const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+
+    const missing = KeyManager.keys.find({ libraryID, citekey: { $nin: Array.from(this.citekeys) } })
+    if (missing.length) {
+      let bibtex = `@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n`
+
+      const decoder = new TextDecoder
+      for (const bibdata of this.bibdata) {
+        if (await OS.File.exists(bibdata)) {
+          bibtex += decoder.decode(await OS.File.read(bibdata))
+        }
+      }
+
+      Translators.importString(bibtex)
+    }
 
     if (tag) {
-      await this.saveToTag(tag)
+      await this.saveToTag(tag, libraryID)
     } else {
-      await this.saveToCollection(file.leafName)
+      await this.saveToCollection(file.leafName, libraryID, collection)
     }
   }
 
-  private parse(file) {
+  private async parse(file) {
     log.debug('AUXScanner:', file.path)
 
     let m
     const contents = Zotero.File.getContents(file)
+
+    // bib files used
+    while ((m = this.bibdataRE.exec(contents))) {
+      this.bibdata.push(OS.Path.join(file.parent.path, m[1]))
+    }
 
     while ((m = this.citationRE.exec(contents))) {
       for (const key of m[1].split(',')) {
@@ -46,17 +75,12 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     while ((m = this.includeRE.exec(contents))) {
       const inc = file.parent.clone()
       inc.append(m[1])
-      this.parse(inc)
+      await this.parse(inc)
     }
   }
 
-  private async saveToCollection(source) {
+  private async saveToCollection(source, libraryID, collection) {
     if (!this.citekeys.size) return null
-
-    const azp = Zotero.getActiveZoteroPane()
-
-    let collection = azp.getSelectedCollection()
-    const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
 
     log.debug('AUXScanner.saveToCollection', source, { parent: collection ? collection.id : null })
 
@@ -113,8 +137,8 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
   }
 
-  private async saveToTag(tag) {
-    const cited = new Set(KeyManager.keys.find({ citekey: { $in: Array.from(this.citekeys) } }).map(item => item.itemID))
+  private async saveToTag(tag, libraryID) {
+    const cited = new Set(KeyManager.keys.find({ libraryID, citekey: { $in: Array.from(this.citekeys) } }).map(item => item.itemID))
     const tagged = new Set(await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag]))
 
     // cited but not tagged
