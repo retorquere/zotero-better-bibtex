@@ -1205,6 +1205,8 @@ Translator.doImport = async () => {
 
     if (bibtex.entry_key) itemIDS[bibtex.entry_key] = id // Endnote has no citation keys
 
+    debug('importing item with key', bibtex.entry_key)
+
     try {
       await (new ZoteroItem(id, bibtex, bib.jabref)).complete()
     } catch (err) {

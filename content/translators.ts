@@ -85,6 +85,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     await translation.translate({ libraryID })
 
     log.debug('imported', translation.newItems.length, 'item(s)')
+    return translation.newItems
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {

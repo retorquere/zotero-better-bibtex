@@ -30,40 +30,40 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     this.citekeys = new Set
     await this.parse(file)
 
+    if (!this.citekeys.size) return
+
     const azp = Zotero.getActiveZoteroPane()
     const collection = azp.getSelectedCollection()
     const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
+    let imported = []
 
-    log.debug('aux import:', Prefs.get('auxImport'))
     if (Prefs.get('auxImport')) {
       const keys = new Set(KeyManager.keys.find({ libraryID }).map(key => key.citekey))
       const missing = Array.from(this.citekeys).filter(key => !keys.has(key))
-      log.debug('aux import: found:', Array.from(this.citekeys))
-      log.debug('aux import: keys:', Array.from(keys))
-      log.debug('aux import: missing:', missing)
-      log.debug('aux import: bibdata:', this.bibdata)
       if (missing.length) {
-        let bibtex = `@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n`
+        const bibfiles = {}
 
         const decoder = new TextDecoder
         for (const bibdata of this.bibdata) {
-          if (await OS.File.exists(bibdata)) {
-            bibtex += decoder.decode(await OS.File.read(bibdata))
-          } else if (await OS.File.exists(bibdata + '.bib')) {
-            bibtex += decoder.decode(await OS.File.read(bibdata + '.bib'))
+          for (const bib of [bibdata, bibdata + '.bib']) {
+            if (await OS.File.exists(bib)) {
+              log.debug('scanning', bib, 'for missing items')
+              bibfiles[bib] = bibfiles[bib] || decoder.decode(await OS.File.read(bib))
+              break
+            }
           }
         }
 
-        log.debug('aux import: import:', bibtex)
+        const bibtex = Object.values(bibfiles).join('\n').trim()
 
-        Translators.importString(bibtex)
+        imported = bibtex ? await Translators.importString(`@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n${bibtex}`) : []
       }
     }
 
     if (tag) {
-      await this.saveToTag(tag, libraryID)
+      await this.saveToTag(tag, libraryID, imported)
     } else {
-      await this.saveToCollection(file.leafName, libraryID, collection)
+      await this.saveToCollection(file.leafName, libraryID, collection, imported)
     }
   }
 
@@ -92,9 +92,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
   }
 
-  private async saveToCollection(source, libraryID, collection) {
-    if (!this.citekeys.size) return null
-
+  private async saveToCollection(source, libraryID, collection, imported) {
     log.debug('AUXScanner.saveToCollection', source, { parent: collection ? collection.id : null })
 
     // if no collection is selected, or the selected collection contains references, create a new subcollection
@@ -120,7 +118,7 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     }
 
     const missing = []
-    const found = []
+    const found = imported.map(item => item.id)
     for (const citekey of Array.from(this.citekeys)) {
       const item = KeyManager.keys.findOne({libraryID, citekey})
       if (item) {
@@ -150,14 +148,15 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
   }
 
-  private async saveToTag(tag, libraryID) {
+  private async saveToTag(tag, libraryID, imported) {
     const cited = new Set(KeyManager.keys.find({ libraryID, citekey: { $in: Array.from(this.citekeys) } }).map(item => item.itemID))
     const tagged = new Set(await Zotero.DB.columnQueryAsync('SELECT itemID FROM itemTags JOIN tags ON tags.tagID = itemTags.tagID WHERE LOWER(tags.name) = LOWER(?)', [tag]))
 
     // cited but not tagged
     let itemIDs = [...cited].filter(item => !tagged.has(item))
-    if (itemIDs.length) {
-      for (const item of await Zotero.Items.getAsync(itemIDs)) {
+    if (itemIDs.length) imported = imported.concat(await Zotero.Items.getAsync(itemIDs))
+    if (imported.length) {
+      for (const item of imported) {
         item.addTag(tag, 1)
         await item.saveTx()
       }
