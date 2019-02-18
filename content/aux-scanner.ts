@@ -8,6 +8,7 @@ import * as log from './debug'
 import { timeout } from './timeout'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
+import { Preferences as Prefs } from './prefs'
 
 export let AUXScanner = new class { // tslint:disable-line:variable-name
   private citekeys: Set<string>
@@ -33,18 +34,30 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
     const collection = azp.getSelectedCollection()
     const libraryID = collection ? collection.libraryID : azp.getSelectedLibraryID()
 
-    const missing = KeyManager.keys.find({ libraryID, citekey: { $nin: Array.from(this.citekeys) } })
-    if (missing.length) {
-      let bibtex = `@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n`
+    log.debug('aux import:', Prefs.get('auxImport'))
+    if (Prefs.get('auxImport')) {
+      const keys = new Set(KeyManager.keys.find({ libraryID }).map(key => key.citekey))
+      const missing = Array.from(this.citekeys).filter(key => !keys.has(key))
+      log.debug('aux import: found:', Array.from(this.citekeys))
+      log.debug('aux import: keys:', Array.from(keys))
+      log.debug('aux import: missing:', missing)
+      log.debug('aux import: bibdata:', this.bibdata)
+      if (missing.length) {
+        let bibtex = `@comment{zotero-better-bibtex:whitelist:${missing.join(',')}}\n`
 
-      const decoder = new TextDecoder
-      for (const bibdata of this.bibdata) {
-        if (await OS.File.exists(bibdata)) {
-          bibtex += decoder.decode(await OS.File.read(bibdata))
+        const decoder = new TextDecoder
+        for (const bibdata of this.bibdata) {
+          if (await OS.File.exists(bibdata)) {
+            bibtex += decoder.decode(await OS.File.read(bibdata))
+          } else if (await OS.File.exists(bibdata + '.bib')) {
+            bibtex += decoder.decode(await OS.File.read(bibdata + '.bib'))
+          }
         }
-      }
 
-      Translators.importString(bibtex)
+        log.debug('aux import: import:', bibtex)
+
+        Translators.importString(bibtex)
+      }
     }
 
     if (tag) {

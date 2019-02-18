@@ -133,6 +133,15 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.auxImport"
+          id="pref-better-bibtex-aux-import"
+          type="bool"
+          default="false"/>
+        <!--!
+          This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers.  if you keep the non-pinned key as-is, your library now has duplicate keys.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.keyScope"
           id="pref-better-bibtex-keyScope"
           type="string"
@@ -548,6 +557,12 @@
                   </row>
                 </rows>
               </grid>
+            </groupbox>
+
+            <groupbox>
+              <caption label="&better-bibtex.Preferences.citekey.AUXScanner;"/>
+              <checkbox preference="pref-better-bibtex-aux-import"
+                label="&better-bibtex.Preferences.citekey.AUXScanner.import;"/>
             </groupbox>
 
           </tabpanel>

@@ -93,6 +93,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Keep keys unique">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "within each library">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "across all libraries">
+
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX scanner">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero">
+
 <!ENTITY better-bibtex.Preferences.advanced "Advanced">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Settings here will impact performance, and can cause breakage of exports. Proceed with care.">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Include comments about potential problems with the references">
