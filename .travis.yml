@@ -30,13 +30,8 @@ script: |
 
   #git submodule sync && git submodule update --init --recursive
 
-  if [[ "$TRAVIS_COMMIT_MESSAGE" == *"#trace"* ]]; then
-    export TRACE=true
-  fi
-
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
     export NIGHTLY=""
-    export TRACE=true
   else
     export NIGHTLY="and not @nightly"
   fi
