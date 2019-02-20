@@ -10,6 +10,7 @@ import unicodeMapping = require('unicode2latex')
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
+  private extramapping: any
   private stack: any[]
   private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
@@ -31,6 +32,11 @@ const htmlConverter = new class HTMLConverter {
     this.options = options
     this.latex = ''
     this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
+
+    this.extramapping = {}
+    for (const c of Array.from(Translator.preferences.ascii)) {
+      this.extramapping[c] = unicodeMapping.ascii[c]
+    }
 
     this.stack = []
 
@@ -177,11 +183,11 @@ const htmlConverter = new class HTMLConverter {
     const chars: string[] = Array.from(text.normalize('NFC'))
     let ch, mapped
     while (chars.length) {
-      if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])])) {
+      if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])] || this.extramapping[ch])) {
         chars.splice(0, 2)
 
       } else {
-        mapped = this.mapping[chars[0]] || { tex: chars[0] }
+        mapped = this.mapping[chars[0]] || this.extramapping[chars[0]] || { tex: chars[0] }
         ch = chars.shift()
 
       }

@@ -217,6 +217,11 @@
 '
   name: Hidden preferences
   preferences:
+    ascii:
+      default: ''
+      description: If you have unicode turned on you can still selectively replace
+        some characters to plain-text commands; any characters entered here will always
+        be replaced by their LaTeX-command counterparts.
     autoExportDelay:
       default: '1'
       description: If you have auto-exports set up, BBT will wait this many seconds

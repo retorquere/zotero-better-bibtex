@@ -52,6 +52,14 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.ascii"
+          type="string"
+          default=""/>
+        <!--!!
+          If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always be replaced by their LaTeX-command counterparts.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.asciiBibTeX"
           id="pref-better-bibtex-asciiBibTeX"
           type="bool"
