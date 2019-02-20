@@ -5,7 +5,7 @@ declare const Zotero: any
 import { debug } from '../lib/debug'
 
 import HE = require('he')
-import unicodeMapping = require('./unicode_translator_mapping.js')
+import unicodeMapping = require('unicode2latex')
 
 const htmlConverter = new class HTMLConverter {
   private latex: string
