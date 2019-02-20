@@ -2,12 +2,10 @@
 
 The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
 you will not likely notice this, but if you have several thousand references, and you are in the habit of exporting
-substantial parts of your library, or you use [Markdown citation scanning](https://atom.io/packages/zotero-citations),
-this gets annoying really fast.
+substantial parts of your library, this gets annoying really fast.
 
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
-substantially faster than the default Zotero exporters.  Specifically for [automatic background exports](push-and-pull)
-or [Markdown citation scanning](https://atom.io/packages/zotero-citations), a filled cache is
+substantially faster than the default Zotero exporters.  Specifically for [automatic background exports](push-and-pull), a filled cache is
 a good thing to have.
 
 For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
