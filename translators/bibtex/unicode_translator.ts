@@ -13,6 +13,18 @@ const htmlConverter = new class HTMLConverter {
   private stack: any[]
   private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
+  private embrace_tex = {
+    '\\k{A}': true,
+    '\\k{E}': true,
+    '\\k{I}': true,
+    '\\k{U}': true,
+    '\\k{a}': true,
+    '\\k{e}': true,
+    '\\k{i}': true,
+    '\\k{u}': true,
+    '\\r{U}': true,
+    '\\r{u}': true,
+  }
 
   public convert(html, options) {
     this.embraced = false
@@ -161,27 +173,27 @@ const htmlConverter = new class HTMLConverter {
     let math = false
     let braced = 0
 
-    const chars = Zotero.Utilities.XRegExp.split(text, '')
-    let ch
-    let shift
+    // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')
+    const chars: string[] = Array.from(text.normalize('NFC'))
+    let ch, mapped
     while (chars.length) {
-      if (chars.length > 1 && (ch = unicodeMapping[chars[0] + chars[1]]) {
-        shift = 2
+      if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])])) {
+        chars.splice(0, 2)
 
       } else {
-        ch = unicodeMapping[chars[0]] || { tex: chars[0] }
-        shift = 1
+        mapped = this.mapping[chars[0]] || { tex: chars[0] }
+        ch = chars.shift()
 
       }
 
       // in and out of math mode
-      if (!!ch.math !== math) {
+      if (!!mapped.math !== math) {
         latex += '$'
         math = !math
       }
 
       // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
-      switch (c) {
+      switch (ch) {
         case '{': braced += 1; break
         case '}': braced -= 1; break
       }
@@ -190,29 +202,7 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
-      latex += this.embrace(ch.tex, unicodeMapping.embrace[c])
-
-
-    }
-
-    for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
-      if (!!this.mapping.math[c] !== math) {
-        latex += '$'
-        math = !!this.mapping.math[c]
-      }
-
-      // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
-      switch (c) {
-        case '{': braced += 1; break
-        case '}': braced -= 1; break
-      }
-      if (braced < 0) {
-        latex += '\\vphantom\\{'
-        braced = 0
-      }
-
-      c = this.mapping.math[c] || this.mapping.text[c] || c
-      latex += this.embrace(c, unicodeMapping.embrace[c])
+      latex += this.embrace(mapped.tex, this.embrace_tex[mapped.tex])
     }
 
     // add any missing closing phantom braces
