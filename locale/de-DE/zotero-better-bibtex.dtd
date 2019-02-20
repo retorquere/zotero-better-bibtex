@@ -94,7 +94,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "innerhalb jeder Bibliothek">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "über alle Bibliotheken hinweg">
 
-<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX scanner">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "BibTeX AUX-Scanner">
 <!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero">
 
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
