@@ -155,14 +155,47 @@ const htmlConverter = new class HTMLConverter {
   }
 
   private chars(text) {
+    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+
     let latex = ''
     let math = false
     let braced = 0
 
-    if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
+    const chars = Zotero.Utilities.XRegExp.split(text, '')
+    let ch
+    let shift
+    while (chars.length) {
+      if (chars.length > 1 && (ch = unicodeMapping[chars[0] + chars[1]]) {
+        shift = 2
+
+      } else {
+        ch = unicodeMapping[chars[0]] || { tex: chars[0] }
+        shift = 1
+
+      }
+
+      // in and out of math mode
+      if (!!ch.math !== math) {
+        latex += '$'
+        math = !math
+      }
+
+      // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
+      switch (c) {
+        case '{': braced += 1; break
+        case '}': braced -= 1; break
+      }
+      if (braced < 0) {
+        latex += '\\vphantom\\{'
+        braced = 0
+      }
+
+      latex += this.embrace(ch.tex, unicodeMapping.embrace[c])
+
+
+    }
 
     for (let c of Zotero.Utilities.XRegExp.split(text, '')) {
-      // in and out of math mode
       if (!!this.mapping.math[c] !== math) {
         latex += '$'
         math = !!this.mapping.math[c]
