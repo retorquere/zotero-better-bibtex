@@ -52,6 +52,13 @@ class Cache extends Loki {
     //                  secs    mins  hours days
     const ttl =         1000  * 60  * 60  * 24 * 30 // tslint:disable-line:no-magic-numbers
     const ttlInterval = 1000  * 60  * 60  * 4       // tslint:disable-line:no-magic-numbers
+
+    const modified = {}
+    // SQLITE gives time in seconds, LokiJS time is in milliseconds
+    for (const item of await Zotero.DB.queryAsync('SELECT itemID, strftime("%s", dateModified) * 1000 AS modified FROM items WHERE itemID NOT IN (select itemID from deletedItems)')) {
+      modified[item.itemID] = item.modified
+    }
+
     for (const translator of Object.keys(translators.byName)) {
       coll = this.schemaCollection(translator, {
         logging: true,
@@ -85,6 +92,11 @@ class Cache extends Loki {
 
       // old cache, drop
       if (coll.findOne({ [prefOverrides[0]]: undefined })) coll.removeDataOnly()
+
+      // should have been dropped after object change/delete
+      for (const oudated of coll.data.filter(item => !modified[item.itemID] || modified[item.itemID] >= (item.meta.updated || item.meta.created))) {
+        coll.remove(oudated)
+      }
 
       clearOnUpgrade(coll, 'BetterBibTeX', version)
     }
