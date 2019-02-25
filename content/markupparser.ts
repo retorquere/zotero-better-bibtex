@@ -66,6 +66,7 @@ re.whitespace = new RegExp(`^[${re.Whitespace}]+`)
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let HTMLParser = new class { // tslint:disable-line:variable-name
   private caseConversion: boolean
+  private braceProtection: boolean
   private sentenceStart: boolean
   private spuriousNode = new Set(['#document-fragment', '#document', 'div', 'span'])
   private titleCased: string
@@ -78,6 +79,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
     // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
     this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
+    this.braceProtection = !Prefs.get('suppressNoCaseInference')
     this.sentenceStart = true
 
     // add enquote tags.
@@ -326,7 +328,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
           this.sentenceStart = false
 
-          if (m = re.protectedWords.exec(text)) {
+          if (this.braceProtection && (m = re.protectedWords.exec(text))) {
             this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
 

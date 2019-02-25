@@ -336,6 +336,15 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.suppressNoCaseInference"
+          type="bool"
+          default="false"/>
+        <!--!!
+          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+          casing, set this preference to "true" to suppress [automatic brace-protection for words with uppercase letters](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.autoExportDelay"
           type="int"
           default="1"/>
