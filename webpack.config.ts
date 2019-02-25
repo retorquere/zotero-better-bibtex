@@ -124,7 +124,7 @@ for (const label of Object.keys(translators.byName)) {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
         new TranslatorHeaderPlugin(label),
-        new LogUsedFilesPlugin(`translator.${label.replace(/ /g, '')}`),
+        new LogUsedFilesPlugin(label, 'translator')
         // BailPlugin,
       ],
       context: path.resolve(__dirname, './translators'),

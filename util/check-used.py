@@ -2,6 +2,8 @@
 
 import glob
 import json
+import sys
+import os
 
 used = []
 for _used in glob.glob('gen/log-used/*.json'):
@@ -10,16 +12,15 @@ for _used in glob.glob('gen/log-used/*.json'):
 used = [_used for _used in set(used) if not _used.startswith('gen/')]
 #print(used)
 
-for src in glob.glob(r'[content]/**/*.[ts]'):
-  print(src)
+sources = []
+for root in ['content', 'translators']:
+  for (dirpath, dirnames, filenames) in os.walk(root):
+    if dirpath == 'content/minitests':
+      continue
+    sources += [os.path.join(dirpath, filename) for filename in filenames if not filename.endswith('.xul')]
 
-sources = [
-    f
-    for d in ['content', 'translators']
-    for e in ['ts', 'json']
-    for f in glob.glob(f'{d}/**/*.{e}')
-    if not f.endswith('.d.ts') and not f.startswith('content/minitests/')
-]
+unused = [src for src in sources if not src in used]
 
-for src in sources:
-  if not src in used: print(src)
+for src in unused:
+  print(f'Not used: {src}')
+sys.exit(len(unused))

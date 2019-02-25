@@ -24,7 +24,7 @@
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "npm install && npm run lint && npm run setup",
     "build": "npm run webpack",
-    "postbuild": "npm run docs && zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
+    "postbuild": "./util/check-used.py && npm run docs && zotero-plugin-zipup build zotero-better-bibtex && zotero-plugin-zipup test/fixtures/debug-bridge debug-bridge",
     "odfscan": "echo curl -L -o xpi/odfscan.xpi `curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '\"' -f 4`",
     "minitest": "webpack && node ./minitests/build/dateparser.js",
     "start": "KILL=false cucumber --fail-fast --tags @none",
