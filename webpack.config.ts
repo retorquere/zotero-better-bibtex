@@ -7,6 +7,7 @@ import * as path from 'path'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
 import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
+import { LogUsedFilesPlugin } from './setup/plugins/log-used'
 
 /*
 class WebpackFixerPlugin {
@@ -86,6 +87,7 @@ config.push(
       // new webpack.NamedModulesPlugin(),
       new CircularDependencyPlugin({ failOnError: true }),
       // BailPlugin,
+      new LogUsedFilesPlugin('BetterBibTeX'),
     ],
 
     context: path.resolve(__dirname, './content'),
@@ -122,6 +124,7 @@ for (const label of Object.keys(translators.byName)) {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
         new TranslatorHeaderPlugin(label),
+        new LogUsedFilesPlugin(`translator.${label.replace(/ /g, '')}`),
         // BailPlugin,
       ],
       context: path.resolve(__dirname, './translators'),
