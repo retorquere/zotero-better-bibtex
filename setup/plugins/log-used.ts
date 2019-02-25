@@ -11,7 +11,7 @@ export class LogUsedFilesPlugin {
   }
 
   public apply(compiler) {
-    compiler.plugin('after-emit', compilation => {
+    compiler.hooks.afterEmit.tap('LogUsedFilesPlugin', compilation => {
       const used = new Set
 
       if (this.type === 'translator') used.add(`translators/${this.name}.json`)
