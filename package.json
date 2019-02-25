@@ -19,7 +19,7 @@
   "scripts": {
     "test": "cucumber --fail-fast",
     "lint": "tslint -t stylish --project .",
-    "webpack": "parallel-webpack",
+    "webpack": "webpack",
     "postwebpack": "./setup/patch-webpack.py",
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "npm install && npm run lint && npm run setup",
