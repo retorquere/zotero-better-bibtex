@@ -103,7 +103,6 @@
     "lodash": "4.17.11",
     "moment": "2.24.0",
     "node-archiver": "0.3.0",
-    "parallel-webpack": "^2.3.0",
     "pretty-data": "0.40.0",
     "properties-reader": "0.0.16",
     "pug": "2.0.3",
