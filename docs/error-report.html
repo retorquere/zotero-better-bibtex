@@ -1,47 +1,104 @@
----
-title: Submit debug logs
-layout: default
----
-<h2>Submit debug log</h2>
-<form>
-</form>
-<script>
-  const cors = 'https://cors-anywhere.herokuapp.com/';
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function() { 
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-      var params = JSON.parse(this.responseText);
-      console.log(params);
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Upload</title>
+  </head>
+  <script>
+    const bucket = 'http://better-bibtex-error-reports-62200312-euc.s3-eu-central-1.amazonaws.com/'
 
-      var h2 = document.getElementsByTagName('h2')[0];
-      h2.textContent = 'Generated on ' + params.fields['X-Amz-Date'];
-
-      var form = document.getElementsByTagName('form')[0];
-      form.setAttribute('action', params.action);
-      form.setAttribute('method', 'POST');
-      form.setAttribute('enctype', 'multipart/form-data');
-
-      var input;
-      for (var field in params.fields) {
-        input = document.createElement("input");
-        input.setAttribute('type', 'hidden');
-        input.setAttribute('value', params.fields[field]);
-        input.setAttribute('name', field);
-        form.appendChild(input);
+    function progress(text, id) {
+      const progress = document.getElementById('progress')
+      let li = null
+      if (!id || !(li = document.getElementById(id))) {
+        li = document.createElement('li')
+        if (id) li.setAttribute('id', id)
+        progress.appendChild(li)
       }
-
-      input = document.createElement("input");
-      input.setAttribute('type', 'file');
-      input.setAttribute('name', params.filefield);
-      form.appendChild(input);
-
-      input = document.createElement("input");
-      input.setAttribute('type', 'submit');
-      input.setAttribute('value', 'Save');
-      form.appendChild(input);
+      li.innerText = text
     }
-  }
-  console.log('here goes');
-  xmlhttp.open('GET', cors + 'https://github.com/retorquere/zotero-better-bibtex/releases/download/release/error-report.json', true);
-  xmlhttp.send(null);
-</script>
+
+    function readFile(file) {
+      return new Promise((resolve, reject) => {
+        var fr = new FileReader()
+
+        fr.onload = function() {
+          resolve(fr.result)
+        }
+
+        if (file.type.startsWith('text/')) {
+          fr.readAsText(file)
+        } else {
+          fr.readAsBinaryString(file)
+        }
+      })
+    }
+
+    function sendFile(name, type, data) {
+      return new Promise(function (resolve, reject) {
+        const xhr = new XMLHttpRequest()
+        xhr.open('PUT', bucket + name)
+        xhr.setRequestHeader('x-amz-storage-class', 'STANDARD')
+        xhr.setRequestHeader('x-amz-acl', 'bucket-owner-full-control')
+        xhr.setRequestHeader('Content-Type', type)
+
+        xhr.onload = function () {
+          if (this.status >= 200 && this.status < 300) {
+            resolve(xhr.response)
+          } else {
+            reject({
+              status: this.status,
+              statusText: xhr.statusText
+            })
+          }
+        }
+
+        xhr.onerror = function () {
+          reject({
+            status: this.status,
+            statusText: xhr.statusText
+          })
+        }
+        xhr.send(data)
+      })
+    }
+
+    async function _upload() {
+      const guid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
+      const files = document.getElementById('files')
+      for (const file of files.files) {
+        const id = `_${file.name}`
+        const target = guid + '-' + file.name
+        progress(`Reading ${file.name}...`, id)
+        const data = await readFile(file)
+        progress(`Sending ${target}...`, id)
+        await sendFile(target, file.type, data)
+        progress(`Sent ${target}`, id)
+      }
+    }
+
+    function upload() {
+      _upload().catch(function(err) {
+        console.log(err.status, err.statusText)
+        if (err.message) {
+          err = err.message
+        } else if (err.status) {
+          err = `${err.status}: ${err.statusText}`
+        } else if (('' + err) === '[object Object]') {
+          err = Object.keys(err).join(' / ')
+        } else {
+          err = '' + err
+        }
+        progress(err)
+      })
+      return false
+    }
+  </script>
+  <body>
+    <form method="POST" enctype="multipart/form-data" onsubmit="return upload()">
+      <input type="file" id="files" name="files[]" multiple />
+      <input type="submit" name="submit" value="Send"/>
+      <ul id="progress"/>
+    </form>
+  </body>
+</html>
