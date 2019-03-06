@@ -1,9 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Upload</title>
-  </head>
+----
+-title: Submit debug logs
+-layout: default
+----
   <script>
     const bucket = 'http://better-bibtex-error-reports-62200312-euc.s3-eu-central-1.amazonaws.com/'
 
@@ -94,11 +92,8 @@
       return false
     }
   </script>
-  <body>
-    <form method="POST" enctype="multipart/form-data" onsubmit="return upload()">
-      <input type="file" id="files" name="files[]" multiple />
-      <input type="submit" name="submit" value="Send"/>
-      <ul id="progress"/>
-    </form>
-  </body>
-</html>
+  <form method="POST" enctype="multipart/form-data" onsubmit="return upload()">
+    <input type="file" id="files" name="files[]" multiple />
+    <input type="submit" name="submit" value="Send"/>
+    <ul id="progress"/>
+  </form>
