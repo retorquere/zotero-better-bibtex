@@ -114,13 +114,14 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746 @1069 @1092 @1091
-@1110 @1112 @1118
+@1110 @1112 @1118 @1147
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | citekey firstpage-lastpage #1147                                                   | 2          |
      | Error exporting with custom Extra field #1118                                      | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
      | date not always parsed properly into month and year with PubMed #1112              | 2          |
