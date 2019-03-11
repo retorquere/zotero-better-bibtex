@@ -45,12 +45,12 @@ const htmlConverter = new class HTMLConverter {
     return { latex: this.latex, raw: ast.nodeName === 'pre' }
   }
 
-  private walk(tag: IZoteroMarkupNode) {
+  private walk(tag: IZoteroMarkupNode, nocased = false) {
     if (!tag) return
 
     switch (tag.nodeName) {
       case '#text':
-        this.chars(tag.value)
+        this.chars(tag.value, nocased)
         return
       case 'pre':
       case 'script':
@@ -155,7 +155,7 @@ const htmlConverter = new class HTMLConverter {
 
     this.latex += prefix
     for (const child of tag.childNodes) {
-      this.walk(child)
+      this.walk(child, nocased || tag.nocase)
     }
     this.latex += postfix
 
@@ -172,12 +172,15 @@ const htmlConverter = new class HTMLConverter {
     return `{${latex}}`
   }
 
-  private chars(text) {
+  private chars(text, nocased) {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
     let latex = ''
     let math = false
     let braced = 0
+
+    const open = nocased ? '$' : '{$'
+    const close = nocased ? '$' : '$}'
 
     // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')
     const chars: string[] = Array.from(text.normalize('NFC'))
@@ -195,7 +198,7 @@ const htmlConverter = new class HTMLConverter {
       // in and out of math mode
       if (!!mapped.math !== math) {
         math = !math
-        latex += math ? '{$' : '$}'
+        latex += math ? open : close
       }
 
       // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
@@ -224,7 +227,7 @@ const htmlConverter = new class HTMLConverter {
     }
 
     // might still be in math mode at the end
-    if (math) latex += '$}'
+    if (math) latex += close
 
     this.latex += latex
   }
