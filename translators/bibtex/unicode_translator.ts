@@ -194,8 +194,8 @@ const htmlConverter = new class HTMLConverter {
 
       // in and out of math mode
       if (!!mapped.math !== math) {
-        latex += '$'
         math = !math
+        latex += math ? '{$' : '$}'
       }
 
       // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
@@ -224,7 +224,7 @@ const htmlConverter = new class HTMLConverter {
     }
 
     // might still be in math mode at the end
-    if (math) latex += '$'
+    if (math) latex += '$}'
 
     this.latex += latex
   }
