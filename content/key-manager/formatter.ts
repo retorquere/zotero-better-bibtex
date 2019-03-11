@@ -345,13 +345,13 @@ class PatternFormatter {
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
     if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '').replace(/\s/g, '')
-    return this.item.pages.split(/[,-]/)[0] || ''
+    return this.item.pages.split(/[,-–]/)[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
     if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '').replace(/\s/g, '')
-    return this.item.pages.split(/[,-]/).pop() || ''
+    return this.item.pages.split(/[,-–]/).pop() || ''
   }
 
   /** Tag number `N` */
