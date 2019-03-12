@@ -344,23 +344,14 @@ class PatternFormatter {
 
   /** The number of the first page of the publication (Caution: this will return the lowest number found in the pages field, since BibTeX allows `7,41,73--97` or `43+`.) */
   public $firstpage() {
-    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
-    if (!this.item.pages) return ''
-    const firstpage = []
-    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => firstpage.push(parseInt(fp)))
-    firstpage.sort()
-    return firstpage[0] || ''
+    if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '')
+    return this.item.pages.split(/[-\s,–]/)[0] || ''
   }
 
   /** The number of the last page of the publication (See the remark on `firstpage`) */
   public $lastpage() {
-    if (!this.item.pages) this.item.pages = this.item.item.getField('pages', false, true)
-    if (!this.item.pages) return ''
-    const lastpage = []
-    this.item.pages.replace(/^([0-9]+)/g, (match, fp) => lastpage.push(parseInt(fp)))
-    lastpage.sort()
-    lastpage.reverse()
-    return lastpage[0] || ''
+    if (typeof this.item.pages !== 'string') this.item.pages = (this.item.item.getField('pages', false, true) || '')
+    return this.item.pages.split(/[-\s,–]/).pop() || ''
   }
 
   /** Tag number `N` */
