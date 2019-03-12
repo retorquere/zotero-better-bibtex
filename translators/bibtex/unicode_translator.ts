@@ -176,11 +176,17 @@ const htmlConverter = new class HTMLConverter {
     if (this.options.html) text = HE.decode(text, { isAttributeValue: true })
 
     let latex = ''
-    let math = false
+    let mode = 'text'
     let braced = 0
 
-    const open = nocased ? '$' : '{$'
-    const close = nocased ? '$' : '$}'
+    const switchTo = {
+      math: (nocased ? '$' : '{$'),
+      text: (nocased ? '$' : '$}'),
+    }
+    const switchMode = {
+      math: 'text',
+      text: 'math',
+    }
 
     // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')
     const chars: string[] = Array.from(text.normalize('NFC'))
@@ -190,15 +196,15 @@ const htmlConverter = new class HTMLConverter {
         chars.splice(0, 2)
 
       } else {
-        mapped = this.mapping[chars[0]] || this.extramapping[chars[0]] || { tex: chars[0] }
+        mapped = this.mapping[chars[0]] || this.extramapping[chars[0]] || { text: chars[0] }
         ch = chars.shift()
 
       }
 
       // in and out of math mode
-      if (!!mapped.math !== math) {
-        math = !math
-        latex += math ? open : close
+      if (!mapped[mode]) {
+        mode = switchMode[mode]
+        latex += switchTo[mode]
       }
 
       // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
@@ -211,7 +217,7 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
-      latex += this.embrace(mapped.tex, this.embrace_tex[mapped.tex])
+      latex += this.embrace(mapped[mode], this.embrace_tex[mapped[mode]])
     }
 
     // add any missing closing phantom braces
@@ -227,7 +233,7 @@ const htmlConverter = new class HTMLConverter {
     }
 
     // might still be in math mode at the end
-    if (math) latex += close
+    if (mode === 'math') latex += switchTo.text
 
     this.latex += latex
   }
