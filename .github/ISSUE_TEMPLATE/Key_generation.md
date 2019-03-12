@@ -1,6 +1,6 @@
 ---
 name: Key generation bug
-about: You appear to have found a bug in BBTs citation key generation
+about: You appear to have found a bug in BBTs citation key generation, or are proposing an enhancement to the key generation
 
 ---
 

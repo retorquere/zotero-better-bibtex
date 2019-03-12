@@ -1,6 +1,6 @@
 ---
 name: Import bug
-about: You appear to have found a bug in BBTs BibTeX import
+about: You appear to have found a bug in BBTs BibTeX import, or are proposing an enhancement to the import
 
 ---
 
