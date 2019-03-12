@@ -1,7 +1,7 @@
 ---
 name: Key generation bug
 about: You appear to have found a bug in BBTs citation key generation, or are proposing an enhancement to the key generation
-
+labels: bug
 ---
 
 - [ ] I have verified in the Zotero addons screen that I have the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero installed

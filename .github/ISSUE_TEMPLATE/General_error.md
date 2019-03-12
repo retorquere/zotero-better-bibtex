@@ -1,7 +1,7 @@
 ---
 name: General error
 about: You are experiencing an error not covered by the other categories
-
+labels: bug
 ---
 
 - [ ] I have verified in the Zotero addons screen that I have the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero installed
