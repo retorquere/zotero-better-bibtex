@@ -6,12 +6,14 @@ Background:
 
 @test-cluster-1
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979 @746
+@1148
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | Protect math sections #1148                                                                    | 1           |
      | Error exporting duplicate eprinttype #1128                                                     | 1           |
      | Do not use more than three initials in case of authshort key #1079                             | 1           |
      | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
@@ -114,13 +116,14 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746 @1069 @1092 @1091
-@1110 @1112 @1118
+@1110 @1112 @1118 @1147
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | citekey firstpage-lastpage #1147                                                   | 2          |
      | Error exporting with custom Extra field #1118                                      | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
      | date not always parsed properly into month and year with PubMed #1112              | 2          |

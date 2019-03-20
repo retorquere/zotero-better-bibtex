@@ -5,9 +5,9 @@ python:
 
 before_install:
   - sudo add-apt-repository --yes ppa:retorquere/zotero
-  - sudo apt-get update
-  - sudo apt-get install zotero jurism
-  - ./check-latest-zotero.py
+  - travis_retry sudo apt-get update
+  - travis_retry sudo apt-get install zotero jurism
+  - travis_retry ./check-latest-zotero.py
 
 cache:
   npm: true
