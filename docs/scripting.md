@@ -193,3 +193,11 @@ if (Translator.BetterBibLaTeX) {
   }
 }
 ```
+
+## Changing the reference type from collection to book
+
+```
+if (Translator.BetterBibLaTeX) {
+  if (this.referencetype === 'collection') this.referencetype = 'book'
+}
+```
