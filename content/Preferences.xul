@@ -336,7 +336,7 @@
         -->
 
         <preference
-          name="extensions.zotero.translators.better-bibtex.suppressNoCaseInference"
+          name="extensions.zotero.translators.better-bibtex.suppressBraceProtection"
           type="bool"
           default="false"/>
         <!--!!

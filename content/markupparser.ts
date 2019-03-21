@@ -79,7 +79,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
     // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
     this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
-    this.braceProtection = !Prefs.get('suppressNoCaseInference')
+    this.braceProtection = !Prefs.get('suppressBraceProtection')
     this.sentenceStart = true
 
     // add enquote tags.
