@@ -44,7 +44,7 @@ Emilie has writen [instructions](https://github.com/AmomentOfMusic/Zotero_scrive
 
 ## DIY
 
-BBT now exposes (if you have HTTP export on in the preferences) an URL at http://localhost:23119/better-bibtex/cayw. The url accepts
+BBT exposes an URL at http://localhost:23119/better-bibtex/cayw. The url accepts
 the following URL parameters:
 
 | parameter |   |
