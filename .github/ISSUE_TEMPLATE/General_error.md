@@ -10,6 +10,8 @@ labels: bug
 - [ ] I am available for follow-up questions and testing
 - [ ] I have included the error-report ID here after restarting Zotero with debugging enabled (Help -> Debug Output Logging -> Restart with logging enabled), reproducing your problem, and selecting "Report Better BibTeX error" from the help menu
 
+Report ID:
+
 **Expected behavior:**
 
 **Actual behavior:**

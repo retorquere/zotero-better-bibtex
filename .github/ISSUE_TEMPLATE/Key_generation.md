@@ -10,6 +10,8 @@ labels: bug
 - [ ] I am available for follow-up questions and testing
 - [ ] I have included the error-report ID here after selecting the problematic reference(s), right-clicking, and submitting an BBT error report from that popup menu
 
+Report ID:
+
 **Expected behavior:**
 
 **Actual behavior:**
