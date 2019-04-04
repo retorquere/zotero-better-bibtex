@@ -20,6 +20,7 @@ import * as Citekey from './key-manager/get-set'
 import { Formatter } from './key-manager/formatter'
 import { DB } from './db/main'
 import { AutoExport } from './auto-export'
+import { DB as Cache } from './db/cache'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let KeyManager = new class { // tslint:disable-line:variable-name
@@ -97,6 +98,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
   public async refresh(ids, manual = false) {
     ids = this.expandSelection(ids)
     log.debug('KeyManager.refresh', ids)
+
+    Cache.remove(ids, `refreshing keys for ${ids}`)
 
     const warnAt = manual ? Prefs.get('warnBulkModify') : 0
     if (warnAt > 0 && ids.length > warnAt) {
