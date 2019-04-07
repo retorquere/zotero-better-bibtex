@@ -314,8 +314,6 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     try {
       const citation = await pick(options)
 
-      if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)
-
       if (options.minimize) {
         const wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
         const windows = wm.getEnumerator(null)
@@ -325,7 +323,29 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         }
       }
 
+      if (options.clipboard) {
+        let str
+
+        str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+        str.data = citation.replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#039;')
+          .replace(/\n/g, '<br>')
+        transferable.addDataFlavor('text/html')
+        transferable.setTransferData('text/html', str, str.data.length * 2)
+
+        str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+        str.data = citation
+        transferable.addDataFlavor('text/unicode')
+        transferable.setTransferData('text/unicode', str, str.data.length * 2)
+
+        clipboardService.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
+      }
+
       log.debug('CAYW: sending', citation)
+
       return [this.OK, 'text/plain', citation]
     } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
