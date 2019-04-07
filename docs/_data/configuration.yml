@@ -189,6 +189,15 @@
       description: When on, BBT will deterministically order references on export.
         This is primarily interesting if you keep the exported file under some kind
         of version control. Comes at performance and memory consumption cost.
+    Warn me when auto-exports take longer than:
+      default: '10'
+      description: 'If you have auto-export set up for a large library, Zotero might
+        freeze for during exports. There is nothing I can do about this; caching helps,
+
+        but all Zotero exports freeze Zotero while they are running. BBT will warn
+        you if it sees a long-running auto-export to suggest running it only
+
+        when Zotero goes idle.'
     Warn me when changing citation keys in bulk:
       default: '10'
       description: 'For those who are curious about what the "Clear/Generate BibTeX

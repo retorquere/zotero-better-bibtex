@@ -9,6 +9,7 @@ autoExportDelay: 1
 autoExportIdleWait: 10
 autoExportPrimeExportCacheBatch: 10
 autoExportPrimeExportCacheThreshold: 0
+autoExportTooLong: 10
 autoPin: false
 auxImport: false
 biblatexExtendedDateFormat: true
