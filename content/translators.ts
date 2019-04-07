@@ -5,6 +5,7 @@ import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
+import { flash } from './flash'
 
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
@@ -88,16 +89,16 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
+  public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, exportOptions: { path?: string, reason?: string } = {}) {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
-    log.debug('Translators.exportItems', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems', { translatorID, displayOptions, exportOptions })
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    log.debug('Translators.exportItems prepping', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems prepping', { translatorID, displayOptions, exportOptions })
 
     if (!items) items = { library: Zotero.Libraries.userLibraryID }
 
@@ -118,31 +119,39 @@ export let Translators = new class { // tslint:disable-line:variable-name
     translation.setTranslator(translatorID)
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 
-    if (path) {
-      const file = Zotero.File.pathToFile(path)
+    if (exportOptions.path) {
+      const file = Zotero.File.pathToFile(exportOptions.path)
 
       if (file.exists() && !file.isFile()) {
-        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
+        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path: exportOptions.path }))
         return deferred.promise
       }
 
       if (!file.parent || !file.parent.exists()) {
-        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
+        deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path: exportOptions.path }))
         return deferred.promise
       }
 
       translation.setLocation(file)
     }
 
-    log.debug('Translators.exportItems starting', { translatorID, displayOptions, path })
+    log.debug('Translators.exportItems starting', { translatorID, displayOptions, exportOptions })
 
     translation.setHandler('done', (obj, success) => {
+      const seconds = 1000
+      const too_long = 5 * seconds
+      const time = Date.now() - start
+
       if (success) {
-        log.debug('Translators.exportItems complete in', { time: Date.now() - start, translatorID, displayOptions, path })
+        log.debug('Translators.exportItems complete in', { time - start, translatorID, displayOptions, exportOptions })
         deferred.resolve(obj ? obj.string : undefined)
       } else {
-        log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
+        log.error('Translators.exportItems failed in', { time, translatorID, displayOptions, exportOptions })
         deferred.reject('translation failed')
+      }
+
+      if (time > too_long && exportOptions.reason) {
+        flash('Long-running export', `Your export took to ${this.byId[translatorID].label} took ${Math.round(time / seconds)} -- if this is an auto-export, timeout = 20)
       }
     })
 
