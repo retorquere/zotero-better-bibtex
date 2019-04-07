@@ -218,6 +218,17 @@
         -->
 
         <preference
+          name="extensions.zotero.translators.better-bibtex.autoExportTooLong"
+          id="pref-better-bibtex-autoExport-warn-long-running"
+          type="int"
+          default="10"/>
+        <!--!
+          If you have auto-export set up for a large library, Zotero might freeze for during exports. There is nothing I can do about this; caching helps,
+          but all Zotero exports freeze Zotero while they are running. BBT will warn you if it sees a long-running auto-export to suggest running it only
+          when Zotero goes idle.
+        -->
+
+        <preference
           name="extensions.zotero.translators.better-bibtex.postscript"
           id="pref-better-bibtex-postscript"
           type="string"
@@ -816,8 +827,14 @@
             <button label="&better-bibtex.Preferences.rescan-citekeys;" oncommand="Zotero.BetterBibTeX.Preferences.rescanCitekeys()"/>
             <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
 
-            <label forpreference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
-            <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
+            <hbox>
+              <label forpreference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
+              <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
+            </hbox>
+            <hbox>
+              <label forpreference="pref-better-bibtex-autoExport-warn-long-running">&better-bibtex.Preferences.auto-export.warn.long-running;</label>
+              <textbox size="5" preference="pref-better-bibtex-autoExport-warn-long-running"/>
+            </hbox>
             <label id="better-bibtex-preferences-cache-stats"/>
             <label height="20px;" style="margin-bottom: 0px"/>
           </tabpanel>

@@ -12,6 +12,7 @@ import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import { pathSearch } from './path-search'
+import { flash } from './flash'
 import Loki = require('lokijs')
 
 class Git {
@@ -251,7 +252,18 @@ const queue = new class {
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
+      const start = Date.now()
       await Translators.exportItems(ae.translatorID, displayOptions, items, ae.path)
+      const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
+      if (elapsed > Prefs.get('autoExportTooLong')) {
+        const title = Zotero.BetterBibTeX.getString('AutoExport.too-long.title')
+        const body = Zotero.BetterBibTeX.getString('AutoExport.too-long.body', {
+          translator: Translators.byId[ae.translatorID].label,
+          path: ae.path,
+          seconds: Math.round(elapsed),
+        })
+        flash(title, body, 20) // tslint:disable-line no-magic-numbers
+      }
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       log.debug('AutoExport.queue.run: export finished', ae)
