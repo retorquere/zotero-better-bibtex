@@ -310,7 +310,7 @@ function toClipboard(text) {
   const data = {
     'text/unicode': text,
     'text/html': escape.html(text),
-    // 'application/rtf': escape.rtf(text),
+    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
   }
 
   const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
@@ -353,7 +353,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
 
       log.debug('CAYW: sending', citation)
 
-      return [this.OK, 'text/plain', citation]
+      return [this.OK, 'text/html; charset=utf-8', citation]
     } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
     }

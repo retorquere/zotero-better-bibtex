@@ -1,10 +1,12 @@
 export function html(str) {
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;')
+  const entity = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+  }
+  // return str.replace(/[\u00A0-\u9999<>\&]/gim, c => entity[c] || `&#${c.charCodeAt(0)};`)
+  return str.replace(/[<>\&"']/g, c => entity[c] || `&#${c.charCodeAt(0)};`)
 }
 
 export function rtf(str) {
