@@ -324,8 +324,10 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
       }
 
       if (options.clipboard) {
-        let str
+        const clipboardService = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
+        const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
 
+        let str
         str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
         str.data = citation.replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
