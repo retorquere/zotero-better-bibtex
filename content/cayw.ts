@@ -5,6 +5,7 @@ declare const Zotero: any
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
 import * as log from './debug'
+import * as escape from './escape'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -34,6 +35,7 @@ class Field {
   public doc: Document
   public code: string
   public text: string
+  public isRich: boolean
   public wrappedJSObject: Field
 
   constructor(doc) {
@@ -66,7 +68,10 @@ class Field {
    * @param {String} text
    * @param {Boolean} isRich
    */
-  public setText(text, isRich) { this.text = text }
+  public setText(text, isRich) {
+    this.text = text
+    this.isRich = isRich
+  }
 
   /**
    * Gets the text inside this field, preferably with formatting, but potentially without
@@ -301,6 +306,27 @@ export async function pick(options) {
   return citation
 }
 
+function toClipboard(text) {
+  const data = {
+    'text/unicode': text,
+    'text/html': escape.html(text),
+    // 'application/rtf': escape.rtf(text),
+  }
+
+  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
+  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
+
+  for (const [mimetype, content] of Object.entries(data)) {
+    log.debug('clipboard: adding', { mimetype, content })
+    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+    str.data = content
+    transferable.addDataFlavor(mimetype)
+    transferable.setTransferData(mimetype, str, content.length * 2)
+  }
+
+  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
+}
+
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
   public OK = 200
@@ -323,28 +349,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         }
       }
 
-      if (options.clipboard) {
-        const clipboardService = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
-        const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
-
-        let str
-        str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
-        str.data = citation.replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
-          .replace(/'/g, '&#039;')
-          .replace(/\n/g, '<br>')
-        transferable.addDataFlavor('text/html')
-        transferable.setTransferData('text/html', str, str.data.length * 2)
-
-        str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
-        str.data = citation
-        transferable.addDataFlavor('text/unicode')
-        transferable.setTransferData('text/unicode', str, str.data.length * 2)
-
-        clipboardService.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
-      }
+      if (options.clipboard) toClipboard(citation)
 
       log.debug('CAYW: sending', citation)
 
