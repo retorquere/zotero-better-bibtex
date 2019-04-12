@@ -84,10 +84,10 @@
     "unicode2latex": "^1.0.11",
     "webpack-cli": "3.3.0",
     "xregexp": "4.2.4",
-    "zotero-plugin": "0.0.72"
+    "zotero-plugin": "0.0.73"
   },
   "devDependencies": {
-    "@types/node": "11.13.2",
+    "@types/node": "11.13.4",
     "@types/webpack": "4.4.27",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",
@@ -120,7 +120,7 @@
     "typedoc": "0.14.2",
     "typescript": "3.4.3",
     "uri-templates": "0.2.0",
-    "webpack": "4.29.6",
+    "webpack": "4.30.0",
     "wrapper-webpack-plugin": "2.1.0",
     "xml-parser": "1.2.1",
     "xmldom": "^0.1.27",
