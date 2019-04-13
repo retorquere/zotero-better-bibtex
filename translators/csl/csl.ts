@@ -146,7 +146,6 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         }
       }
 
-      [csl.shortTitle, csl['title-short']] = [csl['title-short'], csl.shortTitle]; // ; here for disambiguation
       [csl.journalAbbreviation, csl['container-title-short']] = [csl['container-title-short'], csl.journalAbbreviation]
 
       /* ham-fisted workaround for #365 */
