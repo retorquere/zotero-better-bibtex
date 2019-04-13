@@ -223,7 +223,7 @@
     All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table
     you will find there
 
-'
+    '
   name: Hidden preferences
   preferences:
     ascii:

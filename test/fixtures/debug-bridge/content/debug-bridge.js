@@ -17,6 +17,17 @@ if (!Zotero.DebugBridge) {
       permitBookmarklet: false,
   
       init: async function (options) {
+        const password = {
+          expected: Zotero.Prefs.get('debug-bridge.password') || '',
+          found: (options.query || {}).password || '',
+        }
+
+        Zotero.debug(`debug-bridge: password=${JSON.stringify(password)}`)
+
+        if (password.expected !== password.found) {
+          return [401, "text/plain", 'wrong password'];
+        }
+
         Zotero.debug("debug-bridge: executing\n" + options.data);
         let start = new Date()
         let response;
