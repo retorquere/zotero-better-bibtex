@@ -25,10 +25,10 @@ def released(client):
   else:
     feed = 'https://github.com/Juris-M/zotero/releases.atom'
 
-    response = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read()
-    if type(response) is bytes: response = response.decode("utf-8")
-    release = sorted(response.split('\n'))[-1]
-    return release
+    #response = urlopen('https://github.com/Juris-M/assets/releases/download/client%2Freleases%2Fincrementals-linux/incrementals-release-linux').read()
+    #if type(response) is bytes: response = response.decode("utf-8")
+    #release = sorted(response.split('\n'))[-1]
+    #return release
 
   response = urlopen(feed).read()
   if type(response) is bytes: response = response.decode("utf-8")
