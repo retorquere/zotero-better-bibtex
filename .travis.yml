@@ -39,7 +39,7 @@ script: |
   xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
 
 after_failure:
-  curl --upload-file ~/.BBTZ5TEST.log https://transfer.sh/BBTZ5TEST.log
+  curl -F "file=@~/.BBTZ5TEST.log" https://file.io
 
 jobs:
   include:

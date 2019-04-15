@@ -108,7 +108,7 @@ Scenario Outline: BibLaTeX Export
      | Better BibLaTeX.017                                                                            | 1           |
      | Better BibLaTeX.016                                                                            | 1           |
      | Better BibLaTeX.015                                                                            | 1           |
-     | Better BibLaTeX.014                                                                            | 1           | must wait for fidus parser
+     | Better BibLaTeX.014                                                                            | 1           |
      | Better BibLaTeX.013                                                                            | 1           |
      | Better BibLaTeX.012                                                                            | 1           |
      | Better BibLaTeX.011                                                                            | 1           |
