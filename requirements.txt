@@ -2,5 +2,7 @@ addict
 Cheetah3
 lxml
 ruamel.yaml
-behave
 selenium
+behave
+boto3
+munch
