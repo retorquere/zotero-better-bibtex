@@ -1,0 +1,51 @@
+#!/usr/bin/env python3
+
+import boto3
+import json
+from munch import *
+import os
+import sys
+
+s3 = boto3.resource('s3')
+
+with open('package.json') as f:
+  package = json.load(f, object_hook=Munch)
+with open('content/s3.json') as f:
+  regions = json.load(f, object_hook=Munch)
+
+prefix = package.bugs.logs.bucket
+print(prefix)
+for region, details in regions.items():
+  merge = {}
+
+  bucket = s3.Bucket(name=f'{prefix}-{details.short}')
+  for obj in bucket.objects.all():
+    target = os.path.basename(obj.key)
+
+    try:
+      parts = os.path.basename(obj.key).split('.')
+      if parts[2] in ['json', 'txt'] and int(parts[1]): target = f'{parts[0]}.{parts[2]}'
+    except IndexError:
+      target = os.path.basename(obj.key)
+
+    if not target in merge: merge[target] = []
+    merge[target].append(obj)
+
+  if len(sys.argv) == 0:
+    pass
+#    for log in set([k.split('.')[[0] for k in merge.keys()]):
+#      print(log)
+
+  else:
+    args = [a.lower() for a in sys.argv[1:]]
+    for target, partials in merge.items():
+      if len([a for a in args if a in target.lower()]) == 0: continue
+      if os.path.exists(target):
+        print(f'skipping {target}')
+        continue
+
+      print(f'saving {target}')
+      with open(target, 'wb') as f:
+        for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
+          if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
+          f.write(partial.get()['Body'].read())
