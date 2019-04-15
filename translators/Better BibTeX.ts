@@ -178,7 +178,6 @@ Translator.doExport = () => {
     ref.add({name: 'issn', value: item.ISSN})
     ref.add({name: 'lccn', value: item.callNumber})
     ref.add({name: 'shorttitle', value: item.shortTitle})
-    ref.add({name: 'doi', value: item.DOI})
     ref.add({name: 'abstract', value: item.abstractNote})
     ref.add({name: 'nationality', value: item.country})
     ref.add({name: 'language', value: item.language})
@@ -216,15 +215,18 @@ Translator.doExport = () => {
         break
     }
 
-    switch (Translator.preferences.bibtexURL) {
-      case 'url':
-        ref.add({ name: 'url', value: item.url })
-        break
-      case 'note':
-        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
-        break
-      default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !item.url) ref.add({ name: 'doi', value: item.DOI })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !item.DOI) {
+      switch (Translator.preferences.bibtexURL) {
+        case 'url':
+          ref.add({ name: 'url', value: item.url })
+          break
+        case 'note':
+          ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
+          break
+        default:
+          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
+      }
     }
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
