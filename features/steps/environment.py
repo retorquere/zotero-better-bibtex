@@ -1,3 +1,4 @@
+import redo
 import toml
 import munch
 import zotero
@@ -8,6 +9,7 @@ import platform
 import glob
 import configparser
 import shutil
+import urllib
 from selenium import webdriver
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
@@ -22,6 +24,13 @@ class benchmark(object):
     print("%s : %0.3f seconds" % (self.name, end-self.start))
     return False
 
+def running(pid):
+  try:
+    os.kill(pid, 0)
+    return False
+  except OSError:
+    return True
+
 import atexit
 zoteropid = None
 def killzotero():
@@ -29,21 +38,18 @@ def killzotero():
   if zoteropid is None: return
 
   # graceful shutdown
-  zotero.execute("""
-    const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
-    appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
-  """)
+  try:
+    zotero.execute("""
+      const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
+      appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
+    """)
+  except:
+    pass
 
   stopped = False
-  for _ in range(5):
-    sleep(1)
-    try:
-      os.kill(pid, 0)
-    except OSError:
-      pass
-    else:
-      stopped = true
-      break
+  for _ in redo.retrier(attempts=5,sleeptime=1):
+    stopped = not running(zoteropid)
+    if stopped: break
   
   if not stopped: os.kill(zoteropid, signal.SIGKILL)
 atexit.register(killzotero)
@@ -77,8 +83,8 @@ def before_all(context):
     binary = '/Applications/Zotero.app/Contents/MacOS/zotero'
   else:
     assert platform_client in ['Linux:zotero', 'Linux:jurism', 'Darwin:zotero']
+  print(platform_client)
 
-  plugins = glob.glob(os.path.join(ROOT, 'xpi/*.xpi'))
   os.makedirs(profiles, exist_ok = True)
 
   profile = munch.Munch()
@@ -112,6 +118,10 @@ def before_all(context):
   fixtures = os.path.join(ROOT, 'test/fixtures')
   profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.CLIENT))
 
+  for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
+    profile.firefox.add_extension(xpi)
+
+  profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', 'true')
   with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
     preferences = toml.load(f)
     for p, v in nested_dict_iter(preferences['general']):
@@ -127,38 +137,45 @@ def before_all(context):
 
   shutil.rmtree(profile.path, ignore_errors=True)
   shutil.move(profile.firefox.path, profile.path)
+  print('PROFILE READY')
 
   zoteropid = os.fork()
   if zoteropid == 0:
-    fdout = os.open(os.path.expanduser('~/.BBTZ5TEST.log'), os.O_WRONLY)
-    os.dup2(fdout, 1)
+    log = os.open(os.path.expanduser('~/.BBTZ5TEST.log'), os.O_WRONLY)
+    os.dup2(log, 1)
+    os.dup2(log, 2)
     os.execvp(binary, [binary, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile'])
     assert False, f'error starting {zotero.CLIENT}'
 
+  print(f'ZOTERO STARTED: {zoteropid}')
   if os.environ.get('KILL', 'true') == 'false': zoteropid = None
 
   with benchmark(f'starting {zotero.CLIENT}'):
-    for _ in retrier(sleeptime=1):
-      running = zotero.execute("""
-        if (!Zotero.BetterBibTeX) {
-          Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
-          return false;
-        }
-        if (!Zotero.BetterBibTeX.ready) {
-          if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
-          } else {
-            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+    for _ in redo.retrier(attempts=30,sleeptime=1):
+      print('connecting...')
+      try:
+        running = zotero.execute("""
+          if (!Zotero.BetterBibTeX) {
+            Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
+            return false;
           }
-          return false;
-        }
+          if (!Zotero.BetterBibTeX.ready) {
+            if (typeof Zotero.BetterBibTeX.ready === 'boolean') {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX initialization error')
+            } else {
+              Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not initialized')
+            }
+            return false;
+          }
 
-        Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
-        await Zotero.BetterBibTeX.ready;
-        Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
-        return true;
-      """)
-      if running: break
+          Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
+          await Zotero.BetterBibTeX.ready;
+          Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
+          return true;
+        """)
+        if running: break
+      except (urllib.error.HTTPError, urllib.error.URLError):
+        pass
 
   # test whether the existing references, if any, have gotten a cite key
   exportLibrary(translator = 'Better BibTeX', expected = None)

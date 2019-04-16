@@ -40,7 +40,8 @@
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/formatters-doc.py",
     "ncu": "ncu -a && npm install",
-    "reinstall": "rm -rf node_modules yarn* && npm install"
+    "reinstall": "rm -rf node_modules yarn* && npm install",
+    "behave": "behave --include empty --no-capture"
   },
   "main": "index.js",
   "directories": {
