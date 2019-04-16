@@ -121,3 +121,54 @@ def expand_expected(expected):
 
   return [None, None]
 
+def import_file(context, references, collection):
+  if not collection:
+    collection = False
+  elif collection[0] == '"':
+    collection = collection[1:-1]
+  else:
+    collection = True
+
+  fixtures = path.join(path.dirname(__file__), '../../test/fixtures')
+  references = path.join(fixtures, references)
+
+  if references.endswith('.json'):
+    with open(references) as f:
+      config = json.load(f).get('config', {})
+    preferences = config.get('preferences', {})
+    context.displayOptions = config.get('options', {})
+
+    for pref in context.preferences.keys():
+      del preferences[pref]
+
+    del preferences['testing']
+  else:
+    context.displayOptions = {}
+    preferences = None
+
+  with tempfile.TemporaryDirectory() as d:
+    if type(collection) is str:
+      orig = references
+      references = os.path.join(d, collection)
+      shutil.cp(orig, references)
+
+    if '.bib' in references:
+      copy = false
+      bib = ''
+      with open(references) as f:
+        for line in f.readlines():
+          if line.lower().startswith('@comment{jabref-meta: filedirectory:'):
+            bib += f"@Comment{{jabref-meta: fileDirectory:{path.join(path.dirname(references), 'attachments')};}}\n"
+            copy = true
+          else:
+            bib += line
+      if copy:
+        references += '_'
+        with open(references, 'w') as out:
+          out.write(bib)
+
+    return execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
+      filename = references,
+      preferences = preferences,
+      createNewCollection = (collection != False)
+    )

@@ -1,13 +1,13 @@
 [general]
-browser.EULA.3.accepted = true
-browser.EULA.override = true
 browser.displayedE10SNotice = 4
 browser.dom.window.dump.enabled = true
+browser.EULA.3.accepted = true
+browser.EULA.override = true
 browser.laterrun.enabled = false
 browser.link.open_external = 2
 browser.link.open_newwindow = 2
-browser.newtab.url = "about:blank"
 browser.newtabpage.enabled = false
+browser.newtab.url = "about:blank"
 browser.offline = false
 browser.reader.detectedFirstArticle = true
 browser.safebrowsing.enabled = false
@@ -21,29 +21,31 @@ browser.startup.page = 0
 browser.tabs.warnOnClose = false
 browser.tabs.warnOnOpen = false
 browser.usedOnWindows10.introURL = "about:blank"
+
 datareporting.healthreport.logging.consoleEnabled = false
-extensions.logging.enabled = true
-extensions.zotero.firstRunGuidance = false
 datareporting.healthreport.service.firstRun = false
 datareporting.healthreport.uploadEnabled = false
 datareporting.policy.dataSubmissionPolicyAccepted = false
+
 devtools.errorconsole.enabled = true
 devtools.source-map.locations.enabled = true
+
 dom.disable_open_during_load = false
 dom.max_chrome_script_run_time = 0
 dom.max_script_run_time = 0
 dom.report_all_js_exceptions = true
+
 extensions.autoDisableScopes = 10
 extensions.blocklist.enabled = false
 extensions.blocklist.pingCountVersion = -1
-extensions.zotero.translators.better-bibtex.removeStock = true
-
+extensions.logging.enabled = true
+extensions.zotero.automaticScraperUpdates = true
 extensions.zotero.firstRun2 = false
 extensions.zotero.firstRunGuidance = false
 extensions.zotero.reportTranslationFailure = false
 extensions.zotero.translators.better-bibtex.kuroshiro = true
 extensions.zotero.translators.better-bibtex.lockedInit = false
-extensions.zotero.automaticScraperUpdates = true
+extensions.zotero.translators.better-bibtex.removeStock = true
 
 [debug]
 extensions.zotero.debug.log = true

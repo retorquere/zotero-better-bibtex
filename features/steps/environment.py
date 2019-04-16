@@ -1,9 +1,17 @@
 import toml
 import munch
-
 import zotero
-
 import time
+import os
+import json
+import platform
+import glob
+import configparser
+import shutil
+from selenium import webdriver
+
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 class benchmark(object):
   def __init__(self,name):
     self.name = name
@@ -51,7 +59,7 @@ def nested_dict_iter(nested, root = []):
 def before_all(context):
   global zoteropid
 
-  with open(path.join(path.dirname(__file__), '../../gen/translators.json')) as f:
+  with open(os.path.join(ROOT, 'gen/translators.json')) as f:
     context.translators = json.load(f)
 
   home = os.path.expanduser(os.environ.get('TRAVIS_BUILD_DIR', None) or os.environ.get('CIRCLE_WORKING_DIR', None) or '~')
@@ -70,15 +78,15 @@ def before_all(context):
   else:
     assert platform_client in ['Linux:zotero', 'Linux:jurism', 'Darwin:zotero']
 
-  plugins = glob.glob(os.path.join(os.path.dirname(__file__), '../../xpi/*.xpi'))
+  plugins = glob.glob(os.path.join(ROOT, 'xpi/*.xpi'))
   os.makedirs(profiles, exist_ok = True)
 
-  profile = Munch()
+  profile = munch.Munch()
   profile.name = 'BBTZ5TEST'
   profile.path = os.path.expanduser(f'~/.{profile.name}')
   profile.ini_path = os.path.join(profiles, 'profiles.ini')
 
-  profile.ini = ConfigParser.RawConfigParser()
+  profile.ini = configparser.RawConfigParser()
   profile.ini.optionxform = str
   if os.path.exists(profile.ini_path): profile.ini.read(profile.ini_path)
 
@@ -101,24 +109,24 @@ def before_all(context):
   with open(profile.ini_path, 'w') as f:
     profile.ini.write(f, space_around_delimiters=False)
 
-  fixtures = os.path.join(os.path.dirname(__file__), '../../test/fixtures')
+  fixtures = os.path.join(ROOT, 'test/fixtures')
   profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.CLIENT))
 
-  with open('preferences.toml') as f:
+  with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
     preferences = toml.load(f)
     for p, v in nested_dict_iter(preferences['general']):
-      profile.set_preference(p, v)
+      profile.firefox.set_preference(p, v)
 
     if context.config.userdata.get('locale', '') == 'fr':
       for p, v in nested_dict_iter(preferences['fr']):
-        profile.set_preference(p, v)
+        profile.firefox.set_preference(p, v)
 
   if context.config.userdata.get('first-run', 'false') == 'false':
-    profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
   profile.firefox.update_preferences()
 
-  shutil.rm_rf(profile.path)
-  shutil.mv(profile.firefox.path, profile.path)
+  shutil.rmtree(profile.path, ignore_errors=True)
+  shutil.move(profile.firefox.path, profile.path)
 
   zoteropid = os.fork()
   if zoteropid == 0:
