@@ -1,6 +1,8 @@
 import toml
 import munch
 
+import zotero
+
 import time
 class benchmark(object):
   def __init__(self,name):
@@ -14,12 +16,12 @@ class benchmark(object):
 
 import atexit
 zoteropid = None
-def killzotero
+def killzotero():
   global zoteropid
   if zoteropid is None: return
 
   # graceful shutdown
-  execute("""
+  zotero.execute("""
     const appStartup = Components.classes['@mozilla.org/toolkit/app-startup;1'].getService(Components.interfaces.nsIAppStartup);
     appStartup.quit(Components.interfaces.nsIAppStartup.eAttemptQuit);
   """)
@@ -53,18 +55,18 @@ def before_all(context):
     context.translators = json.load(f)
 
   home = os.path.expanduser(os.environ.get('TRAVIS_BUILD_DIR', None) or os.environ.get('CIRCLE_WORKING_DIR', None) or '~')
-  client = context.config.userdata.get('zotero', 'zotero')
-  platform_client = platform.system() + ':' + client
+  zotero.CLIENT = context.config.userdata.get('zotero', 'zotero')
+  platform_client = platform.system() + ':' + zotero.CLIENT
 
   if platform_client == 'Linux:zotero':
     profiles = os.path.expanduser('~/.zotero/zotero')
-    zotero = '/usr/lib/zotero/zotero'
+    binary = '/usr/lib/zotero/zotero'
   elif platform_client == 'Linux:jurism':
     profiles = os.path.expanduser('~/.jurism/zotero')
-    zotero = '/usr/lib/jurism/jurism'
+    binary = '/usr/lib/jurism/jurism'
   elif platform_client == 'Darwin:zotero':
     profiles = os.path.expanduser('~/Library/Application Support/Zotero')
-    zotero = '/Applications/Zotero.app/Contents/MacOS/zotero'
+    binary = '/Applications/Zotero.app/Contents/MacOS/zotero'
   else:
     assert platform_client in ['Linux:zotero', 'Linux:jurism', 'Darwin:zotero']
 
@@ -100,7 +102,7 @@ def before_all(context):
     profile.ini.write(f, space_around_delimiters=False)
 
   fixtures = os.path.join(os.path.dirname(__file__), '../../test/fixtures')
-  profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', client))
+  profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.CLIENT))
 
   with open('preferences.toml') as f:
     preferences = toml.load(f)
@@ -122,14 +124,14 @@ def before_all(context):
   if zoteropid == 0:
     fdout = os.open(os.path.expanduser('~/.BBTZ5TEST.log'), os.O_WRONLY)
     os.dup2(fdout, 1)
-    os.execvp(client, [client, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile')
-    assert False, f'error starting {client}'
+    os.execvp(binary, [binary, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile'])
+    assert False, f'error starting {zotero.CLIENT}'
 
   if os.environ.get('KILL', 'true') == 'false': zoteropid = None
 
-  with benchmark(f'starting {client}'):
+  with benchmark(f'starting {zotero.CLIENT}'):
     for _ in retrier(sleeptime=1):
-      running = execute("""
+      running = zotero.execute("""
         if (!Zotero.BetterBibTeX) {
           Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX not loaded')
           return false;
@@ -154,8 +156,9 @@ def before_all(context):
   exportLibrary(translator = 'Better BibTeX', expected = None)
 
   profile.user_js = os.path.join(profile.path, 'user.js')
-  File.unlink(profile.user_js) if os.path.exists(profile.user_js)
+  if os.path.exists(profile.user_js): os.remove(profile.user_js)
 
 def before_scenario(context, scenario):
-  context.preferences = Preferences()
+  print('before_scenario')
+  context.preferences = zotero.Preferences()
   context.displayOptions = {}
