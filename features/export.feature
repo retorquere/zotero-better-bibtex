@@ -175,7 +175,6 @@ Scenario: Omit URL export when DOI present. #131
 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/BibTeX name escaping has a million inconsistencies #438.json"
-  And I set preference .relaxAuthors to true
   Then an export using "Better BibTeX" should match "export/BibTeX name escaping has a million inconsistencies #438.bibtex"
 
 @test-cluster-1
@@ -212,12 +211,8 @@ Scenario: BibTeX URLs
 @cayw
 Scenario: CAYW picker
   When I import 3 references from "export/cayw.json"
-  And I pick "6 The time it takes: temporalities of planning" for CAYW:
-    | label | page |
-    | locator | 1 |
-  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation" for CAYW:
-    | label | chapter |
-    | locator | 1 |
+  And I pick "6 The time it takes: temporalities of planning", page 1 for CAYW
+  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation", chapter 1 for CAYW
   Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
   And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
   And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
@@ -260,12 +255,12 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 @1155
 Scenario: Postscript error aborts CSL JSON export #1155
-  When I import 4 reference from "export/Postscript error aborts CSL JSON export #1155.json"
+  When I import 4 references from "export/Postscript error aborts CSL JSON export #1155.json"
   Then an export using "Better CSL JSON" should match "export/Postscript error aborts CSL JSON export #1155.csl.json"
 
 @860
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
-  When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
+  When I import 6 references from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"

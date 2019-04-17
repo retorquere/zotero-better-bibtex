@@ -4,6 +4,12 @@ import urllib
 import tempfile
 from munch import *
 import difflib
+import shutil
+import io
+
+from ruamel.yaml import YAML
+yaml=YAML()
+yaml.default_flow_style = False
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 with open(os.path.join(ROOT, 'gen/translators.json')) as f:
@@ -12,7 +18,18 @@ with open(os.path.join(ROOT, 'gen/translators.json')) as f:
 CLIENT=None
 
 def assert_equal_diff(expected, found):
-  assert found == expected, '\n' + '\n'.join(difflib.context_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+  assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+
+def serialize(obj):
+  return json.dumps(obj, indent=2, sort_keys=True)
+
+def compare(expected, found):
+  size = 30
+  if len(expected) < size or len(found) < size:
+    assert_equal_diff(serialize(expected), serialize(found))
+  else:
+    for start in range(0, max(len(expected), len(found)), size):
+      assert_equal_diff(serialize(expected[start:start + size]), serialize(found[start:start + size]))
 
 def execute(script, **args):
   for var, value in args.items():
@@ -27,18 +44,14 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = [self.prefix + k for k in json.load(f).keys()]
-
-  def __getitem__(self, key):
-    return self.pref[key]
+      self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
 
   def __setitem__(self, key, value):
-    value = self.parse(value)
-
     if key[0] == '.': key = self.prefix + key[1:]
 
     if key.startswith(self.prefix):
       assert key in self.supported, f'Unknown preference "{key}"'
+      assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
       with open(path.join('test/fixtures', value)) as f:
@@ -92,11 +105,10 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     expected = f.read()
 
   if ext == '.csl.json':
-    return compare(json.loads(found), json.loads(expected))
+    return compare(json.loads(expected), json.loads(found))
 
   elif ext == '.csl.yml':
-    assert sort_yaml(found) == sort_yaml(expected)
-    return
+    return compare(yaml.load(io.StringIO(expected)), yaml.load(io.StringIO(found)))
 
   elif exit == '.json':
     with open('exported.json', 'w') as f: f.write(found)
@@ -104,12 +116,12 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     found = normalizeJSON(JSON.parse(found))
     expected = normalizeJSON(JSON.parse(expected))
 
-    if len(found['items']) < 30 or len(expected['items']) < 30:
-      assert serialize(found) == serialize(expected)
+    if len(expected['items']) < 30 or len(found['items']) < 30:
+      assert serialize(expected) == serialize(found)
       return
     else:
-      assert serialize({ **found, 'items': []}) == serialize({ **expected, 'items': []})
-      return compare(found['items'], expected['items'])
+      assert serialize({ **expected, 'items': []}) == serialize({ **found, 'items': []})
+      return compare(expected['items'], found['items'])
 
   with open('exported.txt', 'w') as f: f.write(found)
   expected = expected.strip()
@@ -149,11 +161,12 @@ def import_file(context, references, collection = False):
     preferences = config.get('preferences', {})
     context.displayOptions = config.get('options', {})
 
-    for pref in context.preferences.keys():
-      if pref in preferences:
-        del preferences[pref]
-
     if 'testing' in preferences: del preferences['testing']
+    preferences = {
+      pref: (','.join(value) if type(value) == list else value)
+      for pref, value in preferences.items()
+      if not context.preferences.prefix + pref in context.preferences.keys()
+    }
   else:
     context.displayOptions = {}
     preferences = None
@@ -162,7 +175,7 @@ def import_file(context, references, collection = False):
     if type(collection) is str:
       orig = references
       references = os.path.join(d, collection)
-      shutil.cp(orig, references)
+      shutil.copy(orig, references)
 
     if '.bib' in references:
       copy = False
@@ -181,6 +194,6 @@ def import_file(context, references, collection = False):
 
     return execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
       filename = references,
-      preferences = preferences,
-      createNewCollection = (collection != False)
+      createNewCollection = (collection != False),
+      preferences = preferences
     )
