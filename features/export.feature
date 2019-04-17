@@ -258,14 +258,14 @@ Scenario: Postscript error aborts CSL JSON export #1155
   When I import 4 references from "export/Postscript error aborts CSL JSON export #1155.json"
   Then an export using "Better CSL JSON" should match "export/Postscript error aborts CSL JSON export #1155.csl.json"
 
-@860
+@860 @cslyml
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 references from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
-@922
+@922 @cslyml
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
   Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
@@ -301,7 +301,7 @@ Scenario: Date export to Better CSL-JSON #360 #811
   And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
 @test-cluster-1
-@432 @447 @pandoc @598
+@432 @447 @pandoc @598 @cslyml
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
   And I set preference .quickCopyMode to "pandoc"
