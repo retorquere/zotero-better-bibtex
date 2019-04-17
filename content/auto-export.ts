@@ -151,6 +151,7 @@ const queue = new class {
   private paused: Set<number>
   private autoexports: any
   private debounce_delay: number
+  private sorry = true
 
   constructor() {
     this.paused = Prefs.get('autoExport') === 'immediate' ? null : new Set([])
@@ -263,11 +264,25 @@ const queue = new class {
           path: ae.path,
           seconds: Math.round(elapsed),
         })
+        let linger = 10
+
         if (!Prefs.get('autoExportPrimeExportCacheThreshold')) {
           body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.primeEnabled')
           Prefs.set('autoExportPrimeExportCacheThreshold', 20) // tslint:disable-line no-magic-numbers
+
+        } else if (Prefs.get('autoExport') === 'immediate') {
+          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.suggestIdle')
+
+        } else if (this.sorry) {
+          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.sorry')
+          this.sorry = false
+
+        } else {
+          linger = 5 // tslint:disable-line:no-magic-numbers
+
         }
-        flash(title, body, 20) // tslint:disable-line no-magic-numbers
+
+        flash(title, body, linger)
       }
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
