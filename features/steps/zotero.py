@@ -108,7 +108,9 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     return compare(json.loads(expected), json.loads(found))
 
   elif ext == '.csl.yml':
-    return compare(yaml.load(io.StringIO(expected)), yaml.load(io.StringIO(found)))
+    with open('exported.csl.yml', 'w') as f: f.write(found)
+    assert_equal_diff(expected, found)
+    return
 
   elif exit == '.json':
     with open('exported.json', 'w') as f: f.write(found)
