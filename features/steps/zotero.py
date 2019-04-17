@@ -27,7 +27,7 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = [prefix + k for k in json.load(f).keys()]
+      self.supported = [self.prefix + k for k in json.load(f).keys()]
 
   def __getitem__(self, key):
     return self.pref[key]
