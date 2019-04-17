@@ -164,7 +164,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       if (csl.type === 'broadcast' && csl.genre === 'television broadcast') delete csl.genre
 
-      const cache = this.postscript(csl, item)
+      let cache
+      try {
+        cache = this.postscript(csl, item)
+      } catch (err) {
+        cache = false
+      }
 
       csl = this.serialize(csl)
 

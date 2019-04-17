@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+import plistlib
+import os
+
+root = '/Applications/Zotero.app/Contents'
+launcher = root + '/MacOS/zotero-p-datadir'
+zotero = root + '/MacOS/zotero'
+info = root + '/Info.plist'
+
+with open(launcher, 'w') as f:
+  f.write('#!/bin/bash\n')
+  f.write('set -x\n')
+  f.write(f'{zotero} -P -datadir profile\n')
+
+os.chmod(launcher, os.stat(zotero).st_mode)
+
+with open(info, 'rb') as f:
+  plist = plistlib.load(f)
+plist['CFBundleExecutable'] = os.path.basename(launcher)
+with open(info, 'wb') as f:
+  plistlib.dump(plist, f)

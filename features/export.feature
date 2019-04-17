@@ -258,6 +258,11 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
    And I import 1 reference from "export/Include first name initial(s) in cite key generation pattern (86).json"
   Then an export using "Better BibTeX" should match "export/Include first name initial(s) in cite key generation pattern (86).bibtex"
 
+@1155
+Scenario: Postscript error aborts CSL JSON export #1155
+  When I import 4 reference from "export/Postscript error aborts CSL JSON export #1155.json"
+  Then an export using "Better CSL JSON" should match "export/Postscript error aborts CSL JSON export #1155.csl.json"
+
 @860
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"

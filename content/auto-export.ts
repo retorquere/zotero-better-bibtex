@@ -257,11 +257,15 @@ const queue = new class {
       const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       if (elapsed > Prefs.get('autoExportTooLong')) {
         const title = Zotero.BetterBibTeX.getString('AutoExport.too-long.title')
-        const body = Zotero.BetterBibTeX.getString('AutoExport.too-long.body', {
+        let body = Zotero.BetterBibTeX.getString('AutoExport.too-long.body', {
           translator: Translators.byId[ae.translatorID].label,
           path: ae.path,
           seconds: Math.round(elapsed),
         })
+        if (!Prefs.get('autoExportPrimeExportCacheThreshold')) {
+          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.primeEnabled')
+          Prefs.set('autoExportPrimeExportCacheThreshold', 20) // tslint:disable-line no-magic-numbers
+        }
         flash(title, body, 20) // tslint:disable-line no-magic-numbers
       }
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
