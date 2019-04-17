@@ -15,11 +15,6 @@ import subprocess
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
-def after_step(context, step):
-  if step.status == 'failed':
-    if 'exception' in dir(step): print(step.exception)
-    if 'exc_traceback' in dir(step): print(step.exc_traceback)
-
 class benchmark(object):
   def __init__(self,name):
     self.name = name
@@ -137,6 +132,7 @@ class Profile:
       profile.add_extension(xpi)
 
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', 'true')
+
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
       for p, v in nested_dict_iter(preferences['general']):
@@ -157,10 +153,10 @@ def before_all(context):
   global zoteropid
   zotero.CLIENT = context.config.userdata.get('zotero', 'zotero')
 
+  assert not running('Zotero'), 'Zotero is running'
+
   with open(os.path.join(ROOT, 'gen/translators.json')) as f:
     context.translators = json.load(f)
-
-  assert not running('Zotero'), 'Zotero is running'
 
   profile = Profile(context, 'BBTZ5TEST')
 
@@ -208,9 +204,6 @@ def before_all(context):
 
   # test whether the existing references, if any, have gotten a cite key
   zotero.export_library(translator = 'Better BibTeX')
-
-  user_js = os.path.join(profile.path, 'user.js')
-  if os.path.exists(user_js): os.remove(user_js)
 
 def before_scenario(context, scenario):
   zotero.execute('await Zotero.BetterBibTeX.TestSupport.reset()')

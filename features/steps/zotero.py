@@ -25,8 +25,9 @@ def execute(script, **args):
 class Preferences:
   def __init__(self):
     self.pref = {}
+    self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.defaults = json.load(f)
+      self.supported = [prefix + k for k in json.load(f).keys()]
 
   def __getitem__(self, key):
     return self.pref[key]
@@ -34,7 +35,10 @@ class Preferences:
   def __setitem__(self, key, value):
     value = self.parse(value)
 
-    if key[0] == '.': key = f'translators.better-bibtex{key}'
+    if key[0] == '.': key = self.prefix + key[1:]
+
+    if key.startswith(self.prefix):
+      assert key in self.supported, f'Unknown preference "{key}"'
 
     if key == 'translators.better-bibtex.postscript':
       with open(path.join('test/fixtures', value)) as f:
@@ -111,8 +115,6 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
   expected = expected.strip()
   found = found.strip()
 
-  print('expected:', len(expected))
-  print('found:', len(found))
   assert_equal_diff(expected, found)
 
 def expand_expected(expected):
@@ -163,13 +165,13 @@ def import_file(context, references, collection = False):
       shutil.cp(orig, references)
 
     if '.bib' in references:
-      copy = false
+      copy = False
       bib = ''
       with open(references) as f:
         for line in f.readlines():
           if line.lower().startswith('@comment{jabref-meta: filedirectory:'):
             bib += f"@Comment{{jabref-meta: fileDirectory:{os.path.join(os.path.dirname(references), 'attachments')};}}\n"
-            copy = true
+            copy = True
           else:
             bib += line
       if copy:
