@@ -301,6 +301,7 @@ def exportLibrary(displayOptions:, collection: nil, output: nil, translator:, ex
       return compare(JSON.parse(found), JSON.parse(expected))
 
     when '.csl.yml'
+      open('exported.csl.yml', 'w'){|f| f.puts(found) }
       #return compare(YAML.load(found), YAML.load(expected))
       expect(sort_yaml(found)).to eq(sort_yaml(expected))
       return
