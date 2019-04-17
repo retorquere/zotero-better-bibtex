@@ -113,8 +113,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     }
 
-    await this.primeCache(translatorID, displayOptions, items)
-
     translation.setTranslator(translatorID)
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 

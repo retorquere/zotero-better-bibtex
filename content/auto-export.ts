@@ -253,6 +253,7 @@ const queue = new class {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
       const start = Date.now()
+      await this.primeCache(ae.translatorID, displayOptions, items)
       await Translators.exportItems(ae.translatorID, displayOptions, items, ae.path)
       const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       if (elapsed > Prefs.get('autoExportTooLong')) {
