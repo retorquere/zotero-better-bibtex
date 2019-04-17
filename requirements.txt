@@ -1,8 +1,8 @@
-addict
 Cheetah3
-lxml
-ruamel.yaml
-selenium
+addict
 behave
 boto3
+lxml
 munch
+ruamel.yaml
+selenium
