@@ -1,11 +1,6 @@
 ---
 references:
-- id: vogel_cinema_2016
-  type: book
-  title: 'Le Cinéma, art subversif'
-  publisher: Capricci
-  number-of-pages: '349'
-  source: 'BnF Catalogue général (http://catalogue.bnf.fr)'
+- ISBN: 979-10-239-0085-9
   abstract: >-
     Le Cine´ma, art subversif est un livre culte dans l'histoire de la
     cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes
@@ -26,22 +21,30 @@ references:
     Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e´galement
     co-fonde´ le Festival du Film de New York, dont il a dirige´ la
     programmation jusqu'en 1968
-  ISBN: 979-10-239-0085-9
-  call-number: 791.430 1
-  language: fre
+  accessed:
+    -
+      day: 29
+      month: 6
+      year: 2017
   author:
     - family: Vogel
       given: Amos
+  call-number: 791.430 1
+  id: vogel_cinema_2016
+  issued:
+    -
+      year: 2016
+  language: fre
+  number-of-pages: '349'
+  original-date:
+    -
+      year: 1974
+  publisher: Capricci
+  publisher-place: Paris
+  source: 'BnF Catalogue général (http://catalogue.bnf.fr)'
+  title: 'Le Cinéma, art subversif'
   translator:
     - family: Frégnac
       given: Claude
-  issued:
-    - year: 2016
-  accessed:
-    - year: 2017
-      month: 6
-      day: 29
-  publisher-place: Paris
-  original-date:
-    - year: 1974
+  type: book
 ...
