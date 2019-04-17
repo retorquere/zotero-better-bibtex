@@ -12,6 +12,7 @@ import shutil
 import urllib
 from selenium import webdriver
 import subprocess
+import psutil
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -37,7 +38,15 @@ def running(id):
     count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
     return count > 0
 
-  raise ValueError(f'No detection for {platform.system()}')
+  for proc in psutil.process_iter():
+    try:
+      # Check if process name contains the given name string.
+      if id.lower() in proc.name().lower():
+        return True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+      pass
+
+  return False
 
 import atexit
 zoteropid = None

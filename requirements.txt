@@ -8,3 +8,5 @@ redo
 ruamel.yaml
 selenium
 toml
+PyHamcrest
+psutil
