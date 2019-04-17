@@ -21,11 +21,19 @@ def step_impl(context, source, collection):
 def step_impl(context, source):
   assert_that(zotero.import_file(context, source), equal_to(1))
 
+@given(u'I import 1 reference with 1 attachment from "{source}"')
+def step_impl(context):
+  assert_that(zotero.import_file(context, source), equal_to(1))
+
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}" into a new collection')
 def step_impl(context, references, attachments, source):
   assert_that(zotero.import_file(context, source, True), equal_to(references))
 
-@then('an export using "{translator}" should match "{expected}"')
+@step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
+def step_impl(context, references, attachments, source):
+  assert_that(zotero.import_file(context, source), equal_to(references))
+
+@step('an export using "{translator}" should match "{expected}"')
 def step_impl(context, translator, expected):
   zotero.export_library(
     displayOptions = context.displayOptions,
@@ -58,3 +66,8 @@ def step_impl(context, fmt, expected):
 def step_impl(context, change):
   assert change in ['pin', 'unpin', 'refresh']
   zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(itemID, action)', itemID=context.selected, action=change)
+
+@then(u'an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"')
+
