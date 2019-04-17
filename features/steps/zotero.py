@@ -1,13 +1,18 @@
 import json
 import os
 import urllib
+import tempfile
 from munch import *
+import difflib
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 with open(os.path.join(ROOT, 'gen/translators.json')) as f:
   TRANSLATORS = json.load(f, object_hook=Munch)
 
 CLIENT=None
+
+def assert_equal_diff(expected, found):
+  assert found == expected, '\n'.join(difflib.context_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
 def execute(script, **args):
   for var, value in args.items():
@@ -19,6 +24,8 @@ def execute(script, **args):
 class Preferences:
   def __init__(self):
     self.pref = {}
+    with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
+      self.defaults = json.load(f)
 
   def __getitem__(self, key):
     return self.pref[key]
@@ -28,7 +35,7 @@ class Preferences:
 
     if key[0] == '.': key = f'translators.better-bibtex{key}'
 
-    if pref == 'translators.better-bibtex.postscript':
+    if key == 'translators.better-bibtex.postscript':
       with open(path.join('test/fixtures', value)) as f:
         value = f.read()
 
@@ -39,7 +46,7 @@ class Preferences:
     return self.pref.keys()
 
   def parse(self, value):
-    value = value.trim()
+    value = value.strip()
 
     if value in ['true', 'false']: return value == 'true'
 
@@ -54,7 +61,7 @@ class Preferences:
 
     return value
 
-def export_library(displayOptions, translator, collection = None, output = None, expected = None):
+def export_library(translator, displayOptions = {}, collection = None, output = None, expected = None):
   assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
 
   if translator.startswith('id:'):
@@ -100,7 +107,9 @@ def export_library(displayOptions, translator, collection = None, output = None,
       return compare(found['items'], expected['items'])
 
   with open('exported.txt', 'w') as f: f.write(found)
-  assert found.strip() == expected.strip()
+  found = found.strip()
+  expected = expected.strip()
+  assert_equal_diff(expected, found)
 
 def expand_expected(expected):
   base, ext = os.path.splitext(expected)
@@ -122,16 +131,11 @@ def expand_expected(expected):
 
   return [None, None]
 
-def import_file(context, references, collection):
-  if not collection:
-    collection = False
-  elif collection[0] == '"':
-    collection = collection[1:-1]
-  else:
-    collection = True
+def import_file(context, references, collection = False):
+  assert type(collection) in [bool, str]
 
-  fixtures = path.join(path.dirname(__file__), '../../test/fixtures')
-  references = path.join(fixtures, references)
+  fixtures = os.path.join(os.path.dirname(__file__), '../../test/fixtures')
+  references = os.path.join(fixtures, references)
 
   if references.endswith('.json'):
     with open(references) as f:
@@ -140,7 +144,8 @@ def import_file(context, references, collection):
     context.displayOptions = config.get('options', {})
 
     for pref in context.preferences.keys():
-      del preferences[pref]
+      if pref in preferences:
+        del preferences[pref]
 
     del preferences['testing']
   else:
@@ -159,7 +164,7 @@ def import_file(context, references, collection):
       with open(references) as f:
         for line in f.readlines():
           if line.lower().startswith('@comment{jabref-meta: filedirectory:'):
-            bib += f"@Comment{{jabref-meta: fileDirectory:{path.join(path.dirname(references), 'attachments')};}}\n"
+            bib += f"@Comment{{jabref-meta: fileDirectory:{os.path.join(os.path.dirname(references), 'attachments')};}}\n"
             copy = true
           else:
             bib += line

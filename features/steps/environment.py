@@ -160,6 +160,8 @@ def before_all(context):
   with open(os.path.join(ROOT, 'gen/translators.json')) as f:
     context.translators = json.load(f)
 
+  assert not running('Zotero'), 'Zotero is running'
+
   profile = Profile(context, 'BBTZ5TEST')
 
   zoteropid = os.fork()
@@ -174,8 +176,6 @@ def before_all(context):
 
   print(f'ZOTERO STARTED: {zoteropid}')
   if os.environ.get('KILL', 'true') == 'false': zoteropid = None
-
-  assert not running('Zotero'), 'Zotero is running'
 
   ready = False
   with benchmark(f'starting {zotero.CLIENT}'):
@@ -207,7 +207,7 @@ def before_all(context):
   assert ready
 
   # test whether the existing references, if any, have gotten a cite key
-  exportLibrary(translator = 'Better BibTeX', expected = None)
+  zotero.export_library(translator = 'Better BibTeX')
 
   user_js = os.path.join(profile.path, 'user.js')
   if os.path.exists(user_js): os.remove(user_js)
