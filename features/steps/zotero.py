@@ -12,14 +12,15 @@ with open(os.path.join(ROOT, 'gen/translators.json')) as f:
 CLIENT=None
 
 def assert_equal_diff(expected, found):
-  assert found == expected, '\n'.join(difflib.context_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+  assert found == expected, '\n' + '\n'.join(difflib.context_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
 def execute(script, **args):
   for var, value in args.items():
     script = f'const {var} = {json.dumps(value)};\n' + script
 
   req = urllib.request.Request('http://127.0.0.1:23119/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
-  return json.loads(urllib.request.urlopen(req).read().decode())
+  res = urllib.request.urlopen(req).read().decode()
+  return json.loads(res)
 
 class Preferences:
   def __init__(self):
@@ -107,8 +108,11 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
       return compare(found['items'], expected['items'])
 
   with open('exported.txt', 'w') as f: f.write(found)
-  found = found.strip()
   expected = expected.strip()
+  found = found.strip()
+
+  print('expected:', len(expected))
+  print('found:', len(found))
   assert_equal_diff(expected, found)
 
 def expand_expected(expected):
@@ -147,7 +151,7 @@ def import_file(context, references, collection = False):
       if pref in preferences:
         del preferences[pref]
 
-    del preferences['testing']
+    if 'testing' in preferences: del preferences['testing']
   else:
     context.displayOptions = {}
     preferences = None

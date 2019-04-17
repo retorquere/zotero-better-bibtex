@@ -213,6 +213,8 @@ def before_all(context):
   if os.path.exists(user_js): os.remove(user_js)
 
 def before_scenario(context, scenario):
-  print('before_scenario')
+  zotero.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
   context.preferences = zotero.Preferences()
   context.displayOptions = {}
+  context.selected = None
+  context.picked = []
