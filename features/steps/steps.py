@@ -3,6 +3,7 @@ import urllib.request
 import json
 import zotero
 import time
+import os
 from hamcrest import assert_that, equal_to
 
 @step('I set preference {pref} to {value}')
@@ -22,7 +23,7 @@ def step_impl(context, source):
   assert_that(zotero.import_file(context, source), equal_to(1))
 
 @given(u'I import 1 reference with 1 attachment from "{source}"')
-def step_impl(context):
+def step_impl(context, source):
   assert_that(zotero.import_file(context, source), equal_to(1))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}" into a new collection')
@@ -32,6 +33,33 @@ def step_impl(context, references, attachments, source):
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   assert_that(zotero.import_file(context, source), equal_to(references))
+
+@step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
+def step_impl(context, translator, output, expected):
+  zotero.export_library(
+    displayOptions = { **context.displayOptions, 'keepUpdated': True},
+    translator = translator,
+    output = output,
+    expected = expected
+  )
+
+@then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match "{expected}"')
+def step_impl(context, translator, collection, output, expected):
+  zotero.export_library(
+    displayOptions = { **context.displayOptions, 'keepUpdated': True},
+    translator = translator,
+    collection = collection,
+    output = output,
+    expected = expected
+  )
+
+@step('an export using "{translator}" with {displayOption} on should match "{expected}"')
+def step_impl(context, translator, displayOption, expected):
+  zotero.export_library(
+    displayOptions = { **context.displayOptions, displayOption: True},
+    translator = translator,
+    expected = expected
+  )
 
 @step('an export using "{translator}" should match "{expected}"')
 def step_impl(context, translator, expected):
@@ -67,7 +95,28 @@ def step_impl(context, change):
   assert change in ['pin', 'unpin', 'refresh']
   zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(itemID, action)', itemID=context.selected, action=change)
 
+@when(u'I {change} all citation keys')
+def step_impl(context, change):
+  assert change in ['pin', 'unpin', 'refresh']
+  zotero.execute('await Zotero.BetterBibTeX.TestSupport.pinCiteKey(null, action)', action=change)
+
 @then(u'an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"')
 def step_impl(context):
     raise NotImplementedError(u'STEP: Then an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"')
+
+@then(u'"{found}" should match "{expected}"')
+def step_impl(context, expected, found):
+  if expected[0] != '/': expected = os.path.join(os.path.dirname(__file__), '../../test/fixtures', expected)
+  with open(expected) as f:
+    expected = f.read()
+
+  if found[0] != '/': found = os.path.join(os.path.dirname(__file__), '../../test/fixtures', found)
+  with open(found) as f:
+    found = f.read()
+
+  zotero.assert_equal_diff(expected.strip(), found.strip())
+
+@when(u'I wait {seconds:d} seconds')
+def step_impl(context, seconds):
+  time.sleep(seconds)
 

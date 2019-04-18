@@ -315,23 +315,18 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
 @test-cluster-1
 @journal-abbrev @bbt
 Scenario: Journal abbreviations
-  Given I set preference ..citekeyFormat to 10
   Given I set preference .citekeyFormat to "[authors][year][journal]"
   And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
-  And I set preference .pinCitekeys to "on-export"
   And I import 1 reference with 1 attachment from "export/Better BibTeX.029.json"
-  Then an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"
-    | useJournalAbbreviation | true |
+  Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/Better BibTeX.029.bibtex"
 
 @test-cluster-1
 @81 @bbt
 Scenario: Journal abbreviations exported in bibtex (81)
   Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
   And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
-  And I set preference .pinCitekeys to "on-export"
   And I import 1 reference from "export/Journal abbreviations exported in bibtex (81).json"
-  Then an export using "Better BibTeX" with the following export options should match "export/Journal abbreviations exported in bibtex (81).bibtex"
-    | useJournalAbbreviation  | true |
+  Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/Journal abbreviations exported in bibtex (81).bibtex"
 
 @postscript @bbt
 Scenario: Post script

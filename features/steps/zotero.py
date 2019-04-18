@@ -9,7 +9,7 @@ import io
 from markdownify import markdownify as md
 
 from ruamel.yaml import YAML
-yaml=YAML()
+yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
@@ -122,7 +122,7 @@ class Preferences:
       assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
-      with open(path.join('test/fixtures', value)) as f:
+      with open(os.path.join('test/fixtures', value)) as f:
         value = f.read()
 
     self.pref[key] = value
@@ -177,7 +177,10 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
 
   elif ext == '.csl.yml':
     with open('exported.csl.yml', 'w') as f: f.write(found)
-    assert_equal_diff(expected, found)
+    assert_equal_diff(
+      serialize(yaml.load(io.StringIO(expected))),
+      serialize(yaml.load(io.StringIO(found)))
+    )
     return
 
   elif exit == '.json':
