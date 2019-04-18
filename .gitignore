@@ -1,4 +1,5 @@
 behave.ini
+setup.cfg
 __pycache__
 docs/_site
 wiki
