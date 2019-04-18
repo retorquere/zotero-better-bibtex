@@ -31,7 +31,6 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "git": "config",
       "itemObserverDelay": 100,
@@ -177,7 +176,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
     "release": {
@@ -197,17 +195,7 @@
   "items": [
     {
       "accessDate": "2019-03-11T07:01:19Z",
-      "attachments": [
-        {
-          "dateAdded": "2019-03-11T07:01:19Z",
-          "dateModified": "2019-03-11T07:01:19Z",
-          "itemType": "attachment",
-          "relations": [],
-          "tags": [],
-          "title": "\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
-          "uri": "http://zotero.org/users/local/VonvPTGW/items/TYX7X2MB"
-        }
-      ],
+      "attachments": [],
       "citekey": "InputWikiGoLaTeX",
       "creators": [],
       "dateAdded": "2019-03-11T07:01:19Z",

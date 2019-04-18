@@ -6,6 +6,7 @@ from munch import *
 import difflib
 import shutil
 import io
+from markdownify import markdownify as md
 
 from ruamel.yaml import YAML
 yaml=YAML()
@@ -22,6 +23,72 @@ def assert_equal_diff(expected, found):
 
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
+
+def un_multi(obj):
+  if type(obj) == dict:
+    obj.pop('multi', None)
+    for v in obj.values():
+      un_multi(v)
+  elif type(obj) == list:
+    for v in obj:
+      un_multi(v)
+
+def normalizeJSON(lib):
+  print('NORMALIZING')
+  un_multi(lib)
+
+  lib.pop('config', None)
+  lib.pop('keymanager', None)
+  lib.pop('cache', None)
+
+  itemIDs = {}
+  for itemID, item in enumerate(lib['items']):
+    itemIDs[item['itemID']] = itemID
+    item['itemID'] = itemID
+
+    item.pop('dateAdded', None)
+    item.pop('dateModified', None)
+    item.pop('uniqueFields', None)
+    item.pop('key', None)
+    item.pop('citekey', None)
+    item.pop('attachments', None)
+    item.pop('collections', None)
+    item.pop('__citekey__', None)
+    item.pop('uri', None)
+
+    item['notes'] = sorted([md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
+
+    if 'note' in item: item['note']  = md(item['note'])
+
+    item['tags'] = sorted([(tag if type(tag) == str else tag['tag']) for tag in item.get('tags', [])])
+
+    for k, v in item.items():
+      if v is None: del item[k]
+      if type(v) in [list, dict] and len(v) == 0: del item[k]
+
+  collections = lib.get('collections', {})
+  while any(coll for coll in collections.values() if not coll.get('path', None)):
+    for coll in collections.values():
+      if coll.get('path', None): continue
+
+      if not coll.get('parent', None):
+        coll['path'] = [ coll['name'] ]
+      elif collections[ coll['parent'] ].get('path', None):
+        coll['path'] = collections[ coll['parent'] ]['path'] + [ coll['name'] ]
+
+  for key, coll in collections.items():
+    coll['key'] = ' ::: '.join(coll['path'])
+    coll.pop('path', None)
+    coll.pop('id', None)
+
+  for key, coll in collections.items():
+    if coll['parent']: coll['parent'] = collections[coll['parent']]['key']
+    coll['collections'] = [collections[key]['key'] for key in coll['collections']]
+    coll['items'] = [itemIDs[itemID] for itemID in coll['items']]
+
+  lib['collections'] = {coll['key']: coll for coll in collections.values()}
+
+  return lib
 
 def compare(expected, found):
   size = 30
@@ -170,9 +237,9 @@ def import_file(context, references, collection = False):
       for pref, value in preferences.items()
       if not context.preferences.prefix + pref in context.preferences.keys()
     }
-    for k, v in preferences:
-      assert k in context.preferences.supported, f'Unsupported preference "{k}"'
-      assert type(v) == context.preferences.supported[k], f'Value for preference {k} has unexpected type {type(v)}'
+    for k, v in preferences.items():
+      assert context.preferences.prefix + k in context.preferences.supported, f'Unsupported preference "{k}"'
+      assert type(v) == context.preferences.supported[context.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
   else:
     context.displayOptions = {}
     preferences = None

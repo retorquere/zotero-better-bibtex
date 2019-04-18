@@ -5,8 +5,7 @@
     "label": "BetterBibTeX JSON",
     "options": {
       "exportFileData": false,
-      "exportNotes": false,
-      "exportPath": "/home/emile/github/better-bibtex/"
+      "exportNotes": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -29,7 +28,6 @@
       "citekeyFormat": "[authshort:nopunct][shortyear]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -174,7 +172,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
     "release": {
@@ -195,17 +192,7 @@
     {
       "ISBN": "978-953-51-0396-7",
       "accessDate": "2018-11-08T19:36:39Z",
-      "attachments": [
-        {
-          "dateAdded": "2018-11-08T19:36:44Z",
-          "dateModified": "2018-11-08T19:36:44Z",
-          "itemType": "attachment",
-          "relations": [],
-          "tags": [],
-          "title": "Snapshot",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/D2EGH6MM"
-        }
-      ],
+      "attachments": [],
       "citekey": "IABGD+12",
       "creators": [
         {

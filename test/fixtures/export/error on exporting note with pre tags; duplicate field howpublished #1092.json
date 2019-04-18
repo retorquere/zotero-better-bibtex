@@ -459,7 +459,6 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -604,7 +603,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
     "release": {
@@ -623,17 +621,7 @@
   },
   "items": [
     {
-      "attachments": [
-        {
-          "dateAdded": "2016-10-05T13:46:46Z",
-          "dateModified": "2016-10-05T13:53:03Z",
-          "itemType": "attachment",
-          "relations": [],
-          "tags": [],
-          "title": "Snapshot",
-          "uri": "http://zotero.org/groups/570438/items/FKWR3PMV"
-        }
-      ],
+      "attachments": [],
       "citekey": "blantonConservativeLossRecovery2012",
       "creators": [
         {

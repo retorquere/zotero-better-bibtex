@@ -5,8 +5,7 @@
     "label": "BetterBibTeX JSON",
     "options": {
       "exportFileData": false,
-      "exportNotes": true,
-      "exportPath": "/home/emile/github/better-bibtex/"
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -29,7 +28,6 @@
       "citekeyFormat": "[auth][shorttitle][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "git": "config",
       "itemObserverDelay": 100,
@@ -175,7 +173,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
     "release": {

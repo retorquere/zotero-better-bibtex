@@ -28,7 +28,6 @@
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": true,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -173,7 +172,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
     "release": {

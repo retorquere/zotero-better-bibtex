@@ -28,7 +28,6 @@
       "citekeyFormat": "[auth:lower][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -175,7 +174,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
     "release": {
@@ -195,17 +193,7 @@
   "items": [
     {
       "abstractNote": "The Boogie Veri\ufb01cation Debugger (BVD) is a tool that lets users explore the potential program errors reported by a deductive program veri\ufb01er. The user interface is like that of a dynamic debugger, but the debugging happens statically without executing the program. BVD integrates with the programveri\ufb01cation engine Boogie. Just as Boogie supports multiple language front-ends, BVD can work with those front-ends through a plug-in architecture. BVD plugins have been implemented for two state-of-the-art veri\ufb01ers, VCC and Dafny.",
-      "attachments": [
-        {
-          "dateAdded": "2018-11-20T02:39:33Z",
-          "dateModified": "2018-11-20T02:39:33Z",
-          "itemType": "attachment",
-          "relations": [],
-          "tags": [],
-          "title": "Goues Leino Moskal 2011 The Boogie Veri\ufb01cation Debugger.pdf",
-          "uri": "http://zotero.org/users/local/G4R0aqlY/items/NFRRE35D"
-        }
-      ],
+      "attachments": [],
       "citekey": "bvd2011",
       "creators": [
         {

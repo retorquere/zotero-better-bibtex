@@ -3,8 +3,7 @@ Feature: Import
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to 0
-  And I set preference .defaultDateParserLocale to en-GB
+  And I set preference .jabrefFormat to 0
 
 @i1 @schomd
 Scenario: Better BibTeX Import 2
