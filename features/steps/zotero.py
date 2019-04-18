@@ -21,6 +21,9 @@ CLIENT=None
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
+def html2md(html):
+  return md(html.replace('\n', ' ')).strip()
+
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
 
@@ -33,8 +36,18 @@ def un_multi(obj):
     for v in obj:
       un_multi(v)
 
+def strip_obj(data):
+  if type(data) == list:
+    stripped = [strip_obj(e) for e in data]
+    return [e for e in stripped if e not in ['', u'', {}, None, []]]
+
+  if type(data) == dict:
+    stripped = {k: strip_obj(v) for (k, v) in data.items()}
+    return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
+
+  return data
+
 def normalizeJSON(lib):
-  print('NORMALIZING')
   un_multi(lib)
 
   lib.pop('config', None)
@@ -56,13 +69,14 @@ def normalizeJSON(lib):
     item.pop('__citekey__', None)
     item.pop('uri', None)
 
-    item['notes'] = sorted([md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
+    item['notes'] = sorted([html2md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
 
-    if 'note' in item: item['note']  = md(item['note'])
+    if 'note' in item: item['note']  = html2md(item['note'])
 
     item['tags'] = sorted([(tag if type(tag) == str else tag['tag']) for tag in item.get('tags', [])])
 
-    for k, v in item.items():
+    for k in list(item.keys()):
+      v = item[k]
       if v is None: del item[k]
       if type(v) in [list, dict] and len(v) == 0: del item[k]
 
@@ -88,7 +102,7 @@ def normalizeJSON(lib):
 
   lib['collections'] = {coll['key']: coll for coll in collections.values()}
 
-  return lib
+  return strip_obj(lib)
 
 def compare(expected, found):
   size = 30
@@ -183,17 +197,19 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     )
     return
 
-  elif exit == '.json':
+  elif ext == '.json':
     with open('exported.json', 'w') as f: f.write(found)
 
-    found = normalizeJSON(JSON.parse(found))
-    expected = normalizeJSON(JSON.parse(expected))
+    found = normalizeJSON(json.loads(found))
+    expected = normalizeJSON(json.loads(expected))
 
     if len(expected['items']) < 30 or len(found['items']) < 30:
-      assert serialize(expected) == serialize(found)
+      print('SMALL COMPARE')
+      assert_equal_diff(serialize(expected), serialize(found))
       return
     else:
-      assert serialize({ **expected, 'items': []}) == serialize({ **found, 'items': []})
+      print('BIG COMPARE')
+      assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
       return compare(expected['items'], found['items'])
 
   with open('exported.txt', 'w') as f: f.write(found)
