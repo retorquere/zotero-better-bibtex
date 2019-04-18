@@ -4,6 +4,8 @@ python:
   - 3.7
 
 before_install:
+  - echo https://github.com/travis-ci/travis-ci/issues/8920
+  - python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
   - sudo add-apt-repository --yes ppa:retorquere/zotero
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install zotero jurism
