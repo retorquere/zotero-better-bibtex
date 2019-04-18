@@ -174,7 +174,7 @@ def before_all(context):
   if zoteropid == 0:
     cmd = [profile.binary, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile']
     if 'xvfb' in context.config.userdata:
-      cmd.unshift(context.config.userdata['xvfb'])
+      cmd = [ context.config.userdata['xvfb'] ] + cmd
     print('starting ' + ' '.join(cmd))
     log = os.open(profile.path + '.log', os.O_WRONLY | os.O_CREAT | os.O_TRUNC)
     os.dup2(log, 1)
