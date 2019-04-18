@@ -1,7 +1,7 @@
 dist: xenial
 language: python
 python:
-  - 3.6
+  - 3.7
 
 before_install:
   - sudo add-apt-repository --yes ppa:retorquere/zotero
@@ -16,17 +16,11 @@ cache:
   apt: true
   directories:
   - node_modules
-  - vendor/bundle
   - .cache/pip
 
 script: |
   #set -e
   #set -x
-
-  gem install bundler
-  gem update bundler
-  bundle config
-  bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
 
   #git submodule sync && git submodule update --init --recursive
 
@@ -36,7 +30,7 @@ script: |
     export NIGHTLY="and not @nightly"
   fi
 
-  xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+  xvfb-run behave --tags="$CLUSTER $NIGHTLY"
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io

@@ -30,6 +30,10 @@ def step_impl(context, source):
 def step_impl(context, references, attachments, source):
   assert_that(zotero.import_file(context, source, True), equal_to(references))
 
+@step(r'I import {references:d} references from "{source}" into a new collection')
+def step_impl(context, references, source):
+  assert_that(zotero.import_file(context, source, True), equal_to(references))
+
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   assert_that(zotero.import_file(context, source), equal_to(references))

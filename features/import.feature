@@ -29,7 +29,7 @@ Scenario: AUX scanner
 
 @nightly
 Scenario Outline: Better BibTeX Import
-  When I import <references> reference from "import/<file>.bib"
+  When I import <references> references from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
   Examples:
@@ -39,7 +39,7 @@ Scenario Outline: Better BibTeX Import
 
 @test-cluster-1 @959 @1058 @871 @1081 @1115
 Scenario Outline: Better BibTeX Import
-  When I import <references> reference from "import/<file>.bib"
+  When I import <references> references from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |

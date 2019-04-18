@@ -7,6 +7,7 @@ import difflib
 import shutil
 import io
 from markdownify import markdownify as md
+from bs4 import BeautifulSoup
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -22,7 +23,8 @@ def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
 def html2md(html):
-  return md(html.replace('\n', ' ')).strip()
+  html = BeautifulSoup(html).prettify()
+  return md(html).strip()
 
 def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
