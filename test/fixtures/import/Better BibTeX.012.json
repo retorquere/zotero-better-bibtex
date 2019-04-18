@@ -1,26 +1,25 @@
 {
-  "items": [
-    {
-      "itemType": "bookSection",
-      "creators": [
-        {
-          "firstName": "Niklas",
-          "lastName": "Möller",
-          "creatorType": "author"
-        }
-      ],
-      "publisher": "Springer",
-      "title": "The Concepts of Risk and Safety",
-      "date": "2012",
-      "extra": "Citation Key: moller2012conceptsrisksafety",
-      "itemID": 0,
-      "publicationTitle": "Handbook of Risk Theory: Epistemology, Decision Theory, Ethics, and Social Implications of Risk"
-    }
-  ],
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Niklas",
+          "lastName": "M\u00f6ller"
+        }
+      ],
+      "date": "2012",
+      "extra": "Citation Key: moller2012conceptsrisksafety",
+      "itemID": 0,
+      "itemType": "bookSection",
+      "publicationTitle": "Handbook of Risk Theory: Epistemology, Decision Theory, Ethics, and Social Implications of Risk",
+      "publisher": "Springer",
+      "title": "The Concepts of Risk and Safety"
+    }
+  ]
 }

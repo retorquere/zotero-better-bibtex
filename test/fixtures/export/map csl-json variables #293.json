@@ -1,77 +1,76 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.7.33",
-    "preferences": {
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "skipFields": "file,editora,editoratype,editorb,editorbtype",
-      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
-      "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": false
-    }
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "jabrefFormat": 0,
+      "preserveBibTeXVariables": false,
+      "skipFields": "file,editora,editoratype,editorb,editorbtype",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
+    },
+    "release": "0.7.33"
   },
   "items": [
     {
-      "itemID": 647,
-      "itemType": "book",
-      "place": "København",
-      "publisher": "Akademisk Forlag",
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": "",
+          "firstName": "Bruno",
+          "lastName": "Latour"
+        }
+      ],
       "date": "2008",
       "extra": "{:original-date: 2005}\n{:original-publisher: origpublisher}\n{:original-publisher-place: origlocation}\n{:original-title: origtitle}",
-      "title": "En ny sociologi for et nyt samfund. Introduktion til Aktør-Netværk-Teori",
-      "shortTitle": "En ny sociologi",
+      "itemID": 647,
+      "itemType": "book",
       "language": "dan",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Bruno",
-          "lastName": "Latour",
-          "fieldMode": ""
-        }
-      ]
+      "place": "K\u00f8benhavn",
+      "publisher": "Akademisk Forlag",
+      "shortTitle": "En ny sociologi",
+      "title": "En ny sociologi for et nyt samfund. Introduktion til Akt\u00f8r-Netv\u00e6rk-Teori"
     },
     {
-      "itemType": "book",
-      "series": "Bibliothèque Dalloz",
-      "edition": "2",
-      "place": "Paris",
-      "publisher": "Dalloz",
       "ISBN": "2-247-04268-6",
-      "date": "2004 [1929]",
-      "extra": "{:original-date: 1929}\n{:original-title: Vom Wesen und Wert der Demokratie}\n{:original-publisher-place: Tübingen}\n{:original-publisher: J.C.B. Mohr}",
-      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
-      "language": "fr-FR",
-      "abstractNote": "Préface de Ph. Raynaud.\nTrad. de : \"Vom Wesen und Wert der Demokratie\" - Tübingen : J.C.B.  Mohr, 1929.\nFac-sim. de la 2e éd., Paris : Sirey : 1932.",
-      "title": "La démocratie. Sa nature, sa valeur",
-      "numPages": "x+121",
+      "abstractNote": "Pr\u00e9face de Ph. Raynaud.\nTrad. de : \"Vom Wesen und Wert der Demokratie\" - T\u00fcbingen : J.C.B.  Mohr, 1929.\nFac-sim. de la 2e \u00e9d., Paris : Sirey : 1932.",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Kelsen",
-          "firstName": "Hans"
+          "firstName": "Hans",
+          "lastName": "Kelsen"
         },
         {
           "creatorType": "contributor",
-          "lastName": "Raynaud",
-          "firstName": "Philippe"
+          "firstName": "Philippe",
+          "lastName": "Raynaud"
         },
         {
           "creatorType": "translator",
-          "lastName": "Eisenmann",
-          "firstName": "Charles"
+          "firstName": "Charles",
+          "lastName": "Eisenmann"
         }
       ],
-      "itemID": 4325
+      "date": "2004 [1929]",
+      "edition": "2",
+      "extra": "{:original-date: 1929}\n{:original-title: Vom Wesen und Wert der Demokratie}\n{:original-publisher-place: T\u00fcbingen}\n{:original-publisher: J.C.B. Mohr}",
+      "itemID": 4325,
+      "itemType": "book",
+      "language": "fr-FR",
+      "libraryCatalog": "Library Catalog - www.sudoc.abes.fr",
+      "numPages": "x+121",
+      "place": "Paris",
+      "publisher": "Dalloz",
+      "series": "Biblioth\u00e8que Dalloz",
+      "title": "La d\u00e9mocratie. Sa nature, sa valeur"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

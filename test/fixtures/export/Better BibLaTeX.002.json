@@ -1,54 +1,53 @@
 {
-  "items": [
-    {
-      "itemType": "book",
-      "creators": [
-        {
-          "firstName": "Milton",
-          "lastName": "Abramowitz",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Irene A.",
-          "lastName": "Stegun",
-          "creatorType": "author"
-        }
-      ],
-      "place": "New York",
-      "edition": "ninth Dover printing, tenth GPO printing",
-      "title": "Handbook of mathematical functions with formulas, graphs, and mathematical tables",
-      "publisher": "Dover",
-      "date": "1964"
-    },
-    {
-      "itemType": "book",
-      "creators": [
-        {
-          "firstName": "Joe",
-          "lastName": "Torre",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Tom",
-          "lastName": "Verducci",
-          "creatorType": "author"
-        }
-      ],
-      "ISBN": "0385527403",
-      "publisher": "Doubleday",
-      "title": "The Yankee years",
-      "date": "2008"
-    }
-  ],
+  "collections": {},
   "config": {
-    "label": "BetterBibTeX JSON",
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     }
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Milton",
+          "lastName": "Abramowitz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Irene A.",
+          "lastName": "Stegun"
+        }
+      ],
+      "date": "1964",
+      "edition": "ninth Dover printing, tenth GPO printing",
+      "itemType": "book",
+      "place": "New York",
+      "publisher": "Dover",
+      "title": "Handbook of mathematical functions with formulas, graphs, and mathematical tables"
+    },
+    {
+      "ISBN": "0385527403",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Joe",
+          "lastName": "Torre"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tom",
+          "lastName": "Verducci"
+        }
+      ],
+      "date": "2008",
+      "itemType": "book",
+      "publisher": "Doubleday",
+      "title": "The Yankee years"
+    }
+  ]
 }

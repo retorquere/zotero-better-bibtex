@@ -1,86 +1,76 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.8.40",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "skipFields": "",
-      "autoAbbrev": true,
-      "autoAbbrevStyle": "",
-      "DOIandURL": "both"
-    },
     "options": {
       "exportFileData": false
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "",
+      "citekeyFormat": "[auth][year]",
+      "skipFields": ""
+    },
+    "release": "0.8.40"
   },
   "items": [
     {
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "volume": "62",
-      "pages": "493-518",
-      "publicationTitle": "Bulletin of Volcanology",
+      "attachments": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Nancy K",
+          "lastName": "Adams"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Self"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Guido",
+          "lastName": "Salas"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Steven",
+          "lastName": "Schubring"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Jason L",
+          "lastName": "Permenter"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kendra",
+          "lastName": "Arbesman"
+        }
+      ],
       "date": "2001",
       "extra": "Citation Key: Adams2001",
-      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Nancy K",
-          "lastName": "Adams"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Self"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Guido",
-          "lastName": "Salas"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Schubring"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Jason L",
-          "lastName": "Permenter"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Kendra",
-          "lastName": "Arbesman"
-        }
-      ],
-      "attachments": [
-
-      ],
-      "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
-      ]
-    },
-    {
-      "itemID": 3,
+      "itemID": 1,
       "itemType": "journalArticle",
-      "volume": "62",
       "pages": "493-518",
       "publicationTitle": "Bulletin of Volcanology",
-      "date": "2001",
-      "extra": "Citation Key: Adams2002",
+      "tags": [
+        "Vulcanian eruptions",
+        "breadcrust",
+        "plinian"
+      ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62"
+    },
+    {
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -118,22 +108,27 @@
           "lastName": "Arbesman"
         }
       ],
-      "attachments": [
-
-      ],
+      "date": "2001",
+      "extra": "Citation Key: Adams2002",
+      "itemID": 3,
+      "itemType": "journalArticle",
+      "pages": "493-518",
+      "publicationTitle": "Bulletin of Volcanology",
       "tags": [
         "Vulcanian eruptions",
         "breadcrust",
         "plinian"
-      ]
+      ],
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "volume": "62"
     },
     {
+      "itemID": 4,
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 12: incomplete reference @emptyreference</li></ul>",
       "tags": [
         "#Better BibTeX import error"
-      ],
-      "itemID": 4
+      ]
     }
   ]
 }

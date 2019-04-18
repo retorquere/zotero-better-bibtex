@@ -1,4 +1,9 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
   "items": [
     {
       "creators": [
@@ -8,9 +13,9 @@
         }
       ],
       "extra": "Citation Key: 1e",
+      "itemID": 1,
       "itemType": "journalArticle",
-      "title": "Blah <i>emph</i> and “enquote”.",
-      "itemID": 1
+      "title": "Blah <i>emph</i> and \u201cenquote\u201d."
     },
     {
       "creators": [
@@ -20,9 +25,9 @@
         }
       ],
       "extra": "Citation Key: 1b",
+      "itemID": 2,
       "itemType": "journalArticle",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
-      "itemID": 2
+      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d."
     },
     {
       "creators": [
@@ -32,9 +37,9 @@
         }
       ],
       "extra": "Citation Key: 2e",
+      "itemID": 3,
       "itemType": "book",
-      "title": "Blah <i>emph</i> and “enquote”.",
-      "itemID": 3
+      "title": "Blah <i>emph</i> and \u201cenquote\u201d."
     },
     {
       "creators": [
@@ -44,9 +49,9 @@
         }
       ],
       "extra": "Citation Key: 2b",
+      "itemID": 4,
       "itemType": "book",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
-      "itemID": 4
+      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d."
     },
     {
       "creators": [
@@ -58,10 +63,10 @@
       ],
       "date": "2003",
       "extra": "Citation Key: Bennett2003",
-      "itemType": "thesis",
-      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "itemID": 5,
+      "itemType": "thesis",
       "publisher": "University of London",
+      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D."
     },
     {
@@ -74,10 +79,10 @@
       ],
       "date": "2013",
       "extra": "Citation Key: Cooper2013 \nbibtex*[crossref=Classen2013]",
+      "itemID": 6,
       "itemType": "bookSection",
       "pages": "263-87",
-      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries",
-      "itemID": 6
+      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries"
     },
     {
       "creators": [
@@ -89,12 +94,12 @@
       ],
       "date": "1891",
       "extra": "Citation Key: Correns1891",
+      "itemID": 7,
       "itemType": "journalArticle",
       "pages": "1-11",
-      "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
-      "title": "Die dem Boethius fälschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
-      "volume": "1",
-      "itemID": 7
+      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
+      "title": "Die dem Boethius f\u00e4lschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
+      "volume": "1"
     },
     {
       "creators": [
@@ -106,12 +111,12 @@
       ],
       "date": "1985",
       "extra": "Citation Key: Algar1985",
+      "itemID": 8,
       "itemType": "encyclopediaArticle",
       "pages": "172-4",
+      "publicationTitle": "Encyclopedia Iranica",
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "volume": "4",
-      "itemID": 8,
-      "publicationTitle": "Encyclopedia Iranica"
+      "volume": "4"
     },
     {
       "creators": [
@@ -128,17 +133,11 @@
       ],
       "date": "2012",
       "extra": "Citation Key: Arsdall2012",
+      "itemID": 9,
       "itemType": "book",
       "place": "Burlington, VT",
       "publisher": "Ashgate",
-      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle",
-      "itemID": 9
+      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle"
     }
-  ],
-  "config": {
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
-  },
-  "collections": {
-  }
+  ]
 }

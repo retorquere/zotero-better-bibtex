@@ -1,88 +1,88 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
   },
-  "collections": {
-  },
   "items": [
     {
-      "itemType": "journalArticle",
+      "DOI": "10.1161/CIR.0b013e318288b4dd",
+      "ISSN": "1524-4539",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Comilla",
-          "lastName": "Sasson",
-          "creatorType": "author"
+          "lastName": "Sasson"
         },
         {
+          "creatorType": "author",
           "firstName": "Hendrika",
-          "lastName": "Meischke",
-          "creatorType": "author"
+          "lastName": "Meischke"
         },
         {
+          "creatorType": "author",
           "firstName": "Benjamin S",
-          "lastName": "Abella",
-          "creatorType": "author"
+          "lastName": "Abella"
         },
         {
+          "creatorType": "author",
           "firstName": "Robert A",
-          "lastName": "Berg",
-          "creatorType": "author"
+          "lastName": "Berg"
         },
         {
+          "creatorType": "author",
           "firstName": "Bentley J",
-          "lastName": "Bobrow",
-          "creatorType": "author"
+          "lastName": "Bobrow"
         },
         {
+          "creatorType": "author",
           "firstName": "Paul S",
-          "lastName": "Chan",
-          "creatorType": "author"
+          "lastName": "Chan"
         },
         {
+          "creatorType": "author",
           "firstName": "Elisabeth Dowling",
-          "lastName": "Root",
-          "creatorType": "author"
+          "lastName": "Root"
         },
         {
+          "creatorType": "author",
           "firstName": "Michele",
-          "lastName": "Heisler",
-          "creatorType": "author"
+          "lastName": "Heisler"
         },
         {
+          "creatorType": "author",
           "firstName": "Jerrold H",
-          "lastName": "Levy",
-          "creatorType": "author"
+          "lastName": "Levy"
         },
         {
+          "creatorType": "author",
           "firstName": "Mark",
-          "lastName": "Link",
-          "creatorType": "author"
+          "lastName": "Link"
         },
         {
+          "creatorType": "author",
           "firstName": "Frederick",
-          "lastName": "Masoudi",
-          "creatorType": "author"
+          "lastName": "Masoudi"
         },
         {
+          "creatorType": "author",
           "firstName": "Marcus",
-          "lastName": "Ong",
-          "creatorType": "author"
+          "lastName": "Ong"
         },
         {
+          "creatorType": "author",
           "firstName": "Michael R",
-          "lastName": "Sayre",
-          "creatorType": "author"
+          "lastName": "Sayre"
         },
         {
+          "creatorType": "author",
           "firstName": "John S",
-          "lastName": "Rumsfeld",
-          "creatorType": "author"
+          "lastName": "Rumsfeld"
         },
         {
+          "creatorType": "author",
           "firstName": "Thomas D",
-          "lastName": "Rea",
-          "creatorType": "author"
+          "lastName": "Rea"
         },
         {
           "creatorType": "author",
@@ -105,6 +105,15 @@
           "name": "Council on Cardiovascular Surgery and Anesthesia"
         }
       ],
+      "date": "2013-03",
+      "extra": "PMID: 23439512 \nCitation Key: sasson_increasing_2013",
+      "issue": "12",
+      "itemID": 0,
+      "itemType": "journalArticle",
+      "language": "English",
+      "pages": "1342-1350",
+      "publicationTitle": "Circulation",
+      "shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
       "tags": [
         "Administrative Personnel",
         "American Heart Association",
@@ -117,18 +126,8 @@
         "Public Health",
         "United States"
       ],
-      "extra": "PMID: 23439512 \nCitation Key: sasson_increasing_2013",
-      "ISSN": "1524-4539",
-      "shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
-      "DOI": "10.1161/CIR.0b013e318288b4dd",
-      "language": "English",
-      "issue": "12",
       "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
-      "volume": "127",
-      "publicationTitle": "Circulation",
-      "date": "2013-03",
-      "pages": "1342-1350",
-      "itemID": 0
+      "volume": "127"
     }
   ]
 }

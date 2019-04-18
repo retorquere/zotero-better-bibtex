@@ -1,13 +1,13 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true
-    }
+    },
+    "preferences": {}
   },
   "items": [
     {
@@ -28,10 +28,8 @@
       "tags": [
         "article"
       ],
-      "title": "Decidability of Quantified Propositional Intuitionistic Logic and S4 on Trees of Height and Arity ≤ω",
+      "title": "Decidability of Quantified Propositional Intuitionistic Logic and S4 on Trees of Height and Arity \u2264\u03c9",
       "volume": "33"
     }
-  ],
-  "collections": {
-  }
+  ]
 }
