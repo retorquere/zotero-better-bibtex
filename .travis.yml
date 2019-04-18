@@ -3,7 +3,11 @@ language: python
 python:
   - 3.7
 
+# https://github.com/travis-ci/travis-ci/issues/8920
+# https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
+  - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
+  - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - sudo add-apt-repository --yes ppa:retorquere/zotero
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install zotero jurism
@@ -18,31 +22,13 @@ cache:
   - node_modules
   - .cache/pip
 
-script: |
-  #set -e
-  #set -x
-
-  #git submodule sync && git submodule update --init --recursive
-  if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
-    export TAGLIMIT=""
-    export TIMEOUT=300
-  else
-    export TAGLIMIT="and not @nightly"
-    export TIMEOUT=60
-  fi
-
-  npm run build
-
-  # https://github.com/travis-ci/travis-ci/issues/8920
-  # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
-  # something to do with node?
-  #python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
-  python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
-  python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-
-  echo "Testing for $ZOTERO"
-
-  xvfb-run behave --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
+script:
+  - npm run build
+  - ./.travis.py
+  - cat behave.ini
+  - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
+  - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
+  - xvfb-run behave
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io
