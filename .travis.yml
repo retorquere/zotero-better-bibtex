@@ -30,6 +30,7 @@ script: |
     export NIGHTLY="and not @nightly"
   fi
 
+  npm run build
   xvfb-run behave --tags="$CLUSTER $NIGHTLY"
 
 after_failure:

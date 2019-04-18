@@ -17,7 +17,8 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
-    "test": "cucumber --fail-fast",
+    "pretest": "npm run build",
+    "test": "behave --stop",
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",
     "postwebpack": "./setup/patch-webpack.py",
@@ -40,8 +41,7 @@
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/formatters-doc.py",
     "ncu": "ncu -a && npm install",
-    "reinstall": "rm -rf node_modules yarn* && npm install",
-    "behave": "behave --verbose --stop --no-capture"
+    "reinstall": "rm -rf node_modules yarn* && npm install"
   },
   "main": "index.js",
   "directories": {
