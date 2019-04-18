@@ -26,12 +26,14 @@ script: |
 
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
     export NIGHTLY=""
+    export TIMEOUT=60
   else
     export NIGHTLY="and not @nightly"
+    export TIMEOUT=300
   fi
 
   npm run build
-  xvfb-run behave --tags="$CLUSTER $NIGHTLY"
+  xvfb-run behave --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $NIGHTLY"
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io

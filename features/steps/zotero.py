@@ -18,6 +18,7 @@ with open(os.path.join(ROOT, 'gen/translators.json')) as f:
   TRANSLATORS = json.load(f, object_hook=Munch)
 
 CLIENT=None
+TIMEOUT=60
 
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
@@ -119,7 +120,7 @@ def execute(script, **args):
     script = f'const {var} = {json.dumps(value)};\n' + script
 
   req = urllib.request.Request('http://127.0.0.1:23119/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
-  res = urllib.request.urlopen(req).read().decode()
+  res = urllib.request.urlopen(req, timeout=TIMEOUT).read().decode()
   return json.loads(res)
 
 class Preferences:
