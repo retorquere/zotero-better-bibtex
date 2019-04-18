@@ -24,11 +24,10 @@ cache:
 
 script:
   - npm run build
-  - ./.travis/prepare.py
-  - cat behave.ini
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - xvfb-run behave
+  - echo behave --define xvfb=`which xvfb` --define zotero=$ZOTERO `./.travis/behave-parameters.py`
+  - behave --define xvfb=`which xvfb` --define zotero=$ZOTERO `./.travis/behave-parameters.py`
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io
