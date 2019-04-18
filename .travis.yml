@@ -36,9 +36,11 @@ script: |
   # https://github.com/travis-ci/travis-ci/issues/8920
   # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
   # something to do with node?
-  python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
+  #python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
   python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
-  python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print(flags&os.O_NONBLOCK);'
+  python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
+
+  echo "Testing for $ZOTERO"
 
   xvfb-run behave --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
 
