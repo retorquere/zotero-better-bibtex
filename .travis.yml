@@ -4,8 +4,6 @@ python:
   - 3.7
 
 before_install:
-  - echo https://github.com/travis-ci/travis-ci/issues/8920
-  - python -c "import fcntl; fcntl.fcntl(1, fcntl.F_SETFL, 0)"
   - sudo add-apt-repository --yes ppa:retorquere/zotero
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install zotero jurism
@@ -25,6 +23,10 @@ script: |
   #set -x
 
   #git submodule sync && git submodule update --init --recursive
+  # https://github.com/travis-ci/travis-ci/issues/8920
+  # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
+  python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); fcntl.fcntl(sys.stdout, fcntl.F_SETFL, flags&~os.O_NONBLOCK);'
+  python -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print(flags&os.O_NONBLOCK);'
 
   if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
     export TAGLIMIT=""
@@ -35,7 +37,7 @@ script: |
   fi
 
   npm run build
-  xvfb-run behave --stop --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
+  xvfb-run behave --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io
