@@ -45,6 +45,7 @@ class Preferences:
     self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
       self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
+    self.supported['removeStock'] = bool
 
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
@@ -169,6 +170,9 @@ def import_file(context, references, collection = False):
       for pref, value in preferences.items()
       if not context.preferences.prefix + pref in context.preferences.keys()
     }
+    for k, v in preferences:
+      assert k in context.preferences.supported, f'Unsupported preference "{k}"'
+      assert type(v) == context.preferences.supported[k], f'Value for preference {k} has unexpected type {type(v)}'
   else:
     context.displayOptions = {}
     preferences = None

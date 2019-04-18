@@ -33,6 +33,9 @@ class Fixer:
 
     resave = None
 
+    if 'config' in data and 'preferences' in data['config'] and 'jabrefGroups' in data['config']['preferences']:
+      data['config']['preferences']['jabrefFormat'] = data['config']['preferences']['jabrefGroups']
+
     try:
       for key in list(data['config']['preferences'].keys()):
         if key in self.supported: continue
