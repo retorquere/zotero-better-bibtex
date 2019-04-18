@@ -161,7 +161,7 @@ class Profile:
 def before_all(context):
   global zoteropid
   zotero.CLIENT = context.config.userdata.get('zotero', 'zotero')
-  if 'timeout' in context.config.userdata: zotero.TIMEOUT=context.config.userdata['timeout']
+  if 'timeout' in context.config.userdata: zotero.TIMEOUT = int(context.config.userdata['timeout'])
 
   assert not running('Zotero'), 'Zotero is running'
 
