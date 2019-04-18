@@ -35,7 +35,7 @@ script: |
   fi
 
   npm run build
-  xvfb-run behave --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
+  xvfb-run behave --color --define zotero=$ZOTERO --define timeout=$TIMEOUT --tags="$CLUSTER $TAGLIMIT"
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io
