@@ -15,6 +15,7 @@ behave.set('behave', 'default_tags', tags)
 
 behave.add_section('behave.userdata')
 behave.set('behave.userdata', 'zotero', os.environ['ZOTERO'])
+behave.set('behave.userdata', 'zotero', 'zotero')
 if nightly: behave.set('behave.userdata', 'timeout', 300)
 
 with open('behave.ini', 'w') as f:

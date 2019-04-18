@@ -24,7 +24,7 @@ cache:
 
 script:
   - npm run build
-  - ./.travis.py
+  - ./.travis/prepare.py
   - cat behave.ini
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
