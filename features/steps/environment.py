@@ -162,16 +162,14 @@ class Profile:
 
     if zotero.client.jurism:
       print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-#      profile.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
-#      profile.set_preference('extensions.zotero.useDataDir', True)
+      profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
+      profile.set_preference('extensions.zotero.useDataDir', True)
       profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
     profile.update_preferences()
 
     shutil.rmtree(self.path, ignore_errors=True)
     shutil.move(profile.path, self.path)
-    for f in glob.glob(os.path.join(self.path, '*')):
-      print('file in profile:', f)
 
   def start(self):
     cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")}'
