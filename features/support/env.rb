@@ -449,8 +449,8 @@ module BBT
   if ENV['ZOTERO'] == 'jurism' # Juris-M doesn't support -datadir
     STDERR.puts "\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n"
     STDERR.flush
-    profile['extensions.zotero.dataDir'] = File.join(profile_tgt, 'jurism')
-    profile['extensions.zotero.useDataDir']  = true
+#    profile['extensions.zotero.dataDir'] = File.join(profile_tgt, 'jurism')
+#    profile['extensions.zotero.useDataDir']  = true
     profile['extensions.zotero.translators.better-bibtex.removeStock'] = false
   else
     profile['extensions.zotero.translators.better-bibtex.removeStock'] = true
