@@ -1,3 +1,5 @@
+python-dotenv
+pushbullet.py
 markdownify
 beautifulsoup4
 Cheetah3
