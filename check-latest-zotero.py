@@ -40,11 +40,7 @@ outdated = False
 for client in ['zotero', 'jurism']:
   try:
     installed = os.popen("dpkg -s " + client + " 2>null | grep '^Version:'").read().strip().split(':')[1].strip()
-
-    installed = [v for v in re.split(r'([a-z]+)', installed) if v != '']
-    ppa_version = int(installed.pop())
-    installed.pop()
-    installed = ''.join(installed)
+    installed = re.sub(r'ppa[0-9]+$', '', installed)
 
   except:
     installed = 'none'
