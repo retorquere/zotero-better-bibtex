@@ -35,7 +35,7 @@ class Client:
     print(self)
 
   def __str__(self):
-    print(f'{self.id}: port={self.port}, timeout={self.timeout}')
+    return f'{self.id}: port={self.port}, timeout={self.timeout}'
 
 client = None
 
