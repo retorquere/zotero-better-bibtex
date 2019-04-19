@@ -17,8 +17,21 @@ ROOT = os.path.join(os.path.dirname(__file__), '../..')
 with open(os.path.join(ROOT, 'gen/translators.json')) as f:
   TRANSLATORS = json.load(f, object_hook=Munch)
 
-CLIENT=None
-TIMEOUT=60
+class Client:
+  def __init__(self, config):
+    self.id = config['zotero']
+    if self.id == 'zotero':
+      self.port = 23119
+    elif self.id == 'jurism':
+      self.port = 24119
+    else:
+      raise ValueError(f'Unexpected client "{config.zotero}"'
+
+    self.zotero = self.id == 'zotero'
+    self.jurism = self.id == 'jurism'
+
+    self.timeout = config.get('timeout', 60)
+client = None
 
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
@@ -119,8 +132,8 @@ def execute(script, **args):
   for var, value in args.items():
     script = f'const {var} = {json.dumps(value)};\n' + script
 
-  req = urllib.request.Request('http://127.0.0.1:23119/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
-  res = urllib.request.urlopen(req, timeout=TIMEOUT).read().decode()
+  req = urllib.request.Request(f'http://127.0.0.1:{client.port}/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
+  res = urllib.request.urlopen(req, timeout=client.timeout).read().decode()
   return json.loads(res)
 
 class Preferences:
@@ -230,9 +243,7 @@ def expand_expected(expected):
 
   fixtures = os.path.join(ROOT, 'test/fixtures')
 
-  assert CLIENT is not None
-
-  if CLIENT == 'zotero': return [ os.path.join(fixtures, expected), ext ]
+  if client.zotero: return [ os.path.join(fixtures, expected), ext ]
 
   expected = None
   for variant in ['.juris-m', '']:

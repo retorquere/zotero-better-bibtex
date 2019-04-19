@@ -47,7 +47,6 @@ extensions.zotero.translators.better-bibtex.kuroshiro = true
 extensions.zotero.translators.better-bibtex.lockedInit = false
 extensions.zotero.translators.better-bibtex.removeStock = true
 
-[debug]
 extensions.zotero.debug.log = true
 extensions.zotero.debug.time = true
 extensions.zotero.debug.store = true

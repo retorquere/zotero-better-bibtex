@@ -84,7 +84,7 @@ class Profile:
     self.name = name
     self.context = context
 
-    platform_client = platform.system() + ':' + zotero.CLIENT
+    platform_client = platform.system() + ':' + zotero.client.id
 
     if platform_client == 'Linux:zotero':
       self.profiles = os.path.expanduser('~/.zotero/zotero')
@@ -135,7 +135,7 @@ class Profile:
 
   def layout(self):
     fixtures = os.path.join(ROOT, 'test/fixtures')
-    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.CLIENT))
+    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.client.id))
 
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
       profile.add_extension(xpi)
@@ -154,7 +154,7 @@ class Profile:
     if self.context.config.userdata.get('first-run', 'false') == 'false':
       profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
 
-    if zotero.CLIENT == 'jurism': # Juris-M doesn't support -datadir
+    if zotero.jurism:
       print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
 #      profile.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
 #      profile.set_preference('extensions.zotero.useDataDir', True)
@@ -167,8 +167,7 @@ class Profile:
 
 def before_all(context):
   global zoteropid
-  zotero.CLIENT = context.config.userdata.get('zotero', 'zotero')
-  if 'timeout' in context.config.userdata: zotero.TIMEOUT = int(context.config.userdata['timeout'])
+  zotero.client = zotero.Client(context.config)
 
   assert not running('Zotero'), 'Zotero is running'
 
@@ -187,13 +186,13 @@ def before_all(context):
     os.dup2(log, 1)
     os.dup2(log, 2)
     os.execvp(cmd[0], cmd)
-    assert False, f'error starting {zotero.CLIENT}'
+    assert False, f'error starting {zotero.client.id}'
 
   print(f'ZOTERO STARTED: {zoteropid}')
   if context.config.userdata.get('kill', 'true') == 'false': zoteropid = None
 
   ready = False
-  with benchmark(f'starting {zotero.CLIENT}'):
+  with benchmark(f'starting {zotero.client.id}'):
     for _ in redo.retrier(attempts=30,sleeptime=1):
       print('connecting...')
       try:
