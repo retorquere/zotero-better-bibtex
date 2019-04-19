@@ -19,18 +19,18 @@ with open(os.path.join(ROOT, 'gen/translators.json')) as f:
 
 class Client:
   def __init__(self, config):
-    self.id = config['zotero']
+    self.id = config.userdata['zotero']
     if self.id == 'zotero':
       self.port = 23119
     elif self.id == 'jurism':
       self.port = 24119
     else:
-      raise ValueError(f'Unexpected client "{config.zotero}"')
+      raise ValueError(f'Unexpected client "{config.userdata.zotero}"')
 
     self.zotero = self.id == 'zotero'
     self.jurism = self.id == 'jurism'
 
-    self.timeout = config.get('timeout', 60)
+    self.timeout = int(config.userdata.get('timeout', 60))
 client = None
 
 def assert_equal_diff(expected, found):

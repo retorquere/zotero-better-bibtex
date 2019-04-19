@@ -154,7 +154,7 @@ class Profile:
     if self.context.config.userdata.get('first-run', 'false') == 'false':
       profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
 
-    if zotero.jurism:
+    if zotero.client.jurism:
       print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
 #      profile.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
 #      profile.set_preference('extensions.zotero.useDataDir', True)
