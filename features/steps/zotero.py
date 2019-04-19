@@ -31,6 +31,12 @@ class Client:
     self.jurism = self.id == 'jurism'
 
     self.timeout = int(config.userdata.get('timeout', 60))
+
+    print(self)
+
+  def __str__(self):
+    print(f'{self.id}: port={self.port}, timeout={self.timeout}')
+
 client = None
 
 def assert_equal_diff(expected, found):
