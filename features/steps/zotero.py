@@ -19,7 +19,7 @@ with open(os.path.join(ROOT, 'gen/translators.json')) as f:
 
 class Client:
   def __init__(self, config):
-    self.id = config.userdata['zotero']
+    self.id = config.userdata.get('zotero', 'zotero')
     if self.id == 'zotero':
       self.port = 23119
     elif self.id == 'jurism':

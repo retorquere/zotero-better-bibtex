@@ -51,10 +51,10 @@ def running(id):
   return False
 
 import atexit
-zoteropid = None
+zoteroproc = None
 def killzotero():
-  global zoteropid
-  if zoteropid is None: return
+  global zoteroproc
+  if zoteroproc is None: return
 
   # graceful shutdown
   try:
@@ -67,10 +67,13 @@ def killzotero():
 
   stopped = False
   for _ in redo.retrier(attempts=5,sleeptime=1):
-    stopped = not running(zoteropid)
+    stopped = not running(zoteroproc.pid)
     if stopped: break
-  
-  if not stopped: os.kill(zoteropid, signal.SIGKILL)
+
+  zoteroproc = psutil.Process(zoteroproc.pid)
+  for proc in zoteroproc.children(recursive=True):
+    proc.kill()
+  zoteroproc.kill()
 atexit.register(killzotero)
 
 def nested_dict_iter(nested, root = []):
@@ -83,6 +86,7 @@ def nested_dict_iter(nested, root = []):
 
 class Profile:
   def __init__(self, context, name):
+    self.running = None
     self.name = name
     self.context = context
 
@@ -167,8 +171,14 @@ class Profile:
     shutil.rmtree(self.path, ignore_errors=True)
     shutil.move(profile.path, self.path)
 
+  def start(self):
+    proc = subprocess.Popen(f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")}', shell=True)
+    print(f'ZOTERO STARTED: {proc.pid}')
+    if self.context.config.userdata.get('kill', 'true') == 'false': return None
+    return proc
+
 def before_all(context):
-  global zoteropid
+  global zoteroproc
   zotero.client = zotero.Client(context.config)
 
   assert not running('Zotero'), 'Zotero is running'
@@ -177,16 +187,7 @@ def before_all(context):
     context.translators = json.load(f)
 
   profile = Profile(context, 'BBTZ5TEST')
-
-  cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")}'
-  print(f'starting {cmd}')
-  zoteropid = os.fork()
-  if zoteropid == 0:
-    exitcode = os.system(cmd)
-    sys.exit(0 if exitcode == 0 else 1)
-
-  print(f'ZOTERO STARTED: {zoteropid}')
-  if context.config.userdata.get('kill', 'true') == 'false': zoteropid = None
+  zoteroproc = profile.start()
 
   ready = False
   with benchmark(f'starting {zotero.client.id}'):
