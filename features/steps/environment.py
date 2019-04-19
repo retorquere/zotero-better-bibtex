@@ -178,10 +178,10 @@ def before_all(context):
 
   profile = Profile(context, 'BBTZ5TEST')
 
+  cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")}'
+  print(f'starting {cmd}')
   zoteropid = os.fork()
   if zoteropid == 0:
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")}'
-    print(f'starting {cmd}')
     exitcode = os.system(cmd)
     sys.exit(0 if exitcode == 0 else 1)
 
