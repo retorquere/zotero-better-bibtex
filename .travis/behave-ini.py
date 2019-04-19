@@ -18,6 +18,7 @@ else:
   behave.set('behave', 'default_tags', os.environ['TAGS'] + ' and not @nightly')
 
 #behave.set('behave.userdata', 'xvfb', shutil.which('xvfb-run'))
+print('remove xvfb handling')
 behave.set('behave.userdata', 'zotero', os.environ['ZOTERO'])
 
 with open('setup.cfg', 'w') as f:

@@ -25,7 +25,7 @@ class Client:
     elif self.id == 'jurism':
       self.port = 24119
     else:
-      raise ValueError(f'Unexpected client "{config.zotero}"'
+      raise ValueError(f'Unexpected client "{config.zotero}"')
 
     self.zotero = self.id == 'zotero'
     self.jurism = self.id == 'jurism'
