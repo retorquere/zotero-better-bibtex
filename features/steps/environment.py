@@ -173,9 +173,9 @@ class Profile:
 
   def start(self):
     cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")}'
-    print(f'Starting {self.id}: {cmd}')
+    print(f'Starting {zotero.client.id}: {cmd}')
     proc = subprocess.Popen(cmd, shell=True)
-    print(f'{self.id} started: {proc.pid}')
+    print(f'{zotero.client.id} started: {proc.pid}')
     if self.context.config.userdata.get('kill', 'true') == 'false': return None
     return proc
 
