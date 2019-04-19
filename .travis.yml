@@ -28,8 +28,8 @@ script:
   - npm run build
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - (sleep 120 && import -window root /tmp/screenshot.png && curl -F file=@/tmp/screenshot.png https://anonfile.com/api/upload)&
-  - (sleep 120 && curl -F "file=@$HOME/.BBTZ5TEST.log" https://anonfile.com/api/upload)&
+  - # (sleep 120 && import -window root /tmp/screenshot.png && curl -F file=@/tmp/screenshot.png https://anonfile.com/api/upload)&
+  - # (sleep 120 && curl -F "file=@$HOME/.BBTZ5TEST.log" https://anonfile.com/api/upload)&
   - ./.travis/behave-parameters.py | xargs -t behave --no-capture --verbose
 
 after_failure:
