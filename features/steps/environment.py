@@ -1,9 +1,11 @@
+import shlex
 import redo
 import toml
 import munch
 import zotero
 import time
 import os
+import sys
 import json
 import platform
 import glob
@@ -178,15 +180,10 @@ def before_all(context):
 
   zoteropid = os.fork()
   if zoteropid == 0:
-    cmd = [profile.binary, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile']
-    if 'xvfb' in context.config.userdata:
-      cmd = [ context.config.userdata['xvfb'] ] + cmd
-    print('starting ' + ' '.join(cmd))
-    log = os.open(profile.path + '.log', os.O_WRONLY | os.O_CREAT | os.O_TRUNC)
-    os.dup2(log, 1)
-    os.dup2(log, 2)
-    os.execvp(cmd[0], cmd)
-    assert False, f'error starting {zotero.client.id}'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")}'
+    print(f'starting {cmd}')
+    exitcode = os.system(cmd)
+    sys.exit(0 if exitcode == 0 else 1)
 
   print(f'ZOTERO STARTED: {zoteropid}')
   if context.config.userdata.get('kill', 'true') == 'false': zoteropid = None
