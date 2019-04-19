@@ -28,8 +28,8 @@ script:
   - npm run build
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - ./.travis/behave-ini.py
-  - behave --no-capture --verbose
+  - ./.travis/behave-parameters.py | xargs echo behave
+  - ./.travis/behave-parameters.py | xargs behave
 
 after_failure:
   curl -F "file=@~/.BBTZ5TEST.log" https://file.io
