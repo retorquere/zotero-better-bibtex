@@ -172,7 +172,7 @@ class Profile:
     shutil.move(profile.path, self.path)
 
   def start(self):
-    cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile &> {shlex.quote(self.path + ".log")}'
+    cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")} 2>&1'
     print(f'Starting {zotero.client.id}: {cmd}')
     proc = subprocess.Popen(cmd, shell=True)
     print(f'{zotero.client.id} started: {proc.pid}')
