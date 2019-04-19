@@ -1,12 +1,18 @@
 dist: xenial
 language: python
 python:
-  - 3.6
+  - 3.7
+services:
+  - xvfb
 
+# https://github.com/travis-ci/travis-ci/issues/8920
+# https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
-  - sudo add-apt-repository --yes ppa:retorquere/zotero
+  - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
+  - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
+  - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update
-  - travis_retry sudo apt-get install zotero jurism
+  - travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
   - travis_retry ./check-latest-zotero.py
 
 cache:
@@ -16,52 +22,40 @@ cache:
   apt: true
   directories:
   - node_modules
-  - vendor/bundle
   - .cache/pip
 
-script: |
-  #set -e
-  #set -x
-
-  gem install bundler
-  gem update bundler
-  bundle config
-  bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
-
-  #git submodule sync && git submodule update --init --recursive
-
-  if [[ "$TRAVIS_EVENT_TYPE" == "cron" ]] || [[ ! -z "$TRAVIS_TAG" ]] || [[ "$TRAVIS_COMMIT_MESSAGE" == *"#nightly"* ]]; then
-    export NIGHTLY=""
-  else
-    export NIGHTLY="and not @nightly"
-  fi
-
-  xvfb-run bundle exec cucumber --format pretty --strict --tags "$CLUSTER $NIGHTLY"
+script:
+  - npm run build
+  - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
+  - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
+  - (sleep 120 && import -window root /tmp/screenshot.png && curl -F file=@/tmp/screenshot.png https://anonfile.com/api/upload)&
+  - (sleep 120 && curl -F "file=@$HOME/.BBTZ5TEST.log" https://anonfile.com/api/upload)&
+  - ./.travis/behave-parameters.py | xargs -t behave --no-capture --verbose
 
 after_failure:
-  curl -F "file=@~/.BBTZ5TEST.log" https://file.io
+  curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io
 
 jobs:
   include:
   - stage: test
     env:
     - ZOTERO=zotero
-    - CLUSTER="@test-cluster-1"
+    - TAGS="@test-cluster-1"
 
   - stage: test
     env:
     - ZOTERO=zotero
-    - CLUSTER="not @test-cluster-1"
+    - TAGS="not @test-cluster-1"
 
   - stage: test
     env:
     - ZOTERO=jurism
-    - CLUSTER="@test-cluster-1"
+    - TAGS="@test-cluster-1"
 
   - stage: test
     env:
     - ZOTERO=jurism
-    - CLUSTER="not @test-cluster-1"
+    - TAGS="not @test-cluster-1"
 
   - stage: release
     install: true

@@ -1,97 +1,94 @@
 {
+  "cache": {
+    "items": []
+  },
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.96",
+    "options": {
+      "exportFileData": false,
+      "exportFilename": "Exported Items.json",
+      "exportNotes": true,
+      "exportPath": "/Users/emile/Desktop"
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "itemObserverDelay": 100,
-      "citeCommand": "cite",
-      "citekeyFormat": "[zotero]",
-      "citekeyFold": true,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
-      "csquotes": "",
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[zotero]",
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 4,
+      "keyConflictPolicy": "keep",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "qualityReport": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "suppressTitleCase": false,
-      "jabrefFormat": 4
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportPath": "/Users/emile/Desktop",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.96"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "tags": [
-        "Political economy"
-      ],
-      "url": "http://www.sciencedirect.com/science/article/pii/S014759670300101X",
-      "volume": "31",
-      "issue": "4",
-      "pages": "620-652",
-      "publicationTitle": "Journal of Comparative Economics",
-      "ISSN": "0147-5967",
-      "date": "2003",
-      "extra": "Citation Key: Acemoglu2003Whynotpolitical \nbibtex*[bdsk-url-2=http://dx.doi.org/10.1016/j.jce.2003.09.003;jlprojects=spatialₑlections, continuousₒpinion<sub>d</sub>ynamics;project=ODCD;rating=4]",
       "DOI": "10.1016/j.jce.2003.09.003",
+      "ISSN": "0147-5967",
       "abstractNote": "Do societies choose inefficient policies and institutions? An extension of the Coase theorem to politics would suggest the answer is no. This paper discusses various approaches to political economy and develops the argument that there are strong empirical and theoretical grounds for believing that inefficient policies and institutions are prevalent. We conclude that these inefficient institutions and policies are chosen because they serve the interests of politicians or social groups that hold political power at the expense of the rest. The theoretical case depends on commitment problems inherent in politics; parties holding political power cannot make commitments to bind their future actions because there is no outside agency with the coercive capacity to enforce such arrangements. Journal of Comparative Economics 31 (4) (2003) 620-652.",
-      "title": "Why not a political Coase theorem? Social conflict, commitment, and politics",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Acemoglu",
-          "firstName": "Daron"
+          "firstName": "Daron",
+          "lastName": "Acemoglu"
         }
       ],
-      "itemID": 2
+      "date": "2003",
+      "extra": "Citation Key: Acemoglu2003Whynotpolitical \nbibtex*[bdsk-url-2=http://dx.doi.org/10.1016/j.jce.2003.09.003;jlprojects=spatial\u2091lections, continuous\u2092pinion<sub>d</sub>ynamics;project=ODCD;rating=4]",
+      "issue": "4",
+      "itemID": 2,
+      "itemType": "journalArticle",
+      "pages": "620-652",
+      "publicationTitle": "Journal of Comparative Economics",
+      "tags": [
+        "Political economy"
+      ],
+      "title": "Why not a political Coase theorem? Social conflict, commitment, and politics",
+      "url": "http://www.sciencedirect.com/science/article/pii/S014759670300101X",
+      "volume": "31"
     }
   ],
-  "cache": {
-    "items": [
-
-    ]
-  },
   "keymanager": [
     {
-      "itemID": 2,
-      "libraryID": null,
       "citekey": "acemoglu_why_2003",
-      "citekeyFormat": "format=[zotero],fold=true"
+      "citekeyFormat": "format=[zotero],fold=true",
+      "itemID": 2,
+      "libraryID": null
     },
     {
-      "itemID": 3,
-      "libraryID": null,
       "citekey": "acemoglu_why_2003-1",
-      "citekeyFormat": "format=[zotero],fold=true"
+      "citekeyFormat": "format=[zotero],fold=true",
+      "itemID": 3,
+      "libraryID": null
     },
     {
-      "itemID": 4,
-      "libraryID": null,
       "citekey": "Abbott-2007-aa",
-      "citekeyFormat": null
+      "citekeyFormat": null,
+      "itemID": 4,
+      "libraryID": null
     }
   ]
 }

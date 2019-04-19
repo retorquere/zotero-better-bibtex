@@ -1,20 +1,19 @@
 {
-  "items": [
-    {
-      "itemType": "journalArticle",
-      "title": "Dates incorrect when Zotero date field includes times #934",
-      "date": "2016/09/22 17:12:01"
-    }
-  ],
+  "collections": {},
   "config": {
-    "label": "BetterBibTeX JSON",
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     }
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "date": "2016/09/22 17:12:01",
+      "itemType": "journalArticle",
+      "title": "Dates incorrect when Zotero date field includes times #934"
+    }
+  ]
 }

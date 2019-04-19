@@ -1,30 +1,20 @@
 {
+  "collections": {},
   "config": {
-    "label": "BetterBibTeX JSON",
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
       "autoAbbrev": true,
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     }
   },
   "items": [
     {
-      "itemID": "Hammond.Bortz2011AMaC",
-      "itemType": "journalArticle",
-      "url": "http://linkinghub.elsevier.com/retrieve/pii/S0096300311010137",
-      "volume": "218",
-      "issue": "6",
-      "pages": "2497–2508",
-      "publicationTitle": "Applied Mathematics and Computation",
-      "ISSN": "00963003",
-      "date": "11/2011",
       "DOI": "10.1016/j.amc.2011.03.163",
+      "ISSN": "00963003",
       "accessDate": "2014-07-02 20:29:12",
-      "libraryCatalog": "CrossRef",
-      "language": "en",
-      "title": "Analytical solutions to Fisher's equation with time-variable coefficients",
       "creators": [
         {
           "creatorType": "author",
@@ -36,9 +26,18 @@
           "firstName": "David M.",
           "lastName": "Bortz"
         }
-      ]
+      ],
+      "date": "11/2011",
+      "issue": "6",
+      "itemID": "Hammond.Bortz2011AMaC",
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "CrossRef",
+      "pages": "2497\u20132508",
+      "publicationTitle": "Applied Mathematics and Computation",
+      "title": "Analytical solutions to Fisher's equation with time-variable coefficients",
+      "url": "http://linkinghub.elsevier.com/retrieve/pii/S0096300311010137",
+      "volume": "218"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

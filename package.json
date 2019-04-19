@@ -17,7 +17,8 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
-    "test": "cucumber --fail-fast",
+    "pretest": "npm run build",
+    "test": "behave --stop",
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",
     "postwebpack": "./setup/patch-webpack.py",
@@ -30,8 +31,8 @@
     "release-debug-bridge": "mkdir -p xpi && rm -f xpi/debug-bridge*xpi && npm run zipup-debug-bridge && github-release upload --owner retorquere --repo zotero-better-bibtex --tag debug-bridge xpi/debug-bridge*xpi",
     "odfscan": "echo curl -L -o xpi/odfscan.xpi `curl -s https://api.github.com/repos/Juris-M/zotero-odf-scan-plugin/releases/latest | grep browser_download_url | cut -d '\"' -f 4`",
     "minitest": "webpack && node ./minitests/build/dateparser.js",
-    "start": "KILL=false cucumber --fail-fast --tags @none",
-    "ae": "KILL=false cucumber --fail-fast --tags @ae",
+    "prestart": "npm run build",
+    "start": "behave --stop --tags=@none --define kill=false",
     "s3form": "zotero-plugin-s3form",
     "release": "zotero-plugin-release \"You can verify you are on the latest version by going into 'Tools' -> 'Addons' in Zotero/Juris-M, clicking the gear icon, and selecting 'Check for updates'\"",
     "branches": "zotero-plugin-branches",
@@ -40,8 +41,7 @@
     "running": "ps auxw | grep -i zotero | grep -v grep || true",
     "docs": "ts-node setup/readme.ts && typedoc --ignoreCompilerErrors --json typedoc.json content/key-manager && ./setup/formatters-doc.py",
     "ncu": "ncu -a && npm install",
-    "reinstall": "rm -rf node_modules yarn* && npm install",
-    "behave": "behave --verbose --stop --no-capture"
+    "reinstall": "rm -rf node_modules yarn* && npm install"
   },
   "main": "index.js",
   "directories": {
@@ -88,7 +88,7 @@
     "zotero-plugin": "0.0.74"
   },
   "devDependencies": {
-    "@types/node": "11.13.4",
+    "@types/node": "11.13.5",
     "@types/webpack": "4.4.27",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",

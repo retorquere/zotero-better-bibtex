@@ -1,36 +1,36 @@
 {
-  "collections":{},
-  "items":[
+  "collections": {},
+  "items": [
     {
-      "DOI":"10.1145/1596655.1596682",
-      "ISBN":"978-1-60558-598-7",
-      "creators":[
+      "DOI": "10.1145/1596655.1596682",
+      "ISBN": "978-1-60558-598-7",
+      "creators": [
         {
-          "creatorType":"author",
-          "firstName":"Nagy",
-          "lastName":"Mostafa"
+          "creatorType": "author",
+          "firstName": "Nagy",
+          "lastName": "Mostafa"
         },
         {
-          "creatorType":"author",
-          "firstName":"Chandra",
-          "lastName":"Krintz"
+          "creatorType": "author",
+          "firstName": "Chandra",
+          "lastName": "Krintz"
         }
       ],
-      "date":"2009",
-      "extra":"Citation Key: Mostafa:2009:TPA:1596655.1596682 \nbibtex*[acmid=1596682;numpages=10] \nevent-place: Calgary, Alberta, Canada",
-      "itemID":0,
-      "itemType":"conferencePaper",
-      "pages":"162-171",
-      "publicationTitle":"Proceedings of the 7th International Conference on Principles and Practice of Programming in Java",
-      "publisher":"ACM",
-      "series":"PPPJ '09",
-      "tags":[
+      "date": "2009",
+      "extra": "Citation Key: Mostafa:2009:TPA:1596655.1596682 \nbibtex*[acmid=1596682;numpages=10] \nevent-place: Calgary, Alberta, Canada",
+      "itemID": 0,
+      "itemType": "conferencePaper",
+      "pages": "162-171",
+      "publicationTitle": "Proceedings of the 7th International Conference on Principles and Practice of Programming in Java",
+      "publisher": "ACM",
+      "series": "PPPJ '09",
+      "tags": [
         "calling context tree",
         "performance-aware revision control",
         "profiling"
       ],
-      "title":"Tracking Performance Across Software Revisions",
-      "url":"http://doi.acm.org/10.1145/1596655.1596682"
+      "title": "Tracking Performance Across Software Revisions",
+      "url": "http://doi.acm.org/10.1145/1596655.1596682"
     }
   ]
 }

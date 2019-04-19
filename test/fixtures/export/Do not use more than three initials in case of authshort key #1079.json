@@ -1,19 +1,11 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.57",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.57",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.3.emile.titanarum"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -36,7 +28,6 @@
       "citekeyFormat": "[authshort:nopunct][shortyear]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -181,73 +172,69 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": false,
-      "exportFileData": false,
-      "exportPath": "/home/emile/github/better-bibtex/"
+    "release": {
+      "BetterBibTeX": "5.1.3.emile.titanarum",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.57",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.57"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "bookSection",
-      "url": "https://www.intechopen.com/books/fuzzy-logic-controls-concepts-theories-and-applications",
       "ISBN": "978-953-51-0396-7",
-      "date": "2012-03-28",
-      "extra": "DOI: 10.5772/2662",
       "accessDate": "2018-11-08T19:36:39Z",
-      "language": "en",
-      "title": "A Mamdani Type Fuzzy Logic Controller",
+      "attachments": [],
+      "citekey": "IABGD+12",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Ion",
-          "lastName": "Iancu",
-          "creatorType": "author"
+          "lastName": "Iancu"
         },
         {
+          "creatorType": "author",
           "firstName": "",
-          "lastName": "Alpha",
-          "creatorType": "author"
+          "lastName": "Alpha"
         },
         {
+          "creatorType": "author",
           "firstName": "",
-          "lastName": "Beta",
-          "creatorType": "author"
+          "lastName": "Beta"
         },
         {
+          "creatorType": "author",
           "firstName": "",
-          "lastName": "Gamma",
-          "creatorType": "author"
+          "lastName": "Gamma"
         },
         {
+          "creatorType": "author",
           "firstName": "",
-          "lastName": "Delta",
-          "creatorType": "author"
+          "lastName": "Delta"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "2012-03-28",
       "dateAdded": "2018-11-08T19:36:39Z",
       "dateModified": "2018-11-10T11:02:00Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/J2TWZPJZ",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Snapshot",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2018-11-08T19:36:44Z",
-          "dateModified": "2018-11-08T19:36:44Z",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/D2EGH6MM"
-        }
-      ],
-      "notes": [],
+      "extra": "DOI: 10.5772/2662",
       "itemID": 102,
-      "citekey": "IABGD+12",
-      "publicationTitle": "Fuzzy Logic - Controls, Concepts, Theories and Applications"
+      "itemType": "bookSection",
+      "language": "en",
+      "notes": [],
+      "publicationTitle": "Fuzzy Logic - Controls, Concepts, Theories and Applications",
+      "relations": [],
+      "tags": [],
+      "title": "A Mamdani Type Fuzzy Logic Controller",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/J2TWZPJZ",
+      "url": "https://www.intechopen.com/books/fuzzy-logic-controls-concepts-theories-and-applications"
     }
   ]
 }

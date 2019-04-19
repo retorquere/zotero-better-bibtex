@@ -1,44 +1,44 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.35.1",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "fr-FR",
-        "appName": "Zotero",
-        "appVersion": "5.0.35.1"
-      },
-      "BetterBibTeX": "5.0.92"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
-      "quickCopyMode": "pandoc",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": true,
-      "citekeyFormat": "[zotero]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
+      "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[zotero]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": true,
+      "scrubDatabase": false,
       "skipFields": [
         "extra",
         "collection"
       ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
       "skipWords": [
         "a",
         "ab",
@@ -163,56 +163,60 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
+      "strings": "",
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.92",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.35.1",
+        "locale": "fr-FR",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.35.1"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "book",
-      "place": "Paris",
-      "publisher": "Capricci",
       "ISBN": "979-10-239-0085-9",
-      "date": "2016 [1974]",
-      "callNumber": "791.430 1",
+      "abstractNote": "Le Cine\u00b4ma, art subversif est un livre culte dans l'histoire de la cine\u00b4philie, cite\u00b4 en re\u00b4fe\u00b4rence par de nombreux cine\u00b4astes et artistes depuis sa parution en 1974. Ce\u00b4le\u00b4brant les formes de la subversion au cine\u00b4ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e\u00b4tablies, qu'elles soient esthe\u00b4tiques ou morales. Illustre\u00b4 par plus de 300 images, souvent side\u00b4rantes, l'ouvrage alterne textes the\u00b4oriques et notules critiques, consacre\u00b4es aussi bien a` des \u0153uvres ce\u00b4le`bres qu'a` des films inconnus, de tous pays et de toutes e\u00b4poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte\u00b4 cine\u00b4matographique. Traduit en franc\u00b8ais en 1977, Le Cine\u00b4ma, art subversif n'avait jamais e\u00b4te\u00b4 re\u00b4e\u00b4dite\u00b4. A` l'heure ou` la subversion, rele\u00b4gue\u00b4e dans les marges, semble avoir de\u00b4serte\u00b4 les e\u00b4crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine\u00b4-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre\u00b4 aux E\u00b4tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e\u00b4galement co-fonde\u00b4 le Festival du Film de New York, dont il a dirige\u00b4 la programmation jusqu'en 1968",
       "accessDate": "2017-06-29 14:17:18",
-      "libraryCatalog": "BnF Catalogue général (http://catalogue.bnf.fr)",
-      "language": "fre",
-      "abstractNote": "Le Cine´ma, art subversif est un livre culte dans l'histoire de la cine´philie, cite´ en re´fe´rence par de nombreux cine´astes et artistes depuis sa parution en 1974. Ce´le´brant les formes de la subversion au cine´ma, Amos Vogel analyse comment les films peuvent contourner, transgresser ou annihiler les re`gles et les conventions e´tablies, qu'elles soient esthe´tiques ou morales. Illustre´ par plus de 300 images, souvent side´rantes, l'ouvrage alterne textes the´oriques et notules critiques, consacre´es aussi bien a` des œuvres ce´le`bres qu'a` des films inconnus, de tous pays et de toutes e´poques. Contre les tabous, contre toute forme de censure, c'est une ode a` la liberte´ cine´matographique. Traduit en franc¸ais en 1977, Le Cine´ma, art subversif n'avait jamais e´te´ re´e´dite´. A` l'heure ou` la subversion, rele´gue´e dans les marges, semble avoir de´serte´ les e´crans, il apparai^t plus indispensable que jamais. Amos Vogel (1921-2012) est le fondateur et programmateur du Cinema 16, le plus influent cine´-club d'avant-garde new- yorkais. Il est le premier a` y avoir montre´ aux E´tats-Unis les films de Roman Polanski, John Cassavetes, Nagisa Oshima, Jacques Rivette ou encore Alain Resnais. Il a e´galement co-fonde´ le Festival du Film de New York, dont il a dirige´ la programmation jusqu'en 1968",
-      "title": "Le Cinéma, art subversif",
-      "numPages": "349",
+      "attachments": [],
+      "callNumber": "791.430 1",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Amos",
-          "lastName": "Vogel",
-          "creatorType": "author"
+          "lastName": "Vogel"
         },
         {
+          "creatorType": "translator",
           "firstName": "Claude",
-          "lastName": "Frégnac",
-          "creatorType": "translator"
+          "lastName": "Fr\u00e9gnac"
         }
       ],
+      "date": "2016 [1974]",
+      "dateAdded": "2017-06-29 14:17:18",
+      "dateModified": "2018-03-03 16:47:25",
+      "itemID": 804,
+      "itemType": "book",
+      "language": "fre",
+      "libraryCatalog": "BnF Catalogue g\u00e9n\u00e9ral (http://catalogue.bnf.fr)",
+      "notes": [],
+      "numPages": "349",
+      "place": "Paris",
+      "publisher": "Capricci",
+      "seeAlso": [],
       "tags": [
         {
-          "tag": "Cinéma",
+          "tag": "Cin\u00e9ma",
           "type": 1
         },
         {
-          "tag": "Cinéma et politique",
+          "tag": "Cin\u00e9ma et politique",
           "type": 1
         },
         {
@@ -220,18 +224,7 @@
           "type": 1
         }
       ],
-      "dateAdded": "2017-06-29 14:17:18",
-      "dateModified": "2018-03-03 16:47:25",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
-      "itemID": 804,
-      "seeAlso": [
-
-      ]
+      "title": "Le Cin\u00e9ma, art subversif"
     }
   ]
 }

@@ -8,7 +8,8 @@ import re
 class Fixer:
   def __init__(self):
     self.root = os.path.join(os.path.dirname(__file__), '..')
-    self.supported = self.load(os.path.join(self.root, 'gen/preferences/preferences.json')).keys()
+    self.supported = list(self.load(os.path.join(self.root, 'gen/preferences/preferences.json')).keys())
+    self.supported.append('rawLaTag')
 
   def load(self, f):
     with open(f) as _f:
@@ -33,6 +34,9 @@ class Fixer:
 
     resave = None
 
+    if 'config' in data and 'preferences' in data['config'] and 'jabrefGroups' in data['config']['preferences']:
+      data['config']['preferences']['jabrefFormat'] = data['config']['preferences']['jabrefGroups']
+
     try:
       for key in list(data['config']['preferences'].keys()):
         if key in self.supported: continue
@@ -51,6 +55,7 @@ class Fixer:
         pass
 
     def valid_att(att):
+      if 'url' in att: return True
       if not 'path' in att: return False
       if re.match(r'^(\/|([a-z]:\\))', att.get('path'), flags=re.IGNORECASE): return False
       if not os.path.exists(os.path.join(os.path.dirname(lib), att['path'])): return False

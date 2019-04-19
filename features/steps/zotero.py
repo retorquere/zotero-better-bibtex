@@ -4,22 +4,142 @@ import urllib
 import tempfile
 from munch import *
 import difflib
+import shutil
+import io
+from markdownify import markdownify as md
+from bs4 import BeautifulSoup
+
+from ruamel.yaml import YAML
+yaml = YAML(typ='safe')
+yaml.default_flow_style = False
 
 ROOT = os.path.join(os.path.dirname(__file__), '../..')
 with open(os.path.join(ROOT, 'gen/translators.json')) as f:
   TRANSLATORS = json.load(f, object_hook=Munch)
 
-CLIENT=None
+class Client:
+  def __init__(self, config):
+    self.id = config.userdata.get('zotero', 'zotero')
+    if self.id == 'zotero':
+      self.port = 23119
+    elif self.id == 'jurism':
+      self.port = 24119
+    else:
+      raise ValueError(f'Unexpected client "{config.userdata.zotero}"')
+
+    self.zotero = self.id == 'zotero'
+    self.jurism = self.id == 'jurism'
+
+    self.timeout = int(config.userdata.get('timeout', 60))
+
+    print(self)
+
+  def __str__(self):
+    return f'{self.id}: port={self.port}, timeout={self.timeout}'
+
+client = None
 
 def assert_equal_diff(expected, found):
-  assert found == expected, '\n' + '\n'.join(difflib.context_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+  assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
+
+def html2md(html):
+  html = BeautifulSoup(html).prettify()
+  return md(html).strip()
+
+def serialize(obj):
+  return json.dumps(obj, indent=2, sort_keys=True)
+
+def un_multi(obj):
+  if type(obj) == dict:
+    obj.pop('multi', None)
+    for v in obj.values():
+      un_multi(v)
+  elif type(obj) == list:
+    for v in obj:
+      un_multi(v)
+
+def strip_obj(data):
+  if type(data) == list:
+    stripped = [strip_obj(e) for e in data]
+    return [e for e in stripped if e not in ['', u'', {}, None, []]]
+
+  if type(data) == dict:
+    stripped = {k: strip_obj(v) for (k, v) in data.items()}
+    return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
+
+  return data
+
+def normalizeJSON(lib):
+  un_multi(lib)
+
+  lib.pop('config', None)
+  lib.pop('keymanager', None)
+  lib.pop('cache', None)
+
+  itemIDs = {}
+  for itemID, item in enumerate(lib['items']):
+    itemIDs[item['itemID']] = itemID
+    item['itemID'] = itemID
+
+    item.pop('dateAdded', None)
+    item.pop('dateModified', None)
+    item.pop('uniqueFields', None)
+    item.pop('key', None)
+    item.pop('citekey', None)
+    item.pop('attachments', None)
+    item.pop('collections', None)
+    item.pop('__citekey__', None)
+    item.pop('uri', None)
+
+    item['notes'] = sorted([html2md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
+
+    if 'note' in item: item['note']  = html2md(item['note'])
+
+    item['tags'] = sorted([(tag if type(tag) == str else tag['tag']) for tag in item.get('tags', [])])
+
+    for k in list(item.keys()):
+      v = item[k]
+      if v is None: del item[k]
+      if type(v) in [list, dict] and len(v) == 0: del item[k]
+
+  collections = lib.get('collections', {})
+  while any(coll for coll in collections.values() if not coll.get('path', None)):
+    for coll in collections.values():
+      if coll.get('path', None): continue
+
+      if not coll.get('parent', None):
+        coll['path'] = [ coll['name'] ]
+      elif collections[ coll['parent'] ].get('path', None):
+        coll['path'] = collections[ coll['parent'] ]['path'] + [ coll['name'] ]
+
+  for key, coll in collections.items():
+    coll['key'] = ' ::: '.join(coll['path'])
+    coll.pop('path', None)
+    coll.pop('id', None)
+
+  for key, coll in collections.items():
+    if coll['parent']: coll['parent'] = collections[coll['parent']]['key']
+    coll['collections'] = [collections[key]['key'] for key in coll['collections']]
+    coll['items'] = [itemIDs[itemID] for itemID in coll['items']]
+
+  lib['collections'] = {coll['key']: coll for coll in collections.values()}
+
+  return strip_obj(lib)
+
+def compare(expected, found):
+  size = 30
+  if len(expected) < size or len(found) < size:
+    assert_equal_diff(serialize(expected), serialize(found))
+  else:
+    for start in range(0, max(len(expected), len(found)), size):
+      assert_equal_diff(serialize(expected[start:start + size]), serialize(found[start:start + size]))
 
 def execute(script, **args):
   for var, value in args.items():
     script = f'const {var} = {json.dumps(value)};\n' + script
 
-  req = urllib.request.Request('http://127.0.0.1:23119/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
-  res = urllib.request.urlopen(req).read().decode()
+  req = urllib.request.Request(f'http://127.0.0.1:{client.port}/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
+  res = urllib.request.urlopen(req, timeout=client.timeout).read().decode()
   return json.loads(res)
 
 class Preferences:
@@ -27,21 +147,18 @@ class Preferences:
     self.pref = {}
     self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
-      self.supported = [self.prefix + k for k in json.load(f).keys()]
-
-  def __getitem__(self, key):
-    return self.pref[key]
+      self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
+    self.supported['removeStock'] = bool
 
   def __setitem__(self, key, value):
-    value = self.parse(value)
-
     if key[0] == '.': key = self.prefix + key[1:]
 
     if key.startswith(self.prefix):
       assert key in self.supported, f'Unknown preference "{key}"'
+      assert type(value) == self.supported[key], f'Unexpected value of type {type(value)} for preference {key}'
 
     if key == 'translators.better-bibtex.postscript':
-      with open(path.join('test/fixtures', value)) as f:
+      with open(os.path.join('test/fixtures', value)) as f:
         value = f.read()
 
     self.pref[key] = value
@@ -92,24 +209,30 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     expected = f.read()
 
   if ext == '.csl.json':
-    return compare(json.loads(found), json.loads(expected))
+    return compare(json.loads(expected), json.loads(found))
 
   elif ext == '.csl.yml':
-    assert sort_yaml(found) == sort_yaml(expected)
+    with open('exported.csl.yml', 'w') as f: f.write(found)
+    assert_equal_diff(
+      serialize(yaml.load(io.StringIO(expected))),
+      serialize(yaml.load(io.StringIO(found)))
+    )
     return
 
-  elif exit == '.json':
+  elif ext == '.json':
     with open('exported.json', 'w') as f: f.write(found)
 
-    found = normalizeJSON(JSON.parse(found))
-    expected = normalizeJSON(JSON.parse(expected))
+    found = normalizeJSON(json.loads(found))
+    expected = normalizeJSON(json.loads(expected))
 
-    if len(found['items']) < 30 or len(expected['items']) < 30:
-      assert serialize(found) == serialize(expected)
+    if len(expected['items']) < 30 or len(found['items']) < 30:
+      print('SMALL COMPARE')
+      assert_equal_diff(serialize(expected), serialize(found))
       return
     else:
-      assert serialize({ **found, 'items': []}) == serialize({ **expected, 'items': []})
-      return compare(found['items'], expected['items'])
+      print('BIG COMPARE')
+      assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
+      return compare(expected['items'], found['items'])
 
   with open('exported.txt', 'w') as f: f.write(found)
   expected = expected.strip()
@@ -126,9 +249,7 @@ def expand_expected(expected):
 
   fixtures = os.path.join(ROOT, 'test/fixtures')
 
-  assert CLIENT is not None
-
-  if CLIENT == 'zotero': return [ os.path.join(fixtures, expected), ext ]
+  if client.zotero: return [ os.path.join(fixtures, expected), ext ]
 
   expected = None
   for variant in ['.juris-m', '']:
@@ -149,11 +270,15 @@ def import_file(context, references, collection = False):
     preferences = config.get('preferences', {})
     context.displayOptions = config.get('options', {})
 
-    for pref in context.preferences.keys():
-      if pref in preferences:
-        del preferences[pref]
-
     if 'testing' in preferences: del preferences['testing']
+    preferences = {
+      pref: (','.join(value) if type(value) == list else value)
+      for pref, value in preferences.items()
+      if not context.preferences.prefix + pref in context.preferences.keys()
+    }
+    for k, v in preferences.items():
+      assert context.preferences.prefix + k in context.preferences.supported, f'Unsupported preference "{k}"'
+      assert type(v) == context.preferences.supported[context.preferences.prefix + k], f'Value for preference {k} has unexpected type {type(v)}'
   else:
     context.displayOptions = {}
     preferences = None
@@ -162,7 +287,7 @@ def import_file(context, references, collection = False):
     if type(collection) is str:
       orig = references
       references = os.path.join(d, collection)
-      shutil.cp(orig, references)
+      shutil.copy(orig, references)
 
     if '.bib' in references:
       copy = False
@@ -181,6 +306,6 @@ def import_file(context, references, collection = False):
 
     return execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
       filename = references,
-      preferences = preferences,
-      createNewCollection = (collection != False)
+      createNewCollection = (collection != False),
+      preferences = preferences
     )

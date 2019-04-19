@@ -1,142 +1,140 @@
 {
+  "cache": {},
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.78",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "autoExportIdleWait": 10,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[zotero]",
       "citekeyFold": true,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
+      "citekeyFormat": "[zotero]",
       "csquotes": "",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "postscript": "",
       "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
-      "quickCopyMode": "latex",
-      "qualityReport": false,
       "suppressTitleCase": false,
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.78"
   },
   "items": [
     {
+      "abstractNote": "Example from CMoS, 16e, 14.249",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hazel V.",
+          "lastName": "Clark"
+        }
+      ],
+      "date": "1957",
+      "extra": "type: pamphlet",
+      "itemID": 17,
       "itemType": "bookSection",
       "place": "Mesopotamia, OH",
       "publisher": "Trumbull County Historical Society",
-      "date": "1957",
-      "extra": "type: pamphlet",
-      "abstractNote": "Example from CMoS, 16e, 14.249",
-      "title": "Mesopotamia: between two rivers",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Clark",
-          "firstName": "Hazel V."
-        }
-      ],
-      "itemID": 17
+      "title": "Mesopotamia: between two rivers"
     },
     {
-      "itemType": "journalArticle",
-      "url": "http://nedwww.ipac.caltech.edu/",
-      "publicationTitle": "NASA/IPAC Extragalactic Database",
-      "extra": "type: dataset",
-      "accessDate": "2009-10-06",
       "abstractNote": "Example from CMoS, 16e, 14.272",
+      "accessDate": "2009-10-06",
+      "extra": "type: dataset",
+      "itemID": 18,
+      "itemType": "journalArticle",
+      "publicationTitle": "NASA/IPAC Extragalactic Database",
       "title": "object name IRAS F00400+4059",
-      "itemID": 18
+      "url": "http://nedwww.ipac.caltech.edu/"
     },
     {
-      "itemType": "book",
-      "edition": "Rev. ed.",
-      "place": "Bryn Mawr, PA",
-      "publisher": "Theodore Presser",
-      "date": "1960",
-      "extra": "type: musical_score",
-      "abstractNote": "Example from CMoS, 16e, 14.269\n“Prepared from the autographs and earliest printed sources by Nathan\nBroder”",
-      "title": "Sonatas and fantasies for the piano",
+      "abstractNote": "Example from CMoS, 16e, 14.269\n\u201cPrepared from the autographs and earliest printed sources by Nathan\nBroder\u201d",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Mozart",
-          "firstName": "Wolfgang Amadeus"
+          "firstName": "Wolfgang Amadeus",
+          "lastName": "Mozart"
         },
         {
           "creatorType": "editor",
-          "lastName": "Broder",
-          "firstName": "Nathan"
+          "firstName": "Nathan",
+          "lastName": "Broder"
         }
       ],
-      "itemID": 19
+      "date": "1960",
+      "edition": "Rev. ed.",
+      "extra": "type: musical_score",
+      "itemID": 19,
+      "itemType": "book",
+      "place": "Bryn Mawr, PA",
+      "publisher": "Theodore Presser",
+      "title": "Sonatas and fantasies for the piano"
     },
     {
-      "itemType": "journalArticle",
-      "volume": "9",
-      "pages": "B13–B14",
-      "publicationTitle": "Lingua Franca",
-      "date": "1999-04",
-      "extra": "type: review-book",
-      "language": "en-US",
-      "abstractNote": "Example from CMoS, 16e, 14.215\n“ed. and trans. John Charles Chasteen”",
-      "title": "The mystery of samba: Popular music and national identity in Brazil",
+      "abstractNote": "Example from CMoS, 16e, 14.215\n\u201ced. and trans. John Charles Chasteen\u201d",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Ratliff",
-          "firstName": "Ben"
+          "firstName": "Ben",
+          "lastName": "Ratliff"
         },
         {
           "creatorType": "reviewedAuthor",
           "name": "Hermano Vianna"
         }
       ],
+      "date": "1999-04",
+      "extra": "type: review-book",
+      "itemID": 20,
+      "itemType": "journalArticle",
+      "language": "en-US",
       "notes": [
         "<p>biblatex-chicago example, adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only.* A Review entry presenting a review from a scholarly journaltitle, hence no entrysubtype needed.&nbsp;&nbsp;Note the bibstrings in the title of the review, and the formatting of the title of the book reviewed there.&nbsp;&nbsp;Also note the use of \\parteditandtrans.&nbsp;&nbsp;The author-date system doesn't absolutely require the use of these mechanisms, which were invented to cope with the differences between notes and bibliography in the other Chicago style.&nbsp;&nbsp;Still, although simply writing \"edited and translated by\" yourself will suffice, using these mechanisms will make your .bib file work across multiple languages, and will also allow it to work, with fewer modifications, in the notes \\&amp; bibliography style, should that be needed.&nbsp;&nbsp;See next entry.</p>\n<p>&nbsp;</p>\n<p>Example from CMoS, 16e, 14.125</p>"
       ],
-      "itemID": 20
+      "pages": "B13\u2013B14",
+      "publicationTitle": "Lingua Franca",
+      "title": "The mystery of samba: Popular music and national identity in Brazil",
+      "volume": "9"
     },
     {
-      "itemType": "newspaperArticle",
-      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html.",
-      "date": "2006-04-23",
-      "section": "Sunday Book Review",
-      "extra": "type: review-book\nreviewed-title: The omnivore’s dilemma: a natural history of four meals",
-      "language": "en-US",
       "abstractNote": "Example from CMoS, 16e, 14.125",
-      "title": "Deconstructing dinner",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Kamp",
-          "firstName": "David"
+          "firstName": "David",
+          "lastName": "Kamp"
         },
         {
           "creatorType": "reviewedAuthor",
-          "lastName": "Pollan",
-          "firstName": "Michael"
+          "firstName": "Michael",
+          "lastName": "Pollan"
         }
       ],
-      "itemID": 22
+      "date": "2006-04-23",
+      "extra": "type: review-book\nreviewed-title: The omnivore\u2019s dilemma: a natural history of four meals",
+      "itemID": 22,
+      "itemType": "newspaperArticle",
+      "language": "en-US",
+      "section": "Sunday Book Review",
+      "title": "Deconstructing dinner",
+      "url": "http://www.nytimes.com/2006/04/23/books/review/23kamp.html."
     }
-  ],
-  "cache": {
-  }
+  ]
 }

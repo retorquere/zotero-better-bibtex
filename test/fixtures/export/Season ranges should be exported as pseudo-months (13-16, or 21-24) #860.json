@@ -1,42 +1,43 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.33",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.12",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.33"
-      },
-      "BetterBibTeX": "5.0.64"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
       "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth][shorttitle][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
+      "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
       "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
       "skipFields": [
         "rights"
       ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "quickCopyMode": "latex",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
       "skipWords": [
         "a",
         "ab",
@@ -161,73 +162,71 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.64",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.33",
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.12",
+        "platform": "MacIntel",
+        "version": "5.0.33"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "webpage",
       "date": "2017-23/2017-24",
+      "dateAdded": "2017-12-30 10:53:52",
+      "dateModified": "2017-12-30 10:57:01",
       "extra": "original-date: Spring 2015 - Summer 2016",
-      "title": "Season ranges: EDTF and literal",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "Season ranges: EDTF and literal"
     },
     {
-      "itemType": "webpage",
       "date": "2017-14/2017-15",
+      "dateAdded": "2017-12-30 10:53:52",
+      "dateModified": "2017-12-30 10:57:01",
       "extra": "original-date: 2017-14/2017-99",
-      "title": "months out of range",
-      "dateAdded": "2017-12-30 10:53:52",
-      "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "months out of range"
     },
     {
-      "itemType": "webpage",
       "date": "0011-21/0012-22",
-      "title": "0011-21/0012-22",
       "dateAdded": "2017-12-30 10:53:52",
       "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "0011-21/0012-22"
     },
     {
-      "itemType": "webpage",
       "date": "-0011-21/-0012-22",
-      "title": "-0011-21/-0012-22",
       "dateAdded": "2017-12-30 10:53:52",
       "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "-0011-21/-0012-22"
     },
     {
-      "itemType": "webpage",
       "date": "-2011-21/-2012-22",
-      "title": "-2011-21/-2012-22",
       "dateAdded": "2017-12-30 10:53:52",
       "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "-2011-21/-2012-22"
     },
     {
-      "itemType": "webpage",
       "date": "0000-21/0000-24",
-      "title": "0000-21/0000-24",
       "dateAdded": "2017-12-30 10:53:52",
       "dateModified": "2017-12-30 10:57:01",
-      "itemID": 366
+      "itemID": 366,
+      "itemType": "webpage",
+      "title": "0000-21/0000-24"
     }
   ]
 }

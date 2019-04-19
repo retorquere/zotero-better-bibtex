@@ -1,42 +1,41 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.33",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.13",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.33"
-      },
-      "BetterBibTeX": "5.0.68"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "doi",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[zotero]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "quickCopyMode": "pandoc",
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[zotero]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "pandoc",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -161,99 +160,98 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.68",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.33",
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.13",
+        "platform": "MacIntel",
+        "version": "5.0.33"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "volume": "15",
-      "issue": "22",
-      "pages": "6241–6250",
-      "publicationTitle": "The EMBO journal",
       "ISSN": "0261-4189 0261-4189",
-      "date": "1996 Nov 15",
-      "extra": "PMID: 8947047 \nPMCID: PMC452447",
-      "journalAbbreviation": "EMBO J",
-      "language": "eng",
       "abstractNote": "Pleckstrin homology (PH) domains may act as membrane localization modules through specific interactions with phosphoinositide phospholipids. These interactions could represent responses to second messengers, with scope for regulation by soluble inositol polyphosphates. A biosensor-based assay was used here to probe interactions between PH domains and unilamellar liposomes containing different phospholipids and to demonstrate specificity for distinct phosphoinositides. The  dynamin PH domain specifically interacted with liposomes containing phosphatidylinositol-4,5-bisphosphate [PI(4,5)P2] and, more weakly, with liposomes containing phosphatidylinositol-4-phosphate [PI(4)P]. This correlates with phosphoinositide activation of the dynamin GTPase. The functional GTPase of  a dynamin mutant lacking the PH domain, however, cannot be activated by PI(4,5)P2. The phosphoinositide-PH domain interaction can be abolished selectively by point mutations in the putative binding pocket predicted by molecular modelling and NMR spectroscopy. In contrast, the Bruton's tyrosine kinase (Btk)PH domain specifically bound liposomes containing phosphatidylinositol-3,4,5-trisphosphate [PI(3,4,5)P3]: an interaction requiring  Arg28, a residue found to be mutated in some X-linked agammaglobulinaemia patients. A rational explanation for these different specificities is proposed through modelling of candidate binding pockets and is supported by NMR spectroscopy.",
-      "title": "Distinct specificity in the recognition of phosphoinositides by the pleckstrin homology domains of dynamin and Bruton's tyrosine kinase.",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "K.",
-          "lastName": "Salim",
-          "creatorType": "author"
+          "lastName": "Salim"
         },
         {
+          "creatorType": "author",
           "firstName": "M. J.",
-          "lastName": "Bottomley",
-          "creatorType": "author"
+          "lastName": "Bottomley"
         },
         {
+          "creatorType": "author",
           "firstName": "E.",
-          "lastName": "Querfurth",
-          "creatorType": "author"
+          "lastName": "Querfurth"
         },
         {
+          "creatorType": "author",
           "firstName": "M. J.",
-          "lastName": "Zvelebil",
-          "creatorType": "author"
+          "lastName": "Zvelebil"
         },
         {
+          "creatorType": "author",
           "firstName": "I.",
-          "lastName": "Gout",
-          "creatorType": "author"
+          "lastName": "Gout"
         },
         {
+          "creatorType": "author",
           "firstName": "R.",
-          "lastName": "Scaife",
-          "creatorType": "author"
+          "lastName": "Scaife"
         },
         {
+          "creatorType": "author",
           "firstName": "R. L.",
-          "lastName": "Margolis",
-          "creatorType": "author"
+          "lastName": "Margolis"
         },
         {
+          "creatorType": "author",
           "firstName": "R.",
-          "lastName": "Gigg",
-          "creatorType": "author"
+          "lastName": "Gigg"
         },
         {
+          "creatorType": "author",
           "firstName": "C. I.",
-          "lastName": "Smith",
-          "creatorType": "author"
+          "lastName": "Smith"
         },
         {
+          "creatorType": "author",
           "firstName": "P. C.",
-          "lastName": "Driscoll",
-          "creatorType": "author"
+          "lastName": "Driscoll"
         },
         {
+          "creatorType": "author",
           "firstName": "M. D.",
-          "lastName": "Waterfield",
-          "creatorType": "author"
+          "lastName": "Waterfield"
         },
         {
+          "creatorType": "author",
           "firstName": "G.",
-          "lastName": "Panayotou",
-          "creatorType": "author"
+          "lastName": "Panayotou"
         }
       ],
+      "date": "1996 Nov 15",
+      "dateAdded": "2017-05-29 11:26:23",
+      "dateModified": "2018-01-05 19:09:08",
+      "extra": "PMID: 8947047 \nPMCID: PMC452447",
+      "issue": "22",
+      "itemID": 191,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "EMBO J",
+      "language": "eng",
+      "pages": "6241\u20136250",
+      "publicationTitle": "The EMBO journal",
       "tags": [
         {
           "tag": "Amino Acid Sequence",
@@ -328,60 +326,60 @@
           "type": 0
         }
       ],
-      "dateAdded": "2017-05-29 11:26:23",
-      "dateModified": "2018-01-05 19:09:08",
-      "itemID": 191
+      "title": "Distinct specificity in the recognition of phosphoinositides by the pleckstrin homology domains of dynamin and Bruton's tyrosine kinase.",
+      "volume": "15"
     },
     {
-      "itemType": "journalArticle",
-      "volume": "313",
-      "issue": "1",
-      "pages": "37–48",
-      "publicationTitle": "Carbohydrate research",
       "ISSN": "0008-6215 0008-6215",
-      "date": "1998 Nov",
-      "extra": "PMID: 9861700",
-      "journalAbbreviation": "Carbohydr Res",
-      "language": "eng",
       "abstractNote": "The epitopes present on beta-(1-->4)-galactosyltransferase-1 (beta 4Gal-T1) have  been explored using a panel of monoclonal antibodies (mAbs) raised against the soluble form of the human enzyme. Reactivity of the antibodies with site-specific and truncated mutants of human beta 4Gal-T1 suggests the presence of a major immunogenic epitope cluster consisting of four epitopes within the stem region and mapping between amino acids 42 and 115. The catalytic activity of the enzyme  is increased in the presence of stem region-specific antibody. Two of the epitopes were further localized to a region between amino acids 42 and 77, sequences which are not shared with the recently cloned beta 4Gal-T2 and beta 4Gal-T3 enzymes. An epitope located close to or within the catalytic domain is also identified, and the mAb to this region binds synergistically with antibodies to the stem region.",
-      "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1.",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Keusch",
-          "creatorType": "author"
+          "lastName": "Keusch"
         },
         {
+          "creatorType": "author",
           "firstName": "G.",
-          "lastName": "Panayotou",
-          "creatorType": "author"
+          "lastName": "Panayotou"
         },
         {
+          "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Malissard",
-          "creatorType": "author"
+          "lastName": "Malissard"
         },
         {
+          "creatorType": "author",
           "firstName": "E. G.",
-          "lastName": "Berger",
-          "creatorType": "author"
+          "lastName": "Berger"
         },
         {
+          "creatorType": "author",
           "firstName": "H. E.",
-          "lastName": "Appert",
-          "creatorType": "author"
+          "lastName": "Appert"
         },
         {
+          "creatorType": "author",
           "firstName": "P. M.",
-          "lastName": "Lydyard",
-          "creatorType": "author"
+          "lastName": "Lydyard"
         },
         {
+          "creatorType": "author",
           "firstName": "P. J.",
-          "lastName": "Delves",
-          "creatorType": "author"
+          "lastName": "Delves"
         }
       ],
+      "date": "1998 Nov",
+      "dateAdded": "2017-05-29 11:26:22",
+      "dateModified": "2017-05-29 11:26:22",
+      "extra": "PMID: 9861700",
+      "issue": "1",
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Carbohydr Res",
+      "language": "eng",
+      "pages": "37\u201348",
+      "publicationTitle": "Carbohydrate research",
       "tags": [
         {
           "tag": "*Epitope Mapping",
@@ -412,9 +410,8 @@
           "type": 0
         }
       ],
-      "dateAdded": "2017-05-29 11:26:22",
-      "dateModified": "2017-05-29 11:26:22",
-      "itemID": 13
+      "title": "Antibody recognition of epitopes on wild-type and mutant beta-(1-->4)-galactosyltransferase-1.",
+      "volume": "313"
     }
   ]
 }
