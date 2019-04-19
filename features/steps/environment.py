@@ -173,6 +173,8 @@ class Profile:
 
   def start(self):
     cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")}'
+    if zotero.client.id == 'jurism': cmd = 'echo ' + cmd
+
     print(f'Starting {zotero.client.id}: {cmd}')
     proc = subprocess.Popen(cmd, shell=True)
     print(f'{zotero.client.id} started: {proc.pid}')
