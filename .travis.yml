@@ -29,6 +29,7 @@ script:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - (sleep 60 && import -window root -crop 1264x948+0+0 -resize 200x150 -quality 90 /tmp/screenshot.jpg && curl -F "file=@/tmp/screenshot.jpg" https://file.io)&
+  - (sleep 60 && curl -F "file=@~/.BBTZ5TEST.log" https://file.io)&
   - ./.travis/behave-parameters.py | xargs -t behave --no-capture --verbose
 
 after_failure:
