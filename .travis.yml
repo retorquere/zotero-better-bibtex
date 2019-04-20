@@ -25,7 +25,7 @@ cache:
   - .cache/pip
 
 script:
-  - ./utils/build-assets fetch
+  - ./util/build-assets fetch
   - ./.travis/behave-parameters.py | xargs -t behave --no-capture --verbose
 
 after_failure:
@@ -44,7 +44,7 @@ jobs:
     before_install: true
     script:
       - npm run build
-      - ./utils/build-assets stash
+      - ./util/build-assets stash
 
   - stage: test
     env:
@@ -71,11 +71,11 @@ jobs:
     install: true
     before_install: true
     script:
-      - ./utils/build-assets fetch
+      - ./util/build-assets fetch
       - npm run release
 
   - stage: cleanup
     install: true
     before_install: true
     script:
-      - ./utils/build-assets pop
+      - ./util/build-assets pop
