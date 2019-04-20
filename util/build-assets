@@ -7,6 +7,7 @@ import os
 import sys
 import glob
 import json
+import datetime
 
 from github3 import login
 
@@ -27,8 +28,14 @@ generated = [
   'gen/preferences/defaults.json',
 ]
 
+expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=7)
+
 for asset in release.assets():
-  if not asset.label.startswith(label_prefix): continue
+  if asset.created_at < expired:
+    asset.delete()
+    continue
+  if not asset.label.startswith(label_prefix):
+    continue
  
   if action == 'fetch':
     filename = asset.label[len(label_prefix):]
@@ -46,7 +53,7 @@ if action == 'stash':
     with open(asset, 'rb') as f:
       release.upload_asset(
         asset=f,
-        name=name_prefix + os.path.basename(asset),
+        name=name_prefix + asset.replace('/', '-'),
         label=label_prefix + asset,
         content_type=('application/x-xpinstall' if asset.endswith('.xpi') else 'application/json')
       )
