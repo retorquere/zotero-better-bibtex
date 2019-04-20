@@ -14,4 +14,4 @@ selenium
 toml
 PyHamcrest
 psutil
-PyGithub
+github3.py
