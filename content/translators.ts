@@ -91,56 +91,42 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async primeCache(translatorID: string, displayOptions: any, scope: any) {
     scope = this.items(scope)
 
-    let sql: string
-    let items: any[]
-    let itemIDs: number[]
+    let reason: string = null
+    let uncached: any[] = []
 
-    let threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
-    const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
-    const jabrefFormat = Prefs.get('jabrefFormat')
+    // if a threshold is set, minimum is 10
+    const threshold: number = Math.max(Prefs.get('autoExportPrimeExportCacheThreshold') || 0, 10) // tslint:disable-line:no-magic-numbers
 
-    // no caching means priming is useless
-    const prime = threshold && cache && jabrefFormat !== 4 && !displayOptions.exportFileData // tslint:disable-line:no-magic-numbers
-    log.debug('priming cache?', { prime, jabrefFormat, threshold, cache: !!cache, displayOptions })
-    if (!prime) return
-
-    threshold = Math.max(threshold, 10) // tslint:disable-line:no-magic-numbers
-
-    if (scope.library) {
-      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
-
-    } else if (scope.items) {
-      items = scope.items
-      itemIDs = scope.items.map(item => item.id)
-
-    } else if (scope.collection) {
-      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id}`
+    if (!reason && !threshold) reason = 'priming threshold set to 0'
+    if (!reason && Prefs.get('jabrefFormat') === 4) reason = 'JabRef Format 4 cannot be cached' // tslint:disable-line:no-magic-numbers
+    if (!reason && displayOptions.exportFileData) reason = 'Cache disabled when exporting attachments'
+    if (!reason) {
+      uncached = await this.uncached(translatorID, displayOptions, scope)
+      log.debug('Translators.primeCache:', uncached.length, 'uncached items')
+      if (!uncached.length) {
+        reason = 'No uncached items found'
+      } else if (uncached.length < threshold) {
+        reason = `${uncached.length} uncached items found, but not priming for less than ${threshold}`
+      }
+    }
+    if (reason) {
+      log.debug('Not priming cache:', reason)
+      return
     }
 
-    if (sql) itemIDs = (await Zotero.DB.queryAsync(sql)).map(item => item.itemID)
-
-    const query = {
-      exportNotes: !!displayOptions.exportNotes,
-      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
-    }
-    for (const pref of prefOverrides) {
-      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
+    switch (typeof uncached[0]) {
+      case 'number':
+      case 'string':
+        uncached = await Zotero.Items.getAsync(uncached)
     }
 
-    const cached = new Set(cache.find(query).map(item => item.itemID))
-    const uncached = itemIDs.filter(id => !cached.has(id))
-
-    if (uncached.length < threshold) return
-
-    log.debug('priming cache:', uncached.length, 'uncached items')
-
-    if (!items) items = await Zotero.Items.getAsync(uncached)
-
-    const batchSize = Math.min(Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10), threshold) // tslint:disable-line:no-magic-numbers
-    const batches = items.reduce((acc, item, index, array) => !(index % batchSize) ? acc.concat([array.slice(index, index + batchSize)]) : acc, [])
-    await Promise.all(batches.map(batch => this.exportItems(translatorID, displayOptions, { items: batch })))
-
-    log.debug('priming cache: done ')
+    // batches of at least 10
+    const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10) // tslint:disable-line:no-magic-numbers
+    while (uncached.length) {
+      log.debug('priming cache:', uncached.length, 'uncached items remaining')
+      await this.exportItems(translatorID, displayOptions, { items: uncached.splice(0, batch) })
+    }
+    log.debug('priming cache: done, uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
@@ -268,6 +254,36 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     return true
+  }
+
+  public async uncached(translatorID: string, displayOptions: any, scope: any): Promise<any[]> {
+    // get all itemIDs in cache
+    const cache = Cache.getCollection(this.byId[translatorID].label)
+    const query = {
+      exportNotes: !!displayOptions.exportNotes,
+      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
+    }
+    for (const pref of prefOverrides) {
+      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
+    }
+    const cached = new Set(cache.find(query).map(item => item.itemID))
+
+    if (scope.items) return scope.items.filter(item => !cached.has(item.id))
+
+    let sql: string = null
+    if (scope.library) {
+      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
+
+    } else if (scope.collection) {
+      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id}`
+
+    } else {
+      log.error('Translators.uncached: no active scope')
+      return []
+
+    }
+
+    return (await Zotero.DB.queryAsync(sql)).map(item => item.itemID).filter(itemID => !cached.has(itemID))
   }
 
   private items(items) {
