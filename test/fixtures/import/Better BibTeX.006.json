@@ -1,16 +1,15 @@
 {
-  "items": [
-    {
-      "itemType": "journalArticle",
-      "title": "non-braking space: ~; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
-      "extra": "Citation Key: test-ticket1661",
-      "itemID": 0
-    }
-  ],
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "extra": "Citation Key: test-ticket1661",
+      "itemID": 0,
+      "itemType": "journalArticle",
+      "title": "non-braking space: ~; accented characters: \u00f1 and \u00f1; tilde in URL: http://example.com/~user"
+    }
+  ]
 }

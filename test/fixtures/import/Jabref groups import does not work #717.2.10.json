@@ -1,38 +1,87 @@
 {
+  "collections": {
+    "3JW9MDH9": {
+      "collections": [
+        "7EPAVT3Q"
+      ],
+      "id": 4,
+      "items": [
+        56,
+        57,
+        58
+      ],
+      "key": "3JW9MDH9",
+      "name": "Jabref groups import does not work #717.2.10",
+      "parent": false
+    },
+    "7EPAVT3Q": {
+      "collections": [
+        "GMJYS2QC",
+        "H2XXRRKH"
+      ],
+      "id": 5,
+      "items": [],
+      "key": "7EPAVT3Q",
+      "name": "my-main-group-2",
+      "parent": "3JW9MDH9"
+    },
+    "GMJYS2QC": {
+      "collections": [],
+      "id": 7,
+      "items": [
+        57
+      ],
+      "key": "GMJYS2QC",
+      "name": "my-other-subgroup-2",
+      "parent": "7EPAVT3Q"
+    },
+    "H2XXRRKH": {
+      "collections": [],
+      "id": 6,
+      "items": [
+        56
+      ],
+      "key": "H2XXRRKH",
+      "name": "my-subgroup-2",
+      "parent": "7EPAVT3Q"
+    }
+  },
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.17",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.17"
-      },
-      "BetterBibTeX": "5.0.2.emile.java-cotton"
+    "options": {
+      "exportFileData": false,
+      "exportFilename": "My Library.json",
+      "exportNotes": true,
+      "exportPath": "/home/emile/github/bbt/better-bibtex"
     },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "itemObserverDelay": 100,
-      "citeCommand": "cite",
-      "citekeyFormat": "[auth][shorttitle][year]",
-      "citekeyFold": true,
-      "DOIandURL": "both",
+      "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
       "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][shorttitle][year]",
       "csquotes": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 4,
       "keyConflictPolicy": "keep",
+      "parseParticles": true,
+      "postscript": "",
       "preserveBibTeXVariables": false,
-      "skipFields": [
-
-      ],
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -157,124 +206,67 @@
         "zu",
         "zum"
       ],
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
-      "biblatexExtendedDateFormat": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "qualityReport": false,
       "suppressTitleCase": false,
-      "parseParticles": true,
-      "jabrefFormat": 4
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true,
-      "exportFileData": false,
-      "exportPath": "/home/emile/github/bbt/better-bibtex",
-      "exportFilename": "My Library.json"
-    }
-  },
-  "collections": {
-    "3JW9MDH9": {
-      "id": 4,
-      "key": "3JW9MDH9",
-      "parent": false,
-      "name": "Jabref groups import does not work #717.2.10",
-      "items": [
-        56,
-        57,
-        58
-      ],
-      "collections": [
-        "7EPAVT3Q"
-      ]
-    },
-    "7EPAVT3Q": {
-      "id": 5,
-      "key": "7EPAVT3Q",
-      "parent": "3JW9MDH9",
-      "name": "my-main-group-2",
-      "items": [
-
-      ],
-      "collections": [
-        "GMJYS2QC",
-        "H2XXRRKH"
-      ]
-    },
-    "GMJYS2QC": {
-      "id": 7,
-      "key": "GMJYS2QC",
-      "parent": "7EPAVT3Q",
-      "name": "my-other-subgroup-2",
-      "items": [
-        57
-      ],
-      "collections": [
-
-      ]
-    },
-    "H2XXRRKH": {
-      "id": 6,
-      "key": "H2XXRRKH",
-      "parent": "7EPAVT3Q",
-      "name": "my-subgroup-2",
-      "items": [
-        56
-      ],
-      "collections": [
-
-      ]
+    "release": {
+      "BetterBibTeX": "5.0.2.emile.java-cotton",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.17",
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.17"
+      }
     }
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "date": "2017",
-      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein]",
-      "title": "The paper in subgroup",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe",
-          "creatorType": "author"
+          "lastName": "Doe"
         }
       ],
+      "date": "2017",
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "itemID": 56
+      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein]",
+      "itemID": 56,
+      "itemType": "journalArticle",
+      "title": "The paper in subgroup"
     },
     {
-      "itemType": "journalArticle",
-      "extra": "Citation Key: Other- \nbibtex*[owner=klein]",
-      "title": "The article in my other subgroup",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "I.",
-          "lastName": "Other",
-          "creatorType": "author"
+          "lastName": "Other"
         }
       ],
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "itemID": 57
+      "extra": "Citation Key: Other- \nbibtex*[owner=klein]",
+      "itemID": 57,
+      "itemType": "journalArticle",
+      "title": "The article in my other subgroup"
     },
     {
-      "itemType": "journalArticle",
-      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein]",
-      "title": "the paper not in a group",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "I",
-          "lastName": "Unkonw",
-          "creatorType": "author"
+          "lastName": "Unkonw"
         }
       ],
       "dateAdded": "2017-09-12 09:24:21",
       "dateModified": "2017-09-12 09:24:21",
-      "itemID": 58
+      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein]",
+      "itemID": 58,
+      "itemType": "journalArticle",
+      "title": "the paper not in a group"
     }
   ]
 }

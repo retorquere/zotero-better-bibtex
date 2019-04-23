@@ -88,6 +88,61 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
+  public async primeCache(translatorID: string, displayOptions: any, scope: any) {
+    scope = this.items(scope)
+
+    let sql: string
+    let items: any[]
+    let itemIDs: number[]
+
+    let threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
+    const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
+    const jabrefFormat = Prefs.get('jabrefFormat')
+
+    // no caching means priming is useless
+    const prime = threshold && cache && jabrefFormat !== 4 && !displayOptions.exportFileData // tslint:disable-line:no-magic-numbers
+    log.debug('priming cache?', { prime, jabrefFormat, threshold, cache: !!cache, displayOptions })
+    if (!prime) return
+
+    threshold = Math.max(threshold, 10) // tslint:disable-line:no-magic-numbers
+
+    if (scope.library) {
+      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
+
+    } else if (scope.items) {
+      items = scope.items
+      itemIDs = scope.items.map(item => item.id)
+
+    } else if (scope.collection) {
+      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id}`
+    }
+
+    if (sql) itemIDs = (await Zotero.DB.queryAsync(sql)).map(item => item.itemID)
+
+    const query = {
+      exportNotes: !!displayOptions.exportNotes,
+      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
+    }
+    for (const pref of prefOverrides) {
+      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
+    }
+
+    const cached = new Set(cache.find(query).map(item => item.itemID))
+    const uncached = itemIDs.filter(id => !cached.has(id))
+
+    if (uncached.length < threshold) return
+
+    log.debug('priming cache:', uncached.length, 'uncached items')
+
+    if (!items) items = await Zotero.Items.getAsync(uncached)
+
+    const batchSize = Math.min(Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10), threshold) // tslint:disable-line:no-magic-numbers
+    const batches = items.reduce((acc, item, index, array) => !(index % batchSize) ? acc.concat([array.slice(index, index + batchSize)]) : acc, [])
+    await Promise.all(batches.map(batch => this.exportItems(translatorID, displayOptions, { items: batch })))
+
+    log.debug('priming cache: done ')
+  }
+
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
     await Zotero.BetterBibTeX.ready
 
@@ -99,7 +154,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     log.debug('Translators.exportItems prepping', { translatorID, displayOptions, path })
 
-    if (!items) items = { library: Zotero.Libraries.userLibraryID }
+    items = this.items(items)
 
     if (items.library) {
       translation.setLibraryID(items.library)
@@ -108,12 +163,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translation.setItems(items.items)
 
     } else if (items.collection) {
-      if (typeof items.collection === 'number') items.collection = Zotero.Collections.get(items.collection)
       translation.setCollection(items.collection)
 
     }
-
-    await this.primeCache(translatorID, displayOptions, items)
 
     translation.setTranslator(translatorID)
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
@@ -218,55 +270,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return true
   }
 
-  public async primeCache(translatorID, displayOptions, scope) {
-    let sql: string
-    let items: any[]
-    let itemIDs: number[]
-
-    let threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
-    const cache = this.byId[translatorID] && Cache.getCollection(this.byId[translatorID].label)
-    const jabrefFormat = Prefs.get('jabrefFormat')
-
-    log.debug('priming cache:', { jabrefFormat, threshold, cache: !!cache, displayOptions })
-    // no caching means priming is useless
-    if (!threshold || !cache || jabrefFormat === 4 || displayOptions.exportFileData) return // tslint:disable-line:no-magic-numbers
-
-    threshold = Math.max(threshold, 10) // tslint:disable-line:no-magic-numbers
-
-    if (scope.library) {
-      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
-
-    } else if (scope.items) {
-      items = scope.items
-      itemIDs = scope.items.map(item => item.id)
-
-    } else if (scope.collection) {
-      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id}`
-    }
-
-    if (sql) itemIDs = (await Zotero.DB.queryAsync(sql)).map(item => item.itemID)
-
-    const query = {
-      exportNotes: !!displayOptions.exportNotes,
-      useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
-    }
-    for (const pref of prefOverrides) {
-      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
-    }
-
-    const cached = new Set(cache.find(query).map(item => item.itemID))
-    const uncached = itemIDs.filter(id => !cached.has(id))
-
-    if (uncached.length < threshold) return
-
-    log.debug('priming cache:', uncached.length, 'uncached items')
-
-    if (!items) items = await Zotero.Items.getAsync(uncached)
-
-    const batchSize = Math.min(Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 10), threshold) // tslint:disable-line:no-magic-numbers
-    const batches = items.reduce((acc, item, index, array) => !(index % batchSize) ? acc.concat([array.slice(index, index + batchSize)]) : acc, [])
-    await Promise.all(batches.map(batch => this.exportItems(translatorID, displayOptions, { items: batch })))
-
-    log.debug('priming cache: done ')
+  private items(items) {
+    if (!items) return { library: Zotero.Libraries.userLibraryID }
+    if (typeof items.collection === 'number') return { collection: Zotero.Collections.get(items.collection) }
+    return items
   }
 }

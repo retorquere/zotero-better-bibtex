@@ -5,7 +5,7 @@ declare const Zotero: any
 import { Reference } from './bibtex/reference'
 import { Exporter } from './lib/exporter'
 import { debug } from './lib/debug'
-import { htmlEscape } from './lib/html-escape'
+import * as escape from '../content/escape'
 
 import JSON5 = require('json5')
 import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
@@ -1230,23 +1230,23 @@ Translator.doImport = async () => {
     for (const err of errors) {
       switch (err.type) {
         case 'cut_off_citation':
-          item.note += `<li>line ${err.line}: ${htmlEscape(`incomplete reference @${err.entry}`)}</li>`
+          item.note += `<li>line ${err.line}: ${escape.html(`incomplete reference @${err.entry}`)}</li>`
           break
         case 'token_mismatch':
-          item.note += `<li>line ${err.line}: found ${htmlEscape(JSON.stringify(err.found))}, expected ${htmlEscape(JSON.stringify(err.expected))}</li>`
+          item.note += `<li>line ${err.line}: found ${escape.html(JSON.stringify(err.found))}, expected ${escape.html(JSON.stringify(err.expected))}</li>`
           break
         case 'undefined_variable':
-          item.note += `<li>line ${err.line}: undefined variable '${htmlEscape(err.variable)}'</li>`
+          item.note += `<li>line ${err.line}: undefined variable '${escape.html(err.variable)}'</li>`
           break
         case 'unknown_type':
-          item.note += `<li>line ${err.line}: unknown reference type '${htmlEscape(err.type_name)}'</li>`
+          item.note += `<li>line ${err.line}: unknown reference type '${escape.html(err.type_name)}'</li>`
           break
         case 'bbt_error':
-          item.note += `<li>Unhandled Better BibTeX error: '${htmlEscape(err.error.toString())}'</li>`
+          item.note += `<li>Unhandled Better BibTeX error: '${escape.html(err.error.toString())}'</li>`
           break
         default:
           if (Translator.preferences.testing) throw new Error('unhandled import error: ' + JSON.stringify(err))
-          item.note += `<li>line ${err.line}: found ${htmlEscape(err.type)}`
+          item.note += `<li>line ${err.line}: found ${escape.html(err.type)}`
           break
       }
     }

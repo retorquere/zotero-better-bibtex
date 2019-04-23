@@ -1,6 +1,5 @@
 {
-  "collections": {
-  },
+  "collections": {},
   "items": [
     {
       "creators": [
@@ -19,8 +18,8 @@
       "extra": "Citation Key: McDermott:72",
       "itemID": 0,
       "itemType": "report",
-      "title": "The CONNIVER Reference Manual",
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "publisher": "MIT Artificial Intelligence Laboratory",
+      "title": "The CONNIVER Reference Manual"
     }
   ]
 }

@@ -5,6 +5,7 @@ declare const Zotero: any
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
 import * as log from './debug'
+import * as escape from './escape'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
 
@@ -34,6 +35,7 @@ class Field {
   public doc: Document
   public code: string
   public text: string
+  public isRich: boolean
   public wrappedJSObject: Field
 
   constructor(doc) {
@@ -66,7 +68,10 @@ class Field {
    * @param {String} text
    * @param {Boolean} isRich
    */
-  public setText(text, isRich) { this.text = text }
+  public setText(text, isRich) {
+    this.text = text
+    this.isRich = isRich
+  }
 
   /**
    * Gets the text inside this field, preferably with formatting, but potentially without
@@ -301,6 +306,27 @@ export async function pick(options) {
   return citation
 }
 
+function toClipboard(text) {
+  const data = {
+    'text/unicode': text,
+    'text/html': escape.html(text),
+    'text/richtext': escape.rtf(text), // I know this is not the correct mimetype but it's the only one that Mozilla accepts for RTF
+  }
+
+  const clipboard = Components.classes['@mozilla.org/widget/clipboard;1'].getService(Components.interfaces.nsIClipboard)
+  const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
+
+  for (const [mimetype, content] of Object.entries(data)) {
+    log.debug('clipboard: adding', { mimetype, content })
+    const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
+    str.data = content
+    transferable.addDataFlavor(mimetype)
+    transferable.setTransferData(mimetype, str, content.length * 2)
+  }
+
+  clipboard.setData(transferable, null, Components.interfaces.nsIClipboard.kGlobalClipboard)
+}
+
 Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public supportedMethods = ['GET']
   public OK = 200
@@ -314,8 +340,6 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     try {
       const citation = await pick(options)
 
-      if (options.clipboard) Zotero.Utilities.Internal.copyTextToClipboard(citation)
-
       if (options.minimize) {
         const wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
         const windows = wm.getEnumerator(null)
@@ -325,8 +349,11 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
         }
       }
 
+      if (options.clipboard) toClipboard(citation)
+
       log.debug('CAYW: sending', citation)
-      return [this.OK, 'text/plain', citation]
+
+      return [this.OK, 'text/html; charset=utf-8', citation]
     } catch (err) {
       return [this.SERVER_ERROR, 'application/text', `CAYW failed: ${err}\n${err.stack}`]
     }

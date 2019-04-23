@@ -1,63 +1,62 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.86-manchineel-1481051947",
+    "options": {
+      "exportFileData": false,
+      "exportFilename": "Exported Items.json",
+      "exportNotes": true,
+      "exportPath": "/Users/emile/Downloads"
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[auth][year]",
       "citekeyFold": true,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
+      "citekeyFormat": "[auth][year]",
       "csquotes": "",
       "keyConflictPolicy": "keep",
+      "postscript": "",
       "preserveBibTeXVariables": false,
+      "qualityReport": true,
+      "quickCopyMode": "citekeys",
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
-      "biblatexExtendedDateFormat": true,
-      "quickCopyMode": "citekeys",
-      "qualityReport": true,
-      "suppressTitleCase": false
+      "suppressTitleCase": false,
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportPath": "/Users/emile/Downloads",
-      "exportFilename": "Exported Items.json",
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.86-manchineel-1481051947"
   },
   "items": [
     {
-      "itemType": "book",
-      "place": "Chicago",
-      "publisher": "University of Chicago Press",
-      "date": "1984",
-      "extra": "Citation Key: Demus1984",
-      "title": "The Mosaics of San Marco in Venice",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Demus",
-          "firstName": "Otto"
+          "firstName": "Otto",
+          "lastName": "Demus"
         }
       ],
+      "date": "1984",
+      "extra": "Citation Key: Demus1984",
+      "itemID": 1182,
+      "itemType": "book",
       "notes": [
         "<p>a &quot;monumental&quot; work on the mosaics of San Marco</p>"
       ],
-      "itemID": 1182
+      "place": "Chicago",
+      "publisher": "University of Chicago Press",
+      "title": "The Mosaics of San Marco in Venice"
     }
   ]
 }

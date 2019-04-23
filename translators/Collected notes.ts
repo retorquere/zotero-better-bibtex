@@ -1,7 +1,7 @@
 declare const Zotero: any
 declare const Translator: ITranslator
 
-import { htmlEscape } from './lib/html-escape'
+import * as escape from '../content/escape'
 
 const html = {
   levels: 0,
@@ -11,7 +11,7 @@ const html = {
 function _collection(collection, level = 1) {
   if (level > html.levels) html.levels = level
 
-  html.body += `<h${ level }>${ htmlEscape(collection.name) }</h${ level }>\n`
+  html.body += `<h${ level }>${ escape.html(collection.name) }</h${ level }>\n`
   for (const item of collection.items) {
     _item(item)
   }
@@ -54,7 +54,7 @@ function _note(note, type) {
   switch (type) {
     case 'extra':
       if (!note) return
-      html.body += `<blockquote><pre>${ htmlEscape(note) }</pre></blockquote>\n`
+      html.body += `<blockquote><pre>${ escape.html(note) }</pre></blockquote>\n`
       break
     case 'attachment':
       if (!note.note) return
@@ -77,7 +77,7 @@ function _reference(item) {
 
   if (item.itemType === 'attachment') {
     if (item.note) notes = [ { note: item.note } ]
-    if (item.title) title = `<samp>${ htmlEscape(item.title) }</samp>`
+    if (item.title) title = `<samp>${ escape.html(item.title) }</samp>`
 
   } else {
     notes = item.notes.filter(note => note.note)
@@ -93,8 +93,8 @@ function _reference(item) {
 
     const author = [creators, date].filter(v => v).join(', ')
 
-    if (item.title) title += `<i>${ htmlEscape(item.title) }</i>`
-    if (author) title += `(${ htmlEscape(author) })`
+    if (item.title) title += `<i>${ escape.html(item.title) }</i>`
+    if (author) title += `(${ escape.html(author) })`
     title = title.trim()
   }
 

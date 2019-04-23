@@ -1,19 +1,11 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.60",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "de",
-        "appName": "Zotero",
-        "appVersion": "5.0.60",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.58"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -39,7 +31,6 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "git": "config",
       "itemObserverDelay": 100,
@@ -185,41 +176,38 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.1.58",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.60",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "de",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.60"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "webpage",
-      "url": "https://golatex.de/wiki/%5Cinput",
       "accessDate": "2019-03-11T07:01:19Z",
-      "title": "<\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
+      "attachments": [],
+      "citekey": "InputWikiGoLaTeX",
       "creators": [],
-      "tags": [],
-      "relations": [],
       "dateAdded": "2019-03-11T07:01:19Z",
       "dateModified": "2019-03-11T07:01:19Z",
-      "uri": "http://zotero.org/users/local/VonvPTGW/items/RZMP88CJ",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2019-03-11T07:01:19Z",
-          "dateModified": "2019-03-11T07:01:19Z",
-          "uri": "http://zotero.org/users/local/VonvPTGW/items/TYX7X2MB"
-        }
-      ],
-      "notes": [],
       "itemID": 65,
-      "citekey": "InputWikiGoLaTeX"
+      "itemType": "webpage",
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "<\\input Wiki .:. goLaTeX - Mein LaTeX-Forum",
+      "uri": "http://zotero.org/users/local/VonvPTGW/items/RZMP88CJ",
+      "url": "https://golatex.de/wiki/%5Cinput"
     }
   ]
 }

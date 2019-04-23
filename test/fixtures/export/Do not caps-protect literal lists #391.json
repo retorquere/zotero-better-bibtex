@@ -1,49 +1,48 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.3",
     "options": {
       "exportFileData": false,
       "exportNotes": true
     },
     "preferences": {
-      "skipFields": "timestamp",
-      "postscript": "",
-      "csquotes": "",
       "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "citekeyFormat": "[title:lower]",
       "bibtexURL": "note",
-      "jabrefFormat": 0
-    }
-  },
-  "collections": {
+      "citekeyFormat": "[title:lower]",
+      "csquotes": "",
+      "jabrefFormat": 0,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "skipFields": "timestamp"
+    },
+    "release": "1.6.3"
   },
   "items": [
     {
+      "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
+      "itemID": 321,
       "itemType": "book",
       "place": "Trinidad and Tobago",
       "publisher": "Miller, Smith and Jones",
-      "extra": "original-publisher-place: Saint Kitts and Nevis\noriginal-publisher: Doe and Company",
-      "title": "Publisher",
-      "itemID": 321
+      "title": "Publisher"
     },
     {
-      "itemType": "report",
       "institution": "Office of Information Management and Communications",
-      "title": "Institution",
       "itemID": 320,
-      "publisher": "Office of Information Management and Communications"
+      "itemType": "report",
+      "publisher": "Office of Information Management and Communications",
+      "title": "Institution"
     },
     {
-      "itemType": "thesis",
-      "university": "University of Saint Kitts and Nevis",
-      "title": "University",
       "itemID": 322,
-      "publisher": "University of Saint Kitts and Nevis"
+      "itemType": "thesis",
+      "publisher": "University of Saint Kitts and Nevis",
+      "title": "University",
+      "university": "University of Saint Kitts and Nevis"
     }
   ]
 }

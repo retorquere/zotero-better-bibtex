@@ -1,66 +1,65 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.2.18",
-    "preferences": {
-      "csquotes": "«»‹›“”",
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
-      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
-      "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": false
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "autoAbbrevStyle": "http://www.zotero.org/styles/nature",
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "csquotes": "\u00ab\u00bb\u2039\u203a\u201c\u201d",
+      "jabrefFormat": 0,
+      "preserveBibTeXVariables": false,
+      "skipFields": "abstract,file,editora,editoratype,editorb,editorbtype",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
+    },
+    "release": "1.2.18"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "issue": "4",
-      "pages": "641–656",
-      "publicationTitle": "Revue française de droit administratif",
-      "date": "2009",
-      "journalAbbreviation": "RFDA",
-      "language": "français",
-      "title": "Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de « notion fonctionnelle »",
-      "shortTitle": "Critique d'une métanotion fonctionnelle",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Tusseau",
-          "firstName": "Guillaume"
+          "firstName": "Guillaume",
+          "lastName": "Tusseau"
         }
       ],
-      "itemID": 2235
+      "date": "2009",
+      "issue": "4",
+      "itemID": 2235,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "RFDA",
+      "language": "fran\u00e7ais",
+      "pages": "641\u2013656",
+      "publicationTitle": "Revue fran\u00e7aise de droit administratif",
+      "shortTitle": "Critique d'une m\u00e9tanotion fonctionnelle",
+      "title": "Critique d'une m\u00e9tanotion fonctionnelle. La notion (trop) fonctionnelle de \u00ab notion fonctionnelle \u00bb"
     },
     {
-      "itemType": "journalArticle",
-      "volume": "73",
-      "issue": "1",
-      "pages": "43–58",
-      "publicationTitle": "The Philosophical Review",
-      "ISSN": "00318108",
-      "date": "1964",
       "DOI": "10.2307/2183201",
-      "libraryCatalog": "CrossRef",
-      "language": "en",
-      "title": "How to derive \"Ought\" from \"Is\"",
+      "ISSN": "00318108",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Searle",
-          "firstName": "John R."
+          "firstName": "John R.",
+          "lastName": "Searle"
         }
       ],
-      "itemID": 1663
+      "date": "1964",
+      "issue": "1",
+      "itemID": 1663,
+      "itemType": "journalArticle",
+      "language": "en",
+      "libraryCatalog": "CrossRef",
+      "pages": "43\u201358",
+      "publicationTitle": "The Philosophical Review",
+      "title": "How to derive \"Ought\" from \"Is\"",
+      "volume": "73"
     }
   ]
 }

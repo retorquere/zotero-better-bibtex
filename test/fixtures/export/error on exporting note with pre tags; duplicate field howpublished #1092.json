@@ -1,9 +1,7 @@
 {
   "collections": {
     "3B923GRM": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 27,
       "items": [
         978,
@@ -22,17 +20,13 @@
         "R2BUSAI2"
       ],
       "id": 29,
-      "items": [
-
-      ],
+      "items": [],
       "key": "3MDFQEB8",
       "name": "other technology",
       "parent": false
     },
     "3XT3T783": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 19,
       "items": [
         630
@@ -42,9 +36,7 @@
       "parent": false
     },
     "4NMU8E3G": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 14,
       "items": [
         93,
@@ -95,9 +87,7 @@
       "parent": false
     },
     "4VVUWQIR": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 17,
       "items": [
         95,
@@ -134,9 +124,7 @@
       "parent": false
     },
     "ARXFFMRM": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 24,
       "items": [
         367,
@@ -158,9 +146,7 @@
       "parent": "3MDFQEB8"
     },
     "F8HSU6NK": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 21,
       "items": [
         101,
@@ -220,9 +206,7 @@
       "parent": false
     },
     "IQ8QIWCI": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 13,
       "items": [
         153,
@@ -309,9 +293,7 @@
       "parent": false
     },
     "MS3GR9C4": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 10,
       "items": [
         90,
@@ -325,9 +307,7 @@
       "parent": false
     },
     "R2BUSAI2": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 30,
       "items": [
         1000,
@@ -388,9 +368,7 @@
       "parent": "3MDFQEB8"
     },
     "XXI5SWPK": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 15,
       "items": [
         101,
@@ -437,9 +415,7 @@
       "parent": false
     },
     "ZAVDMTJP": {
-      "collections": [
-
-      ],
+      "collections": [],
       "id": 23,
       "items": [
         147,
@@ -483,7 +459,6 @@
       "citekeyFormat": "[auth:lower][shorttitle3_3][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": false,
       "debugLog": "",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
@@ -500,9 +475,7 @@
       "rawLaTag": "#LaTeX",
       "relativeFilePaths": false,
       "scrubDatabase": false,
-      "skipFields": [
-
-      ],
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -630,7 +603,6 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
     "release": {
@@ -649,21 +621,7 @@
   },
   "items": [
     {
-      "attachments": [
-        {
-          "dateAdded": "2016-10-05T13:46:46Z",
-          "dateModified": "2016-10-05T13:53:03Z",
-          "itemType": "attachment",
-          "relations": [
-
-          ],
-          "tags": [
-
-          ],
-          "title": "Snapshot",
-          "uri": "http://zotero.org/groups/570438/items/FKWR3PMV"
-        }
-      ],
+      "attachments": [],
       "citekey": "blantonConservativeLossRecovery2012",
       "creators": [
         {
@@ -708,47 +666,33 @@
       ],
       "number": "6675",
       "publisher": "RFC Editor",
-      "relations": [
-
-      ],
-      "tags": [
-
-      ],
+      "relations": [],
+      "tags": [],
       "title": "A Conservative Loss Recovery Algorithm Based on Selective Acknowledgment (SACK) for TCP",
       "type": "RFC",
       "uri": "http://zotero.org/groups/570438/items/VWZTQS8X",
       "url": "https://tools.ietf.org/html/rfc6675"
     },
     {
-      "itemType": "computerProgram",
-      "url": "https://github.com/sctplab/usrsctp",
-      "date": "2018-11-22T07:13:38Z",
-      "extra": "original-date: 2015-07-19T10:51:48Z",
       "accessDate": "2018-11-24T14:37:15Z",
-      "libraryCatalog": "GitHub",
-      "programmingLanguage": "C",
-      "title": "A portable SCTP userland stack. Contribute to sctplab/usrsctp development by creating an account on GitHub",
-      "creators": [
-
-      ],
-      "tags": [
-
-      ],
-      "relations": [
-
-      ],
+      "attachments": [],
+      "citekey": "PortableSCTPUserland2018",
+      "creators": [],
+      "date": "2018-11-22T07:13:38Z",
       "dateAdded": "2018-11-24T14:37:15Z",
       "dateModified": "2018-11-24T14:38:06Z",
-      "uri": "http://zotero.org/groups/570438/items/VEG5S3LG",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "original-date: 2015-07-19T10:51:48Z",
       "itemID": 1244,
-      "citekey": "PortableSCTPUserland2018",
-      "publisher": "sctplab"
+      "itemType": "computerProgram",
+      "libraryCatalog": "GitHub",
+      "notes": [],
+      "programmingLanguage": "C",
+      "publisher": "sctplab",
+      "relations": [],
+      "tags": [],
+      "title": "A portable SCTP userland stack. Contribute to sctplab/usrsctp development by creating an account on GitHub",
+      "uri": "http://zotero.org/groups/570438/items/VEG5S3LG",
+      "url": "https://github.com/sctplab/usrsctp"
     }
   ]
 }

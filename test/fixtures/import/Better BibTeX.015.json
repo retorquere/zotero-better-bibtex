@@ -1,12 +1,12 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
   "items": [
     {
-      "itemType": "bookSection",
-      "publisher": "John Wiley & Sons",
-      "pages": "125-143",
-      "date": "2007",
-      "extra": "Citation Key: robinson2007theoriesglobalization \nbibtex*[collaborator=Ritzer, George]",
-      "title": "Theories of globalization",
+      "attachments": [],
       "creators": [
         {
           "creatorType": "author",
@@ -14,23 +14,20 @@
           "lastName": "Robinson"
         }
       ],
+      "date": "2007",
+      "extra": "Citation Key: robinson2007theoriesglobalization \nbibtex*[collaborator=Ritzer, George]",
+      "itemID": 0,
+      "itemType": "bookSection",
       "notes": [
         "<p>Extracted Annotations (zondag 17 november 2013 15:45:35) &quot;What is the relationship between globalization and the nation-state? Is the nation-state being undermined?&quot; (Robinson 2007:127) Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured? (note on p.127) &quot;Relatedly, to what extent is the relationship between social structure and territoriality being redefined by globalization? Is there a deterritorialization of social&quot; (Robinson 2007:127) &quot;relations under globalization? What is the relationship between the local and the global? How are space and time being reconfigured?&quot; (Robinson 2007:128) &quot;THE NETWORK SOCIETY Manuel Castells&apos; groundbreaking trilogy, The Rise of the Network Society (1996, 1997, 1998), exemplifies a &apos;technologistic&apos; approach to globalization&quot; (Robinson 2007:132) &quot;&apos;communication decisively shapes culture because we do not see . . . reality as it &apos;is&apos; but as our languages are&apos;. He adds, &apos;we are not living in a global village, but in customized cottages, globally produced and locally distributed&apos; (1996: 370).&quot; (Robinson 2007:133)</p>"
       ],
-      "attachments": [
-
-      ],
+      "pages": "125-143",
+      "publicationTitle": "The Blackwell companion to globalization",
+      "publisher": "John Wiley & Sons",
       "tags": [
         "orphaned"
       ],
-      "itemID": 0,
-      "publicationTitle": "The Blackwell companion to globalization"
+      "title": "Theories of globalization"
     }
-  ],
-  "config": {
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
-  },
-  "collections": {
-  }
+  ]
 }

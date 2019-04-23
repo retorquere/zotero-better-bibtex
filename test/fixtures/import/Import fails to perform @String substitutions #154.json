@@ -1,33 +1,31 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.7.27",
-    "preferences": {
-    },
     "options": {
+      "Export Collections": true,
       "exportFileData": false,
-      "exportNotes": true,
-      "Export Collections": true
-    }
-  },
-  "collections": {
+      "exportNotes": true
+    },
+    "preferences": {},
+    "release": "0.7.27"
   },
   "items": [
     {
-      "itemID": 1,
-      "itemType": "book",
-      "place": "London, UK",
-      "publisher": "Freds Publishing",
-      "extra": "Citation Key: Bert:2001:SQL",
-      "title": "SQL is great",
       "creators": [
         {
           "creatorType": "author",
           "firstName": "R. A.",
           "lastName": "Bert"
         }
-      ]
+      ],
+      "extra": "Citation Key: Bert:2001:SQL",
+      "itemID": 1,
+      "itemType": "book",
+      "place": "London, UK",
+      "publisher": "Freds Publishing",
+      "title": "SQL is great"
     }
   ]
 }

@@ -1,46 +1,45 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.53",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "de",
-        "appName": "Zotero",
-        "appVersion": "5.0.53",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.179"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "preserveBibTeXVariables": false,
-      "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "autoPin": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": true,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
+      "debugLog": "",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -165,243 +164,193 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": true,
-      "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false,
-      "autoPin": false,
-      "kuroshiro": false,
       "sorted": false,
-      "debugLog": ""
+      "strings": "",
+      "suppressTitleCase": false,
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.179",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.53",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "de",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.53"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "1 O<sub>abcde</sub>",
-      "extra": "bibtex: ref1",
+      "attachments": [],
+      "citekey": "Name2018",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:37:17Z",
       "dateModified": "2018-07-21T14:43:18Z",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref1",
       "itemID": 466,
-      "citekey": "Name2018"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "1 O<sub>abcde</sub>",
+      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "2 O<sub>abcde</sub> test",
-      "extra": "bibtex: ref2",
+      "attachments": [],
+      "citekey": "Name2018a",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:37:59Z",
       "dateModified": "2018-07-21T14:43:23Z",
-      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref2",
       "itemID": 467,
-      "citekey": "Name2018a"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "2 O<sub>abcde</sub> test",
+      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
-      "extra": "bibtex: ref3",
+      "attachments": [],
+      "citekey": "Name2018b",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:51:35Z",
       "dateModified": "2018-07-21T14:51:44Z",
-      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref3",
       "itemID": 469,
-      "citekey": "Name2018b"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "<span class=\"nocase\">O<sub>abcde</sub></span>",
+      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "O<sub>x</sub>",
-      "extra": "bibtex: ref4",
+      "attachments": [],
+      "citekey": "Name2018",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:37:17Z",
       "dateModified": "2018-07-21T15:55:46Z",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref4",
       "itemID": 466,
-      "citekey": "Name2018"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "O<sub>x</sub>",
+      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "O<sub>x</sub> test",
-      "extra": "bibtex: ref5",
+      "attachments": [],
+      "citekey": "Name2018a",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:37:59Z",
       "dateModified": "2018-07-21T15:55:51Z",
-      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref5",
       "itemID": 467,
-      "citekey": "Name2018a"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "O<sub>x</sub> test",
+      "uri": "http://zotero.org/users/3130622/items/KEKAYD3E"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "<span class=\"nocase\">O<sub>x</sub></span>",
-      "extra": "bibtex: ref6",
+      "attachments": [],
+      "citekey": "Name2018b",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:51:35Z",
       "dateModified": "2018-07-21T15:55:43Z",
-      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref6",
       "itemID": 469,
-      "citekey": "Name2018b"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "<span class=\"nocase\">O<sub>x</sub></span>",
+      "uri": "http://zotero.org/users/3130622/items/ANY3YQYC"
     },
     {
-      "itemType": "journalArticle",
+      "attachments": [],
+      "citekey": "Name2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Name",
+          "lastName": "Name"
+        }
+      ],
       "date": "2018",
-      "title": "O<sub>7-x</sub>",
+      "dateAdded": "2018-07-21T14:37:17Z",
+      "dateModified": "2018-07-21T14:37:52Z",
       "extra": "bibtex: ref7",
-      "creators": [
-        {
-          "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [
-
-      ],
-      "dateAdded": "2018-07-21T14:37:17Z",
-      "dateModified": "2018-07-21T14:37:52Z",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 466,
-      "citekey": "Name2018"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "O<sub>7-x</sub>",
+      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     },
     {
-      "itemType": "journalArticle",
-      "date": "2018",
-      "title": "O<sub>7-x</sub> test",
-      "extra": "bibtex: ref8",
+      "attachments": [],
+      "citekey": "Name2018",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Name",
-          "lastName": "Name",
-          "creatorType": "author"
+          "lastName": "Name"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2018",
       "dateAdded": "2018-07-21T14:37:17Z",
       "dateModified": "2018-07-21T14:37:52Z",
-      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "extra": "bibtex: ref8",
       "itemID": 466,
-      "citekey": "Name2018"
+      "itemType": "journalArticle",
+      "notes": [],
+      "tags": [],
+      "title": "O<sub>7-x</sub> test",
+      "uri": "http://zotero.org/users/3130622/items/ILFCPBUM"
     }
   ]
 }

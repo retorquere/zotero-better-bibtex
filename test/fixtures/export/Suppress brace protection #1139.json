@@ -1,23 +1,15 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.60",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.60",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.58.3534"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
-      "ascii": "“”‘’",
+      "ascii": "\u201c\u201d\u2018\u2019",
       "asciiBibLaTeX": false,
       "asciiBibTeX": false,
       "autoAbbrev": false,
@@ -38,8 +30,7 @@
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
-      "csquotes": "“”‘’",
-      "debug": false,
+      "csquotes": "\u201c\u201d\u2018\u2019",
       "debugLog": "",
       "git": "config",
       "itemObserverDelay": 100,
@@ -193,54 +184,51 @@
       "strings": "",
       "suppressBraceProtection": true,
       "suppressTitleCase": false,
-      "testing": false,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.1.58.3534",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.60",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.60"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "book",
-      "edition": "1 edition",
-      "place": "London ; New York",
-      "publisher": "Routledge",
       "ISBN": "978-0-415-78025-4",
-      "date": "December 15, 2011",
-      "libraryCatalog": "Amazon",
-      "language": "English",
       "abstractNote": "The Anthropology of Islam Reader brings together a rich variety of ethnographic work, offering an insight into various forms of Islam as practiced in different geographic, social, and cultural contexts. Topics explored include Ramadan and the Hajj, the Feast of Sacrifice, and the representation of Islam. An extensive introduction and bibliography helps students develop their understanding of the variety of methodological and theoretical approaches involved in the anthropological study of Islam. In his selections, Jens Kreinath highlights the diversity of practices and themes that were formative for this field of study, making this essential reading for students of Islam at undergraduate and graduate level.",
-      "title": "The Anthropology of Islam Reader",
-      "numPages": "432",
+      "attachments": [],
+      "citekey": "Kreinath2011",
       "creators": [
         {
+          "creatorType": "editor",
           "firstName": "Jens",
-          "lastName": "Kreinath",
-          "creatorType": "editor"
+          "lastName": "Kreinath"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "December 15, 2011",
       "dateAdded": "2019-02-25T21:27:12Z",
       "dateModified": "2019-02-25T21:27:12Z",
-      "uri": "http://zotero.org/users/local/t1ouTzvw/items/56NQ79SG",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "Amazon.com Link",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2019-02-25T21:27:12Z",
-          "dateModified": "2019-02-25T21:27:12Z",
-          "uri": "http://zotero.org/users/local/t1ouTzvw/items/IF3WAV4A"
-        }
-      ],
-      "notes": [],
+      "edition": "1 edition",
       "itemID": 21,
-      "citekey": "Kreinath2011"
+      "itemType": "book",
+      "language": "English",
+      "libraryCatalog": "Amazon",
+      "notes": [],
+      "numPages": "432",
+      "place": "London ; New York",
+      "publisher": "Routledge",
+      "relations": [],
+      "tags": [],
+      "title": "The Anthropology of Islam Reader",
+      "uri": "http://zotero.org/users/local/t1ouTzvw/items/56NQ79SG"
     }
   ]
 }
