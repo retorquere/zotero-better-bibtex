@@ -264,7 +264,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       useJournalAbbreviation: !!displayOptions.useJournalAbbreviation,
     }
     for (const pref of prefOverrides) {
-      query[pref] = typeof displayOptions[pref] !== 'undefined' ? displayOptions[pref] : Prefs.get(pref)
+      query[pref] = typeof displayOptions[`preference_${pref}`] !== 'undefined' ? displayOptions[`preference_${pref}`] : Prefs.get(pref)
     }
     log.debug('Translators.uncached:', { prefOverrides, displayOptions, query })
     const cached = new Set(cache.find(query).map(item => item.itemID))
