@@ -44,7 +44,8 @@ def step_impl(context, translator, output, expected):
     displayOptions = { **context.displayOptions, 'keepUpdated': True},
     translator = translator,
     output = output,
-    expected = expected
+    expected = expected,
+    resetCache = True
   )
 
 @then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match "{expected}"')
@@ -54,7 +55,8 @@ def step_impl(context, translator, collection, output, expected):
     translator = translator,
     collection = collection,
     output = output,
-    expected = expected
+    expected = expected,
+    resetCache = True
   )
 
 @step('an export using "{translator}" with {displayOption} on should match "{expected}"')
