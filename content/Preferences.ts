@@ -31,10 +31,6 @@ class AutoExportPane {
     this.refresh()
   }
 
-  public cacheReset() {
-    Cache.reset()
-  }
-
   public refresh() {
     if (Zotero.BetterBibTeX.ready.isPending()) return null
 
@@ -311,6 +307,10 @@ export = new class PrefPane {
     log.debug('starting manual key rescan')
     await KeyManager.rescan()
     log.debug('manual key rescan done')
+  }
+
+  public cacheReset() {
+    Cache.reset()
   }
 
   public load() {
