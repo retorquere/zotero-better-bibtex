@@ -13,12 +13,29 @@ const prefOverrides = require('../../gen/preferences/auto-export-overrides.json'
 const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
 
 class Cache extends Loki {
+  private initialized = false
+
   public remove(ids, reason) {
+    if (!this.initialized) {
+      log.debug('Cache.remove', reason, 'skipped, not initialized')
+      return
+    }
+
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
 
     for (const coll of this.collections) {
       log.debug(coll.name, 'remove:', reason, query)
       coll.findAndRemove(query)
+    }
+  }
+
+  public reset() {
+    if (!this.initialized) {
+      log.debug('Cache.reset skipped, not initialized')
+      return
+    }
+    for (const coll of this.collections) {
+      coll.removeDataOnly()
     }
   }
 
@@ -100,6 +117,8 @@ class Cache extends Loki {
 
       clearOnUpgrade(coll, 'BetterBibTeX', version)
     }
+
+    this.initialized = true
   }
 }
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -134,11 +153,7 @@ function clearOnUpgrade(coll, property, current) {
 // the preferences influence the output way too much, no keeping track of that
 Events.on('preference-changed', async () => {
   await Zotero.BetterBibTeX.loaded
-
-  for (const translator of Object.keys(translators.byName)) {
-    log.debug('DB Event: drop', translator)
-    DB.getCollection(translator).removeDataOnly()
-  }
+  DB.reset()
 })
 
 // cleanup
