@@ -26,7 +26,9 @@ if action not in ['stash', 'fetch', 'pop']:
 generated = [
   'gen/translators.json',
   'gen/preferences/defaults.json',
+  'gen/update.rdf',
 ]
+generated = [ f for f in generated if os.path.exists(f) ]
 
 expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=7)
 
