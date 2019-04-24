@@ -330,8 +330,10 @@ Translator.doExport = () => {
     // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
-    ref.add({ name: 'url', value: item.url })
-    ref.add({ name: 'doi', value: item.DOI })
+
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !item.DOI) ref.add({ name: 'url', value: item.url })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !item.url) ref.add({ name: 'doi', value: item.DOI })
+
     ref.add({ name: 'shorttitle', value: item.shortTitle })
     ref.add({ name: 'abstract', value: item.abstractNote })
     ref.add({ name: 'volumes', value: item.numberOfVolumes })
