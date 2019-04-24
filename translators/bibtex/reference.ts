@@ -515,16 +515,6 @@ export class Reference {
   }
 
   public complete() {
-    if (Translator.preferences.DOIandURL !== 'both') {
-      if (this.has.doi && this.has.url) {
-        debug('removing', Translator.preferences.DOIandURL === 'doi' ? 'url' : 'doi')
-        switch (Translator.preferences.DOIandURL) {
-          case 'doi': this.remove('url'); break
-          case 'url': this.remove('doi'); break
-        }
-      }
-    }
-
     if ((this.item.collections || []).length && Translator.preferences.jabrefFormat === 4) { // tslint:disable-line:no-magic-numbers
       let groups = this.item.collections.filter(key => Translator.collections[key]).map(key => Translator.collections[key].name)
       groups = groups.sort().filter((item, pos, ary) => !pos || (item !== ary[pos - 1]))
