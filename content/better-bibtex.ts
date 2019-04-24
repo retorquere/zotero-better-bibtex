@@ -270,11 +270,11 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       cached.reference = reference
       cached.metadata = metadata
       cached = collection.update(cached)
-      log.debug('cacheStore: update', collection.name, cached)
+      log.debug('cacheStore: update', collection.name, selector, cached)
 
     } else {
       cached = collection.insert({...selector, reference, metadata})
-      log.debug('cacheStore: insert', collection.name, cached)
+      log.debug('cacheStore: insert', collection.name, selector, cached)
 
     }
 
