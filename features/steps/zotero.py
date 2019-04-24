@@ -183,7 +183,7 @@ class Preferences:
 
     return value
 
-def export_library(translator, displayOptions = {}, collection = None, output = None, expected = None):
+def export_library(translator, displayOptions = {}, collection = None, output = None, expected = None, resetCache = False):
   assert not displayOptions.get('keepUpdated', False) or output # Auto-export needs a destination
 
   if translator.startswith('id:'):
@@ -197,6 +197,7 @@ def export_library(translator, displayOptions = {}, collection = None, output = 
     path=output,
     collection=collection
   )
+  if resetCache: execute('Zotero.BetterBibTeX.TestSupport.resetCache()')
 
   if expected is None: return
 
