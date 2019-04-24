@@ -31,6 +31,10 @@ class AutoExportPane {
     this.refresh()
   }
 
+  public cacheReset() {
+    Cache.reset()
+  }
+
   public refresh() {
     if (Zotero.BetterBibTeX.ready.isPending()) return null
 
