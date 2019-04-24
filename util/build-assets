@@ -11,8 +11,8 @@ import datetime
 
 from github3 import login
 
-name_prefix = f'travis-{os.environ["TRAVIS_BUILD_ID"]}-'
-label_prefix = f'/travis/{os.environ["TRAVIS_BUILD_ID"]}/'
+name_prefix = f'travis-{os.environ["TRAVIS_BUILD_NUMBER"]}-'
+label_prefix = f'/travis/{os.environ["TRAVIS_BUILD_NUMBER"]}/'
 
 gh = login(token=os.getenv('GITHUB_TOKEN'))
 repo = repo = gh.repository("retorquere", "zotero-better-bibtex")
