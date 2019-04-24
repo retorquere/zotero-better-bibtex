@@ -12,11 +12,14 @@ import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
+import { DB as Cache } from './db/cache'
 
 const pref_defaults = require('../gen/preferences/defaults.json')
 
 export = Prefs.get('testing') && {
   async reset() {
+    Cache.reset()
+
     let collections
     log.debug('TestSupport.reset: start')
     const prefix = 'translators.better-bibtex.'
@@ -195,5 +198,9 @@ export = Prefs.get('testing') && {
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${action}`)
       }
     }
+  },
+
+  resetCache() {
+    Cache.reset()
   },
 }
