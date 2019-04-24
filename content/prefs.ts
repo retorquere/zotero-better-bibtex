@@ -11,9 +11,9 @@ supported.push('removeStock')
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
+  public testing: boolean
 
   private prefix = 'translators.better-bibtex'
-  private testing: boolean
 
   constructor() {
     this.testing = Zotero.Prefs.get(this.key('testing'))
@@ -45,6 +45,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   }
 
   public set(pref, value) {
+    if (pref === 'testing' && !value) throw new Error(`Unsupported preference "${pref}"`)
     if (this.testing && !supported.includes(pref)) throw new Error(`Unsupported preference "${pref}"`)
     log.debug('Prefs.set', pref, value)
     Zotero.Prefs.set(this.key(pref), value)

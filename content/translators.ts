@@ -38,7 +38,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (reinit) {
       log.debug('Translators.init: reinit translators...')
 
-      if (!Prefs.get('testing')) {
+      if (!Prefs.testing) {
         const ps = Services.prompt
         const index = ps.confirmEx(
           null, // parent
@@ -89,7 +89,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public async primeCache(translatorID: string, displayOptions: any, scope: any) {
-    const minimum = Prefs.get('testing') ? 1 : 10 // tslint:disable-line:no-magic-numbers
+    const minimum = Prefs.testing ? 1 : 10 // tslint:disable-line:no-magic-numbers
 
     scope = this.items(scope)
 
@@ -132,7 +132,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     uncached = await this.uncached(translatorID, displayOptions, scope)
     log.debug('priming cache: done,', uncached.length, 'items left uncached')
-    if (Prefs.get('testing') && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
+    if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {

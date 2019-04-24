@@ -197,7 +197,6 @@ with dump('gen/preferences/preferences.json') as save:
 
 with dump('gen/preferences/defaults.json', 'build/defaults/preferences/defaults.js') as save:
   defaults = {
-    'debug': False,
     'rawLaTag': '#LaTeX',
     'testing': False,
   }

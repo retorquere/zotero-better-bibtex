@@ -7,7 +7,6 @@ import { timeout } from './timeout'
 import * as ZoteroDB from './db/zotero'
 import * as log from './debug'
 import { KeyManager } from './key-manager'
-import { Preferences as Prefs } from './prefs'
 import { Translators } from './translators'
 import { Formatter as CAYWFormatter } from './cayw/formatter'
 import { getItemsAsync } from './get-items-async'
@@ -16,19 +15,18 @@ import { DB as Cache } from './db/cache'
 
 const pref_defaults = require('../gen/preferences/defaults.json')
 
-export = Prefs.get('testing') && {
-  async reset() {
+export = new class {
+  public async reset() {
     Cache.reset()
 
     let collections
     log.debug('TestSupport.reset: start')
     const prefix = 'translators.better-bibtex.'
     for (const [pref, value] of Object.entries(pref_defaults)) {
-      if (['debug', 'testing'].includes(pref)) continue
+      if (pref === 'testing') continue
       Zotero.Prefs.set(prefix + pref, value)
     }
 
-    Zotero.Prefs.set(prefix + 'debug', true)
     Zotero.Prefs.set(prefix + 'testing', true)
     log.debug('TestSupport.reset: preferences reset')
 
@@ -58,9 +56,9 @@ export = Prefs.get('testing') && {
 
     items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, false, true, true)
     if (items.length !== 0) throw new Error('library not empty after reset')
-  },
+  }
 
-  async importFile(source, createNewCollection, preferences) {
+  public async importFile(source, createNewCollection, preferences) {
     preferences = preferences || {}
 
     if (Object.keys(preferences).length) {
@@ -97,9 +95,9 @@ export = Prefs.get('testing') && {
 
     log.debug(`import found ${after - before} items`)
     return (after - before)
-  },
+  }
 
-  async exportLibrary(translatorID, displayOptions, path, collection) {
+  public async exportLibrary(translatorID, displayOptions, path, collection) {
     let items
     log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
     if (collection) {
@@ -114,9 +112,9 @@ export = Prefs.get('testing') && {
       items = null
     }
     return await Translators.exportItems(translatorID, displayOptions, items, path)
-  },
+  }
 
-  async select(field, value) {
+  public async select(field, value) {
     const s = new Zotero.Search()
     s.addCondition('field', 'is', value) // field not used?
     const ids = await s.search()
@@ -144,26 +142,26 @@ export = Prefs.get('testing') && {
       log.debug(`select: expected ${id}, got ${selected}`)
     }
     throw new Error(`failed to select ${id}`)
-  },
+  }
 
-  async find(title) {
+  public async find(title) {
     const s = new Zotero.Search()
     s.addCondition('field', 'is', title) // field not used?
     const ids = await s.search()
     if (!ids || ids.length !== 1) throw new Error(`No item found with title '${title}'`)
 
     return ids[0]
-  },
+  }
 
-  async pick(format, citations) {
+  public async pick(format, citations) {
     for (const citation of citations) {
       citation.citekey = KeyManager.get(citation.id).citekey
       citation.uri = Zotero.URI.getItemURI(await getItemsAsync(citation.id))
     }
     return await CAYWFormatter[format](citations, {})
-  },
+  }
 
-  async pinCiteKey(itemID, action) {
+  public async pinCiteKey(itemID, action) {
     let ids
     if (typeof itemID === 'number') {
       ids = [itemID]
@@ -198,9 +196,9 @@ export = Prefs.get('testing') && {
           throw new Error(`TestSupport.pinCiteKey: unsupported action ${action}`)
       }
     }
-  },
+  }
 
-  resetCache() {
+  public resetCache() {
     Cache.reset()
-  },
+  }
 }

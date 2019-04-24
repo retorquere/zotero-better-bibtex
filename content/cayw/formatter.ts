@@ -153,7 +153,6 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     if (!odfScan) throw new Error('scannable-cite needs the "RTF/ODF Scan for Zotero" plugin to be installed')
 
     log.debug('scannable-cite:', citations)
-    const testing = Prefs.get('testing')
     const items = await getItemsAsync(citations.map(picked => picked.id))
     const labels = (await Translators.exportItems('248bebf1-46ab-4067-9f93-ec3d2960d0cd', null, { items })).split(/[{}]+/).filter(cite => cite).reduce((result, item) => {
       const [ , text, , , id ] = item.split('|').map(v => v.trim())
@@ -176,7 +175,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
         `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
         item.locator ? `${shortLabel[item.label] || item.label} ${item.locator}` : '',
         item.suffix || '',
-        testing ? 'zu:0:ITEMKEY' : id,
+        Prefs.testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ').replace(/ +/g, ' ')
 
       citation += `{ ${enriched.trim()} }`
