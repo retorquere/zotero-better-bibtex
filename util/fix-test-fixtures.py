@@ -4,12 +4,13 @@ import json
 import os
 import glob
 import re
+from munch import *
 
 class Fixer:
   def __init__(self):
     self.root = os.path.join(os.path.dirname(__file__), '..')
-    self.supported = list(self.load(os.path.join(self.root, 'gen/preferences/preferences.json')).keys())
-    self.supported.append('rawLaTag')
+    self.supported = munchify(self.load(os.path.join(self.root, 'gen/preferences/preferences.json')))
+    self.supported.rawLaTag = Munch(default='#LaTeX')
 
   def load(self, f):
     with open(f) as _f:
@@ -31,23 +32,27 @@ class Fixer:
     if not isinstance(data, dict):
       print(f'{lib} is not a dict')
       return
+    data = munchify(data)
 
     resave = None
 
-    if 'config' in data and 'preferences' in data['config'] and 'jabrefGroups' in data['config']['preferences']:
-      data['config']['preferences']['jabrefFormat'] = data['config']['preferences']['jabrefGroups']
+    if data.get('config', {}).get('preferences', None) and 'jabrefGroups' in data.config.preferences:
+      data.config.preferences.jabrefFormat = data.config.preferences.jabrefGroups
+      resave = 'jabrefGroups'
 
-    try:
-      for key in list(data['config']['preferences'].keys()):
-        if key in self.supported: continue
-        del data['config']['preferences'][key] 
-        resave = key
-    except KeyError:
-      pass
+    if data.get('config', {}).get('preferences', None) and 'preserveBibTeXVariables' in data.config.preferences:
+      data.config.preferences.exportBibTeXStrings = 'detect' if data.config.preferences.preserveBibTeXVariables else 'off'
+      resave = 'preserveBibTeXVariables'
+
+    for key in list(data.get('config', {}).get('preferences', {}).keys()): # list, otherwise python complains the dict changes during iteration
+      value = data.config.preferences[key]
+      if key in self.supported: continue
+      del data['config']['preferences'][key] 
+      resave = key
 
     if '/export/' in lib:
       try:
-        for key in list(data['config']['options'].keys()):
+        for key in list(data.config.get('options', {}).keys()):
           if key in ['exportPath']:
             del data['config']['options'][key]
             resave = key
@@ -66,8 +71,8 @@ class Fixer:
       if '/export/' in lib and len(attachments) != 0:
         attachments = [att for att in attachments if valid_att(att)]
 
-        if attachments != item['attachments']:
-          item['attachments'] = attachments
+        if attachments != item.attachments:
+          item.attachments = attachments
           resave = 'attachments'
 
     if not resave: return

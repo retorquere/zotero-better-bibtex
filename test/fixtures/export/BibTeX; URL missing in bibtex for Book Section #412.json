@@ -14,9 +14,9 @@
       "bibtexURL": "note",
       "citekeyFormat": "[authorsAlpha:lower][year]",
       "csquotes": "",
+      "exportBibTeXStrings": "off",
       "jabrefFormat": 0,
       "postscript": "",
-      "preserveBibTeXVariables": false,
       "skipFields": "abstract, keywords, shorttitle, issn, copyright, timestamp, language, urldate"
     },
     "release": "1.6.15"
