@@ -13,7 +13,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
   public byName: any
   public byLabel: any
-  public itemType = { note: Zotero.ItemTypes.getID('note'), attachment: Zotero.ItemTypes.getID('attachment') }
+  public itemType: { note: number, attachment: number }
 
   constructor() {
     Object.assign(this, require('../gen/translators.json'))
@@ -21,6 +21,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
   public async init() {
     const start = (new Date()).valueOf()
+
+    this.itemType = { note: Zotero.ItemTypes.getID('note'), attachment: Zotero.ItemTypes.getID('attachment') }
 
     let reinit = false
 

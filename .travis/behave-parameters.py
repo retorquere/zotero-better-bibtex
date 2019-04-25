@@ -10,6 +10,5 @@ if nightly:
   tags = os.environ['TAGS']
   print(f'--define timeout=300', end=' ')
 else:
-  print(f'--define timeout=120', end=' ')
   tags = os.environ['TAGS'] + ' and not @nightly'
 print(f'--tags={shlex.quote(tags)}')
