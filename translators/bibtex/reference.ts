@@ -674,12 +674,12 @@ export class Reference {
 
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
-          this.referencetype = field.value
-          continue
+        this.referencetype = field.value
+        continue
       }
 
-      debug('extraFields: bibtex')
-      this.override(field)
+      debug('extraFields: bibtex', field)
+      this.override({...field, bibtexStrings: Translator.preferences.exportBibTeXStrings === 'match'})
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
