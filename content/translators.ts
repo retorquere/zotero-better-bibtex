@@ -13,7 +13,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
   public byName: any
   public byLabel: any
-  public itemType: { note: number, attachment: number } = { Zotero.ItemTypes.getID('note'), Zotero.ItemTypes.getID('attachment') }
+  public itemType = { note: Zotero.ItemTypes.getID('note'), attachment: Zotero.ItemTypes.getID('attachment') }
 
   constructor() {
     Object.assign(this, require('../gen/translators.json'))
