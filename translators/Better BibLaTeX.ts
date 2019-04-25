@@ -449,7 +449,7 @@ Translator.doExport = () => {
         break
 
       default:
-        ref.add({ name: 'publisher', value: item.publisher })
+        ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     debug('adding type:', {item_type: item.type || '', item_referenceType: item.referenceType, referencetype: this.referencetype})

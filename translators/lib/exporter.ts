@@ -31,9 +31,11 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       }).strings
     }
 
+    /*
     if (Translator.preferences.exportBibTeXStrings !== 'off') {
       Zotero.write(`${Translator.preferences.strings}\n\n`)
     }
+    */
   }
 
   public unique_chars(str) {
