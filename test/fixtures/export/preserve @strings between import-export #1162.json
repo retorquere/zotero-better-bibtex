@@ -206,7 +206,7 @@
       "publisher": "AW",
       "pages": "277-280",
       "date": "1996-08",
-      "extra": "Citation Key: Mitchell96 \nbibtex*[organization=ACM<sub>S</sub>IGGRAPH]",
+      "extra": "Citation Key: Mitchell96 \nbibtex[organization=ACM_SIGGRAPH]",
       "title": "Consequences of Stratified Sampling in Graphics",
       "creators": [
         {
