@@ -133,6 +133,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       await this.exportItems(translatorID, displayOptions, { items: _batch })
 
       log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
+      log.debug('Translators.primeCache: batch primed, total uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
     }
 
     uncached = await this.uncached(translatorID, displayOptions, scope)
@@ -279,13 +280,16 @@ export let Translators = new class { // tslint:disable-line:variable-name
         query[pref] = Prefs.get(pref)
       } else {
         query[pref] = displayOptions[`preference_${pref}`]
-        log.debug('Translators.uncached: override', pref, '=', query[pref])
+        log.debug('Translators.primeCache.uncached: override', pref, '=', query[pref])
       }
     }
-    log.debug('Translators.uncached:', { prefOverrides, displayOptions, query })
+    log.debug('Translators.primeCacheTranslators.uncached:', { prefOverrides, displayOptions, query })
     const cached = new Set(cache.find(query).map(item => item.itemID))
 
-    if (scope.items) return scope.items.filter(item => !cached.has(item.id))
+    if (scope.items) {
+      log.debug('Translators.primeCacheTranslators.uncached: items')
+      return scope.items.filter(item => !cached.has(item.id))
+    }
 
     let sql: string = null
     if (scope.library) {
@@ -299,7 +303,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
       return []
 
     }
-    return (await Zotero.DB.queryAsync(sql)).map(item => item.itemID).filter(itemID => !cached.has(itemID))
+
+    log.debug('Translators.primeCacheTranslators.uncached:', sql)
+    return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
   private items(items) {
