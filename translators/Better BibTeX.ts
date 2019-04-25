@@ -170,7 +170,7 @@ Translator.doExport = () => {
     ref.add({name: 'chapter', value: item.section})
     ref.add({name: 'edition', value: item.edition})
     ref.add({name: 'type', value: item.type})
-    ref.add({name: 'series', value: item.series})
+    ref.add({name: 'series', value: item.series, preserveBibTeXVariables: true})
     ref.add({name: 'title', value: item.title})
     ref.add({name: 'volume', value: item.volume})
     ref.add({name: 'copyright', value: item.rights})

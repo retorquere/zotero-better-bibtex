@@ -428,7 +428,7 @@ Translator.doExport = () => {
       }
     }
 
-    ref.add({ name: 'series', value: item.seriesTitle || item.series })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series, preserveBibTeXVariables: true })
 
     switch (item.referenceType) {
       case 'report':
