@@ -435,17 +435,17 @@ Translator.doExport = () => {
     switch (item.referenceType) {
       case 'report':
       case 'thesis':
-        ref.add({ name: 'institution', value: item.publisher })
+        ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
       case 'case':
       case 'hearing':
       case 'legal_case':
-        ref.add({ name: 'institution', value: item.court })
+        ref.add({ name: 'institution', value: item.court, bibtexStrings: true })
         break
 
       case 'computerProgram':
-        ref.add({ name: 'organization', value: item.publisher })
+        ref.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
       default:
