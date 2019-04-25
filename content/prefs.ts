@@ -24,6 +24,12 @@ export let Preferences = new class { // tslint:disable-line:variable-name
     // preference upgrades
     for (const pref of this.branch.getChildList('')) {
       switch (pref) {
+        case 'preserveBibTeXVariables':
+          log.debug('Preferences: preserveBibTeXVariables -> exportBibTeXStrings')
+          this.set('exportBibTeXStrings', this.get(pref) ? 'detect' : 'off')
+          this.clear(pref)
+          break
+
         case 'jabrefGroups':
           log.debug('Preferences: jabrefGroups -> jabrefFormat')
           this.set('jabrefFormat', this.get(pref))

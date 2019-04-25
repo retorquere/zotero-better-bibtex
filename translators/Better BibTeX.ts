@@ -159,6 +159,8 @@ Reference.prototype.typeMap = {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 Translator.doExport = () => {
+  Exporter.prepare_strings()
+
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
@@ -187,13 +189,13 @@ Translator.doExport = () => {
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
-      ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, preserveBibTeXVariables: true })
+      ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
-    } else if (ref.isBibVar(item.publicationTitle)) {
-      ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
+    } else if (ref.isBibString(item.publicationTitle)) {
+      ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
 
     } else {
-      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
+      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
 
     }
 
@@ -1177,7 +1179,7 @@ Translator.doImport = async () => {
     input += read
   }
 
-  if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
+  if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
   const bib = await biblatex.parse(input, {
     processUnexpected: true,

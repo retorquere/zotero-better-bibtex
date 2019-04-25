@@ -178,17 +178,32 @@
 - description: ''
   name: Advanced
   preferences:
-    Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces.:
-      default: 'False'
-      description: 'When enabled, single-word strings will be assumed to be externally-defined
-        @string vars, and thus not
-
-        surrounded by braces. If you don''t know what this means, leave it off.'
+    '@string definitions':
+      default: ''
+      description: If you have externally maintained @string vars paste them here
+        and they will be resolved for subsequent imports
     Deterministically order references and fields; primarily for version control.:
       default: 'False'
       description: When on, BBT will deterministically order references on export.
         This is primarily interesting if you keep the exported file under some kind
         of version control. Comes at performance and memory consumption cost.
+    Expand the @string vars below during imports:
+      default: 'True'
+      description: When enabled, BBT will prepend the @strings section below to all
+        Bib(La)TeX imports and will expand the strings during export.
+    If a field could be a @string var, export it without braces:
+      default: No
+      description: 'When enabled, BBT will try to retain @string vars its exports
+        unsurrounded by braces; when set to ''detect'', single-word strings will be
+        assumed to be externally-defined @string vars,
+
+        when set to ''match'', only @strings declared in the @strings section of the
+        preferences will be preserved. If you don''t know what this means, leave it
+        off.'
+      options:
+      - No
+      - Assume single-word fields to be @string vars
+      - Match against the @string vars below
     Warn me when auto-exports take longer than:
       default: '10'
       description: 'If you have auto-export set up for a large library, Zotero might
@@ -207,10 +222,6 @@
         your curiosity from changing
 
         all your citation keys at once.'
-    import @string definitions:
-      default: ''
-      description: If you have externally maintained @string vars paste them here
-        and they will be resolved for subsequent imports
     postscript:
       default: ''
       description: Snippet of javascript to run [after each reference generation](scripting).

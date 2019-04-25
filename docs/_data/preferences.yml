@@ -23,7 +23,9 @@ citekeyFormat: ​[auth:lower][shorttitle3_3][year]
 citeprocNoteCitekey: false
 csquotes: ''
 debugLog: ''
+exportBibTeXStrings: off
 git: config
+importBibTeXStrings: true
 itemObserverDelay: 100
 jabrefFormat: 0
 keyConflictPolicy: keep
@@ -32,7 +34,6 @@ kuroshiro: false
 lockedInit: false
 parseParticles: true
 postscript: ''
-preserveBibTeXVariables: false
 qualityReport: false
 quickCopyMode: latex
 quickCopyPandocBrackets: false
