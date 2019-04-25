@@ -27,6 +27,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public nextItem(): ISerializedItem {
     let item
     while (item = Zotero.nextItem()) {
+      debug(':caching:nextItem:', item.itemType)
       if (['note', 'attachment'].includes(item.itemType)) continue
 
       if (!item.citekey) {

@@ -13,6 +13,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
   public byName: any
   public byLabel: any
+  public itemType: { note: number, attachment: number } = { Zotero.ItemTypes.getID('note'), Zotero.ItemTypes.getID('attachment') }
 
   constructor() {
     Object.assign(this, require('../gen/translators.json'))
@@ -163,6 +164,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     } else if (items.collection) {
       translation.setCollection(items.collection)
 
+    } else {
+      log.debug(':caching:Translators.exportItems: nothing?')
+
     }
 
     translation.setTranslator(translatorID)
@@ -292,11 +296,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     let sql: string = null
+    const cond = `i.itemTypeID NOT IN (${this.itemType.note}, ${this.itemType.attachment}) AND i.itemID NOT IN (SELECT itemID FROM deletedItems)`
     if (scope.library) {
-      sql = `SELECT itemID FROM items WHERE libraryID = ${scope.library} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
+      sql = `SELECT i.itemID FROM items i WHERE i.libraryID = ${scope.library} AND ${cond}`
 
     } else if (scope.collection) {
-      sql = `SELECT itemID FROM collectionItems WHERE collectionID = ${scope.collection.id} AND itemID NOT IN (SELECT itemID FROM deletedItems)`
+      sql = `SELECT i.itemID FROM collectionItems ci JOIN items i ON i.itemID = ci.itemID WHERE ci.collectionID = ${scope.collection.id} AND ${cond}`
 
     } else {
       log.error('Translators.uncached: no active scope')
@@ -309,8 +314,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   private items(items) {
-    if (!items) return { library: Zotero.Libraries.userLibraryID }
-    if (typeof items.collection === 'number') return { collection: Zotero.Collections.get(items.collection) }
+    if (!items) {
+      log.debug(':caching:scope: nothing => userlibrary')
+      return { library: Zotero.Libraries.userLibraryID }
+    }
+
+    if (typeof items.collection === 'number') {
+      log.debug(':caching:scope: collection ID => collection')
+      return { collection: Zotero.Collections.get(items.collection) }
+    }
+
+    if (items.items) {
+      log.debug(':caching:scope:', items.items.length, 'items')
+    } else if (items.collection) {
+      log.debug(':caching:scope: collection', items.collection.id)
+    } else if (items.library) {
+      log.debug(':caching:scope: library', items.library)
+    } else {
+      log.debug(':caching:scope: none?')
+    }
+
     return items
   }
 }
