@@ -281,7 +281,7 @@ export class Reference {
   private _enc_creators_initials_marker = '\u0097' // end of guarded area
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
-  private isBibStringRE = /^[a-z][a-z0-9_]*$/i
+  private isBibStringRE = /^[a-z][-a-z0-9_]*$/i
   private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false }
   private juniorcomma: boolean
 
