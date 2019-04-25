@@ -112,26 +112,31 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
     if (reason) {
-      log.debug('Not priming cache:', reason)
+      log.debug('Translators.primeCache: not priming cache:', reason)
       return
     }
 
     switch (typeof uncached[0]) {
       case 'number':
       case 'string':
-        log.debug('fetching uncached items')
+        log.debug('Translators.primeCache: fetching uncached items')
         uncached = await Zotero.Items.getAsync(uncached)
     }
 
     // batches of at least 10
     const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, minimum)
     while (uncached.length) {
-      log.debug('priming cache:', uncached.length, 'uncached items remaining')
-      await this.exportItems(translatorID, displayOptions, { items: uncached.splice(0, batch) })
+      log.debug('Translators.primeCache:', uncached.length, 'remaining')
+      const _batch = uncached.splice(0, batch)
+      log.debug('Translators.primeCache: priming', _batch.length)
+
+      await this.exportItems(translatorID, displayOptions, { items: _batch })
+
+      log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
     }
 
     uncached = await this.uncached(translatorID, displayOptions, scope)
-    log.debug('priming cache: done,', uncached.length, 'items left uncached')
+    log.debug('Translators.primeCache: done,', uncached.length, 'total uncached in system')
     if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
   }
 
