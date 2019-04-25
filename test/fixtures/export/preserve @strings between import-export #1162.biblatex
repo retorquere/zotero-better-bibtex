@@ -1,12 +1,11 @@
 @inproceedings{Mitchell96,
-  author = {Don P. Mitchell},
+  author = {Mitchell, Don P.},
   booktitle = PROC_SIGGRAPH93-01,
-  editor = {Holly Rushmeier},
-  month = aug,
+  date = {1996-08},
+  editor = {Rushmeier, Holly},
   organization = ACM_SIGGRAPH,
   pages = {277-280},
   publisher = AW,
   series = ACS,
-  title = {Consequences of Stratified Sampling in Graphics},
-  year = {1996}
+  title = {Consequences of Stratified Sampling in Graphics}
 }
