@@ -26,7 +26,7 @@ cache:
 
 script:
   - ./util/build-assets fetch
-  - ./.travis/behave-parameters.py | xargs -t behave --no-capture --verbose
+  - ./.travis/behave-parameters.py | xargs -t behave --no-capture
 
 after_failure:
   - ./util/build-assets pop
