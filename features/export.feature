@@ -7,13 +7,14 @@ Background:
 @test-cluster-1
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
-@biblatex @644 @889 @482 @979 @746 @1148 @1139
+@biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | preserve @strings between import-export #1162                                                  | 1           |
      | Suppress brace protection #1139                                                                | 1           |
      | Protect math sections #1148                                                                    | 1           |
      | Error exporting duplicate eprinttype #1128                                                     | 1           |
