@@ -261,6 +261,7 @@ const patent = new class {
 }
 
 Translator.doExport = () => {
+  debug(':caching:', Translator.caching)
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 

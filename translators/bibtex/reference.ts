@@ -756,6 +756,7 @@ export class Reference {
 
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
+    debug(':caching:cacheStore:', Translator.caching && this.cachable)
     if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     if (this.metadata.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.metadata.DeclarePrefChars
