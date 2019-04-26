@@ -2654,7 +2654,7 @@
       "citekeyFormat": "[auth]-[year]-[shorttitle]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "exportBibTeXStrings": "detect",
+      "exportBibTeXStrings": "off",
       "itemObserverDelay": 100,
       "jabrefFormat": 4,
       "keyConflictPolicy": "keep",
