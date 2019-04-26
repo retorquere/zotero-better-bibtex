@@ -126,6 +126,7 @@ Scenario Outline: BibTeX Export
 
   Examples:
      | file                                                                               | references |
+     | preserve @strings between import-export #1162                                      | 1          |
      | citekey firstpage-lastpage #1147                                                   | 2          |
      | Error exporting with custom Extra field #1118                                      | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
