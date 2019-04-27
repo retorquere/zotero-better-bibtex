@@ -12,8 +12,8 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
       "bibtexURL": "note",
       "citekeyFormat": "[auth:fold:lower]_[Title:fold:nopunct:skipwords:select,1,1:lower]_[year]",
+      "exportBibTeXStrings": "off",
       "jabrefFormat": 0,
-      "preserveBibTeXVariables": false,
       "skipFields": ""
     },
     "release": "1.0.5"

@@ -14,7 +14,7 @@ interface IField {
   value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; }
   enc?: string
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
-  preserveBibTeXVariables?: boolean
+  bibtexStrings?: boolean
   bare?: boolean
   raw?: boolean
 
@@ -281,7 +281,7 @@ export class Reference {
   private _enc_creators_initials_marker = '\u0097' // end of guarded area
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
-  private isBibVarRE = /^[a-z][a-z0-9_]*$/i
+  private isBibStringRE = /^[a-z][-a-z0-9_]*$/i
   private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false }
   private juniorcomma: boolean
 
@@ -452,7 +452,7 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value === 'number') || (field.preserveBibTeXVariables && this.isBibVar(field.value))) {
+      if ((typeof field.value === 'number') || (field.bibtexStrings && this.isBibString(field.value))) {
         field.bibtex = `${field.value}`
 
       } else {
@@ -490,8 +490,19 @@ export class Reference {
     return removed
   }
 
-  public isBibVar(value) {
-    return Translator.preferences.preserveBibTeXVariables && value && (typeof value === 'string') && this.isBibVarRE.test(value)
+  public isBibString(value) {
+    if (!value || typeof value !== 'string') return false
+
+    switch (Translator.preferences.exportBibTeXStrings) {
+      case 'off':
+        return false
+      case 'detect':
+        return this.isBibStringRE.test(value)
+      case 'match':
+        return !!Exporter.strings[value.toUpperCase()] // the importer uppercases string declarations
+      default:
+        return false
+    }
   }
 
   public hasCreator(type) { return (this.item.creators || []).some(creator => creator.creatorType === type) }
@@ -663,12 +674,12 @@ export class Reference {
 
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
-          this.referencetype = field.value
-          continue
+        this.referencetype = field.value
+        continue
       }
 
-      debug('extraFields: bibtex')
-      this.override(field)
+      debug('extraFields: bibtex', field)
+      this.override({...field, bibtexStrings: Translator.preferences.exportBibTeXStrings === 'match'})
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {

@@ -10,8 +10,8 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth][year]",
       "csquotes": "",
+      "exportBibTeXStrings": "off",
       "postscript": "",
-      "preserveBibTeXVariables": false,
       "skipFields": [
         ""
       ]

@@ -123,13 +123,19 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "When a reference has both a DOI and a URL, export">
 <!ENTITY better-bibtex.Preferences.export.fields "Fields">
-<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Assume single-word strings to be externally-defined @string vars, and thus not surrounded by braces.">
+
+<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Expand the @string vars below during imports">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string var, export it without braces">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "No">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assume single-word fields to be @string vars">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string vars below">
+
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Deterministically order references and fields; primarily for version control.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Fields to omit from export (comma-separated)">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Journal abbreviations">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.tab.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
-<!ENTITY better-bibtex.Preferences.tab.strings "import @string definitions">
+<!ENTITY better-bibtex.Preferences.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Re-scan pinned citekeys">
 <!ENTITY better-bibtex.Preferences.resetCache "Reset cache">

@@ -15,9 +15,9 @@
       "bibtexURL": "note",
       "citekeyFormat": "[auth5][auth5_1][shortyear]",
       "csquotes": "",
+      "exportBibTeXStrings": "off",
       "jabrefFormat": 0,
       "postscript": "",
-      "preserveBibTeXVariables": false,
       "skipFields": "abstract"
     },
     "release": "1.6.5"

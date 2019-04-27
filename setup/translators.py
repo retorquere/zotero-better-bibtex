@@ -112,6 +112,9 @@ interface ITranslator {
   unicode: boolean
   pathSep: string
   debugEnabled: boolean
+  BetterBibTeX: boolean
+  BetterBibLaTeX: boolean
+  BetterTeX: boolean
 
   doExport: () => void
   detectImport: () => void
