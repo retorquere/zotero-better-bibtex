@@ -5,6 +5,7 @@ import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
+import { timeout } from './timeout'
 
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
@@ -22,7 +23,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async init() {
     const start = (new Date()).valueOf()
 
-    this.itemType = { note: Zotero.ItemTypes.getID('note'), attachment: Zotero.ItemTypes.getID('attachment') }
+    this.itemType = {
+      note: Zotero.ItemTypes.getID('note'),
+      attachment: Zotero.ItemTypes.getID('attachment'),
+    }
 
     let reinit = false
 
@@ -92,15 +96,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
   }
 
   public async primeCache(translatorID: string, displayOptions: any, scope: any) {
-    const minimum = Prefs.testing ? 1 : 10 // tslint:disable-line:no-magic-numbers
-
     scope = this.items(scope)
 
     let reason: string = null
     let uncached: any[] = []
 
-    // if a threshold is set, minimum is 10
-    const threshold: number = Math.max(Prefs.get('autoExportPrimeExportCacheThreshold') || 0, minimum)
+    const threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
 
     if (!reason && !threshold) reason = 'priming threshold set to 0'
     if (!reason && Prefs.get('jabrefFormat') === 4) reason = 'JabRef Format 4 cannot be cached' // tslint:disable-line:no-magic-numbers
@@ -126,8 +127,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
         uncached = await Zotero.Items.getAsync(uncached)
     }
 
-    // batches of at least 10
-    const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, minimum)
+    const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
+    const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
     while (uncached.length) {
       log.debug('Translators.primeCache:', uncached.length, 'remaining')
       const _batch = uncached.splice(0, batch)
@@ -137,6 +138,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
       log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
       log.debug('Translators.primeCache: batch primed, total uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
+      // give the UI a chance
+      await timeout(delay)
     }
 
     uncached = await this.uncached(translatorID, displayOptions, scope)

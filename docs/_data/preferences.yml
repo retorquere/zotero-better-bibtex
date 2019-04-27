@@ -7,7 +7,8 @@ autoAbbrevStyle: ''
 autoExport: immediate
 autoExportDelay: 1
 autoExportIdleWait: 10
-autoExportPrimeExportCacheBatch: 10
+autoExportPrimeExportCacheBatch: 4
+autoExportPrimeExportCacheDelay: 100
 autoExportPrimeExportCacheThreshold: 0
 autoExportTooLong: 10
 autoPin: false

@@ -253,10 +253,16 @@ const queue = new class {
       for (const pref of prefOverrides) {
         displayOptions[`preference_${pref}`] = ae[pref]
       }
-      const start = Date.now()
+
+      let start = Date.now()
       await Translators.primeCache(ae.translatorID, displayOptions, items)
+      let elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
+      log.debug('AutoExport.queue.run: priming took', elapsed, 'seconds')
+
+      start = Date.now()
       await Translators.exportItems(ae.translatorID, displayOptions, items, ae.path)
-      const elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
+      elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
+
       if (elapsed > Prefs.get('autoExportTooLong')) {
         const title = Zotero.BetterBibTeX.getString('AutoExport.too-long.title')
         let body = Zotero.BetterBibTeX.getString('AutoExport.too-long.body', {
