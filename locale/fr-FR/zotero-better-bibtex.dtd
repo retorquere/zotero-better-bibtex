@@ -123,7 +123,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "l'URL seulement">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Lorsqu'une référence comporte un DOI et une URL, exporter">
 <!ENTITY better-bibtex.Preferences.export.fields "Gestion des champs">
-<!ENTITY better-bibtex.Preferences.export.fields.preserveBibTeXVariables "Permettre que les chaînes de mots uniques soient des variables @string définies de manière externe non entourées par des accolades">
+<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Expand the @string vars below during imports">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string var, export it without braces">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "No">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assume single-word fields to be @string vars">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string vars below">
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordonner de façon déterministe les références et champs, principalement pour le contrôle de version.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abréviations de journaux">
