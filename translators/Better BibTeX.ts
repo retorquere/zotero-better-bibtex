@@ -159,6 +159,8 @@ Reference.prototype.typeMap = {
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
 Translator.doExport = () => {
+  Exporter.prepare_strings()
+
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
@@ -170,7 +172,7 @@ Translator.doExport = () => {
     ref.add({name: 'chapter', value: item.section})
     ref.add({name: 'edition', value: item.edition})
     ref.add({name: 'type', value: item.type})
-    ref.add({name: 'series', value: item.series})
+    ref.add({name: 'series', value: item.series, bibtexStrings: true})
     ref.add({name: 'title', value: item.title})
     ref.add({name: 'volume', value: item.volume})
     ref.add({name: 'copyright', value: item.rights})
@@ -178,7 +180,6 @@ Translator.doExport = () => {
     ref.add({name: 'issn', value: item.ISSN})
     ref.add({name: 'lccn', value: item.callNumber})
     ref.add({name: 'shorttitle', value: item.shortTitle})
-    ref.add({name: 'doi', value: item.DOI})
     ref.add({name: 'abstract', value: item.abstractNote})
     ref.add({name: 'nationality', value: item.country})
     ref.add({name: 'language', value: item.language})
@@ -188,43 +189,46 @@ Translator.doExport = () => {
     ref.add({ name: 'urldate', value: item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '') })
 
     if (['bookSection', 'conferencePaper', 'chapter'].includes(item.referenceType)) {
-      ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, preserveBibTeXVariables: true })
+      ref.add({ name: 'booktitle', value: item.publicationTitle || item.conferenceName, bibtexStrings: true })
 
-    } else if (ref.isBibVar(item.publicationTitle)) {
-      ref.add({ name: 'journal', value: item.publicationTitle, preserveBibTeXVariables: true })
+    } else if (ref.isBibString(item.publicationTitle)) {
+      ref.add({ name: 'journal', value: item.publicationTitle, bibtexStrings: true })
 
     } else {
-      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, preserveBibTeXVariables: true })
+      ref.add({ name: 'journal', value: (Translator.options.useJournalAbbreviation && item.journalAbbreviation) || item.publicationTitle, bibtexStrings: true })
 
     }
 
     switch (item.referenceType) {
       case 'thesis':
-        ref.add({ name: 'school', value: item.publisher })
+        ref.add({ name: 'school', value: item.publisher, bibtexStrings: true })
         break
 
       case 'report':
-        ref.add({ name: 'institution', value: item.publisher })
+        ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
       case 'computerProgram':
-        ref.add({ name: 'howpublished', value: item.publisher })
+        ref.add({ name: 'howpublished', value: item.publisher, bibtexStrings: true })
         break
 
       default:
-        ref.add({ name: 'publisher', value: item.publisher })
+        ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
         break
     }
 
-    switch (Translator.preferences.bibtexURL) {
-      case 'url':
-        ref.add({ name: 'url', value: item.url })
-        break
-      case 'note':
-        ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
-        break
-      default:
-        if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !item.url) ref.add({ name: 'doi', value: item.DOI })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !item.DOI) {
+      switch (Translator.preferences.bibtexURL) {
+        case 'url':
+          ref.add({ name: 'url', value: item.url })
+          break
+        case 'note':
+          ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
+          break
+        default:
+          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
+      }
     }
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
@@ -1175,7 +1179,7 @@ Translator.doImport = async () => {
     input += read
   }
 
-  if (Translator.preferences.strings) input = `${Translator.preferences.strings}\n${input}`
+  if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
   const bib = await biblatex.parse(input, {
     processUnexpected: true,

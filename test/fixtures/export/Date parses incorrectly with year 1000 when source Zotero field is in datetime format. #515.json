@@ -1,56 +1,55 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.61-circle-2529",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "autoExportIdleWait": 10,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
-      "citekeyFormat": "[Auth:condense,_:lower]_[year]_[veryshorttitle:lower]",
       "citekeyFold": true,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
+      "citekeyFormat": "[Auth:condense,_:lower]_[year]_[veryshorttitle:lower]",
       "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
       "postscript": "// the bib(la)tex fields are ordered according to this array.\n// If a field is not in this list, it will show up at the end in random order.\n// https://github.com/retorquere/zotero-better-bibtex/issues/512\nvar order = ['author', 'date', 'origdate', 'shorthand', 'title'];\nthis.fields.sort(function(a, b) {\n  var oa = order.indexOf(a.name);\n  var ob = order.indexOf(b.name);\n  if (oa < 0) { return 1; } // a is not in order, so put it at the end\n  if (ob < 0) { return -1; } // b is not in order, so put it at the end\n  return oa - ob;\n});",
       "quickCopyMode": "latex",
-      "jabrefFormat": 0
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.61-circle-2529"
   },
   "items": [
     {
-      "itemType": "newspaperArticle",
-      "url": "http://www.abc.net.au/news/2016-06-06/swiss-voters-reject-basic-income-proposal/7481672",
-      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
-      "publicationTitle": "ABC News",
-      "date": "2016-06-06T15:26:37+1000",
-      "accessDate": "2017-12-06 07:40:14",
-      "language": "en-AU",
       "abstractNote": "Voters in Switzerland overwhelmingly reject a proposal to introduce a guaranteed monthly income for all citizens.",
-      "title": "Swiss voters say no to guaranteed free money",
+      "accessDate": "2017-12-06 07:40:14",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Barker",
-          "firstName": "Anne"
+          "firstName": "Anne",
+          "lastName": "Barker"
         }
       ],
-      "itemID": 300
+      "date": "2016-06-06T15:26:37+1000",
+      "itemID": 300,
+      "itemType": "newspaperArticle",
+      "language": "en-AU",
+      "publicationTitle": "ABC News",
+      "rights": "http://www.abc.net.au/conditions.htm#UseOfContent",
+      "title": "Swiss voters say no to guaranteed free money",
+      "url": "http://www.abc.net.au/news/2016-06-06/swiss-voters-reject-basic-income-proposal/7481672"
     }
   ]
 }

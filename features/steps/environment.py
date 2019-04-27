@@ -1,9 +1,11 @@
+import shlex
 import redo
 import toml
 import munch
 import zotero
 import time
 import os
+import sys
 import json
 import platform
 import glob
@@ -12,6 +14,7 @@ import shutil
 import urllib
 from selenium import webdriver
 import subprocess
+import psutil
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -37,13 +40,21 @@ def running(id):
     count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
     return count > 0
 
-  raise ValueError(f'No detection for {platform.system()}')
+  for proc in psutil.process_iter():
+    try:
+      # Check if process name contains the given name string.
+      if id.lower() in proc.name().lower():
+        return True
+    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+      pass
+
+  return False
 
 import atexit
-zoteropid = None
+zoteroproc = None
 def killzotero():
-  global zoteropid
-  if zoteropid is None: return
+  global zoteroproc
+  if zoteroproc is None: return
 
   # graceful shutdown
   try:
@@ -56,10 +67,13 @@ def killzotero():
 
   stopped = False
   for _ in redo.retrier(attempts=5,sleeptime=1):
-    stopped = not running(zoteropid)
+    stopped = not running(zoteroproc.pid)
     if stopped: break
-  
-  if not stopped: os.kill(zoteropid, signal.SIGKILL)
+
+  zoteroproc = psutil.Process(zoteroproc.pid)
+  for proc in zoteroproc.children(recursive=True):
+    proc.kill()
+  zoteroproc.kill()
 atexit.register(killzotero)
 
 def nested_dict_iter(nested, root = []):
@@ -72,10 +86,11 @@ def nested_dict_iter(nested, root = []):
 
 class Profile:
   def __init__(self, context, name):
+    self.running = None
     self.name = name
     self.context = context
 
-    platform_client = platform.system() + ':' + zotero.CLIENT
+    platform_client = platform.system() + ':' + zotero.client.id
 
     if platform_client == 'Linux:zotero':
       self.profiles = os.path.expanduser('~/.zotero/zotero')
@@ -126,7 +141,7 @@ class Profile:
 
   def layout(self):
     fixtures = os.path.join(ROOT, 'test/fixtures')
-    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.CLIENT))
+    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', zotero.client.id))
 
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
       profile.add_extension(xpi)
@@ -144,14 +159,29 @@ class Profile:
 
     if self.context.config.userdata.get('first-run', 'false') == 'false':
       profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
+
+    if zotero.client.jurism:
+      print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
+      #profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
+      #profile.set_preference('extensions.zotero.useDataDir', True)
+      #profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+
     profile.update_preferences()
 
     shutil.rmtree(self.path, ignore_errors=True)
     shutil.move(profile.path, self.path)
 
+  def start(self):
+    cmd = f'{shlex.quote(self.binary)} -P {shlex.quote(self.name)} -ZoteroDebugText -datadir profile > {shlex.quote(self.path + ".log")} 2>&1'
+    print(f'Starting {zotero.client.id}: {cmd}')
+    proc = subprocess.Popen(cmd, shell=True)
+    print(f'{zotero.client.id} started: {proc.pid}')
+    if self.context.config.userdata.get('kill', 'true') == 'false': return None
+    return proc
+
 def before_all(context):
-  global zoteropid
-  zotero.CLIENT = context.config.userdata.get('zotero', 'zotero')
+  global zoteroproc
+  zotero.client = zotero.Client(context.config)
 
   assert not running('Zotero'), 'Zotero is running'
 
@@ -159,22 +189,10 @@ def before_all(context):
     context.translators = json.load(f)
 
   profile = Profile(context, 'BBTZ5TEST')
-
-  zoteropid = os.fork()
-  if zoteropid == 0:
-    cmd = [profile.binary, '-P', profile.name, '-ZoteroDebugText', '-datadir', 'profile']
-    print('starting ' + ' '.join(cmd))
-    log = os.open(profile.path + '.log', os.O_WRONLY | os.O_CREAT | os.O_TRUNC)
-    os.dup2(log, 1)
-    os.dup2(log, 2)
-    os.execvp(cmd[0], cmd)
-    assert False, f'error starting {zotero.CLIENT}'
-
-  print(f'ZOTERO STARTED: {zoteropid}')
-  if os.environ.get('KILL', 'true') == 'false': zoteropid = None
+  zoteroproc = profile.start()
 
   ready = False
-  with benchmark(f'starting {zotero.CLIENT}'):
+  with benchmark(f'starting {zotero.client.id}'):
     for _ in redo.retrier(attempts=30,sleeptime=1):
       print('connecting...')
       try:

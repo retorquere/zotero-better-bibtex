@@ -1,14 +1,6 @@
 ---
 references:
-- id: Adams2001
-  type: article-journal
-  title: >-
-    The physical volcanology of the 1600 eruption of **Huaynaputina**, southern
-    Peru
-  container-title: Bulletin of Volcanology
-  page: 493–518
-  volume: '62'
-  author:
+- author:
     - family: Adams
       given: Nancy K
     - family: DeSilva
@@ -23,74 +15,89 @@ references:
       given: Jason L
     - family: Arbesman
       given: Kendra
+  container-title: Bulletin of Volcanology
+  id: Adams2001
   issued:
-    - year: 2014
-      month: 12
+    -
       day: 31
-    - year: 2015
-      month: 1
+      month: 12
+      year: 2014
+    -
       day: 1
-
-- id: Berndt1994
-  type: article-journal
+      month: 1
+      year: 2015
+  page: 493–518
   title: >-
-    Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in
-    der abendländischen Kirche
-  container-title: Sacris Erudiri
-  page: 5–32
-  volume: '34'
-  source: MetaPress
+    The physical volcanology of the 1600 eruption of **Huaynaputina**, southern
+    Peru
+  type: article-journal
+  volume: '62'
+
+- DOI: 10.1484/J.SE.2.303788
   URL: 'http://dx.doi.org/10.1484/J.SE.2.303788'
-  DOI: 10.1484/J.SE.2.303788
-  language: German
+  accessed:
+    -
+      day: 2
+      month: 10
+      year: 2014
   author:
     - family: Berndt
       given: Rainer
+  container-title: Sacris Erudiri
+  id: Berndt1994
   issued:
-    - year: 1994
-  accessed:
-    - year: 2014
-      month: 10
-      day: 2
-
-- id: Wordsworth1883
-  type: book
+    -
+      year: 1994
+  language: German
+  page: 5–32
+  source: MetaPress
   title: >-
-    The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now
-    numbered Lat. 11553 in the National Library at Paris
-  collection-title: Old-Latin Biblical Texts
+    Skizze zur Auslegungsgeschichte der Bücher *Prouerbia* und *Ecclesiastes* in
+    der abendländischen Kirche
+  type: article-journal
+  volume: '34'
+
+- URL: 'https://archive.org/details/gospelaccording00goog'
+  accessed:
+    -
+      day: 29
+      month: 4
+      year: 2014
   collection-number: '1'
-  publisher: Clarendon Press
-  number-of-pages: '139'
-  source: Internet Archive
-  URL: 'https://archive.org/details/gospelaccording00goog'
-  language: English
+  collection-title: Old-Latin Biblical Texts
   editor:
     - family: Wordsworth
       given: John
+  id: Wordsworth1883
   issued:
-    - year: 1883
-  accessed:
-    - year: 2014
-      month: 4
-      day: 29
+    -
+      year: 1883
+  language: English
+  number-of-pages: '139'
+  publisher: Clarendon Press
   publisher-place: Oxford
+  source: Internet Archive
+  title: >-
+    The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now
+    numbered Lat. 11553 in the National Library at Paris
   title-short: The Gospel according to St. Matthew
-
-- id: Dunning2016
   type: book
+
+- author:
+    - family: Dunning
+      given: Andrew N.J.
+  collection-number: '33'
+  collection-title: Toronto Medieval Latin Texts
+  id: Dunning2016
+  issued:
+    -
+      year: 2016
+  publisher: Pontifical Institute of Mediaeval Studies
+  publisher-place: Toronto
   title: >-
     Samuel Presbiter: Notes from the school of William de Montibus. <span
     class="nocase">Collecta ex diuersis auditis in scola magistri Willelmi de
     Monte</span>
-  collection-title: Toronto Medieval Latin Texts
-  collection-number: '33'
-  publisher: Pontifical Institute of Mediaeval Studies
-  author:
-    - family: Dunning
-      given: Andrew N.J.
-  issued:
-    - year: 2016
-  publisher-place: Toronto
   title-short: Notes from the school of William de Montibus
+  type: book
 ...

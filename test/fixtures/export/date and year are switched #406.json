@@ -1,121 +1,120 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.6",
-    "preferences": {
-      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
-      "skipFields": "",
-      "postscript": "",
-      "csquotes": "",
-      "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth:lower]_[veryshorttitle:lower]_[year]",
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "jabrefFormat": 0,
+      "postscript": "",
+      "skipFields": ""
+    },
+    "release": "1.6.6"
   },
   "items": [
     {
-      "itemType": "book",
-      "edition": "2",
-      "publisher": "Prentice Hall",
       "ISBN": "978-0-13-014400-3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Douglas Brent",
+          "lastName": "West"
+        }
+      ],
       "date": "22.08.2000",
-      "title": "Introduction to Graph Theory",
-      "numPages": "470",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "West",
-          "firstName": "Douglas Brent"
-        }
-      ],
-      "itemID": 60
-    },
-    {
+      "edition": "2",
+      "itemID": 60,
       "itemType": "book",
-      "place": "Masterthesis, Fakultät Statistik",
-      "publisher": "TU Dortmund",
-      "date": "2012.09.27",
-      "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz",
+      "numPages": "470",
+      "publisher": "Prentice Hall",
+      "title": "Introduction to Graph Theory"
+    },
+    {
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Skubala",
-          "firstName": "Adam"
+          "firstName": "Adam",
+          "lastName": "Skubala"
         }
       ],
-      "itemID": 50
+      "date": "2012.09.27",
+      "itemID": 50,
+      "itemType": "book",
+      "place": "Masterthesis, Fakult\u00e4t Statistik",
+      "publisher": "TU Dortmund",
+      "title": "Modellierung niederfrequenter Schwingungen in einem elektrischen Energienetz"
     },
     {
-      "itemType": "journalArticle",
-      "volume": "115",
+      "DOI": "10.1002/eej.4391150705",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Tsutomu",
+          "lastName": "Michigami"
+        }
+      ],
+      "date": "1995.12",
       "issue": "7",
+      "itemID": 31,
+      "itemType": "journalArticle",
       "pages": "49 - 68",
       "publicationTitle": "Electrical Engineering in Japan",
-      "date": "1995.12",
-      "DOI": "10.1002/eej.4391150705",
       "title": "Development of a new two-input PSS to control low-frequency oscillation in interconnecting power systems and the study of a low-frequency oscillation model",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Michigami",
-          "firstName": "Tsutomu"
-        }
-      ],
-      "itemID": 31
+      "volume": "115"
     },
     {
-      "itemType": "report",
-      "url": "http://dx.doi.org/10.17877/DE290R-13190",
-      "place": "Eldorado",
-      "date": "2014.02.11",
-      "institution": "Technische Universität Dortmund",
-      "reportNumber": "2003/32864",
-      "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Brato",
-          "firstName": "Sebastian"
+          "firstName": "Sebastian",
+          "lastName": "Brato"
         },
         {
           "creatorType": "author",
-          "lastName": "Surmann",
-          "firstName": "Dirk"
+          "firstName": "Dirk",
+          "lastName": "Surmann"
         },
         {
           "creatorType": "author",
-          "lastName": "Krey",
-          "firstName": "Sebastian"
+          "firstName": "Sebastian",
+          "lastName": "Krey"
         },
         {
           "creatorType": "author",
-          "lastName": "Götze",
-          "firstName": "Jürgen"
+          "firstName": "J\u00fcrgen",
+          "lastName": "G\u00f6tze"
         },
         {
           "creatorType": "author",
-          "lastName": "Ligges",
-          "firstName": "Uwe"
+          "firstName": "Uwe",
+          "lastName": "Ligges"
         },
         {
           "creatorType": "author",
-          "lastName": "Weihs",
-          "firstName": "Claus"
+          "firstName": "Claus",
+          "lastName": "Weihs"
         }
       ],
+      "date": "2014.02.11",
+      "institution": "Technische Universit\u00e4t Dortmund",
       "itemID": 10,
-      "publisher": "Technische Universität Dortmund",
-      "number": "2003/32864"
+      "itemType": "report",
+      "number": "2003/32864",
+      "place": "Eldorado",
+      "publisher": "Technische Universit\u00e4t Dortmund",
+      "reportNumber": "2003/32864",
+      "title": "Stability Analysis and Clustering of Electrical Transmission Systems",
+      "url": "http://dx.doi.org/10.17877/DE290R-13190"
     }
   ]
 }

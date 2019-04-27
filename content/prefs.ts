@@ -5,19 +5,31 @@ import * as log from './debug'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
+const supported = Object.keys(require('../gen/preferences/defaults.json'))
+supported.push('removeStock')
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
 
   private prefix = 'translators.better-bibtex'
+  private testing: boolean
 
   constructor() {
+    this.testing = Zotero.Prefs.get(this.key('testing'))
+
     const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
     this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${this.prefix}.`)
 
     // preference upgrades
     for (const pref of this.branch.getChildList('')) {
       switch (pref) {
+        case 'preserveBibTeXVariables':
+          log.debug('Preferences: preserveBibTeXVariables -> exportBibTeXStrings')
+          this.set('exportBibTeXStrings', this.get(pref) ? 'detect' : 'off')
+          this.clear(pref)
+          break
+
         case 'jabrefGroups':
           log.debug('Preferences: jabrefGroups -> jabrefFormat')
           this.set('jabrefFormat', this.get(pref))
@@ -39,16 +51,14 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   }
 
   public set(pref, value) {
+    if (this.testing && !supported.includes(pref)) throw new Error(`Unsupported preference "${pref}"`)
     log.debug('Prefs.set', pref, value)
     Zotero.Prefs.set(this.key(pref), value)
   }
 
   public get(pref) {
-    try {
-      return Zotero.Prefs.get(this.key(pref))
-    } catch (error) {
-      return null
-    }
+    if (this.testing && !supported.includes(pref)) throw new Error(`Unsupported preference "${pref}"`)
+    return Zotero.Prefs.get(this.key(pref))
   }
 
   public clear(pref) {

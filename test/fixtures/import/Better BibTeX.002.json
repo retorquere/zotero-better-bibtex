@@ -1,53 +1,52 @@
 {
-  "items": [
-    {
-      "itemType": "book",
-      "creators": [
-        {
-          "firstName": "Milton",
-          "lastName": "Abramowitz",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Irene A.",
-          "lastName": "Stegun",
-          "creatorType": "author"
-        }
-      ],
-      "place": "New York",
-      "edition": "ninth Dover printing, tenth GPO printing",
-      "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables",
-      "publisher": "Dover",
-      "date": "1964",
-      "extra": "Citation Key: abramowitz+stegun",
-      "itemID": 0
-    },
-    {
-      "itemType": "book",
-      "creators": [
-        {
-          "firstName": "Joe",
-          "lastName": "Torre",
-          "creatorType": "author"
-        },
-        {
-          "firstName": "Tom",
-          "lastName": "Verducci",
-          "creatorType": "author"
-        }
-      ],
-      "ISBN": "0-385-52740-3",
-      "publisher": "Doubleday",
-      "title": "The Yankee Years",
-      "date": "2008",
-      "extra": "Citation Key: Torre2008",
-      "itemID": 1
-    }
-  ],
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON"
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Milton",
+          "lastName": "Abramowitz"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Irene A.",
+          "lastName": "Stegun"
+        }
+      ],
+      "date": "1964",
+      "edition": "ninth Dover printing, tenth GPO printing",
+      "extra": "Citation Key: abramowitz+stegun",
+      "itemID": 0,
+      "itemType": "book",
+      "place": "New York",
+      "publisher": "Dover",
+      "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables"
+    },
+    {
+      "ISBN": "0-385-52740-3",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Joe",
+          "lastName": "Torre"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Tom",
+          "lastName": "Verducci"
+        }
+      ],
+      "date": "2008",
+      "extra": "Citation Key: Torre2008",
+      "itemID": 1,
+      "itemType": "book",
+      "publisher": "Doubleday",
+      "title": "The Yankee Years"
+    }
+  ]
 }

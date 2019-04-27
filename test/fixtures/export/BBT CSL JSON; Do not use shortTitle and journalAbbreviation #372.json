@@ -1,52 +1,51 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.5.8",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
-      "skipFields": [
-        ""
-      ],
-      "jabrefGroups": true,
-      "postscript": "",
-      "csquotes": "",
-      "preserveCaps": "all",
-      "fancyURLs": false,
-      "langID": "babel",
-      "rawImports": false,
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": false
-    }
-  },
-  "collections": {
+      "csquotes": "",
+      "fancyURLs": false,
+      "jabrefGroups": true,
+      "langID": "babel",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "preserveCaps": "all",
+      "rawImports": false,
+      "skipFields": [
+        ""
+      ]
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    },
+    "release": "1.5.8"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "volume": "76",
-      "issue": "1",
-      "pages": "19–35",
-      "publicationTitle": "Library Quarterly",
-      "date": "2006",
-      "journalAbbreviation": "Libr. Q.",
       "DOI": "10.1086/504343",
-      "language": "en-US",
-      "title": "Codes, costs, and critiques: The organization of information in <i>Library Quarterly</i>, 1931–2004",
-      "shortTitle": "Codes, costs, and critiques",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Olson",
-          "firstName": "Hope A."
+          "firstName": "Hope A.",
+          "lastName": "Olson"
         }
       ],
-      "itemID": 259
+      "date": "2006",
+      "issue": "1",
+      "itemID": 259,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Libr. Q.",
+      "language": "en-US",
+      "pages": "19\u201335",
+      "publicationTitle": "Library Quarterly",
+      "shortTitle": "Codes, costs, and critiques",
+      "title": "Codes, costs, and critiques: The organization of information in <i>Library Quarterly</i>, 1931\u20132004",
+      "volume": "76"
     }
   ]
 }

@@ -1,4 +1,9 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON"
+  },
   "items": [
     {
       "attachments": [
@@ -7,10 +12,10 @@
           "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
         }
       ],
+      "extra": "Citation Key: id",
+      "itemID": 0,
       "itemType": "book",
-      "title": "Filename character test. Relative path",
-      "extra":"Citation Key: id",
-      "itemID": 0
+      "title": "Filename character test. Relative path"
     },
     {
       "attachments": [
@@ -19,16 +24,10 @@
           "title": ",.;'[]{}`-=~!@#$%^&()_+.pdf"
         }
       ],
+      "extra": "Citation Key: id2",
+      "itemID": 1,
       "itemType": "book",
-      "title": "Filename character test. Absolute path",
-      "extra":"Citation Key: id2",
-      "itemID": 1
+      "title": "Filename character test. Absolute path"
     }
-  ],
-  "config": {
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
-  },
-  "collections": {
-  }
+  ]
 }

@@ -1,19 +1,11 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.57",
-        "platform": "Linux x86_64",
-        "oscpu": "Linux x86_64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.57",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.6.emile.titanarum"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -36,8 +28,8 @@
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debug": true,
       "debugLog": "",
+      "exportBibTeXStrings": "off",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
@@ -46,7 +38,6 @@
       "lockedInit": false,
       "parseParticles": true,
       "postscript": "",
-      "preserveBibTeXVariables": false,
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
@@ -181,39 +172,46 @@
       "sorted": false,
       "strings": "",
       "suppressTitleCase": false,
-      "testing": true,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": false,
-      "exportFileData": false
+    "release": {
+      "BetterBibTeX": "5.1.6.emile.titanarum",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.57",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Linux x86_64",
+        "platform": "Linux x86_64",
+        "version": "5.0.57"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "creators":[
+      "creators": [
         {
-          "creatorType":"author",
-          "firstName":"Radim",
-          "lastName":"Řehůřek"
+          "creatorType": "author",
+          "firstName": "Radim",
+          "lastName": "\u0158eh\u016f\u0159ek"
         },
         {
-          "creatorType":"author",
-          "firstName":"Petr",
-          "lastName":"Sojka"
+          "creatorType": "author",
+          "firstName": "Petr",
+          "lastName": "Sojka"
         }
       ],
-      "date":"2010-05",
-      "extra":"Citation Key: rehurek_lrec \nbibtex*[day=22] \nevent-place: Valletta, Malta",
-      "itemID":0,
-      "itemType":"conferencePaper",
-      "language":"English",
-      "pages":"45-50",
-      "publicationTitle":"Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks",
-      "publisher":"ELRA",
-      "title":"Software Framework for Topic Modelling with Large Corpora",
-      "url":"http://is.muni.cz/publication/884893/en"
+      "date": "2010-05",
+      "extra": "Citation Key: rehurek_lrec \nbibtex*[day=22] \nevent-place: Valletta, Malta",
+      "itemID": 0,
+      "itemType": "conferencePaper",
+      "language": "English",
+      "pages": "45-50",
+      "publicationTitle": "Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks",
+      "publisher": "ELRA",
+      "title": "Software Framework for Topic Modelling with Large Corpora",
+      "url": "http://is.muni.cz/publication/884893/en"
     }
   ]
 }

@@ -3,8 +3,7 @@ Feature: Import
 
 Background:
   Given I set preference .citekeyFormat to [auth][year]
-  And I set preference .jabrefGroups to 0
-  And I set preference .defaultDateParserLocale to en-GB
+  And I set preference .jabrefFormat to 0
 
 @i1 @schomd
 Scenario: Better BibTeX Import 2
@@ -19,7 +18,7 @@ Scenario: Better BibTeX Import 2
 Scenario: Math markup to unicode not always imported correctly #472
   When I import 3 references from "import/Math markup to unicode not always imported correctly #472.bib"
   Then an export using "BetterBibTeX JSON" should match "import/Math markup to unicode not always imported correctly #472.json"
-  And I set preference .preserveBibTeXVariables to true
+  And I set preference .exportBibTeXStrings to detect
   Then an export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
 
 @758 @aux
@@ -30,7 +29,7 @@ Scenario: AUX scanner
 
 @nightly
 Scenario Outline: Better BibTeX Import
-  When I import <references> reference from "import/<file>.bib"
+  When I import <references> references from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
 
   Examples:
@@ -40,7 +39,7 @@ Scenario Outline: Better BibTeX Import
 
 @test-cluster-1 @959 @1058 @871 @1081 @1115
 Scenario Outline: Better BibTeX Import
-  When I import <references> reference from "import/<file>.bib"
+  When I import <references> references from "import/<file>.bib"
   Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |

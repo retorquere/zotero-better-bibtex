@@ -1,45 +1,44 @@
 {
-  "items": [
-    {
-      "itemType": "journalArticle",
-      "volume": "55",
-      "issue": "1",
-      "pages": "122",
-      "publicationTitle": "American psychologist",
-      "date": "2000",
-      "title": "Wisdom: a metaheuristic (pragmatic) to orchestrate mind and virtue toward excellence.",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Paul B",
-          "lastName": "Baltes",
-          "fieldMode": ""
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Ursula M",
-          "lastName": "Staudinger",
-          "fieldMode": ""
-        }
-      ],
-      "attachments": [
-        {
-          "title": "Baltes_Staudinger_2000_Wisdom.pdf",
-          "mimeType": "application/pdf",
-          "path": "attachments/Baltes_Staudinger_2000_Wisdom.pdf"
-        }
-      ]
-    }
-  ],
+  "collections": {},
   "config": {
-    "label": "BetterBibTeX JSON",
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     }
   },
-  "collections": {
-  }
+  "items": [
+    {
+      "attachments": [
+        {
+          "mimeType": "application/pdf",
+          "path": "attachments/Baltes_Staudinger_2000_Wisdom.pdf",
+          "title": "Baltes_Staudinger_2000_Wisdom.pdf"
+        }
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "fieldMode": "",
+          "firstName": "Paul B",
+          "lastName": "Baltes"
+        },
+        {
+          "creatorType": "author",
+          "fieldMode": "",
+          "firstName": "Ursula M",
+          "lastName": "Staudinger"
+        }
+      ],
+      "date": "2000",
+      "issue": "1",
+      "itemType": "journalArticle",
+      "pages": "122",
+      "publicationTitle": "American psychologist",
+      "title": "Wisdom: a metaheuristic (pragmatic) to orchestrate mind and virtue toward excellence.",
+      "volume": "55"
+    }
+  ]
 }

@@ -1,76 +1,75 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.5",
-    "preferences": {
-      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
-      "skipFields": "timestamp",
-      "postscript": "",
-      "csquotes": "",
-      "DOIandURL": "both",
-      "preserveBibTeXVariables": false,
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
       "exportFileData": false,
       "exportNotes": true
-    }
-  },
-  "collections": {
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth:lower][Title:fold:nopunct:skipwords:select,1,1:lower:alphanum:prefix,_][year:prefix,_][0]",
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "jabrefFormat": 0,
+      "postscript": "",
+      "skipFields": "timestamp"
+    },
+    "release": "1.6.5"
   },
   "items": [
     {
+      "itemID": 323,
       "itemType": "journalArticle",
       "language": "en-GB",
-      "title": "A carbocyclic carbene as an efficient catalyst ligand for C–C coupling reactions",
-      "itemID": 323
+      "title": "A carbocyclic carbene as an efficient catalyst ligand for C\u2013C coupling reactions"
     },
     {
+      "itemID": 324,
       "itemType": "book",
       "language": "en-US",
-      "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2 <span class=\"nocase\">nm</span>",
-      "itemID": 324
+      "title": "Alkanethiolate gold cluster molecules with core diameters from 1.5 to 5.2\u00a0<span class=\"nocase\">nm</span>"
     },
     {
+      "itemID": 325,
       "itemType": "book",
       "language": "en-US",
-      "title": "A stochastic model of TCP Reno congestion avoidance and control",
-      "itemID": 325
+      "title": "A stochastic model of TCP Reno congestion avoidance and control"
     },
     {
+      "itemID": 326,
       "itemType": "journalArticle",
       "language": "en-US",
-      "title": "Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions",
-      "itemID": 326
+      "title": "Effect of immobilization on catalytic characteristics of saturated Pd-N-heterocyclic carbenes in Mizoroki-Heck reactions"
     },
     {
+      "abstractNote": "in French, so no case conversion, nor protection.",
+      "itemID": 327,
       "itemType": "book",
       "language": "fr-FR",
-      "abstractNote": "in French, so no case conversion, nor protection.",
-      "title": "Estimateur d'un défaut de fonctionnement d'un modulateur en quadrature et étage de modulation l'utilisant",
-      "itemID": 327
+      "title": "Estimateur d'un d\u00e9faut de fonctionnement d'un modulateur en quadrature et \u00e9tage de modulation l'utilisant"
     },
     {
+      "itemID": 328,
       "itemType": "book",
       "language": "en-US",
-      "title": "High-speed digital-to-RF converter",
-      "itemID": 328
+      "title": "High-speed digital-to-RF converter"
     },
     {
+      "itemID": 329,
       "itemType": "journalArticle",
       "language": "en-GB",
-      "title": "Pleistocene <i><span class=\"nocase\">Homo sapiens</span></i> from Middle Awash, Ethiopia",
-      "itemID": 329
+      "title": "Pleistocene <i><span class=\"nocase\">Homo sapiens</span></i> from Middle Awash, Ethiopia"
     },
     {
+      "abstractNote": "Zotero\u2019s \u201cLanguage\u201d field empty, so \u201cen-US\u201d is assumed.",
+      "itemID": 330,
       "itemType": "book",
-      "abstractNote": "Zotero’s “Language” field empty, so “en-US” is assumed.",
-      "title": "Some remarks on <span class=\"nocase\">’t Hooft’s</span> S-matrix for black holes",
-      "itemID": 330
+      "title": "Some remarks on <span class=\"nocase\">\u2019t Hooft\u2019s</span> S-matrix for black holes"
     }
   ]
 }

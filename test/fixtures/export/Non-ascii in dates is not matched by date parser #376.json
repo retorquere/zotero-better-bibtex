@@ -1,34 +1,67 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.5.9",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
-      "skipFields": [
-        ""
-      ],
-      "jabrefGroups": true,
-      "postscript": "",
-      "csquotes": "",
-      "preserveCaps": "all",
-      "fancyURLs": false,
-      "langID": "babel",
-      "rawImports": false,
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": true
-    }
-  },
-  "collections": {
+      "csquotes": "",
+      "fancyURLs": false,
+      "jabrefGroups": true,
+      "langID": "babel",
+      "postscript": "",
+      "preserveBibTeXVariables": true,
+      "preserveCaps": "all",
+      "rawImports": false,
+      "skipFields": [
+        ""
+      ]
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    },
+    "release": "1.5.9"
   },
   "items": [
     {
+      "DOI": "10.1111/j.1469-8986.2007.00620.x",
+      "accessDate": "2014-05-12",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Julia",
+          "lastName": "Wendt"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Martin",
+          "lastName": "Lotze"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Almut I.",
+          "lastName": "Weike"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Norbert",
+          "lastName": "Hosten"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Alfons O.",
+          "lastName": "Hamm"
+        }
+      ],
+      "date": "M\u00e4rz 1, 2008",
+      "extra": "bibtex: Wendt2008BrainW.L.W.H.H+ \nbibtex[journaltitle=Psychophysiology;langid=english]",
+      "issue": "2",
+      "itemID": 80,
       "itemType": "journalArticle",
+      "pages": "205\u2013215",
       "tags": [
         "Amygdala",
         "Insula",
@@ -36,43 +69,9 @@
         "Startle",
         "fMRI"
       ],
-      "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1469-8986.2007.00620.x/abstract",
-      "volume": "45",
-      "issue": "2",
-      "pages": "205–215",
-      "date": "März 1, 2008",
-      "extra": "bibtex: Wendt2008BrainW.L.W.H.H+ \nbibtex[journaltitle=Psychophysiology;langid=english]",
-      "DOI": "10.1111/j.1469-8986.2007.00620.x",
-      "accessDate": "2014-05-12",
       "title": "Brain activation and defensive response mobilization during sustained exposure to phobia-related and other affective pictures in spider phobia",
-      "creators": [
-        {
-          "creatorType": "author",
-          "lastName": "Wendt",
-          "firstName": "Julia"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Lotze",
-          "firstName": "Martin"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Weike",
-          "firstName": "Almut I."
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Hosten",
-          "firstName": "Norbert"
-        },
-        {
-          "creatorType": "author",
-          "lastName": "Hamm",
-          "firstName": "Alfons O."
-        }
-      ],
-      "itemID": 80
+      "url": "http://onlinelibrary.wiley.com/doi/10.1111/j.1469-8986.2007.00620.x/abstract",
+      "volume": "45"
     }
   ]
 }

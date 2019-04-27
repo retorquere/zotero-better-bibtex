@@ -1,47 +1,46 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "0.8.2",
+    "options": {
+      "Export collections": false,
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
-      "citekeyFormat": "[auth][year]",
       "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
       "jabrefFormat": 0
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "Export collections": false
-    }
-  },
-  "collections": {
+    "release": "0.8.2"
   },
   "items": [
     {
-      "itemID": 653,
-      "itemType": "document",
-      "publisher": "Doubleday",
-      "date": "2008",
-      "extra": "bibtex: Torre2008",
-      "title": "XYZZY",
       "creators": [
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Joe",
-          "lastName": "Torre",
-          "fieldMode": ""
+          "lastName": "Torre"
         },
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Tom",
-          "lastName": "Verducci",
-          "fieldMode": ""
+          "lastName": "Verducci"
         }
       ],
+      "date": "2008",
+      "extra": "bibtex: Torre2008",
+      "itemID": 653,
+      "itemType": "document",
       "notes": [
         "note 1",
         "note 2"
-      ]
+      ],
+      "publisher": "Doubleday",
+      "title": "XYZZY"
     }
   ]
 }

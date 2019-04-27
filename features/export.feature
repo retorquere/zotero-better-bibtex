@@ -5,14 +5,16 @@ Background:
   Given I set preference .autoExportPrimeExportCacheThreshold to 10
 
 @test-cluster-1
-@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689 @biblatex @644 @889 @482 @979 @746
-@1148 @1139
+@127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
+@351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
+@biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | preserve @strings between import-export #1162                                                  | 1           |
      | Suppress brace protection #1139                                                                | 1           |
      | Protect math sections #1148                                                                    | 1           |
      | Error exporting duplicate eprinttype #1128                                                     | 1           |
@@ -116,14 +118,15 @@ Scenario Outline: BibLaTeX Export
      | Malformed HTML                                                                                 | 1           |
      | Allow explicit field override                                                                  | 1           |
 
-@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977 @978 @746 @1069 @1092 @1091
-@1110 @1112 @1118 @1147
+@441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
+@978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/<file>.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | preserve @strings between import-export #1162                                      | 1          |
      | citekey firstpage-lastpage #1147                                                   | 2          |
      | Error exporting with custom Extra field #1118                                      | 1          |
      | No space between author first and last name because last char of first name is translated to a latex command #1091 | 1 |
@@ -175,7 +178,6 @@ Scenario: Omit URL export when DOI present. #131
 @438 @bbt
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/BibTeX name escaping has a million inconsistencies #438.json"
-  And I set preference .relaxAuthors to true
   Then an export using "Better BibTeX" should match "export/BibTeX name escaping has a million inconsistencies #438.bibtex"
 
 @test-cluster-1
@@ -212,12 +214,8 @@ Scenario: BibTeX URLs
 @cayw
 Scenario: CAYW picker
   When I import 3 references from "export/cayw.json"
-  And I pick "6 The time it takes: temporalities of planning" for CAYW:
-    | label | page |
-    | locator | 1 |
-  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation" for CAYW:
-    | label | chapter |
-    | locator | 1 |
+  And I pick "6 The time it takes: temporalities of planning", page 1 for CAYW
+  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation", chapter 1 for CAYW
   Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
   And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
   And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
@@ -260,17 +258,17 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 @1155
 Scenario: Postscript error aborts CSL JSON export #1155
-  When I import 4 reference from "export/Postscript error aborts CSL JSON export #1155.json"
+  When I import 4 references from "export/Postscript error aborts CSL JSON export #1155.json"
   Then an export using "Better CSL JSON" should match "export/Postscript error aborts CSL JSON export #1155.csl.json"
 
-@860
+@860 @cslyml
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
-  When I import 6 reference from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
+  When I import 6 references from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
   Then an export using "Better CSL JSON" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.json"
   And an export using "Better CSL YAML" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.csl.yml"
   And an export using "Better BibLaTeX" should match "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.biblatex"
 
-@922
+@922 @cslyml
 Scenario: CSL YAML export of date with original publication date in [brackets] #922
   When I import 1 reference from "export/CSL YAML export of date with original publication date in [brackets] #922.json"
   Then an export using "Better CSL YAML" should match "export/CSL YAML export of date with original publication date in [brackets] #922.csl.yml"
@@ -306,7 +304,7 @@ Scenario: Date export to Better CSL-JSON #360 #811
   And an export using "Better BibLaTeX" should match "export/Date export to Better CSL-JSON #360 #811.biblatex"
 
 @test-cluster-1
-@432 @447 @pandoc @598
+@432 @447 @pandoc @598 @cslyml
 Scenario: Pandoc/LaTeX/SCHOMD Citation Export
   When I import 4 references with 3 attachments from "export/Pandoc Citation.json"
   And I set preference .quickCopyMode to "pandoc"
@@ -320,24 +318,18 @@ Scenario: Pandoc/LaTeX/SCHOMD Citation Export
 @test-cluster-1
 @journal-abbrev @bbt
 Scenario: Journal abbreviations
-  Given I set the following preferences:
-    | .citekeyFormat    | [authors][year][journal]          |
-    | .autoAbbrevStyle  | http://www.zotero.org/styles/cell |
-    | .pinCitekeys      | on-export                         |
+  Given I set preference .citekeyFormat to "[authors][year][journal]"
+  And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
   And I import 1 reference with 1 attachment from "export/Better BibTeX.029.json"
-  Then an export using "Better BibTeX" with the following export options should match "export/Better BibTeX.029.bibtex"
-    | useJournalAbbreviation | true |
+  Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/Better BibTeX.029.bibtex"
 
 @test-cluster-1
 @81 @bbt
 Scenario: Journal abbreviations exported in bibtex (81)
-  Given I set the following preferences:
-    | .citekeyFormat          | [authors2][year][journal:nopunct] |
-    | .autoAbbrevStyle        | http://www.zotero.org/styles/cell |
-    | .pinCitekeys            | on-export                         |
+  Given I set preference .citekeyFormat to "[authors2][year][journal:nopunct]"
+  And I set preference .autoAbbrevStyle to "http://www.zotero.org/styles/cell"
   And I import 1 reference from "export/Journal abbreviations exported in bibtex (81).json"
-  Then an export using "Better BibTeX" with the following export options should match "export/Journal abbreviations exported in bibtex (81).bibtex"
-    | useJournalAbbreviation  | true |
+  Then an export using "Better BibTeX" with useJournalAbbreviation on should match "export/Journal abbreviations exported in bibtex (81).bibtex"
 
 @postscript @bbt
 Scenario: Post script

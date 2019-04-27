@@ -1,22 +1,24 @@
 {
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    }
+  },
   "items": [
     {
-      "itemType": "bookSection",
-      "place": "Paris",
-      "publisher": "Hermann",
-      "pages": "665–86",
       "ISBN": "2705662219",
-      "date": "1994",
+      "bookTitle": "\u0152uvres compl\u00e8tes de philosophie des sciences",
       "callNumber": "QA3 .C39 1994",
-      "libraryCatalog": "Library of Congress ISBN",
-      "language": "french",
-      "title": "In memoriam",
-      "bookTitle": "Œuvres complètes de philosophie des sciences",
       "creators": [
         {
           "creatorType": "bookAuthor",
           "firstName": "Jean",
-          "lastName": "Cavaillès"
+          "lastName": "Cavaill\u00e8s"
         },
         {
           "creatorType": "author",
@@ -24,23 +26,20 @@
           "lastName": "Canguilhem"
         }
       ],
+      "date": "1994",
+      "itemType": "bookSection",
+      "language": "french",
+      "libraryCatalog": "Library of Congress ISBN",
+      "pages": "665\u201386",
+      "place": "Paris",
+      "publicationTitle": "\u0152uvres comple\u0300tes de philosophie des sciences",
+      "publisher": "Hermann",
       "tags": [
         "Mathematics",
         "Philosophy",
         "Science"
       ],
-      "publicationTitle": "Œuvres complètes de philosophie des sciences"
+      "title": "In memoriam"
     }
-  ],
-  "config": {
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    }
-  },
-  "collections": {
-  }
+  ]
 }

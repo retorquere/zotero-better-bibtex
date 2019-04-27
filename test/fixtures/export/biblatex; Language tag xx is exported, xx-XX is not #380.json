@@ -1,53 +1,52 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.5.11",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
+      "DOIandURL": "both",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "attachmentsNoMetadata": false,
+      "csquotes": "",
+      "fancyURLs": false,
+      "jabrefGroups": true,
+      "langID": "babel",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "preserveCaps": "all",
+      "rawImports": false,
       "skipFields": [
         ""
-      ],
-      "jabrefGroups": true,
-      "postscript": "",
-      "csquotes": "",
-      "preserveCaps": "all",
-      "fancyURLs": false,
-      "langID": "babel",
-      "rawImports": false,
-      "DOIandURL": "both",
-      "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": false,
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true
-    }
-  },
-  "collections": {
+      ]
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    },
+    "release": "1.5.11"
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "volume": "56",
-      "issue": "2",
-      "pages": "110–113",
-      "publicationTitle": "Modern Language Notes",
-      "ISSN": "01496611",
-      "date": "1941",
       "DOI": "10.2307/2911510",
-      "language": "fr-FR",
-      "title": "Le poêle de Descartes",
+      "ISSN": "01496611",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Spitzer",
-          "firstName": "Leo"
+          "firstName": "Leo",
+          "lastName": "Spitzer"
         }
       ],
-      "itemID": 275
+      "date": "1941",
+      "issue": "2",
+      "itemID": 275,
+      "itemType": "journalArticle",
+      "language": "fr-FR",
+      "pages": "110\u2013113",
+      "publicationTitle": "Modern Language Notes",
+      "title": "Le po\u00eale de Descartes",
+      "volume": "56"
     }
   ]
 }

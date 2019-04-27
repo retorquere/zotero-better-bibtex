@@ -85,7 +85,7 @@ export = Prefs.get('testing') && {
       // for some reason, the imported collection shows up as empty right after the import >:
       await timeout(1500) // tslint:disable-line:no-magic-numbers
     } else {
-      await Zotero_File_Interface.importFile(file, !!createNewCollection)
+      await Zotero_File_Interface.importFile({ file, createNewCollection: !!createNewCollection })
     }
     log.debug(`import finished at ${new Date()}`)
 

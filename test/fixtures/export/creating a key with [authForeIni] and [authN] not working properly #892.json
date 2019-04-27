@@ -1,43 +1,41 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.34.4",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.13",
-        "locale": "de",
-        "appName": "Zotero",
-        "appVersion": "5.0.34.4"
-      },
-      "BetterBibTeX": "5.0.79.5455.issue-892"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[authForeIni:upper][auth2:upper][shortyear]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "bibtexParticleNoOp": false,
-      "skipFields": [
-
-      ],
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "strings": "",
-      "quickCopyMode": "latex",
       "autoAbbrev": false,
       "autoAbbrevStyle": "http://www.zotero.org/styles/elsevier-harvard",
+      "autoExport": "immediate",
       "autoExportIdleWait": 10,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
       "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[authForeIni:upper][auth2:upper][shortyear]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "lockedInit": false,
+      "parseParticles": true,
+      "postscript": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "scrubDatabase": false,
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -162,91 +160,74 @@
         "zu",
         "zum"
       ],
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
+      "strings": "",
       "suppressTitleCase": false,
-      "itemObserverDelay": 100,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "lockedInit": false
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.79.5455.issue-892",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.34.4",
+        "locale": "de",
+        "oscpu": "Intel Mac OS X 10.13",
+        "platform": "MacIntel",
+        "version": "5.0.34.4"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "book",
-      "edition": "3. Aufl.",
-      "place": "Berlin [u.~a.]",
-      "publisher": "Springer",
       "ISBN": "978-3-642-37365-7",
-      "date": "2014",
-      "libraryCatalog": "Library of Congress ISBN",
-      "language": "ger",
-      "title": "Tutorium Analysis 1 und Lineare Algebra 1. Mathematik von Studenten für Studenten erklärt und kommenteiert",
-      "shortTitle": "Tutorium",
+      "attachments": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Florian",
-          "lastName": "Modler",
-          "creatorType": "author"
+          "lastName": "Modler"
         },
         {
+          "creatorType": "author",
           "firstName": "Martin",
-          "lastName": "Kreh",
-          "creatorType": "author"
+          "lastName": "Kreh"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2014",
       "dateAdded": "2018-01-16 13:48:27",
       "dateModified": "2018-01-16 14:09:51",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
+      "edition": "3. Aufl.",
       "itemID": 320,
-      "seeAlso": [
-
-      ]
+      "itemType": "book",
+      "language": "ger",
+      "libraryCatalog": "Library of Congress ISBN",
+      "notes": [],
+      "place": "Berlin [u.~a.]",
+      "publisher": "Springer",
+      "seeAlso": [],
+      "shortTitle": "Tutorium",
+      "tags": [],
+      "title": "Tutorium Analysis 1 und Lineare Algebra 1. Mathematik von Studenten f\u00fcr Studenten erkl\u00e4rt und kommenteiert"
     },
     {
-      "itemType": "book",
-      "volume": "12",
-      "publisher": "Springer",
-      "date": "2013",
-      "title": "Analysis 1",
+      "attachments": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Otto",
-          "lastName": "Forster",
-          "creatorType": "author"
+          "lastName": "Forster"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "2013",
       "dateAdded": "2018-01-27 12:17:16",
       "dateModified": "2018-01-27 12:19:02",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 60,
-      "seeAlso": [
-
-      ]
+      "itemType": "book",
+      "notes": [],
+      "publisher": "Springer",
+      "seeAlso": [],
+      "tags": [],
+      "title": "Analysis 1",
+      "volume": "12"
     }
   ]
 }

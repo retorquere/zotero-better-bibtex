@@ -1,60 +1,59 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "preferences": {
-      "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
-      "skipFields": "url,issn",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
+      "Export collections": true,
       "exportFileData": false,
-      "exportNotes": true,
-      "Export collections": true
+      "exportNotes": true
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth3][auth3_1][auth3_2][auth3_3][auth3_4][shortyear]",
+      "jabrefFormat": 0,
+      "skipFields": "url,issn"
     }
   },
   "items": [
     {
-      "itemType": "journalArticle",
-      "volume": "11",
-      "issue": "99",
-      "pages": "20140594",
-      "publicationTitle": "Journal of The Royal Society Interface",
-      "ISSN": "1742-5689, 1742-5662",
-      "date": "10/06/2014",
-      "extra": "PMID: 25056215",
-      "journalAbbreviation": "J. R. Soc. Interface",
       "DOI": "10.1098/rsif.2014.0594",
-      "accessDate": "2014-08-16 08:23:00",
-      "libraryCatalog": "rsif.royalsocietypublishing.org.ezproxy.lib.gla.ac.uk",
-      "language": "en",
+      "ISSN": "1742-5689, 1742-5662",
       "abstractNote": "Blindfolded or disoriented people have the tendency to walk in circles rather than on a straight line even if they wanted to. Here, we use a minimalistic walking model to examine this phenomenon. The bipedal spring-loaded inverted pendulum exhibits asymptotically stable gaits with centre of mass (CoM) dynamics and ground reaction forces similar to human walking in the sagittal plane. We extend this model into three dimensions, and show that stable walking patterns persist if the leg is aligned with respect to the body (here: CoM velocity) instead of a world reference frame. Further, we demonstrate that asymmetric leg configurations, which are common in humans, will typically lead to walking in circles. The diameter of these circles depends strongly on parameter configuration, but is in line with empirical data from human walkers. Simulation results suggest that walking radius and especially direction of rotation are highly dependent on leg configuration and walking velocity, which explains inconsistent veering behaviour in repeated trials in human data. Finally, we discuss the relation between findings in the model and implications for human walking.",
-      "title": "Walking in circles: a modelling approach",
-      "shortTitle": "Walking in circles",
+      "accessDate": "2014-08-16 08:23:00",
       "creators": [
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Horst-Moritz",
-          "lastName": "Maus",
-          "fieldMode": ""
+          "lastName": "Maus"
         },
         {
           "creatorType": "author",
+          "fieldMode": "",
           "firstName": "Andre",
-          "lastName": "Seyfarth",
-          "fieldMode": ""
+          "lastName": "Seyfarth"
         }
       ],
+      "date": "10/06/2014",
+      "extra": "PMID: 25056215",
+      "issue": "99",
+      "itemType": "journalArticle",
+      "journalAbbreviation": "J. R. Soc. Interface",
+      "language": "en",
+      "libraryCatalog": "rsif.royalsocietypublishing.org.ezproxy.lib.gla.ac.uk",
+      "pages": "20140594",
+      "publicationTitle": "Journal of The Royal Society Interface",
+      "shortTitle": "Walking in circles",
       "tags": [
         "locomotion",
         "slip",
         "template model",
         "veering",
         "walking"
-      ]
+      ],
+      "title": "Walking in circles: a modelling approach",
+      "volume": "11"
     }
-  ],
-  "collections": {
-  }
+  ]
 }

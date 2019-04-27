@@ -261,6 +261,8 @@ const patent = new class {
 }
 
 Translator.doExport = () => {
+  Exporter.prepare_strings()
+
   // Zotero.write(`\n% ${Translator.header.label}\n`)
   Zotero.write('\n')
 
@@ -330,8 +332,10 @@ Translator.doExport = () => {
     // ref.add({ name: 'rights', value: item.rights })
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
-    ref.add({ name: 'url', value: item.url })
-    ref.add({ name: 'doi', value: item.DOI })
+
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !item.DOI) ref.add({ name: 'url', value: item.url })
+    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !item.url) ref.add({ name: 'doi', value: item.DOI })
+
     ref.add({ name: 'shorttitle', value: item.shortTitle })
     ref.add({ name: 'abstract', value: item.abstractNote })
     ref.add({ name: 'volumes', value: item.numberOfVolumes })
@@ -346,13 +350,13 @@ Translator.doExport = () => {
       case 'case':
       case 'gazette':
       case 'legal_case':
-        ref.add({ name: 'journaltitle', value: item.reporter, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.reporter, bibtexStrings: true })
         break
 
       case 'statute':
       case 'bill':
       case 'legislation':
-        ref.add({ name: 'journaltitle', value: item.code, preserveBibTeXVariables: true })
+        ref.add({ name: 'journaltitle', value: item.code, bibtexStrings: true })
         break
     }
 
@@ -364,28 +368,28 @@ Translator.doExport = () => {
         case 'encyclopediaArticle':
         case 'chapter':
         case 'chapter':
-          ref.add({ name: 'booktitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+          ref.add({ name: 'booktitle', value: item.publicationTitle, bibtexStrings: true })
           break
 
         case 'magazineArticle':
         case 'newspaperArticle':
         case 'article-magazine':
         case 'article-newspaper':
-          ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true})
+          ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true})
           if (['newspaperArticle', 'article-newspaper'].includes(item.referenceType)) ref.add({ name: 'journalsubtitle', value: item.section })
           break
 
         case 'journalArticle':
         case 'article':
         case 'article-journal':
-          if (ref.isBibVar(item.publicationTitle)) {
-            ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
+          if (ref.isBibString(item.publicationTitle)) {
+            ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
           } else {
             if (Translator.options.useJournalAbbreviation && item.journalAbbreviation) {
-              ref.add({ name: 'journaltitle', value: item.journalAbbreviation, preserveBibTeXVariables: true })
+              ref.add({ name: 'journaltitle', value: item.journalAbbreviation, bibtexStrings: true })
             } else {
-              ref.add({ name: 'journaltitle', value: item.publicationTitle, preserveBibTeXVariables: true })
-              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, preserveBibTeXVariables: true })
+              ref.add({ name: 'journaltitle', value: item.publicationTitle, bibtexStrings: true })
+              ref.add({ name: 'shortjournal', value: item.journalAbbreviation, bibtexStrings: true })
             }
           }
           break
@@ -426,26 +430,26 @@ Translator.doExport = () => {
       }
     }
 
-    ref.add({ name: 'series', value: item.seriesTitle || item.series })
+    ref.add({ name: 'series', value: item.seriesTitle || item.series, bibtexStrings: true })
 
     switch (item.referenceType) {
       case 'report':
       case 'thesis':
-        ref.add({ name: 'institution', value: item.publisher })
+        ref.add({ name: 'institution', value: item.publisher, bibtexStrings: true })
         break
 
       case 'case':
       case 'hearing':
       case 'legal_case':
-        ref.add({ name: 'institution', value: item.court })
+        ref.add({ name: 'institution', value: item.court, bibtexStrings: true })
         break
 
       case 'computerProgram':
-        ref.add({ name: 'organization', value: item.publisher })
+        ref.add({ name: 'organization', value: item.publisher, bibtexStrings: true })
         break
 
       default:
-        ref.add({ name: 'publisher', value: item.publisher })
+        ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
     debug('adding type:', {item_type: item.type || '', item_referenceType: item.referenceType, referencetype: this.referencetype})

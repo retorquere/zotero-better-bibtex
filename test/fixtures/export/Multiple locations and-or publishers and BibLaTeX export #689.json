@@ -1,65 +1,63 @@
 {
+  "cache": {},
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.6.100",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true
+    },
     "preferences": {
+      "DOIandURL": "both",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "idle",
       "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "itemObserverDelay": 100,
-      "citeCommand": "cite",
-      "citekeyFormat": "[zotero]",
-      "citekeyFold": true,
-      "DOIandURL": "both",
-      "bibtexURL": "off",
-      "csquotes": "",
-      "keyConflictPolicy": "keep",
-      "preserveBibTeXVariables": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "warnBulkModify": 10,
-      "postscript": "",
-      "bibtexParticleNoOp": false,
-      "biblatexExtendedNameFormat": false,
       "biblatexExtendedDateFormat": false,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[zotero]",
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "postscript": "",
+      "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "qualityReport": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "suppressTitleCase": false,
-      "jabrefFormat": 0
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
-    }
-  },
-  "collections": {
+    "release": "1.6.100"
   },
   "items": [
     {
-      "itemType": "book",
-      "place": "<pre>Basel and Boston and Berlin</pre>",
-      "publisher": "Birkhäuser",
       "ISBN": "978-3-7643-7986-5",
-      "date": "2007",
-      "language": "en",
-      "title": "Geometry and Monadology: Leibniz's Analysis Situs and Philosophy of Space",
-      "shortTitle": "Geometry and Monadology",
-      "numPages": "676",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Risi",
-          "firstName": "Vincenzo de"
+          "firstName": "Vincenzo de",
+          "lastName": "Risi"
         }
       ],
-      "itemID": 2609
+      "date": "2007",
+      "itemID": 2609,
+      "itemType": "book",
+      "language": "en",
+      "numPages": "676",
+      "place": "<pre>Basel and Boston and Berlin</pre>",
+      "publisher": "Birkh\u00e4user",
+      "shortTitle": "Geometry and Monadology",
+      "title": "Geometry and Monadology: Leibniz's Analysis Situs and Philosophy of Space"
     }
-  ],
-  "cache": {
-  }
+  ]
 }

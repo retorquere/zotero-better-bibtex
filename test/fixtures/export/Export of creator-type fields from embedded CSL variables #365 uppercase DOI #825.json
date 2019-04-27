@@ -1,195 +1,194 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": "1.5.3",
-    "preferences": {
-      "citekeyFormat": "[auth][year]",
-      "bibtexURL": "note",
-      "jabrefFormat": 0
-    },
     "options": {
-      "skipFields": [
-        ""
-      ],
-      "jabrefGroups": true,
-      "postscript": "",
-      "csquotes": "",
-      "preserveCaps": "inner",
-      "fancyURLs": false,
-      "langID": "babel",
-      "rawImports": false,
       "DOIandURL": "both",
       "attachmentsNoMetadata": false,
-      "preserveBibTeXVariables": false
-    }
-  },
-  "collections": {
+      "csquotes": "",
+      "fancyURLs": false,
+      "jabrefGroups": true,
+      "langID": "babel",
+      "postscript": "",
+      "preserveBibTeXVariables": false,
+      "preserveCaps": "inner",
+      "rawImports": false,
+      "skipFields": [
+        ""
+      ]
+    },
+    "preferences": {
+      "bibtexURL": "note",
+      "citekeyFormat": "[auth][year]",
+      "jabrefFormat": 0
+    },
+    "release": "1.5.3"
   },
   "items": [
     {
-      "itemType": "film",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "John",
+          "lastName": "Doe"
+        },
+        {
+          "creatorType": "director",
+          "firstName": "Rob",
+          "lastName": "Roe"
+        }
+      ],
       "date": "2015",
       "distributor": "The Distributor",
       "extra": "publisher-place: US/GB",
-      "title": "A film",
-      "creators": [
-        {
-          "creatorType": "director",
-          "lastName": "Doe",
-          "firstName": "John"
-        },
-        {
-          "creatorType": "director",
-          "lastName": "Roe",
-          "firstName": "Rob"
-        }
-      ],
       "itemID": 16,
-      "publisher": "The Distributor"
+      "itemType": "film",
+      "publisher": "The Distributor",
+      "title": "A film"
     },
     {
-      "itemType": "report",
-      "place": "Place",
-      "date": "2015",
-      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
-      "institution": "Institution",
-      "reportType": "working paper",
-      "reportNumber": "77",
-      "title": "A report",
       "creators": [
         {
           "creatorType": "author",
-          "lastName": "Author",
-          "firstName": "Ann"
+          "firstName": "Ann",
+          "lastName": "Author"
         }
       ],
+      "date": "2015",
+      "extra": "editor: Editrix||Emma\neditor: Editor||Ed\n{:X-genre: xxx}",
+      "institution": "Institution",
       "itemID": 15,
+      "itemType": "report",
+      "number": "77",
+      "place": "Place",
       "publisher": "Institution",
-      "type": "working paper",
-      "number": "77"
+      "reportNumber": "77",
+      "reportType": "working paper",
+      "title": "A report",
+      "type": "working paper"
     },
     {
-      "itemType": "tvBroadcast",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Stanley",
+          "lastName": "Kubrick"
+        }
+      ],
       "date": "1964",
-      "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb",
+      "itemID": 2,
+      "itemType": "tvBroadcast",
       "shortTitle": "Dr. Strangelove",
-      "creators": [
-        {
-          "creatorType": "director",
-          "lastName": "Kubrick",
-          "firstName": "Stanley"
-        }
-      ],
-      "itemID": 2
+      "title": "Dr. Strangelove or: how I learned to stop worrying and love the bomb"
     },
     {
-      "itemType": "tvBroadcast",
-      "place": "US",
-      "date": "1996-09-16",
-      "extra": "bibtex: friends:leia:tv\nvolume: 3",
-      "runningTime": "22 min",
-      "network": "NBC",
-      "language": "en-US",
-      "episodeNumber": "1",
-      "title": "The one with the Princess Leia fantasy",
-      "programTitle": "Friends",
       "creators": [
         {
           "creatorType": "director",
-          "lastName": "Mancuso",
-          "firstName": "Gail"
+          "firstName": "Gail",
+          "lastName": "Mancuso"
         },
         {
           "creatorType": "scriptwriter",
-          "lastName": "Curtis",
-          "firstName": "Michael"
+          "firstName": "Michael",
+          "lastName": "Curtis"
         },
         {
           "creatorType": "scriptwriter",
-          "lastName": "Malins",
-          "firstName": "Gregory S."
+          "firstName": "Gregory S.",
+          "lastName": "Malins"
         }
       ],
+      "date": "1996-09-16",
+      "episodeNumber": "1",
+      "extra": "bibtex: friends:leia:tv\nvolume: 3",
+      "itemID": 251,
+      "itemType": "tvBroadcast",
+      "language": "en-US",
+      "network": "NBC",
       "notes": [
         "<p>Adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only*. This is a template for citing television shows in the 16th edition. The eventdate is the original broadcast date, while the date applies to the medium you are citing. As in other audiovisual entries, the earliest date automatically goes at the head of the entry. Note that information about the season and episode numbers [season~3, episode~1] goes in booktitleaddon.</p>"
       ],
-      "itemID": 251,
+      "number": "1",
+      "place": "US",
+      "programTitle": "Friends",
       "publisher": "NBC",
-      "number": "1"
+      "runningTime": "22 min",
+      "title": "The one with the Princess Leia fantasy"
     },
     {
-      "itemType": "videoRecording",
-      "volume": "3",
-      "place": "US",
+      "creators": [
+        {
+          "creatorType": "director",
+          "firstName": "Gail",
+          "lastName": "Mancuso"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Michael",
+          "lastName": "Curtis"
+        },
+        {
+          "creatorType": "scriptwriter",
+          "firstName": "Gregory S.",
+          "lastName": "Malins"
+        }
+      ],
       "date": "2003",
       "extra": "bibtex: friends:leia:dvd\ncontainer-title: Friends\nnumber: 1\noriginal-publisher: NBC\noriginal-date: 1996-09-16",
-      "videoRecordingFormat": "DVD",
-      "studio": "Warner Home Video",
-      "runningTime": "22 min",
+      "itemID": 253,
+      "itemType": "videoRecording",
       "language": "en-US",
-      "title": "The one with the Princess Leia fantasy",
-      "creators": [
-        {
-          "creatorType": "director",
-          "lastName": "Mancuso",
-          "firstName": "Gail"
-        },
-        {
-          "creatorType": "scriptwriter",
-          "lastName": "Curtis",
-          "firstName": "Michael"
-        },
-        {
-          "creatorType": "scriptwriter",
-          "lastName": "Malins",
-          "firstName": "Gregory S."
-        }
-      ],
+      "medium": "DVD",
       "notes": [
         "<p>Adapted from <a href=\"http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib\">http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib</a></p>\n<p>Original annotation:</p>\n<p>*16th edition only*. This is a template for citing television shows in the 16th edition. The eventdate is the original broadcast date, while the date applies to the medium you are citing. As in other audiovisual entries, the earliest date automatically goes at the head of the entry. Note that information about the season and episode numbers [season~3, episode~1] goes in booktitleaddon.</p>"
       ],
-      "itemID": 253,
-      "medium": "DVD",
-      "publisher": "Warner Home Video"
+      "place": "US",
+      "publisher": "Warner Home Video",
+      "runningTime": "22 min",
+      "studio": "Warner Home Video",
+      "title": "The one with the Princess Leia fantasy",
+      "videoRecordingFormat": "DVD",
+      "volume": "3"
     },
     {
-      "itemType": "encyclopediaArticle",
       "extra": "bibtex:emptybook\n{:X-genre: xxx}{:editor: Xxx}",
-      "itemID": 255
+      "itemID": 255,
+      "itemType": "encyclopediaArticle"
     },
     {
-      "itemType": "encyclopediaArticle",
-      "url": "http://www.oxforddnb.com/view/article/10183",
-      "place": "Oxford",
-      "publisher": "Oxford University Press",
-      "date": "2004",
-      "extra": "DOI: 10.1093/ref:odnb/10183",
       "accessDate": "2014-06-13 15:44:43",
-      "libraryCatalog": "CrossRef",
-      "encyclopediaTitle": "Oxford dictionary of national biography",
-      "title": "Frithuswith (<i>d.</i> 727)",
       "creators": [
         {
+          "creatorType": "editor",
           "firstName": "H.C.G.",
-          "lastName": "Matthew",
-          "creatorType": "editor"
+          "lastName": "Matthew"
         },
         {
+          "creatorType": "editor",
           "firstName": "Brian Howard",
-          "lastName": "Harrison",
-          "creatorType": "editor"
+          "lastName": "Harrison"
         },
         {
+          "creatorType": "author",
           "firstName": "John",
-          "lastName": "Blair",
-          "creatorType": "author"
+          "lastName": "Blair"
         }
       ],
+      "date": "2004",
       "dateAdded": "2015-08-13 18:39:21",
       "dateModified": "2016-08-19 14:52:17",
+      "encyclopediaTitle": "Oxford dictionary of national biography",
+      "extra": "DOI: 10.1093/ref:odnb/10183",
       "itemID": 670,
-      "publicationTitle": "Oxford dictionary of national biography"
+      "itemType": "encyclopediaArticle",
+      "libraryCatalog": "CrossRef",
+      "place": "Oxford",
+      "publicationTitle": "Oxford dictionary of national biography",
+      "publisher": "Oxford University Press",
+      "title": "Frithuswith (<i>d.</i> 727)",
+      "url": "http://www.oxforddnb.com/view/article/10183"
     }
   ]
 }

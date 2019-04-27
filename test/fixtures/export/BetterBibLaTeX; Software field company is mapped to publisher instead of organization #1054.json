@@ -1,19 +1,10 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.55",
-        "platform": "Win32",
-        "oscpu": "Windows NT 10.0; WOW64",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.0.190"
+    "options": {
+      "exportNotes": true
     },
     "preferences": {
       "DOIandURL": "both",
@@ -35,6 +26,7 @@
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "debugLog": "",
+      "exportBibTeXStrings": "off",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
@@ -43,14 +35,11 @@
       "lockedInit": false,
       "parseParticles": true,
       "postscript": "",
-      "preserveBibTeXVariables": false,
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
       "scrubDatabase": false,
-      "skipFields": [
-
-      ],
+      "skipFields": [],
       "skipWords": [
         "a",
         "ab",
@@ -180,38 +169,40 @@
       "suppressTitleCase": false,
       "warnBulkModify": 10
     },
-    "options": {
-      "exportNotes": true
+    "release": {
+      "BetterBibTeX": "5.0.190",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.55",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Windows NT 10.0; WOW64",
+        "platform": "Win32",
+        "version": "5.0.55"
+      }
     }
-  },
-  "collections": {
   },
   "items": [
     {
-      "itemType": "computerProgram",
-      "date": "9265",
-      "title": "Bla",
+      "attachments": [],
+      "citekey": "blup_bla_9265",
       "creators": [
         {
-          "name": "Blup",
-          "creatorType": "programmer"
+          "creatorType": "programmer",
+          "name": "Blup"
         }
       ],
-      "tags": [
-
-      ],
+      "date": "9265",
       "dateAdded": "2018-08-23T13:04:23Z",
       "dateModified": "2018-08-23T13:04:47Z",
-      "uri": "http://zotero.org/users/4882007/items/ED3P3LJH",
-      "attachments": [
-
-      ],
-      "notes": [
-
-      ],
       "itemID": 68,
-      "citekey": "blup_bla_9265",
-      "publisher": "BliBlaBlup"
+      "itemType": "computerProgram",
+      "notes": [],
+      "publisher": "BliBlaBlup",
+      "tags": [],
+      "title": "Bla",
+      "uri": "http://zotero.org/users/4882007/items/ED3P3LJH"
     }
   ]
 }

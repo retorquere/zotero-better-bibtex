@@ -5,15 +5,37 @@ declare const Zotero: any
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
+import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
   public jabref: JabRef
+  public strings: {[key: string]: string}
 
   constructor() {
     this.preamble = {DeclarePrefChars: ''}
     this.jabref = new JabRef()
+    this.strings = {}
+
+  }
+
+  public prepare_strings() {
+    if (!Translator.BetterTeX || !Translator.preferences.strings) return
+
+    if (Translator.preferences.exportBibTeXStrings === 'match') {
+      this.strings = biblatex.parse(Translator.preferences.strings, {
+        processUnexpected: true,
+        processUnknown: { comment: 'f_verbatim' },
+        processInvalidURIs: true,
+      }).strings
+    }
+
+    /*
+    if (Translator.preferences.exportBibTeXStrings !== 'off') {
+      Zotero.write(`${Translator.preferences.strings}\n\n`)
+    }
+    */
   }
 
   public unique_chars(str) {
