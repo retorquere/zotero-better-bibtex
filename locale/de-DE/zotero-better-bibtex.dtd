@@ -124,18 +124,18 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Wenn ein Eintrag über DOI und URL verfügt, exportiere">
 <!ENTITY better-bibtex.Preferences.export.fields "Felder">
 
-<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Expand the @string vars below during imports">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings "If a field could be a @string var, export it without braces">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "No">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assume single-word fields to be @string vars">
-<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Match against the @string vars below">
+<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Erweitere die folgenden @string-Variablen während des Imports">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "Wenn ein Feld eine @string-Variable sein könnte, exportiere es ohne Klammern">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Nein">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Behandle Felder mit nur einem Wort als @String-Variablen">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Vergleiche mit den @string-Variablen unten">
 
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordne Referenzen und Felder deterministisch; hauptsächlich für Versionskontrolle.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Felder, die nicht exportiert werden sollen (mit Komma trennen)">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Zeitschriften-Abkürzungen">
 <!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
 <!ENTITY better-bibtex.Preferences.tab.postscript.warn "Die Verwendung von 'Translator.options.exportPath' in Postscripts deaktiviert den Cache. Die Exporte werden sich deutlich verlangsamen.">
-<!ENTITY better-bibtex.Preferences.tab.strings "@string definitions">
+<!ENTITY better-bibtex.Preferences.tab.strings "@string-Definitionen">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTex">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Scanne angeheftete Zitierschlüssel erneut">
 <!ENTITY better-bibtex.Preferences.resetCache "Cache zurücksetzen">
