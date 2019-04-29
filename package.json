@@ -78,7 +78,7 @@
     "pegjs": "0.10.0",
     "permutater": "^1.0.2",
     "punycode": "2.1.1",
-    "recast": "0.17.5",
+    "recast": "0.17.6",
     "string-template": "1.0.0",
     "transliteration": "2.1.3",
     "tslint": "5.16.0",
@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@types/node": "11.13.8",
-    "@types/webpack": "4.4.27",
+    "@types/webpack": "4.4.29",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",
     "circular-dependency-plugin": "5.0.2",
