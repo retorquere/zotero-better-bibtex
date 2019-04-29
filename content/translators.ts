@@ -136,15 +136,15 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
       await this.exportItems(translatorID, displayOptions, { items: _batch })
 
-      log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
-      log.debug('Translators.primeCache: batch primed, total uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
+      // log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
+      // log.debug('Translators.primeCache: batch primed, total uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
       // give the UI a chance
       await timeout(delay)
     }
 
-    uncached = await this.uncached(translatorID, displayOptions, scope)
-    log.debug('Translators.primeCache: done,', uncached.length, 'total uncached in system')
-    if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
+    // uncached = await this.uncached(translatorID, displayOptions, scope)
+    // log.debug('Translators.primeCache: done,', uncached.length, 'total uncached in system')
+    // if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
