@@ -2,7 +2,7 @@ import shlex
 import redo
 import toml
 import munch
-import zotero
+import steps.zotero as zotero
 import time
 import os
 import sys
@@ -16,7 +16,11 @@ from selenium import webdriver
 import subprocess
 import psutil
 
-ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+import pathlib
+for d in pathlib.Path(__file__).resolve().parents:
+  if os.path.exists(os.path.join(d, 'behave.ini')):
+    ROOT = d
+    break
 
 class benchmark(object):
   def __init__(self,name):

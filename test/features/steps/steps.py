@@ -6,6 +6,12 @@ import time
 import os
 from hamcrest import assert_that, equal_to
 
+import pathlib
+for d in pathlib.Path(__file__).resolve().parents:
+  if os.path.exists(os.path.join(d, 'behave.ini')):
+    ROOT = d
+    break
+
 @step('I set preference {pref} to {value}')
 def step_impl(context, pref, value):
   context.preferences[pref] = context.preferences.parse(value)
@@ -112,11 +118,11 @@ def step_impl(context):
 
 @then(u'"{found}" should match "{expected}"')
 def step_impl(context, expected, found):
-  if expected[0] != '/': expected = os.path.join(os.path.dirname(__file__), '../../test/fixtures', expected)
+  if expected[0] != '/': expected = os.path.join(ROOT, 'test/fixtures', expected)
   with open(expected) as f:
     expected = f.read()
 
-  if found[0] != '/': found = os.path.join(os.path.dirname(__file__), '../../test/fixtures', found)
+  if found[0] != '/': found = os.path.join(ROOT, 'test/fixtures', found)
   with open(found) as f:
     found = f.read()
 

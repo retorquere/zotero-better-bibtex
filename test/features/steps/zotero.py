@@ -13,7 +13,12 @@ from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
-ROOT = os.path.join(os.path.dirname(__file__), '../..')
+import pathlib
+for d in pathlib.Path(__file__).resolve().parents:
+  if os.path.exists(os.path.join(d, 'behave.ini')):
+    ROOT = d
+    break
+
 with open(os.path.join(ROOT, 'gen/translators.json')) as f:
   TRANSLATORS = json.load(f, object_hook=Munch)
 
@@ -262,7 +267,7 @@ def expand_expected(expected):
 def import_file(context, references, collection = False):
   assert type(collection) in [bool, str]
 
-  fixtures = os.path.join(os.path.dirname(__file__), '../../test/fixtures')
+  fixtures = os.path.join(ROOT, 'test/fixtures')
   references = os.path.join(fixtures, references)
 
   if references.endswith('.json'):
