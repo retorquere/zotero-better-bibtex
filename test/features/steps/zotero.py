@@ -9,7 +9,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize
 #import difflib
 import shutil
 import shlex
