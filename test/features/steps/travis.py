@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-
 from behave.formatter.base import Formatter
 from behave.model_describe import ModelPrinter
 from behave.textutil import make_indentation
