@@ -334,6 +334,26 @@ class Profile:
     shutil.rmtree(self.path, ignore_errors=True)
     shutil.move(profile.path, self.path)
 
+def un_multi(obj):
+  if type(obj) == dict:
+    obj.pop('multi', None)
+    for v in obj.values():
+      un_multi(v)
+  elif type(obj) == list:
+    for v in obj:
+      un_multi(v)
+
+def strip_obj(data):
+  if type(data) == list:
+    stripped = [strip_obj(e) for e in data]
+    return [e for e in stripped if e not in ['', u'', {}, None, []]]
+
+  if type(data) == dict:
+    stripped = {k: strip_obj(v) for (k, v) in data.items()}
+    return {k: v for (k, v) in stripped.items() if v not in ['', u'', {}, None, []]}
+
+  return data
+
 def normalizeJSON(lib):
   un_multi(lib)
 
