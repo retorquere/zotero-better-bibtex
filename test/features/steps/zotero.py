@@ -21,9 +21,9 @@ import subprocess
 import atexit
 import time
 
-#from ruamel.yaml import YAML
-#yaml = YAML(typ='safe')
-#yaml.default_flow_style = False
+from ruamel.yaml import YAML
+yaml = YAML(typ='safe')
+yaml.default_flow_style = False
 
 class Zotero:
   def __init__(self, userdata):
