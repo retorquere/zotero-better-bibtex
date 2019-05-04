@@ -54,7 +54,7 @@ jobs:
   - stage: test
     env:
     - ZOTERO=zotero
-    - TAGS="not @test-cluster-1"
+    - TAGS="~@test-cluster-1"
 
   - stage: test
     env:
@@ -64,7 +64,7 @@ jobs:
   - stage: test
     env:
     - ZOTERO=jurism
-    - TAGS="not @test-cluster-1"
+    - TAGS="~@test-cluster-1"
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request

@@ -4,7 +4,7 @@ markdownify
 beautifulsoup4
 Cheetah3
 addict
-git+https://github.com/behave/behave
+behave
 boto3
 lxml
 munch
