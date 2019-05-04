@@ -9,13 +9,10 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize
-#import difflib
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md
 import shutil
 import shlex
-#import io
-#from markdownify import markdownify as md
-#from bs4 import BeautifulSoup
+import io
 import psutil
 import subprocess
 import atexit
