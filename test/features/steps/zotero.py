@@ -162,11 +162,9 @@ class Zotero:
       expected = normalizeJSON(json.loads(expected))
 
       if len(expected['items']) < 30 or len(found['items']) < 30:
-        print('SMALL COMPARE')
         assert_equal_diff(serialize(expected), serialize(found))
         return
       else:
-        print('BIG COMPARE')
         assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
         return compare(expected['items'], found['items'])
 
