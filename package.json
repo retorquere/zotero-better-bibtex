@@ -18,7 +18,7 @@
   },
   "scripts": {
     "pretest": "npm run build",
-    "test": "behave --stop",
+    "test": "./test/behave --stop",
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",
     "postwebpack": "./setup/patch-webpack.py",
@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@types/node": "12.0.0",
-    "@types/webpack": "4.4.29",
+    "@types/webpack": "4.4.30",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",
     "circular-dependency-plugin": "5.0.2",
