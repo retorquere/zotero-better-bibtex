@@ -20,7 +20,7 @@ class TravisFormatter(PlainFormatter):
     name = "travis"
     description = "Very basic formatter with maximum compatibility but shortened line lengths for Travis"
 
-    LINE_WIDTH = 125
+    LINE_WIDTH = 130
 
     def result(self, step):
         """
@@ -35,12 +35,13 @@ class TravisFormatter(PlainFormatter):
             text = u"%s%6s %s" % (indent, step.keyword, step.name)
         else:
             text = u"%s%s %s" % (indent, step.keyword, step.name)
+        if step.status.name == 'failed': text = u'\u26A0' + ' ' + text
         self.stream.write(textwrap.shorten(text, width=self.LINE_WIDTH - 30) + ' ')
 
-        status_text = f'({step.status.name}'
+        status_text = ': '
+        status_text += {'passed': u'\u2713', 'failed': u'\u26A0'}[step.status.name]
         if self.show_timings:
             status_text += " in %0.3fs" % step.duration
-        status_text += ')'
 
         unicode_errors = 0
         if step.error_message:
