@@ -4,6 +4,7 @@ import os
 import time
 import psutil
 import json
+import difflib
 from markdownify import markdownify as md
 from bs4 import BeautifulSoup
 

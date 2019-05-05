@@ -1,0 +1,45 @@
+#!/usr/bin/env python3
+
+import sys
+import os
+import json
+
+#https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
+from behave.__main__ import Configuration, run_behave
+import behave.configuration
+
+sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
+
+nightly = os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
+if nightly:
+  sys.argv.extend(['--define', 'timeout=300'])
+else:
+  sys.argv.extend(['--tags', '~@nightly'])
+
+print(' '.join(sys.argv))
+
+# hijack setup_formats to do sys.path processing so the format loader is ran with the sys.path patched already
+Configuration_setup_formats = Configuration.setup_formats
+def patched_Configuration_setup_formats(self):
+  if self.sys_path:
+    for path in self.sys_path:
+      path = os.path.abspath(path)
+      assert os.path.exists(path), f'sys-path {json.dumps(path)} does not exist'
+      sys.path.append(path)
+
+  return Configuration_setup_formats(self)
+Configuration.setup_formats = patched_Configuration_setup_formats
+
+behave.configuration.options.append(
+  (
+    ('--sys-path',),
+    dict(
+      action="append",
+      dest="sys_path",
+      help="Specify additional sys.path paths."
+    )
+  )
+)
+config = Configuration(None)
+
+sys.exit(run_behave(config))
