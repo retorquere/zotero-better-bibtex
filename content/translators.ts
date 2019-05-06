@@ -180,11 +180,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (path) {
       let file = null
 
-      // path could exist but not be a regular file
       try {
         file = Zotero.File.pathToFile(path)
+        // path could exist but not be a regular file
         if (file.exists() && !file.isFile()) file = null
       } catch (err) {
+        // or Zotero.File.pathToFile could have thrown an error
         log.error('Translators.exportItems:', err)
         file = null
       }
@@ -193,14 +194,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
         return deferred.promise
       }
 
-      // the parent directory could be removed
-      try {
-        if (!file.parent || !file.parent.exists()) file = null
-      } catch (err) {
-        log.error('Translators.exportItems:', err)
-        file = null
-      }
-      if (!file) {
+      // the parent directory could have been removed
+      if (!file.parent || !file.parent.exists()) file = null
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
         return deferred.promise
       }
