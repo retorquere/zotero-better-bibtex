@@ -178,23 +178,29 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 
     if (path) {
-      let exists = false
       let file = null
+
+      // path could exist but not be a regular file
       try {
         file = Zotero.File.pathToFile(path)
-        exists = file.exists() && !file.isFile()
+        if (file.exists() && !file.isFile()) file = null
       } catch (err) {
-        log.error('translator.exportItems:', err)
-        exists = false
+        log.error('Translators.exportItems:', err)
+        file = null
       }
-
-      if (!exists) {
+      if (!file) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
         return deferred.promise
       }
 
-      // really shouldn't be possible?
-      if (!file.parent || !file.parent.exists()) {
+      // the parent directory could be removed
+      try {
+        if (!file.parent || !file.parent.exists()) file = null
+      } catch (err) {
+        log.error('Translators.exportItems:', err)
+        file = null
+      }
+      if (!file) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
         return deferred.promise
       }
