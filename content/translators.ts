@@ -247,13 +247,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     let installed = null
     try {
-      installed = !!Zotero.Translators.get(header.translatorID)
+      installed = Zotero.Translators.get(header.translatorID)
     } catch (err) {
       log.error('Translators.install', header, err)
       installed = null
     }
 
-    log.debug('Translators.install: installed =', installed)
+    log.debug('Translators.install: installed =', !!installed)
 
     const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
     const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
