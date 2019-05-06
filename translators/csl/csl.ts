@@ -43,6 +43,17 @@ const validCSLTypes = [
   'thesis',
 ]
 
+function sortObject(obj) {
+  if (!Array.isArray(obj) && obj && typeof obj === 'object') {
+    for (const field of Object.keys(obj).sort()) {
+      const value = obj[field]
+      delete obj[field]
+      obj[field] = sortObject(value)
+    }
+  }
+  return obj
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
@@ -171,6 +182,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         cache = false
       }
 
+      if (Translator.preferences.testing || Translator.preferences.sorted) csl = sortObject(csl)
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
