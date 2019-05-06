@@ -232,7 +232,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     let installed = null
     try {
-      installed = Zotero.Translators.get(header.translatorID)
+      installed = !!Zotero.Translators.get(header.translatorID)
     } catch (err) {
       log.error('Translators.install', header, err)
       installed = null
