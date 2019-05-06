@@ -171,6 +171,9 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         cache = false
       }
 
+      for (const field of Translator.preferences.skipFields) {
+        delete csl[field]
+      }
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
