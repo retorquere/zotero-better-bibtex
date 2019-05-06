@@ -178,13 +178,22 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 
     if (path) {
-      const file = Zotero.File.pathToFile(path)
+      let exists = false
+      let file = null
+      try {
+        file = Zotero.File.pathToFile(path)
+        exists = file.exists() && !file.isFile()
+      } catch (err) {
+        log.error('translator.exportItems:', err)
+        exists = false
+      }
 
-      if (file.exists() && !file.isFile()) {
+      if (!exists) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
         return deferred.promise
       }
 
+      // really shouldn't be possible?
       if (!file.parent || !file.parent.exists()) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
         return deferred.promise
