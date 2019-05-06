@@ -195,7 +195,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
 
       // the parent directory could have been removed
-      if (!file.parent || !file.parent.exists()) file = null
+      if (!file.parent || !file.parent.exists()) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
         return deferred.promise
       }
