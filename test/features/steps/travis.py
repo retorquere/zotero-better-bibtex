@@ -3,6 +3,7 @@
 from __future__ import absolute_import
 from behave.formatter.plain import PlainFormatter
 from behave.textutil import make_indentation
+from behave.formatter.ansi_escapes import escapes
 import textwrap
 
 # -----------------------------------------------------------------------------
@@ -35,11 +36,12 @@ class TravisFormatter(PlainFormatter):
             text = u"%s%6s %s" % (indent, step.keyword, step.name)
         else:
             text = u"%s%s %s" % (indent, step.keyword, step.name)
-        if step.status.name == 'failed': text = u'\u26A0' + ' ' + text
-        self.stream.write(textwrap.shorten(text, width=self.LINE_WIDTH - 30) + ' ')
+        text = escapes[step.status.name] + textwrap.shorten(text, width=self.LINE_WIDTH - 30) + escapes['reset'] + ' '
+        self.stream.write(text)
 
         status_text = ': '
         status_text += {'passed': u'\u2713', 'failed': u'\u26A0'}[step.status.name]
+
         if self.show_timings:
             status_text += " in %0.3fs" % step.duration
 
