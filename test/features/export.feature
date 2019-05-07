@@ -261,6 +261,11 @@ Scenario: Postscript error aborts CSL JSON export #1155
   When I import 4 references from "export/Postscript error aborts CSL JSON export #1155.json"
   Then an export using "Better CSL JSON" should match "export/Postscript error aborts CSL JSON export #1155.csl.json"
 
+@1179
+Scenario: CSL exporters; ignore [Fields to omit from export] setting #1179
+  When I import 26 references from "export/CSL exporters; ignore [Fields to omit from export] setting #1179.json"
+  Then an export using "Better CSL JSON" should match "export/CSL exporters; ignore [Fields to omit from export] setting #1179.csl.json"
+
 @860 @cslyml
 Scenario: Season ranges should be exported as pseudo-months (13-16, or 21-24) #860
   When I import 6 references from "export/Season ranges should be exported as pseudo-months (13-16, or 21-24) #860.json"
