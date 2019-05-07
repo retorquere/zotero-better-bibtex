@@ -69,7 +69,7 @@ for template in templates:
     print('', file=f)
 
     if template.name in ['Export', 'Key_generation']:
-      print("The error report is important; it gives me your current BBT settings and a copy of the problematic reference so I can best replicate your problem. Without it, I'm effectively blind.", file=f)
+      print("The error report is important; it gives me your current BBT settings and a copy of the problematic reference as a test case so I can best replicate your problem. Without it, I'm effectively blind.", file=f)
       print('', file=f)
     elif template.name in ['General_error']:
       print("The error-report is important; it gives me your current BBT settings and a log of what Zotero was doing at the time of error. Without it, I'm effectively blind.", file=f)
