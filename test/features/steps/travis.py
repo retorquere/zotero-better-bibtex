@@ -2,6 +2,7 @@
 
 from __future__ import absolute_import
 from behave.formatter.plain import PlainFormatter
+from behave.formatter.pretty import get_terminal_size
 from behave.textutil import make_indentation
 from behave.formatter.ansi_escapes import escapes
 import textwrap
@@ -23,7 +24,7 @@ class TravisFormatter(PlainFormatter):
     name = "travis"
     description = "Very basic formatter with maximum compatibility but shortened line lengths for Travis"
 
-    LINE_WIDTH = 130
+    LINE_WIDTH = (130 if 'CI' in os.environ else max(get_terminal_size()[0], 130))
     SHOW_TAGS = True
 
     def write_tags(self, tags, indent=None):
