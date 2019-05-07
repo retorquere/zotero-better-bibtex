@@ -43,6 +43,23 @@ const validCSLTypes = [
   'thesis',
 ]
 
+function keySort(a, b) {
+  if (a === 'id' && b !== 'id') return -1
+  if (a !== 'id' && b === 'id') return -1
+  return a.localeCompare(b, undefined, { sensitivity: 'base' })
+}
+
+function sortObject(obj) {
+  if (!Array.isArray(obj) && obj && typeof obj === 'object') {
+    for (const field of Object.keys(obj).sort(keySort)) {
+      const value = obj[field]
+      delete obj[field]
+      obj[field] = sortObject(value)
+    }
+  }
+  return obj
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let CSLExporter = new class { // tslint:disable-line:variable-name
   public flush: Function // will be added by JSON/YAML exporter
@@ -64,11 +81,14 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public postscript(reference, item) {} // tslint:disable-line:no-empty
 
   public doExport() {
-    const items = []
+    let items = []
+    const order = []
 
     let item: ISerializedItem
     while (item = Zotero.nextItem()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
+
+      order.push({ id: item.citekey, index: items.length })
 
       let cached: Types.DB.Cache.ExportedItem
       if (cached = Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences)) {
@@ -174,11 +194,17 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       for (const field of Translator.preferences.skipFields) {
         delete csl[field]
       }
+      if (Translator.preferences.testing || Translator.preferences.sorted) csl = sortObject(csl)
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
       items.push(csl)
+    }
+
+    if (Translator.preferences.testing || Translator.preferences.sorted) {
+      order.sort((a, b) => a.id.localeCompare(b.id, undefined, { sensitivity: 'base' }))
+      items = order.map(i => items[i.index])
     }
 
     Zotero.write(this.flush(items))

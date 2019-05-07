@@ -1,6 +1,63 @@
 ---
 references:
 -
+  id: '0000210000240'
+  issued:
+    -
+      season: 1
+      year: -1
+    -
+      season: 4
+      year: -1
+  title: 0000-21/0000-24
+  type: webpage
+
+-
+  id: 001121001222-11
+  issued:
+    -
+      season: 1
+      year: -12
+    -
+      season: 2
+      year: -13
+  title: '-0011-21/-0012-22'
+  type: webpage
+
+-
+  id: '00112100122211'
+  issued:
+    -
+      season: 1
+      year: 11
+    -
+      season: 2
+      year: 12
+  title: 0011-21/0012-22
+  type: webpage
+
+-
+  id: 201121201222-2011
+  issued:
+    -
+      season: 1
+      year: -2012
+    -
+      season: 2
+      year: -2013
+  title: '-2011-21/-2012-22'
+  type: webpage
+
+-
+  id: monthsoutrange2017
+  issued:
+    - literal: 2017-14/2017-15
+  original-date:
+    - literal: 2017-14/2017-99
+  title: months out of range
+  type: webpage
+
+-
   id: SeasonrangesEDTF2017
   issued:
     -
@@ -17,62 +74,5 @@ references:
       season: 2
       year: 2016
   title: 'Season ranges: EDTF and literal'
-  type: webpage
-
--
-  id: monthsoutrange2017
-  issued:
-    - literal: 2017-14/2017-15
-  original-date:
-    - literal: 2017-14/2017-99
-  title: months out of range
-  type: webpage
-
--
-  id: '00112100122211'
-  issued:
-    -
-      season: 1
-      year: 11
-    -
-      season: 2
-      year: 12
-  title: 0011-21/0012-22
-  type: webpage
-
--
-  id: 001121001222-11
-  issued:
-    -
-      season: 1
-      year: -12
-    -
-      season: 2
-      year: -13
-  title: '-0011-21/-0012-22'
-  type: webpage
-
--
-  id: 201121201222-2011
-  issued:
-    -
-      season: 1
-      year: -2012
-    -
-      season: 2
-      year: -2013
-  title: '-2011-21/-2012-22'
-  type: webpage
-
--
-  id: '0000210000240'
-  issued:
-    -
-      season: 1
-      year: -1
-    -
-      season: 4
-      year: -1
-  title: 0000-21/0000-24
   type: webpage
 ...
