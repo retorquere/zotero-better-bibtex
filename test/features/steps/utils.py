@@ -29,7 +29,7 @@ def assert_equal_diff(expected, found):
 
 def expand_scenario_variables(context, filename, star=True):
   if hasattr(context, 'scenario'):
-    filename = filename.replace('%scenario%', context.scenario.name)
+    filename = filename.replace('((scenario))', context.scenario.name)
     if star: filename = filename.replace('*', context.scenario.name)
   return filename
 
