@@ -74,6 +74,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         this.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => void
         Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
+        if (Translator.preferences.testing) throw err
         Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
       }
     }
@@ -188,6 +189,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       try {
         cache = this.postscript(csl, item)
       } catch (err) {
+        if (Translator.preferences.testing) throw err
         cache = false
       }
 

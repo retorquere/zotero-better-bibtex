@@ -266,14 +266,16 @@ export class Reference {
   private inPostscript = false
 
   public static installPostscript() {
-    const postscript = Translator.preferences.postscript
+    let postscript = Translator.preferences.postscript
 
     if (typeof postscript !== 'string' || postscript.trim() === '') return
 
     try {
-      Reference.prototype.postscript = new Function('reference', 'item', `this.inPostscript = true; ${postscript}; this.inPostscript = false;`) as (reference: any, item: any) => void
+      if (!Translator.preferences.testing) postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
+      Reference.prototype.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => boolean
       Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
+      if (Translator.preferences.testing) throw err
       Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
     }
   }
@@ -736,6 +738,7 @@ export class Reference {
     try {
       cache = this.postscript(this, this.item)
     } catch (err) {
+      if (Translator.preferences.testing) throw err
       debug('Reference.postscript failed:', err)
       cache = false
     }
