@@ -271,7 +271,7 @@ export class Reference {
     if (typeof postscript !== 'string' || postscript.trim() === '') return
 
     try {
-      if (!Translator.preferences.testing) postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
+      postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
       Reference.prototype.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => boolean
       Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
