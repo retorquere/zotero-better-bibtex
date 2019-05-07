@@ -57,6 +57,24 @@ references:
   type: article-journal
   volume: '34'
 
+- author:
+    - family: Dunning
+      given: Andrew N.J.
+  collection-number: '33'
+  collection-title: Toronto Medieval Latin Texts
+  id: Dunning2016
+  issued:
+    -
+      year: 2016
+  publisher: Pontifical Institute of Mediaeval Studies
+  publisher-place: Toronto
+  title: >-
+    Samuel Presbiter: Notes from the school of William de Montibus. <span
+    class="nocase">Collecta ex diuersis auditis in scola magistri Willelmi de
+    Monte</span>
+  title-short: Notes from the school of William de Montibus
+  type: book
+
 - URL: 'https://archive.org/details/gospelaccording00goog'
   accessed:
     -
@@ -81,23 +99,5 @@ references:
     The Gospel according to St. Matthew, from the St. Germain ms. (g~1~), now
     numbered Lat. 11553 in the National Library at Paris
   title-short: The Gospel according to St. Matthew
-  type: book
-
-- author:
-    - family: Dunning
-      given: Andrew N.J.
-  collection-number: '33'
-  collection-title: Toronto Medieval Latin Texts
-  id: Dunning2016
-  issued:
-    -
-      year: 2016
-  publisher: Pontifical Institute of Mediaeval Studies
-  publisher-place: Toronto
-  title: >-
-    Samuel Presbiter: Notes from the school of William de Montibus. <span
-    class="nocase">Collecta ex diuersis auditis in scola magistri Willelmi de
-    Monte</span>
-  title-short: Notes from the school of William de Montibus
   type: book
 ...

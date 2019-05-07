@@ -46,7 +46,7 @@ const validCSLTypes = [
 function keySort(a, b) {
   if (a === 'id' && b !== 'id') return -1
   if (a !== 'id' && b === 'id') return -1
-  return a.localeCompare(b, null, { sensitivity: 'base' })
+  return a.localeCompare(b, undefined, { sensitivity: 'base' })
 }
 
 function sortObject(obj) {
@@ -203,7 +203,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     }
 
     if (Translator.preferences.testing || Translator.preferences.sorted) {
-      order.sort((a, b) => a.id.localeCompare(b.id, null, { sensitivity: 'base' }))
+      order.sort((a, b) => a.id.localeCompare(b.id, undefined, { sensitivity: 'base' }))
       items = order.map(i => items[i.index])
     }
 
