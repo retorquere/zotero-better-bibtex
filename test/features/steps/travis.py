@@ -5,6 +5,7 @@ from behave.formatter.plain import PlainFormatter
 from behave.textutil import make_indentation
 from behave.formatter.ansi_escapes import escapes
 import textwrap
+import os
 
 # -----------------------------------------------------------------------------
 # CLASS: PlainFormatter
@@ -28,6 +29,10 @@ class TravisFormatter(PlainFormatter):
     def write_tags(self, tags, indent=None):
       if tags and self.show_tags:
         indent = indent or ""
+
+        if 'test-cluster-1' in tags:
+          tags = set(tags) - set(['test-cluster-1'])
+
         text = textwrap.fill(' '.join(['@' + tag for tag in sorted(tags, key=lambda t: (t.rjust(10, '0').rjust(30, '~') if t.isdigit() else t))]), self.LINE_WIDTH, initial_indent=indent, subsequent_indent=indent + '  ')
         self.stream.write(text + '\n')
 
