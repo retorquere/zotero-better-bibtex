@@ -9,6 +9,7 @@ import textwrap
 # -----------------------------------------------------------------------------
 # CLASS: PlainFormatter
 # -----------------------------------------------------------------------------
+
 class TravisFormatter(PlainFormatter):
     """
     Provides a simple plain formatter without coloring/formatting.
@@ -22,6 +23,13 @@ class TravisFormatter(PlainFormatter):
     description = "Very basic formatter with maximum compatibility but shortened line lengths for Travis"
 
     LINE_WIDTH = 130
+    SHOW_TAGS = True
+
+    def write_tags(self, tags, indent=None):
+      if tags and self.show_tags:
+        indent = indent or ""
+        text = textwrap.fill(' '.join(['@' + tag for tag in sorted(tags, key=lambda t: (t.rjust(10, '0').rjust(30, '~') if t.isdigit() else t))]), self.LINE_WIDTH, initial_indent=indent, subsequent_indent=indent + '  ')
+        self.stream.write(text + '\n')
 
     def result(self, step):
         """
