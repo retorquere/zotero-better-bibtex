@@ -17,7 +17,7 @@ for d in pathlib.Path(__file__).resolve().parents:
 def step_impl(context, pref, value):
   # bit of a cheat...
   if pref.endswith('.postscript'):
-    pref = expand_scenario_variables(context, pref)
+    value = expand_scenario_variables(context, value)
   context.zotero.preferences[pref] = context.zotero.preferences.parse(value)
 
 @step(r'I import {references:d} references from "{source}"')
