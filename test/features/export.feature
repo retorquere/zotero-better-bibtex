@@ -398,7 +398,7 @@ Scenario: auto-export
   And I set preference .jabrefFormat to 3
   And I set preference .autoExportPrimeExportCacheThreshold to 1
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
-  And an auto-export of "/autoexport" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
+  And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
   And I remove the selected item
   And I wait 5 seconds
