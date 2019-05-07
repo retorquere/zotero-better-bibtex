@@ -738,7 +738,7 @@ export class Reference {
     try {
       cache = this.postscript(this, this.item)
     } catch (err) {
-      if (Translator.preferences.testing) throw err
+      if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
       debug('Reference.postscript failed:', err)
       cache = false
     }

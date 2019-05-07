@@ -7,6 +7,7 @@ import { ZoteroConfig } from './zotero-config'
 
 const supported = Object.keys(require('../gen/preferences/defaults.json'))
 supported.push('removeStock')
+supported.push('postscriptProductionMode')
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name
