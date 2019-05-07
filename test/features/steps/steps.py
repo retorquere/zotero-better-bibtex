@@ -113,7 +113,6 @@ def step_impl(context, title, label, locator):
 
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):
-  expected = scenario_filename(context, expected)
   found = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.pick(fmt, picks)', fmt=fmt, picks=context.picked)
   assert_equal_diff(expected.strip(), found.strip())
 

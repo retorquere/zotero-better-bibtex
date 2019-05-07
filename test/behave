@@ -4,6 +4,13 @@ import sys
 import os
 import json
 
+import pathlib
+for d in pathlib.Path(__file__).resolve().parents:
+  if os.path.exists(os.path.join(d, 'behave.ini')):
+    ROOT = d
+    break
+os.chdir(ROOT)
+
 if not 'CI' in os.environ:
   from subprocess import Popen, PIPE
 

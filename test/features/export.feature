@@ -224,7 +224,7 @@ Scenario: CAYW picker
 
 @test-cluster-1
 @307 @bbt
-Scenario: thesis zotero entries always create @phpthesis bibtex entries #307
+Scenario: thesis zotero entries always create @phdthesis bibtex entries #307
   When I import 2 references from "export/*.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
   And an export using "Better BibTeX" should match "export/*.bibtex"

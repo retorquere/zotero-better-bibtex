@@ -7,8 +7,8 @@ Background:
 
 @i1 @schomd
 Scenario: Better BibTeX Import 2
-  When I import 2 references from "import/Better BibTeX.002.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/Better BibTeX.002.json"
+  When I import 2 references from "import/*.bib"
+  Then an export using "BetterBibTeX JSON" should match "import/*.json"
 #  And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
 #  And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
 #  And the markdown citation for orre2008 should be ''
