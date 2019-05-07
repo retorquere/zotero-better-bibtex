@@ -178,13 +178,23 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (displayOptions && (Object.keys(displayOptions).length !== 0)) translation.setDisplayOptions(displayOptions)
 
     if (path) {
-      const file = Zotero.File.pathToFile(path)
+      let file = null
 
-      if (file.exists() && !file.isFile()) {
+      try {
+        file = Zotero.File.pathToFile(path)
+        // path could exist but not be a regular file
+        if (file.exists() && !file.isFile()) file = null
+      } catch (err) {
+        // or Zotero.File.pathToFile could have thrown an error
+        log.error('Translators.exportItems:', err)
+        file = null
+      }
+      if (!file) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.notaFile', { path }))
         return deferred.promise
       }
 
+      // the parent directory could have been removed
       if (!file.parent || !file.parent.exists()) {
         deferred.reject(Zotero.BetterBibTeX.getString('Translate.error.target.noParent', { path }))
         return deferred.promise
@@ -238,7 +248,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       installed = null
     }
 
-    log.debug('Translators.install: installed =', installed)
+    log.debug('Translators.install: installed =', !!installed)
 
     const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
     const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)

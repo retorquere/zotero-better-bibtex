@@ -30,7 +30,7 @@ script:
 
 after_failure:
   - ./util/build-assets pop
-  - curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io
+  - export fileio=$(curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io) && echo $fileio
 
 stages:
   - build

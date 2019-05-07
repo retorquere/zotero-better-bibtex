@@ -89,7 +89,7 @@
   },
   "devDependencies": {
     "@types/node": "12.0.0",
-    "@types/webpack": "4.4.30",
+    "@types/webpack": "4.4.31",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",
     "circular-dependency-plugin": "5.0.2",
@@ -115,7 +115,7 @@
     "request-promise": "4.2.4",
     "rimraf": "2.6.3",
     "shelljs": "0.8.3",
-    "ts-loader": "5.4.5",
+    "ts-loader": "6.0.0",
     "ts-node": "8.1.0",
     "typedoc": "0.14.2",
     "typescript": "3.4.5",
