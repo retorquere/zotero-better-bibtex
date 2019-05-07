@@ -27,9 +27,10 @@ class benchmark(object):
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
-def scenario_filename(context, filename):
+def expand_scenario_variables(context, filename, star=True):
   if hasattr(context, 'scenario'):
-    filename = filename.format(scenario = context.scenario.name).replace('*', context.scenario.name)
+    filename = filename.replace('%scenario%', context.scenario.name)
+    if star: filename = filename.replace('*', context.scenario.name)
   return filename
 
 def html2md(html):

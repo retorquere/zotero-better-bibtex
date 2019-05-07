@@ -338,7 +338,7 @@ Scenario: Journal abbreviations exported in bibtex (81)
 @postscript @bbt
 Scenario: Export web page to misc type with notes and howpublished custom fields #329
   Given I import 3 references from "export/*.json"
-  And I set preference .postscript to "export/{scenario}.js"
+  And I set preference .postscript to "export/*.js"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 @postscript @1043
