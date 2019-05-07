@@ -145,6 +145,7 @@ class Zotero:
       expected = f.read()
 
     if ext == '.csl.json':
+      with open('exported.csl.json', 'w') as f: f.write(found)
       return compare(json.loads(expected), json.loads(found))
 
     elif ext == '.csl.yml':
