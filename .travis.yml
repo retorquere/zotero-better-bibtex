@@ -74,8 +74,10 @@ jobs:
     script:
       - ./util/build-assets fetch
       - npm run release
+      - ./util/build-assets pop
 
   - stage: cleanup
+    if: env(TRAVIS_EVENT_TYPE) = cron OR env(TRAVIS_EVENT_TYPE) = pull_request
     before_install: true
     script:
       - ./util/build-assets pop
