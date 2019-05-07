@@ -95,7 +95,7 @@ def step_impl(context, translator, expected):
   )
 
 @step('the library should match "{expected}"')
-def step_impl(context, translator, expected):
+def step_impl(context, expected):
   expected = expand_scenario_variables(context, expected)
   context.zotero.export_library(
     displayOptions = context.displayOptions,
