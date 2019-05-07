@@ -8,7 +8,7 @@ Background:
 @i1 @schomd
 Scenario: Better BibTeX Import 2
   When I import 2 references from "import/*.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/*.json"
+  Then the library should match "import/*.json"
 #  And the markdown citation for Torre2008 should be '\(Torre & Verducci, 2008\)'
 #  And the markdown bibliography for Torre2008 should be '<a name="@Torre2008"></a>Torre, J., & Verducci, T. \(2008\). _The Yankee Years_.  Doubleday.'
 #  And the markdown citation for orre2008 should be ''
@@ -16,21 +16,21 @@ Scenario: Better BibTeX Import 2
 
 @472
 Scenario: Math markup to unicode not always imported correctly #472
-  When I import 3 references from "import/Math markup to unicode not always imported correctly #472.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/Math markup to unicode not always imported correctly #472.json"
+  When I import 3 references from "import/*.bib"
+  Then the library should match "import/*.json"
   And I set preference .exportBibTeXStrings to detect
-  Then an export using "Better BibTeX" should match "import/Math markup to unicode not always imported correctly #472.roundtrip.bib"
+  Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
 @758 @aux
 Scenario: AUX scanner
-  When I import 149 references from "import/AUX scanner-pre.json"
-  And I import 1 reference from "import/AUX scanner.aux"
-  Then an export using "BetterBibTeX JSON" should match "import/AUX scanner-post.json"
+  When I import 149 references from "import/*-pre.json"
+  And I import 1 reference from "import/*.aux"
+  Then the library should match "import/*-post.json"
 
 @nightly
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+  Then the library should match "import/<file>.json"
 
   Examples:
   | file                                                                        | references  |
@@ -40,7 +40,7 @@ Scenario Outline: Better BibTeX Import
 @test-cluster-1 @959 @1058 @871 @1081 @1115
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+  Then the library should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
   | Import location to event-place for conference papers                        | 1           |
@@ -76,7 +76,7 @@ Scenario Outline: Better BibTeX Import
 @13
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
-  Then an export using "BetterBibTeX JSON" should match "import/<file>.json"
+  Then the library should match "import/<file>.json"
   Examples:
   | file                                                                        | references  |
   # | Better BibTeX.014                                                           | 1           | # not supported by biblatex-csl-converter
@@ -89,11 +89,11 @@ Scenario Outline: Better BibTeX Import
 #@97
 #Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #97
 #  When I import 911 references with 42 attachments from "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.bib"
-#  Then an export using "BetterBibTeX JSON" should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
+#  Then the library should match "import/Maintain the JabRef group and subgroup structure when importing a BibTeX db #97.json"
 
 @717
-Scenario: Maintain the JabRef group and subgroup structure when importing a BibTeX db #717
-  When I import 3 references from "import/Jabref groups import does not work #717.2.10.bib" into a new collection
-  Then an export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.2.10.json"
-  When I import 4 references from "import/Jabref groups import does not work #717.3.8.bib" into a new collection
-  Then an export using "BetterBibTeX JSON" should match "import/Jabref groups import does not work #717.3.8.json"
+Scenario: Jabref groups import does not work #717
+  When I import 3 references from "import/*.2.10.bib" into a new collection
+  Then the library should match "import/*.2.10.json"
+  When I import 4 references from "import/*.3.8.bib" into a new collection
+  Then the library should match "import/*.3.8.json"

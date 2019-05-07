@@ -55,7 +55,6 @@ def step_impl(context, references, attachments, source):
 
 @step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
 def step_impl(context, translator, output, expected):
-  source = expand_scenario_variables(context, source)
   expected = expand_scenario_variables(context, expected)
   context.zotero.export_library(
     displayOptions = { **context.displayOptions, 'keepUpdated': True},
@@ -92,6 +91,15 @@ def step_impl(context, translator, expected):
   context.zotero.export_library(
     displayOptions = context.displayOptions,
     translator = translator,
+    expected = expected
+  )
+
+@step('the library should match "{expected}"')
+def step_impl(context, translator, expected):
+  expected = expand_scenario_variables(context, expected)
+  context.zotero.export_library(
+    displayOptions = context.displayOptions,
+    translator = 'BetterBibTeX JSON',
     expected = expected
   )
 
