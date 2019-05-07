@@ -27,6 +27,11 @@ class benchmark(object):
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
+def scenario_filename(context, filename):
+  if hasattr(context, 'scenario'):
+    filename = filename.format(scenario = context.scenario.name).replace('*', context.scenario.name)
+  return filename
+
 def html2md(html):
   html = BeautifulSoup(html).prettify()
   return md(html).strip()
