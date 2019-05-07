@@ -44,7 +44,7 @@ jobs:
     before_install: true
     script:
       - npm run build
-      - ./util/build-assets stash
+      - travis_retry ./util/build-assets stash
 
   - stage: test
     env:
