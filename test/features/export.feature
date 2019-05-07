@@ -290,7 +290,8 @@ Scenario: BBT CSL JSON; Do not use shortTitle and journalAbbreviation #372
 
 @365 @pandoc @825
 Scenario: Export of creator-type fields from embedded CSL variables #365 uppercase DOI #825
-  When I import 7 references from "export/*.biblatex"
+  When I import 7 references from "export/*.json"
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
   And an export using "Better CSL JSON" should match "export/*.csl.json"
 
 @587
