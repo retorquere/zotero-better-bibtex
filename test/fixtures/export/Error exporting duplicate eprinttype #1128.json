@@ -28,7 +28,6 @@
       "citekeyFormat": "[auth:lower][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debugLog": "",
       "exportBibTeXStrings": "off",
       "git": "config",
       "itemObserverDelay": 100,

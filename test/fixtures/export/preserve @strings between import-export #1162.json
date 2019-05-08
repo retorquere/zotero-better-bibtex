@@ -32,7 +32,6 @@
       "citekeyFormat": "[auth]:[year]:[shorttitle1_1]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
-      "debugLog": "",
       "exportBibTeXStrings": "match",
       "git": "config",
       "importBibTeXStrings": false,

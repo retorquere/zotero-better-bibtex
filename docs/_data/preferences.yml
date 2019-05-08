@@ -23,7 +23,6 @@ citekeyFold: true
 citekeyFormat: ​[auth:lower][shorttitle3_3][year]
 citeprocNoteCitekey: false
 csquotes: ''
-debugLog: ''
 exportBibTeXStrings: off
 git: config
 importBibTeXStrings: true

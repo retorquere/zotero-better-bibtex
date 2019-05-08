@@ -305,9 +305,6 @@
       description: if you set `csquotes` to a string of character pairs, each pair
         will be assumed to be the open and close parts of a pair and will be replaced
         with a `\\enquote{...}` construct.
-    debugLog:
-      default: ''
-      description: '!'
     git:
       default: config
       description: Can be 'off', 'config' or 'always'

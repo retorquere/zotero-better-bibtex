@@ -31,7 +31,6 @@
       "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "\u201c\u201d\u2018\u2019",
-      "debugLog": "",
       "exportBibTeXStrings": "off",
       "git": "config",
       "itemObserverDelay": 100,

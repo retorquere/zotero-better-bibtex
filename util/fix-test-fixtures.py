@@ -10,7 +10,6 @@ class Fixer:
   def __init__(self):
     self.root = os.path.join(os.path.dirname(__file__), '..')
     self.supported = munchify(self.load(os.path.join(self.root, 'gen/preferences/preferences.json')))
-    self.supported.rawLaTag = Munch(default='#LaTeX')
 
   def load(self, f):
     with open(f) as _f:
@@ -46,9 +45,9 @@ class Fixer:
 
     for key in list(data.get('config', {}).get('preferences', {}).keys()): # list, otherwise python complains the dict changes during iteration
       value = data.config.preferences[key]
-      if key in self.supported: continue
-      del data['config']['preferences'][key] 
-      resave = key
+      if key not in self.supported:
+        del data['config']['preferences'][key] 
+        resave = key
 
     if '/export/' in lib:
       try:
