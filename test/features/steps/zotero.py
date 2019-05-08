@@ -106,6 +106,7 @@ class Zotero:
 
             Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
             await Zotero.BetterBibTeX.ready;
+            if (!Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
             Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
             return true;
           """)
