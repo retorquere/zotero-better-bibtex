@@ -12,6 +12,7 @@ for d in pathlib.Path(__file__).resolve().parents:
 os.chdir(ROOT)
 
 if not 'CI' in os.environ:
+  sys.argv.append('--stop')
   from subprocess import Popen, PIPE
 
   process = Popen('npm run build', stdout=PIPE, shell=True)

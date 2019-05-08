@@ -189,7 +189,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       try {
         cache = this.postscript(csl, item)
       } catch (err) {
-        if (Translator.preferences.testing) throw err
+        if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
         cache = false
       }
 
