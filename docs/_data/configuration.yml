@@ -371,6 +371,11 @@
     parseParticles:
       default: 'True'
       description: Name particle handling
+    rawLaTag:
+      default: '#LaTeX'
+      description: When an item has this tag, all its fields will be assumed to hold
+        raw LaTeX and will undergo no further transformation. If you set this to '*',
+        all items will be assumed to have raw LaTeX.
     relativeFilePaths:
       default: 'False'
       description: When exporting a Bib(La)TeX file, if the attachments are stored

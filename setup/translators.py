@@ -64,6 +64,7 @@ variables.labels = translators.byLabel.keys()
 template = """
 interface ITranslator {
   preferences: {
+    testing: bool
   #for $pref, $type in $preferences.items()
     $pref: $type
   #end for

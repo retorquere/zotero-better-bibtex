@@ -197,8 +197,7 @@ with dump('gen/preferences/preferences.json') as save:
 
 with dump('gen/preferences/defaults.json', 'build/defaults/preferences/defaults.js') as save:
   defaults = {
-    'rawLaTag': '#LaTeX',
-    'testing': False,
+    #'testing': False,
   }
   for pref in preferences.values():
     defaults[pref['name']] = pref['default']

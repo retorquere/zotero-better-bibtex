@@ -38,6 +38,7 @@ postscript: ''
 qualityReport: false
 quickCopyMode: latex
 quickCopyPandocBrackets: false
+rawLaTag: '#LaTeX'
 relativeFilePaths: false
 scrubDatabase: false
 skipFields: ''
