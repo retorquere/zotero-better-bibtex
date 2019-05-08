@@ -306,7 +306,7 @@ class Profile:
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
       profile.add_extension(xpi)
 
-    profile.set_preference('extensions.zotero.translators.better-bibtex.testing', 'true')
+    profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
