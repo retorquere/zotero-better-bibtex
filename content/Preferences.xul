@@ -505,12 +505,6 @@
           Can be 'off', 'config' or 'always'
         -->
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.debugLog"
-          type="string"
-          default=""/>
-        <!--!! !-->
-
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">
