@@ -414,8 +414,8 @@ class Preferences:
     self.prefix = 'translators.better-bibtex.'
     with open(os.path.join(ROOT, 'gen/preferences/defaults.json')) as f:
       self.supported = {self.prefix + k: type(v) for (k, v) in json.load(f).items()}
-    self.supported['removeStock'] = bool
-    self.supported['postscriptProductionMode'] = bool
+    self.supported[self.prefix + 'removeStock'] = bool
+    self.supported[self.prefix + 'postscriptProductionMode'] = bool
 
   def __setitem__(self, key, value):
     if key[0] == '.': key = self.prefix + key[1:]
