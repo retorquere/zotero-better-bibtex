@@ -13,6 +13,7 @@ import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
 const s3 = require('./s3.json')
+const preferences = Object.keys(require('../gen/preferences/defaults.json')).sort()
 
 const PACKAGE = require('../package.json')
 
@@ -28,7 +29,7 @@ const httpRequestOptions = {
 }
 
 export = new class ErrorReport {
-  private chunkSize
+  private chunkSize = 10 * MB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
   private previewSize = 3 * kB // tslint:disable-line:no-magic-numbers binary-expression-operand-order
 
   private key: string
@@ -118,20 +119,6 @@ export = new class ErrorReport {
     const continueButton = wizard.getButton('next')
     continueButton.disabled = true
 
-    // configure debug logging
-    const debugLog = {
-      chunkSize: null,
-      region: null,
-    }
-    const m = Prefs.get('debugLog').match(/^([-a-z]+[0-9]?)|([-a-z]+[0-9]?)\.([0-9]+)|([0-9]+)$/)
-    if (m) {
-      debugLog.region = m[1] || m[2] // tslint:disable-line:no-magic-numbers
-      debugLog.chunkSize = parseInt(m[3] || m[4] || 0)  // tslint:disable-line:no-magic-numbers
-    }
-
-    this.chunkSize = (debugLog.chunkSize || 10) * MB // tslint:disable-line:no-magic-numbers
-    log.debug('ErrorReport.debuglog:', m, debugLog, this.chunkSize)
-
     this.params = window.arguments[0].wrappedJSObject
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
@@ -173,7 +160,7 @@ export = new class ErrorReport {
       show_latest.hidden = false
     }
 
-    const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.filter(r => !debugLog.region || r === debugLog.region).map(this.ping))
+    const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.map(this.ping))
     this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
     log.debug('ErrorReport.ping:', this.bucket, this.key)
@@ -219,11 +206,7 @@ export = new class ErrorReport {
     }
 
     info += 'Settings:\n'
-    const prefs = []
-    for (const key of Prefs.branch.getChildList('')) {
-      prefs.push(key)
-    }
-    for (const key of prefs.sort()) {
+    for (const key of preferences) {
       info += `  ${key} = ${JSON.stringify(Prefs.get(key))}\n`
     }
     for (const key of ['export.quickCopy.setting']) {
