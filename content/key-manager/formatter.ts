@@ -2,7 +2,7 @@ declare const Zotero: any
 declare const Node: any
 declare const Components: any
 
-const fold2ascii = require('fold-to-ascii').fold
+const fold2ascii = require('fold-to-ascii')
 import PunyCode = require('punycode')
 import { transliterate } from 'transliteration'
 
@@ -560,10 +560,11 @@ class PatternFormatter {
       replace,
     })
 
-    str = fold2ascii(str)
+    str = fold2ascii.foldMaintaining(str)
 
     return str
   }
+
   private clean(str) {
     return this.safechars(this.removeDiacritics(str)).trim()
   }
