@@ -8,22 +8,15 @@ import { datefield } from './datefield'
 
 import { arXiv } from '../../content/arXiv'
 
-function drive(path) {
-  if (!Translator.onWindows) return ''
-
-  return path.match(/^[a-z]:\\/i) ? path.slice(0, 2).toLowerCase() : ''
+function normalize_dir(path) {
+  return Translator.onWindows ? path.toLowerCase() : path
 }
 
-function normalize_path(file) {
-  if (!Translator.preferences.relativeFilePaths || !Translator.options.exportPath) return file
-
-  // on different drives in Windows
-  if (drive(Translator.options.exportPath) !== drive(file)) return file
-
+function relative_path(file) {
   const from = Translator.options.exportPath.split(Translator.pathSep)
   const to = file.split(Translator.pathSep)
 
-  while (from.length && to.length && from[0] === to[0]) {
+  while (from.length && to.length && normalize_dir(from[0]) === normalize_dir(to[0])) {
     from.shift()
     to.shift()
   }
@@ -999,8 +992,8 @@ export class Reference {
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else {
-        const relative = normalize_path(att.path)
+      } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath) {
+        const relative = relative_path(att.path)
         if (relative !== att.path) {
           this.cachable = false
           att.path = relative
