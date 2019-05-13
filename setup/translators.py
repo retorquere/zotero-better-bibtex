@@ -111,7 +111,11 @@ interface ITranslator {
   isJurisM: boolean
   isZotero: boolean
   unicode: boolean
-  pathSep: string
+  platform: string
+  paths: {
+    caseSensitive: boolean
+    sep: string
+  }
   debugEnabled: boolean
   BetterBibTeX: boolean
   BetterBibLaTeX: boolean

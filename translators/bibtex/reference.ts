@@ -8,6 +8,30 @@ import { datefield } from './datefield'
 
 import { arXiv } from '../../content/arXiv'
 
+const Path = { // tslint:disable-line variable-name
+  normalize(path) {
+    return Translator.paths.caseSensitive ? path : path.toLowerCase()
+  },
+
+  drive(path) {
+    if (Translator.platform !== 'win') return ''
+    return path.match(/^[a-z]:\//) ? path.substring(0, 2) : ''
+  },
+
+  relative(path) {
+    if (this.drive(Translator.options.exportPath) !== this.drive(path)) return path
+
+    const from = Translator.options.exportPath.split(Translator.paths.sep)
+    const to = path.split(Translator.paths.sep)
+
+    while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
+      from.shift()
+      to.shift()
+    }
+    return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
+  },
+}
+
 interface IField {
   name: string
   verbatim?: string
@@ -977,10 +1001,13 @@ export class Reference {
 
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
-      } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath && att.path.startsWith(Translator.options.exportPath)) {
-        this.cachable = false
-        att.path = att.path.slice(Translator.options.exportPath.length)
-        debug('clipped attachment::', Translator.options, att)
+      } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath) {
+        const relative = Path.relative(att.path)
+        if (relative !== att.path) {
+          this.cachable = false
+          att.path = relative
+          debug('clipped attachment::', Translator.options, att)
+        }
       }
 
       attachments.push(att)
