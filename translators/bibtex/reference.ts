@@ -8,19 +8,28 @@ import { datefield } from './datefield'
 
 import { arXiv } from '../../content/arXiv'
 
-function normalize_dir(path) {
-  return Translator.onWindows ? path.toLowerCase() : path
-}
+const Path = { // tslint:disable-line variable-name
+  normalize(path) {
+    return Translator.paths.caseSensitive ? path : path.toLowerCase()
+  },
 
-function relative_path(file) {
-  const from = Translator.options.exportPath.split(Translator.pathSep)
-  const to = file.split(Translator.pathSep)
+  drive(path) {
+    if (Translator.platform !== 'win') return ''
+    return path.match(/^[a-z]:\//) ? path.substring(0, 2) : ''
+  },
 
-  while (from.length && to.length && normalize_dir(from[0]) === normalize_dir(to[0])) {
-    from.shift()
-    to.shift()
-  }
-  return `..${Translator.pathSep}`.repeat(from.length) + to.join(Translator.pathSep)
+  relative(path) {
+    if (this.drive(Translator.options.exportPath) !== this.drive(path)) return path
+
+    const from = Translator.options.exportPath.split(Translator.paths.sep)
+    const to = path.split(Translator.paths.sep)
+
+    while (from.length && to.length && this.normalize(from[0]) === this.normalize(to[0])) {
+      from.shift()
+      to.shift()
+    }
+    return `..${Translator.paths.sep}`.repeat(from.length) + to.join(Translator.paths.sep)
+  },
 }
 
 interface IField {
@@ -993,7 +1002,7 @@ export class Reference {
       if (Translator.preferences.testing) {
         att.path = `files/${this.item.citekey}/${att.path.replace(/.*[\/\\]/, '')}`
       } else if (Translator.preferences.relativeFilePaths && Translator.options.exportPath) {
-        const relative = relative_path(att.path)
+        const relative = Path.relative(att.path)
         if (relative !== att.path) {
           this.cachable = false
           att.path = relative

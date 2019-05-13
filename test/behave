@@ -20,6 +20,9 @@ if not 'CI' in os.environ:
     line = process.stdout.readline()
     if not line: break
     print(line.decode('utf-8'), end='')
+  if process.returncode != 0 and process.returncode is not None:
+    print(f'Build exited with exit code {process.returncode}')
+    sys.exit(process.returncode)
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
