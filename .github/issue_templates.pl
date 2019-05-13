@@ -45,6 +45,7 @@ for template in templates:
 
     action = iter(range(1,20))
     print('', file=f)
+    print('<!--', file=f)
     print('*Please verify **all** of the below before submitting*:', file=f)
     print('', file=f)
 
@@ -77,6 +78,9 @@ for template in templates:
     elif template.name in ['Import']:
       print("The error-report is important; it gives me your current BBT settings and a log of what Zotero was doing at the time of import. Without it, I'm effectively blind.", file=f)
       print('', file=f)
+
+    print('-->', file=f)
+    print('', file=f)
 
     if template.name != 'Question':
       print('**Report ID:**', file=f)
