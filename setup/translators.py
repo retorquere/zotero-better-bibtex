@@ -111,6 +111,7 @@ interface ITranslator {
   isJurisM: boolean
   isZotero: boolean
   unicode: boolean
+  onWindows: boolean
   pathSep: string
   debugEnabled: boolean
   BetterBibTeX: boolean

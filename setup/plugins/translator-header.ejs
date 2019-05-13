@@ -23,7 +23,8 @@ var Translator = {
     if (stage == 'detectImport') {
       this.options = {}
     } else {
-      this.pathSep = (Zotero.BetterBibTeX.platform().toLowerCase().startsWith('win')) ? '\\' : '/'
+      this.onWindows = Zotero.BetterBibTeX.platform().toLowerCase().startsWith('win')
+      this.pathSep = this.onWindows ? '\\' : '/'
 
       this.references = []
 
@@ -38,7 +39,7 @@ var Translator = {
 
       if (stage === 'doExport') {
         this.options.exportPath = Zotero.getOption('exportPath')
-        if (this.options.exportPath && !this.options.exportPath.endsWith(this.pathSep)) this.options.exportPath += this.pathSep
+        if (this.options.exportPath && this.options.exportPath.endsWith(this.pathSep)) this.options.exportPath = this.options.exportPath.slice(0, -1)
       }
     }
 
