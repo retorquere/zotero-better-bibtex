@@ -17,12 +17,12 @@
         `fold` to all your keys.'
     Keep keys unique:
       default: within each library
-      description: This determines what happens if you pin a key to a value that is
-        already in use in a different reference but not pinned there. Neither are
-        ideal, you just get to pick your poison. If you let BBT change the non-pinned
-        key by adding a postfix character, the citation key changes which could be
-        problematic for existing papers.  if you keep the non-pinned key as-is, your
-        library now has duplicate keys.
+      description: Auto-generated (non-pinned) keys automatically get a postfix when
+        they would generate a duplicate. By default, the check for duplicates is restricted
+        to the library/group the item lives in. When set to global, the check will
+        include all libraries/groups, so auto-generated keys would be globally unique.
+        Changing this setting *does not* affect existign keys - for this you would
+        need to select the items and refresh the keys.
       options:
       - across all libraries
       - within each library
@@ -39,7 +39,7 @@
         already in use in a different reference but not pinned there. Neither are
         ideal, you just get to pick your poison. If you let BBT change the non-pinned
         key by adding a postfix character, the citation key changes which could be
-        problematic for existing papers.  if you keep the non-pinned key as-is, your
+        problematic for existing papers. If you keep the non-pinned key as-is, your
         library now has duplicate keys.
       options:
       - postfixed (causes key changes)
@@ -70,12 +70,10 @@
         surrounded with brackets or not.
     When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero:
       default: 'False'
-      description: This determines what happens if you pin a key to a value that is
-        already in use in a different reference but not pinned there. Neither are
-        ideal, you just get to pick your poison. If you let BBT change the non-pinned
-        key by adding a postfix character, the citation key changes which could be
-        problematic for existing papers.  if you keep the non-pinned key as-is, your
-        library now has duplicate keys.
+      description: By default, when scanning for cited items in the aux file, BBT
+        will just generate a note listing all citation keys it cannot find in Zotero.
+        When this option is turned on, BBT will attempt to import such missing items
+        from the bib file that the AUX file being scanned points to.
 - description: ''
   name: Export
   preferences:
