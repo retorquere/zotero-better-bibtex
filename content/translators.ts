@@ -106,6 +106,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (!reason && !threshold) reason = 'priming threshold set to 0'
     if (!reason && Prefs.get('jabrefFormat') === 4) reason = 'JabRef Format 4 cannot be cached' // tslint:disable-line:no-magic-numbers
     if (!reason && displayOptions.exportFileData) reason = 'Cache disabled when exporting attachments'
+    if (!reason && Prefs.get('relativeFilePaths')) reason = 'Cache disabled when relativeFilePaths is on'
     if (!reason) {
       uncached = await this.uncached(translatorID, displayOptions, scope)
       log.debug('Translators.primeCache:', uncached.length, 'uncached items')
