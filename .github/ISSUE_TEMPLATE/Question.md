@@ -7,10 +7,13 @@ labels: question
 <!--
 *Please verify **all** of the below before submitting*:
 
-1. in the Zotero addons screen you can see that you have the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero installed
-2. you are posting a single question
-3. you have included a descriptive subject of the problem
-4. you are available for follow-up questions and testing
+1. you have picked the right category for the issue in the previous screen.
+2. in the Zotero addons screen you can see that you have the latest release of BBT (https://github.com/retorquere/zotero-better-bibtex/releases/latest) and Zotero installed
+3. you are posting a single question
+4. you have included a descriptive subject of the problem
+5. you are available for follow-up questions and testing
+
+Picking the right issue category is really important. Each category (`Export`, `General error`, `Import`, `Key generation`, `Question`) has different instructions for gathering the data necessary required to resolve the issue you are experiencing
 
 -->
 
