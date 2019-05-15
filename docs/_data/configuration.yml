@@ -202,7 +202,7 @@
       - No
       - Assume single-word fields to be @string vars
       - Match against the @string vars below
-    Warn me when auto-exports take longer than:
+    Warn me when auto-exports take longer than (seconds):
       default: '10'
       description: 'If you have auto-export set up for a large library, Zotero might
         freeze for during exports. There is nothing I can do about this; caching helps,

@@ -923,7 +923,7 @@ export class Reference {
 
     if (f.raw || raw) return f.value
 
-    const caseConversion = !Translator.preferences.suppressTitleCase && (this.caseConversion[f.name] || f.caseConversion)
+    const caseConversion = this.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
     let value: String | string = latex.latex
     if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`

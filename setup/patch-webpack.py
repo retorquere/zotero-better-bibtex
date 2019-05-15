@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 
 import os
+import sys
+
+if 'MINITESTS' in os.environ:
+  sys.exit(0)
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
