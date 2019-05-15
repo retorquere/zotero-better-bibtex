@@ -65,7 +65,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Abréviations de journaux">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erreur">
 <!ENTITY better-bibtex.Preferences.auto-export.fields.cached "En cache">
-<!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avertissez-moi lorsque les exportations automatiques durent plus de">
+<!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "M'avertir lorsque les exportations automatiques durent plus de">
 
 <!ENTITY better-bibtex.Preferences.bulkWarning "M'avertir si un changement par lot touche plus de X éléments (où X = le nb. à rentrer ci-dessous) :">
 <!ENTITY better-bibtex.Preferences.tab.citekey "Clés de citation">
@@ -135,7 +135,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abréviations de journaux">
 <!ENTITY better-bibtex.Preferences.tab.postscript "Postscript">
 <!ENTITY better-bibtex.Preferences.tab.postscript.warn "L'utilisation de 'Translator.options.exportPath' dans les PostScripts désactive le cache. Les exportations seront sensiblement plus lentes.">
-<!ENTITY better-bibtex.Preferences.tab.strings "définitions des @string">
+<!ENTITY better-bibtex.Preferences.tab.strings "Définitions des @string">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
