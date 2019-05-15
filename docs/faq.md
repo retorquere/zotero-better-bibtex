@@ -45,7 +45,7 @@ preference
 [extensions.zotero.translators.better-bibtex.suppressTitleCase](configuration#suppresstitlecase)
 to keep BBT from applying title-casing, but take note that if you do this, the
 bibliographies you get from Zotero and the bibliograhies you get through Bib(La)TeX will differ, and you can't complain
-about this. Brace protection (see below) cannot be turned off.
+about this.
 
 ## Why the double braces?
 
