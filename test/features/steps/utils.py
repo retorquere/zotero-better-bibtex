@@ -28,9 +28,14 @@ def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
 
 def expand_scenario_variables(context, filename, star=True):
-  if hasattr(context, 'scenario'):
-    filename = filename.replace('((scenario))', context.scenario.name)
-    if star: filename = filename.replace('*', context.scenario.name)
+  scenario = None
+  if hasattr(context, 'scenario') and context.scenario.keyword == 'Scenario': # exclude outlines
+    scenario = context.scenario.name
+  elif hasattr(context, 'imported') and context.imported:
+    scenario = os.path.splitext(os.path.basename(context.imported))[0]
+  if scenario:
+    filename = filename.replace('((scenario))', scenario)
+    if star: filename = filename.replace('*', scenario)
   return filename
 
 def html2md(html):

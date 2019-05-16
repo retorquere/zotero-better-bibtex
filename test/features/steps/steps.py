@@ -23,36 +23,43 @@ def step_impl(context, pref, value):
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source, collection), equal_to(1))
 
 @step(r'I import 1 reference from "{source}"')
 def step_impl(context, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(1))
 
 @given(u'I import 1 reference with 1 attachment from "{source}"')
 def step_impl(context, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(1))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}" into a new collection')
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source, True), equal_to(references))
 
 @step(r'I import {references:d} references from "{source}" into a new collection')
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source, True), equal_to(references))
 
 @step(r'I import {references:d} references with {attachments:d} attachments from "{source}"')
 def step_impl(context, references, attachments, source):
   source = expand_scenario_variables(context, source)
+  context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(references))
 
 @step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')

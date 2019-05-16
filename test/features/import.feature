@@ -30,7 +30,7 @@ Scenario: AUX scanner
 @nightly
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
-  Then the library should match "import/<file>.json"
+  Then the library should match "import/*.json"
 
   Examples:
   | file                                                                        | references  |
@@ -40,7 +40,7 @@ Scenario Outline: Better BibTeX Import
 @test-cluster-1 @959 @1058 @871 @1081 @1115
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
-  Then the library should match "import/<file>.json"
+  Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
   | Import location to event-place for conference papers                        | 1           |
@@ -76,7 +76,7 @@ Scenario Outline: Better BibTeX Import
 @13
 Scenario Outline: Better BibTeX Import
   When I import <references> reference from "import/<file>.bib"
-  Then the library should match "import/<file>.json"
+  Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
   # | Better BibTeX.014                                                           | 1           | # not supported by biblatex-csl-converter

@@ -10,7 +10,7 @@ Background:
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
-  Then an export using "Better BibLaTeX" should match "export/<file>.biblatex"
+  Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
      | file                                                                                           | references  |
@@ -122,7 +122,7 @@ Scenario Outline: BibLaTeX Export
 @978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
-  Then an export using "Better BibTeX" should match "export/<file>.bibtex"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Examples:
      | file                                                                               | references |
