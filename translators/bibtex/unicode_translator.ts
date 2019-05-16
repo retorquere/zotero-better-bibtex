@@ -7,6 +7,30 @@ import { debug } from '../lib/debug'
 import HE = require('he')
 import unicodeMapping = require('unicode2latex')
 
+/* https://github.com/retorquere/zotero-better-bibtex/issues/1189
+  Needed so that composite characters are counted as single characters
+  for in-text citation generation. This messes with the {} cleanup
+  so the resulting TeX will be more verbose; doing this only for
+  bibtex because biblatex doesn't appear to need it.
+
+  Only testing ascii.text because that's the only place (so far)
+  that these have turned up.
+*/
+if (Translator.BetterBibTeX) {
+  let m
+  for (const tex of Object.values(unicodeMapping.ascii)) {
+    if (!tex.text) continue
+
+    if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {
+      tex.text = `{${tex.text}}`
+    } else if (tex.text.match(/^\\[^]\\[ij]$/)) {
+      tex.text = `{${tex.text}}`
+    } else if (m = tex.text.match(/^\\(L|O|AE|AA|DH|DJ|OE|SS|TH|NG)\{\}$/i)) {
+      tex.text = `{\\${m[1]}}`
+    }
+  }
+}
+
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
@@ -14,18 +38,6 @@ const htmlConverter = new class HTMLConverter {
   private stack: any[]
   private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
-  private embrace_tex = {
-    '\\k{A}': true,
-    '\\k{E}': true,
-    '\\k{I}': true,
-    '\\k{U}': true,
-    '\\k{a}': true,
-    '\\k{e}': true,
-    '\\k{i}': true,
-    '\\k{u}': true,
-    '\\r{U}': true,
-    '\\r{u}': true,
-  }
 
   public convert(html, options) {
     this.embraced = false
@@ -217,7 +229,7 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
-      latex += this.embrace(mapped[mode], this.embrace_tex[mapped[mode]])
+      latex += this.embrace(mapped[mode], mapped[mode].match(/^\\[kr]\{[a-zA-Z]\}$/))
     }
 
     // add any missing closing phantom braces
