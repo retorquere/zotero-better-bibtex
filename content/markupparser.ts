@@ -77,10 +77,11 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
     let doc
 
-    // debug('markupparser:', typeof html, html, options, htmlParser.parseFragment(html))
-    this.caseConversion = options.caseConversion && !Prefs.get('suppressTitleCase')
-    this.braceProtection = !Prefs.get('suppressBraceProtection')
+    this.caseConversion = options.caseConversion
+    this.braceProtection = options.caseConversion && !Prefs.get('suppressBraceProtection')
     this.sentenceStart = true
+
+    // log.debug('markupparser:', html, {...options, braceProtection: this.braceProtection})
 
     // add enquote tags.
     const csquotes = Prefs.get('csquotes')
@@ -120,12 +121,15 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
     doc = this.walk(htmlParser.parseFragment(this.html))
 
-    if (this.caseConversion) {
-      this.titleCased = ''
-      this.collectText(doc)
-      this.titleCased = titleCase(this.titleCased)
+    if (options.caseConversion) {
+      if (!Prefs.get('suppressTitleCase')) {
+        this.titleCased = ''
+        this.collectText(doc)
+        this.titleCased = titleCase(this.titleCased)
 
-      this.titleCase(doc)
+        this.titleCase(doc)
+      }
+
       doc = this.unwrapNocase(doc)
       if (doc.length === 1) {
         doc = doc[0]
@@ -135,7 +139,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
       this.cleanupNocase(doc)
     }
 
-    // debug('markupparser:', doc)
+    // log.debug('markupparser:', doc)
 
     // spurious wrapping span
     doc = this.unwrapSpurious(doc)
@@ -304,7 +308,6 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
           continue
         }
 
-        // debug('walk.text:', child.nodeName)
         if (!this.caseConversion || isNocased) {
           this.plaintext(_node.childNodes, child.value, child.sourceCodeLocation.startOffset)
           continue
@@ -328,7 +331,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
 
           this.sentenceStart = false
 
-          if (this.braceProtection && (m = re.protectedWords.exec(text))) {
+          if (!isNocased && this.braceProtection && (m = re.protectedWords.exec(text))) {
             this.nocase(_node.childNodes, m[0], child.sourceCodeLocation.startOffset + (length - text.length))
             text = text.substring(m[0].length)
 
