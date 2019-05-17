@@ -60,7 +60,14 @@ Translator.doExport = () => {
     node(id, _item.citekey)
     items[_item.citekey] = {
       id,
-      cites: (_item.extra || '').split('\n').filter(line => line.startsWith('cites:')).map(line => line.replace(/^cites:/, '').trim()).filter(key => key),
+      cites: [].concat.apply([],
+        (_item.extra || '')
+          .split('\n')
+          .filter(line => line.startsWith('cites:'))
+          .map(line => line.replace(/^cites:/, '').trim())
+          .filter(keys => keys)
+          .map(keys => keys.split(/\s*,\s*/))
+        ),
     }
   }
 
