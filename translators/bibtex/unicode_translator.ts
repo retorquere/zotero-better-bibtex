@@ -25,6 +25,8 @@ if (Translator.BetterBibTeX) {
       tex.text = `{${tex.text}}`
     } else if (tex.text.match(/^\\[^]\\[ij]$/)) {
       tex.text = `{${tex.text}}`
+    } else if (tex.text.match(/^\\[kr]\{[a-zA-Z]\}$/)) {
+      tex.text = `{${tex.text}}`
     } else if (m = tex.text.match(/^\\(L|O|AE|AA|DH|DJ|OE|SS|TH|NG)\{\}$/i)) {
       tex.text = `{\\${m[1]}}`
     }
@@ -229,7 +231,7 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
-      latex += this.embrace(mapped[mode], mapped[mode].match(/^\\[kr]\{[a-zA-Z]\}$/))
+      latex += mapped[mode]
     }
 
     // add any missing closing phantom braces
