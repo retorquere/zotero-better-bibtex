@@ -473,7 +473,7 @@ class PatternFormatter {
   /**
    * selects words from the value passed in. The format is `select=start,number` (1-based), so `select=1,4`
    * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
-   * selected. It is important to note that `select' works only on values that have the words separated by whitespace,
+   * selected. It is important to note that `select` works only on values that have the words separated by whitespace,
    * so the caveat below applies.
    */
   public _select(value, start, n) {

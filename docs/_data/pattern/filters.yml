@@ -26,7 +26,7 @@
 '`select`': "selects words from the value passed in. The format is `select=start,number`\
   \ (1-based), so `select=1,4`\nwould select the first four words. If `number` is\
   \ not given, all words from `start` to the end of the list are\nselected. It is\
-  \ important to note that `select' works only on values that have the words separated\
+  \ important to note that `select` works only on values that have the words separated\
   \ by whitespace,\nso the caveat below applies."
 '`skipwords`': "filters out common words like 'of', 'the', ... the list of words can\
   \ be seen and changed by going into\n`about:config` under the key `extensions.zotero.translators.better-bibtex.skipWords`\
