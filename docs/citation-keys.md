@@ -53,7 +53,7 @@ A common pattern is `[auth:lower][year]`, which means
 
 1. last name of first author without spaces, in lowercase
 2. year of publication if any,
-3. a letter postfix in case of a clash (this part is always added, you can't disable it)
+3. a letter postfix (a, b, c, etc) in case of a clash (this part is always added, you can't disable it, although you can change it to Zotero-style numeric)
 
 **note that changing the pattern used to cause all your non-fixed keys to be regenerated in Zotero 4.** In Zotero 5, this is no longer the case; changing a pattern will only affect references being created/changed after you changed the pattern. If you want your keys to update after a pattern change you will have to select your references, right-click, and select `Refresh`. This will not affect keys you have pinned.
 
@@ -100,7 +100,7 @@ The full list of functions (extract data from your reference into your citekey) 
 
 *Usage note*: the functions `condense`, `skipwords`, `capitalize` and `select` rely on whitespaces for word handling. The JabRef functions strip
 whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the
-table above, which give you the values from Zotero without any changes.
+table above, which give you the values from Zotero without any changes. The fields with `**` are only available in Juris-M.
 
 <!--
 ## Generation of stable keys, and syncing
