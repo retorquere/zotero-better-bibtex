@@ -295,7 +295,7 @@ export let Application = new class { // tslint:disable-line:variable-name
 }
 
 export async function pick(options) {
-  await Zotero.BetterBibTeX.loaded
+  await Zotero.BetterBibTeX.ready
 
   const doc = Application.createDocument(options)
   await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
@@ -335,7 +335,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
   public async init(request) {
     const options = request.query || {}
 
-    if (options.probe) return [this.OK, 'text/plain', 'ready']
+    if (options.probe) return [this.OK, 'text/plain', (!Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) ? 'starting' : 'ready' ]
 
     try {
       const citation = await pick(options)

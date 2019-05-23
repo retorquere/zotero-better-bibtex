@@ -88,7 +88,7 @@
   },
   "devDependencies": {
     "@types/node": "12.0.2",
-    "@types/webpack": "4.4.31",
+    "@types/webpack": "4.4.32",
     "archiver": "3.0.0",
     "bluebird": "3.5.4",
     "circular-dependency-plugin": "5.0.2",
@@ -119,7 +119,7 @@
     "typedoc": "0.14.2",
     "typescript": "3.4.5",
     "uri-templates": "0.2.0",
-    "webpack": "4.31.0",
+    "webpack": "4.32.2",
     "wrapper-webpack-plugin": "2.1.0",
     "xml-parser": "1.2.1",
     "xmldom": "^0.1.27",
