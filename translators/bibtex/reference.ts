@@ -926,7 +926,7 @@ export class Reference {
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
     let value: String | string = latex.latex
-    if (caseConversion && Translator.BetterBibTeX && !this.english) value = `{${value}}`
+    if (caseConversion && Translator.BetterBibTeX && !this.english && !Translator.preferences.suppressBraceProtection) value = `{${value}}`
 
     if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
     return value
