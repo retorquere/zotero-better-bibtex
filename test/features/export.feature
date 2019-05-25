@@ -119,14 +119,13 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
-@978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188 @1194
+@978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Examples:
      | file                                                                               | references |
-     | suppressBraceProtection does not work for BibTeX export (non-English items) #1194  | 1          |
      | No brace protection when suppressTitleCase set to true #1188                       | 3          |
      | preserve @strings between import-export #1162                                      | 1          |
      | citekey firstpage-lastpage #1147                                                   | 2          |
@@ -181,6 +180,14 @@ Scenario: Omit URL export when DOI present. #131
 Scenario: BibTeX name escaping has a million inconsistencies #438
   When I import 2 references from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+@1194
+Scenario: suppressBraceProtection does not work for BibTeX export (non-English items) #1194
+  When I import 1 reference from "export/*.json"
+  Then an export using "Better BibTeX" should match "export/*.sbp.bibtex"
+  When I set preference .suppressBraceProtection to false
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
+  And an export using "Better BibLaTeX" should match "export/*.biblatex"
 
 @test-cluster-1
 @708 @957
