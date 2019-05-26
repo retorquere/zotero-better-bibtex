@@ -27,6 +27,7 @@ Reference.prototype.fieldEncoding = {
   institution: 'literal',
   publisher: 'literal',
   organization: 'literal',
+  address: 'literal',
 }
 
 Reference.prototype.lint = function(explanation) {

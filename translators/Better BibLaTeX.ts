@@ -23,6 +23,7 @@ Reference.prototype.fieldEncoding = {
   publisher: 'literal',
   organization: 'literal',
   location: 'literal',
+  address: 'literal',
 }
 Reference.prototype.caseConversion = {
   title: true,

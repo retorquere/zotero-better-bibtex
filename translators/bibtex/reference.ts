@@ -926,6 +926,15 @@ export class Reference {
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
     let value: String | string = latex.latex
+
+    /*
+      biblatex has a langid field it can use to exclude non-English
+      titles from any lowercasing a style might request, so no
+      additional protection by BBT is necessary. bibtex lacks a
+      comparable mechanism, so the only thing BBT can do to tell
+      bibtex to back off from non-English titles is to wrap the whole
+      thing in braces.
+    */
     if (caseConversion && Translator.BetterBibTeX && !this.english && !Translator.preferences.suppressBraceProtection) value = `{${value}}`
 
     if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
