@@ -21,9 +21,10 @@ Reference.prototype.fieldEncoding = {
   verbc: 'verbatim',
   institution: 'literal',
   publisher: 'literal',
+  origpublisher: 'literal',
   organization: 'literal',
   location: 'literal',
-  address: 'literal',
+  origlocation: 'literal',
 }
 Reference.prototype.caseConversion = {
   title: true,
