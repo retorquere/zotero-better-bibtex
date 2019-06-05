@@ -1,6 +1,6 @@
 ---
-name: Export bug/enhancement
-about: You appear to have found a bug in BBTs export, or are proposing an enhancement to the exports.
+name: Export bug/enhancement/question
+about: You appear to have found a bug in BBTs export, are proposing an enhancement to the exports, or have a question about exporting items.
 labels: bug
 ---
 

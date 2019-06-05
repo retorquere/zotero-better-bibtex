@@ -1,6 +1,6 @@
 ---
-name: Import bug/enhancement
-about: You appear to have found a bug in BBTs BibTeX import, or are proposing an enhancement to the import
+name: Import bug/enhancement/question
+about: You appear to have found a bug in BBTs BibTeX import, are proposing an enhancement to the import, or have a question about importing BibTeX.
 labels: bug
 ---
 

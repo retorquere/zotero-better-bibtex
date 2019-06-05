@@ -5,8 +5,8 @@ from munch import *
 templates = [
   Munch(
     name='Export',
-    title='Export bug/enhancement',
-    about='You appear to have found a bug in BBTs export, or are proposing an enhancement to the exports.',
+    title='Export bug/enhancement/question',
+    about='You appear to have found a bug in BBTs export, are proposing an enhancement to the exports, or have a question about exporting items.',
     labels='bug',
   ),
   Munch(
@@ -17,20 +17,20 @@ templates = [
   ),
   Munch(
     name='Import',
-    title='Import bug/enhancement',
-    about='You appear to have found a bug in BBTs BibTeX import, or are proposing an enhancement to the import',
+    title='Import bug/enhancement/question',
+    about='You appear to have found a bug in BBTs BibTeX import, are proposing an enhancement to the import, or have a question about importing BibTeX.',
     labels='bug'
   ),
   Munch(
     name='Key_generation',
-    title='Key generation bug',
-    about='You appear to have found a bug in BBTs citation key generation, or are proposing an enhancement to the key generation',
+    title='Key generation bug/enhancement/question',
+    about='You appear to have found a bug in BBTs citation key generation, are proposing an enhancement to the key generation, or have a question about key generation.',
     labels='bug'
   ),
   Munch(
     name='Question',
-    title='Question on use, or feature suggestions',
-    about='You want information on how to use BBT, or have an idea for improvement',
+    title='Question on use, or feature suggestions, not covered by the other categories above.',
+    about='You want information on how to use BBT, or have an idea for improvement that is not one of the categories above.',
     labels='question'
   ),
 ]
