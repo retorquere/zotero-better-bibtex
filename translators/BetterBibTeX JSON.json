@@ -12,7 +12,8 @@
   },
   "displayOptions": {
     "exportNotes": true,
-    "exportFileData": false
+    "exportFileData": false,
+    "keepUpdated": false
   },
   "translatorType": 3,
   "browserSupport": "gcsv",
