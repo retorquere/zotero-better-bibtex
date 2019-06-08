@@ -2,6 +2,7 @@
 
 declare const Zotero: any
 declare const Components: any
+declare const Services: any
 
 Components.utils.import('resource://gre/modules/osfile.jsm')
 
@@ -196,15 +197,55 @@ export class Store {
 
     let db = null
     const collections = {}
-    for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
-      if (row.name === name) {
-        db = JSON.parse(row.data)
-      } else {
-        collections[row.name] = JSON.parse(row.data)
 
-        collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-        collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
-        collections[row.name].dirty = true
+    try {
+      for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
+        if (row.name === name) {
+          db = JSON.parse(row.data)
+        } else {
+          collections[row.name] = JSON.parse(row.data)
+
+          collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+          collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+          collections[row.name].dirty = true
+        }
+      }
+    } catch (err) {
+      Zotero.logError(err)
+
+      if (this.storage === 'sqlite') {
+        const ps = Services.prompt
+        const index = ps.confirmEx(
+          null, // parent
+          Zotero.BetterBibTeX.getString('DB.corrupt'), // dialogTitle
+          Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
+          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
+            + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
+            + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING,
+          Zotero.BetterBibTeX.getString('DB.corrupt.quit'), // button 0
+          Zotero.BetterBibTeX.getString('DB.corrupt.restore'), // button 1
+          Zotero.BetterBibTeX.getString('DB.corrupt.reset'), // button 2
+          null, // check message
+          {} // check state
+        )
+
+        await conn.closeDatabase(true)
+
+        switch (index) {
+          case 0: // quit
+            Zotero.Utilities.Internal.quit()
+            break
+          case 1: // attempt restore
+            await OS.File.move(path, `${path}.is.corrupt`)
+            Zotero.Utilities.Internal.quit(true)
+            break
+          default:
+            await OS.File.move(path, `${path}.ignore.corrupt`)
+            this.conn[name] = new Zotero.DBConnection(name)
+            break
+        }
+
+        return null
       }
     }
 
