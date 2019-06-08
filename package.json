@@ -84,7 +84,7 @@
     "unicode2latex": "^1.0.15",
     "webpack-cli": "3.3.3",
     "xregexp": "4.2.4",
-    "zotero-plugin": "0.0.82"
+    "zotero-plugin": "0.0.83"
   },
   "devDependencies": {
     "@types/node": "12.0.7",
