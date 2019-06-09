@@ -236,11 +236,11 @@ export class Store {
             Zotero.Utilities.Internal.quit()
             break
           case 1: // attempt restore
-            await OS.File.move(path, `${path}.is.corrupt`)
+            if (await OS.File.exists(path)) await OS.File.move(path, `${path}.is.corrupt`)
             Zotero.Utilities.Internal.quit(true)
             break
           default:
-            await OS.File.move(path, `${path}.ignore.corrupt`)
+            if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
             this.conn[name] = new Zotero.DBConnection(name)
             break
         }
