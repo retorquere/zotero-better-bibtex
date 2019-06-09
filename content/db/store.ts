@@ -27,7 +27,7 @@ export class Store {
   public close(name, callback) {
     if (this.storage !== 'sqlite') return callback(null)
 
-    log.error('FileStore.SQLite:', close, name)
+    log.error('DB.Store.close:', close, name)
 
     if (!this.conn[name]) return callback(null)
 
@@ -36,11 +36,11 @@ export class Store {
 
     conn.closeDatabase(true)
       .then(() => {
-        log.debug('FileStore.SQLite.close OK', name)
+        log.debug('DB.Store.close OK', name)
         callback(null)
       })
       .catch(err => {
-        log.error('FileStore.SQLite.close FAILED', name, err)
+        log.error('DB.Store.close FAILED', name, err)
         callback(err)
       })
   }
@@ -81,12 +81,12 @@ export class Store {
     const conn = this.conn[name]
 
     if (conn === false) {
-      log.error('FileStore.SQLite: save of', name, 'attempted after close')
+      log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'attempted after close')
       return
     }
 
     if (!conn) {
-      log.error('FileStore.SQLite: save of', name, 'to unopened database')
+      log.error('DB.Store.exportDatabaseSQLiteAsync: save of', name, 'to unopened database')
       return
     }
 
@@ -140,7 +140,7 @@ export class Store {
       try {
         await file.promise
       } catch (err) {
-        log.error('FileStore.roll:', err)
+        log.error('DB.Store.roll:', err)
       }
     }
   }
@@ -157,7 +157,7 @@ export class Store {
   public loadDatabase(name, callback) {
     this.loadDatabaseAsync(name)
       .then(callback)
-      .catch(err => { log.error('Database load', name, err); callback(null)})
+      .catch(err => { log.error('DB.Store.loadDatabase', name, err); callback(null)})
   }
 
   public async loadDatabaseAsync(name) {
@@ -165,7 +165,7 @@ export class Store {
       const db = await this.loadDatabaseSQLiteAsync(name) // always try sqlite first, may be a migration to file
       if (db) return db
     } catch (err) {
-      log.error('Filestore.migrate:', err)
+      log.error('DB.Store.loadDatabaseAsync:', err)
     }
 
     if (this.storage === 'file') {
@@ -182,7 +182,7 @@ export class Store {
   private async loadDatabaseSQLiteAsync(name) {
     const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
     const exists = await OS.File.exists(path)
-    log.debug('FileStore.migrate:', { path, exists })
+    log.debug('DB.Store.loadDatabaseSQLiteAsync:', { path, exists })
 
     if (!exists) {
       if (this.storage === 'sqlite') {
@@ -192,8 +192,15 @@ export class Store {
       return null
     }
 
-    const conn = new Zotero.DBConnection(name)
-    if (this.storage === 'sqlite') this.conn[name] = conn
+    let conn
+    try {
+      conn = new Zotero.DBConnection(name)
+      if (this.storage === 'sqlite') this.conn[name] = conn
+    } catch (err) {
+      log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
+      // this will error out the queryAsync below and fall through to the corruption handling
+      conn = null
+    }
 
     let db = null
     const collections = {}
@@ -211,7 +218,7 @@ export class Store {
         }
       }
     } catch (err) {
-      Zotero.logError(err)
+      log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
 
       if (this.storage === 'sqlite') {
         const ps = Services.prompt
@@ -229,7 +236,7 @@ export class Store {
           {} // check state
         )
 
-        await conn.closeDatabase(true)
+        if (conn) await conn.closeDatabase(true)
 
         switch (index) {
           case 0: // quit
@@ -241,7 +248,12 @@ export class Store {
             break
           default:
             if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
-            this.conn[name] = new Zotero.DBConnection(name)
+            try {
+              this.conn[name] = new Zotero.DBConnection(name)
+            } catch (err) {
+              log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
+              alert('Database reset failed')
+            }
             break
         }
 
@@ -250,14 +262,14 @@ export class Store {
     }
 
     if (!db) {
-      log.error('FileStore.migrate: could not find metadata for', name)
+      log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name)
       return null
     }
 
     db.collections = db.collections.map(coll => collections[coll] || coll)
     const missing = db.collections.find(coll => typeof coll === 'string')
     if (missing && !this.allowPartial) {
-      log.error(`FileStore.migrate: could not find ${name}.${missing}`)
+      log.error(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing}`)
       return null
     }
 
@@ -288,7 +300,7 @@ export class Store {
       const msg = `Could not load ${name}.${collname}`
 
       if (this.allowPartial) {
-        log.error(msg)
+        log.error('DB.Store.loadDatabaseVersionAsync:', msg)
         return null
       } else {
         throw new Error(msg)
