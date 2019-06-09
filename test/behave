@@ -13,16 +13,17 @@ os.chdir(ROOT)
 
 if not 'CI' in os.environ:
   sys.argv.append('--stop')
-  from subprocess import Popen, PIPE
+  import subprocess
 
-  process = Popen('npm run build', stdout=PIPE, shell=True)
+  process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
-    if not line: break
     print(line.decode('utf-8'), end='')
-  if process.returncode != 0 and process.returncode is not None:
-    print(f'Build exited with exit code {process.returncode}')
-    sys.exit(process.returncode)
+    if process.poll() is not None: break
+  returncode = process.poll()
+  if returncode != 0:
+    print(f'Build exited with exit code {returncode}')
+    sys.exit(returncode)
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave

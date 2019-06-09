@@ -27,20 +27,18 @@ export class Store {
   public close(name, callback) {
     if (this.storage !== 'sqlite') return callback(null)
 
-    log.error('DB.Store.close:', close, name)
+    log.debug('DB.Store.close:', close, name)
 
     if (!this.conn[name]) return callback(null)
 
     const conn = this.conn[name]
     this.conn[name] = false
 
-    conn.closeDatabase(true)
+    this.closeDatabase(conn, name, 'DB.Store.close called')
       .then(() => {
-        log.debug('DB.Store.close OK', name)
         callback(null)
       })
       .catch(err => {
-        log.error('DB.Store.close FAILED', name, err)
         callback(err)
       })
   }
@@ -49,6 +47,27 @@ export class Store {
     this.exportDatabaseAsync(name, dbref)
       .then(() => callback(null))
       .catch(callback)
+  }
+
+  private async closeDatabase(conn, name, reason) {
+    log.debug('DB.Store.closeDatabase:', name, reason)
+
+    if (!conn) {
+      log.error('DB.Store.closeDatabase: ', name, typeof conn)
+      return
+    }
+
+    if (conn.closed) {
+      log.error('DB.Store.closeDatabase: not re-closing connection', name)
+      return
+    }
+
+    try {
+      await conn.closeDatabase(true)
+      log.debug('DB.Store.closeDatabase OK', name)
+    } catch (err) {
+      log.error('DB.Store.closeDatabase FAILED', name, err)
+    }
   }
 
   private async exportDatabaseAsync(name, dbref) {
@@ -157,7 +176,10 @@ export class Store {
   public loadDatabase(name, callback) {
     this.loadDatabaseAsync(name)
       .then(callback)
-      .catch(err => { log.error('DB.Store.loadDatabase', name, err); callback(null)})
+      .catch(err => {
+        log.error('DB.Store.loadDatabase', name, err)
+        callback(null)
+      })
   }
 
   public async loadDatabaseAsync(name) {
@@ -184,103 +206,113 @@ export class Store {
     const exists = await OS.File.exists(path)
     log.debug('DB.Store.loadDatabaseSQLiteAsync:', { path, exists })
 
-    if (!exists) {
-      if (this.storage === 'sqlite') {
-        this.conn[name] = new Zotero.DBConnection(name)
-        await this.conn[name].queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
-      }
-      return null
-    }
+    if (!exists && this.storage !== 'sqlite') return null // don't create the DB for a migration load
 
-    let conn
-    try {
-      conn = new Zotero.DBConnection(name)
-      if (this.storage === 'sqlite') this.conn[name] = conn
-    } catch (err) {
-      log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
-      // this will error out the queryAsync below and fall through to the corruption handling
-      conn = null
-    }
+    const conn = await this.openDatabaseSQLiteAsync(name)
+    await conn.queryAsync(`CREATE TABLE IF NOT EXISTS "${name}" (name TEXT PRIMARY KEY NOT NULL, data TEXT NOT NULL)`)
 
     let db = null
     const collections = {}
 
-    try {
-      for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
-        if (row.name === name) {
-          db = JSON.parse(row.data)
-        } else {
-          collections[row.name] = JSON.parse(row.data)
+    let rows = 0
+    for (const row of await conn.queryAsync(`SELECT name, data FROM "${name}" ORDER BY name ASC`)) {
+      rows += 1
+      if (row.name === name) {
+        db = JSON.parse(row.data)
+      } else {
+        collections[row.name] = JSON.parse(row.data)
 
-          collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
-          collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
-          collections[row.name].dirty = true
-        }
-      }
-    } catch (err) {
-      log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
-
-      if (this.storage === 'sqlite') {
-        const ps = Services.prompt
-        const index = ps.confirmEx(
-          null, // parent
-          Zotero.BetterBibTeX.getString('DB.corrupt'), // dialogTitle
-          Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
-          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
-            + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
-            + ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING,
-          Zotero.BetterBibTeX.getString('DB.corrupt.quit'), // button 0
-          Zotero.BetterBibTeX.getString('DB.corrupt.restore'), // button 1
-          Zotero.BetterBibTeX.getString('DB.corrupt.reset'), // button 2
-          null, // check message
-          {} // check state
-        )
-
-        if (conn) await conn.closeDatabase(true)
-
-        switch (index) {
-          case 0: // quit
-            Zotero.Utilities.Internal.quit()
-            break
-          case 1: // attempt restore
-            if (await OS.File.exists(path)) await OS.File.move(path, `${path}.is.corrupt`)
-            Zotero.Utilities.Internal.quit(true)
-            break
-          default:
-            if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
-            try {
-              this.conn[name] = new Zotero.DBConnection(name)
-            } catch (err) {
-              log.error('DB.Store.loadDatabaseSQLiteAsync:', err)
-              alert('Database reset failed')
-            }
-            break
-        }
-
-        return null
+        collections[row.name].cloneObjects = true // https://github.com/techfort/LokiJS/issues/47#issuecomment-362425639
+        collections[row.name].adaptiveBinaryIndices = false // https://github.com/techfort/LokiJS/issues/654
+        collections[row.name].dirty = true
       }
     }
 
-    if (!db) {
-      log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name)
-      return null
+    let failed = false
+
+    if (db) {
+      const missing = db.collections.filter(coll => !collections[coll])
+      db.collections = db.collections.map(coll => collections[coll]).filter(coll => coll)
+      if (missing.length) {
+        failed = !this.allowPartial
+        log.error(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing.join('.')}`)
+      }
+
+    } else if (exists && rows) {
+      log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
+      failed = true
+
+    } else {
+      log.debug('DB.Store.loadDatabaseSQLiteAsync: new database', name)
+
     }
 
-    db.collections = db.collections.map(coll => collections[coll] || coll)
-    const missing = db.collections.find(coll => typeof coll === 'string')
-    if (missing && !this.allowPartial) {
-      log.error(`DB.Store.loadDatabaseSQLiteAsync: could not find ${name}.${missing}`)
-      return null
-    }
-
-    if (this.storage === 'file') { // migrate but move after
-      await conn.closeDatabase(true)
+    if (this.storage !== 'sqlite') { // migrate but move after
+      log.debug('DB.Store.loadDatabaseSQLiteAsync: migrated', name, this.storage)
+      await this.closeDatabase(conn, name, 'migrated')
       await OS.File.move(path, `${path}.migrated`)
+
+    } else {
+      this.conn[name] = conn
+      if (failed || this.deleteAfterLoad) await conn.queryAsync(`DELETE FROM "${name}"`)
+
     }
 
-    if (this.storage === 'sqlite' && this.deleteAfterLoad) await this.conn[name].queryAsync(`DELETE FROM "${name}"`)
-
+    if (failed) {
+      log.error('DB.Store.loadDatabaseSQLiteAsync failed, returning empty database')
+      return null
+    }
     return db
+  }
+
+  private async openDatabaseSQLiteAsync(name, fatal = false) {
+    const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
+    const exists = await OS.File.exists(path)
+
+    log.debug('DB.Store.openDatabaseSQLiteAsync:', {name, path, exists, fatal})
+
+    const conn = new Zotero.DBConnection(name)
+    try {
+      if (await conn.integrityCheck()) return conn
+      throw new Error(`DB.Store.openDatabaseSQLiteAsync(${JSON.stringify(name)}) failed: integrity check not OK`)
+
+    } catch (err) {
+      log.error('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
+      if (fatal) throw err
+
+      const ps = Services.prompt
+      const index = ps.confirmEx(
+        null, // parent
+        Zotero.BetterBibTeX.getString('DB.corrupt'), // dialogTitle
+        Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
+        ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
+          + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
+          + (fatal ? 0 : ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING),
+        Zotero.BetterBibTeX.getString('DB.corrupt.quit'), // button 0
+        Zotero.BetterBibTeX.getString('DB.corrupt.reset'), // button 1
+        (fatal ? null : Zotero.BetterBibTeX.getString('DB.corrupt.restore')), // button 2
+        null, // check message
+        {} // check state
+      )
+
+      await this.closeDatabase(conn, name, 'corrupted')
+
+      switch (index) {
+        case 0: // quit
+          Zotero.Utilities.Internal.quit()
+          break
+
+        case 1: // reset
+          if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
+          return await this.openDatabaseSQLiteAsync(name, true)
+          break
+
+        default: // restore
+          if (await OS.File.exists(path)) await OS.File.move(path, `${path}.is.corrupt`)
+          Zotero.Utilities.Internal.quit(true)
+          break
+      }
+    }
   }
 
   private async loadDatabaseVersionAsync(name: string, version: number) {
