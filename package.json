@@ -58,7 +58,7 @@
     "eventemitter4": "0.2.4",
     "fast-chunk-string": "1.0.1",
     "fold-to-ascii": "5.0.0",
-    "github-release-cli": "^1.1.0",
+    "github-release-cli": "^1.2.0",
     "global": "4.3.2",
     "he": "1.2.0",
     "ini": "1.3.5",
@@ -82,12 +82,12 @@
     "transliteration": "2.1.3",
     "tslint": "5.17.0",
     "unicode2latex": "^1.0.15",
-    "webpack-cli": "3.3.2",
+    "webpack-cli": "3.3.3",
     "xregexp": "4.2.4",
-    "zotero-plugin": "0.0.82"
+    "zotero-plugin": "0.0.83"
   },
   "devDependencies": {
-    "@types/node": "12.0.4",
+    "@types/node": "12.0.7",
     "@types/webpack": "4.4.32",
     "archiver": "3.0.0",
     "bluebird": "3.5.5",
@@ -119,7 +119,7 @@
     "typedoc": "0.14.2",
     "typescript": "3.5.1",
     "uri-templates": "0.2.0",
-    "webpack": "4.32.2",
+    "webpack": "4.33.0",
     "wrapper-webpack-plugin": "2.1.0",
     "xml-parser": "1.2.1",
     "xmldom": "^0.1.27",
