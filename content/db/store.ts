@@ -280,6 +280,7 @@ export class Store {
       log.error('DB.Store.openDatabaseSQLiteAsync:', { name, fatal }, err)
       if (fatal) throw err
 
+      // restore disabled until I Zotero supports after-open restore
       const ps = Services.prompt
       const index = ps.confirmEx(
         null, // parent
@@ -287,10 +288,10 @@ export class Store {
         Zotero.BetterBibTeX.getString('DB.corrupt.explanation', { error: err.message }), // text
         ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT // buttons
           + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING
-          + (fatal ? 0 : ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING),
+          + 0, // disabled: (fatal ? 0 : ps.BUTTON_POS_2 * ps.BUTTON_TITLE_IS_STRING),
         Zotero.BetterBibTeX.getString('DB.corrupt.quit'), // button 0
         Zotero.BetterBibTeX.getString('DB.corrupt.reset'), // button 1
-        (fatal ? null : Zotero.BetterBibTeX.getString('DB.corrupt.restore')), // button 2
+        null, // disabled: (fatal ? null : Zotero.BetterBibTeX.getString('DB.corrupt.restore')), // button 2
         null, // check message
         {} // check state
       )
