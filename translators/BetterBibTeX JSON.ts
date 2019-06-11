@@ -139,7 +139,7 @@ Translator.doExport = () => {
     }
 
     for (const att of item.attachments || []) {
-      att.path = att.localpath
+      att.path = att.localPath
       for (const field of Object.keys(att)) {
         att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
         if (!validAttachmentFields.has(field)) delete att[field]
