@@ -139,14 +139,21 @@ Translator.doExport = () => {
     }
 
     for (const att of item.attachments || []) {
-      att.path = att.localPath
+      if (Translator.options.exportFileData && att.saveFile && att.defaultPath) {
+        att.saveFile(att.defaultPath, true)
+        att.path = att.defaultPath
+      } else if (att.localPath) {
+        att.path = att.localPath
+      }
+
+      if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
+
+      att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
       for (const field of Object.keys(att)) {
-        att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
         if (!validAttachmentFields.has(field)) delete att[field]
       }
     }
 
-    if (item.relations) debug('adding item', item)
     data.items.push(item)
   }
   debug('data ready')
