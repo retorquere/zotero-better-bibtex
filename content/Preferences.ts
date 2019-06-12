@@ -390,7 +390,7 @@ export = new class PrefPane {
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
       // tslint:disable-next-line:no-magic-numbers
-      setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
+      Zotero.setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
     log.debug('prefs: ready')
 
@@ -435,7 +435,7 @@ export = new class PrefPane {
         if (selectedIndex === -1) selectedIndex = 0
         this.styleChanged(selectedIndex)
 
-        setTimeout(() => { stylebox.ensureIndexIsVisible(selectedIndex); stylebox.selectedIndex = selectedIndex }, 0)
+        Zotero.setTimeout(() => { stylebox.ensureIndexIsVisible(selectedIndex); stylebox.selectedIndex = selectedIndex }, 0)
       })
     }
 

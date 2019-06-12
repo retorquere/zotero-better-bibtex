@@ -524,7 +524,7 @@
                   onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat();"
                   onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat();"
                   oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat();"
-                  onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat() }, 1);"/>
+                  onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkCitekeyFormat() }, 1);"/>
               </hbox>
               <description>&better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate;</description>
               <checkbox preference="pref-better-bibtex-citekeyFold" label="&better-bibtex.Preferences.citekey.fold;"/>
@@ -596,7 +596,7 @@
                     <label forpreference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
                       onchange="Zotero.BetterBibTeX.Preferences.update();"
-                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
+                      onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
                   <row id="id-better-bibtex-preferences-quickCopyPandocBrackets">
                     <checkbox id="id-better-bibtex-preferences-quickCopyPandocBrackets"
@@ -657,7 +657,7 @@
                     <label forpreference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
                       oninput="Zotero.BetterBibTeX.Preferences.update();"
-                      onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
+                      onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
                   <row>
                     <label forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
@@ -833,7 +833,7 @@
                         preference="pref-better-bibtex-postscript" id="zotero-better-bibtex-postscript"
                         onblur="Zotero.BetterBibTeX.Preferences.checkPostscript();"
                         oninput="Zotero.BetterBibTeX.Preferences.checkPostscript();"
-                        onkeypress="setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
+                        onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.checkPostscript() }, 1);"/>
                   <textbox rows="2" multiline="true" flex="1" id="better-bibtex-cache-warn-postscript" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.tab.postscript.warn;"/>
                 </tabpanel>
                 <tabpanel orient="vertical">
