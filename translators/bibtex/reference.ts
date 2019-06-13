@@ -758,6 +758,9 @@ export class Reference {
       this.add({ name: annotation, value: notes, html: true })
     }
 
+    // I do this all the way here because there are lots of ways we could end up with an urldate; literal bibtex fields, csl cheater syntax, and, of course, accessDate
+    if (!this.has.url && this.has.urldate) this.remove('urldate')
+
     let cache
     try {
       cache = this.postscript(this, this.item)
@@ -771,8 +774,6 @@ export class Reference {
     for (const name of Translator.preferences.skipFields) {
       this.remove(name)
     }
-
-    if (!this.has.url && this.has.urldate) this.remove('urldate')
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
 
