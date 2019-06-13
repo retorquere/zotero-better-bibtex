@@ -8,6 +8,8 @@ import { DOMParser } from 'xmldom'
 import jsesc = require('jsesc')
 import _ = require('lodash')
 
+// TODO: make sure to occasionally check https://sourceforge.net/projects/biblatex-biber/files/biblatex-biber/testfiles/ for updates.
+
 const _select = xpath.useNamespaces({ bcf: 'https://sourceforge.net/projects/biblatex' })
 function select(selector, node) {
   return _select(selector, node) as Element[]
