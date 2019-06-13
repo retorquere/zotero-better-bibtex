@@ -1,10 +1,16 @@
 try {
-  if (this.item.itemType === 'webpage' && Translator.BetterBibTeX) {
-    if (this.has.urldate) {
-      this.add({ name: 'note', value: "(accessed " + this.has.urldate.value + ")" });
+  if (item.itemType === 'webpage' && Translator.BetterBibTeX) {
+    if (item.accessDate) {
+      const accessed = item.accessDate && item.accessDate.replace(/\s*T?\d+:\d+:\d+.*/, '')
+      reference.add({ name: 'note', value: "(accessed " + accessed + ")" });
     }
-    if (this.has.url) {
-      this.add({ name: 'howpublished', bibtex: "{\\url" + this.has.url.bibtex + "}" });
+    if (item.url) {
+      // this (ab)uses the default latex encoder and wraps the result
+      reference.add({ name: 'howpublished', value: item.url });
+      reference.add({ name: 'howpublished', bibtex: "{\\url" + reference.has.howpublished.bibtex + "}" });
+
+      // another way would be
+      // reference.add({ name: 'howpublished', bibtex: "{\\url{" + reference.enc_latex({ value: item.url }) + "}}" });
     }
   }
 } catch (err) {
