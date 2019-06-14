@@ -761,15 +761,15 @@ export class Reference {
     // I do this all the way here because there are lots of ways we could end up with an urldate; literal bibtex fields, csl cheater syntax, and, of course, accessDate
     if (!this.has.url && this.has.urldate) this.remove('urldate')
 
-    let cache
+    let cachable
     try {
-      cache = this.postscript(this, this.item)
+      cachable = this.postscript(this, this.item)
     } catch (err) {
       if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
       debug('Reference.postscript failed:', err)
-      cache = false
+      cachable = false
     }
-    this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)
+    this.cachable = this.cachable && (typeof cachable !== 'boolean' || cachable)
 
     for (const name of Translator.preferences.skipFields) {
       this.remove(name)
