@@ -13,7 +13,6 @@ before_install:
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
-  - ./check-latest-zotero.py
 
 cache:
   npm: true
