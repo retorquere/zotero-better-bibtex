@@ -7,6 +7,30 @@ import * as log from '../debug'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
 
+const unicode2latex = Object.entries(require('unicode2latex/tables/unicode.json')).reduce((acc, pair) => {
+  const unicode = pair[0] as string
+  const latex = pair[1] as { text: string, math: string }
+  acc[unicode] = { text: latex.text || latex.math, math: !!(latex.text) }
+  return acc
+}, {})
+function tolatex(s) {
+  if (!s) return ''
+
+  return s.split('')
+    .map(c => ({...(unicode2latex[c] || { text: c, math: false }) }) )
+    .reduce((acc, c) => {
+      const last = acc[acc.length - 1]
+      if (last.math === c.math) {
+        last.text += c.text
+      } else {
+        acc.push(c)
+      }
+      return acc
+    })
+    .map(c => c.math ? `$${c.text}$` : c.text)
+    .join('')
+}
+
 const shortLabel = {
   article: 'art.',
   chapter: 'ch.',
@@ -32,22 +56,22 @@ const shortLabel = {
   volume: 'vol.',
 }
 
-function citation2Latex(citation) {
+function citation2latex(citation) {
   let formatted = ''
 
-  if (citation.prefix) formatted += `[${citation.prefix}]`
+  if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
 
   log.debug('citation:', citation)
   if (citation.locator && citation.suffix) {
     const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
-    formatted += `[${label}${citation.locator}, ${citation.suffix}]`
+    formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
 
   } else if (citation.locator) {
     const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
-    formatted += `[${label}${citation.locator}]`
+    formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
 
   } else if (citation.suffix) {
-    formatted += `[${citation.suffix}]`
+    formatted += `[${tolatex(citation.suffix)}]`
 
   } else if (citation.prefix) {
     formatted += '[]'
@@ -69,11 +93,12 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return citations.map(citation => `cites: ${citation.citekey}`).join('\n')
   }
 
-  public async cite(citations, options) { return this.latex(citations, options) }
-  public async citet(citations, options) { return this.latex(citations, { command: 'citet', ...options } ) }
-  public async citep(citations, options) { return this.latex(citations, { command: 'citep', ...options } ) }
+  public async cite(citations, options) { return this.natbib(citations, options) }
+  public async citet(citations, options) { return this.natbib(citations, { command: 'citet', ...options } ) }
+  public async citep(citations, options) { return this.natbib(citations, { command: 'citep', ...options } ) }
+  public async latex(citations, options) { return this.natbib(citations, options) }
 
-  public async latex(citations, options) {
+  public async natbib(citations, options) {
     if (!options.command) options.command = 'cite'
 
     if (citations.length === 0) return ''
@@ -104,7 +129,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     for (const citation of citations) {
       formatted += '\\'
       formatted += citation.suppressAuthor ? 'citeyear' : options.command
-      formatted += citation2Latex(citation)
+      formatted += citation2latex(citation)
     }
 
     return formatted
@@ -123,10 +148,10 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       // citations, biblatex doesn't support suppressing authors on a case by
       // case basis
       const suppressAuthor = citation.suppressAuthor && /^(auto|paren|)cite$/.exec(command) ? '*' : ''
-      return `\\${command}${suppressAuthor}${citation2Latex(citation)}`
+      return `\\${command}${suppressAuthor}${citation2latex(citation)}`
     }
 
-    citations = citations.map(citation2Latex).join('')
+    citations = citations.map(citation2latex).join('')
     if (citations.includes('[')) {
       // there are some pre/post notes → generate a full \XYcites command
       command = command.endsWith('s') ? command : `${command}s`
