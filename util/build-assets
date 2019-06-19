@@ -51,8 +51,8 @@ for asset in release.assets():
     asset.delete()
 
 if action == 'fetch':
-  if len([f for f in fetched if f.endswith('.xpi')]) != 1:
-    print('fetch: no xpi')
+  if len([f for f in fetched if f.endswith('.xpi')]) != 2:
+    print('fetch: need 2 xpis')
     sys.exit(1)
   missing = list(set(generated) - set(fetched))
   if len(missing) > 0:
