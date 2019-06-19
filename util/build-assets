@@ -28,10 +28,10 @@ generated = [
   'gen/preferences/defaults.json',
   'gen/update.rdf',
 ]
-generated = [ f for f in generated if os.path.exists(f) ]
 
-expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=7)
+expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=2)
 
+fetched = []
 for asset in release.assets():
   if asset.created_at < expired:
     asset.delete()
@@ -45,9 +45,22 @@ for asset in release.assets():
     os.makedirs(os.path.dirname(filename), exist_ok=True)
     with open(filename, 'wb') as f:
       asset.download(f)
+    fetched.append(filename)
   else:
     print(f'Removing {asset.label}')
     asset.delete()
+
+if action == 'fetch':
+  if len([f for f in fetched if f.endswith('.xpi')]) != 1:
+    print('fetch: no xpi')
+    sys.exit(1)
+  missing = list(set(generated) - set(fetched))
+  if len(missing) > 0:
+    print('fetch: missing ' + ', '.join(missing))
+    sys.exit(1)
+  if len(generated) + 1 != len(fetched):
+    print(f'fetch: expected {len(generated) + 1}, got {len(fetched)}')
+    sys.exit(1)
 
 if action == 'stash':
   for asset in glob.glob('xpi/*.xpi') + generated:
