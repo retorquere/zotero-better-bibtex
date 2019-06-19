@@ -1,4 +1,4 @@
-import ISBN = require('isbnjs')
+import { validate as IsISBN } from 'is-isbn'
 import ISSN = require('issn')
 import EAN = require('barcoder')
 import * as DateParser from './dateparser'
@@ -8,8 +8,7 @@ const isnm_prefix = '9790'
 export function qualityReport(value, test, params = null) {
   switch (test) {
     case 'isbn':
-      const isbn = ISBN.parse(value)
-      return (isbn && (isbn.isIsbn10() || isbn.isIsbn13())) ? '' : 'not a valid ISBN'
+      return IsISBN(value.replace(/-/g, '')) ? '' : 'not a valid ISBN'
 
     case 'issn':
       return ISSN(value) ? '' : 'not a valid ISSN'
