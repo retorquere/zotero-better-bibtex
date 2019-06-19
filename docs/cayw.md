@@ -56,9 +56,11 @@ the following URL parameters:
 
 The following formats are available:
 
-* `latex`. Extra URL parameters allowed:
+* `latex`. Generates [natbib] citation commands. Extra URL parameters allowed:
   * `command`: the citation command to use (if unspecified, defaults to `cite`)
 * `cite` is an alias for `latex` with the assumption you want the cite command to be `cite`
+* `biblatex`. Generates [biblatex] citation commands. Extra URL parameters allowed:
+  * `command`: the citation command to use (if unspecified, defaults to `autocite`)
 * `mmd`: MultiMarkdown
 * `pandoc`. Accepts additional URL parameter `brackets`; any non-empty value surrounds the citation with brackets
 * `asciidoctor-bibtex`
@@ -80,12 +82,18 @@ The picker passes the following data along with your picked references if you fi
 | `suffix` | for stuff after the citations |
 | `suppress author` | if you only want the year |
 
-However not all output formats supports these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
-none. LaTeX supports all 4, in a way; if you choose `suppress author` for none or all of your references in a pick, you
-will get the citation as you would normally enter it, such as `\\cite{author1,author2}`, or
-`\\citeyear{author1,author2}`. If you use `locator`, `prefix`, `suffix` in any one of them, or you use `suppress author`
-for some but not for others, the picker will write them out all separate, like `\cite[p.  1]{author1}\citeyear{author2}`, 
-as LaTeX doesn't seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators. The `formatted-` formats will ignore these.
+However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
+none. The `formatted-` formats will ignore these. LaTeX supports all 4, in a way:
+
+* in the `latex` ([natbib]) format: if you choose `suppress author` for none or all of your references in a pick, you
+  will get the citation as you would normally enter it, such as `\cite{author1,author2}`, or
+  `\citeyear{author1,author2}`. If you use `locator`, `prefix`, `suffix` in any one of them, or you use `suppress author`
+  for some but not for others, the picker will write them out all separate, like `\cite[p. 1]{author1}\citeyear{author2}`,
+  as natbib doesn't seem to have a good mechanism for combined citations that mix different prefixes/suffixes/locators.
+* in the [`biblatex`][biblatex] format: `suppress author` is ignored unless the command is one of `\cite`, `\autocite`
+  or `\parencite` AND there is one reference only, in which case the starred variant of the command is returned, which
+  hides the author; for multiple references with `locator`s, `prefix`es or `suffix`es, the `s`-affixed variant of the
+  command is generated
 
 The `clipboard` option can be used as a workaround for editors that haven't gotten around to integrating this yet. If
 you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
@@ -109,3 +117,6 @@ For testing for other markdown formatters, you can construct simple references y
 * `separator`, default `,`, for text to put between citekeys
 
 but if you need an extra format, just ask.
+
+[natbib]: https://ctan.org/pkg/natbib
+[biblatex]: https://ctan.org/pkg/biblatex
