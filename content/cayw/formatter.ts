@@ -63,11 +63,11 @@ function citation2latex(citation) {
 
   log.debug('citation:', citation)
   if (citation.locator && citation.suffix) {
-    const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
+    const label = citation.label === 'page' ? '' : ((shortLabel[citation.label] || citation.label) + ' ')
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
 
   } else if (citation.locator) {
-    const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
+    const label = citation.label === 'page' ? '' : ((shortLabel[citation.label] || citation.label) + ' ')
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
 
   } else if (citation.suffix) {
