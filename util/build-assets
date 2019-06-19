@@ -29,7 +29,7 @@ generated = [
   'gen/update.rdf',
 ]
 
-expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=2)
+expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=2)
 
 fetched = []
 for asset in release.assets():
