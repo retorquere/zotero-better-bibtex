@@ -24,7 +24,7 @@ cache:
   - .cache/pip
 
 script:
-  - ./util/build-assets fetch
+  - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --no-capture -f travis --tags $TAGS
 
 after_failure:
@@ -69,7 +69,7 @@ jobs:
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
     before_install: true
     script:
-      - ./util/build-assets fetch
+      - ./util/build-assets fetch || travis_terminate 1
       - npm run release
       - ./util/build-assets pop
 
