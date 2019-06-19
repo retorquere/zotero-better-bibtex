@@ -540,7 +540,7 @@ export class Reference {
       if (this.referencetype !== itemtype_name[0]) return
       name = itemtype_name[1]
     } else {
-      name = itemtype_name
+      name = field.name
     }
 
     if ((typeof field.value === 'string') && (field.value.trim() === '')) {
@@ -899,9 +899,9 @@ export class Reference {
    * @param {field} field to encode.
    * @return {String} field.value encoded as author-style value
    */
-  protected enc_literal(f) {
+  protected enc_literal(f, raw = false) {
     if (!f.value) return null
-    return this.enc_latex({value: Translator.preferences.suppressBraceProtection ? f.value : new String(f.value)}) // tslint:disable-line:no-construct
+    return this.enc_latex({...f, value: Translator.preferences.suppressBraceProtection ? f.value : new String(f.value)}, raw) // tslint:disable-line:no-construct
   }
 
   /*
