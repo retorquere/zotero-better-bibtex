@@ -56,7 +56,8 @@ the following URL parameters:
 
 The following formats are available:
 
-* `latex`.
+* `latex`. Extra URL parameters allowed:
+  * `command`: the citation command to use (if unspecified, defaults to `cite`)
 * `cite` is an alias for `latex` with the assumption you want the cite command to be `cite`
 * `mmd`: MultiMarkdown
 * `pandoc`. Accepts additional URL parameter `brackets`; any non-empty value surrounds the citation with brackets
