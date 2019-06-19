@@ -32,6 +32,32 @@ const shortLabel = {
   volume: 'vol.',
 }
 
+function citation2Latex(citation) {
+  let formatted = ''
+
+  if (citation.prefix) formatted += `[${citation.prefix}]`
+
+  log.debug('citation:', citation)
+  if (citation.locator && citation.suffix) {
+    const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
+    formatted += `[${label}${citation.locator}, ${citation.suffix}]`
+
+  } else if (citation.locator) {
+    const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
+    formatted += `[${label}${citation.locator}]`
+
+  } else if (citation.suffix) {
+    formatted += `[${citation.suffix}]`
+
+  } else if (citation.prefix) {
+    formatted += '[]'
+  }
+
+  formatted += `{${citation.citekey}}`
+
+  return formatted
+}
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Formatter = new class { // tslint:disable-line:variable-name
   public async playground(citations, options) {
@@ -78,28 +104,38 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     for (const citation of citations) {
       formatted += '\\'
       formatted += citation.suppressAuthor ? 'citeyear' : options.command
-      if (citation.prefix) formatted += `[${citation.prefix}]`
-
-      log.debug('citation:', citation)
-      if (citation.locator && citation.suffix) {
-        const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
-        formatted += `[${label}${citation.locator}, ${citation.suffix}]`
-
-      } else if (citation.locator) {
-        const label = citation.label === 'page' ? '' : (shortLabel[citation.label] || citation.label) + ' '
-        formatted += `[${label}${citation.locator}]`
-
-      } else if (citation.suffix) {
-        formatted += `[${citation.suffix}]`
-
-      } else if (citation.prefix) {
-        formatted += '[]'
-      }
-
-      formatted += `{${citation.citekey}}`
+      formatted += citation2Latex(citation)
     }
 
     return formatted
+  }
+
+  public async biblatex(citations, options) {
+    if (citations.length === 0) return ''
+
+    let command = options.command ? options.command : 'autocite'
+
+    if (citations.length === 1) {
+      const citation = citations[0]
+      // NOTE: suppressAuthor is only honored when citations.length === 1 and
+      // the command is one of \cite, \autocite or \parencite; for other
+      // commands, suppressAuthor doesn't make sense, and for multiple
+      // citations, biblatex doesn't support suppressing authors on a case by
+      // case basis
+      const suppressAuthor = citation.suppressAuthor && /^(auto|paren|)cite$/.exec(command) ? '*' : ''
+      return `\\${command}${suppressAuthor}${citation2Latex(citation)}`
+    }
+
+    citations = citations.map(citation2Latex).join('')
+    if (citations.includes('[')) {
+      // there are some pre/post notes → generate a full \XYcites command
+      command = command.endsWith('s') ? command : `${command}s`
+    } else {
+      // there are no pre/post-notes, the citations can be a simple
+      // comma-separated list of keys
+      citations = citations.replace(/\}\{/g, ',')
+    }
+    return `\\${command}${citations}`
   }
 
   public async mmd(citations, options) {
