@@ -58,8 +58,8 @@ if action == 'fetch':
   if len(missing) > 0:
     print('fetch: missing ' + ', '.join(missing))
     sys.exit(1)
-  if len(generated) + 1 != len(fetched):
-    print(f'fetch: expected {len(generated) + 1}, got {len(fetched)}')
+  if len(generated) + 2 != len(fetched): # 2 xpis
+    print(f'fetch: expected {len(generated) + 2}, got {len(fetched)}')
     sys.exit(1)
 
 if action == 'stash':
