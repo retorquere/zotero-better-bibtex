@@ -20,13 +20,13 @@ function tolatex(s) {
     .map(c => ({...(unicode2latex[c] || { text: c, math: false }) }) )
     .reduce((acc, c) => {
       const last = acc[acc.length - 1]
-      if (last.math === c.math) {
+      if (last && last.math === c.math) {
         last.text += c.text
       } else {
         acc.push(c)
       }
       return acc
-    })
+    }, [])
     .map(c => c.math ? `$${c.text}$` : c.text)
     .join('')
 }
