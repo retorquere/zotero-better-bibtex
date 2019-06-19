@@ -75,12 +75,12 @@ The following formats are available:
 
 The picker passes the following data along with your picked references if you filled them out:
 
-| field    |   |
-| -------- | --------- |
-| `locator` | the place within the work (e.g. page number) |
-| `prefix` | for stuff like "see ..." |
-| `suffix` | for stuff after the citations |
-| `suppress author` | if you only want the year |
+| field             |                                               |
+| ----------------- | --------------------------------------------- |
+| `locator`         | the place within the work (e.g. page number)  |
+| `prefix`          | for stuff like "see ..."                      |
+| `suffix`          | for stuff after the citations                 |
+| `suppress author` | if you only want the year                     |
 
 However not all output formats support these. Pandoc and scannable cite are the richest ones, supporting all 4. MultiMarkdown supports
 none. The `formatted-` formats will ignore these. LaTeX supports all 4, in a way:
