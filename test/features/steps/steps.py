@@ -122,14 +122,19 @@ def step_impl(context, field, value):
 def step_impl(context):
   context.zotero.execute('await Zotero.Items.trashTx([id])', id=context.selected)
 
-@when(u'I pick for CAYW')
-def step_impl(context):
+@when(u'I pick "{title}" for CAYW')
+def step_impl(context, title):
+  print(context.table.headings)
+  print(context.table)
+  pick = {
+    'id': context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find(title)', title=title),
+    context.table.headings[0]: context.table.headings[1],
+  }
+  assert pick['id'] is not None
   for row in context.table:
-    pick = { 'id': context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find(title)', title=row['title']) }
-    assert pick['id'] is not None
-    for h in row.headings:
-      if h != 'title': pick[h] = row[h]
-    context.picked.append(pick)
+    pick[row[0]] = row[1]
+  print(pick)
+  context.picked.append(pick)
 
 @then(u'the picks for "{fmt}" should be "{expected}"')
 def step_impl(context, fmt, expected):

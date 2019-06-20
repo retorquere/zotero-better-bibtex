@@ -224,10 +224,12 @@ Scenario: BibTeX; URL missing in bibtex for Book Section #412
 @cayw
 Scenario: CAYW picker
   When I import 3 references from "export/cayw.json"
-  And I pick for CAYW
-    | title                                                                                               | prefix  | suffix  | suppressAuthor  | label   | locator |
-    | 6 The time it takes: temporalities of planning                                                      |         |         |                 | page    | 1       |
-    | A bicycle made for two? The integration of scientific techniques into archaeological interpretation |         |         |                 | chapter | 1       |
+  And I pick "6 The time it takes: temporalities of planning" for CAYW
+    | label   | page  |
+    | locator | 1     |
+  And I pick "A bicycle made for two? The integration of scientific techniques into archaeological interpretation" for CAYW
+    | label   | chapter |
+    | locator | 1       |
   Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1"
   And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][]"
   And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}"
