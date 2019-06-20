@@ -17,6 +17,7 @@ import psutil
 import subprocess
 import atexit
 import time
+import collections
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -451,3 +452,66 @@ class Preferences:
 
     return value
 
+class Pick(collections.MutableMapping):
+  labels = [
+    'article',
+    'chapter',
+    'subchapter',
+    'column',
+    'figure',
+    'line',
+    'note',
+    'issue',
+    'opus',
+    'page',
+    'paragraph',
+    'subparagraph',
+    'part',
+    'rule',
+    'section',
+    'subsection',
+    'Section',
+    'sub verbo',
+    'schedule',
+    'title',
+    'verse',
+    'volume',
+  ]
+
+  def __init__(self, *args, **kwargs):
+    self._pick = dict()
+    self.update(dict(*args, **kwargs))
+
+  def __getitem__(self, key):
+    label = self.__label__(key)
+    if label: return self._pick['locator']
+    return self._pick[key]
+
+  def __setitem__(self, key, value):
+    label = self.__label__(key)
+    if label:
+      self._pick['label'] = label
+      self._pick['locator'] = value
+    else:
+      self._pick[key] = value
+
+  def __delitem__(self, key):
+    label = self.__label__(key)
+    if label:
+      del self._pick['label']
+      del self._pick['locator']
+    else:
+      del self.store[key]
+
+  def __iter__(self):
+    return iter(self._pick)
+
+  def __len__(self):
+    return len(self._pick)
+
+  def __label__(self, key):
+    _key = key.replace(' ', '').lower()
+    for label in self.labels:
+      if _key == label.replace(' ', '').lower():
+        return label
+    return None
