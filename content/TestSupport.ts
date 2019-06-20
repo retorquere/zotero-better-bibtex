@@ -146,7 +146,7 @@ export = new class {
 
   public async find(title) {
     const s = new Zotero.Search()
-    s.addCondition('field', 'is', title) // field not used?
+    s.addCondition('field', 'contains', title) // field not used?
     const ids = await s.search()
     if (!ids || ids.length !== 1) throw new Error(`No item found with title '${title}'`)
 
