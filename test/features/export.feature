@@ -229,18 +229,18 @@ Scenario: CAYW picker
   And I pick "A bicycle made for two" for CAYW
     | chapter | 1 |
   And I pick "Commonwealth" for CAYW
-    | section | 5                   |
-    | prefix  | see                 |
-    | suffix  | what would go here? |
+    | section | 5         |
+    | prefix  | see       |
+    | suffix  | et passim |
   And I pick "Commonwealth" for CAYW
     | volume  | <1>                 |
     | prefix  | see                 |
-  Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1; see @kartinyeri, sec. 5 what would go here?; see @kartinyeri, vol. <1>"
+  Then the picks for "pandoc" should be "@bentley_academic_2011, p. 1; @pollard_bicycle_2007, ch. 1; see @kartinyeri, sec. 5 et passim; see @kartinyeri, vol. <1>"
   And the picks for "mmd" should be "[#bentley_academic_2011][][#pollard_bicycle_2007][][see][#kartinyeri][see][#kartinyeri]"
-  And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}\cite[see][sec. 5, what would go here?]{kartinyeri}\cite[see][vol. $<$1$>$]{kartinyeri}"
+  And the picks for "latex" should be "\cite[1]{bentley_academic_2011}\cite[ch. 1]{pollard_bicycle_2007}\cite[see][sec. 5, et passim]{kartinyeri}\cite[see][vol. $<$1$>$]{kartinyeri}"
   # And the picks for "scannable-cite" should be "{ | Abram, 2014 | p. 1 | | zu:0:ITEMKEY }{ | Pollard, & Bray, 2007 | ch. 1 | | zu:0:ITEMKEY }"
   And the picks for "asciidoctor-bibtex" should be "cite:[bentley_academic_2011(1), pollard_bicycle_2007(ch. 1), kartinyeri(sec. 5), kartinyeri(vol. <1>)]"
-  And the picks for "biblatex" should be "\autocites[1]{bentley_academic_2011}[ch. 1]{pollard_bicycle_2007}[see][sec. 5, what would go here?]{kartinyeri}[see][vol. $<$1$>$]{kartinyeri}"
+  And the picks for "biblatex" should be "\autocites[1]{bentley_academic_2011}[ch. 1]{pollard_bicycle_2007}[see][sec. 5, et passim]{kartinyeri}[see][vol. $<$1$>$]{kartinyeri}"
 
 @test-cluster-1
 @307 @bbt
