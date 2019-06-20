@@ -1,5 +1,28 @@
 # Very rudimentary instructions to get you going on BBT coding
 
+# SUPER IMPORTANT, READ THIS IF ANYTHING
+
+Running the tests will **clear out the Zotero profile** used for running the tests without asking you any questions.
+
+In order to make sure that this isn't my actual research data, I have set up the tests to do a couple of things, and I've done some things manually
+
+Manually:
+
+* Before first start of Zotero, I have created empty files (not directories, this is important), called `~/Zotero` and `~/zotero`. This will prevent Zotero from putting any data there
+* I have set up Zotero to always start with `-datadir profile` so that the reference data sits within the actual Zotero profile, not in `~/Zotero`
+
+Automated:
+
+* The tests will create a Zotero profile called `BBTZ5TEST`. **This profile gets clobbered everytime you start the tests. DO NOT PUT IMPORTANT DATA HERE.**
+* The test runner starts Zoteru using `-datadir profile -P BBTZ5TEST` which means I force it to use that profile, and it should leave your production profile alone
+
+If you try to start up Zotero for your regular work and it's empty or you see test data, try running it with `-P` and the profile picker will pop up. Select your actual profile and tick the checkbox that says `start up with this profile by default`.
+
+This has kept my data safe for the past few years but I can make no guarantees. Safest is to run the tests on a system or user account entirely separate from your own, but I don't.
+
+
+# Setting up for development/test
+
 ## Zotero
 
 If you're on Linux, install the latest Zotero release using the either manually or using https://github.com/retorquere/zotero-deb so Zotero will end up in
