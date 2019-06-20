@@ -488,10 +488,12 @@ export class Reference {
         if (!value) return
 
         value = value.trim()
+
+        // scrub fields of unwanted {}, but not if it's a raw field or a bare field without spaces
         if (!field.bare || (field.value as string).match(/\s/)) {
           // clean up unnecesary {} when followed by a char that safely terminates the command before
           // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
-          value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
+          if (!(this.raw || field.raw)) value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
           value = `{${value}}`
         }
 
