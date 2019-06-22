@@ -1,3 +1,7 @@
-# test
+# HTML
 
-{{% configuration %}}
+{{% configuration-html %}}
+
+# MD
+
+{{% configuration-md %}}
