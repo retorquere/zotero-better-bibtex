@@ -24,3 +24,32 @@ Options:
 {{ end }}
 
 {{ end }}
+
+{{ range $tab := .Site.Data.configuration }}
+
+  <h2>{{ $tab.name | markdownify | safeHTML }}</h2>
+
+  {{ $tab.description | markdownify | safeHTML }}
+
+  {{ range $pref, $details := $tab.preferences }}
+
+    <h3>{{ $pref | markdownify | safeHTML }}</h3>
+
+    <p>default: <code>{{ $details.default | markdownify | safeHTML }}</code></p>
+
+    <p>{{ $details.description | markdownify | safeHTML }}</p>
+
+    {{ with $details.options }}
+      <p>Options:
+
+      <ul>
+        {{ range $option := . }}
+          <li>{{ $option | markdownify | safeHTML }}</li>
+        {{ end }}
+      </ul>
+      </p>
+    {{ end }}
+
+  {{ end }}
+
+{{ end }}
