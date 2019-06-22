@@ -102,3 +102,13 @@ with open('docs/_data/pattern/functions.yml', 'w') as f:
   yaml.dump(formatter['$'], f)
 with open('docs/_data/pattern/filters.yml', 'w') as f:
   yaml.dump(formatter['_'], f)
+
+os.makedirs("bbt/data/pattern", exist_ok=True)
+with open('bbt/data/pattern/fields.yml', 'w') as f:
+  yaml.dump(table, f)
+with open('bbt/data/pattern/typeNames.yml', 'w') as f:
+  yaml.dump(typeNames, f)
+with open('bbt/data/pattern/functions.yml', 'w') as f:
+  yaml.dump(formatter['$'], f)
+with open('bbt/data/pattern/filters.yml', 'w') as f:
+  yaml.dump(formatter['_'], f)

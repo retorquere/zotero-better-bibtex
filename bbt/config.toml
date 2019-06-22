@@ -1,0 +1,43 @@
+baseURL = "/"
+languageCode = "en-US"
+defaultContentLanguage = "en"
+
+title = "Better BibTeX for Zotero"
+theme = "learn"
+metaDataFormat = "yaml"
+defaultContentLanguageInSubdir= true
+
+[params]
+  editURL = "https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/"
+  description = "Make Zotero more useful for us LaTeX holdouts"
+  author = "Emiliano Heyns"
+  showVisitedLinks = false
+  disableBreadcrumb = true
+  disableNextPrev = true
+  disableInlineCopyToClipBoard = true
+
+[outputs]
+home = [ "HTML", "RSS", "JSON"]
+
+[Languages]
+[Languages.en]
+title = "Better BibTeX for Zotero"
+weight = 1
+languageName = "English"
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fab fa-fw fa-github'></i> GitHub repo"
+identifier = "ds"
+url = "https://github.com/retorquere/zotero-better-bibtex"
+weight = 12
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fas fa-fw fa-download'></i> Download"
+url = "https://github.com/retorquere/zotero-better-bibtex/releases/latest"
+weight = 10
+
+[[Languages.en.menu.shortcuts]]
+name = "<i class='fas fa-fw fa-heart'></i> Sponsorship"
+identifier = "sponsorship"
+url = "/sponsorship"
+weight = 11

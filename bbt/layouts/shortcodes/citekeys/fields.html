@@ -1,0 +1,10 @@
+<table>
+  {{ range $row := .Site.Data.pattern.fields }}
+    <tr>
+      {{ range $field := $row }}
+        <td>{{ $field }}</td>
+      {{ end }}
+    </tr>
+  {{ end }}
+</table>
+

@@ -1,0 +1,26 @@
+{{ range $tab := .Site.Data.configuration }}
+
+
+## {{ $tab.name | markdownify | safeHTML }}
+
+{{ $tab.description }}
+
+  {{ range $pref, $details := $tab.preferences }}
+
+#### {{ $pref }}
+
+default: `{{ $details.default }}`
+
+{{ $details.description }}
+
+{{ with $details.options }}
+Options:
+
+  {{ range $option := . }}
+* {{ $option }}
+  {{ end }}
+{{ end }}
+
+{{ end }}
+
+{{ end }}

@@ -9,6 +9,8 @@ from pathlib import Path
 from ruamel.yaml import YAML
 import glob
 import sys
+from slugify import slugify
+import frontmatter
 
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
@@ -215,10 +217,10 @@ with dump('gen/preferences/auto-export-overrides-schema.json') as save:
       schema[pref['name']] = { 'enum': list(pref['options'].keys()) }
   save(schema)
 
-with dump('docs/_data/preferences.yml') as save:
+with dump('docs/_data/preferences.yml', 'bbt/data/preferences.yml') as save:
   save({name: pref['default'] for (name, pref) in preferences.items()})
 
-with dump('docs/_data/configuration.yml') as save:
+with dump('docs/_data/configuration.yml', 'bbt/data/configuration.yml') as save:
   config = []
   for tab in tabs:
     tab = tab.copy()
@@ -258,3 +260,34 @@ with dump('docs/_data/configuration.yml') as save:
   config.append(tab)
 
   save(config)
+
+weight = frontmatter.load('bbt/content/better-bibtex/configuration/_index.md')['weight']
+for i, tab in enumerate(config):
+  page = 'bbt/content/better-bibtex/configuration/' + slugify(tab['name']) + '.md'
+  print('  ' + page)
+  with open(page, 'w') as f:
+    print('---', file=f)
+    print(f'title: {tab["name"]}', file=f)
+    print(f'weight: {weight + i + 1}', file=f)
+    print('---', file=f)
+
+    print(tab['description'], file=f, end="\n\n")
+
+    for pref, details in tab['preferences'].items():
+      print(f'#### {pref}', file=f, end="\n\n")
+
+      if details["default"] == '':
+        default = '<not set>'
+      elif type(details["default"]) == bool:
+        default = 'yes' if details["default"] else 'no'
+      else:
+        default = details["default"]
+      print(f'default: `{default}`', file=f, end="\n\n")
+
+      print(details['description'], file=f, end="\n\n")
+
+      if 'options' in details:
+        print('Options:', file=f, end="\n\n")
+        for option in details['options']:
+          print(f'* {option}', file=f)
+        print('', file=f, end="\n\n")

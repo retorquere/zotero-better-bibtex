@@ -16,3 +16,5 @@ PyHamcrest
 psutil
 github3.py
 pylint
+python-slugify
+python-frontmatter
