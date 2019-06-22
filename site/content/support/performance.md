@@ -1,5 +1,7 @@
 ---
 title: Performance
+aliases:
+  - /Performance
 ---
 
 The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,

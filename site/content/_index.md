@@ -1,7 +1,9 @@
-+++
-title = "Better BibTeX for Zotero"
-weight = 5
-+++
+---
+title: Better BibTeX for Zotero
+weight: 5
+aliases:
+  - /Home
+---
 
 # Better BibTeX for Zotero
 

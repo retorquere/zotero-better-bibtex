@@ -1,6 +1,5 @@
 setup.cfg
 __pycache__
-docs/_site
 wiki
 gen
 build
@@ -35,4 +34,3 @@ typedoc.json
 *.bib_
 test/fixtures/profile/zotero/zotero/better-bibtex-12k.sqlite
 test/fixtures/profile/zotero/zotero/zotero-12k.sqlite
-docs/modular-admin-html-1.3.0

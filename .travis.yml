@@ -12,7 +12,7 @@ before_install:
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update
-  - travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
+  - travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common hugo
 
 cache:
   npm: true

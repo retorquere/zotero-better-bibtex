@@ -1,7 +1,9 @@
-+++
-title = "Citation Keys"
-weight = 3
-+++
+---
+title: Citation Keys
+weight: 3
+aliases:
+  - /Citation-Keys
+---
 
 ## Generating citekeys for your references
 

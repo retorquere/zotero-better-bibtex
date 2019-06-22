@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Installation on Better BibTeX for Zotero</title>
+    <link>/better-bibtex/</link>
+    <description>Recent content in Installation on Better BibTeX for Zotero</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    
+	<atom:link href="/better-bibtex/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bundled translators</title>
+      <link>/better-bibtex/bundled-translators/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/better-bibtex/bundled-translators/</guid>
+      <description>Better BibTeX bundles 5 translators you might care about:
+Export These translators are supported by the auto-export functionality built into Better BibTeX:
+ Better BibLaTeX exports references in BibLaTeX format (but better, natch) Better BibTeX exports references in BibTeX format Better CSL JSON exports references in pandoc-compatible CSL-JSON format, with added citation keys and parsing of metadata Better CSL YAML exports the same as the Better CSL JSON exporter, but in YAML format Collected Notes exports just notes &amp;ndash; standalone notes and notes attached to references, not the extra field &amp;ndash; to HTML.</description>
+    </item>
+    
+  </channel>
+</rss>

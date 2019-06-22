@@ -217,10 +217,10 @@ with dump('gen/preferences/auto-export-overrides-schema.json') as save:
       schema[pref['name']] = { 'enum': list(pref['options'].keys()) }
   save(schema)
 
-with dump('docs/_data/preferences.yml', 'bbt/data/preferences.yml') as save:
+with dump('site/data/preferences.yml') as save:
   save({name: pref['default'] for (name, pref) in preferences.items()})
 
-with dump('docs/_data/configuration.yml', 'bbt/data/configuration.yml') as save:
+with dump('site/data/configuration.yml') as save:
   config = []
   for tab in tabs:
     tab = tab.copy()
@@ -261,9 +261,9 @@ with dump('docs/_data/configuration.yml', 'bbt/data/configuration.yml') as save:
 
   save(config)
 
-weight = frontmatter.load('bbt/content/better-bibtex/configuration/_index.md')['weight']
+weight = frontmatter.load('site/content/better-bibtex/configuration/_index.md')['weight']
 for i, tab in enumerate(config):
-  page = 'bbt/content/better-bibtex/configuration/' + slugify(tab['name']) + '.md'
+  page = 'site/content/better-bibtex/configuration/' + slugify(tab['name']) + '.md'
   print('  ' + page)
   with open(page, 'w') as f:
     print('---', file=f)

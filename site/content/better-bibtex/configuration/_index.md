@@ -1,6 +1,8 @@
 ---
 title: Configuration
 weight: 10
+aliases:
+  - /Configuration
 ---
 The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab 'Better BibTeX'.
 

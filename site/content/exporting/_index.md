@@ -1,7 +1,12 @@
-+++
-title = "Push/Pull export"
-weight = 2
-+++
+---
+title: "Push/Pull export"
+weight: 2
+aliases:
+  - /export
+  - /Customized-Exports
+  - /Push-and-Pull-Export
+  - /pull-export
+---
 ## Push Export / Auto-Export
 
 When exporting using Better BibTex you will be offered a new export option: `Keep updated`. Checking this option

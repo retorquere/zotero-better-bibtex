@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <url>
+    <loc>/better-bibtex/</loc>
+  </url>
+  
+  <url>
+    <loc>/exporting/</loc>
+  </url>
+  
+  <url>
+    <loc>/citing/</loc>
+  </url>
+  
+  <url>
+    <loc>/exporting/customized-exports/</loc>
+  </url>
+  
+  <url>
+    <loc>/exporting/scripting/</loc>
+  </url>
+  
+  <url>
+    <loc>/support/</loc>
+  </url>
+  
+  <url>
+    <loc>/exporting/advanced/</loc>
+  </url>
+  
+  <url>
+    <loc>/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/citation-keys/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/export/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/automatic-export/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/advanced/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/configuration/hidden-preferences/</loc>
+  </url>
+  
+  <url>
+    <loc>/better-bibtex/bundled-translators/</loc>
+  </url>
+  
+  <url>
+    <loc>/test/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/citing/aux-scanner/</loc>
+  </url>
+  
+  <url>
+    <loc>/categories/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/citing/cayw/</loc>
+  </url>
+  
+  <url>
+    <loc>/support/faq/</loc>
+  </url>
+  
+  <url>
+    <loc>/support/performance/</loc>
+  </url>
+  
+  <url>
+    <loc>/sponsoring/</loc>
+  </url>
+  
+  <url>
+    <loc>/tags/</loc>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>/support/translations/</loc>
+  </url>
+  
+</urlset>

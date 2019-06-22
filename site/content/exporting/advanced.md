@@ -1,6 +1,9 @@
 ---
 title: Advanced
 weight: 5
+aliases:
+  - /hardcore
+  - /Going-hardcore
 ---
 ## You are a hardcore LaTeX user
 

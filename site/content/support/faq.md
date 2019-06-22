@@ -1,6 +1,12 @@
 ---
 title: Frequently Asked Questions
 menuTitle: FAQ
+aliases:
+  - /Unnecessarily-complicated-BibTeX-output
+  - /Unicode-and-Markup
+  - /unicode
+  - /From-Unicode-to-LaTeX-and-Back-Again
+  - /Unnecessarily-complicated-BibTeX-output
 ---
 
 ## Are there any plans to support Firefox 57+?
