@@ -6,7 +6,6 @@ title = "Better BibTeX for Zotero"
 theme = "learn"
 metaDataFormat = "yaml"
 defaultContentLanguageInSubdir= true
-publishDir = "../docs"
 
 [params]
   editURL = "https://github.com/retorquere/zotero-better-bibtex/edit/master/site/content/"

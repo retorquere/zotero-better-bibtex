@@ -5,6 +5,10 @@ python:
 services:
   - xvfb
 
+branches:
+  except:
+    - gh-pages
+
 # https://github.com/travis-ci/travis-ci/issues/8920
 # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
@@ -34,14 +38,14 @@ after_failure:
 stages:
   - build
   - test
+  - docs
   - release
   - cleanup
 
 jobs:
   include:
   - stage: build
-    before_install:
-      - travis_retry sudo snap install hugo --channel=extended
+    before_install: true
     script:
       - npm run build
       - travis_retry ./util/build-assets stash
@@ -65,6 +69,19 @@ jobs:
     env:
     - ZOTERO=jurism
     - TAGS="~@test-cluster-1"
+
+  - stage: docs
+    if: branch = hugo
+    before_install:
+      - travis_retry sudo snap install hugo --channel=extended
+    script:
+      - ./util/build-assets fetch || travis_terminate 1
+      - git worktree add -B gh-pages site/public origin/gh-pages
+      - git config --global user.email "travis@travis-ci.org"
+      - git config --global user.name "Travis CI"
+      - git config --global push.default current
+      - npm run docs
+      - cd site/public && git add --all && git commit -m "Publishing to gh-pages" && git push https://${GITHUB_TOKEN}@github.com/retorquere/zotero-better-bibtex.git
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
