@@ -77,22 +77,20 @@ jobs:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
       - ./util/build-assets pop
+    before_deploy:
+      - travis_retry sudo snap install hugo --channel=extended
+      - ./util/build-assets fetch || travis_terminate 1
+      - npm run docs
+    deploy:
+      provider: pages
+      skip_cleanup: true
+      github_token: $GITHUB_TOKEN
+      local_dir: site/public
+      on:
+        branch: hugo
 
   - stage: cleanup
     if: env(TRAVIS_EVENT_TYPE) = cron OR env(TRAVIS_EVENT_TYPE) = pull_request
     before_install: true
     script:
       - ./util/build-assets pop
-
-before_deploy:
-  - travis_retry sudo snap install hugo --channel=extended
-  - ./util/build-assets fetch || travis_terminate 1
-  - npm run docs
-
-deploy:
-  provider: pages
-  skip_cleanup: true
-  github_token: $GITHUB_TOKEN
-  local_dir: site/public
-  on:
-    branch: hugo
