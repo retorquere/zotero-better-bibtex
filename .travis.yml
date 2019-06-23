@@ -85,7 +85,7 @@ jobs:
       github_token: $GITHUB_TOKEN
       local_dir: site/public
       on:
-        branch: hugo
+        branch: master
     after_script:
       - ./util/build-assets pop
 

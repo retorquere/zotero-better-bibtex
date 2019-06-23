@@ -16,6 +16,7 @@ defaultContentLanguageInSubdir= true
   disableNextPrev = true
   disableInlineCopyToClipBoard = true
   disableAssetsBusting = true
+  themeVariant = "green"
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
