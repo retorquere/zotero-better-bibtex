@@ -78,7 +78,7 @@ jobs:
       - npm run release
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
-      - npm run docs
+      - npm run docs:deploy
     deploy:
       provider: pages
       skip_cleanup: true
