@@ -218,7 +218,9 @@ with dump('gen/preferences/auto-export-overrides-schema.json') as save:
   save(schema)
 
 with dump('site/data/preferences/defaults.yml') as save:
-  save({name: pref['default'] for (name, pref) in preferences.items()})
+  defaults = {name: pref['default'] for (name, pref) in preferences.items()}
+  defaults['citekeyFormat'] = defaults['citekeyFormat'].replace('\u200b', '') # clean out marker for citekeyformat
+  save(defaults)
 
 with dump('site/data/preferences/tabs.yml') as save:
   config = []
@@ -238,7 +240,7 @@ with dump('site/data/preferences/tabs.yml') as save:
         tab['preferences'][label]['default'] = pref['options'][pref['default']]
         tab['preferences'][label]['options'] = list(pref['options'].values())
       else:
-        tab['preferences'][label]['default'] = str(pref['default'])
+        tab['preferences'][label]['default'] = str(pref['default']).replace('\u200b', '') # clean out marker for citekeyformat
     config.append(tab)
 
   # hidden prefs

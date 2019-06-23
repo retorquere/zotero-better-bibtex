@@ -78,7 +78,7 @@ citation-keys:
   name: Citation keys
   preferences:
     Citation key format:
-      default: ​[auth:lower][shorttitle3_3][year]
+      default: '[auth:lower][shorttitle3_3][year]'
       description: Set the pattern used to generate citation keys. The format of the
         keys is documented [here](citation-keys).
     Force citation key to plain text:

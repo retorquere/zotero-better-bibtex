@@ -20,7 +20,7 @@ bibtexURL: off
 cacheFlushInterval: 5
 citeCommand: cite
 citekeyFold: true
-citekeyFormat: ​[auth:lower][shorttitle3_3][year]
+citekeyFormat: '[auth:lower][shorttitle3_3][year]'
 citeprocNoteCitekey: false
 csquotes: ''
 exportBibTeXStrings: off
