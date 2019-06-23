@@ -217,10 +217,10 @@ with dump('gen/preferences/auto-export-overrides-schema.json') as save:
       schema[pref['name']] = { 'enum': list(pref['options'].keys()) }
   save(schema)
 
-with dump('site/data/preferences.yml') as save:
+with dump('site/data/preferences/defaults.yml') as save:
   save({name: pref['default'] for (name, pref) in preferences.items()})
 
-with dump('site/data/configuration.yml') as save:
+with dump('site/data/preferences/tabs.yml') as save:
   config = []
   for tab in tabs:
     tab = tab.copy()
@@ -261,41 +261,8 @@ with dump('site/data/configuration.yml') as save:
 
   save(config)
 
-weight = frontmatter.load('site/content/better-bibtex/configuration/_index.md')['weight']
-for i, tab in enumerate(config):
-  slug = slugify(tab['name'])
-  page = f'site/content/better-bibtex/configuration/{slug}.md'
-  print('  ' + page)
-  with open(page, 'w') as f:
-    print('---', file=f)
-    tags = ['preferences', 'configuration']
-    if slug in ['citation-keys', 'automatic-export']: tags.append(slug)
-    if 'export' in slug: tags.append('export')
-
-    yaml.dump({
-      'title': tab['name'],
-      'weight': weight + i + 1,
-      'tags': sorted(tags),
-    }, f)
-    print('---', file=f)
-
-    print(tab['description'], file=f, end="\n\n")
-
-    for pref, details in tab['preferences'].items():
-      print(f'#### {pref}', file=f, end="\n\n")
-
-      if details["default"] == '':
-        default = '<not set>'
-      elif type(details["default"]) == bool:
-        default = 'yes' if details["default"] else 'no'
-      else:
-        default = details["default"]
-      print(f'default: `{default}`', file=f, end="\n\n")
-
-      print(details['description'], file=f, end="\n\n")
-
-      if 'options' in details:
-        print('Options:', file=f, end="\n\n")
-        for option in details['options']:
-          print(f'* {option}', file=f)
-        print('', file=f, end="\n\n")
+with dump('site/data/preferences/slugs.yml') as save:
+  prefs = {}
+  for tab in config:
+    prefs[slugify(tab['name'])] = tab
+  save(prefs)

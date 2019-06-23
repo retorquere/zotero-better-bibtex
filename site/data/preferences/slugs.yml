@@ -1,0 +1,406 @@
+advanced:
+  description: ''
+  name: Advanced
+  preferences:
+    '@string definitions':
+      default: ''
+      description: If you have externally maintained @string vars paste them here
+        and they will be resolved for subsequent imports
+    Deterministically order references and fields; primarily for version control.:
+      default: 'False'
+      description: When on, BBT will deterministically order references on export.
+        This is primarily interesting if you keep the exported file under some kind
+        of version control. Comes at performance and memory consumption cost.
+    Expand the @string vars below during imports:
+      default: 'True'
+      description: When enabled, BBT will prepend the @strings section below to all
+        Bib(La)TeX imports and will expand the strings during export.
+    If a field could be a @string var, export it without braces:
+      default: No
+      description: 'When enabled, BBT will try to retain @string vars its exports
+        unsurrounded by braces; when set to ''detect'', single-word strings will be
+        assumed to be externally-defined @string vars,
+
+        when set to ''match'', only @strings declared in the @strings section of the
+        preferences will be preserved. If you don''t know what this means, leave it
+        off.'
+      options:
+      - No
+      - Assume single-word fields to be @string vars
+      - Match against the @string vars below
+    Warn me when auto-exports take longer than (seconds):
+      default: '10'
+      description: 'If you have auto-export set up for a large library, Zotero might
+        freeze for during exports. There is nothing I can do about this; caching helps,
+
+        but all Zotero exports freeze Zotero while they are running. BBT will warn
+        you if it sees a long-running auto-export to suggest running it only
+
+        when Zotero goes idle.'
+    Warn me when changing citation keys in bulk:
+      default: '10'
+      description: 'For those who are curious about what the "Clear/Generate BibTeX
+        key" right-click options do, this will warn
+
+        you if you are doing this on more than 10 (default) at the same time, to prevent
+        your curiosity from changing
+
+        all your citation keys at once.'
+    postscript:
+      default: ''
+      description: Snippet of javascript to run [after each reference generation](scripting).
+automatic-export:
+  description: ''
+  name: Automatic export
+  preferences:
+    Automatic export:
+      default: On Change
+      description: 'Determines when [automatic exports](push-and-pull) are kicked
+        off. Having it disabled still marks
+
+        auto-exports as needing updates, so when you re-enable it, those exports will
+        start. On-change means exports
+
+        happen whenever a reference in the export changes/is added/is removed. On
+        idle does more or less what
+
+        `Disabled` (that is, no exports but mark as needing changes), but will kick
+        off exports when your computer is
+
+        idle. You mostly want this if your computer is performance-constrained (aka
+        slow).'
+      options:
+      - Disabled
+      - On Change
+      - When Idle
+citation-keys:
+  description: ''
+  name: Citation keys
+  preferences:
+    Citation key format:
+      default: ​[auth:lower][shorttitle3_3][year]
+      description: Set the pattern used to generate citation keys. The format of the
+        keys is documented [here](citation-keys).
+    Force citation key to plain text:
+      default: 'True'
+      description: 'If you have deviated from the default citation key format pattern
+        by [specifying your own](citation-keys), you may
+
+        wind up with non-ASCII characters in your citation keys. You can prevent that
+        using the `fold` function at the
+
+        appropriate place in your pattern, but checking this checkbox will just apply
+        `fold` to all your keys.'
+    Keep keys unique:
+      default: within each library
+      description: Auto-generated (non-pinned) keys automatically get a postfix when
+        they would generate a duplicate. By default, the check for duplicates is restricted
+        to the library/group the item lives in. When set to global, the check will
+        include all libraries/groups, so auto-generated keys would be globally unique.
+        Changing this setting *does not* affect existign keys - for this you would
+        need to select the items and refresh the keys.
+      options:
+      - across all libraries
+      - within each library
+    LaTeX command:
+      default: cite
+      description: 'Used for drag-and-drop/quick copy citations in `LaTeX` format.
+        Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop
+        citations will yield
+
+        `\citep{key1,key2,...}`'
+    On conflict with a pinned key, non-pinned keys will be:
+      default: kept (causes key duplicates)
+      description: This determines what happens if you pin a key to a value that is
+        already in use in a different reference but not pinned there. Neither are
+        ideal, you just get to pick your poison. If you let BBT change the non-pinned
+        key by adding a postfix character, the citation key changes which could be
+        problematic for existing papers. If you keep the non-pinned key as-is, your
+        library now has duplicate keys.
+      options:
+      - postfixed (causes key changes)
+      - kept (causes key duplicates)
+    QuickCopy format:
+      default: LaTeX
+      description: 'Used for drag-and-drop/quick copy using Better BibTeX citekeys.
+        In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default
+        export format for quick copy,
+
+        and choose the desired format for the drag-and-drop citations here.'
+      options:
+      - LaTeX
+      - Cite Keys
+      - Pandoc
+      - Org-mode (citekey)
+      - Org-mode (item ID)
+      - org-ref
+      - RTF Scan
+      - Atom (https://atom.io/packages/zotero-citations)
+      - GitBook
+      - Select link (citekey)
+      - Select link (item ID)
+    Surround Pandoc citations with brackets:
+      default: 'False'
+      description: Used for drag-and-drop/quick copy citations in `Pandoc` format.
+        You can use this option to select whether you want to have these pandoc citations
+        surrounded with brackets or not.
+    When scanning an AUX file, attempt to import references from the attached bib file when their citation keys are not in Zotero:
+      default: 'False'
+      description: By default, when scanning for cited items in the aux file, BBT
+        will just generate a note listing all citation keys it cannot find in Zotero.
+        When this option is turned on, BBT will attempt to import such missing items
+        from the bib file that the AUX file being scanned points to.
+export:
+  description: ''
+  name: Export
+  preferences:
+    Abbreviation style:
+      default: ''
+      description: 'Select the style for auto-abbreviation. Only applicable to Juris-M;
+        in Zotero, the style for automatic
+
+        abbreviation is not configurable.'
+    Add URLs to BibTeX export:
+      default: no
+      description: "*\n          BibLaTeX supports urls in your references natively;
+        BibTeX does not. For this reason, URLs are\n          omitted from BibTeX
+        exports by default. Using this setting you can have them added to your exports
+        either in a `note`\n          field (not as clean, but compatible with BibTeX
+        out of the box), or in a `url` field (requires extra packages to be loaded,\n
+        \         or bibtex will error out)."
+      options:
+      - no
+      - in a note field
+      - in a URL field (requires custom style for url field support)
+    Automatically abbreviate journal title if none is set explicitly:
+      default: 'False'
+      description: If set, generates journal abbreviations on export using the Zotero
+        journal abbreviator, according to the abbreviation style selected in the list
+        below the checkbox.
+    Disregard name prefixes when sorting:
+      default: 'False'
+      description: "*\n          Name handling is a lot more complex than I had ever
+        thought it to be. A *lot* more complex. BibTeX has\n          really limited
+        ways of dealing with names with particles (van, von, de, etc). If you turn
+        this on, BBT\n          will add code to have `van Gogh` sorted under `Gogh`."
+    Export unicode as plain-text latex commands:
+      default: 'False'
+      description: "*\n          BibLaTeX actually has really good Unicode support,
+        so you generally want this off. But for some geezers such as me it is\n          simply
+        more pleasing to have things like accented characters translated to their
+        equivalent LaTeX constructs on export."
+    Export unicode as plain-text latex commands (recommended):
+      default: 'True'
+      description: "*\n          BibTeX has really spotty Unicode support, so you
+        generally want this on. It will translate things like accented characters
+        to their equivalent LaTeX constructs on export."
+    Fields to omit from export (comma-separated):
+      default: ''
+      description: If there are some fields you don't want in your bibtex files (such
+        as `note` for example), add a list of them here, separated by comma's.
+    Include JabRef-specific metadata:
+      default: no
+      description: Export JabRef-specific information fields; timetamps and groups
+        for collections. Note that format "4" will disable caching in exports, which
+        is really undesirable specifically for auto-exports.
+      options:
+      - no
+      - for JabRef 3
+      - for JabRef 4
+    Include comments about potential problems with the references:
+      default: 'False'
+      description: "*\n          Generate quality reports for exported references."
+    Use BibLaTeX extended name format (requires biblatex 3.5):
+      default: 'False'
+      description: "*\n          Use the extended biber 2.7 format for names with
+        particles - only works in BibLaTeX 3.5 or later.\n          This biblatex
+        has a new (less ambiguous) way to store creator names. It's technically\n
+        \         superior, but the LaTeX world moves slowly, so many people won't
+        have it yet. But if you're an early adopter,\n          you can enable it
+        here"
+    When a reference has both a DOI and a URL, export:
+      default: both
+      description: "*\n          Does what it says on the tin, really. If a reference
+        has both a DOI and an URL, you can choose to have them both exported, or either
+        one of them."
+      options:
+      - both
+      - DOI
+      - URL
+hidden-preferences:
+  description: '
+
+    The following settings are not exposed in the UI, but can be found under `Preferences`/`Advanced`/`Config
+    editor`.
+
+
+    All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table
+    you will find there
+
+    '
+  name: Hidden preferences
+  preferences:
+    ascii:
+      default: ''
+      description: If you have unicode turned on you can still selectively replace
+        some characters to plain-text commands; any characters entered here will always
+        be replaced by their LaTeX-command counterparts.
+    autoExportDelay:
+      default: '1'
+      description: If you have auto-exports set up, BBT will wait this many seconds
+        before actually kicking off the exports to buffer multiple changes in quick
+        succession setting off an unreasonable number of auto-exports. Minimum is
+        1 second. Changes to this preference take effect after restarting Zotero.
+    autoExportIdleWait:
+      default: '10'
+      description: Number of seconds to wait after your system goes idle before kicking
+        off auto-exports.
+    autoExportPrimeExportCacheBatch:
+      default: '4'
+      description: If cache priming is kicked off (see `autoExportPrimeExportCacheThreshold`),
+        the cache will be primed in batches of `autoExportPrimeExportCacheBatch`.
+        The lower this number is, the longer the priming will take (there's a fixed
+        per-prime overhead), but (since the priming uses exports under the hood) the
+        larger it is, the longer the priming actions will lock the UI.
+    autoExportPrimeExportCacheDelay:
+      default: '100'
+      description: Cache priming (see `autoExportPrimeExportCacheThreshold`), happens
+        in a tight loop, which will still make Zotero sluggish while the priming runs.
+        By default, BBT will wait a tenths of a second between prime batches;- longer
+        waits mean a more responsive Zotero during the priming, but the priming will
+        take longer to complete.
+    autoExportPrimeExportCacheThreshold:
+      default: '0'
+      description: If an auto-export is triggered and there are more than `autoExportPrimeExportCacheThreshold`
+        un-cached entries, prime the cache before starting the auto-export. This makes
+        the export take longer in total, but since exports in Zotero lock up the UI,
+        priming helps making the actual export run as fast as possible. Really only
+        useful for large exports, but what counts as large is system-dependent, so
+        you can play with this value. The default of `0` disables priming. This is
+        a temporary measure until https://groups.google.com/d/msg/zotero-dev/lHYEtdgPHCE/nDUyxpFmAgAJ
+        is implemented in Zotero.
+    autoPin:
+      default: 'False'
+      description: When on, BBT will automatically pin the first citekey it generates
+        for an item.
+    biblatexExtendedDateFormat:
+      default: 'True'
+      description: Support for EDTF dates in biblatex
+    cacheFlushInterval:
+      default: '5'
+      description: 'How often the Better BibTeX database should be saved to disk.
+        Defaults to once every 5 seconds. Note that
+
+        your database is always saved when your computer goes idle, or when you exit
+        Zotero.'
+    citeprocNoteCitekey:
+      default: 'False'
+      description: 'Replaces the "note" field with the bibtex key during citation
+        rendering in Word/Libreoffice. Main use-case is to help migrating word documents
+        to pandoc.
+
+        This setting only takes effect during startup, so if you change it, you will
+        have to restart Zotero to have this take effect (or to disable it. Please
+        disable it when done). You will want to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl))
+        to make this work.'
+    csquotes:
+      default: ''
+      description: if you set `csquotes` to a string of character pairs, each pair
+        will be assumed to be the open and close parts of a pair and will be replaced
+        with a `\\enquote{...}` construct.
+    git:
+      default: config
+      description: Can be 'off', 'config' or 'always'
+    itemObserverDelay:
+      default: '100'
+      description: 'I''ve had reports where Zotero notifies extensions that references
+        have changed, but if BBT then actually
+
+        retrieves those same references, Zotero complains they "haven''t been saved
+        yet". Super. This preference sets
+
+        the number of microseconds BBT should wait after being notified before acting
+        on the changed references.'
+    kuroshiro:
+      default: 'False'
+      description: When on, BBT will load kuroshiro for romajization in citekeys.
+        This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names,
+        keep this off.
+    lockedInit:
+      default: 'False'
+      description: 'BBT locks the UI during startup because I have been told in
+
+        no uncertain terms I am not to touch the Zotero database
+
+        before I get an all-clear from Zotero. This all-clear takes a fair amount
+        of time. As BBT needs database
+
+        access for generating keys, and *everything* in BBT depends on the keys being
+        present, it is absolutely safest
+
+        to make sure BBT initialization has completed before freeing the UI. I want
+        to stress that during most of the
+
+        lock-time, BBT is simply waiting for Zotero to complete its own initialization;
+        try to do an export of any
+
+        kind (not just BBT) or to import new references directly after Zotero has
+        started and you''ll notice that it
+
+        may take a while before Zotero reacts. The lockout just puts a face on this
+        hidden init, and prevents nasty
+
+        race conditions between the BBT and Zotero initialization leading to unpredictable
+        breakage occasionally.
+
+
+        If you however cannot stand the lockout during startup and you
+
+        want to live dangerously, you can turn this off and hope that
+
+        no race conditions bite you. If you turn this on and experience
+
+        problems, you are welcome to file a bug report and I will see what I can do,
+        but be prepared
+
+        for the answer to be "turn this back on for now".
+
+
+        This is **EXPERIMENTAL** and this preference may disappear at any moment without
+        notice.'
+    parseParticles:
+      default: 'True'
+      description: Name particle handling
+    rawLaTag:
+      default: '#LaTeX'
+      description: When an item has this tag, all its fields will be assumed to hold
+        raw LaTeX and will undergo no further transformation. If you set this to '*',
+        all items will be assumed to have raw LaTeX.
+    relativeFilePaths:
+      default: 'False'
+      description: When exporting a Bib(La)TeX file, if the attachments are stored
+        anywhere under the directory the bibliography is exported to, use relative
+        paths to those attachments. Caching is disabled when this option is on, so
+        it affects performance.
+    scrubDatabase:
+      default: 'False'
+      description: Finds potential problems in the database and fixes those. This
+        runs **extremely** slow at startup, don't unable this unless explicitly asked
+        to.
+    skipWords:
+      default: a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum
+      description: list of words to skip in title when generating citation keys
+    suppressBraceProtection:
+      default: 'False'
+      description: 'If you''re dead-set on ignoring both BibTeX/BibLaTeX best practice
+        and the Zotero recommendations on title/sentence
+
+        casing, set this preference to "true" to suppress [automatic brace-protection
+        for words with uppercase letters](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).'
+    suppressTitleCase:
+      default: 'False'
+      description: 'If you''re dead-set on ignoring both BibTeX/BibLaTeX best practice
+        and the Zotero recommendations on title/sentence
+
+        casing, set this preference to "true" to suppress [title casing for English
+        references](Unnecessarily-complicated-BibTeX-output%3F#mapping-fields).'

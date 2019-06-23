@@ -1,0 +1,29 @@
+{{ $section := (index .Site.Data.preferences.slugs (.Get 0)) }}
+
+{{ $section.description }}
+
+{{ range $pref, $details := $section.preferences }}
+#### {{ $pref }}
+
+  {{ if eq $details.default "" }}
+default: `<not set>`
+  {{ else if eq $details.default false }}
+default: `no`
+  {{ else if eq $details.default true }}
+default: `yes`
+  {{ else }}
+default: `{{ $details.default }}`
+  {{ end }}{{/* if */}}
+
+  {{ $details.description }}
+
+  {{ with $details.options }}
+Options:
+
+    {{ range $option := . }}
+* {{ $option }}
+    {{ end }}
+
+  {{ end }}{{/* with */}}
+
+{{ end }} {{/* range $pref, $details */}}
