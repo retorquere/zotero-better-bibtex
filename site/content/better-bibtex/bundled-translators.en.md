@@ -2,6 +2,9 @@
 title: Bundled translators
 description : "Zotero import/export translators bundled with BBT"
 weight: 20
+tags:
+  - export
+  - import
 ---
 Better BibTeX bundles 5 translators you might care about:
 

@@ -5,6 +5,7 @@ aliases:
   - /Configuration
 tags:
   - configuration
+  - cache
 ---
 The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab 'Better BibTeX'.
 

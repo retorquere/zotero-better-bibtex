@@ -1,7 +1,7 @@
-+++
-title = "Installation"
-weight = 1
-+++
+---
+title: Installation
+weight: 1
+---
 
 Install by downloading the [latest release](https://github.com/retorquere/zotero-better-bibtex/releases/latest), and then in Zotero:
 

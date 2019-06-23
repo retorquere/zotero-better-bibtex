@@ -2,6 +2,10 @@
 title: Cite as you Write
 aliases:
   - /Cite-as-you-Write
+tags:
+  - citation keys
+  - overleaf
+  - cite as you write
 ---
 
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration! 
@@ -44,7 +48,11 @@ Emilie has writen [instructions](https://github.com/AmomentOfMusic/Zotero_scrive
 ### Linux
 
 - Emma Reisz has gracefully written [instructions and scripts](https://emmareisz.github.io/zotpicknix/) for setting up CAYW on Linux.
-- ConorIA has more versatile solution called [zotero4overleaf](https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf), which was inspired by Emma's scripts.
+- ConorIA has more versatile solution called [zotero4overleaf](https://gitlab.com/ConorIA/shell-scripts/tree/master/zotero4overleaf), which was inspired by Emma's scripts. This should allow use with Overleaf, which is pretty insane that it's possible if you think about it.
+
+### Overleaf
+
+David Lukes takes Overleaf integration one step further with a GreaseMonkey/TamperMonkey [userscript](https://gist.github.com/dlukes/5289eaa12d591dc21745fdef42098a17) which not only allows popping up the CAYW picker straight from your browser, no other tools required, but adds a hotkey to refresh your bib file on Overleaf. This should work with the free subscription, no fiddling with git or dropbox required.
 
 ## DIY
 

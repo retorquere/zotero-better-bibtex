@@ -2,7 +2,7 @@
 title: Citation keys
 weight: 11
 tags:
-- citation-keys
+- citation keys
 - configuration
 - preferences
 ---

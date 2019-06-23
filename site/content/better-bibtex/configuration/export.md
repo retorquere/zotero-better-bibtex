@@ -2,7 +2,7 @@
 title: Export
 weight: 13
 tags:
-- automatic-export
+- automatic export
 - configuration
 - export
 - preferences

@@ -2,6 +2,9 @@
 title: Performance
 aliases:
   - /Performance
+tags:
+  - export
+  - cache
 ---
 
 The Better BibTeX exporters are a lot slower than the standard Zotero Bib(La)TeX exporters. If you have a small library,
