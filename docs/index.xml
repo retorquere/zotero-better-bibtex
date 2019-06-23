@@ -169,7 +169,7 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/sponsoring/</guid>
-      <description>Sponsoring BBT While the development needs of BBT are to a large extent covered by the use of services such as github and circleci, my development system does require the occasional upgrade. My trusty MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. Anything you can spare towards making that upgrade a reality is very much appreciated.</description>
+      <description>While the development needs of BBT are to a large extent covered by the use of services such as github and travis, my development system does require the occasional upgrade. My trusty MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. Anything you can spare towards making that upgrade a reality is very much appreciated.</description>
     </item>
     
     <item>

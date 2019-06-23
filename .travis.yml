@@ -41,8 +41,7 @@ jobs:
   include:
   - stage: build
     before_install:
-      - travis_retry sudo apt-get update
-      - travis_retry sudo apt-get install hugo
+      - travis_retry sudo snap install hugo --channel=extended
     script:
       - npm run build
       - travis_retry ./util/build-assets stash

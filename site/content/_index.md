@@ -1,11 +1,13 @@
+
 ---
 title: Better BibTeX for Zotero
 weight: 5
 aliases:
   - /Home
 ---
+<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 
-# Better BibTeX for Zotero
+
 
 This extension aims to make Zotero (and soon Juris-M) effective for us text-based authoring holdouts;
 currently, that translates to the LaTeX/Markdown crowd. To get started, read the
@@ -43,7 +45,7 @@ BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, a
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I'm pragmatic about implementing what works.
 
-# Got problems? We got fixes!
+## Got problems? We got fixes!
 
 If you have any questions on the use of the plugin, please do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new)
 to ask for help. If you're reporting a bug in the plugin, please take a moment to glance through the 
