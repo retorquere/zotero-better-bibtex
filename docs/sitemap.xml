@@ -63,11 +63,6 @@
   </url>
   
   <url>
-    <loc>/test/</loc>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>/citing/aux-scanner/</loc>
   </url>
   
@@ -99,6 +94,10 @@
   
   <url>
     <loc>/support/translations/</loc>
+  </url>
+  
+  <url>
+    <loc>/test/</loc>
   </url>
   
 </urlset>

@@ -113,16 +113,6 @@ Export These translators are supported by the auto-export functionality built in
     </item>
     
     <item>
-      <title></title>
-      <link>/test/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>/test/</guid>
-      <description>HTML Citation keys
-&amp;lt;h3&amp;gt;Citation key format&amp;lt;/h3&amp;gt; &amp;lt;p&amp;gt;default: &amp;lt;code&amp;gt;​[auth:lower][shorttitle3_3][year]&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;Set the pattern used to generate citation keys. The format of the keys is documented &amp;lt;a href=&amp;quot;citation-keys&amp;quot;&amp;gt;here&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt; &amp;lt;h3&amp;gt;Force citation key to plain text&amp;lt;/h3&amp;gt; &amp;lt;p&amp;gt;default: &amp;lt;code&amp;gt;True&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;If you have deviated from the default citation key format pattern by &amp;lt;a href=&amp;quot;citation-keys&amp;quot;&amp;gt;specifying your own&amp;lt;/a&amp;gt;, you may  wind up with non-ASCII characters in your citation keys. You can prevent that using the fold function at the appropriate place in your pattern, but checking this checkbox will just apply fold to all your keys.</description>
-    </item>
-    
-    <item>
       <title>AUX Scanner</title>
       <link>/citing/aux-scanner/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
@@ -169,7 +159,8 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>/sponsoring/</guid>
-      <description>While the development needs of BBT are to a large extent covered by the use of services such as github and travis, my development system does require the occasional upgrade. My trusty MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. Anything you can spare towards making that upgrade a reality is very much appreciated.</description>
+      <description>{warning}
+While the development needs of BBT are to a large extent covered by the use of services such as github and travis, my development system does require the occasional upgrade. My trusty MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. Anything you can spare towards making that upgrade a reality is very much appreciated.</description>
     </item>
     
     <item>
@@ -179,6 +170,16 @@ To deal with this problem, Better BibTeX implements an extensive caching system.
       
       <guid>/support/translations/</guid>
       <description>BBT is currently available in English, German and French. You can help out by adding new translations or fixing existing ones on Crowdin.</description>
+    </item>
+    
+    <item>
+      <title>test</title>
+      <link>/test/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/test/</guid>
+      <description>HTML Citation keys
+&amp;lt;h3&amp;gt;Citation key format&amp;lt;/h3&amp;gt; &amp;lt;p&amp;gt;default: &amp;lt;code&amp;gt;​[auth:lower][shorttitle3_3][year]&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;Set the pattern used to generate citation keys. The format of the keys is documented &amp;lt;a href=&amp;quot;citation-keys&amp;quot;&amp;gt;here&amp;lt;/a&amp;gt;.&amp;lt;/p&amp;gt; &amp;lt;h3&amp;gt;Force citation key to plain text&amp;lt;/h3&amp;gt; &amp;lt;p&amp;gt;default: &amp;lt;code&amp;gt;True&amp;lt;/code&amp;gt;&amp;lt;/p&amp;gt; &amp;lt;p&amp;gt;If you have deviated from the default citation key format pattern by &amp;lt;a href=&amp;quot;citation-keys&amp;quot;&amp;gt;specifying your own&amp;lt;/a&amp;gt;, you may  wind up with non-ASCII characters in your citation keys. You can prevent that using the fold function at the appropriate place in your pattern, but checking this checkbox will just apply fold to all your keys.</description>
     </item>
     
   </channel>

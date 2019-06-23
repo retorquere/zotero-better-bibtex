@@ -41,5 +41,5 @@ weight = 10
 [[Languages.en.menu.shortcuts]]
 name = "<i class='fas fa-fw fa-heart'></i> Sponsorship"
 identifier = "sponsorship"
-url = "/sponsorship"
+url = "/sponsoring"
 weight = 11

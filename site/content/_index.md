@@ -7,9 +7,10 @@ aliases:
 ---
 <!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 
+# Better BibTeX for Zotero 
 
 
-This extension aims to make Zotero (and soon Juris-M) effective for us text-based authoring holdouts;
+This extension aims to make Zotero and Juris-M effective for us text-based authoring holdouts;
 currently, that translates to the LaTeX/Markdown crowd. To get started, read the
 [Installation](https://retorquere.github.io/zotero-better-bibtex/installation) instructions. At its core,
 it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
@@ -56,3 +57,4 @@ The support request guidelines are very detailed, perhaps to the point of being 
 these guidelines simply express my ideal bug submission.
 I of course prefer very clearly documented issue reports over fuzzy ones,
 but I prefer fuzzy ones over missed ones.
+

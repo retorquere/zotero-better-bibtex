@@ -1,3 +1,7 @@
+---
+title: test
+notoc: true
+---
 # HTML
 
 {{% configuration-html %}}
