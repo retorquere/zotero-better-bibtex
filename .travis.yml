@@ -71,7 +71,7 @@ jobs:
     - TAGS="~@test-cluster-1"
 
   - stage: docs
-    if: branch = hugo
+    if: branch = hugo AND type != cron
     before_install:
       - travis_retry sudo snap install hugo --channel=extended
     script:
