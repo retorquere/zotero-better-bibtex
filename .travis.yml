@@ -76,10 +76,8 @@ jobs:
     script:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
-      - ./util/build-assets pop
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
-      - ./util/build-assets fetch || travis_terminate 1
       - npm run docs
     deploy:
       provider: pages
@@ -88,6 +86,8 @@ jobs:
       local_dir: site/public
       on:
         branch: hugo
+    after_script:
+      - ./util/build-assets pop
 
   - stage: cleanup
     if: env(TRAVIS_EVENT_TYPE) = cron OR env(TRAVIS_EVENT_TYPE) = pull_request
