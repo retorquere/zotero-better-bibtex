@@ -6,12 +6,12 @@ import os.path
 import textwrap
 from contextlib import contextmanager
 from pathlib import Path
-from ruamel.yaml import YAML
 import glob
 import sys
 from slugify import slugify
 import frontmatter
 
+from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
@@ -263,12 +263,20 @@ with dump('site/data/configuration.yml') as save:
 
 weight = frontmatter.load('site/content/better-bibtex/configuration/_index.md')['weight']
 for i, tab in enumerate(config):
-  page = 'site/content/better-bibtex/configuration/' + slugify(tab['name']) + '.md'
+  slug = slugify(tab['name'])
+  page = f'site/content/better-bibtex/configuration/{slug}.md'
   print('  ' + page)
   with open(page, 'w') as f:
     print('---', file=f)
-    print(f'title: {tab["name"]}', file=f)
-    print(f'weight: {weight + i + 1}', file=f)
+    tags = ['preferences', 'configuration']
+    if slug in ['citation-keys', 'automatic-export']: tags.append(slug)
+    if 'export' in slug: tags.append('export')
+
+    yaml.dump({
+      'title': tab['name'],
+      'weight': weight + i + 1,
+      'tags': sorted(tags),
+    }, f)
     print('---', file=f)
 
     print(tab['description'], file=f, end="\n\n")

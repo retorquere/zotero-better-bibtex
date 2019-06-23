@@ -1,6 +1,8 @@
 ---
 title: Scripting
 weight: 4
+tags:
+  - scripting
 ---
 ## You wanted customized...
 

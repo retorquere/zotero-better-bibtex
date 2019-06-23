@@ -1,4 +1,8 @@
 ---
+tags:
+- citation-keys
+- configuration
+- preferences
 title: Citation keys
 weight: 11
 ---

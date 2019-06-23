@@ -3,6 +3,8 @@ title: Configuration
 weight: 10
 aliases:
   - /Configuration
+tags:
+  - configuration
 ---
 The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab 'Better BibTeX'.
 

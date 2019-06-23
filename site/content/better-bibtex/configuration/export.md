@@ -1,4 +1,8 @@
 ---
+tags:
+- configuration
+- export
+- preferences
 title: Export
 weight: 12
 ---

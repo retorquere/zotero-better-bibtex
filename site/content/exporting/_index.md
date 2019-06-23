@@ -6,6 +6,8 @@ aliases:
   - /Customized-Exports
   - /Push-and-Pull-Export
   - /pull-export
+tags:
+  - export
 ---
 ## Push Export / Auto-Export
 

@@ -3,6 +3,8 @@ title: Citation Keys
 weight: 3
 aliases:
   - /Citation-Keys
+tags:
+  - citation-keys
 ---
 
 ## Generating citekeys for your references

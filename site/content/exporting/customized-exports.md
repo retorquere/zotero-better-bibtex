@@ -1,6 +1,9 @@
 ---
 title: Customized exports
 weight: 3
+tags:
+  - export
+  - scripting
 ---
 
 Better BibTex adds a couple of export formats to Zotero's export dialog. The Better BibTeX configuration pane can be found under the regular Zotero preferences pane, tab 'Better BibTeX'.

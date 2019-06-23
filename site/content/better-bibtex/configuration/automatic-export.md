@@ -1,4 +1,9 @@
 ---
+tags:
+- automatic-export
+- configuration
+- export
+- preferences
 title: Automatic export
 weight: 13
 ---

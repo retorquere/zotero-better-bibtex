@@ -1,4 +1,7 @@
 ---
+tags:
+- configuration
+- preferences
 title: Advanced
 weight: 14
 ---

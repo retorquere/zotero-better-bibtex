@@ -1,8 +1,7 @@
-
 ---
 title: Sponsoring BBT
 ---
-{warning}
+<!-- WARNING: GENERATED FROM https://github.com/retorquere/zotero-better-bibtex/blob/master/README.md. EDITS WILL BE OVERWRITTEN -->
 
 
 While the development needs of BBT are to a large extent covered by the use of services such as github and travis, my development system does require the occasional upgrade.

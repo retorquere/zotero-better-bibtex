@@ -14,14 +14,14 @@ aliases:
   - /Home
 ---
 {warning}
-""".split('\n')
+""".lstrip().split('\n')
 
-sponsoring = """
+sponsoring = f"""
 ---
 title: Sponsoring BBT
 ---
 {warning}
-""".split('\n')
+""".lstrip().split('\n')
 
 appendto = index
 for line in readme.split('\n'):
