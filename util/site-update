@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+
+import subprocess
+import os
+import sys
+
+for change in subprocess.run(['git', 'diff', '--name-status', os.environ['TRAVIS_COMMIT_RANGE']], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n"):
+  if not "\t" in change: continue
+  changed = change.split("\t")[1].split('/')[0]
+  if changed != 'site': sys.exit(1)
+sys.exit(0)

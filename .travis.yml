@@ -28,8 +28,8 @@ cache:
   - .cache/pip
 
 script:
-  - ./util/build-assets fetch || travis_terminate 1
-  - ./test/behave --no-capture -f travis --tags $TAGS
+  - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
+  - ./util/site-update || ./test/behave --no-capture -f travis --tags $TAGS
 
 after_failure:
   - ./util/build-assets pop
