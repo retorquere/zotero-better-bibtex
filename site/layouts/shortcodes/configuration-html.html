@@ -1,4 +1,4 @@
-{{ range $tab := .Site.Data.configuration }}
+{{ range $slug, $tab := .Site.Data.preferences.slugs }}
 
   <h2>{{ $tab.name | markdownify | safeHTML }}</h2>
 
