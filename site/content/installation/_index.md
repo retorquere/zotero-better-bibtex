@@ -3,7 +3,7 @@ title: Installation
 weight: 1
 ---
 
-Install by downloading the [latest release](https://github.com/retorquere/zotero-better-bibtex/releases/latest), and then in Zotero:
+Install by downloading the [latest release](https://github.com/retorquere/zotero-better-bibtex/releases/latest) -- if you use Firefox, make sure to right-click and save the XPI file, not just clicking it -- and then in Zotero:
 
 1. In the main menu go to Tools > Add-ons
 2. Select 'Extensions'
