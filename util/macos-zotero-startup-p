@@ -15,6 +15,7 @@ with open(launcher, 'w') as f:
 
 os.chmod(launcher, os.stat(zotero).st_mode)
 
+print(info)
 with open(info, 'rb') as f:
   plist = plistlib.load(f)
 plist['CFBundleExecutable'] = os.path.basename(launcher)
