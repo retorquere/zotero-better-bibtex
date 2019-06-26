@@ -19,9 +19,7 @@ Through the configuration pane of BBT you can customize the BibTeX file that wil
   configuration screen, add a comma-separated list of BibTeX fields you do not want to see in your export. The fields
   are case-sensitive, separated by a comma *only*, no spaces.
 * **[Configurable citekey generator](citation-keys)**
-* **[Push-and-Pull-Export](push-and-pull)**: You can fetch your library as part of your build, using curl (for example by using the included
-  zoterobib.yaml arara rule), or with a BiblaTeX remote statement like
-  \addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}.
+* **[Push-and-Pull-Export](push-and-pull)**: You can fetch your library as part of your build, using something like `curl`, or with a BiblaTeX remote statement like `\addbibresource[location=remote]{http://localhost:23119/better-bibtex/collection?/0/8CV58ZVD.biblatex}`.
 * Add other custom BibLaTeX fields
 
 BBT http export uses the general Zotero HTTP facility; please note that disabling this will disable ALL HTTP
