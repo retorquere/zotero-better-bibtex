@@ -363,6 +363,5 @@ class Preferences:
       with open(_page, 'wb') as f:
         frontmatter.dump(page, f)
 
-if __name__ == '__main__':
-  check_translations()
-  Preferences()
+check_translations()
+Preferences()
