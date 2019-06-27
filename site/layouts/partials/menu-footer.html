@@ -1,25 +1,4 @@
-{{ if not (eq (len $.Site.Taxonomies.tags) 0) }}
-    {{ $fontUnit := "em" }}
-    {{ $largestFontSize := 1.5 }}
-    {{ $smallestFontSize := 1.0 }}
-    {{ $fontSpread := sub $largestFontSize $smallestFontSize }}
-    {{ $max := add (len (index $.Site.Taxonomies.tags.ByCount 0).Pages) 1 }}
-    {{ $min := len (index $.Site.Taxonomies.tags.ByCount.Reverse 0).Pages }}
-    {{ $spread := sub $max $min }}
-    {{ $fontStep := div $fontSpread $spread }}
-
-    <div id="tag-cloud" style="padding: 5px 15px">
-        {{ range $name, $taxonomy := $.Site.Taxonomies.tags }}
-            {{ $currentTagCount := len $taxonomy.Pages }}
-            {{ $currentFontSize := (add $smallestFontSize (mul (sub $currentTagCount $min) $fontStep) ) }}
-            {{ $count := len $taxonomy.Pages }}
-            {{ $weigth := div (sub (math.Log $count) (math.Log $min)) (sub (math.Log $max) (math.Log $min)) }}
-            {{ $currentFontSize := (add $smallestFontSize (mul (sub $largestFontSize $smallestFontSize) $weigth) ) }}
-            <!--Current font size: {{$currentFontSize}}-->
-            <span style="white-space: nowrap"><a href="{{ "/tags/" | relLangURL }}{{ $name | urlize }}" style="font-size:{{$currentFontSize}}{{$fontUnit}}"><i class="fas fa-tag"></i>{{ $name }}</a></span>
-        {{ end }}
-    </div>
-{{ end }}
+{{ partial "tagcloud.html" . }}
 
 <center>
     <!-- Place this tag where you want the button to render.

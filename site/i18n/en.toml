@@ -1,0 +1,9 @@
+[title-404]
+other = "Oops... not found"
+
+[message-404]
+other = "Woops. Looks like this page doesn't exist ¯\\_(ツ)_/¯. Maybe one of these tags will get you where you need to go."
+
+[report-404]
+other = "Feel free to <a href=\"https://github.com/retorquere/zotero-better-bibtex/issues\">report</a> any broken links."
+
