@@ -13,7 +13,7 @@ tags:
 
 ## Are there any plans to support Firefox 57+?
 
-BBT lives where Zotero lives, and Zotero [only has standalone these days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed inside Zotero instead of in the browser. Please see the [installation instructions](https://retorque.re/zotero-better-bibtex/installation/) to get started with BBT.
+BBT lives where Zotero lives, and Zotero [only has standalone these days](https://www.zotero.org/blog/zotero-5-and-firefox-faq/). BBT is installed inside Zotero instead of in the browser. Please see the [installation instructions]({{< ref "/installation" >}}) to get started with BBT.
 
 ## BBT is changing the capitalization of my titles -- why?
 
@@ -21,8 +21,7 @@ There isn't a straightforward one-to-one mapping for all Zotero to Bib(La)TeX fi
 choices, but there are some things where Better BibTeX takes a little more liberties with your references in order to
 get sensible output.
 
-Title fields in particular are a total mess. Zotero [recommends having your titles in sentence
-case](https://zotero-manual.github.io/zotero-manual/adding-items#sentence-and-title-case) because that's what the
+Title fields in particular are a total mess. Zotero [recommends having your titles in sentence case](https://zotero-manual.github.io/zotero-manual/adding-items#sentence-and-title-case) because that's what the
 embedded citation processor expects, but of course, BibLaTeX expects your titles to be in Title Case... *but only if
 they're in English*. Nice. In order to translate the Zotero recommendation into Bib(La)TeX best practice, BBT will
 title-case the titles of English references. English references, as far as BBT is concerned, are those references that
@@ -53,7 +52,7 @@ Zotero and will work in the Word/LibreOffice plugins as well as in the BibTeX ex
 you wish to always keep lowercase, for example.  Also, if
 you don't generally use Zotero for generating bibliographies but just for BibTeX reference management, you can turn on the hidden
 preference
-[extensions.zotero.translators.better-bibtex.suppressTitleCase](configuration#suppresstitlecase)
+[extensions.zotero.translators.better-bibtex.suppressTitleCase]({{< ref "installation/configuration#suppresstitlecase" >}})
 to keep BBT from applying title-casing, but take note that if you do this, the
 bibliographies you get from Zotero and the bibliograhies you get through Bib(La)TeX will differ, and you can't complain
 about this.

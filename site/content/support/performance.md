@@ -12,7 +12,7 @@ you will not likely notice this, but if you have several thousand references, an
 substantial parts of your library, this gets annoying really fast.
 
 To deal with this problem, Better BibTeX implements an extensive caching system. With a filled cache, Better BibTeX is
-substantially faster than the default Zotero exporters.  Specifically for [automatic background exports](push-and-pull), a filled cache is
+substantially faster than the default Zotero exporters.  Specifically for [automatic background exports]({{< ref "exporting" >}}), a filled cache is
 a good thing to have.
 
 For technical reasons, if you export the file attachments as part of your export, the cache is skipped altogether, so
@@ -51,17 +51,17 @@ cached already, they will be before subsequent auto-exports.
 The cache entry for a reference is retained as long as you do not make any changes to that reference. Any change you
 make will drop all cache entries for that reference (so all variants you had for different export options). The cache
 for that reference will be refreshed as soon as you export it again, either manually or
-[automatically](push-and-pull).
+[automatically]({{< ref "exporting" >}}).
 
 ### Cache drop
 
-*Any* change you make to the Better BibTeX [preferences](configuration) will drop the whole cache. The behavior of
+*Any* change you make to the Better BibTeX [preferences]({{< ref "installation/configuration" >}}) will drop the whole cache. The behavior of
 the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.
 
 The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
 the cache during first startup of the newer version. This can be a nuisance if you have a large library, so if you have
-a substantial cache (where 'substantial' is [configurable](configuration#hidden) by changing
+a substantial cache (where 'substantial' is [configurable]({{< ref "installation/configuration#hidden" >}}) by changing
 `confirmCacheResetSize`), you will be asked whether you want to drop or retain your cache at this point.
 
 Please *do keep in mind* that some new settings will not be reflected in your exports until the cache entry is

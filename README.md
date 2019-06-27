@@ -28,7 +28,8 @@ have to if you use BibLaTeX, which has fairly good Unicode support). With BBT yo
 * Highly [Customized Exports](https://retorquere.github.io/zotero-better-bibtex/customized-exports).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
-* [Push/Pull Export](https://retorquere.github.io/zotero-better-bibtex/push-and-pull) from the embedded webserver.
+* [Auto Export](https://retorquere.github.io/zotero-better-bibtex/exporting) of collections or entire libraries when they change.
+* [Pull Export](https://retorquere.github.io/zotero-better-bibtex/exporting) from the embedded webserver.
 * Automatic [journal abbreviation](https://retorquere.github.io/zotero-better-bibtex/citation-keys).
 
 

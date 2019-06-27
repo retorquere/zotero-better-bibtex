@@ -1,0 +1,32 @@
+{{ partial "header.html" . }}
+
+{{ if eq .Kind "section" }}
+	{{ .Content }}
+{{end}}
+
+{{ if or (eq .Kind "taxonomy") (eq .Kind "taxonomyTerm") }}
+<ul>
+	{{ range .Pages }}
+    <li>{{ template "page-path" dict "page" . "value" .Title }}</li>
+	{{ end }}
+</ul>
+{{end}}
+
+<footer class=" footline" >
+	{{with .Params.LastModifierDisplayName}}
+	    <i class='fas fa-user'></i> <a href="mailto:{{ $.Params.LastModifierEmail }}">{{ . }}</a> {{with $.Date}} <i class='fas fa-calendar'></i> {{ .Format "02/01/2006" }}{{end}}
+	    </div>
+	{{end}}
+</footer>
+
+{{ partial "footer.html" . }}
+
+{{define "page-path"}}
+          {{$parent := .page.Parent }}
+          {{ if $parent }}
+            {{ $value := (printf "<a href='%s'>%s</a> > %s" $parent.URL $parent.Title .value) }}
+            {{ template "page-path" dict "page" $parent "value" $value }} 
+          {{else}}
+            {{.value|safeHTML}}
+          {{end}}
+{{end}}

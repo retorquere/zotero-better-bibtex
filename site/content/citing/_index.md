@@ -35,14 +35,14 @@ You can also
 
 ## Set your own, fixed citation keys
 
-You can fix the citation key for a reference by adding the text "bibtex: [your citekey]" (sans quotes) anywhere in the
-"extra" field of the reference, or by using biblatexcitekey\[my_key\]. You can generate a fixed citation key by
+You can fix the citation key for a reference by adding the text `bibtex: [your citekey]` anywhere in the
+"extra" field of the reference, or by using `biblatexcitekey[my_key]`. You can generate a fixed citation key by
 selecting references, right-clicking, and selecting "Generate BibTeX key".
 
 ## Drag and drop/hotkey citations
 
 You can drag and drop citations into your LaTeX/Markdown/Orgmode editor, and it will add a proper `\cite{citekey}`/`[@citekey]`/`[[zotero://select...][@citekey]`. The `cite` command is
-configurable for LaTeX by setting the config option in the [[Preferences|Configuration]]. Do not include the leading backslash. This feature requires a one-time setup: go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy", and choose the Quick Copy format under the `Citation keys` preferences for BBT.
+configurable for LaTeX by setting the config option in the [preferences]({{< ref "installation/configuration" >}}). Do not include the leading backslash. This feature requires a one-time setup: go to Zotero preferences, tab Export, under Default Output Format, select "Better BibTeX Quick Copy", and choose the Quick Copy format under the `Citation keys` preferences for BBT.
 
 ## Find duplicate keys through integration with [Report Customizer](https://github.com/retorquere/zotero-report-customizer)
 
