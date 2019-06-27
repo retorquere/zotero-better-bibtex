@@ -42,7 +42,7 @@ have to if you use BibLaTeX, which has fairly good Unicode support). With BBT yo
 
 Better BibTeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
 BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
-[The Biblatex Package](http://ctan.mirrorcatalogs.com/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
+[The Biblatex Package](http://mirrors.ctan.org/macros/latex/contrib/biblatex/doc/biblatex.pdf) for BibLaTeX, but
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I'm pragmatic about implementing what works.
 
