@@ -173,8 +173,12 @@ class Preferences:
 
     return None
 
-  def all(self, options=dict, section=int):
-    return [self.get(name=pref[0], options=options, section=section) for pref in self.db.execute('SELECT name FROM preference ORDER BY "order"')]
+  def all(self, options=dict, section=int, order='order'):
+    if order == 'name':
+      order = 'name COLLATE NOCASE ASC'
+    else:
+      order = f'"{order}"'
+    return [self.get(name=pref[0], options=options, section=section) for pref in self.db.execute(f'SELECT name FROM preference ORDER BY {order}')]
 
   def parse(self):
     self.db = sqlite3.connect(':memory:', isolation_level=None)
@@ -329,7 +333,7 @@ class Preferences:
           All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table you will find there
 
           """)
-        preferences = [pref for pref in self.all(options=list, section=str) if pref.hidden]
+        preferences = [pref for pref in self.all(options=list, section=str, order='name') if pref.hidden]
       else:
         preferences = [pref for pref in self.all(options=list, section=str) if pref.section == slug]
 
