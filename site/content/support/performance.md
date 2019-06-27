@@ -60,13 +60,4 @@ the Better BibTeX exporters are highly configurable, and it is impossible for me
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.
 
 The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
-the cache during first startup of the newer version. This can be a nuisance if you have a large library, so if you have
-a substantial cache (where 'substantial' is [configurable]({{< ref "installation/configuration#hidden" >}}) by changing
-`confirmCacheResetSize`), you will be asked whether you want to drop or retain your cache at this point.
-
-Please *do keep in mind* that some new settings will not be reflected in your exports until the cache entry is
-refreshed. This is a trade-off you will have to make. If you want to refresh a single entry, just change anything (and
-back if you wish after), or go into the Better BibTeX debug settings and click "Reset Cache" to refresh them all.
-
-If you have chosen to retain your cache and you are experiencing problems, please first clear your cache and try to
-reproduce your problem before lodging an issue.
+the cache during first startup of the newer version. This can be a nuisance if you have a large library, but it's the only way to keep support feasible.
