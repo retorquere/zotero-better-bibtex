@@ -121,12 +121,14 @@ For example, if you call up [http://localhost:23119/better-bibtex/cayw?format=mm
 
 ## Playing around
 
-For testing for other markdown formatters, you can construct simple references yourself, using:
+For testing for other markdown formatters, you can construct simple references yourself, using the `playground` formatter, with parameters:
 
 * `citeprefix`, default empty, for text to put before the full citation.
 * `citepostfix`, default empty, for text to put after the full citation.
 * `keyprefix`, default empty, for text to put before each individual citekey
 * `keypostfix`, default empty, for text to put after each individual citekey
 * `separator`, default `,`, for text to put between citekeys
+
+Alternately, the `json` formatter will just give you the picks as JSON which you can turn into pretty much anything if you can code.
 
 but if you need an extra format, just ask.

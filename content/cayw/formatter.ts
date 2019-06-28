@@ -262,4 +262,8 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
     return await Translators.exportItems(translator, exportOptions, items)
   }
+
+  public async json(citations, options) {
+    return JSON.stringify(citations)
+  }
 }
