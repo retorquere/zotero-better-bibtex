@@ -8,7 +8,7 @@ title: Advanced
 weight: 14
 ---
 
-{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}
+<!-- DO NOT EDIT. This page is created automatically from Preferences.xul -->
 #### Deterministically order references and fields; primarily for version control.
 
 default: `no`

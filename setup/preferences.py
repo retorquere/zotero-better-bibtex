@@ -328,7 +328,7 @@ class Preferences:
       alias = f'/installation/configuration/{slug}'
       if not alias in page['aliases']: page['aliases'].append(alias)
 
-      page.content = "{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}\n"
+      page.content = "<!-- DO NOT EDIT. This page is created automatically from Preferences.xul -->\n"
 
       if slug == 'hidden-preferences':
         page.content += textwrap.dedent("""
