@@ -1,4 +1,6 @@
 ---
+aliases:
+- /installation/configuration/hidden-preferences
 tags:
 - configuration
 - preferences
@@ -6,6 +8,7 @@ title: Hidden preferences
 weight: 15
 ---
 
+{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}
 
 The following settings are not exposed in the UI, but can be found under `Preferences`/`Advanced`/`Config editor`.
 

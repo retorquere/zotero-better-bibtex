@@ -321,10 +321,14 @@ class Preferences:
       if not page in slugs: raise ValueError(f'{page} not found in config')
 
     for slug in slugs:
-      _page = f'site/content/installation/configuration/{slug}.md'
+      _page = f'site/content/installation/preferences/{slug}.md'
       page = frontmatter.load(_page)
     
-      page.content = ''
+      if not 'aliases' in page: page['aliases'] = []
+      alias = f'/installation/configuration/{slug}'
+      if not alias in page['aliases']: page['aliases'].append(alias)
+
+      page.content = "{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}\n"
 
       if slug == 'hidden-preferences':
         page.content += textwrap.dedent("""
@@ -351,6 +355,8 @@ class Preferences:
           default = 'no'
         elif 'options' in pref:
           default = [o for o in pref.options if o.value == pref.default][0].label
+        elif type(pref.default) == str:
+          default = pref.default.replace('\u200B', '')
         else:
           default = pref.default
     

@@ -1,4 +1,6 @@
 ---
+aliases:
+- /installation/configuration/export
 tags:
 - automatic export
 - configuration
@@ -8,6 +10,7 @@ title: Export
 weight: 13
 ---
 
+{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}
 #### Export unicode as plain-text latex commands (recommended)
 
 default: `yes`

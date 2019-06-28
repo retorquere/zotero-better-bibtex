@@ -55,7 +55,7 @@ for that reference will be refreshed as soon as you export it again, either manu
 
 ### Cache drop
 
-*Any* change you make to the Better BibTeX [preferences]({{< ref "installation/configuration" >}}) will drop the whole cache. The behavior of
+*Any* change you make to the Better BibTeX [preferences]({{< ref "installation/preferences" >}}) will drop the whole cache. The behavior of
 the Better BibTeX exporters are highly configurable, and it is impossible for me to figure out which entries would be
 affected specifically. Keep this in mind for large libraries; if you want to make changes to your configuration, make them all at once.
 

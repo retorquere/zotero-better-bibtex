@@ -1,4 +1,6 @@
 ---
+aliases:
+- /installation/configuration/citation-keys
 tags:
 - citation keys
 - configuration
@@ -7,9 +9,10 @@ title: Citation keys
 weight: 11
 ---
 
+{{/* DO NOT EDIT. This page is created automatically from Preferences.xul */}}
 #### Citation key format
 
-default: `​[auth:lower][shorttitle3_3][year]`
+default: `[auth:lower][shorttitle3_3][year]`
 
 Set the pattern used to generate citation keys. The format of the keys is documented [here]({{< ref "citing" >}}).
 
