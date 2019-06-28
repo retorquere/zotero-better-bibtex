@@ -12,6 +12,7 @@ import sys
 from slugify import slugify
 import frontmatter
 import sqlite3
+import toml
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -33,6 +34,8 @@ def dump(*paths):
 
         if ext == '.json':
           json.dump(data, out, indent=2, sort_keys=True)
+        elif ext == '.toml':
+          toml.dump(data, out)
         elif ext == '.yml':
           yaml.dump(data, out)
         elif ext == '.js':
@@ -93,7 +96,7 @@ class Preferences:
         preferences[name] = pref
       save(preferences)
 
-    with dump('gen/preferences/defaults.json', 'build/defaults/preferences/defaults.js', 'site/data/preferences/defaults.yml') as save:
+    with dump('gen/preferences/defaults.json', 'build/defaults/preferences/defaults.js', 'site/data/preferences/defaults.json') as save:
       save({pref.name: pref.default for pref in self.all()})
 
     overrides = [pref for pref in self.all() if pref.override]

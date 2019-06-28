@@ -4,9 +4,6 @@ import sqlite3
 import os
 import json
 import re
-from ruamel.yaml import YAML
-yaml=YAML()
-yaml.default_flow_style = False
 
 def split_and_mark(names):
   common = set(names['zotero']).intersection(names['jurism'])
@@ -95,11 +92,11 @@ for filt in list(formatter['_'].keys()):
   del formatter['_'][filt]
 
 os.makedirs("site/data/pattern", exist_ok=True)
-with open('site/data/pattern/fields.yml', 'w') as f:
-  yaml.dump(table, f)
-with open('site/data/pattern/typeNames.yml', 'w') as f:
-  yaml.dump(typeNames, f)
-with open('site/data/pattern/functions.yml', 'w') as f:
-  yaml.dump(formatter['$'], f)
-with open('site/data/pattern/filters.yml', 'w') as f:
-  yaml.dump(formatter['_'], f)
+with open('site/data/pattern/fields.json', 'w') as f:
+  json.dump(table, f, indent=2)
+with open('site/data/pattern/typeNames.json', 'w') as f:
+  json.dump(typeNames, f, indent=2)
+with open('site/data/pattern/functions.json', 'w') as f:
+  json.dump(formatter['$'], f, indent=2)
+with open('site/data/pattern/filters.json', 'w') as f:
+  json.dump(formatter['_'], f, indent=2)
