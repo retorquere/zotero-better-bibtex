@@ -19,18 +19,18 @@ BBT contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or 
 equivalents on import, and their unicode equivalents back to `\"{o}` if you have that option enabled (but you don't
 have to if you use BibLaTeX, which has fairly good Unicode support). With BBT you'll have:
 
-* Stable [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citation-keys), without key clashes! Generates citation keys that take into account other existing keys in your library
+* Stable [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citing), without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!
 * Converts from/to HTML/LaTeX: Currently supports `<i>...</i>`/`\emph{...}`/`\textit{...}`, `<b>...</b>`/`\textbf{...}`, `<sup>...</sup>`/`\_{...}` and `<sub>...</sub>`/`^{...}`. 
   The plugin contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode equivalents on import (e.g., `\"{o}` to `ö`). If you need
   literal LaTeX in your export: surround it with `<pre>`...`</pre>` tags.
-* Set your own, fixed [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citation-keys), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
+* Set your own, fixed [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citing), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
 * Highly [Customized Exports](https://retorquere.github.io/zotero-better-bibtex/customized-exports).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
 * [Auto Export](https://retorquere.github.io/zotero-better-bibtex/exporting) of collections or entire libraries when they change.
 * [Pull Export](https://retorquere.github.io/zotero-better-bibtex/exporting) from the embedded webserver.
-* Automatic [journal abbreviation](https://retorquere.github.io/zotero-better-bibtex/citation-keys).
+* Automatic [journal abbreviation](https://retorquere.github.io/zotero-better-bibtex/citing).
 
 
 Better BibTeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
