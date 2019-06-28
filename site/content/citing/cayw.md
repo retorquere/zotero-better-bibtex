@@ -2,6 +2,7 @@
 title: Cite as you Write
 aliases:
   - /Cite-as-you-Write
+  - /cayw
 tags:
   - citation keys
   - overleaf

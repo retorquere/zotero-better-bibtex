@@ -3,6 +3,8 @@ title: Scripting
 weight: 4
 tags:
   - scripting
+aliases:
+  - /scripting
 ---
 ## You wanted customized...
 

@@ -11,13 +11,13 @@ weight: 11
 
 default: `​[auth:lower][shorttitle3_3][year]`
 
-Set the pattern used to generate citation keys. The format of the keys is documented [here]({{< ref "citation-keys" >}}).
+Set the pattern used to generate citation keys. The format of the keys is documented [here]({{< ref "citing" >}}).
 
 #### Force citation key to plain text
 
 default: `yes`
 
-If you have deviated from the default citation key format pattern by [specifying your own]({{< ref "citation-keys" >}}), you may
+If you have deviated from the default citation key format pattern by [specifying your own]({{< ref "citing" >}}), you may
 wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
 appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
 
