@@ -1,6 +1,0 @@
-DirectoryPath: public
-EnforceHTTPS: false
-CacheExpires: "6h"
-CheckExternal: false
-IgnoreDirectoryMissingTrailingSlash: true
-IgnoreInternalEmptyHash: true
