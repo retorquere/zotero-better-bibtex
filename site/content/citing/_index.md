@@ -76,11 +76,11 @@ The full list of functions (extract data from your reference into your citekey) 
 
 #### Functions
 
-{{% citekeys/functions %}}
+{{< citekey-formatters/functions >}}
 
 **Note**: the functions above all have the `clean` filter (see below) automatically applied to them. If you want more control, `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below. For all the non-author fields, you can use the reference fields directly. The possible fields are:
 
-{{% citekeys/fields %}}
+{{< citekey-formatters/fields >}}
 
 (fields marked `**` are only available in Juris-M).
 
@@ -90,7 +90,7 @@ The full list of functions (extract data from your reference into your citekey) 
 
 #### Filters
 
-{{% citekeys/filters %}}
+{{< citekey-formatters/filters >}}
 
 *Usage note*: the functions `condense`, `skipwords`, `capitalize` and `select` rely on whitespaces for word handling. The JabRef functions strip
 whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the

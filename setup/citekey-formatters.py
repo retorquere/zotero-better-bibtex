@@ -91,12 +91,13 @@ for filt in list(formatter['_'].keys()):
   formatter['_'][quote(filt)] = formatter['_'][filt]
   del formatter['_'][filt]
 
-os.makedirs("site/data/pattern", exist_ok=True)
-with open('site/data/pattern/fields.json', 'w') as f:
-  json.dump(table, f, indent=2)
-with open('site/data/pattern/typeNames.json', 'w') as f:
-  json.dump(typeNames, f, indent=2)
-with open('site/data/pattern/functions.json', 'w') as f:
-  json.dump(formatter['$'], f, indent=2)
-with open('site/data/pattern/filters.json', 'w') as f:
-  json.dump(formatter['_'], f, indent=2)
+print('Saving pattern formatters documentation')
+def save(data, path):
+  os.makedirs(os.path.dirname(path), exist_ok=True)
+  print('  ' + path)
+  with open(path, 'w') as f:
+    json.dump(data, f, indent=2)
+save(table, 'site/data/citekeyformatters/fields.json')
+save(typeNames, 'site/data/citekeyformatters/typeNames.json')
+save(formatter['$'], 'site/data/citekeyformatters/functions.json')
+save(formatter['_'], 'site/data/citekeyformatters/filters.json')

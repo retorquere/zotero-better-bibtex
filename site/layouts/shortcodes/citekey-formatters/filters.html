@@ -1,0 +1,6 @@
+<ul>
+  {{ range $filter, $description := .Site.Data.citekeyformatters.filters }}
+    <li>{{ $filter | markdownify }}: {{ $description | markdownify }}</li>
+  {{ end }}
+  <li><code>(x)</code>: The string between the parentheses will be inserted if the field marker preceding this modifier resolves to an empty value. The placeholder <code>x</code> may be any string. For instance, the marker <code>[volume:(unknown)]</code> will return the entry's volume if set, and the string <code>unknown</code> if the entry's volume field is not set.
+</ul>

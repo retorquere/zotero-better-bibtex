@@ -1,5 +1,5 @@
 <table>
-  {{ range $row := .Site.Data.pattern.fields }}
+  {{ range $row := .Site.Data.citekeyformatters.fields }}
     <tr>
       {{ range $field := $row }}
         <td>{{ $field }}</td>
@@ -7,4 +7,3 @@
     </tr>
   {{ end }}
 </table>
-

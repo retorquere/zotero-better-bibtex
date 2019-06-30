@@ -1,9 +1,0 @@
-{{ range $func, $description := .Site.Data.pattern.functions }}
-- {{ $func }}: {{ $description }}
-{{ end }}
-- `0`: a pseudo-function that sets the citekey disambiguation postfix to numeric (-1, -2, etc, like the standard Zotero
-  Bib(La)TeX translators do) rather than alphabetic (a, b, c). Does not add any text to the citekey otherwise.
-- `>X`: a pseudo-function which aborts the current pattern generation if what came before it is X characters or less (`[>0]` is a typical use. You'd typically use this with something like `[auth][>0][year]|[title][year]` which means if there's no author you get `title-year` rather than just `year`.
-- `=typeName`: a pseudo-function that aborts the current pattern generation if the Zotero reference type does not equal `typeName`. You can test for multiple typenames at once by separating them with slashes (`[=journalArticle/report]`). Valid typeNames are: {{ range $index, $tn := .Site.Data.pattern.typeNames }}{{ if (eq $index 0) }}, {{ end }}`{{ $tn }}`{{ end }}.
-
-

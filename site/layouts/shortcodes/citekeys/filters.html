@@ -1,6 +1,0 @@
-{{ range $filter, $description := .Site.Data.pattern.filters }}
-- `{{ $filter }}`: {{ $description }}
-{{ end }}
-- `(x)`: The string between the parentheses will be inserted if the field marker preceding this modifier resolves to an empty value. The placeholder x may be any string. For instance, the marker `[volume:(unknown)]` will return the entry's volume if set, and the string `unknown` if the entry's volume field is not set.
-
-
