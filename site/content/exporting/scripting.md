@@ -47,16 +47,11 @@ switch (Translator.header.label) {
 }
 ```
 
-If you want to run a postscript in the CSL translators but don't care whether it will output YAML or JSON, you can test for `Translator.BetterCSL`, which will be true when either one of `BetterCSLJSON` or `BetterCSLYAML` is active.
+If you want to run a postscript in the CSL translators but don't care whether it will output YAML or JSON, you can test for `Translator.BetterCSL`, which will be true when either one of `BetterCSLJSON` or `BetterCSLYAML` is active. Analogously, `Translator.BetterTeX` will be true if either of `Better BibTeX` or `Better BibLaTeX` is active.
 
-In the `BetterBib(La)TeX` context you will typically access `this`, which will
-be undefined in the `BetterCSL(JSON|YAML)` context. In the `BetterBib(La)TeX` context, your Bib(La)TeX reference being built is
-available as both `this` and `reference`; the source Zotero item is available both as `item` (and `this.item` for historic reasons). In the `BetterCSL(JSON|YAML)` context,
-the CSL object being built is available as `reference` and the the source Zotero item is available as `item`.
+In the postscript, the reference being built is available as `reference`, and the Zotero item it is being built from is available as `item`. For backwards compatibility, in the `BetterBib(La)TeX` contexts, the reference being built is also available as `this`, and the Zotero item it is being built from as `this.item`, but use of these is discouraged now.
 
-You should
-really test for the translator context in your postscripts. If you don't because you have a postscript that pre-date CSL support, you will probably be using `this.<something>` in your
-existing postscripts, which will make the script will non-fatally error out. So you're very probably good to go as-is.
+You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `this.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
 But please fix your postscripts to test for the translator context.
 
 ## The API (for the Better Bib(La)TeX context)
@@ -65,19 +60,18 @@ The postscript should be a `javascript` snippet. You can access the data with fo
 
 In `BetterBibLaTeX` and `BetterBibTeX`, 
 
-- `this` is the BibTeX reference you are building, and the reference has a number of fields.
-- `this.fields`
-- `item` (or as mentioned earlier, `this.item`) is the Zotero item that's the source of the reference. 
+- `reference` is the BibTeX reference you are building, and the reference has a number of fields.
+- `item` is the Zotero item that's the source of the reference. 
 
-  e.g. access the date in zotero item `item.date`.
+  e.g. you can access the date in zotero item `item.date`.
 
-- `this.has` is a dictionary of fields for output.
+- `reference.has` is a dictionary of fields for output.
 
-  e.g. access the year in output `this.has.year`
+  e.g. you can see whether the `year` field has been set by testing for `reference.has.year`
 
-- `this.add` is the function to add or modify keys in `this.has`. It will check check for unintentional duplicates (unless you specify explicitly with `replace: true`). 
+- `reference.add` is the function to add or modify keys in `reference.has`. 
 
-  e.g. change the value of year in output `this.add({name: 'year', replace: true, value: your_year_value})`
+  e.g. change the value of year in output `reference.add({name: 'year', replace: true, value: your_year_value})`
 
 In `BetterCSLJSON` and `BetterCSLYAML`:
 
@@ -93,10 +87,10 @@ Since BibTeX doesn't really have well-defined behavior across styles the way Bib
 ```js
 if (Translator.BetterBibTeX && item.itemType === 'webpage') {
     if (item.accessDate) {
-      this.add({ name: 'note', value: "(accessed " + item.accessDate + ")" });
+      reference.add({ name: 'note', value: "(accessed " + item.accessDate + ")" });
     }
     if (item.url) {
-      this.add({ name: 'howpublished', bibtex: "{\\url{" + this.enc_verbatim({value: item.url}) + "}}" });
+      reference.add({ name: 'howpublished', bibtex: "{\\url{" + reference.enc_verbatim({value: item.url}) + "}}" });
     }
   }
 ```
@@ -107,7 +101,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```js
 if (Translator.BetterBibTeX || Translator.BetterBibLaTeX) {
-  this.add({ name: 'keywords', replace: true, value: item.tags, sep: ', ' });
+  reference.add({ name: 'keywords', replace: true, value: item.tags, sep: ', ' });
 }
 ```
 
@@ -119,7 +113,7 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.DOI) {
   var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
-  this.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });
+  reference.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });
 }
 ```
 
@@ -131,8 +125,8 @@ But for arguments' sake, let's say you get the desired output by including an em
 
 ```
 if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.arXiv.id) {
-  this.add({ name: 'pages', value: item.arXiv.id });
-  if (!this.has.journaltitle) { this.add({ name: 'journaltitle', bibtex: '{}' }); }
+  reference.add({ name: 'pages', value: item.arXiv.id });
+  if (!reference.has.journaltitle) { reference.add({ name: 'journaltitle', bibtex: '{}' }); }
 }
 ```
 
@@ -147,11 +141,11 @@ if (Translator.BetterTeX) {
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher'];
-  const keys = Object.keys(this.has)
+  const keys = Object.keys(reference.has)
   for (const field of keys.sort((a, b) => ((order.indexOf(a) + 1) || (keys.length + order.length + 1)) - ((order.indexOf(b) + 1) || (keys.length + order.length + 1)))) {
-    const value = this.has[field]
-    delete this.has[field]
-    this.has[field] = value
+    const value = reference.has[field]
+    delete reference.has[field]
+    reference.has[field] = value
   }
 }
 ```
@@ -179,12 +173,14 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 ### Detect and protect LaTeX math formulas
 
 ```
-if (Translator.BetterBibTeX && this.has.title) {
-  this.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>$1</script>'), replace: true });
+if (Translator.BetterBibTeX && reference.has.title) {
+  reference.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>$1</script>'), replace: true });
 }
 ```
 
 ### Replace `director` with `author` for `videoRecording` and `film` references
+
+Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `item` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `reference` with the current state in `item.creators`, however you left it.
 
 ```
 if (Translator.BetterBibLaTeX) {
@@ -194,7 +190,7 @@ if (Translator.BetterBibLaTeX) {
       item.creators.forEach(creator => {
         if (creator.creatorType === 'director') creator.creatorType = 'author'
       })
-      this.addCreators();
+      reference.addCreators();
       break;
   }
 }
@@ -204,6 +200,6 @@ if (Translator.BetterBibLaTeX) {
 
 ```
 if (Translator.BetterBibLaTeX) {
-  if (this.referencetype === 'collection') this.referencetype = 'book'
+  if (reference.referencetype === 'collection') reference.referencetype = 'book'
 }
 ```
