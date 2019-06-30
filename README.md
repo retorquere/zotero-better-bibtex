@@ -25,7 +25,7 @@ have to if you use BibLaTeX, which has fairly good Unicode support). With BBT yo
   The plugin contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode equivalents on import (e.g., `\"{o}` to `ö`). If you need
   literal LaTeX in your export: surround it with `<pre>`...`</pre>` tags.
 * Set your own, fixed [Citation Keys](https://retorquere.github.io/zotero-better-bibtex/citing), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
-* Highly [Customized Exports](https://retorquere.github.io/zotero-better-bibtex/customized-exports).
+* Highly [Customized Exports](https://retorquere.github.io/zotero-better-bibtex/exporting).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
 * [Auto Export](https://retorquere.github.io/zotero-better-bibtex/exporting) of collections or entire libraries when they change.
