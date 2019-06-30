@@ -36,8 +36,8 @@ You can also
 
 ## Set your own, fixed citation keys
 
-You can fix the citation key for a reference by adding the text `bibtex: [your citekey]` anywhere in the
-"extra" field of the reference, or by using `biblatexcitekey[my_key]`. You can generate a fixed citation key by
+You can fix the citation key for a reference by adding the text `Citation Key: [your citekey]` anywhere in the
+"extra" field of the reference on a line of its own, or tge legacy `biblatexcitekey[my_key]`. You can generate a fixed citation key by
 selecting references, right-clicking, and selecting "Generate BibTeX key".
 
 ## Drag and drop/hotkey citations
