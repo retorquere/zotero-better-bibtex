@@ -10,7 +10,6 @@ from pathlib import Path
 import glob
 import sys
 from slugify import slugify
-import frontmatter
 import sqlite3
 import toml
 
@@ -81,9 +80,8 @@ class Preferences:
     self.load()
     self.check()
     self.parse()
-    self.merge_auto_export()
 
-    self.pages()
+    self.shortcodes()
 
     with dump('gen/preferences/preferences.json') as save:
       preferences = {}
@@ -110,16 +108,6 @@ class Preferences:
         else:
           schema[pref.name] = { 'enum': list(pref.options.keys()) }
       save(schema)
-
-  def merge_auto_export(self):
-    # move auto-export to the end of export
-    offset = None
-    export = None
-    for row in self.db.execute('SELECT "order" FROM section WHERE slug=?', ('export',)):
-      export = row[0]
-    for row in self.db.execute('SELECT MAX("order") FROM preference WHERE section = ?', (export,)):
-      offset = row[0] + 1
-    self.db.execute('UPDATE preference SET "order" = "order" + ?, section = ? WHERE section IN (SELECT "order" FROM section WHERE slug=?)', (offset, export, 'automatic-export'))
 
   def load(self):
     with open(os.path.join(root, 'content', 'Preferences.xul'), 'r') as xul:
@@ -316,39 +304,21 @@ class Preferences:
       if pref.hidden and pref.section is not None: raise ValueError(f'{pref.name}: hidden + section')
       if not pref.hidden and pref.section is None: raise ValueError(f'{pref.name}: unassigned preference')
 
-  def pages(self):
-    slugs = [section[0] for section in self.db.execute('SELECT slug FROM section WHERE "order" IN (select section from preference) ORDER BY "order"')] + ['hidden-preferences']
-    for page in glob.glob('site/content/installation/configuration/*.md'):
-      page = os.path.splitext(os.path.basename(page))[0]
-      if page == '_index': continue
-      if not page in slugs: raise ValueError(f'{page} not found in config')
-
+  def shortcodes(self):
+    slugs = [section[0] for section in self.db.execute('SELECT slug FROM section ORDER BY "order"')] + ['hidden-preferences']
     for slug in slugs:
-      _page = f'site/content/installation/preferences/{slug}.md'
-      page = frontmatter.load(_page)
-    
-      if not 'aliases' in page: page['aliases'] = []
-      alias = f'/installation/configuration/{slug}'
-      if not alias in page['aliases']: page['aliases'].append(alias)
-
-      page.content = "<!-- DO NOT EDIT. This page is created automatically from Preferences.xul -->\n"
+      content = "{{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}\n"
 
       if slug == 'hidden-preferences':
-        page.content += textwrap.dedent("""
-          The following settings are not exposed in the UI, but can be found under `Preferences`/`Advanced`/`Config editor`.
-
-          All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table you will find there
-
-          """)
         preferences = [pref for pref in self.all(options=list, section=str, order='name') if pref.hidden]
       else:
         preferences = [pref for pref in self.all(options=list, section=str) if pref.section == slug]
 
       for pref in preferences:
         if pref.hidden:
-          page.content += f"#### {pref.name}\n\n"
+          content += f"#### {pref.name}\n\n"
         else:
-          page.content += f"#### {pref.label}\n\n"
+          content += f"#### {pref.label}\n\n"
     
         if pref.default == '':
           default = '<not set>'
@@ -363,18 +333,20 @@ class Preferences:
         else:
           default = pref.default
     
-        page.content += f"default: `{default}`\n\n"
-        page.content += pref.description + "\n\n"
+        content += f"default: `{default}`\n\n"
+        content += pref.description + "\n\n"
     
         if 'options' in pref:
-          page.content += "Options:\n\n"
+          content += "Options:\n\n"
           for option in pref.options:
-            page.content += f"* {option.label}\n"
-          page.content += "\n"
+            content += f"* {option.label}\n"
+          content += "\n"
   
-      print('  ' + _page)
-      with open(_page, 'wb') as f:
-        frontmatter.dump(page, f)
+      shortcode = f'site/layouts/shortcodes/preferences/{slug}.md'
+      os.makedirs(os.path.dirname(shortcode), exist_ok=True)
+      print('  ' + shortcode)
+      with open(shortcode, 'w') as f:
+        print(content, file=f)
 
 check_translations()
 Preferences()

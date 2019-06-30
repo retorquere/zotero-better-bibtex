@@ -29,7 +29,7 @@
         only have hidden preferences). The defaults should just work, but here's an attempt to describe what they do.
 
         **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a
-        really large library, but you can read about what is involved [here]({{< ref "performance" >}}).
+        really large library, but you can read about what is involved [here]({{ ref . "performance" }}).
       -->
       <preferences id="zotero-preferences-cite">
         <preference
@@ -74,7 +74,7 @@
           type="string"
           default="immediate"/>
         <!--!
-          Determines when [automatic exports]({{< ref "exporting" >}}) are kicked off. Having it disabled still marks
+          Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
           auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
           happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
           `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
@@ -117,7 +117,7 @@
           type="string"
           default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
         <!--!
-          Set the pattern used to generate citation keys. The format of the keys is documented [here]({{< ref "citing" >}}).
+          Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
         -->
 
         <preference
@@ -126,7 +126,7 @@
           type="bool"
           default="true"/>
         <!--!
-          If you have deviated from the default citation key format pattern by [specifying your own]({{< ref "citing" >}}), you may
+          If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
           wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
           appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
         -->
@@ -243,7 +243,7 @@
           type="string"
           default=""/>
         <!--!
-          Snippet of javascript to run [after each reference generation]({{< ref "scripting" >}}).
+          Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
         -->
 
         <preference
@@ -360,7 +360,7 @@
           default="false"/>
         <!--!!
           If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, set this preference to "true" to suppress [title casing for English references]({{< ref "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" >}}).
+          casing, set this preference to "true" to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
         -->
 
         <preference
@@ -369,7 +369,7 @@
           default="false"/>
         <!--!!
           If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, set this preference to "true" to suppress [automatic brace-protection for words with uppercase letters]({{< ref "support/faq#why-the-double-braces" >}}).
+          casing, set this preference to "true" to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
         -->
 
         <preference

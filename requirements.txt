@@ -12,7 +12,6 @@ psutil
 pushbullet.py
 pylint
 python-dotenv
-python-frontmatter
 python-slugify
 redo
 ruamel.yaml
