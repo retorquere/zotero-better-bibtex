@@ -415,6 +415,7 @@ export class Reference {
    */
   public add(field: IField) {
     debug('add field', field)
+    if (Translator.preferences.skipField[field.name]) return
 
     if (field.enc === 'date') {
       if (!field.value) return

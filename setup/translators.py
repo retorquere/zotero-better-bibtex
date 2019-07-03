@@ -68,6 +68,7 @@ interface ITranslator {
   #for $pref, $type in $preferences.items()
     $pref: $type
   #end for
+    skipField: {[key: string]: boolean}
   }
 
   options: {
