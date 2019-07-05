@@ -33,6 +33,11 @@ if (Translator.BetterBibTeX) {
   }
 }
 
+const switchMode = {
+  math: 'text',
+  text: 'math',
+}
+
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
@@ -46,6 +51,16 @@ const htmlConverter = new class HTMLConverter {
     this.options = options
     this.latex = ''
     this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
+
+    if (!this.mapping.initialized) {
+      const remove = switchMode[Translator.preferences.mapUnicode]
+      if (remove) {
+        for (const tex of (Object.values(this.mapping) as any[])) {
+          if (tex.text && tex.math) delete tex[remove]
+        }
+      }
+      this.mapping.initialized = true
+    }
 
     this.extramapping = {}
     for (const c of Array.from(Translator.preferences.ascii)) {
@@ -196,10 +211,6 @@ const htmlConverter = new class HTMLConverter {
     const switchTo = {
       math: (nocased ? '$' : '{$'),
       text: (nocased ? '$' : '$}'),
-    }
-    const switchMode = {
-      math: 'text',
-      text: 'math',
     }
 
     // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')

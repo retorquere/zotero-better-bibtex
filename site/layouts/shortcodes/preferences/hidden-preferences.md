@@ -109,6 +109,16 @@ for the answer to be "turn this back on for now".
 
 This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
 
+#### mapUnicode
+
+default: `conservative`
+
+When a unicode character can be exported as either a math-mode or text-mode command, map to:
+
+* `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output.
+* `text`: if both a math-mode and a text-mode mapping is available, prefer text.
+* `math`: if both a math-mode and a text-mode mapping is available, prefer math.
+
 #### parseParticles
 
 default: `yes`

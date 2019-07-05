@@ -498,12 +498,24 @@
 
         <preference
           name="extensions.zotero.translators.better-bibtex.git"
-          id="pref-better-bibtex-git"
           type="string"
           default="config"/>
         <!--!!
           Can be 'off', 'config' or 'always'
         -->
+
+        <preference
+          name="extensions.zotero.translators.better-bibtex.mapUnicode"
+          type="string"
+          default="conservative"/>
+        <!--!!
+          When a unicode character can be exported as either a math-mode or text-mode command, map to:
+
+          * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output.
+          * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
+          * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
+        -->
+
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">

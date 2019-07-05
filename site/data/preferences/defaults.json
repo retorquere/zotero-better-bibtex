@@ -33,6 +33,7 @@
   "keyScope": "library",
   "kuroshiro": false,
   "lockedInit": false,
+  "mapUnicode": "conservative",
   "parseParticles": true,
   "postscript": "",
   "qualityReport": false,

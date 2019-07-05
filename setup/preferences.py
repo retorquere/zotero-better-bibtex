@@ -300,6 +300,7 @@ class Preferences:
 
     # consistency checks
     for pref in self.all():
+      if pref.hidden and pref.id: raise ValueError(f'{pref.name}: hidden + ID')
       if pref.hidden and pref.override: raise ValueError(f'{pref.name}: hidden + override')
       if pref.hidden and pref.section is not None: raise ValueError(f'{pref.name}: hidden + section')
       if not pref.hidden and pref.section is None: raise ValueError(f'{pref.name}: unassigned preference')
