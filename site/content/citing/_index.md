@@ -21,9 +21,9 @@ For a LaTeX author, the citation keys have their own meaning, fully separate fro
 people usually pick a naming scheme related to them. As the citation key is *the* piece of data that connects your
 bibliography, this is a piece of data you want to have control over. BBT offers you this control:
 
-* Set your own, fixed citation keys
 * Stable citation keys, without key clashes. BBT generates citation keys that take into account other existing keys in your library in a deterministic way, regardless of what part of your library you export, or the order in which you do it.
-* Generate citation keys from JabRef(-ish) patterns
+* BBT is conservative about citation key changes, and allows you to fixate keys to any value of your choosing.
+* Generate citation keys from JabRef(-ish) patterns.
 
 You can also
 
@@ -31,11 +31,11 @@ You can also
 * Show your citation keys in the reference list view.
 * Search for citation keys (if you select "All fields and tags" in the search box)
 
-## Set your own, fixed citation keys
+## Set your own, fixated citation keys
 
 By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with a `*` in the reference list view, and are displayed in italics in the item details.
 
-You can fixate the citation key for an item by adding the text `Citation Key: [your citekey]` anywhere in the
+You can fixate the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
 "extra" field of the reference on a line of its own, or the legacy `biblatexcitekey[my_key]`. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it. These keys are shown without the `*` marker in the middle column, and non-italicized in the details view, to distinguish them from dynamic keys.
 
 ## Drag and drop/hotkey citations
