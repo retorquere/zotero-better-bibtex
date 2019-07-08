@@ -10,6 +10,7 @@ import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
   public preamble: { DeclarePrefChars: string, noopsort?: boolean }
+  public packages: { [key: string]: boolean }
   public jabref: JabRef
   public strings: {[key: string]: string}
 
@@ -17,7 +18,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     this.preamble = {DeclarePrefChars: ''}
     this.jabref = new JabRef()
     this.strings = {}
-
+    this.packages = {}
   }
 
   public prepare_strings() {
@@ -72,6 +73,11 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         if (cached.metadata) {
           if (cached.metadata.DeclarePrefChars) this.preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars
           if (cached.metadata.noopsort) this.preamble.noopsort = true
+          if (cached.metadata.packages) {
+            for (const pkg of cached.metadata.packages) {
+              this.packages[pkg] = true
+            }
+          }
         }
         continue
       }
@@ -104,6 +110,14 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     if (preamble.length > 0) {
       preamble = preamble.map(cmd => `"${cmd} "`)
       Zotero.write(`@preamble{ ${preamble.join(' \n # ')} }\n`)
+    }
+
+    if (Translator.preferences.qualityReport) {
+      const packages = Object.keys(this.packages)
+      if (packages.length) Zotero.write('\n%Required packages:\n')
+      for (const pkg of packages) {
+        Zotero.write(`% * ${pkg}\n`)
+      }
     }
   }
 }

@@ -41,18 +41,24 @@ const switchMode = {
 const htmlConverter = new class HTMLConverter {
   private latex: string
   private mapping: any
-  private extramapping: any
   private stack: any[]
   private options: { caseConversion?: boolean, html?: boolean }
   private embraced: boolean
+  private packages: { [key: string]: boolean }
 
   public convert(html, options) {
     this.embraced = false
     this.options = options
     this.latex = ''
+    this.packages = {}
     this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
 
     if (!this.mapping.initialized) {
+      // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
+      for (const c of Translator.preferences.ascii) {
+        this.mapping[c] = unicodeMapping.ascii[c]
+      }
+
       if (Translator.preferences.mapUnicode === 'conservative') {
         for (const keep of Object.keys(switchMode).sort()) {
           const remove = switchMode[keep]
@@ -78,16 +84,18 @@ const htmlConverter = new class HTMLConverter {
       this.mapping.initialized = true
     }
 
-    this.extramapping = {}
-    for (const c of Array.from(Translator.preferences.ascii)) {
-      this.extramapping[c] = unicodeMapping.ascii[c]
-    }
-
     this.stack = []
 
     const ast: IZoteroMarkupNode = Zotero.BetterBibTeX.parseHTML(html, this.options)
     this.walk(ast)
-    return { latex: this.latex, raw: ast.nodeName === 'pre' }
+
+    this.latex = this.latex
+    // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
+    .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
+    .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
+    // .replace(/{}([}])/g, '$1') // seems to have become obsolete
+
+    return { latex: this.latex, raw: ast.nodeName === 'pre', packages: Object.keys(this.packages) }
   }
 
   private walk(tag: IZoteroMarkupNode, nocased = false) {
@@ -233,11 +241,11 @@ const htmlConverter = new class HTMLConverter {
     const chars: string[] = Array.from(text.normalize('NFC'))
     let ch, mapped
     while (chars.length) {
-      if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])] || this.extramapping[ch])) {
+      if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])])) {
         chars.splice(0, 2)
 
       } else {
-        mapped = this.mapping[chars[0]] || this.extramapping[chars[0]] || { text: chars[0] }
+        mapped = this.mapping[chars[0]] || { text: chars[0] }
         ch = chars.shift()
 
       }
@@ -259,6 +267,8 @@ const htmlConverter = new class HTMLConverter {
       }
 
       latex += mapped[mode]
+      const pkg = mapped[mode + 'package']
+      if (pkg) this.packages[pkg] = true
     }
 
     // add any missing closing phantom braces
@@ -284,10 +294,6 @@ export function html2latex(html, options) {
   if (typeof options.html === 'undefined') options.html = true
   const latex = htmlConverter.convert(html, options)
   latex.latex = latex.latex
-    // .replace(/(\\\\)+[^\S\n]*\n\n/g, '\n\n') // I don't recall why I had the middle match, replaced by match below until I figure it out
-    .replace(/(\\\\)+\n\n/g, '\n\n') // paragraph breaks followed by line breaks == line breaks
-    .replace(/\n\n\n+/g, '\n\n') // line breaks > 3 is the same as two line breaks.
-    // .replace(/{}([}])/g, '$1') // seems to have become obsolete
   return latex
 }
 

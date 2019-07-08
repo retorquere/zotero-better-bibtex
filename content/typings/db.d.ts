@@ -4,6 +4,7 @@ namespace Types {
       class ExportedItemMetadata {
         DeclarePrefChars: string
         noopsort: boolean
+        packages: string[]
       }
 
       class ExportedItem {

@@ -308,12 +308,14 @@ export class Reference {
   private _enc_creators_relax_marker = '\u200C' // zero-width non-joiner
 
   private isBibStringRE = /^[a-z][-a-z0-9_]*$/i
-  private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false }
+  private metadata: Types.DB.Cache.ExportedItemMetadata = { DeclarePrefChars: '', noopsort: false, packages: [] }
+  private packages: { [key: string]: boolean }
   private juniorcomma: boolean
 
   constructor(item) {
     this.item = item
     this.raw = (Translator.preferences.rawLaTag === '*') || (this.item.tags.includes(Translator.preferences.rawLaTag))
+    this.packages = {}
 
     if (!this.item.language) {
       this.english = true
@@ -798,10 +800,14 @@ export class Reference {
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
     debug(':caching:cacheStore:', Translator.caching && this.cachable)
+    this.metadata.packages = Object.keys(this.packages)
     if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
     if (this.metadata.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.metadata.DeclarePrefChars
     if (this.metadata.noopsort) Exporter.preamble.noopsort = true
+    for (const pkg of this.metadata.packages) {
+      Exporter.packages[pkg] = true
+    }
   }
 
   /*
@@ -928,6 +934,9 @@ export class Reference {
 
     const caseConversion = this.caseConversion[f.name] || f.caseConversion
     const latex = text2latex(f.value, {html: f.html, caseConversion: caseConversion && this.english})
+    for (const pkg of latex.packages) {
+      this.packages[pkg] = true
+    }
     let value: String | string = latex.latex
 
     /*
@@ -1150,7 +1159,7 @@ export class Reference {
 
     if (Translator.BetterBibTeX && Translator.preferences.bibtexParticleNoOp && (name['non-dropping-particle'] || name['dropping-particle'])) {
       family = `{\\noopsort{${this.enc_latex({value: name.family.toLowerCase()})}}}${family}`
-      this.metadata.noopsort = Exporter.preamble.noopsort = true
+      this.metadata.noopsort = true
     }
 
     if (name.given) name.given = this.enc_latex({value: name.given})
