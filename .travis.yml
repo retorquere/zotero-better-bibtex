@@ -21,15 +21,15 @@ cache:
 # the python stuff is for
 # https://github.com/travis-ci/travis-ci/issues/8920
 # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
-script:
-  - (./util/site-update && travis_terminate 0) || true
+before_install:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-  - travis_retry sudo apt-get update
-  - travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
-  - ./util/build-assets fetch || travis_terminate 1
-  - ./test/behave --no-capture -f travis --tags $TAGS
+  - ./util/site-update || travis_retry sudo apt-get update
+  - ./util/site-update || travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
+script:
+  - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
+  - ./util/site-update || ./test/behave --no-capture -f travis --tags $TAGS
 
 after_failure:
   - ./util/build-assets pop
@@ -44,6 +44,7 @@ stages:
 jobs:
   include:
   - stage: build
+    before_install: true
     script:
       - npm run build
       - travis_retry ./util/build-assets stash
@@ -71,6 +72,7 @@ jobs:
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
+    before_install: true
     script:
       - ./util/build-assets fetch || travis_terminate 1
       - npm run release
@@ -89,5 +91,6 @@ jobs:
 
   - stage: cleanup
     if: env(TRAVIS_EVENT_TYPE) = cron OR env(TRAVIS_EVENT_TYPE) = pull_request
+    before_install: true
     script:
       - ./util/build-assets pop
