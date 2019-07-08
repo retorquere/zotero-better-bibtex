@@ -53,12 +53,28 @@ const htmlConverter = new class HTMLConverter {
     this.mapping = (Translator.unicode ? unicodeMapping.unicode : unicodeMapping.ascii)
 
     if (!this.mapping.initialized) {
-      const remove = switchMode[Translator.preferences.mapUnicode]
-      if (remove) {
-        for (const tex of (Object.values(this.mapping) as any[])) {
-          if (tex.text && tex.math) delete tex[remove]
+      if (Translator.preferences.mapUnicode === 'conservative') {
+        for (const keep of Object.keys(switchMode).sort()) {
+          const remove = switchMode[keep]
+          const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
+          for (const c of unicode) {
+            if (this.mapping[c] && this.mapping[c].text && this.mapping[c].math) {
+              debug('deleting', this.mapping[c][remove])
+              delete this.mapping[c][remove]
+            }
+          }
+        }
+
+      } else {
+        const remove = switchMode[Translator.preferences.mapUnicode]
+        if (remove) {
+          for (const tex of (Object.values(this.mapping) as any[])) {
+            debug('deleting', tex[remove])
+            if (tex.text && tex.math) delete tex[remove]
+          }
         }
       }
+
       this.mapping.initialized = true
     }
 

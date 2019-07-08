@@ -6,6 +6,7 @@
       "exportNotes": true
     },
     "preferences": {
+      "mapMath": "\u2192",
       "DOIandURL": "both",
       "asciiBibLaTeX": true,
       "asciiBibTeX": true,

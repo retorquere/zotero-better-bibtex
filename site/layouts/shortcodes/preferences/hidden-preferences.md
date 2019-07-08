@@ -109,6 +109,18 @@ for the answer to be "turn this back on for now".
 
 This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
 
+#### mapMath
+
+default: `<not set>`
+
+Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
+
+#### mapText
+
+default: `<not set>`
+
+Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available. Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
+
 #### mapUnicode
 
 default: `conservative`

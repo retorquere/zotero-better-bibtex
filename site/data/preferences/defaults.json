@@ -33,6 +33,8 @@
   "keyScope": "library",
   "kuroshiro": false,
   "lockedInit": false,
+  "mapMath": "",
+  "mapText": "",
   "mapUnicode": "conservative",
   "parseParticles": true,
   "postscript": "",
