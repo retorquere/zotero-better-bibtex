@@ -57,4 +57,3 @@ The support request guidelines are very detailed, perhaps to the point of being 
 these guidelines simply express my ideal bug submission.
 I of course prefer very clearly documented issue reports over fuzzy ones,
 but I prefer fuzzy ones over missed ones.
-

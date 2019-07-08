@@ -134,3 +134,4 @@ JabRef import works generally well but has a few gotchas:
     fail to import. You can fix this by going into Jabref and selecting `File` -
     `Library properties` option, then filling out the path to the attachments
     directory in `general file directory`.
+

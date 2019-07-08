@@ -61,3 +61,4 @@ affected specifically. Keep this in mind for large libraries; if you want to mak
 
 The same applies to upgrades. As the export behavior quite frequently changes between versions, Better BibTeX will drop
 the cache during first startup of the newer version. This can be a nuisance if you have a large library, but it's the only way to keep support feasible.
+

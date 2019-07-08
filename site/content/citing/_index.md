@@ -93,4 +93,3 @@ The full list of functions (extract data from your reference into your citekey) 
 *Usage note*: the functions `condense`, `skipwords`, `capitalize` and `select` rely on whitespaces for word handling. The JabRef functions strip
 whitespace and thereby make these filter functions sort of useless. You will in general want to use the fields from the
 table above, which give you the values from Zotero without any changes. The fields with `**` are only available in Juris-M.
-

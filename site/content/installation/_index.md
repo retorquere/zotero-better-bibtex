@@ -18,3 +18,4 @@ Note that the default setting of BBT will generate different citekeys than Zoter
 Note that BBT needs to be installed in Zotero, *not* Firefox. There used to be two versions of Zotero, one standalone, and one that was installed in Firefox. BBT is a *Zotero* extension and lives where Zotero lives; Zotero is [no longer available](https://www.zotero.org/blog/zotero-5-and-firefox-faq/) as a Firefox plugin, only as standalone.
 
 On first install you will be asked a few questions. **Please** read these instead of just clicking through.
+

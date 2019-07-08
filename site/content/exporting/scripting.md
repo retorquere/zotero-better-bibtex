@@ -203,3 +203,4 @@ if (Translator.BetterBibLaTeX) {
   if (reference.referencetype === 'collection') reference.referencetype = 'book'
 }
 ```
+

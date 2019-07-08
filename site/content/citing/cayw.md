@@ -132,3 +132,4 @@ For testing for other markdown formatters, you can construct simple references y
 Alternately, the `json` formatter will just give you the picks as JSON which you can turn into pretty much anything if you can code.
 
 but if you need an extra format, just ask.
+

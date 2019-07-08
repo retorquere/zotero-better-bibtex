@@ -32,4 +32,3 @@ You can fetch your library as part of your build, using something like `curl` fr
 same system your Zotero client with BBT runs on**. *Technically*
 it can be made to work for pulling from other systems, but it's
 even more arcane to set up than [git support]({{< ref "auto#git-support" >}}).
-

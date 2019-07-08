@@ -28,3 +28,4 @@ I would hide these if I could. They're used for Zotero's drag-and-drop citation 
 
 * **BetterBibTeX JSON** exports and imports references in BetterBibTeX debug format. The error reporter uses this format
 * **Better BibTeX Quick Copy** exports citations to be copy-pasted into your LaTeX/Markdown document in the form `\cite{< key >}`/`[@key]`
+
