@@ -74,8 +74,8 @@ jobs:
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
     before_install: true
     script:
-      - ./util/build-assets fetch || travis_terminate 1
-      - npm run release
+      - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
+      - ./util/site-update || npm run release
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
       - npm run docs:deploy
