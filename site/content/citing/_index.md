@@ -33,10 +33,10 @@ You can also
 
 ## Set your own, fixated citation keys
 
-By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with a `*` in the reference list view, and are displayed in italics in the item details.
+By default, BBT generates the citation key from the item information, and this key may change when you edit the item. Such keys are called `dynamic` keys, which are marked with an asterisk (`*`) in the reference list view, and are displayed in italics in the item details.
 
 You can fixate the citation key (called `pinning` in BBT) for an item by adding the text `Citation Key: [your citekey]` anywhere in the
-"extra" field of the reference on a line of its own, or the legacy `biblatexcitekey[my_key]`. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it. These keys are shown without the `*` marker in the middle column, and non-italicized in the details view, to distinguish them from dynamic keys.
+"extra" field of the reference on a line of its own, or the legacy `biblatexcitekey[my_key]`. You can generate a pinned citation key by selecting one or more items, right-clicking, and selecting `Generate BibTeX key`, which will add the current citation key to the `extra` field, thereby pinning it. These keys are shown without the asterisk (`*`) marker in the middle column, and non-italicized in the details view, to distinguish them from dynamic keys.
 
 ## Drag and drop/hotkey citations
 
