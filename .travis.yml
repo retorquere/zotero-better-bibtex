@@ -12,7 +12,7 @@ branches:
 # https://github.com/travis-ci/travis-ci/issues/8920
 # https://github.com/travis-ci/travis-ci/issues/4704#issuecomment-348435959
 before_install:
-  - ./util/site-update && travis_terminate 0
+  - ./util/site-update && exit
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
@@ -29,7 +29,7 @@ cache:
   - .cache/pip
 
 script:
-  - ./util/site-update && travis_terminate 0
+  - ./util/site-update && exit
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --no-capture -f travis --tags $TAGS
 
