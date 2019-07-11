@@ -83,7 +83,7 @@
     "string-template": "1.0.0",
     "transliteration": "2.1.4",
     "tslint": "5.18.0",
-    "unicode2latex": "^1.0.16",
+    "unicode2latex": "^1.0.17",
     "webpack-cli": "3.3.5",
     "xregexp": "4.2.4",
     "zotero-plugin": "0.0.83"

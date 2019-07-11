@@ -417,7 +417,7 @@ export class Reference {
    */
   public add(field: IField) {
     debug('add field', field)
-    if (Translator.preferences.skipField[field.name]) return
+    if (Translator.skipField[field.name]) return
 
     if (field.enc === 'date') {
       if (!field.value) return
@@ -773,7 +773,7 @@ export class Reference {
     }
     this.cachable = this.cachable && (typeof cache !== 'boolean' || cache)
 
-    for (const name of Translator.preferences.skipFields) {
+    for (const name of Translator.skipFields) {
       this.remove(name)
     }
 

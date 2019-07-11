@@ -193,7 +193,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
         cache = false
       }
 
-      for (const field of Translator.preferences.skipFields) {
+      for (const field of Translator.skipFields) {
         delete csl[field]
       }
       if (Translator.preferences.testing || Translator.preferences.sorted) csl = sortObject(csl)

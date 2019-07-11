@@ -239,7 +239,7 @@ const htmlConverter = new class HTMLConverter {
 
     // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')
     const chars: string[] = Array.from(text.normalize('NFC'))
-    let ch, mapped
+    let ch, mapped, switched, m
     while (chars.length) {
       if (chars.length > 1 && (mapped = this.mapping[ch = (chars[0] + chars[1])])) {
         chars.splice(0, 2)
@@ -254,6 +254,9 @@ const htmlConverter = new class HTMLConverter {
       if (!mapped[mode]) {
         mode = switchMode[mode]
         latex += switchTo[mode]
+        switched = true
+      } else {
+        switched = false
       }
 
       // balance out braces with invisible braces until http://tex.stackexchange.com/questions/230750/open-brace-in-bibtex-fields/230754#comment545453_230754 is widely deployed
@@ -266,7 +269,18 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
+      // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it
+      if (switched && mode === 'text' && (m = latex.match(/([\^_])\{(.)\}(\$\}?)$/))) {
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // tslint:disable-line no-magic-numbers
+      }
+
       latex += mapped[mode]
+
+      // only try to merge sup/sub if we were already in math mode, because if we were previously in text mode, testing for _^ is tricky.
+      if (!switched && mode === 'math' && (m = latex.match(/(([\^_])\{[^{}]+)\}\2{(.\})$/))) {
+        latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // tslint:disable-line no-magic-numbers
+      }
+
       const pkg = mapped[mode + 'package']
       if (pkg) this.packages[pkg] = true
     }
