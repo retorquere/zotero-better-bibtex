@@ -395,7 +395,7 @@
           type="bool"
           default="true"/>
         <!--!!
-          Name particle handling
+          Name particle handling. Only turn on when requested and we're talking about it on github.
         -->
 
         <preference
@@ -412,7 +412,7 @@
           type="bool"
           default="false"/>
         <!--!!
-          Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't unable this unless explicitly asked to.
+          Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't enable this unless explicitly asked to.
         -->
 
         <preference
@@ -430,13 +430,9 @@
           may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty
           race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
 
-          If you however cannot stand the lockout during startup and you
-          want to live dangerously, you can turn this off and hope that
-          no race conditions bite you. If you turn this on and experience
-          problems, you are welcome to file a bug report and I will see what I can do, but be prepared
-          for the answer to be "turn this back on for now".
-
-          This is **EXPERIMENTAL** and this preference may disappear at any moment without notice.
+          By default you only get a flaoting popup to tell you how far along this process Zotero is; if you really want to see how long BBT has to wait before it can do anything, you can
+          enable the lockout during startup, but it seems fairly safe now if you're patient enough to wait until the floating window goes away. There is absolutely nothing I can do about the long
+          time it takes before BBT moves from "Waiting for Zotero". After that, initialization is very quick.
         -->
 
         <preference
