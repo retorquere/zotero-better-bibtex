@@ -13,4 +13,7 @@ want to guard against this, go into the Advanced section of the Zotero
 settings and open the Config Editor; create a new string value
 with the name `extensions.zotero.debug-bridge.password`,
 enter a password there, and change the url above to
-`http://127.0.0.1:23119/debug-bridge/execute?password=<your password>`.
+`http://127.0.0.1:23119/debug-bridge/execute?password=<your password>`,
+but if you have something running on your computer that may exploit
+this, such a hostile program can likely achieve its ends easier
+and more reliably without using this conduit.
