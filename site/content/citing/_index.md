@@ -76,7 +76,9 @@ The full list of functions (extract data from your reference into your citekey) 
 
 {{< citekey-formatters/functions >}}
 
-**Note**: the functions above all have the `clean` filter (see below) automatically applied to them. If you want more control, `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below. For all the non-author fields, you can use the reference fields directly. The possible fields are:
+**Note**: the functions above all have the `clean` filter (see below) automatically applied to them. If you want more control, `auth`, `authIni`, `edtr`, ... and all the author-related fields that mimic the JabRef equivalents also have capitalized versions (so `Auth`, `AuthIni`, `Edtr`, ...) which follow the same algorithm but do not have any cleaning (diacritic folding, space removal, stripping of invalid citekey characters) applied. These can be used to pass through the filters specified below much like the fields from the table above. See also "usage note" below. For all the non-author fields, you can use the unprocessed reference fields directly:
+
+### Direct access to unprocessed fields
 
 {{< citekey-formatters/fields >}}
 
