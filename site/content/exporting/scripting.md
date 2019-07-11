@@ -71,7 +71,7 @@ In `BetterBibLaTeX` and `BetterBibTeX`,
 
 - `reference.add` is the function to add or modify keys in `reference.has`. 
 
-  e.g. change the value of year in output `reference.add({name: 'year', replace: true, value: your_year_value})`
+  e.g. change the value of year in output `reference.add({name: 'year', value: your_year_value})`
 
 In `BetterCSLJSON` and `BetterCSLYAML`:
 
@@ -101,7 +101,7 @@ If you want to retain commas in your keywords (e.g. for chemical elements) and s
 
 ```js
 if (Translator.BetterBibTeX || Translator.BetterBibLaTeX) {
-  reference.add({ name: 'keywords', replace: true, value: item.tags, sep: ', ' });
+  reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
 }
 ```
 
@@ -174,7 +174,7 @@ Further details [Export to Biblatex/Bibtex. Custom field order. #512](https://gi
 
 ```
 if (Translator.BetterBibTeX && reference.has.title) {
-  reference.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>$1</script>'), replace: true });
+  reference.add({ name: 'title', value: item.title.replace(/(\$.*?\$)/g, '<script>$1</script>') });
 }
 ```
 
