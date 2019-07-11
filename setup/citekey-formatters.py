@@ -59,6 +59,8 @@ def walk(doc):
 
       try:
         documentation = signatures[0]['comment']['shortText']
+        if 'text' in signatures[0]['comment']:
+          documentation += "\n" + signatures[0]['comment']['text']
       except KeyError:
         documentation = 'not documented'
 

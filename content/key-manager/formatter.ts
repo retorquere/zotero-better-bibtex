@@ -442,7 +442,10 @@ class PatternFormatter {
     return value
   }
 
-  /** Abbreviates the text. Only the first character and subsequent characters following white space will be included. */
+  /**
+   * Abbreviates the text. Only the first character and subsequent characters following white space will be included.
+   * **Only works if the value you're filtering contains spaces**, so you'll most likely want to use this either on one of the fields from the table above, or `journal` (which is the only function with returns values with spaces).
+   */
   public _abbr(value) {
     return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
   }
@@ -465,6 +468,8 @@ class PatternFormatter {
    * If you want to strip words like 'Jr.' from names, you could use something like `[Auth:nopunct:skipwords:fold]`
    * after adding `jr` to the skipWords list.
    * Note that this filter is always applied if you use `title` (which is different from `Title`) or `shorttitle`.
+   *
+   * **Only works if the value you're filtering contains spaces**, so you'll most likely want to use this either on one of the fields from the table above, or `journal` (which is the only function with returns values with spaces).
    */
   public _skipwords(value) {
     return (value || '').split(/\s+/).filter(word => !this.skipWords.has(word.toLowerCase())).join(' ').trim()
@@ -473,8 +478,9 @@ class PatternFormatter {
   /**
    * selects words from the value passed in. The format is `select=start,number` (1-based), so `select=1,4`
    * would select the first four words. If `number` is not given, all words from `start` to the end of the list are
-   * selected. It is important to note that `select` works only on values that have the words separated by whitespace,
-   * so the caveat below applies.
+   * selected.
+   *
+   * **Only works if the value you're filtering contains spaces**, so you'll most likely want to use this either on one of the fields from the table above, or `journal` (which is the only function with returns values with spaces).
    */
   public _select(value, start, n) {
     value = (value || '').split(/\s+/)
