@@ -4,8 +4,8 @@ import subprocess
 import os
 import sys
 
-# for tagged builds, pull requests, or first commit on branch, just always assume a full update
-if os.environ.get('TRAVIS_TAG', '') != '' or os.environ.get('TRAVIS_PULL_REQUEST', 'false') != 'false' or os.environ['TRAVIS_COMMIT_RANGE'] == '':
+# for tagged builds, pull requests, or first commit on branch, or anything not on master, just always assume a full update
+if os.environ.get('TRAVIS_TAG', '') != '' or os.environ.get('TRAVIS_PULL_REQUEST', 'false') != 'false' or os.environ['TRAVIS_COMMIT_RANGE'] == '' or os.environ['TRAVIS_BRANCH'] != 'master':
   sys.exit(1)
 
 for change in subprocess.run(['git', 'diff', '--name-status', os.environ['TRAVIS_COMMIT_RANGE']], stdout=subprocess.PIPE).stdout.decode('utf-8').split("\n"):
