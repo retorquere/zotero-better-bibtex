@@ -39,7 +39,7 @@ def expand_scenario_variables(context, filename, star=True):
   return filename
 
 def html2md(html):
-  html = BeautifulSoup(html).prettify()
+  html = BeautifulSoup(html, features='lxml').prettify()
   return md(html).strip()
 
 def serialize(obj):
