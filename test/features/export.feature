@@ -120,13 +120,14 @@ Scenario Outline: BibLaTeX Export
      | Allow explicit field override                                                                  | 1           |
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
-@978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188
+@978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188 @1217
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | Double superscript in title field on export #1217                                  | 1          |
      | No brace protection when suppressTitleCase set to true #1188                       | 3          |
      | preserve @strings between import-export #1162                                      | 1          |
      | citekey firstpage-lastpage #1147                                                   | 2          |

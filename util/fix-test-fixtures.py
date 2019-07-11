@@ -35,13 +35,30 @@ class Fixer:
 
     resave = None
 
-    if data.get('config', {}).get('preferences', None) and 'jabrefGroups' in data.config.preferences:
-      data.config.preferences.jabrefFormat = data.config.preferences.jabrefGroups
-      resave = 'jabrefGroups'
+    if data.get('config', {}).get('preferences', None):
+      if 'jabrefGroups' in data.config.preferences:
+        data.config.preferences.jabrefFormat = data.config.preferences.jabrefGroups
+        resave = 'jabrefGroups'
 
-    if data.get('config', {}).get('preferences', None) and 'preserveBibTeXVariables' in data.config.preferences:
-      data.config.preferences.exportBibTeXStrings = 'detect' if data.config.preferences.preserveBibTeXVariables else 'off'
-      resave = 'preserveBibTeXVariables'
+      if 'preserveBibTeXVariables' in data.config.preferences:
+        data.config.preferences.exportBibTeXStrings = 'detect' if data.config.preferences.preserveBibTeXVariables else 'off'
+        resave = 'preserveBibTeXVariables'
+
+      if 'preserveBibTeXVariables' in data.config.preferences:
+        data.config.preferences.exportBibTeXStrings = 'detect' if data.config.preferences.preserveBibTeXVariables else 'off'
+        resave = 'preserveBibTeXVariables'
+
+      if 'skipWords' in data.config.preferences and type(data.config.preferences.skipWords) == list:
+        data.config.preferences.skipWords = ','.join(data.config.preferences.skipWords)
+        resave = 'skipWords'
+
+      if 'skipFields' in data.config.preferences and type(data.config.preferences.skipFields) == list:
+        data.config.preferences.skipFields = ','.join(data.config.preferences.skipFields)
+        resave = 'skipFields'
+
+      if 'skipField' in data.config.preferences:
+        data.config.preferences.pop('skipField')
+        resave = 'skipField'
 
     for key in list(data.get('config', {}).get('preferences', {}).keys()): # list, otherwise python complains the dict changes during iteration
       value = data.config.preferences[key]

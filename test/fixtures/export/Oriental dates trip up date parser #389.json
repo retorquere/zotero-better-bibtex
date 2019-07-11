@@ -12,9 +12,7 @@
       "csquotes": "",
       "exportBibTeXStrings": "off",
       "postscript": "",
-      "skipFields": [
-        ""
-      ]
+      "skipFields": ""
     },
     "release": "1.6.3"
   },

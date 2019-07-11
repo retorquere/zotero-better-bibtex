@@ -32,13 +32,8 @@
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
-      "skipFields": [
-        "file",
-        "timestamp",
-        "annotation",
-        "note"
-      ],
-      "skipWords": [],
+      "skipFields": "file,timestamp,annotation,note",
+      "skipWords": "",
       "suppressTitleCase": false,
       "warnBulkModify": 10
     },

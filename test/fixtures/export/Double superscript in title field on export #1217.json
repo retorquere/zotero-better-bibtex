@@ -4,89 +4,116 @@
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
     "options": {
-      "exportNotes": true
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
-      "DOIandURL": "doi",
+      "DOIandURL": "both",
+      "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
-      "autoAbbrev": false,
+      "autoAbbrev": true,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 20,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
+      "bibtexURL": "url",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[auth2_1][auth2_2][auth2_3][year]",
+      "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
       "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
       "parseParticles": true,
       "postscript": "",
-      "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
       "scrubDatabase": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": true,
       "strings": "",
+      "suppressBraceProtection": false,
       "suppressTitleCase": false,
       "warnBulkModify": 10
     },
     "release": {
-      "BetterBibTeX": "5.0.85",
+      "BetterBibTeX": "5.1.99",
       "Zotero": {
         "appName": "Zotero",
-        "appVersion": "5.0.34",
+        "appVersion": "5.0.69",
+        "isJurisM": false,
+        "isZotero": true,
         "locale": "en-US",
-        "oscpu": "Windows NT 6.1; WOW64",
-        "platform": "Win32",
-        "version": "5.0.34"
+        "oscpu": "Intel Mac OS X 10.12",
+        "platform": "MacIntel",
+        "version": "5.0.69"
       }
     }
   },
   "items": [
     {
+      "DOI": "10.1103/PhysRevB.97.184301",
       "attachments": [],
+      "citekey": "Rovny2018",
       "creators": [
         {
           "creatorType": "author",
-          "name": "One, Author"
+          "firstName": "Jared",
+          "lastName": "Rovny"
         },
         {
           "creatorType": "author",
-          "name": "Two, Author"
+          "firstName": "Robert L.",
+          "lastName": "Blum"
         },
         {
           "creatorType": "author",
-          "name": "Three, Author"
-        },
-        {
-          "creatorType": "author",
-          "name": "Four, Author"
+          "firstName": "Sean E.",
+          "lastName": "Barrett"
         }
       ],
-      "date": "2018",
-      "dateAdded": "2018-02-02 15:28:00",
-      "dateModified": "2018-02-02 15:28:04",
-      "issue": "1",
-      "itemID": 1374,
+      "date": "2018-05",
+      "dateAdded": "2019-07-11T18:27:19Z",
+      "dateModified": "2019-07-11T18:27:25Z",
+      "extra": "bibtex*[publisher=American Physical Society;numpages=16]",
+      "issue": "18",
+      "itemID": 592,
       "itemType": "journalArticle",
+      "journalAbbreviation": "Phys Rev B",
       "notes": [],
-      "pages": "1\u20132",
-      "publicationTitle": "A Fancy Journal",
-      "seeAlso": [],
+      "pages": "184301",
+      "publicationTitle": "Phys. Rev. B",
+      "relations": [],
       "tags": [],
-      "title": "My Article",
-      "volume": "1"
+      "title": "\u00b3\u00b9P NMR study of discrete time-crystalline signatures in an ordered crystal of ammonium dihydrogen phosphate",
+      "uri": "http://zotero.org/users/1407765/items/4XE5A6Z6",
+      "url": "https://link.aps.org/doi/10.1103/PhysRevB.97.184301",
+      "volume": "97"
     }
   ]
 }

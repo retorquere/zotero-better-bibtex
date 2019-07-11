@@ -52,12 +52,7 @@ with open(os.path.join(root, 'gen/preferences/defaults.json')) as f:
   variables.preferences = json.load(f)
 
   for pref, default in variables.preferences.items():
-    if pref == 'csquotes':
-      variables.preferences[pref] = '{ open: string, close: string }'
-    elif pref == 'skipFields' or pref == 'skipWords':
-      variables.preferences[pref] = 'string[]'
-    else:
-      variables.preferences[pref] = jstype(default)
+    variables.preferences[pref] = jstype(default)
 
 variables.labels = translators.byLabel.keys()
 
@@ -68,8 +63,10 @@ interface ITranslator {
   #for $pref, $type in $preferences.items()
     $pref: $type
   #end for
-    skipField: {[key: string]: boolean}
   }
+  skipFields: string[]
+  skipField: {[key: string]: boolean}
+  csquotes: { open: string, close: string }
 
   options: {
     quickCopyMode?: string
