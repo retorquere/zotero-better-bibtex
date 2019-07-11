@@ -252,7 +252,7 @@ class PatternFormatter {
       if (etal) authors.push('EtAl')
     }
 
-    return authors.join('')
+    return authors.join(' ')
   }
 
   /** Corresponds to the BibTeX style "alpha". One author: First three letters of the last name. Two to four authors: First letters of last names concatenated.
@@ -269,11 +269,11 @@ class PatternFormatter {
       case 2: // tslint:disable-line:no-magic-numbers
       case 3: // tslint:disable-line:no-magic-numbers
       case 4: // tslint:disable-line:no-magic-numbers
-        return authors.map(author => author.substring(0, 1)).join('')
+        return authors.map(author => author.substring(0, 1)).join(' ')
 
       default:
         // tslint:disable-next-line:no-magic-numbers
-        return authors.slice(0, 3).map(author => author.substring(0, 1)).join('') + '+'
+        return authors.slice(0, 3).map(author => author.substring(0, 1)).join(' ') + '+'
     }
   }
 
@@ -371,7 +371,7 @@ class PatternFormatter {
     const words = this.titleWords(this.item.title, { skipWords: true, asciiOnly: true})
     if (!words) return ''
 
-    return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join('')
+    return words.slice(0, n).map((word, i) => i < m ? word.charAt(0).toUpperCase() + word.slice(1) : word).join(' ')
   }
 
   /** The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those */
@@ -403,8 +403,8 @@ class PatternFormatter {
     return this.months[this.item.month - 1] || ''
   }
 
-  /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref` */
-  public $title() { return (this.titleWords(this.item.title) || []).join('') }
+  /** Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref` */
+  public $title() { return (this.titleWords(this.item.title) || []).join(' ') }
 
   /** replaces text, case insensitive; `:replace=.etal,&etal` will replace `.EtAl` with `&etal` */
   public _replace(value, find, replace) {
@@ -447,7 +447,7 @@ class PatternFormatter {
    * **Only works if the value you're filtering contains spaces**, so you'll most likely want to use this either on one of the fields from the table above, or `journal` (which is the only function with returns values with spaces).
    */
   public _abbr(value) {
-    return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join('')
+    return (value || '').split(/\s+/).map(word => word.substring(0, 1)).join(' ')
   }
 
   /** Forces the text inserted by the field marker to be in lowercase. For example, `[auth:lower]` expands the last name of the first author in lowercase. */
