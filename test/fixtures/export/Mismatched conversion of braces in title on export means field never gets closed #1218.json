@@ -1,0 +1,128 @@
+{
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 20,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "url",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "",
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": true,
+      "strings": "",
+      "suppressBraceProtection": false,
+      "suppressTitleCase": false,
+      "warnBulkModify": 10
+    },
+    "release": {
+      "BetterBibTeX": "5.1.99",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.69",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.12",
+        "platform": "MacIntel",
+        "version": "5.0.69"
+      }
+    }
+  },
+  "items": [
+    {
+      "DOI": "https://doi.org/10.1016/j.ymeth.2018.04.026",
+      "ISSN": "1046-2023",
+      "abstractNote": "Among the tools of structural biology, NMR spectroscopy is unique in that it not only derives a static three-dimensional structure, but also provides an atomic-level description of the local fluctuations and global dynamics around this static structure. A battery of NMR experiments is now available to probe the motions of proteins and nucleic acids over the whole biologically relevant timescale from picoseconds to hours. Here we focus on one of these methods, relaxation dispersion, which resolves dynamics on the micro- to millisecond timescale. Key biological processes that occur on this timescale include enzymatic catalysis, ligand binding, and local folding. In other words, relaxation-dispersion-resolved dynamics are often closely related to the function of the molecule and therefore highly interesting to the structural biochemist. With an astounding sensitivity of \u223c0.5%, the method detects low-population excited states that are invisible to any other biophysical method. The kinetics of the exchange between the ground state and excited states are quantified in the form of the underlying exchange rate, while structural information about the invisible excited state is obtained in the form of its chemical shift. Lastly, the population of the excited state can be derived. This diversity in the information that can be obtained makes relaxation dispersion an excellent method to study the detailed mechanisms of conformational transitions and molecular interactions. Here we describe the two branches of relaxation dispersion, R2 and R1\u03c1, discussing their applicability, similarities, and differences, as well as recent developments in pulse sequence design and data processing.",
+      "attachments": [],
+      "citekey": "Walinda2018",
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Erik",
+          "lastName": "Walinda"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Daichi",
+          "lastName": "Morimoto"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Kenji",
+          "lastName": "Sugase"
+        }
+      ],
+      "date": "2018",
+      "dateAdded": "2019-04-02T20:14:33Z",
+      "dateModified": "2019-07-11T19:38:19Z",
+      "extra": "bibtex[bdsk-url-2=https://doi.org/10.1016/j.ymeth.2018.04.026]",
+      "itemID": 495,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "",
+      "notes": [],
+      "pages": "28-38",
+      "publicationTitle": "Methods",
+      "relations": [],
+      "tags": [
+        "NMR spectroscopy",
+        "Biomolecular interactions",
+        "Chemical exchange",
+        "Conformational exchange",
+        "DNA/RNA dynamics",
+        "Protein dynamics",
+        "Relaxation dispersion"
+      ],
+      "title": "Resolving biomolecular motion and interactions by $R_2$ and $R_{1\\text{\u03c1}}$ relaxation dispersion NMR",
+      "uri": "http://zotero.org/users/1407765/items/XS8BW4TV",
+      "url": "http://www.sciencedirect.com/science/article/pii/S1046202318300070",
+      "volume": "148"
+    }
+  ]
+}
