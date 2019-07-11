@@ -23,7 +23,7 @@ paste it in your .vimrc (and modify to your liking):
 function! ZoteroCite()
   " pick a format based on the filetype (customize at will)
   let format = &filetype =~ '.*tex' ? 'citep' : 'pandoc'
-  let api_call = 'http://localhost:23119/better-bibtex/cayw?format='.format.'&brackets=1'
+  let api_call = 'http://127.0.0.1:23119/better-bibtex/cayw?format='.format.'&brackets=1'
   let ref = system('curl -s '.shellescape(api_call))
   return ref
 endfunction
@@ -57,7 +57,7 @@ David Lukes takes Overleaf integration one step further with a GreaseMonkey/Tamp
 
 ## DIY
 
-BBT exposes an URL at http://localhost:23119/better-bibtex/cayw. The url accepts
+BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw. The url accepts
 the following URL parameters:
 
 | parameter |   |
@@ -114,7 +114,7 @@ you use this option you will probably want to bind to a hotkey, either system-wi
 do the job, and for Linux you could give [IronAHK](https://github.com/polyethene/IronAHK) or
 [autokey](https://code.google.com/p/autokey/) a shot).
 
-For example, if you call up [http://localhost:23119/better-bibtex/cayw?format=mmd&clipboard=yes](http://localhost:23119/better-bibtex/cayw?format=mmd&clipboard=yes), the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
+For example, if you call up [http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes](http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes), the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard

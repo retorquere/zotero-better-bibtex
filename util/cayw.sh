@@ -1,4 +1,4 @@
 #!/bin/bash
 
-curl -v http://localhost:23119/better-bibtex/cayw?format=pandoc
+curl -v http://127.0.0.1:23119/better-bibtex/cayw?format=pandoc
 

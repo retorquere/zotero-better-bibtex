@@ -95,7 +95,7 @@ export = new class ZoteroPane {
     const translator = 'biblatex'
     const row = pane.collectionsView.selectedTreeRow
 
-    const root = `http://localhost:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
+    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
 
     if (row.isCollection()) {
       let collection = pane.getSelectedCollection()
