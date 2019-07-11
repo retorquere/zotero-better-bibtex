@@ -20,7 +20,7 @@
   "`origyear`": "the original year of the publication",
   "`shorttitleN_M`": "The first `N` (default: 3) words of the title, apply capitalization to first `M` (default: 0) of those",
   "`shortyear`": "The last 2 digits of the publication year",
-  "`title`": "Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperonJabref`",
+  "`title`": "Capitalize all the significant words of the title, and concatenate them. For example, `An awesome paper on JabRef` will become `AnAwesomePaperJabref`",
   "`veryshorttitleN_M`": "The first `N` (default: 1) words of the title, apply capitalization to first `M` (default: 0) of those",
   "`year`": "The year of the publication",
   "`zotero`": "Generates citation keys as the stock Zotero Bib(La)TeX export does. Note that this pattern inherits all the problems of the original Zotero citekey generation -- you should really only use this if you have existing papers that rely on this behavior."
