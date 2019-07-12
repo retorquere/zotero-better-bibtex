@@ -9,10 +9,10 @@ aliases:
 
 If you'd really just rather hand-code your LaTeX constructs, BBT makes that possible:
 
-* You can add literal LaTeX anywhere in your reference by surrounding it with `<pre>...</pre>` (or `<script>...</script>`) tags. BBT will
+* You can add literal LaTeX anywhere in your reference by surrounding it with `<script>...</script>` (`<pre>...</pre>` will also work for historical reasons) markers. BBT will
   convert to/from unicode and (un)escape where required but will pass whatever is enclosed in the pre tags unchanged.
 * An entry tagged with `#LaTeX` (case-sensitive!) will have all fields exported as if they're wrapped in
-  `<pre>...</pre>`, so you can include LaTeX markup in your references.
+  `<script>...</script>`, so you can include LaTeX markup in your references.
 
 ## Recognizing initials in names
 
