@@ -100,7 +100,7 @@ if (Translator.BetterBibTeX && item.itemType === 'webpage') {
 If you want to retain commas in your keywords (e.g. for chemical elements) and separate with a comma-space, you could do:
 
 ```js
-if (Translator.BetterBibTeX || Translator.BetterBibLaTeX) {
+if (Translator.BetterTeX) {
   reference.add({ name: 'keywords', value: item.tags, sep: ', ' });
 }
 ```
@@ -110,7 +110,7 @@ as the default encoder knows what to do with arrays, if you give it a separator.
 ### Add DOI in note field
 
 ```js
-if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.DOI) {
+if (Translator.BetterTeX && item.DOI) {
   var doi = item.DOI;
   if (doi.indexOf('doi:') != 0) { doi = 'doi:' + doi; }
   reference.add({ name: 'note', duplicate: true, value: '[' + doi + ']' });
@@ -124,7 +124,7 @@ arXiv is a bit of an odd duck. It really isn't a journal, so it shouldn't be the
 But for arguments' sake, let's say you get the desired output by including an empty `journaltitle` field (ugh) and stuff the `arXiv:...` ID in the `pages` field (*ugh*). You could do that with the following postscript:
 
 ```
-if ((Translator.BetterBibTeX || Translator.BetterBibLaTeX) && item.arXiv.id) {
+if (Translator.BetterTeX && item.arXiv.id) {
   reference.add({ name: 'pages', value: item.arXiv.id });
   if (!reference.has.journaltitle) { reference.add({ name: 'journaltitle', bibtex: '{}' }); }
 }
