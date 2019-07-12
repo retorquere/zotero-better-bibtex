@@ -187,9 +187,9 @@ if (Translator.BetterBibLaTeX) {
   switch (item.itemType) {
     case 'videoRecording':
     case 'film':
-      item.creators.forEach(creator => {
+      for (const creator of item.creators) {
         if (creator.creatorType === 'director') creator.creatorType = 'author'
-      })
+      }
       reference.addCreators();
       break;
   }
