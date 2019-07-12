@@ -20,6 +20,8 @@ class User {
 
 class Item {
   public async search(terms) {
+    if (typeof terms !== 'string') terms = terms.terms
+
     // quicksearch-titleCreatorYear / quicksearch-fields
     // const mode = Prefs.get('caywAPIsearchMode')
 
@@ -42,9 +44,11 @@ class Item {
     if (Zotero.QuickCopy.unserializeSetting(format).mode !== 'bibliography') throw new Error('formatted-citations requires the Zotero default quick-copy format to be set to a citation style')
     */
 
-    // add citekey search
-    for (const item of KeyManager.keys.find({ citekey: { $contains: terms } })) {
-      ids.add(item.itemID)
+    // add partial-citekey search results.
+    for (const partialCitekey of terms.split(/\s+/)) {
+      for (const item of KeyManager.keys.find({ citekey: { $contains: partialCitekey } })) {
+        ids.add(item.itemID)
+      }
     }
 
     const items = await getItemsAsync(Array.from(ids))
