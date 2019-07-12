@@ -269,7 +269,7 @@ const htmlConverter = new class HTMLConverter {
         braced = 0
       }
 
-      // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it
+      // if we just switched out of math mode, and there's a lone sup/sub at the end, unpack it. The extra option brace is for when we're in nocased mode (see switchTo)
       if (switched && mode === 'text' && (m = latex.match(/([\^_])\{(.)\}(\$\}?)$/))) {
         latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[2] + m[3] // tslint:disable-line no-magic-numbers
       }
