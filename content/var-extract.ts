@@ -26,12 +26,14 @@ export function extract(item) {
     bibtex: {},
     csl: {},
     kv: {},
-    citekey: { citekey: '', pinned: false },
+    citekey: { citekey: '', pinned: false, aliases: [] },
   }
 
   const citekey = Citekey.get(extra)
-  extraFields.citekey = { citekey: citekey.citekey, pinned: citekey.pinned }
-  extra = citekey.extra
+  extraFields.citekey = { citekey: citekey.citekey, pinned: citekey.pinned, aliases: [] }
+  const aliases = Citekey.aliases.get(citekey.extra)
+  extraFields.citekey.aliases = aliases.aliases
+  extra = aliases.extra
 
   extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, cook, fields) => {
     const legacy = {}
