@@ -23,15 +23,15 @@
 <!ENTITY better-bibtex.FirstRun.done "Félicitations !">
 <!ENTITY better-bibtex.FirstRun.done.explanation "BBT est maintenant configuré. Vous pouvez toujours modifier l'un de ces paramètres dans les préférences de Zotero, onglet 'Better BibTex'.">
 
-<!ENTITY better-bibtex.ErrorReport.title "Rapport d'erreur Better BibTeX">
+<!ENTITY better-bibtex.ErrorReport.title "Better BibTeX Debug Report">
 <!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Redémarrer avec le journal activé…">
-<!ENTITY better-bibtex.ErrorReport.enableDebug "Le journal de déboggage de Zotero est actuellement désactivé. Il sera plus facile de diagnostiquer le problème si vous l'activez avant de soumettre un rapport d'erreur.">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "Zotero debug logging is currently disabled. It will be easier to diagnose the problem if you enable it before submitting an debug report.">
 <!ENTITY better-bibtex.ErrorReport.context "Contexte d'application">
 <!ENTITY better-bibtex.ErrorReport.errors "Erreurs">
 <!ENTITY better-bibtex.ErrorReport.includeCache "Envoyer le cache">
 <!ENTITY better-bibtex.ErrorReport.debug "Journal de débogage">
-<!ENTITY better-bibtex.ErrorReport.notReviewed "Les rapports d'erreurs ne peuvent pas être vérifiés sauf s'ils sont référencés dans le programme de suivi des problèmes GitHub.">
-<!ENTITY better-bibtex.ErrorReport.postToGitHub "Veuillez envoyer un message dans le programme de suivi des problèmes GitHub (https://github.com/retorquere/zotero-better-bibtex/issues) en précisant l'ID de débogage, une description du problème et toutes les étapes nécessaires pour le reproduire.">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Debug reports can not reviewed unless referred to in the GitHub issue tracker.">
+<!ENTITY better-bibtex.ErrorReport.postToGitHub "Please post a message to the issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) with this report ID, a description of the problem, and any steps necessary to reproduce it.">
 <!ENTITY better-bibtex.ErrorReport.references "Références">
 <!ENTITY better-bibtex.ErrorReport.reportID "Report ID :">
 <!ENTITY better-bibtex.ErrorReport.review "Les données ci-dessous sont sur le point d'être envoyées à Better BibTeX pour le débogage. Vous pouvez consulter les données pour voir s'il existe des informations sensibles que vous ne souhaitez pas envoyer.
@@ -39,8 +39,8 @@
 Si vous acceptez d'envoyer ces données, cliquez sur « Suivant » et publiez l'ID de débogage présenté dans l'écran suivant dans le suivi des problèmes à : 
 
 https://github.com/retorquere/zotero-better-bibtex/issue">
-<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Veuillez patienter pendant la transmission du rapport d'erreur.">
-<!ENTITY better-bibtex.ErrorReport.submitted						"Le rapport d'erreur a été transmis.">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Please wait while the debug report is submitted.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Your debug report has been submitted.">
 
 <!ENTITY better-bibtex.ItemPane.citekey_column	"Clé de citation">
 
@@ -139,7 +139,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
-<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Rapport d'erreurs Better BibTeX...">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Send Better BibTeX debug report...">
 <!ENTITY better-bibtex.BetterBibTeX.auxScanner "Scannez le fichier BibTeX AUX pour les références ...">
 <!ENTITY better-bibtex.bulk-keys-confirm.message "Vous allez modifier plus de {treshold} éléments en une seule fois. Êtes-vous certain de vouloir poursuivre ?">
 <!ENTITY better-bibtex.bulk-keys-confirm.whatever "Oui, ne plus me le demander">
