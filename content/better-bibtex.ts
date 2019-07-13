@@ -106,7 +106,10 @@ $patch$(Zotero.Items, 'merge', original => async function(item, otherItems) {
       extra.aliases = extra.aliases.concat(Citekey.aliases.get(i.getField('extra')).aliases)
     }
 
-    item.setField('extra', Citekey.aliases.set(extra.extra, extra.aliases))
+    const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
+    extra.aliases = extra.aliases.filter(alias => alias !== citekey)
+    if (extra.aliases.length) extra.extra = Citekey.aliases.set(extra.extra, extra.aliases)
+    item.setField('extra', extra.extra)
 
   } catch (err) {
     log.error('Zotero.Items.merge:', err)
