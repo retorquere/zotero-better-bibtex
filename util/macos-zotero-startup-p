@@ -21,3 +21,5 @@ with open(info, 'rb') as f:
 plist['CFBundleExecutable'] = os.path.basename(launcher)
 with open(info, 'wb') as f:
   plistlib.dump(plist, f)
+
+os.system('find /System/Library/Frameworks -type f -name "lsregister" -exec {} -kill -seed -r \;')
