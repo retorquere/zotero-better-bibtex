@@ -13,7 +13,7 @@ if (!Zotero.DebugBridge) {
     Zotero.Server.Endpoints["/debug-bridge/execute"] = Zotero.DebugBridge.Execute;
     Zotero.DebugBridge.Execute.prototype = {
       supportedMethods: ["POST"],
-      supportedDataTypes: '*',
+      supportedDataTypes: 'application/json',
       permitBookmarklet: false,
   
       init: async function (options) {
