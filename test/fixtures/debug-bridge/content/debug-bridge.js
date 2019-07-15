@@ -22,11 +22,9 @@ if (!Zotero.DebugBridge) {
           found: (options.query || {}).password || '',
         }
 
-        Zotero.debug(`debug-bridge: password=${JSON.stringify(password)}`)
-
-        if (password.expected !== password.found) {
-          return [401, "text/plain", 'wrong password'];
-        }
+        if (!password.expected) return [500, "text/plain", 'password not configured'];
+        if (!password.found) return [401, "text/plain", 'password required'];
+        if (password.expected !== password.found)  return [401, "text/plain", 'invalid password'];
 
         Zotero.debug("debug-bridge: executing\n" + options.data);
         let start = new Date()
