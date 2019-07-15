@@ -32,7 +32,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
     if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
 
     try {
-      const [ , lib, path, translator ] = request.query[''].match(/\/(?:([0-9]+)\/)?(.*)\.([a-zA-Z]+)$/)
+      const [ , lib, path, translator ] = request.query[''].match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
       const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
 
@@ -67,7 +67,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
     if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export library: no path']
 
     try {
-      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([a-zA-Z]+)$/)
+      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
       const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
 
       if (!Zotero.Libraries.exists(libID)) {
