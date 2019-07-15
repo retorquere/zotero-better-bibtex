@@ -6,12 +6,11 @@ import format = require('string-template')
 
 import { Exporter } from './lib/exporter'
 
-function select_link(item, mode) {
-  switch (mode) {
-    case 'id': return item.libraryID > 1 ? `zotero://select/items/${item.libraryID}_${item.key}` : `zotero://select/items/${item.key}`
-    case 'citekey': return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
-    default: throw new Error(`Unsupported link mode ${mode}`)
-  }
+function select_by_id(item) {
+  return `zotero://select/items/${item.libraryID}_${item.key}`
+}
+function select_by_citekey(item) {
+  return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
 }
 
 const Mode = { // tslint:disable-line:variable-name
@@ -59,20 +58,20 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgmode(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_link(item, 'id')}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_by_id(item)}][@${item.citekey}]]`)
     }
   },
   orgmode_citekey(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_link(item, 'citekey')}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_by_citekey(item)}][@${item.citekey}]]`)
     }
   },
 
   selectLink(items) {
-    Zotero.write(items.map(item => select_link(item, 'id')).join('\n'))
+    Zotero.write(items.map(select_by_id).join('\n'))
   },
   selectLink_citekey(items) {
-    Zotero.write(items.map(item => select_link(item, 'citekey')).join('\n'))
+    Zotero.write(items.map(select_by_citekey).join('\n'))
   },
 
   rtfScan(items) {
