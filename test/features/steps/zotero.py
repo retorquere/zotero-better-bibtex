@@ -53,7 +53,7 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
+    req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
     res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
     return json.loads(res)
 
