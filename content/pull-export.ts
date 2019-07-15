@@ -18,6 +18,9 @@ function displayOptions(request) {
 }
 
 function getTranslatorId(name) {
+  if (name === 'json') return Translators.byLabel.BetterBibTeXJSON.translatorID
+  if (name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
+
   for (const [id, translator] of (Object.entries(Translators.byId) as Array<[string, ITranslatorHeader]>)) {
     if (translator.label.replace(/\s/g, '').toLowerCase().replace('better', '') === name) return id
   }
