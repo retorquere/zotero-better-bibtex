@@ -9,6 +9,9 @@
   "displayOptions": {
     "keepUpdated": false
   },
+  "configOptions": {
+    "getCollections": true
+  },
   "translatorType": 2,
   "browserSupport": "gcsv",
   "priority": 100,
