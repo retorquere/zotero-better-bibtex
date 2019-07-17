@@ -114,10 +114,13 @@ class PatternFormatter {
 
     if (this.item.date) {
       let date = DateParser.parse(this.item.date)
-      if (date.type === 'list') date = date.dates[0]
-      if (date.type === 'interval') date = date.from || date.to
+      if (date.type === 'list') date = date.dates.find(d => d.type !== 'open') || date.dates[0]
+      if (date.type === 'interval') date = (date.from && date.from.type !== 'open') ? date.from : date.to
 
       switch ((date ? date.type : undefined) || 'verbatim') {
+        case 'open':
+          break
+
         case 'verbatim':
           // strToDate is a lot less accurate than the BBT+EDTF dateparser, but it sometimes extracts year-ish things that
           // ours doesn't

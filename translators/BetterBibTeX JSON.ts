@@ -45,7 +45,13 @@ Translator.doImport = async () => {
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
+    delete source.citationKey
+
     delete source.uri
+    delete source.key
+    delete source.version
+    delete source.libraryID
+    delete source.collections
 
     const validFields = itemfields.valid.get(source.itemType)
     if (!validFields) throw new Error(`unexpected item type '${source.itemType}'`)
