@@ -18,9 +18,15 @@ function displayOptions(request) {
 }
 
 function getTranslatorId(name) {
+  const _name = name.toLowerCase()
+
+  if (_name === 'json') return Translators.byLabel.BetterBibTeXJSON.translatorID
+  if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
+
   for (const [id, translator] of (Object.entries(Translators.byId) as Array<[string, ITranslatorHeader]>)) {
-    if (translator.label.replace(/\s/g, '').toLowerCase().replace('better', '') === name) return id
+    if (translator.label.replace(/\s/g, '').toLowerCase().replace('better', '') === _name) return id
   }
+
   // allowed to pass GUID
   return name
 }
@@ -32,7 +38,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
     if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no path']
 
     try {
-      const [ , lib, path, translator ] = request.query[''].match(/\/(?:([0-9]+)\/)?(.*)\.([a-zA-Z]+)$/)
+      const [ , lib, path, translator ] = request.query[''].match(/^\/(?:([0-9]+)\/)?(.*)\.([-0-9a-z]+)$/i)
 
       const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
 
@@ -67,7 +73,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
     if (!request.query || !request.query['']) return [NOT_FOUND, 'text/plain', 'Could not export library: no path']
 
     try {
-      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([a-zA-Z]+)$/)
+      const [ , lib, translator ] = request.query[''].match(/\/?(?:([0-9]+)\/)?library\.([-0-9a-z]+)$/i)
       const libID = parseInt(lib || 0) || Zotero.Libraries.userLibraryID
 
       if (!Zotero.Libraries.exists(libID)) {

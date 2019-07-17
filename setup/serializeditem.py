@@ -75,7 +75,13 @@ types = {
 rename = {}
 for (fieldName, fieldAlias) in z.execute('SELECT fieldName, fieldAlias FROM typings WHERE fieldAlias IS NOT NULL'):
   rename[fieldAlias] = fieldName
-
+delete = [
+  'collections',
+  'version',
+  'key',
+  'citationKey',
+  'libraryID',
+]
 for imex in ['import', 'export']:
   for fixture in glob.glob(os.path.join(root, 'test', 'fixtures', imex, '*.json')):
     if fixture.endswith('.csl.json') or fixture.endswith('.csl.juris-m.json'): continue
@@ -84,7 +90,10 @@ for imex in ['import', 'export']:
       lib = json.load(f)
       if not 'items' in lib: continue
       for item in lib['items']:
-        for key, value in item.items():
+        for key, value in list(item.items()):
+          if key in delete:
+            item.pop(key, None)
+            continue
           if key in rename: key = rename[key]
 
           if key == 'itemID' and type(value) in [str, int]:

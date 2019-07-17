@@ -21,6 +21,7 @@ browser.startup.page = 0
 browser.tabs.warnOnClose = false
 browser.tabs.warnOnOpen = false
 browser.usedOnWindows10.introURL = "about:blank"
+devtools.chrome.enabled = true
 
 datareporting.healthreport.logging.consoleEnabled = false
 datareporting.healthreport.service.firstRun = false

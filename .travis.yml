@@ -84,6 +84,7 @@ jobs:
       skip_cleanup: true
       github_token: $GITHUB_TOKEN
       local_dir: site/public
+      keep_history: true
       on:
         branch: master
     after_script:

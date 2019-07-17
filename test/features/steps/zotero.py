@@ -18,6 +18,7 @@ import subprocess
 import atexit
 import time
 import collections
+import uuid
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -27,6 +28,8 @@ class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
     self.userdata = userdata
+
+    self.password = str(uuid.uuid4())
 
     self.id = self.userdata.get('zotero', 'zotero')
     if self.id == 'zotero':
@@ -53,7 +56,7 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute', data=script.encode('utf-8'), headers={'Content-type': 'text/plain'})
+    req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
     res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
     return json.loads(res)
 
@@ -80,7 +83,7 @@ class Zotero:
     zotero.kill()
 
   def start(self):
-    profile = Profile('BBTZ5TEST', self.id, self.userdata)
+    profile = Profile('BBTZ5TEST', self.id, self.userdata, self.password)
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")} 2>&1'
     print(f'Starting {self.id}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
@@ -248,7 +251,7 @@ class Zotero:
     return [None, None]
 
 class Profile:
-  def __init__(self, name, client, userdata):
+  def __init__(self, name, client, userdata, password):
     self.name = name
 
     platform_client = platform.system() + ':' + client
@@ -269,7 +272,7 @@ class Profile:
     self.path = os.path.expanduser(f'~/.{self.name}')
 
     self.create()
-    self.layout(client, userdata)
+    self.layout(client, userdata, password)
 
   def create(self):
     profiles_ini = os.path.join(self.profiles, 'profiles.ini')
@@ -300,7 +303,7 @@ class Profile:
     with open(profiles_ini, 'w') as f:
       profiles.write(f, space_around_delimiters=False)
 
-  def layout(self, client, userdata):
+  def layout(self, client, userdata, password):
     fixtures = os.path.join(ROOT, 'test/fixtures')
     profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', client))
 
@@ -308,6 +311,7 @@ class Profile:
       profile.add_extension(xpi)
 
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
+    profile.set_preference('extensions.zotero.debug-bridge.password', password)
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
@@ -364,6 +368,8 @@ def normalizeJSON(lib):
     itemIDs[item['itemID']] = itemID
     item['itemID'] = itemID
 
+    item.pop('version', None)
+    item.pop('libraryID', None)
     item.pop('dateAdded', None)
     item.pop('dateModified', None)
     item.pop('uniqueFields', None)
@@ -372,6 +378,7 @@ def normalizeJSON(lib):
     item.pop('attachments', None)
     item.pop('collections', None)
     item.pop('__citekey__', None)
+    item.pop('citationKey', None)
     item.pop('uri', None)
 
     item['notes'] = sorted([html2md(note if type(note) == str else note['note']) for note in item.get('notes', [])])

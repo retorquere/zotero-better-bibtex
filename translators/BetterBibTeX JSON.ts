@@ -45,7 +45,13 @@ Translator.doImport = async () => {
     // I do export these but the cannot be imported back
     delete source.relations
     delete source.citekey
+    delete source.citationKey
+
     delete source.uri
+    delete source.key
+    delete source.version
+    delete source.libraryID
+    delete source.collections
 
     const validFields = itemfields.valid.get(source.itemType)
     if (!validFields) throw new Error(`unexpected item type '${source.itemType}'`)
@@ -115,11 +121,6 @@ Translator.doExport = () => {
   }
   debug('header ready')
 
-  const validItemFields = new Set([
-    'citekey',
-    'uri',
-    'relations',
-  ])
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
   while ((item = Zotero.nextItem())) {
@@ -127,16 +128,6 @@ Translator.doExport = () => {
 
     itemfields.simplifyForExport(item, Translator.options.dropAttachments)
     item.relations = item.relations ? (item.relations['dc:relation'] || []) : []
-
-    const validFields = itemfields.valid.get(item.itemType)
-    for (const field of Object.keys(item)) {
-      if (validItemFields.has(field)) continue
-
-      if (validFields && !validFields.get(field)) {
-        debug('bbt json: delete', item.itemType, field, item[field])
-        delete item[field]
-      }
-    }
 
     for (const att of item.attachments || []) {
       if (Translator.options.exportFileData && att.saveFile && att.defaultPath) {
@@ -150,7 +141,10 @@ Translator.doExport = () => {
 
       att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
       for (const field of Object.keys(att)) {
-        if (!validAttachmentFields.has(field)) delete att[field]
+        if (!validAttachmentFields.has(field)) {
+          debug('bbt json: delete attachment', field, att[field])
+          delete att[field]
+        }
       }
     }
 
