@@ -368,6 +368,8 @@ def normalizeJSON(lib):
     itemIDs[item['itemID']] = itemID
     item['itemID'] = itemID
 
+    item.pop('version', None)
+    item.pop('libraryID', None)
     item.pop('dateAdded', None)
     item.pop('dateModified', None)
     item.pop('uniqueFields', None)
@@ -376,6 +378,7 @@ def normalizeJSON(lib):
     item.pop('attachments', None)
     item.pop('collections', None)
     item.pop('__citekey__', None)
+    item.pop('citationKey', None)
     item.pop('uri', None)
 
     item['notes'] = sorted([html2md(note if type(note) == str else note['note']) for note in item.get('notes', [])])
