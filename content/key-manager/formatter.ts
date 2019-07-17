@@ -143,7 +143,7 @@ class PatternFormatter {
           break
 
         default:
-          throw new Error(`Unexpected parsed date ${JSON.stringify(date)}`)
+          throw new Error(`Unexpected parsed date ${JSON.stringify(this.item.date)} => ${JSON.stringify(date)}`)
       }
     }
 
