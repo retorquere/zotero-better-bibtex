@@ -15,9 +15,9 @@ Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Ju
 ## Features
 
 ### Facilities for generating citation keys
-* Stable [citation keys]({{< ref "retorque.re" >}}), without key clashes! Generates citation keys that take into account other existing keys in your library
+* Stable [citation keys]({{< ref "/citing" >}}), without key clashes! Generates citation keys that take into account other existing keys in your library
   that are not part of the items you export. Prevent random breakage!
-* Set your own, fixated [citation keys]({{< ref "retorque.re" >}}), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
+* Set your own, fixated [citation keys]({{< ref "/citing" >}}), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
 ### Conversion between formats and encodings
 * Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
@@ -37,15 +37,15 @@ in your references that Bib(La)TeX won't understand.
   If you need literal LaTeX in your export: surround it with `<script>`...`</script>` (or `<pre>`...`</pre>`, which do the same) markers.
   
 ### Facilities for exporting data from Zotero
-* Highly [customized exports]({{< ref "retorque.re" >}}).
+* Highly [customized exports]({{< ref "/exporting" >}}).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
-* [Auto export]({{< ref "retorque.re" >}}) of collections or entire libraries when they change.
-* [Pull export]({{< ref "retorque.re" >}}) from the embedded webserver.
-* Automatic [journal abbreviation]({{< ref "retorque.re" >}}).
+* [Auto export]({{< ref "/exporting/auto" >}}) of collections or entire libraries when they change.
+* [Pull export]({{< ref "/exporting/pull" >}}) from the embedded webserver.
+* Automatic [journal abbreviation]({{< ref "/citing" >}}).
 
 ## Getting started
-To get started, read the [installation instructions]({{< ref "retorque.re" >}}).
+To get started, read the [installation instructions]({{< ref "/installation" >}}).
 
 ## How does it work ?
 At its core, BBT behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
@@ -63,7 +63,7 @@ editors/processors, I'm pragmatic about implementing what works.
 
 If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) and ask for help. 
 
-If you're reporting a bug in BBT, please take a moment to glance through the [support request guidelines]({{< ref "retorque.re" >}}); it will make sure I get your problem fixed as quick as possible.
+If you're reporting a bug in BBT, please take a moment to glance through the [support request guidelines]({{< ref "/support" >}}); it will make sure I get your problem fixed as quick as possible.
 Clear bug reports commonly have really short time-to-fix, so if you report something, stick around -- it may be done as you wait.
 
 The support request guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply express my ideal bug submission.
