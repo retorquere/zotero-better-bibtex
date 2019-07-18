@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/retorquere/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/retorquere/zotero-better-bibtex)
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This extension aims to make [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) effective for us text-based authoring holdouts; currently, that translates to the LaTeX/Markdown crowd.
+Better BibTeX (BBT) is an extension for [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) that makes it easier to manage bibliographic data, especially for people authoring documents using text-based toolchains (e.g. based on [LaTeX](https://www.latex-project.org) / [Markdown](https://www.markdownguide.org)).
 
 ## Features
 
@@ -17,7 +17,7 @@ This extension aims to make [Zotero](https://www.zotero.org) and [Juris-M](https
 to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
 in your references that Bib(La)TeX won't understand.
 
-* Better BibTeX (BBT) will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
+* BBT will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
 &lt;sub&gt;&#8660;\_{...}, &lt;sup&gt;&#8660;^{...} and &lt;sc&gt;&#8660;\\textsc{...}; more can be added on request.
 BBT contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode
 equivalents on import, and their unicode equivalents back to `\"{o}` if you have that option enabled (but you don't
