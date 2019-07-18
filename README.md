@@ -2,7 +2,7 @@
 
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-This extension aims to make Zotero and Juris-M effective for us text-based authoring holdouts;
+This extension aims to make [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) effective for us text-based authoring holdouts;
 currently, that translates to the LaTeX/Markdown crowd. To get started, read the
 [Installation](https://retorque.re/zotero-better-bibtex/installation/) instructions. At its core,
 it behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
