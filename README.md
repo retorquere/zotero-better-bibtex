@@ -52,7 +52,7 @@ BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, a
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I'm pragmatic about implementing what works.
 
-## Support
+## Got problems? We got fixes!
 
 If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) and ask for help. 
 
@@ -64,10 +64,15 @@ I of course prefer very clearly documented issue reports over fuzzy ones, but I 
 
 ## Sponsoring BBT
 
-While the development needs of BBT are to a large extent covered by the use of services such as github and travis, my development system does require the occasional upgrade.
+While the development needs of BBT are to a large extent covered
+by the generosity towards open-source developers of services such
+as github and travis, my development system does require the
+occasional upgrade; also, I enjoy getting the occasional frivolous
+tech-toy that I wouldn't otherwise grant myself. While you should
+feel in no way obligated to pay for BBT, [anything you can spare](https://www.paypal.me/retorquere) is very much appreciated.
+If you'd rather contribute a little bit each month (and a little
+means a lot) so I can save up for a replacement a year or so down
+the line, head on over to [Patreon](https://www.patreon.com/retorquere),
+but mind that Patreon takes a fairly large cut of what you give.
 
-My trusty MacBook Air is not really hacking it anymore, and in order to do decent cross-platform support, a MacBook (or a system capable of running macOS in VMware player) is what I need. 
-
-[Anything you can spare](https://www.paypal.me/retorquere)  towards making that upgrade a reality is very much appreciated. If you'd rather contribute a little bit each month (and a little means a lot) so I can save up for a replacement a year or so down the line, head on over to [Patreon](https://www.patreon.com/retorquere). 
-
-Many, many thanks, also to the existing contributors -- thanks to you I've hit my first target and have been able to replace my trusty `manchineel` with `limonia` which has much more breathing room.
+Many, many thanks, also to the existing contributors -- thanks to you I've hit my first target and have been able to replace my trusty macbook air with a newer macbook pro which has much more breathing room.
