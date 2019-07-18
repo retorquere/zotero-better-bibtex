@@ -8,6 +8,7 @@ import sys
 import glob
 import json
 import datetime
+from munch import Munch
 
 from github3 import login
 
@@ -29,13 +30,17 @@ generated = [
   'gen/update.rdf',
 ]
 
-expired = datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=2)
+expired = Munch(
+  assets=datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(hours=2),
+  builds=datetime.datetime.now(datetime.timezone.utc) - datetime.timedelta(days=7),
+)
 
 fetched = []
 for asset in release.assets():
-  if asset.created_at < expired:
+  if (asset.labels.startswith('/travis/') and asset.created_at < expired.assets) or asset.created_at < expired.builds:
     asset.delete()
     continue
+
   if not asset.label.startswith(label_prefix):
     continue
  
