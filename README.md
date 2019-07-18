@@ -1,5 +1,6 @@
-# Better BibTeX for Zotero [![Build Status](https://travis-ci.org/retorquere/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/retorquere/zotero-better-bibtex)
+# Better BibTeX for Zotero
 
+[![Build Status](https://travis-ci.org/retorquere/zotero-better-bibtex.svg?branch=master)](https://travis-ci.org/retorquere/zotero-better-bibtex)
 [![Join the chat at https://gitter.im/retorquere/zotero-better-bibtex](https://badges.gitter.im/retorquere/zotero-better-bibtex.svg)](https://gitter.im/retorquere/zotero-better-bibtex?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 This extension aims to make [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) effective for us text-based authoring holdouts; currently, that translates to the LaTeX/Markdown crowd.
