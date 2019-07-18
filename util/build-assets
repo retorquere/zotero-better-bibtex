@@ -38,6 +38,7 @@ expired = Munch(
 fetched = []
 for asset in release.assets():
   if (asset.labels.startswith('/travis/') and asset.created_at < expired.assets) or asset.created_at < expired.builds:
+    print(f'Removing expired {asset.label}')
     asset.delete()
     continue
 
