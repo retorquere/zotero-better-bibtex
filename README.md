@@ -5,31 +5,29 @@
 
 This extension aims to make [Zotero](https://www.zotero.org) and [Juris-M](https://juris-m.github.io) effective for us text-based authoring holdouts; currently, that translates to the LaTeX/Markdown crowd.
 
-## Getting started
-To get started, read the [Installation](https://retorque.re/zotero-better-bibtex/installation/) instructions.
+## Features
 
-## How does it work ?
-At its core, BBT behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
-you'll find *Better X* listed among the choices.  
-If nothing else, you could keep your existing workflow as-is, and just enjoy the improved LaTeX &harr; unicode translation on import and export and more accurate field mapping.
+### Facilities for generating citation keys
+* Stable [Citation Keys](https://retorque.re/zotero-better-bibtex/citing/), without key clashes! Generates citation keys that take into account other existing keys in your library
+  that are not part of the items you export. Prevent random breakage!
+* Set your own, fixated [Citation Keys](https://retorque.re/zotero-better-bibtex/citing/), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
 
-Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
+### Conversion between formats and encodings
+* Zotero does all its work in UTF-8 Unicode, which is absolutely the right thing to do. Unfortunately, for those shackled
 to BibTeX and who cannot (yet) move to BibLaTeX, unicode is a major PITA. Also, Zotero supports some simple HTML markup
 in your references that Bib(La)TeX won't understand.
 
-Better BibTeX (BBT) will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
+* Better BibTeX (BBT) will convert from/to HTML/LaTeX; Currently supports &lt;i&gt;&#8660;\emph &amp; \textit, &lt;b&gt;&#8660;\textbf,
 &lt;sub&gt;&#8660;\_{...}, &lt;sup&gt;&#8660;^{...} and &lt;sc&gt;&#8660;\\textsc{...}; more can be added on request.
 BBT contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode
 equivalents on import, and their unicode equivalents back to `\"{o}` if you have that option enabled (but you don't
-have to if you use BibLaTeX, which has fairly good Unicode support). With BBT you'll have:
+have to if you use BibLaTeX, which has fairly good Unicode support).
 
-## Features
-* Stable [Citation Keys](https://retorque.re/zotero-better-bibtex/citing/), without key clashes! Generates citation keys that take into account other existing keys in your library
-  that are not part of the items you export. Prevent random breakage!
 * Converts from/to HTML/LaTeX: Currently supports `<i>...</i>`/`\emph{...}`/`\textit{...}`, `<b>...</b>`/`\textbf{...}`, `<sup>...</sup>`/`\_{...}` and `<sub>...</sub>`/`^{...}`. 
   The plugin contains a comprehensive list of LaTeX constructs, so stuff like `\"{o}` or `\"o` will be converted to their unicode equivalents on import (e.g., `\"{o}` to `ö`). If you need
   literal LaTeX in your export: surround it with `<script>`...`</script>` (or `<pre>`...`</pre>`, which do the same) markers.
-* Set your own, fixated [Citation Keys](https://retorque.re/zotero-better-bibtex/citing/), generate citation keys from [JabRef patterns](https://help.jabref.org/en/BibtexKeyPatterns), drag and drop LaTeX citations, add other custom BibLaTeX fields.
+  
+### Facilities for exporting data from Zotero
 * Highly [Customized Exports](https://retorque.re/zotero-better-bibtex/exporting/).
 * Fixes date field exports: export dates like 'forthcoming' as 'forthcoming' instead of empty, but normalize valid dates
   to unambiguous international format.
@@ -37,6 +35,13 @@ have to if you use BibLaTeX, which has fairly good Unicode support). With BBT yo
 * [Pull Export](https://retorque.re/zotero-better-bibtex/exporting/pull/) from the embedded webserver.
 * Automatic [journal abbreviation](https://retorque.re/zotero-better-bibtex/citing/).
 
+## Getting started
+To get started, read the [Installation](https://retorque.re/zotero-better-bibtex/installation/) instructions.
+
+## How does it work ?
+At its core, BBT behaves like any Zotero import/export module; anywhere you can export or import bibliography items in Zotero,
+you'll find *Better X* listed among the choices.  
+If nothing else, you could keep your existing workflow as-is, and just enjoy the improved LaTeX &harr; unicode translation on import and export and more accurate field mapping.
 
 Better BibTeX works from [BibTeXing](http://ctan.cs.uu.nl/biblio/bibtex/base/btxdoc.pdf) and [Tame the
 BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, and
