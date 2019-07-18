@@ -52,12 +52,11 @@ BeaST](http://www.lsv.ens-cachan.fr/~markey/BibTeX/doc/ttb_en.pdf) for BibTeX, a
 since there isn't really a definitive manual for either format that is universally followed by Bib(La)TeX
 editors/processors, I'm pragmatic about implementing what works.
 
-## Got problems? We got fixes!
+## Support
 
-If you have any questions on the use of the plugin, please do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) to ask for help. 
+If you have any questions on BBT's use, do not hesitate to [file a GitHub issue](https://github.com/retorquere/zotero-better-bibtex/issues/new) and ask for help. 
 
-If you're reporting a bug in the plugin, please take a moment to glance through the 
-[Support Request Guidelines](https://retorque.re/zotero-better-bibtex/support/); it will make sure I get your problem fixed as quick as possible.
+If you're reporting a bug in BBT, please take a moment to glance through the [Support Request Guidelines](https://retorque.re/zotero-better-bibtex/support/); it will make sure I get your problem fixed as quick as possible.
 Clear bug reports commonly have really short time-to-fix, so if you report something, stick around -- it may be done as you wait.
 
 The support request guidelines are very detailed, perhaps to the point of being off-putting, but please do not fret; these guidelines simply express my ideal bug submission.
