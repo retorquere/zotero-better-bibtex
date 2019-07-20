@@ -189,7 +189,7 @@
       "volume": "12",
       "pages": "116-125",
       "date": "August 1977",
-      "extra": "Citation Key: deKleer:77 \nbibtex*[number=8]",
+      "extra": "Citation Key: deKleer:77",
       "title": "AMORD: Explicit control of reasoning",
       "creators": [
         {
@@ -472,7 +472,7 @@
       "citationKey": "McAllester:80",
       "libraryID": 1,
       "number": "AI-TR-550",
-      "publisher": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
+      "institution": "Massachusetts Institute of Technology, Artificial Intelligence Laboratory"
     },
     {
       "version": 0,
@@ -803,7 +803,7 @@
       "citekey": "London:78",
       "citationKey": "London:78",
       "libraryID": 1,
-      "publisher": "University of Maryland Department of Computer Science"
+      "institution": "University of Maryland Department of Computer Science"
     },
     {
       "version": 0,
@@ -832,7 +832,7 @@
       "citekey": "Barstow:77",
       "citationKey": "Barstow:77",
       "libraryID": 1,
-      "publisher": "Stanford University Artificial Intelligence Laboratory"
+      "institution": "Stanford University Artificial Intelligence Laboratory"
     },
     {
       "version": 0,
@@ -1039,7 +1039,7 @@
       "citekey": "Hewitt:72",
       "citationKey": "Hewitt:72",
       "libraryID": 1,
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "version": 0,
