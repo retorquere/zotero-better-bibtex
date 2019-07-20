@@ -1,129 +1,37 @@
 {
-  "collections": {
-    "2IREJN7H": {
-      "collections": [],
-      "id": 12,
-      "items": [],
-      "key": "2IREJN7H",
-      "name": "sub-sub-group-3",
-      "parent": "XQ2MPNZP"
-    },
-    "8XRBZUBF": {
-      "collections": [],
-      "id": 7,
-      "items": [
-        57
-      ],
-      "key": "8XRBZUBF",
-      "name": "my-other-subgroup-2",
-      "parent": "CA87DDNZ"
-    },
-    "CA87DDNZ": {
-      "collections": [
-        "8XRBZUBF",
-        "GY9DL87J"
-      ],
-      "id": 5,
-      "items": [],
-      "key": "CA87DDNZ",
-      "name": "my-main-group-2",
-      "parent": "SQJ3ALNX"
-    },
-    "CUG6FGJ3": {
-      "collections": [
-        "J7ELSATK",
-        "XQ2MPNZP"
-      ],
-      "id": 9,
-      "items": [
-        62
-      ],
-      "key": "CUG6FGJ3",
-      "name": "my-main-group-3",
-      "parent": "NTSU7GBL"
-    },
-    "GY9DL87J": {
-      "collections": [],
-      "id": 6,
-      "items": [
-        56
-      ],
-      "key": "GY9DL87J",
-      "name": "my-subgroup-2",
-      "parent": "CA87DDNZ"
-    },
-    "J7ELSATK": {
-      "collections": [],
-      "id": 11,
-      "items": [
-        60,
-        61
-      ],
-      "key": "J7ELSATK",
-      "name": "my-other-subgroup-3",
-      "parent": "CUG6FGJ3"
-    },
-    "NTSU7GBL": {
-      "collections": [
-        "CUG6FGJ3"
-      ],
-      "id": 8,
-      "items": [
-        59,
-        60,
-        61,
-        62
-      ],
-      "key": "NTSU7GBL",
-      "name": "Jabref groups import does not work #717.3.8",
-      "parent": false
-    },
-    "SQJ3ALNX": {
-      "collections": [
-        "CA87DDNZ"
-      ],
-      "id": 4,
-      "items": [
-        56,
-        57,
-        58
-      ],
-      "key": "SQJ3ALNX",
-      "name": "Jabref groups import does not work #717.2.10",
-      "parent": false
-    },
-    "XQ2MPNZP": {
-      "collections": [
-        "2IREJN7H"
-      ],
-      "id": 10,
-      "items": [
-        59,
-        61
-      ],
-      "key": "XQ2MPNZP",
-      "name": "my-subgroup-3",
-      "parent": "CUG6FGJ3"
-    }
-  },
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportFilename": "Jabref groups import does not work #717.3.8.json",
-      "exportNotes": true,
-      "exportPath": "/home/emile/github/bbt/better-bibtex/test/fixtures/import"
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.118.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
+      "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": false,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
@@ -131,140 +39,355 @@
       "citeCommand": "cite",
       "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
+      "strings": "",
+      "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": {
-      "BetterBibTeX": "5.0.2.emile.java-cotton",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.18",
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.18"
-      }
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {
+    "7QFAXP57": {
+      "id": 3,
+      "key": "7QFAXP57",
+      "parent": false,
+      "name": "Jabref groups import does not work #717.2.10",
+      "items": [
+        319,
+        320,
+        321
+      ],
+      "collections": [
+        "CGMRDQEA"
+      ]
+    },
+    "CGMRDQEA": {
+      "id": 4,
+      "key": "CGMRDQEA",
+      "parent": "7QFAXP57",
+      "name": "my-main-group-2",
+      "items": [],
+      "collections": [
+        "EEWZJYAP",
+        "2AZGSQ8I"
+      ]
+    },
+    "EEWZJYAP": {
+      "id": 6,
+      "key": "EEWZJYAP",
+      "parent": "CGMRDQEA",
+      "name": "my-other-subgroup-2",
+      "items": [
+        320
+      ],
+      "collections": []
+    },
+    "2AZGSQ8I": {
+      "id": 5,
+      "key": "2AZGSQ8I",
+      "parent": "CGMRDQEA",
+      "name": "my-subgroup-2",
+      "items": [
+        319
+      ],
+      "collections": []
+    },
+    "JJ5TVQ37": {
+      "id": 7,
+      "key": "JJ5TVQ37",
+      "parent": false,
+      "name": "Jabref groups import does not work #717.3.8",
+      "items": [
+        322,
+        323,
+        324,
+        325
+      ],
+      "collections": [
+        "WIZ4JV35"
+      ]
+    },
+    "WIZ4JV35": {
+      "id": 8,
+      "key": "WIZ4JV35",
+      "parent": "JJ5TVQ37",
+      "name": "my-main-group-3",
+      "items": [
+        325
+      ],
+      "collections": [
+        "5BTI32WJ",
+        "DFJJXLLV"
+      ]
+    },
+    "5BTI32WJ": {
+      "id": 10,
+      "key": "5BTI32WJ",
+      "parent": "WIZ4JV35",
+      "name": "my-other-subgroup-3",
+      "items": [
+        323,
+        324
+      ],
+      "collections": []
+    },
+    "DFJJXLLV": {
+      "id": 9,
+      "key": "DFJJXLLV",
+      "parent": "WIZ4JV35",
+      "name": "my-subgroup-3",
+      "items": [
+        322,
+        324
+      ],
+      "collections": [
+        "8RKIA6TU"
+      ]
+    },
+    "8RKIA6TU": {
+      "id": 11,
+      "key": "8RKIA6TU",
+      "parent": "DFJJXLLV",
+      "name": "sub-sub-group-3",
+      "items": [],
+      "collections": []
     }
   },
   "items": [
     {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "John",
-          "lastName": "Doe"
-        }
-      ],
+      "version": 0,
+      "itemType": "journalArticle",
       "date": "2017",
-      "dateAdded": "2017-09-12 11:36:16",
-      "dateModified": "2017-09-12 11:36:16",
-      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein]",
-      "itemID": 56,
-      "itemType": "journalArticle",
-      "title": "The paper in subgroup"
-    },
-    {
+      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "The paper in subgroup",
       "creators": [
         {
-          "creatorType": "author",
-          "firstName": "I.",
-          "lastName": "Other"
-        }
-      ],
-      "dateAdded": "2017-09-12 11:36:16",
-      "dateModified": "2017-09-12 11:36:16",
-      "extra": "Citation Key: Other- \nbibtex*[owner=klein]",
-      "itemID": 57,
-      "itemType": "journalArticle",
-      "title": "The article in my other subgroup"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "I",
-          "lastName": "Unkonw"
-        }
-      ],
-      "dateAdded": "2017-09-12 11:36:16",
-      "dateModified": "2017-09-12 11:36:16",
-      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein]",
-      "itemID": 58,
-      "itemType": "journalArticle",
-      "title": "the paper not in a group"
-    },
-    {
-      "creators": [
-        {
-          "creatorType": "author",
           "firstName": "John",
-          "lastName": "Doe"
+          "lastName": "Doe",
+          "creatorType": "author"
         }
       ],
-      "date": "2017",
-      "dateAdded": "2017-09-12 11:36:17",
-      "dateModified": "2017-09-12 11:36:17",
-      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein]",
-      "itemID": 59,
-      "itemType": "journalArticle",
-      "title": "The paper in subgroup"
+      "tags": [],
+      "collections": [
+        "7QFAXP57",
+        "2AZGSQ8I"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:58Z",
+      "dateModified": "2019-07-20T22:30:58Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FNFNZGGN",
+      "attachments": [],
+      "notes": [],
+      "itemID": 319,
+      "key": "FNFNZGGN",
+      "citekey": "Doe-2017",
+      "citationKey": "Doe-2017",
+      "libraryID": 1
     },
     {
+      "version": 0,
+      "itemType": "journalArticle",
+      "extra": "Citation Key: Other- \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "The article in my other subgroup",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "I.",
-          "lastName": "Other"
+          "lastName": "Other",
+          "creatorType": "author"
         }
       ],
-      "dateAdded": "2017-09-12 11:36:17",
-      "dateModified": "2017-09-12 11:36:17",
-      "extra": "Citation Key: Other- \nbibtex*[owner=klein]",
-      "itemID": 60,
-      "itemType": "journalArticle",
-      "title": "The article in my other subgroup"
+      "tags": [],
+      "collections": [
+        "7QFAXP57",
+        "EEWZJYAP"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:58Z",
+      "dateModified": "2019-07-20T22:30:58Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DU8VC982",
+      "attachments": [],
+      "notes": [],
+      "itemID": 320,
+      "key": "DU8VC982",
+      "citekey": "Other-",
+      "citationKey": "Other-",
+      "libraryID": 1
     },
     {
+      "version": 0,
+      "itemType": "journalArticle",
+      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "the paper not in a group",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "I",
-          "lastName": "Unkonw"
+          "lastName": "Unkonw",
+          "creatorType": "author"
         }
       ],
-      "dateAdded": "2017-09-12 11:36:17",
-      "dateModified": "2017-09-12 11:36:17",
-      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein]",
-      "itemID": 61,
-      "itemType": "journalArticle",
-      "title": "the paper in two groups"
+      "tags": [],
+      "collections": [
+        "7QFAXP57"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:58Z",
+      "dateModified": "2019-07-20T22:30:58Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3IHNNXJT",
+      "attachments": [],
+      "notes": [],
+      "itemID": 321,
+      "key": "3IHNNXJT",
+      "citekey": "Unkonw-",
+      "citationKey": "Unkonw-",
+      "libraryID": 1
     },
     {
+      "version": 0,
+      "itemType": "journalArticle",
+      "date": "2017",
+      "extra": "Citation Key: Doe-2017 \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "The paper in subgroup",
       "creators": [
         {
-          "creatorType": "author",
-          "firstName": "I",
-          "lastName": "Unkonw"
+          "firstName": "John",
+          "lastName": "Doe",
+          "creatorType": "author"
         }
       ],
-      "dateAdded": "2017-09-12 11:36:17",
-      "dateModified": "2017-09-12 11:36:17",
-      "extra": "Citation Key: Unkonw \nbibtex*[owner=klein]",
-      "itemID": 62,
+      "tags": [],
+      "collections": [
+        "JJ5TVQ37",
+        "DFJJXLLV"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:59Z",
+      "dateModified": "2019-07-20T22:30:59Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BB25L5G9",
+      "attachments": [],
+      "notes": [],
+      "itemID": 322,
+      "key": "BB25L5G9",
+      "citekey": "Doe-2017",
+      "citationKey": "Doe-2017",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
       "itemType": "journalArticle",
-      "title": "the paper not in a group"
+      "extra": "Citation Key: Other- \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "The article in my other subgroup",
+      "creators": [
+        {
+          "firstName": "I.",
+          "lastName": "Other",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "JJ5TVQ37",
+        "5BTI32WJ"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:59Z",
+      "dateModified": "2019-07-20T22:30:59Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RTPQR8XK",
+      "attachments": [],
+      "notes": [],
+      "itemID": 323,
+      "key": "RTPQR8XK",
+      "citekey": "Other-",
+      "citationKey": "Other-",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "journalArticle",
+      "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "the paper in two groups",
+      "creators": [
+        {
+          "firstName": "I",
+          "lastName": "Unkonw",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "JJ5TVQ37",
+        "DFJJXLLV",
+        "5BTI32WJ"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:59Z",
+      "dateModified": "2019-07-20T22:30:59Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/C49YMVYC",
+      "attachments": [],
+      "notes": [],
+      "itemID": 324,
+      "key": "C49YMVYC",
+      "citekey": "Unkonw-",
+      "citationKey": "Unkonw-",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "journalArticle",
+      "extra": "Citation Key: Unkonw \nbibtex*[owner=klein;timestamp=2017.09.11]",
+      "title": "the paper not in a group",
+      "creators": [
+        {
+          "firstName": "I",
+          "lastName": "Unkonw",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "JJ5TVQ37",
+        "WIZ4JV35"
+      ],
+      "relations": [],
+      "dateAdded": "2019-07-20T22:30:59Z",
+      "dateModified": "2019-07-20T22:30:59Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SB7BTMFQ",
+      "attachments": [],
+      "notes": [],
+      "itemID": 325,
+      "key": "SB7BTMFQ",
+      "citekey": "Unkonw",
+      "citationKey": "Unkonw",
+      "libraryID": 1
     }
   ]
 }
