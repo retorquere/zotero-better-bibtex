@@ -79,13 +79,13 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "LaTeX-Befehl">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "RTF-Scan">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_id "Org-mode (Item ID)">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Org-Mode (Zitierschlüssel)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey "Org-mode Zotero select link">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "Org-mode citekey select link">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "Org-Ref">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Umschließe Pandoc-Zitate mit eckigen Klammern">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_id "Link auswählen (Item-ID)">
-<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Link auswählen (Zitierschlüssel)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey "Zotero select link">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Citekey select link">
 <!ENTITY better-bibtex.Preferences.citekey.quickCopy "Schnelle Copy-/Drag-and-Drop-Zitate">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness "Halte Zitierschlüssel eindeutig">
 <!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Bei Konflikten mit einem angehefteten Schlüssel werden nicht angeheftete Schlüssel">
