@@ -46,7 +46,7 @@ def serialize(obj):
   return json.dumps(obj, indent=2, sort_keys=True)
 
 def compare(expected, found):
-  size = 300000
+  size = 30
   if len(expected) < size or len(found) < size:
     assert_equal_diff(serialize(expected), serialize(found))
   else:
