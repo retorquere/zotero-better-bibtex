@@ -6,8 +6,9 @@ import format = require('string-template')
 
 import { Exporter } from './lib/exporter'
 
-function select_by_id(item) {
-  return `zotero://select/items/${item.libraryID}_${item.key}`
+function select_by_key(item) {
+  const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)
+  return (kind === 'users') ? `zotero://select/library/items/${key}` : `zotero://select/groups/${lib}/items/${key}`
 }
 function select_by_citekey(item) {
   return `zotero://select/items/@${encodeURIComponent(item.citekey)}`
@@ -58,7 +59,7 @@ const Mode = { // tslint:disable-line:variable-name
 
   orgmode(items) {
     for (const item of items) {
-      Zotero.write(`[[${select_by_id(item)}][@${item.citekey}]]`)
+      Zotero.write(`[[${select_by_key(item)}][@${item.citekey}]]`)
     }
   },
   orgmode_citekey(items) {
@@ -68,7 +69,7 @@ const Mode = { // tslint:disable-line:variable-name
   },
 
   selectLink(items) {
-    Zotero.write(items.map(select_by_id).join('\n'))
+    Zotero.write(items.map(select_by_key).join('\n'))
   },
   selectLink_citekey(items) {
     Zotero.write(items.map(select_by_citekey).join('\n'))
