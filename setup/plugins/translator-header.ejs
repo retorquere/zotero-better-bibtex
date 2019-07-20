@@ -68,6 +68,7 @@ var Translator = {
     this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
     this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing')
     Zotero.debug('prefs loaded: ' + JSON.stringify(this.preferences, null, 2))
+    Zotero.debug('options loaded: ' + JSON.stringify(this.options, null, 2))
 
     if (stage == 'doExport') {
       this.caching = !(
