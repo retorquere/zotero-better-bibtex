@@ -1664,7 +1664,7 @@
       "citekey": "Bundy:75",
       "citationKey": "Bundy:75",
       "libraryID": 1,
-      "publisher": "University of Edinburgh Department of Artificial Intelligence"
+      "institution": "University of Edinburgh Department of Artificial Intelligence"
     },
     {
       "version": 0,
@@ -1752,7 +1752,7 @@
       "citekey": "Woods:78",
       "citationKey": "Woods:78",
       "libraryID": 1,
-      "publisher": "Bolt Beranek and Newman"
+      "institution": "Bolt Beranek and Newman"
     },
     {
       "version": 0,
@@ -1842,7 +1842,7 @@
       "citekey": "Roberts:77",
       "citationKey": "Roberts:77",
       "libraryID": 1,
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "institution": "MIT Artificial Intelligence Laboratory"
     },
     {
       "version": 0,
@@ -1973,7 +1973,7 @@
       "citekey": "Martin:73",
       "citationKey": "Martin:73",
       "libraryID": 1,
-      "publisher": "Project MAC, MIT"
+      "institution": "Project MAC, MIT"
     },
     {
       "version": 0,
