@@ -723,10 +723,12 @@ class ZoteroItem {
     return true
   }
 
+  /* TODO: Zotero ignores these on import
   protected '$date-modified'(value) { return this.item.dateAdded = this.unparse(value) }
   protected '$date-added'(value) { return this.item.dateAdded = this.unparse(value) }
   protected '$added-at'(value) { return this.item.dateAdded = this.unparse(value) }
   protected $timestamp(value) { return this.item.dateAdded = this.unparse(value) }
+  */
 
   protected $number(value) {
     value = this.unparse(value)
