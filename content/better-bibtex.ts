@@ -373,6 +373,13 @@ function notify(event, handler) {
   }, [event], 'BetterBibTeX', 1)
 }
 
+notify('item-tag', (action, type, ids, extraData) => {
+  ids = ids.map(item_tag => parseInt(item_tag.split('-')[0]))
+
+  Cache.remove(ids, `item ${ids} changed`)
+  Events.emit('items-changed', ids)
+})
+
 notify('item', (action, type, ids, extraData) => {
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
