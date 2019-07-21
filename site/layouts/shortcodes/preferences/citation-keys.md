@@ -47,14 +47,14 @@ Options:
 * LaTeX
 * Cite Keys
 * Pandoc
-* Org-mode (citekey)
-* Org-mode (item ID)
+* Org-mode citekey select link
+* Org-mode Zotero select link
 * org-ref
 * RTF Scan
 * Atom (https://atom.io/packages/zotero-citations)
 * GitBook
-* Select link (citekey)
-* Select link (item ID)
+* Citekey select link
+* Zotero select link
 
 #### LaTeX command
 

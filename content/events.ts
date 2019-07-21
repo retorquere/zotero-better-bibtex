@@ -11,6 +11,7 @@ export let Events = new EventEmitter() // tslint:disable-line:variable-name
 if (Zotero.Debug.enabled) {
   const events = [
     'preference-changed',
+    'item-tag',
     'items-changed',
     'items-removed',
     'libraries-changed',

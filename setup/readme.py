@@ -32,7 +32,7 @@ for line in readme.split('\n'):
 
   line = re.sub(r'\[!\[.*', '', line)
 
-  line = re.sub(r'\(https:\/\/retorquere.github.io\/zotero-better-bibtex(\/.*?)\)', "({{< ref \"\\1\" >}})", line)
+  line = re.sub(r'\(https:\/\/(retorquere\.github\.io|retorque\.re)\/zotero-better-bibtex(\/.*?)\/?\)', "({{< ref \"\\2\" >}})", line)
   appendto.append(line)
 
 with open('site/content/_index.md', 'w') as f:

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.70",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.70",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.110.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,48 +60,53 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false,
-      "exportPath": "/Users/emile/github/better-bibtex"
+    "release": {
+      "BetterBibTeX": "5.1.110.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.70",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.70"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "volume": "41",
-      "pages": "247–261",
-      "publicationTitle": "Pacific Journal of Mathematics",
-      "date": "--",
-      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
+      "attachments": [],
+      "citationKey": "Shelahcombinatorialproblemstability1999",
+      "citekey": "Shelahcombinatorialproblemstability1999",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Saharon",
-          "lastName": "Shelah",
-          "creatorType": "author"
+          "lastName": "Shelah"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "--",
       "dateAdded": "2018-03-04T10:57:40Z",
       "dateModified": "2019-07-17T13:49:01Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS",
-      "attachments": [],
+      "itemID": 32,
+      "itemType": "journalArticle",
+      "key": "TUAXBMBS",
+      "libraryID": 1,
       "notes": [
         "<p>MR 46:7018</p>"
       ],
-      "itemID": 32,
-      "key": "TUAXBMBS",
-      "citekey": "Shelahcombinatorialproblemstability1999",
-      "citationKey": "Shelahcombinatorialproblemstability1999",
-      "libraryID": 1
+      "pages": "247\u2013261",
+      "publicationTitle": "Pacific Journal of Mathematics",
+      "relations": [],
+      "tags": [],
+      "title": "A combinatorial problem; stability and order for models and theories in infinitary languages",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TUAXBMBS",
+      "version": 0,
+      "volume": "41"
     }
   ]
 }

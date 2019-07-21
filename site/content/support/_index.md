@@ -26,16 +26,17 @@ cannot accept bug reports or support requests on anything but the latest version
 version might have bumped up already, and you will have to upgrade (you might have auto-upgraded already however) and
 re-verify that your issue still exists. Apologies for the inconvenience, but such are the breaks.
 
-* You can send off an error report by selecting `Report Better BibTeX Errors` from the `Help` menu. Post the resulting ID
+* You can send off an debug report by selecting `Send Better BibTeX debug report` from the `Help` menu. Post the resulting ID
   (displayed in red) in a github issue.
-* You can send off an error report for a specific collection or (selection of) items that fails to export by selecting those, right-clicking
-  and choosing `Report Better BibTeX Errors`
+* You can send off an debug report for a specific collection or (selection of) items that fails to export by selecting those, right-clicking
+  and choosing `Send Better BibTeX debug report`
 
 That in itself will in many cases give me what I need. Don't forget to copy the generated ID to paste it into the github
 issue; you cannot call it up later (although you can just do it again).
 
 For the fastest fix:
 
+* **Please be around** for follow-up questions and verification I've fixed the problem. It's really frustrating for me to get a bug report, work feverishly to get it fixed, and then the reporter having no time to verify it is actually addressed.
 * **Please include *specifics* of what doesn't work**. I use this plugin every day myself, so "it doesn't work" is trivially
   false. Please tell me what you expected and what you see happening, and the relevant difference between them.
 * **Please don't file a jumble of problems in one issue**. Posting a slew of separate issues is much preferred, as I can

@@ -29,7 +29,6 @@ You can also
 
 * Drag and drop LaTeX citations using these keys to your favorite LaTeX editor
 * Show your citation keys in the reference list view.
-* Search for citation keys (if you select "All fields and tags" in the search box)
 
 ## Set your own, fixated citation keys
 

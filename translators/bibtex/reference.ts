@@ -992,6 +992,7 @@ export class Reference {
   }
 
   protected enc_attachments(f) {
+    debug('attachments::', Translator.options, f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments = []
     const errors = []
@@ -1009,11 +1010,13 @@ export class Reference {
         att.path = attachment.localPath
       }
 
+      debug('attachment::', Translator.options, att)
+
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      debug('attachment::', Translator.options, att)
+      debug('attachment:::', Translator.options, att)
 
       if (Translator.options.exportFileData) {
         debug('saving attachment::', Translator.options, att)
