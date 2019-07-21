@@ -265,6 +265,9 @@ class Profile:
     elif platform_client == 'Darwin:zotero':
       self.profiles = os.path.expanduser('~/Library/Application Support/Zotero')
       self.binary = '/Applications/Zotero.app/Contents/MacOS/zotero'
+    elif platform_client == 'Darwin:jurism':
+      self.profiles = os.path.expanduser('~/Library/Application Support/Juris-M')
+      self.binary = '/Applications/Jurism.app/Contents/MacOS/jurism'
     else:
       raise ValueError(f'Unsupported test environment {platform_client}')
 
