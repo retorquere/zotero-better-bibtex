@@ -1,0 +1,156 @@
+<!ENTITY better-bibtex.FirstRun.title "Bem-vindo ao Better BibTeX para Zotero">
+<!ENTITY better-bibtex.FirstRun.welcome "Better BibTeX para Zotero (ou simplesmente BBT) procura tornar Zotero mais útil para tradicionalistas do LaTeX e do Markdown. Há muitas opções para configurar no BBT -- dê uma olhada nas preferências se estiver curioso -- mas vamos acertrar o básico com algumas escolhas simples.">
+
+<!ENTITY better-bibtex.FirstRun.citekeyFormat "Suas chaves de citação">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT vai criar chaves de citação para suas referências. A geração de chaves é altamente configurável e você pode ignorar o que foi gerado, mas é preciso definir um default. Você pode acessar as preferências e mudar esta escolha a qualquer momento.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Eu já usei o BBT antes">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Eu sou novato com o BBT mas já usei arquivos BibTeX gerados por Zotero antes">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.whatever "Eu nunca usei o Zotero para gerir arquivos BibTeX antes">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Escolha esta opção se tiver documentos que fazem referência a chaves geradas por BBT">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Nota">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "No Zotero 5, BBT não atualiza mais as chaves de citação automaticamente quando você modifica o molde nas preferências. Se você quiser que as referências que já existem sigam o novo molde, é preciso selecioná-las e atualizá-las.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Escolha esta opção se você tiver documentos existentes que se referem a chaves geradas por Zotero sem a ajuda do BBT. Isso irá reproduzir fielmente as chaves geradas por Zotero, incluindo as limitações conhecidas do gerador de chaves do Zotero. Apenas use esta opção se precisar que as chaves sejam exatamente como geradas por Zotero.">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.whatever "Escolher esta opção seleciona o formato padrão do BBT">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "suas chaves de citação serão como">
+
+<!ENTITY better-bibtex.FirstRun.exporting "Exportar usando BBT">
+<!ENTITY better-bibtex.FirstRun.exporting.explanation "Exportar usando BBT funciona como sempre no Zotero, mas verifique que você escolheu o formato correto; na lista de formatos, ao invés de 'BibTeX', escolha">
+
+<!ENTITY better-bibtex.FirstRun.dragndrop "Arrastar-e-soltar citações">
+<!ENTITY better-bibtex.FirstRun.dragndrop.explanation "Com BBT, é possível arrastar e soltar citações no seu editor LaTeX preferido. Você quer ativar isso?">
+<!ENTITY better-bibtex.FirstRun.dragndrop.enable "Ativar arrastar-e-soltar citações">
+
+<!ENTITY better-bibtex.FirstRun.done "Tudo pronto!">
+<!ENTITY better-bibtex.FirstRun.done.explanation "BBT já está configurado. Você ainda pode mudar qualquer uma dessas opções nas preferências do Zotero, abrindo a aba BBT.">
+
+<!ENTITY better-bibtex.ErrorReport.title "Relatório de depuração Better BibTeX">
+<!ENTITY better-bibtex.ErrorReport.restartWithLoggingEnabled  "Reiniciar com registro ativado…">
+<!ENTITY better-bibtex.ErrorReport.enableDebug "O registro de depuração do Zotero está desligado. Será mais fácil diagnosticar o problema se você ativá-lo antes de submeter um relato de erro.">
+<!ENTITY better-bibtex.ErrorReport.context "Contexto da aplicação">
+<!ENTITY better-bibtex.ErrorReport.errors "Erros">
+<!ENTITY better-bibtex.ErrorReport.includeCache "Enviar cache">
+<!ENTITY better-bibtex.ErrorReport.debug "Registro de depuração">
+<!ENTITY better-bibtex.ErrorReport.notReviewed "Relatórios de depuração não podem ser revisados a menos que haja uma referência a eles no issue tracker do GitHub.">
+<!ENTITY better-bibtex.ErrorReport.postToGitHub "Envie uma mensagem para o issue tracker (https://github.com/retorquere/zotero-better-bibtex/issues) com o ID deste relatório, uma descrição do problema e os passos necessários para reproduzi-lo.">
+<!ENTITY better-bibtex.ErrorReport.references "Referências">
+<!ENTITY better-bibtex.ErrorReport.reportID "ID do relatório:">
+<!ENTITY better-bibtex.ErrorReport.review "Os dados abaixo serão enviados para o Better BibTeX para depuração. Você pode reexaminar os dados para verificar se há informações sigilosas que você não quer enviar.
+
+Se você está de acordo com o envio desses dados, por favor clique &quot;Continuar&quot; e envie o ID de depuração apresentado na próxima tela no issue tracker em
+
+https://github.com/retorquere/zotero-better-bibtex/issue">
+<!ENTITY better-bibtex.ErrorReport.submissionInProgress			"Aguarde enquanto o relatório de depuração é enviado.">
+<!ENTITY better-bibtex.ErrorReport.submitted						"Seu relatório de depuração foi submetido.">
+
+<!ENTITY better-bibtex.ItemPane.citekey_column	"Chave de Citação">
+
+<!ENTITY better-bibtex.Preferences.auto-abbrev "Abreviar o título de periódicos automaticamente se nada foi definido explicitamente">
+<!ENTITY better-bibtex.Preferences.auto-abbrev.style "Estilo de abreviação:">
+
+<!ENTITY better-bibtex.Preferences.tab.auto-export "Exportação automática">
+<!ENTITY better-bibtex.Preferences.auto-export "Exportação automática">
+<!ENTITY better-bibtex.Preferences.auto-export.explanation "Aqui só é possível ver e remover exportações. Para adicionar uma exportação automática, faça uma exportação normal e ative a opção 'Manter atualizado' na lista de opções.">
+<!ENTITY better-bibtex.Preferences.auto-export.idle "Quando ocioso">
+<!ENTITY better-bibtex.Preferences.auto-export.immediate "Imediatamente">
+<!ENTITY better-bibtex.Preferences.auto-export.off "Desativado">
+<!ENTITY better-bibtex.Preferences.auto-export.run "Exportar agora">
+<!ENTITY better-bibtex.Preferences.auto-export.remove "Remover">
+<!ENTITY better-bibtex.Preferences.auto-export.collection "Coleção">
+<!ENTITY better-bibtex.Preferences.auto-export.library "Biblioteca">
+<!ENTITY better-bibtex.Preferences.auto-export.target "Arquivo de destino">
+<!ENTITY better-bibtex.Preferences.auto-export.status "Status">
+<!ENTITY better-bibtex.Preferences.auto-export.updated "Atualizado">
+<!ENTITY better-bibtex.Preferences.auto-export.translator "Formato">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.notes "Exportar notas">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.journalAbbrev "Usar abreviações de periódicos">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.error "Erro">
+<!ENTITY better-bibtex.Preferences.auto-export.fields.cached "Em cache">
+<!ENTITY better-bibtex.Preferences.auto-export.warn.long-running "Avisar quando exportações automáticas demorarem mais que (seconds)">
+
+<!ENTITY better-bibtex.Preferences.bulkWarning "Avisar ao modificar chaves de citação em massa">
+<!ENTITY better-bibtex.Preferences.tab.citekey "Chaves de citação">
+<!ENTITY better-bibtex.Preferences.citekey.citekeys "Chaves de citação">
+<!ENTITY better-bibtex.Preferences.citekey.fold "Força chave de citação em texto puro">
+<!ENTITY better-bibtex.Preferences.citekey.format "Formato da chave de citação">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.atom "Atom (https://atom.io/packages/zotero-citations)">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.citekeys "Chaves de citação">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.format "Formato QuickCopy">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.gitbook "GitBook">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex.command "Comando LaTeX">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.latex "LaTeX">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.rtfScan "Varredura de RTF">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_itemkey "link de seleção Zotero para Org-mode">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgmode_citekey "link de seleção citekey para Org-mode">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.orgRef "org-ref">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc.brackets "Envolver citações Pandoc com colchetes">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.pandoc "Pandoc">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_itemkey "Link de seleção Zotero">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy.selectLink_citekey "Link de seleção Citekey">
+<!ENTITY better-bibtex.Preferences.citekey.quickCopy "Citações rápidas - cópia/arrastar-e-soltar">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness "Evitando chaves de citação em duplicata">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict "Caso haja conflito com uma chave fixa, chaves não-fixas serão">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.change "postfixadas (modifica a chave)">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.conflict.keep "mantidas (causa chaves duplicadas)">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope "Manter chaves sem duplicatas">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.library "dentro de cada biblioteca">
+<!ENTITY better-bibtex.Preferences.citekey.uniqueness.scope.global "em todas as bibliotecas">
+
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner "Analisador BibTeX AUX">
+<!ENTITY better-bibtex.Preferences.citekey.AUXScanner.import "Ao vasculhar um arquivo AUX, procura importar referências do arquivo bib anexado quando as chaves de citação não estão no Zotero">
+
+<!ENTITY better-bibtex.Preferences.advanced "Avançado">
+<!ENTITY better-bibtex.Preferences.advanced.warning "Estas opções afetam o desempenho e podem causar falhas na exportação. Seja cuidadoso.">
+<!ENTITY better-bibtex.Preferences.export.qualityReport "Incluir comentários sobre possíveis problemas com as referências">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat "Incluir metadados específicos para JabRef:">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "não">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "para JabRef 3">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "para JabRef 4">
+<!ENTITY better-bibtex.Preferences.export.jabrefFormat.4.warn "Exportar para o formato JabRef 4 desativa o cache. As exportações serão significativamente mais lentas.">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exportar unicode como comandos LaTeX em texto puro">
+<!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
+<!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Usar o formato de nomes estendido de BibLaTeX (exige biblatex 3.5)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exportar unicode como comandos LaTeX em texto puro (recomendado)">
+<!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Adicionar URLs à exportação BibTeX">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "em um campo 'note'">
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.off "não">
+<!-- https://texfaq.org/FAQ-citeURL -->
+<!ENTITY better-bibtex.Preferences.export.bibtex.URLs.url "em um campo 'URL' (exige suporte a estilos personalizados para o campo url)">
+<!ENTITY better-bibtex.Preferences.tab.export "Exportar">
+<!ENTITY better-bibtex.Preferences.export.fields.bibtexParticleNoOp "Ignorar prefixos de nomes ao ordenar">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.both "ambos">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.DOI "DOI">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url.URL "URL">
+<!ENTITY better-bibtex.Preferences.export.fields.doi-and-url "Quando uma referência tem tanto um DOI quanto uma URL, exportar">
+<!ENTITY better-bibtex.Preferences.export.fields "Campos">
+
+<!ENTITY better-bibtex.Preferences.export.fields.import-strings "Expandir as variáveis @string abaixo ao importar">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings "Se um campo pode ser uma variável @string, exportá-lo sem colchetes">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.off "Não">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.detect "Assumir campos com uma única palavra como variáveis @string">
+<!ENTITY better-bibtex.Preferences.export.fields.export-strings.match "Comparar com as variáveis @string abaixo">
+
+<!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordenar referências e campos deterministicamente; essencialmente para controle de versão.">
+<!ENTITY better-bibtex.Preferences.export.fields.skip "Campos a omitir na exportação (separados por vírgulas)">
+<!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abreviações de periódicos">
+<!ENTITY better-bibtex.Preferences.tab.postscript "postscript">
+<!ENTITY better-bibtex.Preferences.tab.postscript.warn "Usar 'Translator.options.exportPath' em postscripts desabilita o cache. As exportações serão significativamente mais lentas.">
+<!ENTITY better-bibtex.Preferences.tab.strings "Definições @string">
+<!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
+<!ENTITY better-bibtex.Preferences.rescan-citekeys "Reler chaves de citação fixas">
+<!ENTITY better-bibtex.Preferences.resetCache "Zerar cache">
+<!ENTITY better-bibtex.BetterBibTeX.reportErrors "Enviar relatório de depuração Better BibTeX...">
+<!ENTITY better-bibtex.BetterBibTeX.auxScanner "Vasculhar arquivo BibTeX AUX por referências...">
+<!ENTITY better-bibtex.bulk-keys-confirm.message "Você está modificando mais que {treshold} items de uma vez. Tem certeza?">
+<!ENTITY better-bibtex.bulk-keys-confirm.whatever "OK e não perguntar novamente">
+<!ENTITY better-bibtex.BetterBibTeX.menu "Better BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pin "Fixar chave BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.pinInspireHEP "Fixar chave BibTeX do InspireHEP">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.unpin "Des-fixar chave BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.citekey.refresh "Atualizar chave BibTeX">
+<!ENTITY better-bibtex.BetterBibTeX.addCitationLinks "Adicionar links de citação">
+<!ENTITY better-bibtex.ZoteroPane.tag-duplicates "Etiquetar chaves de citação duplicadas">
+<!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Enviar referências para TeXstudio">
+<!ENTITY zotero.better-bibtex.csquotes "Substituir aspas duplas ou angulares por \\enquote{...} (exige csquotes)">
+<!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportação via HTTP desativada">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Mostrar URL do servidor BibLaTeX">
