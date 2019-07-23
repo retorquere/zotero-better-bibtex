@@ -563,6 +563,10 @@ export class Reference {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
+    if (this.item.extraFields.citekey.aliases.length) {
+      this.add({ name: 'ids', value: this.item.extraFields.citekey.aliases.join(',') })
+    }
+
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
       debug('extraFields: csl', cslName, field)
 

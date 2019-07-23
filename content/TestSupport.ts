@@ -1,6 +1,7 @@
 declare const Zotero: any
 declare const Zotero_File_Interface: any
 declare const Components: any
+declare const Zotero_Duplicates_Pane: any
 
 import { AutoExport } from './auto-export'
 import { timeout } from './timeout'
@@ -200,5 +201,25 @@ export = new class {
 
   public resetCache() {
     Cache.reset()
+  }
+
+  public async merge(ids) {
+    const zoteroPane = Zotero.getActiveZoteroPane()
+    await zoteroPane.selectItems(ids, true)
+    const selected = zoteroPane.getSelectedItems()
+    if (selected.length !== ids.length) throw new Error(`selected: ${selected.length}, expected: ${ids.length}`)
+    zoteroPane.mergeSelectedItems()
+    await timeout(1500) // tslint:disable-line:no-magic-numbers
+
+    if (typeof Zotero_Duplicates_Pane === 'undefined') {
+      log.debug('Loading duplicatesMerge.js')
+      Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
+    }
+
+    const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    await Zotero_Duplicates_Pane.merge()
+    await timeout(1500) // tslint:disable-line:no-magic-numbers
+    const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }
 }

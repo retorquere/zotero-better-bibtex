@@ -23,6 +23,7 @@ import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
+import * as Citekey from './key-manager/get-set'
 import { TeXstudio } from './tex-studio'
 import format = require('string-template')
 
@@ -90,6 +91,32 @@ if (Prefs.get('citeprocNoteCitekey')) {
     return cslItem
   })
 }
+
+// https://github.com/retorquere/zotero-better-bibtex/issues/1221
+$patch$(Zotero.Items, 'merge', original => async function(item, otherItems) {
+  try {
+    const extra = Citekey.aliases.get(item.getField('extra'))
+
+    // get citekeys of other items
+    const otherIDs = otherItems.map(i => parseInt(i.id))
+    extra.aliases = extra.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map(i => i.citekey))
+
+    // add any aliases they were already holding
+    for (const i of otherItems) {
+      extra.aliases = extra.aliases.concat(Citekey.aliases.get(i.getField('extra')).aliases)
+    }
+
+    const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
+    extra.aliases = extra.aliases.filter(alias => alias !== citekey)
+    if (extra.aliases.length) extra.extra = Citekey.aliases.set(extra.extra, extra.aliases)
+    item.setField('extra', extra.extra)
+
+  } catch (err) {
+    log.error('Zotero.Items.merge:', err)
+  }
+
+  return original.apply(this, arguments)
+})
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
 $patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function(id) {

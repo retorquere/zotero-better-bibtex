@@ -8,6 +8,6 @@ def before_all(context):
 def before_scenario(context, scenario):
   context.zotero.reset()
   context.displayOptions = {}
-  context.selected = None
+  context.selected = []
   context.imported = None
   context.picked = []

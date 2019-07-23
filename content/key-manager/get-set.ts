@@ -22,3 +22,23 @@ export function get(extra) {
 }
 
 export function set(extra, citekey) { return `${get(extra).extra}\nCitation Key: ${citekey}`.trim() }
+
+const citationKeyAlias = /(?:^|\n)Citation Key Alias:(.*?)(?:\n|$)/i
+export const aliases = new class {
+  public get(extra) {
+    const parsed = { extra, aliases: [] }
+
+    parsed.extra = parsed.extra.replace(citationKeyAlias, (m, _aliases) => {
+      parsed.aliases = _aliases.trim().split(/\s*,\s*/)
+      return '\n'
+    }).trim()
+
+    return parsed
+  }
+
+  public set(extra, _aliases) {
+    if (!_aliases.length) throw new Error('empty alias list')
+    _aliases = Array.from(new Set(_aliases)).sort().join(', ')
+    return `${this.get(extra).extra}\nCitation Key Alias: ${_aliases}`.trim()
+  }
+}
