@@ -8,8 +8,6 @@ tags:
 aliases:
   - /customized-exports
   - /Customized-Exports
-  - /Push-and-Pull-Export
-  - /push-and-pull
   - /export
 ---
 

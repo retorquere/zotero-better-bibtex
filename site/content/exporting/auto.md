@@ -6,6 +6,9 @@ tags:
   - automatic export
   - overleaf
   - git
+aliases:
+  - /Push-and-Pull-Export
+  - /push-and-pull
 ---
 
 When exporting using BBT you will be offered a new export option: `Keep updated`. Checking this option
