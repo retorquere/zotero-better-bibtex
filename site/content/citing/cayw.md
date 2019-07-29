@@ -119,6 +119,8 @@ For example, if you call up [http://127.0.0.1:23119/better-bibtex/cayw?format=mm
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
 
+Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; `curl` and other programmatic access will work if you make sure you send a `User-Agent` header (`curl` does so by default).
+
 ## Playing around
 
 For testing for other markdown formatters, you can construct simple references yourself, using the `playground` formatter, with parameters:
