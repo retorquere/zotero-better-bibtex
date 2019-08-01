@@ -178,6 +178,24 @@ if (Translator.BetterTeX && reference.has.title) {
 }
 ```
 
+### Detect and protect MathJax
+
+```
+if (Translator.BetterTeX) {
+  // different for bibtex and biblatex exporters
+  const note = ['annotation', 'note'].find(field => reference.has[field])
+
+  if (note) {
+    let notes = item.notes.map(note => `<div>${note}</div>`).join('')
+    notes = notes
+      .replace(/(\$\$[\s\S]*?\$\$)/g, '<script>$1</script>')
+      .replace(/\\\(/g, '<script>$')
+      .replace(/\\\)/g, '$</script>')
+    this.add({ name: note, value: notes, html: true });
+  }
+}
+```
+
 ### Replace `director` with `author` for `videoRecording` and `film` references
 
 Creator handling is fairly complicated, so to change the authors/editors/creators of any kind, you must change them on `item` and then call `addCreators` to do the needful. `addCreators` will *replace* the existing creators that were added to `reference` with the current state in `item.creators`, however you left it.
@@ -203,4 +221,5 @@ if (Translator.BetterBibLaTeX) {
   if (reference.referencetype === 'collection') reference.referencetype = 'book'
 }
 ```
+
 
