@@ -4,7 +4,7 @@ declare const Components: any
 
 const fold2ascii = require('fold-to-ascii')
 import PunyCode = require('punycode')
-import { transliterate } from 'transliteration/dist/node/src/node'
+import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
 import { Preferences as Prefs } from '../prefs'
