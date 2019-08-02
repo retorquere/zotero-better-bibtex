@@ -191,7 +191,7 @@ if (Translator.BetterTeX) {
       .replace(/(\$\$[\s\S]*?\$\$)/g, '<script>$1</script>')
       .replace(/\\\(/g, '<script>$')
       .replace(/\\\)/g, '$</script>')
-    this.add({ name: note, value: notes, html: true });
+    reference.add({ name: note, value: notes, html: true });
   }
 }
 ```
