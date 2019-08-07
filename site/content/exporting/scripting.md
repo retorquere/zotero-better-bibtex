@@ -95,6 +95,8 @@ The postscript should be a `javascript` snippet. You can access the data with fo
 - `reference` is the CSL object being built. Any changes made to this object will directly change the CSL object being output.
 - `item` is the Zotero reference it's being built from.
 
+There isn't really an API. You can use regular javascript to manipulate the `reference` object, which is a [CSL-JSON](http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables) object.
+
 ## Debugging
 
 There isn't much in place in terms of debugging, as tranlators (and
