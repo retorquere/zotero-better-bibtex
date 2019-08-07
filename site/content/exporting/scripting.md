@@ -54,11 +54,9 @@ In the postscript, the reference being built is available as `reference`, and th
 You should really test for the translator context in your postscripts using the `Translator.<name>` tests mentioned above. If you don't because you have a postscript that pre-date postscript CSL support, you will probably be using the legacy use of `this` to set things on the reference being built, and calling `this.add` in those postscripts; since, for CSL postscripts, `this` is not set, it will make the script will non-fatally error out, so you're very probably good to go as-is.
 But please fix your postscripts to test for the translator context.
 
-## The API (for the Better Bib(La)TeX context)
+## The API for `Better BibTeX` and `Better BibLaTeX`
 
-The postscript should be a `javascript` snippet. You can access the data with following objects or functions.
-
-In `BetterBibLaTeX` and `BetterBibTeX`, 
+The postscript should be a `javascript` snippet. You can access the data with following objects and methods:
 
 - `reference` is the BibTeX reference you are building, and the reference has a number of fields.
 - `item` is the Zotero item that's the source of the reference. 
@@ -69,14 +67,43 @@ In `BetterBibLaTeX` and `BetterBibTeX`,
 
   e.g. you can see whether the `year` field has been set by testing for `reference.has.year`
 
-- `reference.add` is the function to add or modify keys in `reference.has`. 
+- `reference.add` is the function to add or modify keys in `reference.has`. It accepts the following named parameters in the form of an object:
 
-  e.g. change the value of year in output `reference.add({name: 'year', value: your_year_value})`
+  - `name`: name of the bib(la)tex field to output
+  - `value`: the value for the field *without* LaTeX encoding
+  - `bibtex`: the value for the field *with LaTeX encoding already applied*. If both `bibtex` and `value` are present, `bibtex` takes precedence
+  - `enc`: specifies how to encode the `value` field. Valid values are:
+    - `latex`: encode markup and special characters to LaTeX. This is the default, if you don't provide an `enc` parameter, `latex` is assumed
+    - `verbatim`: encode under `verbatim` rules
+    - `literal`: encode under `literal` rules
+    - `raw`: assume `value` is already LaTeX-encoded (same as passing the value in `bibtex`)
+    - `url`: encode as verbatim url
+  - `sep`: if `value` is an array, and `enc` is `latex`, encode each array element using `latex` and join the results with the string in `sep`. Defaults to an empty string.
+  - `html`: boolean indicating whether the `value` is full HTML (really only useful for notes)
 
-In `BetterCSLJSON` and `BetterCSLYAML`:
+  e.g. change the value of year in output `reference.add({name: 'year', value: "your_year_value"})`
+
+- `reference.addCreators` adds the contents of `item.creators` to `reference`.
+
+  author encoding has a fair number of moving bits and generates multiple fields (`author`, `editor`, etc), this function is here so you can manipulate `item.creators` and call `reference.addCreators` to *replace*
+  the existing creator fields on `reference`.
+
+- `reference.remove` removes a field previously added by `reference.add` or `reference.addCreators`
+
+## The API for `BetterCSLJSON` and `BetterCSLYAML`
 
 - `reference` is the CSL object being built. Any changes made to this object will directly change the CSL object being output.
 - `item` is the Zotero reference it's being built from.
+
+## Debugging
+
+There isn't much in place in terms of debugging, as tranlators (and
+thus postscripts) are not allowed to do any UI work. You can do
+old-fashioned `printf`-style debugging by calling `Zotero.debug(...)`
+in your postscript -- it will output the string you pass into the
+Zotero debug log which you can inspect from the `Help` menu. You
+can for example do `Zotero.debug(JSON.stringify(item))` to see what
+the Zotero item looks like to the translator.
 
 ## Samples
 
