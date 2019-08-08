@@ -166,11 +166,11 @@ Specify the ordering of the listing of fields in an exported Biblatex/Bibtex ent
 ```
 if (Translator.BetterTeX) {
   // the bib(la)tex fields are ordered according to this array.
-  // If a field is not in this list, it will show up at the end in random order.
+  // If a field is not in this list, it will show up at after the ordered fields.
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher'];
-  for (const field of order.concat(Object.keys(reference.has).filter(field => !order.includes(field)))) {
+  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {
     const value = reference.has[field]
     delete reference.has[field]
     reference.has[field] = value
