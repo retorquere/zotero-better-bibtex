@@ -170,8 +170,7 @@ if (Translator.BetterTeX) {
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
   const order = ['author', 'date', 'title', 'publisher'];
-  const keys = Object.keys(reference.has)
-  for (const field of keys.sort((a, b) => ((order.indexOf(a) + 1) || (keys.length + order.length + 1)) - ((order.indexOf(b) + 1) || (keys.length + order.length + 1)))) {
+  for (const field of order.concat(Object.keys(reference.has).filter(field => !order.includes(field)))) {
     const value = reference.has[field]
     delete reference.has[field]
     reference.has[field] = value
