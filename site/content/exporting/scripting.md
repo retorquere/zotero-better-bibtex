@@ -73,11 +73,11 @@ The postscript should be a `javascript` snippet. You can access the data with fo
   - `value`: the value for the field *without* LaTeX encoding
   - `bibtex`: the value for the field *with LaTeX encoding already applied*. If both `bibtex` and `value` are present, `bibtex` takes precedence
   - `enc`: specifies how to encode the `value` field. Valid values are:
-    - `latex`: encode markup and special characters to LaTeX. This is the default, if you don't provide an `enc` parameter, `latex` is assumed
-    - `verbatim`: encode under `verbatim` rules
-    - `literal`: encode under `literal` rules
-    - `raw`: assume `value` is already LaTeX-encoded (same as passing the value in `bibtex`)
-    - `url`: encode as verbatim url
+      - `latex`: encode markup and special characters to LaTeX. This is the default, if you don't provide an `enc` parameter, `latex` is assumed
+      - `verbatim`: encode under `verbatim` rules
+      - `literal`: encode under `literal` rules
+      - `raw`: assume `value` is already LaTeX-encoded (same as passing the value in `bibtex`)
+      - `url`: encode as verbatim url
   - `sep`: if `value` is an array, and `enc` is `latex`, encode each array element using `latex` and join the results with the string in `sep`. Defaults to an empty string.
   - `html`: boolean indicating whether the `value` is full HTML (really only useful for notes)
 
