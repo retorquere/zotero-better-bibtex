@@ -9,6 +9,8 @@ tags:
   - cite as you write
 ---
 
+**PSA: as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; `curl` and other programmatic access will work. In 5.0.71 and 5.0.72 you were required to send a `User-Agent` header (anything will work, as long as it's there, `curl` sends a user-agent header by default); as of 5.0.73, the user agent requirement was [dropped](https://forums.zotero.org/discussion/78502/http-user-agents-that-dont-identify-fail-for-zotero-v5-0-71).**
+
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration! 
 
 ## Editor integration
@@ -118,8 +120,6 @@ For example, if you call up [http://127.0.0.1:23119/better-bibtex/cayw?format=mm
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
-
-Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; `curl` and other programmatic access will work if you make sure you send a `User-Agent` header (`curl` does so by default).
 
 ## Playing around
 
