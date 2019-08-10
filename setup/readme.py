@@ -26,7 +26,7 @@ title: Sponsoring BBT
 appendto = index
 for line in readme.split('\n'):
   if 'gitter' in line: continue
-  if line.startswith('# ') and 'sponsor' in line.lower():
+  if line.startswith('## ') and 'sponsor' in line.lower():
     appendto = sponsoring
     continue
 
