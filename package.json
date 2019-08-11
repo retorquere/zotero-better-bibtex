@@ -79,7 +79,7 @@
     "pegjs": "0.10.0",
     "permutater": "^1.0.2",
     "punycode": "2.1.1",
-    "recast": "0.18.1",
+    "recast": "0.18.2",
     "string-template": "1.0.0",
     "transliteration": "2.1.5",
     "tslint": "5.18.0",
