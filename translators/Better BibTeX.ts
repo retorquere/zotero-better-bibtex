@@ -400,7 +400,7 @@ class ZoteroItem {
 
     if (!this.item[field]) this.item[field] = ''
     if (this.item[field]) this.item[field] += ' / '
-    this.item[field] += value.map(this.unparse).join(' and ').replace(/[ \t\r\n]+/g, ' ')
+    this.item[field] += value.map(v => this.unparse(v)).join(' and ').replace(/[ \t\r\n]+/g, ' ')
     return true
   }
   protected $institution(value) { return this.$publisher(value) }
@@ -696,7 +696,7 @@ class ZoteroItem {
   protected $language(value, field) {
     let language
     if (field === 'language') {
-      language = value.map(this.unparse).join(' and ')
+      language = value.map(v => this.unparse(v)).join(' and ')
     } else {
       language = this.unparse(value)
     }

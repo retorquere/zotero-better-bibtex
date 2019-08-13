@@ -25,7 +25,7 @@
       "itemType": "book",
       "place": "New York",
       "publisher": "Dover",
-      "title": "Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables"
+      "title": "Handbook of mathematical functions with formulas, graphs, and mathematical tables"
     },
     {
       "ISBN": "0-385-52740-3",
@@ -46,7 +46,7 @@
       "itemID": 1,
       "itemType": "book",
       "publisher": "Doubleday",
-      "title": "The Yankee Years"
+      "title": "The yankee years"
     }
   ]
 }

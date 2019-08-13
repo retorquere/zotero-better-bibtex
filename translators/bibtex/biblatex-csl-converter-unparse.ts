@@ -8,7 +8,6 @@ const map = {
     nocase: { open: '<span class="nocase">', close: '</span>' },
     enquote: { open: '“', close: '”' },
     url: { open: '', close: '' },
-    undefined: { open: '[', close: ']' },
   },
 
   sup: {
@@ -150,12 +149,7 @@ export function unparse(text, options: { condense?: boolean, sentenceCase?: bool
   // split out sup/sub text that can be unicodified
   const chunks = []
   for (const node of text) {
-    if (node.type === 'variable') {
-      chunks.push({text: node.attrs.variable, marks: []})
-      continue
-    }
-
-    if (!node.marks) {
+    if (node.type === 'variable' || !node.marks) {
       chunks.push(node)
       continue
     }
@@ -202,8 +196,11 @@ export function unparse(text, options: { condense?: boolean, sentenceCase?: bool
     if (node.type === 'variable') {
       // This is an undefined variable
       // This should usually not happen, as CSL doesn't know what to
-      // do with these. We'll put them into an unsupported tag.
-      html += `${map.tags.undefined.open}${node.attrs.variable}${map.tags.undefined.close}`
+      // do with these.
+
+      if (!nocase.length || typeof nocase[0][1] === 'number') nocase.unshift([html.length, html.length + node.attrs.variable.length])
+      html += node.attrs.variable
+
       continue
     }
 

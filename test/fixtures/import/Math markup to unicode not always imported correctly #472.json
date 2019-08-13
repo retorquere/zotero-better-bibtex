@@ -1,20 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.127.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
+      "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
@@ -22,127 +38,140 @@
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFormat": "[auth][year]",
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
       "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
       "scrubDatabase": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
       "strings": "",
+      "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": {
-      "BetterBibTeX": "5.0.77.emile.manchineel",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.33",
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.13",
-        "platform": "MacIntel",
-        "version": "5.0.33"
-      }
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     }
   },
+  "collections": {},
   "items": [
     {
-      "DOI": "10.1109/JPROC.2016.2526118",
-      "abstractNote": "Abstract here",
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Doe"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Smith"
-        }
-      ],
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "300-301",
       "date": "2016-02",
-      "dateAdded": "2018-01-16 16:17:07",
-      "dateModified": "2018-01-16 16:17:07",
       "extra": "Citation Key: test_citation1 \nISSN: 0193-6530",
-      "itemID": 57,
-      "itemType": "conferencePaper",
-      "notes": [],
-      "pages": "300-301",
-      "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [],
-      "tags": [
-        {
-          "tag": "Keyword 1",
-          "type": 0
-        },
-        {
-          "tag": "Keyword 2",
-          "type": 0
-        }
-      ],
-      "title": "Test Title With 100\u00a0\u03bcJ, 200\u2009\u03bcJ Energy, and \u00b10.1% Accuracy, 0.2\u2009mm\u00b2 Size, and -50\u2009dB Attenuation"
-    },
-    {
       "DOI": "10.1109/JPROC.2016.2526118",
       "abstractNote": "Abstract here",
-      "attachments": [],
+      "title": "<span class=\"nocase\">T</span>est <span class=\"nocase\">T</span>itle <span class=\"nocase\">W</span>ith 100 μ<span class=\"nocase\">J</span>, 200 <span class=\"nocase\">μJ</span> <span class=\"nocase\">E</span>nergy, and ±0.1% <span class=\"nocase\">A</span>ccuracy, 0.2 mm² <span class=\"nocase\">S</span>ize, and -50 d<span class=\"nocase\">B</span> <span class=\"nocase\">A</span>ttenuation",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "J.",
-          "lastName": "Doe"
+          "lastName": "Doe",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "R.",
-          "lastName": "Smith"
+          "lastName": "Smith",
+          "creatorType": "author"
         }
       ],
-      "date": "2016-02",
-      "dateAdded": "2018-01-16 16:17:07",
-      "dateModified": "2018-01-16 16:17:07",
-      "extra": "Citation Key: test_citation2 \nISSN: 0193-6530",
-      "itemID": 58,
-      "itemType": "conferencePaper",
-      "notes": [],
-      "pages": "300-301",
-      "publicationTitle": "IEEE_J_PROC",
-      "seeAlso": [],
       "tags": [
-        {
-          "tag": "Keyword 1",
-          "type": 0
-        },
-        {
-          "tag": "Keyword 2",
-          "type": 0
-        }
+        "Keyword 1",
+        "Keyword 2"
       ],
-      "title": "Test Title with space\u2003quad, space\u2004semi-colon, space\u205fcolon, space\u2009comma, space\u00a0nbsp"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-13T16:19:07Z",
+      "dateModified": "2019-08-13T16:19:07Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NCUF2SI6",
+      "attachments": [],
+      "notes": [],
+      "itemID": 102,
+      "key": "NCUF2SI6",
+      "citekey": "test_citation1",
+      "citationKey": "test_citation1",
+      "libraryID": 1,
+      "publicationTitle": "IEEE_J_PROC"
     },
     {
-      "dateAdded": "2018-01-16 16:17:07",
-      "dateModified": "2018-01-16 16:17:07",
-      "itemID": 56,
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "300-301",
+      "date": "2016-02",
+      "extra": "Citation Key: test_citation2 \nISSN: 0193-6530",
+      "DOI": "10.1109/JPROC.2016.2526118",
+      "abstractNote": "Abstract here",
+      "title": "<span class=\"nocase\">T</span>est <span class=\"nocase\">T</span>itle with space quad, space semi-colon, space colon, space comma, space nbsp",
+      "creators": [
+        {
+          "firstName": "J.",
+          "lastName": "Doe",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "R.",
+          "lastName": "Smith",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "Keyword 1",
+        "Keyword 2"
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-13T16:19:08Z",
+      "dateModified": "2019-08-13T16:19:08Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/4IKBTDI3",
+      "attachments": [],
+      "notes": [],
+      "itemID": 103,
+      "key": "4IKBTDI3",
+      "citekey": "test_citation2",
+      "citationKey": "test_citation2",
+      "libraryID": 1,
+      "publicationTitle": "IEEE_J_PROC"
+    },
+    {
+      "version": 0,
       "itemType": "note",
       "note": "Import errors found: <ul><li>line 4: undefined variable 'IEEE_J_PROC'</li><li>line 17: undefined variable 'IEEE_J_PROC'</li></ul>",
       "tags": [
-        {
-          "tag": "#Better BibTeX import error",
-          "type": 0
-        }
-      ]
+        "#Better BibTeX import error"
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-13T16:19:08Z",
+      "dateModified": "2019-08-13T16:19:08Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JLBXUWXE",
+      "itemID": 104,
+      "key": "JLBXUWXE",
+      "attachments": [],
+      "notes": []
     }
   ]
 }
