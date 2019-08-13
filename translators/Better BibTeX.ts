@@ -9,6 +9,7 @@ import * as escape from '../content/escape'
 
 import JSON5 = require('json5')
 import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
+import { unparse } from './bibtex/biblatex-csl-converter-unparse'
 import { valid as validFields } from '../gen/itemfields'
 import { arXiv } from '../content/arXiv'
 
@@ -299,18 +300,6 @@ function importGroup(group, itemIDs, root = null) {
 }
 
 class ZoteroItem {
-  public tags = {
-    strong: { open: '<b>', close: '</b>' },
-    em: { open: '<i>', close: '</i>' },
-    sub: { open: '<sub>', close: '</sub>' },
-    sup: { open: '<sup>', close: '</sup>' },
-    smallcaps: { open: '<span style="font-variant:small-caps;">', close: '</span>' },
-    nocase: { open: '', close: '' },
-    enquote: { open: '“', close: '”' },
-    url: { open: '', close: '' },
-    undefined: { open: '[', close: ']' },
-  }
-
   public groups: any // comes from biblatex parser
 
   protected item: any
@@ -337,125 +326,6 @@ class ZoteroItem {
     report:         'report',
   }
 
-  private sup = {
-    '(': '\u207D',
-    ')': '\u207E',
-    '+': '\u207A',
-    '=': '\u207C',
-    '-': '\u207B',
-    '\u00C6': '\u1D2D', // tslint:disable-line:object-literal-key-quotes
-    '\u014B': '\u1D51', // tslint:disable-line:object-literal-key-quotes
-    '\u018E': '\u1D32', // tslint:disable-line:object-literal-key-quotes
-    '\u0222': '\u1D3D', // tslint:disable-line:object-literal-key-quotes
-    '\u0250': '\u1D44', // tslint:disable-line:object-literal-key-quotes
-    '\u0251': '\u1D45', // tslint:disable-line:object-literal-key-quotes
-    '\u0254': '\u1D53', // tslint:disable-line:object-literal-key-quotes
-    '\u0259': '\u1D4A', // tslint:disable-line:object-literal-key-quotes
-    '\u025B': '\u1D4B', // tslint:disable-line:object-literal-key-quotes
-    '\u025C': '\u1D4C', // tslint:disable-line:object-literal-key-quotes
-    '\u0263': '\u02E0', // tslint:disable-line:object-literal-key-quotes
-    '\u0266': '\u02B1', // tslint:disable-line:object-literal-key-quotes
-    '\u026F': '\u1D5A', // tslint:disable-line:object-literal-key-quotes
-    '\u0279': '\u02B4', // tslint:disable-line:object-literal-key-quotes
-    '\u027B': '\u02B5', // tslint:disable-line:object-literal-key-quotes
-    '\u0281': '\u02B6', // tslint:disable-line:object-literal-key-quotes
-    '\u0294': '\u02C0', // tslint:disable-line:object-literal-key-quotes
-    '\u0295': '\u02C1', // tslint:disable-line:object-literal-key-quotes
-    '\u03B2': '\u1D5D', // tslint:disable-line:object-literal-key-quotes
-    '\u03B3': '\u1D5E', // tslint:disable-line:object-literal-key-quotes
-    '\u03B4': '\u1D5F', // tslint:disable-line:object-literal-key-quotes
-    '\u03C6': '\u1D60', // tslint:disable-line:object-literal-key-quotes
-    '\u03C7': '\u1D61', // tslint:disable-line:object-literal-key-quotes
-    '\u1D02': '\u1D46', // tslint:disable-line:object-literal-key-quotes
-    '\u1D16': '\u1D54', // tslint:disable-line:object-literal-key-quotes
-    '\u1D17': '\u1D55', // tslint:disable-line:object-literal-key-quotes
-    '\u1D1D': '\u1D59', // tslint:disable-line:object-literal-key-quotes
-    '\u1D25': '\u1D5C', // tslint:disable-line:object-literal-key-quotes
-    '\u2212': '\u207B', // tslint:disable-line:object-literal-key-quotes
-    '\u2218': '\u00B0', // tslint:disable-line:object-literal-key-quotes
-    '\u4E00': '\u3192', // tslint:disable-line:object-literal-key-quotes
-    0: '\u2070',
-    1: '\u00B9',
-    2: '\u00B2',
-    3: '\u00B3',
-    4: '\u2074',
-    5: '\u2075',
-    6: '\u2076',
-    7: '\u2077',
-    8: '\u2078',
-    9: '\u2079',
-    A: '\u1D2C',
-    B: '\u1D2E',
-    D: '\u1D30',
-    E: '\u1D31',
-    G: '\u1D33',
-    H: '\u1D34',
-    I: '\u1D35',
-    J: '\u1D36',
-    K: '\u1D37',
-    L: '\u1D38',
-    M: '\u1D39',
-    N: '\u1D3A',
-    O: '\u1D3C',
-    P: '\u1D3E',
-    R: '\u1D3F',
-    T: '\u1D40',
-    U: '\u1D41',
-    W: '\u1D42',
-    a: '\u1D43',
-    b: '\u1D47',
-    d: '\u1D48',
-    e: '\u1D49',
-    g: '\u1D4D',
-    h: '\u02B0',
-    i: '\u2071',
-    j: '\u02B2',
-    k: '\u1D4F',
-    l: '\u02E1',
-    m: '\u1D50',
-    n: '\u207F',
-    o: '\u1D52',
-    p: '\u1D56',
-    r: '\u02B3',
-    s: '\u02E2',
-    t: '\u1D57',
-    u: '\u1D58',
-    v: '\u1D5B',
-    w: '\u02B7',
-    x: '\u02E3',
-    y: '\u02B8',
-  }
-
-  private sub = {
-    0: '\u2080',
-    1: '\u2081',
-    2: '\u2082',
-    3: '\u2083',
-    4: '\u2084',
-    5: '\u2085',
-    6: '\u2086',
-    7: '\u2087',
-    8: '\u2088',
-    9: '\u2089',
-    '+': '\u208A',
-    '-': '\u208B',
-    '=': '\u208C',
-    '(': '\u208D',
-    ')': '\u208E',
-    a: '\u2090',
-    e: '\u2091',
-    o: '\u2092',
-    x: '\u2093',
-    h: '\u2095',
-    k: '\u2096',
-    l: '\u2097',
-    m: '\u2098',
-    n: '\u2099',
-    p: '\u209A',
-    s: '\u209B',
-    t: '\u209C',
-  }
-
   private fields: any // comes from biblatex parser
   private type: string
   private hackyFields: string[]
@@ -463,6 +333,7 @@ class ZoteroItem {
   private extra: { data: { [key: string]: string }, json: boolean }
   private validFields: Map<string, boolean>
   private numberPrefix: string
+  private sentenceCase: boolean
 
   constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
@@ -879,122 +750,7 @@ class ZoteroItem {
   }
 
   private unparse(text, condense = true): string {
-    debug('unparsing', text)
-    if (Array.isArray(text) && Array.isArray(text[0])) return text.map(t => this.unparse(t)).join(' and ')
-
-    if (['string', 'number'].includes(typeof text)) return text
-
-    if (!Array.isArray(text)) text = [ text ]
-
-    // split out sup/sub text that can be unicodified
-    const chunks = []
-    for (const node of text) {
-      if (node.type === 'variable') {
-        chunks.push({text: node.attrs.variable, marks: []})
-        continue
-      }
-
-      if (!node.marks) {
-        chunks.push(node)
-        continue
-      }
-
-      let sup = false
-      let sub = false
-      const nosupb = node.marks.filter(mark => {
-        sup = sup || mark.type === 'sup'
-        sub = sub || mark.type === 'sub'
-        return !['sup', 'sub'].includes(mark.type)
-      })
-
-      if (sup === sub) { // !xor
-        chunks.push(node)
-        continue
-      }
-
-      const tr = sup ? this.sup : this.sub
-      let unicoded = ''
-      for (const c of Zotero.Utilities.XRegExp.split(node.text, '')) {
-        if (sup && c === '\u00B0') { // spurious mark
-          unicoded += c
-        } else if (tr[c]) {
-          unicoded += tr[c]
-        } else {
-          unicoded = null
-          break
-        }
-      }
-      if (unicoded) {
-        node.text = unicoded
-        node.marks = nosupb
-      }
-      chunks.push(node)
-    }
-
-//        switch
-//          when tr[c] && (i == 0 || !chunks[chunks.length - 1].unicoded) # can be replaced but not appended
-//            chunks.push({text: tr[c], marks: nosupb, unicoded: true})
-//          when tr[c]
-//            chunks[chunks.length - 1].text += tr[c] # can be replaced and appended
-//          when i == 0 || chunks[chunks.length - 1].unicoded # cannot be replaced and and cannot be appended
-//            chunks.push({text: c, marks: node.marks})
-//          else
-//            chunks[chunks.length - 1].text += c # cannot be replaced but can be appended
-
-    // convert to string
-    let html = ''
-    let lastMarks = []
-    for (const node of chunks) {
-      if (node.type === 'variable') {
-        // This is an undefined variable
-        // This should usually not happen, as CSL doesn't know what to
-        // do with these. We'll put them into an unsupported tag.
-        html += `${this.tags.undefined.open}${node.attrs.variable}${this.tags.undefined.close}`
-        continue
-      }
-
-      const newMarks = []
-      if (node.marks) {
-        for (const mark of node.marks) {
-          newMarks.push(mark.type)
-        }
-      }
-
-      // close all tags that are not present in current text node.
-      let closing = false
-      const closeTags = []
-      for (let index = 0; index < lastMarks.length; index++) {
-        const mark = lastMarks[index]
-        if (mark !== newMarks[index]) closing = true
-        if (closing) closeTags.push(this.tags[mark].close)
-      }
-      // Add close tags in reverse order to close innermost tags
-      // first.
-      closeTags.reverse()
-
-      html += closeTags.join('')
-      // open all new tags that were not present in the last text node.
-      let opening = false
-      for (let index = 0; index < newMarks.length; index++) {
-        const mark = newMarks[index]
-        if (mark !== lastMarks[index]) opening = true
-        if (opening) html += this.tags[mark].open
-      }
-
-      html += node.text
-      lastMarks = newMarks
-    }
-
-    // Close all still open tags
-    for (const mark of lastMarks.slice().reverse()) {
-      html += this.tags[mark].close
-    }
-
-    html = html.replace(/ \u00A0/g, ' ~') // if allowtilde
-    html = html.replace(/\u00A0 /g, '~ ') // if allowtilde
-    // html = html.replace(/\uFFFD/g, '') # we have no use for the unicode replacement character
-
-    return condense ? html.replace(/[\t\r\n ]+/g, ' ') : html
+    return unparse(text, { enquote: Translator.preferences.csquotes, condense, sentenceCase: this.sentenceCase })
   }
 
   private unparseNamelist(names, creatorType): Array<{lastName?: string, firstName?: string, fieldMode?: number, creatorType: string }> {
@@ -1029,6 +785,8 @@ class ZoteroItem {
 
     debug('importing bibtex:', this.bibtex, this.fields)
     for (const [field, value] of Object.entries(this.fields)) {
+      this.sentenceCase = Reference.prototype.caseConversion[field]
+
       if (field.match(/^local-zo-url-[0-9]+$/)) {
         if (this.$file(value)) continue
       } else if (field.match(/^bdsk-url-[0-9]+$/)) {
@@ -1194,10 +952,6 @@ Translator.doImport = async () => {
 
   const ignoreErrors = new Set(['alias_creates_duplicate_field', 'unexpected_field', 'unknown_date', 'unknown_field']) // ignore these -- biblatex-csl-converter considers these errors, I don't
   const errors = bib.errors.concat(bib.warnings).filter(err => !ignoreErrors.has(err.type))
-
-  if (Translator.preferences.csquotes) {
-    ZoteroItem.prototype.tags.enquote = { open: Translator.preferences.csquotes[0], close: Translator.preferences.csquotes[1]}
-  }
 
   const whitelist = bib.comments
     .filter(comment => comment.startsWith('zotero-better-bibtex:whitelist:'))
