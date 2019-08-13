@@ -74,7 +74,7 @@
     "kuroshiro-analyzer-kuromoji": "1.1.0",
     "lokijs": "1.5.7",
     "node-eta": "0.9.0",
-    "npm-check-updates": "^3.1.20",
+    "npm-check-updates": "^3.1.21",
     "parse5": "5.1.0",
     "pegjs": "0.10.0",
     "permutater": "^1.0.2",
@@ -83,7 +83,7 @@
     "string-template": "1.0.0",
     "transliteration": "2.1.5",
     "tslint": "5.18.0",
-    "unicode2latex": "^1.0.17",
+    "unicode2latex": "^1.0.19",
     "webpack-cli": "3.3.6",
     "xregexp": "4.2.4",
     "zotero-plugin": "0.0.85"
