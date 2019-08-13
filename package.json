@@ -53,7 +53,7 @@
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
     "barcoder": "2.0.1",
-    "biblatex-csl-converter": "1.6.8",
+    "biblatex-csl-converter": "1.6.9",
     "edtf": "2.6.3",
     "edtfy": "0.0.8",
     "escape-string-regexp": "2.0.0",
