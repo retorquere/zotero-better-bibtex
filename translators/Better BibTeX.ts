@@ -19,6 +19,11 @@ Reference.prototype.caseConversion = {
   shorttitle: true,
   booktitle: true,
   type: true,
+
+  // only for imports
+  origtitle: true,
+  maintitle: true,
+  eventtitle: true,
 }
 
 Reference.prototype.fieldEncoding = {
@@ -334,6 +339,7 @@ class ZoteroItem {
   private validFields: Map<string, boolean>
   private numberPrefix: string
   private sentenceCase: boolean
+  private english = 'English'
 
   constructor(private id: string, private bibtex: any, private jabref: { groups: any[], meta: { [key: string]: string } }) {
     this.bibtex.bib_type = this.bibtex.bib_type.toLowerCase()
@@ -707,7 +713,7 @@ class ZoteroItem {
       case 'eng':
       case 'usenglish':
       case 'english':
-        language = 'English'
+        language = this.english
         break
     }
     this.set('language', language)
@@ -750,7 +756,7 @@ class ZoteroItem {
   }
 
   private unparse(text, condense = true): string {
-    return unparse(text, { enquote: Translator.preferences.csquotes, condense, sentenceCase: this.sentenceCase })
+    return unparse(text, { enquote: Translator.preferences.csquotes, condense, nocase: !Translator.preferences.suppressBraceProtection, sentenceCase: this.sentenceCase })
   }
 
   private unparseNamelist(names, creatorType): Array<{lastName?: string, firstName?: string, fieldMode?: number, creatorType: string }> {
@@ -784,8 +790,13 @@ class ZoteroItem {
     }
 
     debug('importing bibtex:', this.bibtex, this.fields)
-    for (const [field, value] of Object.entries(this.fields)) {
-      this.sentenceCase = Reference.prototype.caseConversion[field]
+
+    // get language to the front because we need it set for sentence case detection
+    let fields = Object.entries(this.fields)
+    fields = fields.filter(fv => ['language', 'langid'].includes(fv[0])).concat(fields.filter(fv => !['language', 'langid'].includes(fv[0])))
+
+    for (const [field, value] of fields) {
+      this.sentenceCase = !Translator.preferences.suppressTitleCase && (!this.item.language || this.item.language === this.english) && Reference.prototype.caseConversion[field]
 
       if (field.match(/^local-zo-url-[0-9]+$/)) {
         if (this.$file(value)) continue
@@ -805,6 +816,7 @@ class ZoteroItem {
           break
 
         default:
+          this.sentenceCase = false
           this.addToExtraData(field, this.unparse(value))
           break
       }

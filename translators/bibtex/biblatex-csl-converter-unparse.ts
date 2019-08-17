@@ -130,8 +130,9 @@ const map = {
   },
 }
 
-export function unparse(text, options: { condense?: boolean, sentenceCase?: boolean, enquote?: string} = {}): string {
+export function unparse(text, options: { condense?: boolean, nocase?: boolean, sentenceCase?: boolean, enquote?: string} = {}): string {
   if (typeof options.condense === 'undefined') options.condense = true
+  if (typeof options.nocase === 'undefined') options.nocase = true
 
   if (options.enquote) {
     map.tags.enquote = { open: options.enquote[0], close: options.enquote[1] }
@@ -154,7 +155,7 @@ export function unparse(text, options: { condense?: boolean, sentenceCase?: bool
       continue
     }
 
-    node.marks = node.marks.filter(mark => mark.type !== 'nocase').concat(node.marks.filter(mark => options.sentenceCase && mark.type === 'nocase'))
+    node.marks = node.marks.filter(mark => mark.type !== 'nocase').concat(options.nocase ? node.marks.filter(mark => options.sentenceCase && mark.type === 'nocase') : [])
 
     let sup = false
     let sub = false
@@ -198,7 +199,7 @@ export function unparse(text, options: { condense?: boolean, sentenceCase?: bool
       // This should usually not happen, as CSL doesn't know what to
       // do with these.
 
-      if (!nocase.length || typeof nocase[0][1] === 'number') nocase.unshift([html.length, html.length + node.attrs.variable.length])
+      if (options.nocase && (!nocase.length || typeof nocase[0][1] === 'number')) nocase.unshift([html.length, html.length + node.attrs.variable.length])
       html += node.attrs.variable
 
       continue
@@ -252,6 +253,7 @@ export function unparse(text, options: { condense?: boolean, sentenceCase?: bool
   for (const mark of lastMarks.slice().reverse()) {
     html += map.tags[mark].close
   }
+  if (options.sentenceCase && lastMarks.find(mark => mark === 'nocase')) nocase[0][1] = html.length
 
   html = html.replace(/ \u00A0/g, ' ~') // if allowtilde
   html = html.replace(/\u00A0 /g, '~ ') // if allowtilde
