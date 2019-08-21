@@ -51,7 +51,7 @@ Scenario Outline: Better BibTeX Import
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
-  | BibTeX import; preamble with def create problems #732                       | 2           |
+  | BibTeX import; preamble with def create problems #732                       | 1           |
   | space after citekey creates confusion #716                                  | 2           |
   | Endnote should parse                                                        | 1           |
   | Author splitter failure                                                     | 1           |

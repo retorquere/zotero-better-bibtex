@@ -5,7 +5,7 @@ declare const Zotero: any
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
-import * as biblatex from 'biblatex-csl-converter/src/import/biblatex'
+import * as bibtexParser from '@retorquere/bibtex-parser'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
@@ -25,11 +25,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     if (!Translator.BetterTeX || !Translator.preferences.strings) return
 
     if (Translator.preferences.exportBibTeXStrings === 'match') {
-      this.strings = biblatex.parse(Translator.preferences.strings, {
-        processUnexpected: true,
-        processUnknown: { comment: 'f_verbatim' },
-        processInvalidURIs: true,
-      }).strings
+      this.strings = (bibtexParser.parse(Translator.preferences.strings, { markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}) }) as bibtexParser.Bibliography).strings
     }
 
     /*

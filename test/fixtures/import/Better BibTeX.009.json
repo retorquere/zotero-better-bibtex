@@ -1,134 +1,227 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.127.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
-      "autoAbbrev": true,
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
       "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
       "citekeyFormat": "[auth][year]",
-      "skipFields": ""
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
+      "strings": "",
+      "suppressBraceProtection": false,
+      "suppressTitleCase": false,
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": "0.8.40"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
   },
+  "collections": {},
   "items": [
     {
-      "attachments": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Nancy K",
-          "lastName": "Adams"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Shanaka L",
-          "lastName": "DeSilva"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Self"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Guido",
-          "lastName": "Salas"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Steven",
-          "lastName": "Schubring"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Jason L",
-          "lastName": "Permenter"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Kendra",
-          "lastName": "Arbesman"
-        }
-      ],
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "62",
+      "pages": "493-518",
+      "publicationTitle": "Bulletin of Volcanology",
       "date": "2001",
       "extra": "Citation Key: Adams2001",
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "pages": "493-518",
-      "publicationTitle": "Bulletin of Volcanology",
-      "tags": [
-        "Vulcanian eruptions",
-        "breadcrust",
-        "plinian"
-      ],
       "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62"
-    },
-    {
-      "attachments": [],
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Nancy K",
-          "lastName": "Adams"
+          "lastName": "Adams",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Shanaka L",
-          "lastName": "DeSilva"
+          "lastName": "DeSilva",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Self"
+          "lastName": "Self",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Guido",
-          "lastName": "Salas"
+          "lastName": "Salas",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Steven",
-          "lastName": "Schubring"
+          "lastName": "Schubring",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Jason L",
-          "lastName": "Permenter"
+          "lastName": "Permenter",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Kendra",
-          "lastName": "Arbesman"
+          "lastName": "Arbesman",
+          "creatorType": "author"
         }
       ],
-      "date": "2001",
-      "extra": "Citation Key: Adams2002",
-      "itemID": 3,
-      "itemType": "journalArticle",
-      "pages": "493-518",
-      "publicationTitle": "Bulletin of Volcanology",
       "tags": [
-        "Vulcanian eruptions",
         "breadcrust",
-        "plinian"
+        "plinian",
+        "Vulcanian eruptions"
       ],
-      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-      "volume": "62"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-21T08:25:40Z",
+      "dateModified": "2019-08-21T08:25:40Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YL6W3WI5",
+      "attachments": [],
+      "notes": [],
+      "itemID": 307,
+      "key": "YL6W3WI5",
+      "citekey": "Adams2001",
+      "citationKey": "Adams2001",
+      "libraryID": 1
     },
     {
-      "itemID": 4,
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "62",
+      "pages": "493-518",
+      "publicationTitle": "Bulletin of Volcanology",
+      "date": "2001",
+      "extra": "Citation Key: Adams2002",
+      "title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
+      "creators": [
+        {
+          "firstName": "Nancy K",
+          "lastName": "Adams",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Shanaka L",
+          "lastName": "DeSilva",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Self",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Guido",
+          "lastName": "Salas",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Steven",
+          "lastName": "Schubring",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jason L",
+          "lastName": "Permenter",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Kendra",
+          "lastName": "Arbesman",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        "breadcrust",
+        "plinian",
+        "Vulcanian eruptions"
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-21T08:25:40Z",
+      "dateModified": "2019-08-21T08:25:40Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NQX2YJVB",
+      "attachments": [],
+      "notes": [],
+      "itemID": 308,
+      "key": "NQX2YJVB",
+      "citekey": "Adams2002",
+      "citationKey": "Adams2002",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 12: incomplete reference @emptyreference</li></ul>",
+      "note": "Import errors found: <ul><li>No fields in @emptyreference</li></ul>",
       "tags": [
         "#Better BibTeX import error"
-      ]
+      ],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-21T08:25:41Z",
+      "dateModified": "2019-08-21T08:25:41Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJCS23Z8",
+      "itemID": 309,
+      "key": "HJCS23Z8",
+      "attachments": [],
+      "notes": []
     }
   ]
 }

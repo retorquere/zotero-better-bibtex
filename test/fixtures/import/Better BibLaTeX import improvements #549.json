@@ -1,143 +1,333 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
+    "label": "BetterBibTeX JSON",
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.127.emile.limonia"
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
+      "csquotes": "",
+      "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
+      "itemObserverDelay": 100,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
+      "postscript": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
+      "strings": "",
+      "suppressBraceProtection": false,
+      "suppressTitleCase": false,
+      "warnBulkModify": 10,
+      "testing": true
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
   },
+  "collections": {},
   "items": [
     {
-      "creators": [
-        {
-          "creatorType": "author",
-          "name": "01e"
-        }
-      ],
+      "version": 0,
+      "itemType": "journalArticle",
       "extra": "Citation Key: 1e",
-      "itemID": 1,
-      "itemType": "journalArticle",
-      "title": "Blah <i>emph</i> and \u201cenquote\u201d."
-    },
-    {
+      "title": "Blah <i>emph</i> and “enquote”.",
       "creators": [
         {
-          "creatorType": "author",
-          "name": "01b"
+          "name": "01e",
+          "creatorType": "author"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/32PD64U3",
+      "attachments": [],
+      "notes": [],
+      "itemID": 287,
+      "key": "32PD64U3",
+      "citekey": "1e",
+      "citationKey": "1e",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "journalArticle",
       "extra": "Citation Key: 1b",
-      "itemID": 2,
-      "itemType": "journalArticle",
-      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d."
-    },
-    {
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
       "creators": [
         {
-          "creatorType": "author",
-          "name": "02e"
+          "name": "01b",
+          "creatorType": "author"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HZT27KC2",
+      "attachments": [],
+      "notes": [],
+      "itemID": 288,
+      "key": "HZT27KC2",
+      "citekey": "1b",
+      "citationKey": "1b",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "book",
       "extra": "Citation Key: 2e",
-      "itemID": 3,
-      "itemType": "book",
-      "title": "Blah <i>emph</i> and \u201cenquote\u201d."
-    },
-    {
+      "title": "Blah <i>emph</i> and “enquote”.",
       "creators": [
         {
-          "creatorType": "author",
-          "name": "02b"
+          "name": "02e",
+          "creatorType": "author"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/2TNUJ6WP",
+      "attachments": [],
+      "notes": [],
+      "itemID": 289,
+      "key": "2TNUJ6WP",
+      "citekey": "2e",
+      "citationKey": "2e",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "book",
       "extra": "Citation Key: 2b",
-      "itemID": 4,
-      "itemType": "book",
-      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d."
-    },
-    {
+      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
       "creators": [
         {
-          "creatorType": "author",
-          "firstName": "David Christopher",
-          "lastName": "Bennett"
+          "name": "02b",
+          "creatorType": "author"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/Z2UNLUK9",
+      "attachments": [],
+      "notes": [],
+      "itemID": 290,
+      "key": "Z2UNLUK9",
+      "citekey": "2b",
+      "citationKey": "2b",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "thesis",
       "date": "2003",
       "extra": "Citation Key: Bennett2003",
-      "itemID": 5,
-      "itemType": "thesis",
+      "title": "Xenonika: medical texts associated with xenones in the late byzantine period",
+      "creators": [
+        {
+          "firstName": "David Christopher",
+          "lastName": "Bennett",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QRYE8GWA",
+      "attachments": [],
+      "notes": [],
+      "itemID": 291,
+      "key": "QRYE8GWA",
+      "citekey": "Bennett2003",
+      "citationKey": "Bennett2003",
+      "libraryID": 1,
       "publisher": "University of London",
-      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
       "type": "Ph.D."
     },
     {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Glen",
-          "lastName": "Cooper"
-        }
-      ],
-      "date": "2013",
-      "extra": "Citation Key: Cooper2013 \nbibtex*[crossref=Classen2013]",
-      "itemID": 6,
+      "version": 0,
       "itemType": "bookSection",
       "pages": "263-87",
-      "title": "Byzantium between East and West: Competing Hellenisms in the <i>Alexiad</i> of Anna Komnene and her Contemporaries"
-    },
-    {
+      "date": "2013",
+      "extra": "Citation Key: Cooper2013 \nbibtex*[crossref=Classen2013]",
+      "title": "Byzantium between east and west: competing hellenisms in the <i>alexiad</i> of anna komnene and her contemporaries",
       "creators": [
         {
-          "creatorType": "editor",
-          "firstName": "Paul",
-          "lastName": "Correns"
+          "firstName": "Glen",
+          "lastName": "Cooper",
+          "creatorType": "author"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/WRSMW36Z",
+      "attachments": [],
+      "notes": [],
+      "itemID": 292,
+      "key": "WRSMW36Z",
+      "citekey": "Cooper2013",
+      "citationKey": "Cooper2013",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "1",
+      "pages": "1-11",
+      "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
       "date": "1891",
       "extra": "Citation Key: Correns1891",
-      "itemID": 7,
-      "itemType": "journalArticle",
-      "pages": "1-11",
-      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
-      "title": "Die dem Boethius f\u00e4lschlich zugeschriebene Abhandlung des Dominicus Gundisalvi 'De unitate'",
-      "volume": "1"
-    },
-    {
+      "title": "Die dem boethius fälschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
       "creators": [
         {
-          "creatorType": "author",
-          "firstName": "Hamid",
-          "lastName": "Algar"
+          "firstName": "Paul",
+          "lastName": "Correns",
+          "creatorType": "editor"
         }
       ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XUVJ4T7A",
+      "attachments": [],
+      "notes": [],
+      "itemID": 293,
+      "key": "XUVJ4T7A",
+      "citekey": "Correns1891",
+      "citationKey": "Correns1891",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "encyclopediaArticle",
+      "volume": "4",
+      "pages": "172-4",
       "date": "1985",
       "extra": "Citation Key: Algar1985",
-      "itemID": 8,
-      "itemType": "encyclopediaArticle",
-      "pages": "172-4",
-      "publicationTitle": "Encyclopedia Iranica",
       "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "volume": "4"
-    },
-    {
       "creators": [
         {
-          "creatorType": "editor",
-          "firstName": "Anne",
-          "lastName": "van Arsdall"
-        },
-        {
-          "creatorType": "editor",
-          "firstName": "Timothy",
-          "lastName": "Graham"
+          "firstName": "Hamid",
+          "lastName": "Algar",
+          "creatorType": "author"
         }
       ],
-      "date": "2012",
-      "extra": "Citation Key: Arsdall2012",
-      "itemID": 9,
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RTMI3ZIR",
+      "attachments": [],
+      "notes": [],
+      "itemID": 294,
+      "key": "RTMI3ZIR",
+      "citekey": "Algar1985",
+      "citationKey": "Algar1985",
+      "libraryID": 1,
+      "publicationTitle": "Encyclopedia iranica"
+    },
+    {
+      "version": 0,
       "itemType": "book",
       "place": "Burlington, VT",
       "publisher": "Ashgate",
-      "title": "Herbs and Healers from the Ancient Mediterranean through the Medieval West: Essays in Honor of John M. Riddle"
+      "date": "2012",
+      "extra": "Citation Key: Arsdall2012",
+      "title": "Herbs and healers from the ancient mediterranean through the medieval west: essays in honor of john m. riddle",
+      "creators": [
+        {
+          "firstName": "Anne",
+          "lastName": "van Arsdall",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Timothy",
+          "lastName": "Graham",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:43:31Z",
+      "dateModified": "2019-08-20T15:43:31Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SHRSWJ25",
+      "attachments": [],
+      "notes": [],
+      "itemID": 295,
+      "key": "SHRSWJ25",
+      "citekey": "Arsdall2012",
+      "citationKey": "Arsdall2012",
+      "libraryID": 1
     }
   ]
 }

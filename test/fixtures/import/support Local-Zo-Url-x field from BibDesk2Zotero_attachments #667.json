@@ -1,90 +1,126 @@
 {
-  "cache": {
-    "items": []
-  },
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": true,
-      "exportFilename": "Exported Items.json",
-      "exportNotes": true,
-      "exportPath": "/Users/emile/Desktop/Exported Items.json"
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.127.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
+      "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
-      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
-      "autoExport": "idle",
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
-      "biblatexExtendedDateFormat": false,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
       "bibtexURL": "off",
       "cacheFlushInterval": 5,
       "citeCommand": "cite",
       "citekeyFold": true,
-      "citekeyFormat": "[zotero]",
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
-      "jabrefFormat": 4,
+      "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "scrubDatabase": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
+      "strings": "",
+      "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": "1.6.96"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
   },
+  "collections": {},
   "items": [
     {
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Roderick",
-          "lastName": "Abbott"
-        }
-      ],
-      "date": "2007",
-      "extra": "Citation Key: Abbott-2007-aa \nbibtex*[class=States & Markets 2009, Diss Tax & Democracy 2010ff;date-modified=2014-06-14 15:13:01 +0000]",
-      "itemID": 4,
+      "version": 0,
       "itemType": "report",
       "place": "Brussels, Belgium",
-      "publisher": "European Center for International Political Economy",
+      "date": "2007",
+      "extra": "Citation Key: Abbott-2007-aa \nbibtex*[class=States & Markets 2009, Diss Tax & Democracy 2010ff;date-modified=2014-06-14 15:13:01 +0000]",
+      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005",
+      "creators": [
+        {
+          "firstName": "Roderick",
+          "lastName": "Abbott",
+          "creatorType": "author"
+        }
+      ],
       "tags": [
         "Finance",
         "Markets",
         "Political Economy"
       ],
-      "title": "Are Developing Countries Deterred from Using the WTO Dispute Settlement System? - Participation of Developing Countries in the DSM in the years 1995-2005"
-    }
-  ],
-  "keymanager": [
-    {
-      "citekey": "acemoglu_why_2003",
-      "citekeyFormat": "format=[zotero],fold=true",
-      "itemID": 2,
-      "libraryID": null
-    },
-    {
-      "citekey": "acemoglu_why_2003-1",
-      "citekeyFormat": "format=[zotero],fold=true",
-      "itemID": 3,
-      "libraryID": null
-    },
-    {
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-20T15:45:04Z",
+      "dateModified": "2019-08-20T15:45:04Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FVRH9FL5",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "1",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-08-20T15:45:04Z",
+          "dateModified": "2019-08-20T15:45:04Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/8VZFW8AS/1.pdf"
+        }
+      ],
+      "notes": [],
+      "itemID": 296,
+      "key": "FVRH9FL5",
       "citekey": "Abbott-2007-aa",
-      "citekeyFormat": null,
-      "itemID": 4,
-      "libraryID": null
+      "citationKey": "Abbott-2007-aa",
+      "libraryID": 1,
+      "publisher": "European Center for International Political Economy"
     }
   ]
 }

@@ -82,12 +82,13 @@
       "version": 0,
       "itemType": "conferencePaper",
       "url": "http://is.muni.cz/publication/884893/en",
+      "place": "Valletta, Malta",
       "publisher": "ELRA",
       "pages": "45-50",
-      "date": "2010-05",
-      "extra": "Citation Key: rehurek_lrec \nbibtex*[day=22] \nevent-place: Valletta, Malta",
+      "date": "2010-05-22",
+      "extra": "Citation Key: rehurek_lrec",
       "language": "English",
-      "title": "<span class=\"nocase\">software framework for topic modelling with large corpora</span>",
+      "title": "Software Framework for Topic Modelling with Large Corpora",
       "creators": [
         {
           "firstName": "Radim",
@@ -103,17 +104,17 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-08-13T17:12:09Z",
-      "dateModified": "2019-08-13T17:12:09Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PID5SQ8E",
+      "dateAdded": "2019-08-18T23:14:06Z",
+      "dateModified": "2019-08-18T23:14:06Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VD7YCVXJ",
       "attachments": [],
       "notes": [],
       "itemID": 264,
-      "key": "PID5SQ8E",
+      "key": "VD7YCVXJ",
       "citekey": "rehurek_lrec",
       "citationKey": "rehurek_lrec",
       "libraryID": 1,
-      "publicationTitle": "<span class=\"nocase\">proceedings of the lrec 2010 workshop on new challenges for nlp frameworks</span>"
+      "publicationTitle": "Proceedings of the LREC 2010 Workshop on New Challenges for NLP Frameworks"
     }
   ]
 }

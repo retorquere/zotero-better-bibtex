@@ -1,21 +1,36 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false
+    "release": {
+      "Zotero": {
+        "version": "5.0.71",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.14",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.127.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
+      "ascii": "",
       "asciiBibLaTeX": false,
       "asciiBibTeX": true,
       "autoAbbrev": false,
       "autoAbbrevStyle": "",
       "autoExport": "immediate",
+      "autoExportDelay": 1,
       "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
       "autoPin": false,
+      "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
       "bibtexParticleNoOp": false,
@@ -27,118 +42,156 @@
       "citeprocNoteCitekey": false,
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "git": "config",
+      "importBibTeXStrings": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
       "lockedInit": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
       "quickCopyMode": "latex",
       "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
       "scrubDatabase": false,
       "skipFields": "",
       "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
       "sorted": false,
       "strings": "",
+      "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": {
-      "BetterBibTeX": "5.0.195.emile.titanarum",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.55",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Linux x86_64",
-        "platform": "Linux x86_64",
-        "version": "5.0.55"
-      }
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     }
   },
+  "collections": {},
   "items": [
     {
-      "ISSN": "1612-4642",
-      "attachments": [],
-      "citekey": "springerlink:10.1007/s10344-009-0327-7",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Isabel",
-          "lastName": "Barrio"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Pelayo",
-          "lastName": "Acevedo"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Francisco",
-          "lastName": "Tortosa"
-        }
-      ],
-      "date": "2010",
-      "dateAdded": "2018-08-28T14:44:57Z",
-      "dateModified": "2018-08-28T14:44:57Z",
-      "extra": "10.1007/s10344-009-0327-7 \nCitation Key: springerlink:10.1007/s10344-009-0327-7 \nbibtex*[affiliation=University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 C\u00c3\u00b3rdoba Spain;owner=tiago;publisher=Springer Berlin / Heidelberg;subdatabase=distance;timestamp=2011.06.17]",
-      "issue": "3",
-      "itemID": 101,
+      "version": 0,
       "itemType": "journalArticle",
-      "notes": [],
+      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
+      "volume": "56",
+      "issue": "3",
       "pages": "335-340",
       "publicationTitle": "European Journal of Wildlife Research",
-      "relations": [],
+      "ISSN": "1612-4642",
+      "date": "2010",
+      "extra": "10.1007/s10344-009-0327-7 \nCitation Key: springerlink:10.1007/s10344-009-0327-7 \nbibtex*[affiliation=University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain;owner=tiago;publisher=Springer Berlin / Heidelberg;subdatabase=distance;timestamp=2011.06.17]",
+      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
+      "creators": [
+        {
+          "firstName": "Isabel",
+          "lastName": "Barrio",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Pelayo",
+          "lastName": "Acevedo",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Francisco",
+          "lastName": "Tortosa",
+          "creatorType": "author"
+        }
+      ],
       "tags": [
         "Biomedical and Life Sciences"
       ],
-      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XFMH9KNW",
-      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
-      "volume": "56"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-19T07:21:37Z",
+      "dateModified": "2019-08-19T07:21:37Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LZY4X2GI",
+      "attachments": [],
+      "notes": [],
+      "itemID": 269,
+      "key": "LZY4X2GI",
+      "citekey": "springerlink:10.1007/s10344-009-0327-7",
+      "citationKey": "springerlink:10.1007/s10344-009-0327-7",
+      "libraryID": 1
     },
     {
-      "attachments": [],
-      "citekey": "Afonso2011",
+      "version": 0,
+      "itemType": "journalArticle",
+      "date": "2011",
+      "extra": "Citation Key: Afonso2011 \nbibtex*[location=Poster apresentado no Congresso da SPE;owner=tiago;timestamp=2011.10.04]",
+      "title": "Amostragem em duas fases adaptativa para estimar a abundância de populações raras",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Anabela",
-          "lastName": "Afonso"
+          "lastName": "Afonso",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Russell",
-          "lastName": "Alpizar-Jara"
+          "lastName": "Alpizar-Jara",
+          "creatorType": "author"
         }
       ],
-      "date": "2011",
-      "dateAdded": "2018-08-28T14:44:57Z",
-      "dateModified": "2018-08-28T14:44:57Z",
-      "extra": "Citation Key: Afonso2011 \nbibtex*[location=Poster apresentado no Congresso da SPE;owner=tiago;timestamp=2011.10.04]",
-      "itemID": 102,
-      "itemType": "journalArticle",
-      "notes": [],
-      "relations": [],
       "tags": [],
-      "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/D9YQ23UD"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-19T07:21:37Z",
+      "dateModified": "2019-08-19T07:21:37Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/33PXMVAU",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "2",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-08-19T07:21:38Z",
+          "dateModified": "2019-08-19T07:21:38Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/UVSHR9JF",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/UVSHR9JF/2.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "title": "stuff",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-08-19T07:21:38Z",
+          "dateModified": "2019-08-19T07:21:38Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/3CNJBBFL",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/3CNJBBFL/1.pdf"
+        }
+      ],
+      "notes": [],
+      "itemID": 270,
+      "key": "33PXMVAU",
+      "citekey": "Afonso2011",
+      "citationKey": "Afonso2011",
+      "libraryID": 1
     },
     {
-      "dateAdded": "2018-08-28T14:44:57Z",
-      "dateModified": "2018-08-28T14:44:57Z",
-      "itemID": 100,
+      "version": 0,
       "itemType": "note",
-      "note": "Import errors found: <ul><li>line 23: unknown reference type 'talk'</li></ul>",
-      "relations": [],
+      "note": "Import errors found: <ul><li>Unexpected reference type &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>",
       "tags": [
         "#Better BibTeX import error"
       ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5PA5EEGC"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-19T07:21:38Z",
+      "dateModified": "2019-08-19T07:21:38Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LFTS6UJS",
+      "itemID": 273,
+      "key": "LFTS6UJS",
+      "attachments": [],
+      "notes": []
     }
   ]
 }
