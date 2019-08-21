@@ -49,7 +49,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.54",
+    "@retorquere/bibtex-parser": "^1.0.55",
     "@types/lokijs": "^1.5.2",
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
