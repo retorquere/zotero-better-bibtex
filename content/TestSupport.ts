@@ -208,13 +208,17 @@ export = new class {
     await zoteroPane.selectItems(ids, true)
     const selected = zoteroPane.getSelectedItems()
     if (selected.length !== ids.length) throw new Error(`selected: ${selected.length}, expected: ${ids.length}`)
-    zoteroPane.mergeSelectedItems()
-    await timeout(1500) // tslint:disable-line:no-magic-numbers
+
+    // zoteroPane.mergeSelectedItems()
 
     if (typeof Zotero_Duplicates_Pane === 'undefined') {
       log.debug('Loading duplicatesMerge.js')
       Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
     }
+
+    selected.sort((a, b) => a.getField('title').localeCompare(b.getField('title')))
+    Zotero_Duplicates_Pane.setItems(selected)
+    await timeout(1500) // tslint:disable-line:no-magic-numbers
 
     const before = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     await Zotero_Duplicates_Pane.merge()
