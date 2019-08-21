@@ -621,6 +621,9 @@ class ZoteroItem {
   protected $url(value, field) {
     let m, url
 
+    // no escapes needed in an verbatim field but people do it anyway
+    value = value.replace(/\\/g, '')
+
     if (m = value.match(/^(\\url{)(https?:\/\/|mailto:)}$/i)) {
       url = m[2]
     } else if (field === 'url' || /^(https?:\/\/|mailto:)/i.test(value)) {
