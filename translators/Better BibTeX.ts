@@ -530,6 +530,9 @@ class ZoteroItem {
   protected $month(value) { return this.$date(value) }
   protected $day(value) { return this.$date(value) }
 
+  // "files" will import the same as "file" but won't be treated as verbatim by the bibtex parser. Needed because the people at Mendeley can't be bothered
+  // to read the manual apparently.
+  protected $files(value) { return this.$file(value) }
   protected $file(value) {
     const replace = {
       '\\;':    '\u0011',
