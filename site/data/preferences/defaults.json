@@ -49,6 +49,8 @@
   "sorted": false,
   "strings": "",
   "suppressBraceProtection": false,
+  "suppressNoCase": false,
+  "suppressSentenceCase": false,
   "suppressTitleCase": false,
   "warnBulkModify": 10
 }

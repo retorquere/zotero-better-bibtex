@@ -923,6 +923,8 @@ Translator.doImport = async () => {
     async: true,
     errorHandler: (Translator.preferences.testing ? undefined : debug),
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
+    sentenceCase: !Translator.preferences.suppressSentenceCase,
+    caseProtect: !Translator.preferences.suppressNoCase,
   })
   const errors = bib.errors
 
