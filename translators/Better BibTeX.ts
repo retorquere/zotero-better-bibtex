@@ -473,13 +473,29 @@ class ZoteroItem {
   protected $keyword(value) { return this.$keywords(value) }
 
   protected $date(value) {
+    if (this.item.date) return true
+
     const dates = (this.bibtex.fields.date || []).slice()
 
     const year = (this.bibtex.fields.year && this.bibtex.fields.year[0]) || ''
-    const month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
+
+    let month = (this.bibtex.fields.month && this.bibtex.fields.month[0]) || ''
+    const monthno = months.indexOf(month.toLowerCase())
+    if (monthno >= 0) month = `0${monthno + 1}`.slice(-2) // tslint:disable-line no-magic-numbers
+
     const day = (this.bibtex.fields.day && this.bibtex.fields.day[0]) || ''
-    const ymd = `${day} ${month} ${year}`.trim()
-    if (ymd) dates.push(ymd)
+
+    if (year && month.match(/^[0-9]+$/) && day.match(/^[0-9]+$/)) {
+      dates.push(`${year}-${month}-${day}`)
+    } else if (year && month.match(/^[0-9]+$/)) {
+      dates.push(`${year}-${month}`)
+    } else if (year && month && day) {
+      dates.push(`${day} ${month} ${year}`)
+    } else if (year && month) {
+      dates.push(`${month} ${year}`)
+    } else if (year) {
+      dates.push(year)
+    }
 
     this.item.date = Array.from(new Set(dates)).join(', ')
     return true

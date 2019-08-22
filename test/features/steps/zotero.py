@@ -24,9 +24,16 @@ from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
+EXPORTED = os.path.join(ROOT, 'exported')
+
 class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
+
+    if os.path.exists(EXPORTED):
+      shutil.rmtree(EXPORTED)
+    os.makedirs(EXPORTED)
+
     self.userdata = userdata
 
     self.password = str(uuid.uuid4())
@@ -84,7 +91,7 @@ class Zotero:
 
   def start(self):
     profile = Profile('BBTZ5TEST', self.id, self.userdata, self.password)
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")} 2>&1'
     print(f'Starting {self.id}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     print(f'{self.id} started: {self.proc.pid}')
@@ -146,15 +153,17 @@ class Zotero:
         found = f.read()
 
     expected, ext = self.expand_expected(expected)
+    exported = os.path.join(EXPORTED, os.path.basename(os.path.dirname(expected)) + '-' + os.path.basename(expected))
+
     with open(expected) as f:
       expected = f.read()
 
     if ext == '.csl.json':
-      with open('exported.csl.json', 'w') as f: f.write(found)
+      with open(exported, 'w') as f: f.write(found)
       return compare(json.loads(expected), json.loads(found))
 
     elif ext == '.csl.yml':
-      with open('exported.csl.yml', 'w') as f: f.write(found)
+      with open(exported, 'w') as f: f.write(found)
       assert_equal_diff(
         serialize(yaml.load(io.StringIO(expected))),
         serialize(yaml.load(io.StringIO(found)))
@@ -162,7 +171,7 @@ class Zotero:
       return
 
     elif ext == '.json':
-      with open('exported.json', 'w') as f: f.write(found)
+      with open(exported, 'w') as f: f.write(found)
 
       found = normalizeJSON(json.loads(found))
       expected = normalizeJSON(json.loads(expected))
@@ -174,7 +183,7 @@ class Zotero:
         assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
         return compare(expected['items'], found['items'])
 
-    with open('exported.txt', 'w') as f: f.write(found)
+    with open(exported, 'w') as f: f.write(found)
     expected = expected.strip()
     found = found.strip()
 
