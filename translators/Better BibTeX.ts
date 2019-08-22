@@ -624,6 +624,14 @@ class ZoteroItem {
   }
 
   protected $annotation(value) {
+    this.item.notes.push(Zotero.Utilities.text2html(value, false))
+    return true
+  }
+  protected $comment(value) { return this.$annotation(value) }
+  protected $annote(value) { return this.$annotation(value) }
+  protected $review(value) { return this.$annotation(value) }
+  protected $notes(value) { return this.$annotation(value) }
+  protected $note(value) {
     if (value.includes('<')) {
       this.item.notes.push(Zotero.Utilities.text2html(value, false))
     } else {
@@ -631,11 +639,6 @@ class ZoteroItem {
     }
     return true
   }
-  protected $comment(value) { return this.$annotation(value) }
-  protected $annote(value) { return this.$annotation(value) }
-  protected $review(value) { return this.$annotation(value) }
-  protected $notes(value) { return this.$annotation(value) }
-  protected $note(value) { return this.$annotation(value) }
 
   protected $series(value) { return this.set('series', value) }
 
