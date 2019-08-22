@@ -77,107 +77,107 @@
     }
   },
   "collections": {
-    "P8XH2UN3": {
-      "id": 3,
-      "key": "P8XH2UN3",
+    "VM2Z6KXM": {
+      "id": 142,
+      "key": "VM2Z6KXM",
       "parent": false,
       "name": "Jabref groups import does not work #717.2.10",
       "items": [
-        317,
-        318,
-        319
+        864,
+        865,
+        866
       ],
       "collections": [
-        "NWK9ELSV"
+        "IRF5IRPQ"
       ]
     },
-    "NWK9ELSV": {
-      "id": 4,
-      "key": "NWK9ELSV",
-      "parent": "P8XH2UN3",
+    "IRF5IRPQ": {
+      "id": 143,
+      "key": "IRF5IRPQ",
+      "parent": "VM2Z6KXM",
       "name": "my-main-group-2",
       "items": [],
       "collections": [
-        "S37LCYH7",
-        "JVGP78CQ"
+        "M8LP5V3V",
+        "TZYVV4VB"
       ]
     },
-    "S37LCYH7": {
-      "id": 6,
-      "key": "S37LCYH7",
-      "parent": "NWK9ELSV",
+    "M8LP5V3V": {
+      "id": 145,
+      "key": "M8LP5V3V",
+      "parent": "IRF5IRPQ",
       "name": "my-other-subgroup-2",
       "items": [
-        318
+        865
       ],
       "collections": []
     },
-    "JVGP78CQ": {
-      "id": 5,
-      "key": "JVGP78CQ",
-      "parent": "NWK9ELSV",
+    "TZYVV4VB": {
+      "id": 144,
+      "key": "TZYVV4VB",
+      "parent": "IRF5IRPQ",
       "name": "my-subgroup-2",
       "items": [
-        317
+        864
       ],
       "collections": []
     },
-    "X2GGKS6D": {
-      "id": 7,
-      "key": "X2GGKS6D",
+    "TF8L5S56": {
+      "id": 146,
+      "key": "TF8L5S56",
       "parent": false,
       "name": "Jabref groups import does not work #717.3.8",
       "items": [
-        320,
-        321,
-        322,
-        323
+        867,
+        868,
+        869,
+        870
       ],
       "collections": [
-        "54UAC7F4"
+        "BWCZYC4K"
       ]
     },
-    "54UAC7F4": {
-      "id": 8,
-      "key": "54UAC7F4",
-      "parent": "X2GGKS6D",
+    "BWCZYC4K": {
+      "id": 147,
+      "key": "BWCZYC4K",
+      "parent": "TF8L5S56",
       "name": "my-main-group-3",
       "items": [
-        323
+        870
       ],
       "collections": [
-        "ZNTVMM32",
-        "RW4T54BV"
+        "KXWJ6YS5",
+        "HGWJFW48"
       ]
     },
-    "ZNTVMM32": {
-      "id": 10,
-      "key": "ZNTVMM32",
-      "parent": "54UAC7F4",
+    "KXWJ6YS5": {
+      "id": 149,
+      "key": "KXWJ6YS5",
+      "parent": "BWCZYC4K",
       "name": "my-other-subgroup-3",
       "items": [
-        321,
-        322
+        868,
+        869
       ],
       "collections": []
     },
-    "RW4T54BV": {
-      "id": 9,
-      "key": "RW4T54BV",
-      "parent": "54UAC7F4",
+    "HGWJFW48": {
+      "id": 148,
+      "key": "HGWJFW48",
+      "parent": "BWCZYC4K",
       "name": "my-subgroup-3",
       "items": [
-        320,
-        322
+        867,
+        869
       ],
       "collections": [
-        "6T4MGFIB"
+        "P5RJHRNM"
       ]
     },
-    "6T4MGFIB": {
-      "id": 11,
-      "key": "6T4MGFIB",
-      "parent": "RW4T54BV",
+    "P5RJHRNM": {
+      "id": 150,
+      "key": "P5RJHRNM",
+      "parent": "HGWJFW48",
       "name": "sub-sub-group-3",
       "items": [],
       "collections": []
@@ -199,17 +199,17 @@
       ],
       "tags": [],
       "collections": [
-        "P8XH2UN3",
-        "JVGP78CQ"
+        "VM2Z6KXM",
+        "TZYVV4VB"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MZ3ZQSTQ",
+      "dateAdded": "2019-08-22T21:18:02Z",
+      "dateModified": "2019-08-22T21:18:02Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/R24V6DQJ",
       "attachments": [],
       "notes": [],
-      "itemID": 317,
-      "key": "MZ3ZQSTQ",
+      "itemID": 864,
+      "key": "R24V6DQJ",
       "citekey": "Doe-2017",
       "citationKey": "Doe-2017",
       "libraryID": 1
@@ -228,17 +228,17 @@
       ],
       "tags": [],
       "collections": [
-        "P8XH2UN3",
-        "S37LCYH7"
+        "VM2Z6KXM",
+        "M8LP5V3V"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XZCPX8WA",
+      "dateAdded": "2019-08-22T21:18:03Z",
+      "dateModified": "2019-08-22T21:18:03Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BWKZVSTB",
       "attachments": [],
       "notes": [],
-      "itemID": 318,
-      "key": "XZCPX8WA",
+      "itemID": 865,
+      "key": "BWKZVSTB",
       "citekey": "Other-",
       "citationKey": "Other-",
       "libraryID": 1
@@ -247,7 +247,7 @@
       "version": 0,
       "itemType": "journalArticle",
       "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein;timestamp=2017.09.11]",
-      "title": "The paper not in a group",
+      "title": "the paper not in a group",
       "creators": [
         {
           "firstName": "I",
@@ -257,16 +257,16 @@
       ],
       "tags": [],
       "collections": [
-        "P8XH2UN3"
+        "VM2Z6KXM"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5RY69D93",
+      "dateAdded": "2019-08-22T21:18:03Z",
+      "dateModified": "2019-08-22T21:18:03Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/24KFRZWT",
       "attachments": [],
       "notes": [],
-      "itemID": 319,
-      "key": "5RY69D93",
+      "itemID": 866,
+      "key": "24KFRZWT",
       "citekey": "Unkonw-",
       "citationKey": "Unkonw-",
       "libraryID": 1
@@ -286,17 +286,17 @@
       ],
       "tags": [],
       "collections": [
-        "X2GGKS6D",
-        "RW4T54BV"
+        "TF8L5S56",
+        "HGWJFW48"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NLSQ5DWR",
+      "dateAdded": "2019-08-22T21:18:04Z",
+      "dateModified": "2019-08-22T21:18:04Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NUGAUGEK",
       "attachments": [],
       "notes": [],
-      "itemID": 320,
-      "key": "NLSQ5DWR",
+      "itemID": 867,
+      "key": "NUGAUGEK",
       "citekey": "Doe-2017",
       "citationKey": "Doe-2017",
       "libraryID": 1
@@ -315,17 +315,17 @@
       ],
       "tags": [],
       "collections": [
-        "X2GGKS6D",
-        "ZNTVMM32"
+        "TF8L5S56",
+        "KXWJ6YS5"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/N89VGGIM",
+      "dateAdded": "2019-08-22T21:18:04Z",
+      "dateModified": "2019-08-22T21:18:04Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/G9EUF637",
       "attachments": [],
       "notes": [],
-      "itemID": 321,
-      "key": "N89VGGIM",
+      "itemID": 868,
+      "key": "G9EUF637",
       "citekey": "Other-",
       "citationKey": "Other-",
       "libraryID": 1
@@ -334,7 +334,7 @@
       "version": 0,
       "itemType": "journalArticle",
       "extra": "Citation Key: Unkonw- \nbibtex*[owner=klein;timestamp=2017.09.11]",
-      "title": "The paper in two groups",
+      "title": "the paper in two groups",
       "creators": [
         {
           "firstName": "I",
@@ -344,18 +344,18 @@
       ],
       "tags": [],
       "collections": [
-        "X2GGKS6D",
-        "RW4T54BV",
-        "ZNTVMM32"
+        "TF8L5S56",
+        "HGWJFW48",
+        "KXWJ6YS5"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YWTJXPN2",
+      "dateAdded": "2019-08-22T21:18:04Z",
+      "dateModified": "2019-08-22T21:18:04Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VLYJX8N7",
       "attachments": [],
       "notes": [],
-      "itemID": 322,
-      "key": "YWTJXPN2",
+      "itemID": 869,
+      "key": "VLYJX8N7",
       "citekey": "Unkonw-",
       "citationKey": "Unkonw-",
       "libraryID": 1
@@ -364,7 +364,7 @@
       "version": 0,
       "itemType": "journalArticle",
       "extra": "Citation Key: Unkonw \nbibtex*[owner=klein;timestamp=2017.09.11]",
-      "title": "The paper not in a group",
+      "title": "the paper not in a group",
       "creators": [
         {
           "firstName": "I",
@@ -374,17 +374,17 @@
       ],
       "tags": [],
       "collections": [
-        "X2GGKS6D",
-        "54UAC7F4"
+        "TF8L5S56",
+        "BWCZYC4K"
       ],
       "relations": [],
-      "dateAdded": "2019-08-21T09:16:14Z",
-      "dateModified": "2019-08-21T09:16:14Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9DYCBGXV",
+      "dateAdded": "2019-08-22T21:18:04Z",
+      "dateModified": "2019-08-22T21:18:04Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/F7AZVBRP",
       "attachments": [],
       "notes": [],
-      "itemID": 323,
-      "key": "9DYCBGXV",
+      "itemID": 870,
+      "key": "F7AZVBRP",
       "citekey": "Unkonw",
       "citationKey": "Unkonw",
       "libraryID": 1

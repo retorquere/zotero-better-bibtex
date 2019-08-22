@@ -160,7 +160,9 @@ class Zotero:
 
     if ext == '.csl.json':
       with open(exported, 'w') as f: f.write(found)
-      return compare(json.loads(expected), json.loads(found))
+      compare(json.loads(expected), json.loads(found))
+      os.remove(exported)
+      return
 
     elif ext == '.csl.yml':
       with open(exported, 'w') as f: f.write(found)
@@ -168,6 +170,7 @@ class Zotero:
         serialize(yaml.load(io.StringIO(expected))),
         serialize(yaml.load(io.StringIO(found)))
       )
+      os.remove(exported)
       return
 
     elif ext == '.json':
@@ -178,16 +181,20 @@ class Zotero:
 
       if True or len(expected['items']) < 30 or len(found['items']) < 30:
         assert_equal_diff(serialize(expected), serialize(found))
-        return
       else:
         assert_equal_diff(serialize({ **expected, 'items': []}), serialize({ **found, 'items': []}))
-        return compare(expected['items'], found['items'])
+        compare(expected['items'], found['items'])
+
+      os.remove(exported)
+      return
 
     with open(exported, 'w') as f: f.write(found)
     expected = expected.strip()
     found = found.strip()
 
     assert_equal_diff(expected, found)
+    os.remove(exported)
+    return
 
   def import_file(self, context, references, collection = False):
     assert type(collection) in [bool, str]
