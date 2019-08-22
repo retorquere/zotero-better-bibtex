@@ -164,6 +164,22 @@ default: `no`
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
 casing, set this preference to "true" to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
 
+#### suppressNoCase
+
+default: `no`
+
+On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
+out there that do this a little overzealously, and you may not like the resulting HTML code in your items (even though this is what the braces mean in bib(la)tex, and
+Zotero supports it. If you turn this off, the markup is omitted during import.
+
+#### suppressSentenceCase
+
+default: `no`
+
+Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
+during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can suppress this, but you may then also want
+to enable suppressTitleCase (which has its own problems, see the help entry for that option on this page).
+
 #### suppressTitleCase
 
 default: `no`

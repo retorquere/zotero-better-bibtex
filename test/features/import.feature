@@ -21,6 +21,12 @@ Scenario: Math markup to unicode not always imported correctly #472
   And I set preference .exportBibTeXStrings to detect
   Then an export using "Better BibTeX" should match "import/*.roundtrip.bib"
 
+@1246
+Scenario: importing a title-cased bib #1246
+  When I import 2 references from "import/*.bib"
+  Then the library should match "import/*.json"
+  And an export using "Better BibTeX" should match "import/*.roundtrip.bib"
+
 @758 @aux
 Scenario: AUX scanner
   When I import 149 references from "import/*-pre.json"
@@ -34,7 +40,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 986         |
+  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
  # | Async import, large library #720                                            | 9057        |
 
 @test-cluster-1 @959 @1058 @871 @1081 @1115
@@ -68,7 +74,6 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.004                                                           | 1           |
   | Better BibTeX.005                                                           | 1           |
   | Better BibTeX.006                                                           | 1           |
-  | Better BibTeX.007                                                           | 1           |
   | Better BibTeX.009                                                           | 3           |
   | Better BibTeX.011                                                           | 1           |
   | Better BibTeX.012                                                           | 1           |

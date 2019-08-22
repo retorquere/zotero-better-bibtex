@@ -87,7 +87,7 @@
       "date": "2012",
       "extra": "Citation Key: Frit2 \nbibtex*[timestamp=2015-02-24 12:14:36 +0100]",
       "DOI": "10.1007/s13127-011-0069-8",
-      "title": "Test of markupconversion: italics, bold, superscript, subscript, and small caps: mitochondrial DNA₂ sequences suggest unexpected phylogenetic position of corso-sardinian grass snakes (<i>natrix cetti</i>) and <b>do not</b> support their <span style=\"font-variant:small-caps;\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes.",
+      "title": "Test of markupconversion: Italics, bold, superscript, subscript, and small caps: Mitochondrial DNA₂ sequences suggest unexpected phylogenetic position of Corso-Sardinian grass snakes (<i>Natrix cetti</i>) and <b>do not</b> support their <span style=\"font-variant:small-caps;\">species status</span>, with notes on phylogeography and subspecies delineation of grass snakes.",
       "creators": [
         {
           "firstName": "U.",
@@ -108,15 +108,55 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-08-21T07:54:42Z",
-      "dateModified": "2019-08-21T07:54:42Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KW5VYK7C",
+      "dateAdded": "2019-08-22T20:53:09Z",
+      "dateModified": "2019-08-22T20:53:09Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/XIGD8T48",
       "attachments": [],
       "notes": [],
-      "itemID": 306,
-      "key": "KW5VYK7C",
+      "itemID": 650,
+      "key": "XIGD8T48",
       "citekey": "Frit2",
       "citationKey": "Frit2",
+      "libraryID": 1
+    },
+    {
+      "version": 0,
+      "itemType": "journalArticle",
+      "volume": "125",
+      "pages": "2293-2315",
+      "publicationTitle": "Monthly Weather Review",
+      "date": "1997",
+      "extra": "Citation Key: AdcroftETAL:1997",
+      "title": "Representation of topography by shaved cells in a height coordinate ocean model",
+      "creators": [
+        {
+          "firstName": "Alistair",
+          "lastName": "Adcroft",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Chris",
+          "lastName": "Hill",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "John",
+          "lastName": "Marshall",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-08-22T20:53:09Z",
+      "dateModified": "2019-08-22T20:53:09Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ET4JL95J",
+      "attachments": [],
+      "notes": [],
+      "itemID": 651,
+      "key": "ET4JL95J",
+      "citekey": "AdcroftETAL:1997",
+      "citationKey": "AdcroftETAL:1997",
       "libraryID": 1
     }
   ]

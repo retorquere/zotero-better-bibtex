@@ -12,7 +12,10 @@ for d in pathlib.Path(__file__).resolve().parents:
 os.chdir(ROOT)
 
 if not 'CI' in os.environ:
-  sys.argv.append('--stop')
+  if '--no-stop' in sys.argv:
+    sys.argv = [arg for arg in sys.argv if arg != '--no-stop']
+  else:
+    sys.argv.append('--stop')
   import subprocess
 
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)

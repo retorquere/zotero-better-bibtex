@@ -99,22 +99,22 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-08-20T21:58:59Z",
-      "dateModified": "2019-08-20T21:58:59Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/Y38BQNQS",
+      "dateAdded": "2019-08-22T20:53:43Z",
+      "dateModified": "2019-08-22T20:53:43Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YIKS325Q",
       "attachments": [],
       "notes": [],
-      "itemID": 301,
-      "key": "Y38BQNQS",
+      "itemID": 848,
+      "key": "YIKS325Q",
       "citekey": "author:06",
       "citationKey": "author:06",
       "libraryID": 1
     },
     {
       "version": 0,
-      "itemType": "book",
+      "itemType": "bookSection",
       "date": "2006-10",
-      "extra": "Citation Key: conference:06 \nbibtex*[booktitle=Proceedings of the xth conference on XYZ (Book)]",
+      "extra": "Citation Key: conference:06",
       "title": "Proceedings of the xth conference on XYZ",
       "creators": [
         {
@@ -131,16 +131,17 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-08-20T21:58:59Z",
-      "dateModified": "2019-08-20T21:58:59Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/2GEWHCWY",
+      "dateAdded": "2019-08-22T20:53:43Z",
+      "dateModified": "2019-08-22T20:53:43Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MAICCQBU",
       "attachments": [],
       "notes": [],
-      "itemID": 302,
-      "key": "2GEWHCWY",
+      "itemID": 849,
+      "key": "MAICCQBU",
       "citekey": "conference:06",
       "citationKey": "conference:06",
-      "libraryID": 1
+      "libraryID": 1,
+      "publicationTitle": "Proceedings of the xth conference on XYZ (book)"
     }
   ]
 }
