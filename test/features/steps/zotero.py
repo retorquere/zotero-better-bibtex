@@ -167,7 +167,7 @@ class Zotero:
       found = normalizeJSON(json.loads(found))
       expected = normalizeJSON(json.loads(expected))
 
-      if len(expected['items']) < 30 or len(found['items']) < 30:
+      if True or len(expected['items']) < 30 or len(found['items']) < 30:
         assert_equal_diff(serialize(expected), serialize(found))
         return
       else:

@@ -40,7 +40,7 @@ Scenario Outline: Better BibTeX Import
 
   Examples:
   | file                                                                        | references  |
-  | Some bibtex entries quietly discarded on import from bib file #873          | 986         |
+  | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
  # | Async import, large library #720                                            | 9057        |
 
 @test-cluster-1 @959 @1058 @871 @1081 @1115

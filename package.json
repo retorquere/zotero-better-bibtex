@@ -42,14 +42,15 @@
     "docs:serve": "npm run docs:prep && cd site && hugo serve",
     "docs:deploy": "npm run docs:prep && cd site && hugo --baseURL /zotero-better-bibtex",
     "ncu": "ncu -a && npm install",
-    "reinstall": "rm -rf node_modules yarn* && npm install"
+    "reinstall": "rm -rf node_modules yarn* && npm install",
+    "test:nightly": "TRAVIS_EVENT_TYPE=cron ./test/behave --tags @nightly"
   },
   "main": "index.js",
   "directories": {
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.57",
+    "@retorquere/bibtex-parser": "^1.0.61",
     "@types/lokijs": "^1.5.2",
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
