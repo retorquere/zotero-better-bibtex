@@ -52,5 +52,6 @@
   "suppressNoCase": false,
   "suppressSentenceCase": false,
   "suppressTitleCase": false,
+  "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
   "warnBulkModify": 10
 }

@@ -562,6 +562,7 @@ class ZoteroItem {
 
       this.item.attachments.push(att)
     }
+    debug('$file:', this.item.attachments)
 
     return true
   }
@@ -925,6 +926,7 @@ Translator.doImport = async () => {
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: !Translator.preferences.suppressSentenceCase,
     caseProtect: !Translator.preferences.suppressNoCase,
+    verbatimFields: Translator.verbatimFields,
   })
   const errors = bib.errors
 
