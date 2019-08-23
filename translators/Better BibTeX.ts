@@ -289,9 +289,9 @@ function importGroup(group, itemIDs, root = null) {
   const collection = new Zotero.Collection()
   collection.type = 'collection'
   collection.name = group.name
-  collection.children = group.keys.filter(citekey => itemIDs[citekey]).map(citekey => ({type: 'item', id: itemIDs[citekey]}))
+  collection.children = group.entries.filter(citekey => itemIDs[citekey]).map(citekey => ({type: 'item', id: itemIDs[citekey]}))
 
-  for (const subgroup of group.children || []) {
+  for (const subgroup of group.groups || []) {
     collection.children.push(importGroup(subgroup, itemIDs))
   }
 
@@ -660,7 +660,7 @@ class ZoteroItem {
 
   // horrid jabref 3.8+ groups format
   protected $groups(value) {
-    if (this.jabref.groups[value] && !this.jabref.groups[value].keys.includes(this.bibtex.key)) this.jabref.groups[value].keys.push(this.bibtex.key)
+    if (this.jabref.groups[value] && !this.jabref.groups[value].entries.includes(this.bibtex.key)) this.jabref.groups[value].entries.push(this.bibtex.key)
     return true
   }
 
