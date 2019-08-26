@@ -66,6 +66,7 @@ interface ITranslator {
   }
   skipFields: string[]
   skipField: {[key: string]: boolean}
+  verbatimFields?: string[]
   csquotes: { open: string, close: string }
 
   options: {

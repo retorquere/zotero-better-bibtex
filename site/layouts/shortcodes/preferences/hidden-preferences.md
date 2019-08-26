@@ -187,4 +187,10 @@ default: `no`
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
 casing, set this preference to "true" to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
 
+#### verbatimFields
+
+default: `url,doi,file,eprint,verba,verbb,verbc`
+
+list of fields to treat as verbatim during import. If you're importing the rather horridly broken Mendeley-generated BibTeX, try removing `file` from this list before import.
+
 
