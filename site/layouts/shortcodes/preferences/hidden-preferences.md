@@ -169,7 +169,7 @@ casing, set this preference to "true" to suppress [automatic brace-protection fo
 default: `no`
 
 On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
-out there that do this a little overzealously, and you may not like the resulting HTML code in your items (even though this is what the braces mean in bib(la)tex, and
+out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
 Zotero supports it. If you turn this off, the markup is omitted during import.
 
 #### suppressSentenceCase
@@ -191,6 +191,6 @@ casing, set this preference to "true" to suppress [title casing for English refe
 
 default: `url,doi,file,eprint,verba,verbb,verbc`
 
-list of fields to treat as verbatim during import. If you're importing the rather horridly broken Mendeley-generated BibTeX, try removing `file` from this list before import.
+list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
 
 
