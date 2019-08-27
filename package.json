@@ -120,7 +120,7 @@
     "typedoc": "^0.15.0",
     "typescript": "3.5.3",
     "uri-templates": "0.2.0",
-    "webpack": "4.39.2",
+    "webpack": "4.39.3",
     "wrapper-webpack-plugin": "2.1.0",
     "xml-parser": "1.2.1",
     "xmldom": "^0.1.27",
