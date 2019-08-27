@@ -16,9 +16,10 @@ import unicodeMapping = require('unicode2latex')
   Only testing ascii.text because that's the only place (so far)
   that these have turned up.
 */
+
 if (Translator.BetterBibTeX) {
   let m
-  for (const tex of Object.values(unicodeMapping.ascii)) {
+  for (const tex of (Object.values(unicodeMapping.ascii) as Array<{text: string}>)) {
     if (!tex.text) continue
 
     if (tex.text.match(/^\\[`'^~"=.][A-Za-z]$/)) {
@@ -241,7 +242,11 @@ const htmlConverter = new class HTMLConverter {
     const chars: string[] = Array.from(text.normalize('NFC'))
     let mapped, switched, m
     while (chars.length) {
-      if (chars.length > 1 && (mapped = this.mapping[chars[0] + chars[1]])) {
+      // tie "i","︠","a","︡"
+      if (chars.length >= 4 && chars[1] === '\ufe20' && chars[3] === '\ufe21') { // tslint:disable-line no-magic-numbers
+        const tie = chars.splice(0, 4) // tslint:disable-line no-magic-numbers
+        mapped = this.mapping[tie.join('')] || { text: chars[0] + chars[2] }
+      } else if (chars.length > 1 && (mapped = this.mapping[chars[0] + chars[1]])) {
         chars.splice(0, 2)
 
       } else {
