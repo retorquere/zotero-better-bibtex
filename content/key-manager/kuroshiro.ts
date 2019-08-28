@@ -1,5 +1,3 @@
-declare const Components: any
-
 import Kuroshiro from 'kuroshiro/src/core-sync'
 import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import * as log from '../debug'
@@ -20,8 +18,8 @@ _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:
     callback(err ? new Error(xhr.statusText) : null, err ? null : this.response)
   }
 
-  xhr.onerror = function(err) { // tslint:disable-line:only-arrow-functions
-    err = new Error(`could not load ${url}: ${err}`)
+  xhr.onerror = function(pge) { // tslint:disable-line:only-arrow-functions
+    const err = new Error(`could not load ${url}: ${pge}`)
     log.error('kuromoji: load failed', url, err)
     callback(err, null)
   }
