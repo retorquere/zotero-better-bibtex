@@ -74,8 +74,7 @@ export = new class {
       log.debug(`importing references from ${source}`)
     }
 
-    const file = Components.classes['@mozilla.org/file/local;1'].createInstance(Components.interfaces.nsILocalFile)
-    file.initWithPath(source)
+    const file = Zotero.File.pathToFile(source)
 
     let items = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     const before = items.length

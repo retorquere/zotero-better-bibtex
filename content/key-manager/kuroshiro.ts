@@ -9,7 +9,7 @@ import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
   log.debug('kuromoji: loading', url)
-  const xhr = Components.classes['@mozilla.org/xmlextras/xmlhttprequest;1'].createInstance()
+  const xhr = new XMLHttpRequest()
 
   xhr.open('GET', url, true)
   xhr.responseType = 'arraybuffer'
