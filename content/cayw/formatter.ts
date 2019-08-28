@@ -30,42 +30,46 @@ function tolatex(s) {
     .join('')
 }
 
-const shortLabel = {
-  article: 'art.',
-  chapter: 'ch.',
-  subchapter: 'subch.',
-  column: 'col.',
-  figure: 'fig.',
-  line: 'l.',
-  note: 'n.',
-  issue: 'no.',
-  opus: 'op.',
-  page: 'p.',
-  paragraph: 'para.',
-  subparagraph: 'subpara.',
-  part: 'pt.',
-  rule: 'r.',
-  section: 'sec.',
-  subsection: 'subsec.',
-  Section: 'Sec.',
-  'sub verbo': 'sv.',
-  schedule: 'sch.',
-  title: 'tit.',
-  verse: 'vrs.',
-  volume: 'vol.',
+function shortLabel(label, options) {
+  if (typeof options[label] === 'string') return options[label]
+
+  return {
+    article: 'art.',
+    chapter: 'ch.',
+    subchapter: 'subch.',
+    column: 'col.',
+    figure: 'fig.',
+    line: 'l.',
+    note: 'n.',
+    issue: 'no.',
+    opus: 'op.',
+    page: 'p.',
+    paragraph: 'para.',
+    subparagraph: 'subpara.',
+    part: 'pt.',
+    rule: 'r.',
+    section: 'sec.',
+    subsection: 'subsec.',
+    Section: 'Sec.',
+    'sub verbo': 'sv.',
+    schedule: 'sch.',
+    title: 'tit.',
+    verse: 'vrs.',
+    volume: 'vol.',
+  }[label] || label
 }
 
-function citation2latex(citation) {
+function citation2latex(citation, options) {
   let formatted = ''
+  // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
+  const label = (shortLabel(citation.label, { page: '', ...options }) + ' ').trimLeft()
 
   if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
 
   if (citation.locator && citation.suffix) {
-    const label = citation.label === 'page' ? '' : ((shortLabel[citation.label] || citation.label) + ' ')
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}, ${tolatex(citation.suffix)}]`
 
   } else if (citation.locator) {
-    const label = citation.label === 'page' ? '' : ((shortLabel[citation.label] || citation.label) + ' ')
     formatted += `[${tolatex(label)}${tolatex(citation.locator)}]`
 
   } else if (citation.suffix) {
@@ -117,7 +121,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
 
     let formatted = ''
     for (const citation of citations) {
-      formatted += `\\${citation.suppressAuthor ? 'citeyear' : options.command}${citation2latex(citation)}`
+      formatted += `\\${citation.suppressAuthor ? 'citeyear' : options.command}${citation2latex(citation, options)}`
     }
 
     return formatted
@@ -136,7 +140,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       // citations, biblatex doesn't support suppressing authors on a case by
       // case basis
       const suppressAuthor = citation.suppressAuthor && /^(auto|paren|)cite$/.exec(command) ? '*' : ''
-      return `\\${command}${suppressAuthor}${citation2latex(citation)}`
+      return `\\${command}${suppressAuthor}${citation2latex(citation, options)}`
     }
 
     citations = citations.map(citation2latex).join('')
@@ -171,7 +175,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       if (citation.prefix) cite += `${citation.prefix} `
       if (citation.suppressAuthor) cite += '-'
       cite += `@${citation.citekey}`
-      if (citation.locator) cite += `, ${shortLabel[citation.label] || citation.label} ${citation.locator}`
+      if (citation.locator) cite += `, ${shortLabel(citation.label, options)} ${citation.locator}`.replace(/\s+/, ' ')
       if (citation.suffix) cite += ` ${citation.suffix}`
       formatted.push(cite)
     }
@@ -184,8 +188,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     for (const citation of citations) {
       let cite = citation.citekey
       if (citation.locator) {
-        let label = citation.locator
-        if (citation.label !== 'page') label = `${shortLabel[citation.label] || citation.label} ${label}`
+        const label = `${shortLabel(citation.label, { page: '', ...options })} ${citation.locator}`.trim()
         cite += `(${label})`
       }
       formatted.push(cite)
@@ -194,7 +197,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
     return `${options.cite || 'cite'}:[${formatted.join(', ')}]`
   }
 
-  public async 'scannable-cite'(citations) {
+  public async 'scannable-cite'(citations, options) {
     const deferred = Zotero.Promise.defer()
     Components.utils.import('resource://gre/modules/AddonManager.jsm')
     AddonManager.getAddonByID('rtf-odf-scan-for-zotero@mystery-lab.com', addon => deferred.resolve(addon && addon.isActive))
@@ -219,7 +222,7 @@ export let Formatter = new class { // tslint:disable-line:variable-name
       const enriched = [
         item.prefix || '',
         `${item.suppressAuthor ? '-' : ''}${labels[id]}`,
-        item.locator ? `${shortLabel[item.label] || item.label} ${item.locator}` : '',
+        item.locator ? `${shortLabel(item.label, options)} ${item.locator}`.trim() : '',
         item.suffix || '',
         Prefs.testing ? 'zu:0:ITEMKEY' : id,
       ].join(' | ').replace(/ +/g, ' ')
