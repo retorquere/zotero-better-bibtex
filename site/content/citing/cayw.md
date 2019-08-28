@@ -69,6 +69,7 @@ the following URL parameters:
 | `clipboard` | Any non-empty value will copy the results to the clipboard |
 | `minimize` | Any non-empty value minimize all Firefox windows after a pick |
 
+
 The following formats are available:
 
 * `latex`. Generates [natbib](https://ctan.org/pkg/natbib) citation commands. Extra URL parameters allowed:
@@ -86,7 +87,7 @@ The following formats are available:
   *  `translator`: stripped name of one of the BBT translators (lowercased, remove 'better', and only the letters, e.g.  `biblatex` or `csljson`), or a translator ID. Defaults to `biblatex`.
   * `exportNotes`: set to `true` to export notes
   * `useJournalAbbreviation`: set to `true` to use journal abbreviations
-
+* `json`: the full pick information Zotero provides.
 
 The picker passes the following data along with your picked references if you filled them out:
 
@@ -110,13 +111,41 @@ none. The `formatted-` formats will ignore these. LaTeX supports all 4, in a way
   hides the author; for multiple references with `locator`s, `prefix`es or `suffix`es, the `s`-affixed variant of the
   command is generated
 
+Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:
+| locator label | abbreviation |
+| --------- | --- |
+| article | art. |
+| chapter | ch. |
+| subchapter | subch. |
+| column | col. |
+| figure | fig. |
+| line | l. |
+| note | n. |
+| issue | no. |
+| opus | op. |
+| page | p. |
+| paragraph | para. |
+| subparagraph | subpara. |
+| part | pt. |
+| rule | r. |
+| section | sec. |
+| subsection | subsec. |
+| Section | Sec. |
+| sub verbo | sv. |
+| schedule | sch. |
+| title | tit. |
+| verse | vrs. |
+| volume | vol. |
+
+In your call to the CAYW URL, you can override the abbreviations by adding them to the query, e.g. http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&page=&Section=sec., page-picks will have no label, and Section-picks will get `sec.` rather than `Sec.`.
+
 The `clipboard` option can be used as a workaround for editors that haven't gotten around to integrating this yet. If
 you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
 [AutoHotKey](http://www.autohotkey.com) works for windows, for OSX [Karabiner](https://pqrs.org/osx/karabiner/) ought to
 do the job, and for Linux you could give [IronAHK](https://github.com/polyethene/IronAHK) or
 [autokey](https://code.google.com/p/autokey/) a shot).
 
-For example, if you call up [http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes](http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes), the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
+For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes, the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
 
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
@@ -134,4 +163,3 @@ For testing for other markdown formatters, you can construct simple references y
 Alternately, the `json` formatter will just give you the picks as JSON which you can turn into pretty much anything if you can code.
 
 but if you need an extra format, just ask.
-
