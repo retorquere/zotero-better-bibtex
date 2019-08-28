@@ -1,10 +1,25 @@
 from steps.zotero import Zotero
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
+import re
 
 def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
-    if "flaky" in scenario.effective_tags:
-      patch_scenario_with_autoretry(scenario, max_attempts=10)
+    retries = None
+    for tag in scenario.effective_tags:
+      r = tag.split('=', 1)
+      if len(r) != 2 or r[0] != 'retries': continue
+
+      r = r[1]
+      try:
+        r = int(r)
+        if r == 0: raise ValueError(tag) # will be caught in the except
+      except:
+        raise ValueError(f'{r} is not a valid number of retries')
+
+      if retries is None or r > retries: retries = r
+
+    if not retries is None:
+      patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
 def before_all(context):
   context.zotero = Zotero(context.config.userdata)
