@@ -112,6 +112,7 @@ none. The `formatted-` formats will ignore these. LaTeX supports all 4, in a way
   command is generated
 
 Some of the formatters use abbreviated labels for the results if you include a locator. The defaults are:
+
 | locator label | abbreviation |
 | --------- | --- |
 | article | art. |
