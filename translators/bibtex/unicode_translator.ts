@@ -238,20 +238,19 @@ const htmlConverter = new class HTMLConverter {
       text: (nocased ? '$' : '$}'),
     }
 
-    // const chars = Zotero.Utilities.XRegExp.split(text.normalize('NFC'), '')
-    const chars: string[] = Array.from(text.normalize('NFC'))
-    let mapped, switched, m
-    while (chars.length) {
+    text = text.normalize('NFC')
+    let mapped, switched, m, i
+    const l = text.length
+    for (i = 0; i < l; i++) {
       // tie "i","︠","a","︡"
-      if (chars.length >= 4 && chars[1] === '\ufe20' && chars[3] === '\ufe21') { // tslint:disable-line no-magic-numbers
-        const tie = chars.splice(0, 4) // tslint:disable-line no-magic-numbers
-        mapped = this.mapping[tie.join('')] || { text: chars[0] + chars[2] }
-      } else if (chars.length > 1 && (mapped = this.mapping[chars[0] + chars[1]])) {
-        chars.splice(0, 2)
+      if (text[i + 1] === '\ufe20' && text[i + 3] === '\ufe21') { // tslint:disable-line no-magic-numbers
+        mapped = this.mapping[text.substr(i, 4)] || { text: text[i] + text[i + 2] } // tslint:disable-line no-magic-numbers
+        i += 3 // tslint:disable-line no-magic-numbers
+      } else if (text[i + 1] && (mapped = this.mapping[text.substr(i, 2)])) {
+        i += 1
 
       } else {
-        mapped = this.mapping[chars[0]] || { text: chars[0] }
-        chars.shift()
+        mapped = this.mapping[text[i]] || { text: text[i] }
 
       }
 
