@@ -6,15 +6,18 @@ def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
     retries = None
     for tag in scenario.effective_tags:
-      r = tag.split('=', 1)
-      if len(r) != 2 or r[0] != 'retries': continue
+      if tag == 'retry':
+        r = 1
+      else:
+        r = tag.split('=', 1)
+        if len(r) != 2 or r[0] != 'retries': continue
 
-      r = r[1]
-      try:
-        r = int(r)
-        if r == 0: raise ValueError(tag) # will be caught in the except
-      except:
-        raise ValueError(f'{r} is not a valid number of retries')
+        r = r[1]
+        try:
+          r = int(r)
+          if r == 0: raise ValueError(tag) # will be caught in the except
+        except:
+          raise ValueError(f'{r} is not a valid number of retries')
 
       if retries is None or r > retries: retries = r
 
