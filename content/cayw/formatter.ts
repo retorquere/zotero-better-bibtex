@@ -61,7 +61,8 @@ function shortLabel(label, options) {
 
 function citation2latex(citation, options) {
   let formatted = ''
-  const label = (shortLabel(citation.label, { page: '', ...options }) + ' ').trim()
+  // despite Mozilla's claim that trimStart === trimLeft, and that trimStart should be preferred, trimStart does not seem to exist in FF chrome code.
+  const label = (shortLabel(citation.label, { page: '', ...options }) + ' ').trimLeft()
 
   if (citation.prefix) formatted += `[${tolatex(citation.prefix)}]`
 
