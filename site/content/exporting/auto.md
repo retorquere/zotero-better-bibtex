@@ -18,6 +18,14 @@ I've gone to some lengths to make sure performance is OK, don't go overboard wit
 going. Also, exporting only targeted selections over your whole library will get you better performance. You can set up
 separate exports for separate papers for example if you have set up a collection for each.
 
+## Managing auto-exports
+
+After you've set up an auto-export using an `Keep updated` export,
+you can manage your auto-exports in the BBT preferences under the
+`Automatic exports` tab. There, you can remove auto-export, change
+settings on them, or remove them. You cannot add new auto-exports
+from here, that can only be done by initiating an export.
+
 ## Getting your BBT-generated bib(la)tex/citekeys to other places
 
 You may want to use your BBT generated bib(la)tex on other systems; maybe you use Overleaf (as I do), maybe you have your documents compiled using Travis (as I do). In any case, you want your auto-exported items to show up somewhere else. If you're thinking of this in the context of Overleaf, here's a TL;DR of the pros and cons:
