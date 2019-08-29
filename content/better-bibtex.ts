@@ -604,7 +604,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     if (!this.loaded) return
     await this.loaded
 
-    const aux = AUXScanner.pick()
+    const aux = await AUXScanner.pick()
     if (!aux) return
 
     switch (target) {

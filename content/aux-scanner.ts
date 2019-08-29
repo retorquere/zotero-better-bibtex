@@ -17,13 +17,25 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   private includeRE = /\\@input{([^}]+)}/g
   private bibdata: string[] = []
 
-  public pick() {
+  public async pick() {
     const fp = Components.classes['@mozilla.org/filepicker;1'].createInstance(Components.interfaces.nsIFilePicker)
     fp.init(window, Zotero.getString('fileInterface.import'), Components.interfaces.nsIFilePicker.modeOpen)
     fp.appendFilter('AUX file', '*.aux')
-    const rv = fp.show()
-    if (![Components.interfaces.nsIFilePicker.returnOK, Components.interfaces.nsIFilePicker.returnReplace].includes(rv)) return false
-    return fp.file
+
+    return new Zotero.Promise(resolve => {
+      fp.open(userChoice => {
+        switch (userChoice) {
+          case Components.interfaces.nsIFilePicker.returnOK:
+          case Components.interfaces.nsIFilePicker.returnReplace:
+            resolve(fp.file)
+            break
+
+          default: // aka returnCancel
+            resolve(false)
+            break
+        }
+      })
+    })
   }
 
   public async scan(file, tag = null) {
