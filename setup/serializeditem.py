@@ -70,6 +70,8 @@ types = {
   'reporter': 'string',
   'genre': 'string',
   'institution': 'string',
+
+  'raw': 'boolean',
 }
 
 rename = {}
@@ -104,8 +106,10 @@ for imex in ['import', 'export']:
             tpe = 'number'
           elif key == 'creators' and type(value) is list:
             tpe = '{ creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number }[]'
-          elif key in ['notes', 'tags'] and type(value) is list:
+          elif key == 'notes' and type(value) is list:
             tpe = 'string[]'
+          elif key == 'tags' and type(value) is list:
+            tpe = 'Array<{ tag: string, type?: number }>'
           elif key == 'multi' and type(value) is dict:
             tpe = 'any'
           elif key in ['seeAlso', 'relations'] and type(value) is list:
@@ -129,7 +133,7 @@ with open(os.path.join(root, 'gen/typings/serialized-item.d.ts'), 'w') as typing
   print('interface ISerializedItem {', file=typings)
 
   comment('fields common to all items')
-  for fieldName in 'itemID itemType dateAdded dateModified creators tags notes attachments'.split(' '):
+  for fieldName in 'itemID itemType dateAdded dateModified creators tags notes attachments raw'.split(' '):
     addfield(fieldName)
   print('', file=typings)
 
@@ -226,7 +230,6 @@ function unalias(item) {
 export function simplifyForExport(item, dropAttachments = false) {
   unalias(item)
 
-  item.tags = item.tags ? item.tags.map(tag => tag.tag ) : []
   item.notes = item.notes ? item.notes.map(note =>  note.note || note ) : []
   if (item.filingDate) item.filingDate = item.filingDate.replace(/^0000-00-00 /, '')
 
