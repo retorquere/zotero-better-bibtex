@@ -958,7 +958,7 @@ export class Reference {
   protected enc_tags(f) {
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => Translator.preferences.automaticTags || tag.type !== 1)
+      .filter(tag => Translator.preferences.automaticTags || (tag.type !== 1))
     if (tags.length === 0) return null
 
     // sort tags for stable tests

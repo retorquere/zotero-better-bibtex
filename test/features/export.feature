@@ -436,3 +436,8 @@ Scenario: auto-export
 Scenario: (non-)dropping particle handling #313
   When I import 53 references from "export/*.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
+
+@1270 @test-cluster-1
+Scenario: automatic tags in export #1270
+  When I import 1 reference from "export/*.json"
+  Then an export using "Better BibTeX" should match "export/*.bibtex"
