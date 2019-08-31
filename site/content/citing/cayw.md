@@ -151,6 +151,8 @@ For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd
 * the response body will be `[#adams2001][][#brigge2002][]`, and
 * `[#adams2001][][#brigge2002][]` will be left on the clipboard
 
+More of a gimmick than anything else, but if you add `select=true`, BBT will select the picked items in Zotero.
+
 ## Playing around
 
 For testing for other markdown formatters, you can construct simple references yourself, using the `playground` formatter, with parameters:
