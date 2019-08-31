@@ -83,6 +83,15 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)
 
+      item.raw = Translator.preferences.rawLaTag === '*'
+      item.tags = item.tags.filter(tag => {
+        if (tag.tag === Translator.preferences.rawLaTag) {
+          item.raw = true
+          return false
+        }
+        return true
+      })
+
       return item
     }
 

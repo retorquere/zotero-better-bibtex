@@ -35,7 +35,7 @@ const Path = { // tslint:disable-line variable-name
 interface IField {
   name: string
   verbatim?: string
-  value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; }
+  value: string | string[] | number | null | { path: string; title?: string; mimeType?: string; } | Array<{ tag: string, type?: number }>
   enc?: string
   orig?: { name?: string, verbatim?: string, inherit?: boolean }
   bibtexStrings?: boolean
@@ -264,7 +264,6 @@ const Language = new class { // tslint:disable-line:variable-name
  *   * enc: the encoding to use for the field
  */
 export class Reference {
-  public raw: boolean
   public has: { [key: string]: any } = {}
   public item: ISerializedItem
   public referencetype: string
@@ -314,7 +313,6 @@ export class Reference {
 
   constructor(item) {
     this.item = item
-    this.raw = (Translator.preferences.rawLaTag === '*') || (this.item.tags.includes(Translator.preferences.rawLaTag))
     this.packages = {}
 
     if (!this.item.language) {
@@ -398,7 +396,7 @@ export class Reference {
   public normalizeDashes(str) {
     str = (str || '').trim()
 
-    if (this.raw) return str
+    if (this.item.raw) return str
 
     return str
       .replace(/\u2053/g, '~')
@@ -486,7 +484,7 @@ export class Reference {
 
       } else {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
-        let value = this[`enc_${enc}`](field, this.raw)
+        let value = this[`enc_${enc}`](field, this.item.raw)
 
         if (!value) return
 
@@ -496,7 +494,7 @@ export class Reference {
         if (!field.bare || (field.value as string).match(/\s/)) {
           // clean up unnecesary {} when followed by a char that safely terminates the command before
           // value = value.replace(/({})+($|[{}$\/\\.;,])/g, '$2') // don't remove trailing {} https://github.com/retorquere/zotero-better-bibtex/issues/1091
-          if (!(this.raw || field.raw)) value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
+          if (!(this.item.raw || field.raw)) value = value.replace(/({})+([{}\$\/\\\.;,])/g, '$2')
           value = `{${value}}`
         }
 
@@ -958,37 +956,35 @@ export class Reference {
   }
 
   protected enc_tags(f) {
-    let tags = f.value.filter(tag => tag !== Translator.preferences.rawLaTag)
+    const tags = f.value.map(tag => (typeof tag === 'string' ? { tag } : tag))
     if (tags.length === 0) return null
 
     // sort tags for stable tests
-    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort((a, b) => Translator.stringCompare(a, b))
+    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort((a, b) => Translator.stringCompare(a.tag, b.tag))
 
-    tags = tags.map(tag => {
+    for (const tag of tags) {
       if (Translator.BetterBibTeX) {
-        tag = tag.replace(/([#\\%&])/g, '\\$1')
+        tag.tag = tag.tag.replace(/([#\\%&])/g, '\\$1')
       } else {
-        tag = tag.replace(/([#%\\])/g, '\\$1')
+        tag.tag = tag.tag.replace(/([#%\\])/g, '\\$1')
       }
 
       // the , -> ; is unfortunate, but I see no other way
-      tag = tag.replace(/,/g, ';')
+      tag.tag = tag.tag.replace(/,/g, ';')
 
       // verbatim fields require balanced braces -- please just don't use braces in your tags
       let balanced = 0
-      for (const ch of tag) {
+      for (const ch of tag.tag) {
         switch (ch) {
           case '{': balanced += 1; break
           case '}': balanced -= 1; break
         }
         if (balanced < 0) break
       }
-      if (balanced !== 0) tag = tag.replace(/{/g, '(').replace(/}/g, ')')
+      if (balanced !== 0) tag.tag = tag.tag.replace(/{/g, '(').replace(/}/g, ')')
+    }
 
-      return tag
-    })
-
-    return tags.join(',')
+    return tags.map(tag => tag.tag).join(',')
   }
 
   protected enc_attachments(f) {
