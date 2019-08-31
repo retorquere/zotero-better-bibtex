@@ -976,8 +976,8 @@ Translator.doImport = async () => {
       if (err.source) item.note += `<pre>${escape.html(err.source)}</pre>`
       item.note += '</li>'
     }
-    item.tags = ['#Better BibTeX import error']
     item.note += '</ul>'
+    item.tags = [{ tag: '#Better BibTeX import error', type: 1 }]
     await item.complete()
   }
 

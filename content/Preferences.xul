@@ -32,6 +32,7 @@
         **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a
         really large library, but you can read about what is involved [here]({{ ref . "performance" }}).
       -->
+
       <preferences id="zotero-preferences-cite">
         <preference
           name="extensions.zotero.translators.better-bibtex.DOIandURL"
@@ -40,6 +41,15 @@
           default="both"/>
         <!--!
           Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
+        -->
+
+        <preference
+          name="extensions.zotero.translators.better-bibtex.automaticTags"
+          id="pref-better-bibtex-automaticTags"
+          type="bool"
+          default="false"/>
+        <!--!
+          Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.
         -->
 
         <preference
@@ -727,6 +737,7 @@
               </grid>
               <textbox flex="1" id="better-bibtex-cache-warn-jabrefFormat" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.export.jabrefFormat.4.warn;"/>
               <checkbox label="&better-bibtex.Preferences.export.qualityReport;" preference="pref-better-bibtex-qualityReport"/>
+              <checkbox label="&better-bibtex.Preferences.export.automaticTags;" preference="pref-better-bibtex-automaticTags"/>
             </groupbox>
 
             <groupbox>
