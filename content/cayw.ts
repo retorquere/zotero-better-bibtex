@@ -303,6 +303,13 @@ export async function pick(options) {
   const picked = doc.citation()
   const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
   Application.closeDocument(doc)
+
+  if (options.select) {
+    const zoteroPane = Zotero.getActiveZoteroPane()
+    zoteroPane.show()
+    await zoteroPane.selectItems(picked.map(item => item.id), true)
+  }
+
   return citation
 }
 
