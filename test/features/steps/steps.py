@@ -114,9 +114,8 @@ def step_impl(context, expected):
 
 @when(u'I select the first item where {field} = "{value}"')
 def step_impl(context, field, value):
-  selected = len(context.selected)
-  context.selected.append(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.select(field, value)', field=field, value=value))
-  assert len(context.selected) == selected + 1
+  context.selected.append(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({is: value})', value=value))
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
 @when(u'I remove the selected item')
@@ -136,7 +135,7 @@ def step_impl(context):
 
 @when(u'I pick "{title}" for CAYW')
 def step_impl(context, title):
-  pick = zotero.Pick(id = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find(title)', title=title))
+  pick = zotero.Pick(id = context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.find({contains: title})', title=title))
   assert pick['id'] is not None
 
   pick[context.table.headings[0]] = context.table.headings[1]

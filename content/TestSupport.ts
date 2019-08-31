@@ -114,20 +114,15 @@ export = new class {
     return await Translators.exportItems(translatorID, displayOptions, items, path)
   }
 
-  public async select(field, value) {
-    const s = new Zotero.Search()
-    s.addCondition('field', 'is', value) // field not used?
-    const ids = await s.search()
-    if (!ids || !ids.length) throw new Error(`No item found with ${field}  = '${value}'`)
+  public async select(ids) {
+    const zoteroPane = Zotero.getActiveZoteroPane()
+    zoteroPane.show()
 
-    const id = ids[0]
-
+    const sortedIDs = ids.slice().sort()
     // tslint:disable-next-line:no-magic-numbers
     for (let attempt = 1; attempt <= 10; attempt++) {
-      log.debug(`select ${field} = '${value}' = ${id}, attempt ${attempt}`)
-      const zoteroPane = Zotero.getActiveZoteroPane()
-      zoteroPane.show()
-      if (await zoteroPane.selectItem(id, true)) continue
+      log.debug(`select ${ids}, attempt ${attempt}`)
+      await zoteroPane.selectItems(ids, true)
 
       let selected
       try {
@@ -136,19 +131,25 @@ export = new class {
         log.error('Could not get selected items:', err)
         selected = []
       }
+      selected.sort()
 
       log.debug('selected items = ', selected)
-      if ((selected.length === 1) && (id === selected[0])) return id
-      log.debug(`select: expected ${id}, got ${selected}`)
+
+      if (JSON.stringify(sortedIDs) === JSON.stringify(selected)) return true
+      log.debug(`select: expected ${ids}, got ${selected}`)
     }
-    throw new Error(`failed to select ${id}`)
+    throw new Error(`failed to select ${ids}`)
   }
 
-  public async find(title) {
+  public async find(query) {
+    if (!Object.keys(query).length) throw new Error(`empty query ${JSON.stringify(query)}`)
     const s = new Zotero.Search()
-    s.addCondition('field', 'contains', title) // field not used?
+    for (const [mode, text] of Object.entries(query)) {
+      if (!['is', 'contains'].includes(mode)) throw new Error(`unsupported search mode ${mode}`)
+      s.addCondition('field', mode, text)
+    }
     const ids = await s.search()
-    if (!ids || ids.length !== 1) throw new Error(`No item found with title '${title}'`)
+    if (!ids || ids.length !== 1) throw new Error(`No item found matching '${JSON.stringify(query)}'`)
 
     return ids[0]
   }

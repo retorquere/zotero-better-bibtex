@@ -304,7 +304,7 @@ export async function pick(options) {
   const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
   Application.closeDocument(doc)
 
-  if (options.select) {
+  if (options.select && picked.length) {
     const zoteroPane = Zotero.getActiveZoteroPane()
     zoteroPane.show()
     await zoteroPane.selectItems(picked.map(item => item.id), true)
