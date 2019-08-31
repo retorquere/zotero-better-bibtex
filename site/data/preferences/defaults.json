@@ -13,6 +13,7 @@
   "autoExportPrimeExportCacheThreshold": 0,
   "autoExportTooLong": 10,
   "autoPin": false,
+  "automaticTags": false,
   "auxImport": false,
   "biblatexExtendedDateFormat": true,
   "biblatexExtendedNameFormat": false,

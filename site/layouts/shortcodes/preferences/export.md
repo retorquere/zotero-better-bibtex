@@ -80,6 +80,12 @@ default: `no`
 
 Generate quality reports for exported references.
 
+#### Include automatic tags in export
+
+default: `no`
+
+Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.
+
 #### Automatically abbreviate journal title if none is set explicitly
 
 default: `no`
