@@ -50,7 +50,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.68",
+    "@retorquere/bibtex-parser": "^1.0.69",
     "@types/lokijs": "^1.5.2",
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
@@ -118,7 +118,7 @@
     "ts-loader": "6.0.4",
     "ts-node": "8.3.0",
     "typedoc": "^0.15.0",
-    "typescript": "3.5.3",
+    "typescript": "3.6.2",
     "uri-templates": "0.2.0",
     "webpack": "4.39.3",
     "wrapper-webpack-plugin": "2.1.0",
