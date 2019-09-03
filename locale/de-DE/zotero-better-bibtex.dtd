@@ -101,7 +101,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced "Erweitert">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Füge Kommentare über mögliche Probleme mit den Verweisen hinzu">
-<!ENTITY better-bibtex.Preferences.export.automaticTags "Include automatic tags in export">
+<!ENTITY better-bibtex.Preferences.export.automaticTags "Inkludiere automatische Tags in den Export">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat "Füge JabRef-spezifische Meta-Informationen hinzu:">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.0 "Keine">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "für JabRef 3">
