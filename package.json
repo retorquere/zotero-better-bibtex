@@ -81,7 +81,7 @@
     "punycode": "2.1.1",
     "recast": "0.18.2",
     "string-template": "1.0.0",
-    "transliteration": "2.1.5",
+    "transliteration": "2.1.7",
     "tslint": "5.19.0",
     "unicode2latex": "^1.0.22",
     "webpack-cli": "3.3.8",
