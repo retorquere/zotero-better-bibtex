@@ -55,7 +55,7 @@
     "ajv": "6.10.2",
     "ajv-keywords": "3.4.1",
     "barcoder": "2.0.1",
-    "edtf": "2.6.3",
+    "edtf": "2.7.0",
     "edtfy": "0.0.8",
     "escape-string-regexp": "2.0.0",
     "eventemitter4": "0.2.4",
