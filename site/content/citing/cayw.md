@@ -59,7 +59,7 @@ David Lukes takes Overleaf integration one step further with a GreaseMonkey/Tamp
 
 ## DIY
 
-BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw[^1]. The url accepts
+BBT exposes an URL at http://127.0.0.1:23119/better-bibtex/cayw [^1]. The url accepts
 the following URL parameters:
 
 | parameter |   |
@@ -167,5 +167,4 @@ Alternately, the `json` formatter will just give you the picks as JSON which you
 
 but if you need an extra format, just ask.
 
-<hr/>
-[^1]: For Juris-M, the posrt number `23119` must be replaced with `24119`.
+[^1]: For Juris-M, the port number `23119` must be replaced with `24119`.

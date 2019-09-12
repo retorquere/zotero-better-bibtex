@@ -7,7 +7,7 @@ tags:
   - export
 ---
 
-You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]`[^1], where collectionID is:
+You can fetch your bibliography on the url http://127.0.0.1:23119/better-bibtex/collection?`[collectionID]`.`[format]` [^1], where collectionID is:
 
 * the ID you get by right-clicking your collection and selecting "Show collection key"
 * the path "/[library id]/full/path/to/collection" (the library id is the first number from the key you get in the
@@ -43,5 +43,4 @@ even more arcane to set up than [git support]({{< ref "auto#git-support" >}}).
 
 Note that as of Zotero 5.0.71, access to this URL will no longer work from the browser for security reasons; `curl` and other programmatic access will work.
 
-<hr/>
 [^1]: Replace portnumber `23119` with `24119` for Juris-M.
