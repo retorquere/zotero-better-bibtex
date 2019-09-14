@@ -29,6 +29,7 @@ EXPORTED = os.path.join(ROOT, 'exported')
 class Zotero:
   def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
+    self.timeout = 60
 
     if os.path.exists(EXPORTED):
       shutil.rmtree(EXPORTED)
@@ -48,8 +49,6 @@ class Zotero:
 
     self.zotero = self.id == 'zotero'
     self.jurism = self.id == 'jurism'
-
-    self.timeout = int(self.userdata.get('timeout', 60))
 
     with open(os.path.join(ROOT, 'gen/translators.json')) as f:
       self.translators = json.load(f, object_hook=Munch)

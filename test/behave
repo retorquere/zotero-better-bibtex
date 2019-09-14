@@ -3,6 +3,7 @@
 import sys
 import os
 import json
+import subprocess
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -11,13 +12,8 @@ for d in pathlib.Path(__file__).resolve().parents:
     break
 os.chdir(ROOT)
 
-if not 'CI' in os.environ:
-  if '--no-stop' in sys.argv:
-    sys.argv = [arg for arg in sys.argv if arg != '--no-stop']
-  else:
-    sys.argv.append('--stop')
-  import subprocess
-
+# build before test unless on CI
+if not 'CI':
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
@@ -28,24 +24,27 @@ if not 'CI' in os.environ:
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
-  if '--nightly' in sys.argv:
-    nightly = True
-    sys.argv = [arg for arg in sys.argv if arg != '--nightly']
+# augment command line
+## stop on first error by default
+if not 'CI' in os.environ or '--no-stop' in sys.argv:
+  sys.argv = [arg for arg in sys.argv if arg != '--no-stop']
 else:
-  nightly = os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
+  sys.argv.append('--stop')
 
-if nightly:
-  sys.argv.extend(['--define', 'timeout=900'])
+## exclude @nightly by default
+if os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or '--nightly' in sys.argv:
+  sys.argv = [arg for arg in sys.argv if arg != '--nightly']
 else:
   sys.argv.extend(['--tags', '~@nightly'])
+
+## client is Zotero unless specified
+sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
+
+print(' '.join(sys.argv))
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
 import behave.configuration
-
-sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
-
-print(' '.join(sys.argv))
 
 # hijack setup_formats to do sys.path processing so the format loader is ran with the sys.path patched already
 Configuration_setup_formats = Configuration.setup_formats
