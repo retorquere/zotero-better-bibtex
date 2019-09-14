@@ -443,7 +443,7 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
-@nightly @rbwl @timeout=3000
+@rbwl @timeout=3000
 Scenario: Really Big whopping library
   When I import 15120 references from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
