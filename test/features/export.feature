@@ -441,3 +441,11 @@ Scenario: (non-)dropping particle handling #313
 Scenario: automatic tags in export #1270
   When I import 1 reference from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
+
+#@nightly @rbwl
+#Scenario: Really Big whopping library
+#  When I import 15000 references from "export/*.json"
+#  Then an export using "Better BibTeX" should match "export/*.bibtex"
+#  And should take less than 300 seconds
+#  And an export using "Better BibTeX" should match "export/*.bibtex"
+#  And should take less than 200 seconds

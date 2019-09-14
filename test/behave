@@ -28,17 +28,22 @@ if not 'CI' in os.environ:
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
 
+  if '--nightly' in sys.argv:
+    nightly = True
+    sys.argv = [arg for arg in sys.argv if arg != '--nightly']
+else:
+  nightly = os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
+
+if nightly:
+  sys.argv.extend(['--define', 'timeout=900'])
+else:
+  sys.argv.extend(['--tags', '~@nightly'])
+
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
 import behave.configuration
 
 sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
-
-nightly = os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '')
-if nightly:
-  sys.argv.extend(['--define', 'timeout=300'])
-else:
-  sys.argv.extend(['--tags', '~@nightly'])
 
 print(' '.join(sys.argv))
 

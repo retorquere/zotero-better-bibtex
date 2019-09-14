@@ -54,7 +54,10 @@ class TravisFormatter(PlainFormatter):
         self.stream.write(text)
 
         status_text = ': '
-        status_text += {'passed': u'\u2713', 'failed': u'\u26A0'}[step.status.name]
+        if step.status.name == 'passed':
+          status_text += u'\u2713'
+        else:
+          status_text += u'\u26A0'
 
         if self.show_timings:
             status_text += " in %0.3fs" % step.duration

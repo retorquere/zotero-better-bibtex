@@ -88,20 +88,32 @@ def step_impl(context, translator, collection, output, expected):
 @step('an export using "{translator}" with {displayOption} on should match "{expected}"')
 def step_impl(context, translator, displayOption, expected):
   expected = expand_scenario_variables(context, expected)
+
+  start = time.time()
   context.zotero.export_library(
     displayOptions = { **context.displayOptions, displayOption: True},
     translator = translator,
     expected = expected
   )
+  finish = time.time()
+  context.runtime = finish - start
 
 @step('an export using "{translator}" should match "{expected}"')
 def step_impl(context, translator, expected):
   expected = expand_scenario_variables(context, expected)
+
+  start = time.time()
   context.zotero.export_library(
     displayOptions = context.displayOptions,
     translator = translator,
     expected = expected
   )
+  finish = time.time()
+  context.runtime = finish - start
+
+@step('should take less than {seconds:d} seconds')
+def step_impl(context, seconds):
+  assert context.runtime < seconds
 
 @step('the library should match "{expected}"')
 def step_impl(context, expected):
