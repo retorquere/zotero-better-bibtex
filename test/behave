@@ -32,7 +32,7 @@ else:
   sys.argv.append('--stop')
 
 ## exclude @nightly by default
-if os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or os.environ.get('TRAVIS_TAG', '') != '' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or '--nightly' in sys.argv:
+if os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or '--nightly' in sys.argv:
   sys.argv = [arg for arg in sys.argv if arg != '--nightly']
 else:
   sys.argv.extend(['--tags', '~@nightly'])
