@@ -62,22 +62,39 @@ def step_impl(context, references, attachments, source):
   context.imported = source
   assert_that(context.zotero.import_file(context, source), equal_to(references))
 
-@step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
-def step_impl(context, translator, output, expected):
+def export_library(context, translator='BetterBibTeX JSON', collection=None, expected=None, output=None, displayOption=None, timeout=None, resetCache=False):
   expected = expand_scenario_variables(context, expected)
+  displayOptions = { **context.displayOptions }
+  if displayOption: displayOptions[displayOption] = True
+
+  start = time.time()
   context.zotero.export_library(
-    displayOptions = { **context.displayOptions, 'keepUpdated': True},
+    displayOptions = displayOptions,
     translator = translator,
     output = output,
     expected = expected,
+    resetCache = resetCache,
+    collection = collection
+  )
+  runtime = time.time() - start
+
+  if context.max_export_time is not None:
+    assert(runtime < context.max_export_time), f'Export runtime of {runtime} exceeded set maximum of {context.max_export_time}'
+
+@step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
+def step_impl(context, translator, output, expected):
+  export_library(context,
+    translator=translator,
+    expected=expected,
+    output=output,
+    displayOption='keepUpdated',
     resetCache = True
   )
 
 @then(u'an auto-export of "{collection}" to "{output}" using "{translator}" should match "{expected}"')
 def step_impl(context, translator, collection, output, expected):
-  expected = expand_scenario_variables(context, expected)
-  context.zotero.export_library(
-    displayOptions = { **context.displayOptions, 'keepUpdated': True},
+  export_library(context,
+    displayOption = 'keepUpdated',
     translator = translator,
     collection = collection,
     output = output,
@@ -87,42 +104,30 @@ def step_impl(context, translator, collection, output, expected):
 
 @step('an export using "{translator}" with {displayOption} on should match "{expected}"')
 def step_impl(context, translator, displayOption, expected):
-  expected = expand_scenario_variables(context, expected)
-
-  start = time.time()
-  context.zotero.export_library(
-    displayOptions = { **context.displayOptions, displayOption: True},
+  export_library(context,
+    displayOption = displayOption,
     translator = translator,
     expected = expected
   )
-  finish = time.time()
-  context.runtime = finish - start
 
 @step('an export using "{translator}" should match "{expected}"')
 def step_impl(context, translator, expected):
-  expected = expand_scenario_variables(context, expected)
-
-  start = time.time()
-  context.zotero.export_library(
-    displayOptions = context.displayOptions,
+  export_library(context,
     translator = translator,
     expected = expected
   )
-  finish = time.time()
-  context.runtime = finish - start
 
-@step('should take less than {seconds:d} seconds')
-def step_impl(context, seconds):
-  assert context.runtime < seconds
+@step('an export using "{translator}" should match "{expected}", but take no more than {seconds:d} seconds')
+def step_impl(context, translator, expected, seconds):
+  export_library(context,
+    translator = translator,
+    expected = expected,
+    timeout = seconds
+  )
 
 @step('the library should match "{expected}"')
 def step_impl(context, expected):
-  expected = expand_scenario_variables(context, expected)
-  context.zotero.export_library(
-    displayOptions = context.displayOptions,
-    translator = 'BetterBibTeX JSON',
-    expected = expected
-  )
+  export_library(context, expected = expected)
 
 @when(u'I select the first item where {field} = "{value}"')
 def step_impl(context, field, value):

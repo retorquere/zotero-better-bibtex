@@ -447,6 +447,4 @@ Scenario: automatic tags in export #1270
 Scenario: Really Big whopping library
   When I import 15120 references from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
-  And should take less than 300 seconds
-  And an export using "Better BibTeX" should match "export/*.bibtex"
-  And should take less than 50 seconds
+  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 50 seconds

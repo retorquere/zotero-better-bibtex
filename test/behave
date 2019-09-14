@@ -13,7 +13,7 @@ for d in pathlib.Path(__file__).resolve().parents:
 os.chdir(ROOT)
 
 # build before test unless on CI
-if not 'CI':
+if not 'CI' in os.environ:
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()

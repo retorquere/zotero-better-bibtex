@@ -1,3 +1,4 @@
+import threading
 import json
 import os
 import redo
@@ -19,12 +20,31 @@ import atexit
 import time
 import collections
 import uuid
+import sys
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
+
+class Pinger(threading.Thread):
+  wait = 300
+
+  def __init__(self):
+    threading.Thread.__init__(self)
+    self.running = True
+
+  def run(self):
+    while True:
+      for _ in range(self.wait):
+        if not self.running: return
+        time.sleep(1)
+      sys.stderr.write('.')
+      sys.stderr.flush()
+
+  def stop(self):
+    self.running = False
 
 class Zotero:
   def __init__(self, userdata):
@@ -62,8 +82,20 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
+    # keep Travis satisfied
+    if self.timeout > Pinger.wait:
+      pinger = Pinger()
+      pinger.start()
+    else:
+      pinger = None
+
     req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
     res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
+
+    if pinger:
+      pinger.stop()
+      pinger.join()
+
     return json.loads(res)
 
   def shutdown(self):
