@@ -85,6 +85,10 @@ interface ITranslator {
   CSL: boolean
 
   caching: boolean
+  cache: {
+    hits: number
+    misses: number
+  }
 
   header: {
   #for $key, $type in $header.items():

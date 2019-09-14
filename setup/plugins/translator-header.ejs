@@ -9,7 +9,6 @@ var Translator = {
   options: <%- JSON.stringify(header.displayOptions || {}) %>,
 
   stringCompare: (new Intl.Collator('en')).compare,
-
   configure: function(stage) {
     var version = Zotero.BetterBibTeX.version();
     this.isZotero = version.Zotero.isZotero;
@@ -41,6 +40,10 @@ var Translator = {
       // special handling
 
       if (stage === 'doExport') {
+        this.cache = {
+          hits: 0,
+          misses: 0,
+        }
         this.options.exportPath = Zotero.getOption('exportPath')
         if (this.options.exportPath && this.options.exportPath.endsWith(this.pathSep)) this.options.exportPath = this.options.exportPath.slice(0, -1)
       }
@@ -130,7 +133,7 @@ function doExport() {
   Translator.configure('doExport')
   Translator.initialize()
   Translator.doExport()
-  Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start))
+  Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start) + ', cache: ' + JSON.stringify(Translator.cache))
 }
 <% } %>
 
