@@ -1,27 +1,36 @@
 from steps.zotero import Zotero
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 import re
+from contextlib import contextmanager
+
+@contextmanager
+def integer_tag(tag):
+    name = tag
+    value = None
+
+    if '=' in tag:
+      s = tag.split('=', 1)
+      name = s[0]
+      try:
+        value = int(s[1])
+      except:
+        raise ValueError(f'{tag} must specify a valid integer')
+
+    yield (name, value)
 
 def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
-    retries = None
+    retries = 0
     for tag in scenario.effective_tags:
-      if tag == 'retry':
-        r = 1
-      else:
-        r = tag.split('=', 1)
-        if len(r) != 2 or r[0] != 'retries': continue
+      with integer_tag(tag) as (tag, value):
+        if tag == 'retry':
+          retries = max(retries, 1)
+        elif tag == 'retries':
+          value = value or 0
+          if value == 0: raise ValueError(f'{value} is not a valid number of retries')
+          retries = max(retries, value)
 
-        r = r[1]
-        try:
-          r = int(r)
-          if r == 0: raise ValueError(tag) # will be caught in the except
-        except:
-          raise ValueError(f'{r} is not a valid number of retries')
-
-      if retries is None or r > retries: retries = r
-
-    if not retries is None:
+    if retries > 0:
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
 def before_all(context):
@@ -35,3 +44,12 @@ def before_scenario(context, scenario):
   context.selected = []
   context.imported = None
   context.picked = []
+  context.zotero.timeout = 60
+  for tag in scenario.effective_tags:
+    with integer_tag(tag) as (tag, value):
+      if tag == 'nightly':
+        context.zotero.timeout = max(context.zotero.timeout, 300)
+      elif tag == 'timeout':
+        value = value or 0
+        if value == 0: raise ValueError(f'{value} is not a valid timeout')
+        context.zotero.timeout = max(context.zotero.timeout, value)
