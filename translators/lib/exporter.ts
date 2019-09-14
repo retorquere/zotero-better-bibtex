@@ -46,7 +46,6 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public nextItem(): ISerializedItem {
     let item
     while (item = Zotero.nextItem()) {
-      debug(':caching:nextItem:', item.itemType)
       if (['note', 'attachment'].includes(item.itemType)) continue
 
       if (!item.citekey) {
@@ -59,7 +58,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       // this is not automatically lazy-evaluated?!?!
       const cached: Types.DB.Cache.ExportedItem = Translator.caching ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       if (cached) {
-        debug('cache hit for', item.itemID)
+        debug(':cache:hit', item.itemID)
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
           Translator.references.push({ citekey: item.citekey, reference: cached.reference })
         } else {
@@ -78,7 +77,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
         continue
       }
 
-      debug('cache miss for', item.itemID)
+      debug(':cache:miss', item.itemID)
       itemfields.simplifyForExport(item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
       debug('exporting', item)

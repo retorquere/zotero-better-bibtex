@@ -270,11 +270,11 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     const cached = collection.findOne(query)
 
     if (!cached) {
-      log.debug('export cache miss:', query)
+      log.debug(':cache:miss:', query)
       return false
     }
 
-    log.debug('export cache hit:', query)
+    log.debug(':cache:hit:', query)
 
     collection.update(cached) // touches the cache object so it isn't reaped too early
 
@@ -297,11 +297,11 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
       cached.reference = reference
       cached.metadata = metadata
       cached = collection.update(cached)
-      log.debug('cacheStore: update', collection.name, selector, cached)
+      log.debug(':cache:store: update', collection.name, selector, cached)
 
     } else {
       cached = collection.insert({...selector, reference, metadata})
-      log.debug('cacheStore: insert', collection.name, selector, cached)
+      log.debug(':cache:store: insert', collection.name, selector, cached)
 
     }
 

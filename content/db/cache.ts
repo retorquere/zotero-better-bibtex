@@ -17,25 +17,25 @@ class Cache extends Loki {
 
   public remove(ids, reason) {
     if (!this.initialized) {
-      log.debug('Cache.remove', reason, 'skipped, not initialized')
+      log.debug(':Cache:remove', reason, 'skipped, not initialized')
       return
     }
 
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
 
     for (const coll of this.collections) {
-      log.debug('Cache.remove:', coll.name, reason, query)
+      log.debug(':Cache:remove:', coll.name, reason, query)
       coll.findAndRemove(query)
     }
   }
 
   public reset() {
     if (!this.initialized) {
-      log.debug('Cache.reset skipped, not initialized')
+      log.debug(':Cache:reset skipped, not initialized')
       return
     }
     for (const coll of this.collections) {
-      log.debug('Cache.reset:', coll.name)
+      log.debug(':Cache:reset:', coll.name)
       coll.removeDataOnly()
     }
   }
@@ -133,14 +133,14 @@ const METADATA = 'Better BibTeX metadata'
 function clearOnUpgrade(coll, property, current) {
   const dbVersion = (coll.getTransform(METADATA) || [{value: {}}])[0].value[property]
   if (current && dbVersion === current) {
-    Zotero.debug(`CACHE: retaining cache ${coll.name} because stored ${property} is ${dbVersion} (current: ${current})`)
+    Zotero.debug(`:Cache:retaining cache ${coll.name} because stored ${property} is ${dbVersion} (current: ${current})`)
     return
   }
 
   if (dbVersion) {
-    Zotero.debug(`CACHE: dropping cache ${coll.name} because ${property} went from ${dbVersion} to ${current}`)
+    Zotero.debug(`:Cache:dropping cache ${coll.name} because ${property} went from ${dbVersion} to ${current}`)
   } else {
-    Zotero.debug(`CACHE: dropping cache ${coll.name} because ${property} was not set (current: ${current})`)
+    Zotero.debug(`:Cache:dropping cache ${coll.name} because ${property} was not set (current: ${current})`)
   }
 
   coll.removeDataOnly()

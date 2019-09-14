@@ -109,7 +109,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (!reason && Prefs.get('relativeFilePaths')) reason = 'Cache disabled when relativeFilePaths is on'
     if (!reason) {
       uncached = await this.uncached(translatorID, displayOptions, scope)
-      log.debug('Translators.primeCache:', uncached.length, 'uncached items')
+      log.debug(':cache:prime:', uncached.length, 'uncached items')
       if (!uncached.length) {
         reason = 'No uncached items found'
       } else if (uncached.length < threshold) {
@@ -117,34 +117,32 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
     if (reason) {
-      log.debug('Translators.primeCache: not priming cache:', reason)
+      log.debug(':cache:prime: not priming cache:', reason)
       return
     }
 
     switch (typeof uncached[0]) {
       case 'number':
       case 'string':
-        log.debug('Translators.primeCache: fetching uncached items')
+        log.debug(':cache:prime: fetching uncached items')
         uncached = await Zotero.Items.getAsync(uncached)
     }
 
     const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
     const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
     while (uncached.length) {
-      log.debug('Translators.primeCache:', uncached.length, 'remaining')
+      log.debug(':cache:prime:', uncached.length, 'remaining')
       const _batch = uncached.splice(0, batch)
-      log.debug('Translators.primeCache: priming', _batch.length)
+      log.debug(':cache:prime: priming', _batch.length)
 
       await this.exportItems(translatorID, displayOptions, { items: _batch })
 
-      // log.debug('Translators.primeCache: batch primed, of which remain uncached:', (await this.uncached(translatorID, displayOptions, { items: _batch})).map(item => item.id))
-      // log.debug('Translators.primeCache: batch primed, total uncached:', (await this.uncached(translatorID, displayOptions, scope)).length)
       // give the UI a chance
       await timeout(delay)
     }
 
     // uncached = await this.uncached(translatorID, displayOptions, scope)
-    // log.debug('Translators.primeCache: done,', uncached.length, 'total uncached in system')
+    // log.debug(':cache:prime: done,', uncached.length, 'total uncached in system')
     // if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
   }
 
@@ -171,7 +169,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translation.setCollection(items.collection)
 
     } else {
-      log.debug(':caching:Translators.exportItems: nothing?')
+      log.debug(':cache:exportItems: nothing?')
 
     }
 
@@ -300,14 +298,14 @@ export let Translators = new class { // tslint:disable-line:variable-name
         query[pref] = Prefs.get(pref)
       } else {
         query[pref] = displayOptions[`preference_${pref}`]
-        log.debug('Translators.primeCache.uncached: override', pref, '=', query[pref])
+        log.debug(':cache:prime.uncached: override', pref, '=', query[pref])
       }
     }
-    log.debug('Translators.primeCacheTranslators.uncached:', { prefOverrides, displayOptions, query })
+    log.debug(':cache:prime.uncached:', { prefOverrides, displayOptions, query })
     const cached = new Set(cache.find(query).map(item => item.itemID))
 
     if (scope.items) {
-      log.debug('Translators.primeCacheTranslators.uncached: items')
+      log.debug(':cache:prime.uncached: items')
       return scope.items.filter(item => !cached.has(item.id))
     }
 
@@ -325,29 +323,29 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     }
 
-    log.debug('Translators.primeCacheTranslators.uncached:', sql)
+    log.debug(':cache:prime.uncached:', sql)
     return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
   private items(items) {
     if (!items) {
-      log.debug(':caching:scope: nothing => userlibrary')
+      log.debug(':cache:scope: nothing => userlibrary')
       return { library: Zotero.Libraries.userLibraryID }
     }
 
     if (typeof items.collection === 'number') {
-      log.debug(':caching:scope: collection ID => collection')
+      log.debug(':cache:scope: collection ID => collection')
       return { collection: Zotero.Collections.get(items.collection) }
     }
 
     if (items.items) {
-      log.debug(':caching:scope:', items.items.length, 'items')
+      log.debug(':cache:scope:', items.items.length, 'items')
     } else if (items.collection) {
-      log.debug(':caching:scope: collection', items.collection.id)
+      log.debug(':cache:scope: collection', items.collection.id)
     } else if (items.library) {
-      log.debug(':caching:scope: library', items.library)
+      log.debug(':cache:scope: library', items.library)
     } else {
-      log.debug(':caching:scope: none?')
+      log.debug(':cache:scope: none?')
     }
 
     return items

@@ -21,10 +21,10 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     const query = { itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems}
     const cached = cache.findOne(query)
     if (!cached) {
-      log.debug('serializer cache miss:', query)
+      log.debug(':cache:serializer miss:', query)
       return null
     }
-    log.debug('serializer cache hit:', query)
+    log.debug(':cache:serializer hit:', query)
 
     return this.enrich(cached.item, item)
   }
