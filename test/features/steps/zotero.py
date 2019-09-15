@@ -31,14 +31,16 @@ EXPORTED = os.path.join(ROOT, 'exported')
 class Pinger(threading.Thread):
   wait = 300
 
-  def __init__(self):
+  def __init__(self, max_run_time):
     threading.Thread.__init__(self)
     self.running = True
+    self.max_run_time = max_run_time
+    self.start_time = time.time()
 
   def run(self):
     while True:
       for _ in range(self.wait):
-        if not self.running: return
+        if not self.running or (time.time() - self.start_time) > self.max_run_time: return
         time.sleep(1)
       sys.stderr.write('.')
       sys.stderr.flush()
@@ -84,7 +86,7 @@ class Zotero:
 
     # keep Travis satisfied
     if self.timeout > Pinger.wait:
-      pinger = Pinger()
+      pinger = Pinger(self.timeout)
       pinger.start()
     else:
       pinger = None

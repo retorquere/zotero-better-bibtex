@@ -4,7 +4,7 @@ import re
 from contextlib import contextmanager
 
 @contextmanager
-def integer_tag(tag):
+def value_tag(tag):
     name = tag
     value = None
 
@@ -15,14 +15,22 @@ def integer_tag(tag):
         value = int(s[1])
       except:
         raise ValueError(f'{tag} must specify a valid integer')
+    elif ':' in tag:
+      s = tag.split(':', 1)
+      name = s[0]
+      value = s[1]
+      if len(value) == 0: raise ValueError(f'{tag} must specify a valid string')
 
     yield (name, value)
+## client = context.config.userdata.get('zotero', 'zotero')
+## zotero = os.path.join(ROOT, 'test', 'db', f'{client}-{source}.sqlite')
+## bbt = os.path.join(ROOT, 'test', 'db', f'{client}-{source}-better-bibtex.sqlite')
 
 def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
     retries = 0
     for tag in scenario.effective_tags:
-      with integer_tag(tag) as (tag, value):
+      with value_tag(tag) as (tag, value):
         if tag == 'retry':
           retries = max(retries, 1)
         elif tag == 'retries':
@@ -45,12 +53,20 @@ def before_scenario(context, scenario):
   context.imported = None
   context.picked = []
   context.max_export_time = None
-  context.zotero.timeout = 60
+
+  timeout = 60
+  db = None
   for tag in scenario.effective_tags:
-    with integer_tag(tag) as (tag, value):
+    with value_tag(tag) as (tag, value):
       if tag == 'nightly':
-        context.zotero.timeout = max(context.zotero.timeout, 300)
+        timeout = max(timeout, 300)
       elif tag == 'timeout':
         value = value or 0
-        if value == 0: raise ValueError(f'{value} is not a valid timeout')
-        context.zotero.timeout = max(context.zotero.timeout, value)
+        assert value > 0, f'{value} is not a valid timeout'
+        timeout = max(timeout, value)
+
+      elif tag == 'db':
+        db = value
+        assert db, f'{value} is not a valid db tag'
+
+  context.zotero.timeout = timeout
