@@ -49,7 +49,7 @@ class Pinger(threading.Thread):
     self.running = False
 
 class Zotero:
-  def __init__(self, userdata):
+  def __init__(self, userdata, db=None):
     assert not running('Zotero'), 'Zotero is running'
     self.timeout = 60
 
@@ -78,7 +78,8 @@ class Zotero:
     if self.userdata.get('kill', 'true') == 'true':
       atexit.register(self.shutdown)
 
-    self.start()
+    self.preferences = Preferences(self)
+    self.start(db)
 
   def execute(self, script, **args):
     for var, value in args.items():
@@ -122,9 +123,11 @@ class Zotero:
       proc.kill()
     zotero.kill()
 
-  def start(self):
-    profile = Profile('BBTZ5TEST', self.id, self.userdata, self.password)
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile > {shlex.quote(profile.path + ".log")} 2>&1'
+  def start(self, db=None):
+    profile = Profile('BBTZ5TEST', self.id, self.userdata, self.password, db)
+    redir = '>'
+    if db: redir = '>>'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
     print(f'Starting {self.id}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     print(f'{self.id} started: {self.proc.pid}')
@@ -300,7 +303,7 @@ class Zotero:
     return [None, None]
 
 class Profile:
-  def __init__(self, name, client, userdata, password):
+  def __init__(self, name, client, userdata, password, db=None):
     self.name = name
 
     platform_client = platform.system() + ':' + client
@@ -324,7 +327,7 @@ class Profile:
     self.path = os.path.expanduser(f'~/.{self.name}')
 
     self.create()
-    self.layout(client, userdata, password)
+    self.layout(client, userdata, password, db)
 
   def create(self):
     profiles_ini = os.path.join(self.profiles, 'profiles.ini')
@@ -355,7 +358,7 @@ class Profile:
     with open(profiles_ini, 'w') as f:
       profiles.write(f, space_around_delimiters=False)
 
-  def layout(self, client, userdata, password):
+  def layout(self, client, userdata, password, db):
     fixtures = os.path.join(ROOT, 'test/fixtures')
     profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', client))
 
@@ -387,6 +390,10 @@ class Profile:
 
     shutil.rmtree(self.path, ignore_errors=True)
     shutil.move(profile.path, self.path)
+
+    if db:
+      shutil.copy(db.zotero, os.path.join(self.path, client, os.path.basename(db.zotero)))
+      shutil.copy(db.bbt, os.path.join(self.path, client, os.path.basename(db.bbt)))
 
 def un_multi(obj):
   if type(obj) == dict:

@@ -2,6 +2,10 @@ from steps.zotero import Zotero
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 import re
 from contextlib import contextmanager
+import urllib.request
+from munch import *
+import os
+from steps.utils import ROOT
 
 @contextmanager
 def value_tag(tag):
@@ -22,9 +26,6 @@ def value_tag(tag):
       if len(value) == 0: raise ValueError(f'{tag} must specify a valid string')
 
     yield (name, value)
-## client = context.config.userdata.get('zotero', 'zotero')
-## zotero = os.path.join(ROOT, 'test', 'db', f'{client}-{source}.sqlite')
-## bbt = os.path.join(ROOT, 'test', 'db', f'{client}-{source}-better-bibtex.sqlite')
 
 def before_feature(context, feature):
   for scenario in feature.walk_scenarios():
@@ -47,7 +48,6 @@ def before_all(context):
   context.zotero.export_library(translator = 'Better BibTeX')
 
 def before_scenario(context, scenario):
-  context.zotero.reset()
   context.displayOptions = {}
   context.selected = []
   context.imported = None
@@ -68,5 +68,20 @@ def before_scenario(context, scenario):
       elif tag == 'db':
         db = value
         assert db, f'{value} is not a valid db tag'
+
+  if db:
+    d = os.path.join(ROOT, 'test', 'db', db)
+    if not os.path.exists(d): os.makedirs(d)
+    zotero = os.path.join(d, 'zotero.sqlite')
+    if not os.path.exists(zotero):
+      urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.zotero.sqlite', zotero)
+    bbt = os.path.join(d, 'better-bibtex.sqlite')
+    if not os.path.exists(bbt):
+      urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.better-bibtex.sqlite', bbt)
+
+    context.zotero.shutdown()
+    context.zotero = Zotero(context.config.userdata, db=Munch(zotero=zotero, bbt=bbt))
+  else:
+    context.zotero.reset()
 
   context.zotero.timeout = timeout
