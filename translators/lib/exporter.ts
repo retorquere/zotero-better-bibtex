@@ -23,12 +23,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     this.strings = {}
     this.packages = {}
     this.time = {
-      nextItem: (new Date).getTime(),
+      nextItem: Date.now(),
     }
   }
 
   private elapsed(category, msg) {
-    const now = (new Date).getTime()
+    const now = Date.now()
     debug(`${category}: +${now - this.time[category]}: ${msg}`)
     this.time[category] = now
   }

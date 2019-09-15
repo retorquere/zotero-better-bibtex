@@ -133,7 +133,10 @@ function doExport() {
   Translator.configure('doExport')
   Translator.initialize()
   Translator.doExport()
-  Zotero.debug(<%- JSON.stringify(header.label) %> + ' export took ' + (Date.now() - start) + ', cache: ' + JSON.stringify(Translator.cache))
+  const elapsed = Date.now() - start
+  const hits = Translator.cache.hits
+  const misses = Translator.cache.misses
+  Zotero.debug(<%- JSON.stringify(header.label) %> + ` export took ${elapsed/1000}s, hits=${hits}, misses=${misses}, ${elapsed / (misses + hits)}ms/item`)
 }
 <% } %>
 
