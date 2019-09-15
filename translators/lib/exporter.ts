@@ -13,14 +13,24 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public packages: { [key: string]: boolean }
   public jabref: JabRef
   public strings: {[key: string]: string}
-  public time: number
+  private time: {
+    nextItem: number
+  }
 
   constructor() {
     this.preamble = {DeclarePrefChars: ''}
     this.jabref = new JabRef()
     this.strings = {}
     this.packages = {}
-    this.time = (new Date).getTime()
+    this.time = {
+      nextItem: (new Date).getTime(),
+    }
+  }
+
+  private elapsed(category, msg) {
+    const now = (new Date).getTime()
+    debug(`${category}: +${now - this.time[category]}: ${msg}`)
+    this.time[category] = now
   }
 
   public prepare_strings() {
@@ -60,9 +70,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       // this is not automatically lazy-evaluated?!?!
       const cached: Types.DB.Cache.ExportedItem = Translator.caching ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
-
-      debug(`nextItem: +${(new Date).getTime() - this.time}: cache ${cached ? 'hit' : 'miss' }`)
-      this.time = (new Date).getTime()
+      this.elapsed('nextItem', `${item.itemID} cache ${cached ? 'hit' : 'miss' }, hits=${Translator.cache.hits}, misses=${Translator.cache.misses}`)
 
       if (cached) {
         debug(':cache:hit', item.itemID)

@@ -269,12 +269,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     const query = cacheSelector(itemID, options, prefs)
     const cached = collection.findOne(query)
 
-    if (!cached) {
-      log.debug(':cache:miss:', query)
-      return false
-    }
-
-    log.debug(':cache:hit:', query)
+    if (!cached) return false
 
     collection.update(cached) // touches the cache object so it isn't reaped too early
 
