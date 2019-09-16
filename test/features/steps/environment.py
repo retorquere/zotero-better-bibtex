@@ -48,40 +48,19 @@ def before_all(context):
   context.zotero.export_library(translator = 'Better BibTeX')
 
 def before_scenario(context, scenario):
+  context.zotero.reset()
   context.displayOptions = {}
   context.selected = []
   context.imported = None
   context.picked = []
   context.max_export_time = None
 
-  timeout = 60
-  db = None
+  context.zotero.timeout = 60
   for tag in scenario.effective_tags:
     with value_tag(tag) as (tag, value):
       if tag == 'nightly':
-        timeout = max(timeout, 300)
+        context.zotero.timeout = max(context.zotero.timeout, 300)
       elif tag == 'timeout':
         value = value or 0
         assert value > 0, f'{value} is not a valid timeout'
-        timeout = max(timeout, value)
-
-      elif tag == 'db':
-        db = value
-        assert db, f'{value} is not a valid db tag'
-
-  if db:
-    d = os.path.join(ROOT, 'test', 'db', db)
-    if not os.path.exists(d): os.makedirs(d)
-    zotero = os.path.join(d, 'zotero.sqlite')
-    if not os.path.exists(zotero):
-      urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.zotero.sqlite', zotero)
-    bbt = os.path.join(d, 'better-bibtex.sqlite')
-    if not os.path.exists(bbt):
-      urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.better-bibtex.sqlite', bbt)
-
-    context.zotero.shutdown()
-    context.zotero = Zotero(context.config.userdata, db=Munch(zotero=zotero, bbt=bbt))
-  else:
-    context.zotero.reset()
-
-  context.zotero.timeout = timeout
+        context.zotero.timeout = max(context.zotero.timeout, value)

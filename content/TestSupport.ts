@@ -59,6 +59,11 @@ export = new class {
     if (items.length !== 0) throw new Error('library not empty after reset')
   }
 
+  public async librarySize() {
+    const itemIDs = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
+    return itemIDs.length
+  }
+
   public async importFile(source, createNewCollection, preferences) {
     preferences = preferences || {}
 
@@ -73,6 +78,8 @@ export = new class {
     } else {
       log.debug(`importing references from ${source}`)
     }
+
+    if (!source) return 0
 
     const file = Zotero.File.pathToFile(source)
 

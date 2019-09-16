@@ -85,19 +85,19 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    # keep Travis satisfied
-    if self.timeout > Pinger.wait:
-      pinger = Pinger(self.timeout)
-      pinger.start()
-    else:
-      pinger = None
+#    # keep Travis satisfied
+#    if self.timeout > Pinger.wait:
+#      pinger = Pinger(self.timeout)
+#      pinger.start()
+#    else:
+#      pinger = None
 
     req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
     res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
 
-    if pinger:
-      pinger.stop()
-      pinger.join()
+#    if pinger:
+#      pinger.stop()
+#      pinger.join()
 
     return json.loads(res)
 
@@ -232,7 +232,7 @@ class Zotero:
     os.remove(exported)
     return
 
-  def import_file(self, context, references, collection = False):
+  def import_file(self, context, references, collection = False, items=True):
     assert type(collection) in [bool, str]
 
     fixtures = os.path.join(ROOT, 'test/fixtures')
@@ -278,8 +278,10 @@ class Zotero:
           with open(references, 'w') as out:
             out.write(bib)
 
+      filename = references
+      if not items: filename = None
       return self.execute('return await Zotero.BetterBibTeX.TestSupport.importFile(filename, createNewCollection, preferences)',
-        filename = references,
+        filename = filename,
         createNewCollection = (collection != False),
         preferences = preferences
       )
