@@ -116,7 +116,7 @@ class Zotero:
         print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
-    procs = zotero.children().append(zotero)
+    procs = zotero.children(recursive=True).append(zotero)
 
     for p in procs:
       try:
@@ -135,7 +135,7 @@ class Zotero:
       gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
       if alive:
         for p in alive:
-        print("process {} survived SIGKILL; giving up" % p)
+          print("process {} survived SIGKILL; giving up" % p)
     self.proc = None
     assert not running('Zotero')
 

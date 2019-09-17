@@ -7,6 +7,7 @@ import json
 import difflib
 from markdownify import markdownify as md
 from bs4 import BeautifulSoup
+import sys
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -63,17 +64,19 @@ def running(id):
 
   if platform.system() == 'Darwin':
     count = int(subprocess.check_output(['osascript', '-e', 'tell application "System Events"', '-e', f'count (every process whose name is "{id}")', '-e', 'end tell']).strip())
-    return count > 0
+  else:
+    count = 0
+    for proc in psutil.process_iter():
+      try:
+        # Check if process name contains the given name string.
+        if id.lower() in proc.name().lower():
+          count += 1
+          sys.stderr.write(f'{id} is running, name = {proc.name()}, pid = {proc.pid}\n')
+          sys.stderr.flush()
+      except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+        pass
 
-  for proc in psutil.process_iter():
-    try:
-      # Check if process name contains the given name string.
-      if id.lower() in proc.name().lower():
-        return True
-    except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-      pass
-
-  return False
+  return count > 0
 
 def nested_dict_iter(nested, root = []):
   for key, value in nested.items():
