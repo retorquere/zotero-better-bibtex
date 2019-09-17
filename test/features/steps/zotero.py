@@ -112,15 +112,32 @@ class Zotero:
     except:
       pass
 
-    stopped = False
-    for _ in redo.retrier(attempts=5,sleeptime=1):
-      stopped = not running(self.proc.pid)
-      if stopped: break
+    def on_terminate(proc):
+        print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
-    for proc in zotero.children(recursive=True):
-      proc.kill()
-    zotero.kill()
+    procs = zotero.children().append(zotero)
+
+    for p in procs:
+      try:
+        p.terminate()
+      except psutil.NoSuchProcess:
+        pass
+    gone, alive = psutil.wait_procs(procs, timeout=5, callback=on_terminate)
+
+    if alive:
+      for p in alive:
+        print("process {} survived SIGTERM; trying SIGKILL" % p)
+        try:
+          p.kill()
+        except psutil.NoSuchProcess:
+          pass
+      gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
+      if alive:
+        for p in alive:
+        print("process {} survived SIGKILL; giving up" % p)
+    self.proc = None
+    assert not running('Zotero')
 
   def start(self, db=None):
     profile = Profile('BBTZ5TEST', self.id, self.userdata, db)
