@@ -19,7 +19,6 @@ import subprocess
 import atexit
 import time
 import collections
-import uuid
 import sys
 
 from ruamel.yaml import YAML
@@ -59,7 +58,7 @@ class Zotero:
 
     self.userdata = userdata
 
-    self.password = str(uuid.uuid4())
+    self.password = userdata['debugbridgepassword']
 
     self.id = self.userdata.get('zotero', 'zotero')
     if self.id == 'zotero':
@@ -124,7 +123,7 @@ class Zotero:
     zotero.kill()
 
   def start(self, db=None):
-    profile = Profile('BBTZ5TEST', self.id, self.userdata, self.password, db)
+    profile = Profile('BBTZ5TEST', self.id, self.userdata, db)
     redir = '>'
     if db: redir = '>>'
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
@@ -305,7 +304,7 @@ class Zotero:
     return [None, None]
 
 class Profile:
-  def __init__(self, name, client, userdata, password, db=None):
+  def __init__(self, name, client, userdata, db=None):
     self.name = name
 
     platform_client = platform.system() + ':' + client
@@ -329,7 +328,7 @@ class Profile:
     self.path = os.path.expanduser(f'~/.{self.name}')
 
     self.create()
-    self.layout(client, userdata, password, db)
+    self.layout(client, userdata, db)
 
   def create(self):
     profiles_ini = os.path.join(self.profiles, 'profiles.ini')
@@ -360,7 +359,7 @@ class Profile:
     with open(profiles_ini, 'w') as f:
       profiles.write(f, space_around_delimiters=False)
 
-  def layout(self, client, userdata, password, db):
+  def layout(self, client, userdata, db):
     fixtures = os.path.join(ROOT, 'test/fixtures')
     profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', client))
 
@@ -368,7 +367,7 @@ class Profile:
       profile.add_extension(xpi)
 
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
-    profile.set_preference('extensions.zotero.debug-bridge.password', password)
+    profile.set_preference('extensions.zotero.debug-bridge.password', userdata['debugbridgepassword'])
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)

@@ -4,6 +4,7 @@ import sys
 import os
 import json
 import subprocess
+import uuid
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -11,6 +12,10 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 os.chdir(ROOT)
+
+# because behave doesn't think it's useful to be able to load local stuff... oy...
+sys.path.insert(0, os.path.abspath('test/features/steps'))
+print(sys.path)
 
 # build before test unless on CI
 if not 'CI' in os.environ:
@@ -39,35 +44,11 @@ else:
 
 ## client is Zotero unless specified
 sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
+sys.argv.extend(['--define', f'debugbridgepassword={str(uuid.uuid4())}'])
 
 print(' '.join(sys.argv))
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
 import behave.configuration
-
-# hijack setup_formats to do sys.path processing so the format loader is ran with the sys.path patched already
-Configuration_setup_formats = Configuration.setup_formats
-def patched_Configuration_setup_formats(self):
-  if self.sys_path:
-    for path in self.sys_path:
-      path = os.path.abspath(path)
-      assert os.path.exists(path), f'sys-path {json.dumps(path)} does not exist'
-      sys.path.append(path)
-
-  return Configuration_setup_formats(self)
-Configuration.setup_formats = patched_Configuration_setup_formats
-
-behave.configuration.options.append(
-  (
-    ('--sys-path',),
-    dict(
-      action="append",
-      dest="sys_path",
-      help="Specify additional sys.path paths."
-    )
-  )
-)
-config = Configuration(None)
-
-sys.exit(run_behave(config))
+sys.exit(run_behave(Configuration(None)))
