@@ -28,7 +28,10 @@ def step_impl(context, source, db):
   context.imported = source
 
   with open(os.path.join(ROOT, 'test', 'fixtures', source)) as f:
-    references = len(json.load(f)['items'])
+    data = json.load(f)
+    items = data['items']
+    #references = sum([ 1 + len(item.get('attachments', [])) + len(item.get('notes', [])) for item in items ])
+    references = len(items)
 
   dbs = os.path.join(ROOT, 'test', 'db', db)
   if not os.path.exists(dbs): os.makedirs(dbs)
@@ -46,6 +49,12 @@ def step_impl(context, source, db):
   assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
 
   context.zotero.import_file(context, source, items=False)
+
+@step(r'I import {references:d} references from "{source}"')
+def step_impl(context, references, source):
+  source = expand_scenario_variables(context, source)
+  context.imported = source
+  assert_that(context.zotero.import_file(context, source, collection), equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
