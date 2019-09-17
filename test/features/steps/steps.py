@@ -54,7 +54,7 @@ def step_impl(context, source, db):
 def step_impl(context, references, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
-  assert_that(context.zotero.import_file(context, source, collection), equal_to(references))
+  assert_that(context.zotero.import_file(context, source), equal_to(references))
 
 @step(r'I import 1 reference from "{source}" into "{collection}"')
 def step_impl(context, source, collection):
