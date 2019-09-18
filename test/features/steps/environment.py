@@ -47,6 +47,11 @@ def before_all(context):
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
+def after_scenario(context, scenario):
+  if context.zotero.restarted:
+    context.zotero.shutdown()
+    context.zotero = Zotero(context.config.userdata)
+
 def before_scenario(context, scenario):
   context.zotero.reset()
   context.displayOptions = {}

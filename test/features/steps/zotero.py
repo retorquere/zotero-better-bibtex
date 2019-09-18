@@ -50,7 +50,9 @@ class Pinger(threading.Thread):
 class Zotero:
   def __init__(self, userdata, db=None):
     assert not running('Zotero'), 'Zotero is running'
+    self.proc = None
     self.timeout = 60
+    self.restarted = db is not None
 
     if os.path.exists(EXPORTED):
       shutil.rmtree(EXPORTED)
@@ -141,7 +143,7 @@ class Zotero:
     assert not running('Zotero')
 
   def start(self, db=None):
-    profile = Profile('BBTZ5TEST', self.id, self.userdata, db)
+    profile = Profile('BBTZ5TEST', self.id, self.userdata, self.timeout, db)
     redir = '>'
     if db: redir = '>>'
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
@@ -322,7 +324,7 @@ class Zotero:
     return [None, None]
 
 class Profile:
-  def __init__(self, name, client, userdata, db=None):
+  def __init__(self, name, client, userdata, timeout, db=None):
     self.name = name
 
     platform_client = platform.system() + ':' + client
@@ -346,7 +348,7 @@ class Profile:
     self.path = os.path.expanduser(f'~/.{self.name}')
 
     self.create()
-    self.layout(client, userdata, db)
+    self.layout(client, userdata, timeout, db)
 
   def create(self):
     profiles_ini = os.path.join(self.profiles, 'profiles.ini')
@@ -377,7 +379,7 @@ class Profile:
     with open(profiles_ini, 'w') as f:
       profiles.write(f, space_around_delimiters=False)
 
-  def layout(self, client, userdata, db):
+  def layout(self, client, userdata, timeout, db):
     fixtures = os.path.join(ROOT, 'test/fixtures')
     profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', client))
 
@@ -386,6 +388,7 @@ class Profile:
 
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
     profile.set_preference('extensions.zotero.debug-bridge.password', userdata['debugbridgepassword'])
+    profile.set_preference('dom.max_chrome_script_run_time', timeout)
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)

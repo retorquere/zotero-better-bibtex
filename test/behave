@@ -15,7 +15,6 @@ os.chdir(ROOT)
 
 # because behave doesn't think it's useful to be able to load local stuff... oy...
 sys.path.insert(0, os.path.abspath('test/features/steps'))
-print(sys.path)
 
 # build before test unless on CI
 if not 'CI' in os.environ:
