@@ -447,4 +447,4 @@ Scenario: automatic tags in export #1270
 Scenario: Really Big whopping library
   When I restart Zotero with from "1287" + "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
-  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 50 seconds
+  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
