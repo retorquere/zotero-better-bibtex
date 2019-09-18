@@ -89,14 +89,15 @@ class Zotero:
       res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
       return json.loads(res)
 
-    if self.timeout < 300:
+    ping = 120 # no longer than two minutes between output
+    if self.timeout < ping:
       return post()
     else: # keep Travis happy by pinging the output
       with ThreadPoolExecutor(max_workers=1) as e:
         remote = e.submit(post)
         started = time.time()
         while (time.time() - started) < self.timeout:
-          for _ in range(300):
+          for _ in range(ping):
             if remote.done(): return remote.result()
             time.sleep(1)
           sys.stderr.write('.')
