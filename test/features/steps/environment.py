@@ -58,7 +58,6 @@ def before_scenario(context, scenario):
   context.selected = []
   context.imported = None
   context.picked = []
-  context.max_export_time = None
 
   context.zotero.timeout = 60
   for tag in scenario.effective_tags:

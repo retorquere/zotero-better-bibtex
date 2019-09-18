@@ -98,8 +98,8 @@ def export_library(context, translator='BetterBibTeX JSON', collection=None, exp
   )
   runtime = time.time() - start
 
-  if context.max_export_time is not None:
-    assert(runtime < context.max_export_time), f'Export runtime of {runtime} exceeded set maximum of {context.max_export_time}'
+  if timeout is not None:
+    assert(runtime < timeout), f'Export runtime of {runtime} exceeded set maximum of {timeout}'
 
 @step(u'an auto-export to "{output}" using "{translator}" should match "{expected}"')
 def step_impl(context, translator, output, expected):

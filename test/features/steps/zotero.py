@@ -427,12 +427,12 @@ class Profile:
 
       db_zotero = os.path.join(dbs, f'{self.config.client}.sqlite')
       if not os.path.exists(db_zotero):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.zotero.sqlite', db_zotero)
+        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
       shutil.copy(db_zotero, os.path.join(self.path, self.config.client, os.path.basename(db_zotero)))
 
       db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
       if not os.path.exists(db_bbt):
-        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.better-bibtex.sqlite', db_bbt)
+        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
       shutil.copy(db_bbt, os.path.join(self.path, self.config.client, os.path.basename(db_bbt)))
 
 def un_multi(obj):
