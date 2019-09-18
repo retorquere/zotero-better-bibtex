@@ -116,14 +116,15 @@ class Zotero:
         print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
-    procs = zotero.children(recursive=True).append(zotero)
+    alive = zotero.children(recursive=True)
+    alive.append(zotero)
 
-    for p in procs:
+    for p in alive:
       try:
         p.terminate()
       except psutil.NoSuchProcess:
         pass
-    gone, alive = psutil.wait_procs(procs, timeout=5, callback=on_terminate)
+    gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
 
     if alive:
       for p in alive:
