@@ -414,8 +414,20 @@ class Profile:
     shutil.move(profile.path, self.path)
 
     if db:
-      shutil.copy(db.zotero, os.path.join(self.path, client, os.path.basename(db.zotero)))
-      shutil.copy(db.bbt, os.path.join(self.path, client, os.path.basename(db.bbt)))
+      sys.stderr.write(f'restarting using {db}')
+      sys.stderr.flush()
+      dbs = os.path.join(ROOT, 'test', 'db', db)
+      if not os.path.exists(dbs): os.makedirs(dbs)
+
+      db_zotero = os.path.join(dbs, f'{client}.sqlite')
+      if not os.path.exists(db_zotero):
+        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.zotero.sqlite', db_zotero)
+      shutil.copy(db_zotero, os.path.join(self.path, client, os.path.basename(db_zotero)))
+
+      db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
+      if not os.path.exists(db_bbt):
+        urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.better-bibtex.sqlite', db_bbt)
+      shutil.copy(db_bbt, os.path.join(self.path, client, os.path.basename(db_bbt)))
 
 def un_multi(obj):
   if type(obj) == dict:

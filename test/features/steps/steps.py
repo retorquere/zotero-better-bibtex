@@ -33,18 +33,9 @@ def step_impl(context, source, db):
     #references = sum([ 1 + len(item.get('attachments', [])) + len(item.get('notes', [])) for item in items ])
     references = len(items)
 
-  dbs = os.path.join(ROOT, 'test', 'db', db)
-  if not os.path.exists(dbs): os.makedirs(dbs)
-  zotero = os.path.join(dbs, 'zotero.sqlite')
-  if not os.path.exists(zotero):
-    urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.zotero.sqlite', zotero)
-  bbt = os.path.join(dbs, 'better-bibtex.sqlite')
-  if not os.path.exists(bbt):
-    urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{db}.better-bibtex.sqlite', bbt)
-
   timeout = context.zotero.timeout
   context.zotero.shutdown()
-  context.zotero = Zotero(context.config.userdata, db=Munch(zotero=zotero, bbt=bbt))
+  context.zotero = Zotero(context.config.userdata, db=db)
   context.zotero.timeout = timeout
   assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
 
