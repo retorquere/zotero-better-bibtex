@@ -1,9 +1,8 @@
-from steps.zotero import Zotero
+import steps.zotero as zotero
 from munch import *
 from behave import given, when, then, use_step_matcher
 import urllib.request
 import json
-import zotero
 import time
 import os
 from hamcrest import assert_that, equal_to
@@ -35,7 +34,7 @@ def step_impl(context, source, db):
 
   timeout = context.zotero.timeout
   context.zotero.shutdown()
-  context.zotero = Zotero(context.config.userdata, db=db)
+  context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata, append=True, db=db))
   context.zotero.timeout = timeout
   assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
 

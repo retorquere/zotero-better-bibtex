@@ -1,4 +1,4 @@
-from steps.zotero import Zotero
+import steps.zotero as zotero
 from behave.contrib.scenario_autoretry import patch_scenario_with_autoretry
 import re
 from contextlib import contextmanager
@@ -43,14 +43,14 @@ def before_feature(context, feature):
       patch_scenario_with_autoretry(scenario, max_attempts=retries + 1)
 
 def before_all(context):
-  context.zotero = Zotero(context.config.userdata)
+  context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata))
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
 def after_scenario(context, scenario):
-  if context.zotero.restarted:
+  if context.zotero.restart:
     context.zotero.shutdown()
-    context.zotero = Zotero(context.config.userdata)
+    context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata, append=True))
 
 def before_scenario(context, scenario):
   context.zotero.reset()
