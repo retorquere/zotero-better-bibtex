@@ -18,8 +18,8 @@ os.chdir(ROOT)
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
 parser = argparse.ArgumentParser()
-parse.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
-parse.add_argument('--no-stop', action='store_true')
+parser.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
+parser.add_argument('--no-stop', action='store_true')
 parser.add_argument('--nightly')
 
 args, unknownargs = parser.parse_known_args()
