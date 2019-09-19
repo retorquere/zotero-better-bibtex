@@ -396,6 +396,8 @@ class Profile:
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
     profile.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
     profile.set_preference('dom.max_chrome_script_run_time', self.timeout)
+    sys.stderr.write(f'dom.max_chrome_script_run_time={self.timeout}')
+    sys.stderr.flush()
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
