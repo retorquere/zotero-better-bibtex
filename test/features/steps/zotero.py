@@ -38,7 +38,7 @@ class Config:
 
     userdata = kwargs.pop('userdata', {})
     self.password = userdata['debugbridgepassword']
-    self.client = userdata.get('zotero', 'zotero')
+    self.client = userdata.get('client', 'zotero')
     self.kill = userdata.get('kill', 'true') == 'true'
     self.locale = userdata.get('locale', '')
     self.first_run = userdata.get('first-run', 'false') == 'true'
