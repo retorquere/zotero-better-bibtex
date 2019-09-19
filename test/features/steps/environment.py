@@ -5,7 +5,8 @@ from contextlib import contextmanager
 import urllib.request
 from munch import *
 import os
-from steps.utils import ROOT
+import steps.utils as utils
+import sys
 
 @contextmanager
 def value_tag(tag):

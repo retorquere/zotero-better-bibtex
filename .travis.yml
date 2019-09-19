@@ -29,7 +29,7 @@ before_install:
   - ./util/site-update || travis_retry sudo apt-get install zotero jurism default-jre libreoffice-java-common
 script:
   - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
-  - ./util/site-update || ./test/behave --no-capture -f travis --tags $TAGS
+  - ./util/site-update || ./test/behave --no-capture -f travis --tags $TAGS --$CLIENT
 
 after_failure:
   - ./util/build-assets pop
@@ -51,22 +51,22 @@ jobs:
 
   - stage: test
     env:
-    - ZOTERO=zotero
+    - CLIENT=zotero
     - TAGS="@test-cluster-1"
 
   - stage: test
     env:
-    - ZOTERO=zotero
+    - CLIENT=zotero
     - TAGS="~@test-cluster-1"
 
   - stage: test
     env:
-    - ZOTERO=jurism
+    - CLIENT=jurism
     - TAGS="@test-cluster-1"
 
   - stage: test
     env:
-    - ZOTERO=jurism
+    - CLIENT=jurism
     - TAGS="~@test-cluster-1"
 
 

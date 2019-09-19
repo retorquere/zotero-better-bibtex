@@ -16,6 +16,12 @@ os.chdir(ROOT)
 # because behave doesn't think it's useful to be able to load local stuff... oy...
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
+def is_set(option):
+  if not option in sys.argv: return False
+
+  sys.argv.remove(option)
+  return True
+
 # build before test unless on CI
 if not 'CI' in os.environ:
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
@@ -30,19 +36,23 @@ if not 'CI' in os.environ:
 
 # augment command line
 ## stop on first error by default
-if 'CI' in os.environ or '--no-stop' in sys.argv:
-  sys.argv = [arg for arg in sys.argv if arg != '--no-stop']
-else:
+if not is_set('--no-stop') and 'CI' not in os.environ:
   sys.argv.append('--stop')
 
 ## exclude @nightly by default
-if os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron' or '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', '') or '--nightly' in sys.argv:
-  sys.argv = [arg for arg in sys.argv if arg != '--nightly']
-else:
+if not is_set('--nightly') and os.environ.get('TRAVIS_EVENT_TYPE', '') != 'cron' and '#nightly' not in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''):
   sys.argv.extend(['--tags', '~@nightly'])
 
+zotero = is_set('--zotero')
+jurism = is_set('--jurism')
+if zotero and jurism: raise ValueError('Both Zotero and Juris-M specified')
 ## client is Zotero unless specified
-sys.argv.extend(['--define', f'zotero=' + os.environ.get('ZOTERO', 'zotero')])
+if not jurism: zotero = True
+client = 'zotero' if zotero else 'jurism'
+ignore = 'zotero' if not zotero else 'jurism'
+
+sys.argv.extend(['--tags', f'~@{ignore}'])
+sys.argv.extend(['--define', f'client={client}'])
 sys.argv.extend(['--define', f'debugbridgepassword={str(uuid.uuid4())}'])
 
 print(' '.join(sys.argv))
