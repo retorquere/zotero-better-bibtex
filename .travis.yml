@@ -29,7 +29,7 @@ before_install:
   - ./util/site-update || travis_retry sudo apt-get install $CLIENT
 script:
   - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
-  - ./util/site-update || ./test/behave --no-capture --tags $TAGS --$CLIENT
+  - ./util/site-update || ./test/behave --client $CLIENT --tags $TAGS
 
 after_failure:
   - ./util/build-assets pop

@@ -100,10 +100,13 @@ class Zotero:
         started = time.time()
         while (time.time() - started) < self.config.timeout:
           for _ in range(ping):
-            if remote.done(): return remote.result()
+            if remote.done():
+              utils.print('execute done')
+              return remote.result()
             time.sleep(1)
           # utils.print('.', end='')
           utils.print(f'waiting for long-running request ({datetime.datetime.now()})...')
+        utils.print(f'request took {time.time() - started}s which was longer than the available {self.config.timeout}s')
         remote.cancel()
         raise ValueError('Request timed out')
 
