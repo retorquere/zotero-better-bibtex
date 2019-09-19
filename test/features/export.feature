@@ -1,4 +1,4 @@
-@export @zotero @jurism
+@export
 Feature: Export
 
 Background:
