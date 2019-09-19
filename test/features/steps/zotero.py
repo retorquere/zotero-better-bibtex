@@ -95,6 +95,7 @@ class Zotero:
     if self.config.timeout < ping:
       return post()
     else: # keep Travis happy by pinging the output
+      utils.print('starting execute...')
       with ThreadPoolExecutor(max_workers=1) as e:
         remote = e.submit(post)
         started = time.time()
