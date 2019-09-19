@@ -47,24 +47,24 @@ def before_all(context):
   # test whether the existing references, if any, have gotten a cite key
   context.zotero.export_library(translator = 'Better BibTeX')
 
-def after_scenario(context, scenario):
+def before_scenario(context, scenario):
   if context.zotero.restart:
     context.zotero.shutdown()
     context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata, append=True))
 
-def before_scenario(context, scenario):
   context.zotero.reset()
   context.displayOptions = {}
   context.selected = []
   context.imported = None
   context.picked = []
 
-  context.zotero.timeout = 60
+  context.timeout = 60
   for tag in scenario.effective_tags:
     with value_tag(tag) as (tag, value):
       if tag == 'nightly':
-        context.zotero.timeout = max(context.zotero.timeout, 300)
+        context.timeout = max(context.timeout, 300)
       elif tag == 'timeout':
         value = value or 0
         assert value > 0, f'{value} is not a valid timeout'
-        context.zotero.timeout = max(context.zotero.timeout, value)
+        context.timeout = max(context.timeout, value)
+  context.zotero.timeout = context.timeout

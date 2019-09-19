@@ -27,6 +27,10 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 
+def print(txt, end='\n'):
+  sys.stderr.write(txt + end)
+  sys.stderr.flush()
+
 class Config:
   def __init__(self, **kwargs):
     self.db = ''
@@ -38,6 +42,7 @@ class Config:
     self.kill = userdata.get('kill', 'true') == 'true'
     self.locale = userdata.get('locale', '')
     self.first_run = userdata.get('first-run', 'false') == 'true'
+    self.timeout = 60
 
     for k, v in kwargs.items():
       if not hasattr(self, k): raise ValueError(f'Unexpected property {k}')
@@ -52,7 +57,6 @@ class Zotero:
     self.config = config
 
     self.proc = None
-    self.timeout = 60
     self.restart = self.config.db is not None
 
     if not self.config.append:
@@ -86,22 +90,21 @@ class Zotero:
 
     def post():
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.config.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
-      res = urllib.request.urlopen(req, timeout=self.timeout).read().decode()
+      res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
       return json.loads(res)
 
     ping = 120 # no longer than two minutes between output
-    if self.timeout < ping:
+    if self.config.timeout < ping:
       return post()
     else: # keep Travis happy by pinging the output
       with ThreadPoolExecutor(max_workers=1) as e:
         remote = e.submit(post)
         started = time.time()
-        while (time.time() - started) < self.timeout:
+        while (time.time() - started) < self.config.timeout:
           for _ in range(ping):
             if remote.done(): return remote.result()
             time.sleep(1)
-          sys.stderr.write('.')
-          sys.stderr.flush()
+          print('.', end='')
         remote.cancel()
         raise ValueError('Request timed out')
 
@@ -146,7 +149,7 @@ class Zotero:
     assert not running('Zotero')
 
   def start(self):
-    profile = Profile('BBTZ5TEST', self.config, self.timeout)
+    profile = Profile('BBTZ5TEST', self.config)
 
     redir = '>'
     if self.config.append: redir = '>>'
@@ -329,10 +332,9 @@ class Zotero:
     return [None, None]
 
 class Profile:
-  def __init__(self, name, config, timeout):
+  def __init__(self, name, config):
     self.name = name
     self.config = config
-    self.timeout = timeout
 
     platform_client = platform.system() + ':' + self.config.client
 
@@ -395,7 +397,8 @@ class Profile:
 
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
     profile.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
-    profile.set_preference('dom.max_chrome_script_run_time', self.timeout)
+    profile.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
+    print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
@@ -411,8 +414,8 @@ class Profile:
 
     if self.config.client == 'jurism':
       print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-      #profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
-      #profile.set_preference('extensions.zotero.useDataDir', True)
+      profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
+      profile.set_preference('extensions.zotero.useDataDir', True)
       #profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
     profile.update_preferences()
@@ -421,8 +424,7 @@ class Profile:
     shutil.move(profile.path, self.path)
 
     if self.config.db:
-      sys.stderr.write(f'restarting using {self.config.db}')
-      sys.stderr.flush()
+      print(f'restarting using {self.config.db}')
       dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
       if not os.path.exists(dbs): os.makedirs(dbs)
 
