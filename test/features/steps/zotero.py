@@ -10,6 +10,7 @@ import urllib
 import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md
+import steps.utils as utils
 import shutil
 import shlex
 import io
@@ -100,7 +101,7 @@ class Zotero:
           for _ in range(ping):
             if remote.done(): return remote.result()
             time.sleep(1)
-          print('.', end='')
+          utils.print('.', end='')
         remote.cancel()
         raise ValueError('Request timed out')
 
@@ -117,7 +118,7 @@ class Zotero:
       pass
 
     def on_terminate(proc):
-        print("process {} terminated with exit code {}".format(proc, proc.returncode))
+        utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
     alive = zotero.children(recursive=True)
@@ -132,7 +133,7 @@ class Zotero:
 
     if alive:
       for p in alive:
-        print("process {} survived SIGTERM; trying SIGKILL" % p)
+        utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
         try:
           p.kill()
         except psutil.NoSuchProcess:
@@ -140,7 +141,7 @@ class Zotero:
       gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
       if alive:
         for p in alive:
-          print("process {} survived SIGKILL; giving up" % p)
+          utils.print("process {} survived SIGKILL; giving up" % p)
     self.proc = None
     assert not running('Zotero')
 
@@ -151,14 +152,14 @@ class Zotero:
     if self.config.append: redir = '>>'
 
     cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
-    print(f'Starting {self.config.client}: {cmd}')
+    utils.print(f'Starting {self.config.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
-    print(f'{self.config.client} started: {self.proc.pid}')
+    utils.print(f'{self.config.client} started: {self.proc.pid}')
 
     ready = False
     with benchmark(f'starting {self.config.client}'):
       for _ in redo.retrier(attempts=30,sleeptime=1):
-        print('connecting...')
+        utils.print('connecting...')
         try:
           ready = self.execute("""
             if (!Zotero.BetterBibTeX) {
@@ -394,7 +395,7 @@ class Profile:
     profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
     profile.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
     profile.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
-    print(f'dom.max_chrome_script_run_time={self.config.timeout}')
+    utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
@@ -409,7 +410,7 @@ class Profile:
       profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
 
     if self.config.client == 'jurism':
-      print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
+      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
       profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
       profile.set_preference('extensions.zotero.useDataDir', True)
       #profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
@@ -420,7 +421,7 @@ class Profile:
     shutil.move(profile.path, self.path)
 
     if self.config.db:
-      print(f'restarting using {self.config.db}')
+      utils.print(f'restarting using {self.config.db}')
       dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
       if not os.path.exists(dbs): os.makedirs(dbs)
 

@@ -15,6 +15,10 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
+def print(txt, end='\n'):
+  sys.stdout.write(txt + end)
+  sys.stdout.flush()
+
 class benchmark(object):
   def __init__(self,name):
     self.name = name
