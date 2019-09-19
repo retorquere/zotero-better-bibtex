@@ -18,6 +18,7 @@ import psutil
 import subprocess
 import atexit
 import time
+import datetime
 import collections
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -101,7 +102,8 @@ class Zotero:
           for _ in range(ping):
             if remote.done(): return remote.result()
             time.sleep(1)
-          utils.print('.', end='')
+          # utils.print('.', end='')
+          utils.print(f'waiting for long-running request ({datetime.datetime.now()})...')
         remote.cancel()
         raise ValueError('Request timed out')
 
