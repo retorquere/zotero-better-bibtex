@@ -27,10 +27,6 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 
-def print(txt, end='\n'):
-  sys.stderr.write(txt + end)
-  sys.stderr.flush()
-
 class Config:
   def __init__(self, **kwargs):
     self.db = ''
@@ -93,7 +89,7 @@ class Zotero:
       res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
       return json.loads(res)
 
-    ping = 120 # no longer than two minutes between output
+    ping = 100 # no longer than two minutes between output
     if self.config.timeout < ping:
       return post()
     else: # keep Travis happy by pinging the output

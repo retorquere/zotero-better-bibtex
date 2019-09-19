@@ -71,8 +71,7 @@ def running(id):
         # Check if process name contains the given name string.
         if id.lower() in proc.name().lower():
           count += 1
-          sys.stderr.write(f'{id} is running, name = {proc.name()}, pid = {proc.pid}\n')
-          sys.stderr.flush()
+          print(f'{id} is running, name = {proc.name()}, pid = {proc.pid}')
       except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
         pass
 
