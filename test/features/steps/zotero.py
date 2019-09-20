@@ -21,13 +21,30 @@ import time
 import datetime
 import collections
 import sys
-from concurrent.futures import ThreadPoolExecutor
+import threading
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
 yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
+
+class Pinger():
+  def __init__(self, every):
+    self.every = every
+
+  def __enter__(self):
+    self.stop = threading.Event()
+    threading.Timer(self.every, self.display, [time.time(), self.every, self.stop]).start()
+
+  def __exit__(self, *args):
+    self.stop.set()
+
+  def display(self, start, every, stop):
+    if stop.is_set(): return
+
+    utils.print('.', end='')
+    threading.Timer(every, self.display, [start, every, stop]).start()
 
 class Config:
   def __init__(self, **kwargs):
@@ -86,33 +103,10 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    def post():
+    with Pinger(120):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.config.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
       res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
       return json.loads(res)
-
-    return post()
-
-    # ignore ping for now
-    ping = 120 # no longer than two minutes between output
-    if self.config.timeout < ping:
-      return post()
-    else: # keep Travis happy by pinging the output
-      utils.print('starting execute...')
-      with ThreadPoolExecutor(max_workers=1) as e:
-        remote = e.submit(post)
-        started = time.time()
-        while (time.time() - started) < self.config.timeout:
-          for _ in range(ping):
-            if remote.done():
-              utils.print('execute done')
-              return remote.result()
-            time.sleep(1)
-          # utils.print('.', end='')
-          utils.print(f'waiting for long-running request ({datetime.datetime.now()})...')
-        utils.print(f'request took {time.time() - started}s which was longer than the available {self.config.timeout}s')
-        remote.cancel()
-        raise ValueError('Request timed out')
 
   def shutdown(self):
     if self.proc is None: return
