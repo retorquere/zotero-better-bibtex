@@ -50,7 +50,9 @@ def before_all(context):
 
 def before_scenario(context, scenario):
   if context.zotero.restart:
+    utils.print('Shutting down Zotero')
     context.zotero.shutdown()
+    utils.print('Restarting Zotero')
     context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata, append=True))
 
   context.zotero.reset()

@@ -103,7 +103,7 @@ class Zotero:
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    with Pinger(120):
+    with Pinger(20):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.config.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
       res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
       return json.loads(res)
