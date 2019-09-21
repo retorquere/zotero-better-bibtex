@@ -24,11 +24,14 @@ cache:
 before_install:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
+  - ./util/site-update && travis_terminate 0
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - ./util/site-update || travis_retry sudo apt-get update
   - ./util/site-update || travis_retry sudo apt-get install $CLIENT
 script:
+  - ./util/site-update && travis_terminate 0
   - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
+  - (sleep 120 && curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io)&
   - ./util/site-update || ./test/behave --client $CLIENT --tags $TAGS
 
 after_failure:
