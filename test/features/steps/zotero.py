@@ -53,17 +53,19 @@ class Config:
       {
         'db': '',
         'password': userdata['debugbridgepassword'],
-        'client': userdata.get('client', 'zotero'),
-        'kill': userdata.get('kill', 'true') == 'true',
         'locale': userdata.get('locale', ''),
         'first_run': userdata.get('first-run', 'false') == 'true',
         'timeout': 60,
+      },
+      {
+        'client': userdata.get('client', 'zotero'),
+        'kill': userdata.get('kill', 'true') == 'true',
       },
     ]
     self.reset()
 
   def __getattr__(self, name):
-    value = [cfg for cfg in self.data if name in cfg]
+    value = [frame for frame in self.data if name in frame]
     if len(value) == 0: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
 
     value = value[0][name]
@@ -78,20 +80,20 @@ class Config:
 
   def update(self, **kwargs):
     for k, v in kwargs.items():
-      if k in ['client', 'kill']: raise AttributeError(f'{type(self)}.{k} is not mutable')
-      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
-      if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
+      if k in self.data[-1]: raise AttributeError(f'{type(self)}.{k} is not mutable')
+      if not k in self.data[-2]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if type(v) != type(self.data[-2][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
       self.data[0][k] = v
 
   def stash(self):
     self.data.insert(0, {})
 
   def pop(self):
-    if len(self.data) <= 1: raise ValueError('cannot pop last frame')
+    if len(self.data) <= 2: raise ValueError('cannot pop last frame')
     self.data.pop(0)
 
   def reset(self):
-    self.data = [ self.data[-1] ]
+    self.data = self.data[-2:]
     self.stash()
 
   def __str__(self):
