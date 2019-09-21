@@ -3,8 +3,8 @@ declare const Zotero: any
 import * as log from './debug'
 import { Events } from './events'
 
-const defaults = Object.keys(require('../gen/preferences/defaults.json'))
-const supported = ['removeStock', 'postscriptProductionMode'].concat(defaults)
+const defaults = require('../gen/preferences/defaults.json')
+const supported = ['removeStock', 'postscriptProductionMode'].concat(Object.keys(defaults))
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name
@@ -16,9 +16,9 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   constructor() {
     this.testing = Zotero.Prefs.get(this.key('testing'))
 
-    for (const name of Object.keys(defaults)) {
+    for (const [name, value] of Object.entries(defaults)) {
       // https://groups.google.com/forum/#!topic/zotero-dev/a1IPUJ2m_3s
-      if (typeof this.get(name) === 'undefined') this.set(name, defaults[name]);
+      if (typeof this.get(name) === 'undefined') this.set(name, value);
 
       (pref => {
         Zotero.Prefs.registerObserver(`${this.prefix}.${pref}`, newValue => {
