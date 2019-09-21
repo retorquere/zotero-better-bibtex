@@ -22,6 +22,7 @@ import datetime
 import collections
 import sys
 import threading
+import socket
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -176,7 +177,7 @@ class Zotero:
     timeout = self.config.timeout
     self.config.timeout = 2
     with benchmark(f'starting {self.config.client}'):
-      for _ in redo.retrier(attempts=60,sleeptime=1):
+      for _ in redo.retrier(attempts=120,sleeptime=1):
         utils.print('connecting...')
         try:
           ready = self.execute("""
@@ -200,7 +201,7 @@ class Zotero:
             return true;
           """)
           if ready: break
-        except (urllib.error.HTTPError, urllib.error.URLError):
+        except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
     assert ready, f'{self.config.client} did not start'
     self.config.timeout = timeout
