@@ -20,7 +20,7 @@ sys.path.insert(0, os.path.abspath('test/features/steps'))
 parser = argparse.ArgumentParser()
 parser.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
 parser.add_argument('--no-stop', action='store_true')
-parser.add_argument('--nightly')
+parser.add_argument('--nightly', action='store_true')
 parser.add_argument('--debug-bridge', default=str(uuid.uuid4()))
 
 args, unknownargs = parser.parse_known_args()
