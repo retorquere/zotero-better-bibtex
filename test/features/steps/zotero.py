@@ -49,34 +49,53 @@ class Pinger():
 
 class Config:
   def __init__(self, userdata):
-    self.data = {
-      'db': '',
-      'password': userdata['debugbridgepassword'],
-      'client': userdata.get('client', 'zotero'),
-      'kill': userdata.get('kill', 'true') == 'true',
-      'locale': userdata.get('locale', ''),
-      'first_run': userdata.get('first-run', 'false') == 'true',
-      'timeout': 60,
-    }
+    self.data = [
+      {
+        'db': '',
+        'password': userdata['debugbridgepassword'],
+        'client': userdata.get('client', 'zotero'),
+        'kill': userdata.get('kill', 'true') == 'true',
+        'locale': userdata.get('locale', ''),
+        'first_run': userdata.get('first-run', 'false') == 'true',
+        'timeout': 60,
+      },
+    ]
     self.reset()
 
   def __getattr__(self, name):
-    if name in self.override:
-      value = self.override[name]
-    else:
-      value = self.data[name]
+    value = [cfg for cfg in self.data if name in cfg]
+    if len(value) == 0: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+
+    value = value[0][name]
     if name == 'db' and value == '': value = None
     return value
 
+  def __setattr__(self, name, value):
+    if name == 'data':
+      super().__setattr__(name, value)
+    else:
+      self.update(**{name: value})
+
   def update(self, **kwargs):
     for k, v in kwargs.items():
-      if k in ['client', 'kill']: raise ValueError(f'{k} cannot be reset')
-      if not k in self.data: raise ValueError(f'Unexpected property {k}')
-      if type(v) != type(self.data[k]): raise ValueError(f'Unexpected type {type(v)} for {k}')
-      self.override[k] = v
+      if k in ['client', 'kill']: raise AttributeError(f'{type(self)}.{k} is not mutable')
+      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
+      self.data[0][k] = v
+
+  def stash(self):
+    self.data.insert(0, {})
+
+  def pop(self):
+    if len(self.data) <= 1: raise ValueError('cannot pop last frame')
+    self.data.pop(0)
 
   def reset(self):
-    self.override = {}
+    self.data = [ self.data[-1] ]
+    self.stash()
+
+  def __str__(self):
+    return str(self.data)
 
 class Zotero:
   def __init__(self, userdata):
@@ -174,7 +193,7 @@ class Zotero:
     utils.print(f'{self.config.client} started: {self.proc.pid}')
 
     ready = False
-    timeout = self.config.timeout
+    self.config.stash()
     self.config.timeout = 2
     with benchmark(f'starting {self.config.client}'):
       for _ in redo.retrier(attempts=120,sleeptime=1):
@@ -204,7 +223,7 @@ class Zotero:
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
     assert ready, f'{self.config.client} did not start'
-    self.config.timeout = timeout
+    self.config.pop()
 
   def reset(self):
     if self.needs_restart:
