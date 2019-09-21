@@ -21,6 +21,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
 parser.add_argument('--no-stop', action='store_true')
 parser.add_argument('--nightly')
+parser.add_argument('--debug-bridge', default=str(uuid.uuid4()))
 
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
@@ -50,7 +51,7 @@ ignore = 'jurism' if args.client == 'zotero' else 'zotero'
 
 sys.argv.extend(['--tags', f'~@{ignore}'])
 sys.argv.extend(['--define', f'client={args.client}'])
-sys.argv.extend(['--define', f'debugbridgepassword={str(uuid.uuid4())}'])
+sys.argv.extend(['--define', f'debugbridgepassword={args.debug_bridge}'])
 
 print(' '.join(sys.argv))
 

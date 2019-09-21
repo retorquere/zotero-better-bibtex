@@ -364,7 +364,7 @@ class Zotero:
 
     profile.binary = {
       'Linux': f'/usr/lib/{self.config.client}/{self.config.client}',
-      'Darwin': f'/Applications/{self.config.client.title()}.app/Contents/MacOS/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client],
+      'Darwin': f'/Applications/{self.config.client.title()}.app/Contents/MacOS/{self.config.client}',
     }[platform.system()]
 
     # create profile
