@@ -24,8 +24,7 @@ cache:
 before_install:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - ./util/site-update && travis_terminate 0
-  - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+  - ./util/site-update || curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - ./util/site-update || travis_retry sudo apt-get update
   - ./util/site-update || travis_retry sudo apt-get install $CLIENT
 script:
