@@ -47,38 +47,46 @@ class Pinger():
     threading.Timer(every, self.display, [start, every, stop]).start()
 
 class Config:
-  def __init__(self, **kwargs):
-    self.db = ''
-    self.append = False
+  def __init__(self, userdata):
+    self.data = {
+      'db': '',
+      'password': userdata['debugbridgepassword'],
+      'client': userdata.get('client', 'zotero'),
+      'kill': userdata.get('kill', 'true') == 'true',
+      'locale': userdata.get('locale', ''),
+      'first_run': userdata.get('first-run', 'false') == 'true',
+      'timeout': 60,
+    }
+    self.reset()
 
-    userdata = kwargs.pop('userdata', {})
-    self.password = userdata['debugbridgepassword']
-    self.client = userdata.get('client', 'zotero')
-    self.kill = userdata.get('kill', 'true') == 'true'
-    self.locale = userdata.get('locale', '')
-    self.first_run = userdata.get('first-run', 'false') == 'true'
-    self.timeout = 60
+  def __getattr__(self, name):
+    if name in self.override:
+      value = self.override[name]
+    else:
+      value = self.data[name]
+    if name == 'db' and value == '': value = None
+    return value
 
+  def update(self, **kwargs):
     for k, v in kwargs.items():
-      if not hasattr(self, k): raise ValueError(f'Unexpected property {k}')
-      if type(v) != type(getattr(self, k)): raise ValueError(f'Unexpected type {type(v)} for {k}')
-      setattr(self, k, v)
+      if k in ['client', 'kill']: raise ValueError(f'{k} cannot be reset')
+      if not k in self.data: raise ValueError(f'Unexpected property {k}')
+      if type(v) != type(self.data[k]): raise ValueError(f'Unexpected type {type(v)} for {k}')
+      self.override[k] = v
 
-    if self.db == '': self.db = None
+  def reset(self):
+    self.override = {}
 
 class Zotero:
-  def __init__(self, config):
+  def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
-    self.config = config
+    self.config = Config(userdata)
 
     self.proc = None
-    self.restart = False
 
-    if not self.config.append:
-      if os.path.exists(EXPORTED):
-        shutil.rmtree(EXPORTED)
-    if not os.path.exists(EXPORTED):
-      os.makedirs(EXPORTED)
+    if os.path.exists(EXPORTED):
+      shutil.rmtree(EXPORTED)
+    os.makedirs(EXPORTED)
 
     if self.config.client == 'zotero':
       self.port = 23119
@@ -97,7 +105,9 @@ class Zotero:
       atexit.register(self.shutdown)
 
     self.preferences = Preferences(self)
+    self.redir = '>'
     self.start()
+    self.redir = '>>'
 
   def execute(self, script, **args):
     for var, value in args.items():
@@ -148,13 +158,16 @@ class Zotero:
     self.proc = None
     assert not running('Zotero')
 
+  def restart(self, **kwargs):
+    self.shutdown()
+    self.config.update(**kwargs)
+    self.start()
+
   def start(self):
+    self.needs_restart = False
     profile = self.create_profile()
 
-    redir = '>'
-    if self.config.append: redir = '>>'
-
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
     utils.print(f'Starting {self.config.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
     utils.print(f'{self.config.client} started: {self.proc.pid}')
@@ -190,6 +203,11 @@ class Zotero:
     assert ready, f'{self.config.client} did not start'
 
   def reset(self):
+    if self.needs_restart:
+      self.shutdown()
+      self.config.reset()
+      self.start()
+
     self.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
     self.preferences = Preferences(self)
 
@@ -415,7 +433,7 @@ class Zotero:
     profile.firefox = None
 
     if self.config.db:
-      self.restart = True
+      self.needs_restart = True
       utils.print(f'restarting using {self.config.db}')
       dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
       if not os.path.exists(dbs): os.makedirs(dbs)
