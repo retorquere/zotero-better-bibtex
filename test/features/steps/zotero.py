@@ -360,7 +360,8 @@ class Zotero:
     profile.path = os.path.expanduser(f'~/.{profile.name}')
 
     profile.profiles = {
-      'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
+      # 'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
+      'Linux': os.path.expanduser(f'~/.{self.config.client}/zotero'),
       'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client]),
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
