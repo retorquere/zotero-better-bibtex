@@ -32,8 +32,7 @@ def step_impl(context, source, db):
     #references = sum([ 1 + len(item.get('attachments', [])) + len(item.get('notes', [])) for item in items ])
     references = len(items)
 
-  context.zotero.shutdown()
-  context.zotero = zotero.Zotero(zotero.Config(userdata=context.config.userdata, timeout=context.timeout, append=True, db=db))
+  context.zotero.restart(timeout=context.timeout, db=db)
   assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
 
   context.zotero.import_file(context, source, items=False)

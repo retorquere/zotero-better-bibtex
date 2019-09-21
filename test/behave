@@ -5,6 +5,7 @@ import os
 import json
 import subprocess
 import uuid
+import argparse
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -16,11 +17,14 @@ os.chdir(ROOT)
 # because behave doesn't think it's useful to be able to load local stuff... oy...
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
-def is_set(option):
-  if not option in sys.argv: return False
+parser = argparse.ArgumentParser()
+parser.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
+parser.add_argument('--no-stop', action='store_true')
+parser.add_argument('--nightly')
+parser.add_argument('--debug-bridge', default=str(uuid.uuid4()))
 
-  sys.argv.remove(option)
-  return True
+args, unknownargs = parser.parse_known_args()
+sys.argv = sys.argv[:1] + unknownargs
 
 # build before test unless on CI
 if not 'CI' in os.environ:
@@ -36,28 +40,21 @@ if not 'CI' in os.environ:
 
 # augment command line
 ## stop on first error by default
-if not is_set('--no-stop') and 'CI' not in os.environ:
+if not args.no_stop and 'CI' not in os.environ:
   sys.argv.append('--stop')
 
 ## exclude @nightly by default
-if not is_set('--nightly') and os.environ.get('TRAVIS_EVENT_TYPE', '') != 'cron' and '#nightly' not in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''):
+if not args.nightly and os.environ.get('TRAVIS_EVENT_TYPE', '') != 'cron' and '#nightly' not in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''):
   sys.argv.extend(['--tags', '~@nightly'])
 
-zotero = is_set('--zotero')
-jurism = is_set('--jurism')
-if zotero and jurism: raise ValueError('Both Zotero and Juris-M specified')
-## client is Zotero unless specified
-if not jurism: zotero = True
-client = 'zotero' if zotero else 'jurism'
-ignore = 'zotero' if not zotero else 'jurism'
+ignore = 'jurism' if args.client == 'zotero' else 'zotero'
 
 sys.argv.extend(['--tags', f'~@{ignore}'])
-sys.argv.extend(['--define', f'client={client}'])
-sys.argv.extend(['--define', f'debugbridgepassword={str(uuid.uuid4())}'])
+sys.argv.extend(['--define', f'client={args.client}'])
+sys.argv.extend(['--define', f'debugbridgepassword={args.debug_bridge}'])
 
 print(' '.join(sys.argv))
 
 #https://stackoverflow.com/questions/28829350/run-python-behave-from-python-instead-of-command-line
 from behave.__main__ import Configuration, run_behave
-import behave.configuration
 sys.exit(run_behave(Configuration(None)))

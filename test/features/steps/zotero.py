@@ -10,6 +10,7 @@ import urllib
 import tempfile
 from munch import *
 from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md
+import steps.utils as utils
 import shutil
 import shlex
 import io
@@ -17,9 +18,11 @@ import psutil
 import subprocess
 import atexit
 import time
+import datetime
 import collections
 import sys
-from concurrent.futures import ThreadPoolExecutor
+import threading
+import socket
 
 from ruamel.yaml import YAML
 yaml = YAML(typ='safe')
@@ -27,43 +30,83 @@ yaml.default_flow_style = False
 
 EXPORTED = os.path.join(ROOT, 'exported')
 
-def print(txt, end='\n'):
-  sys.stderr.write(txt + end)
-  sys.stderr.flush()
+class Pinger():
+  def __init__(self, every):
+    self.every = every
+
+  def __enter__(self):
+    self.stop = threading.Event()
+    threading.Timer(self.every, self.display, [time.time(), self.every, self.stop]).start()
+
+  def __exit__(self, *args):
+    self.stop.set()
+
+  def display(self, start, every, stop):
+    if stop.is_set(): return
+
+    utils.print('.', end='')
+    threading.Timer(every, self.display, [start, every, stop]).start()
 
 class Config:
-  def __init__(self, **kwargs):
-    self.db = ''
-    self.append = False
+  def __init__(self, userdata):
+    self.data = [
+      {
+        'db': '',
+        'password': userdata['debugbridgepassword'],
+        'client': userdata.get('client', 'zotero'),
+        'kill': userdata.get('kill', 'true') == 'true',
+        'locale': userdata.get('locale', ''),
+        'first_run': userdata.get('first-run', 'false') == 'true',
+        'timeout': 60,
+      },
+    ]
+    self.reset()
 
-    userdata = kwargs.pop('userdata', {})
-    self.password = userdata['debugbridgepassword']
-    self.client = userdata.get('client', 'zotero')
-    self.kill = userdata.get('kill', 'true') == 'true'
-    self.locale = userdata.get('locale', '')
-    self.first_run = userdata.get('first-run', 'false') == 'true'
-    self.timeout = 60
+  def __getattr__(self, name):
+    value = [cfg for cfg in self.data if name in cfg]
+    if len(value) == 0: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
 
+    value = value[0][name]
+    if name == 'db' and value == '': value = None
+    return value
+
+  def __setattr__(self, name, value):
+    if name == 'data':
+      super().__setattr__(name, value)
+    else:
+      self.update(**{name: value})
+
+  def update(self, **kwargs):
     for k, v in kwargs.items():
-      if not hasattr(self, k): raise ValueError(f'Unexpected property {k}')
-      if type(v) != type(getattr(self, k)): raise ValueError(f'Unexpected type {type(v)} for {k}')
-      setattr(self, k, v)
+      if k in ['client', 'kill']: raise AttributeError(f'{type(self)}.{k} is not mutable')
+      if not k in self.data[-1]: raise AttributeError(f"'{type(self)}' object has no attribute '{name}'")
+      if type(v) != type(self.data[-1][k]): raise ValueError(f'{type(self)}.{k} must be of type {self.data[-1][k]}')
+      self.data[0][k] = v
 
-    if self.db == '': self.db = None
+  def stash(self):
+    self.data.insert(0, {})
+
+  def pop(self):
+    if len(self.data) <= 1: raise ValueError('cannot pop last frame')
+    self.data.pop(0)
+
+  def reset(self):
+    self.data = [ self.data[-1] ]
+    self.stash()
+
+  def __str__(self):
+    return str(self.data)
 
 class Zotero:
-  def __init__(self, config):
+  def __init__(self, userdata):
     assert not running('Zotero'), 'Zotero is running'
-    self.config = config
+    self.config = Config(userdata)
 
     self.proc = None
-    self.restart = self.config.db is not None
 
-    if not self.config.append:
-      if os.path.exists(EXPORTED):
-        shutil.rmtree(EXPORTED)
-    if not os.path.exists(EXPORTED):
-      os.makedirs(EXPORTED)
+    if os.path.exists(EXPORTED):
+      shutil.rmtree(EXPORTED)
+    os.makedirs(EXPORTED)
 
     if self.config.client == 'zotero':
       self.port = 23119
@@ -82,31 +125,18 @@ class Zotero:
       atexit.register(self.shutdown)
 
     self.preferences = Preferences(self)
+    self.redir = '>'
     self.start()
+    self.redir = '>>'
 
   def execute(self, script, **args):
     for var, value in args.items():
       script = f'const {var} = {json.dumps(value)};\n' + script
 
-    def post():
+    with Pinger(20):
       req = urllib.request.Request(f'http://127.0.0.1:{self.port}/debug-bridge/execute?password={self.config.password}', data=script.encode('utf-8'), headers={'Content-type': 'application/javascript'})
       res = urllib.request.urlopen(req, timeout=self.config.timeout).read().decode()
       return json.loads(res)
-
-    ping = 120 # no longer than two minutes between output
-    if self.config.timeout < ping:
-      return post()
-    else: # keep Travis happy by pinging the output
-      with ThreadPoolExecutor(max_workers=1) as e:
-        remote = e.submit(post)
-        started = time.time()
-        while (time.time() - started) < self.config.timeout:
-          for _ in range(ping):
-            if remote.done(): return remote.result()
-            time.sleep(1)
-          print('.', end='')
-        remote.cancel()
-        raise ValueError('Request timed out')
 
   def shutdown(self):
     if self.proc is None: return
@@ -121,7 +151,7 @@ class Zotero:
       pass
 
     def on_terminate(proc):
-        print("process {} terminated with exit code {}".format(proc, proc.returncode))
+        utils.print("process {} terminated with exit code {}".format(proc, proc.returncode))
 
     zotero = psutil.Process(self.proc.pid)
     alive = zotero.children(recursive=True)
@@ -136,7 +166,7 @@ class Zotero:
 
     if alive:
       for p in alive:
-        print("process {} survived SIGTERM; trying SIGKILL" % p)
+        utils.print("process {} survived SIGTERM; trying SIGKILL" % p)
         try:
           p.kill()
         except psutil.NoSuchProcess:
@@ -144,25 +174,30 @@ class Zotero:
       gone, alive = psutil.wait_procs(alive, timeout=5, callback=on_terminate)
       if alive:
         for p in alive:
-          print("process {} survived SIGKILL; giving up" % p)
+          utils.print("process {} survived SIGKILL; giving up" % p)
     self.proc = None
     assert not running('Zotero')
 
+  def restart(self, **kwargs):
+    self.shutdown()
+    self.config.update(**kwargs)
+    self.start()
+
   def start(self):
-    profile = Profile('BBTZ5TEST', self.config)
+    self.needs_restart = False
+    profile = self.create_profile()
 
-    redir = '>'
-    if self.config.append: redir = '>>'
-
-    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {redir} {shlex.quote(profile.path + ".log")} 2>&1'
-    print(f'Starting {self.config.client}: {cmd}')
+    cmd = f'{shlex.quote(profile.binary)} -P {shlex.quote(profile.name)} -jsconsole -ZoteroDebugText -datadir profile {self.redir} {shlex.quote(profile.path + ".log")} 2>&1'
+    utils.print(f'Starting {self.config.client}: {cmd}')
     self.proc = subprocess.Popen(cmd, shell=True)
-    print(f'{self.config.client} started: {self.proc.pid}')
+    utils.print(f'{self.config.client} started: {self.proc.pid}')
 
     ready = False
+    self.config.stash()
+    self.config.timeout = 2
     with benchmark(f'starting {self.config.client}'):
-      for _ in redo.retrier(attempts=30,sleeptime=1):
-        print('connecting...')
+      for _ in redo.retrier(attempts=120,sleeptime=1):
+        utils.print('connecting...')
         try:
           ready = self.execute("""
             if (!Zotero.BetterBibTeX) {
@@ -185,11 +220,17 @@ class Zotero:
             return true;
           """)
           if ready: break
-        except (urllib.error.HTTPError, urllib.error.URLError):
+        except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
     assert ready, f'{self.config.client} did not start'
+    self.config.pop()
 
   def reset(self):
+    if self.needs_restart:
+      self.shutdown()
+      self.config.reset()
+      self.start()
+
     self.execute('await Zotero.BetterBibTeX.TestSupport.reset()')
     self.preferences = Preferences(self)
 
@@ -331,112 +372,107 @@ class Zotero:
 
     return [None, None]
 
-class Profile:
-  def __init__(self, name, config):
-    self.name = name
-    self.config = config
+  def create_profile(self):
+    profile = Munch(
+      name='BBTZ5TEST'
+    )
 
-    platform_client = platform.system() + ':' + self.config.client
+    profile.path = os.path.expanduser(f'~/.{profile.name}')
 
-    if platform_client == 'Linux:zotero':
-      self.profiles = os.path.expanduser('~/.zotero/zotero')
-      self.binary = '/usr/lib/zotero/zotero'
-    elif platform_client == 'Linux:jurism':
-      self.profiles = os.path.expanduser('~/.jurism/zotero')
-      self.binary = '/usr/lib/jurism/jurism'
-    elif platform_client == 'Darwin:zotero':
-      self.profiles = os.path.expanduser('~/Library/Application Support/Zotero')
-      self.binary = '/Applications/Zotero.app/Contents/MacOS/zotero'
-    elif platform_client == 'Darwin:jurism':
-      self.profiles = os.path.expanduser('~/Library/Application Support/Juris-M')
-      self.binary = '/Applications/Jurism.app/Contents/MacOS/jurism'
-    else:
-      raise ValueError(f'Unsupported test environment {platform_client}')
+    profile.profiles = {
+      # 'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
+      'Linux': os.path.expanduser(f'~/.{self.config.client}/zotero'),
+      'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client]),
+    }[platform.system()]
+    os.makedirs(profile.profiles, exist_ok = True)
 
-    os.makedirs(self.profiles, exist_ok = True)
-    self.path = os.path.expanduser(f'~/.{self.name}')
+    profile.binary = {
+      'Linux': f'/usr/lib/{self.config.client}/{self.config.client}',
+      'Darwin': f'/Applications/{self.config.client.title()}.app/Contents/MacOS/{self.config.client}',
+    }[platform.system()]
 
-    self.create()
-    self.layout()
+    # create profile
+    profile.ini = os.path.join(profile.profiles, 'profiles.ini')
 
-  def create(self):
-    profiles_ini = os.path.join(self.profiles, 'profiles.ini')
+    ini = configparser.RawConfigParser()
+    ini.optionxform = str
+    if os.path.exists(profile.ini): ini.read(profile.ini)
 
-    profiles = configparser.RawConfigParser()
-    profiles.optionxform = str
-    if os.path.exists(profiles_ini): profiles.read(profiles_ini)
+    if not ini.has_section('General'): ini.add_section('General')
 
-    if not profiles.has_section('General'): profiles.add_section('General')
+    profile.id = None
+    for p in ini.sections():
+      for k, v in ini.items(p):
+        if k == 'Name' and v == profile.name: profile.id = p
 
-    id = None
-    for p in profiles.sections():
-      for k, v in profiles.items(p):
-        if k == 'Name' and v == self.name: id = p
-
-    if not id:
+    if not profile.id:
       free = 0
       while True:
-        id = f'Profile{free}'
-        if not profiles.has_section(id): break
+        profile.id = f'Profile{free}'
+        if not ini.has_section(profile.id): break
         free += 1
-      profiles.add_section(id)
-      profiles.set(id, 'Name', self.name)
+      ini.add_section(profile.id)
+      ini.set(profile.id, 'Name', profile.name)
 
-    profiles.set(id, 'IsRelative', 0)
-    profiles.set(id, 'Path', self.path)
-    profiles.set(id, 'Default', None)
-    with open(profiles_ini, 'w') as f:
-      profiles.write(f, space_around_delimiters=False)
+    ini.set(profile.id, 'IsRelative', 0)
+    ini.set(profile.id, 'Path', profile.path)
+    ini.set(profile.id, 'Default', None)
+    with open(profile.ini, 'w') as f:
+      ini.write(f, space_around_delimiters=False)
 
-  def layout(self):
+    # layout profile
     fixtures = os.path.join(ROOT, 'test/fixtures')
-    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', self.config.client))
+    profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', self.config.client))
 
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
-      profile.add_extension(xpi)
+      profile.firefox.add_extension(xpi)
 
-    profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
-    profile.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
-    profile.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
-    print(f'dom.max_chrome_script_run_time={self.config.timeout}')
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
+    profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
+    profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
+    utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
       for p, v in nested_dict_iter(preferences['general']):
-        profile.set_preference(p, v)
+        profile.firefox.set_preference(p, v)
 
       if self.config.locale == 'fr':
         for p, v in nested_dict_iter(preferences['fr']):
-          profile.firefox.set_preference(p, v)
+          profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
 
     if self.config.client == 'jurism':
-      print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-      profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
-      profile.set_preference('extensions.zotero.useDataDir', True)
-      #profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+      utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
+      profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
+      profile.firefox.set_preference('extensions.zotero.useDataDir', True)
+      #profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
-    profile.update_preferences()
+    profile.firefox.update_preferences()
 
-    shutil.rmtree(self.path, ignore_errors=True)
-    shutil.move(profile.path, self.path)
+    shutil.rmtree(profile.path, ignore_errors=True)
+    shutil.move(profile.firefox.path, profile.path)
+    profile.firefox = None
 
     if self.config.db:
-      print(f'restarting using {self.config.db}')
+      self.needs_restart = True
+      utils.print(f'restarting using {self.config.db}')
       dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
       if not os.path.exists(dbs): os.makedirs(dbs)
 
       db_zotero = os.path.join(dbs, f'{self.config.client}.sqlite')
       if not os.path.exists(db_zotero):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
-      shutil.copy(db_zotero, os.path.join(self.path, self.config.client, os.path.basename(db_zotero)))
+      shutil.copy(db_zotero, os.path.join(profile.path, self.config.client, os.path.basename(db_zotero)))
 
       db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
       if not os.path.exists(db_bbt):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
-      shutil.copy(db_bbt, os.path.join(self.path, self.config.client, os.path.basename(db_bbt)))
+      shutil.copy(db_bbt, os.path.join(profile.path, self.config.client, os.path.basename(db_bbt)))
+
+    return profile
 
 def un_multi(obj):
   if type(obj) == dict:

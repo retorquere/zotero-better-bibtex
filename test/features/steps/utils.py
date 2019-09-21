@@ -15,6 +15,10 @@ for d in pathlib.Path(__file__).resolve().parents:
     ROOT = d
     break
 
+def print(txt, end='\n'):
+  sys.stdout.write(txt + end)
+  sys.stdout.flush()
+
 class benchmark(object):
   def __init__(self,name):
     self.name = name
@@ -71,8 +75,7 @@ def running(id):
         # Check if process name contains the given name string.
         if id.lower() in proc.name().lower():
           count += 1
-          sys.stderr.write(f'{id} is running, name = {proc.name()}, pid = {proc.pid}\n')
-          sys.stderr.flush()
+          print(f'{id} is running, name = {proc.name()}, pid = {proc.pid}')
       except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
         pass
 
