@@ -24,11 +24,12 @@ cache:
 before_install:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+  - ./util/site-update || curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - ./util/site-update || travis_retry sudo apt-get update
   - ./util/site-update || travis_retry sudo apt-get install $CLIENT
 script:
   - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
+  - (sleep 120 && import -window root -quality 90 /tmp/screenshot.png && curl --upload-file /tmp/screenshot.png https://transfer.sh/screenshot.png)&
   - ./util/site-update || ./test/behave --client $CLIENT --tags $TAGS
 
 after_failure:
