@@ -72,7 +72,7 @@ class Zotero:
     self.config = config
 
     self.proc = None
-    self.restart = self.config.db is not None
+    self.restart = False
 
     if not self.config.append:
       if os.path.exists(EXPORTED):
@@ -149,7 +149,7 @@ class Zotero:
     assert not running('Zotero')
 
   def start(self):
-    profile = Profile('BBTZ5TEST', self.config)
+    profile = self.create_profile()
 
     redir = '>'
     if self.config.append: redir = '>>'
@@ -331,99 +331,91 @@ class Zotero:
 
     return [None, None]
 
-class Profile:
-  def __init__(self, name, config):
-    self.name = name
-    self.config = config
+  def create_profile(self):
+    profile = Munch(
+      name='BBTZ5TEST'
+    )
 
-    platform_client = platform.system() + ':' + self.config.client
+    profile.path = os.path.expanduser(f'~/.{profile.name}')
 
-    if platform_client == 'Linux:zotero':
-      self.profiles = os.path.expanduser('~/.zotero/zotero')
-      self.binary = '/usr/lib/zotero/zotero'
-    elif platform_client == 'Linux:jurism':
-      self.profiles = os.path.expanduser('~/.jurism/zotero')
-      self.binary = '/usr/lib/jurism/jurism'
-    elif platform_client == 'Darwin:zotero':
-      self.profiles = os.path.expanduser('~/Library/Application Support/Zotero')
-      self.binary = '/Applications/Zotero.app/Contents/MacOS/zotero'
-    elif platform_client == 'Darwin:jurism':
-      self.profiles = os.path.expanduser('~/Library/Application Support/Juris-M')
-      self.binary = '/Applications/Jurism.app/Contents/MacOS/jurism'
-    else:
-      raise ValueError(f'Unsupported test environment {platform_client}')
+    profile.profiles = {
+      'Linux': os.path.expanduser(f'~/.{self.config.client}/{self.config.client}'),
+      'Darwin': os.path.expanduser('~/Library/Application Support/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client]),
+    }[platform.system()]
+    os.makedirs(profile.profiles, exist_ok = True)
 
-    os.makedirs(self.profiles, exist_ok = True)
-    self.path = os.path.expanduser(f'~/.{self.name}')
+    profile.binary = {
+      'Linux': f'/usr/lib/{self.config.client}/{self.config.client}',
+      'Darwin': f'/Applications/{self.config.client.title()}.app/Contents/MacOS/' + {'zotero': 'Zotero', 'jurism': 'Juris-M'}[self.config.client],
+    }[platform.system()]
 
-    self.create()
-    self.layout()
+    # create profile
+    profile.ini = os.path.join(profile.profiles, 'profiles.ini')
 
-  def create(self):
-    profiles_ini = os.path.join(self.profiles, 'profiles.ini')
+    ini = configparser.RawConfigParser()
+    ini.optionxform = str
+    if os.path.exists(profile.ini): ini.read(profile.ini)
 
-    profiles = configparser.RawConfigParser()
-    profiles.optionxform = str
-    if os.path.exists(profiles_ini): profiles.read(profiles_ini)
+    if not ini.has_section('General'): ini.add_section('General')
 
-    if not profiles.has_section('General'): profiles.add_section('General')
+    profile.id = None
+    for p in ini.sections():
+      for k, v in ini.items(p):
+        if k == 'Name' and v == profile.name: profile.id = p
 
-    id = None
-    for p in profiles.sections():
-      for k, v in profiles.items(p):
-        if k == 'Name' and v == self.name: id = p
-
-    if not id:
+    if not profile.id:
       free = 0
       while True:
-        id = f'Profile{free}'
-        if not profiles.has_section(id): break
+        profile.id = f'Profile{free}'
+        if not ini.has_section(profile.id): break
         free += 1
-      profiles.add_section(id)
-      profiles.set(id, 'Name', self.name)
+      ini.add_section(profile.id)
+      ini.set(profile.id, 'Name', profile.name)
 
-    profiles.set(id, 'IsRelative', 0)
-    profiles.set(id, 'Path', self.path)
-    profiles.set(id, 'Default', None)
-    with open(profiles_ini, 'w') as f:
-      profiles.write(f, space_around_delimiters=False)
+    ini.set(profile.id, 'IsRelative', 0)
+    ini.set(profile.id, 'Path', profile.path)
+    ini.set(profile.id, 'Default', None)
+    with open(profile.ini, 'w') as f:
+      ini.write(f, space_around_delimiters=False)
 
-  def layout(self):
+    # layout profile
     fixtures = os.path.join(ROOT, 'test/fixtures')
-    profile = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', self.config.client))
+    profile.firefox = webdriver.FirefoxProfile(os.path.join(fixtures, 'profile', self.config.client))
 
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
-      profile.add_extension(xpi)
+      profile.firefox.add_extension(xpi)
 
-    profile.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
-    profile.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
-    profile.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
+    profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.config.password)
+    profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')
 
     with open(os.path.join(os.path.dirname(__file__), 'preferences.toml')) as f:
       preferences = toml.load(f)
       for p, v in nested_dict_iter(preferences['general']):
-        profile.set_preference(p, v)
+        profile.firefox.set_preference(p, v)
 
       if self.config.locale == 'fr':
         for p, v in nested_dict_iter(preferences['fr']):
-          profile.firefox.set_preference(p, v)
+          profile.firefox.firefox.set_preference(p, v)
 
     if not self.config.first_run:
-      profile.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.citekeyFormat', '[auth][shorttitle][year]')
 
     if self.config.client == 'jurism':
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
-      profile.set_preference('extensions.zotero.dataDir', os.path.join(self.path, 'jurism'))
-      profile.set_preference('extensions.zotero.useDataDir', True)
-      #profile.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+      profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
+      profile.firefox.set_preference('extensions.zotero.useDataDir', True)
+      #profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
-    profile.update_preferences()
+    profile.firefox.update_preferences()
 
-    shutil.rmtree(self.path, ignore_errors=True)
-    shutil.move(profile.path, self.path)
+    shutil.rmtree(profile.path, ignore_errors=True)
+    shutil.move(profile.firefox.path, profile.path)
+    profile.firefox = None
 
     if self.config.db:
+      self.restart = True
       utils.print(f'restarting using {self.config.db}')
       dbs = os.path.join(ROOT, 'test', 'db', self.config.db)
       if not os.path.exists(dbs): os.makedirs(dbs)
@@ -431,12 +423,14 @@ class Profile:
       db_zotero = os.path.join(dbs, f'{self.config.client}.sqlite')
       if not os.path.exists(db_zotero):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.zotero.sqlite', db_zotero)
-      shutil.copy(db_zotero, os.path.join(self.path, self.config.client, os.path.basename(db_zotero)))
+      shutil.copy(db_zotero, os.path.join(profile.path, self.config.client, os.path.basename(db_zotero)))
 
       db_bbt = os.path.join(dbs, 'better-bibtex.sqlite')
       if not os.path.exists(db_bbt):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
-      shutil.copy(db_bbt, os.path.join(self.path, self.config.client, os.path.basename(db_bbt)))
+      shutil.copy(db_bbt, os.path.join(profile.path, self.config.client, os.path.basename(db_bbt)))
+
+    return profile
 
 def un_multi(obj):
   if type(obj) == dict:
