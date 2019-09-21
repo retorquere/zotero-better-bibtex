@@ -1,4 +1,4 @@
-from steps.zotero import Zotero
+import steps.zotero as zotero
 from munch import *
 from behave import given, when, then, use_step_matcher
 import urllib.request
