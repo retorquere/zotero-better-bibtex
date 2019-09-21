@@ -173,8 +173,10 @@ class Zotero:
     utils.print(f'{self.config.client} started: {self.proc.pid}')
 
     ready = False
+    timeout = self.config.timeout
+    self.config.timeout = 2
     with benchmark(f'starting {self.config.client}'):
-      for _ in redo.retrier(attempts=30,sleeptime=1):
+      for _ in redo.retrier(attempts=60,sleeptime=1):
         utils.print('connecting...')
         try:
           ready = self.execute("""
@@ -201,6 +203,7 @@ class Zotero:
         except (urllib.error.HTTPError, urllib.error.URLError):
           pass
     assert ready, f'{self.config.client} did not start'
+    self.config.timeout = timeout
 
   def reset(self):
     if self.needs_restart:
