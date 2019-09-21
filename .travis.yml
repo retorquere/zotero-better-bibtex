@@ -29,7 +29,7 @@ before_install:
   - ./util/site-update || travis_retry sudo apt-get install $CLIENT
 script:
   - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
-  - (sleep 120 && import -window root -quality 90 /tmp/screenshot.png && curl -F "file=@/tmp/screenshot.png" https://0x0.st)&
+  - (sleep 120 && import -window root -quality 90 /tmp/screenshot.png && curl --upload-file /tmp/screenshot.png https://transfer.sh/screenshot.png)&
   - ./util/site-update || ./test/behave --client $CLIENT --tags $TAGS
 
 after_failure:
