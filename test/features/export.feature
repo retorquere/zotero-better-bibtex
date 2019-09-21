@@ -443,7 +443,7 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
-@zotero @nightly @rbwl @timeout=3000
+@zotero @xnightly @rbwl @timeout=3000
 Scenario: Really Big whopping library
   When I restart Zotero with from "1287" + "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
