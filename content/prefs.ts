@@ -1,9 +1,7 @@
-declare const Components: any
 declare const Zotero: any
 
 import * as log from './debug'
 import { Events } from './events'
-import { ZoteroConfig } from './zotero-config'
 
 const defaults = Object.keys(require('../gen/preferences/defaults.json'))
 const supported = ['removeStock', 'postscriptProductionMode'].concat(defaults)
@@ -20,7 +18,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
 
     for (const name of Object.keys(defaults)) {
       // https://groups.google.com/forum/#!topic/zotero-dev/a1IPUJ2m_3s
-      if (typeof this.get(name) === 'undefined') this.set(name, defaults[name])
+      if (typeof this.get(name) === 'undefined') this.set(name, defaults[name]);
 
       (pref => {
         Zotero.Prefs.registerObserver(`${this.prefix}.${pref}`, newValue => {
@@ -29,6 +27,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
         })
       })(name)
     }
+  }
 
   public set(pref, value) {
     log.debug('Prefs.set', pref, value)
