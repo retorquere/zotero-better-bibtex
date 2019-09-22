@@ -64,4 +64,4 @@ def before_scenario(context, scenario):
         value = value or 0
         assert value > 0, f'{value} is not a valid timeout'
         context.timeout = max(context.timeout, value)
-  context.zotero.timeout = context.timeout
+  context.zotero.config.timeout = context.timeout
