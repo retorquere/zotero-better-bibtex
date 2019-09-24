@@ -89,7 +89,7 @@
     "zotero-plugin": "^0.0.89"
   },
   "devDependencies": {
-    "@types/node": "^12.7.5",
+    "@types/node": "^12.7.7",
     "@types/webpack": "^4.39.1",
     "archiver": "^3.1.1",
     "bluebird": "^3.5.5",
@@ -120,7 +120,7 @@
     "typedoc": "^0.15.0",
     "typescript": "^3.6.3",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.40.2",
+    "webpack": "^4.41.0",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
