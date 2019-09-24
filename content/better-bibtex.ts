@@ -263,17 +263,32 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
 
   cacheFetch(sandbox, itemID, options, prefs) {
+    log.debug(':cache:fetch', itemID)
     const collection = Cache.getCollection(sandbox.translator[0].label)
     if (!collection) return false
 
     const query = cacheSelector(itemID, options, prefs)
+    log.debug(':cache:fetch', query)
+
+    // not safe in async!
+    const cloneObjects = collection.cloneObjects
+    collection.cloneObjects = false
     const cached = collection.findOne(query)
+    collection.cloneObjects = cloneObjects
+
+    log.debug(':cache:fetch', !!cached)
 
     if (!cached) return false
 
-    collection.update(cached) // touches the cache object so it isn't reaped too early
+    // collection.update(cached) // touches the cache object so it isn't reaped too early
 
-    return cached
+    // direct-DB access for speed...
+    cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
+    collection.dirty = true
+
+    log.debug(':cache:fetch:touched')
+    // freeze object, because it was not fetched using clone
+    return Object.freeze(cached)
   },
 
   cacheStore(sandbox, itemID, options, prefs, reference, metadata) {

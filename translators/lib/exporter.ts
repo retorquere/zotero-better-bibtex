@@ -58,6 +58,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public nextItem(): ISerializedItem {
     let item
     while (item = Zotero.nextItem()) {
+      debug('got nextItem')
       if (['note', 'attachment'].includes(item.itemType)) continue
 
       if (!item.citekey) {
@@ -89,6 +90,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
             }
           }
         }
+        debug(':cache:written item, expect netxItem')
         continue
       }
 

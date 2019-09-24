@@ -257,6 +257,12 @@ export = new class ErrorReport {
         break
     }
 
+    const debugLogDir = Prefs.get('debugLogDir')
+    if (debugLogDir) {
+      await Zotero.File.putContentsAsync(`${debugLogDir}/${filename}.${ext}`, prefix + data)
+      return
+    }
+
     const url = `${this.bucket}/${this.key}-${this.timestamp}/${this.key}-${filename}`
 
     let chunks = []
