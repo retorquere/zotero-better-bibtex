@@ -4,7 +4,6 @@ import sys
 import os
 import json
 import subprocess
-import uuid
 import argparse
 
 import pathlib
@@ -18,10 +17,9 @@ os.chdir(ROOT)
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
 parser = argparse.ArgumentParser()
-parser.add_argument('--client', choices={'zotero', 'jurism'}, default='zotero')
 parser.add_argument('--no-stop', action='store_true')
 parser.add_argument('--nightly', action='store_true')
-parser.add_argument('--debug-bridge', default=str(uuid.uuid4()))
+parser.add_argument('--jurism', action='store_true')
 
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
@@ -47,11 +45,7 @@ if not args.no_stop and 'CI' not in os.environ:
 if not args.nightly and os.environ.get('TRAVIS_EVENT_TYPE', '') != 'cron' and '#nightly' not in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''):
   sys.argv.extend(['--tags', '~@nightly'])
 
-ignore = 'jurism' if args.client == 'zotero' else 'zotero'
-
-sys.argv.extend(['--tags', f'~@{ignore}'])
-sys.argv.extend(['--define', f'client={args.client}'])
-sys.argv.extend(['--define', f'debugbridgepassword={args.debug_bridge}'])
+if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
 
 print(' '.join(sys.argv))
 

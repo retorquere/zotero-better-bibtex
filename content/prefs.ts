@@ -1,13 +1,10 @@
-declare const Components: any
 declare const Zotero: any
 
 import * as log from './debug'
 import { Events } from './events'
-import { ZoteroConfig } from './zotero-config'
 
-const supported = Object.keys(require('../gen/preferences/defaults.json'))
-supported.push('removeStock')
-supported.push('postscriptProductionMode')
+const defaults = require('../gen/preferences/defaults.json')
+const supported = ['removeStock', 'postscriptProductionMode'].concat(Object.keys(defaults))
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name
@@ -19,36 +16,17 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   constructor() {
     this.testing = Zotero.Prefs.get(this.key('testing'))
 
-    const prefService = Components.classes['@mozilla.org/preferences-service;1'].getService(Components.interfaces.nsIPrefService)
-    this.branch = prefService.getBranch(`${ZoteroConfig.PREF_BRANCH}${this.prefix}.`)
+    for (const [name, value] of Object.entries(defaults)) {
+      // https://groups.google.com/forum/#!topic/zotero-dev/a1IPUJ2m_3s
+      if (typeof this.get(name) === 'undefined') this.set(name, value);
 
-    // preference upgrades
-    for (const pref of this.branch.getChildList('')) {
-      switch (pref) {
-        case 'preserveBibTeXVariables':
-          log.debug('Preferences: preserveBibTeXVariables -> exportBibTeXStrings')
-          this.set('exportBibTeXStrings', this.get(pref) ? 'detect' : 'off')
-          this.clear(pref)
-          break
-
-        case 'jabrefGroups':
-          log.debug('Preferences: jabrefGroups -> jabrefFormat')
-          this.set('jabrefFormat', this.get(pref))
-          this.clear(pref)
-          break
-
-        case 'ZotFile':
-          this.clear(pref)
-          break
-      }
+      (pref => {
+        Zotero.Prefs.registerObserver(`${this.prefix}.${pref}`, newValue => {
+          log.debug('preference', pref, 'changed to', newValue)
+          Events.emit('preference-changed', pref)
+        })
+      })(name)
     }
-
-    this.branch.addObserver('', this, false)
-  }
-
-  public observe(branch, topic, pref) {
-    log.debug('preference', pref, 'changed to', this.get(pref))
-    Events.emit('preference-changed', pref)
   }
 
   public set(pref, value) {
