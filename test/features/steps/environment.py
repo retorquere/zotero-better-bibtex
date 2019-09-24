@@ -49,6 +49,11 @@ def before_all(context):
   context.zotero.export_library(translator = 'Better BibTeX')
 
 def before_scenario(context, scenario):
+  client = [tag for tag in scenario.effective_tags if tag in ['jurism', 'zotero']]
+  if len(client) > 0 and not context.zotero.client in client:
+    scenario.skip(f'{str(client)}-specific scenario skipped for {context.zotero.client}')
+    return
+
   context.zotero.reset()
   context.displayOptions = {}
   context.selected = []
