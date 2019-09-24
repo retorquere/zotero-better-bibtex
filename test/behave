@@ -42,8 +42,13 @@ if not args.no_stop and 'CI' not in os.environ:
   sys.argv.append('--stop')
 
 ## exclude @nightly by default
-if not args.nightly and os.environ.get('TRAVIS_EVENT_TYPE', '') != 'cron' and '#nightly' not in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''):
-  sys.argv.extend(['--tags', '~@nightly'])
+nightly = any([
+  args.nightly,                                               # requested explicitly from the command line
+  '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
+  os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
+  os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron',          # running the nightly build
+])
+if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
 
