@@ -2,8 +2,6 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { debug } from '../lib/debug'
-
 export class JabRef {
   public citekeys: Map<number, string>
   private groups: string[]
@@ -58,7 +56,6 @@ export class JabRef {
 
   private quote(s, wrap = false) {
     s = s.replace(/([\\;])/g, '\\$1')
-    debug('JabRef.quote:', s)
     if (wrap) s = s.match(/.{1,70}/g).join('\n')
     return s
   }

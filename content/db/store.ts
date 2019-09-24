@@ -4,9 +4,9 @@ declare const Zotero: any
 declare const Components: any
 declare const Services: any
 
-Components.utils.import('resource://gre/modules/osfile.jsm')
-
 import * as log from '../debug'
+
+Components.utils.import('resource://gre/modules/osfile.jsm')
 
 export class Store {
   public mode = 'reference'
@@ -26,8 +26,6 @@ export class Store {
 
   public close(name, callback) {
     if (this.storage !== 'sqlite') return callback(null)
-
-    log.debug('DB.Store.close:', close, name)
 
     if (!this.conn[name]) return callback(null)
 
@@ -50,8 +48,6 @@ export class Store {
   }
 
   private async closeDatabase(conn, name, reason) {
-    log.debug('DB.Store.closeDatabase:', name, reason)
-
     if (!conn) {
       log.error('DB.Store.closeDatabase: ', name, typeof conn)
       return
@@ -64,7 +60,6 @@ export class Store {
 
     try {
       await conn.closeDatabase(true)
-      log.debug('DB.Store.closeDatabase OK', name)
     } catch (err) {
       log.error('DB.Store.closeDatabase FAILED', name, err)
     }
@@ -204,7 +199,6 @@ export class Store {
   private async loadDatabaseSQLiteAsync(name) {
     const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
     const exists = await OS.File.exists(path)
-    log.debug('DB.Store.loadDatabaseSQLiteAsync:', { path, exists })
 
     if (!exists && this.storage !== 'sqlite') return null // don't create the DB for a migration load
 
@@ -242,13 +236,9 @@ export class Store {
       log.error('DB.Store.loadDatabaseSQLiteAsync: could not find metadata for', name, rows)
       failed = true
 
-    } else {
-      log.debug('DB.Store.loadDatabaseSQLiteAsync: new database', name)
-
     }
 
     if (this.storage !== 'sqlite') { // migrate but move after
-      log.debug('DB.Store.loadDatabaseSQLiteAsync: migrated', name, this.storage)
       await this.closeDatabase(conn, name, 'migrated')
       await OS.File.move(path, `${path}.migrated`)
 
@@ -267,9 +257,6 @@ export class Store {
 
   private async openDatabaseSQLiteAsync(name, fatal = false) {
     const path = OS.Path.join(Zotero.DataDirectory.dir, `${name}.sqlite`)
-    const exists = await OS.File.exists(path)
-
-    log.debug('DB.Store.openDatabaseSQLiteAsync:', {name, path, exists, fatal})
 
     const conn = new Zotero.DBConnection(name)
     try {

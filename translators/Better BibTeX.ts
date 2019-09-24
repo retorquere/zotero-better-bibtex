@@ -546,8 +546,6 @@ class ZoteroItem {
         continue
       }
 
-      debug('$file:', att, this.jabref)
-
       if (this.jabref.fileDirectory) att.path = `${this.jabref.fileDirectory}${Translator.paths.sep}${att.path}`
 
       if (att.mimeType.toLowerCase() === 'pdf' || (!att.mimeType && att.path.toLowerCase().endsWith('.pdf'))) {
@@ -558,11 +556,8 @@ class ZoteroItem {
       att.title = att.title || att.path.split(/[\\/]/).pop().replace(/\.[^.]+$/, '')
       if (!att.title) delete att.title
 
-      debug('$file:*', att, this.jabref)
-
       this.item.attachments.push(att)
     }
-    debug('$file:', this.item.attachments)
 
     return true
   }
@@ -719,8 +714,6 @@ class ZoteroItem {
       }
     }
 
-    debug('importing bibtex:', this.bibtex)
-
     // import order
     const creatorTypes = [
       'author',
@@ -752,7 +745,6 @@ class ZoteroItem {
         this.item.creators.push(name)
       }
     }
-    debug('creators:', this.item.creators)
 
     // do this before because some handlers directly access this.bibtex.fields
     for (const [field, values] of Object.entries(this.bibtex.fields)) {
@@ -859,7 +851,6 @@ class ZoteroItem {
   }
 
   private set(field, value) {
-    debug('import.set:', this.type, field, this.validFields.get(field))
     if (!this.validFields.get(field)) return false
 
     if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
@@ -944,8 +935,6 @@ Translator.doImport = async () => {
     id++
 
     if (bibtex.key) itemIDS[bibtex.key] = id // Endnote has no citation keys
-
-    debug('importing item with key', bibtex.key, jabref)
 
     try {
       await (new ZoteroItem(id, bibtex, jabref, errors)).complete()

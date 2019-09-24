@@ -296,10 +296,10 @@ export class Reference {
     try {
       postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
       Reference.prototype.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => boolean
-      Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+      debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
       if (Translator.preferences.testing) throw err
-      Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+      debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
     }
   }
 
@@ -317,14 +317,12 @@ export class Reference {
 
     if (!this.item.language) {
       this.english = true
-      debug('detecting language: defaulting to english')
     } else {
       const langlc = this.item.language.toLowerCase()
 
       let language = Language.babelMap[langlc.replace(/[^a-z0-9]/, '_')]
       if (!language) language = Language.babelMap[langlc.replace(/-[a-z]+$/i, '').replace(/[^a-z0-9]/, '_')]
       if (!language) language = Language.fromPrefix(langlc)
-      debug('detecting language:', {langlc, language})
       if (language) {
         this.language = language[0]
       } else {
@@ -337,7 +335,6 @@ export class Reference {
       }
 
       this.english = ['american', 'british', 'canadian', 'english', 'australian', 'newzealand', 'usenglish', 'ukenglish', 'anglais'].includes(this.language.toLowerCase())
-      debug('detected language:', {language: this.language, english: this.english})
     }
 
     if (this.item.extraFields.csl.type) {
@@ -351,7 +348,6 @@ export class Reference {
     }
 
     this.item.referenceType = this.item.cslType || this.item.itemType
-    debug('postextract: item:', this.item)
 
     // should be const referencetype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
@@ -414,7 +410,6 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField) {
-    debug('add field', field)
     if (Translator.skipField[field.name]) return
 
     if (field.enc === 'date') {
@@ -513,7 +508,6 @@ export class Reference {
    */
   public remove(name) {
     if (!this.has[name]) return
-    debug('remove field', name)
     const removed = this.has[name]
     delete this.has[name]
     return removed
@@ -566,8 +560,6 @@ export class Reference {
     }
 
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
-      debug('extraFields: csl', cslName, field)
-
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
         this.item.extraFields.kv[cslName] = field
@@ -703,21 +695,16 @@ export class Reference {
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.bibtex)) {
-      debug('extraFields: bibtex', name, field)
-
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
         this.referencetype = field.value
         continue
       }
 
-      debug('extraFields: bibtex', field)
       this.override({...field, bibtexStrings: Translator.preferences.exportBibTeXStrings === 'match'})
     }
 
     for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
-      debug('extraFields: kv', name, field)
-
       switch (name) {
         case 'mr':
           this.override({ name: 'mrnumber', value: field.value, raw: field.raw })
@@ -801,7 +788,6 @@ export class Reference {
 
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
-    debug(':cache:store?', Translator.caching && this.cachable)
     this.metadata.packages = Object.keys(this.packages)
     if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
@@ -990,7 +976,6 @@ export class Reference {
   }
 
   protected enc_attachments(f) {
-    debug('attachments::', Translator.options, f)
     if (!f.value || (f.value.length === 0)) return null
     const attachments = []
     const errors = []
@@ -1008,16 +993,11 @@ export class Reference {
         att.path = attachment.localPath
       }
 
-      debug('attachment::', Translator.options, att)
-
       if (!att.path) continue // amazon/googlebooks etc links show up as atachments without a path
       // att.path = att.path.replace(/^storage:/, '')
       att.path = att.path.replace(/(?:\s*[{}]+)+\s*/g, ' ')
 
-      debug('attachment:::', Translator.options, att)
-
       if (Translator.options.exportFileData) {
-        debug('saving attachment::', Translator.options, att)
         attachment.saveFile(att.path, true)
       }
 
@@ -1032,7 +1012,6 @@ export class Reference {
         if (relative !== att.path) {
           this.cachable = false
           att.path = relative
-          debug('clipped attachment::', Translator.options, att)
         }
       }
 

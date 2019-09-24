@@ -2,8 +2,6 @@ declare const Translator: ITranslator
 
 declare const Zotero: any
 
-import { debug } from './lib/debug'
-
 function node(id, label, style = null) {
   Zotero.write('  node [\n')
   Zotero.write(`    id ${id}\n`)
@@ -70,8 +68,6 @@ Translator.doExport = () => {
         ),
     }
   }
-
-  debug(items)
 
   for (const item of Object.values(items)) {
     for (const cited of item.cites) {

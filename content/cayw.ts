@@ -4,7 +4,6 @@ declare const Zotero: any
 
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
-import * as log from './debug'
 import * as escape from './escape'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
@@ -118,7 +117,6 @@ class Document {
 
     options.style = options.style || 'apa'
     const style = Zotero.Styles.get(`http://www.zotero.org/styles/${options.style}`) || Zotero.Styles.get(`http://juris-m.github.io/styles/${options.style}`) || Zotero.Styles.get(options.style)
-    log.debug('CAYW.document:', style)
     options.style = style ? style.url : 'http://www.zotero.org/styles/apa'
 
     const data = new Zotero.Integration.DocumentData()
@@ -129,7 +127,6 @@ class Document {
     }
     data.style = {styleID: options.style, locale: 'en-US', hasBibliography: true, bibliographyStyleHasBeenSet: true}
     data.sessionID = Zotero.Utilities.randomString(10) // tslint:disable-line:no-magic-numbers
-    log.debug('CAYW.document:', data)
     this.data = data.serialize()
   }
 
@@ -239,7 +236,6 @@ class Document {
     if (!this.fields[0] || !this.fields[0].code || !this.fields[0].code.startsWith('ITEM CSL_CITATION ')) return []
 
     return JSON.parse(this.fields[0].code.replace(/ITEM CSL_CITATION /, '')).citationItems.map(item => {
-      log.debug('CAYW.citation:', item)
       return {
         id: item.id,
         locator: item.locator || '',
@@ -277,7 +273,6 @@ export let Application = new class { // tslint:disable-line:variable-name
    * @param {String|Number} id
    */
   public getDocument(id) {
-    log.debug('CAYW.getDocument', { id }, this.docs[id])
     return this.docs[id]
   }
 
@@ -324,7 +319,6 @@ function toClipboard(text) {
   const transferable = Components.classes['@mozilla.org/widget/transferable;1'].createInstance(Components.interfaces.nsITransferable)
 
   for (const [mimetype, content] of Object.entries(data)) {
-    log.debug('clipboard: adding', { mimetype, content })
     const str = Components.classes['@mozilla.org/supports-string;1'].createInstance(Components.interfaces.nsISupportsString)
     str.data = content
     transferable.addDataFlavor(mimetype)
@@ -357,8 +351,6 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
       }
 
       if (options.clipboard) toClipboard(citation)
-
-      log.debug('CAYW: sending', citation)
 
       return [this.OK, 'text/html; charset=utf-8', citation]
     } catch (err) {

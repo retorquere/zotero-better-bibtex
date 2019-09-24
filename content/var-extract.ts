@@ -49,7 +49,6 @@ export function extract(item) {
       legacy[name] = { name, value, raw: !cook }
     }
 
-    log.debug('var-extract:', legacy)
     Object.assign(extraFields.bibtex, legacy)
     return ''
   }).trim()
@@ -64,12 +63,9 @@ export function extract(item) {
     // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
     let end = extra.lastIndexOf('}')
 
-    log.debug('var-extract: biblatexdata marker found', { marker, start, end, raw })
-
     let json = null
     while (end > start) {
       try {
-        log.debug('var-extract: biblatexdata trying', { start, end, candidate: extra.substring(start, end + 1) })
         json = JSON5.parse(extra.substring(start, end + 1))
 
         if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
@@ -94,7 +90,6 @@ export function extract(item) {
     }
 
     if (!json) {
-      log.debug('var-extract: biblatexdata ignoring', { marker, start })
       marker = start
     }
   }
@@ -123,7 +118,6 @@ export function extract(item) {
 
     name = name.trim().toLowerCase().replace(/ +/g, '-')
     const cslType = cslVariables[name]
-    log.debug('fieldExtract:', { name, value, cslType })
     if (cslType) {
       if (cslType === 'creator') {
         extraFields.csl[name] = extraFields.csl[name] || { type: cslType, value: [] }
@@ -143,6 +137,5 @@ export function extract(item) {
     return true
   }).join('\n')
 
-  log.debug('fieldExtract:', { extra, extraFields })
   return { extra, extraFields }
 }

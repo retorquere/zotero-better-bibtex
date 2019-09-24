@@ -72,10 +72,10 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     if (typeof postscript === 'string' && postscript.trim() !== '') {
       try {
         this.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => void
-        Zotero.debug(`Installed postscript: ${JSON.stringify(postscript)}`)
+        debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
         if (Translator.preferences.testing) throw err
-        Zotero.debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
+        debug(`Failed to compile postscript: ${err}\n\n${JSON.stringify(postscript)}`)
       }
     }
   }
@@ -127,7 +127,6 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
-      debug('extracted:', item.extraFields)
       for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
         switch (name) {
           case 'type':

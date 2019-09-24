@@ -4,7 +4,6 @@ declare const Zotero: any
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './lib/exporter'
-import { debug } from './lib/debug'
 
 Reference.prototype.fieldEncoding = {
   url: 'url',
@@ -39,7 +38,6 @@ Reference.prototype.caseConversion = {
 Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
 Reference.prototype.addCreators = function() {
-  debug('addCreators:', this.item.creators)
   if (!this.item.creators || !this.item.creators.length) return
 
   const creators = {
@@ -115,8 +113,6 @@ Reference.prototype.addCreators = function() {
 
     creators[kind].push(creator)
   }
-
-  debug('addCreators:', creators)
 
   for (const [field, value] of Object.entries(creators)) {
     this.remove(field)
@@ -263,7 +259,6 @@ const patent = new class {
 }
 
 Translator.doExport = () => {
-  debug(':cache:', Translator.caching)
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
@@ -455,7 +450,6 @@ Translator.doExport = () => {
         ref.add({ name: 'publisher', value: item.publisher, bibtexStrings: true })
     }
 
-    debug('adding type:', {item_type: item.type || '', item_referenceType: item.referenceType, referencetype: this.referencetype})
     switch (item.referenceType) {
       case 'letter':
       case 'personal_communication':
@@ -527,16 +521,13 @@ Translator.doExport = () => {
     ref.add({ name: 'file', value: item.attachments, enc: 'attachments' })
 
     if (item.cslVolumeTitle) { // #381
-      debug('cslVolumeTitle: true, type:', item.referenceType, 'has:', Object.keys(ref.has))
       if (item.referenceType === 'book' && ref.has.title) {
-        debug('cslVolumeTitle: for book, type:', item.referenceType, 'has:', Object.keys(ref.has))
         ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
         [ref.has.title.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.title.bibtex]; // ; to prevent chaining
         [ref.has.title.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.title.value]
       }
 
       if (['bookSection', 'chapter'].includes(item.referenceType) && ref.has.booktitle) {
-        debug('cslVolumeTitle: for bookSection, type:', item.referenceType, 'has:', Object.keys(ref.has))
         ref.add({name: 'maintitle', value: item.cslVolumeTitle }); // ; to prevent chaining
         [ref.has.booktitle.bibtex, ref.has.maintitle.bibtex] = [ref.has.maintitle.bibtex, ref.has.booktitle.bibtex]; // ; to preven chaining
         [ref.has.booktitle.value, ref.has.maintitle.value] = [ref.has.maintitle.value, ref.has.booktitle.value]

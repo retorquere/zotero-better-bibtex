@@ -3,7 +3,6 @@ declare const Translator: ITranslator
 declare const Zotero: any
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
-import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 
@@ -13,24 +12,12 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public packages: { [key: string]: boolean }
   public jabref: JabRef
   public strings: {[key: string]: string}
-  private time: {
-    nextItem: number
-  }
 
   constructor() {
     this.preamble = {DeclarePrefChars: ''}
     this.jabref = new JabRef()
     this.strings = {}
     this.packages = {}
-    this.time = {
-      nextItem: Date.now(),
-    }
-  }
-
-  private elapsed(category, msg) {
-    const now = Date.now()
-    debug(`${category}: +${now - this.time[category]}: ${msg}`)
-    this.time[category] = now
   }
 
   public prepare_strings() {
@@ -58,11 +45,9 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   public nextItem(): ISerializedItem {
     let item
     while (item = Zotero.nextItem()) {
-      debug('got nextItem')
       if (['note', 'attachment'].includes(item.itemType)) continue
 
       if (!item.citekey) {
-        debug(new Error('No citation key found in'), item)
         throw new Error(`No citation key in ${JSON.stringify(item)}`)
       }
 
@@ -71,10 +56,8 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       // this is not automatically lazy-evaluated?!?!
       const cached: Types.DB.Cache.ExportedItem = Translator.caching ? Zotero.BetterBibTeX.cacheFetch(item.itemID, Translator.options, Translator.preferences) : null
       Translator.cache[cached ? 'hits' : 'misses'] += 1
-      this.elapsed('nextItem', `${item.itemID} cache ${cached ? 'hit' : 'miss' }, hits=${Translator.cache.hits}, misses=${Translator.cache.misses}`)
 
       if (cached) {
-        debug(':cache:hit', item.itemID)
         if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
           Translator.references.push({ citekey: item.citekey, reference: cached.reference })
         } else {
@@ -90,14 +73,11 @@ export let Exporter = new class { // tslint:disable-line:variable-name
             }
           }
         }
-        debug(':cache:written item, expect netxItem')
         continue
       }
 
-      debug(':cache:miss', item.itemID)
       itemfields.simplifyForExport(item)
       Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
-      debug('exporting', item)
 
       item.raw = Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
@@ -116,13 +96,11 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
   // TODO: move to bibtex-exporters
   public complete() {
-    debug('sorted:', { prefs: Translator.preferences, bbt: Translator.BetterBibTeX, bbl: Translator.BetterBibLaTeX })
     if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
       Translator.references.sort((a, b) => Translator.stringCompare(a.citekey, b.citekey))
       Zotero.write(Translator.references.map(ref => ref.reference).join(''))
     }
 
-    debug('Exporter.complete: write JabRef groups')
     this.jabref.exportGroups()
 
     let preamble = []

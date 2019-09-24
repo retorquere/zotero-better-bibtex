@@ -66,7 +66,6 @@ const htmlConverter = new class HTMLConverter {
           const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
           for (const c of unicode) {
             if (this.mapping[c] && this.mapping[c].text && this.mapping[c].math) {
-              debug('deleting', this.mapping[c][remove])
               delete this.mapping[c][remove]
             }
           }
@@ -76,7 +75,6 @@ const htmlConverter = new class HTMLConverter {
         const remove = switchMode[Translator.preferences.mapUnicode]
         if (remove) {
           for (const tex of (Object.values(this.mapping) as any[])) {
-            debug('deleting', tex[remove])
             if (tex.text && tex.math) delete tex[remove]
           }
         }

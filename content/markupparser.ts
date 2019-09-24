@@ -81,8 +81,6 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     this.braceProtection = options.caseConversion && !Prefs.get('suppressBraceProtection')
     this.sentenceStart = true
 
-    // log.debug('markupparser:', html, {...options, braceProtection: this.braceProtection})
-
     // add enquote tags.
     const csquotes = Prefs.get('csquotes')
     if (csquotes) {
@@ -138,8 +136,6 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
       }
       this.cleanupNocase(doc)
     }
-
-    // log.debug('markupparser:', doc)
 
     // spurious wrapping span
     doc = this.unwrapSpurious(doc)

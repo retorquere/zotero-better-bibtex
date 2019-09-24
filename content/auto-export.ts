@@ -32,7 +32,6 @@ class Git {
 
   public async init() {
     this.git = await pathSearch('git')
-    if (!this.git) log.debug('git.init: git not found')
 
     return this
   }
@@ -209,12 +208,9 @@ const queue = new class {
   public async run(task) {
     if (task.canceled) return
 
-    log.debug('AutoExport.queue.run:', task, this.autoexports)
-
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
 
-    log.debug('AutoExport.queue.run:', ae)
     ae.status = 'running'
     this.autoexports.update(ae)
 
@@ -230,8 +226,6 @@ const queue = new class {
         default:
           items = null
       }
-
-      log.debug('AutoExport.queue.run: starting export', ae)
 
       const repo = git.repo(ae.path)
       await repo.pull()
@@ -292,7 +286,6 @@ const queue = new class {
       }
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
-      log.debug('AutoExport.queue.run: export finished', ae)
       ae.error = ''
     } catch (err) {
       log.error('AutoExport.queue.run: failed', ae, err)
@@ -301,7 +294,6 @@ const queue = new class {
 
     ae.status = 'done'
     this.autoexports.update(ae)
-    log.debug('AutoExport.queue.run: completed', task, ae)
   }
 
   // idle observer
@@ -323,8 +315,6 @@ const queue = new class {
 
 Events.on('preference-changed', pref => {
   if (pref !== 'autoExport') return
-
-  log.debug('AutoExport: preference changed')
 
   switch (Prefs.get('autoExport')) {
     case 'immediate':
@@ -363,7 +353,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     for (const pref of prefOverrides) {
       ae[pref] = Prefs.get(pref)
     }
-    log.debug('AutoExport.add', ae)
     this.db.removeWhere({ path: ae.path })
     this.db.insert(ae)
 
@@ -395,7 +384,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
 
   public schedule(type, ids) {
     for (const ae of this.db.find({ type, id: { $in: ids } })) {
-      log.debug('AutoExport.schedule: push', ae.$loki)
       queue.add(ae)
     }
   }
@@ -408,7 +396,6 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
   }
 
   public run(id) {
-    log.debug('Autoexport.run:', id)
     queue.run({id})
   }
 }

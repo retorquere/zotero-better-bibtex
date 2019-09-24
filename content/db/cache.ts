@@ -24,7 +24,6 @@ class Cache extends Loki {
     const query = Array.isArray(ids) ? { itemID : { $in : ids } } : { itemID: ids }
 
     for (const coll of this.collections) {
-      log.debug(':Cache:remove:', coll.name, reason, query)
       coll.findAndRemove(query)
     }
   }
@@ -35,7 +34,6 @@ class Cache extends Loki {
       return
     }
     for (const coll of this.collections) {
-      log.debug(':Cache:reset:', coll.name)
       coll.removeDataOnly()
     }
   }

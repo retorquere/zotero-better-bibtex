@@ -1,7 +1,5 @@
 declare const Translator: ITranslator
 
-import { debug } from '../lib/debug'
-
 function pad(v, padding) {
   if (v.length >= padding.length) return v
   return (padding + v).slice(-padding.length)
@@ -44,8 +42,6 @@ function format(date) {
 }
 
 export function datefield(date, field) {
-  debug('formatting date', date, field)
-
   if (!date) return {}
   if (date && !date.type && date.orig) return {}
   if (!date.type) throw new Error(`Failed to parse ${JSON.stringify(date)}`)

@@ -9,7 +9,6 @@ const chunkSize = 0x100000
 
 Translator.detectImport = () => {
   let str
-  debug('BetterBibTeX JSON.detect: start')
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
     json += str
@@ -38,7 +37,6 @@ Translator.doImport = async () => {
   if (!data.items || !data.items.length) return
 
   const items = new Set
-  debug('importing', data.items.length, 'items')
   for (const source of (data.items as any[])) {
     itemfields.simplifyForImport(source)
 
@@ -107,7 +105,6 @@ Translator.doImport = async () => {
 
 Translator.doExport = () => {
   let item
-  debug('starting export')
   const data = {
     config: {
       id: Translator.header.translatorID,
@@ -119,7 +116,6 @@ Translator.doExport = () => {
     collections: Translator.collections,
     items: [],
   }
-  debug('header ready')
 
   const validAttachmentFields = new Set([ 'relations', 'uri', 'itemType', 'title', 'path', 'tags', 'dateAdded', 'dateModified', 'seeAlso', 'mimeType' ])
 
@@ -142,7 +138,6 @@ Translator.doExport = () => {
       att.relations = att.relations ? (att.relations['dc:relation'] || []) : []
       for (const field of Object.keys(att)) {
         if (!validAttachmentFields.has(field)) {
-          debug('bbt json: delete attachment', field, att[field])
           delete att[field]
         }
       }
@@ -150,8 +145,6 @@ Translator.doExport = () => {
 
     data.items.push(item)
   }
-  debug('data ready')
 
   Zotero.write(JSON.stringify(data, null, '  '))
-  debug('export done')
 }

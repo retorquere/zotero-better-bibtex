@@ -4,7 +4,6 @@ declare const Zotero: any
 Components.utils.import('resource://gre/modules/osfile.jsm')
 declare const OS: any
 
-import * as log from './debug'
 import { timeout } from './timeout'
 import { KeyManager } from './key-manager'
 import { Translators } from './translators'
@@ -59,7 +58,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
         for (const bibdata of this.bibdata) {
           for (const bib of [bibdata, bibdata + '.bib']) {
             if (await OS.File.exists(bib)) {
-              log.debug('scanning', bib, 'for missing items')
               bibfiles[bib] = bibfiles[bib] || decoder.decode(await OS.File.read(bib))
               break
             }
@@ -80,8 +78,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private async parse(file) {
-    log.debug('AUXScanner:', file.path)
-
     let m
     const contents = Zotero.File.getContents(file)
 
@@ -105,8 +101,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
   }
 
   private async saveToCollection(source, libraryID, collection, imported) {
-    log.debug('AUXScanner.saveToCollection', source, { parent: collection ? collection.id : null })
-
     // if no collection is selected, or the selected collection contains references, create a new subcollection
     if (!collection || collection.getChildItems(true).length) {
       const siblings = new Set((collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(libraryID)).map(coll => coll.name))
@@ -126,7 +120,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       })
 
       await collection.saveTx()
-      log.debug('AUXScanner.saveToCollection', source, { collection: collection.id })
     }
 
     const missing = []
@@ -154,8 +147,6 @@ export let AUXScanner = new class { // tslint:disable-line:variable-name
       await item.saveTx()
       found.push(item.id)
     }
-
-    log.debug('AUX scan: adding', found)
 
     if (found.length) Zotero.DB.executeTransaction(function *() { yield collection.addItems(found) })
   }

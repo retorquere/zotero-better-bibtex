@@ -43,8 +43,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     if (reinit) {
-      log.debug('Translators.init: reinit translators...')
-
       if (!Prefs.testing) {
         const ps = Services.prompt
         const index = ps.confirmEx(
@@ -61,9 +59,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
 
       try {
-        log.debug('Translators.init: reinit start @', (new Date()).valueOf() - start)
         await Zotero.Translators.reinit()
-        log.debug('Translators.init: reinit ready @', (new Date()).valueOf() - start)
       } catch (err) {
         log.error('Translator.inits: reinit failed @', (new Date()).valueOf() - start, err)
       }
@@ -91,7 +87,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     await translation.translate({ libraryID })
 
-    log.debug('imported', translation.newItems.length, 'item(s)')
     return translation.newItems
   }
 
@@ -109,7 +104,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     if (!reason && Prefs.get('relativeFilePaths')) reason = 'Cache disabled when relativeFilePaths is on'
     if (!reason) {
       uncached = await this.uncached(translatorID, displayOptions, scope)
-      log.debug(':cache:prime:', uncached.length, 'uncached items')
       if (!uncached.length) {
         reason = 'No uncached items found'
       } else if (uncached.length < threshold) {
@@ -124,16 +118,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
     switch (typeof uncached[0]) {
       case 'number':
       case 'string':
-        log.debug(':cache:prime: fetching uncached items')
         uncached = await Zotero.Items.getAsync(uncached)
     }
 
     const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
     const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
     while (uncached.length) {
-      log.debug(':cache:prime:', uncached.length, 'remaining')
       const _batch = uncached.splice(0, batch)
-      log.debug(':cache:prime: priming', _batch.length)
 
       await this.exportItems(translatorID, displayOptions, { items: _batch })
 
@@ -142,7 +133,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     // uncached = await this.uncached(translatorID, displayOptions, scope)
-    // log.debug(':cache:prime: done,', uncached.length, 'total uncached in system')
     // if (Prefs.testing && uncached.length) throw new Error(`Translators.uncached: ${uncached.length} uncached items left`)
   }
 
@@ -150,12 +140,9 @@ export let Translators = new class { // tslint:disable-line:variable-name
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
-    log.debug('Translators.exportItems', { translatorID, displayOptions, path })
 
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
-
-    log.debug('Translators.exportItems prepping', { translatorID, displayOptions, path })
 
     items = this.items(items)
 
@@ -202,11 +189,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translation.setLocation(file)
     }
 
-    log.debug('Translators.exportItems starting', { translatorID, displayOptions, path })
-
     translation.setHandler('done', (obj, success) => {
       if (success) {
-        log.debug('Translators.exportItems complete in', { time: Date.now() - start, translatorID, displayOptions, path })
         deferred.resolve(obj ? obj.string : undefined)
       } else {
         log.error('Translators.exportItems failed in', { time: Date.now() - start, translatorID, displayOptions, path })
@@ -247,8 +231,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       installed = null
     }
 
-    log.debug('Translators.install: installed =', !!installed)
-
     const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
     const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
     header = JSON.parse(metadata)
@@ -277,7 +259,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     try {
       await Zotero.Translators.save(header, code)
 
-      log.debug('Translator.install', header, 'succeeded')
     } catch (err) {
       log.error('Translator.install', header, 'failed:', err)
       this.uninstall(header.label, header.translatorID)
@@ -298,14 +279,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
         query[pref] = Prefs.get(pref)
       } else {
         query[pref] = displayOptions[`preference_${pref}`]
-        log.debug(':cache:prime.uncached: override', pref, '=', query[pref])
       }
     }
-    log.debug(':cache:prime.uncached:', { prefOverrides, displayOptions, query })
     const cached = new Set(cache.find(query).map(item => item.itemID))
 
     if (scope.items) {
-      log.debug(':cache:prime.uncached: items')
       return scope.items.filter(item => !cached.has(item.id))
     }
 
@@ -323,29 +301,16 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     }
 
-    log.debug(':cache:prime.uncached:', sql)
     return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
   private items(items) {
     if (!items) {
-      log.debug(':cache:scope: nothing => userlibrary')
       return { library: Zotero.Libraries.userLibraryID }
     }
 
     if (typeof items.collection === 'number') {
-      log.debug(':cache:scope: collection ID => collection')
       return { collection: Zotero.Collections.get(items.collection) }
-    }
-
-    if (items.items) {
-      log.debug(':cache:scope:', items.items.length, 'items')
-    } else if (items.collection) {
-      log.debug(':cache:scope: collection', items.collection.id)
-    } else if (items.library) {
-      log.debug(':cache:scope: library', items.library)
-    } else {
-      log.debug(':cache:scope: none?')
     }
 
     return items

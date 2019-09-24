@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { XULoki as Loki } from './loki'
-import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
 import { getItemsAsync } from '../get-items-async'
 
@@ -47,7 +46,6 @@ class Main extends Loki {
       }
     }
 
-    log.debug('Keymanager: userLibraryID =', Zotero.Libraries.userLibraryID)
     if (Zotero.Libraries.userLibraryID) {
       for (const citekey of citekeys.where(ck => ck.libraryID === 1 || !ck.libraryID )) {
         citekey.libraryID = Zotero.Libraries.userLibraryID

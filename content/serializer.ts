@@ -1,7 +1,6 @@
 declare const Zotero: any
 
 import { JournalAbbrev } from './journal-abbrev'
-import * as log from './debug'
 
 import { DB as Cache } from './db/cache'
 import { KeyManager } from './key-manager'
@@ -21,10 +20,8 @@ export let Serializer = new class { // tslint:disable-line:variable-name
     const query = { itemID: item.id, legacy: !!legacy, skipChildItems: !!skipChildItems}
     const cached = cache.findOne(query)
     if (!cached) {
-      log.debug(':cache:serializer miss:', query)
       return null
     }
-    log.debug(':cache:serializer hit:', query)
 
     return this.enrich(cached.item, item)
   }

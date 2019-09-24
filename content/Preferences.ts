@@ -245,9 +245,7 @@ export = new class PrefPane {
   private timer: number
 
   public getCitekeyFormat() {
-    log.debug('prefs: fetching citekey for display...')
     this.keyformat.value = Prefs.get('citekeyFormat')
-    log.debug('prefs: fetched citekey for display:', this.keyformat.value)
   }
 
   public checkCitekeyFormat() {
@@ -269,7 +267,6 @@ export = new class PrefPane {
 
   public saveCitekeyFormat() {
     try {
-      log.debug('prefs: saving new citekey format', this.keyformat.value)
       Formatter.parsePattern(this.keyformat.value)
       Prefs.set('citekeyFormat', this.keyformat.value)
     } catch (error) {
@@ -324,7 +321,6 @@ export = new class PrefPane {
     await Zotero.BetterBibTeX.ready
 
     tabbox.hidden = false
-    log.debug('prefs: loading...')
 
     if (typeof Zotero_Preferences === 'undefined') {
       log.error('Preferences.load: Zotero_Preferences not ready')
@@ -385,14 +381,11 @@ export = new class PrefPane {
     this.getCitekeyFormat()
     this.update()
 
-    log.debug('prefs: loaded @', document.location.hash)
-
     if (document.location.hash === '#better-bibtex') {
       // runs into the 'TypeError: aId is undefined' problem for some reason unless I delay the activation of the pane
       // tslint:disable-next-line:no-magic-numbers
       Zotero.setTimeout(() => document.getElementById('zotero-prefs').showPane(document.getElementById('zotero-prefpane-better-bibtex')), 500)
     }
-    log.debug('prefs: ready')
 
     window.sizeToContent()
   }
@@ -417,7 +410,6 @@ export = new class PrefPane {
     if (ZoteroConfig.Zotero.isJurisM) {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
-        log.debug('prefPane.update: found styles', styles)
 
         const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
         const refill = stylebox.children.length === 0

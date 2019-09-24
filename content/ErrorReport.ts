@@ -123,7 +123,6 @@ export = new class ErrorReport {
 
     this.timestamp = (new Date()).toISOString().replace(/\..*/, '').replace(/:/g, '.')
 
-    log.debug('ErrorReport.log:', Zotero.Debug.count())
     this.errorlog = {
       info: await this.info(),
       errors: Zotero.getErrors(true).join('\n'),
@@ -133,12 +132,9 @@ export = new class ErrorReport {
     if (Zotero.BetterBibTeX.ready && this.params.items) {
       await Zotero.BetterBibTeX.ready
 
-      log.debug('ErrorReport::init items', this.params.items.length)
       this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true}, this.params.items)
-      log.debug('ErrorReport::init references', this.errorlog.references.length)
     }
 
-    log.debug('ErrorReport.init:', Object.keys(this.errorlog))
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
     document.getElementById('better-bibtex-error-errors').value = this.errorlog.errors
     document.getElementById('better-bibtex-error-debug').value = this.preview(this.errorlog.debug)
@@ -149,9 +145,7 @@ export = new class ErrorReport {
     document.getElementById('better-bibtex-report-current').value = Zotero.BetterBibTeX.getString('ErrorReport.better-bibtex.current', { version: current })
 
     let latest = PACKAGE.xpi.releaseURL.replace('https://github.com/', 'https://api.github.com/repos/').replace(/\/releases\/.*/, '/releases/latest')
-    log.debug('ErrorReport.current:', latest)
     latest = JSON.parse((await Zotero.HTTP.request('GET', latest, httpRequestOptions)).responseText).tag_name.replace('v', '')
-    log.debug('ErrorReport.current:', latest)
     const show_latest = document.getElementById('better-bibtex-report-latest')
     if (current === latest) {
       show_latest.hidden = true
@@ -163,7 +157,6 @@ export = new class ErrorReport {
     const region = await Zotero.Promise.any(PACKAGE.bugs.logs.regions.map(this.ping))
     this.bucket = `http://${PACKAGE.bugs.logs.bucket}-${region.short}.s3-${region.region}.amazonaws.com${region.tld}`
     this.key = `${Zotero.Utilities.generateObjectKey()}-${region.short}`
-    log.debug('ErrorReport.ping:', this.bucket, this.key)
 
     continueButton.disabled = false
     continueButton.focus()
@@ -235,9 +228,6 @@ export = new class ErrorReport {
   }
 
   private async submit(filename, contentType, data, prefix = '') {
-    const started = Date.now()
-    log.debug('Errorlog.submit:', filename)
-
     if (data.then) data = await data
 
     const headers = {
@@ -296,7 +286,6 @@ export = new class ErrorReport {
       headers,
     })))
 
-    log.debug('Errorlog.submit:', filename, Date.now() - started)
   }
 }
 
