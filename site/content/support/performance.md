@@ -46,7 +46,7 @@ Here are some numbers from a test with a library consisting of:
 ### Initial state
 
 Initially, your cache will be empty. The first export of any reference using Better BibTeX will therefore be a little
-over 14 times as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a reference
+over twice as slow as subsequent exports. After that, it gets pretty zippy, as the process of exporting a reference
 will also cache that reference *for the current export settings*. This means if you export once with, and once without
 notes (one of the options in the export popup), you will hit an empty cache twice. If you set up an automatic export,
 the export you do that registers it for auto-update will already be the first export, so if your references weren't
