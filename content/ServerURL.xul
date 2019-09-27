@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!DOCTYPE window SYSTEM "chrome://zotero-better-bibtex/locale/zotero-better-bibtex.dtd">
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<dialog id="btt-server-url" title="&better-bibtex.ServerURL.title;"
+  xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+  onload="update();"
+  buttons="accept"
+  buttonlabelaccept="&better-bibtex.ServerURL.OK;"
+  buttonaccesskeyaccept="O"
+>
+  <script>
+    function setURL(id, url) {
+      const elt = document.getElementById(id);
+      elt.value = url
+      elt.setAttribute('style', `min-width: ${url.length / 2}em; color: blue;`)
+    }
+
+    function update() {
+      const params = window.arguments[0];
+      const ext = document.getElementById('formats').value
+
+      setURL('pull-export-short', params.url.short + ext)
+      setURL('pull-export-long', params.url.long + ext)
+      document.getElementById('pull-export-long-available').hidden = !params.url.long
+
+      window.sizeToContent();
+    }
+  </script>
+
+  <dialogheader title="&better-bibtex.ServerURL.title;"/>
+  <groupbox flex="1">
+    <vbox flex="1">
+      <hbox flex="1">
+        <label>&better-bibtex.ServerURL.format;</label>
+        <menulist id="formats" oncommand="update();">
+          <menupopup>
+            <menuitem label="BibLaTeX" value=".biblatex"/>
+            <menuitem label="BibTeX" value=".bibtex"/>
+            <menuitem label="CSL YAML" value=".yaml"/>
+            <menuitem label="CSL JSON" value=".json"/>
+          </menupopup>
+        </menulist>
+      </hbox>
+      <hbox flex="1">
+        <description>&better-bibtex.ServerURL.description;</description><textbox flex="1" id="pull-export-short" class="plain" readonly="true"/>
+      </hbox>
+      <hbox flex="1" id="pull-export-long-available">
+        <description>&better-bibtex.ServerURL.or;</description><textbox flex="1" id="pull-export-long" class="plain" readonly="true"/>
+      </hbox>
+    </vbox>
+  </groupbox>
+</dialog>

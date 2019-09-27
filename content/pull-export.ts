@@ -20,11 +20,15 @@ function displayOptions(request) {
 function getTranslatorId(name) {
   const _name = name.toLowerCase()
 
-  if (_name === 'json') return Translators.byLabel.BetterBibTeXJSON.translatorID
+  if (_name === 'jzon') return Translators.byLabel.BetterBibTeXJSON.translatorID
   if (_name === 'bib') return Translators.byLabel.BetterBibLaTeX.translatorID
 
   for (const [id, translator] of (Object.entries(Translators.byId) as Array<[string, ITranslatorHeader]>)) {
-    if (translator.label.replace(/\s/g, '').toLowerCase().replace('better', '') === _name) return id
+    if (! ['yaml', 'json', 'bib'].includes(translator.target) ) continue
+    if (! translator.label.startsWith('Better ') ) continue
+
+    if (translator.label.replace('Better ', '').replace(' ', '').toLowerCase() === _name) return id
+    if (translator.label.split(' ').pop().toLowerCase() === _name) return id
   }
 
   // allowed to pass GUID

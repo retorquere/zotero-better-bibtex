@@ -26,7 +26,7 @@
     <menuitem
       id="bbt-collectionmenu-pull-url"
       label="&better-bibtex.BetterBibTeX.show-collection-key;"
-      oncommand="event.stopPropagation(); alert(Zotero.BetterBibTeX.ZoteroPane.pullExport())"
+      oncommand="event.stopPropagation(); Zotero.BetterBibTeX.ZoteroPane.pullExport()"
       class="menuitem-iconic" image="chrome://zotero-better-bibtex/skin/bibtex-menu.svg"
     />
     <menuitem

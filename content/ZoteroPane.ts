@@ -90,34 +90,39 @@ export = new class ZoteroPane {
   }
 
   public pullExport() {
-    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return ''
+    if (!pane.collectionsView || !pane.collectionsView.selection || !pane.collectionsView.selection.count) return
 
-    const translator = 'biblatex'
     const row = pane.collectionsView.selectedTreeRow
 
-    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex/`
+    const root = `http://127.0.0.1:${Zotero.Prefs.get('httpServer.port')}/better-bibtex`
+    const params = {
+      url: {
+        long: '',
+        short: '',
+      },
+    }
 
     if (row.isCollection()) {
       let collection = pane.getSelectedCollection()
-      const short = `collection?/${collection.libraryID || 0}/${collection.key}.${translator}`
+      params.url.short = `${root}/collection?/${collection.libraryID || 0}/${collection.key}`
 
-      const path = [encodeURIComponent(collection.name)]
+      let path = `/${encodeURIComponent(collection.name)}`
       while (collection.parent) {
         collection = Zotero.Collections.get(collection.parent)
-        path.unshift(encodeURIComponent(collection.name))
+        path = `/${encodeURIComponent(collection.name)}/${path}`
       }
-      const long = `collection?/${collection.libraryID || 0}/${path.join('/')}.${translator}`
-
-      return `${root}${short}\nor\n${root}${long}`
+      params.url.long = `${root}/collection?/${collection.libraryID || 0}${path}`
     }
 
     if (row.isLibrary(true)) {
       const libId = pane.getSelectedLibraryID()
-      const short = libId ? `library?/${libId}/library.${translator}` : `library?library.${translator}`
-      return `${root}${short}`
+      const short = libId ? `/${libId}/library` : 'library'
+      params.url.short = `${root}/library?${short}`
     }
 
-    return ''
+    if (!params.url.short) return
+
+    window.openDialog('chrome://zotero-better-bibtex/content/ServerURL.xul', '', 'chrome,dialog,centerscreen,modal', params)
   }
 
   public startAutoExport(event) {
