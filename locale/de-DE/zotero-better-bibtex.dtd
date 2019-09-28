@@ -154,10 +154,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Eintrag an TeXstudio senden">
 <!ENTITY zotero.better-bibtex.csquotes "Ersetze links/rechts (doppelte) Anführungszeichen mit \\enquote{...} (benötigt csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportier über HTTP ausgestellt">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better-BibTeX-Export...">
 
-<!ENTITY better-bibtex.ServerURL.title "Better BibTeX export via HTTP">
-<!ENTITY better-bibtex.ServerURL.description "Download URL:">
-<!ENTITY better-bibtex.ServerURL.or "or">
-<!ENTITY better-bibtex.ServerURL.format "Download items as">
+<!ENTITY better-bibtex.ServerURL.title "Better-BibTeX-Export via HTTP">
+<!ENTITY better-bibtex.ServerURL.description "Download-URL:">
+<!ENTITY better-bibtex.ServerURL.or "oder">
+<!ENTITY better-bibtex.ServerURL.format "Element herunterladen als">
 <!ENTITY better-bibtex.ServerURL.OK "OK">
