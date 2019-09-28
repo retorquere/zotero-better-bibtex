@@ -154,4 +154,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Enviar referências para TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Substituir aspas duplas ou angulares por \\enquote{...} (exige csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportação via HTTP desativada">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Mostrar URL do servidor BibLaTeX">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
+
+<!ENTITY better-bibtex.ServerURL.title "Better BibTeX export via HTTP">
+<!ENTITY better-bibtex.ServerURL.description "Download URL:">
+<!ENTITY better-bibtex.ServerURL.or "or">
+<!ENTITY better-bibtex.ServerURL.format "Download items as">
+<!ENTITY better-bibtex.ServerURL.OK "OK">
