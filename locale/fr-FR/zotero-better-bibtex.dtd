@@ -154,4 +154,10 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.BetterBibTeX.TeXstudio "Exporter les références vers TeXstudio">
 <!ENTITY zotero.better-bibtex.csquotes "Remplacer les guillemets par la commande '\\enquote{...}' (nécessite le package csquotes)">
 <!ENTITY better-bibtex.BetterBibTeX.server.disabled "Exportation par HTTP désactivée">
-<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Afficher l’URL du serveur BibLaTeX">
+<!ENTITY better-bibtex.BetterBibTeX.show-collection-key "Download Better BibTeX export...">
+
+<!ENTITY better-bibtex.ServerURL.title "Better BibTeX export via HTTP">
+<!ENTITY better-bibtex.ServerURL.description "Download URL:">
+<!ENTITY better-bibtex.ServerURL.or "or">
+<!ENTITY better-bibtex.ServerURL.format "Download items as">
+<!ENTITY better-bibtex.ServerURL.OK "OK">
