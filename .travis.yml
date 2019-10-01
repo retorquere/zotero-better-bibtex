@@ -27,15 +27,13 @@ before_install:
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update
   - travis_retry sudo apt-get install $CLIENT
-  - travis_retry sudo ./util/install-beta
 script:
-  - set | grep TRAVIS_
   - ./util/build-assets fetch || travis_terminate 1
-  - ./test/behave --define client=$CLIENT
+  - ./test/behave
 
 after_failure:
   - ./util/build-assets pop
-  - export fileio=$(curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io) && echo $fileio
+  - export transfersh=$(curl --upload-file "@$HOME/.BBTZ5TEST.log" https://transfer.sh/BBTZ5TEST.txt) && echo $transfersh
 
 stages:
   - build
@@ -52,17 +50,9 @@ jobs:
       - travis_retry ./util/build-assets stash
 
   - stage: test
-    env:
-    - CLIENT=zotero
-
   - stage: test
-    env:
-    - CLIENT=jurism
-
   - stage: test
-    env:
-    - CLIENT=zotero
-    - INSTALL_BETA=true
+  - stage: test
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request

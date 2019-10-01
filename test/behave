@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 
-import sys
-import os
-import json
-import subprocess
+from urllib.request import urlretrieve
 import argparse
+import json
+import os
+import re
+import shutil
+import subprocess
+import sys
+import tarfile
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -24,8 +28,56 @@ parser.add_argument('--jurism', action='store_true')
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
 
-# build before test unless on CI
-if not 'CI' in os.environ:
+## exclude @nightly by default
+nightly = any([
+  args.nightly,                                               # requested explicitly from the command line
+  '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
+  os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
+  os.environ.get('TRAVIS_EVENT_TYPE') == 'cron',          # running the nightly build
+])
+if not nightly: sys.argv.extend(['--tags', '~@nightly'])
+
+if 'CI' in os.environ: # set up for CI
+  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1])
+
+  if nightly:
+    client =  {1: 'zotero', 2: 'jurism', 3: 'zotero', 4: None}[job]
+
+    if job == 3:
+      print('Installing Zotero beta')
+      urlretrieve('https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', 'client.tar.bz2')
+
+      target = '/usr/lib/zotero'
+      if os.path.exists(target): shutil.rmtree(target)
+      os.mkdir(target)
+
+      tar = tarfile.open('client.tar.bz2')
+      for member in tar.getmembers():
+        if not member.isreg(): continue
+        member.name = re.sub(r'^.+?\/', '', member.name) # strip leading directory
+
+        if member.name in ['zotero.desktop', 'jurism.desktop', 'active-update.xml', 'precomplete', 'removed-files', 'updates', 'updates.xml']:
+          continue
+
+        tar.extract(member, target)
+      tar.close()
+
+  else: # run regular tests
+    client = {1: 'zotero', 2: 'zotero', 3: 'jurism', 4: 'jurism'}[job]
+    tags = '@test-cluster-1'
+    if job in [2, 4]: tags = f'~{tags}'
+    sys.argv.extend(['--tags', tags])
+
+  if client is None: sys.exit(0)
+  sys.argv.extend(['--define', f'client={client}'])
+
+else:
+  ## stop on first error by default
+  if not args.no_stop: sys.argv.append('--stop')
+
+  if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
+
+  # build before test unless on CI
   process = subprocess.Popen(['npm', 'run', 'build'], stdout=subprocess.PIPE)
   while True:
     line = process.stdout.readline()
@@ -35,22 +87,6 @@ if not 'CI' in os.environ:
   if returncode != 0:
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
-
-# augment command line
-## stop on first error by default
-if not args.no_stop and 'CI' not in os.environ:
-  sys.argv.append('--stop')
-
-## exclude @nightly by default
-nightly = any([
-  args.nightly,                                               # requested explicitly from the command line
-  '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
-  os.environ.get('TRAVIS_TAG', '') != '',                     # running a release build
-  os.environ.get('TRAVIS_EVENT_TYPE', '') == 'cron',          # running the nightly build
-])
-if not nightly: sys.argv.extend(['--tags', '~@nightly'])
-
-if args.jurism: sys.argv.extend(['--define', f'client=jurism'])
 
 print(' '.join(sys.argv))
 
