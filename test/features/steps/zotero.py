@@ -99,6 +99,7 @@ class Zotero:
     assert not running('Zotero'), 'Zotero is running'
 
     self.client = userdata.get('client', 'zotero')
+    self.beta = userdata.get('beta') == 'true'
     self.password = str(uuid.uuid4())
 
     self.config = Config(userdata)
@@ -387,9 +388,11 @@ class Zotero:
     }[platform.system()]
     os.makedirs(profile.profiles, exist_ok = True)
 
+    beta = ''
+    if self.beta: beta = '-beta'
     profile.binary = {
-      'Linux': f'/usr/lib/{self.client}/{self.client}',
-      'Darwin': f'/Applications/{self.client.title()}.app/Contents/MacOS/{self.client}',
+      'Linux': f'/usr/lib/{self.client}{beta}/{self.client}',
+      'Darwin': f'/Applications/{self.client.title()}{beta}.app/Contents/MacOS/{self.client}',
     }[platform.system()]
 
     # create profile
