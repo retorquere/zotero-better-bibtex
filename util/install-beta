@@ -4,6 +4,7 @@ import tarfile
 import os
 import sys
 import shutil
+from urllib.request import urlretrieve
 
 if not 'CI' in os.environ: sys.exit(0)
 if os.environ.get('CLIENT') != 'zotero': sys.exit(0)
