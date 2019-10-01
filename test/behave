@@ -39,12 +39,14 @@ if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if 'CI' in os.environ: # set up for CI
   print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'])
-  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1])
+  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 5 # 1 is build job, 2 - 5 is test jobs
 
   if nightly:
-    client =  {1: 'zotero', 2: 'jurism', 3: 'zotero', 4: None}[job]
+    client =  ['zotero',  'jurism', 'zotero', None][job]
+    beta =    [False,     False,    True,     False][job]
+    if client is None: sys.exit(0)
 
-    if job == 3:
+    if beta:
       print('Installing Zotero beta')
       urlretrieve('https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', 'client.tar.bz2')
 
@@ -64,12 +66,11 @@ if 'CI' in os.environ: # set up for CI
       tar.close()
 
   else: # run regular tests
-    client = {1: 'zotero', 2: 'zotero', 3: 'jurism', 4: 'jurism'}[job]
+    client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
     tags = '@test-cluster-1'
-    if job in [2, 4]: tags = f'~{tags}'
+    if job in [1, 3]: tags = f'~{tags}'
     sys.argv.extend(['--tags', tags])
 
-  if client is None: sys.exit(0)
   sys.argv.extend(['--define', f'client={client}'])
 
 else:
