@@ -42,12 +42,13 @@ if 'CI' in os.environ: # set up for CI
   job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 2 # 1 is build job, 2 - 5 is test jobs
   print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'], 'test job number:', job)
 
-  if nightly:
+  if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
     client =    ['zotero',  'jurism', 'zotero', None][job]
-    args.beta = [False,     False,    True,     False][job]
+    args.beta = [False,     False,    True,     None][job]
+
     if client is None: sys.exit(0)
 
-    if beta:
+    if args.beta:
       print('Installing Zotero beta')
       installdir = '/usr/lib/zotero-beta'
       tarball = 'client.tar.bz2'
@@ -65,9 +66,7 @@ if 'CI' in os.environ: # set up for CI
 
   sys.argv.extend(['--define', f'client={client}'])
 
-if args.beta: sys.argv.extend(['--define', f'beta=true'])
-
-else:
+else: # local client run
   ## stop on first error by default
   if not args.no_stop: sys.argv.append('--stop')
 
@@ -83,6 +82,8 @@ else:
   if returncode != 0:
     print(f'Build exited with exit code {returncode}')
     sys.exit(returncode)
+
+if args.beta: sys.argv.extend(['--define', f'beta=true'])
 
 print(' '.join(sys.argv))
 
