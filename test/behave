@@ -38,6 +38,7 @@ nightly = any([
 if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if 'CI' in os.environ: # set up for CI
+  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'])
   job = int(os.environ['TRAVIS_JOB_NUMBER'][-1])
 
   if nightly:
