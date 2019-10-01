@@ -48,22 +48,13 @@ if 'CI' in os.environ: # set up for CI
 
     if beta:
       print('Installing Zotero beta')
-      urlretrieve('https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', 'client.tar.bz2')
+      installdir = '/usr/lib/zotero'
+      tarball = 'client.tar.bz2'
+      urlretrieve('https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', tarball)
 
-      target = '/usr/lib/zotero'
-      if os.path.exists(target): shutil.rmtree(target)
-      os.mkdir(target)
-
-      tar = tarfile.open('client.tar.bz2')
-      for member in tar.getmembers():
-        if not member.isreg(): continue
-        member.name = re.sub(r'^.+?\/', '', member.name) # strip leading directory
-
-        if member.name in ['zotero.desktop', 'jurism.desktop', 'active-update.xml', 'precomplete', 'removed-files', 'updates', 'updates.xml']:
-          continue
-
-        tar.extract(member, target)
-      tar.close()
+      os.system(f'sudo rm -rf {installdir}')
+      os.system(f'sudo mkdir {installdir}')
+      os.system(f'sudo tar -xf {tarball} --strip-components=1 -C {installdir}')
 
   else: # run regular tests
     client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
