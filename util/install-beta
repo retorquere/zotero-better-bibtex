@@ -4,6 +4,7 @@ import tarfile
 import os
 import sys
 import shutil
+import re
 from urllib.request import urlretrieve
 
 if not 'CI' in os.environ: sys.exit(0)
