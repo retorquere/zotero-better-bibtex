@@ -29,6 +29,7 @@ before_install:
   - travis_retry sudo apt-get install $CLIENT
   - travis_retry sudo ./util/install-beta
 script:
+  - set | grep TRAVIS_
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave --define client=$CLIENT
 
