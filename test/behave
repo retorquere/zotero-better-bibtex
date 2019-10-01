@@ -38,8 +38,8 @@ nightly = any([
 if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if 'CI' in os.environ: # set up for CI
-  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'])
-  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 5 # 1 is build job, 2 - 5 is test jobs
+  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 2 # 1 is build job, 2 - 5 is test jobs
+  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'], 'test job number:', job)
 
   if nightly:
     client =  ['zotero',  'jurism', 'zotero', None][job]
