@@ -33,7 +33,7 @@ script:
 
 after_failure:
   - ./util/build-assets pop
-  - export transfersh=$(curl --upload-file "@$HOME/.BBTZ5TEST.log" https://transfer.sh/BBTZ5TEST.txt) && echo $transfersh
+  - export transfersh=$(curl --upload-file "$HOME/.BBTZ5TEST.log" https://transfer.sh/BBTZ5TEST.txt) && echo $transfersh
 
 stages:
   - build
