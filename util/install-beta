@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ "$OSTYPE" != "linux-gnu" ]]; then
+  echo "Cannot install beta on $OSTYPE"
+  exit 1
+fi
+
+if [[ "$1" == "zotero" ]]; then
+  rm -rf /usr/lib/zotero-beta
+  mkdir /usr/lib/zotero-beta
+  curl -L 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta' -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
+
+elif [[ "$1" == "jurism" ]]; then
+  rm -rf /usr/lib/jurism-beta
+  mkdir /usr/lib/jurism-beta
+  curl -L 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=beta&platform=linux-x86_64' -o - | tar -xjf - --strip-components=1 -C /usr/lib/jurism-beta
+
+else
+  echo "No install target"
+  exit 1
+fi

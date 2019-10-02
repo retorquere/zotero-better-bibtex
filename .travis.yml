@@ -24,16 +24,17 @@ cache:
 before_install:
   - python3 -c 'import os,sys; os.set_blocking(sys.stdout.fileno(), True)'
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
-  - ./util/site-update || curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
-  - ./util/site-update || travis_retry sudo apt-get update
-  - ./util/site-update || travis_retry sudo apt-get install $CLIENT
+  - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
+  - travis_retry sudo apt-get update
+  - travis_retry sudo apt-get install $CLIENT
+  - travis_retry sudo ./util/install-beta $CLIENT
 script:
-  - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
-  - ./util/site-update || ./test/behave --define client=$CLIENT --tags $TAGS
+  - ./util/build-assets fetch || travis_terminate 1
+  - ./test/behave
 
 after_failure:
   - ./util/build-assets pop
-  - export fileio=$(curl -F "file=@$HOME/.BBTZ5TEST.log" https://file.io) && echo $fileio
+  - export transfersh=$(curl --upload-file "$HOME/.BBTZ5TEST.log" https://transfer.sh/BBTZ5TEST.txt) && echo $transfersh
 
 stages:
   - build
@@ -52,30 +53,26 @@ jobs:
   - stage: test
     env:
     - CLIENT=zotero
-    - TAGS="@test-cluster-1"
-
+    - JOB=1
   - stage: test
     env:
     - CLIENT=zotero
-    - TAGS="~@test-cluster-1"
-
+    - JOB=2
   - stage: test
     env:
     - CLIENT=jurism
-    - TAGS="@test-cluster-1"
-
+    - JOB=1
   - stage: test
     env:
     - CLIENT=jurism
-    - TAGS="~@test-cluster-1"
-
+    - JOB=2
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
     before_install: true
     script:
-      - ./util/site-update || ./util/build-assets fetch || travis_terminate 1
-      - ./util/site-update || npm run release
+      - ./util/build-assets fetch || travis_terminate 1
+      - npm run release
     before_deploy:
       - travis_retry sudo snap install hugo --channel=extended
       - npm run docs:deploy
