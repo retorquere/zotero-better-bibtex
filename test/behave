@@ -40,21 +40,17 @@ if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if 'CI' in os.environ: # set up for CI
   job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 2 # 1 is build job, 2 - 5 is test jobs
-  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'], 'test job number:', job)
+  oddjob = (job % 2) == 1
+  client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
+  sys.argv.extend(['--define', f'client={client}'])
+
+  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'], 'test job number:', job, 'client:', client)
 
   if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
-    client =    ['zotero',  'jurism', 'zotero', None][job]
-    args.beta = [False,     False,    True,     None][job]
-
-    if client is None: sys.exit(0)
+    args.beta = oddjob
 
   else: # run regular tests
-    client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
-    tags = '@test-cluster-1'
-    if job in [1, 3]: tags = f'~{tags}'
-    sys.argv.extend(['--tags', tags])
-
-  sys.argv.extend(['--define', f'client={client}'])
+    sys.argv.extend(['--tags', f'{"~" if oddjob else ""}@test-cluster-1'])
 
 else: # local client run
   ## stop on first error by default
