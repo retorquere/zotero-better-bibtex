@@ -39,12 +39,8 @@ nightly = any([
 if not nightly: sys.argv.extend(['--tags', '~@nightly'])
 
 if 'CI' in os.environ: # set up for CI
-  job = int(os.environ['TRAVIS_JOB_NUMBER'][-1]) - 2 # 1 is build job, 2 - 5 is test jobs
-  oddjob = (job % 2) == 1
-  client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
-  sys.argv.extend(['--define', f'client={client}'])
-
-  print('TRAVIS_JOB_NUMBER=', os.environ['TRAVIS_JOB_NUMBER'], 'test job number:', job, 'client:', client)
+  sys.argv.extend(['--define', f'client={os.environ["CLIENT"]}'])
+  oddjob = (os.environ['JOB'] == '2')
 
   if nightly and os.environ.get('TRAVIS_TAG', '') == '': # don't run beta on tagged builds
     args.beta = oddjob

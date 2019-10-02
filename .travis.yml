@@ -26,8 +26,8 @@ before_install:
   - python3 -c 'import os,sys,fcntl; flags = fcntl.fcntl(sys.stdout, fcntl.F_GETFL); print("blocking:", flags&os.O_NONBLOCK == 0);'
   - curl -sL https://github.com/retorquere/zotero-deb/releases/download/apt-get/install.sh | sudo bash
   - travis_retry sudo apt-get update
-  - travis_retry sudo apt-get install zotero jurism
-  - travis_retry sudo ./util/install-beta
+  - travis_retry sudo apt-get install $CLIENT
+  - travis_retry sudo ./util/install-beta $CLIENT
 script:
   - ./util/build-assets fetch || travis_terminate 1
   - ./test/behave
@@ -51,9 +51,21 @@ jobs:
       - travis_retry ./util/build-assets stash
 
   - stage: test
+    env:
+    - CLIENT=zotero
+    - JOB=1
   - stage: test
+    env:
+    - CLIENT=zotero
+    - JOB=2
   - stage: test
+    env:
+    - CLIENT=jurism
+    - JOB=1
   - stage: test
+    env:
+    - CLIENT=jurism
+    - JOB=2
 
   - stage: release
     if: env(TRAVIS_EVENT_TYPE) != cron AND env(TRAVIS_EVENT_TYPE) != pull_request
