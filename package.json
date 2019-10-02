@@ -69,7 +69,7 @@
     "issn": "^1.0.5",
     "js-yaml": "^3.13.1",
     "json-stringify-safe": "^5.0.1",
-    "json5": "^2.1.0",
+    "json5": "^2.1.1",
     "kuromoji": "^0.1.2",
     "kuroshiro": "^1.1.2",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
@@ -89,7 +89,7 @@
     "zotero-plugin": "^0.0.89"
   },
   "devDependencies": {
-    "@types/node": "^12.7.8",
+    "@types/node": "^12.7.9",
     "@types/webpack": "^4.39.2",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.0",
