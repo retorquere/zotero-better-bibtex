@@ -48,16 +48,6 @@ if 'CI' in os.environ: # set up for CI
 
     if client is None: sys.exit(0)
 
-    if args.beta:
-      print('Installing Zotero beta')
-      installdir = '/usr/lib/zotero-beta'
-      tarball = 'client.tar.bz2'
-      urlretrieve('https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta', tarball)
-
-      os.system(f'sudo rm -rf {installdir}')
-      os.system(f'sudo mkdir {installdir}')
-      os.system(f'sudo tar -xf {tarball} --strip-components=1 -C {installdir}')
-
   else: # run regular tests
     client =  ['zotero',  'zotero', 'jurism', 'jurism'][job]
     tags = '@test-cluster-1'
