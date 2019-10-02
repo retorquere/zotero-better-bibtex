@@ -295,7 +295,7 @@ export class Reference {
 
     try {
       postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
-      Reference.prototype.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => boolean
+      Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
       debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
       if (Translator.preferences.testing) throw err
@@ -754,7 +754,7 @@ export class Reference {
 
     let cache
     try {
-      cache = this.postscript(this, this.item)
+      cache = this.postscript(this, this.item, Translator, Zotero)
     } catch (err) {
       if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
       debug('Reference.postscript failed:', err)
@@ -1156,7 +1156,7 @@ export class Reference {
     return latex
   }
 
-  private postscript(reference, item) {} // tslint:disable-line:no-empty
+  private postscript(_reference, _item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   private toVerbatim(text) {
     text = text || ''
