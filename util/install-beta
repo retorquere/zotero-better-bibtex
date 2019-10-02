@@ -7,4 +7,4 @@ fi
 
 rm -rf /usr/lib/zotero-beta
 mkdir /usr/lib/zotero-beta
-curl -L 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta' -s -o - | tar -xf - --strip-components=1 -C /usr/lib/zotero-beta
+curl -L 'https://www.zotero.org/download/standalone/dl?platform=linux-x86_64&channel=beta' -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
