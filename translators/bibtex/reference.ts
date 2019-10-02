@@ -295,6 +295,7 @@ export class Reference {
 
     try {
       postscript = `this.inPostscript = true; ${postscript}; this.inPostscript = false;`
+      // workaround for https://github.com/Juris-M/zotero/issues/65
       Reference.prototype.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => boolean
       debug(`Installed postscript: ${JSON.stringify(postscript)}`)
     } catch (err) {
