@@ -71,7 +71,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
     if (typeof postscript === 'string' && postscript.trim() !== '') {
       try {
-        this.postscript = new Function('reference', 'item', postscript) as (reference: any, item: any) => void
+        this.postscript = new Function('reference', 'item', 'Translator', 'Zotero', postscript) as (reference: any, item: any) => void
         debug(`Installed postscript: ${JSON.stringify(postscript)}`)
       } catch (err) {
         if (Translator.preferences.testing) throw err
@@ -79,7 +79,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
     }
   }
-  public postscript(reference, item) {} // tslint:disable-line:no-empty
+  public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   public doExport() {
     let items = []
@@ -186,7 +186,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       let cache
       try {
-        cache = this.postscript(csl, item)
+        cache = this.postscript(csl, item, Translator, Zotero)
       } catch (err) {
         if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
         cache = false
