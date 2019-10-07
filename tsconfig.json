@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowUnreachableCode": false,
     "noUnusedLocals": true,
     "noUnusedParameters": false,
     "importHelpers": true,

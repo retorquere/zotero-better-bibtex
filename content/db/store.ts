@@ -293,7 +293,6 @@ export class Store {
         case 1: // reset
           if (await OS.File.exists(path)) await OS.File.move(path, `${path}.ignore.corrupt`)
           return await this.openDatabaseSQLiteAsync(name, true)
-          break
 
         default: // restore
           if (await OS.File.exists(path)) await OS.File.move(path, `${path}.is.corrupt`)
