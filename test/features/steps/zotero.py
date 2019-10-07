@@ -126,6 +126,8 @@ class Zotero:
     if userdata.get('kill', 'true') == 'true':
       atexit.register(self.shutdown)
 
+    self.testing = userdata.get('testing', 'true') == 'true'
+
     self.preferences = Preferences(self)
     self.redir = '>'
     self.start()
@@ -217,10 +219,10 @@ class Zotero:
 
             Zotero.debug('{better-bibtex:debug bridge}: startup: waiting for BetterBibTeX ready...')
             await Zotero.BetterBibTeX.ready;
-            if (!Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
+            if (testing && !Zotero.Prefs.get('translators.better-bibtex.testing')) throw new Error('translators.better-bibtex.testing not set!')
             Zotero.debug('{better-bibtex:debug bridge}: startup: BetterBibTeX ready!');
             return true;
-          """)
+          """, testing = self.testing)
           if ready: break
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
@@ -431,7 +433,7 @@ class Zotero:
     for xpi in glob.glob(os.path.join(ROOT, 'xpi/*.xpi')):
       profile.firefox.add_extension(xpi)
 
-    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', True)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')

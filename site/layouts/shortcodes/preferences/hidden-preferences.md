@@ -127,6 +127,12 @@ When a unicode character can be exported as either a math-mode or text-mode comm
 * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
 * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
 
+#### newTranslatorsAskRestart
+
+default: `yes`
+
+New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it's more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Don't ask again" in that dialog.
+
 #### parseParticles
 
 default: `yes`

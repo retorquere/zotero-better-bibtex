@@ -43,20 +43,34 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     if (reinit) {
-      if (!Prefs.testing) {
+      let restart = false
+      if (Prefs.get('newTranslatorsAskRestart') && !Prefs.testing) {
+        const dontAskAgain = { value: false }
         const ps = Services.prompt
         const index = ps.confirmEx(
           null, // parent
           Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new'), // dialogTitle
           Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.DnD'), // text
-          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT, // button flags
-          Zotero.getString('general.restartNow'), Zotero.getString('general.restartLater'), null, // button messages
-          null, // check message
-          {} // check state
+
+          // button flags
+          ps.BUTTON_POS_0 * ps.BUTTON_TITLE_IS_STRING + ps.BUTTON_POS_0_DEFAULT
+            + ps.BUTTON_POS_1 * ps.BUTTON_TITLE_IS_STRING,
+
+          // button messages
+          Zotero.getString('general.restartNow'),
+          Zotero.getString('general.restartLater'),
+          null,
+
+          Zotero.BetterBibTeX.getString('BetterBibTeX.startup.installingTranslators.new.dontAskAgain'), // check message
+          dontAskAgain // check state
         )
 
-        if (index === 0) Zotero.Utilities.Internal.quit(true)
+        Prefs.set('newTranslatorsAskRestart', !dontAskAgain.value)
+
+        restart = (index === 0)
       }
+
+      if (restart) Zotero.Utilities.Internal.quit(true)
 
       try {
         await Zotero.Translators.reinit()
