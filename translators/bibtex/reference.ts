@@ -792,11 +792,7 @@ export class Reference {
     this.metadata.packages = Object.keys(this.packages)
     if (Translator.caching && this.cachable) Zotero.BetterBibTeX.cacheStore(this.item.itemID, Translator.options, Translator.preferences, ref, this.metadata)
 
-    if (this.metadata.DeclarePrefChars) Exporter.preamble.DeclarePrefChars += this.metadata.DeclarePrefChars
-    if (this.metadata.noopsort) Exporter.preamble.noopsort = true
-    for (const pkg of this.metadata.packages) {
-      Exporter.packages[pkg] = true
-    }
+    Exporter.postfix.add(this)
   }
 
   /*
