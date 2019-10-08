@@ -50,7 +50,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.72",
+    "@retorquere/bibtex-parser": "^1.0.74",
     "@types/lokijs": "^1.5.2",
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
@@ -79,17 +79,17 @@
     "pegjs": "^0.10.0",
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
-    "recast": "^0.18.2",
+    "recast": "^0.18.3",
     "string-template": "^1.0.0",
     "transliteration": "^2.1.7",
     "tslint": "^5.20.0",
-    "unicode2latex": "^1.0.22",
+    "unicode2latex": "^1.0.23",
     "webpack-cli": "^3.3.9",
     "xregexp": "^4.2.4",
-    "zotero-plugin": "^0.0.89"
+    "zotero-plugin": "^0.0.91"
   },
   "devDependencies": {
-    "@types/node": "^12.7.9",
+    "@types/node": "^12.7.11",
     "@types/webpack": "^4.39.2",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.0",
