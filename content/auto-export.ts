@@ -210,6 +210,7 @@ const queue = new class {
 
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)
+    log.debug('AutoExport.queue.run: starting', ae)
 
     ae.status = 'running'
     this.autoexports.update(ae)
