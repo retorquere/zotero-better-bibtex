@@ -5,19 +5,17 @@ declare const Zotero: any
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/itemfields'
 import * as bibtexParser from '@retorquere/bibtex-parser'
+import { Postfix } from '../bibtex/postfix.ts'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
-  public preamble: { DeclarePrefChars: string, noopsort?: boolean }
-  public packages: { [key: string]: boolean }
+  public postfix: Postfix
   public jabref: JabRef
   public strings: {[key: string]: string}
 
   constructor() {
-    this.preamble = {DeclarePrefChars: ''}
     this.jabref = new JabRef()
     this.strings = {}
-    this.packages = {}
   }
 
   public prepare_strings() {
@@ -43,6 +41,8 @@ export let Exporter = new class { // tslint:disable-line:variable-name
   }
 
   public nextItem(): ISerializedItem {
+    this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
+
     let item
     while (item = Zotero.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
@@ -64,15 +64,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
           Zotero.write(cached.reference)
         }
 
-        if (cached.metadata) {
-          if (cached.metadata.DeclarePrefChars) this.preamble.DeclarePrefChars += cached.metadata.DeclarePrefChars
-          if (cached.metadata.noopsort) this.preamble.noopsort = true
-          if (cached.metadata.packages) {
-            for (const pkg of cached.metadata.packages) {
-              this.packages[pkg] = true
-            }
-          }
-        }
+        this.postfix.add(cached)
         continue
       }
 
@@ -103,20 +95,6 @@ export let Exporter = new class { // tslint:disable-line:variable-name
 
     this.jabref.exportGroups()
 
-    let preamble = []
-    if (this.preamble.DeclarePrefChars) preamble.push("\\ifdefined\\DeclarePrefChars\\DeclarePrefChars{'’-}\\else\\fi")
-    if (this.preamble.noopsort) preamble.push('\\newcommand{\\noopsort}[1]{}')
-    if (preamble.length > 0) {
-      preamble = preamble.map(cmd => `"${cmd} "`)
-      Zotero.write(`@preamble{ ${preamble.join(' \n # ')} }\n`)
-    }
-
-    if (Translator.preferences.qualityReport) {
-      const packages = Object.keys(this.packages)
-      if (packages.length) Zotero.write('\n%Required packages:\n')
-      for (const pkg of packages) {
-        Zotero.write(`% * ${pkg}\n`)
-      }
-    }
+    Zotero.write(this.postfix.toString())
   }
 }

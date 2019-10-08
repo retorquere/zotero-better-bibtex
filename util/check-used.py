@@ -17,7 +17,7 @@ for root in ['content', 'translators']:
   for (dirpath, dirnames, filenames) in os.walk(root):
     if dirpath == 'content/minitests':
       continue
-    sources += [os.path.join(dirpath, filename) for filename in filenames if not filename.endswith('.xul')]
+    sources += [os.path.join(dirpath, filename) for filename in filenames if os.path.splitext(filename)[1] not in ['.xul', '.swp']]
 
 unused = [src for src in sources if not src in used]
 
