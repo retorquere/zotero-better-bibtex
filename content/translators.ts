@@ -139,6 +139,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
     log.debug(':cache:prime:', uncached.length)
     while (uncached.length) {
+      log.debug(':cache:prime:remaining', uncached.length)
       const _batch = uncached.splice(0, batch)
 
       await this.exportItems(translatorID, displayOptions, { items: _batch })
