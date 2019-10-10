@@ -8,7 +8,7 @@ fi
 if [[ "$1" == "zotero" ]]; then
   rm -rf /usr/lib/zotero-beta
   mkdir /usr/lib/zotero-beta
-  curl -L 'https://www.zotero.org/download/client/dl?channel=dev&platform=linux' -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
+  curl -L 'https://www.zotero.org/download/client/dl?channel=dev&platform=linux-x86_64' -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
 
 elif [[ "$1" == "jurism" ]]; then
   rm -rf /usr/lib/jurism-beta
