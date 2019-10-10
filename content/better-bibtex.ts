@@ -682,9 +682,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await Promise.all([Cache.init(), DB.init()])
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
-    await AutoExport.init()
-
     progress.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB
 
@@ -701,6 +698,9 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
+
+    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
+    await AutoExport.init()
 
     // should be safe to start tests at this point. I hate async.
 
