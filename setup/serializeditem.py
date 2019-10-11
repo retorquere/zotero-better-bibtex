@@ -260,8 +260,11 @@ export function simplifyForImport(item) {
         delete creator.firstName
         delete creator.name
       }
+      if (!jurism) delete creator.multi
     }
   }
+
+  if (!jurism) delete item.multi
 
   return item
 }
