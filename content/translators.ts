@@ -6,6 +6,7 @@ import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
 import { timeout } from './timeout'
+const fold = require('./fold.json')
 
 const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
 
@@ -137,7 +138,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
     const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
-    log.debug(':cache:prime:{{{', uncached.length)
+    log.debug(fold.start, ':cache:prime:', uncached.length)
     while (uncached.length) {
       log.debug(':cache:prime:remaining', uncached.length)
       const _batch = uncached.splice(0, batch)
@@ -147,7 +148,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       // give the UI a chance
       await timeout(delay)
     }
-    log.debug(':cache:prime:done}}}')
+    log.debug(':cache:prime:done', fold.end)
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {

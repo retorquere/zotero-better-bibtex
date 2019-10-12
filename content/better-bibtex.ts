@@ -14,6 +14,8 @@ import { flash } from './flash'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
+const fold = require('./fold.json')
+log.debug(`vim: foldmethod=marker:foldlevel=0:foldmarker=${fold.start},${fold.end}:`)
 log.debug('Loading Better BibTeX')
 
 import { Translators } from './translators'
@@ -510,7 +512,7 @@ class Progress {
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    log.debug(`${this.name}: ${msg}...`)
+    log.debug(fold.start, `${this.name}: ${msg}...`)
     this.toggle(true)
     log.debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
@@ -530,7 +532,7 @@ class Progress {
     this.bench(null)
 
     this.toggle(false)
-    log.debug(`${this.name}: done`)
+    log.debug(`${this.name}: done`, fold.end)
   }
 
   private bench(msg) {
