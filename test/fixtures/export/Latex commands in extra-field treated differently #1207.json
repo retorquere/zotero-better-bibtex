@@ -109,7 +109,7 @@
       "dateAdded": "2019-06-20T10:17:56Z",
       "dateModified": "2019-06-20T10:18:40Z",
       "edition": "1",
-      "extra": "Citation Key: LiuHuaChun2018_HulianwangJinrongJianguan\nbiblatex{\n  publisher: \"Liu, \\\\chsf{\u5218\u534e\u6625}, Hua\\\\-chun\",\n  author: \"Xu, \\\\chsf{}, Duo\\\\-qi\"\n}",
+      "extra": "Citation Key: LiuHuaChun2018_HulianwangJinrongJianguan\nbiblatex{\n  publisher: \"Liu, \\\\chsf{\u5218\u534e\u6625}, Hua\\\\-chun\"\n,  author: \"Xu, \\\\chsf{}, Duo\\\\-qi\"\n}",
       "itemID": 218,
       "itemType": "book",
       "language": "Chinese",
