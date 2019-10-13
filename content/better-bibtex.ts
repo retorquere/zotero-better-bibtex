@@ -414,6 +414,8 @@ notify('item-tag', (action, type, ids, extraData) => {
 })
 
 notify('item', (action, type, ids, extraData) => {
+  log.debug('notify.item', { action, type, ids, extraData })
+
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)

@@ -139,14 +139,21 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
     const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
     log.debug(fold.start, ':cache:prime:', uncached.length)
+
     while (uncached.length) {
       log.debug(':cache:prime:remaining', uncached.length)
+
+      const debugEnabled = Zotero.Debug.enabled
+      Zotero.Debug.enabled = false
+
       const _batch = uncached.splice(0, batch)
 
       await this.exportItems(translatorID, displayOptions, { items: _batch })
 
       // give the UI a chance
       await timeout(delay)
+
+      Zotero.Debug.enabled = debugEnabled
     }
     log.debug(':cache:prime:done', fold.end)
   }
