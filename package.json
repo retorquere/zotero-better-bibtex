@@ -89,8 +89,8 @@
     "zotero-plugin": "^0.0.91"
   },
   "devDependencies": {
-    "@types/node": "^12.7.11",
-    "@types/webpack": "^4.39.2",
+    "@types/node": "^12.7.12",
+    "@types/webpack": "^4.39.3",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.0",
     "circular-dependency-plugin": "^5.2.0",
@@ -118,9 +118,9 @@
     "ts-loader": "^6.2.0",
     "ts-node": "^8.4.1",
     "typedoc": "^0.15.0",
-    "typescript": "^3.6.3",
+    "typescript": "^3.6.4",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.41.0",
+    "webpack": "^4.41.1",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
     "xmldom": "^0.1.27",
