@@ -6,14 +6,18 @@ if [[ "$OSTYPE" != "linux-gnu" ]]; then
 fi
 
 if [[ "$1" == "zotero" ]]; then
+  CHANNEL=beta
+  if [[ "$TRAVIS_BRANCH" == "zotero-dev" ]]; then
+    CHANNEL=dev
+  fi
   rm -rf /usr/lib/zotero-beta
   mkdir /usr/lib/zotero-beta
-  curl -L 'https://www.zotero.org/download/client/dl?channel=dev&platform=linux-x86_64' -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
+  curl -L "https://www.zotero.org/download/client/dl?channel=$CHANNEL&platform=linux-x86_64" -o - | tar -xjf - --strip-components=1 -C /usr/lib/zotero-beta
 
 elif [[ "$1" == "jurism" ]]; then
   rm -rf /usr/lib/jurism-beta
   mkdir /usr/lib/jurism-beta
-  curl -L 'https://our.law.nagoya-u.ac.jp/jurism/dl?channel=beta&platform=linux-x86_64' -o - | tar -xjf - --strip-components=1 -C /usr/lib/jurism-beta
+  curl -L "https://our.law.nagoya-u.ac.jp/jurism/dl?channel=beta&platform=linux-x86_64" -o - | tar -xjf - --strip-components=1 -C /usr/lib/jurism-beta
 
 else
   echo "No install target"
