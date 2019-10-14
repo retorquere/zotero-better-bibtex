@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -x
+
 if [[ "$OSTYPE" != "linux-gnu" ]]; then
   echo "Cannot install beta on $OSTYPE"
   exit 1
