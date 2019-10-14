@@ -18,17 +18,19 @@ export async function upgrade() {
       AND (itemDataValues.value like ? OR itemDataValues.value like ?)
   `
 
-  for (const _item of await queryAsync(query, ['%biblatex%', '%bibtex%'])) {
-    const item = Zotero.Items.get(_item.itemID)
-    const extra = {
-      before: item.getField('extra') || '',
-      after: upgradeExtra(item.getField('extra') || ''),
-    }
-    log.debug('upgrade', _item.itemID, extra)
+  await Zotero.DB.executeTransaction(async () => {
+    for (const _item of await queryAsync(query, ['%biblatex%', '%bibtex%'])) {
+      const item = Zotero.Items.get(_item.itemID)
+      const extra = {
+        before: item.getField('extra') || '',
+        after: upgradeExtra(item.getField('extra') || ''),
+      }
+      log.debug('upgrade', _item.itemID, extra)
 
-    if (extra.before !== extra.after) {
-      item.setField('extra', extra.after)
-      await item.saveTx()
+      if (extra.before !== extra.after) {
+        item.setField('extra', extra.after)
+        await item.save()
+      }
     }
-  }
+  })
 }
