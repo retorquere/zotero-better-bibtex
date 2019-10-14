@@ -18,7 +18,7 @@
     {
       "attachments": [],
       "date": "2014",
-      "extra": "bibtex: \nbiblatexdata[ptolemaeus:14:systemdesigneditor=Claudius Ptolemaeus]",
+      "extra": "Citation Key: \ntex.ptolemaeus-14-systemdesigneditor= Claudius Ptolemaeus",
       "itemType": "book",
       "publisher": "Ptolemy.org",
       "title": "System design, modeling, and simulation using Ptolemy II",

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,55 +60,61 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "conferencePaper",
-      "pages": "25-30",
-      "date": "2010",
-      "extra": "svm liniowe najlepsze \nCitation Key: Klassen2010 \nbibtex*[bibsource=DBLP, http://dblp.uni-trier.de;crossref=DBLP:conf/cata/2010;owner=sstudent;timestamp=2011.03.22]",
-      "title": "Empirical study of support vector machine kernels with applications to microarray data",
+      "attachments": [],
+      "citationKey": "Klassen2010",
+      "citekey": "Klassen2010",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Myungsook",
-          "lastName": "Klassen",
-          "creatorType": "author"
+          "lastName": "Klassen"
         },
         {
+          "creatorType": "author",
           "firstName": "Nyunsu",
-          "lastName": "Kim",
-          "creatorType": "author"
+          "lastName": "Kim"
         },
         {
+          "creatorType": "author",
           "firstName": "Wei Ming",
-          "lastName": "Liu",
-          "creatorType": "author"
+          "lastName": "Liu"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "2010",
       "dateAdded": "2019-08-21T08:27:41Z",
       "dateModified": "2019-08-21T08:27:41Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QISZQFT9",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: Klassen2010\ntex.bibsource: DBLP, http://dblp.uni-trier.de\ntex.crossref: DBLP:conf/cata/2010\ntex.owner: sstudent\ntex.timestamp: 2011.03.22\nsvm liniowe najlepsze",
       "itemID": 310,
+      "itemType": "conferencePaper",
       "key": "QISZQFT9",
-      "citekey": "Klassen2010",
-      "citationKey": "Klassen2010",
       "libraryID": 1,
-      "publicationTitle": "CATA"
+      "notes": [],
+      "pages": "25-30",
+      "publicationTitle": "CATA",
+      "relations": [],
+      "tags": [],
+      "title": "Empirical study of support vector machine kernels with applications to microarray data",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QISZQFT9",
+      "version": 0
     }
   ]
 }

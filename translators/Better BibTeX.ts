@@ -7,7 +7,6 @@ import { Exporter } from './lib/exporter'
 import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
-import JSON5 = require('json5')
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { valid as validFields } from '../gen/itemfields'
 import { arXiv } from '../content/arXiv'
@@ -327,7 +326,6 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[]
   private eprint: { [key: string]: string }
-  private extra: { data: { [key: string]: string }, json: boolean }
   private validFields: Map<string, boolean>
   private numberPrefix: string
   private english = 'English'
@@ -352,7 +350,6 @@ class ZoteroItem {
     } else {
       this.item = new Zotero.Item(this.type)
       this.item.itemID = this.id
-      this.extra = { data: {}, json: false }
 
       this.import()
 
@@ -774,7 +771,7 @@ class ZoteroItem {
             break
 
           default:
-            this.addToExtraData(field, value)
+            this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
             break
         }
       }
@@ -782,7 +779,7 @@ class ZoteroItem {
 
     if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`
 
-    if (this.bibtex.key) this.addToExtra(`Citation Key: ${this.bibtex.key}`) // Endnote has no citation keys in their bibtex
+    if (this.bibtex.key) this.hackyFields.push(`Citation Key: ${this.bibtex.key}`) // Endnote has no citation keys in their bibtex
 
     if (this.eprint.slaccitation && !this.eprint.eprint) {
       const m = this.eprint.slaccitation.match(/^%%CITATION = (.+);%%$/)
@@ -805,30 +802,13 @@ class ZoteroItem {
 
       delete this.eprint.eprintType
       for (const [k, v] of Object.entries(this.eprint)) {
-        this.addToExtraData(k, v)
+        this.hackyFields.push(`tex.${k.toLowerCase()}: ${v}`)
       }
-    }
-
-    const keys = Object.keys(this.extra.data)
-    if (keys.length > 0) {
-      let extraData
-      if (Translator.preferences.testing) keys.sort()
-      if (this.extra.json && Translator.preferences.testing) {
-        extraData = `bibtex*{${keys.map(k => JSON5.stringify({[k]: this.extra.data[k]}).slice(1, -1))}}`
-
-      } else if (this.extra.json) {
-        extraData = `bibtex*${JSON5.stringify(this.extra.data)}`
-
-      } else {
-        extraData = `bibtex*[${keys.map(key => `${key}=${this.extra.data[key]}`).join(';')}]`
-      }
-
-      this.addToExtra(extraData)
     }
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()
-      this.addToExtra(this.hackyFields.join(' \n'))
+      this.item.extra = this.hackyFields.concat(this.item.extra || '').join('\n').trim()
     }
 
     if (!this.item.publisher && this.item.backupPublisher) {
@@ -838,16 +818,11 @@ class ZoteroItem {
   }
 
   private addToExtra(str) {
-    if (this.item.extra && (this.item.extra !== '')) {
-      this.item.extra += ` \n${str}`
+    if (this.item.extra && this.item.extra !== '') {
+      this.item.extra += `\n${str}`
     } else {
       this.item.extra = str
     }
-  }
-
-  private addToExtraData(key, value) {
-    this.extra.data[key] = value
-    if (key.match(/[\[\]=;\r\n]/) || value.match(/[\[\]=;\r\n]/)) this.extra.json = true
   }
 
   private set(field, value) {

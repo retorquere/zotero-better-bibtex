@@ -24,7 +24,7 @@
       "court": "HCA",
       "date": "1998-04-01",
       "dateDecided": "1998-04-01",
-      "extra": "bibtex:kartinyeri\nbibtex{author:\"Kaetinyeri v Commonwealth\",translator:\"Kartinyeri\"\n}",
+      "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
       "firstPage": "337",
       "itemID": 10,
       "itemType": "case",

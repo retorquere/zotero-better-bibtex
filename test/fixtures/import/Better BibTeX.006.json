@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,36 +60,42 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "extra": "Citation Key: test-ticket1661",
-      "title": "non-braking space:  ; accented characters: ñ and ñ; tilde in URL: http://example.com/~user",
-      "creators": [],
-      "tags": [],
+      "attachments": [],
+      "citationKey": "test-ticket1661",
+      "citekey": "test-ticket1661",
       "collections": [],
-      "relations": [],
+      "creators": [],
       "dateAdded": "2019-08-22T20:53:45Z",
       "dateModified": "2019-08-22T20:53:45Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3E3DGN2H",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: test-ticket1661",
       "itemID": 852,
+      "itemType": "journalArticle",
       "key": "3E3DGN2H",
-      "citekey": "test-ticket1661",
-      "citationKey": "test-ticket1661",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "non-braking space:  ; accented characters: \u00f1 and \u00f1; tilde in URL: http://example.com/~user",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3E3DGN2H",
+      "version": 0
     }
   ]
 }

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,81 +60,87 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "conferencePaper",
-      "pages": "330—331",
-      "extra": "Citation Key: author:06 \nbibtex*[crossref=conference:06]",
-      "title": "Some publication title",
+      "attachments": [],
+      "citationKey": "author:06",
+      "citekey": "author:06",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "First",
-          "lastName": "Author",
-          "creatorType": "author"
+          "lastName": "Author"
         },
         {
+          "creatorType": "author",
           "firstName": "Second",
-          "lastName": "Author",
-          "creatorType": "author"
+          "lastName": "Author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
       "dateAdded": "2019-08-22T20:53:43Z",
       "dateModified": "2019-08-22T20:53:43Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YIKS325Q",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: author:06\ntex.crossref: conference:06",
       "itemID": 848,
+      "itemType": "conferencePaper",
       "key": "YIKS325Q",
-      "citekey": "author:06",
-      "citationKey": "author:06",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "pages": "330\u2014331",
+      "relations": [],
+      "tags": [],
+      "title": "Some publication title",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YIKS325Q",
+      "version": 0
     },
     {
-      "version": 0,
-      "itemType": "bookSection",
-      "date": "2006-10",
-      "extra": "Citation Key: conference:06",
-      "title": "Proceedings of the xth conference on XYZ",
+      "attachments": [],
+      "citationKey": "conference:06",
+      "citekey": "conference:06",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "editor",
           "firstName": "First",
-          "lastName": "Editor",
-          "creatorType": "editor"
+          "lastName": "Editor"
         },
         {
+          "creatorType": "editor",
           "firstName": "Second",
-          "lastName": "Editor",
-          "creatorType": "editor"
+          "lastName": "Editor"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "2006-10",
       "dateAdded": "2019-08-22T20:53:43Z",
       "dateModified": "2019-08-22T20:53:43Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MAICCQBU",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: conference:06",
       "itemID": 849,
+      "itemType": "bookSection",
       "key": "MAICCQBU",
-      "citekey": "conference:06",
-      "citationKey": "conference:06",
       "libraryID": 1,
-      "publicationTitle": "Proceedings of the xth conference on XYZ (book)"
+      "notes": [],
+      "publicationTitle": "Proceedings of the xth conference on XYZ (book)",
+      "relations": [],
+      "tags": [],
+      "title": "Proceedings of the xth conference on XYZ",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MAICCQBU",
+      "version": 0
     }
   ]
 }

@@ -19,6 +19,7 @@ log.debug('Loading Better BibTeX')
 import { Translators } from './translators'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
+import { upgrade as dbUpgrade } from './db/zotero'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -682,12 +683,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await Promise.all([Cache.init(), DB.init()])
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
-    await AutoExport.init()
-
-    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
-    await KeyManager.init() // inits the key cache by scanning the DB
-
     deferred.loaded.resolve(true)
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
@@ -702,7 +697,14 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
-    // should be safe to start tests at this point. I hate async.
+    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
+    await AutoExport.init()
+
+    progress.update(this.getString('BetterBibTeX.startup.dbUpgrade'))
+    await dbUpgrade()
+
+    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
+    await KeyManager.init() // inits the key cache by scanning the DB
 
     deferred.ready.resolve(true)
 

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,47 +60,53 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "book",
-      "edition": "1st,",
-      "place": "Palo Alto",
-      "publisher": "Stanford Press",
       "ISBN": "0-69-697269-4",
-      "date": "2001",
-      "extra": "Citation Key: hicks2001",
-      "title": "Design of a carbon fiber composite grid structure for the GLAST spacecraft using a novel manufacturing technique",
+      "attachments": [],
+      "citationKey": "hicks2001",
+      "citekey": "hicks2001",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Michael",
-          "lastName": "von Hicks, III",
-          "creatorType": "author"
+          "lastName": "von Hicks, III"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "2001",
       "dateAdded": "2019-08-20T22:00:54Z",
       "dateModified": "2019-08-20T22:00:54Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U8JTAXFZ",
-      "attachments": [],
-      "notes": [],
+      "edition": "1st,",
+      "extra": "Citation Key: hicks2001",
       "itemID": 303,
+      "itemType": "book",
       "key": "U8JTAXFZ",
-      "citekey": "hicks2001",
-      "citationKey": "hicks2001",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "place": "Palo Alto",
+      "publisher": "Stanford Press",
+      "relations": [],
+      "tags": [],
+      "title": "Design of a carbon fiber composite grid structure for the GLAST spacecraft using a novel manufacturing technique",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U8JTAXFZ",
+      "version": 0
     }
   ]
 }

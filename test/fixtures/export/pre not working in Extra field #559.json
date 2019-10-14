@@ -40,7 +40,7 @@
           "lastName": "Br\u00f8ns"
         }
       ],
-      "extra": "Hello <pre> hej </pre> \nbibtex: Brons:pretest",
+      "extra": "Citation Key: Brons:pretest\nHello <pre> hej </pre>",
       "itemID": 2337,
       "itemType": "journalArticle",
       "title": "<pre>$pretest$</pre>"

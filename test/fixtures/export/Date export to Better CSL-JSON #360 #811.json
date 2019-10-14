@@ -26,7 +26,7 @@
         }
       ],
       "date": "2014-12-31/2015-01-01",
-      "extra": "bibtex: t1\naccessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
+      "extra": "Citation Key: t1\naccessed: 2014-12-31~\noriginal-date: 1777-07-27/1888-08-28\ncontainer: 1777-07-27\nevent-date: 1888-08-28\nsubmitted:1999-09-29/",
       "itemID": 8,
       "itemType": "manuscript",
       "title": "A manuscript: 2014-12-31/2015-01-01"
@@ -39,7 +39,7 @@
           "lastName": "Doe2"
         }
       ],
-      "extra": "bibtex: t2\naccessed: 13th cent\ncontainer: 1700-01-01_1700-12-31\nevent-date: 1800-01-01--1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
+      "extra": "Citation Key: t2\naccessed: 13th cent\ncontainer: 1700-01-01_1700-12-31\nevent-date: 1800-01-01--1800-12-31\nsubmitted: 1900-01-01/1900-12-31",
       "itemID": 12,
       "itemType": "book",
       "title": "container, event-date, and submitted test"
@@ -53,7 +53,7 @@
         }
       ],
       "date": "2014-12-31/",
-      "extra": "bibtex: t3",
+      "extra": "Citation Key: t3",
       "itemID": 11,
       "itemType": "book",
       "title": "open-ended date range test: 2014-12-31/"
@@ -67,7 +67,7 @@
         }
       ],
       "date": "2014-12-31",
-      "extra": "bibtex: t4",
+      "extra": "Citation Key: t4",
       "itemID": 13,
       "itemType": "book",
       "title": "single date test: 2014-12-31"
@@ -81,7 +81,7 @@
         }
       ],
       "date": "-0333",
-      "extra": "bibtex: t5\naccessed: -0332-11-05\noriginal-date: -0333/-0332\ncontainer: -0062-09-23/0014-08-19\nevent-date: 0000\nsubmitted:-0001",
+      "extra": "Citation Key: t5\naccessed: -0332-11-05\noriginal-date: -0333/-0332\ncontainer: -0062-09-23/0014-08-19\nevent-date: 0000\nsubmitted:-0001",
       "itemID": 13,
       "itemType": "book",
       "title": "BC tests: -0333"
@@ -95,7 +95,7 @@
         }
       ],
       "date": "-0099-07-12/-0043-03-15",
-      "extra": "bibtex: t6",
+      "extra": "Citation Key: t6",
       "itemID": 13,
       "itemType": "book",
       "title": "BC tests 2: -0099-07-12/-0043-03-15"

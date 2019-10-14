@@ -48,7 +48,7 @@
         }
       ],
       "date": "2002",
-      "extra": "bibtex[related=key_2;relatedtype=bytranslator]",
+      "extra": "tex.related= key_2\ntex.relatedtype= bytranslator",
       "issue": "6",
       "itemID": 9,
       "itemType": "journalArticle",
