@@ -700,8 +700,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     await AutoExport.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.dbUpgrade'))
-    await dbUpgrade()
+    await dbUpgrade(progress.update.bind(progress))
 
     progress.update(this.getString('BetterBibTeX.startup.keyManager'))
     await KeyManager.init() // inits the key cache by scanning the DB

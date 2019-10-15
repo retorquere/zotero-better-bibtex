@@ -1,33 +1,31 @@
-const citationKey = /(?:^|\s)Citation Key:[^\S\n]*([^\s]*)(?:\s|$)/i
-
-export function get(extra) {
+function extract(extra, re) {
   extra = extra ? `${extra}` : ''
-
   let citekey = ''
-  let pinned = false
-
-  extra = extra.replace(citationKey, (m, _citekey) => {
-    citekey = _citekey
-    pinned = !!citekey
-    return '\n'
-  }).trim()
-
-  return {extra, citekey, pinned}
+  let m
+  extra = extra.split('\n').filter(line => {
+    if (m = line.match(re)) {
+      citekey = m[1]
+      return false
+    }
+    return true
+  }).join('\n')
+  return { extra, citekey, pinned: !!citekey }
 }
 
-export function set(extra, citekey) { return `${get(extra).extra}\nCitation Key: ${citekey}`.trim() }
+const citationKey = /^Citation Key\s*:\s*([^\s]*)\s*$/i
+export function get(extra) {
+  const extracted = extract(extra, citationKey)
 
-const citationKeyAlias = /(?:^|\n)Citation Key Alias:(.*?)(?:\n|$)/i
+  return extracted
+}
+
+export function set(extra, citekey) { return `Citation Key: ${citekey}\n${get(extra).extra}`.trim() }
+
+const citationKeyAlias = /^Citation Key Alias\s*:\s*([^\s]*)\s*$/i
 export const aliases = new class {
   public get(extra) {
-    const parsed = { extra, aliases: [] }
-
-    parsed.extra = parsed.extra.replace(citationKeyAlias, (m, _aliases) => {
-      parsed.aliases = _aliases.trim().split(/\s*,\s*/)
-      return '\n'
-    }).trim()
-
-    return parsed
+    const extracted = extract(extra, citationKeyAlias)
+    return { extra: extracted.extra, aliases: extracted.citekey.trim().split(/\s*,\s*/) }
   }
 
   public set(extra, _aliases) {
