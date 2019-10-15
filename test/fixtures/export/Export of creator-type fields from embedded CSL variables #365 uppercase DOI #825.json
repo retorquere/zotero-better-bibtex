@@ -102,7 +102,7 @@
       ],
       "date": "1996-09-16",
       "episodeNumber": "1",
-      "extra": "bibtex: friends:leia:tv\nvolume: 3",
+      "extra": "Citation Key: friends:leia:tv\nvolume: 3",
       "itemID": 251,
       "itemType": "tvBroadcast",
       "language": "en-US",
@@ -136,7 +136,7 @@
         }
       ],
       "date": "2003",
-      "extra": "bibtex: friends:leia:dvd\ncontainer-title: Friends\nnumber: 1\noriginal-publisher: NBC\noriginal-date: 1996-09-16",
+      "extra": "Citation Key: friends:leia:dvd\ncontainer-title: Friends\nnumber: 1\noriginal-publisher: NBC\noriginal-date: 1996-09-16",
       "itemID": 253,
       "itemType": "videoRecording",
       "language": "en-US",
@@ -153,7 +153,7 @@
       "volume": "3"
     },
     {
-      "extra": "bibtex:emptybook\n{:X-genre: xxx}{:editor: Xxx}",
+      "extra": "Citation Key: emptybook\n{:X-genre: xxx}{:editor: Xxx}",
       "itemID": 255,
       "itemType": "encyclopediaArticle"
     },

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.69",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.69",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.101.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,67 +60,72 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": false,
-      "keepUpdated": false,
-      "exportPath": "/Users/emile/github/better-bibtex"
+    "release": {
+      "BetterBibTeX": "5.1.101.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.69",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.69"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "itemType": "journalArticle",
-      "volume": "15",
-      "pages": "437–441",
-      "publicationTitle": "Israel Journal of Mathematics",
-      "date": "1973",
-      "title": "Errata to: First order theory of permutation groups",
+      "attachments": [],
+      "citekey": "ShelahErrataFirstorder1973",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Saharon",
-          "lastName": "Shelah",
-          "creatorType": "author"
+          "lastName": "Shelah"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "1973",
       "dateAdded": "2018-03-04T10:57:41Z",
       "dateModified": "2018-03-04T10:57:41Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LFYS3RRV",
-      "attachments": [],
-      "notes": [],
       "itemID": 50,
-      "citekey": "ShelahErrataFirstorder1973"
+      "itemType": "journalArticle",
+      "notes": [],
+      "pages": "437\u2013441",
+      "publicationTitle": "Israel Journal of Mathematics",
+      "relations": [],
+      "tags": [],
+      "title": "Errata to: First order theory of permutation groups",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LFYS3RRV",
+      "volume": "15"
     },
     {
-      "itemType": "journalArticle",
-      "volume": "16",
-      "pages": "314–328",
-      "publicationTitle": "Israel Journal of Mathematics",
-      "date": "1973",
-      "title": "Differentially closed fields",
+      "attachments": [],
+      "citekey": "ShelahDifferentiallyclosedfields1973",
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Saharon",
-          "lastName": "Shelah",
-          "creatorType": "author"
+          "lastName": "Shelah"
         }
       ],
-      "tags": [],
-      "relations": [],
+      "date": "1973",
       "dateAdded": "2018-03-04T10:57:42Z",
       "dateModified": "2018-03-04T10:57:42Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EJKS8NQD",
-      "attachments": [],
+      "itemID": 77,
+      "itemType": "journalArticle",
       "notes": [
         "<p>MR 49:8856</p>"
       ],
-      "itemID": 77,
-      "citekey": "ShelahDifferentiallyclosedfields1973"
+      "pages": "314\u2013328",
+      "publicationTitle": "Israel Journal of Mathematics",
+      "relations": [],
+      "tags": [],
+      "title": "Differentially closed fields",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EJKS8NQD",
+      "volume": "16"
     }
   ]
 }

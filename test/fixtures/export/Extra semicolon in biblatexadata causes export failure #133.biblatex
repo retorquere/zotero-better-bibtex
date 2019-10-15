@@ -57,10 +57,10 @@
   keywords-plus = {TRANSFORM},
   langid = {english},
   number = {4},
-  number-of-cited-references = 13,
+  number-of-cited-references = {13},
   pages = {2982--3000},
   subject-category = {Mathematics, Applied},
-  times-cited = 0,
+  times-cited = {0},
   title = {A {{MODIFIED TIKHONOV REGULARIZATION FOR STABLE ANALYTIC CONTINUATION}}},
   volume = {47}
 }

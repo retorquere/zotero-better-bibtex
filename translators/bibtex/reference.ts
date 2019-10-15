@@ -372,7 +372,7 @@ export class Reference {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
 
-    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv)) && this.item.arXiv.id) {
+    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv.value)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
 
     } else {
@@ -695,17 +695,14 @@ export class Reference {
       }
     }
 
-    for (const [name, field] of Object.entries(this.item.extraFields.bibtex)) {
+    const bibtexStrings = Translator.preferences.exportBibTeXStrings === 'match'
+    for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
         this.referencetype = field.value
         continue
       }
 
-      this.override({...field, bibtexStrings: Translator.preferences.exportBibTeXStrings === 'match'})
-    }
-
-    for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
       switch (name) {
         case 'mr':
           this.override({ name: 'mrnumber', value: field.value, raw: field.raw })
@@ -737,7 +734,8 @@ export class Reference {
           break
 
         default:
-          debug('unexpected KV field', name, field)
+          this.override({ ...field, bibtexStrings })
+          break
       }
     }
 

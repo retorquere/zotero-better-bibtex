@@ -35,7 +35,11 @@ def step_impl(context, source, db):
   context.zotero.restart(timeout=context.timeout, db=db)
   assert_that(context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.librarySize()'), equal_to(references))
 
+  # import preferences
   context.zotero.import_file(context, source, items=False)
+
+  # check import
+  export_library(context, expected = source)
 
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):

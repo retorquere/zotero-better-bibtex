@@ -1,16 +1,23 @@
 declare const Zotero: any
 
-const state = {
-  opt: { lang: 'en' },
+// tslint:disable: no-var-keyword prefer-const semicolon prefer-template quotemark
+function makeRegExp(lst) {
+  var lst = lst.slice();
+  var ret = new RegExp( "(?:(?:[?!:]*\\s+|-|^)(?:" + lst.join("|") + ")(?=[!?:]*\\s+|-|$))", "g");
+  return ret;
+}
+// tslint:enable
 
-  locale: {
-    en: {
-      opts: {
-        'skip-words': Zotero.CiteProc.CSL.SKIP_WORDS,
-        'skip-words-regexp': new RegExp( '(?:(?:[?!:]*\\s+|-|^)(?:' + Zotero.CiteProc.CSL.SKIP_WORDS.join('|') + ')(?=[!?:]*\\s+|-|$))', 'g'), // tslint:disable-line:prefer-template
-      },
-    },
-  },
+const state = new class {
+  public opt = { lang: 'en' }
+  public locale: { [locale: string]: { opts: { 'skip-words'?: string[], 'skip-words-regexp'?: RegExp } } }
+
+  constructor() {
+    this.locale = {}
+    this.locale[this.opt.lang] = { opts: {} }
+    this.locale[this.opt.lang].opts['skip-words'] = Zotero.CiteProc.CSL.SKIP_WORDS
+    this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]) // tslint:disable-line:quotemark semicolon
+  }
 }
 
 export function titleCase(text) {

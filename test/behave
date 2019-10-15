@@ -25,9 +25,12 @@ parser.add_argument('--no-stop', action='store_true')
 parser.add_argument('--nightly', action='store_true')
 parser.add_argument('--jurism', action='store_true')
 parser.add_argument('--beta', action='store_true')
+parser.add_argument('--keep', action='store_true')
 
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
+
+if args.keep: sys.argv.extend(['--define', 'kill=false'])
 
 ## exclude @nightly by default
 nightly = any([

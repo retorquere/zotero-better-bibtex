@@ -14,13 +14,12 @@ import { flash } from './flash'
 import { Events } from './events'
 import { ZoteroConfig } from './zotero-config'
 
-const fold = require('./fold.json')
-log.debug(`vim: foldmethod=marker:foldlevel=0:foldmarker=${fold.start},${fold.end}:`)
 log.debug('Loading Better BibTeX')
 
 import { Translators } from './translators'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
+import { upgrade as dbUpgrade } from './db/zotero'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -109,7 +108,7 @@ $patch$(Zotero.Items, 'merge', original => async function(item, otherItems) {
     }
 
     const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
-    extra.aliases = extra.aliases.filter(alias => alias !== citekey)
+    extra.aliases = extra.aliases.filter(alias => alias && alias !== citekey)
     if (extra.aliases.length) extra.extra = Citekey.aliases.set(extra.extra, extra.aliases)
     item.setField('extra', extra.extra)
 
@@ -512,7 +511,7 @@ class Progress {
 
     if (this.locked && Zotero.locked) await Zotero.unlockPromise
 
-    log.debug(fold.start, `${this.name}: ${msg}...`)
+    log.debug(`${this.name}: ${msg}...`)
     this.toggle(true)
     log.debug(`${this.name}: ${this.locked ? 'locked' : 'progress window up'}`)
   }
@@ -532,7 +531,7 @@ class Progress {
     this.bench(null)
 
     this.toggle(false)
-    log.debug(`${this.name}: done`, fold.end)
+    log.debug(`${this.name}: done`)
   }
 
   private bench(msg) {
@@ -684,9 +683,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await Promise.all([Cache.init(), DB.init()])
 
-    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
-    await KeyManager.init() // inits the key cache by scanning the DB
-
     deferred.loaded.resolve(true)
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
@@ -698,13 +694,20 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
 
+    // order matters, even if it sucks for display:
+    // 1. Translators need to be installed before autoexport can be started
+    // 2. Autoexport is started so it can pick up potential changes by dbUpgrade
+    // 3. dbUpgrade must be ran before the keymanager scans the database
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
     progress.update(this.getString('BetterBibTeX.startup.autoExport'))
     await AutoExport.init()
 
-    // should be safe to start tests at this point. I hate async.
+    await dbUpgrade(progress.update.bind(progress))
+
+    progress.update(this.getString('BetterBibTeX.startup.keyManager'))
+    await KeyManager.init() // inits the key cache by scanning the DB
 
     deferred.ready.resolve(true)
 

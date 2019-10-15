@@ -4,16 +4,16 @@
     "label": "BetterBibTeX JSON",
     "release": {
       "Zotero": {
-        "version": "5.0.71",
+        "version": "5.0.75",
         "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
+        "oscpu": "Intel Mac OS X 10.15",
         "locale": "en-US",
         "appName": "Zotero",
-        "appVersion": "5.0.71",
+        "appVersion": "5.0.75",
         "isZotero": true,
         "isJurisM": false
       },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+      "BetterBibTeX": "5.1.145.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
@@ -30,6 +30,7 @@
       "autoExportPrimeExportCacheThreshold": 0,
       "autoExportTooLong": 10,
       "autoPin": false,
+      "automaticTags": true,
       "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
@@ -53,6 +54,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -66,7 +68,10 @@
       "sorted": false,
       "strings": "",
       "suppressBraceProtection": false,
+      "suppressNoCase": false,
+      "suppressSentenceCase": false,
       "suppressTitleCase": false,
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10,
       "testing": true
     },
@@ -85,7 +90,7 @@
       "pages": "155-164",
       "publicationTitle": "Journal of Philosophical Logic",
       "date": "2004",
-      "extra": "Citation Key: Zach2004a \nbibtex*[eprint=ZACDOQ;eprinttype=philpapers;scholar=15184825758825835157,15198214561219081821]",
+      "extra": "Citation Key: Zach2004a\ntex.eprint: ZACDOQ\ntex.eprinttype: philpapers\ntex.scholar: 15184825758825835157,15198214561219081821",
       "DOI": "10.1023/B:LOGI.0000021744.10237.d0",
       "title": "Decidability of quantified propositional intuitionistic logic and s4 on trees of height and arity ≤ω",
       "creators": [
@@ -96,17 +101,19 @@
         }
       ],
       "tags": [
-        "article"
+        {
+          "tag": "article"
+        }
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-08-19T08:24:34Z",
-      "dateModified": "2019-08-19T08:24:34Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RQJUKFP8",
+      "dateAdded": "2019-10-14T19:21:44Z",
+      "dateModified": "2019-10-14T19:21:44Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/5AII8RLX",
       "attachments": [],
       "notes": [],
-      "itemID": 274,
-      "key": "RQJUKFP8",
+      "itemID": 276,
+      "key": "5AII8RLX",
       "citekey": "Zach2004a",
       "citationKey": "Zach2004a",
       "libraryID": 1

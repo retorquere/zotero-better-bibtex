@@ -34,7 +34,7 @@
         }
       ],
       "date": "2014",
-      "extra": "http://www.nuprl.org/html/verification/\n\nbiblatexdata[origdate=1856;origtitle=An Old Title;timestamp=2011.03.22]\nbibtex: anand2014technicalreportformally",
+      "extra": "Citation Key: anand2014technicalreportformally\ntex.origdate= 1856\ntex.origtitle= An Old Title\ntex.timestamp= 2011.03.22\nhttp://www.nuprl.org/html/verification/",
       "itemID": 375,
       "itemType": "journalArticle",
       "title": "Technical Report : Towards a Formally Verified Proof Assistant",
