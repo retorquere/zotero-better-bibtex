@@ -507,7 +507,6 @@ def normalizeJSON(lib):
   lib.pop('keymanager', None)
   lib.pop('cache', None)
 
-  # TODO COME ON ZOTERO FIX THIS
   dev = (os.environ.get('TRAVIS_BRANCH') == 'zotero-dev')
 
   itemIDs = {}
@@ -528,9 +527,10 @@ def normalizeJSON(lib):
     item.pop('citationKey', None)
     item.pop('uri', None)
 
+    # TODO COME ON ZOTERO FIX THIS
     if 'extra' in item and dev:
       extra = item['extra'].split('\n')
-      extra = [(f'event-{line}' if line.startswith('place:') else line) for line in extra]
+      extra = [line for line in extra if not line.startswith('place:')] + [f'event-{line}' for line in extra if line.startswith('place:')]
       extra = '\n'.join(extra)
       if dev and extra != item['extra']:
         utils.print('ZOTERO DEV event-place WORKAROUND APPLIED')
