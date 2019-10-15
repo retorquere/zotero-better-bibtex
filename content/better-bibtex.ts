@@ -694,6 +694,10 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     JournalAbbrev.init()
 
+    // order matters, even if it sucks for display:
+    // 1. Translators need to be installed before autoexport can be started
+    // 2. Autoexport is started so it can pick up potential changes by dbUpgrade
+    // 3. dbUpgrade must be ran before the keymanager scans the database
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
