@@ -530,7 +530,8 @@ def normalizeJSON(lib):
     # TODO COME ON ZOTERO FIX THIS
     if 'extra' in item and dev:
       extra = item['extra'].split('\n')
-      extra = [line for line in extra if not line.startswith('place:')] + [f'event-{line}' for line in extra if line.startswith('place:')]
+      extra = [(f'event-{line}' if line.startswith('place:') else line) for line in extra]
+      extra = sorted(extra)
       extra = '\n'.join(extra)
       if dev and extra != item['extra']:
         utils.print('ZOTERO DEV event-place WORKAROUND APPLIED')
