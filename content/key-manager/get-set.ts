@@ -25,7 +25,7 @@ const citationKeyAlias = /^Citation Key Alias\s*:\s*([^\s]*)\s*$/i
 export const aliases = new class {
   public get(extra) {
     const extracted = extract(extra, citationKeyAlias)
-    return { extra: extracted.extra, aliases: extracted.citekey.trim().split(/\s*,\s*/) }
+    return { extra: extracted.extra, aliases: extracted.citekey.trim().split(/\s*,\s*/).filter(alias => alias) }
   }
 
   public set(extra, _aliases) {
