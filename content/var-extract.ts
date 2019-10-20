@@ -16,7 +16,7 @@ export function extract(item) {
 
   const extraFields = {
     csl: {},
-    kv: {},
+    tex: {},
     citekey: { citekey: '', pinned: false, aliases: [] },
   }
 
@@ -54,7 +54,7 @@ export function extract(item) {
     if (!tex && raw) return true
 
     if (tex) {
-      extraFields.kv[name] = { name, value, raw }
+      extraFields.tex[name] = { name, value, raw }
       return false
     }
 
@@ -73,7 +73,7 @@ export function extract(item) {
 
     name = name.replace(/-/g, '') // google-books-id
     if (['place', 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name)) {
-      extraFields.kv[name] = { name, value }
+      extraFields.tex[name] = { name, value }
       return false
     }
 

@@ -372,7 +372,7 @@ export class Reference {
       this.item.arXiv.source = 'publicationTitle'
       if (Translator.BetterBibLaTeX) delete this.item.publicationTitle
 
-    } else if (this.item.extraFields.kv.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.kv.arxiv.value)) && this.item.arXiv.id) {
+    } else if (this.item.extraFields.tex.arxiv && (this.item.arXiv = arXiv.parse(this.item.extraFields.tex.arxiv.value)) && this.item.arXiv.id) {
       this.item.arXiv.source = 'extra'
 
     } else {
@@ -381,7 +381,7 @@ export class Reference {
     }
 
     if (this.item.arXiv) {
-      delete this.item.extraFields.kv.arxiv
+      delete this.item.extraFields.tex.arxiv
       this.add({ name: 'archivePrefix', value: 'arXiv'} )
       this.add({ name: 'eprinttype', value: 'arxiv'})
       this.add({ name: 'eprint', value: this.item.arXiv.id })
@@ -563,7 +563,7 @@ export class Reference {
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
       // these are handled just like 'arxiv' and 'lccn', respectively
       if (['pmid', 'pmcid'].includes(cslName)) {
-        this.item.extraFields.kv[cslName] = field
+        this.item.extraFields.tex[cslName] = field
         delete this.item.extraFields.csl[cslName]
         continue
       }
@@ -696,7 +696,7 @@ export class Reference {
     }
 
     const bibtexStrings = Translator.preferences.exportBibTeXStrings === 'match'
-    for (const [name, field] of Object.entries(this.item.extraFields.kv)) {
+    for (const [name, field] of Object.entries(this.item.extraFields.tex)) {
       // psuedo-var, sets the reference type
       if (name === 'referencetype') {
         this.referencetype = field.value

@@ -164,9 +164,8 @@ with open(os.path.join(root, 'gen/typings/serialized-item.d.ts'), 'w') as typing
 
   addfield('extraFields', textwrap.dedent('''
     {
-      bibtex: { [key: string]: { name: string, type: string, value: any, bibtex?: string } }
       csl: { [key: string]: { name: string, type: string, value: any } }
-      kv: { [key: string]: { name: string, type: string, value: string, raw?: boolean, bibtex?: string } }
+      tex: { [key: string]: { name: string, type: string, value: string, raw?: boolean, bibtex?: string } }
       citekey?: { aliases: string[] }
     }
   ''').strip())
