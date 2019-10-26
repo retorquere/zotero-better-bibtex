@@ -123,7 +123,7 @@ export = new class {
 
   public async select(ids) {
     const zoteroPane = Zotero.getActiveZoteroPane()
-    zoteroPane.show()
+    // zoteroPane.show()
 
     const sortedIDs = ids.slice().sort()
     // tslint:disable-next-line:no-magic-numbers

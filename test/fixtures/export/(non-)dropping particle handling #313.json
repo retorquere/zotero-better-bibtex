@@ -29,7 +29,7 @@
           "lastName": "abb\u00e9 d' Aubignac"
         }
       ],
-      "extra": "bibtex: abbot3",
+      "extra": "Citation Key: abbot3",
       "itemType": "journalArticle",
       "title": "<span class=\"nocase\">(abb\u00e9 d' Aubignac) (Fran\u00e7ois H\u00e9delin)</span>"
     },
@@ -41,7 +41,7 @@
           "lastName": "Aubignac"
         }
       ],
-      "extra": "relies on paricleParser fallback detection\nbibtex: abbot1",
+      "extra": "Citation Key: abbot1\nrelies on paricleParser fallback detection",
       "itemType": "journalArticle",
       "title": "<span class=\"nocase\">(Aubignac) (Fran\u00e7ois H\u00e9delin, abb\u00e9 d')</span>"
     },
@@ -75,7 +75,7 @@
         }
       ],
       "date": "1963",
-      "extra": "bibtex: fixedkey",
+      "extra": "Citation Key: fixedkey",
       "itemID": 2066,
       "itemType": "book",
       "language": "anglais",
@@ -156,7 +156,7 @@
           "lastName": "d' Jones"
         }
       ],
-      "extra": "bibtex: bugreports_ApostropheOnParticle",
+      "extra": "Citation Key: bugreports_ApostropheOnParticle",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -170,7 +170,7 @@
           "lastName": "Doe Co."
         }
       ],
-      "extra": "bibtex: bugreports_AsmJournals",
+      "extra": "Citation Key: bugreports_AsmJournals",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -183,7 +183,7 @@
           "name": "U.S. Bureau of the Census"
         }
       ],
-      "extra": "bibtex: bugreports_DemoPageFullCiteCruftOnSubsequent",
+      "extra": "Citation Key: bugreports_DemoPageFullCiteCruftOnSubsequent",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -198,7 +198,7 @@
           "lastName": "D'Arcus"
         }
       ],
-      "extra": "bibtex: bugreports_DuplicateSpaces",
+      "extra": "Citation Key: bugreports_DuplicateSpaces",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -213,7 +213,7 @@
           "lastName": "Family Name"
         }
       ],
-      "extra": "bibtex: bugreports_DuplicateSpaces3",
+      "extra": "Citation Key: bugreports_DuplicateSpaces3",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -228,7 +228,7 @@
           "lastName": "\u039a\u03b1\u03c1\u03c5\u03c9\u03c4\u03ac\u03ba\u03b7\u03c2"
         }
       ],
-      "extra": "bibtex: bugreports_GreekStyleProblems",
+      "extra": "Citation Key: bugreports_GreekStyleProblems",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -258,7 +258,7 @@
           "lastName": "Williams-Linera"
         }
       ],
-      "extra": "bibtex: bugreports_ProcessorHang1",
+      "extra": "Citation Key: bugreports_ProcessorHang1",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -271,7 +271,7 @@
           "name": "Africa News"
         }
       ],
-      "extra": "bibtex: bugreports_YearSuffixInHarvard1",
+      "extra": "Citation Key: bugreports_YearSuffixInHarvard1",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -291,7 +291,7 @@
           "lastName": "von Hoppel"
         }
       ],
-      "extra": "bibtex: bugreports_parseName",
+      "extra": "Citation Key: bugreports_parseName",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -311,7 +311,7 @@
           "lastName": "van Roe"
         }
       ],
-      "extra": "bibtex: decorations_AndTermUnaffectedByNameDecorations",
+      "extra": "Citation Key: decorations_AndTermUnaffectedByNameDecorations",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -326,7 +326,7 @@
           "lastName": "von Dipheria"
         }
       ],
-      "extra": "bibtex: disambiguate_CitationLabelInData",
+      "extra": "Citation Key: disambiguate_CitationLabelInData",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -344,7 +344,7 @@
           "name": "JRS-Europe"
         }
       ],
-      "extra": "bibtex: disambiguate_FailWithYearSuffix",
+      "extra": "Citation Key: disambiguate_FailWithYearSuffix",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -358,7 +358,7 @@
           "lastName": "Smith Co"
         }
       ],
-      "extra": "bibtex: disambiguate_YearCollapseWithInstitution",
+      "extra": "Citation Key: disambiguate_YearCollapseWithInstitution",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -373,7 +373,7 @@
           "lastName": "Bennett"
         }
       ],
-      "extra": "bibtex: display_SecondFieldAlignMigratePunctuation",
+      "extra": "Citation Key: display_SecondFieldAlignMigratePunctuation",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -387,7 +387,7 @@
           "lastName": "Doe Inc."
         }
       ],
-      "extra": "bibtex: group_ComplexNesting",
+      "extra": "Citation Key: group_ComplexNesting",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -402,7 +402,7 @@
           "lastName": "la Berge"
         }
       ],
-      "extra": "bibtex: integration_DuplicateItem",
+      "extra": "Citation Key: integration_DuplicateItem",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -417,7 +417,7 @@
           "lastName": "de Simone"
         }
       ],
-      "extra": "bibtex: magic_CapitalizeFirstOccurringNameParticle",
+      "extra": "Citation Key: magic_CapitalizeFirstOccurringNameParticle",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -432,7 +432,7 @@
           "lastName": "von Doe"
         }
       ],
-      "extra": "bibtex: magic_NameParticle",
+      "extra": "Citation Key: magic_NameParticle",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -445,7 +445,7 @@
           "name": "Blob"
         }
       ],
-      "extra": "bibtex: magic_SuppressDuplicateVariableRendering",
+      "extra": "Citation Key: magic_SuppressDuplicateVariableRendering",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -460,7 +460,7 @@
           "lastName": "Doe"
         }
       ],
-      "extra": "bibtex: name_ArticularNameAsSortOrder",
+      "extra": "Citation Key: name_ArticularNameAsSortOrder",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -475,7 +475,7 @@
           "lastName": "Doe"
         }
       ],
-      "extra": "bibtex: name_ArticularShortFormCommaSuffix",
+      "extra": "Citation Key: name_ArticularShortFormCommaSuffix",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -490,7 +490,7 @@
           "lastName": "Doe"
         }
       ],
-      "extra": "bibtex: name_ArticularWithComma",
+      "extra": "Citation Key: name_ArticularWithComma",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -504,7 +504,7 @@
           "lastName": "Noakes Inc."
         }
       ],
-      "extra": "bibtex: name_Delimiter",
+      "extra": "Citation Key: name_Delimiter",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -519,7 +519,7 @@
           "lastName": "van der Meer"
         }
       ],
-      "extra": "bibtex: name_FormattingOfParticles",
+      "extra": "Citation Key: name_FormattingOfParticles",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -534,7 +534,7 @@
           "lastName": "al-One"
         }
       ],
-      "extra": "bibtex: name_HyphenatedNonDroppingParticle1",
+      "extra": "Citation Key: name_HyphenatedNonDroppingParticle1",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -547,7 +547,7 @@
           "name": "Multi-National United"
         }
       ],
-      "extra": "bibtex: name_Institution",
+      "extra": "Citation Key: name_Institution",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -560,7 +560,7 @@
           "name": "S\u00e3o Paulo (Estado)"
         }
       ],
-      "extra": "bibtex: name_InstitutionDecoration",
+      "extra": "Citation Key: name_InstitutionDecoration",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -580,7 +580,7 @@
           "lastName": "Thucydides"
         }
       ],
-      "extra": "bibtex: name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
+      "extra": "Citation Key: name_MixedFormatsInitialSortOrderAllWithDecorationsEtAl",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -602,7 +602,7 @@
           "name": "John Candy Foundation"
         }
       ],
-      "extra": "bibtex: name_MultipleLiteral",
+      "extra": "Citation Key: name_MultipleLiteral",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -622,7 +622,7 @@
           "lastName": "van Gogh"
         }
       ],
-      "extra": "bibtex: name_ParseNames",
+      "extra": "Citation Key: name_ParseNames",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -637,7 +637,7 @@
           "lastName": "La Fontaine"
         }
       ],
-      "extra": "bibtex: name_ParsedDroppingParticleWithAffixes",
+      "extra": "Citation Key: name_ParsedDroppingParticleWithAffixes",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -652,7 +652,7 @@
           "lastName": "la Fontaine"
         }
       ],
-      "extra": "bibtex: name_ParsedNonDroppingParticleWithAffixes",
+      "extra": "Citation Key: name_ParsedNonDroppingParticleWithAffixes",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -667,7 +667,7 @@
           "lastName": "d'Aubignac"
         }
       ],
-      "extra": "bibtex: name_ParsedNonDroppingParticleWithApostrophe",
+      "extra": "Citation Key: name_ParsedNonDroppingParticleWithApostrophe",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -697,7 +697,7 @@
           "lastName": "Van Four"
         }
       ],
-      "extra": "bibtex: name_ParticleCaps1",
+      "extra": "Citation Key: name_ParticleCaps1",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -712,7 +712,7 @@
           "lastName": "\"Van Dyke\""
         }
       ],
-      "extra": "bibtex: name_ParticleCaps3",
+      "extra": "Citation Key: name_ParticleCaps3",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -727,7 +727,7 @@
           "lastName": "de la Doe"
         }
       ],
-      "extra": "bibtex: name_ParticleFormatting",
+      "extra": "Citation Key: name_ParticleFormatting",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -867,7 +867,7 @@
           "lastName": "ver Familyname"
         }
       ],
-      "extra": "bibtex: name_ParticlesDemoteNonDroppingNever",
+      "extra": "Citation Key: name_ParticlesDemoteNonDroppingNever",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -882,7 +882,7 @@
           "lastName": "van Doe"
         }
       ],
-      "extra": "bibtex: name_WesternArticularLowercase",
+      "extra": "Citation Key: name_WesternArticularLowercase",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -897,7 +897,7 @@
           "lastName": "de La Fontaine"
         }
       ],
-      "extra": "bibtex: name_namepartAffixes",
+      "extra": "Citation Key: name_namepartAffixes",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -912,7 +912,7 @@
           "lastName": "de la Martini\u00e8re"
         }
       ],
-      "extra": "bibtex: nameorder_Long",
+      "extra": "Citation Key: nameorder_Long",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -926,7 +926,7 @@
           "lastName": "Al-Khatib Organization"
         }
       ],
-      "extra": "bibtex: position_IbidWithSuffix",
+      "extra": "Citation Key: position_IbidWithSuffix",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -941,7 +941,7 @@
           "lastName": "\"De Quincey\""
         }
       ],
-      "extra": "bibtex: sort_ChangeInNameSort",
+      "extra": "Citation Key: sort_ChangeInNameSort",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -958,7 +958,7 @@
           "name": "Beijing Zoo"
         }
       ],
-      "extra": "bibtex: sort_ChicagoYearSuffix1",
+      "extra": "Citation Key: sort_ChicagoYearSuffix1",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -972,7 +972,7 @@
           "lastName": "ANZ Group"
         }
       ],
-      "extra": "bibtex: sort_FamilyOnly",
+      "extra": "Citation Key: sort_FamilyOnly",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -992,7 +992,7 @@
           "lastName": "in 't Horvath"
         }
       ],
-      "extra": "bibtex: sort_LeadingApostropheOnNameParticle",
+      "extra": "Citation Key: sort_LeadingApostropheOnNameParticle",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -1007,7 +1007,7 @@
           "lastName": "di Noakes"
         }
       ],
-      "extra": "bibtex: sort_NameParticleInNameSortFalse",
+      "extra": "Citation Key: sort_NameParticleInNameSortFalse",
       "itemType": "journalArticle",
       "tags": [
         "imported"
@@ -1022,7 +1022,7 @@
           "lastName": "[F]linders"
         }
       ],
-      "extra": "bibtex: sort_NameVariable",
+      "extra": "Citation Key: sort_NameVariable",
       "itemType": "journalArticle",
       "tags": [
         "imported"

@@ -63,6 +63,32 @@ re.unprotectedWord = new RegExp(`^[${re.char}]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
 re.whitespace = new RegExp(`^[${re.Whitespace}]+`)
 
+// tslint:disable: object-literal-key-quotes
+const ligatures = {
+  '\u01F1': 'DZ',
+  '\u01F2': 'Dz',
+  '\u01F3': 'dz',
+  '\u01C4': 'D\u017D',
+  '\u01C5': 'D\u017E',
+  '\u01C6': 'd\u017E',
+  '\uFB00': 'ff',
+  '\uFB01': 'fi',
+  '\uFB02': 'fl',
+  '\uFB03': 'ffi',
+  '\uFB04': 'ffl',
+  '\uFB05': '\u017Ft',
+  '\uFB06': 'st',
+  '\u0132': 'IJ',
+  '\u0133': 'ij',
+  '\u01C7': 'LJ',
+  '\u01C8': 'Lj',
+  '\u01C9': 'lj',
+  '\u01CA': 'NJ',
+  '\u01CB': 'Nj',
+  '\u01CC': 'nj',
+}
+// tslint:enable
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let HTMLParser = new class { // tslint:disable-line:variable-name
   private caseConversion: boolean
@@ -71,6 +97,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   private spuriousNode = new Set(['#document-fragment', '#document', 'div', 'span'])
   private titleCased: string
   private html: string
+  private ligatures = new RegExp(`[${Object.keys(ligatures).join('')}]`, 'g')
 
   public parse(html, options: { html?: boolean, caseConversion?: boolean } = {}): IZoteroMarkupNode {
     this.html = html
@@ -227,6 +254,8 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   }
 
   private plaintext(childNodes: IZoteroMarkupNode[], text, offset) {
+    // replace ligatures so titlecasing works for things like "figures"
+    text = text.replace(this.ligatures, ligature => ligatures[ligature])
     const l = childNodes.length
     if (l === 0 || (childNodes[l - 1].nodeName !== '#text')) {
       childNodes.push({ nodeName: '#text', offset, value: text, attr: {}, class: {} })

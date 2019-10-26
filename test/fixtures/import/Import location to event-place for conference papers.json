@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -30,6 +23,7 @@
       "autoExportPrimeExportCacheThreshold": 0,
       "autoExportTooLong": 10,
       "autoPin": false,
+      "automaticTags": true,
       "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
@@ -53,6 +47,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -66,61 +61,76 @@
       "sorted": false,
       "strings": "",
       "suppressBraceProtection": false,
+      "suppressNoCase": false,
+      "suppressSentenceCase": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.145.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.75",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.15",
+        "platform": "MacIntel",
+        "version": "5.0.75"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "conferencePaper",
-      "url": "http://doi.acm.org/10.1145/1596655.1596682",
-      "series": "PPPJ '09",
-      "place": "New York, NY, USA",
-      "publisher": "ACM",
-      "pages": "162-171",
-      "ISBN": "978-1-60558-598-7",
-      "date": "2009",
-      "extra": "Citation Key: Mostafa:2009:TPA:1596655.1596682 \nbibtex*[acmid=1596682;numpages=10] \nevent-place: Calgary, Alberta, Canada",
       "DOI": "10.1145/1596655.1596682",
-      "title": "Tracking performance across software revisions",
+      "ISBN": "978-1-60558-598-7",
+      "attachments": [],
+      "citationKey": "Mostafa:2009:TPA:1596655.1596682",
+      "citekey": "Mostafa:2009:TPA:1596655.1596682",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Nagy",
-          "lastName": "Mostafa",
-          "creatorType": "author"
+          "lastName": "Mostafa"
         },
         {
+          "creatorType": "author",
           "firstName": "Chandra",
-          "lastName": "Krintz",
-          "creatorType": "author"
+          "lastName": "Krintz"
         }
       ],
-      "tags": [
-        "calling context tree",
-        "performance-aware revision control",
-        "profiling"
-      ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-20T13:47:43Z",
-      "dateModified": "2019-08-20T13:47:43Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/42GEWAAT",
-      "attachments": [],
-      "notes": [],
-      "itemID": 263,
-      "key": "42GEWAAT",
-      "citekey": "Mostafa:2009:TPA:1596655.1596682",
-      "citationKey": "Mostafa:2009:TPA:1596655.1596682",
+      "date": "2009",
+      "dateAdded": "2019-10-14T18:43:01Z",
+      "dateModified": "2019-10-14T18:43:01Z",
+      "extra": "Citation Key: Mostafa:2009:TPA:1596655.1596682\nevent-place: Calgary, Alberta, Canada\ntex.acmid: 1596682\ntex.numpages: 10",
+      "itemID": 811,
+      "itemType": "conferencePaper",
+      "key": "MCGBKEWB",
       "libraryID": 1,
-      "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java"
+      "notes": [],
+      "pages": "162-171",
+      "place": "New York, NY, USA",
+      "publicationTitle": "Proceedings of the 7th international conference on principles and practice of programming in java",
+      "publisher": "ACM",
+      "relations": [],
+      "series": "PPPJ '09",
+      "tags": [
+        {
+          "tag": "calling context tree"
+        },
+        {
+          "tag": "performance-aware revision control"
+        },
+        {
+          "tag": "profiling"
+        }
+      ],
+      "title": "Tracking performance across software revisions",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/MCGBKEWB",
+      "url": "http://doi.acm.org/10.1145/1596655.1596682",
+      "version": 0
     }
   ]
 }

@@ -79,7 +79,7 @@
       "date": "1972",
       "dateAdded": "2018-03-04T10:57:40Z",
       "dateModified": "2019-01-09T09:18:16Z",
-      "extra": "{biblatex{\n  editortype: \"translated and edited under the supervision of\",\n  referencetype: mvlexicon\n}}\n\n{biblatex{\n  editortype: \"translated and edited under the supervision of\",\n  referencetype: 'mvlexicon'\n}}",
+      "extra": "tex.editortype= translated and edited under the supervision of\ntex.referencetype= mvlexicon\n{biblatex{\n  editortype: \"translated and edited under the supervision of\",\n  referencetype: mvlexicon\n}}\n\n{}",
       "itemID": 32,
       "itemType": "journalArticle",
       "notes": [

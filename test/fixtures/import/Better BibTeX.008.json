@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,45 +60,51 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "url": "http://www.americanrightsatwork.org/blogcategory-275/",
-      "date": "2012",
-      "extra": "Citation Key: american_rights_at_work_public_2012",
       "accessDate": "2012-07-27",
-      "title": "Public service research foundation",
+      "attachments": [],
+      "citationKey": "american_rights_at_work_public_2012",
+      "citekey": "american_rights_at_work_public_2012",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "American Rights",
-          "lastName": "at Work",
-          "creatorType": "author"
+          "lastName": "at Work"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "2012",
       "dateAdded": "2019-08-19T14:48:00Z",
       "dateModified": "2019-08-19T14:48:00Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JB7NIG5H",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: american_rights_at_work_public_2012",
       "itemID": 284,
+      "itemType": "journalArticle",
       "key": "JB7NIG5H",
-      "citekey": "american_rights_at_work_public_2012",
-      "citationKey": "american_rights_at_work_public_2012",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Public service research foundation",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JB7NIG5H",
+      "url": "http://www.americanrightsatwork.org/blogcategory-275/",
+      "version": 0
     }
   ]
 }

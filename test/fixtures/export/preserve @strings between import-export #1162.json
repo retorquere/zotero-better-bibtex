@@ -90,7 +90,7 @@
       "date": "1996-08",
       "dateAdded": "2019-04-25T15:45:41Z",
       "dateModified": "2019-04-25T15:45:41Z",
-      "extra": "Citation Key: Mitchell96 \nbibtex[organization=ACM_SIGGRAPH]",
+      "extra": "Citation Key: Mitchell96\ntex.organization= ACM_SIGGRAPH",
       "itemID": 5161,
       "itemType": "conferencePaper",
       "notes": [],

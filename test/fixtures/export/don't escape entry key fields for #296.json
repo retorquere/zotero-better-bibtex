@@ -31,7 +31,7 @@
         }
       ],
       "date": "1983",
-      "extra": "bibtex[crossref=eisenmann_cours_1982] \nbibtex: eisenmann_actes_1983",
+      "extra": "Citation Key: eisenmann_actes_1983\ntex.crossref= eisenmann_cours_1982",
       "itemID": 5864,
       "itemType": "bookSection",
       "language": "fr-FR",

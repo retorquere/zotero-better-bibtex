@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,60 +60,66 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "report",
-      "place": "Brussels, Belgium",
-      "date": "2007",
-      "extra": "Citation Key: Abbott-2007-aa \nbibtex*[class=States & Markets 2009, Diss Tax & Democracy 2010ff;date-modified=2014-06-14 15:13:01 +0000]",
-      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005",
-      "creators": [
+      "attachments": [
         {
-          "firstName": "Roderick",
-          "lastName": "Abbott",
-          "creatorType": "author"
+          "dateAdded": "2019-08-20T15:45:04Z",
+          "dateModified": "2019-08-20T15:45:04Z",
+          "itemType": "attachment",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/8VZFW8AS/1.pdf",
+          "relations": [],
+          "tags": [],
+          "title": "1",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS"
         }
       ],
+      "citationKey": "Abbott-2007-aa",
+      "citekey": "Abbott-2007-aa",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Roderick",
+          "lastName": "Abbott"
+        }
+      ],
+      "date": "2007",
+      "dateAdded": "2019-08-20T15:45:04Z",
+      "dateModified": "2019-08-20T15:45:04Z",
+      "extra": "Citation Key: Abbott-2007-aa\ntex.class: States & Markets 2009, Diss Tax & Democracy 2010ff\ntex.date-modified: 2014-06-14 15:13:01 +0000",
+      "itemID": 296,
+      "itemType": "report",
+      "key": "FVRH9FL5",
+      "libraryID": 1,
+      "notes": [],
+      "place": "Brussels, Belgium",
+      "publisher": "European Center for International Political Economy",
+      "relations": [],
       "tags": [
         "Finance",
         "Markets",
         "Political Economy"
       ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-20T15:45:04Z",
-      "dateModified": "2019-08-20T15:45:04Z",
+      "title": "Are developing countries deterred from using the WTO dispute settlement system? - participation of developing countries in the DSM in the years 1995-2005",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/FVRH9FL5",
-      "attachments": [
-        {
-          "itemType": "attachment",
-          "title": "1",
-          "tags": [],
-          "relations": [],
-          "dateAdded": "2019-08-20T15:45:04Z",
-          "dateModified": "2019-08-20T15:45:04Z",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/8VZFW8AS",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/8VZFW8AS/1.pdf"
-        }
-      ],
-      "notes": [],
-      "itemID": 296,
-      "key": "FVRH9FL5",
-      "citekey": "Abbott-2007-aa",
-      "citationKey": "Abbott-2007-aa",
-      "libraryID": 1,
-      "publisher": "European Center for International Political Economy"
+      "version": 0
     }
   ]
 }

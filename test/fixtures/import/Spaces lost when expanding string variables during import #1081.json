@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,44 +60,50 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "publicationTitle": "a space between this and this",
-      "date": "1990",
-      "extra": "Citation Key: key",
-      "title": "Title",
+      "attachments": [],
+      "citationKey": "key",
+      "citekey": "key",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "",
-          "name": "Author",
-          "creatorType": "author"
+          "name": "Author"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "1990",
       "dateAdded": "2019-08-18T23:16:11Z",
       "dateModified": "2019-08-18T23:16:11Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PI4ULTZC",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: key",
       "itemID": 265,
+      "itemType": "journalArticle",
       "key": "PI4ULTZC",
-      "citekey": "key",
-      "citationKey": "key",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "publicationTitle": "a space between this and this",
+      "relations": [],
+      "tags": [],
+      "title": "Title",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PI4ULTZC",
+      "version": 0
     }
   ]
 }

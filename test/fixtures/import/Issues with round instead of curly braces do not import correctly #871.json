@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,49 +60,55 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "report",
-      "date": "1972-05",
-      "extra": "Citation Key: McDermott:72",
-      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual",
+      "attachments": [],
+      "citationKey": "McDermott:72",
+      "citekey": "McDermott:72",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Drew V.",
-          "lastName": "McDermott",
-          "creatorType": "author"
+          "lastName": "McDermott"
         },
         {
+          "creatorType": "author",
           "firstName": "Gerald J.",
-          "lastName": "Sussman",
-          "creatorType": "author"
+          "lastName": "Sussman"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "1972-05",
       "dateAdded": "2019-08-18T23:27:52Z",
       "dateModified": "2019-08-18T23:27:52Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FF8ZQ34W",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: McDermott:72",
       "itemID": 266,
+      "itemType": "report",
       "key": "FF8ZQ34W",
-      "citekey": "McDermott:72",
-      "citationKey": "McDermott:72",
       "libraryID": 1,
-      "publisher": "MIT Artificial Intelligence Laboratory"
+      "notes": [],
+      "publisher": "MIT Artificial Intelligence Laboratory",
+      "relations": [],
+      "tags": [],
+      "title": "The <span style=\"font-variant:small-caps;\">CONNIVER</span> reference manual",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/FF8ZQ34W",
+      "version": 0
     }
   ]
 }

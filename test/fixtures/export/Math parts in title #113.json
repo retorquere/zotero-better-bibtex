@@ -19,7 +19,7 @@
     {
       "accessDate": "2014-10-26 21:15:44",
       "date": "2014-10",
-      "extra": "bibtex: stackexchange_integers_14\nbiblatexdata[presort=z]",
+      "extra": "Citation Key: stackexchange_integers_14\ntex.presort= z",
       "itemID": 286,
       "itemType": "webpage",
       "shortTitle": "Do integers modulo $n$ minus $\\frac n 2$ (i.e. signed integers) still form a commutative ring?",

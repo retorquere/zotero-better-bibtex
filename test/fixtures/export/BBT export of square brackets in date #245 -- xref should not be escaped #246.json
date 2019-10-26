@@ -33,7 +33,7 @@
         }
       ],
       "date": "[2014]",
-      "extra": "bibtex[xref=welker_andreas_1999]\nbibtex: bentley_academic_2011",
+      "extra": "Citation Key: bentley_academic_2011\ntex.xref= welker_andreas_1999",
       "itemID": 281,
       "itemType": "journalArticle",
       "journalAbbreviation": "J R Anthropol Inst",
@@ -80,7 +80,7 @@
       "court": "HCA",
       "date": "1998-04-01",
       "dateDecided": "1998-04-01",
-      "extra": "bibtex:kartinyeri\nbibtex{\nauthor:\"Kaetinyeri v Commonwealth\",\ntranslator:\"Kartinyeri\"\n}",
+      "extra": "Citation Key: kartinyeri\ntex.author= Kaetinyeri v Commonwealth\ntex.translator= Kartinyeri",
       "firstPage": "337",
       "itemID": 1825,
       "itemType": "case",

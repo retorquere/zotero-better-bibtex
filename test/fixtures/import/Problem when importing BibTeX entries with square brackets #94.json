@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,57 +60,63 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "volume": "157",
-      "issue": "1",
-      "pages": "169-179",
-      "publicationTitle": "Physica C",
-      "ISSN": "0921-4534",
-      "date": "1989-01",
-      "extra": "Citation Key: Adachi_1989 \nbibtex*[owner=Francesco;timestamp=2010.07.01]",
       "DOI": "10.1016/0921-4534(89)90484-X",
-      "abstractNote": "Cluster model calculations have been carried out to study the electronic state and the chemical bonding in Cu2O and CuO as well as YBa2Cu3O7 and YBa2Cu3O6. The clusters used are Cu4O14-9, Cu4O16-12, Cu3O17-12 and Cu3O15-10, respectively, each being embedded in an appropriate electrostatic potential reflecting the crystal structure. The covalent interaction between Cu and O is most significant in the cluster for the high-temperature superconductor YBa2CuO7. It is remarkable that O 2p[pi] holes are created near the Fermi level and stabilized in the O—-Cu+—O- linear bond formed in the basal Cu2O plane of the cluster for YBa2Cu3O7. A charge disproportionation takes place both in the model clusters for YBa2Cu3O7 and YBa2Cu3O6, while a spin polarization is seen only in the latter. The similarity and dissimilarity of Cu atoms in those oxides are discussed.",
-      "title": "Cluster model investigation of the electronic state and chemical bond in cuprous and cupric oxide",
+      "ISSN": "0921-4534",
+      "abstractNote": "Cluster model calculations have been carried out to study the electronic state and the chemical bonding in Cu2O and CuO as well as YBa2Cu3O7 and YBa2Cu3O6. The clusters used are Cu4O14-9, Cu4O16-12, Cu3O17-12 and Cu3O15-10, respectively, each being embedded in an appropriate electrostatic potential reflecting the crystal structure. The covalent interaction between Cu and O is most significant in the cluster for the high-temperature superconductor YBa2CuO7. It is remarkable that O 2p[pi] holes are created near the Fermi level and stabilized in the O\u2014-Cu+\u2014O- linear bond formed in the basal Cu2O plane of the cluster for YBa2Cu3O7. A charge disproportionation takes place both in the model clusters for YBa2Cu3O7 and YBa2Cu3O6, while a spin polarization is seen only in the latter. The similarity and dissimilarity of Cu atoms in those oxides are discussed.",
+      "attachments": [],
+      "citationKey": "Adachi_1989",
+      "citekey": "Adachi_1989",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "H.",
-          "lastName": "Adachi",
-          "creatorType": "author"
+          "lastName": "Adachi"
         },
         {
+          "creatorType": "author",
           "firstName": "M.",
-          "lastName": "Takano",
-          "creatorType": "author"
+          "lastName": "Takano"
         }
       ],
+      "date": "1989-01",
+      "dateAdded": "2019-08-21T08:50:07Z",
+      "dateModified": "2019-08-21T08:50:07Z",
+      "extra": "Citation Key: Adachi_1989\ntex.owner: Francesco\ntex.timestamp: 2010.07.01",
+      "issue": "1",
+      "itemID": 314,
+      "itemType": "journalArticle",
+      "key": "GV53JY7D",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "169-179",
+      "publicationTitle": "Physica C",
+      "relations": [],
       "tags": [
         "CuO"
       ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-21T08:50:07Z",
-      "dateModified": "2019-08-21T08:50:07Z",
+      "title": "Cluster model investigation of the electronic state and chemical bond in cuprous and cupric oxide",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/GV53JY7D",
-      "attachments": [],
-      "notes": [],
-      "itemID": 314,
-      "key": "GV53JY7D",
-      "citekey": "Adachi_1989",
-      "citationKey": "Adachi_1989",
-      "libraryID": 1
+      "version": 0,
+      "volume": "157"
     }
   ]
 }

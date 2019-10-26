@@ -208,6 +208,8 @@ const queue = new class {
 
   public async run(task) {
     if (task.canceled) return
+    await Zotero.BetterBibTeX.ready
+    if (task.canceled) return
 
     const ae = this.autoexports.get(task.id)
     if (!ae) throw new Error(`AutoExport ${task.id} not found`)

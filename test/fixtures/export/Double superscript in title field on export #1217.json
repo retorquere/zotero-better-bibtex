@@ -100,7 +100,7 @@
       "date": "2018-05",
       "dateAdded": "2019-07-11T18:27:19Z",
       "dateModified": "2019-07-11T18:27:25Z",
-      "extra": "bibtex*[publisher=American Physical Society;numpages=16]",
+      "extra": "tex.publisher: American Physical Society\ntex.numpages: 16",
       "issue": "18",
       "itemID": 592,
       "itemType": "journalArticle",

@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,100 +60,106 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "conferencePaper",
-      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.html#HulseKNW09",
-      "publisher": "IEEE Computer Society",
-      "pages": "507-514",
       "ISBN": "978-0-7695-3902-7",
-      "date": "2010-01-27",
-      "extra": "Citation Key: Hulse2009 \nbibtex*[added-at=2010-01-27T00:00:00.000+0100;biburl=http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp;crossref=conf/icdm/2009w;description=dblp;ee=http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35;interhash=aad604c231737dbf8f6155082e3535ae;intrahash=c97a29e90fbd958a0990360f70252458;owner=sstudent;timestamp=2011.01.03]",
-      "title": "Feature selection with high-dimensional imbalanced data#",
+      "attachments": [],
+      "citationKey": "Hulse2009",
+      "citekey": "Hulse2009",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Jason Van",
-          "lastName": "Hulse",
-          "creatorType": "author"
+          "lastName": "Hulse"
         },
         {
+          "creatorType": "author",
           "firstName": "Taghi M.",
-          "lastName": "Khoshgoftaar",
-          "creatorType": "author"
+          "lastName": "Khoshgoftaar"
         },
         {
+          "creatorType": "author",
           "firstName": "Amri",
-          "lastName": "Napolitano",
-          "creatorType": "author"
+          "lastName": "Napolitano"
         },
         {
+          "creatorType": "author",
           "firstName": "Randall",
-          "lastName": "Wald",
-          "creatorType": "author"
+          "lastName": "Wald"
         },
         {
-          "firstName": "Yücel",
-          "lastName": "Saygin",
-          "creatorType": "editor"
+          "creatorType": "editor",
+          "firstName": "Y\u00fccel",
+          "lastName": "Saygin"
         },
         {
+          "creatorType": "editor",
           "firstName": "Jeffrey Xu",
-          "lastName": "Yu",
-          "creatorType": "editor"
+          "lastName": "Yu"
         },
         {
+          "creatorType": "editor",
           "firstName": "Hillol",
-          "lastName": "Kargupta",
-          "creatorType": "editor"
+          "lastName": "Kargupta"
         },
         {
+          "creatorType": "editor",
           "firstName": "Wei",
-          "lastName": "Wang",
-          "creatorType": "editor"
+          "lastName": "Wang"
         },
         {
+          "creatorType": "editor",
           "firstName": "Sanjay",
-          "lastName": "Ranka",
-          "creatorType": "editor"
+          "lastName": "Ranka"
         },
         {
+          "creatorType": "editor",
           "firstName": "Philip S.",
-          "lastName": "Yu",
-          "creatorType": "editor"
+          "lastName": "Yu"
         },
         {
+          "creatorType": "editor",
           "firstName": "Xindong",
-          "lastName": "Wu",
-          "creatorType": "editor"
+          "lastName": "Wu"
         }
       ],
+      "date": "2010-01-27",
+      "dateAdded": "2019-08-20T14:16:42Z",
+      "dateModified": "2019-08-20T14:16:42Z",
+      "extra": "Citation Key: Hulse2009\ntex.added-at: 2010-01-27T00:00:00.000+0100\ntex.biburl: http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp\ntex.crossref: conf/icdm/2009w\ntex.description: dblp\ntex.ee: http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35\ntex.interhash: aad604c231737dbf8f6155082e3535ae\ntex.intrahash: c97a29e90fbd958a0990360f70252458\ntex.owner: sstudent\ntex.timestamp: 2011.01.03",
+      "itemID": 283,
+      "itemType": "conferencePaper",
+      "key": "55KZUW55",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "507-514",
+      "publicationTitle": "ICDM workshops",
+      "publisher": "IEEE Computer Society",
+      "relations": [],
       "tags": [
         "dblp"
       ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-20T14:16:42Z",
-      "dateModified": "2019-08-20T14:16:42Z",
+      "title": "Feature selection with high-dimensional imbalanced data#",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/55KZUW55",
-      "attachments": [],
-      "notes": [],
-      "itemID": 283,
-      "key": "55KZUW55",
-      "citekey": "Hulse2009",
-      "citationKey": "Hulse2009",
-      "libraryID": 1,
-      "publicationTitle": "ICDM workshops"
+      "url": "http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.html#HulseKNW09",
+      "version": 0
     }
   ]
 }

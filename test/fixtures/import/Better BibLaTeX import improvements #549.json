@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,267 +60,273 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "extra": "Citation Key: 1e",
-      "title": "Blah <i>emph</i> and “enquote”.",
-      "creators": [
-        {
-          "name": "01e",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:50Z",
-      "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJZNWNRK",
       "attachments": [],
-      "notes": [],
-      "itemID": 834,
-      "key": "HJZNWNRK",
-      "citekey": "1e",
       "citationKey": "1e",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "journalArticle",
-      "extra": "Citation Key: 1b",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
+      "citekey": "1e",
+      "collections": [],
       "creators": [
         {
-          "name": "01b",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "01e"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
       "dateAdded": "2019-08-22T21:07:50Z",
       "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T3BBPLRD",
-      "attachments": [],
+      "extra": "Citation Key: 1e",
+      "itemID": 834,
+      "itemType": "journalArticle",
+      "key": "HJZNWNRK",
+      "libraryID": 1,
       "notes": [],
-      "itemID": 835,
-      "key": "T3BBPLRD",
-      "citekey": "1b",
+      "relations": [],
+      "tags": [],
+      "title": "Blah <i>emph</i> and \u201cenquote\u201d.",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HJZNWNRK",
+      "version": 0
+    },
+    {
+      "attachments": [],
       "citationKey": "1b",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "book",
-      "extra": "Citation Key: 2e",
-      "title": "Blah <i>emph</i> and “enquote”.",
+      "citekey": "1b",
+      "collections": [],
       "creators": [
         {
-          "name": "02e",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "01b"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
       "dateAdded": "2019-08-22T21:07:50Z",
       "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LAJIGL2P",
-      "attachments": [],
-      "notes": [],
-      "itemID": 836,
-      "key": "LAJIGL2P",
-      "citekey": "2e",
-      "citationKey": "2e",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "book",
-      "extra": "Citation Key: 2b",
-      "title": "Blah <i>mkbibemph</i> and “mkbibquote”.",
-      "creators": [
-        {
-          "name": "02b",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:50Z",
-      "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/8GYZHJIP",
-      "attachments": [],
-      "notes": [],
-      "itemID": 837,
-      "key": "8GYZHJIP",
-      "citekey": "2b",
-      "citationKey": "2b",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "thesis",
-      "date": "2003",
-      "extra": "Citation Key: Bennett2003",
-      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
-      "creators": [
-        {
-          "firstName": "David Christopher",
-          "lastName": "Bennett",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:50Z",
-      "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JTY3X44X",
-      "attachments": [],
-      "notes": [],
-      "itemID": 838,
-      "key": "JTY3X44X",
-      "citekey": "Bennett2003",
-      "citationKey": "Bennett2003",
-      "libraryID": 1,
-      "publisher": "University of London",
-      "type": "Ph.D."
-    },
-    {
-      "version": 0,
-      "itemType": "bookSection",
-      "pages": "263-87",
-      "date": "2013",
-      "extra": "Citation Key: Cooper2013 \nbibtex*[crossref=Classen2013]",
-      "title": "Byzantium between east and west: competing hellenisms in the <i>alexiad</i> of anna komnene and her contemporaries",
-      "creators": [
-        {
-          "firstName": "Glen",
-          "lastName": "Cooper",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:50Z",
-      "dateModified": "2019-08-22T21:07:50Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LVSMWQH",
-      "attachments": [],
-      "notes": [],
-      "itemID": 839,
-      "key": "9LVSMWQH",
-      "citekey": "Cooper2013",
-      "citationKey": "Cooper2013",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
+      "extra": "Citation Key: 1b",
+      "itemID": 835,
       "itemType": "journalArticle",
-      "volume": "1",
-      "pages": "1-11",
-      "publicationTitle": "Beiträge zur Geschichte der Philosophie des Mittelalters",
-      "date": "1891",
-      "extra": "Citation Key: Correns1891",
-      "title": "Die dem boethius fälschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
-      "creators": [
-        {
-          "firstName": "Paul",
-          "lastName": "Correns",
-          "creatorType": "editor"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:51Z",
-      "dateModified": "2019-08-22T21:07:51Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U8N9YRXX",
-      "attachments": [],
-      "notes": [],
-      "itemID": 840,
-      "key": "U8N9YRXX",
-      "citekey": "Correns1891",
-      "citationKey": "Correns1891",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "encyclopediaArticle",
-      "volume": "4",
-      "pages": "172-4",
-      "date": "1985",
-      "extra": "Citation Key: Algar1985",
-      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
-      "creators": [
-        {
-          "firstName": "Hamid",
-          "lastName": "Algar",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-08-22T21:07:51Z",
-      "dateModified": "2019-08-22T21:07:51Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BBDH9HPN",
-      "attachments": [],
-      "notes": [],
-      "itemID": 841,
-      "key": "BBDH9HPN",
-      "citekey": "Algar1985",
-      "citationKey": "Algar1985",
+      "key": "T3BBPLRD",
       "libraryID": 1,
-      "publicationTitle": "Encyclopedia iranica"
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d.",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T3BBPLRD",
+      "version": 0
     },
     {
-      "version": 0,
-      "itemType": "book",
-      "place": "Burlington, VT",
-      "publisher": "Ashgate",
-      "date": "2012",
-      "extra": "Citation Key: Arsdall2012",
-      "title": "Herbs and healers from the ancient mediterranean through the medieval west: essays in honor of john m. riddle",
+      "attachments": [],
+      "citationKey": "2e",
+      "citekey": "2e",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
+          "name": "02e"
+        }
+      ],
+      "dateAdded": "2019-08-22T21:07:50Z",
+      "dateModified": "2019-08-22T21:07:50Z",
+      "extra": "Citation Key: 2e",
+      "itemID": 836,
+      "itemType": "book",
+      "key": "LAJIGL2P",
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Blah <i>emph</i> and \u201cenquote\u201d.",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/LAJIGL2P",
+      "version": 0
+    },
+    {
+      "attachments": [],
+      "citationKey": "2b",
+      "citekey": "2b",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "name": "02b"
+        }
+      ],
+      "dateAdded": "2019-08-22T21:07:50Z",
+      "dateModified": "2019-08-22T21:07:50Z",
+      "extra": "Citation Key: 2b",
+      "itemID": 837,
+      "itemType": "book",
+      "key": "8GYZHJIP",
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Blah <i>mkbibemph</i> and \u201cmkbibquote\u201d.",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/8GYZHJIP",
+      "version": 0
+    },
+    {
+      "attachments": [],
+      "citationKey": "Bennett2003",
+      "citekey": "Bennett2003",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "David Christopher",
+          "lastName": "Bennett"
+        }
+      ],
+      "date": "2003",
+      "dateAdded": "2019-08-22T21:07:50Z",
+      "dateModified": "2019-08-22T21:07:50Z",
+      "extra": "Citation Key: Bennett2003",
+      "itemID": 838,
+      "itemType": "thesis",
+      "key": "JTY3X44X",
+      "libraryID": 1,
+      "notes": [],
+      "publisher": "University of London",
+      "relations": [],
+      "tags": [],
+      "title": "Xenonika: medical texts associated with xenones in the late Byzantine period",
+      "type": "Ph.D.",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/JTY3X44X",
+      "version": 0
+    },
+    {
+      "attachments": [],
+      "citationKey": "Cooper2013",
+      "citekey": "Cooper2013",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Glen",
+          "lastName": "Cooper"
+        }
+      ],
+      "date": "2013",
+      "dateAdded": "2019-08-22T21:07:50Z",
+      "dateModified": "2019-08-22T21:07:50Z",
+      "extra": "Citation Key: Cooper2013\ntex.crossref: Classen2013",
+      "itemID": 839,
+      "itemType": "bookSection",
+      "key": "9LVSMWQH",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "263-87",
+      "relations": [],
+      "tags": [],
+      "title": "Byzantium between east and west: competing hellenisms in the <i>alexiad</i> of anna komnene and her contemporaries",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LVSMWQH",
+      "version": 0
+    },
+    {
+      "attachments": [],
+      "citationKey": "Correns1891",
+      "citekey": "Correns1891",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "editor",
+          "firstName": "Paul",
+          "lastName": "Correns"
+        }
+      ],
+      "date": "1891",
+      "dateAdded": "2019-08-22T21:07:51Z",
+      "dateModified": "2019-08-22T21:07:51Z",
+      "extra": "Citation Key: Correns1891",
+      "itemID": 840,
+      "itemType": "journalArticle",
+      "key": "U8N9YRXX",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "1-11",
+      "publicationTitle": "Beitr\u00e4ge zur Geschichte der Philosophie des Mittelalters",
+      "relations": [],
+      "tags": [],
+      "title": "Die dem boethius f\u00e4lschlich zugeschriebene abhandlung des dominicus gundisalvi 'De unitate'",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/U8N9YRXX",
+      "version": 0,
+      "volume": "1"
+    },
+    {
+      "attachments": [],
+      "citationKey": "Algar1985",
+      "citekey": "Algar1985",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "Hamid",
+          "lastName": "Algar"
+        }
+      ],
+      "date": "1985",
+      "dateAdded": "2019-08-22T21:07:51Z",
+      "dateModified": "2019-08-22T21:07:51Z",
+      "extra": "Citation Key: Algar1985",
+      "itemID": 841,
+      "itemType": "encyclopediaArticle",
+      "key": "BBDH9HPN",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "172-4",
+      "publicationTitle": "Encyclopedia iranica",
+      "relations": [],
+      "tags": [],
+      "title": "Besmallah: in exegesis, jurisprudence, and cultural life",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/BBDH9HPN",
+      "version": 0,
+      "volume": "4"
+    },
+    {
+      "attachments": [],
+      "citationKey": "Arsdall2012",
+      "citekey": "Arsdall2012",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "editor",
           "firstName": "Anne",
-          "lastName": "van Arsdall",
-          "creatorType": "editor"
+          "lastName": "van Arsdall"
         },
         {
+          "creatorType": "editor",
           "firstName": "Timothy",
-          "lastName": "Graham",
-          "creatorType": "editor"
+          "lastName": "Graham"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "2012",
       "dateAdded": "2019-08-22T21:07:51Z",
       "dateModified": "2019-08-22T21:07:51Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZJ7Y4QAM",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: Arsdall2012",
       "itemID": 842,
+      "itemType": "book",
       "key": "ZJ7Y4QAM",
-      "citekey": "Arsdall2012",
-      "citationKey": "Arsdall2012",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "place": "Burlington, VT",
+      "publisher": "Ashgate",
+      "relations": [],
+      "tags": [],
+      "title": "Herbs and healers from the ancient mediterranean through the medieval west: essays in honor of john m. riddle",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ZJ7Y4QAM",
+      "version": 0
     }
   ]
 }

@@ -30,7 +30,7 @@
         }
       ],
       "date": "1988",
-      "extra": "bibtex[date=1988;number=sp\u00e9cial anniversaire 1978-1988;issue=]",
+      "extra": "tex.date= 1988\ntex.number= sp\u00e9cial anniversaire 1978-1988\ntex.issue=",
       "issue": "sp\u00e9cial anniversaire 1978-1988",
       "itemID": 677,
       "itemType": "journalArticle",

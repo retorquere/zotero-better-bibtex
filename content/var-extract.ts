@@ -1,6 +1,3 @@
-import * as log from './debug'
-import JSON5 = require('json5')
-
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 const cslVariables = require('./csl-vars.json')
 import * as Citekey from './key-manager/get-set'
@@ -14,18 +11,12 @@ function cslCreator(value) {
   }
 }
 
-function indexOfRE(str, re, start) {
-  const index = str.substring(start).search(re)
-  return (index >= 0) ? (index + start) : index
-}
-
 export function extract(item) {
   let extra = item.extra || ''
 
   const extraFields = {
-    bibtex: {},
     csl: {},
-    kv: {},
+    tex: {},
     citekey: { citekey: '', pinned: false, aliases: [] },
   }
 
@@ -34,65 +25,6 @@ export function extract(item) {
   const aliases = Citekey.aliases.get(citekey.extra)
   extraFields.citekey.aliases = aliases.aliases
   extra = aliases.extra
-
-  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, cook, fields) => {
-    const legacy = {}
-    for (const field of fields.split(';')) {
-      const kv = field.match(/^([^=]+)(?:=)([\S\s]*)/)
-      if (!kv) {
-        log.debug('fieldExtract: not a field', field)
-        return match
-      }
-
-      let [ , name, value ] = kv.map(v => v.trim())
-      name = name.toLowerCase()
-      legacy[name] = { name, value, raw: !cook }
-    }
-
-    Object.assign(extraFields.bibtex, legacy)
-    return ''
-  }).trim()
-
-  const bibtexJSON = /(biblatexdata|bibtex|biblatex)(\*)?{/
-  let marker = 0
-  const validTypes = new Set(['string', 'number'])
-  while ((marker = indexOfRE(extra, bibtexJSON, marker)) >= 0) {
-    const start = extra.indexOf('{', marker)
-    const raw = extra[start - 1] !== '*'
-
-    // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
-    let end = extra.lastIndexOf('}')
-
-    let json = null
-    while (end > start) {
-      try {
-        json = JSON5.parse(extra.substring(start, end + 1))
-
-        if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
-
-        extra = extra.substring(0, marker) + extra.substring(end + 1)
-
-        for (const [name, value] of Object.entries(json)) {
-          if (validTypes.has(typeof value)) {
-            extraFields.bibtex[name] = {name, value, raw }
-          } else {
-            log.error(`"extra" has invalid biblatexdata field ${name} of type ${typeof value} (${JSON.stringify(value)})`)
-          }
-        }
-
-        break
-
-      } catch (err) {
-        json = null
-      }
-
-      end = extra.lastIndexOf('}', end - 1)
-    }
-
-    if (!json) {
-      marker = start
-    }
-  }
 
   // fetch fields as per https://forums.zotero.org/discussion/3673/2/original-date-of-publication/
   extra = extra.replace(/{:([^:]+):[^\S\n]*([^}]+)}/g, (match, name, value) => {
@@ -112,11 +44,21 @@ export function extract(item) {
   }).trim()
 
   extra = extra.split('\n').filter(line => {
-    let [name, value] = line.split(/\s*:\s*(.+)/)
+    const kv = line.match(/^(tex\.)?([^:=]+)\s*([:=])\s*([\S\s]*)/)
+    if (!kv) return true
+    let [ , tex, name, assign, value ] = kv
+    name = name.trim().toLowerCase()
+    const raw = (assign === '=')
 
-    if (!value) return true // keep line
+    if (!name) return true
+    if (!tex && raw) return true
 
-    name = name.trim().toLowerCase().replace(/ +/g, '-')
+    if (tex) {
+      extraFields.tex[name] = { name, value, raw }
+      return false
+    }
+
+    name = name.replace(/ +/g, '-')
     const cslType = cslVariables[name]
     if (cslType) {
       if (cslType === 'creator') {
@@ -129,8 +71,9 @@ export function extract(item) {
       return false
     }
 
-    if (['lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name.replace(/-/g, ''))) { // google-books-id
-      extraFields.kv[name.replace(/-/g, '')] = value
+    name = name.replace(/-/g, '') // google-books-id
+    if (['place', 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid'].includes(name)) {
+      extraFields.tex[name] = { name, value }
       return false
     }
 

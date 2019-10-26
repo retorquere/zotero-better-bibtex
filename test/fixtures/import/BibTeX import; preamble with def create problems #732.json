@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.71",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.14",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.127.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -67,47 +60,53 @@
       "strings": "",
       "suppressBraceProtection": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.127.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.71",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.14",
+        "platform": "MacIntel",
+        "version": "5.0.71"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "bookSection",
-      "extra": "Citation Key: MR1870153",
-      "title": "Homogenization of scalar wave equation with hysteresis operator",
+      "attachments": [],
+      "citationKey": "MR1870153",
+      "citekey": "MR1870153",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Jan",
-          "lastName": "Franců",
-          "creatorType": "author"
+          "lastName": "Franc\u016f"
         },
         {
+          "creatorType": "author",
           "firstName": "Pavel",
-          "lastName": "Krejčí",
-          "creatorType": "author"
+          "lastName": "Krej\u010d\u00ed"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
       "dateAdded": "2019-08-19T14:27:46Z",
       "dateModified": "2019-08-19T14:27:46Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TX7DIEAS",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: MR1870153",
       "itemID": 277,
+      "itemType": "bookSection",
       "key": "TX7DIEAS",
-      "citekey": "MR1870153",
-      "citationKey": "MR1870153",
-      "libraryID": 1
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "Homogenization of scalar wave equation with hysteresis operator",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/TX7DIEAS",
+      "version": 0
     }
   ]
 }
