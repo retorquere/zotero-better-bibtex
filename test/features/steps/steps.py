@@ -160,6 +160,10 @@ def step_impl(context, field, value):
   context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.select(ids)', ids=context.selected)
   time.sleep(3)
 
+@when(u'I remove all items from "{collection}"')
+def step_impl(context, collection):
+  context.zotero.execute('await Zotero.BetterBibTeX.TestSupport.clearCollection(path)', path=collection)
+
 @when(u'I remove the selected item')
 def step_impl(context):
   assert len(context.selected) == 1
@@ -174,6 +178,10 @@ def step_impl(context):
 def step_impl(context):
   assert len(context.selected) > 1
   context.zotero.execute('return await Zotero.BetterBibTeX.TestSupport.merge(selected)', selected=context.selected)
+
+@when(u'I empty the trash')
+def step_impl(context):
+  context.zotero.execute('await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)')
 
 @when(u'I pick "{title}" for CAYW')
 def step_impl(context, title):
@@ -214,7 +222,7 @@ def step_impl(context, expected, found):
 
   assert_equal_diff(expected.strip(), found.strip())
 
-@when(u'I wait {seconds:d} seconds')
+@step(u'I wait {seconds:d} seconds')
 def step_impl(context, seconds):
   time.sleep(seconds)
 

@@ -706,7 +706,7 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     await Zotero.Schema.schemaUpdatePromise
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
-    JournalAbbrev.init()
+    await JournalAbbrev.init()
 
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()

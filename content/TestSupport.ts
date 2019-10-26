@@ -237,4 +237,28 @@ export = new class {
     const after = await Zotero.Items.getAll(Zotero.Libraries.userLibraryID, true, false, true)
     if (before.length - after.length !== (ids.length - 1)) throw new Error(`merging ${ids.length}: before = ${before.length}, after = ${after.length}`)
   }
+
+  public async clearCollection(path) {
+    let collection = null
+
+    for (const name of path.split('/')) {
+      const collections = collection ? Zotero.Collections.getByParent(collection.id) : Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)
+      let found = false
+      for (const candidate of collections) {
+        if (candidate.name !== name) continue
+
+        collection = candidate
+        found = true
+        break
+      }
+      if (!found) throw new Error(`${path} not found`)
+    }
+
+    const itemIDs = collection.getChildItems(true)
+    if (!itemIDs.length) throw new Error(`${path} is empty`)
+    await Zotero.DB.executeTransaction(async () => {
+      await collection.removeItems(itemIDs)
+    })
+    if (collection.getChildItems(true).length) throw new Error(`${path} not empty`)
+  }
 }
