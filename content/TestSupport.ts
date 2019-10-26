@@ -17,6 +17,10 @@ import { DB as Cache } from './db/cache'
 const pref_defaults = require('../gen/preferences/defaults.json')
 
 export = new class {
+  public async removeAutoExports() {
+    AutoExport.db.findAndRemove({ type: { $ne: '' } })
+  }
+
   public async reset() {
     Cache.reset()
 

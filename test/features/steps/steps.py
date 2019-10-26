@@ -22,7 +22,7 @@ def step_impl(context, pref, value):
   context.zotero.preferences[pref] = context.zotero.preferences.parse(value)
 
 @step(r'I restart Zotero with from "{db}" + "{source}"')
-def step_impl(context, source, db):
+def step_impl(context, db, source):
   source = expand_scenario_variables(context, source)
   context.imported = source
 
@@ -40,6 +40,10 @@ def step_impl(context, source, db):
 
   # check import
   export_library(context, expected = source)
+
+@step(r'I restart Zotero with from "{db}"')
+def step_impl(context, db):
+  context.zotero.restart(timeout=context.timeout, db=db)
 
 @step(r'I import {references:d} references from "{source}"')
 def step_impl(context, references, source):
