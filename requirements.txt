@@ -13,8 +13,9 @@ pushbullet.py
 pylint
 python-dotenv
 python-slugify
+readmd
 redo
+requests
 ruamel.yaml
 selenium
 toml
-readmd
