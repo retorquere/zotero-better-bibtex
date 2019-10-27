@@ -405,7 +405,7 @@
         <preference
           name="extensions.zotero.translators.better-bibtex.suppressNoCase"
           type="bool"
-          default="false"/>
+          default="true"/>
         <!--!!
           On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
           out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
