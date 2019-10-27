@@ -22,12 +22,18 @@ def print(txt, end='\n'):
 class benchmark(object):
   def __init__(self,name):
     self.name = name
+
   def __enter__(self):
-    self.start = time.time()
+    self.started = time.time()
+    return self
+
   def __exit__(self,ty,val,tb):
-    end = time.time()
-    print("%s : %0.3f seconds" % (self.name, end-self.start))
+    print("%s : %s" % (self.name, self.elapsed))
     return False
+
+  @property
+  def elapsed(self):
+    return "%0.3fs" % (time.time() - self.started,)
 
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))

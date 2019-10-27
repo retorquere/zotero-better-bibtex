@@ -200,9 +200,9 @@ class Zotero:
     ready = False
     self.config.stash()
     self.config.timeout = 2
-    with benchmark(f'starting {self.client}'):
+    with benchmark(f'starting {self.client}') as bm:
       for _ in redo.retrier(attempts=120,sleeptime=1):
-        utils.print('connecting...')
+        utils.print(f'connecting... ({bm.elapsed})')
         try:
           ready = self.execute("""
             if (!Zotero.BetterBibTeX) {
