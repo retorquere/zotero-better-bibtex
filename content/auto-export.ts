@@ -152,13 +152,20 @@ const queue = new class {
   private autoexports: any
   private debounce_delay: number
   private sorry = true
+  private started = false
 
   constructor() {
-    this.paused = Prefs.get('autoExport') === 'immediate' ? null : new Set([])
+    this.paused = new Set()
 
     this.debounce_delay = Prefs.get('autoExportDelay')
     if (this.debounce_delay < 1) this.debounce_delay = 1
     this.debounce_delay = this.debounce_delay * 1000 // tslint:disable-line:no-magic-numbers
+  }
+
+  public start() {
+    if (this.started) return
+    this.started = true
+    if (Prefs.get('autoExport') === 'immediate') this.resume()
 
     const idleService = Components.classes['@mozilla.org/widget/idleservice;1'].getService(Components.interfaces.nsIIdleService)
     idleService.addIdleObserver(this, Prefs.get('autoExportIdleWait'))
@@ -306,7 +313,7 @@ const queue = new class {
 
   // idle observer
   protected observe(subject, topic, data) {
-    if (Prefs.get('autoExport') === 'off') return
+    if (!this.started || Prefs.get('autoExport') === 'off') return
 
     switch (topic) {
       case 'back':
@@ -355,6 +362,10 @@ export let AutoExport = new class { // tslint:disable-line:variable-name
     }
 
     if (Prefs.get('autoExport') === 'immediate') { queue.resume() }
+  }
+
+  public start() {
+    queue.start()
   }
 
   public add(ae) {

@@ -1,3 +1,4 @@
+import sqlite3
 import uuid
 import json
 import os
@@ -477,6 +478,15 @@ class Zotero:
       if not os.path.exists(db_bbt):
         urllib.request.urlretrieve(f'https://github.com/retorquere/zotero-better-bibtex/releases/download/test-database/{self.config.db}.better-bibtex.sqlite', db_bbt)
       shutil.copy(db_bbt, os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      db = sqlite3.connect(os.path.join(profile.path, self.client, os.path.basename(db_bbt)))
+      ae = None
+      for (ae,) in db.execute('SELECT data FROM "better-bibtex" WHERE name = ?', [ 'better-bibtex.autoexport' ]):
+        ae = json.loads(ae)
+        ae['data'] = []
+      if ae:
+        db.execute('UPDATE "better-bibtex" SET data = ? WHERE name = ?', [ json.dumps(ae), 'better-bibtex.autoexport' ])
+        db.commit()
+      db.close()
 
     return profile
 

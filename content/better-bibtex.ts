@@ -19,7 +19,7 @@ log.debug('Loading Better BibTeX')
 import { Translators } from './translators'
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
-import { upgrade as dbUpgrade } from './db/zotero'
+import { upgrade as dbUpgrade } from './db/upgrade'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
@@ -215,7 +215,9 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
     })
   }
 
-  return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
+  if (!citekey.citekey) return '\uFFFD'
+
+  return citekey.citekey + (citekey.pinned ? '' : ' *')
 })
 
 import * as CAYW from './cayw'
@@ -413,6 +415,8 @@ notify('item-tag', (action, type, ids, extraData) => {
 })
 
 notify('item', (action, type, ids, extraData) => {
+  log.debug('notify.item', { action, type, ids, extraData })
+
   // prevents update loop -- see KeyManager.init()
   if (action === 'modify') {
     ids = ids.filter(id => !extraData[id] || !extraData[id].bbtCitekeyUpdate)
@@ -683,31 +687,35 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     progress.update(this.getString('BetterBibTeX.startup.loadingKeys'))
     await Promise.all([Cache.init(), DB.init()])
 
-    deferred.loaded.resolve(true)
-    // this is what really takes long
-    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
-    await Zotero.Schema.schemaUpdatePromise
+    await KeyManager.init() // loads the existing keys
+
+    // after the caches because I may need to drop items from the cache
+    await dbUpgrade(progress.update.bind(progress))
 
     progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
     Serializer.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
-    JournalAbbrev.init()
+    progress.update(this.getString('BetterBibTeX.startup.autoExport.load'))
+    await AutoExport.init()
 
-    // order matters, even if it sucks for display:
-    // 1. Translators need to be installed before autoexport can be started
-    // 2. Autoexport is started so it can pick up potential changes by dbUpgrade
-    // 3. dbUpgrade must be ran before the keymanager scans the database
+    // not yet started
+    deferred.loaded.resolve(true)
+
+    // this is what really takes long
+    progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
+    await Zotero.Schema.schemaUpdatePromise
+
+    progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
+    await JournalAbbrev.init()
+
     progress.update(this.getString('BetterBibTeX.startup.installingTranslators'))
     await Translators.init()
 
-    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
-    await AutoExport.init()
-
-    await dbUpgrade(progress.update.bind(progress))
-
     progress.update(this.getString('BetterBibTeX.startup.keyManager'))
-    await KeyManager.init() // inits the key cache by scanning the DB
+    await KeyManager.start() // inits the key cache by scanning the DB and generating missing keys
+
+    progress.update(this.getString('BetterBibTeX.startup.autoExport'))
+    await AutoExport.start()
 
     deferred.ready.resolve(true)
 

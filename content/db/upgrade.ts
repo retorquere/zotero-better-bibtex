@@ -1,86 +1,62 @@
-import JSON5 = require('json5')
+declare const Zotero: any
 
-const bibtex = /(?:^|\s)bibtex:[^\S\n]*([^\s]*)(?:\s|$)/
-const biblatexcitekey = /(?:^|\s)biblatexcitekey\[([^\[\]\s]*)\](?:\s|$)/
-const citekey = new RegExp(`${bibtex.source}|${biblatexcitekey.source}`, 'ig')
+import * as ZoteroDB from './zotero'
+import { upgradeExtra } from './upgrade-extra'
+// import { getItemsAsync } from '../get-items-async'
+import { DB as Cache } from './cache'
+import * as log from '../debug'
 
-const bibtexJSON = /(biblatexdata|bibtex|biblatex)(\*)?{/
+export async function upgrade(progress) {
+  progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n: '?', total: '?' })) // tslint:disable-line:no-magic-numbers
 
-function indexOfRE(str, re, start) {
-  const index = str.substring(start).search(re)
-  return (index >= 0) ? (index + start) : index
-}
-
-function makeName(name) {
-  return `tex.${name.replace(/[:=]/g, '-').toLowerCase()}`
-}
-export function upgradeExtra(extra) {
-  let extraFields = []
-
-  // replace citekey markers with 'Citation Key'
-  extra = extra.replace(citekey, (_, ck1, ck2) => {
-    extraFields.push(`Citation Key: ${(ck1 || ck2 || '').trim()}`)
-    return '\n'
-  }).trim()
-
-  // replace old-style key-value fields
-  extra = extra.replace(/(?:biblatexdata|bibtex|biblatex)(\*)?\[([^\[\]]*)\]/g, (match, cook, fields) => {
-    const legacy = []
-    for (const field of fields.split(';')) {
-      const kv = field.match(/^([^=]+)(?:=)([\S\s]*)/)
-      if (!kv) return match
-
-      const [ , name, value ] = kv.map(v => v.trim())
-      legacy.push(`${makeName(name)}${cook ? ':' : '='} ${value}`)
-    }
-
-    extraFields = extraFields.concat(legacy)
-
-    return ''
-  }).trim()
-
-  let marker = 0
-  while ((marker = indexOfRE(extra, bibtexJSON, marker)) >= 0) {
-    const start = extra.indexOf('{', marker)
-    const cook = extra[start - 1] === '*'
-
-    // this selects the maximum chunk of text looking like {...}. May be too long, deal with that below
-    let end = extra.lastIndexOf('}')
-
-    let json = null
-    while (end > start) {
-      const candidate = extra.substring(start, end + 1)
-      try {
-        json = JSON.parse(candidate)
-      } catch (err) {
-        try {
-          json = JSON5.parse(candidate)
-        } catch (err) {
-          json = null
-        }
-      }
-
-      if (json) {
-        if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
-
-        extra = extra.substring(0, marker) + extra.substring(end + 1)
-
-        for (const [name, value] of Object.entries(json)) {
-          extraFields.push(`${makeName(name)}${cook ? ':' : '='} ${value}`)
-        }
-
-        break
-      }
-
-      end = extra.lastIndexOf('}', end - 1)
-    }
-
-    if (!json) {
-      marker = start
+  const patterns = []
+  for (const prefix of ['bibtex', 'biblatexcitekey', 'biblatex', 'biblatexdata']) {
+    for (const postfix of [':', '[', '*[', '{', '*{']) {
+      patterns.push(`%${prefix}${postfix}%`)
     }
   }
 
-  extra = extraFields.concat(extra).join('\n').trim()
+  const query = `
+    SELECT items.itemID, itemDataValues.value as extra
+    FROM items
+    JOIN itemData on itemData.itemID = items.itemID
+    JOIN fields on fields.fieldID = itemData.fieldID
+    JOIN itemDataValues on itemData.valueID = itemDataValues.valueID
+    WHERE
+      items.itemID NOT IN (select itemID from deletedItems)
+      AND fields.fieldName = 'extra'
+      AND (${patterns.map(pattern => 'itemDataValues.value like ?').join(' OR ')})
+  `
 
-  return extra
+  await Zotero.DB.executeTransaction(async () => {
+    const legacy = await ZoteroDB.queryAsync(query, patterns)
+    const affected = []
+
+    const total = legacy.length
+    let n = 0
+    progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // tslint:disable-line:no-magic-numbers
+
+    for (const item of legacy) {
+      n += 1
+      if ((n % 50) === 0) progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n, total })) // tslint:disable-line:no-magic-numbers
+
+      const extra = upgradeExtra(item.extra)
+      if (extra !== item.extra) {
+        log.debug('dbUpgrade: old=\n', item.extra)
+        log.debug('dbUpgrade: new=\n', extra)
+        const upgraded = await Zotero.Items.getAsync(item.itemID)
+        try {
+          upgraded.setField('extra', extra)
+        } catch (err) {
+          await upgraded.loadAllData()
+          upgraded.setField('extra', extra)
+        }
+        await upgraded.save()
+        affected.push(upgraded.id)
+      }
+    }
+    progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade', { n: total, total })) // tslint:disable-line:no-magic-numbers
+    if (affected.length) Cache.remove(affected, 'dbUpgrade')
+  })
+  progress(Zotero.BetterBibTeX.getString('BetterBibTeX.startup.dbUpgrade.saving')) // tslint:disable-line:no-magic-numbers
 }

@@ -35,6 +35,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
   private itemObserverDelay: number = Prefs.get('itemObserverDelay')
   private scanning: any[]
+  private started = false
 
   public async pin(ids, inspireHEP = false) {
     ids = this.expandSelection(ids)
@@ -148,7 +149,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
     Formatter.init(new Set((await Zotero.DB.queryAsync('select typeName from itemTypes')).map(type => type.typeName.toLowerCase())))
     Formatter.update('init')
+  }
 
+  public async start() {
     await this.rescan()
 
     Events.on('preference-changed', pref => {
@@ -170,6 +173,8 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
     })
+
+    this.started = true
   }
 
   public async rescan(clean?: boolean) {
@@ -214,6 +219,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
       // don't fetch when clean is active because the removeDataOnly will have done it already
       const existing = clean ? null : this.keys.findOne({ itemID: item.itemID })
+      log.debug('keymanager.rescan:', { clean, itemID: item.itemID, extra, existing })
       if (!existing) {
         // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
         this.keys.insert({ citekey: extra.citekey || marker, pinned: extra.pinned, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
@@ -318,10 +324,13 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     if (!this.keys) return { citekey: '', pinned: false, retry: true }
 
     const key = this.keys.findOne({ itemID })
-    if (key) return key
+    if (key) {
+      if (!this.started) return {...key, retry: true }
+      return key
+    }
 
-    log.error('KeyManager.get called for non-existent itemID', itemID, new Error('non-existing item'))
-    return { citekey: '', pinned: false }
+    // log.error('KeyManager.get called for non-existent itemID', itemID, new Error('non-existing item'))
+    return { citekey: '', pinned: false, retry: true }
   }
 
   public propose(item) {

@@ -18,6 +18,7 @@ class Main extends Loki {
     const citekeys = this.schemaCollection('citekey', {
       indices: [ 'itemID', 'itemKey', 'libraryID', 'citekey', 'pinned' ],
       unique: [ 'itemID' ],
+      logging: true,
       schema: {
         type: 'object',
         properties: {

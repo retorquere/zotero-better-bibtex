@@ -15,8 +15,9 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
     this.initialized = false
   }
 
-  public init() {
+  public async init() {
     if (this.initialized) return null
+    await Zotero.Styles.init() // otherwise Juris-M throws 'Styles not yet loaded'
     this.initialized = true
 
     Events.on('preference-changed', pref => {

@@ -443,8 +443,21 @@ Scenario: automatic tags in export #1270
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
 # tests the cache
-@zotero @nightly @rbwl @timeout=3000
+@rbwl @zotero @nightly @timeout=3000
 Scenario: Really Big whopping library
   When I restart Zotero with from "1287" + "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+
+@1296 @zotero @timeout=3000
+Scenario: Cache does not seem to fill #1296
+  When I restart Zotero with from "1296"
+  And I empty the trash
+#  Then an export using "Better BibTeX" should match "export/*.bibtex"
+#  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
+  Then an auto-export to "/tmp/autoexport.bib" using "Better BibTeX" should match "export/*.bibtex"
+  And I remove "/tmp/autoexport.bib"
+  When I remove all items from "Cited/2010 - CHI (Magic)"
+  And I wait 5 seconds
+  And I wait at most 100 seconds until all auto-exports are done
+  Then "/tmp/autoexport.bib" should match "export/*.bibtex"
