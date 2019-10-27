@@ -484,7 +484,6 @@ class Zotero:
         ae = json.loads(ae)
         ae['data'] = []
       if ae:
-        utils.print(json.dumps(ae))
         db.execute('UPDATE "better-bibtex" SET data = ? WHERE name = ?', [ json.dumps(ae), 'better-bibtex.autoexport' ])
         db.commit()
       db.close()

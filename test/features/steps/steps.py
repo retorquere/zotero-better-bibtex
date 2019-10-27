@@ -7,6 +7,7 @@ import time
 import os
 from hamcrest import assert_that, equal_to
 from steps.utils import assert_equal_diff, expand_scenario_variables
+import steps.utils as utils
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -226,3 +227,20 @@ def step_impl(context, expected, found):
 def step_impl(context, seconds):
   time.sleep(seconds)
 
+@step(u'I wait at most {seconds:d} seconds until all auto-exports are done')
+def step_impl(context, seconds):
+  printed = False
+  timeout = True
+  for n in range(seconds):
+    if not context.zotero.execute('return Zotero.BetterBibTeX.TestSupport.autoExportRunning()'):
+      timeout = False
+      break
+    time.sleep(1)
+    utils.print('.', end='')
+    printed = True
+  if printed: utils.print('')
+  assert (not timeout), 'Auto-export timed out'
+
+@step(u'I remove "{path}"')
+def step_impl(context, path):
+  os.remove(path)

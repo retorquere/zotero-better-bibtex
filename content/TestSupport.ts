@@ -21,6 +21,10 @@ export = new class {
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
   }
 
+  public autoExportRunning() {
+    return (AutoExport.db.find({ status: 'running' }).length > 0)
+  }
+
   public async reset() {
     Cache.reset()
 
