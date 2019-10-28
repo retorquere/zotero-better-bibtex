@@ -1,13 +1,15 @@
-import platform
-import subprocess
-import os
-import time
-import psutil
-import json
-import difflib
-from markdownify import markdownify as md
 from bs4 import BeautifulSoup
+from markdownify import markdownify as md
+import difflib
+import json
+import os
+import platform
+import psutil
+import subprocess
 import sys
+import time
+import urllib.request
+import threading
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -28,12 +30,12 @@ class benchmark(object):
     return self
 
   def __exit__(self,ty,val,tb):
-    print("%s : %s" % (self.name, self.elapsed))
+    print("%s : %.2fs" % (self.name, self.elapsed))
     return False
 
   @property
   def elapsed(self):
-    return "%0.3fs" % (time.time() - self.started,)
+    return time.time() - self.started
 
 def assert_equal_diff(expected, found):
   assert expected == found, '\n' + '\n'.join(difflib.unified_diff(expected.split('\n'), found.split('\n'), fromfile='expected', tofile='found', lineterm=''))
@@ -94,3 +96,25 @@ def nested_dict_iter(nested, root = []):
         yield inner_key, inner_value
     else:
       yield '.'.join(root) + '.' + key, value
+
+
+class PostLog(object):
+  def __init__(self):
+    self.logfile = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
+
+    self.thread = threading.Thread(target=self.run, args=())
+    self.thread.daemon = True
+    self.thread.start()
+
+  def run(self):
+    print(f'Submitting {self.logfile}')
+    with open(os.path.expanduser('~/.BBTZ5TEST.log'), 'rb') as f:
+      req = urllib.request.Request(f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{self.logfile}.log', data=f.read(), method='PUT')
+      req.add_header('x-amz-storage-class', 'STANDARD')
+      req.add_header('x-amz-acl', 'bucket-owner-full-control')
+      req.add_header('Content-Type', 'text/plain')
+      urllib.request.urlopen(req)
+    print(f'{self.logfile} submitted')
+
+  def join(self):
+    self.thread.join()
