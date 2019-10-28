@@ -231,7 +231,7 @@ class Zotero:
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
 
-        if bm.elapsed > 600 and not posted: posted = PostLog()
+        if bm.elapsed > 2000 and not posted: posted = PostLog()
 
       if posted:
         utils.print('connected, but log posted, waiting for upload to finish...')
