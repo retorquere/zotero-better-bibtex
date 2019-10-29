@@ -404,7 +404,7 @@ class ZoteroItem {
   protected $address(value) { return this.set('place', value) }
   protected $location(value) {
     if (this.type === 'conferencePaper') {
-      this.hackyFields.push(`event-place: ${value}`)
+      this.hackyFields.push(`event-place: ${value.replace(/n+/g, '')}`)
       return true
     }
 
@@ -641,11 +641,7 @@ class ZoteroItem {
   protected $review(value) { return this.$annotation(value) }
   protected $notes(value) { return this.$annotation(value) }
   protected $note(value) {
-    if (value.includes('<')) {
-      this.item.notes.push(Zotero.Utilities.text2html(value, false))
-    } else {
-      this.addToExtra(value)
-    }
+    this.item.notes.push(Zotero.Utilities.text2html(value, false))
     return true
   }
 
@@ -771,7 +767,11 @@ class ZoteroItem {
             break
 
           default:
-            this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+            if (value.indexOf('\n') >= 0) {
+              this.item.notes.push(`<p><b>${Zotero.Utilities.text2html(field, false)}</b></p>${Zotero.Utilities.text2html(value, false)}`)
+            } else {
+              this.hackyFields.push(`tex.${field.toLowerCase()}: ${value}`)
+            }
             break
         }
       }
@@ -808,7 +808,7 @@ class ZoteroItem {
 
     if (this.hackyFields.length > 0) {
       this.hackyFields.sort()
-      this.item.extra = this.hackyFields.concat(this.item.extra || '').join('\n').trim()
+      this.item.extra = this.hackyFields.map(line => line.replace(/\n+/g, ' ')).concat(this.item.extra || '').join('\n').trim()
     }
 
     if (!this.item.publisher && this.item.backupPublisher) {
@@ -817,6 +817,7 @@ class ZoteroItem {
     }
   }
 
+  /*
   private addToExtra(str) {
     if (this.item.extra && this.item.extra !== '') {
       this.item.extra += `\n${str}`
@@ -824,6 +825,7 @@ class ZoteroItem {
       this.item.extra = str
     }
   }
+  */
 
   private set(field, value) {
     if (!this.validFields.get(field)) return false

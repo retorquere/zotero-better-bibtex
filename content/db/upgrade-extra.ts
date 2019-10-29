@@ -14,6 +14,10 @@ function indexOfRE(str, re, start) {
 function makeName(name) {
   return `tex.${name.replace(/[:=]/g, '-').toLowerCase()}`
 }
+function makeValue(value) {
+  return value.replace(/\n+/g, ' ')
+}
+
 export function upgradeExtra(extra) {
   let extraFields = []
 
@@ -31,7 +35,7 @@ export function upgradeExtra(extra) {
       if (!kv) return match
 
       const [ , name, value ] = kv.map(v => v.trim())
-      legacy.push(`${makeName(name)}${cook ? ':' : '='} ${value}`)
+      legacy.push(`${makeName(name)}${cook ? ':' : '='} ${makeValue(value)}`)
     }
 
     extraFields = extraFields.concat(legacy)
@@ -66,7 +70,7 @@ export function upgradeExtra(extra) {
         extra = extra.substring(0, marker) + extra.substring(end + 1)
 
         for (const [name, value] of Object.entries(json)) {
-          extraFields.push(`${makeName(name)}${cook ? ':' : '='} ${value}`)
+          extraFields.push(`${makeName(name)}${cook ? ':' : '='} ${makeValue(value)}`)
         }
 
         break
