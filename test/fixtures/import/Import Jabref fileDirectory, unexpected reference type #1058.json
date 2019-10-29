@@ -94,7 +94,7 @@
       "ISSN": "1612-4642",
       "date": "2010",
       "extra": "Citation Key: springerlink:10.1007/s10344-009-0327-7\ntex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain\ntex.owner: tiago\ntex.publisher: Springer Berlin / Heidelberg\ntex.subdatabase: distance\ntex.timestamp: 2011.06.17",
-      "notes": [ "10.1007/s10344-009-0327-7" ],
+      "notes": [ { "note": "10.1007/s10344-009-0327-7"} ],
       "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
       "creators": [
         {
