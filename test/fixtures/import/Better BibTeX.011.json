@@ -1,12 +1,19 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "Zotero": {
+        "version": "5.0.76",
+        "platform": "MacIntel",
+        "oscpu": "Intel Mac OS X 10.15",
+        "locale": "en-US",
+        "appName": "Zotero",
+        "appVersion": "5.0.76",
+        "isZotero": true,
+        "isJurisM": false
+      },
+      "BetterBibTeX": "5.1.148.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
@@ -23,6 +30,7 @@
       "autoExportPrimeExportCacheThreshold": 0,
       "autoExportTooLong": 10,
       "autoPin": false,
+      "automaticTags": true,
       "auxImport": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,
@@ -46,6 +54,7 @@
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,
@@ -59,63 +68,61 @@
       "sorted": false,
       "strings": "",
       "suppressBraceProtection": false,
+      "suppressNoCase": false,
+      "suppressSentenceCase": false,
       "suppressTitleCase": false,
-      "warnBulkModify": 10
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10,
+      "testing": true
     },
-    "release": {
-      "BetterBibTeX": "5.1.127.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.71",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.14",
-        "platform": "MacIntel",
-        "version": "5.0.71"
-      }
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     }
   },
+  "collections": {},
   "items": [
     {
-      "attachments": [],
-      "citationKey": "Klassen2010",
-      "citekey": "Klassen2010",
-      "collections": [],
+      "version": 0,
+      "itemType": "conferencePaper",
+      "pages": "25-30",
+      "date": "2010",
+      "extra": "Citation Key: Klassen2010\ntex.bibsource: DBLP, http://dblp.uni-trier.de\ntex.crossref: DBLP:conf/cata/2010\ntex.owner: sstudent\ntex.timestamp: 2011.03.22",
+      "title": "Empirical study of support vector machine kernels with applications to microarray data",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Myungsook",
-          "lastName": "Klassen"
+          "lastName": "Klassen",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Nyunsu",
-          "lastName": "Kim"
+          "lastName": "Kim",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Wei Ming",
-          "lastName": "Liu"
+          "lastName": "Liu",
+          "creatorType": "author"
         }
       ],
-      "date": "2010",
-      "dateAdded": "2019-08-21T08:27:41Z",
-      "dateModified": "2019-08-21T08:27:41Z",
-      "extra": "Citation Key: Klassen2010\ntex.bibsource: DBLP, http://dblp.uni-trier.de\ntex.crossref: DBLP:conf/cata/2010\ntex.owner: sstudent\ntex.timestamp: 2011.03.22",
-      "notes": [ { "note": "svm liniowe najlepsze" } ],
-      "itemID": 310,
-      "itemType": "conferencePaper",
-      "key": "QISZQFT9",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "25-30",
-      "publicationTitle": "CATA",
-      "relations": [],
       "tags": [],
-      "title": "Empirical study of support vector machine kernels with applications to microarray data",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QISZQFT9",
-      "version": 0
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-10-29T15:10:52Z",
+      "dateModified": "2019-10-29T15:10:52Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/4A7YHHBD",
+      "attachments": [],
+      "notes": [
+        "<p>svm liniowe najlepsze</p>"
+      ],
+      "itemID": 314,
+      "key": "4A7YHHBD",
+      "citekey": "Klassen2010",
+      "citationKey": "Klassen2010",
+      "libraryID": 1,
+      "publicationTitle": "CATA"
     }
   ]
 }
