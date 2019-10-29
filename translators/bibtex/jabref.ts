@@ -26,8 +26,9 @@ export class JabRef {
     Zotero.write('@comment{jabref-meta: groupstree:\n')
 
     this.groups = ['0 AllEntriesGroup:']
-    for (const collection of Object.values(Translator.collections)) {
-      if (collection.parent) continue
+    const collections = Object.values(Translator.collections).filter(coll => !coll.parent)
+    if (Translator.preferences.testing) collections.sort((a, b) => Translator.stringCompare(a.name, b.name))
+    for (const collection of collections) {
       this.exportGroup(collection, 1)
     }
 
@@ -49,8 +50,10 @@ export class JabRef {
 
     this.groups.push(group.join(';'))
 
-    for (const key of collection.collections || []) {
-      if (Translator.collections[key]) this.exportGroup(Translator.collections[key], level + 1)
+    const children = (collection.collections || []).map(key => Translator.collections[key]).filter(coll => coll)
+    if (Translator.preferences.testing) children.sort((a, b) => Translator.stringCompare(a.name, b.name))
+    for (const child of children) {
+      this.exportGroup(child, level + 1)
     }
   }
 
