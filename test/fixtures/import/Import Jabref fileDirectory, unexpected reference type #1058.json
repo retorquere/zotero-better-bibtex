@@ -4,16 +4,16 @@
     "label": "BetterBibTeX JSON",
     "release": {
       "Zotero": {
-        "version": "5.0.75",
+        "version": "5.0.76",
         "platform": "MacIntel",
         "oscpu": "Intel Mac OS X 10.15",
         "locale": "en-US",
         "appName": "Zotero",
-        "appVersion": "5.0.75",
+        "appVersion": "5.0.76",
         "isZotero": true,
         "isJurisM": false
       },
-      "BetterBibTeX": "5.1.145.emile.limonia"
+      "BetterBibTeX": "5.1.148.emile.limonia"
     },
     "preferences": {
       "DOIandURL": "both",
@@ -94,7 +94,6 @@
       "ISSN": "1612-4642",
       "date": "2010",
       "extra": "Citation Key: springerlink:10.1007/s10344-009-0327-7\ntex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain\ntex.owner: tiago\ntex.publisher: Springer Berlin / Heidelberg\ntex.subdatabase: distance\ntex.timestamp: 2011.06.17",
-      "notes": [ { "note": "10.1007/s10344-009-0327-7"} ],
       "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
       "creators": [
         {
@@ -120,13 +119,15 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-10-14T19:37:13Z",
-      "dateModified": "2019-10-14T19:37:13Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/EQFK8ZIZ",
+      "dateAdded": "2019-10-29T13:22:24Z",
+      "dateModified": "2019-10-29T13:22:24Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HA37MYXR",
       "attachments": [],
-      "notes": [],
-      "itemID": 271,
-      "key": "EQFK8ZIZ",
+      "notes": [
+        "<p>10.1007/s10344-009-0327-7</p>"
+      ],
+      "itemID": 106,
+      "key": "HA37MYXR",
       "citekey": "springerlink:10.1007/s10344-009-0327-7",
       "citationKey": "springerlink:10.1007/s10344-009-0327-7",
       "libraryID": 1
@@ -152,34 +153,34 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-10-14T19:37:13Z",
-      "dateModified": "2019-10-14T19:37:13Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/KXX6EIG7",
+      "dateAdded": "2019-10-29T13:22:24Z",
+      "dateModified": "2019-10-29T13:22:24Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PLPM2HAU",
       "attachments": [
         {
           "itemType": "attachment",
           "title": "2",
           "tags": [],
           "relations": [],
-          "dateAdded": "2019-10-14T19:37:13Z",
-          "dateModified": "2019-10-14T19:37:13Z",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/B58KGRAX",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/B58KGRAX/2.pdf"
+          "dateAdded": "2019-10-29T13:22:24Z",
+          "dateModified": "2019-10-29T13:22:24Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/32JQBXMZ",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/32JQBXMZ/2.pdf"
         },
         {
           "itemType": "attachment",
           "title": "stuff",
           "tags": [],
           "relations": [],
-          "dateAdded": "2019-10-14T19:37:13Z",
-          "dateModified": "2019-10-14T19:37:13Z",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/WB88QIBQ",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/WB88QIBQ/1.pdf"
+          "dateAdded": "2019-10-29T13:22:24Z",
+          "dateModified": "2019-10-29T13:22:25Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/SIEJEUIU",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/SIEJEUIU/1.pdf"
         }
       ],
       "notes": [],
-      "itemID": 272,
-      "key": "KXX6EIG7",
+      "itemID": 108,
+      "key": "PLPM2HAU",
       "citekey": "Afonso2011",
       "citationKey": "Afonso2011",
       "libraryID": 1
@@ -196,11 +197,11 @@
       ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-10-14T19:37:13Z",
-      "dateModified": "2019-10-14T19:37:13Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YJGPA7YD",
-      "itemID": 275,
-      "key": "YJGPA7YD",
+      "dateAdded": "2019-10-29T13:22:25Z",
+      "dateModified": "2019-10-29T13:22:25Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T4YU9WGM",
+      "itemID": 111,
+      "key": "T4YU9WGM",
       "attachments": [],
       "notes": []
     }
