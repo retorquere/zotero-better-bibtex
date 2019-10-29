@@ -689,9 +689,6 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
 
     await KeyManager.init() // loads the existing keys
 
-    // after the caches because I may need to drop items from the cache
-    await dbUpgrade(progress.update.bind(progress))
-
     progress.update(this.getString('BetterBibTeX.startup.serializationCache'))
     Serializer.init()
 
@@ -704,6 +701,9 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
     // this is what really takes long
     progress.update(this.getString('BetterBibTeX.startup.waitingForTranslators'))
     await Zotero.Schema.schemaUpdatePromise
+
+    // after the caches because I may need to drop items from the cache
+    await dbUpgrade(progress.update.bind(progress))
 
     progress.update(this.getString('BetterBibTeX.startup.journalAbbrev'))
     await JournalAbbrev.init()
