@@ -404,7 +404,7 @@ class ZoteroItem {
   protected $address(value) { return this.set('place', value) }
   protected $location(value) {
     if (this.type === 'conferencePaper') {
-      this.hackyFields.push(`event-place: ${value.replace(/n+/g, '')}`)
+      this.hackyFields.push(`event-place: ${value.replace(/\n+/g, '')}`)
       return true
     }
 
