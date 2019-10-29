@@ -30,6 +30,7 @@ export async function upgrade(progress) {
 
   await Zotero.DB.executeTransaction(async () => {
     const legacy = await ZoteroDB.queryAsync(query, patterns)
+    if (!legacy.length) return
     const affected = []
 
     const total = legacy.length
