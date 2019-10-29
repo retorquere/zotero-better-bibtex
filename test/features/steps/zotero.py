@@ -464,7 +464,7 @@ class Zotero:
       utils.print('\n\n** WORKAROUNDS FOR JURIS-M IN PLACE -- SEE https://github.com/Juris-M/zotero/issues/34 **\n\n')
       profile.firefox.set_preference('extensions.zotero.dataDir', os.path.join(profile.path, 'jurism'))
       profile.firefox.set_preference('extensions.zotero.useDataDir', True)
-      #profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
+      profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.removeStock', False)
 
     profile.firefox.update_preferences()
 
