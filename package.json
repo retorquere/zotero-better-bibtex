@@ -75,6 +75,7 @@
     "kuroshiro": "^1.1.2",
     "kuroshiro-analyzer-kuromoji": "^1.1.0",
     "lokijs": "^1.5.7",
+    "njstrace": "^1.1.2",
     "node-eta": "^0.9.0",
     "parse5": "^5.1.0",
     "pegjs": "^0.10.0",
