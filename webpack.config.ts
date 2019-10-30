@@ -22,6 +22,12 @@ class WebpackFixerPlugin {
 const translators = require('./gen/translators.json')
 const _ = require('lodash')
 
+const ts_loaders = [ 'ts-loader' ]
+if ((process.env.TRAVIS_COMMIT_MESSAGE || '').includes('#trace') || process.env.TRACE === 'true') {
+  console.log('!!!!!!!!!!!! TRACE LOGGING ENABLED !!!!!!!!!!!!!!!')
+  ts_loaders.unshift('trace-loader')
+}
+
 const common = {
   mode: 'development',
   devtool: false,
@@ -55,7 +61,7 @@ const common = {
       { test: /\.pegjs$/, use: [ 'pegjs-loader' ] },
       { test: /\.json$/, type: 'javascript/auto', use: [ 'json-jsesc-loader' ] }, // https://github.com/webpack/webpack/issues/6572
       { test: /\.bcf$/, use: [ 'bcf-loader' ] },
-      { test: /\.ts$/, exclude: [ /node_modules/ ], use: [ 'trace-loader', 'ts-loader' ] },
+      { test: /\.ts$/, exclude: [ /node_modules/ ], use: ts_loaders },
     ],
   },
 }
