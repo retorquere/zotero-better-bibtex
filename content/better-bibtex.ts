@@ -193,23 +193,28 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   return original.apply(this, arguments)
 })
 
+const getCellText_waiting: Record<number, boolean> = {}
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
-
-  if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
-    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
-      this._treebox.invalidateCell(row, column)
-    })
-
-    return '\uFFFD'
-  }
 
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
+  if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
+    if (!getCellText_waiting[item.id]) {
+      getCellText_waiting[item.id] = true
+      BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
+        this._treebox.invalidateCell(row, column)
+      })
+    }
+
+    return '\uFFFD'
+  }
+
   const citekey = KeyManager.get(item.id)
 
-  if (citekey.retry) {
+  if (citekey.retry && !getCellText_waiting[item.id]) {
+    getCellText_waiting[item.id] = true
     BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
       this._treebox.invalidateCell(row, column)
     })
