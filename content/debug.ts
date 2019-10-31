@@ -1,3 +1,4 @@
+// __njsTraceDisable__
 import { Logger } from './logger'
 
 export function debug(...msg) {

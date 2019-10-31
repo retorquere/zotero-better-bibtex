@@ -1,3 +1,4 @@
+// __njsTraceDisable__
 declare const Zotero: any
 
 import stringify = require('json-stringify-safe')

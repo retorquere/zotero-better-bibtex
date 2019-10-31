@@ -94,7 +94,7 @@ if (Prefs.get('citeprocNoteCitekey')) {
 }
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
-$patch$(Zotero.Items, 'merge', original => async function(item, otherItems) {
+$patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item, otherItems) {
   try {
     const extra = Citekey.aliases.get(item.getField('extra'))
 
@@ -120,7 +120,7 @@ $patch$(Zotero.Items, 'merge', original => async function(item, otherItems) {
 })
 
 // https://github.com/retorquere/zotero-better-bibtex/issues/769
-$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function(id) {
+$patch$(Zotero.DataObjects.prototype, 'parseLibraryKeyHash', original => function Zotero_DataObjects_prototype_parseLibraryKeyHash(id) {
   id = decodeURIComponent(id)
   try {
     if (id[0] === '@') {
@@ -162,19 +162,19 @@ $patch$(Zotero.Search.prototype, 'search', original => Zotero.Promise.coroutine(
 */
 
 // otherwise the display of the citekey in the item pane flames out
-$patch$(Zotero.ItemFields, 'isFieldOfBase', original => function(field, baseField) {
+$patch$(Zotero.ItemFields, 'isFieldOfBase', original => function Zotero_ItemFields_isFieldOfBase(field, baseField) {
   if (['citekey', 'itemID'].includes(field)) return false
   return original.apply(this, arguments)
 })
 
 // because the zotero item editor does not check whether a textbox is read-only. *sigh*
-$patch$(Zotero.Item.prototype, 'setField', original => function(field, value, loadIn) {
+$patch$(Zotero.Item.prototype, 'setField', original => function Zotero_ItemFields_isFieldOfBase(field, value, loadIn) {
   if (['citekey', 'itemID'].includes(field)) return false
   return original.apply(this, arguments)
 })
 
 // To show the citekey in the reference list
-$patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatted, includeBaseMapped) {
+$patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prototype_getField(field, unformatted, includeBaseMapped) {
   try {
     switch (field) {
       case 'citekey':
@@ -193,7 +193,7 @@ $patch$(Zotero.Item.prototype, 'getField', original => function(field, unformatt
   return original.apply(this, arguments)
 })
 
-$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, column) {
+$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, column) {
   if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
   if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
@@ -221,7 +221,7 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function(row, 
 })
 
 import * as CAYW from './cayw'
-$patch$(Zotero.Integration, 'getApplication', original => function(agent, command, docId) {
+$patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent, command, docId) {
   if (agent === 'BetterBibTeX') return CAYW.Application
   return original.apply(this, arguments)
 })
@@ -323,7 +323,7 @@ Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return DateParser.parse(date) },
 }
 
-$patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zoteroItem, legacy, skipChildItems) {
+$patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function Zotero_Utilities_Internal_itemToExportFormat(zoteroItem, legacy, skipChildItems) {
   try {
     return Serializer.fetch(zoteroItem, !!legacy, !!skipChildItems) || Serializer.store(zoteroItem, original.apply(this, arguments), !!legacy, !!skipChildItems)
   } catch (err) { // fallback for safety for non-BBT
@@ -333,7 +333,7 @@ $patch$(Zotero.Utilities.Internal, 'itemToExportFormat', original => function(zo
   return original.apply(this, arguments)
 })
 
-$patch$(Zotero.Translate.Export.prototype, 'translate', original => function() {
+$patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zotero_Translate_Export_prototype_translate() {
   try {
     /* requested translator */
     let translatorID = this.translator[0]
@@ -673,6 +673,13 @@ export let BetterBibTeX = new class { // tslint:disable-line:variable-name
       this.firstRun = null
     }
 
+    if (Zotero.BBTTRacer) {
+      flash(
+        'BBT TRACE LOGGING IS ENABLED',
+        'BBT trace logging is enabled in this build.\nZotero will run very slowly.\nThis is intended for debugging ONLY.',
+        20 // tslint:disable-line:no-magic-numbers
+      )
+    }
     const progress = new Progress(this.document)
     await progress.start(this.getString('BetterBibTeX.startup.waitingForZotero'))
 

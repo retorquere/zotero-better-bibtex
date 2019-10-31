@@ -1,3 +1,4 @@
+// __njsTraceDisable__
 declare const Components: any
 declare const Zotero: any
 declare const AsyncShutdown: any

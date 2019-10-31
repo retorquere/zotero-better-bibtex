@@ -1,3 +1,4 @@
+// __njsTraceDisable__
 const marker = 'BetterBibTeXMonkeyPatched'
 
 export function repatch(object, method, patcher) {
