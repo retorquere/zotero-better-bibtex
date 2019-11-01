@@ -11,7 +11,7 @@ import toml
 import urllib
 import tempfile
 from munch import *
-from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md, PostLog
+from steps.utils import running, nested_dict_iter, benchmark, ROOT, assert_equal_diff, compare, serialize, html2md, post_log
 import steps.utils as utils
 import shutil
 import shlex
@@ -201,7 +201,7 @@ class Zotero:
     self.config.stash()
     self.config.timeout = 2
     with benchmark(f'starting {self.client}') as bm:
-      posted = None
+      posted = False
       for _ in redo.retrier(attempts=120,sleeptime=1):
         utils.print('connecting... (%.2fs)' % (bm.elapsed,))
 
@@ -231,11 +231,8 @@ class Zotero:
         except (urllib.error.HTTPError, urllib.error.URLError,socket.timeout):
           pass
 
-        if bm.elapsed > 2000 and not posted: posted = PostLog()
+        if bm.elapsed > 2000 and not posted: posted = post_log()
 
-      if posted:
-        utils.print('connected, but log posted, waiting for upload to finish...')
-        posted.join()
     assert ready, f'{self.client} did not start'
     self.config.pop()
 

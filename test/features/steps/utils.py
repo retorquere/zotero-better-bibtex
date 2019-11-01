@@ -9,7 +9,8 @@ import subprocess
 import sys
 import time
 import urllib.request
-import threading
+import psutil
+import shlex
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -30,7 +31,7 @@ class benchmark(object):
     return self
 
   def __exit__(self,ty,val,tb):
-    print("%s : %.2fs" % (self.name, self.elapsed))
+    print('{} {:.2f}s'.format(self.name, self.elapsed))
     return False
 
   @property
@@ -98,23 +99,16 @@ def nested_dict_iter(nested, root = []):
       yield '.'.join(root) + '.' + key, value
 
 
-class PostLog(object):
-  def __init__(self):
-    self.logfile = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
-
-    self.thread = threading.Thread(target=self.run, args=())
-    self.thread.daemon = True
-    self.thread.start()
-
-  def run(self):
-    print(f'Submitting {self.logfile}')
-    with open(os.path.expanduser('~/.BBTZ5TEST.log'), 'rb') as f:
-      req = urllib.request.Request(f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{self.logfile}.log', data=f.read(), method='PUT')
-      req.add_header('x-amz-storage-class', 'STANDARD')
-      req.add_header('x-amz-acl', 'bucket-owner-full-control')
-      req.add_header('Content-Type', 'text/plain')
-      urllib.request.urlopen(req)
-    print(f'{self.logfile} submitted')
-
-  def join(self):
-    self.thread.join()
+def post_log():
+  logid = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
+  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logfile}.log'
+  logfile = shlex.quote(path.join(os.environ['HOME'], '.BBTZ5TEST.log'))
+  headers = [
+    ('x-amz-storage-class', 'STANDARD')
+    ('x-amz-acl', 'bucket-owner-full-control')
+    ('Content-Type', 'text/plain')
+  ]
+  headers = [ f'--header "{h[0]}: {h[1]}"' for h in headers ]
+  headers = ' '.join(headers)
+  os.system(f'curl {bucket} {headers} --upload-file {logfile} &')
+  return True
