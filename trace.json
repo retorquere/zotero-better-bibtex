@@ -1,0 +1,12 @@
+{
+  "-gh-1314": [
+    "content/**/*.ts",
+    "!content/monkey-patch.ts",
+    "!content/flash.ts",
+    "!content/debug.ts",
+    "!content/prefs.ts",
+    "!content/logger.ts",
+    "!content/events.ts",
+    "!content/db/loki.ts"
+  ]
+}

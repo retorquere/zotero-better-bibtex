@@ -1,4 +1,3 @@
-// __njsTraceDisable__
 declare const Zotero: any
 
 import * as log from './debug'
