@@ -200,20 +200,20 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
+  if (getCellText_waiting[item.id]) return '\uFFFD'
+
   if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
-    if (!getCellText_waiting[item.id]) {
-      getCellText_waiting[item.id] = true
-      BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
-        this._treebox.invalidateCell(row, column)
-      })
-    }
+    getCellText_waiting[item.id] = true
+    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
+      this._treebox.invalidateCell(row, column)
+    })
 
     return '\uFFFD'
   }
 
   const citekey = KeyManager.get(item.id)
 
-  if (citekey.retry && !getCellText_waiting[item.id]) {
+  if (citekey.retry) {
     getCellText_waiting[item.id] = true
     BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
       this._treebox.invalidateCell(row, column)

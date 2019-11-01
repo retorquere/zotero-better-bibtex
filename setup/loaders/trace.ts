@@ -24,7 +24,7 @@ Zotero.BBTTRacer = Zotero.BBTTRacer || {
 function __njsTraceEntry__(call) {
   const context = call.file + ': ' + call.name + '@' + call.line;
   Zotero.BBTTRacer.enter()
-  Zotero.debug(Zotero.BBTTRacer.prefix() + '->' + context)
+  Zotero.debug(Zotero.BBTTRacer.prefix() + '->' + context + call.args)
   return { context: context, start: Date.now() };
 }
 
@@ -46,5 +46,5 @@ export = function loader(source) {
 
   if (source.includes('__njsTraceDisable__')) return source
 
-  return tracer + injector.injectTracing(filename, source)
+  return tracer + injector.injectTracing(filename, source, true, true)
 }
