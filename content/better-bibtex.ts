@@ -178,8 +178,8 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
+        if (BetterBibTeX.ready.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
         const citekey = KeyManager.get(this.id)
-        if (citekey.retry) return '\uFFFD'
         return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
 
       case 'itemID':
@@ -200,28 +200,18 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
   const item = this.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
-  if (getCellText_waiting[item.id]) return '\uFFFD'
-
-  if (BetterBibTeX.loaded.isPending()) { // tslint:disable-line:no-use-before-declare
-    getCellText_waiting[item.id] = true
-    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
-      this._treebox.invalidateCell(row, column)
-    })
-
+  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
+    if (!getCellText_waiting[item.id]) {
+      BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
+        this._treebox.invalidateCell(row, column)
+      })
+      getCellText_waiting[item.id] = true
+    }
     return '\uFFFD'
   }
 
   const citekey = KeyManager.get(item.id)
-
-  if (citekey.retry) {
-    getCellText_waiting[item.id] = true
-    BetterBibTeX.loaded.then(() => { // tslint:disable-line:no-use-before-declare
-      this._treebox.invalidateCell(row, column)
-    })
-  }
-
-  if (!citekey.citekey) return '\uFFFD'
-
+  if (!citekey.citekey) return '???'
   return citekey.citekey + (citekey.pinned ? '' : ' *')
 })
 
