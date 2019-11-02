@@ -23,47 +23,29 @@ Additionally you can automate exporting (parts of) your library either using [au
 ## Pinning (fixating) the citation key
 
 By default, BBT will generate citation keys from your items using the [formatting pattern]({{< ref "citing" >}}) you specified. If you want the key to be stable even when you change the item, 
-you can fixate its citation key to a value of your choosing by adding the text `Citation Key: [your citekey]` anywhere in the `extra` field of the item.
+you can fixate its citation key to a value of your choosing by adding the text `Citation Key: [your citekey]` on a line of its own in the `extra` field of the item.
 
 ## Add your own BibLaTeX fields
 
-You can add your own fields to the export which are not derived from regular Zotero item fields by adding them in the `extra` field in Zotero in one of three ways:
+### LaTeX fields
 
-### Square brackets []
+You can add your own fields to the export which are not derived from regular Zotero item fields by adding them in the `extra` field:
 
-You can add any field you like by using something like
-
-```
-bibtex[origdate=1856;origtitle=An Old Title]
-```
-
-This format is very rigid, it has no quoting syntax, so you can't have `=`, `[`, `]` or `;` in your key names or values. 
-
-### JSON5
-
-If you need more flexibility, you can use the [JSON5](http://json5.org/) format
-instead:
+either by using lines such as 
 
 ```
-bibtex{
-  origdate: 1856,
-  origtitle: "Can contain = and ';' just fine"
-}
+tex.origdate= 1856
+tex.origtitle= All This & More
 ```
 
-The marker for these fields can be either `bibtex`, `biblatex` or `biblatexdata` (which are all the same to BBT), but when importing BibTeX files with
-fields not supported by Zotero, the `bibtex` marker will be used. These fields are assumed to be valid LaTeX, and will
-be exported exactly as entered.
-
-If you want to have regular text in these fields and have BBT LaTeX-encode them, add an asterisk (`*`) after the marker, so
-something like
+or
 
 ```
-bibtex*{
-  origdate: 1856,
-  origtitle: "Things like _ and $ will be escaped"
-}
+tex.origdate: 1856
+tex.origtitle: All This & More
 ```
+
+The difference between lines with an `=` or an `:` is that the fields marked with `=` are considered to be valid ("raw") latex and will be passed on into the generated files as-is. The lines marked with `:` are assumed to be plain-text and LaTeX special characters (such as the `&` above) will be escaped.
 
 ### CSL fields
 
