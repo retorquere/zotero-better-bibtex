@@ -17,7 +17,6 @@
     "releaseURL": "https://github.com/retorquere/zotero-better-bibtex/releases/download/release/"
   },
   "scripts": {
-    "postinstall": "patch-package",
     "pretest": "npm run build",
     "test": "./test/behave --stop",
     "lint": "tslint -t stylish --project .",
@@ -52,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.77",
+    "@retorquere/bibtex-parser": "^1.0.75",
     "@types/lokijs": "^1.5.2",
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
@@ -80,7 +79,6 @@
     "njstrace": "^1.1.2",
     "node-eta": "^0.9.0",
     "parse5": "^5.1.0",
-    "patch-package": "^6.2.0",
     "pegjs": "^0.10.0",
     "permutater": "^1.0.2",
     "punycode": "^2.1.1",
@@ -95,8 +93,8 @@
     "zotero-plugin": "^0.0.91"
   },
   "devDependencies": {
-    "@types/node": "^12.12.5",
-    "@types/webpack": "^4.39.8",
+    "@types/node": "^12.12.3",
+    "@types/webpack": "^4.39.7",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.1",
     "circular-dependency-plugin": "^5.2.0",

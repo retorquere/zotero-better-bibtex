@@ -29,7 +29,6 @@
   ],
   "exclude": [
     "node_modules",
-    "translators/worker",
     "**/*.spec.ts",
     "typings"
   ]

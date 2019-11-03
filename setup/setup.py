@@ -5,4 +5,5 @@ import preferences
 import translators
 import submodules
 import months
+import kuroshiro
 import serializeditem

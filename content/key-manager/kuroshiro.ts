@@ -1,9 +1,8 @@
+import Kuroshiro from 'kuroshiro/src/core-sync'
+import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
 import * as log from '../debug'
 import { Preferences as Prefs } from '../prefs'
-
-import Kuroshiro from 'kuroshiro/src/core'
-import _kuromojiLoader = require('kuromoji/src/loader/NodeDictionaryLoader')
-import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji'
+import KuromojiAnalyzer from 'kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync'
 
 _kuromojiLoader.prototype.loadArrayBuffer = function(url, callback) { // tslint:disable-line:only-arrow-functions
   url = `resource://zotero-better-bibtex/kuromoji/${url.replace(/.*\//, '').replace(/\.gz$/, '')}`
