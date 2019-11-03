@@ -22,7 +22,6 @@
     "lint": "tslint -t stylish --project .",
     "webpack": "webpack",
     "postwebpack": "./setup/patch-webpack.py",
-    "presetup": "patch -u -p0 -o node_modules/kuroshiro/src/core-sync.js < setup/kuroshiro.patch && patch -u -p0 -o node_modules/kuroshiro-analyzer-kuromoji/src/kuroshiro-analyzer-kuromoji-sync.js < setup/kuroshiro-analyzer-kuromoji-sync.patch",
     "setup": "./setup/setup.py && ts-node setup/index.ts",
     "prebuild": "npm install && npm run lint && npm run setup",
     "build": "npm run webpack",
