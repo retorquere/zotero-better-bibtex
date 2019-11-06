@@ -37,10 +37,12 @@ Reference.prototype.caseConversion = {
 
 Reference.prototype.lint = require('./bibtex/biblatex.qr.bcf')
 
+type CreatorArray = any[] & { type?: string }
+
 Reference.prototype.addCreators = function() {
   if (!this.item.creators || !this.item.creators.length) return
 
-  const creators = {
+  const creators: Record<string, CreatorArray> = {
     author: [],
     bookauthor: [],
     commentator: [],
@@ -49,18 +51,21 @@ Reference.prototype.addCreators = function() {
     editorb: [],
     holder: [],
     translator: [],
-    scriptwriter: [],
-    director: [],
+    // scriptwriter: [],
+    // director: [],
   }
+  creators.editora.type = 'collaborator'
+  creators.editorb.type = 'redactor'
+
   for (const creator of this.item.creators) {
-    let kind
     switch (creator.creatorType) {
       case 'director':
         // 365.something
         if (['video', 'movie'].includes(this.referencetype)) {
-          kind = 'director'
+          creators.editor.push(creator)
+          creators.editor.type = 'director'
         } else {
-          kind = 'author'
+          creators.author.push(creator)
         }
         break
 
@@ -71,58 +76,55 @@ Reference.prototype.addCreators = function() {
       case 'artist':
       case 'podcaster':
       case 'presenter':
-        kind = 'author'
+        creators.author.push(creator)
         break
 
       case 'bookAuthor':
-        kind = 'bookauthor'
+        creators.bookauthor.push(creator)
         break
 
       case 'commenter':
-        kind = 'commentator'
+        creators.commentator.push(creator)
         break
 
       case 'editor':
-        kind = 'editor'
+        creators.editor.push(creator)
         break
 
       case 'assignee':
-        kind = 'holder'
+        creators.holder.push(creator)
         break
 
       case 'translator':
-        kind = 'translator'
+        creators.translator.push(creator)
         break
 
       case 'seriesEditor':
-        kind = 'editorb'
+        creators.editorb.push(creator)
         break
 
       case 'scriptwriter':
         // 365.something
+        creators.editora.push(creator)
         if (['video', 'movie'].includes(this.referencetype)) {
-          kind = 'scriptwriter'
-        } else {
-          kind = 'editora'
+          creators.editora.type = 'scriptwriter'
         }
         break
 
       default:
-        kind = 'editora'
+        creators.editora.push(creator)
     }
-
-    creators[kind].push(creator)
   }
 
   for (const [field, value] of Object.entries(creators)) {
     this.remove(field)
-    this.add({ name: field, value, enc: 'creators' })
-  }
+    this.remove(field + 'type')
 
-  this.remove('editoratype')
-  if (creators.editora.length > 0) this.add({ name: 'editoratype', value: 'collaborator' })
-  this.remove('editorbtype')
-  if (creators.editorb.length > 0) this.add({ name: 'editorbtype', value: 'redactor' })
+    if (!value.length) continue
+
+    this.add({ name: field, value, enc: 'creators' })
+    if (value.type) this.add({ name: `${field}type`, value: value.type })
+  }
 }
 
 Reference.prototype.typeMap = {

@@ -1,6 +1,8 @@
+
 @movie{Doe2015,
   date = {2015},
-  director = {Doe, John and Roe, Rob},
+  editor = {Doe, John and Roe, Rob},
+  editortype = {director},
   location = {{US/GB}},
   publisher = {{The Distributor}},
   title = {A Film}
@@ -20,7 +22,8 @@
 
 @video{Kubrick1964,
   date = {1964},
-  director = {Kubrick, Stanley},
+  editor = {Kubrick, Stanley},
+  editortype = {director},
   shorttitle = {Dr. {{Strangelove}}},
   title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb}
 }
@@ -28,13 +31,15 @@
 @video{friends:leia:tv,
   booktitle = {Friends},
   date = {1996-09-16},
-  director = {Mancuso, Gail},
+  editor = {Mancuso, Gail},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
+  editortype = {director},
   journaltitle = {Friends},
   langid = {american},
   location = {{US}},
   number = {1},
   publisher = {{NBC}},
-  scriptwriter = {Curtis, Michael and Malins, Gregory S.},
   title = {The One with the {{Princess Leia}} Fantasy},
   volume = {3}
 }
@@ -42,14 +47,16 @@
 @video{friends:leia:dvd,
   booktitle = {Friends},
   date = {2003},
-  director = {Mancuso, Gail},
+  editor = {Mancuso, Gail},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
+  editortype = {director},
   langid = {american},
   location = {{US}},
   number = {1},
   origdate = {1996-09-16},
   origpublisher = {{NBC}},
   publisher = {{Warner Home Video}},
-  scriptwriter = {Curtis, Michael and Malins, Gregory S.},
   title = {The One with the {{Princess Leia}} Fantasy},
   volume = {3}
 }
@@ -71,3 +78,5 @@
   url = {http://www.oxforddnb.com/view/article/10183},
   urldate = {2014-06-13}
 }
+
+
