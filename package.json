@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^1.0.80",
+    "@retorquere/bibtex-parser": "^1.0.81",
     "@types/lokijs": "^1.5.2",
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
@@ -87,7 +87,7 @@
     "string-template": "^1.0.0",
     "transliteration": "^2.1.7",
     "tslint": "^5.20.1",
-    "unicode2latex": "^1.0.23",
+    "unicode2latex": "^1.0.25",
     "webpack-cli": "^3.3.10",
     "xregexp": "^4.2.4",
     "zotero-plugin": "^0.0.91"
@@ -105,7 +105,7 @@
     "ejs": "^2.7.1",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
-    "glob": "^7.1.5",
+    "glob": "^7.1.6",
     "ignore-loader": "^0.1.2",
     "indent-string": "^4.0.0",
     "jsesc": "^2.5.2",
