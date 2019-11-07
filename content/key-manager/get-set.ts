@@ -12,7 +12,7 @@ function extract(extra, re) {
   return { extra, citekey, pinned: !!citekey }
 }
 
-const citationKey = /^Citation Key\s*:\s*([^\s]*)\s*$/i
+const citationKey = /^(?:Citation Key|bibtex)\s*:\s*([^\s]*)\s*$/i
 export function get(extra) {
   const extracted = extract(extra, citationKey)
 
