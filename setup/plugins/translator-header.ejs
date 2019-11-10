@@ -10,9 +10,8 @@ var Translator = {
 
   stringCompare: (new Intl.Collator('en')).compare,
   configure: function(stage) {
-    var version = Zotero.BetterBibTeX.version();
-    this.isZotero = version.Zotero.isZotero;
-    this.isJurisM = version.Zotero.isJurisM;
+    this.isJurisM = Zotero.Utilities.getVersion().includes('m');
+    this.isZotero = !this.isJurisM;
 
     this.BetterCSL = this.BetterCSLYAML || this.BetterCSLJSON;
 

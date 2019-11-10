@@ -109,7 +109,6 @@ Translator.doExport = () => {
     config: {
       id: Translator.header.translatorID,
       label: Translator.header.label,
-      release: Zotero.BetterBibTeX.version(),
       preferences: Translator.preferences,
       options: Translator.options,
     },
