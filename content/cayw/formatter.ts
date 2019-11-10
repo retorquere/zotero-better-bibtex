@@ -6,7 +6,8 @@ import { Translators } from '../translators'
 import { getItemsAsync } from '../get-items-async'
 import { Preferences as Prefs } from '../prefs'
 
-const unicode2latex = Object.entries(require('unicode2latex/tables/unicode.json')).reduce((acc, pair) => {
+import * as unicode_table from 'unicode2latex/tables/unicode.json'
+const unicode2latex = Object.entries(unicode_table).reduce((acc, pair) => {
   const unicode = pair[0] as string
   const latex = pair[1] as { text: string, math: string }
   acc[unicode] = { text: latex.text || latex.math, math: !(latex.text) }

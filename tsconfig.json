@@ -12,6 +12,7 @@
     "preserveConstEnums": false,
     "sourceMap": false,
     "downlevelIteration": true,
+    "resolveJsonModule": true,
     "lib": [ "es2017", "dom" ],
     "typeRoots": [
       "./content/typings",

@@ -1,5 +1,5 @@
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
-const cslVariables = require('./csl-vars.json')
+import * as cslVariables from './csl-vars.json'
 import * as Citekey from './key-manager/get-set'
 
 function cslCreator(value) {

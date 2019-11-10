@@ -14,7 +14,7 @@ import * as ini from 'ini'
 import { pathSearch } from './path-search'
 import { flash } from './flash'
 import Loki = require('lokijs')
-const fold = require('./fold.json')
+import * as fold from './fold.json'
 
 class Git {
   public enabled: boolean
@@ -145,7 +145,7 @@ class Git {
 }
 const git = new Git()
 
-const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 const queue = new class {
   private tasks = new Loki('autoexport').addCollection('tasks')
   private paused: Set<number>

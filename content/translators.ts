@@ -6,9 +6,10 @@ import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
 import { timeout } from './timeout'
-const fold = require('./fold.json')
 
-const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+import * as fold from './fold.json'
+import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
+import * as translatorMetadata from '../gen/translators.json'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -18,7 +19,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public itemType: { note: number, attachment: number }
 
   constructor() {
-    Object.assign(this, require('../gen/translators.json'))
+    Object.assign(this, translatorMetadata)
   }
 
   public async init() {

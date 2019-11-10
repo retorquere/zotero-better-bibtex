@@ -30,7 +30,7 @@ import format = require('string-template')
 
 import { patch as $patch$ } from './monkey-patch'
 
-const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
 /*
   UNINSTALL

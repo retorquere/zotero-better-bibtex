@@ -6,8 +6,8 @@ import { getItemsAsync } from '../get-items-async'
 
 import { Store } from './store'
 
-const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
-const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
+import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
+import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
 
 class Main extends Loki {
   public async init() {

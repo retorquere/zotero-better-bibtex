@@ -7,10 +7,10 @@ import { ZoteroConfig } from '../zotero-config'
 import { Store } from './store'
 
 const version = require('../../gen/version.js')
-const translators = require('../../gen/translators.json')
+import * as translators from '../../gen/translators.json'
 
-const prefOverrides = require('../../gen/preferences/auto-export-overrides.json')
-const prefOverridesSchema = require('../../gen/preferences/auto-export-overrides-schema.json')
+import * as prefOverrides from '../../gen/preferences/auto-export-overrides.json'
+import * as prefOverridesSchema from '../../gen/preferences/auto-export-overrides-schema.json'
 
 class Cache extends Loki {
   private initialized = false

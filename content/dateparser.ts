@@ -3,7 +3,7 @@ import edtfy = require('edtfy')
 
 // import escapeStringRegexp = require('escape-string-regexp')
 
-const months = require('../gen/dateparser-months.json')
+import * as months from '../gen/dateparser-months.json'
 const months_re = new RegExp(Object.keys(months).sort((a, b) => b.length - a.length).join('|'), 'i')
 
 /*

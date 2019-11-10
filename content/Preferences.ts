@@ -15,7 +15,7 @@ import { KeyManager } from './key-manager'
 import { AutoExport } from './auto-export'
 import { Translators } from './translators'
 
-const prefOverrides = require('../gen/preferences/auto-export-overrides.json')
+import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
 class AutoExportPane {
   public items: { [key: string]: number[] } = {}

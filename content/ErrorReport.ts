@@ -12,10 +12,11 @@ import fastChunkString = require('fast-chunk-string')
 import { DB } from './db/main'
 import { DB as Cache } from './db/cache'
 
-const s3 = require('./s3.json')
-const preferences = Object.keys(require('../gen/preferences/defaults.json')).sort()
+import * as s3 from './s3.json'
+import * as preferences_defaults from '../gen/preferences/defaults.json'
+const preferences = Object.keys(preferences_defaults).sort()
 
-const PACKAGE = require('../package.json')
+import * as PACKAGE from '../package.json'
 
 Components.utils.import('resource://gre/modules/Services.jsm')
 

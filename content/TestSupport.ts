@@ -14,7 +14,7 @@ import { getItemsAsync } from './get-items-async'
 import { AUXScanner } from './aux-scanner'
 import { DB as Cache } from './db/cache'
 
-const pref_defaults = require('../gen/preferences/defaults.json')
+import * as pref_defaults from '../gen/preferences/defaults.json'
 
 export = new class {
   public async removeAutoExports() {
