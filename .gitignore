@@ -37,3 +37,4 @@ test/fixtures/profile/zotero/zotero/better-bibtex-12k.sqlite
 test/fixtures/profile/zotero/zotero/zotero-12k.sqlite
 test/db
 site/public
+logs

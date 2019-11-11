@@ -37,15 +37,17 @@ for region, details in regions.items():
 #      print(log)
 
   else:
+    if not os.path.exists('logs'): os.makedirs('logs')
     args = [a.lower() for a in sys.argv[1:]]
     for target, partials in merge.items():
+      log = os.path.join('logs', target)
       if len([a for a in args if a in target.lower()]) == 0: continue
-      if os.path.exists(target):
+      if os.path.exists(log):
         print(f'skipping {target}')
         continue
 
       print(f'saving {target}')
-      with open(target, 'wb') as f:
+      with open(log, 'wb') as f:
         for i, partial in enumerate(sorted(partials, key=lambda p: p.key)):
           if len(partials) != 1: print(f'  {i+1}/{len(partials)}')
           f.write(partial.get()['Body'].read())
