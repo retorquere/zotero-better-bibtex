@@ -65,6 +65,7 @@ export function upgradeExtra(extra) {
       }
 
       if (json) {
+        Zotero.debug(candidate)
         if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
 
         extra = extra.substring(0, marker) + extra.substring(end + 1)
