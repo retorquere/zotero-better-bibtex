@@ -15,7 +15,7 @@ function makeName(name) {
   return `tex.${name.replace(/[:=]/g, '-').toLowerCase()}`
 }
 function makeValue(value) {
-  return value.replace(/\n+/g, ' ')
+  return `${value}`.replace(/\n+/g, ' ')
 }
 
 export function upgradeExtra(extra) {
@@ -65,12 +65,12 @@ export function upgradeExtra(extra) {
       }
 
       if (json) {
-        Zotero.debug(candidate)
         if (extra[marker - 1] === '\n' && extra[end + 1] === '\n') end += 1
 
         extra = extra.substring(0, marker) + extra.substring(end + 1)
 
         for (const [name, value] of Object.entries(json)) {
+          if (typeof value !== 'number' && typeof value !== 'string') throw new Error(`unexpected field of type ${typeof value}`)
           extraFields.push(`${makeName(name)}${cook ? ':' : '='} ${makeValue(value)}`)
         }
 

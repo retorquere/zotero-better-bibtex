@@ -56,7 +56,7 @@
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
     "barcoder": "^2.0.1",
-    "edtf": "^2.7.0",
+    "edtf": "^2.7.1",
     "edtfy": "^0.0.8",
     "escape-string-regexp": "^2.0.0",
     "eventemitter4": "^0.2.4",
@@ -90,7 +90,7 @@
     "unicode2latex": "^1.0.25",
     "webpack-cli": "^3.3.10",
     "xregexp": "^4.2.4",
-    "zotero-plugin": "^0.0.93"
+    "zotero-plugin": "^0.0.95"
   },
   "devDependencies": {
     "@types/node": "^12.12.7",
@@ -121,7 +121,7 @@
     "rimraf": "^3.0.0",
     "sorted-json": "^0.2.6",
     "ts-loader": "^6.2.1",
-    "ts-node": "^8.4.1",
+    "ts-node": "^8.5.0",
     "typedoc": "^0.15.0",
     "typescript": "^3.7.2",
     "uri-templates": "^0.2.0",
