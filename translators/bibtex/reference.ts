@@ -556,14 +556,14 @@ export class Reference {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
-    if (this.item.extraFields.citekey.aliases.length) {
-      this.add({ name: 'ids', value: this.item.extraFields.citekey.aliases.join(',') })
+    if (this.item.extraFields.aliases.length) {
+      this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
     }
 
     for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
       // these are handled just like 'arxiv' and 'lccn', respectively
-      if (['pmid', 'pmcid'].includes(cslName)) {
-        this.item.extraFields.tex[cslName] = field
+      if (['PMID', 'PMCID'].includes(cslName)) {
+        this.item.extraFields.tex[cslName.toLowerCase()] = field
         delete this.item.extraFields.csl[cslName]
         continue
       }
@@ -667,10 +667,10 @@ export class Reference {
           case 'author':
           case 'director':
           case 'editor':
-          case 'doi':
-          case 'isbn':
-          case 'issn':
-            name = cslName
+          case 'DOI':
+          case 'ISBN':
+          case 'ISSN':
+            name = cslName.toLowerCase()
             break
         }
       }
@@ -681,9 +681,9 @@ export class Reference {
             name = 'lccn'
             break
 
-          case 'doi':
-          case 'issn':
-            name = cslName
+          case 'DOI':
+          case 'ISSN':
+            name = cslName.toLowerCase()
             break
         }
       }
@@ -713,7 +713,10 @@ export class Reference {
         case 'lccn': case 'pmcid':
           this.override({ name, value: field.value, raw: field.raw })
           break
-        case 'pmid': case 'arxiv': case 'jstor': case 'hdl':
+        case 'pmid':
+        case 'arxiv':
+        case 'jstor':
+        case 'hdl':
           if (Translator.BetterBibLaTeX) {
             this.override({ name: 'eprinttype', value: name })
             this.override({ name: 'eprint', value: field.value, raw: field.raw })

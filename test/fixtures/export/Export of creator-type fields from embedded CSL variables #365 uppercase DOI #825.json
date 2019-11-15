@@ -153,7 +153,7 @@
       "volume": "3"
     },
     {
-      "extra": "Citation Key: emptybook\n{:X-genre: xxx}{:editor: Xxx}",
+      "extra": "Citation Key: emptybook\n{:X-genre: xxx}\n{:editor: Xxx}",
       "itemID": 255,
       "itemType": "encyclopediaArticle"
     },

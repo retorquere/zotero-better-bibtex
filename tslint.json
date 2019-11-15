@@ -2,7 +2,8 @@
   "extends": "zotero-plugin/tslint.json",
   "rules": {
     "no-console" :false,
-    "function-constructor": { "severity": "warning" },
+    "interface-over-type-literal": false,
+    "function-constructor": false,
     "member-ordering": false
   }
 }

@@ -24,7 +24,6 @@ import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
 import { AutoExport } from './auto-export'
 import { KeyManager } from './key-manager'
-import * as Citekey from './key-manager/get-set'
 import { TeXstudio } from './tex-studio'
 import format = require('string-template')
 
@@ -96,20 +95,20 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item, otherItems) {
   try {
-    const extra = Citekey.aliases.get(item.getField('extra'))
+    const extra = Extra.get(item.getField('extra'), { aliases: true })
 
     // get citekeys of other items
     const otherIDs = otherItems.map(i => parseInt(i.id))
-    extra.aliases = extra.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map(i => i.citekey))
+    extra.extraFields.aliases = extra.extraFields.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map(i => i.citekey))
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      extra.aliases = extra.aliases.concat(Citekey.aliases.get(i.getField('extra')).aliases)
+      extra.extraFields.aliases = extra.extraFields.aliases.concat(Extra.get(i.getField('extra'), { aliases: true }).extraFields.aliases)
     }
 
     const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
-    extra.aliases = extra.aliases.filter(alias => alias && alias !== citekey)
-    if (extra.aliases.length) extra.extra = Citekey.aliases.set(extra.extra, extra.aliases)
+    extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
+    if (extra.extraFields.aliases.length) extra.extra = Extra.set(extra.extra, { aliases: extra.extraFields.aliases })
     item.setField('extra', extra.extra)
 
   } catch (err) {
@@ -228,7 +227,7 @@ import { qualityReport } from './qr-check'
 import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
 import { Logger } from './logger'
-import { extract as varExtract } from './var-extract'
+import * as Extra from './extra'
 
 function cacheSelector(itemID, options, prefs) {
   const selector = {
@@ -254,7 +253,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
   titleCase(sandbox, text) { return titleCase(text) },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
-  extractFields(sandbox, item) { return varExtract(item) },
+  extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   // version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 

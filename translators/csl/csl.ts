@@ -127,20 +127,10 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
-      for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
-        switch (name) {
-          case 'type':
-            if (validCSLTypes.includes(value)) csl.type = value
-            continue
-
-          case 'doi':
-          case 'isbn':
-          case 'issn':
-          case 'pmcid':
-          case 'pmid':
-          case 'url':
-            name = name.toUpperCase()
-            break
+      for (const [name, {type, value}] of Object.entries(item.extraFields.csl)) {
+        if (name === 'type') {
+          if (validCSLTypes.includes(value)) csl.type = value
+          continue
         }
 
         switch (type) {
