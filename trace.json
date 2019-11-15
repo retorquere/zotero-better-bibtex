@@ -1,5 +1,5 @@
 {
-  "-gh-1314": [
+  "gh-1316": [
     "content/**/*.ts",
     "!content/monkey-patch.ts",
     "!content/flash.ts",
@@ -7,6 +7,7 @@
     "!content/prefs.ts",
     "!content/logger.ts",
     "!content/events.ts",
-    "!content/db/loki.ts"
+    "!content/db/loki.ts",
+    "translators/**/*.ts"
   ]
 }
