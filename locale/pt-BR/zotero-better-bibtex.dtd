@@ -3,14 +3,12 @@
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Suas chaves de citação">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT vai criar chaves de citação para suas referências. A geração de chaves é altamente configurável e você pode ignorar o que foi gerado, mas é preciso definir um default. Você pode acessar as preferências e mudar esta escolha a qualquer momento.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Eu já usei o BBT antes">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Eu sou novato com o BBT mas já usei arquivos BibTeX gerados por Zotero antes">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.whatever "Eu nunca usei o Zotero para gerir arquivos BibTeX antes">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "Escolha esta opção se tiver documentos que fazem referência a chaves geradas por BBT">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Use the BBT default citekey format">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Use the Zotero default citekey format">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "New keys will be generated using the default BBT format. If you want a different format, change it in the preferences, then select all items, right-click, and select Refresh">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Nota">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "No Zotero 5, BBT não atualiza mais as chaves de citação automaticamente quando você modifica o molde nas preferências. Se você quiser que as referências que já existem sigam o novo molde, é preciso selecioná-las e atualizá-las.">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.zotero "Escolha esta opção se você tiver documentos existentes que se referem a chaves geradas por Zotero sem a ajuda do BBT. Isso irá reproduzir fielmente as chaves geradas por Zotero, incluindo as limitações conhecidas do gerador de chaves do Zotero. Apenas use esta opção se precisar que as chaves sejam exatamente como geradas por Zotero.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.whatever "Escolher esta opção seleciona o formato padrão do BBT">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.example "suas chaves de citação serão como">
 
 <!ENTITY better-bibtex.FirstRun.exporting "Exportar usando BBT">
