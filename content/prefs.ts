@@ -1,5 +1,9 @@
 declare const Zotero: any
 
+declare const Components: any
+Components.utils.import('resource://zotero/config.js')
+declare const ZOTERO_CONFIG: any
+
 import * as log from './debug'
 import { Events } from './events'
 
@@ -10,6 +14,8 @@ const supported = ['debugLogDir', 'removeStock', 'postscriptProductionMode'].con
 export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
   public testing: boolean
+  public client: 'zotero' | 'jurism'
+  public platform: 'win' | 'lin' | 'mac'
 
   private prefix = 'translators.better-bibtex'
 
@@ -26,6 +32,10 @@ export let Preferences = new class { // tslint:disable-line:variable-name
         })
       })(name)
     }
+
+    // no other way for translators to know this. Set after the defaults
+    this.set('client', this.client = ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', ''))
+    this.set('platform', this.platform = Zotero.platform.toLowerCase().slice(0, 3)) // tslint:disable-line:no-magic-numbers
   }
 
   public set(pref, value) {

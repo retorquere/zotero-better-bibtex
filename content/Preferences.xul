@@ -576,6 +576,19 @@
           New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it's more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Don't ask again" in that dialog.
         -->
 
+        <preference
+          name="extensions.zotero.translators.better-bibtex.platform"
+          type="string"
+          default=""/>
+        <!--!!
+        -->
+        <preference
+          name="extensions.zotero.translators.better-bibtex.client"
+          type="string"
+          default=""/>
+        <!--!!
+        -->
+
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
         <tabs id="better-bibtex-prefs-tabs" onselect="window.sizeToContent()">

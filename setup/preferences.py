@@ -316,6 +316,8 @@ class Preferences:
         preferences = [pref for pref in self.all(options=list, section=str) if pref.section == slug]
 
       for pref in preferences:
+        if not pref.description: continue
+
         if pref.hidden:
           content += f"#### {pref.name}\n\n"
         else:

@@ -10,9 +10,6 @@ var Translator = {
 
   stringCompare: (new Intl.Collator('en')).compare,
   configure: function(stage) {
-    this.isJurisM = Zotero.Utilities.getVersion().includes('m');
-    this.isZotero = !this.isJurisM;
-
     this.BetterCSL = this.BetterCSLYAML || this.BetterCSLJSON;
 
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled();
@@ -21,7 +18,10 @@ var Translator = {
     if (stage == 'detectImport') {
       this.options = {}
     } else {
-      this.platform = Zotero.BetterBibTeX.platform().toLowerCase().slice(0, 3)
+      this.platform = Zotero.getHiddenPref('better-bibtex.platform');
+      this.isJurisM = Zotero.getHiddenPref('better-bibtex.client') === 'jurism';
+      this.isZotero = !this.isJurisM;
+
       this.paths = {
         caseSensitive: this.platform !== 'mac' && this.platform !== 'win',
         sep: this.platform === 'win' ? '\\' : '/'

@@ -3,7 +3,6 @@ declare const Zotero: any
 import { XULoki as Loki } from './loki'
 import * as log from '../debug'
 import { Events } from '../events'
-import { ZoteroConfig } from '../zotero-config'
 import { Store } from './store'
 
 const version = require('../../gen/version.js')
@@ -64,7 +63,7 @@ class Cache extends Loki {
       },
     })
 
-    clearOnUpgrade(coll, 'Zotero', ZoteroConfig.Zotero.version)
+    clearOnUpgrade(coll, 'Zotero', Zotero.version)
 
     // this reaps unused cache entries -- make sure that cacheFetchs updates the object
     //                  secs    mins  hours days

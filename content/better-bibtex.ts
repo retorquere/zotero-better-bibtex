@@ -13,7 +13,6 @@ declare const AddonManager: any
 import * as log from './debug'
 import { flash } from './flash'
 import { Events } from './events'
-// import { ZoteroConfig } from './zotero-config'
 
 log.debug('Loading Better BibTeX')
 
@@ -271,7 +270,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  // version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
 
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
 
@@ -326,7 +324,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 }
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  // version(sandbox) { return { Zotero: ZoteroConfig.Zotero, BetterBibTeX: require('../gen/version.js') } },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   platform(sandbox) { return Zotero.platform },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },

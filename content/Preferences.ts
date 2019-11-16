@@ -4,7 +4,6 @@ declare const Zotero: any
 declare const Zotero_Preferences: any
 
 import * as log from './debug'
-import { ZoteroConfig } from './zotero-config'
 import { patch as $patch$ } from './monkey-patch'
 import * as ZoteroDB from './db/zotero'
 import { DB as Cache } from './db/cache'
@@ -364,10 +363,9 @@ export = new class PrefPane {
     // no other way that I know of to know that I've just been selected
     this.timer = window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
 
-    // document.getElementById('better-bibtex-prefs-tab-journal-abbrev').hidden = !ZoteroConfig.Zotero.isJurisM
-    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
-    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', !ZoteroConfig.Zotero.isJurisM)
+    document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', Prefs.client !== 'jurism')
+    document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', Prefs.client !== 'jurism')
+    document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', Prefs.client !== 'jurism')
 
     $patch$(Zotero_Preferences, 'openHelpLink', original => function() {
       if (document.getElementsByTagName('prefwindow')[0].currentPane.helpTopic === 'BetterBibTeX') {
@@ -407,7 +405,7 @@ export = new class PrefPane {
     this.checkPostscript()
     this.checkJabRef()
 
-    if (ZoteroConfig.Zotero.isJurisM) {
+    if (Prefs.client === 'jurism') {
       Zotero.Styles.init().then(() => {
         const styles = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)
 
@@ -441,7 +439,7 @@ export = new class PrefPane {
   }
 
   private styleChanged(index) {
-    if (!ZoteroConfig.Zotero.isJurisM) return null
+    if (Prefs.client !== 'jurism') return null
 
     const stylebox = document.getElementById('better-bibtex-abbrev-style-popup')
     const selectedItem = typeof index !== 'undefined' ? stylebox.getItemAtIndex(index) : stylebox.selectedItem

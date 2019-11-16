@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Preferences as Prefs } from './prefs'
 import { Events } from './events'
-import { ZoteroConfig } from './zotero-config'
+
 import * as log from './debug'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
@@ -31,7 +31,7 @@ export let JournalAbbrev = new class { // tslint:disable-line:variable-name
 
   public reset() {
     this.style = Prefs.get('autoAbbrevStyle')
-    if (ZoteroConfig.Zotero.isJurisM && !this.style) {
+    if (Prefs.client === 'jurism' && !this.style) {
       this.style = Zotero.Styles.getVisible().filter(style => style.usesAbbreviation)[0].styleID
     }
 
