@@ -413,10 +413,10 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField) {
-    if (Translator.skipField[field.name]) return
+    if (Translator.skipField[field.name]) return null
 
     if (field.enc === 'date') {
-      if (!field.value) return
+      if (!field.value) return null
 
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
         return this.add({
@@ -443,18 +443,18 @@ export class Reference {
         verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
       }))
 
-      return
+      return field.name
     }
 
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
-    if (field.fallback && this.has[field.name]) return
+    if (field.fallback && this.has[field.name]) return null
 
     // legacy field addition, leave in place for postscripts
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
         case 0: // name -> undefined/null
-          return
+          return null
 
         case 1:
           field = {name: keys[0], value: field[keys[0]]}
@@ -466,9 +466,9 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value !== 'number') && !field.value) return
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) return
-      if (Array.isArray(field.value) && (field.value.length === 0)) return
+      if ((typeof field.value !== 'number') && !field.value) return null
+      if ((typeof field.value === 'string') && (field.value.trim() === '')) return null
+      if (Array.isArray(field.value) && (field.value.length === 0)) return null
     }
 
     if (this.has[field.name]) {
@@ -484,7 +484,7 @@ export class Reference {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
         let value = this[`enc_${enc}`](field, this.item.raw)
 
-        if (!value) return
+        if (!value) return null
 
         value = value.trim()
 
@@ -501,6 +501,8 @@ export class Reference {
     }
 
     this.has[field.name] = field
+
+    return field.name
   }
 
   /*
@@ -772,7 +774,18 @@ export class Reference {
       this.remove(name)
     }
 
-    if (!this.has.url && this.has.urldate) this.remove('urldate')
+    if (this.has.url && this.has.doi) {
+      switch (Translator.preferences.DOIandURL) {
+        case 'url':
+          delete this.has.doi
+          break
+        case 'doi':
+          delete this.has.url
+          break
+      }
+    }
+
+    if (!this.has.url) this.remove('urldate')
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
 

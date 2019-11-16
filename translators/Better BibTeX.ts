@@ -222,19 +222,24 @@ Translator.doExport = () => {
         break
     }
 
-    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !item.url) ref.add({ name: 'doi', value: item.DOI })
-    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !item.DOI) {
+    const doi = item.extraFields.csl.DOI || item.DOI
+    let url = null
+    if (Translator.preferences.DOIandURL === 'both' || !doi) {
       switch (Translator.preferences.bibtexURL) {
         case 'url':
-          ref.add({ name: 'url', value: item.url })
+          url = ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
           break
+
         case 'note':
-          ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.url, enc: 'url' })
+          url = ref.add({ name: (['misc', 'booklet'].includes(ref.referencetype) && !ref.has.howpublished ? 'howpublished' : 'note'), value: item.extraFields.csl.URL || item.url, enc: 'url' })
           break
+
         default:
-          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) ref.add({ name: 'howpublished', value: item.url })
+          if (['webpage', 'post', 'post-weblog'].includes(item.referenceType)) url = ref.add({ name: 'howpublished', value: item.extraFields.csl.URL || item.url })
+          break
       }
     }
+    if (Translator.preferences.DOIandURL === 'both' || !url) ref.add({ name: 'doi', value: doi })
 
     if (item.referenceType === 'thesis' && ['mastersthesis', 'phdthesis'].includes(item.type)) {
       ref.referencetype = item.type
