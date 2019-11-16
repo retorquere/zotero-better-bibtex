@@ -10,10 +10,10 @@ const injector = new Injector({
 })
 
 let selected = function(filename) { return false } // tslint:disable-line:only-arrow-functions
-if (fs.existsSync(path.join(__dirname, '../../trace.json'))) {
+if (fs.existsSync(path.join(__dirname, '../../.trace.json'))) {
   const branch = process.env.TRAVIS_BRANCH || shell.exec('git rev-parse --abbrev-ref HEAD', { silent: true }).stdout.trim()
   if (branch !== 'master') {
-    let trace = require('../../trace.json')
+    let trace = require('../../.trace.json')
     trace = trace[branch]
     if (trace) selected = filePathFilter(trace) as ((filename: string) => boolean)
   }
