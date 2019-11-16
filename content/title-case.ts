@@ -1,4 +1,4 @@
-declare const Zotero: any
+import * as CSL from '../gen/citeproc'
 
 // tslint:disable: no-var-keyword prefer-const semicolon prefer-template quotemark
 function makeRegExp(lst) {
@@ -15,12 +15,12 @@ const state = new class {
   constructor() {
     this.locale = {}
     this.locale[this.opt.lang] = { opts: {} }
-    this.locale[this.opt.lang].opts['skip-words'] = Zotero.CiteProc.CSL.SKIP_WORDS
+    this.locale[this.opt.lang].opts['skip-words'] = CSL.SKIP_WORDS
     this.locale[this.opt.lang].opts["skip-words-regexp"] = makeRegExp(this.locale[this.opt.lang].opts["skip-words"]) // tslint:disable-line:quotemark semicolon
   }
 }
 
 export function titleCase(text) {
-  const titleCased = Zotero.CiteProc.CSL.Output.Formatters.title(state, text)
+  const titleCased = CSL.Output.Formatters.title(state, text)
   return titleCased
 }

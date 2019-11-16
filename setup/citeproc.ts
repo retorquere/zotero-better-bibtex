@@ -11,10 +11,10 @@ ast
     id: { type: 'Identifier', name: 'CSL' },
   })
   .find(j.Property)
-  .filter(prop => !['PARTICLE_GIVEN_REGEXP', 'PARTICLE_FAMILY_REGEXP'].includes(prop.value.key.name))
+  .filter(prop => !['SKIP_WORDS', 'PARTICLE_GIVEN_REGEXP', 'PARTICLE_FAMILY_REGEXP'].includes(prop.value.key.name))
   .remove()
 
-const namespaces = [
+const blacklist = [
   'CSL.Attributes',
   'CSL.Conditions',
   'CSL.Disambiguation',
@@ -35,7 +35,6 @@ const namespaces = [
   'CSL.Blob',
   'CSL.Blob.prototype.push',
   'CSL.DateParser',
-  'CSL.Doppeler',
   'CSL.ITERATION',
   'CSL.Mode',
   'CSL.NumericBlob',
@@ -77,6 +76,10 @@ const namespaces = [
   'CSL.substituteTwo',
   'CSL.tokenExec',
 ]
+const whitelist = [
+  'CSL.Output.Formatters',
+  'CSL.Doppeler',
+]
 
 function varname(node) {
   switch (node.object.type) {
@@ -103,7 +106,8 @@ ast.find(j.AssignmentExpression)
     if (node.left.type !== 'MemberExpression') return false
 
     const left = varname(node.left)
-    if (namespaces.find(ns => left === ns || left.startsWith(`${ns}.`))) return true
+    if (whitelist.find(ns => left === ns || ns.startsWith(`${left}.`))) return false
+    if (blacklist.find(ns => left === ns || left.startsWith(`${ns}.`))) return true
     return false
   })
   .remove()
