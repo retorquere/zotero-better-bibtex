@@ -126,11 +126,15 @@ for imex in ['import', 'export']:
 
 with open(os.path.join(root, 'gen/typings/serialized-item.d.ts'), 'w') as typings:
   print(f'  {os.path.relpath(typings.name, root)}')
-  def add(s): print(textwrap.indent(s, '  '), file=typings)
-  def comment(s): print(textwrap.indent(textwrap.fill(s, width=100, initial_indent='', subsequent_indent='  '), '  // '), file=typings)
+  #def add(s): print(textwrap.indent(s, '  '), file=typings)
+  def add(s): print('    ' + s, file=typings)
+  def comment(s): print(textwrap.indent(textwrap.fill(s, width=100, initial_indent='', subsequent_indent='  '), '    // '), file=typings)
   def addfield(name, tpe='any'): add(f'{name}: {types.pop(name, tpe)}')
 
-  print('interface ISerializedItem {', file=typings)
+  print("import { Fields } from '../../content/extra'", file=typings)
+
+  print('declare global {', file=typings)
+  print('  interface ISerializedItem {', file=typings)
 
   comment('fields common to all items')
   for fieldName in 'itemID itemType dateAdded dateModified creators tags notes attachments raw'.split(' '):
@@ -162,18 +166,13 @@ with open(os.path.join(root, 'gen/typings/serialized-item.d.ts'), 'w') as typing
     addfield(fieldName, 'string')
   addfield('collections', 'string[]')
 
-  addfield('extraFields', textwrap.dedent('''
-    {
-      csl: { [key: string]: { name: string, type: string, value: any } }
-      tex: { [key: string]: { name: string, type: string, value: string, raw?: boolean, bibtex?: string } }
-      citekey?: { aliases: string[] }
-    }
-  ''').strip())
+  addfield('extraFields', 'Fields')
   addfield('arXiv', '{ source?: string, id: string, category?: string }')
 
   comment('Juris-M extras')
   addfield('multi')
 
+  print('  }', file=typings)
   print('}', file=typings)
 
 if len(types) != 0: raise ValueError(', '.join(types.keys()))

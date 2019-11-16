@@ -4,6 +4,8 @@ declare const Zotero: any
 
 import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
+import * as Extra from '../../content/extra'
+import * as cslVariables from '../../content/csl-vars.json'
 
 const validCSLTypes = [
   'article',
@@ -98,7 +100,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
+      Object.assign(item, Extra.get(item.extra))
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
@@ -127,42 +129,19 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
       if (item.accessDate) csl.accessed = this.date2CSL(Zotero.BetterBibTeX.parseDate(item.accessDate))
 
-      for (let [name, {type, value}] of Object.entries(item.extraFields.csl)) {
-        switch (name) {
-          case 'type':
-            if (validCSLTypes.includes(value)) csl.type = value
-            continue
+      for (const [name, value] of Object.entries(item.extraFields.csl)) {
+        if (Array.isArray(value)) { // csl creators
+          csl[name] = value.map(Extra.cslCreator)
 
-          case 'doi':
-          case 'isbn':
-          case 'issn':
-          case 'pmcid':
-          case 'pmid':
-          case 'url':
-            name = name.toUpperCase()
-            break
-        }
+        } else if (name === 'type') {
+          if (validCSLTypes.includes(value)) csl.type = value
 
-        switch (type) {
-          case 'date':
+        } else if (cslVariables[name] === 'date') {
             csl[name] = this.date2CSL(Zotero.BetterBibTeX.parseDate(value))
-            break
 
-          case 'creator':
-            csl[name] = []
-            for (let creator of value) {
-              if (creator.name) {
-                csl[name].push({ literal: creator.name })
-              } else {
-                creator = {family: creator.name || creator.lastName || '', given: creator.firstName || '', isInstitution: ((creator.name || creator.fieldMode === 1) ? 1 : undefined)}
-                Zotero.BetterBibTeX.parseParticles(creator)
-                csl[name].push(creator)
-              }
-            }
-            break
-
-          default:
+        } else {
             csl[name] = value
+
         }
       }
 

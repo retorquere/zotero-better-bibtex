@@ -5,6 +5,9 @@ import { Exporter } from '../lib/exporter'
 import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
+import * as Extra from '../../content/extra'
+import * as cslVariables from '../../content/csl-vars.json'
+import * as CSL from '../../gen/citeproc'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -339,12 +342,12 @@ export class Reference {
     }
 
     if (this.item.extraFields.csl.type) {
-      this.item.cslType = this.item.extraFields.csl.type.value.toLowerCase()
+      this.item.cslType = (this.item.extraFields.csl.type as string).toLowerCase()
       delete item.extraFields.csl.type
     }
 
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
-      this.item.cslVolumeTitle = this.item.extraFields.csl['volume-title'].value
+      this.item.cslVolumeTitle = (this.item.extraFields.csl['volume-title'] as string)
       delete this.item.extraFields.csl['volume-title']
     }
 
@@ -411,10 +414,10 @@ export class Reference {
    *   ignored)
    */
   public add(field: IField) {
-    if (Translator.skipField[field.name]) return
+    if (Translator.skipField[field.name]) return null
 
     if (field.enc === 'date') {
-      if (!field.value) return
+      if (!field.value) return null
 
       if (Translator.BetterBibLaTeX && Translator.preferences.biblatexExtendedDateFormat && Zotero.BetterBibTeX.isEDTF(field.value, true)) {
         return this.add({
@@ -441,18 +444,18 @@ export class Reference {
         verbatim: (field.orig && field.orig.inherit && field.verbatim) ? `orig${field.verbatim}` : (field.orig && field.orig.verbatim),
       }))
 
-      return
+      return field.name
     }
 
     if (field.fallback && field.replace) throw new Error('pick fallback or replace, buddy')
-    if (field.fallback && this.has[field.name]) return
+    if (field.fallback && this.has[field.name]) return null
 
     // legacy field addition, leave in place for postscripts
     if (!field.name) {
       const keys = Object.keys(field)
       switch (keys.length) {
         case 0: // name -> undefined/null
-          return
+          return null
 
         case 1:
           field = {name: keys[0], value: field[keys[0]]}
@@ -464,9 +467,9 @@ export class Reference {
     }
 
     if (!field.bibtex) {
-      if ((typeof field.value !== 'number') && !field.value) return
-      if ((typeof field.value === 'string') && (field.value.trim() === '')) return
-      if (Array.isArray(field.value) && (field.value.length === 0)) return
+      if ((typeof field.value !== 'number') && !field.value) return null
+      if ((typeof field.value === 'string') && (field.value.trim() === '')) return null
+      if (Array.isArray(field.value) && (field.value.length === 0)) return null
     }
 
     if (this.has[field.name]) {
@@ -482,7 +485,7 @@ export class Reference {
         const enc = field.enc || this.fieldEncoding[field.name] || 'latex'
         let value = this[`enc_${enc}`](field, this.item.raw)
 
-        if (!value) return
+        if (!value) return null
 
         value = value.trim()
 
@@ -499,6 +502,8 @@ export class Reference {
     }
 
     this.has[field.name] = field
+
+    return field.name
   }
 
   /*
@@ -556,28 +561,30 @@ export class Reference {
       this.add({ name: 'groups', value: groups.join(',') })
     }
 
-    if (this.item.extraFields.citekey.aliases.length) {
-      this.add({ name: 'ids', value: this.item.extraFields.citekey.aliases.join(',') })
+    if (this.item.extraFields.aliases.length) {
+      this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
     }
 
-    for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
+    for (let [cslName, value] of Object.entries(this.item.extraFields.csl)) {
       // these are handled just like 'arxiv' and 'lccn', respectively
-      if (['pmid', 'pmcid'].includes(cslName)) {
-        this.item.extraFields.tex[cslName] = field
+      if (['PMID', 'PMCID'].includes(cslName) && typeof value === 'string') {
+        this.item.extraFields.tex[cslName.toLowerCase()] = { value }
         delete this.item.extraFields.csl[cslName]
         continue
       }
 
+      const type = cslVariables[cslName]
       let name = null
       let replace = false
       let enc
-      switch (field.type) {
+      switch (type) {
         case 'string':
           enc = null
           break
 
         case 'creator':
           enc = 'creators'
+          if (Array.isArray(value)) value = (value.map(Extra.zoteroCreator) as string[]) // yeah yeah, shut up TS
           break
 
         case 'date':
@@ -585,7 +592,7 @@ export class Reference {
           replace = true
 
         default:
-          enc = field.type
+          enc = type
       }
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
@@ -667,10 +674,10 @@ export class Reference {
           case 'author':
           case 'director':
           case 'editor':
-          case 'doi':
-          case 'isbn':
-          case 'issn':
-            name = cslName
+          case 'DOI':
+          case 'ISBN':
+          case 'ISSN':
+            name = cslName.toLowerCase()
             break
         }
       }
@@ -681,17 +688,17 @@ export class Reference {
             name = 'lccn'
             break
 
-          case 'doi':
-          case 'issn':
-            name = cslName
+          case 'DOI':
+          case 'ISSN':
+            name = cslName.toLowerCase()
             break
         }
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value: field.value, enc, replace, fallback: !replace })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       } else {
-        debug('Unmapped CSL field', cslName, '=', field.value)
+        debug('Unmapped CSL field', cslName, '=', value)
       }
     }
 
@@ -713,7 +720,10 @@ export class Reference {
         case 'lccn': case 'pmcid':
           this.override({ name, value: field.value, raw: field.raw })
           break
-        case 'pmid': case 'arxiv': case 'jstor': case 'hdl':
+        case 'pmid':
+        case 'arxiv':
+        case 'jstor':
+        case 'hdl':
           if (Translator.BetterBibLaTeX) {
             this.override({ name: 'eprinttype', value: name })
             this.override({ name: 'eprint', value: field.value, raw: field.raw })
@@ -734,7 +744,7 @@ export class Reference {
           break
 
         default:
-          this.override({ ...field, bibtexStrings })
+          this.override({ ...field, name, bibtexStrings })
           break
       }
     }
@@ -765,7 +775,18 @@ export class Reference {
       this.remove(name)
     }
 
-    if (!this.has.url && this.has.urldate) this.remove('urldate')
+    if (this.has.url && this.has.doi) {
+      switch (Translator.preferences.DOIandURL) {
+        case 'url':
+          delete this.has.doi
+          break
+        case 'doi':
+          delete this.has.url
+          break
+      }
+    }
+
+    if (!this.has.url) this.remove('urldate')
 
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
 
@@ -857,7 +878,7 @@ export class Reference {
           given: this._enc_creators_scrub_name(creator.firstName || ''),
         }
 
-        if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
+        if (Translator.preferences.parseParticles) CSL.parseParticles(name)
 
         if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'

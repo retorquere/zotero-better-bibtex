@@ -2,6 +2,7 @@ declare const Zotero: any
 declare const Translator: ITranslator
 
 import * as escape from '../content/escape'
+import * as Extra from '../content/extra'
 
 const html = {
   levels: 0,
@@ -135,7 +136,7 @@ Translator.doExport = () => {
   const items = {}
   let z_item
   while (z_item = Zotero.nextItem()) {
-    Object.assign(z_item, Zotero.BetterBibTeX.extractFields(z_item))
+    Object.assign(z_item, Extra.get(z_item.extra))
     if (_keep(z_item)) items[z_item.itemID] = z_item
   }
 
