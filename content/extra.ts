@@ -1,5 +1,6 @@
 // http://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables
 import * as cslVariables from './csl-vars.json'
+import * as CSL from '../gen/citeproc'
 
 type TeXString = { value: string, raw?: boolean }
 
@@ -16,8 +17,9 @@ type ZoteroCreator = { name?: string, lastName?: string, firstName?: string }
 export function cslCreator(value: string): CSLCreator {
   const creator = value.split(/\s*\|\|\s*/)
   if (creator.length === 2) { // tslint:disable-line:no-magic-numbers
-    return { family: creator[0] || '', given: creator[1] || ''}
-    // TODO: Zotero.BetterBibTeX.parseParticles(cslCreator)
+    const _creator = { family: creator[0] || '', given: creator[1] || ''}
+    CSL.parseParticles(_creator)
+    return _creator
   } else {
     // return { literal: value, isInstitution: 1 }
     return { literal: value }

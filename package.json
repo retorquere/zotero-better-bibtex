@@ -109,6 +109,7 @@
     "glob": "^7.1.6",
     "ignore-loader": "^0.1.2",
     "indent-string": "^4.0.0",
+    "jscodeshift": "^0.6.4",
     "jsesc": "^2.5.2",
     "json-stable-stringify": "^1.0.1",
     "loader-utils": "^1.2.3",

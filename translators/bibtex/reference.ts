@@ -7,6 +7,7 @@ import { debug } from '../lib/debug'
 import { datefield } from './datefield'
 import * as Extra from '../../content/extra'
 import * as cslVariables from '../../content/csl-vars.json'
+import * as CSL from '../../gen/citeproc'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -877,7 +878,7 @@ export class Reference {
           given: this._enc_creators_scrub_name(creator.firstName || ''),
         }
 
-        if (Translator.preferences.parseParticles) Zotero.BetterBibTeX.parseParticles(name)
+        if (Translator.preferences.parseParticles) CSL.parseParticles(name)
 
         if (!Translator.BetterBibLaTeX || !Translator.preferences.biblatexExtendedNameFormat) {
           // side effects to set use-prefix/uniorcomma -- make sure addCreators is called *before* adding 'options'

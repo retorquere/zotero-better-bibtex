@@ -131,8 +131,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
 
       for (const [name, value] of Object.entries(item.extraFields.csl)) {
         if (Array.isArray(value)) { // csl creators
-          debug('parseparticles', value, value.map(Extra.cslCreator))
-          csl[name] = value.map(Extra.cslCreator).map(Zotero.BetterBibTeX.parseParticles)
+          csl[name] = value.map(Extra.cslCreator)
 
         } else if (name === 'type') {
           if (validCSLTypes.includes(value)) csl.type = value

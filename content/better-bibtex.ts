@@ -267,7 +267,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
-  parseParticles(sandbox, name) { if (name.family) { Zotero.CiteProc.CSL.parseParticles(name) } return name },
   titleCase(sandbox, text) { return titleCase(text) },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   extractFields(sandbox, item) { return Extra.get(item.extra) },
