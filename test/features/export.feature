@@ -7,13 +7,14 @@ Background:
 @test-cluster-1
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
-@biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207
+@biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331               | 1           |
      | Latex commands in extra-field treated differently #1207                                        | 1           |
      | preserve @strings between import-export #1162                                                  | 1           |
      | Suppress brace protection #1139                                                                | 1           |

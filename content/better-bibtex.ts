@@ -5,6 +5,7 @@ import { Preferences as Prefs } from './prefs' // needs to be here early, initia
 require('./pull-export') // just require, initializes the pull-export end points
 require('./json-rpc') // just require, initializes the json-rpc end point
 import { AUXScanner } from './aux-scanner'
+import * as Extra from './extra'
 
 Components.utils.import('resource://gre/modules/AddonManager.jsm')
 declare const AddonManager: any
@@ -95,7 +96,7 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item, otherItems) {
   try {
-    const extra = Extra.get(item.getField('extra'), { aliases: true })
+    const extra = Extra.get(item.getField('extra'), { aliases: true, tex: true, csl: true })
 
     // get citekeys of other items
     const otherIDs = otherItems.map(i => parseInt(i.id))
@@ -103,13 +104,29 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      extra.extraFields.aliases = extra.extraFields.aliases.concat(Extra.get(i.getField('extra'), { aliases: true }).extraFields.aliases)
+      const otherExtra = Extra.get(i.getField('extra'), { aliases: true, tex: true, csl: true })
+
+      extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
+
+      for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
+        if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
+      }
+
+      for (const [name, value] of Object.entries(otherExtra.extraFields.csl)) {
+        if (!extra.extraFields.csl[name]) {
+          extra.extraFields.csl[name] = value
+        } else if (Array.isArray(extra.extraFields.csl[name]) && Array.isArray(value)) {
+          for (const creator in value) {
+            if (!extra.extraFields.csl[name].includes(creator)) (extra.extraFields.csl[name] as string[]).push(creator)
+          }
+        }
+      }
     }
 
     const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
     extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
-    if (extra.extraFields.aliases.length) extra.extra = Extra.set(extra.extra, { aliases: extra.extraFields.aliases })
-    item.setField('extra', extra.extra)
+
+    item.setField('extra', Extra.set(extra.extra, { aliases: extra.extraFields.aliases, tex: extra.extraFields.tex, csl: extra.extraFields.csl }))
 
   } catch (err) {
     log.error('Zotero.Items.merge:', err)
@@ -227,7 +244,6 @@ import { qualityReport } from './qr-check'
 import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
 import { Logger } from './logger'
-import * as Extra from './extra'
 
 function cacheSelector(itemID, options, prefs) {
   const selector = {
@@ -250,7 +266,7 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
-  parseParticles(sandbox, name) { return Zotero.CiteProc.CSL.parseParticles(name) },
+  parseParticles(sandbox, name) { if (name.family) { Zotero.CiteProc.CSL.parseParticles(name) } return name },
   titleCase(sandbox, text) { return titleCase(text) },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
   extractFields(sandbox, item) { return Extra.get(item.extra) },

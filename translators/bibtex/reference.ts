@@ -5,6 +5,8 @@ import { Exporter } from '../lib/exporter'
 import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'
+import * as Extra from '../../content/extra'
+import * as cslVariables from '../../content/csl-vars.json'
 
 import { arXiv } from '../../content/arXiv'
 
@@ -339,12 +341,12 @@ export class Reference {
     }
 
     if (this.item.extraFields.csl.type) {
-      this.item.cslType = this.item.extraFields.csl.type.value.toLowerCase()
+      this.item.cslType = (this.item.extraFields.csl.type as string).toLowerCase()
       delete item.extraFields.csl.type
     }
 
     if (this.item.extraFields.csl['volume-title']) { // should just have been mapped by Zotero
-      this.item.cslVolumeTitle = this.item.extraFields.csl['volume-title'].value
+      this.item.cslVolumeTitle = (this.item.extraFields.csl['volume-title'] as string)
       delete this.item.extraFields.csl['volume-title']
     }
 
@@ -560,24 +562,26 @@ export class Reference {
       this.add({ name: 'ids', value: this.item.extraFields.aliases.join(',') })
     }
 
-    for (const [cslName, field] of Object.entries(this.item.extraFields.csl)) {
+    for (let [cslName, value] of Object.entries(this.item.extraFields.csl)) {
       // these are handled just like 'arxiv' and 'lccn', respectively
-      if (['PMID', 'PMCID'].includes(cslName)) {
-        this.item.extraFields.tex[cslName.toLowerCase()] = field
+      if (['PMID', 'PMCID'].includes(cslName) && typeof value === 'string') {
+        this.item.extraFields.tex[cslName.toLowerCase()] = { value }
         delete this.item.extraFields.csl[cslName]
         continue
       }
 
+      const type = cslVariables[cslName]
       let name = null
       let replace = false
       let enc
-      switch (field.type) {
+      switch (type) {
         case 'string':
           enc = null
           break
 
         case 'creator':
           enc = 'creators'
+          if (Array.isArray(value)) value = (value.map(Extra.zoteroCreator) as string[]) // yeah yeah, shut up TS
           break
 
         case 'date':
@@ -585,7 +589,7 @@ export class Reference {
           replace = true
 
         default:
-          enc = field.type
+          enc = type
       }
 
       // CSL names are not in BibTeX format, so only add it if there's a mapping
@@ -689,9 +693,9 @@ export class Reference {
       }
 
       if (name) {
-        this.override({ name, verbatim: name, orig: { inherit: true }, value: field.value, enc, replace, fallback: !replace })
+        this.override({ name, verbatim: name, orig: { inherit: true }, value, enc, replace, fallback: !replace })
       } else {
-        debug('Unmapped CSL field', cslName, '=', field.value)
+        debug('Unmapped CSL field', cslName, '=', value)
       }
     }
 
@@ -737,7 +741,7 @@ export class Reference {
           break
 
         default:
-          this.override({ ...field, bibtexStrings })
+          this.override({ ...field, name, bibtexStrings })
           break
       }
     }

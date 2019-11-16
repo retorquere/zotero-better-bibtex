@@ -6,6 +6,7 @@ import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/itemfields'
 import * as bibtexParser from '@retorquere/bibtex-parser'
 import { Postfix } from '../bibtex/postfix.ts'
+import * as Extra from '../../content/extra'
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Exporter = new class { // tslint:disable-line:variable-name
@@ -69,7 +70,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Zotero.BetterBibTeX.extractFields(item))
+      Object.assign(item, Extra.get(item.extra))
 
       item.raw = Translator.preferences.rawLaTag === '*'
       item.tags = item.tags.filter(tag => {
