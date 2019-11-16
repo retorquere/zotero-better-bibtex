@@ -113,11 +113,12 @@ $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(ite
       }
 
       for (const [name, value] of Object.entries(otherExtra.extraFields.csl)) {
-        if (!extra.extraFields.csl[name]) {
+        const existing = extra.extraFields.csl[name]
+        if (!existing) {
           extra.extraFields.csl[name] = value
-        } else if (Array.isArray(extra.extraFields.csl[name]) && Array.isArray(value)) {
+        } else if (Array.isArray(existing) && Array.isArray(value)) {
           for (const creator in value) {
-            if (!extra.extraFields.csl[name].includes(creator)) (extra.extraFields.csl[name] as string[]).push(creator)
+            if (!existing.includes(creator)) existing.push(creator)
           }
         }
       }
