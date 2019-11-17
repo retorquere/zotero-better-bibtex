@@ -333,8 +333,8 @@ Translator.doExport = () => {
     ref.add({ name: 'isbn', value: item.ISBN })
     ref.add({ name: 'issn', value: item.ISSN })
 
-    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'url' || !(item.DOI || item.extraFields.csl.DOI)) ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
-    if (Translator.preferences.DOIandURL === 'both' || Translator.preferences.DOIandURL === 'doi' || !(item.url || item.extraFields.csl.URL)) ref.add({ name: 'doi', value: item.extraFields.csl.DOI || item.DOI })
+    ref.add({ name: 'url', value: item.extraFields.csl.URL || item.url })
+    ref.add({ name: 'doi', value: item.extraFields.csl.DOI || item.DOI })
 
     ref.add({ name: 'shorttitle', value: item.shortTitle })
     ref.add({ name: 'abstract', value: item.abstractNote })
