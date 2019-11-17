@@ -3,8 +3,8 @@
 
 <!ENTITY better-bibtex.FirstRun.citekeyFormat "Ihre Zitierschlüssel">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation "BBT generiert Zitierschlüssel für ihre Einträge. Dieser Prozess ist in hohem Maße konfigurierbar und kann übersprungen werden, allerdings müssen Sie jetzt einen Defaultwert setzen. Sie können die Auswahl jederzeit im Konfigurationsmenü ändern.">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Use the BBT default citekey format">
-<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Use the Zotero default citekey format">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.bbt "Verwende das Standard-Zitierschlüssel-Format von BBT">
+<!ENTITY better-bibtex.FirstRun.citekeyFormat.zotero "Verwende das Standard-Zitierschlüssel-Format von Zotero">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt "New keys will be generated using the default BBT format. If you want a different format, change it in the preferences, then select all items, right-click, and select Refresh">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.note "Hinweis">
 <!ENTITY better-bibtex.FirstRun.citekeyFormat.explanation.bbt.citekeyUpdate "In Zotero 5 aktualisiert BBT nicht mehr automatisch die Zitierschlüssel, wenn Sie das Muster in den Einstellungen ändern. Wenn bestehende Eintragungen dem neuen Muster folgen sollen, müssen Sie die Einträge markieren und aktualisieren.">
