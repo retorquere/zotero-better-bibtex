@@ -169,11 +169,13 @@ if (Translator.BetterTeX) {
   // If a field is not in this list, it will show up at after the ordered fields.
   // https://github.com/retorquere/zotero-better-bibtex/issues/512
 
-  const order = ['author', 'date', 'title', 'publisher'].filter(field => field in reference.has);
+  const order = ['author', 'date', 'title', 'publisher']
   for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {
     const value = reference.has[field]
-    delete reference.has[field]
-    reference.has[field] = value
+    if (value) {
+      delete reference.has[field]
+      reference.has[field] = value
+    }
   }
 }
 ```
