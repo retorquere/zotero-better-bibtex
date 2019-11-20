@@ -40,6 +40,11 @@ This inserts the citation at the cursor using the shortcut ctrl-z (in insert mod
 
 A sample implementation of real integration (rather than the working-but-clunky workarounds using paste) can be found in the [Zotero Citations](https://atom.io/packages/zotero-citations) package for the [Atom](http://atom.io) editor.
 
+
+###  VS Code Citation Picker for Zotero
+
+If you don't feel like typing citations out (and let's be honest, you don't), executing [VS Code Citation Picker for Zotero](https://marketplace.visualstudio.com/items?itemName=mblode.zotero) extension for the [VS Code](https://code.visualstudio.com/) editor will call up a graphical picker which will insert these for you, formatted and all.
+
 ### Scrivener 2.0/Marked 2 for Mac
 
 Dave Smith has gracefully written [instructions](http://davepwsmith.github.io/academic-scrivener-howto/) on how to set up Scrivener 2.0 and Marked 2 for OSX to use the CAYW picker, including ready-to-run apps
