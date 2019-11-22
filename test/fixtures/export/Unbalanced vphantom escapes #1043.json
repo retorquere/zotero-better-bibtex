@@ -29,7 +29,6 @@
       "keyConflictPolicy": "change",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "mapMath": "\u2192",
       "parseParticles": true,
       "postscript": "",

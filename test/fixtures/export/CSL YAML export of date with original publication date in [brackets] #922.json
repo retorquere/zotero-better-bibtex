@@ -28,7 +28,6 @@
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
-      "lockedInit": false,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,

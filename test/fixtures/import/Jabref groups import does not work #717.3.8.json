@@ -148,7 +148,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",

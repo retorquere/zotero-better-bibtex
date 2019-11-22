@@ -1,7 +1,13 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    },
     "preferences": {
       "DOIandURL": "doi",
       "ascii": "",
@@ -37,7 +43,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
@@ -60,98 +65,92 @@
       "suppressTitleCase": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
       "warnBulkModify": 10
-    },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "book",
-      "url": "http://link.springer.com/10.1007/0-387-29362-0",
-      "series": "Statistics for Biology and Health",
-      "place": "New York, NY",
-      "publisher": "Springer New York",
       "ISBN": "978-0-387-25146-2 978-0-387-29362-2",
-      "date": "2005",
-      "extra": "DOI: 10.1007/0-387-29362-0\nCitation Key: Gentleman2005",
-      "accessDate": "2019-11-15T00:15:57Z",
-      "libraryCatalog": "DOI.org (Crossref)",
       "abstractNote": "Bioconductor is a widely used open source and open development software project for the analysis and comprehension of data arising from high-throughput experimentation in genomics and molecular biology. Bioconductor is rooted in the open source statistical computing environment R. This volume's coverage is broad and ranges across most of the key capabilities of the Bioconductor project, including\n\nimportation and preprocessing of high-throughput data from microarray, proteomic, and flow cytometry platforms\n\ncuration and delivery of biological metadata for use in statistical modeling and interpretation\n\nstatistical analysis of high-throughput data, including machine learning and visualization,\n\nmodeling and visualization of graphs and networks.\n\nThe developers of the software, who are in many cases leading academic researchers, jointly authored chapters. All methods are illustrated with publicly available data, and a major section of the book is devoted to exposition of fully worked case studies.\n\nThis book is more than a static collection of descriptive text, figures, and code examples that were run by the authors to produce the text; it is a dynamic document. Code underlying all of the computations that are shown is made available on a companion website, and readers can reproduce every number, figure, and table on their own computers.",
-      "title": "Bioinformatics and Computational Biology Solutions Using R and Bioconductor",
+      "accessDate": "2019-11-15T00:15:57Z",
+      "attachments": [],
+      "citationKey": "Gentleman2005",
+      "citekey": "Gentleman2005",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "editor",
           "firstName": "Robert",
-          "lastName": "Gentleman",
-          "creatorType": "editor"
+          "lastName": "Gentleman"
         },
         {
+          "creatorType": "editor",
           "firstName": "Vincent J.",
-          "lastName": "Carey",
-          "creatorType": "editor"
+          "lastName": "Carey"
         },
         {
+          "creatorType": "editor",
           "firstName": "Wolfgang",
-          "lastName": "Huber",
-          "creatorType": "editor"
+          "lastName": "Huber"
         },
         {
+          "creatorType": "editor",
           "firstName": "Rafael A.",
-          "lastName": "Irizarry",
-          "creatorType": "editor"
+          "lastName": "Irizarry"
         },
         {
+          "creatorType": "editor",
           "firstName": "Sandrine",
-          "lastName": "Dudoit",
-          "creatorType": "editor"
+          "lastName": "Dudoit"
         },
         {
+          "creatorType": "seriesEditor",
           "firstName": "Wing",
-          "lastName": "Wong",
-          "creatorType": "seriesEditor"
+          "lastName": "Wong"
         },
         {
+          "creatorType": "seriesEditor",
           "firstName": "M.",
-          "lastName": "Gail",
-          "creatorType": "seriesEditor"
+          "lastName": "Gail"
         },
         {
+          "creatorType": "seriesEditor",
           "firstName": "K.",
-          "lastName": "Krickeberg",
-          "creatorType": "seriesEditor"
+          "lastName": "Krickeberg"
         },
         {
+          "creatorType": "seriesEditor",
           "firstName": "A.",
-          "lastName": "Tsiatis",
-          "creatorType": "seriesEditor"
+          "lastName": "Tsiatis"
         },
         {
+          "creatorType": "seriesEditor",
           "firstName": "J.",
-          "lastName": "Samet",
-          "creatorType": "seriesEditor"
+          "lastName": "Samet"
         }
       ],
+      "date": "2005",
+      "dateAdded": "2019-10-03T07:11:42Z",
+      "dateModified": "2019-11-15T00:18:52Z",
+      "extra": "DOI: 10.1007/0-387-29362-0\nCitation Key: Gentleman2005",
+      "itemID": 3791,
+      "itemType": "book",
+      "key": "HI8MWNJ8",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "libraryID": 1,
+      "notes": [],
+      "place": "New York, NY",
+      "publisher": "Springer New York",
+      "relations": [],
+      "series": "Statistics for Biology and Health",
       "tags": [
         {
           "tag": "#nosource"
         }
       ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-10-03T07:11:42Z",
-      "dateModified": "2019-11-15T00:18:52Z",
+      "title": "Bioinformatics and Computational Biology Solutions Using R and Bioconductor",
       "uri": "http://zotero.org/users/local/XvY1xbc4/items/HI8MWNJ8",
-      "attachments": [],
-      "notes": [],
-      "itemID": 3791,
-      "key": "HI8MWNJ8",
-      "citekey": "Gentleman2005",
-      "citationKey": "Gentleman2005",
-      "libraryID": 1
+      "url": "http://link.springer.com/10.1007/0-387-29362-0",
+      "version": 0
     }
   ]
 }

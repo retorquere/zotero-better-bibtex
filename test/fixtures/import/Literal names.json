@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.76",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.15",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.76",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.148.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -50,7 +43,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
@@ -72,128 +64,144 @@
       "suppressSentenceCase": false,
       "suppressTitleCase": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.148.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.76",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.15",
+        "platform": "MacIntel",
+        "version": "5.0.76"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "volume": "127",
-      "issue": "12",
-      "pages": "1342-1350",
-      "publicationTitle": "Circulation",
-      "ISSN": "1524-4539",
-      "date": "2013-03",
-      "extra": "Citation Key: sasson_increasing_2013",
       "DOI": "10.1161/CIR.0b013e318288b4dd",
-      "language": "English",
-      "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
-      "shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
+      "ISSN": "1524-4539",
+      "attachments": [],
+      "citationKey": "sasson_increasing_2013",
+      "citekey": "sasson_increasing_2013",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "Comilla",
-          "lastName": "Sasson",
-          "creatorType": "author"
+          "lastName": "Sasson"
         },
         {
+          "creatorType": "author",
           "firstName": "Hendrika",
-          "lastName": "Meischke",
-          "creatorType": "author"
+          "lastName": "Meischke"
         },
         {
+          "creatorType": "author",
           "firstName": "Benjamin S",
-          "lastName": "Abella",
-          "creatorType": "author"
+          "lastName": "Abella"
         },
         {
+          "creatorType": "author",
           "firstName": "Robert A",
-          "lastName": "Berg",
-          "creatorType": "author"
+          "lastName": "Berg"
         },
         {
+          "creatorType": "author",
           "firstName": "Bentley J",
-          "lastName": "Bobrow",
-          "creatorType": "author"
+          "lastName": "Bobrow"
         },
         {
+          "creatorType": "author",
           "firstName": "Paul S",
-          "lastName": "Chan",
-          "creatorType": "author"
+          "lastName": "Chan"
         },
         {
+          "creatorType": "author",
           "firstName": "Elisabeth Dowling",
-          "lastName": "Root",
-          "creatorType": "author"
+          "lastName": "Root"
         },
         {
+          "creatorType": "author",
           "firstName": "Michele",
-          "lastName": "Heisler",
-          "creatorType": "author"
+          "lastName": "Heisler"
         },
         {
+          "creatorType": "author",
           "firstName": "Jerrold H",
-          "lastName": "Levy",
-          "creatorType": "author"
+          "lastName": "Levy"
         },
         {
+          "creatorType": "author",
           "firstName": "Mark",
-          "lastName": "Link",
-          "creatorType": "author"
+          "lastName": "Link"
         },
         {
+          "creatorType": "author",
           "firstName": "Frederick",
-          "lastName": "Masoudi",
-          "creatorType": "author"
+          "lastName": "Masoudi"
         },
         {
+          "creatorType": "author",
           "firstName": "Marcus",
-          "lastName": "Ong",
-          "creatorType": "author"
+          "lastName": "Ong"
         },
         {
+          "creatorType": "author",
           "firstName": "Michael R",
-          "lastName": "Sayre",
-          "creatorType": "author"
+          "lastName": "Sayre"
         },
         {
+          "creatorType": "author",
           "firstName": "John S",
-          "lastName": "Rumsfeld",
-          "creatorType": "author"
+          "lastName": "Rumsfeld"
         },
         {
+          "creatorType": "author",
           "firstName": "Thomas D",
-          "lastName": "Rea",
-          "creatorType": "author"
+          "lastName": "Rea"
         },
         {
-          "name": "American Heart Association Council on Quality of Care and Outcomes Research",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "American Heart Association Council on Quality of Care and Outcomes Research"
         },
         {
-          "name": "Emergency Cardiovascular Care Committee",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "Emergency Cardiovascular Care Committee"
         },
         {
-          "name": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation"
         },
         {
-          "name": "Council on Clinical Cardiology",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "Council on Clinical Cardiology"
         },
         {
-          "name": "Council on Cardiovascular Surgery and Anesthesia",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "Council on Cardiovascular Surgery and Anesthesia"
         }
       ],
+      "date": "2013-03",
+      "dateAdded": "2019-10-29T13:25:50Z",
+      "dateModified": "2019-10-29T13:25:50Z",
+      "extra": "Citation Key: sasson_increasing_2013",
+      "issue": "12",
+      "itemID": 121,
+      "itemType": "journalArticle",
+      "key": "UZ45LRQU",
+      "language": "English",
+      "libraryID": 1,
+      "notes": [
+        "<p>PMID: 23439512</p>"
+      ],
+      "pages": "1342-1350",
+      "publicationTitle": "Circulation",
+      "relations": [],
+      "shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
       "tags": [
         {
           "tag": "Administrative Personnel"
@@ -226,20 +234,10 @@
           "tag": "United States"
         }
       ],
-      "collections": [],
-      "relations": [],
-      "dateAdded": "2019-10-29T13:25:50Z",
-      "dateModified": "2019-10-29T13:25:50Z",
+      "title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
       "uri": "http://zotero.org/users/local/6z7M0kXV/items/UZ45LRQU",
-      "attachments": [],
-      "notes": [
-        "<p>PMID: 23439512</p>"
-      ],
-      "itemID": 121,
-      "key": "UZ45LRQU",
-      "citekey": "sasson_increasing_2013",
-      "citationKey": "sasson_increasing_2013",
-      "libraryID": 1
+      "version": 0,
+      "volume": "127"
     }
   ]
 }

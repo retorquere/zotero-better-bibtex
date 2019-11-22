@@ -465,7 +465,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "parseParticles": true,
       "postscript": "",
       "qualityReport": false,

@@ -41,7 +41,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "parseParticles": true,
       "postscript": "// Add `pagetotal' field for `book' items in BibTeX bibliography\nif (Translator.BetterBibTeX) {\n\tswitch (item.itemType) {\n\t\tcase 'book':\n\t\t\tthis.add({ name: 'pagetotal', value: item.numPages });\n\t\t\tbreak;\n\t}\n}\n\n// https://github.com/retorquere/zotero-better-bibtex/issues/512#issuecomment-489435978\nif (Translator.BetterTeX) { // covers both Translator.BetterBibTeX and Translator.BetterBibLaTeX\n\tvar order = [\n\t\t'author',\n\t\t'title',\n\t\t'type', // techreport\n\t\t'institution', // techreport\n\t\t'journal',\n\t\t'editor',\n\t\t'booktitle',\n\t\t'edition',\n\t\t'series',\n\t\t'address',\n\t\t'publisher',\n\t\t'year',\n\t\t'volume',\n\t\t'number',\n\t\t'pages',\n\t\t'pagetotal',\n\t\t'note',\n\t\t'doi',\n\t\t'url',\n\t\t'isbn',\n\t\t'language',\n\t\t'abstract',\n\t];\n\n\tconst keys = Object.keys(this.has)\n\tfor (const field of keys.sort((a, b) => ((order.indexOf(a) + 1) || (keys.length + order.length + 1)) - ((order.indexOf(b) + 1) || (keys.length + order.length + 1)))) {\n\t\tconst value = this.has[field]\n\t\tdelete this.has[field]\n\t\tthis.has[field] = value\n\t}\n}\n",
       "qualityReport": false,

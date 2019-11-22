@@ -38,7 +38,6 @@
       "keyConflictPolicy": "change",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "parseParticles": true,
       "postscript": "// Only use book as type, not collection\nif (Translator.BetterBibLaTeX && item.referencetype === 'collection') item.referencetype = 'book'\n\n// Duplicate title to shorttitle if empty\nif (Translator.BetterBibLaTeX && !this.has.shorttitle) this.add({ name: 'shorttitle', value: item.title })\n\n// Duplicate title to booktitle for books\nif (Translator.BetterBibLaTeX && item.itemType === 'book') this.add({ name: 'booktitle', value: item.title })\n\n// Set english as langid if empty\nif (Translator.BetterBibLaTeX && !this.has.langid) this.add({ name: 'langid', value: 'english' })\n\n// Only export year to date field\nif (Translator.BetterBibLaTeX && item.date) {\n  const date = Zotero.BetterBibTeX.parseDate(item.date)\n  if (date.type === 'date') this.add({ name: 'date', value: date.year })\n}\n\n// Correct single hyphens in page field\nif (Translator.BetterBibLaTeX) {\n  if (this.has.pages) this.has.pages.bibtex = this.has.pages.bibtex.replace(/(\\w+)-(\\w+)/g, '$1--$2');\n}\n\n",
       "qualityReport": false,

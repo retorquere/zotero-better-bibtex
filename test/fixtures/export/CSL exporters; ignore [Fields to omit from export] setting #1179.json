@@ -41,7 +41,6 @@
       "keyConflictPolicy": "change",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "parseParticles": false,
       "postscript": "",
       "qualityReport": false,

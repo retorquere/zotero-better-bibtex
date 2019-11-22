@@ -1,19 +1,12 @@
 {
+  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
-    "release": {
-      "Zotero": {
-        "version": "5.0.75",
-        "platform": "MacIntel",
-        "oscpu": "Intel Mac OS X 10.15",
-        "locale": "en-US",
-        "appName": "Zotero",
-        "appVersion": "5.0.75",
-        "isZotero": true,
-        "isJurisM": false
-      },
-      "BetterBibTeX": "5.1.145.emile.limonia"
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
     },
     "preferences": {
       "DOIandURL": "both",
@@ -50,7 +43,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "mapMath": "",
       "mapText": "",
       "mapUnicode": "conservative",
@@ -72,66 +64,72 @@
       "suppressSentenceCase": false,
       "suppressTitleCase": false,
       "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10,
-      "testing": true
+      "warnBulkModify": 10
     },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
+    "release": {
+      "BetterBibTeX": "5.1.145.emile.limonia",
+      "Zotero": {
+        "appName": "Zotero",
+        "appVersion": "5.0.75",
+        "isJurisM": false,
+        "isZotero": true,
+        "locale": "en-US",
+        "oscpu": "Intel Mac OS X 10.15",
+        "platform": "MacIntel",
+        "version": "5.0.75"
+      }
     }
   },
-  "collections": {},
   "items": [
     {
-      "version": 0,
-      "itemType": "bookSection",
-      "series": "SpringerMaterials - the Landolt-Börnstein database",
-      "volume": "III/41c",
-      "publisher": "Springer-Verlag",
-      "date": "1998",
-      "extra": "Citation Key: Madelung_1998_LB_10681727_56\nDOI: 10.1007/10681727_56\ntex.owner: Francesco\ntex.timestamp: 2010.02.22",
-      "title": "Cuprous oxide (<span class=\"nocase\">Cu₂O</span>) crystal structure, lattice parameters",
+      "attachments": [],
+      "citationKey": "Madelung_1998_LB_10681727_56",
+      "citekey": "Madelung_1998_LB_10681727_56",
+      "collections": [],
       "creators": [
         {
+          "creatorType": "author",
           "firstName": "O.",
-          "lastName": "Madelung",
-          "creatorType": "author"
+          "lastName": "Madelung"
         },
         {
-          "name": "others",
-          "creatorType": "author"
+          "creatorType": "author",
+          "name": "others"
         },
         {
+          "creatorType": "editor",
           "firstName": "O.",
-          "lastName": "Madelung",
-          "creatorType": "editor"
+          "lastName": "Madelung"
         },
         {
+          "creatorType": "editor",
           "firstName": "U.",
-          "lastName": "Rössler",
-          "creatorType": "editor"
+          "lastName": "R\u00f6ssler"
         },
         {
+          "creatorType": "editor",
           "firstName": "M.",
-          "lastName": "Schulz",
-          "creatorType": "editor"
+          "lastName": "Schulz"
         }
       ],
-      "tags": [],
-      "collections": [],
-      "relations": [],
+      "date": "1998",
       "dateAdded": "2019-10-14T19:25:46Z",
       "dateModified": "2019-10-14T19:25:46Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/H6RDJMLU",
-      "attachments": [],
-      "notes": [],
+      "extra": "Citation Key: Madelung_1998_LB_10681727_56\nDOI: 10.1007/10681727_56\ntex.owner: Francesco\ntex.timestamp: 2010.02.22",
       "itemID": 302,
+      "itemType": "bookSection",
       "key": "H6RDJMLU",
-      "citekey": "Madelung_1998_LB_10681727_56",
-      "citationKey": "Madelung_1998_LB_10681727_56",
       "libraryID": 1,
-      "publicationTitle": "Landolt-Börnstein"
+      "notes": [],
+      "publicationTitle": "Landolt-B\u00f6rnstein",
+      "publisher": "Springer-Verlag",
+      "relations": [],
+      "series": "SpringerMaterials - the Landolt-B\u00f6rnstein database",
+      "tags": [],
+      "title": "Cuprous oxide (<span class=\"nocase\">Cu\u2082O</span>) crystal structure, lattice parameters",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/H6RDJMLU",
+      "version": 0,
+      "volume": "III/41c"
     }
   ]
 }

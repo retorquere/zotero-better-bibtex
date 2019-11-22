@@ -17,7 +17,7 @@ const Path = { // tslint:disable-line variable-name
   },
 
   drive(path) {
-    if (Translator.platform !== 'win') return ''
+    if (Translator.preferences.platform !== 'win') return ''
     return path.match(/^[a-z]:\//) ? path.substring(0, 2) : ''
   },
 

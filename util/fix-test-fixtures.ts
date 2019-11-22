@@ -5,11 +5,11 @@ import * as glob from 'glob'
 import * as path from 'path'
 import { sortify } from 'sorted-json'
 
-import { upgradeExtra } from '../content/db/upgrade'
+import { upgradeExtra } from '../content/db/upgrade-extra'
 
 const root = path.join(__dirname, '..')
 
-const preferences = Object.keys(require(path.join(root, 'gen/preferences/preferences.json')))
+const preferences = Object.keys(require(path.join(root, 'gen/preferences/preferences.json'))).filter(p => p != 'testing')
 
 for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: true })) {
   if (lib.endsWith('.csl.json') || lib.endsWith('.schomd.json')) continue

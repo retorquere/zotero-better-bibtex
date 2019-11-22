@@ -261,8 +261,6 @@ function cacheSelector(itemID, options, prefs) {
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
-  platform(sandbox) { return Zotero.platform },
-
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
@@ -325,7 +323,6 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
-  platform(sandbox) { return Zotero.platform },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
   parseDate(sandbox, date) { return DateParser.parse(date) },
 }

@@ -34,7 +34,6 @@
       "keyConflictPolicy": "keep",
       "keyScope": "library",
       "kuroshiro": false,
-      "lockedInit": false,
       "parseParticles": true,
       "postscript": "if(item.itemType == \"conferencePaper\" ) {\n    this.add({name: \"booktitle\", replace: false, value: item.conferenceName});\n}",
       "qualityReport": false,
