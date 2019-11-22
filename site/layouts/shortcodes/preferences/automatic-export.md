@@ -1,3 +1,16 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-{{ "#### Automatic export\n\nDetermines when [automatic exports]({{ ref . \"exporting\" }}) are kicked off. Having it disabled still marks\nauto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports\nhappen whenever a reference in the export changes/is added/is removed. On idle does more or less what\n`Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is\nidle. You mostly want this if your computer is performance-constrained (aka slow).\n\nOptions:\n\n* Disabled\n* On Change\n* When Idle\n\n" | markdownify }}
+#### Automatic export
+
+Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
+auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
+happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
+`Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
+idle. You mostly want this if your computer is performance-constrained (aka slow).
+
+Options:
+
+* Disabled
+* On Change
+* When Idle
+
 

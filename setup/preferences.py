@@ -110,7 +110,7 @@ class Preferences:
         doc += self.pref(pref)
       print(doc, file=f)
 
-  def doc(self, node):
+  def doc(self, node, section=False):
     xul = f'{{{self.ns.xul}}}'
     bbt = f'{{{self.ns.bbt}}}'
 
@@ -121,17 +121,17 @@ class Preferences:
 
     for child in node:
       if child.tag == f'{xul}groupbox':
-        label = child.find(f'./{xul}caption').text
+        label = child.find(f'./{xul}caption').get(f'label')
       elif child.tag == f'{xul}tabpanel':
         label = self.tabs.pop(0)
       else:
         label = None
 
-      child = self.doc(child)
+      child = self.doc(child, section or label is not None)
       if child.strip() == '': continue
 
       #if label: doc += '<fieldset><legend>\n\n' + html.escape(label) + '\n\n</legend>\n\n'
-      #if label: doc += f'### {label}\n\n'
+      if not section and label: doc += f'### {label}\n\n'
       doc += child
       #if label: doc += '</fieldset>\n\n'
 
@@ -164,7 +164,7 @@ class Preferences:
         doc += f'* {option}\n'
       doc += '\n'
 
-    return '{{ ' + json.dumps(doc) + ' | markdownify }}\n'
+    return doc
 
   def save(self):
     preferences = {}
