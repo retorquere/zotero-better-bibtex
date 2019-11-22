@@ -167,7 +167,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       try {
         cache = this.postscript(csl, item, Translator, Zotero)
       } catch (err) {
-        if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.postscriptProductionMode')) throw err
+        if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.ignorePostscriptErrors')) throw err
         cache = false
       }
 

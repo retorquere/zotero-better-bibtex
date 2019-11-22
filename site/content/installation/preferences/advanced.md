@@ -8,5 +8,7 @@ title: Advanced
 weight: 14
 ---
 
+{{% preferences/header %}}
+
 {{% preferences/advanced %}}
 

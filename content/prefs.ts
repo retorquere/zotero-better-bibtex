@@ -8,7 +8,7 @@ import * as log from './debug'
 import { Events } from './events'
 
 import * as defaults from '../gen/preferences/defaults.json'
-const supported = ['debugLogDir', 'removeStock', 'postscriptProductionMode'].concat(Object.keys(defaults))
+const supported = Object.keys(defaults)
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Preferences = new class { // tslint:disable-line:variable-name

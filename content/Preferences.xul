@@ -13,7 +13,8 @@
 
 <overlay id="zotero-better-bibtex-preferences"
   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-  xmlns:html="http://www.w3.org/1999/xhtml">
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:bbt="http://retorque.re/zotero-better-bibtex/">
 
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
@@ -21,153 +22,111 @@
             label="&better-bibtex.Preferences.prefpane.better-bibtex;"
             image="chrome://zotero-better-bibtex/skin/bibtex.svg"
             onpaneload="Zotero.BetterBibTeX.Preferences.load()"
-            helpTopic="BetterBibTeX"
-            >
-      <!--!
-        The Better BibTeX Configuration can be found under the regular Zotero preferences pane, tab 'Better BibTeX'.
-
-        The configuration of Better BibTeX is a little baroque compared to the standard Zotero Bib(La)TeX exporters (which
-        only have hidden preferences). The defaults should just work, but here's an attempt to describe what they do.
-
-        **Making any change here will drop your entire export cache.** This is usually not a problem unless you have a
-        really large library, but you can read about what is involved [here]({{ ref . "performance" }}).
-      -->
+            helpTopic="BetterBibTeX">
 
       <preferences id="zotero-preferences-cite">
-        <preference
-          name="extensions.zotero.translators.better-bibtex.DOIandURL"
-          id="pref-better-bibtex-DOIandURL"
-          type="string"
-          default="both"/>
-        <!--!
-          Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.DOIandURL" id="pref-better-bibtex-DOIandURL" type="string" default="both">
+          <bbt:doc>
+            Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.automaticTags"
-          id="pref-better-bibtex-automaticTags"
-          type="bool"
-          default="true"/>
-        <!--!
-          Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that they are descriptive of the item. When this is off, such tags will not be included in the export.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.automaticTags" id="pref-better-bibtex-automaticTags" type="bool" default="true">
+          <bbt:doc>
+            Some importers or Zotero extensions (such as the ShortDOI manager for example) create tags on items that are more for item management than that
+            they are descriptive of the item. When this is off, such tags will not be included in the export.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX"
-          id="pref-better-bibtex-asciiBibLaTeX"
-          type="bool"
-          default="false"/>
-        <!--!
-          BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
-          simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibLaTeX" id="pref-better-bibtex-asciiBibLaTeX" type="bool" default="false">
+          <bbt:doc>
+            BibLaTeX actually has really good Unicode support, so you generally want this off. But for some geezers such as me it is
+            simply more pleasing to have things like accented characters translated to their equivalent LaTeX constructs on export.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.ascii"
-          type="string"
-          default=""/>
-        <!--!!
-          If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always be replaced by their LaTeX-command counterparts.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.ascii" type="string" default="">
+          <bbt:doc>
+            If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
+            be replaced by their LaTeX-command counterparts.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.asciiBibTeX"
-          id="pref-better-bibtex-asciiBibTeX"
-          type="bool"
-          default="true"/>
-        <!--!
-          BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters to their equivalent LaTeX constructs on export.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.asciiBibTeX" id="pref-better-bibtex-asciiBibTeX" type="bool" default="true">
+          <bbt:doc>
+            BibTeX has really spotty Unicode support, so you generally want this on. It will translate things like accented characters
+            to their equivalent LaTeX constructs on export.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExport"
-          id="pref-better-bibtex-autoExport"
-          type="string"
-          default="immediate"/>
-        <!--!
-          Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
-          auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
-          happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
-          `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
-          idle. You mostly want this if your computer is performance-constrained (aka slow).
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.autoExport" id="pref-better-bibtex-autoExport" type="string" default="immediate">
+          <bbt:doc>
+            Determines when [automatic exports]({{ ref . "exporting" }}) are kicked off. Having it disabled still marks
+            auto-exports as needing updates, so when you re-enable it, those exports will start. On-change means exports
+            happen whenever a reference in the export changes/is added/is removed. On idle does more or less what
+            `Disabled` (that is, no exports but mark as needing changes), but will kick off exports when your computer is
+            idle. You mostly want this if your computer is performance-constrained (aka slow).
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.quickCopyMode"
-          id="pref-better-bibtex-quickCopyMode"
-          type="string"
-          default="latex"/>
-        <!--!
-          Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy` as the default export format for quick copy,
-          and choose the desired format for the drag-and-drop citations here.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyMode" id="pref-better-bibtex-quickCopyMode" type="string" default="latex">
+          <bbt:doc>
+            Used for drag-and-drop/quick copy using Better BibTeX citekeys. In the Zotero "Export" pane, choose `Better BibTeX Quick Copy`
+            as the default export format for quick copy, and choose the desired format for the drag-and-drop citations here.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.citeCommand"
-          id="pref-better-bibtex-citeCommand"
-          type="string"
-          default="cite"/>
-        <!--!
-          Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`, drag-and-drop citations will yield
-          `\citep{key1,key2,...}`
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.citeCommand" id="pref-better-bibtex-citeCommand" type="string" default="cite">
+          <bbt:doc>
+            Used for drag-and-drop/quick copy citations in `LaTeX` format. Set the desired LaTeX citation command here. If you set this to `citep`,
+            drag-and-drop citations will yield `\citep{key1,key2,...}`
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets"
-          id="pref-better-bibtex-quickCopyPandocBrackets"
-          type="bool"
-          default="false"/>
-        <!--!
-          Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want to have these pandoc citations surrounded with brackets or not.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.quickCopyPandocBrackets" id="pref-better-bibtex-quickCopyPandocBrackets" type="bool" default="false">
+          <bbt:doc>
+            Used for drag-and-drop/quick copy citations in `Pandoc` format. You can use this option to select whether you want
+            to have these pandoc citations surrounded with brackets or not.
+          </bbt:doc>
+        </preference>
 
         <!-- the zero-width-space is a marker to re-save the current default so it doesn't get replaced when the default changes later, which would change new keys suddenly -->
-        <preference
-          name="extensions.zotero.translators.better-bibtex.citekeyFormat"
-          id="pref-better-bibtex-citekeyFormat"
-          type="string"
-          default="&#x200B;[auth:lower][shorttitle3_3][year]"/>
-        <!--!
-          Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.citekeyFormat" id="pref-better-bibtex-citekeyFormat" type="string" default="&#x200B;[auth:lower][shorttitle3_3][year]">
+          <bbt:doc>
+            Set the pattern used to generate citation keys. The format of the keys is documented [here]({{ ref . "citing" }}).
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.citekeyFold"
-          id="pref-better-bibtex-citekeyFold"
-          type="bool"
-          default="true"/>
-        <!--!
-          If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
-          wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
-          appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.citekeyFold" id="pref-better-bibtex-citekeyFold" type="bool" default="true">
+          <bbt:doc>
+            If you have deviated from the default citation key format pattern by [specifying your own]({{ ref . "citing" }}), you may
+            wind up with non-ASCII characters in your citation keys. You can prevent that using the `fold` function at the
+            appropriate place in your pattern, but checking this checkbox will just apply `fold` to all your keys.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.keyConflictPolicy"
-          id="pref-better-bibtex-keyConflictPolicy"
-          type="string"
-          default="keep"/>
-        <!--!
-          This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there. Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character, the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.keyConflictPolicy" id="pref-better-bibtex-keyConflictPolicy" type="string" default="keep">
+          <bbt:doc>
+            This determines what happens if you pin a key to a value that is already in use in a different reference but not pinned there.
+            Neither are ideal, you just get to pick your poison. If you let BBT change the non-pinned key by adding a postfix character,
+            the citation key changes which could be problematic for existing papers. If you keep the non-pinned key as-is, your library now has duplicate keys.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.auxImport"
-          id="pref-better-bibtex-aux-import"
-          type="bool"
-          default="false"/>
-        <!--!
-          By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero. When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.auxImport" id="pref-better-bibtex-aux-import" type="bool" default="false">
+          <bbt:doc>
+            By default, when scanning for cited items in the aux file, BBT will just generate a note listing all citation keys it cannot find in Zotero.
+            When this option is turned on, BBT will attempt to import such missing items from the bib file that the AUX file being scanned points to.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.keyScope"
-          id="pref-better-bibtex-keyScope"
-          type="string"
-          default="library"/>
-        <!--!
-          Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.keyScope" id="pref-better-bibtex-keyScope" type="string" default="library">
+          <bbt:doc>
+            Auto-generated (non-pinned) keys automatically get a postfix when they would generate a duplicate. By default, the check for duplicates is restricted
+            to the library/group the item lives in. When set to global, the check will include all libraries/groups, so auto-generated keys would be globally
+            unique. Changing this setting *does not* affect existign keys - for this you would need to select the items and refresh the keys.
+          </bbt:doc>
+        </preference>
 
         <!-- preference
           name="extensions.zotero.translators.better-bibtex.langID"
@@ -175,419 +134,336 @@
           type="string"/ -->
         <!-- Switches between `babel` and `polyglossia`, except I haven't gotten around to polyglossia yet. -->
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.exportBibTeXStrings"
-          id="pref-better-bibtex-exportBibTeXStrings"
-          type="string"
-          default="off"/>
-        <!--!
-          When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
-          when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+        <preference name="extensions.zotero.translators.better-bibtex.exportBibTeXStrings" id="pref-better-bibtex-exportBibTeXStrings" type="string" default="off">
+          <bbt:doc>
+            When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
+            when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.importBibTeXStrings" id="pref-better-bibtex-importBibTeXStrings" type="bool" default="true">
+          <bbt:doc>
+            When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp" id="pref-better-bibtex-bibtexParticleNoOp" type="bool" default="false">
+          <bbt:doc>
+            Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has
+            really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT
+            will add code to have `van Gogh` sorted under `Gogh`.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.skipFields" id="pref-better-bibtex-skipFields" type="string" default="">
+          <bbt:doc>
+            If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.bibtexURL" id="pref-better-bibtex-bibtexURL" type="string" default="off">
+          <bbt:doc>
+            BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
+            omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
+            field (not as clean, but compatible with BibTeX out of the box), or in a `url` field (requires extra packages to be loaded,
+            or bibtex will error out).
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.warnBulkModify" id="pref-better-bibtex-warnBulkModify" type="int" default="10">
+          <bbt:doc>
+            For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn
+            you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
+            all your citation keys at once.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportTooLong" id="pref-better-bibtex-autoExport-warn-long-running" type="int" default="10">
+          <bbt:doc>
+            If you have auto-export set up for a large library, Zotero might freeze for during exports. There is nothing I can do about this; caching helps,
+            but all Zotero exports freeze Zotero while they are running. BBT will warn you if it sees a long-running auto-export to suggest running it only
+            when Zotero goes idle.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.postscript" id="pref-better-bibtex-postscript" type="string" default="">
+          <bbt:doc>
+            Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.strings" id="pref-better-bibtex-strings" type="string" default="">
+          <bbt:doc>
+            If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrev" id="pref-better-bibtex-autoAbbrev" type="bool" default="false">
+          <bbt:doc>
+            If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle" id="pref-better-bibtex-autoAbbrevStyle" type="string" default="">
+          <bbt:doc>
+            Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
+            abbreviation is not configurable.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportIdleWait" type="int" default="10">
+          <bbt:doc>
+            Number of seconds to wait after your system goes idle before kicking off auto-exports.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.cacheFlushInterval" type="int" default="5">
+          <bbt:doc>
+            How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
+            your database is always saved when your computer goes idle, or when you exit Zotero.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.csquotes" type="string" default="">
+          <bbt:doc>
+            if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
+            will be replaced with a `\\enquote{...}` construct.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.rawLaTag" type="string" default="#LaTeX">
+          <bbt:doc>
+            When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
+            If you set this to `*`, all items will be assumed to have raw LaTeX.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.skipWords" type="string" default="
+          a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,
+          by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,
+          except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,
+          sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum">
+          <bbt:doc>
+            list of words to skip in title when generating citation keys
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.verbatimFields" type="string" default="url,doi,file,eprint,verba,verbb,verbc">
+          <bbt:doc>
+            list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.jabrefFormat" id="pref-better-bibtex-jabrefFormat" type="int" default="0">
+          <bbt:doc>
+            Export JabRef-specific information fields; timetamps and groups for collections. Note that format `4` will disable caching in exports,
+            which is really undesirable specifically for auto-exports.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.qualityReport" id="pref-better-bibtex-qualityReport" type="bool" default="false">
+          <bbt:doc>
+            Generate quality reports for exported references.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat" type="bool" default="true">
+          <bbt:doc>
+            Support for EDTF dates in biblatex
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat" id="pref-better-bibtex-biblatexExtendedNameFormat" type="bool" default="false">
+          <bbt:doc>
+            Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
+            This biblatex has a new (less ambiguous) way to store creator names. It's technically
+            superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adopter,
+            you can enable it here
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.suppressTitleCase" type="bool" default="false">
+          <bbt:doc>
+            If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+            casing, set this preference to `true` to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.suppressBraceProtection" type="bool" default="false">
+          <bbt:doc>
+            If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+            casing, set this preference to `true` to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.suppressSentenceCase" type="bool" default="false">
+          <bbt:doc>
+            Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
+            during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can suppress this, but you may then also want
+            to enable suppressTitleCase (which has its own problems, see the help entry for that option on this page).
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.suppressNoCase" type="bool" default="false">
+          <bbt:doc>
+            On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
+            out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
+            Zotero supports it. If you turn this off, the markup is omitted during import.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportDelay" type="int" default="1">
+          <bbt:doc>
+            If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
+            setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" type="int" default="100">
+          <bbt:doc>
+            I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
+            retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
+            the number of microseconds BBT should wait after being notified before acting on the changed references.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.parseParticles" type="bool" default="true">
+          <bbt:doc>
+            Name particle handling. Only turn on when requested and we're talking about it on github.
+          </bbt:doc>
+        </preference>
+
+        <preference name="extensions.zotero.translators.better-bibtex.citeprocNoteCitekey" type="bool" default="false">
+          <bbt:doc>
+            Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
+            This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it.
+            Please disable it when done). You will want to use a custom CSL style
+            (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
+          </bbt:doc>
+        </preference>
+
+        <!-- mainly for testing -->
+        <preference name="extensions.zotero.translators.better-bibtex.scrubDatabase" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.removeStock" type="bool" default="false"/>
+        <preference name="extensions.zotero.translators.better-bibtex.ignorePostscriptErrors" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.debugLogDir" type="string" default=""/>
+        <preference name="extensions.zotero.translators.better-bibtex.testing" type="bool" default="false"/>
+
+        <!--
+        <preference name="extensions.zotero.translators.better-bibtex.lockedInit" type="bool" default="false">
+          <bbt:doc>
+            BBT locks the UI during startup because I have been told in
+            no uncertain terms I am not to touch the Zotero database
+            before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
+            access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
+            to make sure BBT initialization has completed before freeing the UI. I want to stress that during most of the
+            lock-time, BBT is simply waiting for Zotero to complete its own initialization; try to do an export of any
+            kind (not just BBT) or to import new references directly after Zotero has started and you'll notice that it
+            may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty
+            race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
+
+            By default you only get a flaoting popup to tell you how far along this process Zotero is; if you really want to see how long BBT has to wait before it can do anything, you can
+            enable the lockout during startup, but it seems fairly safe now if you're patient enough to wait until the floating window goes away. There is absolutely nothing I can do about the long
+            time it takes before BBT moves from "Waiting for Zotero". After that, initialization is very quick.
+          </bbt:doc>
+        </preference>
         -->
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.importBibTeXStrings"
-          id="pref-better-bibtex-importBibTeXStrings"
-          type="bool"
-          default="true"/>
-        <!--!
-          When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.autoPin" type="bool" default="false">
+          <bbt:doc>
+            When on, BBT will automatically pin the first citekey it generates for an item.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.bibtexParticleNoOp"
-          id="pref-better-bibtex-bibtexParticleNoOp"
-          type="bool"
-          default="false"/>
-        <!--!
-          Name handling is a lot more complex than I had ever thought it to be. A *lot* more complex. BibTeX has
-          really limited ways of dealing with names with particles (van, von, de, etc). If you turn this on, BBT
-          will add code to have `van Gogh` sorted under `Gogh`.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.kuroshiro" type="bool" default="false">
+          <bbt:doc>
+            When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.skipFields"
-          id="pref-better-bibtex-skipFields"
-          type="string"
-          default=""/>
-        <!--!
-          If there are some fields you don't want in your bibtex files (such as `note` for example), add a list of them here, separated by comma's.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheThreshold" type="int" default="0">
+          <bbt:doc>
+            If an auto-export is triggered and there are more than `autoExportPrimeExportCacheThreshold` un-cached entries,
+            prime the cache before starting the auto-export. This makes the export take longer in total, but since exports
+            in Zotero lock up the UI, priming helps making the actual export run as fast as possible. Really only
+            useful for large exports, but what counts as large is system-dependent, so you can play with this value. The
+            default of `0` disables priming. This is a temporary measure until https://groups.google.com/d/msg/zotero-dev/lHYEtdgPHCE/nDUyxpFmAgAJ
+            is implemented in Zotero.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.bibtexURL"
-          id="pref-better-bibtex-bibtexURL"
-          type="string"
-          default="off"/>
-        <!--!
-          BibLaTeX supports urls in your references natively; BibTeX does not. For this reason, URLs are
-          omitted from BibTeX exports by default. Using this setting you can have them added to your exports either in a `note`
-          field (not as clean, but compatible with BibTeX out of the box), or in a `url` field (requires extra packages to be loaded,
-          or bibtex will error out).
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheBatch" type="int" default="4">
+          <bbt:doc>
+            If cache priming is kicked off (see `autoExportPrimeExportCacheThreshold`), the cache will be primed in batches of `autoExportPrimeExportCacheBatch`.
+            The lower this number is, the longer the priming will take (there's a fixed per-prime overhead), but (since the priming uses exports under the hood)
+            the larger it is, the longer the priming actions will lock the UI.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.warnBulkModify"
-          id="pref-better-bibtex-warnBulkModify"
-          type="int"
-          default="10"/>
-        <!--!
-          For those who are curious about what the "Clear/Generate BibTeX key" right-click options do, this will warn
-          you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
-          all your citation keys at once.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheDelay" type="int" default="100">
+          <bbt:doc>
+            Cache priming (see `autoExportPrimeExportCacheThreshold`), happens in a tight loop, which will still make Zotero sluggish while the priming runs.
+            By default, BBT will wait a tenths of a second between prime batches; longer waits mean a more responsive Zotero during the priming,
+            but the priming will take longer to complete.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportTooLong"
-          id="pref-better-bibtex-autoExport-warn-long-running"
-          type="int"
-          default="10"/>
-        <!--!
-          If you have auto-export set up for a large library, Zotero might freeze for during exports. There is nothing I can do about this; caching helps,
-          but all Zotero exports freeze Zotero while they are running. BBT will warn you if it sees a long-running auto-export to suggest running it only
-          when Zotero goes idle.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.relativeFilePaths" type="bool" default="false">
+          <bbt:doc>
+            When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths
+            to those attachments. Caching is disabled when this option is on, so it affects performance.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.postscript"
-          id="pref-better-bibtex-postscript"
-          type="string"
-          default=""/>
-        <!--!
-          Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.sorted" id="pref-better-bibtex-sorted" type="bool" default="false">
+          <bbt:doc>
+            When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
+            some kind of version control. Comes at performance and memory consumption cost.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.strings"
-          id="pref-better-bibtex-strings"
-          type="string"
-          default=""/>
-        <!--!
-          If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.git" type="string" default="config">
+          <bbt:doc>
+            Can be `off`, `config` or `always`
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoAbbrev"
-          id="pref-better-bibtex-autoAbbrev"
-          type="bool"
-          default="false"/>
-        <!--!
-          If set, generates journal abbreviations on export using the Zotero journal abbreviator, according to the abbreviation style selected in the list below the checkbox.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.mapUnicode" type="string" default="conservative">
+          <bbt:doc>
+            When a unicode character can be exported as either a math-mode or text-mode command, map to:
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoAbbrevStyle"
-          id="pref-better-bibtex-autoAbbrevStyle"
-          type="string"
-          default=""/>
-        <!--!
-          Select the style for auto-abbreviation. Only applicable to Juris-M; in Zotero, the style for automatic
-          abbreviation is not configurable.
-        -->
+            * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped
+               character if possible. This minimizes the number of generated `$`s in the output.
+            * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
+            * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportIdleWait"
-          type="int"
-          default="10"/>
-        <!--!!
-          Number of seconds to wait after your system goes idle before kicking off auto-exports.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.mapText" type="string" default="">
+          <bbt:doc>
+            Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
+            Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.cacheFlushInterval"
-          type="int"
-          default="5"/>
-        <!--!!
-          How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
-          your database is always saved when your computer goes idle, or when you exit Zotero.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.mapMath" type="string" default="">
+          <bbt:doc>
+            Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
+            if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.csquotes"
-          type="string"
-          default=""/>
-        <!--!!
-          if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and will be replaced with a `\\enquote{...}` construct.
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.newTranslatorsAskRestart" type="bool" default="true">
+          <bbt:doc>
+            New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop
+            (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation,
+            or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update,
+            but you can disable this by checking "Do not ask again" in that dialog.
+          </bbt:doc>
+        </preference>
 
-        <preference
-          name="extensions.zotero.translators.better-bibtex.rawLaTag"
-          type="string"
-          default="#LaTeX"/>
-        <!--!!
-          When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation. If you set this to `*`, all items will be assumed to have raw LaTeX.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.skipWords"
-          type="string"
-          default="a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum"
-        />
-        <!--!!
-          list of words to skip in title when generating citation keys
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.verbatimFields"
-          type="string"
-          default="url,doi,file,eprint,verba,verbb,verbc"
-        />
-        <!--!!
-          list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.jabrefFormat"
-          id="pref-better-bibtex-jabrefFormat"
-          type="int"
-          default="0"/>
-        <!--!
-          Export JabRef-specific information fields; timetamps and groups for collections. Note that format "4" will disable caching in exports, which is really undesirable specifically for auto-exports.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.qualityReport"
-          id="pref-better-bibtex-qualityReport"
-          type="bool"
-          default="false"/>
-        <!--!
-          Generate quality reports for exported references. 
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.biblatexExtendedDateFormat"
-          type="bool"
-          default="true"/>
-        <!--!!
-          Support for EDTF dates in biblatex
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.biblatexExtendedNameFormat"
-          id="pref-better-bibtex-biblatexExtendedNameFormat"
-          type="bool"
-          default="false"/>
-        <!--!
-          Use the extended biber 2.7 format for names with particles - only works in BibLaTeX 3.5 or later.
-          This biblatex has a new (less ambiguous) way to store creator names. It's technically
-          superior, but the LaTeX world moves slowly, so many people won't have it yet. But if you're an early adopter,
-          you can enable it here
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.suppressTitleCase"
-          type="bool"
-          default="false"/>
-        <!--!!
-          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, set this preference to "true" to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.suppressBraceProtection"
-          type="bool"
-          default="false"/>
-        <!--!!
-          If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-          casing, set this preference to "true" to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.suppressSentenceCase"
-          type="bool"
-          default="false"/>
-        <!--!!
-          Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
-          during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can suppress this, but you may then also want
-          to enable suppressTitleCase (which has its own problems, see the help entry for that option on this page).
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.suppressNoCase"
-          type="bool"
-          default="false"/>
-        <!--!!
-          On import, BBT will add case-protection (&lt;span class="nocase"&gt;...&lt;span&gt;) to titles that have words in {Braces}. There's plenty of bib(la)tex files
-          out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
-          Zotero supports it. If you turn this off, the markup is omitted during import.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportDelay"
-          type="int"
-          default="1"/>
-        <!--!!
-          If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.itemObserverDelay"
-          type="int"
-          default="100"/>
-        <!--!!
-          I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
-          retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
-          the number of microseconds BBT should wait after being notified before acting on the changed references.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.parseParticles"
-          type="bool"
-          default="true"/>
-        <!--!!
-          Name particle handling. Only turn on when requested and we're talking about it on github.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.citeprocNoteCitekey"
-          type="bool"
-          default="false"/>
-        <!--!!
-          Replaces the "note" field with the bibtex key during citation rendering in Word/Libreoffice. Main use-case is to help migrating word documents to pandoc.
-          This setting only takes effect during startup, so if you change it, you will have to restart Zotero to have this take effect (or to disable it. Please disable it when done). You will want to use a custom CSL style (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.scrubDatabase"
-          type="bool"
-          default="false"/>
-        <!--!!
-          Finds potential problems in the database and fixes those. This runs **extremely** slow at startup, don't enable this unless explicitly asked to.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.lockedInit"
-          type="bool"
-          default="false"/>
-        <!--!!
-          BBT locks the UI during startup because I have been told in
-          no uncertain terms I am not to touch the Zotero database
-          before I get an all-clear from Zotero. This all-clear takes a fair amount of time. As BBT needs database
-          access for generating keys, and *everything* in BBT depends on the keys being present, it is absolutely safest
-          to make sure BBT initialization has completed before freeing the UI. I want to stress that during most of the
-          lock-time, BBT is simply waiting for Zotero to complete its own initialization; try to do an export of any
-          kind (not just BBT) or to import new references directly after Zotero has started and you'll notice that it
-          may take a while before Zotero reacts. The lockout just puts a face on this hidden init, and prevents nasty
-          race conditions between the BBT and Zotero initialization leading to unpredictable breakage occasionally.
-
-          By default you only get a flaoting popup to tell you how far along this process Zotero is; if you really want to see how long BBT has to wait before it can do anything, you can
-          enable the lockout during startup, but it seems fairly safe now if you're patient enough to wait until the floating window goes away. There is absolutely nothing I can do about the long
-          time it takes before BBT moves from "Waiting for Zotero". After that, initialization is very quick.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoPin"
-          type="bool"
-          default="false"/>
-        <!--!!
-          When on, BBT will automatically pin the first citekey it generates for an item.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.kuroshiro"
-          type="bool"
-          default="false"/>
-        <!--!!
-          When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheThreshold"
-          type="int"
-          default="0"/>
-        <!--!!
-          If an auto-export is triggered and there are more than `autoExportPrimeExportCacheThreshold` un-cached entries, prime the cache before starting the auto-export. This makes the export take longer in total, but since exports in Zotero lock up the UI, priming helps making the actual export run as fast as possible. Really only useful for large exports, but what counts as large is system-dependent, so you can play with this value. The default of `0` disables priming. This is a temporary measure until https://groups.google.com/d/msg/zotero-dev/lHYEtdgPHCE/nDUyxpFmAgAJ is implemented in Zotero.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheBatch"
-          type="int"
-          default="4"/>
-        <!--!!
-          If cache priming is kicked off (see `autoExportPrimeExportCacheThreshold`), the cache will be primed in batches of `autoExportPrimeExportCacheBatch`. The lower this number is, the longer the priming will take (there's a fixed per-prime overhead), but (since the priming uses exports under the hood) the larger it is, the longer the priming actions will lock the UI.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.autoExportPrimeExportCacheDelay"
-          type="int"
-          default="100"/>
-        <!--!!
-          Cache priming (see `autoExportPrimeExportCacheThreshold`), happens in a tight loop, which will still make Zotero sluggish while the priming runs. By default, BBT will wait a tenths of a second between prime batches;- longer waits mean a more responsive Zotero during the priming, but the priming will take longer to complete.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.relativeFilePaths"
-          type="bool"
-          default="false"/>
-        <!--!!
-          When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths to those attachments. Caching is disabled when this option is on, so it affects performance.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.sorted"
-          id="pref-better-bibtex-sorted"
-          type="bool"
-          default="false"/>
-        <!--!
-          When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under some kind of version control. Comes at performance and memory consumption cost.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.git"
-          type="string"
-          default="config"/>
-        <!--!!
-          Can be 'off', 'config' or 'always'
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.mapUnicode"
-          type="string"
-          default="conservative"/>
-        <!--!!
-          When a unicode character can be exported as either a math-mode or text-mode command, map to:
-
-          * `conservative`: if both a math-mode and a text-mode mapping is available, stay in the mode of the previously mapped character if possible. This minimizes the number of generated `$`s in the output.
-          * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
-          * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.mapText"
-          type="string"
-          default=""/>
-        <!--!!
-          Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available. Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.mapMath"
-          type="string"
-          default=""/>
-        <!--!!
-          Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode, if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.newTranslatorsAskRestart"
-          type="bool"
-          default="true"/>
-        <!--!!
-          New translators installed in Zotero are not immediately usuable for drag-and-drop. If you want to use BBT for drag-and-drop (e.g. to drag and drop citekeys or citations), you will be asked whether you want to restart after installation, or whether you want to reinstall when it's more convenient to you. You will be asked this whenever the BBT translators update, but you can disable this by checking "Don't ask again" in that dialog.
-        -->
-
-        <preference
-          name="extensions.zotero.translators.better-bibtex.platform"
-          type="string"
-          default=""/>
-        <!--!!
-        -->
-        <preference
-          name="extensions.zotero.translators.better-bibtex.client"
-          type="string"
-          default=""/>
-        <!--!!
-        -->
+        <preference name="extensions.zotero.translators.better-bibtex.platform" type="string" default=""/>
+        <preference name="extensions.zotero.translators.better-bibtex.client" type="string" default=""/>
 
       </preferences>
       <tabbox id="better-bibtex-prefs-tabbox">
@@ -603,8 +479,8 @@
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.citekeys;"/>
               <hbox>
-                <label forpreference="pref-better-bibtex-citekeyFormat">&better-bibtex.Preferences.citekey.format;</label>
-                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat" nopreference="pref-better-bibtex-citekeyFormat"
+                <label bbt:forpreference="pref-better-bibtex-citekeyFormat">&better-bibtex.Preferences.citekey.format;</label>
+                <textbox size="40" id="id-better-bibtex-preferences-citekeyFormat"
                   onfocus="Zotero.BetterBibTeX.Preferences.getCitekeyFormat();"
                   onblur="Zotero.BetterBibTeX.Preferences.saveCitekeyFormat();"
                   oninput="Zotero.BetterBibTeX.Preferences.checkCitekeyFormat();"
@@ -624,7 +500,7 @@
                 </columns>
                 <rows>
                   <row>
-                    <label forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
+                    <label bbt:forpreference="pref-better-bibtex-keyScope">&better-bibtex.Preferences.citekey.uniqueness.scope;</label>
                     <menulist preference="pref-better-bibtex-keyScope">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.scope.global;" value="global"/>
@@ -633,7 +509,7 @@
                     </menulist>
                   </row>
                   <row>
-                    <label forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
+                    <label bbt:forpreference="pref-better-bibtex-keyConflictPolicy">&better-bibtex.Preferences.citekey.uniqueness.conflict;</label>
                     <menulist preference="pref-better-bibtex-keyConflictPolicy">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.citekey.uniqueness.conflict.change;" value="change"/>
@@ -654,7 +530,7 @@
                 </columns>
                 <rows>
                   <row>
-                    <label forpreference="pref-better-bibtex-quickCopyMode">&better-bibtex.Preferences.citekey.quickCopy.format;</label>
+                    <label bbt:forpreference="pref-better-bibtex-quickCopyMode">&better-bibtex.Preferences.citekey.quickCopy.format;</label>
                     <menulist
                       id="id-better-bibtex-preferences-quickCopyMode"
                       preference="pref-better-bibtex-quickCopyMode"
@@ -677,7 +553,7 @@
                     </menulist>
                   </row>
                   <row id="id-better-bibtex-preferences-citeCommand">
-                    <label forpreference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
+                    <label bbt:forpreference="pref-better-bibtex-citeCommand">&better-bibtex.Preferences.citekey.quickCopy.latex.command;</label>
                     <textbox size="10" preference="pref-better-bibtex-citeCommand"
                       onchange="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
@@ -693,8 +569,7 @@
 
             <groupbox>
               <caption label="&better-bibtex.Preferences.citekey.AUXScanner;"/>
-              <checkbox preference="pref-better-bibtex-aux-import"
-                label="&better-bibtex.Preferences.citekey.AUXScanner.import;"/>
+              <checkbox preference="pref-better-bibtex-aux-import" label="&better-bibtex.Preferences.citekey.AUXScanner.import;"/>
             </groupbox>
 
           </tabpanel>
@@ -705,7 +580,7 @@
               <checkbox preference="pref-better-bibtex-asciiBibTeX" label="&better-bibtex.Preferences.export.bibtex.ascii;"/>
               <checkbox preference="pref-better-bibtex-bibtexParticleNoOp" label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;"/>
               <hbox>
-                <label forpreference="pref-better-bibtex-bibtexURL">&better-bibtex.Preferences.export.bibtex.URLs;</label>
+                <label bbt:forpreference="pref-better-bibtex-bibtexURL">&better-bibtex.Preferences.export.bibtex.URLs;</label>
                 <menulist preference="pref-better-bibtex-bibtexURL">
                   <menupopup>
                     <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
@@ -728,7 +603,7 @@
                 <columns><column/><column flex="1"/></columns>
                 <rows>
                   <row>
-                    <label forpreference="pref-better-bibtex-DOIandURL">&better-bibtex.Preferences.export.fields.doi-and-url;</label>
+                    <label bbt:forpreference="pref-better-bibtex-DOIandURL">&better-bibtex.Preferences.export.fields.doi-and-url;</label>
                     <menulist preference="pref-better-bibtex-DOIandURL" preference-editable="true">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
@@ -738,13 +613,13 @@
                     </menulist>
                   </row>
                   <row>
-                    <label forpreference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
+                    <label bbt:forpreference="pref-better-bibtex-skipFields">&better-bibtex.Preferences.export.fields.skip;</label>
                     <textbox size="80" id="id-better-bibtex-preferences-skipFields" preference="pref-better-bibtex-skipFields"
                       oninput="Zotero.BetterBibTeX.Preferences.update();"
                       onkeypress="Zotero.setTimeout(function() { Zotero.BetterBibTeX.Preferences.update() }, 1);"/>
                   </row>
                   <row>
-                    <label forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
+                    <label bbt:forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
                     <menulist preference="pref-better-bibtex-jabrefFormat" preference-editable="true" oncommand="Zotero.BetterBibTeX.Preferences.checkJabRef(event.currentTarget)">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
@@ -764,7 +639,7 @@
               <caption label="&better-bibtex.Preferences.export.journal-abbrev;"/>
               <checkbox id="id-better-bibtex-preferences-autoAbbrev" label="&better-bibtex.Preferences.auto-abbrev;" preference="pref-better-bibtex-autoAbbrev"/>
               <separator id="better-bibtex-abbrev-style-separator" class="thin"/>
-              <label id="better-bibtex-abbrev-style-label" forpreference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
+              <label id="better-bibtex-abbrev-style-label" bbt:forpreference="pref-better-bibtex-autoAbbrevStyle">&better-bibtex.Preferences.auto-abbrev.style;</label>
               <menulist id="better-bibtex-abbrev-style" onchange="Zotero.BetterBibTeX.Preferences.styleChanged()">
                 <menupopup id="better-bibtex-abbrev-style-popup">
                 </menupopup>
@@ -778,7 +653,7 @@
               <label>&better-bibtex.Preferences.auto-export.explanation;</label>
               <separator class="thin"/>
               <hbox>
-                <label forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
+                <label bbt:forpreference="pref-better-bibtex-autoExport">&better-bibtex.Preferences.auto-export;</label>
                 <menulist preference="pref-better-bibtex-autoExport">
                   <menupopup>
                     <menuitem label="&better-bibtex.Preferences.auto-export.off;" value="off"/>
@@ -805,45 +680,45 @@
                     </columns>
                     <rows>
                       <row>
-                        <label ae-id="" ae-field="type"/><textbox class="plain" readonly="true" value="" ae-field="name" ae-id=""/>
+                        <label bbt:ae-id="" bbt:ae-field="type"/><textbox class="plain" readonly="true" value="" bbt:ae-field="name" bbt:ae-id=""/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.status;:</label><textbox class="plain" readonly="true" value="" ae-field="status" ae-id=""/>
+                        <label>&better-bibtex.Preferences.auto-export.status;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="status" bbt:ae-id=""/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.updated;:</label><textbox class="plain" readonly="true" value="" ae-field="updated" ae-id=""/>
+                        <label>&better-bibtex.Preferences.auto-export.updated;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="updated" bbt:ae-id=""/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.translator;:</label><textbox class="plain" readonly="true" value="" ae-field="translator"/>
+                        <label>&better-bibtex.Preferences.auto-export.translator;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="translator"/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.target;:</label><textbox class="plain" readonly="true" value="" ae-field="path"/>
+                        <label>&better-bibtex.Preferences.auto-export.target;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="path"/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" ae-field="error" ae-id=""/>
+                        <label>&better-bibtex.Preferences.auto-export.fields.error;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="error" bbt:ae-id=""/>
                       </row>
                       <row>
-                        <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" ae-field="cached" ae-id=""/>
+                        <label>&better-bibtex.Preferences.auto-export.fields.cached;:</label><textbox class="plain" readonly="true" value="" bbt:ae-field="cached" bbt:ae-id=""/>
                       </row>
                     </rows>
                   </grid>
 
                   <vbox hidden="true" class="autoexport-BetterBibTeX">
                     <checkbox
-                      ae-id=""
-                      ae-field="asciiBibTeX"
+                      bbt:ae-id=""
+                      bbt:ae-field="asciiBibTeX"
                       label="&better-bibtex.Preferences.export.bibtex.ascii;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                     <checkbox
-                      ae-id=""
-                      ae-field="bibtexParticleNoOp"
+                      bbt:ae-id=""
+                      bbt:ae-field="bibtexParticleNoOp"
                       label="&better-bibtex.Preferences.export.fields.bibtexParticleNoOp;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                     <hbox>
                       <label>&better-bibtex.Preferences.export.bibtex.URLs;</label>
-                      <menulist ae-id="" ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
+                      <menulist bbt:ae-id="" bbt:ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
                         <menupopup>
                           <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
                           <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
@@ -855,14 +730,14 @@
     
                   <vbox hidden="true" class="autoexport-BetterBibLaTeX">
                     <checkbox
-                      ae-id=""
-                      ae-field="asciiBibLaTeX"
+                      bbt:ae-id=""
+                      bbt:ae-field="asciiBibLaTeX"
                       label="&better-bibtex.Preferences.export.biblatex.ascii;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                     <checkbox
-                      ae-id=""
-                      ae-field="biblatexExtendedNameFormat"
+                      bbt:ae-id=""
+                      bbt:ae-field="biblatexExtendedNameFormat"
                       label="&better-bibtex.Preferences.export.biblatex.extendedNameFormat;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
@@ -871,7 +746,7 @@
                   <vbox hidden="true" class="autoexport-BetterBibTeX autoexport-BetterBibLaTeX">
                     <hbox>
                       <label>&better-bibtex.Preferences.export.fields.doi-and-url;</label>
-                      <menulist ae-id="" ae-field="DOIandURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
+                      <menulist bbt:ae-id="" bbt:ae-field="DOIandURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
                         <menupopup>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.DOI;" value="doi"/>
@@ -881,22 +756,22 @@
                     </hbox>
     
                     <checkbox
-                      ae-id=""
-                      ae-field="exportNotes"
+                      bbt:ae-id=""
+                      bbt:ae-field="exportNotes"
                       label="&better-bibtex.Preferences.auto-export.fields.notes;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                     <checkbox
-                      ae-id=""
-                      ae-field="useJournalAbbreviation"
+                      bbt:ae-id=""
+                      bbt:ae-field="useJournalAbbreviation"
                       label="&better-bibtex.Preferences.auto-export.fields.journalAbbrev;"
                       oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.target)"
                       />
                   </vbox>
     
                   <hbox>
-                    <button label="&better-bibtex.Preferences.auto-export.remove;" ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.remove(event.target)"/>
-                    <button label="&better-bibtex.Preferences.auto-export.run;" ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.run(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.remove;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.remove(event.target)"/>
+                    <button label="&better-bibtex.Preferences.auto-export.run;" bbt:ae-id="" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.run(event.target)"/>
                   </hbox>
                 </tabpanel>
               </tabpanels>
@@ -909,8 +784,8 @@
             <checkbox preference="pref-better-bibtex-sorted" label="&better-bibtex.Preferences.export.fields.sorted;"/>
             <tabbox>
               <tabs>
-                <tab forpreference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.tab.postscript;"/>
-                <tab forpreference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.tab.strings;"/>
+                <tab bbt:forpreference="pref-better-bibtex-postscript" label="&better-bibtex.Preferences.tab.postscript;"/>
+                <tab bbt:forpreference="pref-better-bibtex-strings" label="&better-bibtex.Preferences.tab.strings;"/>
               </tabs>
               <tabpanels>
                 <tabpanel orient="vertical">
@@ -924,7 +799,7 @@
                 <tabpanel orient="vertical">
                   <checkbox preference="pref-better-bibtex-importBibTeXStrings" label="&better-bibtex.Preferences.export.fields.import-strings;"/>
                   <hbox>
-                    <label forpreference="pref-better-bibtex-exportBibTeXStrings">&better-bibtex.Preferences.export.fields.export-strings;</label>
+                    <label bbt:forpreference="pref-better-bibtex-exportBibTeXStrings">&better-bibtex.Preferences.export.fields.export-strings;</label>
                     <menulist preference="pref-better-bibtex-exportBibTeXStrings">
                       <menupopup>
                         <menuitem label="&better-bibtex.Preferences.export.fields.export-strings.off;" value="off"/>
@@ -943,11 +818,11 @@
             <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
 
             <hbox>
-              <label forpreference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
+              <label bbt:forpreference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
               <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
             </hbox>
             <hbox>
-              <label forpreference="pref-better-bibtex-autoExport-warn-long-running">&better-bibtex.Preferences.auto-export.warn.long-running;</label>
+              <label bbt:forpreference="pref-better-bibtex-autoExport-warn-long-running">&better-bibtex.Preferences.auto-export.warn.long-running;</label>
               <textbox size="5" preference="pref-better-bibtex-autoExport-warn-long-running"/>
             </hbox>
             <label id="better-bibtex-preferences-cache-stats"/>

@@ -10,6 +10,8 @@ title: Export
 weight: 13
 ---
 
+{{% preferences/header %}}
+
 {{% preferences/export %}}
 
 {{% preferences/automatic-export %}}

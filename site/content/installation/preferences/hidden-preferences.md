@@ -12,5 +12,7 @@ The following settings are not exposed in the UI, but can be found under `Prefer
 
 All are prefixed with `extensions.zotero.translators.better-bibtex.` in the table you will find there
 
+{{% preferences/header %}}
+
 {{% preferences/hidden-preferences %}}
 

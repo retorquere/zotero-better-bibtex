@@ -284,7 +284,7 @@ Scenario: Include first name initial(s) in cite key generation pattern (86)
 
 @1155
 Scenario: Postscript error aborts CSL JSON export #1155
-  When I set preference .postscriptProductionMode to true
+  When I set preference .ignorePostscriptErrors to true
   When I import 4 references from "export/*.json"
   Then an export using "Better CSL JSON" should match "export/*.csl.json"
 

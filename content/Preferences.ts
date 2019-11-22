@@ -16,6 +16,8 @@ import { Translators } from './translators'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 
+const namespace = 'http://retorque.re/zotero-better-bibtex/'
+
 class AutoExportPane {
   public items: { [key: string]: number[] } = {}
 
@@ -43,7 +45,7 @@ class AutoExportPane {
     const tabpanels = document.getElementById('better-bibtex-prefs-auto-export-tabpanels')
 
     const rebuild = {
-      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttribute('ae-updated')), id: parseInt(node.getAttribute('ae-id')) })),
+      tabs: Array.from(tabs.children).map((node: Element) => ({ updated: parseInt(node.getAttributeNS(namespace, 'ae-updated')), id: parseInt(node.getAttributeNS(namespace, 'ae-id')) })),
       exports: auto_exports.map(ae => ({ updated: ae.meta.updated || ae.meta.created, id: ae.$loki })),
       rebuild: false,
       update: false,
@@ -66,13 +68,13 @@ class AutoExportPane {
       if (rebuild.rebuild) {
         // tab
         tab = tabs.appendChild(document.createElementNS('http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul', 'tab'))
-        tab.setAttribute('ae-id', `${ae.$loki}`)
-        tab.setAttribute('ae-updated', `${ae.meta.updated || ae.meta.created}`)
+        tab.setAttributeNS(namespace, 'ae-id', `${ae.$loki}`)
+        tab.setAttributeNS(namespace, 'ae-updated', `${ae.meta.updated || ae.meta.created}`)
 
         // tabpanel
         tabpanel = (index === 0 ? tabpanels.firstChild : tabpanels.appendChild(tabpanels.firstChild.cloneNode(true)))
-        for (const node of Array.from(tabpanel.querySelectorAll('[ae-id]'))) {
-          (node as Element).setAttribute('ae-id', `${ae.$loki}`)
+        for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-id]'))) {
+          (node as Element).setAttributeNS(namespace, 'ae-id', `${ae.$loki}`)
         }
         for (const node of Array.from(tabpanel.getElementsByClassName(`autoexport-${Translators.byId[ae.translatorID].label.replace(/ /g, '')}`))) {
           (node as XUL.Element).hidden = false
@@ -84,8 +86,8 @@ class AutoExportPane {
 
       tab.setAttribute('label', `${{ library: '\ud83d\udcbb', collection: '\ud83d\udcc2' }[ae.type]} ${this.name(ae, 'short')}`)
 
-      for (const node of Array.from(tabpanel.querySelectorAll('[ae-field]'))) {
-        const field = (node as Element).getAttribute('ae-field')
+      for (const node of Array.from(tabpanel.querySelectorAll('[*|ae-field]'))) {
+        const field = (node as Element).getAttributeNS(namespace, 'ae-field')
 
         if (!rebuild.update && (node as XUL.Textbox).readonly) continue
 
@@ -169,20 +171,20 @@ class AutoExportPane {
   }
 
   public remove(node) {
-    const ae = AutoExport.db.get(parseInt(node.getAttribute('ae-id')))
+    const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
     AutoExport.db.remove(ae)
     this.refresh()
   }
 
   public run(node) {
-    AutoExport.run(parseInt(node.getAttribute('ae-id')))
+    AutoExport.run(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     this.refresh()
   }
 
   public edit(node) {
-    const field = node.getAttribute('ae-field')
-    const ae = AutoExport.db.get(parseInt(node.getAttribute('ae-id')))
+    const field = node.getAttributeNS(namespace, 'ae-field')
+    const ae = AutoExport.db.get(parseInt(node.getAttributeNS(namespace, 'ae-id')))
     Cache.getCollection(Translators.byId[ae.translatorID].label).removeDataOnly()
 
     // const domSerializer = Components.classes['@mozilla.org/xmlextras/xmlserializer;1'].createInstance(Components.interfaces.nsIDOMSerializer)

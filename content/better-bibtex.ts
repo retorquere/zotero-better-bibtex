@@ -508,7 +508,7 @@ class Progress {
 
   constructor(document) {
     this.document = document
-    this.locked = Prefs.get('lockedInit')
+    this.locked = false // Prefs.get('lockedInit')
     this.name = this.locked ? 'Startup lock' : 'Startup progress'
   }
 

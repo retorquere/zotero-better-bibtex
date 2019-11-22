@@ -43,10 +43,13 @@ extensions.logging.enabled = true
 extensions.zotero.automaticScraperUpdates = true
 extensions.zotero.firstRun2 = false
 extensions.zotero.firstRunGuidance = false
+extensions.zoteroMacWordIntegration.installed = true
+
 extensions.zotero.reportTranslationFailure = false
 extensions.zotero.translators.better-bibtex.kuroshiro = true
 extensions.zotero.translators.better-bibtex.lockedInit = false
 extensions.zotero.translators.better-bibtex.removeStock = true
+extensions.zotero.translators.better-bibtex.ignorePostscriptErrors = false
 
 extensions.zotero.debug.log = true
 extensions.zotero.debug.time = true
