@@ -1,5 +1,5 @@
 {
-  "gh-1316": [
+  "beta-fails": [
     "content/**/*.ts",
     "!content/monkey-patch.ts",
     "!content/flash.ts",
@@ -8,6 +8,6 @@
     "!content/logger.ts",
     "!content/events.ts",
     "!content/db/loki.ts",
-    "translators/**/*.ts"
+    "!translators/**/*.ts"
   ]
 }
