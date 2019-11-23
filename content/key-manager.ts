@@ -167,6 +167,7 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
         this.pin([citekey.itemID])
       } else {
         // update display panes by issuing a fake item-update notification
+        log.debug('item updated or inserted')
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
     })
