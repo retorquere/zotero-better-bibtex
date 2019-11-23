@@ -17,6 +17,13 @@ for d in pathlib.Path(__file__).resolve().parents:
     break
 os.chdir(ROOT)
 
+
+if os.environ.get('TRAVIS_BRANCH', '') != '' and os.path.exists(os.path.join(ROOT, '.nightly.json')):
+  with open(os.path.join(ROOT, '.nightly.json')) as f:
+    branch_nightly = os.environ['TRAVIS_BRANCH'] in json.load(f)
+else:
+  branch_nightly = False
+
 # because behave doesn't think it's useful to be able to load local stuff... oy...
 sys.path.insert(0, os.path.abspath('test/features/steps'))
 
@@ -33,6 +40,9 @@ sys.argv = sys.argv[:1] + unknownargs
 if args.keep: sys.argv.extend(['--define', 'kill=false'])
 
 ## exclude @nightly by default
+if os.environ.get('TRAVIS_BRANCH', 'master') != 'master' and os.path.exists(os.path.join(ROOT, '.nightly.json')):
+  with open(os.path.join(ROOT, '.nightly.json')) as f:
+    args.nightly = args.nightly or (os.environ['TRAVIS_BRANCH'] in json.load(f))
 nightly = any([
   args.nightly,                                               # requested explicitly from the command line
   '#nightly' in os.environ.get('TRAVIS_COMMIT_MESSAGE', ''),  # requested explicitly through the commit message
