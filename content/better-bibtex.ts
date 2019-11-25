@@ -194,9 +194,9 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   try {
     switch (field) {
       case 'citekey':
-        if (BetterBibTeX.ready.isPending()) return '\uFFFD' // tslint:disable-line:no-use-before-declare
+        if (BetterBibTeX.ready.isPending()) return '' // tslint:disable-line:no-use-before-declare
         const citekey = KeyManager.get(this.id)
-        return citekey.citekey + (!citekey.citekey || citekey.pinned ? '' : ' *')
+        return citekey.citekey
 
       case 'itemID':
         return `${this.id}`
@@ -209,27 +209,62 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   return original.apply(this, arguments)
 })
 
-const getCellText_waiting: Record<number, boolean> = {}
-$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, column) {
-  if (column.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
+const itemTreeViewWaiting: Record<number, { image?: boolean, text?: boolean, properties?: boolean }> = {}
+function getCellX(tree, row, col, field) {
+  if (col.id !== 'zotero-items-column-citekey') return ''
 
-  const item = this.getRow(row).ref
+  const item = tree.getRow(row).ref
   if (item.isNote() || item.isAttachment()) return ''
 
   if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
-    if (!getCellText_waiting[item.id]) {
-      BetterBibTeX.ready.then(() => { // tslint:disable-line:no-use-before-declare
-        this._treebox.invalidateCell(row, column)
-      })
-      getCellText_waiting[item.id] = true
+    if (!itemTreeViewWaiting[item.id]?.[field]) {
+      // tslint:disable-next-line:no-use-before-declare
+      BetterBibTeX.ready.then(() => tree._treebox.invalidateCell(row, col))
+      itemTreeViewWaiting[item.id] = itemTreeViewWaiting[item.id] || {}
+      itemTreeViewWaiting[item.id][field] = true
     }
-    return '\uFFFD'
+
+    switch (field) {
+      case 'image':
+        return 'chrome://zotero-better-bibtex/skin/loading.gif'
+      case 'text':
+        return ''
+      case 'properties':
+        return ' bbtLoading'
+    }
   }
 
   const citekey = KeyManager.get(item.id)
-  if (!citekey.citekey) return '???'
-  return citekey.citekey + (citekey.pinned ? '' : ' *')
+
+  switch (field) {
+    case 'image':
+      return ''
+    case 'text':
+      return citekey.citekey || '???'
+    case 'properties':
+      return citekey.pinned ? '' : ' bbtDynamicCitationKey'
+  }
+}
+
+$patch$(Zotero.ItemTreeView.prototype, 'getCellProperties', original => function Zotero_ItemTreeView_prototype_getCellProperties(row, col, prop) {
+  const props = (original.apply(this, arguments) + getCellX(this, row, col, 'properties')).trim()
+  log.debug({col: col.id, props})
+  return props
 })
+
+$patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, col) {
+  if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
+
+  return getCellX(this, row, col, 'text')
+})
+
+/*
+$patch$(Zotero.ItemTreeView.prototype, 'getImageSrc', original => function Zotero_ItemTreeView_prototype_getImageSrc(row, col) {
+  if (col.id !== 'zotero-items-column-pubpeer') return original.apply(this, arguments)
+
+  return getCellX(this, row, col, 'image')
+})
+*/
 
 import * as CAYW from './cayw'
 $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent, command, docId) {
