@@ -94,7 +94,7 @@
     "zotero-plugin": "^0.0.95"
   },
   "devDependencies": {
-    "@types/node": "^12.12.12",
+    "@types/node": "^12.12.14",
     "@types/webpack": "^4.41.0",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.1",
@@ -103,7 +103,7 @@
     "current-git-branch": "^1.1.0",
     "dedent-js": "^1.0.1",
     "dotenv": "^8.2.0",
-    "ejs": "^2.7.4",
+    "ejs": "^3.0.1",
     "find-up": "^4.1.0",
     "fs-extra": "^8.1.0",
     "glob": "^7.1.6",
@@ -124,7 +124,7 @@
     "sorted-json": "^0.2.6",
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.2",
-    "typedoc": "^0.15.2",
+    "typedoc": "^0.15.3",
     "typescript": "^3.7.2",
     "uri-templates": "^0.2.0",
     "webpack": "^4.41.2",
