@@ -23,7 +23,7 @@ Options:
 
 * no
 * in a note field
-* in a URL field (requires custom style for url field support)
+* in a URL field
 
 ### BibLaTeX
 
@@ -43,7 +43,9 @@ you can enable it here
 
 #### When a reference has both a DOI and a URL, export
 
-Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
+Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
+you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and
+BibTeX compilation will likely error out without the package loaded.
 
 Options:
 

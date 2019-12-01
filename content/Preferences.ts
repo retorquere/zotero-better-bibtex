@@ -279,20 +279,6 @@ export = new class PrefPane {
     }
   }
 
-  public checkJabRef(node = null) {
-    const hidden = (node ? parseInt(node.value) : Prefs.get('jabrefFormat')) !== 4 // tslint:disable-line:no-magic-numbers
-    for (const img of [...document.querySelectorAll('.jabref-cache-warning')]) {
-      img.setAttribute('hidden', hidden)
-    }
-  }
-
-  public warnURL(node = null) {
-    const hidden = (node ? parseInt(node.value) : Prefs.get('jabrefFormat')) !== 4 // tslint:disable-line:no-magic-numbers
-    for (const img of [...document.querySelectorAll('.jabref-cache-warning')]) {
-      img.setAttribute('hidden', hidden)
-    }
-  }
-
   public checkPostscript() {
     const postscript = document.getElementById('zotero-better-bibtex-postscript')
 
@@ -415,8 +401,6 @@ export = new class PrefPane {
   private update() {
     this.checkCitekeyFormat()
     this.checkPostscript()
-    this.checkJabRef()
-    this.warnURL()
 
     if (Prefs.client === 'jurism') {
       Zotero.Styles.init().then(() => {

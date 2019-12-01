@@ -16,12 +16,14 @@
   xmlns:html="http://www.w3.org/1999/xhtml"
   xmlns:bbt="http://retorque.re/zotero-better-bibtex/">
 
-  <tooltip id="bibtex-url-warning">
-    <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
-  </tooltip>
-  <tooltip id="jabref-cache-warning">
-    <textbox flex="1" class="plain textbox-emph" readonly="true" value="&better-bibtex.Preferences.export.jabrefFormat.4.warn;"/>
-  </tooltip>
+  <popupset>
+    <tooltip id="bibtex-url-warning">
+      <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
+    </tooltip>
+    <tooltip id="jabref-cache-warning">
+      <description>&better-bibtex.Preferences.export.jabrefFormat.4.warn;</description>
+    </tooltip>
+  </popupset>
   <prefwindow id="zotero-prefs">
     <prefpane id="zotero-prefpane-better-bibtex"
             insertafter="zotero-prefpane-advanced"
@@ -33,7 +35,9 @@
       <preferences id="zotero-preferences-cite">
         <preference name="extensions.zotero.translators.better-bibtex.DOIandURL" id="pref-better-bibtex-DOIandURL" type="string" default="both">
           <bbt:doc>
-            Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them.
+            Does what it says on the tin, really. If a reference has both a DOI and an URL, you can choose to have them both exported, or either one of them. Note that for BibTeX,
+            you must load the `url` package when you have `doi` or `url` fields. `doi` and `url` fields are so-called `verbatim` fields with different escaping rules, and
+            BibTeX compilation will likely error out without the package loaded.
           </bbt:doc>
         </preference>
 
@@ -588,7 +592,7 @@
               <hbox>
                 <label bbt:forpreference="pref-better-bibtex-bibtexURL">&better-bibtex.Preferences.export.bibtex.URLs;</label>
                 <hbox>
-                  <menulist flex="1" preference="pref-better-bibtex-bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.warnURL(event.currentTarget)">
+                  <menulist preference="pref-better-bibtex-bibtexURL">
                     <menupopup>
                       <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
                       <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
@@ -614,7 +618,7 @@
                   <row>
                     <label flex="1" bbt:forpreference="pref-better-bibtex-DOIandURL">&better-bibtex.Preferences.export.fields.doi-and-url;</label>
                     <hbox>
-                      <menulist preference="pref-better-bibtex-DOIandURL" preference-editable="true" oncommand="Zotero.BetterBibTeX.Preferences.warnURL(event.currentTarget)">
+                      <menulist preference="pref-better-bibtex-DOIandURL" preference-editable="true">
                         <menupopup>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.both;" value="both"/>
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.DOI;" value="doi"/>
@@ -633,7 +637,7 @@
                   <row>
                     <label bbt:forpreference="pref-better-bibtex-jabrefFormat">&better-bibtex.Preferences.export.jabrefFormat;</label>
                     <hbox>
-                      <menulist flex="1" preference="pref-better-bibtex-jabrefFormat" preference-editable="true" oncommand="Zotero.BetterBibTeX.Preferences.checkJabRef(event.currentTarget)">
+                      <menulist preference="pref-better-bibtex-jabrefFormat" preference-editable="true">
                         <menupopup>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.0;" value="0"/>
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.3;" value="3"/>
@@ -733,7 +737,7 @@
                     <hbox>
                       <label>&better-bibtex.Preferences.export.bibtex.URLs;</label>
                       <hbox>
-                        <menulist flex="1" bbt:ae-id="" bbt:ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
+                        <menulist bbt:ae-id="" bbt:ae-field="bibtexURL" oncommand="Zotero.BetterBibTeX.Preferences.autoexport.edit(event.currentTarget)">
                           <menupopup>
                             <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.off;" value="off"/>
                             <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.note;" value="note"/>
