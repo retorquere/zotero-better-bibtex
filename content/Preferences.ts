@@ -279,10 +279,6 @@ export = new class PrefPane {
     }
   }
 
-  public checkJabRef(node = null) {
-    document.getElementById('better-bibtex-cache-warn-jabrefFormat').setAttribute('hidden', (node ? parseInt(node.value) : Prefs.get('jabrefFormat')) !== 4) // tslint:disable-line:no-magic-numbers
-  }
-
   public checkPostscript() {
     const postscript = document.getElementById('zotero-better-bibtex-postscript')
 
@@ -405,7 +401,6 @@ export = new class PrefPane {
   private update() {
     this.checkCitekeyFormat()
     this.checkPostscript()
-    this.checkJabRef()
 
     if (Prefs.client === 'jurism') {
       Zotero.Styles.init().then(() => {
