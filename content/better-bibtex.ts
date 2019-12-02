@@ -247,9 +247,7 @@ function getCellX(tree, row, col, field) {
 }
 
 $patch$(Zotero.ItemTreeView.prototype, 'getCellProperties', original => function Zotero_ItemTreeView_prototype_getCellProperties(row, col, prop) {
-  const props = (original.apply(this, arguments) + getCellX(this, row, col, 'properties')).trim()
-  log.debug({col: col.id, props})
-  return props
+  return (original.apply(this, arguments) + getCellX(this, row, col, 'properties')).trim()
 })
 
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, col) {
