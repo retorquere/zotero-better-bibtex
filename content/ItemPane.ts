@@ -28,14 +28,16 @@ function init() {
 }
 
 function load() {
-  init()
-  const itemBox = document.getElementById('zotero-editpane-item-box')
-  const citekeyBox = document.getElementById('better-bibtex-editpane-item-box')
+  Zotero.BetterBibTeX.ready.then(() => {
+    init()
+    const itemBox = document.getElementById('zotero-editpane-item-box')
+    const citekeyBox = document.getElementById('better-bibtex-editpane-item-box')
 
-  if (itemBox.parentNode !== citekeyBox.parentNode) {
-    itemBox.parentNode.appendChild(citekeyBox.parentNode) // move the vbox into the tabbox
-    citekeyBox.parentNode.appendChild(itemBox) // move the itembox into the vbox
-  }
+    if (itemBox.parentNode !== citekeyBox.parentNode) {
+      itemBox.parentNode.appendChild(citekeyBox.parentNode) // move the vbox into the tabbox
+      citekeyBox.parentNode.appendChild(itemBox) // move the itembox into the vbox
+    }
+  })
 }
 
 function unload() {
@@ -44,15 +46,14 @@ function unload() {
   }
 }
 
-$patch$(ZoteroItemPane, 'viewItem', original => {
-  // don't use async here because I don't know What Zotero does with the result
-  return Zotero.Promise.coroutine(function*(item, mode, index) {
-    yield original.call(this, item, mode, index)
-    init()
+$patch$(ZoteroItemPane, 'viewItem', original => async function ZoteroItemPane_viewItem(item, mode, index) {
+  const r = await original.call(this, arguments)
+  await Zotero.BetterBibTeX.ready
+  init()
 
-    document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
-    display(item.id)
-  })
+  document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
+  display(item.id)
+  return r
 })
 
 window.addEventListener('load', load, false)

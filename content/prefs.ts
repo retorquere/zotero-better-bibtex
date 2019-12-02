@@ -39,7 +39,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   }
 
   public set(pref, value) {
-    if (pref === 'testing' && !value) throw new Error(`preference "${pref}" may not be set to false`)
+    // if (pref === 'testing' && !value) throw new Error(`preference "${pref}" may not be set to false`)
     if (this.testing && !supported.includes(pref)) throw new Error(`Getting unsupported preference "${pref}"`)
     Zotero.Prefs.set(this.key(pref), value)
   }
