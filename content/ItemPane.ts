@@ -46,14 +46,15 @@ function unload() {
   }
 }
 
-$patch$(ZoteroItemPane, 'viewItem', original => async function ZoteroItemPane_viewItem(item, mode, index) {
-  const r = await original.call(this, arguments)
-  await Zotero.BetterBibTeX.ready
-  init()
+$patch$(ZoteroItemPane, 'viewItem', original => {
+  // don't use async here because I don't know What Zotero does with the result
+  return Zotero.Promise.coroutine(function*(item, mode, index) {
+    yield original.call(this, item, mode, index)
+    init()
 
-  document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
-  display(item.id)
-  return r
+    document.getElementById('better-bibtex-citekey-display').setAttribute('itemID', `${item.id}`)
+    display(item.id)
+  })
 })
 
 window.addEventListener('load', load, false)
