@@ -43,12 +43,13 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
  # | Async import, large library #720                                            | 9057        |
 
-@test-cluster-1 @959 @1058 @871 @1081 @1115
+@test-cluster-1 @959 @1058 @871 @1081 @1115 @1350
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Title of German entry converted to lowercase during import #1350            | 1           |
   | Import location to event-place for conference papers                        | 1           |
   | Wrong ring-above import #1115                                               | 1           |
   | Spaces lost when expanding string variables during import #1081             | 1           |
