@@ -1,7 +1,7 @@
 #zotero-items-tree treechildren::-moz-tree-image(bbtLoading)
 {
   margin: 1px 5px 0;
-  list-style-image: url(chrome://zotero-better-bibtex/skin/loading.gif);
+  list-style-image: url(chrome://zotero-better-bibtex/skin/loading.png);
   height: 16px;
 }
 
