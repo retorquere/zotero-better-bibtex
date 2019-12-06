@@ -225,8 +225,6 @@ function getCellX(tree, row, col, field) {
     }
 
     switch (field) {
-      case 'image':
-        return 'chrome://zotero-better-bibtex/skin/loading.gif'
       case 'text':
         return ''
       case 'properties':
@@ -237,8 +235,6 @@ function getCellX(tree, row, col, field) {
   const citekey = KeyManager.get(item.id)
 
   switch (field) {
-    case 'image':
-      return ''
     case 'text':
       return citekey.citekey || '???'
     case 'properties':
@@ -255,14 +251,6 @@ $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zoter
 
   return getCellX(this, row, col, 'text')
 })
-
-/*
-$patch$(Zotero.ItemTreeView.prototype, 'getImageSrc', original => function Zotero_ItemTreeView_prototype_getImageSrc(row, col) {
-  if (col.id !== 'zotero-items-column-pubpeer') return original.apply(this, arguments)
-
-  return getCellX(this, row, col, 'image')
-})
-*/
 
 import * as CAYW from './cayw'
 $patch$(Zotero.Integration, 'getApplication', original => function Zotero_Integration_getApplication(agent, command, docId) {

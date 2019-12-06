@@ -217,7 +217,6 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
 
       // don't fetch when clean is active because the removeDataOnly will have done it already
       const existing = clean ? null : this.keys.findOne({ itemID: item.itemID })
-      log.debug('keymanager.rescan:', { clean, itemID: item.itemID, extra, existing })
       if (!existing) {
         // if the extra doesn't have a citekey, insert marker, next phase will find & fix it
         this.keys.insert({ citekey: extra.extraFields.citationKey || marker, pinned: !!extra.extraFields.citationKey, itemID: item.itemID, libraryID: item.libraryID, itemKey: item.key })
