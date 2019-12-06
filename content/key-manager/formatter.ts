@@ -15,6 +15,12 @@ import { kuroshiro } from './kuroshiro'
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
+// https://flyingsky.github.io/2018/01/26/javascript-detect-chinese-japanese/
+const logograms = {
+  japanese: /[\u3000-\u303f]|[\u3040-\u309f]|[\u30a0-\u30ff]|[\uff00-\uff9f]|[\u4e00-\u9faf]|[\u3400-\u4dbf]/
+  chinese: /[\u4e00-\u9fff]|[\u3400-\u4dbf]|[\u{20000}-\u{2a6df}]|[\u{2a700}-\u{2b73f}]|[\u{2b740}-\u{2b81f}]|[\u{2b820}-\u{2ceaf}]|[\uf900-\ufaff]|[\u3300-\u33ff]|[\ufe30-\ufe4f]|[\uf900-\ufaff]|[\u{2f800}-\u{2fa1f}]/u,
+}
+
 class PatternFormatter {
   public generate: Function
 
@@ -35,6 +41,7 @@ class PatternFormatter {
       // citeKeyConversion: /%([a-zA-Z])/,
       citeKeyClean: /[^a-z0-9\!\$\&\*\+\-\.\/\:\;\<\>\?\[\]\^\_\`\|]+/g,
     },
+    logograms: new RegExp(`${logograms.japanese.source}|${logograms.chinese.source}`, 'g'),
   }
   private language = {
     jp: 'japanese',
@@ -526,6 +533,11 @@ class PatternFormatter {
     value = Zotero.Utilities.XRegExp.replace(value, this.re.dash, '', 'all')
     value = Zotero.Utilities.XRegExp.replace(value, this.re.punct, '', 'all')
     return value
+  }
+
+  /** Expands Chinese/Japanese logograms to transliterated words */
+  public _unlogogram(value) {
+    return (value || '').replace(this.logograms, ' $1 ').trim()
   }
 
   /** transliterates the citation keys and removes unsafe characters */
