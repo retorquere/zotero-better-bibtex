@@ -30,7 +30,7 @@ before_install:
   - travis_retry sudo ./util/install-beta $CLIENT
 script:
   - ./util/build-assets fetch || travis_terminate 1
-  - [[ $CLIENT = 'zotero' ] && ./test/behave
+  - '[[ "$CLIENT" = "zotero" ] && ./test/behave'
 
 after_failure:
   - ./util/build-assets pop
