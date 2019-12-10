@@ -30,7 +30,7 @@ before_install:
   - travis_retry sudo ./util/install-beta $CLIENT
 script:
   - ./util/build-assets fetch || travis_terminate 1
-  - '[[ "$CLIENT" = "zotero" ] && ./test/behave'
+  - ./test/behave
 
 after_failure:
   - ./util/build-assets pop
@@ -60,11 +60,13 @@ jobs:
     - JOB=2
   - stage: test
     env:
-    - CLIENT=jurism
+    - CLIENT=zotero
+    - XCLIENT=jurism
     - JOB=1
   - stage: test
     env:
-    - CLIENT=jurism
+    - CLIENT=zotero
+    - XCLIENT=jurism
     - JOB=2
 
   - stage: release
