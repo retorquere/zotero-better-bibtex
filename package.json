@@ -88,13 +88,13 @@
     "string-template": "^1.0.0",
     "transliteration": "^2.1.7",
     "tslint": "^5.20.1",
-    "unicode2latex": "^1.0.26",
+    "unicode2latex": "^1.0.32",
     "webpack-cli": "^3.3.10",
     "xregexp": "^4.2.4",
     "zotero-plugin": "^0.0.95"
   },
   "devDependencies": {
-    "@types/node": "^12.12.16",
+    "@types/node": "^12.12.17",
     "@types/webpack": "^4.41.0",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",
