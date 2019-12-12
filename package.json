@@ -88,7 +88,7 @@
     "string-template": "^1.0.0",
     "transliteration": "^2.1.7",
     "tslint": "^5.20.1",
-    "unicode2latex": "^1.0.32",
+    "unicode2latex": "^1.0.33",
     "webpack-cli": "^3.3.10",
     "xregexp": "^4.2.4",
     "zotero-plugin": "^0.0.95"
@@ -109,7 +109,7 @@
     "glob": "^7.1.6",
     "ignore-loader": "^0.1.2",
     "indent-string": "^4.0.0",
-    "jscodeshift": "^0.6.4",
+    "jscodeshift": "^0.7.0",
     "jsesc": "^2.5.2",
     "json-stable-stringify": "^1.0.1",
     "loader-utils": "^1.2.3",
