@@ -329,7 +329,7 @@
           </bbt:doc>
         </preference>
 
-        <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" type="int" default="100">
+        <preference name="extensions.zotero.translators.better-bibtex.itemObserverDelay" type="int" default="5">
           <bbt:doc>
             I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
             retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets

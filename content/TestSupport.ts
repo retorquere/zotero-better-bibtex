@@ -59,6 +59,7 @@ export = new class {
     log.debug('TestSupport.reset: empty trash')
     await Zotero.Items.emptyTrash(Zotero.Libraries.userLibraryID)
 
+    log.debug('TestSupport.reset: remove auto-exports')
     AutoExport.db.findAndRemove({ type: { $ne: '' } })
 
     log.debug('TestSupport.reset: done')

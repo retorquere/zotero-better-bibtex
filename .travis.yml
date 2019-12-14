@@ -60,11 +60,13 @@ jobs:
     - JOB=2
   - stage: test
     env:
-    - CLIENT=jurism
+    - CLIENT=zotero
+    - XCLIENT=jurism
     - JOB=1
   - stage: test
     env:
-    - CLIENT=jurism
+    - CLIENT=zotero
+    - XCLIENT=jurism
     - JOB=2
 
   - stage: release
