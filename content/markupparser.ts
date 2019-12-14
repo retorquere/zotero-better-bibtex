@@ -18,9 +18,9 @@ const re = {
   Lm: charCategories.find(cat => cat.alias === 'Modifier_Letter').bmp,
   Lo: charCategories.find(cat => cat.alias === 'Other_Letter').bmp,
 
-  /* P without period */
+  // punctuation
   P: /\.\u002D\u2000-\u206F\u2E00-\u2E7F\\'!"#\$%&\(\)\*\+,\/:;<=>\?@\[\]^_`{\|}~/.source,
-  // Punctuation
+  // P: charCategories.find(cat => cat.alias === 'Punctuation').bmp,
 
   Whitespace: / \t\n\r\u00A0/.source,
 
