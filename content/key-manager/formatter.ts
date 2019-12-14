@@ -4,6 +4,7 @@ declare const Components: any
 
 const fold2ascii = require('fold-to-ascii')
 import PunyCode = require('punycode')
+import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
@@ -14,6 +15,10 @@ import { kuroshiro } from './kuroshiro'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
+
+const script = {
+  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])'), // tslint:disable-line prefer-template
+}
 
 class PatternFormatter {
   public generate: Function
@@ -592,6 +597,8 @@ class PatternFormatter {
     if (!title) return null
 
     title = this.innerText(title)
+    title = title.replace(script.han, ' $1 ')
+
     if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
