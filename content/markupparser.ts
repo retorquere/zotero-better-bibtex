@@ -6,21 +6,28 @@ import stringify = require('json-stringify-safe')
 // import * as log from './debug'
 
 import charCategories = require('xregexp/tools/output/categories')
+
 const re = {
-  Lu: charCategories.filter(cat => ['Uppercase_Letter', 'Titlecase_Letter'].includes(cat.alias)).map(cat => cat.bmp).join(''),
+  Nl: charCategories.find(cat => cat.alias === 'Letter_Number').bmp,
+  Nd: charCategories.find(cat => cat.alias === 'Decimal_Number').bmp,
+  Mn: charCategories.find(cat => cat.alias === 'Nonspacing_Mark').bmp,
+  Mc: charCategories.find(cat => cat.alias === 'Spacing_Mark').bmp,
+  Lu: charCategories.find(cat => cat.alias === 'Uppercase_Letter').bmp,
+  Lt: charCategories.find(cat => cat.alias === 'Titlecase_Letter').bmp,
   Ll: charCategories.find(cat => cat.alias === 'Lowercase_Letter').bmp,
-  LnotLu: charCategories.filter(cat => ['Lowercase_Letter', 'Modifier_Letter', 'Other_Letter', 'Nonspacing_Mark', 'Spacing_Mark', 'Decimal_Number', 'Letter_Number'].includes(cat.alias)).map(cat => cat.bmp).join(''),
-  P: charCategories.find(cat => cat.alias === 'Punctuation').bmp,
-  L: charCategories.find(cat => cat.alias === 'Letter').bmp,
-  N: charCategories.filter(cat => ['Decimal_Number', 'Letter_Number'].includes(cat.alias)).map(cat => cat.bmp).join(''),
-  AlphaNum: charCategories.filter(cat => ['Letter', 'Decimal_Number', 'Letter_Number'].includes(cat.alias)).map(cat => cat.bmp).join(''),
-  LC: charCategories.find(cat => cat.alias === 'Cased_Letter').bmp,
+  Lm: charCategories.find(cat => cat.alias === 'Modifier_Letter').bmp,
+  Lo: charCategories.find(cat => cat.alias === 'Other_Letter').bmp,
+
+  /* P without period */
+  P: /\.\u002D\u2000-\u206F\u2E00-\u2E7F\\'!"#\$%&\(\)\*\+,\/:;<=>\?@\[\]^_`{\|}~/.source,
+  // Punctuation
 
   Whitespace: / \t\n\r\u00A0/.source,
 
   // calculated below
-  char: '',
-  protectedWord: '',
+  lcChar: null,
+  char: null,
+  protectedWord: null,
 
   leadingUnprotectedWord: null,
   protectedWords: null,
@@ -28,13 +35,15 @@ const re = {
   url: null,
   whitespace: null,
 }
-re.char = re.Lu + re.LnotLu
-re.protectedWord = `[${re.LnotLu}]*[${re.Lu}][${re.char}]*`
+
+re.lcChar = re.Ll + re.Lt + re.Lm + re.Lo + re.Mn + re.Mc + re.Nd + re.Nl
+re.char = re.Lu + re.lcChar
+re.protectedWord = `[${re.lcChar}]*[${re.Lu}][${re.char}]*`
 
 /* actual regexps */
 
 /* TODO: add punctuation */
-re.leadingUnprotectedWord = new RegExp(`^([${re.Lu}][${re.LnotLu}]*)[${re.Whitespace}${re.P}]`)
+re.leadingUnprotectedWord = new RegExp(`^([${re.Lu}][${re.lcChar}]*)[${re.Whitespace}${re.P}]`)
 re.protectedWords = new RegExp(`^(${re.protectedWord})(([${re.Whitespace}])(${re.protectedWord}))*`)
 re.unprotectedWord = new RegExp(`^[${re.char}]+`)
 re.url = /^(https?|mailto):\/\/[^\s]+/
