@@ -158,16 +158,27 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     })
 
     this.keys.on(['insert', 'update'], async citekey => {
+      log.debug('item updated or inserted')
+
       // async is just a heap of fun. Who doesn't enjoy a good race condition?
       // https://github.com/retorquere/zotero-better-bibtex/issues/774
       // https://groups.google.com/forum/#!topic/zotero-dev/yGP4uJQCrMc
       await timeout(this.itemObserverDelay)
 
+      try {
+        await Zotero.Items.getAsync(citekey.itemID)
+      } catch (err) {
+        // assume item has been deleted before we could get to it -- did I mention I hate async? I hate async
+        log.debug('could not load', citekey.itemID, err)
+        return
+      }
+
+      log.debug('item updated or inserted -- waited', this.itemObserverDelay)
+
       if (Prefs.get('autoPin') && !citekey.pinned) {
         this.pin([citekey.itemID])
       } else {
         // update display panes by issuing a fake item-update notification
-        log.debug('item updated or inserted')
         Zotero.Notifier.trigger('modify', 'item', [citekey.itemID], { [citekey.itemID]: { bbtCitekeyUpdate: true } })
       }
     })

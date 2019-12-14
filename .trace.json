@@ -1,5 +1,5 @@
 {
-  "-beta-fails": [
+  "none": [
     "content/**/*.ts",
     "!content/monkey-patch.ts",
     "!content/flash.ts",
