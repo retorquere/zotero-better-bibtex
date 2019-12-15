@@ -326,6 +326,7 @@ class ZoteroItem {
     conference:     'conferencePaper',
     techreport:     'report',
     report:         'report',
+    online:         'webpage',
   }
 
   private type: string
@@ -339,7 +340,7 @@ class ZoteroItem {
     this.bibtex.type = this.bibtex.type.toLowerCase()
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
-      this.errors.push({ message: `Unexpected reference type '${this.bibtex.type}' for ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}, importing as ${this.type = 'journalArticle'}` })
+      this.errors.push({ message: `Don't know what Zotero type to make of '${this.bibtex.type}' for ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}, importing as ${this.type = 'journalArticle'}` })
       this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
