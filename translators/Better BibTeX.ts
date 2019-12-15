@@ -329,8 +329,8 @@ class ZoteroItem {
   }
 
   private type: string
-  private hackyFields: string[]
-  private eprint: { [key: string]: string }
+  private hackyFields: string[] = []
+  private eprint: { [key: string]: string } = {}
   private validFields: Map<string, boolean>
   private numberPrefix: string
   private english = 'English'
@@ -340,6 +340,7 @@ class ZoteroItem {
     this.type = this.typeMap[this.bibtex.type]
     if (!this.type) {
       this.errors.push({ message: `Unexpected reference type '${this.bibtex.type}' for ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}, importing as ${this.type = 'journalArticle'}` })
+      this.hackyFields.push(`tex.referencetype: ${this.bibtex.type}`)
     }
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
     if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
@@ -702,9 +703,6 @@ class ZoteroItem {
   }
 
   private import() {
-    this.hackyFields = []
-    this.eprint = {}
-
     for (const subtitle of ['titleaddon', 'subtitle']) {
       if (!this.bibtex.fields.title && this.bibtex.fields[subtitle]) {
         this.bibtex.fields.title = this.bibtex.fields[subtitle]
