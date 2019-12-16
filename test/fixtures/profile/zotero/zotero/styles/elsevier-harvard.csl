@@ -31,7 +31,7 @@
     <category citation-format="author-date"/>
     <category field="biology"/>
     <category field="generic-base"/>
-    <updated>2014-03-04T00:09:00+00:00</updated>
+    <updated>2019-01-22T15:57:12+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <macro name="container">
@@ -94,7 +94,7 @@
       <if variable="DOI">
         <text variable="DOI" prefix="https://doi.org/"/>
       </if>
-      <else-if type="webpage">
+      <else-if type="webpage post-weblog" match="any">
         <group delimiter=" ">
           <text value="URL"/>
           <text variable="URL"/>

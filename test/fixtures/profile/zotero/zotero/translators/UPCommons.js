@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-27 10:44:28"
+	"lastUpdated": "2019-06-11 13:35:57"
 }
 
 /*
@@ -36,24 +36,25 @@
 */
 
 
+var itemTypes = {
+	Article: "journalArticle",
+	Audiovisual: "film",
+	Book: "book",
+	Thesis: "thesis",
+	"Working Paper": "report",
+	"Technical Report": "report"
+};
+
+
 function detectWeb(doc, url) {
 	var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
-	if (url.indexOf('/handle/')>-1 && type) {
-		if(itemTypes[type]!=null) return itemTypes[type];
-		else return "document";
-	} else if (getSearchResults(doc, true)) {
+	if (url.includes('/handle/') && type) {
+		return itemTypes[type] || "document";
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
-}
-
-
-var itemTypes = {
-	"Article":"journalArticle",
-	"Audiovisual":"film",
-	"Book":"book",
-	"Thesis":"thesis",
-	"Working Paper":"report",
-	"Technical Report":"report"
+	return false;
 }
 
 
@@ -61,7 +62,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//div[contains(@class, "row")]//h4[contains(@class, "artifact-title")]/a[contains(@href, "/handle/")]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -76,16 +77,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -95,17 +96,16 @@ function scrape(doc, url) {
 	// We call the Embedded Metadata translator to do the actual work
 	var translator = Zotero.loadTranslator("web");
 	translator.setTranslator("951c027d-74ac-47d4-a107-9c3069ab7b48");
-	translator.setHandler("itemDone", function(obj, item) {
+	translator.setHandler("itemDone", function (obj, item) {
 		var type = ZU.xpathText(doc, '//meta[@name="DC.type"]/@content');
 		if (itemTypes[type]) item.itemType = itemTypes[type];
-		item.abstractNote=item.extra;
+		item.abstractNote = item.extra;
 		item.extra = "";
 		item.complete();
 	});
 	translator.getTranslatorObject(function (obj) {
 		obj.doWeb(doc, url);
 	});
-	
 }
 
 /** BEGIN TEST CASES **/

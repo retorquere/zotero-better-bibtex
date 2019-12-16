@@ -17,20 +17,19 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2017-10-28 09:11:30"
+	"lastUpdated": "2019-10-19 17:04:49"
 }
 
 function detectImport() {
 	var line;
 	var i = 0;
-	while((line = Zotero.read()) !== false) {
+	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
-		if(line != "") {
-			if(line.substr(0, 6).match(/^TY {1,2}- /)) {
+		if (line != "") {
+			if (line.substr(0, 6).match(/^TY {1,2}- /)) {
 				return true;
 			} else {
-				if(i++ > 3) {
+				if (i++ > 3) {
 					return false;
 				}
 			}
@@ -139,12 +138,12 @@ var importTypeMap = {
 
 //supplement input map with export
 var ty;
-for(ty in exportTypeMap) {
+for (ty in exportTypeMap) {
 	importTypeMap[exportTypeMap[ty]] = ty;
 }
 
 //merge degenerate export type map into main list
-for(ty in degenerateExportTypeMap) {
+for (ty in degenerateExportTypeMap) {
 	exportTypeMap[ty] = degenerateExportTypeMap[ty];
 }
 
@@ -405,6 +404,7 @@ var degenerateImportFieldMap = {
 	CA: "unsupported/Caption",
 	CR: "rights",
 	CT: "title",
+	CY: "place", // ProCite and Springer are using CY instead of C1 also for conferencePapers
 	ED: "creators/editor",
 	EP: "pages",
 	H1: "unsupported/Library Catalog", //Citavi specific (possibly multiple occurences)
@@ -477,48 +477,48 @@ var TagMapper = function(mapList) {
  * @return {String} Zotero field
  */
 TagMapper.prototype.getField = function(itemType, tag) {
-	if(!this.cache[itemType]) this.cache[itemType] = {};
+	if (!this.cache[itemType]) this.cache[itemType] = {};
 
 	//retrieve from cache if available
 	//it can be false if previous search did not find a mapping
-	if(this.cache[itemType][tag] !== undefined) {
+	if (this.cache[itemType][tag] !== undefined) {
 		return this.cache[itemType][tag];
 	}
 
 	var field = false;
-	for(var i=0, n=this.mapList.length; i<n; i++) {
+	for (var i=0, n=this.mapList.length; i<n; i++) {
 		var map = this.mapList[i];
-		if(typeof(map[tag]) == 'object') {
+		if (typeof(map[tag]) == 'object') {
 			var def, exclude = false;
-			for(var f in map[tag]) {
+			for (var f in map[tag]) {
 				//__ignore is not handled here. It's returned as a Zotero field so it
 				//can be explicitly excluded from the note attachment
-				if(f == "__default") {
+				if (f == "__default") {
 					//store default mapping in case we can't find anything explicit
 					def = map[tag][f];
 					continue;
 				}
 
-				if(f == "__exclude") {
-					if(map[tag][f].indexOf(itemType) != -1) {
+				if (f == "__exclude") {
+					if (map[tag][f].indexOf(itemType) != -1) {
 						exclude = true; //don't break. Let explicit mapping override this
 					}
 					continue;
 				}
 
-				if(map[tag][f].indexOf(itemType) != -1) {
+				if (map[tag][f].indexOf(itemType) != -1) {
 					field = f;
 					break;
 				}
 			}
 
 			//assign default value if not excluded
-			if(!field && def && !exclude) field = def;
-		} else if(typeof(map[tag]) == 'string') {
+			if (!field && def && !exclude) field = def;
+		} else if (typeof(map[tag]) == 'string') {
 			field = map[tag];
 		}
 
-		if(field) break; //no need to go on
+		if (field) break; //no need to go on
 	}
 
 	this.cache[itemType][tag] = field;
@@ -536,41 +536,41 @@ TagMapper.prototype.getField = function(itemType, tag) {
  * @return {String} RIS tag
  */
 TagMapper.prototype.reverseLookup = function(itemType, zField) {
-	if(!this.reverseCache[itemType]) this.reverseCache[itemType] = {};
+	if (!this.reverseCache[itemType]) this.reverseCache[itemType] = {};
 	
-	if(this.reverseCache[itemType][zField] !== undefined) {
+	if (this.reverseCache[itemType][zField] !== undefined) {
 		return this.reverseCache[itemType][zField];
 	}
 	
-	for(var i=0, n=this.mapList.length; i<n; i++) {
+	for (var i=0, n=this.mapList.length; i<n; i++) {
 		var risTag;
-		for(risTag in this.mapList[i]) {
+		for (risTag in this.mapList[i]) {
 			var typeMap = this.mapList[i][risTag];
-			if(typeMap == zField) {
+			if (typeMap == zField) {
 				// item type indepndent
 				this.reverseCache[itemType][zField] = risTag;
 				return risTag;
-			} else if(typeof(typeMap) == 'object') {
+			} else if (typeof(typeMap) == 'object') {
 				if (typeMap[zField] && typeMap[zField].indexOf(itemType) !== -1) {
 					//explicitly mapped
 					this.reverseCache[itemType][zField] = risTag;
 					return risTag;
 				}
-				if(!(typeMap.__exclude && typeMap.__exclude.indexOf(itemType) !== -1)
+				if (!(typeMap.__exclude && typeMap.__exclude.indexOf(itemType) !== -1)
 					&& typeMap.__default == zField
 				) {
 					// may be mapped via default, but make sure this item type is not
 					// explicitly mapped somewhere else
 					var preventDefault = false;
-					for(var field in typeMap) {
-						if(typeMap[field].indexOf(itemType) != -1) {
+					for (var field in typeMap) {
+						if (typeMap[field].indexOf(itemType) != -1) {
 							// mapped to something else
 							preventDefault = true;
 							break;
 						}
 					}
 					
-					if(!preventDefault) {
+					if (!preventDefault) {
 						this.reverseCache[itemType][zField] = risTag;
 						return risTag;
 					}
@@ -614,25 +614,25 @@ var RISReader = new function() {
 			entry = []; //maintain tag order
 		entry.tags = {}; //tag list for convenience
 		
-		while(tagValue = (_tagValueBuffer.length && _tagValueBuffer.pop()) || _getTagValue()) {
-			if(tagValue.tag == 'TY' && entry.length) {
+		while (tagValue = (_tagValueBuffer.length && _tagValueBuffer.pop()) || _getTagValue()) {
+			if (tagValue.tag == 'TY' && entry.length) {
 				//we hit a new entry. ER was omitted, but we'll forgive
 				_tagValueBuffer.push(tagValue);
 				return entry;
 			}
 			
-			if(tagValue.tag == 'ER') {
-				if(!entry.length) continue; //weird, but keep going and ignore ER outside of entry
+			if (tagValue.tag == 'ER') {
+				if (!entry.length) continue; //weird, but keep going and ignore ER outside of entry
 				return entry;
 			}
 			
 			entry.push(tagValue);
 			//also add to the "tags" list for convenient access
-			if(!entry.tags[tagValue.tag]) entry.tags[tagValue.tag] = [];
+			if (!entry.tags[tagValue.tag]) entry.tags[tagValue.tag] = [];
 			entry.tags[tagValue.tag].push(tagValue);
 		}
 		
-		if(entry.length) return entry;
+		if (entry.length) return entry;
 	};
 	
 	var RIS_format = /^([A-Z][A-Z0-9]) {1,2}-(?: (.*))?$/, //allow empty entries
@@ -654,28 +654,28 @@ var RISReader = new function() {
 	 */
 	function _getTagValue() {
 		var line, tagValue, temp, lastLineLength = 0;
-		while((line = _nextLine()) !== false) { //could be reading empty lines
+		while ((line = _nextLine()) !== false) { //could be reading empty lines
 			temp = line.match(RIS_format);
 			
-			if(!temp && !tagValue) {
+			if (!temp && !tagValue) {
 				//doesn't match RIS format and we're not processing a tag-value pair,
 				//so this is not a multi-line tag-value pair
-				if(line.trim()) {
+				if (line.trim()) {
 					Z.debug("RIS: Dropping line outside of RIS record: " + line);
 				}
 				continue;
 			}
 			
-			if(line.length > _maxLineLength) _maxLineLength = line.length;
+			if (line.length > _maxLineLength) _maxLineLength = line.length;
 			
-			if(temp && tagValue) {
+			if (temp && tagValue) {
 				//if we are already processing a tag-value pair, then this is the next pair
 				//store this line for later and return
 				_lineBuffer.push(line);
 				return tagValue;
 			}
 			
-			if(temp) {
+			if (temp) {
 				//new tag-value pair
 				tagValue = {
 					tag: temp[1],
@@ -683,14 +683,14 @@ var RISReader = new function() {
 					raw: line
 				};
 				
-				if(tagValue.value === undefined) tagValue.value = '';
+				if (tagValue.value === undefined) tagValue.value = '';
 			} else {
 				//tagValue && !temp
 				//multi-line RIS tag-value pair
 				var newLineAdded = false;
 				var cleanLine = line.trim();
 				//new lines would probably only be meaningful in notes and abstracts
-				if((['AB', 'N1', 'N2', 'RN']).indexOf(tagValue.tag) !== -1
+				if ((['AB', 'N1', 'N2', 'RN']).indexOf(tagValue.tag) !== -1
 					//if all lines are not trimmed to ~80 characters or previous line was
 					// short, this would probably be on a new line. Might want to consider
 					// looking for periods and capital letters to make a better call.
@@ -705,13 +705,13 @@ var RISReader = new function() {
 				}
 				
 				//don't remove new lines from keywords or attachments
-				if(!newLineAdded && preserveNewLines.indexOf(tagValue.tag) != -1) {
+				if (!newLineAdded && preserveNewLines.indexOf(tagValue.tag) != -1) {
 					cleanLine = "\n" + cleanLine;
 					newLineAdded = true;
 				}
 				
 				//check if we need to add a space before concatenating
-				if(!newLineAdded && tagValue.value.charAt(tagValue.value.length-1) != ' ') {
+				if (!newLineAdded && tagValue.value.charAt(tagValue.value.length-1) != ' ') {
 					cleanLine = ' ' + cleanLine;
 				}
 	
@@ -722,7 +722,7 @@ var RISReader = new function() {
 			lastLineLength = line.length;
 		}
 		
-		if(tagValue) return tagValue;
+		if (tagValue) return tagValue;
 	}
 	
 	var _lineBuffer = [];
@@ -735,7 +735,7 @@ var RISReader = new function() {
 	function _nextLine() {
 		// Don't use shortcuts like _lineBuffer.pop() || Zotero.read(),
 		//  because we may have an empty line, which could be meaningful
-		if(_lineBuffer.length) return _lineBuffer.pop();
+		if (_lineBuffer.length) return _lineBuffer.pop();
 		var line = Zotero.read();
 		if (line && (line.indexOf('\u2028') != -1 || line.indexOf('\u2029') != -1)) {
 			// Apparently some services think that it's cool to break up single
@@ -770,21 +770,21 @@ var TagCleaner = {
 		
 		//clean up "tags" list
 		byTag.splice(byTag.indexOf(source),1);
-		if(!byTag.length) delete entry.tags[source.tag];
+		if (!byTag.length) delete entry.tags[source.tag];
 		
-		if(!toTags || !toTags.length) {
+		if (!toTags || !toTags.length) {
 			//then we just remove
 			entry.splice(at,1);
 		} else {
 			source.tag = toTags[0]; //re-use the same pair for first tag
-			if(!entry.tags[toTags[0]]) entry.tags[toTags[0]] = [];
+			if (!entry.tags[toTags[0]]) entry.tags[toTags[0]] = [];
 			entry.tags[toTags[0]].push(source);
 			//if we're changing to more than one tag, we need to add extras
-			for(var i=1, n=toTags.length; i<n; i++) {
+			for (var i=1, n=toTags.length; i<n; i++) {
 				var newSource = ZU.deepCopy(source);
 				newSource.tag = toTags[i];
 				entry.splice(at+i, 0, newSource);
-				if(!entry.tags[toTags[i]]) entry.tags[toTags[i]] = [];
+				if (!entry.tags[toTags[i]]) entry.tags[toTags[i]] = [];
 				entry.tags[toTags[i]].push(newSource);
 			}
 		}
@@ -860,9 +860,9 @@ var ProCiteCleaner = new function() {
 		// We _must_ change some tags before mapping from notes, otherwise
 		// there will be ambiguity
 		var ty;
-		if(this.proCiteMode) {
+		if (this.proCiteMode) {
 			ty = entry.tags.TY && entry.tags.TY[0].value;
-			if((ty == 'CHAP' || ty == 'BOOK') && entry.tags.VL) {
+			if ((ty == 'CHAP' || ty == 'BOOK') && entry.tags.VL) {
 				// Edition in ET, not VL
 				_changeAllTags(entry, 'VL', 'ET');
 			}
@@ -871,14 +871,14 @@ var ProCiteCleaner = new function() {
 		
 		var notes = entry.tags.N1, extentOfWork, packagingMethod;
 		//go through all the notes
-		for(var i=0; notes && notes.length && i<entry.length; i++) {
+		for (var i=0; notes && notes.length && i<entry.length; i++) {
 			var m;
-			if(entry[i].tag !== 'N1'
+			if (entry[i].tag !== 'N1'
 				|| !(m = entry[i].value.trim().match(tagValueSplit)) ) {
 				continue;
 			}
 			
-			switch(m[1]) {
+			switch (m[1]) {
 				case 'Author, Subsidiary':
 				case 'Author, Monographic':
 					//seems to always come before "Author Role"
@@ -891,7 +891,7 @@ var ProCiteCleaner = new function() {
 					//authors are in firstName lastName format, we need to fix it
 					entry[i].value = _fixAuthor(authors[0]);
 					//subsequent authors need to have their own tag-value pairs
-					for(var j=1; j<authors.length; j++) {
+					for (var j=1; j<authors.length; j++) {
 						var newEntry = ZU.deepCopy(entry[i]);
 						newEntry.value = authors[j];
 						entry.splice(i+1,0,newEntry); //insert into tag-value array
@@ -911,32 +911,32 @@ var ProCiteCleaner = new function() {
 					var authorRoles = _normalizeAuthorRole(m[2]);
 					var risTags = [], fail = false;
 					//find a RIS tag for each author role
-					for(var j=0, k=authorRoles.length; j<k; j++) {
+					for (var j=0, k=authorRoles.length; j<k; j++) {
 						var role = this.proCiteMap['Author Role'][authorRoles[j]];
-						if(!role) {
+						if (!role) {
 							Z.debug('RIS: Unknown ProCite author role: ' + authorRoles[j]);
 							continue;
 						}
 						role = 'creators/' + role;
 						var risTag = importFields.reverseLookup(item.itemType, role);
-						if(!risTag) {
+						if (!risTag) {
 							Z.debug('RIS: Cannot map ProCite author role to RIS tag: ' + role + ' for ' + item.itemType);
 							Z.debug('RIS: Will not attempt a partial match: ' + m[0]);
 							fail = true;
 							break;
 						}
-						if(risTags.indexOf(risTag) === -1) risTags.push(risTag); //don't add same role
+						if (risTags.indexOf(risTag) === -1) risTags.push(risTag); //don't add same role
 					}
 					
-					if(fail || !risTags.length) continue;
+					if (fail || !risTags.length) continue;
 					
 					Z.debug('RIS: ' + m[0]);
 					Z.debug('RIS: Mapping preceeding authors to ' + risTags.join(', '));
 					var added;
-					if(added = this._remapPreceedingTags(entry, i, ['A1','A2','A3'], risTags)) {
+					if (added = this._remapPreceedingTags(entry, i, ['A1','A2','A3'], risTags)) {
 						this._changeTag(entry, i); //remove ProCite note
 						i--;
-						if(added !== true) {
+						if (added !== true) {
 							i += added;
 						}
 					}
@@ -950,7 +950,7 @@ var ProCiteCleaner = new function() {
 					entry[i].value = m[2];
 				break;
 				case 'Connective Phrase':
-					if(m[2].trim().toLowerCase() == 'in') {
+					if (m[2].trim().toLowerCase() == 'in') {
 						//this is somewhat meaningless, remove it
 						this._changeTag(entry, i);
 						i--;
@@ -963,9 +963,9 @@ var ProCiteCleaner = new function() {
 					packagingMethod = entry[i]; //processed later
 				break;
 				default:
-					if(this.proCiteMap[m[1]]) {
+					if (this.proCiteMap[m[1]]) {
 						var risTag = importFields.reverseLookup(item.itemType, this.proCiteMap[m[1]]);
-						if(!risTag) {
+						if (!risTag) {
 							Z.debug('RIS: Cannot map ProCite note to RIS tag: ' + this.proCiteMap[m[1]] + ' for ' + item.itemType);
 							continue;
 						}
@@ -975,16 +975,16 @@ var ProCiteCleaner = new function() {
 			}
 		}
 		
-		if(extentOfWork) {
+		if (extentOfWork) {
 			var extent = extentOfWork.value.match(tagValueSplit)[2],
 				m = extent.match(/^(\d+)\s*(pages?|p(?:p|gs?)?|vols?|volumes?)\.?$/i), //e.g. 2 vols.
 				units, deletePackagingMethod = false;
-			if(m) {
+			if (m) {
 				//we have both extent and units in the same field
 				//packagingMethod will be useless
 				units = m[2].charAt(0).toLowerCase() == 'p' ? 'numPages' : 'numberOfVolumes';
 				extent = m[1];
-			} else if(packagingMethod && /^\s*\d+\s*$/.test(extent) //numeric extent
+			} else if (packagingMethod && /^\s*\d+\s*$/.test(extent) //numeric extent
 				&& (m = packagingMethod.value.match(/:\s*(pages?|p(?:p|gs?)?|vols?|volumes?)\.?\s*$/i))
 			) {
 				units = m[1].charAt(0).toLowerCase() == 'p' ? 'numPages' : 'numberOfVolumes';
@@ -992,12 +992,12 @@ var ProCiteCleaner = new function() {
 				deletePackagingMethod = true; //we can delete it since we used it
 			}
 			
-			if(units) {
+			if (units) {
 				risTag = importFields.reverseLookup(item.itemType, units);
-				if(risTag) {
+				if (risTag) {
 					extentOfWork.value = extent;
 					this._changeTag(entry, entry.indexOf(extentOfWork), [risTag]);
-					if(deletePackagingMethod) {
+					if (deletePackagingMethod) {
 						this._changeTag(entry, entry.indexOf(packagingMethod));
 					}
 				}
@@ -1005,50 +1005,45 @@ var ProCiteCleaner = new function() {
 		}
 		
 		//the rest we only fix if we're sure this is ProCite
-		if(!this.proCiteMode) return;
+		if (!this.proCiteMode) return;
 		
 		ty = entry.tags.TY && entry.tags.TY[0].value;
 		
 		//fix titles in book sections.
 		//essentially, make sure there are no duplicate T tags and put them in order
-		if(ty == 'CHAP') {
+		if (ty == 'CHAP') {
 			var titleTags = ['T3', 'T2', 'TI'];
-			for(var i=0; i<entry.length && titleTags.length; i++) {
-				if((['TI', 'T1', 'T2', 'T3']).indexOf(entry[i].tag) !== -1) {
+			for (var i=0; i<entry.length && titleTags.length; i++) {
+				if ((['TI', 'T1', 'T2', 'T3']).indexOf(entry[i].tag) !== -1) {
 					var newTag = titleTags.pop();
-					if(entry[i].tag == newTag) continue; //already correct
+					if (entry[i].tag == newTag) continue; //already correct
 					this._changeTag(entry, i, [newTag]);
 				}
 			}
 		}
 		
-		if(ty == 'BOOK' && entry.tags.IS && entry.tags.IS.length) {
+		if (ty == 'BOOK' && entry.tags.IS && entry.tags.IS.length) {
 			_changeAllTags(entry, 'IS', 'VL');
 		}
 		
-		if((ty == 'CHAP' || ty == 'BOOK') && entry.tags.VL && entry.tags.VL.length > 1) {
+		if ((ty == 'CHAP' || ty == 'BOOK') && entry.tags.VL && entry.tags.VL.length > 1) {
 			// We try to fix this ahead of time, but we can't always
 			// 2 of these entries would indicate Edition and then Volume (maybe)
 			this._changeTag(entry, entry.indexOf(entry.tags.VL[0]), ['ET']);
 		}
 		
-		//fix publication place for conferences. Should be C1, not CY
-		if(ty == 'CONF' && entry.tags.CY && !entry.tags.C1) {
-			_changeAllTags(entry, 'CY', 'C1');
-		}
-		
-		if(ty == 'COMP'&& entry.tags.IS) {
+		if (ty == 'COMP'&& entry.tags.IS) {
 			_changeAllTags(entry, 'IS', 'ET');
 		}
 		
-		if(ty == 'BILL') {
-			if(entry.tags.CY) _changeAllTags(entry, 'CY', 'T2');
-			if(entry.tags.VL) _changeAllTags(entry, 'VL', 'M1');
-			if(entry.tags.SP) _changeAllTags(entry, 'SP', 'SE');
+		if (ty == 'BILL') {
+			if (entry.tags.CY) _changeAllTags(entry, 'CY', 'T2');
+			if (entry.tags.VL) _changeAllTags(entry, 'VL', 'M1');
+			if (entry.tags.SP) _changeAllTags(entry, 'SP', 'SE');
 		}
 		
-		if(ty == 'ART') {
-			if(entry.tags.M1) _changeAllTags(entry, 'M1', 'M3');
+		if (ty == 'ART') {
+			if (entry.tags.M1) _changeAllTags(entry, 'M1', 'M3');
 		}
 	};
 	
@@ -1074,7 +1069,7 @@ var ProCiteCleaner = new function() {
 	 * @return (String)
 	 */
 	function _fixAuthor(author) {
-		if(author.indexOf(',') !== -1 || author.trim().indexOf(' ') === -1) return author;
+		if (author.indexOf(',') !== -1 || author.trim().indexOf(' ') === -1) return author;
 		author = author.trim();
 		return author.substr(author.lastIndexOf(' ')+1) + ', ' + author.substring(0,author.lastIndexOf(' '));
 	}
@@ -1088,9 +1083,9 @@ var ProCiteCleaner = new function() {
 	 * @param (String) to
 	 */
 	function _changeAllTags(entry, from, to) {
-		if(!from || !to) return;
+		if (!from || !to) return;
 		
-		for(var i=0; i<entry.tags[from].length; i++) {
+		for (var i=0; i<entry.tags[from].length; i++) {
 			entry.tags[from][i].tag = to;
 		}
 		
@@ -1127,15 +1122,15 @@ var ProCiteCleaner = new function() {
 	 */
 	this._remapPreceedingTags = function(entry, start, allowedTags, risTags) {
 		var tag, added = 0;
-		for(var i=start-1; i>=0; i--) {
+		for (var i=start-1; i>=0; i--) {
 			
-			if(tag && entry[i].tag !== tag) {
+			if (tag && entry[i].tag !== tag) {
 				//different from the tags we changed previously. Don't continue
 				return added ? added : true;
 			}
 			
 			tag = entry[i].tag;
-			if(allowedTags.indexOf(tag) === -1) {
+			if (allowedTags.indexOf(tag) === -1) {
 				//not allowed to remap this tag
 				Z.debug('RIS: nothing to remap');
 				return;
@@ -1147,7 +1142,7 @@ var ProCiteCleaner = new function() {
 		
 		//we should not end up at the begining of entry,
 		//since we will probably never be replacing TY, but just in case
-		if(tag) return added ? added : true;
+		if (tag) return added ? added : true;
 	};
 }
 /**
@@ -1162,8 +1157,8 @@ var EndNoteCleaner = new function() {
 	 */
 	this.cleanTags = function(entry, item) {
 		// for edited books, treat authors as editors
-		if(entry.tags.TY && entry.tags.TY[0].value == 'EDBOOK' && entry.tags.AU) {
-			for(var i = entry.tags.AU.length-1; i>=0; i--) {
+		if (entry.tags.TY && entry.tags.TY[0].value == 'EDBOOK' && entry.tags.AU) {
+			for (var i = entry.tags.AU.length-1; i>=0; i--) {
 				TagCleaner.changeTag(entry, entry.indexOf(entry.tags.AU[i]), ['A3']);
 			}
 		}
@@ -1215,7 +1210,7 @@ function processTag(item, tagValue, risEntry) {
 	if (value === "") return;
 	
 	var zField = importFields.getField(item.itemType, tag);
-	if(!zField) {
+	if (!zField) {
 		Z.debug("Unknown field " + tag + " in entry :\n" + rawLine);
 		zField = 'unknown'; //this will result in the value being added as note
 	}
@@ -1228,15 +1223,15 @@ function processTag(item, tagValue, risEntry) {
 
 	//tag based manipulations
 	var processFields = true; //whether we should continue processing by zField
-	switch(tag) {
+	switch (tag) {
 		case "N1":
 		case "RN":
 			//seems that EndNote duplicates title in the note field sometimes
-			if(item.title == value) {
+			if (item.title == value) {
 				value = undefined;
 				processFields = false;
 			//do some HTML formatting in non-HTML notes
-			} else if(!value.match(/<[^>]+>/)) { //from cleanTags
+			} else if (!value.match(/<[^>]+>/)) { //from cleanTags
 				value = '<p>'
 					+ value.replace(/\n\n/g, '</p><p>')
 					 .replace(/\n/g, '<br/>')
@@ -1246,8 +1241,8 @@ function processTag(item, tagValue, risEntry) {
 			}
 		break;
 		case "EP":
-			if(item.pages) {
-				if(item.pages.indexOf('-') == -1) {
+			if (item.pages) {
+				if (item.pages.indexOf('-') == -1) {
 					item.pages = item.pages + '-' + value;
 				} else {
 					item.backupNumPages = value;
@@ -1262,7 +1257,7 @@ function processTag(item, tagValue, risEntry) {
 			//Endnote exports access date for webpages to M1
 			//It makes much more sense to export to Y2
 			//We should make sure that M1 does not overwrite whatever may be in Y2
-			if(zField[0] == "accessDate") {
+			if (zField[0] == "accessDate") {
 				item.backupAccessDate = {
 					field: zField[0],
 					value: dateRIStoZotero(value, zField[0])
@@ -1284,9 +1279,9 @@ function processTag(item, tagValue, risEntry) {
 			}
 		break;
 		case "VL":
-			if(zField[0] == "accessDate") {
+			if (zField[0] == "accessDate") {
 				//EndNote screws up webpage entries. VL is access year, but access date is available
-				if(!item.backupAccessDate) {	//make sure we don't replace the M1 data
+				if (!item.backupAccessDate) {	//make sure we don't replace the M1 data
 					item.backupAccessDate = {
 						field: zField[0],
 						value: dateRIStoZotero(value, zField[0])
@@ -1307,7 +1302,7 @@ function processTag(item, tagValue, risEntry) {
 		break;
 		case "UR":
 			//REFMAN places PMIDS in UR sometimes
-			if(value.indexOf('PM:') != -1) {
+			if (value.indexOf('PM:') != -1) {
 				value = 'PMID: ' + value.substr(3);
 				zField = ['extra'];
 			}
@@ -1315,8 +1310,8 @@ function processTag(item, tagValue, risEntry) {
 	}
 
 	//zField based manipulations
-	if(processFields){
-		switch(zField[0]) {
+	if (processFields){
+		switch (zField[0]) {
 			case "__ignore":
 				value = undefined;
 			break;
@@ -1328,7 +1323,7 @@ function processTag(item, tagValue, risEntry) {
 				var lName = value.split(/\s*,\s*/)[0];
 				var fName = value.substr(lName.length).replace(/^\s*,\s*/, '');
 				value = {lastName: lName, firstName:fName, creatorType:zField[1]};
-				if(!value.firstName) {	//corporate
+				if (!value.firstName) {	//corporate
 					delete value.firstName;
 					value.fieldMode = 1;
 				}
@@ -1349,34 +1344,34 @@ function processTag(item, tagValue, risEntry) {
 				//the regex will take care of double semicolons and newlines
 				//but it will still allow a blank tag if there is a newline or
 				//semicolon at the begining or the end
-				if(!value[0]) value.shift();
-				if(value.length && !value[value.length-1]) value.pop();
+				if (!value[0]) value.shift();
+				if (value.length && !value[value.length-1]) value.pop();
 
-				if(!value.length) {
+				if (!value.length) {
 					value = undefined;
 				}
 			break;
 			case "notes":
 				value = {note:value};
 				//we can specify note title in the field mapping table
-				if(zField[1]) {
+				if (zField[1]) {
 					value.note = zField[1] + ': ' + value.note;
 				}
 			break;
 			case "attachments":
 				var values = value.split('\n');
 				var title, mimeType, url;
-				for(var i=0, n=values.length; i<n; i++) {
+				for (var i=0, n=values.length; i<n; i++) {
 					//support for EndNote's relative paths
 					url = values[i].replace(/^internal-pdf:\/\//i,'PDF/').trim();
-					if(!url) continue;
+					if (!url) continue;
 					
 					//get title from file name
 					title = url.match(/([^\/\\]+)(?:\.\w{1,8})$/);
-					if(title) title = decodeURIComponent(title[1]);
+					if (title) title = decodeURIComponent(title[1]);
 					else title = "Attachment";
 					
-					if(zField[1] == 'HTML') {
+					if (zField[1] == 'HTML') {
 						title = "Full Text (HTML)";
 						mimeType = "text/html";
 					}
@@ -1391,7 +1386,7 @@ function processTag(item, tagValue, risEntry) {
 			break;
 			case "unsupported":	//unsupported fields
 				//we can convert a RIS tag to something more useful though
-				if(zField[1]) {
+				if (zField[1]) {
 					value = zField[1] + ': ' + value;
 				}
 			break;
@@ -1402,18 +1397,18 @@ function processTag(item, tagValue, risEntry) {
 }
 
 function applyValue(item, zField, value, rawLine) {
-	if(!value) return;
+	if (!value) return;
 
-	if(!zField || zField == 'unknown') {
-		if(!ignoreUnknown && !Zotero.parentTranslator) {
+	if (!zField || zField == 'unknown') {
+		if (!ignoreUnknown && !Zotero.parentTranslator) {
 			Z.debug("Entry stored in note: " + rawLine);
 			item.unknownFields.push(rawLine);
 		}
 		return;
 	}
 
-	if(zField == 'unsupported') {
-		if(!ignoreUnknown && !Zotero.parentTranslator) {
+	if (zField == 'unsupported') {
+		if (!ignoreUnknown && !Zotero.parentTranslator) {
 			Z.debug("Unsupported field will be stored in note: " + value);
 			item.unsupportedFields.push(value);
 		}
@@ -1421,13 +1416,13 @@ function applyValue(item, zField, value, rawLine) {
 	}
 
 	//check if field is valid for item type
-	if(!Zotero.parentTranslator //cannot use this in connectors, plus we drop notes in most cases anyway
+	if (!Zotero.parentTranslator //cannot use this in connectors, plus we drop notes in most cases anyway
 		&& zField != 'creators' && zField != 'tags'
 		&& zField != 'notes' && zField != 'attachments'
 		&& zField != 'DOI'
 		&& !ZU.fieldIsValidForType(zField, item.itemType)) {
 		Z.debug("Invalid field '" + zField + "' for item type '" + item.itemType + "'.");
-		if(!ignoreUnknown && !Zotero.parentTranslator) {
+		if (!ignoreUnknown && !Zotero.parentTranslator) {
 			Z.debug("Entry stored in note: " + rawLine);
 			item.unknownFields.push(rawLine);
 			return;
@@ -1436,18 +1431,18 @@ function applyValue(item, zField, value, rawLine) {
 	}
 
 	//special processing for certain fields
-	switch(zField) {
+	switch (zField) {
 		case 'notes':
 		case 'attachments':
 		case 'creators':
 		case 'tags':
-			if(!(value instanceof Array)) {
+			if (!(value instanceof Array)) {
 				value = [value];
 			}
 			item[zField] = item[zField].concat(value);
 		break;
 		case 'extra':
-			if(item.extra) {
+			if (item.extra) {
 				item.extra += '\n' + value;
 			} else {
 				item.extra = value;
@@ -1457,7 +1452,7 @@ function applyValue(item, zField, value, rawLine) {
 			value = ZU.cleanDOI(value);
 			//add DOI to extra field, 
 			if (!ZU.fieldIsValidForType("DOI", item.itemType) && value) {
-				if(item.extra) {
+				if (item.extra) {
 					if (item.extra.search(/^DOI:/) == -1) {
 						item.extra += '\nDOI: ' + value;
 					}
@@ -1468,9 +1463,9 @@ function applyValue(item, zField, value, rawLine) {
 			}
 		default:
 			//check if value already exists. Don't overwrite existing values
-			if(item[zField]) {
+			if (item[zField]) {
 				//if the new value is not the same as existing value, store it as note
-				if(!ignoreUnknown && !Zotero.parentTranslator && item[zField] != value) {
+				if (!ignoreUnknown && !Zotero.parentTranslator && item[zField] != value) {
 					item.unsupportedFields.push(zField + ': ' + value);
 				}
 			} else {
@@ -1485,7 +1480,7 @@ function dateRIStoZotero(risDate, zField) {
 	//First, YYYY/MM/DD/other with everything but year optional
 	var m = risDate.match(/^(\d+)(?:\/(\d{0,2})(?:\/(\d{0,2})(?:(?:\/|\s)([^\/]*))?)?)?$/);
 	var timeCheck, part;
-	if(m) {
+	if (m) {
 		date[0] = m[1];	//year
 		date[1] = m[2];	//month
 		date[2] = m[3]; //day
@@ -1499,7 +1494,7 @@ function dateRIStoZotero(risDate, zField) {
 		var y = risDate.match(/\b\d{4}\b/);
 		var d = risDate.match(/\b(?:[1-3]\d|[1-9])\b/);
 		m = risDate.match(/[A-Za-z]+/);
-		if(!y && m) {
+		if (!y && m) {
 			return '0000 ' + m[0] + (d ? ' ' + d[0] : '');
 		}
 		
@@ -1521,40 +1516,40 @@ function dateRIStoZotero(risDate, zField) {
 	}
 
 	//sometimes unknown parts of date are given as 0. Drop these and anything that follows
-	for(var i=0; i<3; i++) {
-		if(date[i] !== undefined) date[i] = date[i].replace(/^0+/,'');	//drop leading 0s
+	for (var i=0; i<3; i++) {
+		if (date[i] !== undefined) date[i] = date[i].replace(/^0+/,'');	//drop leading 0s
 
-		if(!date[i]) {
+		if (!date[i]) {
 			date.splice(i);
 			break;
 		}
 	}
 
-	if(zField == "accessDate") {	//format this as SQL date
-		if(!date[0]) return risDate;	//this should never happed
+	if (zField == "accessDate") {	//format this as SQL date
+		if (!date[0]) return risDate;	//this should never happed
 
 		//adjust month to be 0 based
-		if(date[1]) {
+		if (date[1]) {
 			date[1] = parseInt(date[1], 10);
-			if(date[1]) date[1] = '' + (date[1] - 1);	//make it a string again to keep things simpler
+			if (date[1]) date[1] = '' + (date[1] - 1);	//make it a string again to keep things simpler
 			else date[1] = '0';	//the regex above should ensure this never happens. We don't even test the day
 		}
 
 		//make sure we have a month and day
-		if(!date[1]) date[1] = '0';	//0 based months
-		if(!date[2]) date[2] = '1';
+		if (!date[1]) date[1] = '0';	//0 based months
+		if (!date[2]) date[2] = '1';
 
 		var time;
-		if(timeCheck) {
+		if (timeCheck) {
 			time = timeCheck.match(/\b([0-2]?[1-9]):(\d{2})(?::(\d{2}))\s*(am|pm)?/i);
-			if(time) {
-				if(!time[3]) time[3] = '0';
+			if (time) {
+				if (!time[3]) time[3] = '0';
 
-				if(time[4]) {
+				if (time[4]) {
 					var hour = parseInt(time[1],10);	//this should not fail
-					if(time[4].toLowerCase() == 'pm' && hour < 12) {
+					if (time[4].toLowerCase() == 'pm' && hour < 12) {
 						time[1] = '' + (hour + 12);
-					} else if(time[4].toLowerCase() == 'am' && hour == 12) {
+					} else if (time[4].toLowerCase() == 'am' && hour == 12) {
 						time[1] = '0';
 					}
 				}
@@ -1573,7 +1568,7 @@ function dateRIStoZotero(risDate, zField) {
 		 * This is clearly not a problem with accessDate, but maybe this will
 		 * end up being used for something else later.
 		 */
-		if(time) {
+		if (time) {
 			d.setUTCFullYear(date[0], date[1], date[2]);
 			d.setUTCHours(time[1], time[2], time[3]);
 		} else {
@@ -1595,9 +1590,9 @@ function dateRIStoZotero(risDate, zField) {
 					: '');
 	} else {
 		//adjust month (it's 0 based)
-		if(date[1]) {
+		if (date[1]) {
 			date[1] = parseInt(date[1], 10);
-			if(date[1]) date[1]--;
+			if (date[1]) date[1]--;
 		}
 
 		return ZU.formatDate({
@@ -1611,34 +1606,34 @@ function dateRIStoZotero(risDate, zField) {
 function completeItem(item) {
 	// if backup publication title exists but not proper, use backup
 	// (hack to get newspaper titles from EndNote)
-	if(item.backupPublicationTitle) {
-		if(!item.publicationTitle) {
+	if (item.backupPublicationTitle) {
+		if (!item.publicationTitle) {
 			item.publicationTitle = item.backupPublicationTitle;
 		}
 		item.backupPublicationTitle = undefined;
 	}
 
-	if(item.backupNumPages) {
-		if(!item.numPages) {
+	if (item.backupNumPages) {
+		if (!item.numPages) {
 			item.numPages = item.backupNumPages;
 		}
 		item.backupNumPages = undefined;
 	}
 
-	if(item.backupEndPage) {
-		if(!item.pages) {
+	if (item.backupEndPage) {
+		if (!item.pages) {
 			item.pages = item.backupEndPage;
-		} else if(item.pages.indexOf('-') == -1) {
+		} else if (item.pages.indexOf('-') == -1) {
 			item.pages += '-' + item.backupEndPage;
-		} else if(!item.numPages) {	//should we do this?
+		} else if (!item.numPages) {	//should we do this?
 			item.numPages = item.backupEndPage;
 		}
 		item.backupEndPage = undefined;
 	}
 
 	//see if we have a backup date
-	if(item.backupDate) {
-		if(!item[item.backupDate.field]) {
+	if (item.backupDate) {
+		if (!item[item.backupDate.field]) {
 			item[item.backupDate.field] = item.backupDate.value;
 		} else {
 			item[item.backupDate.field] = item[item.backupDate.field]
@@ -1648,8 +1643,8 @@ function completeItem(item) {
 	}
 
 	//same for access date
-	if(item.backupAccessDate) {
-		if(!item[item.backupAccessDate.field]) {
+	if (item.backupAccessDate) {
+		if (!item[item.backupAccessDate.field]) {
 			item[item.backupAccessDate.field] = item.backupAccessDate.value;
 		}
 		item.backupAccessDate = undefined;
@@ -1662,39 +1657,39 @@ function completeItem(item) {
 	}
 
 	// hack for sites like Nature, which only use JA, journal abbreviation
-	if(item.journalAbbreviation && !item.publicationTitle){
+	if (item.journalAbbreviation && !item.publicationTitle){
 		item.publicationTitle = item.journalAbbreviation;
 	}
 
 	// Hack for Endnote exports missing full title
-	if(item.shortTitle && !item.title){
+	if (item.shortTitle && !item.title){
 		item.title = item.shortTitle;
 	}
 
 	//if we only have one tag, try splitting it by comma
 	//odds of this this backfiring are pretty low
-	if(item.tags.length == 1) {
+	if (item.tags.length == 1) {
 		item.tags = item.tags[0].split(/\s*(?:,\s*)+/);
-		if(!item.tags[0]) item.tags.shift();
-		if(item.tags.length && !item.tags[item.tags.length-1]) item.tags.pop();
+		if (!item.tags[0]) item.tags.shift();
+		if (item.tags.length && !item.tags[item.tags.length-1]) item.tags.pop();
 	}
 
 	//don't pass access date if this is called from (most likely) a web translator
-	if(Zotero.parentTranslator) {
+	if (Zotero.parentTranslator) {
 		item.accessDate = undefined;
 	}
 
 	//store unsupported and unknown fields in a single note
-	if(!Zotero.parentTranslator) {
+	if (!Zotero.parentTranslator) {
 		var note = '';
-		for(var i=0, n=item.unsupportedFields.length; i<n; i++) {
+		for (var i=0, n=item.unsupportedFields.length; i<n; i++) {
 			note += item.unsupportedFields[i] + '<br/>';
 		}
-		for(var i=0, n=item.unknownFields.length; i<n; i++) {
+		for (var i=0, n=item.unknownFields.length; i<n; i++) {
 			note += item.unknownFields[i] + '<br/>';
 		}
 	
-		if(note) {
+		if (note) {
 			note = "The following values have no corresponding Zotero field:<br/>" + note;
 			item.notes.push({note: note.trim(), tags: ['_RIS import']});
 		}
@@ -1733,17 +1728,17 @@ function startImport(resolve, reject) {
 	try {
 		//set up import field mapper
 		var maps = [fieldMap, degenerateImportFieldMap];
-		if(exportedOptions.fieldMap) maps.unshift(exportedOptions.fieldMap);
+		if (exportedOptions.fieldMap) maps.unshift(exportedOptions.fieldMap);
 		importFields = new TagMapper(maps);
 		
 		//prepare some configurable options
-		if(Zotero.getHiddenPref) {
+		if (Zotero.getHiddenPref) {
 			var pref = Zotero.getHiddenPref("RIS.import.ignoreUnknown");
-			if(pref != undefined) {
+			if (pref != undefined) {
 				ignoreUnknown = pref;
 			}
 			var pref = Zotero.getHiddenPref("RIS.import.keepID");
-			if(pref === true) {
+			if (pref === true) {
 				degenerateImportFieldMap.ID = pref;
 			}
 		}
@@ -1758,23 +1753,23 @@ function startImport(resolve, reject) {
 function importNext(resolve, reject) {
 	try {
 		var entry;
-		while(entry = RISReader.nextEntry()) {
+		while (entry = RISReader.nextEntry()) {
 			//determine item type
 			var itemType = exportedOptions.itemType;
-			if(!itemType && entry.tags.TY) {
+			if (!itemType && entry.tags.TY) {
 				var risType = entry.tags.TY[0].value.trim().toUpperCase();
-				if(exportedOptions.typeMap) {
+				if (exportedOptions.typeMap) {
 					itemType = exportedOptions.typeMap[risType];
 				}
-				if(!itemType) {
+				if (!itemType) {
 					itemType = importTypeMap[risType];
 				}
 			}
 			
 			//we allow entries without TY and just use default type
-			if(!itemType) {
+			if (!itemType) {
 				var defaultType = exportedOptions.defaultItemType || DEFAULT_IMPORT_TYPE;
-				if(entry.tags.TY) {
+				if (entry.tags.TY) {
 					Z.debug("RIS: Unknown item type: " + entry.tags.TY[0].value
 						+ ". Defaulting to " + defaultType);
 				} else {
@@ -1789,8 +1784,8 @@ function importNext(resolve, reject) {
 			EndNoteCleaner.cleanTags(entry, item); //some tweaks to EndNote export
 			CitaviCleaner.cleanTags(entry, item);
 			
-			for(var i=0, n=entry.length; i<n; i++) {
-				if((['TY', 'ER']).indexOf(entry[i].tag) == -1) { //ignore TY and ER tags
+			for (var i=0, n=entry.length; i<n; i++) {
+				if ((['TY', 'ER']).indexOf(entry[i].tag) == -1) { //ignore TY and ER tags
 					processTag(item, entry[i], entry);
 				}
 			}
@@ -1835,13 +1830,13 @@ var newLineChar = "\r\n"; //from spec
 var exportFields;
 
 function addTag(tag, value) {
-	if(!(value instanceof Array)) value = [value];
+	if (!(value instanceof Array)) value = [value];
 
-	for(var i=0, n=value.length; i<n; i++) {
-		if(value[i] === undefined) return;
+	for (var i=0, n=value.length; i<n; i++) {
+		if (value[i] === undefined) return;
 		//don't export empty strings
 		var v = (value[i] + '').trim();
-		if(!v) continue;
+		if (!v) continue;
 
 		Zotero.write(tag + "  - " + v + newLineChar);
 	}
@@ -1852,18 +1847,18 @@ function doExport() {
 	
 	//set up field mapper
 	var map = [fieldMap];
-	if(exportedOptions.fieldMap) map.unshift(exportedOptions.fieldMap);
+	if (exportedOptions.fieldMap) map.unshift(exportedOptions.fieldMap);
 	exportFields = new TagMapper(map);
 
-	while(item = Zotero.nextItem()) {
+	while (item = Zotero.nextItem()) {
 		// can't store independent notes in RIS
-		if(item.itemType == "note" || item.itemType == "attachment") {
+		if (item.itemType == "note" || item.itemType == "attachment") {
 			continue;
 		}
 
 		// type
 		var type = exportTypeMap[item.itemType];
-		if(!type) {
+		if (!type) {
 			type = DEFAULT_EXPORT_TYPE;
 			Z.debug("Unknown item type: " + item.itemType + ". Defaulting to " + type);
 		}
@@ -1876,8 +1871,8 @@ function doExport() {
 			other: []
 		};
 
-		for(var i=0, n=item.attachments.length; i<n; i++) {
-			switch(item.attachments[i].mimeType) {
+		for (var i=0, n=item.attachments.length; i<n; i++) {
+			switch (item.attachments[i].mimeType) {
 				case 'application/pdf':
 					attachments.PDF.push(item.attachments[i]);
 				break;
@@ -1890,34 +1885,34 @@ function doExport() {
 		}
 
 		order = exportOrder[item.itemType] || exportOrder["__default"];
-		for(var i=0, n=order.length; i<n; i++) {
+		for (var i=0, n=order.length; i<n; i++) {
 			tag = order[i];
 			//find the appropriate field to export for this item type
 			field = exportFields.getField(item.itemType, tag);
 
 			//if we didn't get anything, we don't need to export this tag for this item type
-			if(!field) continue;
+			if (!field) continue;
 
 			value = undefined;
 			//we can define fields that are nested (i.e. creators) using slashes
 			field = field.split('/');
 
 			//handle special cases based on item field
-			switch(field[0]) {
+			switch (field[0]) {
 				case "creators":
 					//according to spec, one author per line in the "Lastname, Firstname, Suffix" format
 					//Zotero does not store suffixes in a separate field
 					value = [];
 					var name;
-					for(var j=0, m=item.creators.length; j<m; j++) {
+					for (var j=0, m=item.creators.length; j<m; j++) {
 						name = [];
-						if(item.creators[j].creatorType == field[1]) {
+						if (item.creators[j].creatorType == field[1]) {
 							name.push(item.creators[j].lastName);
-							if(item.creators[j].firstName) name.push(item.creators[j].firstName);
+							if (item.creators[j].firstName) name.push(item.creators[j].firstName);
 							value.push(name.join(', '));
 						}
 					}
-					if(!value.length) value = undefined;
+					if (!value.length) value = undefined;
 				break;
 				case "notes":
 					if (item.notes && Zotero.getOption("exportNotes")) {
@@ -1930,8 +1925,8 @@ function doExport() {
 				case "attachments":
 					value = [];
 					var att = attachments[field[1]];
-					for(var j=0, m=att.length; j<m; j++) {
-						if(att[j].saveFile) {	//local file
+					for (var j=0, m=att.length; j<m; j++) {
+						if (att[j].saveFile) {	//local file
 							value.push(att[j].defaultPath);
 							att[j].saveFile(att[j].defaultPath);
 						} else {	//link to remote file
@@ -1940,9 +1935,9 @@ function doExport() {
 					}
 				break;
 				case "pages":
-					if(tag == "SP" && item.pages) {
+					if (tag == "SP" && item.pages) {
 						var m = item.pages.trim().match(/(.+?)[\u002D\u00AD\u2010-\u2015\u2212\u2E3A\u2E3B\s]+(.+)/);
-						if(m) {
+						if (m) {
 							addTag(tag, m[1]);
 							tag = "EP";
 							value = m[2];
@@ -1956,10 +1951,10 @@ function doExport() {
 			}
 
 			//handle special cases based on RIS tag
-			switch(tag) {
+			switch (tag) {
 				case "PY":
 					var date = ZU.strToDate(item[field]);
-					if(date.year) {
+					if (date.year) {
 						value = ('000' + date.year).substr(-4); //since this is in export, this should not be a problem with MS JavaScript implementation of substr
 					} else {
 						value = item[field];
@@ -1968,11 +1963,11 @@ function doExport() {
 				case "Y2":
 				case "DA":
 					var date = ZU.strToDate(item[field]);
-					if(date.year) {
+					if (date.year) {
 						date.year = ('000' + date.year).substr(-4);
 						date.month = (date.month || date.month===0 || date.month==="0")?('0' + (date.month+1)).substr(-2):'';
 						date.day = date.day?('0' + date.day).substr(-2):'';
-						if(!date.part) date.part = '';
+						if (!date.part) date.part = '';
 	
 						value = date.year + '/' + date.month + '/' + date.day + '/' + date.part;
 					} else {

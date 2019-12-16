@@ -9,12 +9,12 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2017-06-16 19:45:59"
+	"lastUpdated": "2018-09-26 16:28:30"
 }
 
 /*
    Scopus Translator
-   Copyright (C) 2008-2014 Center for History and New Media and Sebastian Karcher
+   Copyright (C) 2008-2018 Center for History and New Media and Sebastian Karcher
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as published by
@@ -30,11 +30,12 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
+
 function detectWeb(doc, url) {
-	if (url.indexOf("/results/") !== -1 &&
-		getBoxes(doc).iterateNext()) {
+	if (url.includes("/results/") && getSearchResults(doc, true)) {
 		return "multiple";
-	} else if (url.indexOf("/record/") !== -1) {
+	} else if (url.includes("/record/")) {
 		return "journalArticle";
 	}
 }
@@ -43,22 +44,29 @@ function getEID(url) {
 	return url.match(/eid=([^&]+)/)[1];
 }
 
-function getBoxes(doc) {
 
-	return doc.evaluate('//div[@id="resultsBody"]//span[@class="docTitle"]', doc, null, XPathResult.ANY_TYPE, null);
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('tr[id *= resultDataRow] td a[title = "Show document details"]');
+	for (var i=0; i<rows.length; i++) {
+	  	var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
 }
 
 function doWeb(doc, url) {
-	var articles = [];
 	if (detectWeb(doc, url) == "multiple") {
-		items = {};
-		var boxes = getBoxes(doc);
-		var box;
-		while (box = boxes.iterateNext()) {
-			var link = doc.evaluate('.//a', box, null, XPathResult.ANY_TYPE, null).iterateNext();
-			items[link.href] = Zotero.Utilities.trimInternal(link.textContent);
-		}
-		Zotero.selectItems(items, function (items) {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return true;
+			}
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
@@ -69,18 +77,19 @@ function doWeb(doc, url) {
 	}
 }
 
+
 function scrape(doc, url) {
 	//ISBN, language, and ISSN are not in the export data - get them from the page
 	var ISSN = ZU.xpathText(doc, '//div[contains(@class, "formatSourceExtended")]/span[strong[contains(text(), "ISSN:")]]');
 	var ISBN = ZU.xpathText(doc, '//div[contains(@class, "formatSourceExtended")]/span[strong[contains(text(), "ISBN:")]]');
 	var language = ZU.xpathText(doc, '//div[contains(@class, "formatSourceExtended")]/span[strong[contains(text(), "Original language:")]]');
 	var prefix= url.match(/^https?:\/\//)[0];
-	var get = prefix + doc.location.host + 
+	var baseUrl = prefix + doc.location.host + 
 		'/onclick/export.uri?oneClickExport=%7b%22Format%22%3a%22RIS%22%2c%22View%22%3a%22CiteAbsKeyws%22%7d&origin=recordpage&eid=';
 		//this is the encoded version of oneClickExport={"Format":"RIS","View":"CiteAbsKeyws"} but since it's always the same, no need to run encodeURL
-	var eid = getEID(url)
-	var rislink = get + eid + "&zone=recordPageHeader&outputType=export&txGid=0";
-	Z.debug(rislink)
+	var eid = getEID(url);
+	var rislink = baseUrl + eid + "&zone=recordPageHeader&outputType=export&txGid=0";
+	Z.debug(rislink);
 	Zotero.Utilities.HTTP.doGet(rislink, function(text) {
 		// load translator for RIS
 		//Z.debug(text)
@@ -91,27 +100,27 @@ function scrape(doc, url) {
 			
 		}
 		//Scopus places a stray TY right above the DB field
-		text = text.replace(/TY.+\nDB/, "DB")
+		text = text.replace(/TY.+\nDB/, "DB");
 		//Some Journal Articles are oddly SER
-		text = text.replace(/TY  - SER/, "TY  - JOUR")
+		text = text.replace(/TY  - SER/, "TY  - JOUR");
 		//Z.debug(text)
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
 		translator.setHandler("itemDone", function(obj, item) {
 			var notes = [];
-			for (i in item.notes) {
-				if (item.notes[i]['note'].match(/Export Date:|Source:/))
+			for (let note of item.notes) {
+				if (note.note.search(/Export Date:|Source:/) != -1)
 					continue;
-				notes.push(item.notes[i]);
+				notes.push(note);
 			}
 			item.notes = notes;
 			item.url = "";
-			for (var i in item.creators){
-				if (item.creators[i].fieldMode = 1 && item.creators[i].lastName.indexOf(" ")!=-1){
+			for (var i =0; i<item.creators.length; i++){
+				if (item.creators[i].fieldMode == 1 && item.creators[i].lastName.indexOf(" ")!=-1){
 					item.creators[i].firstName = item.creators[i].lastName.match(/\s(.+)/)[1];
 					item.creators[i].lastName = item.creators[i].lastName.replace(/\s.+/, "");
-					item.creators[i].fieldMode = 2
+					item.creators[i].fieldMode = 2;
 				}
 			}
 			item.attachments.push({document: doc, title: "SCOPUS Snapshot", mimeType: "text/html"});
@@ -121,5 +130,5 @@ function scrape(doc, url) {
 			item.complete();
 		});
 		translator.translate();
-	});;
+	});
 }

@@ -4,8 +4,7 @@
     <title>IEEE</title>
     <id>http://www.zotero.org/styles/ieee</id>
     <link href="http://www.zotero.org/styles/ieee" rel="self"/>
-    <link href="http://www.ieee.org/documents/style_manual.pdf" rel="documentation"/>
-    <link href="http://www.ieee.org/documents/auinfo07.pdf" rel="documentation"/>
+    <link href="https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/style_references_manual.pdf" rel="documentation"/>
     <author>
       <name>Michael Berkowitz</name>
       <email>mberkowi@gmu.edu</email>
@@ -25,10 +24,15 @@
     <contributor>
       <name>Sebastian Karcher</name>
     </contributor>
+    <contributor>
+      <name>Giuseppe Silano</name>
+      <email>g.silano89@gmail.com</email>
+      <uri>http://giuseppesilano.net</uri>
+    </contributor>
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
-    <updated>2016-10-06T15:32:30+00:00</updated>
+    <updated>2019-01-19T16:49:40+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -39,6 +43,13 @@
     </terms>
   </locale>
   <!-- Macros -->
+  <macro name="status">
+    <choose>
+      <if variable="page issue volume" match="none">
+        <text variable="status" text-case="capitalize-first" suffix="" font-weight="bold"/>
+      </if>
+    </choose>
+  </macro>
   <macro name="edition">
     <choose>
       <if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
@@ -239,6 +250,7 @@
             <text macro="locators"/>
             <text macro="page"/>
             <text macro="issued"/>
+            <text macro="status"/>
           </group>
         </if>
         <else-if type="paper-conference speech" match="any">
@@ -248,6 +260,7 @@
             <text macro="issued"/>
             <text macro="locators"/>
             <text macro="page"/>
+            <text macro="status"/>
           </group>
         </else-if>
         <else-if type="report">

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-07-08 13:46:04"
+	"lastUpdated": "2019-02-01 01:28:00"
 }
 
 /*
@@ -42,7 +42,7 @@ function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelec
 
 
 function detectWeb(doc, url) {
-	if (url.includes("/article/") {		// does not handle /event/ or /media/ pages, which EM alone can handle
+	if (url.includes("/article/")) {		// does not handle /event/ or /media/ pages, which EM alone can handle
 		if (text(doc,'.issue-name')) {
 			return "magazineArticle";
 		}

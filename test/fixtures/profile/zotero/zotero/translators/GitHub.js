@@ -2,14 +2,14 @@
 	"translatorID": "a7747ba7-42c6-4a22-9415-1dafae6262a9",
 	"label": "GitHub",
 	"creator": "Martin Fenner, Philipp Zumstein",
-	"target": "^https?://(www\\.)?github\\.com/",
+	"target": "^https?://(www\\.)?github\\.com/[^/]+/[^/]+/?$",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-04-14 12:00:32"
+	"lastUpdated": "2019-08-29 10:16:28"
 }
 
 /**
@@ -36,9 +36,11 @@ function detectWeb(doc, url) {
 		if (getSearchResults(doc, true)) {
 			return "multiple";
 		}
-	} else if (ZU.xpathText(doc, '/html/head/meta[@property="og:type" and @content="object"]/@content')) {
+	}
+	else if (ZU.xpathText(doc, '/html/head/meta[@property="og:type" and @content="object"]/@content')) {
 		return "computerProgram";
 	}
+	return false;
 }
 
 
@@ -46,7 +48,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//*[contains(@class, "repo-list-item")]//h3/a');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -62,7 +64,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -70,77 +72,64 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 
-function scrape(doc, url) {	
+function scrape(doc, _url) {
 	var item = new Z.Item("computerProgram");
 	
 	var repo = ZU.xpathText(doc, '//meta[@property="og:title"]/@content');
 	
-	//basic metadata from the meta tags in the head
+	// basic metadata from the meta tags in the head
 	item.url = ZU.xpathText(doc, '//meta[@property="og:url"]/@content');
-	item.title = ZU.xpathText(doc, '//meta[@property="og:description"]/@content');
-	item.title = item.title.replace(' - ', ': ').replace(/\.$/, '');
+	item.title = ZU.xpathText(doc, '//meta[@property="og:title"]/@content');
+	item.abstractNote = ZU.xpathText(doc, '//meta[@property="og:description"]/@content').split(' - ')[0];
 	item.libraryCatalog = "GitHub";
-	var topics = ZU.xpath(doc, '//div[@id="topics-list-container"]//a');
-	for (var i=0; i<topics.length; i++) {
+	var topics = doc.getElementsByClassName('topic-tag');
+	for (var i = 0; i < topics.length; i++) {
 		item.tags.push(topics[i].textContent.trim());
 	}
 
 	item.rights = ZU.xpathText(doc, '//a[*[contains(@class, "octicon-law")]]');
+	if (item.rights && item.rights.trim() == "View license") {
+		delete item.rights;
+	}
 	
-	//api calls for more information (owner, date, programming language)
+	// api calls for more information (owner, date, programming language)
 	var apiUrl = "https://api.github.com/";
-	ZU.doGet(apiUrl+"repos/"+repo, function(result) {
+	ZU.doGet(apiUrl + "repos/" + repo, function (result) {
 		var json = JSON.parse(result);
-		//Z.debug(json);
+		// Z.debug(json);
 		if (json.message && json.message.includes("API rate limit exceeded")) {
-			//finish and stop in this case
+			// finish and stop in this case
 			item.complete();
 			return;
 		}
-		var name = json.name;
 		var owner = json.owner.login;
 		
 		item.programmingLanguage = json.language;
 		item.extra = "original-date: " + json.created_at;
 		item.date = json.updated_at;
 		
-		ZU.doGet(apiUrl+"users/"+owner, function(user) {
+		ZU.doGet(apiUrl + "users/" + owner, function (user) {
 			var jsonUser = JSON.parse(user);
 			var ownerName = jsonUser.name || jsonUser.login;
 			if (jsonUser.type == "User") {
 				item.creators.push(ZU.cleanAuthor(ownerName, "programmer"));
-			} else {
+			}
+			else {
 				item.company = ownerName;
 			}
 			
 			item.complete();
 		});
-
 	});
-	
-
 }
 
-
-// get the full name from the author profile page
-function getAuthor(username) {
-	var url = "https://github.com/" + encodeURIComponent(username);	
-	ZU.processDocuments(url, function(text) {
-		var author = ZU.xpathText(text, '//span[contains(@class, "vcard-fullname")]');
-		if (!author) { author = ZU.xpathText(text, '//span[contains(@class, "vcard-username")]'); }
-		if (!author) { author = ZU.xpathText(text, '/html/head/meta[@property="profile:username"]/@content'); }
-		Z.debug(author);
-		author = ZU.cleanAuthor(author, "author");
-	});
-	// temporary, until we get the author string out of the closure
-	return ZU.cleanAuthor(username, "author");
-}
 
 /** BEGIN TEST CASES **/
 var testCases = [
@@ -150,14 +139,14 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "computerProgram",
-				"title": "zotero: Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources",
+				"title": "zotero/zotero",
 				"creators": [],
-				"date": "2018-04-14T04:06:44Z",
+				"date": "2019-08-29T02:15:36Z",
+				"abstractNote": "Zotero is a free, easy-to-use tool to help you collect, organize, cite, and share your research sources.",
 				"company": "zotero",
 				"extra": "original-date: 2011-10-27T07:46:48Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
-				"shortTitle": "zotero",
 				"url": "https://github.com/zotero/zotero",
 				"attachments": [],
 				"tags": [],
@@ -177,14 +166,14 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "computerProgram",
-				"title": "schema: DataCite Metadata Schema Repository",
+				"title": "datacite/schema",
 				"creators": [],
-				"date": "2018-03-22T14:50:46Z",
+				"date": "2019-08-16T13:21:08Z",
+				"abstractNote": "DataCite Metadata Schema Repository. Contribute to datacite/schema development by creating an account on GitHub.",
 				"company": "DataCite",
 				"extra": "original-date: 2011-04-13T07:08:41Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "Ruby",
-				"shortTitle": "schema",
 				"url": "https://github.com/datacite/schema",
 				"attachments": [],
 				"tags": [],
@@ -199,7 +188,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "computerProgram",
-				"title": "kraken: Ocropus fork with sane defaults",
+				"title": "mittagessen/kraken",
 				"creators": [
 					{
 						"firstName": "",
@@ -207,12 +196,12 @@ var testCases = [
 						"creatorType": "programmer"
 					}
 				],
-				"date": "2018-04-10T01:48:27Z",
+				"date": "2019-08-23T12:32:51Z",
+				"abstractNote": "OCR engine for all the languages. Contribute to mittagessen/kraken development by creating an account on GitHub.",
 				"extra": "original-date: 2015-05-19T09:24:38Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "Python",
 				"rights": "Apache-2.0",
-				"shortTitle": "kraken",
 				"url": "https://github.com/mittagessen/kraken",
 				"attachments": [],
 				"tags": [
@@ -243,7 +232,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "computerProgram",
-				"title": "z2csl: Zotero extension for creating Zotero to CSL item type and field mappings",
+				"title": "aurimasv/z2csl",
 				"creators": [
 					{
 						"firstName": "Aurimas",
@@ -251,11 +240,11 @@ var testCases = [
 						"creatorType": "programmer"
 					}
 				],
-				"date": "2018-04-02T21:32:18Z",
+				"date": "2019-07-12T17:57:05Z",
+				"abstractNote": "Zotero extension for creating Zotero to CSL item type and field mappings.",
 				"extra": "original-date: 2012-05-20T07:53:58Z",
 				"libraryCatalog": "GitHub",
 				"programmingLanguage": "JavaScript",
-				"shortTitle": "z2csl",
 				"url": "https://github.com/aurimasv/z2csl",
 				"attachments": [],
 				"tags": [],

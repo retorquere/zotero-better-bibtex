@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-07-28 16:37:12"
+	"lastUpdated": "2019-06-13 19:09:19"
 }
 
 /*
@@ -37,13 +37,10 @@
 */
 
 
-// attr()/text() v2 per https://github.com/zotero/translators/issues/1277
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
 function scrubLowercaseTags(tags) {
 	for (let tag of tags) {
 		if (tag == tag.toLowerCase()) {
-			tags[tags.indexOf(tag)] = ZU.capitalizeTitle(tag,true);	
+			tags[tags.indexOf(tag)] = ZU.capitalizeTitle(tag, true);
 		}
 	}
 	return tags;
@@ -53,26 +50,34 @@ function scrubLowercaseTags(tags) {
 function detectWeb(doc, url) {
 	if (/\/(article|story)\//.test(url)) {
 		return "blogPost";
-	} else if (/vice\.com\/?($|\w\w(\_\w\w)?\/?$)|\/(search\?q=)|topic\/|category\/|(latest|read)($|\?page=)/.test(url) && getSearchResults(doc, true) ) {
+	}
+	else if (/vice\.com\/?($|\w\w(_\w\w)?\/?$)|\/(search\?q=)|topic\/|category\/|(latest|read)($|\?page=)/.test(url) && getSearchResults(doc, true)) {
 		return "multiple";
-	} else if (attr(doc,'meta[property="og:type"]','content') == "article") { /* Amuse i-D */
+	}
+	else if (attr(doc, 'meta[property="og:type"]', 'content') == "article") { /* Amuse i-D */
 		return "blogPost";
 	}
+	return false;
 }
 
 
 function scrape(doc, url) {
 	url = url.replace(/(\?|#).+/, '');
-	var jsonURL = url+'?json=true';
-	ZU.doGet(jsonURL, function(text) {
+	var jsonURL = url + '?json=true';
+	ZU.doGet(jsonURL, function (text) {
 		var isValidJSON = true;
-		try { JSON.parse(text) } catch (e) { isValidJSON = false }
+		try {
+			JSON.parse(text);
+		}
+		catch (e) {
+			isValidJSON = false;
+		}
 		if (isValidJSON) {
 			var json = JSON.parse(text);
 			var item = new Zotero.Item("blogPost");
 			item.url = url;
 			item.publicationTitle = json.data.channel.name;
-			item.publicationTitle = ZU.capitalizeTitle(item.publicationTitle,true);
+			item.publicationTitle = ZU.capitalizeTitle(item.publicationTitle, true);
 			item.title = json.metadata.share_title;
 			item.date = new Date(json.data.publish_date).toJSON();
 			item.abstractNote = json.metadata.description;
@@ -84,10 +89,11 @@ function scrape(doc, url) {
 			for (let author of authorMetadata) {
 				item.creators.push(ZU.cleanAuthor(author.contributor.full_name, "author"));
 			}
-			item.language = json.data.locale.replace('_','-').replace(/-\w{2}$/, c => c.toUpperCase());
+			item.language = json.data.locale.replace('_', '-').replace(/-\w{2}$/, c => c.toUpperCase());
 			item.tags = scrubLowercaseTags(item.tags);
 			item.complete();
-		} else {
+		}
+		else {
 			// Embedded Metadata for News, i-D & Amuse
 			var translator = Zotero.loadTranslator('web');
 			translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48'); // EM
@@ -96,19 +102,19 @@ function scrape(doc, url) {
 			translator.setHandler('itemDone', function (obj, item) { // corrections to EM
 				item.itemType = "blogPost";
 				if (url.includes('news.vice.com')) {
-					item.publicationTitle = ZU.capitalizeTitle(item.publicationTitle.toLowerCase(),true);
-					var json_ld = doc.querySelector('script[type="application/ld+json"]');
-					if (json_ld) {
-						json_ld = json_ld.textContent;
-						item.date = json_ld.match(/"datePublished"\s?:\s?"([^"]*)"/)[1].split(":")[0];
-						var ld_authors = JSON.parse(json_ld.match(/"author"\s?:\s?\[([^\]]*)\]/)[0].replace(/"author"\s?:\s?/,''));
-						for (let author of ld_authors) {
-							item.creators.push(ZU.cleanAuthor(author.name, "author"));	
+					item.publicationTitle = ZU.capitalizeTitle(item.publicationTitle.toLowerCase(), true);
+					var jsonLD = doc.querySelector('script[type="application/ld+json"]');
+					if (jsonLD) {
+						jsonLD = jsonLD.textContent;
+						item.date = jsonLD.match(/"datePublished"\s?:\s?"([^"]*)"/)[1].split(":")[0];
+						var ldAuthors = JSON.parse(jsonLD.match(/"author"\s?:\s?\[([^\]]*)\]/)[0].replace(/"author"\s?:\s?/, ''));
+						for (let author of ldAuthors) {
+							item.creators.push(ZU.cleanAuthor(author.name, "author"));
 						}
-						
 					}
-				} else {
-					item.publicationTitle = item.publicationTitle.replace('I-d','i-D');
+				}
+				else {
+					item.publicationTitle = item.publicationTitle.replace('I-d', 'i-D');
 					var authorMetadata = doc.querySelectorAll('.header-info-module__info span');
 					for (let author of authorMetadata) {
 						item.creators.push(ZU.cleanAuthor(author.textContent, "author"));
@@ -118,7 +124,7 @@ function scrape(doc, url) {
 				item.complete();
 			});
 		
-			translator.getTranslatorObject(function(trans) {
+			translator.getTranslatorObject(function (trans) {
 				trans.doWeb(doc, url);
 			});
 		}
@@ -131,7 +137,7 @@ function getSearchResults(doc, checkOnly) {
 	var found = false;
 	var rows = doc.querySelectorAll('.lede__content__title, .search__results__item__title, .grid__wrapper__card__text__title, .lede__content__title, .blog-grid__wrapper__card__text__title, .title-container h1.title, .item .item-title');
 	var links = doc.querySelectorAll('.lede__content__link > a, .search__results__item, .grid__wrapper__card, .lede__content__title, .blog-grid__wrapper__card, .title-container h1.title a, .item .item-title a, .item > a');
-	for (let i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var href = links[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -147,9 +153,8 @@ function doWeb(doc, url) {
 	switch (detectWeb(doc, url)) {
 		case "multiple":
 			Zotero.selectItems(getSearchResults(doc, false), function (items) {
-				if (!items) {
-					return true;
-				}
+				if (!items) return;
+
 				var articles = [];
 				for (var i in items) {
 					articles.push(i);

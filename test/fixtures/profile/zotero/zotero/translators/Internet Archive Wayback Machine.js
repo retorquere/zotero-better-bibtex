@@ -1,66 +1,126 @@
 {
 	"translatorID": "513a53f5-b95e-4df6-a03e-3348d9ec9f44",
+	"translatorType": 4,
 	"label": "Internet Archive Wayback Machine",
-	"creator": "Sean Takats",
+	"creator": "Sean Takats, Philipp Zumstein",
 	"target": "^https?://web\\.archive\\.org/web/",
 	"minVersion": "1.0",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-07-05 10:50:25"
+	"lastUpdated": "2019-12-07 16:55:00"
 }
 
-function detectWeb(doc, url){
-	var xpath = '//td[@class="mainBody"]/a';
-	var links = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
-	if (links.iterateNext()){
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2008 Sean Takats
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
+
+
+// attr()/text() v2
+// eslint-disable-next-line
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
+
+function detectWeb(doc, url) {
+	if (url.match(/\/web\/\d{14}\/http/)) {
+		return "webpage";
+	}
+	if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
-	return "webpage";
+	return false;
 }
 
-function doWeb(doc, url){
-	var uris = new Array();
-	var dateRe = new RegExp("^https?://web.archive.org/web/([0-9]+)");
-	if (dateRe.test(url)){ //handle single item
-		scrape(doc, url)
-	} else{//handle multiple items
-		var xpath = '//td[@class="mainBody"]/a';
-		var links = doc.evaluate(xpath, doc, null, XPathResult.ANY_TYPE, null);
-		var items=new Array();
-		var link;
-		while (link = links.iterateNext()){
-			items[link.href] = link.textContent;
-		}
-		Zotero.selectItems(items, function (items) {
-					if (!items) {
-						return true;
-					}
-					for (var i in items) {
-						uris.push(i);
-					}
-					ZU.processDocuments(uris, scrape);
-				});
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = doc.querySelectorAll('.result-item-heading>a');
+	for (let i = 0; i < rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
+}
+
+
+function doWeb(doc, url) {
+	if (detectWeb(doc, url) == "multiple") {
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) {
+				return;
+			}
+			var articles = [];
+			for (let i in items) {
+				articles.push(i);
+			}
+			ZU.processDocuments(articles, scrape);
+		});
+	}
+	else {
+		scrape(doc, url);
 	}
 }
 
-function scrape(doc, url){
-		var dateRe = new RegExp("^https?://web.archive.org/web/([0-9]+)");
-		//create new webpage Item from page
-		var newItem = new Zotero.Item("webpage");
-		newItem.title = doc.title;
-		newItem.url = url;
-		//parse date and add
-		var m = dateRe.exec(doc.location.href);
-		var date = m[1];
-		date = date.substr(0, 4) + "-" + date.substr(4,2) + "-" + date.substr(6,2);
-		newItem.date = date;
-		//create snapshot
-		newItem.attachments = [{url:doc.location.href, title:doc.title, mimeType:"text/html"}];
-		newItem.complete();
-}/** BEGIN TEST CASES **/
+
+function scrape(doc, url) {
+	// create new webpage Item from page
+	var newItem = new Zotero.Item("webpage");
+	newItem.title = doc.title;
+	newItem.url = url;
+	// parse date and add
+	var date = url.match(/\/web\/(\d{4})(\d{2})(\d{2})\d{6}\/http/);
+	if (date) {
+		newItem.date = [date[1], date[2], date[3]].join('-');
+	}
+	var pdfUrl = attr('#playback', 'src');
+	// if snapshot is pdf, attach it
+	// e.g. https://web.archive.org/web/20180316005456/https://www.foxtel.com.au/content/dam/foxtel/support/pdf/channel-packs.pdf
+	if (url.endsWith(".pdf") && pdfUrl) {
+		newItem.attachments = [{
+			mimeType: "application/pdf",
+			title: "PDF Snapshot",
+			url: pdfUrl
+		}];
+	}
+	else {
+		// create snapshot
+		newItem.attachments = [{
+			url: doc.location.href,
+			title: "Snapshot",
+			mimeType: "text/html"
+		}];
+	}
+
+	newItem.complete();
+}
+
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
@@ -68,23 +128,26 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "webpage",
+				"title": "taz.de",
 				"creators": [],
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"date": "2011-03-10",
+				"url": "http://web.archive.org/web/20110310073553/http://www.taz.de/",
 				"attachments": [
 					{
-						"title": "taz.de",
+						"title": "Snapshot",
 						"mimeType": "text/html"
 					}
 				],
-				"title": "taz.de",
-				"url": "http://web.archive.org/web/20110310073553/http://www.taz.de/",
-				"date": "2011-03-10",
-				"libraryCatalog": "Internet Archive Wayback Machine",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://web.archive.org/web/*/zotero",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/
