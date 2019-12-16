@@ -17,7 +17,7 @@ const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
 
 const script = {
-  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])'), // tslint:disable-line prefer-template
+  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
 }
 
 class PatternFormatter {
@@ -610,7 +610,7 @@ class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && PunyCode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && (PunyCode.ucs2.decode(word).length > 1) || word.match(script.han))
     if (words.length === 0) return null
     return words
   }
