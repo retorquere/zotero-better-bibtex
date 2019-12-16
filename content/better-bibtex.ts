@@ -209,47 +209,25 @@ $patch$(Zotero.Item.prototype, 'getField', original => function Zotero_Item_prot
   return original.apply(this, arguments)
 })
 
-const itemTreeViewWaiting: Record<number, { image?: boolean, text?: boolean, properties?: boolean }> = {}
-function getCellX(tree, row, col, field) {
-  if (col.id !== 'zotero-items-column-citekey') return ''
-
-  const item = tree.getRow(row).ref
-  if (item.isNote() || item.isAttachment()) return ''
-
-  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
-    if (!itemTreeViewWaiting[item.id]?.[field]) {
-      // tslint:disable-next-line:no-use-before-declare
-      BetterBibTeX.ready.then(() => tree._treebox.invalidateCell(row, col))
-      itemTreeViewWaiting[item.id] = itemTreeViewWaiting[item.id] || {}
-      itemTreeViewWaiting[item.id][field] = true
-    }
-
-    switch (field) {
-      case 'text':
-        return ''
-      case 'properties':
-        return ' bbtLoading'
-    }
-  }
-
-  const citekey = KeyManager.get(item.id)
-
-  switch (field) {
-    case 'text':
-      return citekey.citekey || '???'
-    case 'properties':
-      return citekey.pinned ? '' : ' bbtDynamicCitationKey'
-  }
-}
-
-$patch$(Zotero.ItemTreeView.prototype, 'getCellProperties', original => function Zotero_ItemTreeView_prototype_getCellProperties(row, col, prop) {
-  return (original.apply(this, arguments) + getCellX(this, row, col, 'properties')).trim()
-})
-
+const itemTreeViewWaiting: Record<number, boolean> = {}
 $patch$(Zotero.ItemTreeView.prototype, 'getCellText', original => function Zotero_ItemTreeView_prototype_getCellText(row, col) {
   if (col.id !== 'zotero-items-column-citekey') return original.apply(this, arguments)
 
-  return getCellX(this, row, col, 'text')
+  const item = this.getRow(row).ref
+  if (item.isNote() || item.isAttachment()) return ''
+
+  if (BetterBibTeX.ready.isPending()) { // tslint:disable-line:no-use-before-declare
+    if (!itemTreeViewWaiting[item.id]) {
+      // tslint:disable-next-line:no-use-before-declare
+      BetterBibTeX.ready.then(() => this._treebox.invalidateCell(row, col))
+      itemTreeViewWaiting[item.id] = true
+    }
+
+    return '\u231B'
+  }
+
+  const citekey = KeyManager.get(item.id)
+  return (citekey.citekey || '\u26A0') + (citekey.pinned ? ' \uD83D\uDCCC' : '')
 })
 
 import * as CAYW from './cayw'
