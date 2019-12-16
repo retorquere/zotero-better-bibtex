@@ -1,16 +1,17 @@
 {
 	"translatorID": "f4d6dd3c-960f-4289-9b07-02e44aae112a",
+	"translatorType": 4,
 	"label": "courts.go.jp",
 	"creator": "Frank Bennett",
 	"target": "http://(?:www.)*courts.go.jp/app/hanrei_jp",
 	"minVersion": "2.1",
-	"maxVersion": "",
+	"maxVersion": null,
 	"priority": 100,
 	"inRepository": true,
-	"translatorType": 4,
 	"browserSupport": "gcsv",
-	"lastUpdated": "2018-05-16 13:21:39"
+	"lastUpdated": "2018-06-02 10:32:06"
 }
+
 
 /**
 	Copyright (c) 2010-2013, Erik Hetzner
@@ -289,6 +290,27 @@ var courtMap = {
 	}
 }
 
+var reporterDetailsRex = new RegExp("^(?:([^\s]+)　)?第(?:([0-9]+)巻)?(?:([0-9]+)号)?(?:([0-9]+)頁)");
+
+function parseReporter(str) {
+    var ret = [null, null, null, null];
+    var m = str.match(reporterDetailsRex);
+    if (m) {
+        ret = {};
+        ret[0] = m[1];
+        ret[1] = m[2];
+        ret[2] = m[3];
+        ret[3] = m[4];
+        // This is fragile. If another court/reporter is indicated in
+        // the label, rather than in the data field, this will need
+        // to be revised.
+        if (!ret[0]) {
+            ret[0] = "高裁判例集";
+        }
+    }
+    return ret;
+}
+
 var courtKeys = Object.keys(courtMap);
 courtKeys.sort(function(a, b){
 	if (a.length < b.length) {
@@ -356,6 +378,31 @@ function convertCourtName(str) {
 	}
 }
 
+function translateCaseType(item) {
+    var ret = null;
+    var typeMap = {
+        "決定": "Ruling",
+        "判決": "Judgment"
+    }
+    if (item.reign && typeMap[item.reign]) {
+        ZU.setMultiField(item, "reign", typeMap[item.reign], "en");
+    }
+}
+
+function transliterateReporterName(item) {
+    var ret = null;
+    var typeMap = {
+        "民集": "Minshu",
+        "集民": "Shumin",
+        "刑集": "Keishu",
+        "集刑": "Shukei",
+        "高裁判例集": "Kosai hanreishu",
+    }
+    if (item.reporter && typeMap[item.reporter]) {
+        ZU.setMultiField(item, "reporter", typeMap[item.reporter], "en");
+    }
+}
+
 function setValue(doc, item, str, variables, callback) {
 	if (typeof variables === "string") {
 		variables = [variables];
@@ -390,6 +437,16 @@ function scrape(doc, url) {
 	if (!item.court) {
 		setValue(doc, item, "裁判所名", ["jurisdiction", "court"], convertCourtName);
 	}
+    setValue(doc, item, "裁判種別", "reign");
+    if (!item.reign) {
+        item.reign = "判決";
+    }
+    translateCaseType(item);
+    setValue(doc, item, "高裁判例集", ["reporter", "volume", "issue", "pages"], parseReporter);
+    if (!item.reporter) {
+        setValue(doc, item, "判例集", ["reporter", "volume", "issue", "pages"], parseReporter);
+    }
+    transliterateReporterName(item);
 	item.url = url;
 	var attachmentNodes = ZU.xpath(doc, "//div[contains(text(), '全文')]/following-sibling::div/a");
 	for (var attachmentNode of attachmentNodes) {

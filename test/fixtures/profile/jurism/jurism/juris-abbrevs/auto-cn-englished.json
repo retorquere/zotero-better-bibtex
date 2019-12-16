@@ -1,0 +1,18 @@
+{
+	"filename": "auto-cn-prc-englished.json",
+	"name": "Abbreviations: PRC legal (EN)",
+	"version": 1,
+	"xdata": {
+		"default": {
+			"place": {
+				"CN": "People's Republic of China"
+			}
+		},
+		"cn:guangdong": {
+			"institution-part": {
+				"gao.yuan": "Gunagdong High People's Court"
+			}
+			
+		}
+	}
+}

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-11 19:01:21"
+	"lastUpdated": "2019-04-07 20:02:00"
 }
 
 /*
@@ -36,25 +36,24 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/?s=') > -1 && getSearchResults(doc, true))
-		return "multiple";
-	else if (doc.body.className.indexOf("single-post") > -1)
-		return "blogPost";
+	if (url.includes('/?s=') && getSearchResults(doc, true)) return "multiple";
+	else if (doc.body.className.includes("single-post")) return "blogPost";
+	return false;
 }
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		Zotero.selectItems(getSearchResults(doc, false), function(items) {
-			if (!items) {
-				return true;
-			}
+		Zotero.selectItems(getSearchResults(doc, false), function (items) {
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -80,10 +79,10 @@ function scrape(doc, url) {
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
 	translator.setDocument(doc);
 
-	translator.setHandler('itemDone', function(obj, item) {
-		if(item.date) item.date = ZU.strToISO(item.date);
+	translator.setHandler('itemDone', function (obj, item) {
+		if (item.date) item.date = ZU.strToISO(item.date);
 		var authors = ZU.xpath(doc, '//a[@rel="author"]');
-		for (var i = 0; i<authors.length; i++ ) {
+		for (let i = 0; i < authors.length; i++) {
 			if (authors[i].textContent != 'TV By The Numbers') {
 				item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
 			}
@@ -91,13 +90,13 @@ function scrape(doc, url) {
 		item.publicationTitle = "TV By The Numbers";
 		var tags = ZU.xpath(doc, '//a[@rel="tag"]');
 		item.tags = [];
-		for (var i = 0; i<tags.length; i++) {
+		for (let i = 0; i < tags.length; i++) {
 			item.tags.push(tags[i].textContent);
 		}
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = "blogPost";
 		trans.doWeb(doc, url);
 	});

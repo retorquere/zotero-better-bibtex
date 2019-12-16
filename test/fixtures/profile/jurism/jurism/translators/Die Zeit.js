@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-05-23 21:14:22"
+	"lastUpdated": "2018-11-25 19:35:23"
 }
 
 /*
@@ -45,8 +45,8 @@ only the first reference can be scraped.
 */
 
 function detectWeb(doc, url) {
-	var schemaArticle = ZU.xpath(doc, '//*[@itemtype="http://schema.org/Article"]');
-	if (schemaArticle.length>0) {
+	var pageType = doc.body.getAttribute("data-page-type");
+	if (pageType == "article") {
 		return "newspaperArticle";
 	} else if (getSearchResults(doc, true)){ //ZU.xpath(doc, '//h4/a|//h2/a').length>0
 		return "multiple";
@@ -57,7 +57,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.getElementsByClassName('archiveteaser');
-	if (rows.length == 0) {
+	if (rows.length === 0) {
 		rows = doc.getElementsByClassName('teaser-small__container');
 	}
 	for (var i=0; i<rows.length; i++) {
@@ -77,7 +77,7 @@ function doWeb(doc, url) {
 			if (!items) {
 				return true;
 			}
-			var articles = new Array();
+			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
@@ -88,34 +88,52 @@ function doWeb(doc, url) {
 	}
 }
 
-function scrape(doc, url){
-	//Z.monitorDOMChanges(doc, {childList: true})
-	var articleNode = ZU.xpath(doc, '//*[@itemtype="http://schema.org/Article"]')[0];
+function scrape(doc, url) {
+	var data = ZU.xpath(doc, '//script[@type="application/ld+json"]');
+	let json;
+	let found = false;
+	for (let dataItem of data) {
+		json = JSON.parse(dataItem.textContent);
+		if (json["@type"] == "Article") {
+			found = true;
+			break;
+		}
+	}
+	if (!found) {
+		return;
+	}
+	// Z.debug(json);
+	
 	var newItem = new Zotero.Item("newspaperArticle");
 	newItem.url = url;
-	newItem.title = ZU.xpathText(doc, './/title').replace(/\s\|\sZEIT\sONLINE$/, '');
-	newItem.abstractNote = ZU.xpathText(articleNode, './/*[@itemprop="description"]');
-	var date = ZU.xpathText(doc, '//meta[@name="date"]/@content');
-	if (date) {
-		newItem.date = date.replace(/T.+/, "");
+	newItem.title = json.headline;
+	newItem.abstractNote = json.description;
+	if (json.datePublished) {
+		newItem.date = json.datePublished.replace(/T.+/, "");
 	}
-	var authorNode = ZU.xpath(articleNode, './/*[@itemprop="author"]//*[@itemprop="name"]');
-	if (authorNode.length == 0) {
-		authorNode = ZU.xpath(articleNode, './/*[@itemprop="author"]');
-	}
-	if (authorNode.length == 0) {
-		authorNode = ZU.xpath(articleNode, './/div[@class="byline"]');
-	}
-	for (var i=0; i<authorNode.length; i++) {
-		var authorName = authorNode[i].textContent;
-		if (authorName){
-			authorName = authorName.replace(/^\s*Von/, '');
-			var author = ZU.cleanAuthor(authorName, "author");
-			if (author.firstName == "") {
-				author.fieldMode = 1;
-				delete author.firstName;
+	if (json.author) {
+		if (!Array.isArray(json.author)) {
+			json.author = [json.author];
+		}
+		for (let author of json.author) {
+			if (author.name) {
+				newItem.creators.push(ZU.cleanAuthor(author.name, "author"));
 			}
-			newItem.creators.push(author);
+		}
+	} else {
+		var authorNode = ZU.xpath(doc, '//div[@class="byline"]');
+		for (let i=0; i<authorNode.length; i++) {
+			var authorName = authorNode[i].textContent;
+			if (authorName){
+				authorName = authorName.replace(/^\s*Von/, '');
+				newItem.creators.push(ZU.cleanAuthor(authorName, "author"));
+			}
+		}
+	}
+	for (let i=0; i<newItem.creators.length; i++) {
+		if (newItem.creators[i].firstName === "") {
+			newItem.creators[i].fieldMode = 1;
+			delete newItem.creators[i].firstName;
 		}
 	}
 	
@@ -129,12 +147,12 @@ function scrape(doc, url){
 	newItem.language = "de-DE";
 	newItem.place = "Hamburg";
 	
-	var keywordsString = ZU.xpathText(doc, '//meta[@name="keywords"]/@content');
+	var keywordsString = json.keywords;
 	var keywords = keywordsString.split(',');
-	for (var i=0; i<keywords.length; i++) {
+	for (let i=0; i<keywords.length; i++) {
 		newItem.tags.push(
 			keywords[i].trim()
-		)
+		);
 	}
 
 	// if present, use the link to show the whole content on a single page
@@ -151,7 +169,7 @@ function scrape(doc, url){
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.zeit.de/politik/ausland/2011-09/libyen-bani-walid",
+		"url": "https://www.zeit.de/politik/ausland/2011-09/libyen-bani-walid",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -177,7 +195,7 @@ var testCases = [
 				"publicationTitle": "Die Zeit",
 				"section": "Politik",
 				"shortTitle": "Libyen",
-				"url": "http://www.zeit.de/politik/ausland/2011-09/libyen-bani-walid",
+				"url": "https://www.zeit.de/politik/ausland/2011-09/libyen-bani-walid",
 				"attachments": [
 					{
 						"title": "Snapshot",
@@ -185,9 +203,9 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Ausland",
-					"Libyen",
-					"Politik"
+					{
+						"tag": "Libyen"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -196,7 +214,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.zeit.de/2011/36/Interview-Lahm-Rinke",
+		"url": "https://www.zeit.de/2011/36/Interview-Lahm-Rinke",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -217,7 +235,7 @@ var testCases = [
 				"publicationTitle": "Die Zeit",
 				"section": "Sport",
 				"shortTitle": "Philipp Lahm",
-				"url": "http://www.zeit.de/2011/36/Interview-Lahm-Rinke",
+				"url": "https://www.zeit.de/2011/36/Interview-Lahm-Rinke",
 				"attachments": [
 					{
 						"title": "Snapshot",
@@ -225,31 +243,36 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Andreas Ottl",
-					"Angela Merkel",
-					"Berlin",
-					"Bielefeld",
-					"Bremen",
-					"Bundesliga",
-					"Dortmund",
-					"FC Bayern München",
-					"Fifa",
-					"Fußball",
-					"Jogi Löw",
-					"Kanzleramt",
-					"Mailand",
-					"Maxim Gorki",
-					"Mesut Özil",
-					"Oskar Lafontaine",
-					"Philipp Lahm",
-					"Robbe",
-					"Robert Enke",
-					"SV Werder Bremen",
-					"Schriftsteller",
-					"Sport",
-					"Stadion",
-					"Trainer",
-					"Türkei"
+					{
+						"tag": "Andreas Ottl"
+					},
+					{
+						"tag": "Aristoteles"
+					},
+					{
+						"tag": "Berlin"
+					},
+					{
+						"tag": "Bielefeld"
+					},
+					{
+						"tag": "FC Bayern München"
+					},
+					{
+						"tag": "Fußball"
+					},
+					{
+						"tag": "Hertha BSC"
+					},
+					{
+						"tag": "Joachim Löw"
+					},
+					{
+						"tag": "Max Frisch"
+					},
+					{
+						"tag": "Philipp Lahm"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -263,7 +286,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.zeit.de/2009/11/A-Drinnen",
+		"url": "https://www.zeit.de/2009/11/A-Drinnen",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -284,7 +307,7 @@ var testCases = [
 				"publicationTitle": "Die Zeit",
 				"section": "Politik",
 				"shortTitle": "DRINNEN",
-				"url": "http://www.zeit.de/2009/11/A-Drinnen",
+				"url": "https://www.zeit.de/2009/11/A-Drinnen",
 				"attachments": [
 					{
 						"title": "Snapshot",
@@ -292,24 +315,54 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"Band",
-					"DRINNEN",
-					"Eltern",
-					"Familie",
-					"Geschwister",
-					"Hans Krankl",
-					"Hip-Hop",
-					"Iran",
-					"Israel",
-					"Musik",
-					"Offenheit",
-					"Politik",
-					"Reise",
-					"Revolution",
-					"Salzburg",
-					"Teheran",
-					"Wien",
-					"Österreich"
+					{
+						"tag": "Band"
+					},
+					{
+						"tag": "Eltern"
+					},
+					{
+						"tag": "Familie"
+					},
+					{
+						"tag": "Geschwister"
+					},
+					{
+						"tag": "Hans Krankl"
+					},
+					{
+						"tag": "Hip-Hop"
+					},
+					{
+						"tag": "Iran"
+					},
+					{
+						"tag": "Israel"
+					},
+					{
+						"tag": "Musik"
+					},
+					{
+						"tag": "Offenheit"
+					},
+					{
+						"tag": "Reise"
+					},
+					{
+						"tag": "Revolution"
+					},
+					{
+						"tag": "Salzburg"
+					},
+					{
+						"tag": "Teheran"
+					},
+					{
+						"tag": "Wien"
+					},
+					{
+						"tag": "Österreich"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

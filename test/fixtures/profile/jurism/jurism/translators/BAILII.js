@@ -1,6 +1,5 @@
 {
 	"translatorID": "5ae63913-669a-4792-9f45-e089a37de9ab",
-	"translatorType": 4,
 	"label": "BAILII",
 	"creator": "Bill McKinney",
 	"target": "^https?://www\\.bailii\\.org(/cgi\\-bin/markup\\.cgi\\?doc\\=)?/\\w+/cases/.+",
@@ -8,8 +7,9 @@
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
+	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2014-04-03 16:36:35"
+	"lastUpdated": "2019-11-15 22:45:28"
 }
 
 /*
@@ -408,12 +408,13 @@ var liiRegexp= /^http:\/\/www\.bailii\.org(?:\/cgi\-bin\/markup\.cgi\?doc\=)?\/\
 var liiCaseRegexp= /^http:\/\/www\.bailii\.org(?:\/cgi\-bin\/markup\.cgi\?doc\=)?\/\w+\/cases\/([^\/]+)\/.+\.html/
 
 function detectWeb(doc, url) {
-	if(liiRegexp.test(url)) {
+	var liiRegexp= /^https?:\/\/www\.bailii\.org(?:\/cgi\-bin\/markup\.cgi\?doc\=)?\/\w+\/cases\/.+\.html/
+	if (liiRegexp.test(url)) {
 		return "case";
 	} else {
 		var aTags = doc.getElementsByTagName("a");
-		for(var i=0; i<aTags.length; i++) {
-			if(liiRegexp.test(aTags[i].href)) {
+		for (var i=0; i<aTags.length; i++) {
+			if (liiRegexp.test(aTags[i].href)) {
 				return "multiple";
 			}
 		}
@@ -492,16 +493,16 @@ function scrape(doc) {
 	var tableTags = doc.getElementsByTagName("table");
 	for (var i = 0, ilen = tableTags.length; i < ilen; i += 1) {
 		var trTags = tableTags[i].getElementsByTagName("tr");
-        for (var j = 0, jlen = trTags.length; j < jlen; j += 1) {
+		for (var j = 0, jlen = trTags.length; j < jlen; j += 1) {
 			var tdTags = trTags[j].getElementsByTagName("td");
-            for (var k = 0, klen = tdTags.length; k < klen; k += 1) {
-			    if (Zotero.Utilities.getTextContent(tdTags[k]).indexOf("You are here") > -1) {
-				    var tdTag = tdTags[k];
-				    break;
-			    }
-            }
+			for (var k = 0, klen = tdTags.length; k < klen; k += 1) {
+				if (Zotero.Utilities.getTextContent(tdTags[k]).indexOf("You are here") > -1) {
+					var tdTag = tdTags[k];
+					break;
+				}
+			}
 		}
-    }
+	}
 
    	var str = "";
 	if (tdTag) {
@@ -616,7 +617,7 @@ function scrape(doc) {
 			total += 1;
 		}
 		var year = 0;
-		var m = date.match(/.*([0-9]{4}).*/);
+		var m = date ? date.match(/.*([0-9]{4}).*/) : null;
 		if (m) {
 			year = parseInt(m[1], 10);
 		}
@@ -661,7 +662,8 @@ function scrape(doc) {
 }
 
 function doWeb(doc, url) {
-	if(liiCaseRegexp.test(url)) {
+	var liiRegexp= /https?:\/\/www\.bailii\.org(?:\/cgi\-bin\/markup\.cgi\?doc\=)?\/\w+\/cases\/.+\.html/
+	if (liiRegexp.test(url)) {
 		scrape(doc);
 	} else {
 		var items = Zotero.Utilities.getItemArray(doc, doc, liiRegexp);
@@ -683,32 +685,382 @@ function doWeb(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+		"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
 		"items": [
 			{
 				"itemType": "case",
-				"notes": [],
-				"tags": [],
-				"seeAlso": [],
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
+				"dateDecided": "04 October 2011",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "29",
+				"itemID": "1",
+				"jurisdiction": "ec.lex",
+				"reporter": "Common Market Law Reports",
+				"reporterVolume": "1",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
 				"attachments": [
 					{
-						"title": "BAILII Snapshot",
-						"mimeType": "text/html"
+						"title": "BaiLII transcript",
+						"type": "text/html"
 					}
 				],
-				"title": "Football Association Premier League & Ors (Freedom to provide services) [2011] EUECJ C-403/08",
-				"url": "http://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
-				"caseName": "Football Association Premier League & Ors (Freedom to provide services) [2011] EUECJ C-403/08",
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"2",
+					"3",
+					"4",
+					"5",
+					"6"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
 				"dateDecided": "04 October 2011",
-				"court": "EUECJ (2011)",
-				"libraryCatalog": "BAILII",
-				"accessDate": "CURRENT_TIMESTAMP"
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "1",
+				"itemID": "2",
+				"jurisdiction": "ec.lex",
+				"reporter": "Fleet Street Reports",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"3",
+					"4",
+					"5",
+					"6"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
+				"dateDecided": "04 October 2011",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "242",
+				"itemID": "3",
+				"jurisdiction": "ec.lex",
+				"reporter": "CEC",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2",
+					"4",
+					"5",
+					"6"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
+				"dateDecided": "04 October 2011",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "1321",
+				"itemID": "4",
+				"jurisdiction": "ec.lex",
+				"reporter": "Bus LR",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2",
+					"3",
+					"5",
+					"6"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
+				"dateDecided": "04 October 2011",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "8",
+				"itemID": "5",
+				"jurisdiction": "ec.lex",
+				"reporter": "ECDR",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2",
+					"3",
+					"4",
+					"6"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Football Association Premier League & Ors (Freedom to Provide Services)",
+				"creators": [],
+				"dateDecided": "04 October 2011",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "629",
+				"itemID": "6",
+				"jurisdiction": "ec.lex",
+				"reporter": "All ER (EC)",
+				"url": "https://www.bailii.org/cgi-bin/markup.cgi?doc=/eu/cases/EUECJ/2011/C40308.html&query=copyright&method=boolean",
+				"yearAsVolume": "2012",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2",
+					"3",
+					"4",
+					"5"
+				]
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "http://www.bailii.org/eu/cases/EUECJ/2007/",
+		"url": "https://www.bailii.org/eu/cases/EUECJ/2007/",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.bailii.org/uk/cases/UKHL/1932/100.html",
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "Donoghue v Stevenson",
+				"creators": [],
+				"dateDecided": "26 May 1932",
+				"court": "House of Lords",
+				"firstPage": "31",
+				"itemID": "1",
+				"jurisdiction": "gb",
+				"reporter": "SC (HL)",
+				"reporterVolume": "1932",
+				"url": "https://www.bailii.org/uk/cases/UKHL/1932/100.html",
+				"attachments": [
+					{
+						"title": "BaiLII transcript",
+						"type": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"2",
+					"3"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Donoghue v Stevenson",
+				"creators": [],
+				"dateDecided": "26 May 1932",
+				"court": "House of Lords",
+				"firstPage": "100",
+				"itemID": "2",
+				"jurisdiction": "gb",
+				"reporter": "UKHL",
+				"url": "https://www.bailii.org/uk/cases/UKHL/1932/100.html",
+				"yearAsVolume": "1932",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"3"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Donoghue v Stevenson",
+				"creators": [],
+				"dateDecided": "26 May 1932",
+				"court": "House of Lords",
+				"firstPage": "562",
+				"itemID": "3",
+				"jurisdiction": "gb",
+				"reporter": "Appeal Cases",
+				"url": "https://www.bailii.org/uk/cases/UKHL/1932/100.html",
+				"yearAsVolume": "1932",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2"
+				]
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.bailii.org/uk/cases/UKSC/2019/41.html",
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "Miller, R (on the Application of) v The Prime Minister",
+				"creators": [],
+				"dateDecided": "24 September 2019",
+				"court": "Supreme Court",
+				"firstPage": "41",
+				"itemID": "1",
+				"jurisdiction": "gb",
+				"reporter": "UKSC",
+				"url": "https://www.bailii.org/uk/cases/UKSC/2019/41.html",
+				"yearAsVolume": "2019",
+				"attachments": [
+					{
+						"title": "BaiLII transcript",
+						"type": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"2",
+					"3"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Miller, R (on the Application of) v The Prime Minister",
+				"creators": [],
+				"dateDecided": "24 September 2019",
+				"court": "Supreme Court",
+				"firstPage": "1143",
+				"itemID": "2",
+				"jurisdiction": "gb",
+				"reporter": "Scots Law Times",
+				"reporterVolume": "2019",
+				"url": "https://www.bailii.org/uk/cases/UKSC/2019/41.html",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"3"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "Miller, R (on the Application of) v The Prime Minister",
+				"creators": [],
+				"dateDecided": "24 September 2019",
+				"court": "Supreme Court",
+				"firstPage": "589",
+				"itemID": "3",
+				"jurisdiction": "gb",
+				"reporter": "Weekly Law Reports",
+				"reporterVolume": "3",
+				"url": "https://www.bailii.org/uk/cases/UKSC/2019/41.html",
+				"yearAsVolume": "2019",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1",
+					"2"
+				]
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.bailii.org/eu/cases/EUECJ/1963/R2662.html",
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "NV Algemene Transport En Expeditie Onderneming Van Gend & Loos v Netherlands Inland Revenue Administration. (Procedure )",
+				"creators": [],
+				"dateDecided": "5 February 1963",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "105",
+				"itemID": "1",
+				"jurisdiction": "ec.lex",
+				"reporter": "Common Market Law Reports",
+				"url": "https://www.bailii.org/eu/cases/EUECJ/1963/R2662.html",
+				"yearAsVolume": "1963",
+				"attachments": [
+					{
+						"title": "BaiLII transcript",
+						"type": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"2"
+				]
+			},
+			{
+				"itemType": "case",
+				"caseName": "NV Algemene Transport En Expeditie Onderneming Van Gend & Loos v Netherlands Inland Revenue Administration. (Procedure )",
+				"creators": [],
+				"dateDecided": "5 February 1963",
+				"court": "Court of Justice of the European Communities",
+				"firstPage": "1",
+				"itemID": "2",
+				"jurisdiction": "ec.lex",
+				"reporter": "European Court Reports",
+				"url": "https://www.bailii.org/eu/cases/EUECJ/1963/R2662.html",
+				"yearAsVolume": "1963",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": [
+					"1"
+				]
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.bailii.org/ew/cases/Misc/2019/16.html",
+		"items": [
+			{
+				"itemType": "case",
+				"caseName": "Bower V Brewdog Plc",
+				"creators": [],
+				"dateDecided": "23 May 2019",
+				"court": "English and Welsh Courts - Miscellaneous",
+				"firstPage": "16",
+				"itemID": "1",
+				"jurisdiction": "gb",
+				"reporter": "EW Misc",
+				"url": "https://www.bailii.org/ew/cases/Misc/2019/16.html",
+				"yearAsVolume": "2019",
+				"attachments": [
+					{
+						"title": "BaiLII transcript",
+						"type": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.bailii.org/cgi-bin/lucy_search_1.cgi?querytitle=re+baden",
 		"items": "multiple"
 	}
 ]

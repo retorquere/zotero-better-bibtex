@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ir.json",
+  "name": "Iran",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "IR": "Iran"
+      }
+    },
+    "ir": {
+      "institution-part": {}
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-lc.json",
+  "name": "Saint Lucia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "LC": "Saint Lucia"
+      }
+    },
+    "lc": {
+      "institution-part": {}
+    }
+  }
+}

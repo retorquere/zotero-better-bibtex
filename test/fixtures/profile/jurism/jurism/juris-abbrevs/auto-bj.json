@@ -1,0 +1,15 @@
+{
+  "filename": "auto-bj.json",
+  "name": "Benin",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "BJ": "Benin"
+      }
+    },
+    "bj": {
+      "institution-part": {}
+    }
+  }
+}

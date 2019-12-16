@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ht.json",
+  "name": "Haiti",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "HT": "Haiti"
+      }
+    },
+    "ht": {
+      "institution-part": {}
+    }
+  }
+}

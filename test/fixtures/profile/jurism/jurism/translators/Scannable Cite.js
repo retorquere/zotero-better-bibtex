@@ -16,22 +16,22 @@
 }
 
 // legal types are weird
-var LEGAL_TYPES = ["bill","case","gazette","hearing","patent","regulation","statute","treaty"];
-var Mem = function (item) {
-    var lst = [];
-    var isLegal = isLegal = (LEGAL_TYPES.indexOf(item.itemType)>-1);
-    this.set = function (str, punc, slug) { if (!punc) {punc=""}; if (str) {lst.push((str + punc))} else if (!isLegal) {lst.push(slug)}};
-    this.setlaw = function (str, punc) { if (!punc) {punc=""}; if (str && isLegal) {lst.push(str + punc)}};
-    this.get = function () { return lst.join(" ") };
-}
+const LEGAL_TYPES = ["bill","case","gazette","hearing","patent","regulation","statute","treaty"];
+const Mem = function (item) {
+    let lst = [];
+    const isLegal = LEGAL_TYPES.includes(item.itemType);
+    this.set = function (str, punc, slug) { if (!punc) {punc="";} if (str) {lst.push((str + punc));} else if (!isLegal) {lst.push(slug);}};
+    this.setlaw = function (str, punc) { if (!punc) {punc="";} if (str && isLegal) {lst.push(str + punc);}};
+    this.get = function () { return lst.join(" "); };
+};
 
 function doExport() {
-    var item;
+    let item;
     while (item = Zotero.nextItem()) {
-        var mem = new Mem(item);
-        var memdate = new Mem(item);
+        let mem = new Mem(item);
+        let memdate = new Mem(item);
         Zotero.write("{ |");
-        var library_id = item.libraryID ? item.libraryID : 0;
+        let library_id = item.libraryID ? item.libraryID : 0;
         if (item.creators.length >0){
             mem.set(item.creators[0].lastName,",");
             if (item.creators.length > 2) mem.set("et al.", ",");
@@ -48,17 +48,17 @@ function doExport() {
         mem.setlaw(item.reporter);
         mem.setlaw(item.pages);
         memdate.setlaw(item.court,",");
-        var date = Zotero.Utilities.strToDate(item.date);
-        var dateS = (date.year) ? date.year : item.date;
+        let date = Zotero.Utilities.strToDate(item.date);
+        let dateS = (date.year) ? date.year : item.date;
         memdate.set(dateS,"","no date");
         Zotero.write(" " + mem.get() + " " + memdate.get() + " | | |");
         if (Zotero.getHiddenPref("ODFScan.useZoteroSelect")) {
             Zotero.write("zotero://select/items/" + library_id + "_" + item.key + "}");
         } else {
-            var m = item.uri.match(/http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/);
-            var prefix;
-            var lib;
-            var key;
+            let m = item.uri.match(/http:\/\/zotero\.org\/(users|groups)\/([^\/]+)\/items\/(.+)/);
+            let prefix;
+            let lib;
+            let key;
             if (m) {
                 if (m[1] === "users") {
                     prefix = "zu:";

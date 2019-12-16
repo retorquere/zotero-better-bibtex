@@ -9,10 +9,10 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcv",
-	"lastUpdated": "2017-07-03 10:55:03"
+	"lastUpdated": "2019-06-10 22:52:50"
 }
 
-/*****
+/*
    Copyright 2013, Piyush Srivastava.
 
    This program is free software: you can redistribute it and/or modify it
@@ -28,13 +28,11 @@
    You should have received a copy of the GNU Affero General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*****/
+*/
 
 
-
-
-/*****
-  Theory of Computing translator 
+/*
+  Theory of Computing translator
   *****************************
 
 
@@ -56,7 +54,7 @@
 
  while that of the articles looks like
 
- DOMAIN/articles/v[0-9]{3}a{0-9]{3}/. 
+ DOMAIN/articles/v[0-9]{3}a{0-9]{3}/.
 
  These formats are used by detectWeb to find out whether we are looking at a
  graduate survey ("Book") or a journal article.
@@ -64,130 +62,125 @@
  The theory of computing journal provides the PDF file for a given article (say
  gs001) at the url DOMAIN/article/gs001/gs001.pdf.
 
- ******/
+*/
 
 
-
-
-//A Regexp for extracting the Domain
+// A Regexp for extracting the Domain
 
 var surveyRegexp = new RegExp("articles/(gs[^/]+)");
 var journalRegexp = new RegExp("articles/(v[^/]+)");
 
-function detectWeb(doc, url){
-	if (surveyRegexp.test(url))
-		return "book";
-	else
-		return "journalArticle";
+function detectWeb(doc, url) {
+	if (surveyRegexp.test(url)) return "book";
+	else return "journalArticle";
 }
 
-function doWeb(doc, url){
+function doWeb(doc, url) {
 	var typeRegExp;
 	var type = detectWeb(doc, url);
 
-	//Select the right regexp according to the article type
-	if (type == "journalArticle")
-		typeRegExp = journalRegexp;
-	else
-		typeRegExp = surveyRegexp;
+	// Select the right regexp according to the article type
+	if (type == "journalArticle") typeRegExp = journalRegexp;
+	else typeRegExp = surveyRegexp;
 
 	var urlData = typeRegExp.exec(url);
-	//urlData is an Array of three elements, with the element at index 1 containg the
-	//base domain of the mirror being accesses, and the element at index 2
-	//containing the article ID.
+	// urlData is an Array of three elements, with the element at index 1 containg the
+	// base domain of the mirror being accesses, and the element at index 2
+	// containing the article ID.
 
 	var articleID = urlData[1];
 
-	//We now start constructing the Zoetro item
+	// We now start constructing the Zoetro item
 	var newItem = new Zotero.Item(type);
 
-	//Store the snapshot and the PDF file
+	// Store the snapshot and the PDF file
 	newItem.attachments.push({
-		title: "Theory of Computing Snapshot",
-		document: doc});
+		title: "Theory of Computing Snapshot", document: doc
+	});
 	var pdfLink = articleID + ".pdf";
 	newItem.attachments.push({
 		title: "Theory of computing Full Text PDF",
 		mimeType: "application/pdf",
-		url:pdfLink});
+		url: pdfLink
+	});
 
-	//Get the article topLine
+	// Get the article topLine
 	var topLine = ZU.xpathText(doc, '//div[@id="articletopline"]');
 
-	//Get the article publication date lines
+	// Get the article publication date lines
 	var pubDateLines = ZU.xpathText(doc, '//div[@id="articledates"]');
 
-	//Get the article copyright line (to determine authors) 
-	//This seems the most consistent way of determining the authors for this
-	//journal.
+	// Get the article copyright line (to determine authors)
+	// This seems the most consistent way of determining the authors for this
+	// journal.
 	var authorLine = ZU.xpathText(doc, '//div[@id="copyright"]/a[1]');
 
 	var keywordLine = ZU.xpathText(doc, '(//div[@class="hang"])[3]');
 
 	var DOI = ZU.xpathText(doc, '//div[@id="doi"]');
 
-	//Now start filling up data
-	//Title
+	// Now start filling up data
+	// Title
 	var title = ZU.xpathText(doc, '//div[@id="articletitle"]');
-	if (!title)
-		title = ZU.xpathText(doc, '//div[@id="title"]');
+	if (!title) title = ZU.xpathText(doc, '//div[@id="title"]');
 	newItem.title = title;
 
-	//DOI and URL
+	// DOI and URL
 	newItem.DOI = ZU.cleanDOI(DOI);
 	newItem.url = url;
 
-	//Publcication date line
-	if (pubDateLines){
+	// Publcication date line
+	if (pubDateLines) {
 		var pubDateRegexp = /Published:\s+(\w+\s+[0-9]+(?:,|\s)+[0-9]+)/gm;
 		newItem.date = pubDateRegexp.exec(pubDateLines)[1];
 
-		//This also contain page information for surveys
-		if (type == "book"){
+		// This also contain page information for surveys
+		if (type == "book") {
 			var pageNum = /([0-9]+)\s+pages/.exec(pubDateLines)[1];
 			newItem.numPages = pageNum;
 		}
 	}
 
-	//Keywords
-	if (keywordLine){
-		keywords = ZU.trimInternal(/Keywords:\s+(.*)/.exec(keywordLine)[1]);
-		keywordList = keywords.split(/,\s+/);
+	// Keywords
+	if (keywordLine) {
+		let keywords = ZU.trimInternal(/Keywords:\s+(.*)/.exec(keywordLine)[1]);
+		let keywordList = keywords.split(/,\s+/);
 		newItem.tags = keywordList;
 	}
 
-	//Author
-	if (authorLine){
+	// Author
+	if (authorLine) {
 		authorLine = ZU.trimInternal(authorLine);
-		authors = /[^0-9]+[0-9]+\s+(.*)/.exec(authorLine)[1];
+		let authors = /[^0-9]+[0-9]+\s+(.*)/.exec(authorLine)[1];
 		authors = authors.replace(/,?\s+and\s+/, ", ");
-		authorList = authors.split(/\s*,\s+/);
-		for (author in authorList){
+		let authorList = authors.split(/\s*,\s+/);
+		for (let author in authorList) {
 			newItem.creators.push(ZU.cleanAuthor(authorList[author], "author"));
 		}
 	}
 
-	//Article number etc.
-	if (topLine){
+	// Article number etc.
+	if (topLine) {
 		topLine = ZU.trimInternal(topLine);
-		if (type == "book"){
-			number = /Graduate Surveys\s+([0-9]+)/.exec(topLine)[1];
-			newItem.seriesNumber = number;    
-		} else if (type == "journalArticle"){
-			volumeData = /Volume\s+([0-9]+).*Article\s+([0-9]+)\s+pp\.\s+([0-9]+)-([0-9]+)/.exec(topLine);
+		if (type == "book") {
+			let number = /Graduate Surveys\s+([0-9]+)/.exec(topLine)[1];
+			newItem.seriesNumber = number;
+		}
+		else if (type == "journalArticle") {
+			let volumeData = /Volume\s+([0-9]+).*Article\s+([0-9]+)\s+pp\.\s+([0-9]+)-([0-9]+)/.exec(topLine);
 			newItem.volume = volumeData[1];
 			newItem.number = volumeData[2];
 			newItem.pages = volumeData[3] + "–" + volumeData[4];
-		}       
+		}
 	}
 
-	//Format specific data
-	if (type == "book"){
+	// Format specific data
+	if (type == "book") {
 		newItem.series = "Graduate Surveys";
 		newItem.publisher = "Theory of Computing Library";
 	}
 
-	if (type == "journalArticle"){
+	if (type == "journalArticle") {
 		newItem.publicationTitle = "Theory of Computing";
 		newItem.publisher = "Theory of Computing";
 	}

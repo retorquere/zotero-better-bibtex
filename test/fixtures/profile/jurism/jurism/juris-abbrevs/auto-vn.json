@@ -1,0 +1,4493 @@
+{
+  "filename": "auto-vn.json",
+  "name": "Vietnam",
+  "version": "2019-12-13 00:01:28 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "VN": "Vietnam",
+        "VN:AN.GIANG": "An Giang",
+        "VN:AN.GIANG:AN.PHU": "An Phú",
+        "VN:AN.GIANG:CHAU.DOC": "Châu Đốc",
+        "VN:AN.GIANG:CHAU.PHU": "Châu Phú",
+        "VN:AN.GIANG:CHAU.THANH": "Châu Thành",
+        "VN:AN.GIANG:CHO.MOI": "Chợ Mới",
+        "VN:AN.GIANG:LONG.XUYEN": "Long Xuyên",
+        "VN:AN.GIANG:PHU.TAN": "Phú Tân",
+        "VN:AN.GIANG:TAN.CHAU": "Tân Châu",
+        "VN:AN.GIANG:THOAI.SON": "Thoại Sơn",
+        "VN:AN.GIANG:TINH.BIEN": "Tịnh Biên",
+        "VN:AN.GIANG:TRI.TON": "Tri Tôn",
+        "VN:BA.RIA.VUNG.TAU": "Bà Rịa–Vũng Tàu",
+        "VN:BA.RIA.VUNG.TAU:BA.RIA": "Bà Rịa",
+        "VN:BA.RIA.VUNG.TAU:CHAU.DUC": "Châu Đức",
+        "VN:BA.RIA.VUNG.TAU:CON.DAO": "Côn Đảo",
+        "VN:BA.RIA.VUNG.TAU:DAT.DO": "Đất Đỏ",
+        "VN:BA.RIA.VUNG.TAU:LONG.DIEN": "Long Điền",
+        "VN:BA.RIA.VUNG.TAU:TAN.THANH": "Tân Thành",
+        "VN:BA.RIA.VUNG.TAU:VUNG.TAU": "Vũng Tàu",
+        "VN:BA.RIA.VUNG.TAU:XUYEN.MOC": "Xuyên Mộc",
+        "VN:BAC.GIANG": "Bắc Giang",
+        "VN:BAC.GIANG:BAC.GIANG": "Bắc Giang",
+        "VN:BAC.GIANG:HIEP.HOA": "Hiệp Hòa",
+        "VN:BAC.GIANG:LANG.GIANG": "Lạng Giang",
+        "VN:BAC.GIANG:LUC.NAM": "Lục Nam",
+        "VN:BAC.GIANG:LUC.NGAN": "Lục Ngạn",
+        "VN:BAC.GIANG:SON.DONG": "Sơn Động",
+        "VN:BAC.GIANG:TAN.YEN": "Tân Yên",
+        "VN:BAC.GIANG:VIET.YEN": "Việt Yên",
+        "VN:BAC.GIANG:YEN.DUNG": "Yên Dũng",
+        "VN:BAC.GIANG:YEN.THE": "Yên Thế",
+        "VN:BAC.KAN": "Bắc Kạn",
+        "VN:BAC.KAN:BA.BE": "Ba Bể",
+        "VN:BAC.KAN:BAC.KAN": "Bắc Kạn",
+        "VN:BAC.KAN:BACH.THONG": "Bạch Thông",
+        "VN:BAC.KAN:CHO.DON": "Chợ Đồn",
+        "VN:BAC.KAN:CHO.MOI": "Chợ Mới",
+        "VN:BAC.KAN:NA.RI": "Na Rì",
+        "VN:BAC.KAN:NGAN.SON": "Ngân Sơn",
+        "VN:BAC.KAN:PAC.NAM": "Pác Nặm",
+        "VN:BAC.LIEU": "Bạc Liêu",
+        "VN:BAC.LIEU:BAC.LIEU": "Bạc Liêu",
+        "VN:BAC.LIEU:DONG.HAI": "Đông Hải",
+        "VN:BAC.LIEU:GIA.RAI": "Giá Rai",
+        "VN:BAC.LIEU:HOA.BINH": "Hòa Bình",
+        "VN:BAC.LIEU:HONG.DAN": "Hồng Dân",
+        "VN:BAC.LIEU:PHUOC.LONG": "Phước Long",
+        "VN:BAC.LIEU:VINH.LOI": "Vĩnh Lợi",
+        "VN:BAC.NINH": "Bắc Ninh",
+        "VN:BAC.NINH:BAC.NINH": "Bắc Ninh",
+        "VN:BAC.NINH:GIA.BINH": "Gia Bình",
+        "VN:BAC.NINH:LUONG.TAI": "Lương Tài",
+        "VN:BAC.NINH:QUE.VO": "Quế Võ",
+        "VN:BAC.NINH:THUAN.THANH": "Thuận Thành",
+        "VN:BAC.NINH:TIEN.DU": "Tiên Du",
+        "VN:BAC.NINH:TU.SON": "Từ Sơn",
+        "VN:BAC.NINH:YEN.PHONG": "Yên Phong",
+        "VN:BEN.TRE": "Bến Tre",
+        "VN:BEN.TRE:BA.TRI": "Ba Tri",
+        "VN:BEN.TRE:BEN.TRE": "Bến Tre",
+        "VN:BEN.TRE:BINH.DAI": "Bình Đại",
+        "VN:BEN.TRE:CHAU.THANH": "Châu Thành",
+        "VN:BEN.TRE:CHO.LACH": "Chợ Lách",
+        "VN:BEN.TRE:GIONG.TROM": "Giồng Trôm",
+        "VN:BEN.TRE:MO.CAY": "Mỏ Cày",
+        "VN:BEN.TRE:THANH.PHU": "Thạnh Phú",
+        "VN:BINH.DINH": "Bình Định",
+        "VN:BINH.DINH:AN.LAO": "An Lão",
+        "VN:BINH.DINH:AN.NHON": "An Nhơn",
+        "VN:BINH.DINH:HOAI.AN": "Hoài Ân",
+        "VN:BINH.DINH:HOAI.NHON": "Hoài Nhơn",
+        "VN:BINH.DINH:PHU.CAT": "Phù Cát",
+        "VN:BINH.DINH:PHU.MY": "Phù Mỹ",
+        "VN:BINH.DINH:QUI.NHON": "Qui Nhơn",
+        "VN:BINH.DINH:TAY.SON": "Tây Sơn",
+        "VN:BINH.DINH:TUY.PHUOC": "Tuy Phước",
+        "VN:BINH.DINH:VAN.CANH": "Vân Canh",
+        "VN:BINH.DINH:VINH.THANH": "Vĩnh Thạnh",
+        "VN:BINH.DUONG": "Bình Dương",
+        "VN:BINH.DUONG:BEN.CAT": "Bến Cát",
+        "VN:BINH.DUONG:DAU.TIENG": "Dầu Tiếng",
+        "VN:BINH.DUONG:DI.AN": "Dĩ An",
+        "VN:BINH.DUONG:PHU.GIAO": "Phú Giáo",
+        "VN:BINH.DUONG:TAN.UYEN": "Tân Uyên",
+        "VN:BINH.DUONG:THU.DAU.MOT": "Thủ Dầu Một",
+        "VN:BINH.DUONG:THUAN.AN": "Thuận An",
+        "VN:BINH.PHUOC": "Bình Phước",
+        "VN:BINH.PHUOC:BINH.LONG": "Bình Long",
+        "VN:BINH.PHUOC:BU.DANG": "Bù Đăng",
+        "VN:BINH.PHUOC:BU.DOP": "Bù Đốp",
+        "VN:BINH.PHUOC:BU.GIA.MAP": "Bù Gia Mập",
+        "VN:BINH.PHUOC:CHON.THANH": "Chơn Thành",
+        "VN:BINH.PHUOC:DONG.PHU": "Đồng Phú",
+        "VN:BINH.PHUOC:DONG.XOAI": "Đồng Xoài",
+        "VN:BINH.PHUOC:HON.QUAN": "Hớn Quản",
+        "VN:BINH.PHUOC:LOC.NINH": "Lộc Ninh",
+        "VN:BINH.PHUOC:PHUOC.LONG": "Phước Long",
+        "VN:BINH.THUAN": "Bình Thuận",
+        "VN:BINH.THUAN:BAC.BINH": "Bắc Bình",
+        "VN:BINH.THUAN:DUC.LINH": "Đức Linh",
+        "VN:BINH.THUAN:HAM.TAN": "Hàm Tân",
+        "VN:BINH.THUAN:HAM.THUAN.BAC": "Hàm Thuận Bắc",
+        "VN:BINH.THUAN:HAM.THUAN.NAM": "Hàm Thuận Nam",
+        "VN:BINH.THUAN:LA.GI": "La Gi",
+        "VN:BINH.THUAN:PHAN.THIET": "Phan Thiết",
+        "VN:BINH.THUAN:PHU.QUY": "Phú Quý",
+        "VN:BINH.THUAN:TANH.LINH": "Tánh Linh",
+        "VN:BINH.THUAN:TUY.PHONG": "Tuy Phong",
+        "VN:CA.MAU": "Cà Mau",
+        "VN:CA.MAU:CA.MAU": "Cà Mau",
+        "VN:CA.MAU:CAI.NUOC": "Cái Nước",
+        "VN:CA.MAU:DAM.DOI": "Đầm Dơi",
+        "VN:CA.MAU:NAM.CAN": "Năm Căn",
+        "VN:CA.MAU:NGOC.HIEN": "Ngọc Hiển",
+        "VN:CA.MAU:PHU.TAN": "Phú Tân",
+        "VN:CA.MAU:THOI.BINH": "Thới Bình",
+        "VN:CA.MAU:TRAN.VAN.THOI": "Trần Văn Thời",
+        "VN:CA.MAU:U.MINH": "U Minh",
+        "VN:CAN.THO": "Cần Thơ",
+        "VN:CAN.THO:BINH.THUY": "Bình Thủy",
+        "VN:CAN.THO:CAI.RANG": "Cái Răng",
+        "VN:CAN.THO:CAN.THO": "Cần Thơ",
+        "VN:CAN.THO:CO.DO": "Cờ Đỏ",
+        "VN:CAN.THO:NINH.KIEU": "Ninh Kiều",
+        "VN:CAN.THO:O.MON": "Ô Môn",
+        "VN:CAN.THO:PHONG.DIEN": "Phong Điền",
+        "VN:CAN.THO:THOI.LAI": "Thới Lai",
+        "VN:CAN.THO:THOT.NOT": "Thốt Nốt",
+        "VN:CAN.THO:VINH.THANH": "Vĩnh Thạnh",
+        "VN:CAO.BANG": "Cao Bằng",
+        "VN:CAO.BANG:BAO.LAC": "Bảo Lạc",
+        "VN:CAO.BANG:BAO.LAM": "Bảo Lâm",
+        "VN:CAO.BANG:CAO.BANG": "Cao Bằng",
+        "VN:CAO.BANG:HA.LANG": "Hạ Lang",
+        "VN:CAO.BANG:HA.QUANG": "Hà Quảng",
+        "VN:CAO.BANG:HOA.AN": "Hòa An",
+        "VN:CAO.BANG:NGUYEN.BINH": "Nguyên Bình",
+        "VN:CAO.BANG:PHUC.HOA": "Phục Hòa",
+        "VN:CAO.BANG:QUANG.UYEN": "Quảng Uyên",
+        "VN:CAO.BANG:THACH.AN": "Thạch An",
+        "VN:CAO.BANG:THONG.NONG": "Thông Nông",
+        "VN:CAO.BANG:TRA.LINH": "Trà Lĩnh",
+        "VN:CAO.BANG:TRUNG.KHANH": "Trùng Khánh",
+        "VN:DA.NANG": "Đà Nẵng",
+        "VN:DA.NANG:CAM.LE": "Cẩm Lệ",
+        "VN:DA.NANG:HAI.CHAU": "Hải Châu",
+        "VN:DA.NANG:HOA.VANG": "Hòa Vang",
+        "VN:DA.NANG:HOANG.SA": "Hoàng Sa",
+        "VN:DA.NANG:LIEN.CHIEU": "Liên Chiểu",
+        "VN:DA.NANG:NGU.HANH.SON": "Ngũ Hành Sơn",
+        "VN:DA.NANG:SON.TRA": "Sơn Trà",
+        "VN:DA.NANG:THANH.KHE": "Thanh Khê",
+        "VN:DAK.LAK": "Đắk Lắk",
+        "VN:DAK.LAK:BUON.DON": "Buôn Đôn",
+        "VN:DAK.LAK:BUON.HO": "Buôn Hồ",
+        "VN:DAK.LAK:BUON.MA.THUOT": "Buôn Ma Thuột",
+        "VN:DAK.LAK:CU.KUIN": "Cư Kuin",
+        "VN:DAK.LAK:CU.M'GAR": "Cư M'gar",
+        "VN:DAK.LAK:EA.H'LEO": "Ea H'leo",
+        "VN:DAK.LAK:EA.KAR": "Ea Kar",
+        "VN:DAK.LAK:EA.SUP": "Ea Súp",
+        "VN:DAK.LAK:KRONG.ANA": "Krông Ana",
+        "VN:DAK.LAK:KRONG.BONG": "Krông Bông",
+        "VN:DAK.LAK:KRONG.BUK": "Krông Buk",
+        "VN:DAK.LAK:KRONG.NANG": "Krông Năng",
+        "VN:DAK.LAK:KRONG.PAK": "Krông Pắk",
+        "VN:DAK.LAK:LAK": "Lắk",
+        "VN:DAK.LAK:M'DRAK": "M'Đrăk",
+        "VN:DAK.NONG": "Đắk Nông",
+        "VN:DAK.NONG:CU.JUT": "Cư Jút",
+        "VN:DAK.NONG:DAK.GLONG": "Đắk Glong",
+        "VN:DAK.NONG:DAK.MIL": "Đắk Mil",
+        "VN:DAK.NONG:DAK.R'LAP": "Đắk R'Lấp",
+        "VN:DAK.NONG:DAK.SONG": "Đắk Song",
+        "VN:DAK.NONG:GIA.NGHIA": "Gia Nghĩa",
+        "VN:DAK.NONG:KRONG.NO": "Krông Nô",
+        "VN:DAK.NONG:TUY.DUC": "Tuy Đức",
+        "VN:DIEN.BIEN": "Điện Biên",
+        "VN:DIEN.BIEN:DIEN.BIEN": "Điện Biên",
+        "VN:DIEN.BIEN:DIEN.BIEN.DONG": "Điện Biên Đông",
+        "VN:DIEN.BIEN:DIEN.BIEN.PHU": "Điện Biên Phủ",
+        "VN:DIEN.BIEN:MUONG.CHA": "Mường Chà",
+        "VN:DIEN.BIEN:MUONG.NHE": "Mường Nhé",
+        "VN:DIEN.BIEN:TUA.CHUA": "Tủa Chùa",
+        "VN:DIEN.BIEN:TUAN.GIAO": "Tuần Giáo",
+        "VN:DONG.NAI": "Đồng Nai",
+        "VN:DONG.NAI:BIEN.HOA": "Biên Hòa",
+        "VN:DONG.NAI:CAM.MY": "Cẩm Mỹ",
+        "VN:DONG.NAI:DINH.QUAN": "Định Quán",
+        "VN:DONG.NAI:LONG.KHANH": "Long Khánh",
+        "VN:DONG.NAI:LONG.THANH": "Long Thành",
+        "VN:DONG.NAI:NHON.TRACH": "Nhơn Trạch",
+        "VN:DONG.NAI:TAN.PHU": "Tân Phú",
+        "VN:DONG.NAI:THONG.NHAT": "Thống Nhất",
+        "VN:DONG.NAI:TRANG.BOM": "Trảng Bom",
+        "VN:DONG.NAI:VINH.CUU": "Vĩnh Cữu",
+        "VN:DONG.NAI:XUAN.LOC": "Xuân Lộc",
+        "VN:DONG.THAP": "Đồng Tháp",
+        "VN:DONG.THAP:CAO.LANH": "Cao Lãnh",
+        "VN:DONG.THAP:CHAU.THANH": "Châu Thành",
+        "VN:DONG.THAP:HONG.NGU": "Hồng Ngự",
+        "VN:DONG.THAP:LAI.VUNG": "Lai Vung",
+        "VN:DONG.THAP:LAP.VO": "Lấp Vò",
+        "VN:DONG.THAP:SA.DEC": "Sa Đéc",
+        "VN:DONG.THAP:TAM.NONG": "Tam Nông",
+        "VN:DONG.THAP:TAN.HONG": "Tân Hồng",
+        "VN:DONG.THAP:THANH.BINH": "Thanh Bình",
+        "VN:DONG.THAP:THAP.MUOI": "Tháp Mười",
+        "VN:GIA.LAI": "Gia Lai",
+        "VN:GIA.LAI:AN.KHE": "An Khê",
+        "VN:GIA.LAI:AYUN.PA": "Ayun Pa",
+        "VN:GIA.LAI:CHU.PAH": "Chư Păh",
+        "VN:GIA.LAI:CHU.PRONG": "Chư Prông",
+        "VN:GIA.LAI:CHU.PUH": "Chư Pưh",
+        "VN:GIA.LAI:CHU.SE": "Chư Sê",
+        "VN:GIA.LAI:DAK.DOA": "Đắk Đoa",
+        "VN:GIA.LAI:DAK.PO": "Đắk Pơ",
+        "VN:GIA.LAI:DUC.CO": "Đức Cơ",
+        "VN:GIA.LAI:IA.GRAI": "Ia Grai",
+        "VN:GIA.LAI:IA.PA": "Ia Pa",
+        "VN:GIA.LAI:K'BANG": "K'Bang",
+        "VN:GIA.LAI:KONG.CHRO": "Kông Chro",
+        "VN:GIA.LAI:KRONG.PA": "Krông Pa",
+        "VN:GIA.LAI:MANG.YANG": "Mang Yang",
+        "VN:GIA.LAI:PHU.THIEN": "Phú Thiện",
+        "VN:GIA.LAI:PLEIKU": "Pleiku",
+        "VN:HA.GIANG": "Hà Giang",
+        "VN:HA.GIANG:BAC.ME": "Bắc Mê",
+        "VN:HA.GIANG:BAC.QUANG": "Bắc Quang",
+        "VN:HA.GIANG:DONG.VAN": "Đồng Văn",
+        "VN:HA.GIANG:HA.GIANG": "Hà Giang",
+        "VN:HA.GIANG:HOANG.SU.PHI": "Hoàng Su Phì",
+        "VN:HA.GIANG:MEO.VAC": "Mèo Vạc",
+        "VN:HA.GIANG:QUAN.BA": "Quản Bạ",
+        "VN:HA.GIANG:QUANG.BINH": "Quảng Bình",
+        "VN:HA.GIANG:VI.XUYEN": "Vị Xuyên",
+        "VN:HA.GIANG:XIN.MAN": "Xín Mần",
+        "VN:HA.GIANG:YEN.MINH": "Yên Minh",
+        "VN:HA.NAM": "Hà Nam",
+        "VN:HA.NAM:BINH.LUC": "Bình Lục",
+        "VN:HA.NAM:DUY.TIEN": "Duy Tiên",
+        "VN:HA.NAM:KIM.BANG": "Kim Bảng",
+        "VN:HA.NAM:LY.NHAN": "Lý Nhân",
+        "VN:HA.NAM:PHU.LY": "Phủ Lý",
+        "VN:HA.NAM:THANH.LIEM": "Thanh Liêm",
+        "VN:HA.NOI": "Hà Nội",
+        "VN:HA.NOI:BA.DINH": "Ba Đình",
+        "VN:HA.NOI:BA.VI": "Ba Vì",
+        "VN:HA.NOI:CAU.GIAY": "Cầu Giấy",
+        "VN:HA.NOI:CHUONG.MY": "Chương Mỹ",
+        "VN:HA.NOI:DAN.PHUONG": "Đan Phượng",
+        "VN:HA.NOI:DONG.ANH": "Đông Anh",
+        "VN:HA.NOI:DONG.DA": "Đống Đa",
+        "VN:HA.NOI:GIA.LAM": "Gia Lâm",
+        "VN:HA.NOI:HA.DONG": "Hà Đông",
+        "VN:HA.NOI:HAI.BA.TRUNG": "Hai Bà Trưng",
+        "VN:HA.NOI:HOAI.DUC": "Hoài Đức",
+        "VN:HA.NOI:HOAN.KIEM": "Hoàn Kiếm",
+        "VN:HA.NOI:HOANG.MAI": "Hoàng Mai",
+        "VN:HA.NOI:LONG.BIEN": "Long Biên",
+        "VN:HA.NOI:MY.DUC": "Mỹ Đức",
+        "VN:HA.NOI:PHU.XUYEN": "Phú Xuyên",
+        "VN:HA.NOI:PHUC.THO": "Phúc Thọ",
+        "VN:HA.NOI:QUOC.OAI": "Quốc Oai",
+        "VN:HA.NOI:SOC.SON": "Sóc Sơn",
+        "VN:HA.NOI:SON.TAY": "Sơn Tây",
+        "VN:HA.NOI:TAY.HO": "Tây Hồ",
+        "VN:HA.NOI:THACH.THAT": "Thạch Thất",
+        "VN:HA.NOI:THANH.OAI": "Thanh Oai",
+        "VN:HA.NOI:THANH.TRI": "Thanh Trì",
+        "VN:HA.NOI:THANH.XUAN": "Thanh Xuân",
+        "VN:HA.NOI:THUONG.TIN": "Thường Tín",
+        "VN:HA.NOI:TU.LIEM": "Từ Liêm",
+        "VN:HA.NOI:UNG.HOA": "Ứng Hòa",
+        "VN:HA.TINH": "Hà Tĩnh",
+        "VN:HA.TINH:CAM.XUYEN": "Cẩm Xuyên",
+        "VN:HA.TINH:CAN.LOC": "Can Lộc",
+        "VN:HA.TINH:DUC.THO": "Đức Thọ",
+        "VN:HA.TINH:HA.TINH": "Hà Tĩnh",
+        "VN:HA.TINH:HONG.LINH": "Hồng Lĩnh",
+        "VN:HA.TINH:HUONG.KHE": "Hương Khê",
+        "VN:HA.TINH:HUONG.SON": "Hương Sơn",
+        "VN:HA.TINH:KY.ANH": "Kỳ Anh",
+        "VN:HA.TINH:NGHI.XUAN": "Nghi Xuân",
+        "VN:HA.TINH:THACH.HA": "Thạch Hà",
+        "VN:HA.TINH:VU.QUANG": "Vũ Quang",
+        "VN:HAI.DUONG": "Hải Dương",
+        "VN:HAI.DUONG:BINH.GIANG": "Bình Giang",
+        "VN:HAI.DUONG:CAM.GIANG": "Cẩm Giàng",
+        "VN:HAI.DUONG:CHI.LINH": "Chí Linh",
+        "VN:HAI.DUONG:GIA.LOC": "Gia Lộc",
+        "VN:HAI.DUONG:HAI.DUONG": "Hải Dương",
+        "VN:HAI.DUONG:KIM.THANH": "Kim Thành",
+        "VN:HAI.DUONG:KINH.MON": "Kinh Môn",
+        "VN:HAI.DUONG:NAM.SACH": "Nam Sách",
+        "VN:HAI.DUONG:NINH.GIANG": "Ninh Giang",
+        "VN:HAI.DUONG:THANH.HA": "Thanh Hà",
+        "VN:HAI.DUONG:THANH.MIEN": "Thanh Miện",
+        "VN:HAI.DUONG:TU.KY": "Tứ Kỳ",
+        "VN:HAI.PHONG": "Hải Phòng",
+        "VN:HAI.PHONG:AN.DUONG": "An Dương",
+        "VN:HAI.PHONG:AN.LAO": "An Lão",
+        "VN:HAI.PHONG:BACH.LONG.VI": "Bạch Long Vĩ",
+        "VN:HAI.PHONG:CAT.HAI": "Cát Hải",
+        "VN:HAI.PHONG:DO.SON": "Đồ Sơn",
+        "VN:HAI.PHONG:DUONG.KINH": "Dương Kinh",
+        "VN:HAI.PHONG:HAI.AN": "Hải An",
+        "VN:HAI.PHONG:HONG.BANG": "Hồng Bàng",
+        "VN:HAI.PHONG:KIEN.AN": "Kiến An",
+        "VN:HAI.PHONG:KIEN.THUY": "Kiến Thuỵ",
+        "VN:HAI.PHONG:LE.CHAN": "Lê Chân",
+        "VN:HAI.PHONG:NGO.QUYEN": "Ngô Quyền",
+        "VN:HAI.PHONG:THUY.NGUYEN": "Thủy Nguyên",
+        "VN:HAI.PHONG:TIEN.LANG": "Tiên Lãng",
+        "VN:HAI.PHONG:VINH.BAO": "Vĩnh Bảo",
+        "VN:HAU.GIANG": "Hậu Giang",
+        "VN:HAU.GIANG:CHAU.THANH": "Châu Thành",
+        "VN:HAU.GIANG:CHAU.THANH.A": "Châu Thành A",
+        "VN:HAU.GIANG:LONG.MY": "Long Mỹ",
+        "VN:HAU.GIANG:NGA.BAY": "Ngã Bảy",
+        "VN:HAU.GIANG:PHUNG.HIEP": "Phụng Hiệp",
+        "VN:HAU.GIANG:VI.THANH": "Vị Thanh",
+        "VN:HAU.GIANG:VI.THUY": "Vị Thủy",
+        "VN:HO.CHI.MINH": "Hồ Chí Minh",
+        "VN:HO.CHI.MINH:BINH.CHANH": "Bình Chánh",
+        "VN:HO.CHI.MINH:BINH.TAN": "Bình Tân",
+        "VN:HO.CHI.MINH:BINH.THANH": "Bình Thạnh",
+        "VN:HO.CHI.MINH:CAN.GIO": "Cần Giờ",
+        "VN:HO.CHI.MINH:CU.CHI": "Củ Chi",
+        "VN:HO.CHI.MINH:DISTRICT.1": "District 1",
+        "VN:HO.CHI.MINH:DISTRICT.10": "District 10",
+        "VN:HO.CHI.MINH:DISTRICT.11": "District 11",
+        "VN:HO.CHI.MINH:DISTRICT.12": "District 12",
+        "VN:HO.CHI.MINH:DISTRICT.2": "District 2",
+        "VN:HO.CHI.MINH:DISTRICT.3": "District 3",
+        "VN:HO.CHI.MINH:DISTRICT.4": "District 4",
+        "VN:HO.CHI.MINH:DISTRICT.5": "District 5",
+        "VN:HO.CHI.MINH:DISTRICT.6": "District 6",
+        "VN:HO.CHI.MINH:DISTRICT.7": "District 7",
+        "VN:HO.CHI.MINH:DISTRICT.8": "District 8",
+        "VN:HO.CHI.MINH:DISTRICT.9": "District 9",
+        "VN:HO.CHI.MINH:GO.VAP": "Gò Vấp",
+        "VN:HO.CHI.MINH:HOC.MON": "Hóc Môn",
+        "VN:HO.CHI.MINH:NHA.BE": "Nhà Bè",
+        "VN:HO.CHI.MINH:PHU.NHUAN": "Phú Nhuận",
+        "VN:HO.CHI.MINH:TAN.BINH": "Tân Bình",
+        "VN:HO.CHI.MINH:TAN.PHU": "Tân Phú",
+        "VN:HO.CHI.MINH:THU.DUC": "Thủ Đức",
+        "VN:HOA.BINH": "Hòa Bình",
+        "VN:HOA.BINH:CAO.PHONG": "Cao Phong",
+        "VN:HOA.BINH:DA.BAC": "Đà Bắc",
+        "VN:HOA.BINH:HOA.BINH": "Hòa Bình",
+        "VN:HOA.BINH:KIM.BOI": "Kim Bôi",
+        "VN:HOA.BINH:KY.SON": "Kỳ Sơn",
+        "VN:HOA.BINH:LAC.SON": "Lạc Sơn",
+        "VN:HOA.BINH:LAC.THUY": "Lạc Thủy",
+        "VN:HOA.BINH:LUONG.SON": "Lương Sơn",
+        "VN:HOA.BINH:MAI.CHAU": "Mai Châu",
+        "VN:HOA.BINH:TAN.LAC": "Tân Lạc",
+        "VN:HOA.BINH:YEN.THUY": "Yên Thủy",
+        "VN:HUNG.YEN": "Hưng Yên",
+        "VN:HUNG.YEN:AN.THI": "Ân Thi",
+        "VN:HUNG.YEN:HUNG.YEN": "Hưng Yên",
+        "VN:HUNG.YEN:KHOAI.CHAU": "Khoái Châu",
+        "VN:HUNG.YEN:KIM.DONG": "Kim Động",
+        "VN:HUNG.YEN:MY.HAO": "Mỹ Hào",
+        "VN:HUNG.YEN:PHU.CU": "Phù Cừ",
+        "VN:HUNG.YEN:TIEN.LU": "Tiên Lữ",
+        "VN:HUNG.YEN:VAN.GIANG": "Văn Giang",
+        "VN:HUNG.YEN:VAN.LAM": "Văn Lâm",
+        "VN:HUNG.YEN:YEN.MY": "Yên Mỹ",
+        "VN:KHANH.HOA": "Khánh Hòa",
+        "VN:KHANH.HOA:CAM.LAM": "Cam Lâm",
+        "VN:KHANH.HOA:CAM.RANH": "Cam Ranh",
+        "VN:KHANH.HOA:DIEN.KHANH": "Diên Khánh",
+        "VN:KHANH.HOA:KHANH.SON": "Khánh Sơn",
+        "VN:KHANH.HOA:KHANH.VINH": "Khánh Vĩnh",
+        "VN:KHANH.HOA:NHA.TRANG": "Nha Trang",
+        "VN:KHANH.HOA:NINH.HOA": "Ninh Hòa",
+        "VN:KHANH.HOA:TRUONG.SA": "Trường Sa",
+        "VN:KHANH.HOA:VAN.NINH": "Vạn Ninh",
+        "VN:KIEN.GIANG": "Kiên Giang",
+        "VN:KIEN.GIANG:AN.BIEN": "An Biên",
+        "VN:KIEN.GIANG:AN.MINH": "An Minh",
+        "VN:KIEN.GIANG:CHAU.THANH": "Châu Thành",
+        "VN:KIEN.GIANG:GIANG.THANH": "Giang Thành",
+        "VN:KIEN.GIANG:GIONG.RIENG": "Giồng Riềng",
+        "VN:KIEN.GIANG:GO.QUAO": "Gò Quao",
+        "VN:KIEN.GIANG:HA.TIEN": "Hà Tiên",
+        "VN:KIEN.GIANG:HON.DAT": "Hòn Đất",
+        "VN:KIEN.GIANG:KIEN.HAI": "Kiên Hải",
+        "VN:KIEN.GIANG:KIEN.LUONG": "Kiên Lương",
+        "VN:KIEN.GIANG:PHU.QUOC": "Phú Quốc",
+        "VN:KIEN.GIANG:RACH.GIA": "Rạch Giá",
+        "VN:KIEN.GIANG:TAN.HIEP": "Tân Hiệp",
+        "VN:KIEN.GIANG:U.MINH.THUONG": "U Minh Thượng",
+        "VN:KIEN.GIANG:VINH.THUAN": "Vĩnh Thuận",
+        "VN:KON.TUM": "Kon Tum",
+        "VN:KON.TUM:DAK.GLEI": "Đắk Glei",
+        "VN:KON.TUM:DAK.HA": "Đắk Hà",
+        "VN:KON.TUM:DAK.TO": "Đắk Tô",
+        "VN:KON.TUM:KON.PLONG": "Kon Plông",
+        "VN:KON.TUM:KON.RAY": "Kon Rẫy",
+        "VN:KON.TUM:KON.TUM": "Kon Tum",
+        "VN:KON.TUM:NGOC.HOI": "Ngọc Hồi",
+        "VN:KON.TUM:SA.THAY": "Sa Thầy",
+        "VN:KON.TUM:TU.MO.RONG": "Tu Mơ Rông",
+        "VN:LAI.CHAU": "Lai Châu",
+        "VN:LAI.CHAU:LAI.CHAU": "Lai Châu",
+        "VN:LAI.CHAU:MUONG.TE": "Mường Tè",
+        "VN:LAI.CHAU:PHONG.THO": "Phong Thổ",
+        "VN:LAI.CHAU:SIN.HO": "Sìn Hồ",
+        "VN:LAI.CHAU:TAM.DUONG": "Tam Đường",
+        "VN:LAI.CHAU:TAN.UYEN": "Tân Uyên",
+        "VN:LAI.CHAU:THAN.UYEN": "Than Uyên",
+        "VN:LAM.DONG": "Lâm Đồng",
+        "VN:LAM.DONG:BAO.LAM": "Bảo Lâm",
+        "VN:LAM.DONG:BAO.LOC": "Bảo Lộc",
+        "VN:LAM.DONG:CAT.TIEN": "Cát Tiên",
+        "VN:LAM.DONG:DA.HUOAI": "Đạ Huoai",
+        "VN:LAM.DONG:DA.LAT": "Đà Lạt",
+        "VN:LAM.DONG:DA.TEH": "Đạ Tẻh",
+        "VN:LAM.DONG:DAM.RONG": "Đam Rông",
+        "VN:LAM.DONG:DI.LINH": "Di Linh",
+        "VN:LAM.DONG:DON.DUONG": "Đơn Dương",
+        "VN:LAM.DONG:DUC.TRONG": "Đức Trọng",
+        "VN:LAM.DONG:LAC.DUONG": "Lạc Dương",
+        "VN:LAM.DONG:LAM.HA": "Lâm Hà",
+        "VN:LANG.SON": "Lạng Sơn",
+        "VN:LANG.SON:BAC.SON": "Bắc Sơn",
+        "VN:LANG.SON:BINH.GIA": "Bình Gia",
+        "VN:LANG.SON:CAO.LOC": "Cao Lộc",
+        "VN:LANG.SON:CHI.LANG": "Chi Lăng",
+        "VN:LANG.SON:DINH.LAP": "Đình Lập",
+        "VN:LANG.SON:HUU.LUNG": "Hữu Lũng",
+        "VN:LANG.SON:LANG.SON": "Lạng Sơn",
+        "VN:LANG.SON:LOC.BINH": "Lộc Bình",
+        "VN:LANG.SON:TRANG.DINH": "Tràng Định",
+        "VN:LANG.SON:VAN.LANG": "Văn Lãng",
+        "VN:LANG.SON:VAN.QUAN": "Văn Quân",
+        "VN:LAO.CAI": "Lào Cai",
+        "VN:LAO.CAI:BAC.HA": "Bắc Hà",
+        "VN:LAO.CAI:BAO.THANG": "Bảo Thắng",
+        "VN:LAO.CAI:BAO.YEN": "Bảo Yên",
+        "VN:LAO.CAI:BAT.XAT": "Bát Xát",
+        "VN:LAO.CAI:LAO.CAI": "Lào Cai",
+        "VN:LAO.CAI:MUONG.KHUONG": "Mường Khương",
+        "VN:LAO.CAI:SA.PA": "Sa Pa",
+        "VN:LAO.CAI:SI.MA.CAI": "Si Ma Cai",
+        "VN:LAO.CAI:VAN.BAN": "Văn Bàn",
+        "VN:LONG.AN": "Long An",
+        "VN:LONG.AN:BEN.LUC": "Bến Lức",
+        "VN:LONG.AN:CAN.DUOC": "Cần Đước",
+        "VN:LONG.AN:CAN.GIUOC": "Cần Giuộc",
+        "VN:LONG.AN:CHAU.THANH": "Châu Thành",
+        "VN:LONG.AN:DUC.HOA": "Đức Hòa",
+        "VN:LONG.AN:DUC.HUE": "Đức Huệ",
+        "VN:LONG.AN:MOC.HOA": "Mộc Hóa",
+        "VN:LONG.AN:TAN.AN": "Tân An",
+        "VN:LONG.AN:TAN.HUNG": "Tân Hưng",
+        "VN:LONG.AN:TAN.THANH": "Tân Thạnh",
+        "VN:LONG.AN:TAN.TRU": "Tân Trụ",
+        "VN:LONG.AN:THANH.HOA": "Thạnh Hóa",
+        "VN:LONG.AN:THU.THUA": "Thủ Thừa",
+        "VN:LONG.AN:VINH.HUNG": "Vĩnh Hưng",
+        "VN:NAM.DINH": "Nam Định",
+        "VN:NAM.DINH:GIAO.THUY": "Giao Thủy",
+        "VN:NAM.DINH:HAI.HAU": "Hải Hậu",
+        "VN:NAM.DINH:MY.LOC": "Mỹ Lộc",
+        "VN:NAM.DINH:NAM.DINH": "Nam Định",
+        "VN:NAM.DINH:NAM.TRUC": "Nam Trực",
+        "VN:NAM.DINH:NGHIA.HUNG": "Nghĩa Hưng",
+        "VN:NAM.DINH:TRUC.NINH": "Trực Ninh",
+        "VN:NAM.DINH:VU.BAN": "Vụ Bản",
+        "VN:NAM.DINH:XUAN.TRUONG": "Xuân Trường",
+        "VN:NAM.DINH:Y.YEN": "Ý Yên",
+        "VN:NGHE.AN": "Nghệ An",
+        "VN:NGHE.AN:ANH.SON": "Anh Sơn",
+        "VN:NGHE.AN:CON.CUONG": "Con Cuông",
+        "VN:NGHE.AN:CUA.LO": "Cửa Lò",
+        "VN:NGHE.AN:DIEN.CHAU": "Diễn Châu",
+        "VN:NGHE.AN:DO.LUONG": "Đô Lương",
+        "VN:NGHE.AN:HUNG.NGUYEN": "Hưng Nguyên",
+        "VN:NGHE.AN:KY.SON": "Kỳ Sơn",
+        "VN:NGHE.AN:NAM.DAN": "Nam Đàn",
+        "VN:NGHE.AN:NGHI.LOC": "Nghi Lộc",
+        "VN:NGHE.AN:NGHIA.DAN": "Nghĩa Đàn",
+        "VN:NGHE.AN:QUE.PHONG": "Quế Phong",
+        "VN:NGHE.AN:QUY.CHAU": "Quỳ Châu",
+        "VN:NGHE.AN:QUY.HOP": "Quỳ Hợp",
+        "VN:NGHE.AN:QUYNH.LUU": "Quỳnh Lưu",
+        "VN:NGHE.AN:TAN.KY": "Tân Kỳ",
+        "VN:NGHE.AN:THAI.HOA": "Thái Hòa",
+        "VN:NGHE.AN:THANH.CHUONG": "Thanh Chương",
+        "VN:NGHE.AN:TUONG.DUONG": "Tương Dương",
+        "VN:NGHE.AN:VINH": "Vinh",
+        "VN:NGHE.AN:YEN.THANH": "Yên Thành",
+        "VN:NINH.BINH": "Ninh Bình",
+        "VN:NINH.BINH:GIA.VIEN": "Gia Viễn",
+        "VN:NINH.BINH:HOA.LU": "Hoa Lư",
+        "VN:NINH.BINH:KIM.SON": "Kim Sơn",
+        "VN:NINH.BINH:NHO.QUAN": "Nho Quan",
+        "VN:NINH.BINH:NINH.BINH": "Ninh Bình",
+        "VN:NINH.BINH:TAM.DIEP": "Tam Diệp",
+        "VN:NINH.BINH:YEN.KHANH": "Yên Khánh",
+        "VN:NINH.BINH:YEN.MO": "Yên Mô",
+        "VN:NINH.THUAN": "Ninh Thuận",
+        "VN:NINH.THUAN:NINH.HAI": "Ninh Hải",
+        "VN:NINH.THUAN:NINH.PHUOC": "Ninh Phước",
+        "VN:NINH.THUAN:NINH.SON": "Ninh Sơn",
+        "VN:NINH.THUAN:PHAN.RANG.THAP.CHAM": "Phan Rang–Tháp Chàm",
+        "VN:NINH.THUAN:THUAN.BAC": "Thuận Bắc",
+        "VN:NINH.THUAN:THUAN.NAM": "Thuận Nam",
+        "VN:PHU.THO": "Phú Thọ",
+        "VN:PHU.THO:CAM.KHE": "Cẩm Khê",
+        "VN:PHU.THO:DOAN.HUNG": "Đoan Hùng",
+        "VN:PHU.THO:HA.HOA": "Hạ Hòa",
+        "VN:PHU.THO:LAM.THAO": "Lâm Thao",
+        "VN:PHU.THO:PHU.NINH": "Phù Ninh",
+        "VN:PHU.THO:PHU.THO": "Phú Thọ",
+        "VN:PHU.THO:TAM.NONG": "Tam Nông",
+        "VN:PHU.THO:TAN.SON": "Tân Sơn",
+        "VN:PHU.THO:THANH.BA": "Thanh Ba",
+        "VN:PHU.THO:THANH.SON": "Thanh Sơn",
+        "VN:PHU.THO:THANH.THUY": "Thanh Thủy",
+        "VN:PHU.THO:VIET.TRI": "Việt Trì",
+        "VN:PHU.THO:YEN.LAP": "Yên Lập",
+        "VN:PHU.YEN": "Phú Yên",
+        "VN:PHU.YEN:DONG.HOA": "Đông Hòa",
+        "VN:PHU.YEN:DONG.XUAN": "Đồng Xuân",
+        "VN:PHU.YEN:PHU.HOA": "Phú Hòa",
+        "VN:PHU.YEN:SON.HOA": "Sơn Hòa",
+        "VN:PHU.YEN:SONG.CAU": "Sông Cầu",
+        "VN:PHU.YEN:SONG.HINH": "Sông Hinh",
+        "VN:PHU.YEN:TAY.HOA": "Tây Hòa",
+        "VN:PHU.YEN:TUY.AN": "Tuy An",
+        "VN:PHU.YEN:TUY.HOA": "Tuy Hòa",
+        "VN:QUANG.BINH": "Quảng Bình",
+        "VN:QUANG.BINH:BO.TRACH": "Bố Trạch",
+        "VN:QUANG.BINH:DONG.HOI": "Đồng Hới",
+        "VN:QUANG.BINH:LE.THUY": "Lệ Thủy",
+        "VN:QUANG.BINH:MINH.HOA": "Minh Hóa",
+        "VN:QUANG.BINH:QUANG.NINH": "Quảng Ninh",
+        "VN:QUANG.BINH:QUANG.TRACH": "Quảng Trạch",
+        "VN:QUANG.BINH:TUYEN.HOA": "Tuyên Hóa",
+        "VN:QUANG.NAM": "Quảng Nam",
+        "VN:QUANG.NAM:BAC.TRA.MY": "Bắc Trà My",
+        "VN:QUANG.NAM:DAI.LOC": "Đại Lộc",
+        "VN:QUANG.NAM:DIEN.BAN": "Điện Bàn",
+        "VN:QUANG.NAM:DONG.GIANG": "Đông Giang",
+        "VN:QUANG.NAM:DUY.XUYEN": "Duy Xuyên",
+        "VN:QUANG.NAM:HIEP.DUC": "Hiệp Đức",
+        "VN:QUANG.NAM:HOI.AN": "Hội An",
+        "VN:QUANG.NAM:NAM.GIANG": "Nam Giang",
+        "VN:QUANG.NAM:NAM.TRA.MY": "Nam Trà My",
+        "VN:QUANG.NAM:NONG.SON": "Nông Sơn",
+        "VN:QUANG.NAM:NUI.THANH": "Núi Thành",
+        "VN:QUANG.NAM:PHUOC.SON": "Phước Sơn",
+        "VN:QUANG.NAM:QUE.SON": "Quế Sơn",
+        "VN:QUANG.NAM:TAM.KY": "Tam Kỳ",
+        "VN:QUANG.NAM:TAY.GIANG": "Tây Giang",
+        "VN:QUANG.NAM:THANG.BINH": "Thăng Bình",
+        "VN:QUANG.NAM:TIEN.PHUOC": "Tiên Phước",
+        "VN:QUANG.NGAI": "Quảng Ngãi",
+        "VN:QUANG.NGAI:BA.TO": "Ba Tơ",
+        "VN:QUANG.NGAI:BINH.SON": "Bình Sơn",
+        "VN:QUANG.NGAI:DUC.PHO": "Đức Phổ",
+        "VN:QUANG.NGAI:LY.SON": "Lý Sơn",
+        "VN:QUANG.NGAI:MINH.LONG": "Minh Long",
+        "VN:QUANG.NGAI:NGHIA.HANH": "Nghĩa Hành",
+        "VN:QUANG.NGAI:QUANG.NGAI": "Quảng Ngãi",
+        "VN:QUANG.NGAI:SON.HA": "Sơn Hà",
+        "VN:QUANG.NGAI:SON.TAY": "Sơn Tây",
+        "VN:QUANG.NGAI:SON.TINH": "Sơn Tịnh",
+        "VN:QUANG.NGAI:TAY.TRA": "Tây Trà",
+        "VN:QUANG.NGAI:TRA.BONG": "Trà Bồng",
+        "VN:QUANG.NGAI:TU.NGHIA": "Tư Nghĩa",
+        "VN:QUANG.NINH": "Quảng Ninh",
+        "VN:QUANG.NINH:BA.CHE": "Ba Chẽ",
+        "VN:QUANG.NINH:BINH.LIEU": "Bình Liêu",
+        "VN:QUANG.NINH:CAM.PHA": "Cẩm Phả",
+        "VN:QUANG.NINH:CO.TO": "Cô Tô",
+        "VN:QUANG.NINH:DAM.HA": "Đầm Hà",
+        "VN:QUANG.NINH:DONG.TRIEU": "Đông Triều",
+        "VN:QUANG.NINH:HA.LONG": "Hạ Long",
+        "VN:QUANG.NINH:HAI.HA": "Hải Hà",
+        "VN:QUANG.NINH:HOANH.BO": "Hoành Bồ",
+        "VN:QUANG.NINH:MONG.CAI": "Móng Cái",
+        "VN:QUANG.NINH:TIEN.YEN": "Tiên Yên",
+        "VN:QUANG.NINH:UONG.BI": "Uông Bí",
+        "VN:QUANG.NINH:VAN.DON": "Vân Đồn",
+        "VN:QUANG.NINH:YEN.HUNG": "Yên Hưng",
+        "VN:QUANG.TRI": "Quảng Trị",
+        "VN:QUANG.TRI:CAM.LO": "Cam Lộ",
+        "VN:QUANG.TRI:CON.CO": "Cồn Cỏ",
+        "VN:QUANG.TRI:DA.KRONG": "Đa Krông",
+        "VN:QUANG.TRI:DONG.HA": "Đông Hà",
+        "VN:QUANG.TRI:GIO.LINH": "Gio Linh",
+        "VN:QUANG.TRI:HAI.LANG": "Hải Lăng",
+        "VN:QUANG.TRI:HUONG.HOA": "Hướng Hóa",
+        "VN:QUANG.TRI:QUANG.TRI": "Quảng Trị",
+        "VN:QUANG.TRI:TRIEU.PHONG": "Triệu Phong",
+        "VN:QUANG.TRI:VINH.LINH": "Vĩnh Linh",
+        "VN:SOC.TRANG": "Sóc Trăng",
+        "VN:SOC.TRANG:CHAU.THANH": "Châu Thành",
+        "VN:SOC.TRANG:CU.LAO.DUNG": "Cù Lao Dung",
+        "VN:SOC.TRANG:KE.SACH": "Kế Sách",
+        "VN:SOC.TRANG:LONG.PHU": "Long Phú",
+        "VN:SOC.TRANG:MY.TU": "Mỹ Tú",
+        "VN:SOC.TRANG:MY.XUYEN": "Mỹ Xuyên",
+        "VN:SOC.TRANG:SOC.TRANG": "Sóc Trăng",
+        "VN:SOC.TRANG:THANH.TRI": "Thạnh Trị",
+        "VN:SOC.TRANG:VINH.CHAU": "Vĩnh Châu",
+        "VN:SON.LA": "Sơn La",
+        "VN:SON.LA:BAC.YEN": "Bắc Yên",
+        "VN:SON.LA:MAI.SON": "Mai Sơn",
+        "VN:SON.LA:MOC.CHAU": "Mộc Châu",
+        "VN:SON.LA:MUONG.LA": "Mường La",
+        "VN:SON.LA:PHU.YEN": "Phù Yên",
+        "VN:SON.LA:QUYNH.NHAI": "Quỳnh Nhai",
+        "VN:SON.LA:SON.LA": "Sơn La",
+        "VN:SON.LA:SONG.MA": "Sông Mã",
+        "VN:SON.LA:SOP.COP": "Sốp Cộp",
+        "VN:SON.LA:THUAN.CHAU": "Thuận Châu",
+        "VN:SON.LA:YEN.CHAU": "Yên Châu",
+        "VN:TAY.NINH": "Tây Ninh",
+        "VN:TAY.NINH:BEN.CAU": "Bến Cầu",
+        "VN:TAY.NINH:CHAU.THANH": "Châu Thành",
+        "VN:TAY.NINH:DUONG.MINH.CHAU": "Dương Minh Châu",
+        "VN:TAY.NINH:GO.DAU": "Gò Dầu",
+        "VN:TAY.NINH:HOA.THANH": "Hòa Thành",
+        "VN:TAY.NINH:TAN.BIEN": "Tân Biên",
+        "VN:TAY.NINH:TAN.CHAU": "Tân Châu",
+        "VN:TAY.NINH:TAY.NINH": "Tây Ninh",
+        "VN:TAY.NINH:TRANG.BANG": "Trảng Bàng",
+        "VN:THAI.BINH": "Thái Bình",
+        "VN:THAI.BINH:DONG.HUNG": "Đông Hưng",
+        "VN:THAI.BINH:HUNG.HA": "Hưng Hà",
+        "VN:THAI.BINH:KIEN.XUONG": "Kiến Xương",
+        "VN:THAI.BINH:QUYNH.PHU": "Quỳnh Phụ",
+        "VN:THAI.BINH:THAI.BINH": "Thái Bình",
+        "VN:THAI.BINH:THAI.THUY": "Thái Thụy",
+        "VN:THAI.BINH:TIEN.HAI": "Tiền Hải",
+        "VN:THAI.BINH:VU.THU": "Vũ Thư",
+        "VN:THAI.NGUYEN": "Thái Nguyên",
+        "VN:THAI.NGUYEN:DAI.TU": "Đại Từ",
+        "VN:THAI.NGUYEN:DINH.HOA": "Định Hóa",
+        "VN:THAI.NGUYEN:DONG.HY": "Đồng Hỷ",
+        "VN:THAI.NGUYEN:PHO.YEN": "Phổ Yên",
+        "VN:THAI.NGUYEN:PHU.BINH": "Phú Bình",
+        "VN:THAI.NGUYEN:PHU.LUONG": "Phú Lương",
+        "VN:THAI.NGUYEN:SONG.CONG": "Sông Công",
+        "VN:THAI.NGUYEN:THAI.NGUYEN": "Thái Nguyên",
+        "VN:THAI.NGUYEN:VO.NHAI": "Võ Nhai",
+        "VN:THANH.HOA": "Thanh Hóa",
+        "VN:THANH.HOA:BA.THUOC": "Bá Thước",
+        "VN:THANH.HOA:BIM.SON": "Bỉm Sơn",
+        "VN:THANH.HOA:CAM.THUY": "Cẩm Thủy",
+        "VN:THANH.HOA:DONG.SON": "Đông Sơn",
+        "VN:THANH.HOA:HA.TRUNG": "Hà Trung",
+        "VN:THANH.HOA:HAU.LOC": "Hậu Lộc",
+        "VN:THANH.HOA:HOANG.HOA": "Hoằng Hóa",
+        "VN:THANH.HOA:LANG.CHANH": "Lang Chánh",
+        "VN:THANH.HOA:MUONG.LAT": "Mường Lát",
+        "VN:THANH.HOA:NGOC.LAC": "Ngọc Lặc",
+        "VN:THANH.HOA:NHU.THANH": "Như Thanh",
+        "VN:THANH.HOA:NHU.XUAN": "Như Xuân",
+        "VN:THANH.HOA:NONG.CONG": "Nông Cống",
+        "VN:THANH.HOA:QUAN.HOA": "Quan Hóa",
+        "VN:THANH.HOA:QUAN.SON": "Quan Sơn",
+        "VN:THANH.HOA:QUANG.XUONG": "Quảng Xương",
+        "VN:THANH.HOA:SAM.SON": "Sầm Sơn",
+        "VN:THANH.HOA:THACH.THANH": "Thạch Thành",
+        "VN:THANH.HOA:THANH.HOA": "Thanh Hóa",
+        "VN:THANH.HOA:THIEU.HOA": "Thiệu Hóa",
+        "VN:THANH.HOA:THO.XUAN": "Thọ Xuân",
+        "VN:THANH.HOA:THUONG.XUAN": "Thường Xuân",
+        "VN:THANH.HOA:TINH.GIA": "Tĩnh Gia",
+        "VN:THANH.HOA:TRIEU.SON": "Triệu Sơn",
+        "VN:THANH.HOA:VINH.LOC": "Vĩnh Lộc",
+        "VN:THANH.HOA:YEN.DINH": "Yên Định",
+        "VN:THUA.THIEN.HUE": "Thừa Thiên–Huế",
+        "VN:THUA.THIEN.HUE:A.LUOI": "A Lưới",
+        "VN:THUA.THIEN.HUE:HUE": "Huế",
+        "VN:THUA.THIEN.HUE:HUONG.THUY": "Hương Thủy",
+        "VN:THUA.THIEN.HUE:HUONG.TRA": "Hương Trà",
+        "VN:THUA.THIEN.HUE:NAM.DONG": "Nam Đông",
+        "VN:THUA.THIEN.HUE:PHONG.DIEN": "Phong Điền",
+        "VN:THUA.THIEN.HUE:PHU.LOC": "Phú Lộc",
+        "VN:THUA.THIEN.HUE:PHU.VANG": "Phú Vang",
+        "VN:THUA.THIEN.HUE:QUANG.DIEN": "Quảng Điền",
+        "VN:TIEN.GIANG": "Tiền Giang",
+        "VN:TIEN.GIANG:CAI.BE": "Cái Bè",
+        "VN:TIEN.GIANG:CAI.LAY": "Cai Lậy",
+        "VN:TIEN.GIANG:CHAU.THANH": "Châu Thành",
+        "VN:TIEN.GIANG:CHO.GAO": "Chợ Gạo",
+        "VN:TIEN.GIANG:GO.CONG": "Gò Công",
+        "VN:TIEN.GIANG:GO.CONG.DONG": "Gò Công Dông",
+        "VN:TIEN.GIANG:GO.CONG.TAY": "Gò Công Tây",
+        "VN:TIEN.GIANG:MY.THO": "Mỹ Tho",
+        "VN:TIEN.GIANG:TAN.PHUOC": "Tân Phước",
+        "VN:TRA.VINH": "Trà Vinh",
+        "VN:TRA.VINH:CANG.LONG": "Càng Long",
+        "VN:TRA.VINH:CAU.KE": "Cầu Kè",
+        "VN:TRA.VINH:CAU.NGANG": "Cầu Ngang",
+        "VN:TRA.VINH:CHAU.THANH": "Châu Thành",
+        "VN:TRA.VINH:DUYEN.HAI": "Duyên Hải",
+        "VN:TRA.VINH:TIEU.CAN": "Tiểu Cần",
+        "VN:TRA.VINH:TRA.CU": "Trà Cú",
+        "VN:TRA.VINH:TRA.VINH": "Trà Vinh",
+        "VN:TUYEN.QUANG": "Tuyên Quang",
+        "VN:TUYEN.QUANG:CHIEM.HOA": "Chiêm Hóa",
+        "VN:TUYEN.QUANG:HAM.YEN": "Hàm Yên",
+        "VN:TUYEN.QUANG:NA.HANG": "Nà Hang",
+        "VN:TUYEN.QUANG:SON.DUONG": "Sơn Dương",
+        "VN:TUYEN.QUANG:TUYEN.QUANG": "Tuyên Quang",
+        "VN:TUYEN.QUANG:YEN.SON": "Yên Sơn",
+        "VN:VINH.LONG": "Vĩnh Long",
+        "VN:VINH.LONG:BINH.MINH": "Bình Minh",
+        "VN:VINH.LONG:BINH.TAN": "Bình Tân",
+        "VN:VINH.LONG:LONG.HO": "Long Hồ",
+        "VN:VINH.LONG:MANG.THIT": "Mang Thít",
+        "VN:VINH.LONG:TAM.BINH": "Tâm Bình",
+        "VN:VINH.LONG:TRA.ON": "Trà Ôn",
+        "VN:VINH.LONG:VINH.LONG": "Vĩnh Long",
+        "VN:VINH.LONG:VUNG.LIEM": "Vũng Liêm",
+        "VN:VINH.PHUC": "Vĩnh Phúc",
+        "VN:VINH.PHUC:BINH.XUYEN": "Bình Xuyên",
+        "VN:VINH.PHUC:LAP.THACH": "Lập Thạch",
+        "VN:VINH.PHUC:PHUC.YEN": "Phúc Yên",
+        "VN:VINH.PHUC:TAM.DAO": "Tam Đảo",
+        "VN:VINH.PHUC:TAM.DUONG": "Tam Dương",
+        "VN:VINH.PHUC:VINH.TUONG": "Vĩnh Tường",
+        "VN:VINH.PHUC:VINH.YEN": "Vĩnh Yên",
+        "VN:VINH.PHUC:YEN.LAC": "Yên Lạc",
+        "VN:YEN.BAI": "Yên Bái",
+        "VN:YEN.BAI:LUC.YEN": "Lục Yên",
+        "VN:YEN.BAI:MU.CANG.CHAI": "Mù Cang Chải",
+        "VN:YEN.BAI:NGHIA.LO": "Nghĩa Lộ",
+        "VN:YEN.BAI:TRAM.TAU": "Trạm Tấu",
+        "VN:YEN.BAI:TRAN.YEN": "Trấn Yên",
+        "VN:YEN.BAI:VAN.CHAN": "Văn Chấn",
+        "VN:YEN.BAI:VAN.YEN": "Văn Yên",
+        "VN:YEN.BAI:YEN.BAI": "Yên Bái",
+        "VN:YEN.BAI:YEN.BINH": "Yên Bình"
+      }
+    },
+    "vn": {
+      "institution-part": {
+        "toa.an.nhan.dan.toi.cao": "Tòa án Nhân dân Tối cao"
+      }
+    },
+    "vn:an.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:an.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:chau.doc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:chau.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:cho.moi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:long.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:phu.tan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:tan.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:thoai.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:tinh.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:an.giang:tri.ton": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:ba.ria": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:chau.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:con.dao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:dat.do": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:long.dien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:tan.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:vung.tau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ba.ria.vung.tau:xuyen.moc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:bac.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:hiep.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:lang.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:luc.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:luc.ngan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:son.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:tan.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:viet.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:yen.dung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.giang:yen.the": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:ba.be": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:bac.kan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:bach.thong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:cho.don": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:cho.moi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:na.ri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:ngan.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.kan:pac.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:bac.lieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:dong.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:gia.rai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:hoa.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:hong.dan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:phuoc.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.lieu:vinh.loi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:bac.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:gia.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:luong.tai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:que.vo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:thuan.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:tien.du": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:tu.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:bac.ninh:yen.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:ba.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:ben.tre": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:binh.dai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:cho.lach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:giong.trom": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:mo.cay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ben.tre:thanh.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:an.lao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:an.nhon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:hoai.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:hoai.nhon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:phu.cat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:phu.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:qui.nhon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:tay.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:tuy.phuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:van.canh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.dinh:vinh.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:ben.cat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:dau.tieng": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:di.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:phu.giao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:tan.uyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:thu.dau.mot": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.duong:thuan.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:binh.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:bu.dang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:bu.dop": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:bu.gia.map": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:chon.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:dong.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:dong.xoai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:hon.quan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:loc.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.phuoc:phuoc.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:bac.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:duc.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:ham.tan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:ham.thuan.bac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:ham.thuan.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:la.gi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:phan.thiet": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:phu.quy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:tanh.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:binh.thuan:tuy.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:ca.mau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:cai.nuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:dam.doi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:nam.can": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:ngoc.hien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:phu.tan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:thoi.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:tran.van.thoi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ca.mau:u.minh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:binh.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:cai.rang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:can.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:co.do": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:ninh.kieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:o.mon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:phong.dien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:thoi.lai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:thot.not": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:can.tho:vinh.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:bao.lac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:bao.lam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:cao.bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:ha.lang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:ha.quang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:hoa.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:nguyen.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:phuc.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:quang.uyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:thach.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:thong.nong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:tra.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:cao.bang:trung.khanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:cam.le": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:hai.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:hoa.vang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:hoang.sa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:lien.chieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:ngu.hanh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:son.tra": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:da.nang:thanh.khe": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:buon.don": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:buon.ho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:buon.ma.thuot": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:cu.kuin": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:cu.m'gar": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:ea.h'leo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:ea.kar": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:ea.sup": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:krong.ana": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:krong.bong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:krong.buk": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:krong.nang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:krong.pak": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:lak": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.lak:m'drak": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:cu.jut": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:dak.glong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:dak.mil": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:dak.r'lap": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:dak.song": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:gia.nghia": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:krong.no": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dak.nong:tuy.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:dien.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:dien.bien.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:dien.bien.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:muong.cha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:muong.nhe": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:tua.chua": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dien.bien:tuan.giao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:bien.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:cam.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:dinh.quan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:long.khanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:long.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:nhon.trach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:tan.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:thong.nhat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:trang.bom": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:vinh.cuu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.nai:xuan.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:cao.lanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:hong.ngu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:lai.vung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:lap.vo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:sa.dec": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:tam.nong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:tan.hong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:thanh.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:dong.thap:thap.muoi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:an.khe": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:ayun.pa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:chu.pah": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:chu.prong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:chu.puh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:chu.se": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:dak.doa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:dak.po": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:duc.co": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:ia.grai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:ia.pa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:k'bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:kong.chro": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:krong.pa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:mang.yang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:phu.thien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:gia.lai:pleiku": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:bac.me": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:bac.quang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:dong.van": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:ha.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:hoang.su.phi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:meo.vac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:quan.ba": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:quang.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:vi.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:xin.man": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.giang:yen.minh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:binh.luc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:duy.tien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:kim.bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:ly.nhan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:phu.ly": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.nam:thanh.liem": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:ba.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:ba.vi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:cau.giay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:chuong.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:dan.phuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:dong.anh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:dong.da": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:gia.lam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:ha.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:hai.ba.trung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:hoai.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:hoan.kiem": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:hoang.mai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:long.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:my.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:phu.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:phuc.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:quoc.oai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:soc.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:son.tay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:tay.ho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:thach.that": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:thanh.oai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:thanh.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:thanh.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:thuong.tin": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:tu.liem": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.noi:ung.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:cam.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:can.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:duc.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:ha.tinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:hong.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:huong.khe": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:huong.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:ky.anh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:nghi.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:thach.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ha.tinh:vu.quang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:binh.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:cam.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:chi.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:gia.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:hai.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:kim.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:kinh.mon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:nam.sach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:ninh.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:thanh.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:thanh.mien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.duong:tu.ky": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:an.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:an.lao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:bach.long.vi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:cat.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:do.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:duong.kinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:hai.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:hong.bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:kien.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:kien.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:le.chan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:ngo.quyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:thuy.nguyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:tien.lang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hai.phong:vinh.bao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:chau.thanh.a": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:long.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:nga.bay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:phung.hiep": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:vi.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hau.giang:vi.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:binh.chanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:binh.tan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:binh.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:can.gio": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:cu.chi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.1": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.10": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.11": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.12": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.2": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.3": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.4": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.5": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.6": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.7": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.8": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:district.9": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:go.vap": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:hoc.mon": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:nha.be": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:phu.nhuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:tan.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:tan.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ho.chi.minh:thu.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:cao.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:da.bac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:hoa.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:kim.boi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:ky.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:lac.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:lac.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:luong.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:mai.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:tan.lac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hoa.binh:yen.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:an.thi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:hung.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:khoai.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:kim.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:my.hao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:phu.cu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:tien.lu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:van.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:van.lam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:hung.yen:yen.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:cam.lam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:cam.ranh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:dien.khanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:khanh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:khanh.vinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:nha.trang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:ninh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:truong.sa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:khanh.hoa:van.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:an.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:an.minh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:giang.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:giong.rieng": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:go.quao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:ha.tien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:hon.dat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:kien.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:kien.luong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:phu.quoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:rach.gia": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:tan.hiep": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:u.minh.thuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kien.giang:vinh.thuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:dak.glei": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:dak.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:dak.to": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:kon.plong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:kon.ray": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:kon.tum": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:ngoc.hoi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:sa.thay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:kon.tum:tu.mo.rong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:lai.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:muong.te": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:phong.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:sin.ho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:tam.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:tan.uyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lai.chau:than.uyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:bao.lam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:bao.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:cat.tien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:da.huoai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:da.lat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:da.teh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:dam.rong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:di.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:don.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:duc.trong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:lac.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lam.dong:lam.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:bac.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:binh.gia": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:cao.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:chi.lang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:dinh.lap": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:huu.lung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:lang.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:loc.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:trang.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:van.lang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lang.son:van.quan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:bac.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:bao.thang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:bao.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:bat.xat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:lao.cai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:muong.khuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:sa.pa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:si.ma.cai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:lao.cai:van.ban": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:ben.luc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:can.duoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:can.giuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:duc.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:duc.hue": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:moc.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:tan.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:tan.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:tan.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:tan.tru": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:thanh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:thu.thua": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:long.an:vinh.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:giao.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:hai.hau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:my.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:nam.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:nam.truc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:nghia.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:truc.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:vu.ban": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:xuan.truong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nam.dinh:y.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:anh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:con.cuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:cua.lo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:dien.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:do.luong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:hung.nguyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:ky.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:nam.dan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:nghi.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:nghia.dan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:que.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:quy.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:quy.hop": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:quynh.luu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:tan.ky": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:thai.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:thanh.chuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:tuong.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:vinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:nghe.an:yen.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:gia.vien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:hoa.lu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:kim.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:nho.quan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:ninh.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:tam.diep": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:yen.khanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.binh:yen.mo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:ninh.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:ninh.phuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:ninh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:phan.rang.thap.cham": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:thuan.bac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:ninh.thuan:thuan.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:cam.khe": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:doan.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:ha.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:lam.thao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:phu.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:phu.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:tam.nong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:tan.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:thanh.ba": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:thanh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:thanh.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:viet.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.tho:yen.lap": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:dong.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:dong.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:phu.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:son.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:song.cau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:song.hinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:tay.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:tuy.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:phu.yen:tuy.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:bo.trach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:dong.hoi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:le.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:minh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:quang.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:quang.trach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.binh:tuyen.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:bac.tra.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:dai.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:dien.ban": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:dong.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:duy.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:hiep.duc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:hoi.an": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:nam.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:nam.tra.my": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:nong.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:nui.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:phuoc.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:que.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:tam.ky": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:tay.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:thang.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.nam:tien.phuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:ba.to": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:binh.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:duc.pho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:ly.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:minh.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:nghia.hanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:quang.ngai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:son.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:son.tay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:son.tinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:tay.tra": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:tra.bong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ngai:tu.nghia": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:ba.che": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:binh.lieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:cam.pha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:co.to": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:dam.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:dong.trieu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:ha.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:hai.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:hoanh.bo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:mong.cai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:tien.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:uong.bi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:van.don": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.ninh:yen.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:cam.lo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:con.co": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:da.krong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:dong.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:gio.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:hai.lang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:huong.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:quang.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:trieu.phong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:quang.tri:vinh.linh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:cu.lao.dung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:ke.sach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:long.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:my.tu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:my.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:soc.trang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:thanh.tri": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:soc.trang:vinh.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:bac.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:mai.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:moc.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:muong.la": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:phu.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:quynh.nhai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:son.la": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:song.ma": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:sop.cop": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:thuan.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:son.la:yen.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:ben.cau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:duong.minh.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:go.dau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:hoa.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:tan.bien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:tan.chau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:tay.ninh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tay.ninh:trang.bang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:dong.hung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:hung.ha": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:kien.xuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:quynh.phu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:thai.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:thai.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:tien.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.binh:vu.thu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:dai.tu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:dinh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:dong.hy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:pho.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:phu.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:phu.luong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:song.cong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:thai.nguyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thai.nguyen:vo.nhai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:ba.thuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:bim.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:cam.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:dong.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:ha.trung": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:hau.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:hoang.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:lang.chanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:muong.lat": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:ngoc.lac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:nhu.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:nhu.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:nong.cong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:quan.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:quan.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:quang.xuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:sam.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:thach.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:thanh.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:thieu.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:tho.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:thuong.xuan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:tinh.gia": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:trieu.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:vinh.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thanh.hoa:yen.dinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:a.luoi": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:hue": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:huong.thuy": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:huong.tra": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:nam.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:phong.dien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:phu.loc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:phu.vang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:thua.thien.hue:quang.dien": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:cai.be": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:cai.lay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:cho.gao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:go.cong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:go.cong.dong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:go.cong.tay": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:my.tho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tien.giang:tan.phuoc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:cang.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:cau.ke": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:cau.ngang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:chau.thanh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:duyen.hai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:tieu.can": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:tra.cu": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tra.vinh:tra.vinh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:chiem.hoa": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:ham.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:na.hang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:son.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:tuyen.quang": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:tuyen.quang:yen.son": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:binh.minh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:binh.tan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:long.ho": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:mang.thit": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:tam.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:tra.on": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:vinh.long": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.long:vung.liem": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:binh.xuyen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:lap.thach": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:phuc.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:tam.dao": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:tam.duong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:vinh.tuong": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:vinh.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:vinh.phuc:yen.lac": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:luc.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:mu.cang.chai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:nghia.lo": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:tram.tau": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:tran.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:van.chan": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:van.yen": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:yen.bai": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    },
+    "vn:yen.bai:yen.binh": {
+      "institution-part": {
+        "toa.an.nhan.dan": "Tòa án nhân dân"
+      }
+    }
+  }
+}

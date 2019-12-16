@@ -11,174 +11,197 @@
 	},
 	"inRepository": true,
 	"translatorType": 3,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-03 11:41:00"
+	"lastUpdated": "2019-08-07 11:11:24"
 }
 
+
 function detectImport() {
-	var lineRe = /%[A-Z0-9\*\$] .+/;
+	var lineRe = /%[A-Z0-9*$] .+/;
 	var line;
 	var matched = 0;
-	while((line = Zotero.read()) !== false) {
+	while ((line = Zotero.read()) !== false) {
 		line = line.replace(/^\s+/, "");
-		if(line != "") {
-			if(lineRe.test(line)) {
+		if (line != "") {
+			if (lineRe.test(line)) {
 				matched++;
-				if(matched == 2) {
+				if (matched == 2) {
 					// threshold is two lines
 					return true;
 				}
-			} else {
+			}
+			else {
 				return false;
 			}
 		}
 	}
+	return false;
 }
 
 var fieldMap = {
-	T:"title",
-	S:"series",
-	V:"volume",
-	N:"issue",
-	C:"place",
-	I:"publisher",
-	R:"type",
-	P:"pages",
-	W:"archiveLocation",
-	"*":"rights",
-	"@":"ISBN",
-	L:"callNumber",
-	M:"accessionNumber",
-	U:"url",
-	7:"edition",
-	X:"abstractNote",
+	T: "title",
+	S: "series",
+	V: "volume",
+	N: "issue",
+	C: "place",
+	I: "publisher",
+	R: "type",
+	P: "pages",
+	W: "archiveLocation",
+	"*": "rights",
+	"@": "ISBN",
+	L: "callNumber",
+	M: "accessionNumber",
+	U: "url",
+	7: "edition",
+	X: "abstractNote",
 	G: "language"
 };
 
 var inputFieldMap = {
-	J:"publicationTitle",
-	B:"publicationTitle",
-	9:"type"
+	J: "publicationTitle",
+	B: "publicationTitle",
+	9: "type"
 };
 
 // TODO: figure out if these are the best types for personal communication
 var typeMap = {
-	book:"Book",
-	bookSection:"Book Section",
-	journalArticle:"Journal Article",
-	magazineArticle:"Magazine Article",
-	newspaperArticle:"Newspaper Article",
-	thesis:"Thesis",
-	letter:"Personal Communication",
-	manuscript:"Unpublished Work",
-	interview:"Personal Communication",
-	film:"Film or Broadcast",
-	artwork:"Artwork",
-	webpage:"Web Page",
-	report:"Report",
-	bill:"Bill",
-	"case":"Case",
-	hearing:"Hearing",
-	patent:"Patent",
-	statute:"Statute",
-	email:"Personal Communication",
-	map:"Map",
-	blogPost:"Web Page",
-	instantMessage:"Personal Communication",
-	forumPost:"Web Page",
-	audioRecording:"Audiovisual Material",
-	presentation:"Report",
-	videoRecording:"Audiovisual Material",
-	tvBroadcast:"Film or Broadcast",
-	radioBroadcast:"Film or Broadcast",
-	podcast:"Audiovisual Material",
-	computerProgram:"Computer Program",
-	conferencePaper:"Conference Paper",
-	document:"Generic",
-	encyclopediaArticle:"Encyclopedia",
-	dictionaryEntry:"Dictionary"
+	book: "Book",
+	bookSection: "Book Section",
+	journalArticle: "Journal Article",
+	magazineArticle: "Magazine Article",
+	newspaperArticle: "Newspaper Article",
+	thesis: "Thesis",
+	letter: "Personal Communication",
+	manuscript: "Unpublished Work",
+	interview: "Personal Communication",
+	film: "Film or Broadcast",
+	artwork: "Artwork",
+	webpage: "Web Page",
+	report: "Report",
+	bill: "Bill",
+	case: "Case",
+	hearing: "Hearing",
+	patent: "Patent",
+	statute: "Statute",
+	email: "Personal Communication",
+	map: "Map",
+	blogPost: "Web Page",
+	instantMessage: "Personal Communication",
+	forumPost: "Web Page",
+	audioRecording: "Audiovisual Material",
+	presentation: "Report",
+	videoRecording: "Audiovisual Material",
+	tvBroadcast: "Film or Broadcast",
+	radioBroadcast: "Film or Broadcast",
+	podcast: "Audiovisual Material",
+	computerProgram: "Computer Program",
+	conferencePaper: "Conference Paper",
+	document: "Generic",
+	encyclopediaArticle: "Encyclopedia",
+	dictionaryEntry: "Dictionary"
 };
 
 // supplements outputTypeMap for importing
 // TODO: BILL, CASE, COMP, CONF, DATA, HEAR, MUSIC, PAT, SOUND, STAT
 var inputTypeMap = {
-	"Ancient Text":"book",
-	"Audiovisual Material":"videoRecording",
-	"Generic":"book",
-	"Chart or Table":"artwork",
-	"Classical Work":"book",
-	"Conference Proceedings":"conferencePaper",
-	"Conference Paper":"conferencePaper",
-	"Edited Book":"book",
-	"Electronic Article":"journalArticle",
-	"Electronic Book":"book",
-	"Equation":"artwork",
-	"Figure":"artwork",
-	"Government Document":"document",
-	"Grant":"document",
-	"Legal Rule or Regulation":"statute",
-	"Online Database":"webpage",
-	"Online Multimedia":"webpage",
-	"Electronic Source":"webpage"
+	"Ancient Text": "book",
+	"Audiovisual Material": "videoRecording",
+	Generic: "book",
+	"Chart or Table": "artwork",
+	"Classical Work": "book",
+	"Conference Proceedings": "conferencePaper",
+	"Conference Paper": "conferencePaper",
+	"Edited Book": "book",
+	"Electronic Article": "journalArticle",
+	"Electronic Book": "book",
+	Equation: "artwork",
+	Figure: "artwork",
+	"Government Document": "document",
+	Grant: "document",
+	"Legal Rule or Regulation": "statute",
+	"Online Database": "webpage",
+	"Online Multimedia": "webpage",
+	"Electronic Source": "webpage"
 };
-
-var isEndNote = false;
 
 function processTag(item, tag, value) {
 	value = Zotero.Utilities.trim(value);
-	if(fieldMap[tag]) {
-		item[fieldMap[tag]] = value;
-	} else if(inputFieldMap[tag]) {
+	if (fieldMap[tag]) {
+		if (item[fieldMap[tag]]) {
+			item[fieldMap[tag]] += ", " + value;
+		}
+		else {
+			item[fieldMap[tag]] = value;
+		}
+	}
+	else if (inputFieldMap[tag]) {
 		item[inputFieldMap[tag]] = value;
-	} else if(tag == "0") {
-		if(inputTypeMap[value]) {	// first check inputTypeMap
-			item.itemType = inputTypeMap[value]
-		} else {					// then check typeMap
-			for(var i in typeMap) {
-				if(value == typeMap[i]) {
+	}
+	else if (tag == "0") {
+		if (inputTypeMap[value]) {	// first check inputTypeMap
+			item.itemType = inputTypeMap[value];
+		}
+		else {					// then check typeMap
+			for (var i in typeMap) {
+				if (value == typeMap[i]) {
 					item.itemType = i;
 					break;
 				}
 			}
 			// fall back to generic
-			if(!item.itemType) item.itemType = inputTypeMap["Generic"];
+			if (!item.itemType) item.itemType = inputTypeMap.Generic;
 		}
-	} else if(tag == "A" || tag == "E" || tag == "?") {
-		if(tag == "A") {
-			var type = "author";
-		} else if(tag == "E") {
-			var type = "editor";
-		} else if(tag == "?") {
-			var type = "translator";
+	}
+	else if (tag == "A" || tag == "E" || tag == "Y") {
+		var type;
+		if (tag == "A") {
+			type = "author";
+		}
+		else if (tag == "E") {
+			type = "editor";
+		}
+		else if (tag == "Y") {
+			type = "translator";
 		}
 		
-		item.creators.push(Zotero.Utilities.cleanAuthor(value, type, value.indexOf(",") != -1));
-	} else if(tag == "Q") {
-		item.creators.push({creatorType:"author", lastName:value, fieldMode:true});
-	} else if(tag == "H" || tag == "O") {
-		if(!item.extra) item.extra = '';
+		item.creators.push(Zotero.Utilities.cleanAuthor(value, type, value.includes(",")));
+	}
+	else if (tag == "Q") {
+		item.creators.push({ creatorType: "author", lastName: value, fieldMode: true });
+	}
+	else if (tag == "H" || tag == "O") {
+		if (!item.extra) item.extra = '';
 		else item.extra += "\n";
 		item.extra += value;
-	} else if(tag == "Z") {
-		item.notes.push({note:value});
-	} else if(tag == "D") {
-		if(item.date) {
-			if(item.date.indexOf(value) == -1) {
-				item.date += " "+value;
+	}
+	else if (tag == "Z") {
+		item.notes.push({ note: value });
+	}
+	else if (tag == "D") {
+		if (item.date) {
+			if (!item.date.includes(value)) {
+				item.date += " " + value;
 			}
-		} else {
+		}
+		else {
 			item.date = value;
 		}
-	} else if(tag == "8") {
-		if(item.date) {
-			if(value.indexOf(item.date) == -1) {
-				item.date += " "+value;
+	}
+	else if (tag == "8") {
+		if (item.date) {
+			if (!value.includes(item.date)) {
+				item.date += " " + value;
 			}
-		} else {
+		}
+		else {
 			item.date = value;
 		}
-	} else if(tag == "K") {
-		item.tags = value.split("\n");
+	}
+	else if (tag == "K") {
+		if (!item.tags || item.tags.length == 0) {
+			item.tags = [];
+		}
+		item.tags.push(...value.split("\n"));
 	}
 }
 
@@ -186,61 +209,61 @@ function doImport() {
 	var line = true;
 	var tag = data = false;
 	do {	// first valid line is type
-		Zotero.debug("ignoring "+line);
+		Zotero.debug("ignoring " + line);
 		line = Zotero.read();
 		line = line.replace(/^\s+/, "");
-	} while(line !== false && line[0] != "%");
+	} while (line !== false && line[0] != "%");
 	
 	var item = new Zotero.Item();
 	
-	var tag = line[1];
+	tag = line[1];
 	var data = line.substr(3);
-	while((line = Zotero.read()) !== false) {	// until EOF
+	while ((line = Zotero.read()) !== false) {	// until EOF
 		line = line.replace(/^\s+/, "");
-		if(!line) {
-			if(tag) {
+		if (!line) {
+			if (tag) {
 				processTag(item, tag, data);
 				// unset info
-				tag = data = readRecordEntry = false;
+				tag = data = false;
 				// new item
 				item.complete();
 				item = new Zotero.Item();
 			}
-		} else if(line[0] == "%" && line[2] == " ") {
+		}
+		else if (line[0] == "%" && line[2] == " ") {
 			// if this line is a tag, take a look at the previous line to map
 			// its tag
-			if(tag) {
+			if (tag) {
 				processTag(item, tag, data);
 			}
 			
 			// then fetch the tag and data from this line
 			tag = line[1];
 			data = line.substr(3);
-		} else {
+		}
+		else if (tag) {
 			// otherwise, assume this is data from the previous line continued
-			if(tag) {
-				data += "\n"+line;
-			}
+			data += "\n" + line;
 		}
 	}
 	
-	if(tag) {	// save any unprocessed tags
+	if (tag) {	// save any unprocessed tags
 		processTag(item, tag, data);
 		item.complete();
 	}
 }
 
 function addTag(tag, value) {
-	if(value) {
-		Zotero.write("%"+tag+" "+value+"\r\n");
+	if (value) {
+		Zotero.write("%" + tag + " " + value + "\r\n");
 	}
 }
 
 function doExport() {
 	var item;
-	while(item = Zotero.nextItem()) {
+	while (item = Zotero.nextItem()) { // eslint-disable-line no-cond-assign
 		// can't store independent notes in RIS
-		if(item.itemType == "note" || item.itemType == "attachment") {
+		if (item.itemType == "note" || item.itemType == "attachment") {
 			continue;
 		}
 		
@@ -248,39 +271,41 @@ function doExport() {
 		addTag("0", typeMap[item.itemType] ? typeMap[item.itemType] : "Generic");
 		
 		// use field map
-		for(var j in fieldMap) {
-			if(item[fieldMap[j]]) addTag(j, item[fieldMap[j]]);
+		for (let j in fieldMap) {
+			if (item[fieldMap[j]]) addTag(j, item[fieldMap[j]]);
 		}
 		
-		//handle J & B tags correctly
-		if (item["publicationTitle"]) {
+		// handle J & B tags correctly
+		if (item.publicationTitle) {
 			if (item.itemType == "journalArticle") {
-				addTag("J", item["publicationTitle"]);
-			} else {
-				addTag("B", item["publicationTitle"]);
+				addTag("J", item.publicationTitle);
+			}
+			else {
+				addTag("B", item.publicationTitle);
 			}
 		}
 		
 		// creators
-		for(var j in item.creators) {
+		for (let j in item.creators) {
 			var referTag = "A";
-			if(item.creators[j].creatorType == "editor") {
+			if (item.creators[j].creatorType == "editor") {
 				referTag = "E";
-			} else if(item.creators[j].creatorType == "translator") {
+			}
+			else if (item.creators[j].creatorType == "translator") {
 				referTag = "?";
 			}
 			
-			addTag(referTag, item.creators[j].lastName+(item.creators[j].firstName ? ", "+item.creators[j].firstName : ""));
+			addTag(referTag, item.creators[j].lastName + (item.creators[j].firstName ? ", " + item.creators[j].firstName : ""));
 		}
 		
 		// date
 		addTag("D", item.date);
 		
 		// tags
-		if(item.tags) {
+		if (item.tags) {
 			var keywordTag = "";
-			for (var i=0; i<item.tags.length; i++) {
-				keywordTag += "\r\n"+item.tags[i].tag;
+			for (var i = 0; i < item.tags.length; i++) {
+				keywordTag += "\r\n" + item.tags[i].tag;
 			}
 			addTag("K", keywordTag.substr(2));
 		}
@@ -327,6 +352,57 @@ var testCases = [
 					"参考文献管理 文献管理软件 学术书签网站 Zotero"
 				],
 				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "%0 Book\n%R oai:nb.bibsys.no:998320569524702202\n%R URN:NBN:no-nb_digibok_2016062048105\n%U https://urn.nb.no/URN:NBN:no-nb_digibok_2016062048105\n%T Usynlige byer\n%A Calvino, Italo\n%Y Aardal, Jorunn\n%E Stender Clausen, Jørgen\n%D 1982\n%G Flerspråklig\n%G Norsk (Bokmål)\n%G Italiensk\n%G Dansk\n%Z Elektronisk reproduksjon [Norge] Nasjonalbiblioteket Digital 2016-11-03\n%I Aschehoug\n%C Oslo\n%@ 8203107354\n%K Italiensk litteratur\n%K Idealbyer\n%K kjernelitteratur\n%P 173 s.",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Usynlige byer",
+				"creators": [
+					{
+						"firstName": "Italo",
+						"lastName": "Calvino",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jorunn",
+						"lastName": "Aardal",
+						"creatorType": "translator"
+					},
+					{
+						"firstName": "Jørgen",
+						"lastName": "Stender Clausen",
+						"creatorType": "editor"
+					}
+				],
+				"date": "1982",
+				"ISBN": "8203107354",
+				"language": "Flerspråklig, Norsk (Bokmål), Italiensk, Dansk",
+				"place": "Oslo",
+				"publisher": "Aschehoug",
+				"url": "https://urn.nb.no/URN:NBN:no-nb_digibok_2016062048105",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Idealbyer"
+					},
+					{
+						"tag": "Italiensk litteratur"
+					},
+					{
+						"tag": "kjernelitteratur"
+					}
+				],
+				"notes": [
+					{
+						"note": "Elektronisk reproduksjon [Norge] Nasjonalbiblioteket Digital 2016-11-03"
+					}
+				],
 				"seeAlso": []
 			}
 		]

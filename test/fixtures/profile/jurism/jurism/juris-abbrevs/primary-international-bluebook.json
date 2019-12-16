@@ -1,0 +1,47 @@
+{
+  "filename": "primary-international-bluebook.json",
+  "name": "Abbreviations: Primary legal sources with international scope (Bluebook styles)",
+  "version": 2,
+  "xdata": {
+    "coe.int": {
+      "classic": {},
+      "collection-title": {},
+      "container-title": {
+        "collection of decisions": "Eur. Comm’n H.R. Col. Dec.",
+        "decisions reports": "Eur. Comm’n H.R. Dec. & Rep.",
+        "reports of judgments decisions series a": "Eur. Ct. H.R. (ser. A)"
+      },
+      "hereinafter": {},
+      "institution-entire": {
+        "european court of human rights": "Eur. Ct. H.R."
+      },
+      "institution-part": {
+        "european commission of human rights": "Eur. Comm'n H.R.",
+        "european court of human rights": "Eur. Ct. H.R."
+      },
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {}
+    },
+    "un.org": {
+      "classic": {},
+      "collection-title": {},
+      "container-title": {
+        "united nations general assembly official record": "U.N. GAOR"
+      },
+      "hereinafter": {},
+      "institution-entire": {},
+      "institution-part": {
+        "general assembly": "G.A.",
+        "high court": "H.C."
+      },
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {
+        "resolution": "Res."
+      }
+    }
+  }
+}

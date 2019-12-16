@@ -15,7 +15,7 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-12-25 13:29:42"
+	"lastUpdated": "2019-05-20 09:05:38"
 }
 
 var fromMarcGenre = {
@@ -301,7 +301,15 @@ var ns = "http://www.loc.gov/mods/v3",
 var xmlns = "http://www.w3.org/XML/1998/namespace";
 
 function detectImport() {
-	var doc = Zotero.getXML().documentElement;
+	let doc;
+	try {
+		doc = Zotero.getXML().documentElement;
+	}
+	catch (err) {
+		// most likely just not XML
+		return false;
+	}
+
 	if (!doc) {
 		return false;
 	}

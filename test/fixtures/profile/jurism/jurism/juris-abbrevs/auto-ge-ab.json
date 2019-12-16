@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ge-ab.json",
+  "name": "Abkhazia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "GE-AB": "Abkhazia"
+      }
+    },
+    "ge-ab": {
+      "institution-part": {}
+    }
+  }
+}

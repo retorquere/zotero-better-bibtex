@@ -19,7 +19,7 @@
 		"Full TEI Document": false,
 		"Export Collections": false
 	},
-	"lastUpdated": "2017-11-18 10:45:00"
+	"lastUpdated": "2019-01-31 00:12:00"
 }
 
 // ********************************************************************
@@ -35,17 +35,17 @@
 
 // This program is distributed in the hope that it will be useful,
 // but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 // GNU General Public License for more details.
 
 // You should have received a copy of the GNU General Public License
-// along with this program.  If not, see <http://www.gnu.org/licenses/>.
+// along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 
 // *********************************************************************
 //
 // This script does fairly well with papers, theses, websites and
-// books.  Some item properties, important for the more exotic
+// books. Some item properties, important for the more exotic
 // publication types, are still missing. That means, the first 30 are
 // implemented, the rest may be added when I need them. If you like to
 // see some particular item property and you also have a basic idea
@@ -96,17 +96,32 @@ function replaceFormatting(title) {
 }
 
 function genXMLId(item) {
+	// use Better BibTeX for Zotero citation key if available
+	if (item.extra) {
+		item.extra = item.extra.replace(/(?:^|\n)citation key\s*:\s*([^\s]+)(?:\n|$)/i, (m, citationKey) => {
+			item.citationKey = citationKey
+			return '\n'
+		}).trim()
+	}
+	if (item.citationKey) return item.citationKey
+
 	var xmlid = '';
-	if (item.creators && item.creators[0] && item.creators[0].lastName) {
-		xmlid = item.creators[0].lastName;
+	if (item.creators && item.creators[0] && (item.creators[0].lastName || item.creators[0].name)) {
+		if (item.creators[0].lastName){
+			xmlid = item.creators[0].lastName;
+		}
+		if (item.creators[0].name){
+			xmlid = item.creators[0].name;
+		}
 		if (item.date) {
 			var date = Zotero.Utilities.strToDate(item.date);
 			if (date.year) {
 				xmlid += date.year;
 			}
 		}
-		// Replace space and colon by "_"
-		xmlid = xmlid.replace(/([ \t\[\]:])+/g, "_");
+		// Replace space, tabulations, colon, punctuation, parenthesis and apostrophes by "_"
+		xmlid = xmlid.replace(/([ \t\[\]:\u00AD\u0021-\u002C\u2010-\u2021])+/g, "_");
+		
 
 		// Remove any non xml NCName characters
 
@@ -116,13 +131,13 @@ function genXMLId(item) {
 		// [#x3001-#xD7FF] | [#xF900-#xFDCF] | [#xFDF0-#xFFFD] |
 		// [#x10000-#xEFFFF]
 
-		// Name =  NameStartChar | "-" | "." | [0-9] | #xB7 |
+		// Name = NameStartChar | "-" | "." | [0-9] | #xB7 |
 		// [#x0300-#x036F] | [#x203F-#x2040]
 
 		xmlid = xmlid.replace(/^[^A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\u10000-\uEFFFF]/, "");
 		xmlid = xmlid.replace(/[^-A-Z_a-z\u00C0-\u00D6\u00D8-\u00F6\u00F8-\u02FF\u0370-\u037D\u037F-\u1FFF\u200C-\u200D\u2070-\u218F\u2C00-\u2FEF\u3001-\uD7FF\uF900-\uFDCF\uFDF0-\uFFFD\u10000-\uEFFFF.0-9\u00B7\u0300-\u036F\u203F-\u2040]/g, "");
 	} else {
-		// "zoteroItem_item.key" as value for entries without creator     
+		// "zoteroItem_item.key" as value for entries without creator
 		var str = item.uri;
 		var n = str.lastIndexOf('/');
 		var result = str.substring(n + 1);
@@ -166,7 +181,8 @@ function generateItem(item, teiDoc) {
 		"newspaperArticle": true,
 		"conferencePaper": true,
 		"encyclopediaArticle": true,
-		"dictionaryEntry": true
+		"dictionaryEntry": true,
+		"webpage": true
 	};
 
 	var isAnalytic = analyticItemTypes[item.itemType] ? true : false;
@@ -218,7 +234,7 @@ function generateItem(item, teiDoc) {
 		}
 
 		// publication title
-		var publicationTitle = item.bookTitle || item.proceedingsTitle || item.encyclopediaTitle || item.dictionaryTitle || item.publicationTitle;
+		var publicationTitle = item.bookTitle || item.proceedingsTitle || item.encyclopediaTitle || item.dictionaryTitle || item.publicationTitle || item.websiteTitle;
 		if (publicationTitle) {
 			var pubTitle = teiDoc.createElementNS(ns.tei, "title");
 			if (item.itemType == "journalArticle") {
@@ -330,11 +346,11 @@ function generateItem(item, teiDoc) {
 
 	// creators are all people only remotely involved into the creation of
 	// a resource
-	for (var i in item.creators) {
+	for (let creator of item.creators) {
 		var role = '';
 		var curCreator = '';
 		var curRespStmt = null;
-		var type = item.creators[i].creatorType;
+		var type = creator.creatorType;
 		if (type == "author") {
 			curCreator = teiDoc.createElementNS(ns.tei, "author");
 		} else if (type == "editor") {
@@ -352,22 +368,26 @@ function generateItem(item, teiDoc) {
 			curRespStmt.appendChild(curCreator);
 		}
 		// add the names of a particular creator
-		if (item.creators[i].firstName) {
+		if (creator.firstName) {
 			var forename = teiDoc.createElementNS(ns.tei, "forename");
-			forename.appendChild(teiDoc.createTextNode(item.creators[i].firstName));
+			forename.appendChild(teiDoc.createTextNode(creator.firstName));
 			curCreator.appendChild(forename);
 		}
-		if (item.creators[i].lastName) {
+		if (creator.lastName) {
 			var surname = null;
-			if (item.creators[i].firstName) {
+			if (creator.firstName) {
 				surname = teiDoc.createElementNS(ns.tei, "surname");
 			} else {
 				surname = teiDoc.createElementNS(ns.tei, "name");
 			}
-			surname.appendChild(teiDoc.createTextNode(item.creators[i].lastName));
+			surname.appendChild(teiDoc.createTextNode(creator.lastName));
 			curCreator.appendChild(surname);
 		}
-
+		if (creator.name) {
+			let name = teiDoc.createElementNS(ns.tei, "name");
+			name.appendChild(teiDoc.createTextNode(creator.name));
+			curCreator.appendChild(name);
+		}
 		// make sure the right thing gets added
 		if (curRespStmt) {
 			curCreator = curRespStmt;
@@ -446,11 +466,12 @@ function generateItem(item, teiDoc) {
 		imprint.appendChild(imprintDate);
 	}
 
-	// flag unpublished if there is no date | publisher | place
-	if (!(item.date || item.publisher || item.place)) {
-		publisher = teiDoc.createComment("  no publisher, publication date or place given  ");
-		imprint.appendChild(publisher);
-	}
+	// If no date exists, add an empty date node so that spec minimum requirement for one imprint element is met
+	else {
+		var date = teiDoc.createElementNS(ns.tei, "date");
+		imprint.appendChild(date);
+		}
+		
 	if (item.accessDate) {
 		var note = teiDoc.createElementNS(ns.tei, "note");
 		note.setAttribute("type", "accessed");
@@ -472,10 +493,10 @@ function generateItem(item, teiDoc) {
 
 	//export notes
 	if (item.notes && Zotero.getOption("exportNotes")) {
-		for (var n in item.notes) {
+		for (let singleNote of item.notes) {
 			// do only some basic cleaning of the html
 			// strip HTML tags
-			var noteText = Zotero.Utilities.cleanTags(item.notes[n].note);
+			var noteText = Zotero.Utilities.cleanTags(singleNote.note);
 			// unescape remaining entities -> no double escapes
 			noteText = Zotero.Utilities.unescapeHTML(noteText);
 			var note = teiDoc.createElementNS(ns.tei, "note");
@@ -488,10 +509,10 @@ function generateItem(item, teiDoc) {
 	if (Zotero.getOption("Export Tags") && item.tags && item.tags.length > 0) {
 		var tags = teiDoc.createElementNS(ns.tei, "note");
 		tags.setAttribute("type", "tags");
-		for (var n in item.tags) {
+		for (let singleTag of item.tags) {
 			var tag = teiDoc.createElementNS(ns.tei, "note");
 			tag.setAttribute("type", "tag");
-			tag.appendChild(teiDoc.createTextNode(item.tags[n].tag));
+			tag.appendChild(teiDoc.createTextNode(singleTag.tag));
 			tags.appendChild(tag);
 		}
 		bibl.appendChild(tags);

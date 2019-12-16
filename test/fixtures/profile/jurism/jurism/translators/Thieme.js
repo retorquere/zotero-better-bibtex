@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-03-16 15:00:41"
+	"lastUpdated": "2019-06-10 22:59:37"
 }
 
 /*
@@ -37,24 +37,23 @@
 
 
 /*
-  Other example: 
+  Other example:
     https://www.thieme-connect.de/DOI/DOI?10.1055/s-2008-1081006
   which does not save as a test
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
-
-
 function detectWeb(doc, url) {
 	if (url.includes('/abstract/') || url.includes('/html/') || url.includes('/DOI/DOI?')) {
 		return "journalArticle";
-	} else if (url.includes('lookinside')) {
+	}
+	else if (url.includes('lookinside')) {
 		return "bookSection";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
@@ -62,7 +61,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.querySelectorAll('a.articleTitle');
-	for (let i=0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		let href = rows[i].href;
 		let title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -77,22 +76,22 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 
-function scrape(doc, url) {
+function scrape(doc, _url) {
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');

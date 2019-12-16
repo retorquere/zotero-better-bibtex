@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-04-18 18:19:06"
+	"lastUpdated": "2019-11-02 15:43:51"
 }
 
 /*
@@ -216,17 +216,10 @@ function scrape(doc, url, extras) {
 					item.creators[i].lastName = fixCase(item.creators[i].lastName, true);
 					if (item.creators[i].firstName) {
 						item.creators[i].firstName = fixCase(item.creators[i].firstName, true);
-					} else if (url.includes('www.emeraldinsight.com')) {
-						//for Emerald, improve author's lastname and firstname
-						item.creators[i] = ZU.cleanAuthor(item.creators[i].lastName, item.creators[i].creatorType);
 					}
 				}
 				
 				item.url = url;
-				//for Emerald, get rid of the "null" that they add at the end of every title:
-				if (url.includes("www.emeraldinsight.com")){
-					item.title = item.title.replace(/null$/, "");
-				}
 				item.notes = [];
 				for (var i in tags){
 					item.tags.push(tags[i].textContent);
@@ -554,52 +547,6 @@ var testCases = [
 				"shortTitle": "Block Copolymer Thin Films",
 				"url": "http://www.annualreviews.org/doi/abs/10.1146/annurev.matsci.31.1.323",
 				"volume": "31",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
-					{
-						"title": "Snapshot",
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://www.emeraldinsight.com/toc/sajgbr/2/2",
-		"items": "multiple"
-	},
-	{
-		"type": "web",
-		"url": "http://www.emeraldinsight.com/doi/full/10.1108/SAJGBR-10-2012-0120",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "Irish coffee? Well, something better …",
-				"creators": [
-					{
-						"firstName": "Pramila",
-						"lastName": "Rao",
-						"creatorType": "author"
-					}
-				],
-				"date": "August 16, 2013",
-				"DOI": "10.1108/SAJGBR-10-2012-0120",
-				"ISSN": "2045-4457",
-				"issue": "2",
-				"journalAbbreviation": "S Asian Jnl of Global Bus Res",
-				"libraryCatalog": "emeraldinsight.com (Atypon)",
-				"pages": "165-171",
-				"publicationTitle": "South Asian Journal of Global Business Research",
-				"shortTitle": "Irish coffee?",
-				"url": "http://www.emeraldinsight.com/doi/full/10.1108/SAJGBR-10-2012-0120",
-				"volume": "2",
 				"attachments": [
 					{
 						"title": "Full Text PDF",

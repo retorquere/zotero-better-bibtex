@@ -1,0 +1,165 @@
+{
+  "filename": "auto-ch.json",
+  "name": "Switzerland",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CH": "Switzerland",
+        "CH:AARGAU": "Aargau",
+        "CH:APPENZELL.AUSSERRHODEN": "Appenzell-Ausserrhoden",
+        "CH:BASEL.LANDSCHAFT": "Basel-Landschaft",
+        "CH:BASEL.STADT": "Basel-Stadt",
+        "CH:BERN": "Bern",
+        "CH:FRIBOURG": "Fribourg",
+        "CH:GENEVA": "Geneva",
+        "CH:GLARUS": "Glarus",
+        "CH:JURA": "Jura",
+        "CH:LUZERN": "Luzern",
+        "CH:NEUCHATEL": "Neuchatel",
+        "CH:NIDWALDEN": "Nidwalden",
+        "CH:OBWALDEN": "Obwalden",
+        "CH:SCHAFFHAUSEN": "Schaffhausen",
+        "CH:SCHWYZ": "Schwyz",
+        "CH:SOLOTHURN": "Solothurn",
+        "CH:ST.GALLEN": "St-Gallen",
+        "CH:THURGAU": "Thurgau",
+        "CH:TICINO": "Ticino",
+        "CH:URI": "Uri",
+        "CH:VALAIS": "Valais",
+        "CH:VAUD": "Vaud",
+        "CH:ZUG": "Zug",
+        "CH:ZURICH": "Zurich"
+      }
+    },
+    "ch": {
+      "institution-part": {
+        "fcc": "Bundesstrafgericht",
+        "fsc": "Sweizerisches Bundesgericht"
+      }
+    },
+    "ch:aargau": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:appenzell.ausserrhoden": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:basel.landschaft": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:basel.stadt": {
+      "institution-part": {
+        "appellationsgericht": "Appellationsgericht"
+      }
+    },
+    "ch:bern": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:fribourg": {
+      "institution-part": {
+        "tribunal.cantonal": "Tribunal cantonal"
+      }
+    },
+    "ch:geneva": {
+      "institution-part": {
+        "cour.de.cassation": "Cour de cassation"
+      }
+    },
+    "ch:glarus": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:jura": {
+      "institution-part": {
+        "trubunal.cantonal": "Trubunal cantonal"
+      }
+    },
+    "ch:luzern": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:neuchatel": {
+      "institution-part": {
+        "cour.de.cassation.civile": "Cour de cassation civile",
+        "cour.de.cassation.penale": "Cour de cassation pénale"
+      }
+    },
+    "ch:nidwalden": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:obwalden": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:schaffhausen": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:schwyz": {
+      "institution-part": {
+        "kantonsgericht": "Kantonsgericht"
+      }
+    },
+    "ch:solothurn": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:st.gallen": {
+      "institution-part": {
+        "kantonsgericht": "Kantonsgericht",
+        "kassationsgericht": "Kassationsgericht"
+      }
+    },
+    "ch:thurgau": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:ticino": {
+      "institution-part": {
+        "tribunale.d.appello": "Tribunale d'appello"
+      }
+    },
+    "ch:uri": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:valais": {
+      "institution-part": {
+        "tribunal.cantonal": "Tribunal cantonal"
+      }
+    },
+    "ch:vaud": {
+      "institution-part": {
+        "tribunal.cantonal": "Tribunal cantonal"
+      }
+    },
+    "ch:zug": {
+      "institution-part": {
+        "obergericht": "Obergericht"
+      }
+    },
+    "ch:zurich": {
+      "institution-part": {
+        "kassationssgericht": "Kassationssgericht",
+        "obergericht": "Obergericht"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-kg.json",
+  "name": "Kyrgyzstan",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "KG": "Kyrgyzstan"
+      }
+    },
+    "kg": {
+      "institution-part": {}
+    }
+  }
+}

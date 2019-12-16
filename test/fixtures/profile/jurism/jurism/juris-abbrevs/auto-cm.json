@@ -1,0 +1,15 @@
+{
+  "filename": "auto-cm.json",
+  "name": "Cameroon",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CM": "Cameroon"
+      }
+    },
+    "cm": {
+      "institution-part": {}
+    }
+  }
+}

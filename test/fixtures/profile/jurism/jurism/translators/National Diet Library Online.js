@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2018-05-14 03:53:44"
+	"lastUpdated": "2018-07-06 13:50:49"
 }
 
 /*
@@ -103,10 +103,13 @@ function setCreators(details, item) {
 					for (var creatorPart of creatorParts) {
 						if (creatorPart[0] === "name") {
 							creatorSplit = creatorPart[2].split(/\s+/);
+							if (creatorSplit.slice(-1)[0].match(/[0-9]{4}-[0-9]{4}/)) {
+								creatorSplit = creatorSplit.slice(0, -1);
+							}
 							if (creatorSplit.length > 2) {
 								creatorSplit[1] = creatorSplit.slice(1).join(" ");
 							}
-							if (creatorSplit[1] && creatorSplit[1].match(/[0-9]{4}-[0-9]{4}/)) continue;
+							if (creatorSplit.length < 2) continue;
 							newCreator.lastName = creatorSplit[0].replace(/,$/, "");
 							newCreator.firstName = creatorSplit[1];
 							newCreator.creatorType = creatorType;

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-pg.json",
+  "name": "Papua New Guinea",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "PG": "Papua New Guinea"
+      }
+    },
+    "pg": {
+      "institution-part": {}
+    }
+  }
+}

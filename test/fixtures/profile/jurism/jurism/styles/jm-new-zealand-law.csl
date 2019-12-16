@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<style xmlns="http://purl.org/net/xbiblio/csl" class="note" default-locale="en" version="1.1mlz1">
+<style xmlns="http://purl.org/net/xbiblio/csl" class="note" default-locale="en" version="1.1mlz1" and="text" delimiter-precedes-last="never" initialize="false" initialize-with="" sort-separator=", ">
   <info>
     <title>JM New Zealand Law Style</title>
     <id>http://juris-m.github.io/styles/jm-new-zealand-law</id>
@@ -166,7 +166,7 @@
     <choose>
       <if match="none" type="broadcast motion_picture">
         <names variable="editor">
-          <name and="text" delimiter-precedes-last="never"/>
+          <name/>
           <et-al term="et-al"/>
           <label form="short" prefix=" "/>
         </names>
@@ -175,20 +175,20 @@
   </macro>
   <macro name="editor-bib">
     <names variable="editor">
-      <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="" sort-separator=", "/>
+      <name/>
       <et-al term="et-al"/>
       <label form="short" prefix=" "/>
     </names>  	
   </macro>
   <macro name="translator">
     <names variable="translator">
-      <name and="text"/>
+      <name/>
       <label form="long" prefix=" (" suffix=")"/>
     </names>
   </macro>
   <macro name="translator-bib">
     <names variable="translator">
-      <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="" sort-separator=", "/>
+      <name/>
       <et-al term="et-al"/>
       <label form="long" prefix=" (" suffix=")"/>
     </names>		
@@ -200,13 +200,18 @@
     <choose>
       <if type="broadcast" match="none">
         <names variable="author">
-          <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with=""/>
+          <name/>
           <et-al term="et-al"/>
           <institution delimiter=", " substitute-use-first="1" use-last="1"/>
           <substitute>
             <names variable="composer"/>
             <names variable="container-author"/>
             <names variable="editor"/>
+            <choose>
+              <if type="video">
+                <names variable="contributor"/>
+              </if>
+            </choose>
           </substitute>
         </names>
       </if>
@@ -214,7 +219,7 @@
   </macro>
   <macro name="author-bib">
     <names variable="author">
-      <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with="" sort-separator=", "/>
+      <name/>
       <et-al term="et-al"/>
       <institution delimiter=", " substitute-use-first="1" use-last="1"/>
       <substitute>
@@ -222,11 +227,13 @@
         <names variable="container-author"/>
         <text macro="editor-bib"/>
         <text macro="translator-bib"/>
+        <choose>
+          <if type="video">
+            <names variable="contributor"/>
+          </if>
+        </choose>
       </substitute>
     </names>
-  </macro>
-  <macro name="genre">
-    <text variable="genre"/>
   </macro>
   <macro name="issued-long">
     <date variable="issued">
@@ -297,7 +304,7 @@
           <group delimiter=" ">
             <text term="director" form="verb"/>
             <names variable="author">
-              <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with=""/>
+              <name/>
               <et-al term="et-al"/>
             </names>
           </group>
@@ -326,27 +333,28 @@
         <group delimiter=" ">
           <text macro="title-short"/>
           <choose>
-            <if variable="volume">
+            <if variable="volume issue" match="any">
               <date date-parts="year" form="text" prefix="(" suffix=")" variable="issued"/>
             </if>
             <else>
               <date date-parts="year" form="text" prefix="[" suffix="]" variable="issued"/>
             </else>
           </choose>
-          <group>
-            <number variable="volume"/>
-            <choose>
-              <if match="any" type="article-magazine">
-                <number prefix="(" suffix=")" variable="issue"/>
-              </if>
-            </choose>
-          </group>
           <choose>
-            <if match="none" variable="volume">
-              <number variable="issue"/>
-            </if>
+            <if variable="volume">
+              <group>
+                <number variable="volume"/>
+                <choose>
+                  <if type="article-magazine">
+                    <number prefix="(" suffix=")" variable="issue"/>
+                  </if>
+                </choose>
+              </group>
+              </if>
+              <else>
+                <number variable="issue"/>
+              </else>
           </choose>
-          
           <text macro="container-title"/>
           <number variable="page-first"/>
         </group>
@@ -371,7 +379,7 @@
     <group delimiter=" ">
       <text macro="title-short"/>
       <group delimiter=", " prefix="(" suffix=")">
-        <text macro="genre"/>
+        <text variable="genre"/>
         <text form="short" variable="publisher"/>
         <date date-parts="year" form="text" variable="issued"/>
       </group>
@@ -412,6 +420,7 @@
       <text macro="title-short"/>
       <text font-style="italic" macro="container-title"/>
       <group delimiter=", " prefix="(" suffix=")">
+        <text variable="genre"/>
         <text macro="multi-media-medium"/>
         <text variable="publisher-place"/>
         <text macro="issued-long"/>
@@ -439,7 +448,7 @@
       <text macro="author-note" prefix="Interview with "/>
       <group delimiter=", " prefix="(" suffix=")">
         <names variable="interviewer">
-          <name and="text" delimiter-precedes-last="never" initialize="false" initialize-with=""/>
+          <name/>
           <et-al term="et-al"/>
         </names>
         <text variable="medium"/>
@@ -467,13 +476,13 @@
         </else>
       </choose>
       <names variable="author">
-        <name and="text" delimiter=" " delimiter-precedes-last="never" initialize="false" initialize-with=""/>
+        <name/>
         <institution delimiter=" ">
           <institution-part if-short="true" name="long" prefix="(" suffix=")"/>
         </institution> 
       </names>	 
       <names variable="recipient">
-        <name and="text" delimiter=" " delimiter-precedes-last="never" initialize="false" initialize-with="" prefix="to "/>
+        <name prefix="to "/>
         <institution delimiter=" ">
           <institution-part if-short="true" name="long" prefix="(" suffix=")"/>
         </institution> 
@@ -592,30 +601,10 @@
       <institution form="short"/>
     </names>
   </macro>
-  <macro name="std-authority-full">
-    <group delimiter=" ">
-      <choose>
-        <if subjurisdictions="2">
-          <text macro="std-authority-child"/>
-          <text form="short" variable="jurisdiction"/>
-        </if>
-        <else>
-          <text form="short" variable="jurisdiction"/>
-          <text macro="std-authority-child"/>
-        </else>
-      </choose>
-    </group>
-  </macro>
   <macro name="std-authority-parent">
     <names variable="authority">
       <name/>
       <institution institution-parts="short" use-last="1"/>
-    </names>
-  </macro>
-  <macro name="std-authority-child">
-    <names variable="authority">
-      <name/>
-      <institution institution-parts="short" use-first="1"/>
     </names>
   </macro>
   <macro name="std-inventor-label">
@@ -758,7 +747,7 @@
           <choose>
             <if locator="paragraph" match="all" variable="locator">
               <text term="at"/>
-              <text variable="locator-extra"/>
+              <number variable="locator-extra"/>
               <choose>
                 <if locator="paragraph" type="patent">
                   <number prefix="[" suffix="]" variable="locator"/>
@@ -837,7 +826,7 @@
               </if>
               <else>
                 <names variable="author">
-                  <name and="text" delimiter-precedes-last="never" form="short"/>
+                  <name form="short"/>
                   <substitute>
                     <names variable="composer"/>
                     <names variable="container-author"/>
@@ -870,6 +859,12 @@
   </macro>
   <macro name="publisher-place-year">
     <group delimiter=", " prefix="(" suffix=")">
+      <text variable="genre"/>
+      <names variable="director">
+        <name/>
+        <label form="short" prefix=" (" suffix=")"/>
+      </names>
+      <text macro="translator"/>
       <text macro="multi-media-medium"/>
       <text macro="edition"/>
       <group delimiter=", ">
@@ -881,7 +876,7 @@
         </choose>
       </group>
       <choose>
-        <if type="broadcast video">
+        <if type="broadcast">
           <date date-parts="year-month-day" form="text" variable="issued"/>
         </if>
         <else>
@@ -894,7 +889,7 @@
   <macro name="access-url">
     <choose>
       <if match="any" type="article-newspaper graphic post-weblog post song webpage motion_picture broadcast video map">
-        <text prefix="&lt;" suffix="&gt;" variable="URL"/>    
+        <text prefix="&lt;" suffix="&gt;" variable="URL" form="short"/>    
       </if>
       <else-if match="any" type="entry-dictionary entry-encyclopedia">
         <choose>
@@ -1016,7 +1011,7 @@
         <number variable="volume"/>
         <text variable="container-title"/>
         <number variable="page"/>
-        <group delimiter=" " is-parallel="servant false" prefix="(" suffix=")">
+        <group delimiter=" " is-parallel="last" prefix="(" suffix=")">
           <group delimiter=", ">
             <group delimiter=" ">
               <text value="adopted"/>
@@ -1050,7 +1045,7 @@
               <name/>
               <institution and="none" delimiter="&#8211;" institution-parts="short"/>
             </names>
-            <group delimiter=" " is-parallel="master false" prefix="(" suffix=")">
+            <group delimiter=" " is-parallel="last" prefix="(" suffix=")">
               <group delimiter=", ">
                 <group delimiter=" ">
                   <text value="adopted"/>
@@ -1119,7 +1114,7 @@
               </else>
             </choose>
           </group>
-          <group delimiter=", " is-parallel="false master">
+          <group delimiter=", " is-parallel="last">
             <group delimiter=" ">
               <text value="above n"/>
               <text variable="first-reference-note-number"/>
@@ -1157,11 +1152,6 @@
             </else-if>
             <else>
               <group delimiter=" ">
-                <choose>
-                  <if variable="author">
-                    <text macro="translator"/>
-                  </if>
-                </choose>
                 <text macro="author-note" strip-periods="true"/>
                 <choose>
                   <if match="any" type="article-journal article-magazine">
@@ -1176,7 +1166,7 @@
                   <else-if type="article-newspaper">
                     <text macro="render-article-newspaper" strip-periods="true"/>
                   </else-if>
-                  <else-if match="all" type="paper-conference" variable="container-title event">
+                  <else-if match="all" type="paper-conference" variable="container-title">
                     <text macro="render-article-journal"/>
                   </else-if>
                   <else-if type="paper-conference">
@@ -1223,7 +1213,6 @@
                             <text font-style="italic" variable="title"/>
                           </else>
                         </choose>
-                        <text macro="translator"/>
                       </group>
                       <text macro="publisher-place-year"/>
                       <text macro="volume-number"/>
@@ -1403,19 +1392,16 @@
         <!-- full form -->
         <group delimiter=", ">
           <group delimiter=" ">
-            <group delimiter=", ">
+            <group delimiter=" ">
               <choose>
                 <if type="hearing report">
                   <text macro="juris-pretitle"/>
                 </if>
               </choose>
               <choose>
-                <if type="hearing">
+                <if type="hearing report legal_case" match="any">
                   <text macro="juris-title" font-style="italic"/>
                 </if>
-                <else-if type="report">
-                  <text macro="juris-title" font-style="italic"/>
-                </else-if>
                 <else>
                   <text macro="juris-title"/>
                 </else>
@@ -1533,6 +1519,9 @@
                   <else-if type="thesis">
                     <text macro="render-thesis"/>
                   </else-if>
+                  <else-if match="all" type="paper-conference" variable="container-title">
+                    <text macro="render-article-journal"/>
+                  </else-if>
                   <else-if type="paper-conference">
                     <text macro="render-paper-conference"/>
                   </else-if>
@@ -1558,7 +1547,7 @@
                     <text macro="render-encyclopedia"/>
                   </else-if>
                   <else-if match="all" type="motion_picture" variable="container-title publisher">
-                    <text macro="render-chapter"/>                
+                    <text macro="render-chapter"/>
                   </else-if>
                   <else-if match="all" type="motion_picture" variable="publisher">
                     <text macro="render-book"/>

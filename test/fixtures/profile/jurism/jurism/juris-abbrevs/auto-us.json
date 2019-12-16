@@ -1,0 +1,1444 @@
+{
+  "filename": "auto-us.json",
+  "name": "United States",
+  "version": "2019-08-24 06:14:05 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "US": "U.S.",
+        "US:AK": "Alaska",
+        "US:AL": "Ala.",
+        "US:AR": "Ark.",
+        "US:AS": "Am. Samoa",
+        "US:AZ": "Ariz.",
+        "US:C": "Fed. Cir.",
+        "US:C0": "D.C. Cir.",
+        "US:C0:DC.D": "D.D.C.",
+        "US:C1": "1st Cir.",
+        "US:C10": "10th Cir.",
+        "US:C10:CO.D": "D. Colo.",
+        "US:C10:KS.D": "D. Kan.",
+        "US:C10:NM.D": "D.N.M.",
+        "US:C10:OK.ED": "E.D. Okla.",
+        "US:C10:OK.ND": "N.D. Okla.",
+        "US:C10:OK.WD": "W.D. Okla.",
+        "US:C10:UT.D": "D. Utah",
+        "US:C10:WY.D": "D. Wyo.",
+        "US:C11": "11th Cir.",
+        "US:C11:AL.D": "D. Ala.",
+        "US:C11:AL.MD": "M.D. Ala.",
+        "US:C11:AL.ND": "N.D. Ala.",
+        "US:C11:AL.SD": "S.D. Ala.",
+        "US:C11:FL.D": "D. Fla.",
+        "US:C11:FL.MD": "M.D. Fla.",
+        "US:C11:FL.ND": "N.D. Fla.",
+        "US:C11:FL.SD": "S.D. Fla.",
+        "US:C11:GA.D": "D. Ga.",
+        "US:C11:GA.MD": "M.D. Ga.",
+        "US:C11:GA.ND": "N.D. Ga.",
+        "US:C11:GA.SD": "S.D. Ga.",
+        "US:C1:MA.D": "D. Mass.",
+        "US:C1:ME.D": "D. Me.",
+        "US:C1:NH.D": "D.N.H.",
+        "US:C1:PR.D": "D.P.R.",
+        "US:C1:RI.D": "D.R.I.",
+        "US:C2": "2nd Cir.",
+        "US:C2:CT.D": "D. Conn.",
+        "US:C2:NY.D": "D.N.Y.",
+        "US:C2:NY.ED": "E.D.N.Y.",
+        "US:C2:NY.ND": "N.D.N.Y.",
+        "US:C2:NY.SD": "S.D.N.Y.",
+        "US:C2:NY.WD": "W.D.N.Y.",
+        "US:C2:VT.D": "D. Vt.",
+        "US:C3": "3rd Cir.",
+        "US:C3:DE.D": "D. Del.",
+        "US:C3:NJ.D": "D.N.J.",
+        "US:C3:PA.D": "D. Pa.",
+        "US:C3:PA.ED": "E.D. Pa.",
+        "US:C3:PA.MD": "M.D. Pa.",
+        "US:C3:PA.WD": "W.D. Pa.",
+        "US:C3:VI.D": "D.V.I.",
+        "US:C4": "4th Cir.",
+        "US:C4:MD.D": "D. Md.",
+        "US:C4:NC.D": "D.N.C.",
+        "US:C4:NC.ED": "E.D.N.C.",
+        "US:C4:NC.MD": "M.D.N.C.",
+        "US:C4:NC.WD": "W.D.N.C.",
+        "US:C4:SC.D": "D.S.C.",
+        "US:C4:SC.ED": "E.D.S.C.",
+        "US:C4:SC.WD": "W.D.S.C.",
+        "US:C4:VA.D": "D. Va.",
+        "US:C4:VA.ED": "E.D. Va.",
+        "US:C4:VA.WD": "W.D. Va.",
+        "US:C4:WV.D": "D.W. Va.",
+        "US:C4:WV.ND": "N.D.W. Va.",
+        "US:C4:WV.SD": "S.D.W. Va.",
+        "US:C5": "5th Cir.",
+        "US:C5:LA.D": "D. La.",
+        "US:C5:LA.ED": "E.D. La.",
+        "US:C5:LA.MD": "M.D. La.",
+        "US:C5:LA.WD": "W.D. La.",
+        "US:C5:MS.D": "D. Miss.",
+        "US:C5:MS.ND": "N.D. Miss.",
+        "US:C5:MS.SD": "S.D. Miss.",
+        "US:C5:PZ.D": "D.D.Z.",
+        "US:C5:TX.D": "D. Tex.",
+        "US:C5:TX.ED": "E.D. Tex.",
+        "US:C5:TX.ND": "N.D. Tex.",
+        "US:C5:TX.SD": "S.D. Tex.",
+        "US:C5:TX.WD": "W.D. Tex.",
+        "US:C6": "6th Cir.",
+        "US:C6:KY.D": "D. Ky.",
+        "US:C6:KY.ED": "E.D. Ky.",
+        "US:C6:KY.WD": "W.D. Ky.",
+        "US:C6:MI.D": "D. Mich.",
+        "US:C6:MI.ED": "E.D. Mich.",
+        "US:C6:MI.WD": "W.D. Mich.",
+        "US:C6:OH.D": "D. Ohio",
+        "US:C6:OH.ND": "N.D. Ohio",
+        "US:C6:OH.SD": "S.D. Ohio",
+        "US:C6:TN.D": "D. Tenn.",
+        "US:C6:TN.ED": "E.D. Tenn.",
+        "US:C6:TN.MD": "M.D. Tenn.",
+        "US:C6:TN.WD": "W.D. Tenn.",
+        "US:C7": "7th Cir.",
+        "US:C7:IL.CD": "C.D. Ill.",
+        "US:C7:IL.D": "D. Ill.",
+        "US:C7:IL.ED": "E.D. Ill.",
+        "US:C7:IL.ND": "N.D. Ill.",
+        "US:C7:IL.SD": "S.D. Ill.",
+        "US:C7:IN.D": "D. Ind.",
+        "US:C7:IN.ND": "N.D. Ind.",
+        "US:C7:IN.SD": "S.D. Ind.",
+        "US:C7:WI.D": "D. Wis.",
+        "US:C7:WI.ED": "E.D. Wis.",
+        "US:C7:WI.WD": "W.D. Wis.",
+        "US:C8": "8th Cir.",
+        "US:C8:AR.ED": "E.D. Ark.",
+        "US:C8:AR.WD": "W.D. Ark.",
+        "US:C8:IA.D": "D. Iowa",
+        "US:C8:IA.ND": "N.D. Iowa",
+        "US:C8:IA.SD": "S.D. Iowa",
+        "US:C8:MN.D": "D. Minn.",
+        "US:C8:MO.CD": "C.D. Mo.",
+        "US:C8:MO.D": "D. Mo.",
+        "US:C8:MO.ED": "E.D. Mo.",
+        "US:C8:MO.SD": "S.D. Mo.",
+        "US:C8:MO.WD": "W.D. Mo.",
+        "US:C8:ND.D": "D.N.D.",
+        "US:C8:NE.D": "D. Neb.",
+        "US:C8:SD.D": "D.S.D.",
+        "US:C9": "9th Cir.",
+        "US:C9:AK.D": "D. Alaska",
+        "US:C9:AZ.D": "D. Ariz.",
+        "US:C9:CA.CD": "C.D. Cal.",
+        "US:C9:CA.D": "D. Cal.",
+        "US:C9:CA.ED": "E.D. Cal.",
+        "US:C9:CA.ND": "N.D. Cal.",
+        "US:C9:CA.SD": "S.D. Cal.",
+        "US:C9:GU.D": "D. Guam",
+        "US:C9:HI.D": "D. Haw.",
+        "US:C9:ID.D": "D. Idaho",
+        "US:C9:MP.D": "D.N. Mar. Is.",
+        "US:C9:MT.D": "D. Mont.",
+        "US:C9:NV.D": "D. Nev.",
+        "US:C9:OR.D": "D. Or.",
+        "US:C9:WA.D": "D. Wash.",
+        "US:C9:WA.ED": "E.D. Wash.",
+        "US:C9:WA.WD": "W.D. Wash.",
+        "US:CA": "Cal.",
+        "US:CA.D": "D. Cal.",
+        "US:CO": "Colo.",
+        "US:CT": "Conn.",
+        "US:DC": "D.C.",
+        "US:DE": "Del.",
+        "US:DE.D": "D. Del.",
+        "US:FED": "Federal",
+        "US:FL": "Fla.",
+        "US:GA": "Ga.",
+        "US:GU": "Guam",
+        "US:HI": "Haw.",
+        "US:IA": "Iowa",
+        "US:ID": "Idaho",
+        "US:IL": "Ill.",
+        "US:IN": "Ind.",
+        "US:KS": "Kan.",
+        "US:KY": "Ky.",
+        "US:LA": "La.",
+        "US:MA": "Mass.",
+        "US:MD": "Md.",
+        "US:ME": "Me.",
+        "US:MI": "Mich.",
+        "US:MN": "Minn.",
+        "US:MO": "Mo.",
+        "US:MP": "Northern Mariana Islands",
+        "US:MS": "N. Mar. Is.",
+        "US:MT": "Mont.",
+        "US:NAVAJO": "Navajo",
+        "US:NC": "N.C.",
+        "US:NC.D": "D.N.C.",
+        "US:ND": "N.D.",
+        "US:NE": "Neb.",
+        "US:NH": "N.H.",
+        "US:NJ": "N.J.",
+        "US:NM": "N.M.",
+        "US:NV": "Nev.",
+        "US:NY": "N.Y.",
+        "US:NY:NYC": "N.Y.C.",
+        "US:OH": "Ohio",
+        "US:OK": "Okla.",
+        "US:OR": "Or.",
+        "US:ORLEANS.D": "Orleans",
+        "US:PA": "Pa.",
+        "US:PR": "Puerto Rico",
+        "US:RI": "R.I.",
+        "US:SC": "S.C.",
+        "US:SD": "S.D.",
+        "US:TN": "Tenn.",
+        "US:TN.D": "D. Tenn.",
+        "US:TX": "Tex.",
+        "US:TX.D": "D. Tex.",
+        "US:UT": "Utah",
+        "US:VA": "Va.",
+        "US:VI": "U.S. Virgin Islands",
+        "US:VT": "Vt.",
+        "US:WA": "Wash.",
+        "US:WI": "Wis.",
+        "US:WV": "W. Va.",
+        "US:WY": "Wyo."
+      }
+    },
+    "us": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ak": {
+      "institution-part": {
+        "court.appeals": "Alaska Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:al": {
+      "institution-part": {
+        "court.appeals": "Ala. Ct. App.",
+        "court.civil.appeals": "Ala. Civ. App.",
+        "court.criminal.appeals": "Ala. Crim. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ar": {
+      "institution-part": {
+        "attorney.general": "Ark. Att'y Gen.",
+        "court.appeals": "Ark. Ct. App.",
+        "supreme.court": "Supreme Court",
+        "workers.compensation.commission": "Workers' Comp. Comm'n"
+      }
+    },
+    "us:as": {
+      "institution-part": {
+        "high.court": "High Court of American Samoa"
+      }
+    },
+    "us:az": {
+      "institution-part": {
+        "court.appeals": "Ariz. Ct. App.",
+        "supreme.court": "Supreme Court",
+        "tax.court": "T.C."
+      }
+    },
+    "us:c": {
+      "institution-part": {
+        "board.veterans.appeals": "Vet. App.",
+        "court.appeals.federal.circuit": "Fed. Cir.",
+        "court.appeals.veterans.claims": "Vet. App.",
+        "court.claims": "Ct. Cl.",
+        "court.customs.appeals": "Ct. Cust. App.",
+        "court.customs.patent.appeals": "C.C.P.A.",
+        "court.federal.claims": "Fed. Cl.",
+        "court.international.trade": "Ct. Int'l Trade",
+        "customs.court": "Cust. Ct.",
+        "merit.systems.protection.board": "M.S.P.B."
+      }
+    },
+    "us:c0": {
+      "institution-part": {
+        "court.appeals": "D.C. Cir."
+      }
+    },
+    "us:c0:dc.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.D.C.",
+        "district.court": "D.D.C."
+      }
+    },
+    "us:c1": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 1st Cir.",
+        "court.appeals": "1st Cir."
+      }
+    },
+    "us:c10": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 10th Cir.",
+        "court.appeals": "10th Cir."
+      }
+    },
+    "us:c10:co.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Colo.",
+        "district.court": "D. Colo."
+      }
+    },
+    "us:c10:ks.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Kan.",
+        "district.court": "D. Kan."
+      }
+    },
+    "us:c10:nm.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.N.M.",
+        "district.court": "D.N.M."
+      }
+    },
+    "us:c10:ok.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Okla.",
+        "district.court": "E.D. Okla."
+      }
+    },
+    "us:c10:ok.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Okla.",
+        "district.court": "N.D. Okla."
+      }
+    },
+    "us:c10:ok.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Okla.",
+        "district.court": "W.D. Okla."
+      }
+    },
+    "us:c10:ut.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Utah",
+        "district.court": "D. Utah"
+      }
+    },
+    "us:c10:wy.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Wyo.",
+        "district.court": "D. Wyo."
+      }
+    },
+    "us:c11": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 11th Cir.",
+        "court.appeals": "11th Cir. Ct. App."
+      }
+    },
+    "us:c11:al.d": {
+      "institution-part": {
+        "district.court": "D. Ala."
+      }
+    },
+    "us:c11:al.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. Ala.",
+        "district.court": "M.D. Ala."
+      }
+    },
+    "us:c11:al.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Ala.",
+        "district.court": "N.D. Ala."
+      }
+    },
+    "us:c11:al.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Ala.",
+        "district.court": "S.D. Ala."
+      }
+    },
+    "us:c11:fl.d": {
+      "institution-part": {
+        "district.court": "D. Fla."
+      }
+    },
+    "us:c11:fl.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. Fla.",
+        "district.court": "M.D. Fla."
+      }
+    },
+    "us:c11:fl.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Fla.",
+        "district.court": "N.D. Fla."
+      }
+    },
+    "us:c11:fl.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Fla.",
+        "district.court": "S.D. Fla."
+      }
+    },
+    "us:c11:ga.d": {
+      "institution-part": {
+        "district.court": "D. Ga."
+      }
+    },
+    "us:c11:ga.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. Ga.",
+        "district.court": "M.D. Ga."
+      }
+    },
+    "us:c11:ga.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Ga.",
+        "district.court": "N.D. Ga."
+      }
+    },
+    "us:c11:ga.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Ga.",
+        "district.court": "S.D. Ga."
+      }
+    },
+    "us:c1:ma.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Mass.",
+        "district.court": "D. Mass."
+      }
+    },
+    "us:c1:me.d": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. D. Me.",
+        "bankruptcy.court": "Bankr. D. Me.",
+        "district.court": "D. Me."
+      }
+    },
+    "us:c1:nh.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.N.H.",
+        "district.court": "D.N.H."
+      }
+    },
+    "us:c1:pr.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.P.R.",
+        "district.court": "D.P.R."
+      }
+    },
+    "us:c1:ri.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.R.I.",
+        "district.court": "D.R.I."
+      }
+    },
+    "us:c2": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 2nd Cir.",
+        "court.appeals": "2nd Cir. Ct. App."
+      }
+    },
+    "us:c2:ct.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Conn.",
+        "district.court": "D. Conn."
+      }
+    },
+    "us:c2:ny.d": {
+      "institution-part": {
+        "district.court": "D.N.Y."
+      }
+    },
+    "us:c2:ny.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D.N.Y.",
+        "district.court": "E.D.N.Y."
+      }
+    },
+    "us:c2:ny.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D.N.Y.",
+        "district.court": "N.D.N.Y."
+      }
+    },
+    "us:c2:ny.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D.N.Y.",
+        "district.court": "S.D.N.Y."
+      }
+    },
+    "us:c2:ny.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D.N.Y.",
+        "district.court": "W.D.N.Y."
+      }
+    },
+    "us:c2:vt.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Vt.",
+        "district.court": "D. Vt."
+      }
+    },
+    "us:c3": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 3rd Cir.",
+        "court.appeals": "3rd Cir. Ct. App."
+      }
+    },
+    "us:c3:de.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Del.",
+        "district.court": "D. Del."
+      }
+    },
+    "us:c3:nj.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.N.J.",
+        "district.court": "D.N.J."
+      }
+    },
+    "us:c3:pa.d": {
+      "institution-part": {
+        "district.court": "D. Pa."
+      }
+    },
+    "us:c3:pa.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Pa.",
+        "district.court": "E.D. Pa."
+      }
+    },
+    "us:c3:pa.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. Pa.",
+        "district.court": "M.D. Pa."
+      }
+    },
+    "us:c3:pa.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Pa.",
+        "district.court": "W.D. Pa."
+      }
+    },
+    "us:c3:vi.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.V.I.",
+        "district.court": "D.V.I."
+      }
+    },
+    "us:c4": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 4th Cir.",
+        "court.appeals": "4th Cir. Ct. App."
+      }
+    },
+    "us:c4:md.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Md.",
+        "district.court": "D. Md."
+      }
+    },
+    "us:c4:nc.d": {
+      "institution-part": {
+        "district.court": "D.N.C."
+      }
+    },
+    "us:c4:nc.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D.N.C.",
+        "district.court": "E.D.N.C."
+      }
+    },
+    "us:c4:nc.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D.N.C.",
+        "district.court": "M.D.N.C."
+      }
+    },
+    "us:c4:nc.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D.N.C.",
+        "district.court": "W.D.N.C."
+      }
+    },
+    "us:c4:sc.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.S.C.",
+        "district.court": "D.S.C."
+      }
+    },
+    "us:c4:sc.ed": {
+      "institution-part": {
+        "district.court": "E.D.S.C."
+      }
+    },
+    "us:c4:sc.wd": {
+      "institution-part": {
+        "district.court": "W.D.S.C."
+      }
+    },
+    "us:c4:va.d": {
+      "institution-part": {
+        "district.court": "D. Va."
+      }
+    },
+    "us:c4:va.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Va.",
+        "district.court": "E.D. Va."
+      }
+    },
+    "us:c4:va.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Va.",
+        "district.court": "W.D. Va."
+      }
+    },
+    "us:c4:wv.d": {
+      "institution-part": {
+        "district.court": "D.W. Va."
+      }
+    },
+    "us:c4:wv.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D.W. Va.",
+        "district.court": "N.D.W. Va."
+      }
+    },
+    "us:c4:wv.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D.W. Va.",
+        "district.court": "S.D.W. Va."
+      }
+    },
+    "us:c5": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 5th Cir.",
+        "court.appeals": "5th Cir. Ct. App."
+      }
+    },
+    "us:c5:la.d": {
+      "institution-part": {
+        "district.court": "D. La."
+      }
+    },
+    "us:c5:la.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. La.",
+        "district.court": "E.D. La."
+      }
+    },
+    "us:c5:la.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. La.",
+        "district.court": "M.D. La."
+      }
+    },
+    "us:c5:la.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. La.",
+        "district.court": "W.D. La."
+      }
+    },
+    "us:c5:ms.d": {
+      "institution-part": {
+        "district.court": "D. Miss."
+      }
+    },
+    "us:c5:ms.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Miss.",
+        "district.court": "N.D. Miss."
+      }
+    },
+    "us:c5:ms.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Miss.",
+        "district.court": "S.D. Miss."
+      }
+    },
+    "us:c5:pz.d": {
+      "institution-part": {
+        "district.court": "D.D.Z."
+      }
+    },
+    "us:c5:tx.d": {
+      "institution-part": {
+        "district.court": "D. Tex."
+      }
+    },
+    "us:c5:tx.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Tex.",
+        "district.court": "E.D. Tex."
+      }
+    },
+    "us:c5:tx.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Tex.",
+        "district.court": "N.D. Tex."
+      }
+    },
+    "us:c5:tx.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Tex.",
+        "district.court": "S.D. Tex."
+      }
+    },
+    "us:c5:tx.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Tex.",
+        "district.court": "W.D. Tex."
+      }
+    },
+    "us:c6": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 6th Cir.",
+        "court.appeals": "6th Cir. Ct. App."
+      }
+    },
+    "us:c6:ky.d": {
+      "institution-part": {
+        "district.court": "D. Ky."
+      }
+    },
+    "us:c6:ky.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Ky.",
+        "district.court": "E.D. Ky."
+      }
+    },
+    "us:c6:ky.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Ky.",
+        "district.court": "W.D. Ky."
+      }
+    },
+    "us:c6:mi.d": {
+      "institution-part": {
+        "district.court": "D. Mich."
+      }
+    },
+    "us:c6:mi.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Mich.",
+        "district.court": "E.D. Mich."
+      }
+    },
+    "us:c6:mi.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Mich.",
+        "district.court": "W.D. Mich."
+      }
+    },
+    "us:c6:oh.d": {
+      "institution-part": {
+        "district.court": "D. Ohio"
+      }
+    },
+    "us:c6:oh.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Ohio",
+        "district.court": "N.D. Ohio"
+      }
+    },
+    "us:c6:oh.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Ohio",
+        "district.court": "S.D. Ohio"
+      }
+    },
+    "us:c6:tn.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Tenn.",
+        "district.court": "D. Tenn."
+      }
+    },
+    "us:c6:tn.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Tenn.",
+        "district.court": "E.D. Tenn."
+      }
+    },
+    "us:c6:tn.md": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. M.D. Tenn.",
+        "district.court": "M.D. Tenn."
+      }
+    },
+    "us:c6:tn.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Tenn.",
+        "district.court": "W.D. Tenn."
+      }
+    },
+    "us:c7": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 7th Cir.",
+        "court.appeals": "7th Cir. Ct. App."
+      }
+    },
+    "us:c7:il.cd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. C.D. Ill.",
+        "district.court": "C.D. Ill."
+      }
+    },
+    "us:c7:il.d": {
+      "institution-part": {
+        "district.court": "D. Ill."
+      }
+    },
+    "us:c7:il.ed": {
+      "institution-part": {
+        "district.court": "E.D. Ill."
+      }
+    },
+    "us:c7:il.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Ill.",
+        "district.court": "N.D. Ill."
+      }
+    },
+    "us:c7:il.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Ill.",
+        "district.court": "S.D. Ill."
+      }
+    },
+    "us:c7:in.d": {
+      "institution-part": {
+        "district.court": "D. Ind."
+      }
+    },
+    "us:c7:in.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Ind.",
+        "district.court": "N.D. Ind."
+      }
+    },
+    "us:c7:in.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Ind.",
+        "district.court": "S.D. Ind."
+      }
+    },
+    "us:c7:wi.d": {
+      "institution-part": {
+        "district.court": "D. Wis."
+      }
+    },
+    "us:c7:wi.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Wis.",
+        "district.court": "E.D. Wis."
+      }
+    },
+    "us:c7:wi.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Wis.",
+        "district.court": "W.D. Wis."
+      }
+    },
+    "us:c8": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 8th Cir.",
+        "court.appeals": "8th Cir. Ct. App."
+      }
+    },
+    "us:c8:ar.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Ark.",
+        "district.court": "E.D. Ark."
+      }
+    },
+    "us:c8:ar.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Ark.",
+        "district.court": "W.D. Ark."
+      }
+    },
+    "us:c8:ia.d": {
+      "institution-part": {
+        "district.court": "D. Iowa"
+      }
+    },
+    "us:c8:ia.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Iowa",
+        "district.court": "N.D. Iowa"
+      }
+    },
+    "us:c8:ia.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Iowa",
+        "district.court": "S.D. Iowa"
+      }
+    },
+    "us:c8:mn.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Minn.",
+        "district.court": "D. Minn."
+      }
+    },
+    "us:c8:mo.cd": {
+      "institution-part": {
+        "district.court": "C.D. Mo."
+      }
+    },
+    "us:c8:mo.d": {
+      "institution-part": {
+        "district.court": "D. Mo."
+      }
+    },
+    "us:c8:mo.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Mo.",
+        "district.court": "E.D. Mo."
+      }
+    },
+    "us:c8:mo.sd": {
+      "institution-part": {
+        "district.court": "S.D. Mo."
+      }
+    },
+    "us:c8:mo.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Mo.",
+        "district.court": "W.D. Mo."
+      }
+    },
+    "us:c8:nd.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.N.D.",
+        "district.court": "D.N.D."
+      }
+    },
+    "us:c8:ne.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Neb.",
+        "district.court": "D. Neb."
+      }
+    },
+    "us:c8:sd.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.S.D.",
+        "district.court": "D.S.D."
+      }
+    },
+    "us:c9": {
+      "institution-part": {
+        "bankruptcy.appellate.panel": "B.A.P. 9th Cir.",
+        "court.appeals": "9th Cir. Ct. App."
+      }
+    },
+    "us:c9:ak.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Alaska",
+        "district.court": "D. Alaska"
+      }
+    },
+    "us:c9:az.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Ariz.",
+        "district.court": "D. Ariz."
+      }
+    },
+    "us:c9:ca.cd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. C.D. Cal.",
+        "district.court": "C.D. Cal."
+      }
+    },
+    "us:c9:ca.d": {
+      "institution-part": {
+        "district.court": "D. Cal."
+      }
+    },
+    "us:c9:ca.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Cal.",
+        "district.court": "E.D. Cal."
+      }
+    },
+    "us:c9:ca.nd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. N.D. Cal.",
+        "district.court": "N.D. Cal."
+      }
+    },
+    "us:c9:ca.sd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. S.D. Cal.",
+        "district.court": "S.D. Cal."
+      }
+    },
+    "us:c9:gu.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Guam",
+        "district.court": "D. Guam"
+      }
+    },
+    "us:c9:hi.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Haw.",
+        "district.court": "D. Haw."
+      }
+    },
+    "us:c9:id.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Idaho",
+        "district.court": "D. Idaho"
+      }
+    },
+    "us:c9:mp.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D.N. Mar. Is.",
+        "district.court": "D.N. Mar. Is."
+      }
+    },
+    "us:c9:mt.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Mont.",
+        "district.court": "D. Mont."
+      }
+    },
+    "us:c9:nv.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Nev.",
+        "district.court": "D. Nev."
+      }
+    },
+    "us:c9:or.d": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. D. Or.",
+        "district.court": "D. Or."
+      }
+    },
+    "us:c9:wa.d": {
+      "institution-part": {
+        "district.court": "D. Wash."
+      }
+    },
+    "us:c9:wa.ed": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. E.D. Wash.",
+        "district.court": "E.D. Wash."
+      }
+    },
+    "us:c9:wa.wd": {
+      "institution-part": {
+        "bankruptcy.court": "Bankr. W.D. Wash.",
+        "district.court": "W.D. Wash."
+      }
+    },
+    "us:ca": {
+      "institution-part": {
+        "appellate.division.superior.court": "Cal. App. Dep’t Super. Ct.",
+        "attorney.general": "Cal. Att'y Gen.",
+        "court.appeal": "Cal. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ca.d": {
+      "institution-part": {
+        "circuit.court": "Cal. Cir. Ct."
+      }
+    },
+    "us:co": {
+      "institution-part": {
+        "attorney.general": "Colo. Att'y Gen.",
+        "court.appeals": "Colo. Ct. App.",
+        "industrial.claim.appeals": "Colo. Indust. Cl. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ct": {
+      "institution-part": {
+        "appellate.court": "Conn. App. Ct.",
+        "compensation.review.board": "Conn. Comp. Rev. Bd.",
+        "superior.court": "Conn. Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:dc": {
+      "institution-part": {
+        "court.appeals": "D.C. Ct. App."
+      }
+    },
+    "us:de": {
+      "institution-part": {
+        "court.chancery": "Del. Ch.",
+        "court.common.pleas": "Del. Ct. Com. Pl.",
+        "court.judiciary": "Del. Ct. Jud.",
+        "family.court": "Del. Fam. Ct.",
+        "superior.court": "Del. Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:de.d": {
+      "institution-part": {
+        "circuit.court": "Cal. Cir. Ct."
+      }
+    },
+    "us:fed": {
+      "institution-part": {
+        "air.force.court.criminal.appeals": "A.F. Ct. Crim. App.",
+        "armed.services.board.contract.appeals": "A.S.B.C.A.",
+        "army.court.criminal.appeals": "Army Ct. Crim. App.",
+        "attorney.general": "Att'y Gen.",
+        "commerce.court": "Comm. Ct.",
+        "court.appeals.armed.forces": "C.A.A.F.",
+        "court.military.commission.review": "Ct. Mi. Comm'n Rev.",
+        "courts.martial": "Ct. Martial",
+        "emergency.court.appeals": "Emer. Ct. App.",
+        "foreign.intelligence.surveillance.court": "F.I.S.C.",
+        "foreign.intelligence.surveillance.court.review": "F.I.S.C. Rev.",
+        "judicial.conference.committee": "Jud. Conf. Comm.",
+        "judicial.panel.multidistrict.litigation": "J.P.M.L.",
+        "navy.marine.corps.court.criminal.appeals": "N.-M. Ct. Crim. App.",
+        "special.court.regional.rail.reorganization.act": "Reg’l Rail Reorg. Ct.",
+        "tax.court": "T.C.",
+        "temporary.emergency.court.appeals": "Temp. Emer. Ct. App."
+      }
+    },
+    "us:fl": {
+      "institution-part": {
+        "attorney.general": "Fla. Att'y Gen.",
+        "district.court.appeal": "Fla. Dist. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ga": {
+      "institution-part": {
+        "court.appeals": "Ga. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:gu": {
+      "institution-part": {
+        "small.claims.court": "Guam Small Cl. Ct.",
+        "superior.court": "Guam Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:hi": {
+      "institution-part": {
+        "intermediate.court.appeals": "Haw. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ia": {
+      "institution-part": {
+        "court.appeals": "Iowa Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:id": {
+      "institution-part": {
+        "court.appeals": "Idaho Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:il": {
+      "institution-part": {
+        "appellate.court": "Ill. App. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:in": {
+      "institution-part": {
+        "court.appeals": "Ind. Ct. App.",
+        "supreme.court": "Supreme Court",
+        "tax.court": "T.C."
+      }
+    },
+    "us:ks": {
+      "institution-part": {
+        "attorney.general": "Kan. Att'y Gen.",
+        "court.appeals": "Kan. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ky": {
+      "institution-part": {
+        "court.appeals": "Ky. Ct. App.",
+        "court.appeals.high": "Ky. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:la": {
+      "institution-part": {
+        "attorney.general": "La. Att'y Gen.",
+        "court.appeal": "La. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ma": {
+      "institution-part": {
+        "appeals.court": "Mass. App. Ct.",
+        "bankruptcy.appellate.panel": "B.A.P. Mass.",
+        "department.industrial.accidents": "Mass. Dept. Indus. Accid.",
+        "district.court": "Mass. Dist. Ct.",
+        "superior.court": "Mass. Super. Ct.",
+        "supreme.judicial.court": "Supreme Judicial Court"
+      }
+    },
+    "us:md": {
+      "institution-part": {
+        "attorney.general": "Md. Att'y Gen.",
+        "court.appeals": "Md. Ct. App.",
+        "court.special.appeals": "Md. Ct. Spec. App."
+      }
+    },
+    "us:me": {
+      "institution-part": {
+        "supreme.judicial.court": "Supreme Judicial Court"
+      }
+    },
+    "us:mi": {
+      "institution-part": {
+        "court.appeals": "Mich. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:mn": {
+      "institution-part": {
+        "attorney.general": "Minn. Att'y Gen.",
+        "court.appeals": "Minn. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:mo": {
+      "institution-part": {
+        "attorney.general": "Mo. Att'y Gen.",
+        "court.appeals": "Mo. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:mp": {
+      "institution-part": {}
+    },
+    "us:ms": {
+      "institution-part": {
+        "court.appeals": "N. Mar. Is. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:mt": {
+      "institution-part": {
+        "attorney.general": "Mont. Att'y Gen.",
+        "supreme.court": "Supreme Court",
+        "tax.appeal.board": "Mont. Tax App. Bd."
+      }
+    },
+    "us:navajo": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:nc": {
+      "institution-part": {
+        "court.appeals": "N.C. Ct. App.",
+        "industrial.commission": "N.C. Ind. Comm.",
+        "superior.court": "N.C. Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:nc.d": {
+      "institution-part": {
+        "circuit.court": "Cal. Cir. Ct."
+      }
+    },
+    "us:nd": {
+      "institution-part": {
+        "court.appeals": "N.D. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ne": {
+      "institution-part": {
+        "attorney.general": "Neb. Att'y Gen.",
+        "court.appeals": "Neb. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:nh": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:nj": {
+      "institution-part": {
+        "court.chancery": "N.J. Ch.",
+        "superior.court": "N.J. Super. Ct.",
+        "supreme.court": "Supreme Court",
+        "tax.court": "T.C."
+      }
+    },
+    "us:nm": {
+      "institution-part": {
+        "court.appeals": "N.M. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:nv": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ny": {
+      "institution-part": {
+        "appellate.division.supreme.court": "N.Y. App. Div.",
+        "appellate.term.supreme.court": "N.Y. App. Term.",
+        "attorney.general": "N.Y. Att'y Gen.",
+        "court.appeals": "N.Y. Ct. App.",
+        "family.court": "N.Y. Fam. Ct.",
+        "supreme.court": "Supreme Court",
+        "surrogates.court": "N.Y. Sur. Ct."
+      }
+    },
+    "us:ny:nyc": {
+      "institution-part": {
+        "civil.court": "N.Y.C. Civ. Ct.",
+        "criminal.court": "N.Y.C. Crim. Ct."
+      }
+    },
+    "us:oh": {
+      "institution-part": {
+        "court.appeals": "Ohio Ct. App.",
+        "court.claims": "Ct. Cl.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:ok": {
+      "institution-part": {
+        "attorney.general.reports": "Okla. Att'y Gen.",
+        "court.civil.appeals": "Okla. Civ. App.",
+        "court.criminal.appeals": "Okla. Crim. App.",
+        "court.judiciary": "Okla. Ct. Jud.",
+        "judicial.ethics.advisory.panel": "Okla. Jud. Ethics Adv. Panel",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:or": {
+      "institution-part": {
+        "court.appeals": "Or. Ct. App.",
+        "supreme.court": "Supreme Court",
+        "tax.court": "T.C."
+      }
+    },
+    "us:orleans.d": {
+      "institution-part": {
+        "district.court": "Orleans"
+      }
+    },
+    "us:pa": {
+      "institution-part": {
+        "commonwealth.court": "Pa. Commw. Ct.",
+        "court.judicial.discipline": "Pa. Ct. Jud. Disc.",
+        "special.tribunal": "Spec. Trib.",
+        "superior.court": "Pa. Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:pr": {
+      "institution-part": {}
+    },
+    "us:ri": {
+      "institution-part": {
+        "superior.court": "R.I. Super. Ct.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:sc": {
+      "institution-part": {
+        "court.appeals": "S.C. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:sd": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:tn": {
+      "institution-part": {
+        "court.appeals": "Tenn. Ct. App.",
+        "court.criminal.appeals": "Tenn. Crim. App.",
+        "superior.court.law.equity": "Tenn. Super. Ct. L. & Eq.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:tn.d": {
+      "institution-part": {
+        "circuit.court": "Cal. Cir. Ct."
+      }
+    },
+    "us:tx": {
+      "institution-part": {
+        "attorney.general": "Tex. Att'y Gen.",
+        "court.appeals": "Tex. Ct. App.",
+        "court.criminal.appeals": "Tex. Crim. App.",
+        "judicial.panel.multidistrict.litigation": "J.P.M.L.",
+        "special.court.review": "Tex. Spec. Ct. Rev.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:tx.d": {
+      "institution-part": {
+        "special.tribunal": "Spec. Trib."
+      }
+    },
+    "us:ut": {
+      "institution-part": {
+        "court.appeals": "Utah Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:va": {
+      "institution-part": {
+        "court.appeals": "Va. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:vi": {
+      "institution-part": {}
+    },
+    "us:vt": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:wa": {
+      "institution-part": {
+        "attorney.general": "Wash. Att'y Gen.",
+        "court.appeals": "Wash. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:wi": {
+      "institution-part": {
+        "attorney.general": "Wis. Att'y Gen.",
+        "court.appeals": "Wis. Ct. App.",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:wv": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "us:wy": {
+      "institution-part": {
+        "supreme.court": "Supreme Court"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ae.json",
+  "name": "United Arab Emirates",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "AE": "United Arab Emirates"
+      }
+    },
+    "ae": {
+      "institution-part": {}
+    }
+  }
+}
