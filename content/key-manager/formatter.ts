@@ -153,6 +153,7 @@ class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
+    citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey
   }
