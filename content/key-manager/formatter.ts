@@ -533,6 +533,11 @@ class PatternFormatter {
     return value
   }
 
+  /** Treat HAN characters as individual words */
+  public _split_logograms(value) {
+    return (value || '').replace(script.han, ' $1 ').trim()
+  }
+
   /** transliterates the citation keys and removes unsafe characters */
   public _clean(value) {
     if (!value) return ''
@@ -597,7 +602,6 @@ class PatternFormatter {
     if (!title) return null
 
     title = this.innerText(title)
-    title = title.replace(script.han, ' $1 ')
 
     if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
