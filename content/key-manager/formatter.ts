@@ -534,8 +534,8 @@ class PatternFormatter {
     return value
   }
 
-  /** Treat HAN characters as individual words */
-  public _split_logograms(value) {
+  /** Treat ideaographs as individual words */
+  public _split_ideographs(value) {
     return (value || '').replace(script.han, ' $1 ').trim()
   }
 
