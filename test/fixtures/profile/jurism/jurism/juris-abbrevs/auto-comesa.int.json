@@ -1,0 +1,17 @@
+{
+  "filename": "auto-comesa.int.json",
+  "name": "Common Market for Eastern and Southern Africa",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "COMESA.INT": "Common Market for Eastern and Southern Africa"
+      }
+    },
+    "comesa.int": {
+      "institution-part": {
+        "court.justice": "Court Of Justice"
+      }
+    }
+  }
+}

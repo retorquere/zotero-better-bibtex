@@ -1,0 +1,15 @@
+{
+  "filename": "auto-sl.json",
+  "name": "Sierra Leone",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SL": "Sierra Leone"
+      }
+    },
+    "sl": {
+      "institution-part": {}
+    }
+  }
+}

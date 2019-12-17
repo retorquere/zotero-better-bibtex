@@ -1,0 +1,15 @@
+{
+  "filename": "auto-td.json",
+  "name": "Chad",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "TD": "Chad"
+      }
+    },
+    "td": {
+      "institution-part": {}
+    }
+  }
+}

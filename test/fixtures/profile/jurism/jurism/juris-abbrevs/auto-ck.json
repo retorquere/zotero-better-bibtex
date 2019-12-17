@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ck.json",
+  "name": "Cook Islands",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CK": "Cook Islands"
+      }
+    },
+    "ck": {
+      "institution-part": {}
+    }
+  }
+}

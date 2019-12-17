@@ -1,0 +1,244 @@
+{
+  "filename": "auto-fr.json",
+  "name": "France",
+  "version": "2019-11-04 08:52:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "FR": "France",
+        "FR:AGEN": "Agen",
+        "FR:AIX.EN.PROVENCE": "Aix-en-Provence",
+        "FR:AMIENS": "Amiens",
+        "FR:ANGERS": "Angers",
+        "FR:BASSE.TERRE": "Basse-Terre",
+        "FR:BASTIA": "Bastia",
+        "FR:BESANCON": "Besançon",
+        "FR:BORDEAUX": "Bordeaux",
+        "FR:BOURGES": "Bourges",
+        "FR:CAEN": "Caen",
+        "FR:CAYENNE": "Cayenne",
+        "FR:CHAMBERY": "Chambéry",
+        "FR:COLMAR": "Colmar",
+        "FR:DIJON": "Dijon",
+        "FR:DOUAI": "Douai",
+        "FR:FORT.FRANCE": "Fort-de-France",
+        "FR:GRENOBLE": "Grenoble",
+        "FR:LIMOGES": "Limoges",
+        "FR:LYON": "Lyon",
+        "FR:METZ": "Metz",
+        "FR:MONTPELLIER": "Montpellier",
+        "FR:NANCY": "Nancy",
+        "FR:NIMES": "Nîmes",
+        "FR:NOUMEA": "Nouméa",
+        "FR:ORLEANS": "Orléans",
+        "FR:PAPEETE": "Papeete",
+        "FR:PARIS": "Paris",
+        "FR:PAU": "Pau",
+        "FR:POITIERS": "Poitiers",
+        "FR:REIMS": "Reims",
+        "FR:RENNES": "Rennes",
+        "FR:RIOM": "Riom",
+        "FR:ROUEN": "Rouen",
+        "FR:SAINT.DENIS": "Saint-Denis",
+        "FR:TOULOUSE": "Toulouse",
+        "FR:VERSAILLES": "Versailles"
+      }
+    },
+    "fr": {
+      "institution-part": {
+        "ca": "CA France",
+        "cass": "Cour de Cassation",
+        "cass~civ1": "Cour de Cassation|1re chambre civile",
+        "cass~civ2": "Cour de Cassation|2e chambre civile",
+        "cass~civ3": "Cour de Cassation|3e chambre civile",
+        "cass~crim": "Cour de Cassation|Chambre criminelle",
+        "cass~fin": "Cour de Cassation|Chambre commerciale, financière et économique",
+        "cass~plen": "Cour de Cassation|Assemblée plénière",
+        "cass~soc": "Cour de Cassation|Chambre sociale",
+        "cc": "Conseil Constitutionelle",
+        "ce": "Conseil d'Etat",
+        "cnda": "Cour National du Droit d'Asile"
+      }
+    },
+    "fr:agen": {
+      "institution-part": {
+        "ca": "CA Agen"
+      }
+    },
+    "fr:aix.en.provence": {
+      "institution-part": {
+        "ca": "CA Aix-en-Provence"
+      }
+    },
+    "fr:amiens": {
+      "institution-part": {
+        "ca": "CA Amiens"
+      }
+    },
+    "fr:angers": {
+      "institution-part": {
+        "ca": "CA Angers"
+      }
+    },
+    "fr:basse.terre": {
+      "institution-part": {
+        "ca": "CA Basse-Terre"
+      }
+    },
+    "fr:bastia": {
+      "institution-part": {
+        "ca": "CA Bastia"
+      }
+    },
+    "fr:besancon": {
+      "institution-part": {
+        "ca": "CA Besançon"
+      }
+    },
+    "fr:bordeaux": {
+      "institution-part": {
+        "ca": "CA Bordeaux"
+      }
+    },
+    "fr:bourges": {
+      "institution-part": {
+        "ca": "CA Bourges"
+      }
+    },
+    "fr:caen": {
+      "institution-part": {
+        "ca": "CA Caen"
+      }
+    },
+    "fr:cayenne": {
+      "institution-part": {
+        "ca": "CA Cayenne"
+      }
+    },
+    "fr:chambery": {
+      "institution-part": {
+        "ca": "CA Chambéry"
+      }
+    },
+    "fr:colmar": {
+      "institution-part": {
+        "ca": "CA Colmar"
+      }
+    },
+    "fr:dijon": {
+      "institution-part": {
+        "ca": "CA Dijon"
+      }
+    },
+    "fr:douai": {
+      "institution-part": {
+        "ca": "CA Douai"
+      }
+    },
+    "fr:fort.france": {
+      "institution-part": {
+        "ca": "CA Fort-de-France"
+      }
+    },
+    "fr:grenoble": {
+      "institution-part": {
+        "ca": "CA Grenoble"
+      }
+    },
+    "fr:limoges": {
+      "institution-part": {
+        "ca": "CA Limoges"
+      }
+    },
+    "fr:lyon": {
+      "institution-part": {
+        "ca": "CA Lyon"
+      }
+    },
+    "fr:metz": {
+      "institution-part": {
+        "ca": "CA Metz"
+      }
+    },
+    "fr:montpellier": {
+      "institution-part": {
+        "ca": "CA Montpellier"
+      }
+    },
+    "fr:nancy": {
+      "institution-part": {
+        "ca": "CA Nancy"
+      }
+    },
+    "fr:nimes": {
+      "institution-part": {
+        "ca": "CA Nîmes"
+      }
+    },
+    "fr:noumea": {
+      "institution-part": {
+        "ca": "CA Nouméa"
+      }
+    },
+    "fr:orleans": {
+      "institution-part": {
+        "ca": "CA Orléans"
+      }
+    },
+    "fr:papeete": {
+      "institution-part": {
+        "ca": "CA Papeete"
+      }
+    },
+    "fr:paris": {
+      "institution-part": {
+        "ca": "CA Paris"
+      }
+    },
+    "fr:pau": {
+      "institution-part": {
+        "ca": "CA Pau"
+      }
+    },
+    "fr:poitiers": {
+      "institution-part": {
+        "ca": "CA Poitiers"
+      }
+    },
+    "fr:reims": {
+      "institution-part": {
+        "ca": "CA Reims"
+      }
+    },
+    "fr:rennes": {
+      "institution-part": {
+        "ca": "CA Rennes"
+      }
+    },
+    "fr:riom": {
+      "institution-part": {
+        "ca": "CA Riom"
+      }
+    },
+    "fr:rouen": {
+      "institution-part": {
+        "ca": "CA Rouen"
+      }
+    },
+    "fr:saint.denis": {
+      "institution-part": {
+        "ca": "CA Saint-Denis"
+      }
+    },
+    "fr:toulouse": {
+      "institution-part": {
+        "ca": "CA Toulouse"
+      }
+    },
+    "fr:versailles": {
+      "institution-part": {
+        "ca": "CA Versailles"
+      }
+    }
+  }
+}

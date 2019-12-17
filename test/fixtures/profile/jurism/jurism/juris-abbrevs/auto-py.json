@@ -1,0 +1,15 @@
+{
+  "filename": "auto-py.json",
+  "name": "Paraguay",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "PY": "Paraguay"
+      }
+    },
+    "py": {
+      "institution-part": {}
+    }
+  }
+}

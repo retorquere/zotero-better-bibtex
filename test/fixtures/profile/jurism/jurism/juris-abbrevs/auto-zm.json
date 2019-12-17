@@ -1,0 +1,15 @@
+{
+  "filename": "auto-zm.json",
+  "name": "Zambia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ZM": "Zambia"
+      }
+    },
+    "zm": {
+      "institution-part": {}
+    }
+  }
+}

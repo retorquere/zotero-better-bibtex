@@ -12,7 +12,28 @@
 	"inRepository": true,
 	"translatorType": 3,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-05 19:32:38"
+	"lastUpdated": "2019-01-31 00:12:00"
+}
+
+var mimeTypes = {
+    "PDF": "application/pdf",
+    "DOC": "application/msword",
+    "DOCX": "application/msword",
+    "HTML": "text/html",
+    "HTM": "text/html",
+    "TXT": "text/plain",
+    "DEFAULT": "application/octet-stream"
+};
+
+var mimeRex = new RegExp("(" + Object.keys(mimeTypes).join("|") + ")$", "i");
+
+function getMimeType(str) {
+    var mimeKey = "DEFAULT";
+    var m = mimeRex.exec(str);
+    if (m) {
+        mimeKey = m[1].toUpperCase();
+    }
+    return mimeTypes[mimeKey];
 }
 
 function parseInput() {
@@ -21,7 +42,7 @@ function parseInput() {
 	// Read in the whole file at once, since we can't easily parse a JSON stream. The 
 	// chunk size here is pretty arbitrary, although larger chunk sizes may be marginally
 	// faster. We set it to 1MB.
-	while((str = Z.read(1048576)) !== false) json += str;
+	while ((str = Z.read(1048576)) !== false) json += str;
 	
 	try {
 		return JSON.parse(json);
@@ -31,25 +52,17 @@ function parseInput() {
 }
 
 function detectImport() {
-	const CSL_TYPES = {"article":true, "article-journal":true, "article-magazine":true,
-		"article-newspaper":true, "bill":true, "book":true, "broadcast":true,
-		"classic":true, "chapter":true, "dataset":true, "entry":true, "entry-dictionary":true,
-		"entry-encyclopedia":true, "figure":true, "gazette":true, "graphic":true, "interview":true,
-		"legal_case":true, "legislation":true, "manuscript":true, "map":true,
-		"motion_picture":true, "musical_score":true, "pamphlet":true,
-		"paper-conference":true, "patent":true, "personal_communication":true,
-		"post":true, "post-weblog":true, "regulation":true, "report":true, "review":true, "review-book":true,
-		"standard":true, "song":true, "speech":true, "thesis":true, "treaty":true, "webpage":true};
-		
+
 	var parsedData = parseInput();
-	if(!parsedData) return false;
+	if (!parsedData) return false;
 	
-	if(typeof parsedData !== "object") return false;
-	if(!(parsedData instanceof Array)) parsedData = [parsedData];
+	if (typeof parsedData !== "object") return false;
+	if (!(parsedData instanceof Array)) parsedData = [parsedData];
 	
-	for(var i=0; i<parsedData.length; i++) {
+	for (var i=0; i<parsedData.length; i++) {
 		var item = parsedData[i];
-		if(typeof item !== "object" || !item.type || !(item.type in CSL_TYPES)) {
+		// second argument is for "strict"
+		if (typeof item !== "object" || !item.type || !(ZU.getZoteroTypeFromCslType(item, true))) {
 			return false;
 		}
 	}
@@ -90,6 +103,34 @@ function importNext(data, resolve, reject) {
 		while (d = data.shift()) {
 			var item = new Z.Item();
 			ZU.itemFromCSLJSON(item, d);
+			item.attachments = [];
+            item.tags = [];
+			if (d.attachments && d.attachments.length) {
+				for (var att of d.attachments) {
+                    var title = null, path = null;
+                    if (typeof att === "string") {
+                        title = "Attachment";
+                        path = att;
+                    } else if (att.title && att.url) {
+                        title = att.title;
+                        path = att.path;
+                    }
+                    if (title && path) {
+					    item.attachments.push({
+						    title: title,
+						    path: path,
+						    mimeType: getMimeType(path)
+					    });
+                    }
+				}
+			}
+            if (d.tags) {
+                var tags = d.tags;
+                if (typeof d.tags === "string") {
+                    tags = d.tags.split(/\s*,\s*/);
+                }
+                item.tags = tags;
+            }
 			var maybePromise = item.complete();
 			if (maybePromise) {
 				maybePromise.then(function () {
@@ -108,7 +149,17 @@ function importNext(data, resolve, reject) {
 
 function doExport() {
 	var item, data = [];
-	while(item = Z.nextItem()) data.push(ZU.itemToCSLJSON(item));
+	while (item = Z.nextItem()) {
+		if (item.extra) {
+			item.extra = item.extra.replace(/(?:^|\n)citation key\s*:\s*([^\s]+)(?:\n|$)/i, (m, citationKey) => {
+				item.citationKey = citationKey;
+				return '\n';
+			}).trim();
+		}
+		var cslItem = ZU.itemToCSLJSON(item);
+		if (item.citationKey) cslItem.id = item.citationKey;
+		data.push(cslItem);
+	}
 	Z.write(JSON.stringify(data, null, "\t"));
 }
 /** BEGIN TEST CASES **/

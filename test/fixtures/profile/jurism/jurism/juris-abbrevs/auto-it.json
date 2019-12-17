@@ -1,0 +1,1103 @@
+{
+  "filename": "auto-it.json",
+  "name": "Italy",
+  "version": "2019-12-06 02:32:09 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "IT": "Italy",
+        "IT:ANCONA": "Ancona",
+        "IT:ANCONA:ANCONA": "Ancona",
+        "IT:ANCONA:ASCOLI.PICENO": "Ascoli Piceno",
+        "IT:ANCONA:FERMO": "Fermo",
+        "IT:ANCONA:MACERATA": "Macerata",
+        "IT:ANCONA:PESARO": "Pesaro",
+        "IT:ANCONA:URBINO": "Urbino",
+        "IT:BARI": "Bari",
+        "IT:BARI:BARI": "Bari",
+        "IT:BARI:FOGGIA": "Foggia",
+        "IT:BARI:TRANI": "Trani",
+        "IT:BOLOGNA": "Bologna",
+        "IT:BOLOGNA:BOLOGNA": "Bologna",
+        "IT:BOLOGNA:FERRARA": "Ferrara",
+        "IT:BOLOGNA:FORLÌ": "Forlì",
+        "IT:BOLOGNA:MODENA": "Modena",
+        "IT:BOLOGNA:PARMA": "Parma",
+        "IT:BOLOGNA:PIACENZA": "Piacenza",
+        "IT:BOLOGNA:RAVENNA": "Ravenna",
+        "IT:BOLOGNA:REGGIO.NELL.EMILIA": "Reggio nell'Emilia",
+        "IT:BOLOGNA:RIMINI": "Rimini",
+        "IT:BRESCIA": "Brescia",
+        "IT:BRESCIA:BERGAMO": "Bergamo",
+        "IT:BRESCIA:BRESCIA": "Brescia",
+        "IT:BRESCIA:CREMONA": "Cremona",
+        "IT:BRESCIA:MANTOVA": "Mantova",
+        "IT:CAGLIARI": "Cagliari",
+        "IT:CAGLIARI:CAGLIARI": "Cagliari",
+        "IT:CAGLIARI:LANUSEI": "Lanusei",
+        "IT:CAGLIARI:NUORO": "Nuoro",
+        "IT:CAGLIARI:ORISTANO": "Oristano",
+        "IT:CAGLIARI:SASSARI": "Sassari",
+        "IT:CAGLIARI:TEMPIO.PAUSANIA": "Tempio Pausania",
+        "IT:CALTANISSETTA": "Caltanissetta",
+        "IT:CALTANISSETTA:CALTANISSETTA": "Caltanissetta",
+        "IT:CALTANISSETTA:ENNA": "Enna",
+        "IT:CALTANISSETTA:GELA": "Gela",
+        "IT:CAMPOBASSO": "Campobasso",
+        "IT:CAMPOBASSO:CAMPOBASSO": "Campobasso",
+        "IT:CAMPOBASSO:ISERNIA": "Isernia",
+        "IT:CAMPOBASSO:LARINO": "Larino",
+        "IT:CATANIA": "Catania",
+        "IT:CATANIA:CALTAGIRONE": "Caltagirone",
+        "IT:CATANIA:CATANIA": "Catania",
+        "IT:CATANIA:RAGUSA": "Ragusa",
+        "IT:CATANIA:SIRACUSA": "Siracusa",
+        "IT:CATANZARO": "Catanzaro",
+        "IT:CATANZARO:CASTROVILLARI": "Castrovillari",
+        "IT:CATANZARO:CATANZARO": "Catanzaro",
+        "IT:CATANZARO:COSENZA": "Cosenza",
+        "IT:CATANZARO:CROTONE": "Crotone",
+        "IT:CATANZARO:LAMEZIA.TERME": "Lamezia Terme",
+        "IT:CATANZARO:PAOLA": "Paola",
+        "IT:CATANZARO:VIBO.VALENTIA": "Vibo Valentia",
+        "IT:FIRENZE": "Firenze",
+        "IT:FIRENZE:AREZZO": "Arezzo",
+        "IT:FIRENZE:FIRENZE": "Firenze",
+        "IT:FIRENZE:GROSSETO": "Grosseto",
+        "IT:FIRENZE:LIVORNO": "Livorno",
+        "IT:FIRENZE:LUCCA": "Lucca",
+        "IT:FIRENZE:PISA": "Pisa",
+        "IT:FIRENZE:PISTOIA": "Pistoia",
+        "IT:FIRENZE:PRATO": "Prato",
+        "IT:FIRENZE:SIENA": "Siena",
+        "IT:GENOVA": "Genova",
+        "IT:GENOVA:GENOVA": "Genova",
+        "IT:GENOVA:IMPERIA": "Imperia",
+        "IT:GENOVA:LA.SPEZIA": "La Spezia",
+        "IT:GENOVA:MASSA": "Massa",
+        "IT:GENOVA:SAVONA": "Savona",
+        "IT:L.AQUILA": "L'aquila",
+        "IT:L.AQUILA:CHIETI": "Chieti",
+        "IT:L.AQUILA:L.AQUILA": "L'Aquila",
+        "IT:L.AQUILA:PESCARA": "Pescara",
+        "IT:L.AQUILA:TERAMO": "Teramo",
+        "IT:LECCE": "Lecce",
+        "IT:LECCE:BRINDISI": "Brindisi",
+        "IT:LECCE:LECCE": "Lecce",
+        "IT:LECCE:TARANTO": "Taranto",
+        "IT:MESSINA": "Messina",
+        "IT:MESSINA:BARCELLONA.POZZO.DI.GOTTO": "Barcellona Pozzo di Gotto",
+        "IT:MESSINA:MESSINA": "Messina",
+        "IT:MESSINA:PATTI": "Patti",
+        "IT:MILANO": "Milano",
+        "IT:MILANO:BUSTO.ARSIZIO": "Busto Arsizio",
+        "IT:MILANO:COMO": "Como",
+        "IT:MILANO:LECCO": "Lecco",
+        "IT:MILANO:LODI": "Lodi",
+        "IT:MILANO:MILANO": "Milano",
+        "IT:MILANO:MONZA": "Monza",
+        "IT:MILANO:PAVIA": "Pavia",
+        "IT:MILANO:SONDRIO": "Sondrio",
+        "IT:MILANO:VARESE": "Varese",
+        "IT:NAPOLI": "Napoli",
+        "IT:NAPOLI:AVELLINO": "Avellino",
+        "IT:NAPOLI:BENEVENTO": "Benevento",
+        "IT:NAPOLI:NAPOLI": "Napoli",
+        "IT:NAPOLI:NAPOLI.NORD": "Napoli Nord",
+        "IT:NAPOLI:NOLA": "Nola",
+        "IT:NAPOLI:SANTA.MARIA.CAPUA.VETERE": "Santa Maria Capua Vetere",
+        "IT:NAPOLI:TORRE.ANNUNZIATA": "Torre Annunziata",
+        "IT:PALERMO": "Palermo",
+        "IT:PALERMO:AGRIGENTO": "Agrigento",
+        "IT:PALERMO:MARSALA": "Marsala",
+        "IT:PALERMO:PALERMO": "Palermo",
+        "IT:PALERMO:SCIACCA": "Sciacca",
+        "IT:PALERMO:TERMINI.IMERESE": "Termini Imerese",
+        "IT:PALERMO:TRAPANI": "Trapani",
+        "IT:PERUGIA": "Perugia",
+        "IT:PERUGIA:PERUGIA": "Perugia",
+        "IT:PERUGIA:SPOLETO": "Spoleto",
+        "IT:PERUGIA:TERNI": "Terni",
+        "IT:POTENZA": "Potenza",
+        "IT:POTENZA:LAGONEGRO": "Lagonegro",
+        "IT:POTENZA:MATERA": "Matera",
+        "IT:POTENZA:POTENZA": "Potenza",
+        "IT:REGGIO.CALABRIA": "Reggio calabria",
+        "IT:REGGIO.CALABRIA:LOCRI": "Locri",
+        "IT:REGGIO.CALABRIA:PALMI": "Palmi",
+        "IT:REGGIO.CALABRIA:REGGIO.CALABRIA": "Reggio Calabria",
+        "IT:ROMA": "Roma",
+        "IT:ROMA:CASSINO": "Cassino",
+        "IT:ROMA:CIVITAVECCHIA": "Civitavecchia",
+        "IT:ROMA:FROSINONE": "Frosinone",
+        "IT:ROMA:LATINA": "Latina",
+        "IT:ROMA:RIETI": "Rieti",
+        "IT:ROMA:ROMA": "Roma",
+        "IT:ROMA:TIVOLI": "Tivoli",
+        "IT:ROMA:VELLETRI": "Velletri",
+        "IT:ROMA:VITERBO": "Viterbo",
+        "IT:SALERNO": "Salerno",
+        "IT:SALERNO:NOCERA.INFERIORE": "Nocera Inferiore",
+        "IT:SALERNO:SALERNO": "Salerno",
+        "IT:SALERNO:VALLO.DELLA.LUCANIA": "Vallo della Lucania",
+        "IT:SASSARI": "Sassari",
+        "IT:TORINO": "Torino",
+        "IT:TORINO:ALESSANDRIA": "Alessandria",
+        "IT:TORINO:AOSTA": "Aosta",
+        "IT:TORINO:ASTI": "Asti",
+        "IT:TORINO:BIELLA": "Biella",
+        "IT:TORINO:CUNEO": "Cuneo",
+        "IT:TORINO:IVREA": "Ivrea",
+        "IT:TORINO:NOVARA": "Novara",
+        "IT:TORINO:TORINO": "Torino",
+        "IT:TORINO:VERBANIA": "Verbania",
+        "IT:TORINO:VERCELLI": "Vercelli",
+        "IT:TRENTO": "Trento",
+        "IT:TRENTO:BOLZANO": "Bolzano",
+        "IT:TRENTO:ROVERETO": "Rovereto",
+        "IT:TRENTO:TRENTO": "Trento",
+        "IT:TRIESTE": "Trieste",
+        "IT:TRIESTE:GORIZIA": "Gorizia",
+        "IT:TRIESTE:PORDENONE": "Pordenone",
+        "IT:TRIESTE:TRIESTE": "Trieste",
+        "IT:TRIESTE:UDINE": "Udine",
+        "IT:VENEZIA": "Venezia",
+        "IT:VENEZIA:BELLUNO": "Belluno",
+        "IT:VENEZIA:PADOVA": "Padova",
+        "IT:VENEZIA:ROVIGO": "Rovigo",
+        "IT:VENEZIA:TREVISO": "Treviso",
+        "IT:VENEZIA:VENEZIA": "Venezia",
+        "IT:VENEZIA:VERONA": "Verona",
+        "IT:VENEZIA:VICENZA": "Vicenza"
+      }
+    },
+    "it": {
+      "institution-part": {
+        "csdc": "Corte Suprema di Cassazione"
+      }
+    },
+    "it:ancona": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Ancona",
+        "tpm": "Tribunale per i minorenni di Ancona",
+        "tds": "Tribunale di Sorveglianza di Ancona",
+        "cdass": "Corte d’Assise di Ancona",
+        "cdadapp": "Corte d’Assise d’Appello di Ancona"
+      }
+    },
+    "it:ancona:ancona": {
+      "institution-part": {
+        "trib": "Tribunale di Ancona"
+      }
+    },
+    "it:ancona:ascoli.piceno": {
+      "institution-part": {
+        "trib": "Tribunale di Ascoli Piceno"
+      }
+    },
+    "it:ancona:fermo": {
+      "institution-part": {
+        "trib": "Tribunale di Fermo"
+      }
+    },
+    "it:ancona:macerata": {
+      "institution-part": {
+        "trib": "Tribunale di Macerata"
+      }
+    },
+    "it:ancona:pesaro": {
+      "institution-part": {
+        "trib": "Tribunale di Pesaro"
+      }
+    },
+    "it:ancona:urbino": {
+      "institution-part": {
+        "trib": "Tribunale di Urbino"
+      }
+    },
+    "it:bari": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Bari",
+        "tpm": "Tribunale per i minorenni di Bari",
+        "tds": "Tribunale di Sorveglianza di Bari",
+        "cdass": "Corte d’Assise di Bari",
+        "cdadapp": "Corte d’Assise d’Appello di Bari"
+      }
+    },
+    "it:bari:bari": {
+      "institution-part": {
+        "trib": "Tribunale di Bari"
+      }
+    },
+    "it:bari:foggia": {
+      "institution-part": {
+        "trib": "Tribunale di Foggia"
+      }
+    },
+    "it:bari:trani": {
+      "institution-part": {
+        "trib": "Tribunale di Trani"
+      }
+    },
+    "it:bologna": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Bologna",
+        "tpm": "Tribunale per i minorenni di Bologna",
+        "tds": "Tribunale di Sorveglianza di Bologna",
+        "cdass": "Corte d’Assise di Bologna",
+        "cdadapp": "Corte d’Assise d’Appello di Bologna"
+      }
+    },
+    "it:bologna:bologna": {
+      "institution-part": {
+        "trib": "Tribunale di Bologna"
+      }
+    },
+    "it:bologna:ferrara": {
+      "institution-part": {
+        "trib": "Tribunale di Ferrara"
+      }
+    },
+    "it:bologna:forlì": {
+      "institution-part": {
+        "trib": "Tribunale di Forlì"
+      }
+    },
+    "it:bologna:modena": {
+      "institution-part": {
+        "trib": "Tribunale di Modena"
+      }
+    },
+    "it:bologna:parma": {
+      "institution-part": {
+        "trib": "Tribunale di Parma"
+      }
+    },
+    "it:bologna:piacenza": {
+      "institution-part": {
+        "trib": "Tribunale di Piacenza"
+      }
+    },
+    "it:bologna:ravenna": {
+      "institution-part": {
+        "trib": "Tribunale di Ravenna"
+      }
+    },
+    "it:bologna:reggio.nell.emilia": {
+      "institution-part": {
+        "trib": "Tribunale di Reggio nell'Emilia"
+      }
+    },
+    "it:bologna:rimini": {
+      "institution-part": {
+        "trib": "Tribunale di Rimini"
+      }
+    },
+    "it:brescia": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Brescia",
+        "tpm": "Tribunale per i minorenni di Brescia",
+        "tds": "Tribunale di Sorveglianza di Brescia",
+        "cdass": "Corte d’Assise di Brescia",
+        "cdadapp": "Corte d’Assise d’Appello di Brescia"
+      }
+    },
+    "it:brescia:bergamo": {
+      "institution-part": {
+        "trib": "Tribunale di Bergamo"
+      }
+    },
+    "it:brescia:brescia": {
+      "institution-part": {
+        "trib": "Tribunale di Brescia"
+      }
+    },
+    "it:brescia:cremona": {
+      "institution-part": {
+        "trib": "Tribunale di Cremona"
+      }
+    },
+    "it:brescia:mantova": {
+      "institution-part": {
+        "trib": "Tribunale di Mantova"
+      }
+    },
+    "it:cagliari": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Cagliari",
+        "tpm": "Tribunale per i minorenni di Cagliari",
+        "tds": "Tribunale di Sorveglianza di Cagliari",
+        "cdass": "Corte d’Assise di Cagliari",
+        "cdadapp": "Corte d’Assise d’Appello di Cagliari"
+      }
+    },
+    "it:cagliari:cagliari": {
+      "institution-part": {
+        "trib": "Tribunale di Cagliari"
+      }
+    },
+    "it:cagliari:lanusei": {
+      "institution-part": {
+        "trib": "Tribunale di Lanusei"
+      }
+    },
+    "it:cagliari:nuoro": {
+      "institution-part": {
+        "trib": "Tribunale di Nuoro"
+      }
+    },
+    "it:cagliari:oristano": {
+      "institution-part": {
+        "trib": "Tribunale di Oristano"
+      }
+    },
+    "it:cagliari:sassari": {
+      "institution-part": {
+        "cdass": "Corte d’Assise di Sassari",
+        "trib": "Tribunale di Sassari"
+      }
+    },
+    "it:cagliari:tempio.pausania": {
+      "institution-part": {
+        "trib": "Tribunale di Tempio Pausania"
+      }
+    },
+    "it:caltanissetta": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Caltanissetta",
+        "tpm": "Tribunale per i minorenni di Caltanissetta",
+        "tds": "Tribunale di Sorveglianza di Caltanissetta",
+        "cdass": "Corte d’Assise di Caltanissetta",
+        "cdadapp": "Corte d’Assise d’Appello di Caltanissetta"
+      }
+    },
+    "it:caltanissetta:caltanissetta": {
+      "institution-part": {
+        "trib": "Tribunale di Caltanissetta"
+      }
+    },
+    "it:caltanissetta:enna": {
+      "institution-part": {
+        "trib": "Tribunale di Enna"
+      }
+    },
+    "it:caltanissetta:gela": {
+      "institution-part": {
+        "trib": "Tribunale di Gela"
+      }
+    },
+    "it:campobasso": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Campobasso",
+        "tpm": "Tribunale per i minorenni di Campobasso",
+        "tds": "Tribunale di Sorveglianza di Campobasso",
+        "cdass": "Corte d’Assise di Campobasso",
+        "cdadapp": "Corte d’Assise d’Appello di Campobasso"
+      }
+    },
+    "it:campobasso:campobasso": {
+      "institution-part": {
+        "trib": "Tribunale di Campobasso"
+      }
+    },
+    "it:campobasso:isernia": {
+      "institution-part": {
+        "trib": "Tribunale di Isernia"
+      }
+    },
+    "it:campobasso:larino": {
+      "institution-part": {
+        "trib": "Tribunale di Larino"
+      }
+    },
+    "it:catania": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Catania",
+        "tpm": "Tribunale per i minorenni di Catania",
+        "tds": "Tribunale di Sorveglianza di Catania",
+        "cdass": "Corte d’Assise di Catania",
+        "cdadapp": "Corte d’Assise d’Appello di Catania"
+      }
+    },
+    "it:catania:caltagirone": {
+      "institution-part": {
+        "trib": "Tribunale di Caltagirone"
+      }
+    },
+    "it:catania:catania": {
+      "institution-part": {
+        "trib": "Tribunale di Catania"
+      }
+    },
+    "it:catania:ragusa": {
+      "institution-part": {
+        "trib": "Tribunale di Ragusa"
+      }
+    },
+    "it:catania:siracusa": {
+      "institution-part": {
+        "trib": "Tribunale di Siracusa"
+      }
+    },
+    "it:catanzaro": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Catanzaro",
+        "tpm": "Tribunale per i minorenni di Catanzaro",
+        "tds": "Tribunale di Sorveglianza di Catanzaro",
+        "cdass": "Corte d’Assise di Catanzaro",
+        "cdadapp": "Corte d’Assise d’Appello di Catanzaro"
+      }
+    },
+    "it:catanzaro:castrovillari": {
+      "institution-part": {
+        "trib": "Tribunale di Castrovillari"
+      }
+    },
+    "it:catanzaro:catanzaro": {
+      "institution-part": {
+        "trib": "Tribunale di Catanzaro"
+      }
+    },
+    "it:catanzaro:cosenza": {
+      "institution-part": {
+        "trib": "Tribunale di Cosenza"
+      }
+    },
+    "it:catanzaro:crotone": {
+      "institution-part": {
+        "trib": "Tribunale di Crotone"
+      }
+    },
+    "it:catanzaro:lamezia.terme": {
+      "institution-part": {
+        "trib": "Tribunale di Lamezia Terme"
+      }
+    },
+    "it:catanzaro:paola": {
+      "institution-part": {
+        "trib": "Tribunale di Paola"
+      }
+    },
+    "it:catanzaro:vibo.valentia": {
+      "institution-part": {
+        "trib": "Tribunale di Vibo Valentia"
+      }
+    },
+    "it:firenze": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Firenze",
+        "tpm": "Tribunale per i minorenni di Firenze",
+        "tds": "Tribunale di Sorveglianza di Firenze",
+        "cdass": "Corte d’Assise di Firenze",
+        "cdadapp": "Corte d’Assise d’Appello di Firenze"
+      }
+    },
+    "it:firenze:arezzo": {
+      "institution-part": {
+        "trib": "Tribunale di Arezzo"
+      }
+    },
+    "it:firenze:firenze": {
+      "institution-part": {
+        "trib": "Tribunale di Firenze"
+      }
+    },
+    "it:firenze:grosseto": {
+      "institution-part": {
+        "trib": "Tribunale di Grosseto"
+      }
+    },
+    "it:firenze:livorno": {
+      "institution-part": {
+        "trib": "Tribunale di Livorno"
+      }
+    },
+    "it:firenze:lucca": {
+      "institution-part": {
+        "trib": "Tribunale di Lucca"
+      }
+    },
+    "it:firenze:pisa": {
+      "institution-part": {
+        "trib": "Tribunale di Pisa"
+      }
+    },
+    "it:firenze:pistoia": {
+      "institution-part": {
+        "trib": "Tribunale di Pistoia"
+      }
+    },
+    "it:firenze:prato": {
+      "institution-part": {
+        "trib": "Tribunale di Prato"
+      }
+    },
+    "it:firenze:siena": {
+      "institution-part": {
+        "trib": "Tribunale di Siena"
+      }
+    },
+    "it:genova": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Genova",
+        "tpm": "Tribunale per i minorenni di Genova",
+        "tds": "Tribunale di Sorveglianza di Genova",
+        "cdass": "Corte d’Assise di Genova",
+        "cdadapp": "Corte d’Assise d’Appello di Genova"
+      }
+    },
+    "it:genova:genova": {
+      "institution-part": {
+        "trib": "Tribunale di Genova"
+      }
+    },
+    "it:genova:imperia": {
+      "institution-part": {
+        "trib": "Tribunale di Imperia"
+      }
+    },
+    "it:genova:la.spezia": {
+      "institution-part": {
+        "trib": "Tribunale di La Spezia"
+      }
+    },
+    "it:genova:massa": {
+      "institution-part": {
+        "trib": "Tribunale di Massa"
+      }
+    },
+    "it:genova:savona": {
+      "institution-part": {
+        "trib": "Tribunale di Savona"
+      }
+    },
+    "it:l.aquila": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di L'aquila",
+        "tpm": "Tribunale per i minorenni di L'aquila",
+        "tds": "Tribunale di Sorveglianza di L'aquila",
+        "cdass": "Corte d’Assise di L'aquila",
+        "cdadapp": "Corte d’Assise d’Appello di L'aquila"
+      }
+    },
+    "it:l.aquila:chieti": {
+      "institution-part": {
+        "trib": "Tribunale di Chieti"
+      }
+    },
+    "it:l.aquila:l.aquila": {
+      "institution-part": {
+        "trib": "Tribunale di L'Aquila"
+      }
+    },
+    "it:l.aquila:pescara": {
+      "institution-part": {
+        "trib": "Tribunale di Pescara"
+      }
+    },
+    "it:l.aquila:teramo": {
+      "institution-part": {
+        "trib": "Tribunale di Teramo"
+      }
+    },
+    "it:lecce": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Lecce",
+        "tpm": "Tribunale per i minorenni di Lecce",
+        "tds": "Tribunale di Sorveglianza di Lecce",
+        "cdass": "Corte d’Assise di Lecce",
+        "cdadapp": "Corte d’Assise d’Appello di Lecce"
+      }
+    },
+    "it:lecce:brindisi": {
+      "institution-part": {
+        "trib": "Tribunale di Brindisi"
+      }
+    },
+    "it:lecce:lecce": {
+      "institution-part": {
+        "trib": "Tribunale di Lecce"
+      }
+    },
+    "it:lecce:taranto": {
+      "institution-part": {
+        "cdass": "Corte d’Assise di Taranto",
+        "trib": "Tribunale di Taranto"
+      }
+    },
+    "it:messina": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Messina",
+        "tpm": "Tribunale per i minorenni di Messina",
+        "tds": "Tribunale di Sorveglianza di Messina",
+        "cdass": "Corte d’Assise di Messina",
+        "cdadapp": "Corte d’Assise d’Appello di Messina"
+      }
+    },
+    "it:messina:barcellona.pozzo.di.gotto": {
+      "institution-part": {
+        "trib": "Tribunale di Barcellona Pozzo di Gotto"
+      }
+    },
+    "it:messina:messina": {
+      "institution-part": {
+        "trib": "Tribunale di Messina"
+      }
+    },
+    "it:messina:patti": {
+      "institution-part": {
+        "trib": "Tribunale di Patti"
+      }
+    },
+    "it:milano": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Milano",
+        "tpm": "Tribunale per i minorenni di Milano",
+        "tds": "Tribunale di Sorveglianza di Milano",
+        "cdass": "Corte d’Assise di Milano",
+        "cdadapp": "Corte d’Assise d’Appello di Milano"
+      }
+    },
+    "it:milano:busto.arsizio": {
+      "institution-part": {
+        "trib": "Tribunale di Busto Arsizio"
+      }
+    },
+    "it:milano:como": {
+      "institution-part": {
+        "trib": "Tribunale di Como"
+      }
+    },
+    "it:milano:lecco": {
+      "institution-part": {
+        "trib": "Tribunale di Lecco"
+      }
+    },
+    "it:milano:lodi": {
+      "institution-part": {
+        "trib": "Tribunale di Lodi"
+      }
+    },
+    "it:milano:milano": {
+      "institution-part": {
+        "trib": "Tribunale di Milano"
+      }
+    },
+    "it:milano:monza": {
+      "institution-part": {
+        "trib": "Tribunale di Monza"
+      }
+    },
+    "it:milano:pavia": {
+      "institution-part": {
+        "trib": "Tribunale di Pavia"
+      }
+    },
+    "it:milano:sondrio": {
+      "institution-part": {
+        "trib": "Tribunale di Sondrio"
+      }
+    },
+    "it:milano:varese": {
+      "institution-part": {
+        "trib": "Tribunale di Varese"
+      }
+    },
+    "it:napoli": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Napoli",
+        "tpm": "Tribunale per i minorenni di Napoli",
+        "tds": "Tribunale di Sorveglianza di Napoli",
+        "cdass": "Corte d’Assise di Napoli",
+        "cdadapp": "Corte d’Assise d’Appello di Napoli"
+      }
+    },
+    "it:napoli:avellino": {
+      "institution-part": {
+        "trib": "Tribunale di Avellino"
+      }
+    },
+    "it:napoli:benevento": {
+      "institution-part": {
+        "trib": "Tribunale di Benevento"
+      }
+    },
+    "it:napoli:napoli": {
+      "institution-part": {
+        "trib": "Tribunale di Napoli"
+      }
+    },
+    "it:napoli:napoli.nord": {
+      "institution-part": {
+        "trib": "Tribunale di Napoli Nord"
+      }
+    },
+    "it:napoli:nola": {
+      "institution-part": {
+        "trib": "Tribunale di Nola"
+      }
+    },
+    "it:napoli:santa.maria.capua.vetere": {
+      "institution-part": {
+        "trib": "Tribunale di Santa Maria Capua Vetere"
+      }
+    },
+    "it:napoli:torre.annunziata": {
+      "institution-part": {
+        "trib": "Tribunale di Torre Annunziata"
+      }
+    },
+    "it:palermo": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Palermo",
+        "tpm": "Tribunale per i minorenni di Palermo",
+        "tds": "Tribunale di Sorveglianza di Palermo",
+        "cdass": "Corte d’Assise di Palermo",
+        "cdadapp": "Corte d’Assise d’Appello di Palermo"
+      }
+    },
+    "it:palermo:agrigento": {
+      "institution-part": {
+        "trib": "Tribunale di Agrigento"
+      }
+    },
+    "it:palermo:marsala": {
+      "institution-part": {
+        "trib": "Tribunale di Marsala"
+      }
+    },
+    "it:palermo:palermo": {
+      "institution-part": {
+        "trib": "Tribunale di Palermo"
+      }
+    },
+    "it:palermo:sciacca": {
+      "institution-part": {
+        "trib": "Tribunale di Sciacca"
+      }
+    },
+    "it:palermo:termini.imerese": {
+      "institution-part": {
+        "trib": "Tribunale di Termini Imerese"
+      }
+    },
+    "it:palermo:trapani": {
+      "institution-part": {
+        "trib": "Tribunale di Trapani"
+      }
+    },
+    "it:perugia": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Perugia",
+        "tpm": "Tribunale per i minorenni di Perugia",
+        "tds": "Tribunale di Sorveglianza di Perugia",
+        "cdass": "Corte d’Assise di Perugia",
+        "cdadapp": "Corte d’Assise d’Appello di Perugia"
+      }
+    },
+    "it:perugia:perugia": {
+      "institution-part": {
+        "trib": "Tribunale di Perugia"
+      }
+    },
+    "it:perugia:spoleto": {
+      "institution-part": {
+        "trib": "Tribunale di Spoleto"
+      }
+    },
+    "it:perugia:terni": {
+      "institution-part": {
+        "trib": "Tribunale di Terni"
+      }
+    },
+    "it:potenza": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Potenza",
+        "tpm": "Tribunale per i minorenni di Potenza",
+        "tds": "Tribunale di Sorveglianza di Potenza",
+        "cdass": "Corte d’Assise di Potenza",
+        "cdadapp": "Corte d’Assise d’Appello di Potenza"
+      }
+    },
+    "it:potenza:lagonegro": {
+      "institution-part": {
+        "trib": "Tribunale di Lagonegro"
+      }
+    },
+    "it:potenza:matera": {
+      "institution-part": {
+        "trib": "Tribunale di Matera"
+      }
+    },
+    "it:potenza:potenza": {
+      "institution-part": {
+        "trib": "Tribunale di Potenza"
+      }
+    },
+    "it:reggio.calabria": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Reggio calabria",
+        "tpm": "Tribunale per i minorenni di Reggio calabria",
+        "tds": "Tribunale di Sorveglianza di Reggio calabria",
+        "cdass": "Corte d’Assise di Reggio calabria",
+        "cdadapp": "Corte d’Assise d’Appello di Reggio calabria"
+      }
+    },
+    "it:reggio.calabria:locri": {
+      "institution-part": {
+        "trib": "Tribunale di Locri"
+      }
+    },
+    "it:reggio.calabria:palmi": {
+      "institution-part": {
+        "trib": "Tribunale di Palmi"
+      }
+    },
+    "it:reggio.calabria:reggio.calabria": {
+      "institution-part": {
+        "trib": "Tribunale di Reggio Calabria"
+      }
+    },
+    "it:roma": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Roma",
+        "tpm": "Tribunale per i minorenni di Roma",
+        "tds": "Tribunale di Sorveglianza di Roma",
+        "cdass": "Corte d’Assise di Roma",
+        "cdadapp": "Corte d’Assise d’Appello di Roma"
+      }
+    },
+    "it:roma:cassino": {
+      "institution-part": {
+        "trib": "Tribunale di Cassino"
+      }
+    },
+    "it:roma:civitavecchia": {
+      "institution-part": {
+        "trib": "Tribunale di Civitavecchia"
+      }
+    },
+    "it:roma:frosinone": {
+      "institution-part": {
+        "trib": "Tribunale di Frosinone"
+      }
+    },
+    "it:roma:latina": {
+      "institution-part": {
+        "trib": "Tribunale di Latina"
+      }
+    },
+    "it:roma:rieti": {
+      "institution-part": {
+        "trib": "Tribunale di Rieti"
+      }
+    },
+    "it:roma:roma": {
+      "institution-part": {
+        "trib": "Tribunale di Roma"
+      }
+    },
+    "it:roma:tivoli": {
+      "institution-part": {
+        "trib": "Tribunale di Tivoli"
+      }
+    },
+    "it:roma:velletri": {
+      "institution-part": {
+        "trib": "Tribunale di Velletri"
+      }
+    },
+    "it:roma:viterbo": {
+      "institution-part": {
+        "trib": "Tribunale di Viterbo"
+      }
+    },
+    "it:salerno": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Salerno",
+        "tpm": "Tribunale per i minorenni di Salerno",
+        "tds": "Tribunale di Sorveglianza di Salerno",
+        "cdass": "Corte d’Assise di Salerno",
+        "cdadapp": "Corte d’Assise d’Appello di Salerno"
+      }
+    },
+    "it:salerno:nocera.inferiore": {
+      "institution-part": {
+        "trib": "Tribunale di Nocera Inferiore"
+      }
+    },
+    "it:salerno:salerno": {
+      "institution-part": {
+        "trib": "Tribunale di Salerno"
+      }
+    },
+    "it:salerno:vallo.della.lucania": {
+      "institution-part": {
+        "trib": "Tribunale di Vallo della Lucania"
+      }
+    },
+    "it:sassari": {
+      "institution-part": {
+        "cdass": "Corte d’Assise di Sassari",
+        "trib": "Tribunale di Sassari"
+      }
+    },
+    "it:torino": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Torino",
+        "tpm": "Tribunale per i minorenni di Torino",
+        "tds": "Tribunale di Sorveglianza di Torino",
+        "cdass": "Corte d’Assise di Torino",
+        "cdadapp": "Corte d’Assise d’Appello di Torino"
+      }
+    },
+    "it:torino:alessandria": {
+      "institution-part": {
+        "trib": "Tribunale di Alessandria"
+      }
+    },
+    "it:torino:aosta": {
+      "institution-part": {
+        "trib": "Tribunale di Aosta"
+      }
+    },
+    "it:torino:asti": {
+      "institution-part": {
+        "trib": "Tribunale di Asti"
+      }
+    },
+    "it:torino:biella": {
+      "institution-part": {
+        "trib": "Tribunale di Biella"
+      }
+    },
+    "it:torino:cuneo": {
+      "institution-part": {
+        "trib": "Tribunale di Cuneo"
+      }
+    },
+    "it:torino:ivrea": {
+      "institution-part": {
+        "trib": "Tribunale di Ivrea"
+      }
+    },
+    "it:torino:novara": {
+      "institution-part": {
+        "trib": "Tribunale di Novara"
+      }
+    },
+    "it:torino:torino": {
+      "institution-part": {
+        "trib": "Tribunale di Torino"
+      }
+    },
+    "it:torino:verbania": {
+      "institution-part": {
+        "trib": "Tribunale di Verbania"
+      }
+    },
+    "it:torino:vercelli": {
+      "institution-part": {
+        "trib": "Tribunale di Vercelli"
+      }
+    },
+    "it:trento": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Trento",
+        "tpm": "Tribunale per i minorenni di Trento",
+        "tds": "Tribunale di Sorveglianza di Trento",
+        "cdass": "Corte d’Assise di Trento",
+        "cdadapp": "Corte d’Assise d’Appello di Trento"
+      }
+    },
+    "it:trento:bolzano": {
+      "institution-part": {
+        "cdass": "Corte d’Assise di Bolzano",
+        "trib": "Tribunale di Bolzano"
+      }
+    },
+    "it:trento:rovereto": {
+      "institution-part": {
+        "trib": "Tribunale di Rovereto"
+      }
+    },
+    "it:trento:trento": {
+      "institution-part": {
+        "trib": "Tribunale di Trento"
+      }
+    },
+    "it:trieste": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Trieste",
+        "tpm": "Tribunale per i minorenni di Trieste",
+        "tds": "Tribunale di Sorveglianza di Trieste",
+        "cdass": "Corte d’Assise di Trieste",
+        "cdadapp": "Corte d’Assise d’Appello di Trieste"
+      }
+    },
+    "it:trieste:gorizia": {
+      "institution-part": {
+        "trib": "Tribunale di Gorizia"
+      }
+    },
+    "it:trieste:pordenone": {
+      "institution-part": {
+        "trib": "Tribunale di Pordenone"
+      }
+    },
+    "it:trieste:trieste": {
+      "institution-part": {
+        "trib": "Tribunale di Trieste"
+      }
+    },
+    "it:trieste:udine": {
+      "institution-part": {
+        "trib": "Tribunale di Udine"
+      }
+    },
+    "it:venezia": {
+      "institution-part": {
+        "cdapp": "Corti d’Appello di Venezia",
+        "tpm": "Tribunale per i minorenni di Venezia",
+        "tds": "Tribunale di Sorveglianza di Venezia",
+        "cdass": "Corte d’Assise di Venezia",
+        "cdadapp": "Corte d’Assise d’Appello di Venezia"
+      }
+    },
+    "it:venezia:belluno": {
+      "institution-part": {
+        "trib": "Tribunale di Belluno"
+      }
+    },
+    "it:venezia:padova": {
+      "institution-part": {
+        "trib": "Tribunale di Padova"
+      }
+    },
+    "it:venezia:rovigo": {
+      "institution-part": {
+        "trib": "Tribunale di Rovigo"
+      }
+    },
+    "it:venezia:treviso": {
+      "institution-part": {
+        "trib": "Tribunale di Treviso"
+      }
+    },
+    "it:venezia:venezia": {
+      "institution-part": {
+        "trib": "Tribunale di Venezia"
+      }
+    },
+    "it:venezia:verona": {
+      "institution-part": {
+        "trib": "Tribunale di Verona"
+      }
+    },
+    "it:venezia:vicenza": {
+      "institution-part": {
+        "trib": "Tribunale di Vicenza"
+      }
+    }
+  }
+}

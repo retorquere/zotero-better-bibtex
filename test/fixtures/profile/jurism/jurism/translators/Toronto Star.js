@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-10 15:35:12"
+	"lastUpdated": "2019-06-10 23:04:25"
 }
 
 /*
@@ -37,16 +37,19 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf("search") != -1 && url.indexOf("classifieds") == -1 && getSearchResults(doc, true)) {
+	if (url.includes("search") && !url.includes("classifieds") && getSearchResults(doc, true)) {
 		return "multiple";
-	} else if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')=="article") {
-		var urlFolder = url.split('/').slice(0,-1).join('/');
-		if (urlFolder.indexOf('blog')>-1) {
+	}
+	else if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content') == "article") {
+		var urlFolder = url.split('/').slice(0, -1).join('/');
+		if (urlFolder.includes('blog')) {
 			return "blogPost";
-		} else {
+		}
+		else {
 			return "newspaperArticle";
 		}
 	}
+	return false;
 }
 
 
@@ -54,7 +57,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//a[span[contains(@class, "story__headline")]]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -69,16 +72,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -91,14 +94,14 @@ function scrape(doc, url) {
 	item.section = ZU.xpathText(doc, '//meta[@property="article:section"]/@content');
 	item.abstractNote = ZU.xpathText(doc, '//meta[@name="description"]/@content');
 	var authors = ZU.xpath(doc, '//span[@itemprop="author"]//span[@itemprop="name"]');
-	for (var i=0; i<authors.length; i++) {
+	for (let i = 0; i < authors.length; i++) {
 		item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
 	}
 	var tags = ZU.xpath(doc, '//div[contains(@class, "tags")]//a');
-	for (var i=0; i<tags.length; i++) {
+	for (let i = 0; i < tags.length; i++) {
 		item.tags.push(tags[i].textContent);
 	}
-	if (item.itemType=="newspaperArticle") {
+	if (item.itemType == "newspaperArticle") {
 		item.publicationTitle = "The Toronto Star";
 		item.ISSN = "0319-0781";
 	}

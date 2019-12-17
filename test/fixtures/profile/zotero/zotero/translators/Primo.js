@@ -9,8 +9,29 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2018-01-21 17:43:32"
+	"lastUpdated": "2019-03-26 01:29:32"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+	This file is part of Zotero.
+	
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
+	
+	***** END LICENSE BLOCK *****
+*/
+
 
 /*
 Supports Primo 2:
@@ -28,91 +49,95 @@ Primos with showPNX.jsp installed:
 */
 
 function getSearchResults(doc) {
-	var linkXPaths = [ //order dictates preference
-		'.//li[starts-with(@id,"exlidResult") and substring(@id,string-length(@id)-10)="-DetailsTab"]/a[@href]', //details link
-		'.//h2[@class="EXLResultTitle"]/a[@href]' //title link
-	];
+	// order dictates preference
+	var linkXPaths = ['.//li[starts-with(@id,"exlidResult") and substring(@id,string-length(@id)-10)="-DetailsTab"]/a[@href]', // details link
+		'.//h2[@class="EXLResultTitle"]/a[@href]']; // title link
 	var resultsXPath = '//*[self::tr or self::div][starts-with(@id, "exlidResult") and '
 		+ 'number(substring(@id,12))=substring(@id,12)][' + linkXPaths.join(' or ') + ']';
-	//Z.debug(resultsXPath);
+	// Z.debug(resultsXPath);
 	var results = ZU.xpath(doc, resultsXPath);
 	results.titleXPath = './/h2[@class="EXLResultTitle"]';
 	results.linkXPaths = linkXPaths;
 	return results;
 }
 
-function detectWeb(doc, url) {
-	if(getSearchResults(doc).length) {
+function detectWeb(doc) {
+	if (getSearchResults(doc).length) {
 		return 'multiple';
 	}
 	
 	var contentDiv = doc.getElementsByClassName('EXLFullResultsHeader');
-	if(!contentDiv.length) contentDiv = doc.getElementsByClassName('EXLFullDisplay');
-	if(!contentDiv.length) contentDiv = doc.getElementsByClassName('EXLFullView');
-	if(contentDiv.length) return 'book';
+	if (!contentDiv.length) contentDiv = doc.getElementsByClassName('EXLFullDisplay');
+	if (!contentDiv.length) contentDiv = doc.getElementsByClassName('EXLFullView');
+	if (contentDiv.length) return 'book';
+	return false;
 }
 
 function doWeb(doc, url) {
 	var searchResults = getSearchResults(doc);
-	if(searchResults.length) {
+	if (searchResults.length) {
 		var items = {}, itemIDs = {}, title, link,
 			linkXPaths = searchResults.linkXPaths;
-		for(var i=0, n=searchResults.length; i<n; i++) {
+		for (var i = 0, n = searchResults.length; i < n; i++) {
 			title = ZU.xpathText(searchResults[i], searchResults.titleXPath);
-			for(var j=0, m=linkXPaths.length; j<m; j++) {
+			for (var j = 0, m = linkXPaths.length; j < m; j++) {
 				link = ZU.xpath(searchResults[i], linkXPaths[j])[0];
-				if(link) {
+				if (link) {
 					break;
 				}
 			}
 			
-			if(!link || !title || !(title = ZU.trimInternal(title))) continue;
+			if (!link || !title || !(title = ZU.trimInternal(title))) continue;
 			
 			items[link.href] = title;
-			itemIDs[link.href] = {id: i, docID: getDocID(link.href)};
+			itemIDs[link.href] = { id: i, docID: getDocID(link.href) };
 		}
 		
-		Z.selectItems(items, function(selectedItems) {
-			if(!selectedItems) return true;
+		Z.selectItems(items, function (selectedItems) {
+			if (!selectedItems) return true;
 			
 			var urls = [];
-			for(var i in selectedItems) {
-				urls.push({url: i, id: itemIDs[i].id, docID: itemIDs[i].docID});
+			for (var i in selectedItems) {
+				urls.push({ url: i, id: itemIDs[i].id, docID: itemIDs[i].docID });
 			}
 			fetchPNX(urls);
+			return true;
 		});
-	} else {
-		fetchPNX([{url: url, id: 0, docID: getDocID(url)}]);
+	}
+	else {
+		fetchPNX([{ url: url, id: 0, docID: getDocID(url) }]);
 	}
 }
 
 function getDocID(url) {
 	var id = url.match(/\bdoc(?:Id)?=([^&]+)/i);
-	if(id) return id[1];
+	if (id) return id[1];
+	else return false;
 }
 
-//keeps track of which URL format works for retrieving PNX record
-//and applies the correct transformation function
-var PNXUrlGenerator = new function() {
+// keeps track of which URL format works for retrieving PNX record
+// and applies the correct transformation function
+var PNXUrlGenerator = new function () {
 	var functions = [
-		//showPNX.js
-		//using docIDs instead of IDs tied to a session
-		//e.g. http://searchit.princeton.edu/primo_library/libweb/showPNX.jsp?id=PRN_VOYAGER7343340
-		function(urlObj) {
+		// showPNX.js
+		// using docIDs instead of IDs tied to a session
+		// e.g. http://searchit.princeton.edu/primo_library/libweb/showPNX.jsp?id=PRN_VOYAGER7343340
+		function (urlObj) {
 			return getUrlWithId(urlObj.url, urlObj.docID);
 		},
-		//fall back to IDs
-		//from: http://primo.bib.uni-mannheim.de/primo_library/libweb/action/search.do?...
-		//to:   http://primo.bib.uni-mannheim.de/primo_library/libweb/showPNX.jsp?id=
-		function(urlObj) {
+		// fall back to IDs
+		// from: http://primo.bib.uni-mannheim.de/primo_library/libweb/action/search.do?...
+		// to:   http://primo.bib.uni-mannheim.de/primo_library/libweb/showPNX.jsp?id=
+		function (urlObj) {
 			return getUrlWithId(urlObj.url, urlObj.id);
 		},
-		//simply add &showPnx=true
-		function(urlObj) {
+		// simply add &showPnx=true
+		function (urlObj) {
 			var url = urlObj.url.split('#');
-			if(url[0].indexOf('?') == -1) {
+			if (!url[0].includes("?")) {
 				url[0] += '?';
-			} else {
+			}
+			else {
 				url[0] += '&';
 			}
 			return url[0] + 'showPnx=true';
@@ -120,42 +145,46 @@ var PNXUrlGenerator = new function() {
 	];
 	
 	function getUrlWithId(url, id) {
-		var url = url.match(/(https?:\/\/[^?#]+\/)[^?#]+\/[^\/]*(?:[?#]|$)/);
-		if(!url) return;
+		url = url.match(/(https?:\/\/[^?#]+\/)[^?#]+\/[^/]*(?:[?#]|$)/);
+		if (!url) return false;
 		return url[1] + 'showPNX.jsp?id=' + id;
 	}
 	
 	this.currentFunction = 0;
 	this.confirmed = false;
 	
-	this.getUrl = function(data) {
+	this.getUrl = function (data) {
 		var fun = functions[this.currentFunction];
-		if(!fun) return;
+		if (!fun) return false;
 		
 		return fun(data);
 	};
 	
-	this.nextFunction = function() {
-		if(!this.confirmed && this.currentFunction < functions.length) {
+	this.nextFunction = function () {
+		if (!this.confirmed && this.currentFunction < functions.length) {
 			Z.debug("Function " + this.currentFunction + " did not work.");
 			this.currentFunction++;
 			return true;
 		}
+		else {
+			return false;
+		}
 	};
 };
 
-//retrieve PNX records for given items sequentially
+// retrieve PNX records for given items sequentially
 function fetchPNX(itemData) {
-	if(!itemData.length) return; //do this until we run out of URLs
+	if (!itemData.length) return; // do this until we run out of URLs
 	
 	var data = itemData.shift();
-	var url = PNXUrlGenerator.getUrl(data); //format URL if still possible
-	if(!url) {
-		if(PNXUrlGenerator.nextFunction()) {
+	var url = PNXUrlGenerator.getUrl(data); // format URL if still possible
+	if (!url) {
+		if (PNXUrlGenerator.nextFunction()) {
 			itemData.unshift(data);
-		} else if(!PNXUrlGenerator.confirmed){
-			//in case we can't find PNX for a particular item,
-			//go to the next and start looking from begining
+		}
+		else if (!PNXUrlGenerator.confirmed) {
+			// in case we can't find PNX for a particular item,
+			// go to the next and start looking from begining
 			Z.debug("Could not determine PNX url from " + data.url);
 			PNXUrlGenerator.currentFunction = 0;
 		}
@@ -167,28 +196,32 @@ function fetchPNX(itemData) {
 	var gotPNX = false;
 	Z.debug("Trying " + url);
 	ZU.doGet(url,
-		function(text) {
+		function (text) {
 			text = text.trim();
-			if(text.substr(0,5) != '<?xml' || text.search(/<error\b/i) !== -1) {
-				//try a different PNX url
+			if (text.substr(0, 5) != '<?xml' || text.search(/<error\b/i) !== -1) {
+				// try a different PNX url
 				gotPNX = false;
 				return;
-			} else {
+			}
+			else {
 				gotPNX = true;
 				PNXUrlGenerator.confirmed = true;
 			}
 			
 			importPNX(text, url);
 		},
-		function() {
-			if(!gotPNX && PNXUrlGenerator.nextFunction()) {
-				//if url function not confirmed, try another one on the same URL
-				//otherwise, we move on
+		function () {
+			if (!gotPNX && PNXUrlGenerator.nextFunction()) {
+				// if url function not confirmed, try another one on the same URL
+				// otherwise, we move on
 				itemData.unshift(data);
 			}
 			
 			fetchPNX(itemData);
-		}
+		},
+		null,
+		null,
+		[200, 404, 500]
 	);
 }
 
@@ -197,7 +230,7 @@ function importPNX(text, url) {
 	var translator = Zotero.loadTranslator("import");
 	translator.setTranslator("efd737c9-a227-4113-866e-d57fbc0684ca");
 	translator.setString(text);
-	translator.setHandler("itemDone", function(obj, item) {
+	translator.setHandler("itemDone", function (obj, item) {
 		if (url) {
 			item.libraryCatalog = url.match(/^https?:\/\/(.+?)\//)[1].replace(/\.hosted\.exlibrisgroup/, "");
 		}
@@ -235,72 +268,6 @@ var testCases = [
 					"Great Britain Foreign relations China.",
 					"Missions China."
 				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://purdue-primo-prod.hosted.exlibrisgroup.com/default:default_scope:PURDUE_ALMA21505315560001081",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "War",
-				"creators": [
-					{
-						"firstName": "Lawrence",
-						"lastName": "Freedman",
-						"creatorType": "author"
-					}
-				],
-				"date": "1994",
-				"ISBN": "9780192892546",
-				"abstractNote": "Experience of war -- Causes of war -- War and the military establishment -- Ethics of war -- Strategy -- Total war and the great powers -- Limited war and developing countries., \"War makes headlines and history books. It has shaped the international system, prompted social change, and inspired literature, art, and music. It engenders some of the most intense as well as the most brutal human experiences, and it raises fundamental questions of human ethics.\" \"The ubiquitous, contradictory, and many-sided character of war is fully reflected in this reader. It addresses a wide range of questions: What are the causes of war? Which strategic as well as moral principles guide its conduct, and how have these changed? Has total war become unthinkable? What is the nature of contemporary conflict? How is war experienced by those on the front line?\" \"These and other key issues are examined through a variety of writings. Drawing on sources from numerous countries and disciplines, this reader includes accounts by generals, soldiers, historians, strategists, and poets, who consider conflicts from the Napoleonic Wars to Vietnam and Bosnia. The writing not only of great strategic thinkers but also of ordinary soldiers illustrates both the theory and the experience of war in its many guises.\"--BOOK JACKET.",
-				"callNumber": "355.02 W1945 1994",
-				"language": "eng",
-				"libraryCatalog": "Primo",
-				"numPages": "xi+385",
-				"place": "Oxford ; New York",
-				"publisher": "Oxford University Press",
-				"series": "Oxford readers",
-				"attachments": [],
-				"tags": [
-					"War."
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://limo.libis.be/LIBISnet:default_scope:32LIBIS_ALMA_DS71166851730001471",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "War",
-				"creators": [
-					{
-						"firstName": "Albert R.",
-						"lastName": "Leventhal",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Del",
-						"lastName": "Byrne",
-						"creatorType": "contributor"
-					}
-				],
-				"date": "1973",
-				"ISBN": "9780600393047",
-				"callNumber": "9B6655",
-				"language": "eng",
-				"libraryCatalog": "Primo",
-				"numPages": "252",
-				"publisher": "Hamlyn",
-				"attachments": [],
-				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -405,66 +372,6 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://hollis.harvard.edu/primo_library/libweb/action/dlDisplay.do?vid=HVD&search_scope=default_scope&docId=HVD_ALEPH002208563&fn=permalink",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "Mastering the art of French cooking",
-				"creators": [
-					{
-						"firstName": "Simone",
-						"lastName": "Beck",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Louisette",
-						"lastName": "Bertholle",
-						"creatorType": "contributor"
-					},
-					{
-						"firstName": "Julia",
-						"lastName": "Child",
-						"creatorType": "contributor"
-					},
-					{
-						"firstName": "Barbara Ketcham",
-						"lastName": "Wheaton",
-						"creatorType": "contributor"
-					},
-					{
-						"firstName": "Avis",
-						"lastName": "DeVoto",
-						"creatorType": "contributor"
-					}
-				],
-				"date": "1961",
-				"abstractNote": "Illustrates the ways in which classic French dishes may be created with American foodstuffs and appliances.",
-				"callNumber": "641.64 C53m, c.1, 641.64 C53m, c. 3, 641.64 C53m, c.4, 641.64 C53m, c.5, 641.64 C53m, c.6, 641.64 C53m, c. 7, 641.64 C53m, c. 8, 641.64 C53m, c.2",
-				"edition": "[1st ed.]",
-				"extra": "HOLLIS number: 002208563",
-				"language": "eng",
-				"libraryCatalog": "hollis.harvard.edu",
-				"place": "New York",
-				"publisher": "Knopf",
-				"attachments": [
-					{
-						"title": "HOLLIS Permalink",
-						"snapshot": false
-					}
-				],
-				"tags": [
-					"Authors' inscriptions (Provenance)",
-					"Cookery, French",
-					"Cooking, French.",
-					"French cooking"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
 		"url": "http://digitale.beic.it/primo_library/libweb/action/display.do?doc=39bei_digitool2018516",
 		"items": [
 			{
@@ -485,6 +392,53 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					"LEGGI;ITALIA - STORIA MEDIOEVALE"
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "http://bcujas-catalogue.univ-paris1.fr/CUJAS_V1:LSCOP_ALL:33CUJAS_ALEPH000070200",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Test pattern for living",
+				"creators": [
+					{
+						"firstName": "Nicholas",
+						"lastName": "Johnson",
+						"creatorType": "author"
+					}
+				],
+				"date": "1972",
+				"callNumber": "203.206",
+				"language": "eng",
+				"libraryCatalog": "bcujas-catalogue.univ-paris1.fr",
+				"numPages": "xx+154",
+				"place": "Toronto New York",
+				"publisher": "Bantam Books",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "301.16/1/0973"
+					},
+					{
+						"tag": "Mass media"
+					},
+					{
+						"tag": "Mass media -- Social aspects -- United States"
+					},
+					{
+						"tag": "Social aspects"
+					},
+					{
+						"tag": "United States"
+					},
+					{
+						"tag": "United States -- Social conditions -- 1960-"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

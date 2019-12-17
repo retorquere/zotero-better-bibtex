@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-24 07:29:33"
+	"lastUpdated": "2019-06-11 13:43:26"
 }
 
 /*
@@ -37,46 +37,49 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/id/')>-1) {
+	if (url.includes('/id/')) {
 		return "book";
-		//something like archival material would be more appropriate...
-		//but for now we use this type to save some information
+		// something like archival material would be more appropriate...
+		// but for now we use this type to save some information
 	}
-	//multiples will not work easily because the API will then return
-	//somehow an empty json, thus we skipped this here.
+	// multiples will not work easily because the API will then return
+	// somehow an empty json, thus we skipped this here.
+	return false;
 }
 
 
 function doWeb(doc, url) {
 	var position = url.indexOf('/id/');
-	var id = url.substr(position+4);
+	var id = url.substr(position + 4);
 	var posturl = 'https://catalog.archives.gov/OpaAPI/iapi/v1/exports/noauth';
 	var postdata = 'export.format=json&export.type=full&export.what=metadata&naIds=' + id + '&rows=1';
 	
-	ZU.doPost(posturl, postdata, function(result) {
+	ZU.doPost(posturl, postdata, function (result) {
 		var parsed = JSON.parse(result);
 		var exporturl = parsed.opaResponse.exportFile.url;
-		ZU.doGet(exporturl, function(data) {
+		ZU.doGet(exporturl, function (data) {
 			var json = JSON.parse(data);
 			var item = new Zotero.Item("book");
 			
 			item.title = json[0].title;
 			var creators = json[0].creators;
-			for (var i=0; i<creators.length; i++) {
+			for (var i = 0; i < creators.length; i++) {
 				creators[i] = creators[i].replace('(Most Recent)', '');
-				if (creators[i].indexOf(", ")>-1) {
-					item.creators.push(ZU.cleanAuthor(creators[i], "author"));	
-				} else {
+				if (creators[i].includes(", ")) {
+					item.creators.push(ZU.cleanAuthor(creators[i], "author"));
+				}
+				else {
 					creators[i] = creators[i].replace(/\.? ?\d\d?\/\d\d?\/\d\d\d\d-\d\d?\/\d\d?\/\d\d\d\d/, '');
-					if (creators[i].length>255) {
-						creators[i] = creators[i].substr(0,251) + '...';
+					if (creators[i].length > 255) {
+						creators[i] = creators[i].substr(0, 251) + '...';
 					}
-					item.creators.push({'lastName': creators[i].trim(), 'creatorType': 'author', 'fieldMode': true});
+					item.creators.push({ lastName: creators[i].trim(), creatorType: 'author', fieldMode: true });
 				}
 			}
 			if (json[0].productionDates) {
 				item.date = json[0].productionDates[0];
-			} else {
+			}
+			else {
 				item.date = json[0].date;
 			}
 			if (json[0].from) {
@@ -93,9 +96,8 @@ function doWeb(doc, url) {
 			});
 
 			item.complete();
-		})
+		});
 	});
-	
 }
 
 /** BEGIN TEST CASES **/

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-cd.json",
+  "name": "Dem. Rep. of the Congo",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CD": "Dem. Rep. of the Congo"
+      }
+    },
+    "cd": {
+      "institution-part": {}
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "filename": "auto-oas.int.json",
+  "name": "Organization of American States",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "OAS.INT": "Organization of American States"
+      }
+    },
+    "oas.int": {
+      "institution-part": {
+        "iachr": "Corte Interamericana de Derechos Humanos"
+      }
+    }
+  }
+}

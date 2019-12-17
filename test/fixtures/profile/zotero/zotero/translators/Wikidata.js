@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-06 12:03:00"
+	"lastUpdated": "2018-12-13 10:42:07"
 }
 
 /*
@@ -44,6 +44,7 @@ var typeMapping = {
 	"Q17928402" : "blogPost",
 	"Q571" : "book",
 	"Q3331189" : "book", // Edition
+	"Q47461344" : "book", // written work
 	"Q1980247" : "bookSection",
 	"Q2334719" : "case",
 	"Q40056" : "computerProgram",
@@ -118,7 +119,7 @@ var creatorMapping = {
 	'wdt:P57': 'director',
 	'wdt:P58': 'scriptwriter',
 	'wdt:P162': 'producer'
-}
+};
 
 
 var namespaces = {
@@ -185,6 +186,7 @@ function scrape(doc, url) {
 		
 		var item = new Zotero.Item(type);
 		var nodes = ZU.xpath(xml, '//rdf:Description', namespaces);
+		var creatorsArray = [];
 		for (var i=0; i<nodes.length; i++) {
 			var rdfabout = nodes[i].getAttribute("rdf:about");
 			if (rdfabout) {
@@ -201,11 +203,14 @@ function scrape(doc, url) {
 								//Z.debug("Internal look up resource: " + resource);
 								value = ZU.xpathText(xml, '//rdf:Description[@rdf:about="'+resource+'"]/rdfs:label[contains(@xml:lang, "en")][1]', namespaces)
 									|| ZU.xpathText(xml, '//rdf:Description[@rdf:about="'+resource+'"]/rdfs:label[1]', namespaces);
+									
 								//Z.debug(value);
 							}
 							if (zprop=="creator") {
+								var seriesOrdinal = ZU.xpathText(xml, '//rdf:Description[ps:P50[@rdf:resource="'+resource+'"]]/pq:P1545[1]', namespaces)
+									|| ZU.xpathText(xml, '//rdf:Description[ps:P2093[text()="'+value+'"]]/pq:P1545[1]', namespaces);
 								var func = creatorMapping[tagname] || 'contributor';
-								item.creators.push(ZU.cleanAuthor(value, func));
+								creatorsArray.push([value, func, seriesOrdinal]);
 							} else if (item[zprop]) {
 								item[zprop] += ', ' + value;
 							} else {
@@ -220,8 +225,14 @@ function scrape(doc, url) {
 			item.title += ': ' + item.subtitle;
 			delete item.subtitle;
 		}
+		creatorsArray.sort(function(a,b) {
+			return a[2] - b[2];
+		});
+		for (let aut of creatorsArray) {
+			item.creators.push(ZU.cleanAuthor(aut[0], aut[1]));
+		}
 		//in Zotero we cannot allow multiple DOIs
-		if (item.DOI && item.DOI.indexOf(', ')>-1) {
+		if (item.DOI && item.DOI.includes(', ')) {
 			item.DOI = ZU.xpathText(xml, '(//rdf:Description[wikibase:rank[contains(@rdf:resource, "#PreferredRank")]]/ps:P356)[1]', namespaces)
 				|| ZU.xpathText(xml, '(//rdf:Description[wikibase:rank[contains(@rdf:resource, "#NormalRank")]]/ps:P356)[1]', namespaces)
 				|| ZU.xpathText(xml, '(//rdf:Description[wikibase:rank[contains(@rdf:resource, "#DeprecatedRank")]]/ps:P356)[1]', namespaces);
@@ -254,34 +265,39 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Enrico",
-						"lastName": "Zammarchi",
-						"creatorType": "author"
-					},
-					{
 						"firstName": "Rossana De",
 						"lastName": "Leo",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Donato",
-						"lastName": "Civitareale",
+						"firstName": "Enrico",
+						"lastName": "Zammarchi",
 						"creatorType": "author"
 					},
 					{
 						"firstName": "Pier Giorgio",
 						"lastName": "Natali",
 						"creatorType": "author"
+					},
+					{
+						"firstName": "Donato",
+						"lastName": "Civitareale",
+						"creatorType": "author"
 					}
 				],
 				"date": "2002-04-01T00:00:00Z",
 				"DOI": "10.1210/MEND.16.4.0808",
+				"issue": "4",
 				"language": "English",
 				"libraryCatalog": "Wikidata",
+				"pages": "837-846",
 				"publicationTitle": "Molecular Endocrinology",
+				"volume": "16",
 				"attachments": [],
 				"tags": [
-					"transcription"
+					{
+						"tag": "transcription"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -307,6 +323,11 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
+						"firstName": "Christina",
+						"lastName": "Lioma",
+						"creatorType": "author"
+					},
+					{
 						"firstName": "Birger",
 						"lastName": "Larsen",
 						"creatorType": "author"
@@ -314,11 +335,6 @@ var testCases = [
 					{
 						"firstName": "Henrik L.",
 						"lastName": "Jørgensen",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Ole",
-						"lastName": "Winther",
 						"creatorType": "author"
 					},
 					{
@@ -332,13 +348,13 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Christina",
-						"lastName": "Lioma",
+						"firstName": "Peter",
+						"lastName": "Ingwersen",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Peter",
-						"lastName": "Ingwersen",
+						"firstName": "Ole",
+						"lastName": "Winther",
 						"creatorType": "author"
 					}
 				],
@@ -352,8 +368,12 @@ var testCases = [
 				"volume": "82",
 				"attachments": [],
 				"tags": [
-					"rare disease",
-					"search engine"
+					{
+						"tag": "rare disease"
+					},
+					{
+						"tag": "search engine"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -551,14 +571,21 @@ var testCases = [
 					}
 				],
 				"date": "1963-01-01T00:00:00Z",
+				"language": "English",
 				"libraryCatalog": "Wikidata",
 				"publisher": "Viking Press",
 				"shortTitle": "Eichmann in Jerusalem",
 				"attachments": [],
 				"tags": [
-					"Adolf Eichmann",
-					"the Holocaust",
-					"war crimes trial"
+					{
+						"tag": "Adolf Eichmann"
+					},
+					{
+						"tag": "the Holocaust"
+					},
+					{
+						"tag": "war crimes trial"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -610,7 +637,6 @@ var testCases = [
 					}
 				],
 				"date": "1999-01-01T00:00:00Z",
-				"DOI": "10.1210/MEND.13.1.0223",
 				"issue": "1",
 				"libraryCatalog": "Wikidata",
 				"pages": "148-155",
@@ -623,5 +649,5 @@ var testCases = [
 			}
 		]
 	}
-]
+];
 /** END TEST CASES **/

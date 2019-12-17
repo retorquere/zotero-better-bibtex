@@ -1,0 +1,15 @@
+{
+  "filename": "auto-mr.json",
+  "name": "Mauritania",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MR": "Mauritania"
+      }
+    },
+    "mr": {
+      "institution-part": {}
+    }
+  }
+}

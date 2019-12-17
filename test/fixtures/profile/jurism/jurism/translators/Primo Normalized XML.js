@@ -11,8 +11,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-05 07:13:43"
+	"lastUpdated": "2019-06-10 08:28:21"
 }
 
 /*
@@ -48,89 +47,89 @@ function detectImport() {
 function doImport() {
 	var doc = Zotero.getXML();
 	var ns = {
-		'p': 'http://www.exlibrisgroup.com/xsd/primo/primo_nm_bib',
-		'sear': 'http://www.exlibrisgroup.com/xsd/jaguar/search'
+		p: 'http://www.exlibrisgroup.com/xsd/primo/primo_nm_bib',
+		sear: 'http://www.exlibrisgroup.com/xsd/jaguar/search'
 	};
 	
 	var item = new Zotero.Item();
-	var itemType = ZU.xpathText(doc, '//p:display/p:type', ns)  || ZU.xpathText(doc, '//p:facets/p:rsrctype', ns) || ZU.xpathText(doc, '//p:search/p:rsrctype', ns);
-	if(!itemType) {
+	var itemType = ZU.xpathText(doc, '//p:display/p:type', ns) || ZU.xpathText(doc, '//p:facets/p:rsrctype', ns) || ZU.xpathText(doc, '//p:search/p:rsrctype', ns);
+	if (!itemType) {
 		throw new Error('Could not locate item type');
 	}
 	
-	switch(itemType.toLowerCase()) {
-		case 'book':
-		case 'ebook':
-		case 'pbook' :
-		case 'books':
-		case 'score':
-		case 'journal':		//as long as we don't have a periodical item type;
- 			item.itemType = "book";
-			break;
-		case 'audio':
-		case 'sound_recording':
-			item.itemType = "audioRecording";
-			break;
-		case 'video':
-		case 'dvd':
-			item.itemType = "videoRecording";
-			break;
-		case 'computer_file':
-			item.itemType = "computerProgram";
-			break;
-		case 'report':
-			item.itemType = "report";
-			break;
-		case 'webpage':
-			item.itemType = "webpage";
-			break;
-		case 'article':
-		case 'review':
-			item.itemType = "journalArticle";
-			break;
-		case 'thesis':
-		case 'dissertation':
-			item.itemType = "thesis";
-			break;
-		case 'archive_manuscript':
-		case 'object':
-			item.itemType = "manuscript";
-			break;
-		case 'map':
-			item.itemType = "map";
-			break;
-		case 'reference_entry':
-			item.itemType = "encyclopediaArticle";
-			break;
-		case 'image':
-			item.itemType = "artwork";
-			break;
-		case 'newspaper_article':
-			item.itemType = "newspaperArticle";
-			break;
-		case 'conference_proceeding':
-			item.itemType = "conferencePaper";
-			break;
-		default:
-			item.itemType = "document";
-			var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
-			if (risType) {
-				switch(risType.toUpperCase()) {
-					case 'THES':
-						item.itemType = "thesis";
-						break;
-				}
+	switch (itemType.toLowerCase()) {
+	case 'book':
+	case 'ebook':
+	case 'pbook':
+	case 'books':
+	case 'score':
+	case 'journal':		// as long as we don't have a periodical item type;
+		item.itemType = "book";
+		break;
+	case 'audio':
+	case 'sound_recording':
+		item.itemType = "audioRecording";
+		break;
+	case 'video':
+	case 'dvd':
+		item.itemType = "videoRecording";
+		break;
+	case 'computer_file':
+		item.itemType = "computerProgram";
+		break;
+	case 'report':
+		item.itemType = "report";
+		break;
+	case 'webpage':
+		item.itemType = "webpage";
+		break;
+	case 'article':
+	case 'review':
+		item.itemType = "journalArticle";
+		break;
+	case 'thesis':
+	case 'dissertation':
+		item.itemType = "thesis";
+		break;
+	case 'archive_manuscript':
+	case 'object':
+		item.itemType = "manuscript";
+		break;
+	case 'map':
+		item.itemType = "map";
+		break;
+	case 'reference_entry':
+		item.itemType = "encyclopediaArticle";
+		break;
+	case 'image':
+		item.itemType = "artwork";
+		break;
+	case 'newspaper_article':
+		item.itemType = "newspaperArticle";
+		break;
+	case 'conference_proceeding':
+		item.itemType = "conferencePaper";
+		break;
+	default:
+		item.itemType = "document";
+		var risType = ZU.xpathText(doc, '//p:addata/p:ristype', ns);
+		if (risType) {
+			switch (risType.toUpperCase()) {
+			case 'THES':
+				item.itemType = "thesis";
+				break;
 			}
+		}
 	}
 	
 	item.title = ZU.xpathText(doc, '//p:display/p:title', ns);
-	if(item.title) {
+	if (item.title) {
 		item.title = ZU.unescapeHTML(item.title);
 		item.title = item.title.replace(/\s*:/, ":");
 	}
 	var creators = ZU.xpath(doc, '//p:display/p:creator', ns);
 	var contributors = ZU.xpath(doc, '//p:display/p:contributor', ns);
-	if(!creators.length && contributors.length) {
+	if (!creators.length && contributors.length) {
 		// <creator> not available using <contributor> as author instead
 		creators = contributors;
 		contributors = [];
@@ -140,9 +139,9 @@ function doImport() {
 	// but it can also have a bunch of junk. We'll use it to help split authors
 	var splitGuidance = {};
 	var addau = ZU.xpath(doc, '//p:addata/p:addau|//p:addata/p:au', ns);
-	for (var i=0; i<addau.length; i++) {
+	for (let i = 0; i < addau.length; i++) {
 		var author = stripAuthor(addau[i].textContent);
-		if (author.indexOf(',') != -1) {
+		if (author.includes(',')) {
 			var splitAu = author.split(',');
 			if (splitAu.length > 2) continue;
 			var name = splitAu[1].trim().toLowerCase() + ' '
@@ -155,32 +154,41 @@ function doImport() {
 	fetchCreators(item, contributors, 'contributor', splitGuidance);
 
 	item.place = ZU.xpathText(doc, '//p:addata/p:cop', ns);
-	var publisher = ZU.xpathText(doc, '//p:addata/p:pub',ns);
-	if(!publisher) publisher = ZU.xpathText(doc, '//p:display/p:publisher', ns);
-	if(publisher) {
-		publisher = publisher.replace(/,\s*c?\d+|[\(\)\[\]]|(\.\s*)?/g, "");
+	var publisher = ZU.xpathText(doc, '//p:addata/p:pub', ns);
+	if (!publisher) publisher = ZU.xpathText(doc, '//p:display/p:publisher', ns);
+	if (publisher) {
+		publisher = publisher.replace(/,\s*c?\d+|[()[\]]|(\.\s*)?/g, "");
 		item.publisher = publisher.replace(/^\s*"|,?"\s*$/g, '');
 		var pubplace = ZU.unescapeHTML(publisher).split(" : ");
 
-		if(pubplace && pubplace[1]) {
+		if (pubplace && pubplace[1]) {
 			var possibleplace = pubplace[0];
-			if(!item.place ) {
+			if (!item.place) {
 				item.publisher = pubplace[1].replace(/^\s*"|,?"\s*$/g, '');
 				item.place = possibleplace;
 			}
-			if(item.place && item.place == possibleplace) {
+			if (item.place && item.place == possibleplace) {
 				item.publisher = pubplace[1].replace(/^\s*"|,?"\s*$/g, '');
 			}
 		}
+		// sometimes the place is also part of the publisher string
+		// e.g. "Tübingen Mohr Siebeck"
+		if (item.place) {
+			var contained = item.publisher.indexOf(item.place);
+			if (contained === 0) {
+				item.publisher = item.publisher.substring(item.place.length);
+			}
+		}
 	}
-	var date = ZU.xpathText(doc, '//p:addata/p:date', ns) ||
-		ZU.xpathText(doc, '//p:addata/p:risdate', ns);
+	var date = ZU.xpathText(doc, '//p:addata/p:date', ns)
+		|| ZU.xpathText(doc, '//p:addata/p:risdate', ns);
 	if (date && /\d\d\d\d\d\d\d\d/.test(date)) {
-		item.date = date.substring(0,4)+'-'+date.substring(4,6)+'-'+date.substring(6,8);
-	} else {
+		item.date = date.substring(0, 4) + '-' + date.substring(4, 6) + '-' + date.substring(6, 8);
+	}
+	else {
 		date = ZU.xpathText(doc, '//p:display/p:creationdate|//p:search/p:creationdate', ns);
 		var m;
-		if(date && (m = date.match(/\d+/))) {
+		if (date && (m = date.match(/\d+/))) {
 			item.date = m[0];
 		}
 	}
@@ -189,19 +197,26 @@ function doImport() {
 	item.language = ZU.xpathText(doc, '(//p:display/p:language|//p:facets/p:language)[1]', ns);
 	
 	var pages = ZU.xpathText(doc, '//p:display/p:format', ns);
-	if(item.itemType == 'book' && pages && pages.search(/\d/) != -1) {
+	if (item.itemType == 'book' && pages && pages.search(/\d/) != -1) {
 		item.numPages = extractNumPages(pages);
 	}
 	
 	item.series = ZU.xpathText(doc, '(//p:addata/p:seriestitle)[1]', ns);
+	if (item.series) {
+		let m = item.series.match(/^(.*);\s*(\d+)/);
+		if (m) {
+			item.series = m[1].trim();
+			item.seriesNumber = m[2];
+		}
+	}
 
 	var isbn = ZU.xpathText(doc, '//p:addata/p:isbn', ns);
 	var issn = ZU.xpathText(doc, '//p:addata/p:issn', ns);
-	if (isbn){
+	if (isbn) {
 		item.ISBN = ZU.cleanISBN(isbn);
 	}
 	
-	if (issn){
+	if (issn) {
 		item.ISSN = ZU.cleanISSN(issn);
 	}
 	
@@ -210,20 +225,24 @@ function doImport() {
 	// the super-tolerant idCheck should be better than a regex.
 	// (although note that it will reject invalid ISBNs)
 	var locators = ZU.xpathText(doc, '//p:display/p:identifier', ns);
-	if(!(item.ISBN || item.ISSN) && locators) {
+	if (!(item.ISBN || item.ISSN) && locators) {
 		item.ISBN = ZU.cleanISBN(locators);
 		item.ISSN = ZU.cleanISSN(locators);
 	}
 
 	item.edition = ZU.xpathText(doc, '//p:display/p:edition', ns);
 	
-	var subjects = ZU.xpath(doc, '//p:search/p:subject', ns);
-	if(!subjects.length) {
-		subjects = ZU.xpath(doc, '//p:display/p:subject', ns);
+	var subjects = ZU.xpath(doc, '//p:display/p:subject', ns);
+	if (!subjects.length) {
+		subjects = ZU.xpath(doc, '//p:search/p:subject', ns);
 	}
 
-	for(var i=0, n=subjects.length; i<n; i++) {
-		item.tags.push(ZU.trimInternal(subjects[i].textContent));
+	for (let i = 0, n = subjects.length; i < n; i++) {
+		let tagChain = ZU.trimInternal(subjects[i].textContent);
+		// Split chain of tags, e.g. "Deutschland / Gerichtsverhandlung / Schallaufzeichnung / Bildaufzeichnung"
+		for (let tag of tagChain.split(/ (?:\/|--) /)) {
+			item.tags.push(tag);
+		}
 	}
 	
 	item.abstractNote = ZU.xpathText(doc, '//p:display/p:description', ns)
@@ -238,13 +257,16 @@ function doImport() {
 	var startPage = ZU.xpathText(doc, '//p:addata/p:spage', ns);
 	var endPage = ZU.xpathText(doc, '//p:addata/p:epage', ns);
 	var overallPages = ZU.xpathText(doc, '//p:addata/p:pages', ns);
-	if (startPage && endPage){
+	if (startPage && endPage) {
 		item.pages = startPage + '–' + endPage;
-	} else if (overallPages) {
+	}
+	else if (overallPages) {
 		item.pages = overallPages;
-	} else if (startPage) {
+	}
+	else if (startPage) {
 		item.pages = startPage;
-	} else if (endPage) {
+	}
+	else if (endPage) {
 		item.pages = endPage;
 	}
 	
@@ -258,19 +280,19 @@ function doImport() {
 	// add finding aids as links
 	var findingAid = ZU.xpathText(doc, '//p:links/p:linktofa', ns);
 	if (findingAid && findingAid.search(/\$\$U.+\$\$/) != -1) {
-		item.attachments.push({url: findingAid.match(/\$\$U(.+?)\$\$/)[1], title: "Finding Aid", snapshot: false});
+		item.attachments.push({ url: findingAid.match(/\$\$U(.+?)\$\$/)[1], title: "Finding Aid", snapshot: false });
 	}
 	// get the best call Number; sequence recommended by Harvard University Library
 	var callNumber = ZU.xpath(doc, '//p:browse/p:callnumber', ns);
 	var callArray = [];
-	for (var i = 0; i<callNumber.length; i++) {
+	for (let i = 0; i < callNumber.length; i++) {
 		if (callNumber[i].textContent.search(/\$\$D.+\$/) != -1) {
 			callArray.push(callNumber[i].textContent.match(/\$\$D(.+?)\$/)[1]);
 		}
 	}
 	if (!callArray.length) {
 		callNumber = ZU.xpath(doc, '//p:display/p:availlibrary', ns);
-		for (var i = 0; i<callNumber.length; i++) {
+		for (let i = 0; i < callNumber.length; i++) {
 			if (callNumber[i].textContent.search(/\$\$2.+\$/) != -1) {
 				callArray.push(callNumber[i].textContent.match(/\$\$2\(?(.+?)(?:\s*\))?\$/)[1]);
 			}
@@ -291,7 +313,9 @@ function doImport() {
 	var library;
 	var source = ZU.xpathText(doc, '//p:control/p:sourceid', ns);
 	if (source) {
-		library = source.match(/^(.+?)_/);
+		// The HVD library code is now preceded by $$V01 -- not seeing this in other catalogs like Princeton or UQAM
+		// so making it optional
+		library = source.match(/^(?:\$\$V)?(?:\d+)?(.+?)_/);
 		if (library) library = library[1];
 	}
 	// Z.debug(library)
@@ -299,8 +323,14 @@ function doImport() {
 		if (ZU.xpathText(doc, '//p:display/p:lds01', ns)) {
 			item.extra = "HOLLIS number: " + ZU.xpathText(doc, '//p:display/p:lds01', ns);
 		}
-		if (ZU.xpathText(doc, '//p:display/p:lds03', ns)) {
-			item.attachments.push({url: ZU.xpathText(doc, '//p:display/p:lds03', ns), title: "HOLLIS Permalink", snapshot: false});		
+		for (let lds03 of ZU.xpath(doc, '//p:display/p:lds03', ns)) {
+			if (lds03.textContent.match(/href="(.+?)"/)) {
+				item.attachments.push({
+					url: lds03.textContent.match(/href="(.+?)"/)[1],
+					title: "HOLLIS Permalink",
+					snapshot: false
+				});
+			}
 		}
 	}
 	// End Harvard-specific code
@@ -315,16 +345,16 @@ function stripAuthor(str) {
 		// Remove year
 		.replace(/\s*,?\s*\(?\d{4}-?(\d{4})?\)?/g, '')
 		// Remove things like (illustrator). TODO: use this to assign creator type?
-		.replace(/\s*,?\s*[\[\(][^()]*[\]\)]$/, '')
+		.replace(/\s*,?\s*[[(][^()]*[\])]$/, '')
 		// The full "continuous" name uses no separators, which need be removed
 		// cf. "Luc, Jean André : de (1727-1817)"
 		.replace(/\s*:\s+/, " ");
 }
 
 function fetchCreators(item, creators, type, splitGuidance) {
-	for(var i=0; i<creators.length; i++) {
+	for (let i = 0; i < creators.length; i++) {
 		var creator = ZU.unescapeHTML(creators[i].textContent).split(/\s*;\s*/);
-		for(var j=0; j<creator.length; j++) {
+		for (var j = 0; j < creator.length; j++) {
 			var c = stripAuthor(creator[j]);
 			c = ZU.cleanAuthor(
 				splitGuidance[c.toLowerCase()] || c,
@@ -348,11 +378,12 @@ function extractNumPages(str) {
 	// f., p., and S. are "pages" in various languages
 	// For multi-volume works, we expect formats like:
 	//   x-109 p., 510 p. and X, 106 S.; 123 S.
-	var numPagesRE = /\[?\b((?:[ivxlcdm\d]+[ ,\-]*)+)\]?\s+[fps]\b/ig;
+	var numPagesRE = /\[?\b((?:[ivxlcdm\d]+[ \-,]*)+)\]?\s+[fps]\b/ig;
 	var numPages = [];
-	if ((m = numPagesRE.exec(str))) {
+	let m = numPagesRE.exec(str);
+	if (m) {
 		numPages.push(m[1].trim()
-			.replace(/[ ,\-]+/g,'+')
+			.replace(/[ \-,]+/g, '+')
 			.toLowerCase() // for Roman numerals
 		);
 	}
@@ -361,12 +392,12 @@ function extractNumPages(str) {
 
 function dedupeArray(names) {
 	// via http://stackoverflow.com/a/15868720/1483360
-	return names.reduce(function(a,b){
-		if(a.indexOf(b)<0) {
+	return names.reduce(function (a, b) {
+		if (!a.includes(b)) {
 			a.push(b);
 		}
 		return a;
-	},[]);
+	}, []);
 }
 
 /** BEGIN TEST CASES **/
@@ -406,7 +437,10 @@ var testCases = [
 				"attachments": [],
 				"tags": [
 					{
-						"tag": "Water -- chemistry"
+						"tag": "Chemistry"
+					},
+					{
+						"tag": "Water"
 					}
 				],
 				"notes": [],
@@ -464,19 +498,100 @@ var testCases = [
 				],
 				"tags": [
 					{
-						"tag": "Authors' inscriptions (Provenance)"
-					},
-					{
-						"tag": "Cookbooks."
-					},
-					{
-						"tag": "Cookery, French"
-					},
-					{
 						"tag": "Cooking, French."
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<record xmlns=\"http://www.exlibrisgroup.com/xsd/primo/primo_nm_bib\" xmlns:sear=\"http://www.exlibrisgroup.com/xsd/jaguar/search\">\n  <control>\n    <sourcerecordid>21126560510002561</sourcerecordid>\n    <sourceid>MAN_ALMA</sourceid>\n    <recordid>MAN_ALMA21126560510002561</recordid>\n    <originalsourceid>MAN_INST</originalsourceid>\n    <addsrcrecordid>KPLUS492418942</addsrcrecordid>\n    <addsrcrecordid>BSZ118463411</addsrcrecordid>\n    <addsrcrecordid>OCLC238724886</addsrcrecordid>\n    <addsrcrecordid>OCLC62185846</addsrcrecordid>\n    <sourceformat>MARC21</sourceformat>\n    <sourcesystem>Alma</sourcesystem>\n    <almaid>49MAN_INST:21126560510002561</almaid>\n  </control>\n  <display>\n    <type>book</type>\n    <title>Zur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes</title>\n    <creator>Coelln, Christian von</creator>\n    <contributor>Bethge, Herbert</contributor>\n    <contributor>Söhn, Hartmut [Gutachter]</contributor>\n    <publisher>Tübingen Mohr Siebeck</publisher>\n    <creationdate>2005</creationdate>\n    <format>XXX, 575 S. 24 cm</format>\n    <identifier>$$CISBN$$V 3161486617</identifier>\n    <subject>Conduct of court proceedings -- Germany; Constitutional law -- Germany; Freedom of information -- Germany; Hochschulschrift</subject>\n    <subject>Deutschland / Rechtsprechende Gewalt / Öffentlichkeitsgrundsatz / Informationsfreiheit</subject>\n    <subject>Deutschland / Gerichtsberichterstattung / Elektronische Medien / Verbot / Verfassungsmäßigkeit</subject>\n    <subject>Deutschland / Gerichtsverhandlung / Schallaufzeichnung / Bildaufzeichnung</subject>\n    <description>Zugl.: Passau, Univ., Habil.-Schr., 2004</description>\n    <description>Christian von Coelln behandelt die rechtlichen, insbesondere die verfassungsrechtlichen Fragen des Zugangs der Medien zur Rechtsprechung. Neben generellen Erwägungen zur Bedeutung der Medienöffentlichkeit der Dritten Gewalt für Demokratie und Rechtsstaat befaßt er sich u.a. mit der Teilnahme von Journalisten an mündlichen Verhandlungen und mit der Problematik von Bild- und Tonaufnahmen in Gerichtsgebäuden.(Quelle: Verlag).</description>\n    <language>ger</language>\n    <relation>$$Cseries $$VIus publicum ; 138 ; 13800</relation>\n    <source>MAN_ALMA</source>\n    <availlibrary>$$IMAN$$LMANLS300$$1Lehrstuhl Müller-Terpitz$$2(341 PH 4520 C672 )$$Savailable$$X49MAN_INST$$YLS300$$Z341$$P1</availlibrary>\n    <lds01>Mohr Siebeck</lds01>\n    <lds27>121557006 Bethge, Herbert</lds27>\n    <lds30>PG 430</lds30>\n    <availinstitution>$$IMAN$$Savailable</availinstitution>\n    <availpnx>available</availpnx>\n  </display>\n  <links>\n    <openurl>$$Topenurl</openurl>\n    <thumbnail>$$Tamazon_thumb</thumbnail>\n    <thumbnail>$$Tgoogle_thumb</thumbnail>\n    <addlink>$$Uhttp://www.gbv.de/dms/bsz/toc/bsz118463411inh.pdf$$DInhaltsverzeichnis 04</addlink>\n    <addlink>$$Uhttp://d-nb.info/975503499/04$$D04</addlink>\n    <addlink>$$Uhttp://swbplus.bsz-bw.de/bsz118463411inh.htm$$DInhaltsverzeichnis</addlink>\n    <lln05>$$TSerial_Link$$ESerialLink$$1UP(DE-627)231976704</lln05>\n  </links>\n  <search>\n    <creatorcontrib>Christian von  Coelln</creatorcontrib>\n    <creatorcontrib>Christian,  Von Coelln</creatorcontrib>\n    <creatorcontrib>Coelln, C</creatorcontrib>\n    <creatorcontrib>Von Coelln, C</creatorcontrib>\n    <creatorcontrib>Christian von Coelln</creatorcontrib>\n    <creatorcontrib>Herbert  Bethge</creatorcontrib>\n    <creatorcontrib>Hartmut  Söhn  Gutachter</creatorcontrib>\n    <creatorcontrib>Bethge, H</creatorcontrib>\n    <creatorcontrib>Söhn, H</creatorcontrib>\n    <creatorcontrib>Coelln, Christian von</creatorcontrib>\n    <creatorcontrib>Coelln C</creatorcontrib>\n    <creatorcontrib>Bethge, Herbert</creatorcontrib>\n    <creatorcontrib>Söhn, Hartmut [Gutachter]</creatorcontrib>\n    <title>Zur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes</title>\n    <description>Christian von Coelln behandelt die rechtlichen, insbesondere die verfassungsrechtlichen Fragen des Zugangs der Medien zur Rechtsprechung. Neben generellen Erwägungen zur Bedeutung der Medienöffentlichkeit der Dritten Gewalt für Demokratie und Rechtsstaat befaßt er sich u.a. mit der Teilnahme von Journalisten an mündlichen Verhandlungen und mit der Problematik von Bild- und Tonaufnahmen in Gerichtsgebäuden.(Quelle: Verlag).</description>\n    <subject>Conduct of court proceedings Germany</subject>\n    <subject>Constitutional law Germany</subject>\n    <subject>Freedom of information Germany</subject>\n    <subject>Hochschulschrift</subject>\n    <subject>Deutschland</subject>\n    <subject>Rechtsprechende Gewalt</subject>\n    <subject>Öffentlichkeitsgrundsatz</subject>\n    <subject>Informationsfreiheit</subject>\n    <subject>Gerichtsberichterstattung</subject>\n    <subject>Elektronische Medien</subject>\n    <subject>Verbot</subject>\n    <subject>Verfassungsmäßigkeit</subject>\n    <subject>Gerichtsverhandlung</subject>\n    <subject>Schallaufzeichnung</subject>\n    <subject>Bildaufzeichnung</subject>\n    <subject>Tonaufzeichnung</subject>\n    <subject>Phonogramm</subject>\n    <subject>Schallaufnahme</subject>\n    <subject>Tonaufnahme</subject>\n    <subject>Audioaufzeichnung</subject>\n    <subject>Fonogramm</subject>\n    <subject>Tondokument</subject>\n    <subject>Schalldokument</subject>\n    <subject>E-Medien</subject>\n    <subject>Justizberichterstattung</subject>\n    <subject>Prozessberichterstattung</subject>\n    <subject>Prozess</subject>\n    <subject>Deutsche Länder</subject>\n    <subject>Germany</subject>\n    <subject>Heiliges Römisches Reich</subject>\n    <subject>Rheinbund</subject>\n    <subject>Deutscher Bund</subject>\n    <subject>Norddeutscher Bund</subject>\n    <subject>Deutsches Reich</subject>\n    <subject>BRD</subject>\n    <subject>Federal Republic of Germany</subject>\n    <subject>Republic of Germany</subject>\n    <subject>Allemagne</subject>\n    <subject>Ǧumhūrīyat Almāniyā al-Ittiḥādīya</subject>\n    <subject>Bundesrepublik Deutschland</subject>\n    <subject>Niemcy</subject>\n    <subject>République Fédérale d'Allemagne</subject>\n    <subject>Repubblica Federale di Germania</subject>\n    <subject>Germanija</subject>\n    <subject>Federativnaja Respublika Germanija</subject>\n    <subject>FRG</subject>\n    <subject>Deyizhi-Lianbang-Gongheguo</subject>\n    <subject>Informationsanspruch</subject>\n    <subject>Recht auf Information</subject>\n    <subject>Grundrecht</subject>\n    <subject>Gerichtsöffentlichkeit</subject>\n    <subject>Öffentlichkeit</subject>\n    <subject>Judikative</subject>\n    <subject>Dritte Gewalt</subject>\n    <subject>Bundesverfassungsgericht</subject>\n    <subject>Federal Constitutional Court</subject>\n    <subject>Constitutional Court</subject>\n    <subject>Pressestelle</subject>\n    <subject>Cour Constitutionnelle Fédérale</subject>\n    <subject>Savezni Ustavni Sud</subject>\n    <subject>Savezni Ustavni Sud Nemačke</subject>\n    <subject>De guo lian bang xian fa fa yuan</subject>\n    <subject>BVerfG</subject>\n    <subject>BVerfGK</subject>\n    <subject>Conduct of court proceedings -- Germany; Constitutional law -- Germany; Freedom of information -- Germany; Hochschulschrift</subject>\n    <subject>Deutschland / Rechtsprechende Gewalt / Öffentlichkeitsgrundsatz / Informationsfreiheit</subject>\n    <subject>Deutschland / Gerichtsberichterstattung / Elektronische Medien / Verbot / Verfassungsmäßigkeit</subject>\n    <subject>Deutschland / Gerichtsverhandlung / Schallaufzeichnung / Bildaufzeichnung</subject>\n    <general>Mohr Siebeck</general>\n    <general>Zugl.: Passau, Univ., Habil.-Schr., 2004</general>\n    <sourceid>MAN_ALMA</sourceid>\n    <recordid>MAN_ALMA21126560510002561</recordid>\n    <isbn>3161486617</isbn>\n    <isbn>9783161486616</isbn>\n    <rsrctype>book</rsrctype>\n    <creationdate>2005</creationdate>\n    <startdate>20050101</startdate>\n    <enddate>20051231</enddate>\n    <addtitle>Jus publicum 138</addtitle>\n    <addtitle>Ius publicum 138</addtitle>\n    <addsrcrecordid>990016187190402561</addsrcrecordid>\n    <addsrcrecordid>KPLUS492418942</addsrcrecordid>\n    <addsrcrecordid>BSZ118463411</addsrcrecordid>\n    <addsrcrecordid>OCLC238724886</addsrcrecordid>\n    <addsrcrecordid>OCLC62185846</addsrcrecordid>\n    <searchscope>MAN_ALMA</searchscope>\n    <searchscope>MAN</searchscope>\n    <scope>MAN_ALMA</scope>\n    <scope>MAN</scope>\n    <lsr01>UP(DE-627)492418942</lsr01>\n    <lsr02>DN990000639400402561</lsr02>\n    <lsr02>DN990016187190402561</lsr02>\n    <lsr07>SPE990016187190402561</lsr07>\n    <lsr24>LS300</lsr24>\n    <lsr25>341 PH 4520 C672</lsr25>\n    <lsr25>341PH4520C672</lsr25>\n    <lsr30>PG 430</lsr30>\n  </search>\n  <sort>\n    <title>Zur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes</title>\n    <creationdate>2005</creationdate>\n    <author>Coelln, Christian von 1967-</author>\n  </sort>\n  <facets>\n    <language>ger</language>\n    <creationdate>2005</creationdate>\n    <topic>Conduct of court proceedings–Germany</topic>\n    <topic>Constitutional law–Germany</topic>\n    <topic>Freedom of information–Germany</topic>\n    <collection>MANLS300</collection>\n    <toplevel>printmedia</toplevel>\n    <prefilter>books</prefilter>\n    <rsrctype>books</rsrctype>\n    <creatorcontrib>Coelln, Christian von</creatorcontrib>\n    <creatorcontrib>Bethge, Herbert</creatorcontrib>\n    <creatorcontrib>Söhn, Hartmut</creatorcontrib>\n    <genre>Hochschulschrift</genre>\n    <atoz>Z</atoz>\n    <lfc04>MAN09</lfc04>\n    <lfc14>DOM11</lfc14>\n    <newrecords>20160104_120</newrecords>\n    <frbrgroupid>140711198</frbrgroupid>\n    <frbrtype>6</frbrtype>\n  </facets>\n  <dedup>\n    <t>1</t>\n    <c2>3161486617</c2>\n    <c3>zurmedienoeffentlichndgesetzes</c3>\n    <c4>2005</c4>\n    <c5>990016187190402561</c5>\n    <f3>3161486617</f3>\n    <f5>zurmedienoeffentlichndgesetzes</f5>\n    <f6>2005</f6>\n    <f7>zur medienoeffentlichkeit der dritten gewalt rechtliche aspekte des zugangs der medien zur rechtsprechung im verfassungsstaat des grundgesetzes</f7>\n    <f8>xx</f8>\n    <f9>XXX, 575 S.</f9>\n    <f10>mohr siebeck</f10>\n    <f11>coelln christian von 1967</f11>\n    <f20>990016187190402561</f20>\n  </dedup>\n  <frbr>\n    <t>1</t>\n    <k1>$$Kcoelln christian von 1967$$AA</k1>\n    <k3>$$Kzur medienoeffentlichkeit der dritten gewalt rechtliche aspekte des zugangs der medien zur rechtsprechung im verfassungsstaat des grundgesetzes$$AT</k3>\n  </frbr>\n  <delivery>\n    <institution>MAN</institution>\n    <delcategory>Alma-P</delcategory>\n  </delivery>\n  <enrichment>\n    <classificationlcc>KK5162</classificationlcc>\n  </enrichment>\n  <ranking>\n    <booster1>1</booster1>\n    <booster2>1</booster2>\n  </ranking>\n  <addata>\n    <aulast>Coelln</aulast>\n    <aulast>Bethge</aulast>\n    <aulast>Söhn</aulast>\n    <aufirst>Christian von</aufirst>\n    <aufirst>Herbert</aufirst>\n    <aufirst>Hartmut</aufirst>\n    <au>Coelln, Christian von</au>\n    <addau>Bethge, Herbert</addau>\n    <addau>Söhn, Hartmut</addau>\n    <btitle>Zur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes</btitle>\n    <seriestitle>Jus publicum; 138</seriestitle>\n    <date>2005</date>\n    <risdate>2005</risdate>\n    <isbn>3161486617</isbn>\n    <format>dissertation</format>\n    <ristype>THES</ristype>\n    <notes>Zugl.: Passau, Univ., Habil.-Schr., 2004</notes>\n    <abstract>Christian von Coelln behandelt die rechtlichen, insbesondere die verfassungsrechtlichen Fragen des Zugangs der Medien zur Rechtsprechung. Neben generellen Erwägungen zur Bedeutung der Medienöffentlichkeit der Dritten Gewalt für Demokratie und Rechtsstaat befaßt er sich u.a. mit der Teilnahme von Journalisten an mündlichen Verhandlungen und mit der Problematik von Bild- und Tonaufnahmen in Gerichtsgebäuden.(Quelle: Verlag).</abstract>\n    <cop>Tübingen</cop>\n    <mis1>21126560510002561</mis1>\n    <oclcid>238724886</oclcid>\n    <oclcid>62185846</oclcid>\n  </addata>\n  <browse>\n    <author>$$DCoelln, Christian von 1967-$$ECoelln, Christian von 1967-$$PY</author>\n    <author>$$DBethge, Herbert 1939-$$EBethge, Herbert 1939-$$I121557006</author>\n    <author>$$DSöhn, Hartmut$$ESöhn, Hartmut$$PY</author>\n    <title>$$DZur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes$$EZur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes</title>\n    <title>$$DJus publicum$$EJus publicum</title>\n    <title>$$DIus publicum 13800$$EIus publicum 13800</title>\n    <subject>$$DConduct of court proceedings -- Germany$$EConduct of court proceedings Germany</subject>\n    <subject>$$DConstitutional law -- Germany$$EConstitutional law Germany</subject>\n    <subject>$$DFreedom of information -- Germany$$EFreedom of information Germany</subject>\n    <subject>$$DHochschulschrift$$EHochschulschrift$$Tgnd-content$$I(DE-588)4113937-9 (DE-627)105825778 (DE-576)209480580</subject>\n    <institution>MAN</institution>\n  </browse>\n</record>\n",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Zur Medienöffentlichkeit der Dritten Gewalt rechtliche Aspekte des Zugangs der Medien zur Rechtsprechung im Verfassungsstaat des Grundgesetzes",
+				"creators": [
+					{
+						"firstName": "Christian von",
+						"lastName": "Coelln",
+						"creatorType": "author"
 					},
 					{
-						"tag": "French cooking"
+						"firstName": "Herbert",
+						"lastName": "Bethge",
+						"creatorType": "contributor"
+					},
+					{
+						"firstName": "Hartmut",
+						"lastName": "Söhn",
+						"creatorType": "contributor"
+					}
+				],
+				"date": "2005",
+				"ISBN": "3161486617",
+				"abstractNote": "Zugl.: Passau, Univ., Habil.-Schr., 2004, Christian von Coelln behandelt die rechtlichen, insbesondere die verfassungsrechtlichen Fragen des Zugangs der Medien zur Rechtsprechung. Neben generellen Erwägungen zur Bedeutung der Medienöffentlichkeit der Dritten Gewalt für Demokratie und Rechtsstaat befaßt er sich u.a. mit der Teilnahme von Journalisten an mündlichen Verhandlungen und mit der Problematik von Bild- und Tonaufnahmen in Gerichtsgebäuden.(Quelle: Verlag).",
+				"callNumber": "341 PH 4520 C672",
+				"language": "ger",
+				"numPages": "xxx+575",
+				"place": "Tübingen",
+				"publisher": "Mohr Siebeck",
+				"series": "Jus publicum",
+				"seriesNumber": "138",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Bildaufzeichnung"
+					},
+					{
+						"tag": "Conduct of court proceedings"
+					},
+					{
+						"tag": "Deutschland"
+					},
+					{
+						"tag": "Deutschland"
+					},
+					{
+						"tag": "Deutschland"
+					},
+					{
+						"tag": "Elektronische Medien"
+					},
+					{
+						"tag": "Gerichtsberichterstattung"
+					},
+					{
+						"tag": "Gerichtsverhandlung"
+					},
+					{
+						"tag": "Germany; Constitutional law"
+					},
+					{
+						"tag": "Germany; Freedom of information"
+					},
+					{
+						"tag": "Germany; Hochschulschrift"
+					},
+					{
+						"tag": "Informationsfreiheit"
+					},
+					{
+						"tag": "Rechtsprechende Gewalt"
+					},
+					{
+						"tag": "Schallaufzeichnung"
+					},
+					{
+						"tag": "Verbot"
+					},
+					{
+						"tag": "Verfassungsmäßigkeit"
+					},
+					{
+						"tag": "Öffentlichkeitsgrundsatz"
 					}
 				],
 				"notes": [],

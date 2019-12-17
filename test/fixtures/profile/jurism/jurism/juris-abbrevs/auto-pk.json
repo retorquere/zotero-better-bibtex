@@ -1,0 +1,836 @@
+{
+  "filename": "auto-pk.json",
+  "name": "Pakistan",
+  "version": "2019-11-04 08:16:17 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "PK": "Pakistan",
+        "PK:KHYBER.PAKHTUNKHWA": "Khyber Pakhtunkhwa",
+        "PK:KHYBER.PAKHTUNKHWA:PESHAWAR": "Peshawar",
+        "PK:KHYBER.PAKHTUNKHWA:BANNU": "Bannu",
+        "PK:KHYBER.PAKHTUNKHWA:CHARSADDA": "Charsadda",
+        "PK:KHYBER.PAKHTUNKHWA:KOHAT": "Kohat",
+        "PK:KHYBER.PAKHTUNKHWA:ABBOTTABAD": "Abbottabad",
+        "PK:KHYBER.PAKHTUNKHWA:D.I.KHAN": "D.I.Khan",
+        "PK:KHYBER.PAKHTUNKHWA:CHITRAL": "Chitral",
+        "PK:KHYBER.PAKHTUNKHWA:MALAKAND": "Malakand",
+        "PK:KHYBER.PAKHTUNKHWA:KARAK": "Karak",
+        "PK:KHYBER.PAKHTUNKHWA:UPPER.DIR": "Upper Dir",
+        "PK:KHYBER.PAKHTUNKHWA:LOWER.DIR": "Lower Dir",
+        "PK:KHYBER.PAKHTUNKHWA:LAKKI.MARWAT": "Lakki Marwat",
+        "PK:KHYBER.PAKHTUNKHWA:HANGU": "Hangu",
+        "PK:KHYBER.PAKHTUNKHWA:TANK": "Tank",
+        "PK:KHYBER.PAKHTUNKHWA:NOWSHERA": "Nowshera",
+        "PK:KHYBER.PAKHTUNKHWA:SWABI": "Swabi",
+        "PK:KHYBER.PAKHTUNKHWA:BUNER": "Buner",
+        "PK:KHYBER.PAKHTUNKHWA:MARDAN": "Mardan",
+        "PK:KHYBER.PAKHTUNKHWA:SHANGLA": "Shangla",
+        "PK:KHYBER.PAKHTUNKHWA:HARIPUR": "Haripur",
+        "PK:KHYBER.PAKHTUNKHWA:MANSEHRA": "Mansehra",
+        "PK:KHYBER.PAKHTUNKHWA:BATTAGRAM": "Battagram",
+        "PK:KHYBER.PAKHTUNKHWA:DASU.KOHISTAN": "Dasu Kohistan",
+        "PK:KHYBER.PAKHTUNKHWA:LOWER.KOHISTAN": "Lower Kohistan",
+        "PK:KHYBER.PAKHTUNKHWA:KOLAI.PALAS": "Kolai Palas",
+        "PK:KHYBER.PAKHTUNKHWA:TOR.GHAR": "Tor Ghar",
+        "PK:KHYBER.PAKHTUNKHWA:SWAT": "Swat",
+        "PK:PUNJAB": "Punjab",
+        "PK:PUNJAB:CHAKWAL": "Chakwal",
+        "PK:PUNJAB:JEHLUM": "Jehlum",
+        "PK:PUNJAB:ATTOCK": "Attock",
+        "PK:PUNJAB:BHAKKAR": "Bhakkar",
+        "PK:PUNJAB:KHUSHAB": "Khushab",
+        "PK:PUNJAB:MIANWALI": "Mianwali",
+        "PK:PUNJAB:GUJRAT": "Gujrat",
+        "PK:PUNJAB:HAFIZABAD": "Hafizabad",
+        "PK:PUNJAB:MANDI BAHAUDDIN": "Mandi Bahauddin",
+        "PK:PUNJAB:NAROWAL": "Narowal",
+        "PK:PUNJAB:SIALKOT": "Sialkot",
+        "PK:PUNJAB:CHINIOT": "Chiniot",
+        "PK:PUNJAB:JHANG": "Jhang",
+        "PK:PUNJAB:TOBA TEK SINGH": "Toba Tek Singh",
+        "PK:PUNJAB:KASUR": "Kasur",
+        "PK:PUNJAB:NANAKANA SAHIB": "Nanakana Sahib",
+        "PK:PUNJAB:SHEIKHUPURA": "Sheikhupura",
+        "PK:PUNJAB:OKARA": "Okara",
+        "PK:PUNJAB:PAKPATTAN": "Pakpattan",
+        "PK:PUNJAB:KHANEWAL": "Khanewal",
+        "PK:PUNJAB:VEHARI": "Vehari",
+        "PK:PUNJAB:LAYYAH": "Layyah",
+        "PK:PUNJAB:LODHRAN": "Lodhran",
+        "PK:PUNJAB:MUZAFFARGARH": "Muzaffargarh",
+        "PK:PUNJAB:BAHAWALNAGAR": "Bahawalnagar",
+        "PK:PUNJAB:RAJANPUR": "Rajanpur",
+        "PK:PUNJAB:RAHIM YAR KHAN": "Rahim Yar Khan",
+        "PK:PUNJAB:BAHAWALPUR": "Bahawalpur",
+        "PK:PUNJAB:DERA.GHAZI.KHAN": "Dera Ghazi Khan",
+        "PK:PUNJAB:FAISALABAD": "Faisalabad",
+        "PK:PUNJAB:GUJRANWALA": "Gujranwala",
+        "PK:PUNJAB:LAHORE": "Lahore",
+        "PK:PUNJAB:MULTAN": "Multan",
+        "PK:PUNJAB:RAWALPINDI": "Rawalpindi",
+        "PK:PUNJAB:SAHIWAL": "Sahiwal",
+        "PK:PUNJAB:SARGODHA": "Sargodha",
+        "PK:AZAD.JAMMU.KASHMIR": "Azad Jammu Kashmir",
+        "PK:AZAD.JAMMU.KASHMIR:NEELUM": "Neelum",
+        "PK:AZAD.JAMMU.KASHMIR:HATTIAN": "Hattian",
+        "PK:AZAD.JAMMU.KASHMIR:BAGH": "Bagh",
+        "PK:AZAD.JAMMU.KASHMIR:HAVELI": "Haveli",
+        "PK:AZAD.JAMMU.KASHMIR:SUDHNOTI": "Sudhnoti",
+        "PK:AZAD.JAMMU.KASHMIR:KOTLI": "Kotli",
+        "PK:AZAD.JAMMU.KASHMIR:BHIMBER": "Bhimber",
+        "PK:BALOCHISTAN": "Balochistan",
+        "PK:BALOCHISTAN:PESHIN": "Peshin",
+        "PK:BALOCHISTAN:LASBELLA": "Lasbella",
+        "PK:BALOCHISTAN:PANJGOOR": "Panjgoor",
+        "PK:BALOCHISTAN:KILLA.SAIFULLAH": "Killa Saifullah",
+        "PK:BALOCHISTAN:KILLA.ABDULLAH": "Killa Abdullah",
+        "PK:BALOCHISTAN:KHUZDAR": "Khuzdar",
+        "PK:BALOCHISTAN:GWADAR": "Gawadar",
+        "PK:BALOCHISTAN:ZHOB": "Zhob",
+        "PK:BALOCHISTAN:USTA.MOHAMMAD": "Usta Muhammad",
+        "PK:BALOCHISTAN:TURBAT": "Turbat",
+        "PK:BALOCHISTAN:NOUSHKI": "Noushki",
+        "PK:BALOCHISTAN:KALAT.MASTUNG": "Kalat/Mastung",
+        "PK:BALOCHISTAN:MUSAKHAIL": "Musakhail",
+        "PK:BALOCHISTAN:LORALAI": "Loralai",
+        "PK:BALOCHISTAN:KOHLU": "Kohlu",
+        "PK:BALOCHISTAN:SIBI": "Sibi",
+        "PK:BALOCHISTAN:QUETTA": "Quetta",
+        "PK:BALOCHISTAN:DERA.ALLAH.YAR": "Dera Allah Yar",
+        "PK:BALOCHISTAN:DERA.MURAD.JAMALI": "Dera Murad Jamali",
+        "PK:BALOCHISTAN:KHARAN": "Kharan",
+        "PK:BALOCHISTAN:BARKHAN": "Barkhan",
+        "PK:BALOCHISTAN:KALAT": "Kalat",
+        "PK:BALOCHISTAN:DERA.BUGTI": "Dera Bugti",
+        "PK:SINDH": "Sindh",
+        "PK:SINDH:KARACHI.SOUTH": "Karachi South",
+        "PK:SINDH:KARACHI.WEST": "Karachi West",
+        "PK:SINDH:KARACHI.EAST": "Karachi East",
+        "PK:SINDH:KARACHI.CENTRAL": "Karachi Central",
+        "PK:SINDH:MALIR": "Malir",
+        "PK:SINDH:MATIARI": "Matiari",
+        "PK:SINDH:HAYDERABAD": "Hayderabad",
+        "PK:SINDH:THATTA": "Thatta",
+        "PK:SINDH:BADIN": "Badin",
+        "PK:SINDH:DADU": "Dadu",
+        "PK:SINDH:JAMSHORO": "Jamshoro",
+        "PK:SINDH:TANDO.ALLAHYAR": "Tando Allahyar",
+        "PK:SINDH:TANDO.MOHAMMAD.KHAN": "Tando Mohammad Khan",
+        "PK:SINDH:THARPARKAR": "Tharparkar",
+        "PK:SINDH:MIRPURKHAS": "Mirpurkhas",
+        "PK:SINDH:SANGHAR": "Sanghar",
+        "PK:SINDH:UMARKOT": "Umarkot",
+        "PK:SINDH:NAUSHAHRO.FEROZE": "Naushero Feroze",
+        "PK:SINDH:SHAHEED.BENAZIRABAD": "Shaheed Benazirabad",
+        "PK:SINDH:SUKKUR": "Sukkur",
+        "PK:SINDH:KHAIRPUR": "Khairpur",
+        "PK:SINDH:GHOTKI": "Ghotki",
+        "PK:SINDH:LARKANA": "Larkana",
+        "PK:SINDH:SHIKARPUR": "Shikarpur",
+        "PK:SINDH:JACOBABAD": "Jacobabad",
+        "PK:SINDH:KASHMORE": "Kashmore",
+        "PK:SINDH:KAMBER": "Kamber-Shahdadkot",
+        "PK:GILGIT.BALTISTAN": "Gilgit Baltistan",
+        "PK:GILGIT.BALTISTAN:GHANCHE": "Ghanche",
+        "PK:GILGIT.BALTISTAN:DIAMER": "Diamer",
+        "PK:GILGIT.BALTISTAN:ASTORE": "Astore",
+        "PK:GILGIT.BALTISTAN:HUNZA NAGAR": "Hunza Nagar",
+        "PK:GILGIT.BALTISTAN:GHIZAR": "Ghizar",
+        "PK:GILGIT.BALTISTAN:SAKARDU": "Sakardu",
+        "PK:ISLAMABAD": "Islamabad",
+        "PK:ISLAMABAD:EAST": "East Islamabad",
+        "PK:ISLAMABAD:WEST": "West Islamabad"
+      }
+    },
+    "pk": {
+      "institution-part": {
+        "sc": "Supreme Court",
+        "atc": "Anti-Terrorist Court"
+      }
+    },
+    "pk:khyber.pakhtunkhwa": {
+      "institution-part": {
+        "hc": "Khyber Pakhtunkhwa High Court",
+        "fshc": "Federal Shariat Court, Khyber Pakhtunkhwa"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:peshawar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Peshawar"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:bannu": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bannu"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:charsadda": {
+      "institution-part": {
+        "dsc": "District/Session Court, Charsadda"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:kohat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kohat"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:abbottabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Abbottabad"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:d.i.khan": {
+      "institution-part": {
+        "dsc": "District/Session Court, D.I.Khan"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:chitral": {
+      "institution-part": {
+        "dsc": "District/Session Court, Chitral"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:malakand": {
+      "institution-part": {
+        "dsc": "District/Session Court, Malakand"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:karak": {
+      "institution-part": {
+        "dsc": "District/Session Court, Karak"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:upper.dir": {
+      "institution-part": {
+        "dsc": "District/Session Court, Upper Dir"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:lower.dir": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lower Dir"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:lakki.marwat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lakki Marwat"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:hangu": {
+      "institution-part": {
+        "dsc": "District/Session Court, Hangu"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:tank": {
+      "institution-part": {
+        "dsc": "District/Session Court, Tank"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:nowshera": {
+      "institution-part": {
+        "dsc": "District/Session Court, Nowshera"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:swabi": {
+      "institution-part": {
+        "dsc": "District/Session Court, Swabi"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:buner": {
+      "institution-part": {
+        "dsc": "District/Session Court, Buner"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:mardan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Mardan"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:shangla": {
+      "institution-part": {
+        "dsc": "District/Session Court, Shangla"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:haripur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Haripur"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:mansehra": {
+      "institution-part": {
+        "dsc": "District/Session Court, Mansehra"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:battagram": {
+      "institution-part": {
+        "dsc": "District/Session Court, Battagram"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:dasu.kohistan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dasu Kohistan"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:lower.kohistan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lower Kohistan"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:kolai.palas": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kolai Palas"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:tor.ghar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Tor Ghar"
+      }
+    },
+    "pk:khyber.pakhtunkhwa:swat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Swat"
+      }
+    },
+    "pk:punjab": {
+      "institution-part": {
+        "hc": "Punjab High Court",
+        "fshc": "Federal Shariat Court, Punjab"
+      }
+    },
+    "pk:punjab:chakwal": {
+      "institution-part": {
+        "dsc": "District/Session Court, Chakwal"
+      }
+    },
+    "pk:punjab:jehlum": {
+      "institution-part": {
+        "dsc": "District/Session Court, Jehlum"
+      }
+    },
+    "pk:punjab:attock": {
+      "institution-part": {
+        "dsc": "District/Session Court, Attock"
+      }
+    },
+    "pk:punjab:bhakkar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bhakkar"
+      }
+    },
+    "pk:punjab:khushab": {
+      "institution-part": {
+        "dsc": "District/Session Court, Khushab"
+      }
+    },
+    "pk:punjab:mianwali": {
+      "institution-part": {
+        "dsc": "District/Session Court, Mianwali"
+      }
+    },
+    "pk:punjab:gujrat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Gujrat"
+      }
+    },
+    "pk:punjab:hafizabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Hafizabad"
+      }
+    },
+    "pk:punjab:mandi bahauddin": {
+      "institution-part": {
+        "dsc": "District/Session Court, Mandi Bahauddin"
+      }
+    },
+    "pk:punjab:narowal": {
+      "institution-part": {
+        "dsc": "District/Session Court, Narowal"
+      }
+    },
+    "pk:punjab:sialkot": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sialkot"
+      }
+    },
+    "pk:punjab:chiniot": {
+      "institution-part": {
+        "dsc": "District/Session Court, Chiniot"
+      }
+    },
+    "pk:punjab:jhang": {
+      "institution-part": {
+        "dsc": "District/Session Court, Jhang"
+      }
+    },
+    "pk:punjab:toba tek singh": {
+      "institution-part": {
+        "dsc": "District/Session Court, Toba Tek Singh"
+      }
+    },
+    "pk:punjab:kasur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kasur"
+      }
+    },
+    "pk:punjab:nanakana sahib": {
+      "institution-part": {
+        "dsc": "District/Session Court, Nanakana Sahib"
+      }
+    },
+    "pk:punjab:sheikhupura": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sheikhupura"
+      }
+    },
+    "pk:punjab:okara": {
+      "institution-part": {
+        "dsc": "District/Session Court, Okara"
+      }
+    },
+    "pk:punjab:pakpattan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Pakpattan"
+      }
+    },
+    "pk:punjab:khanewal": {
+      "institution-part": {
+        "dsc": "District/Session Court, Khanewal"
+      }
+    },
+    "pk:punjab:vehari": {
+      "institution-part": {
+        "dsc": "District/Session Court, Vehari"
+      }
+    },
+    "pk:punjab:layyah": {
+      "institution-part": {
+        "dsc": "District/Session Court, Layyah"
+      }
+    },
+    "pk:punjab:lodhran": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lodhran"
+      }
+    },
+    "pk:punjab:muzaffargarh": {
+      "institution-part": {
+        "dsc": "District/Session Court, Muzaffargarh"
+      }
+    },
+    "pk:punjab:bahawalnagar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bahawalnagar"
+      }
+    },
+    "pk:punjab:rajanpur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Rajanpur"
+      }
+    },
+    "pk:punjab:rahim yar khan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Rahim Yar Khan"
+      }
+    },
+    "pk:punjab:bahawalpur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bahawalpur"
+      }
+    },
+    "pk:punjab:dera.ghazi.khan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dera Ghazi Khan"
+      }
+    },
+    "pk:punjab:faisalabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Faisalabad"
+      }
+    },
+    "pk:punjab:gujranwala": {
+      "institution-part": {
+        "dsc": "District/Session Court, Gujranwala"
+      }
+    },
+    "pk:punjab:lahore": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lahore"
+      }
+    },
+    "pk:punjab:multan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Multan"
+      }
+    },
+    "pk:punjab:rawalpindi": {
+      "institution-part": {
+        "dsc": "District/Session Court, Rawalpindi"
+      }
+    },
+    "pk:punjab:sahiwal": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sahiwal"
+      }
+    },
+    "pk:punjab:sargodha": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sargodha"
+      }
+    },
+    "pk:azad.jammu.kashmir": {
+      "institution-part": {
+        "ajksc": "Azad Jammu Kashmir Supreme Court",
+        "ajkhc": "Azad Jammu Kashmir High Court",
+        "ajkshc": "Azad Jammu Kashmir Shariat Appellate Bench of High Court"
+      }
+    },
+    "pk:azad.jammu.kashmir:neelum": {
+      "institution-part": {
+        "dsc": "District/Session Court, Neelum"
+      }
+    },
+    "pk:azad.jammu.kashmir:hattian": {
+      "institution-part": {
+        "dsc": "District/Session Court, Hattian"
+      }
+    },
+    "pk:azad.jammu.kashmir:bagh": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bagh"
+      }
+    },
+    "pk:azad.jammu.kashmir:haveli": {
+      "institution-part": {
+        "dsc": "District/Session Court, Haveli"
+      }
+    },
+    "pk:azad.jammu.kashmir:sudhnoti": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sudhnoti"
+      }
+    },
+    "pk:azad.jammu.kashmir:kotli": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kotli"
+      }
+    },
+    "pk:azad.jammu.kashmir:bhimber": {
+      "institution-part": {
+        "dsc": "District/Session Court, Bhimber"
+      }
+    },
+    "pk:balochistan": {
+      "institution-part": {
+        "hc": "Balochistan High Court",
+        "fshc": "Federal Shariat Court, Balochistan"
+      }
+    },
+    "pk:balochistan:peshin": {
+      "institution-part": {
+        "dsc": "District/Session Court, Peshin"
+      }
+    },
+    "pk:balochistan:lasbella": {
+      "institution-part": {
+        "dsc": "District/Session Court, Lasbella"
+      }
+    },
+    "pk:balochistan:panjgoor": {
+      "institution-part": {
+        "dsc": "District/Session Court, Panjgoor"
+      }
+    },
+    "pk:balochistan:killa.saifullah": {
+      "institution-part": {
+        "dsc": "District/Session Court, Killa Saifullah"
+      }
+    },
+    "pk:balochistan:killa.abdullah": {
+      "institution-part": {
+        "dsc": "District/Session Court, Killa Abdullah"
+      }
+    },
+    "pk:balochistan:khuzdar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Khuzdar"
+      }
+    },
+    "pk:balochistan:gwadar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Gawadar"
+      }
+    },
+    "pk:balochistan:zhob": {
+      "institution-part": {
+        "dsc": "District/Session Court, Zhob"
+      }
+    },
+    "pk:balochistan:usta.mohammad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Usta Muhammad"
+      }
+    },
+    "pk:balochistan:turbat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Turbat"
+      }
+    },
+    "pk:balochistan:noushki": {
+      "institution-part": {
+        "dsc": "District/Session Court, Noushki"
+      }
+    },
+    "pk:balochistan:kalat.mastung": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kalat/Mastung"
+      }
+    },
+    "pk:balochistan:musakhail": {
+      "institution-part": {
+        "dsc": "District/Session Court, Musakhail"
+      }
+    },
+    "pk:balochistan:loralai": {
+      "institution-part": {
+        "dsc": "District/Session Court, Loralai"
+      }
+    },
+    "pk:balochistan:kohlu": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kohlu"
+      }
+    },
+    "pk:balochistan:sibi": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sibi"
+      }
+    },
+    "pk:balochistan:quetta": {
+      "institution-part": {
+        "dsc": "District/Session Court, Quetta"
+      }
+    },
+    "pk:balochistan:dera.allah.yar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dera Allah Yar"
+      }
+    },
+    "pk:balochistan:dera.murad.jamali": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dera Murad Jamali"
+      }
+    },
+    "pk:balochistan:kharan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kharan"
+      }
+    },
+    "pk:balochistan:barkhan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Barkhan"
+      }
+    },
+    "pk:balochistan:kalat": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kalat"
+      }
+    },
+    "pk:balochistan:dera.bugti": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dera Bugti"
+      }
+    },
+    "pk:sindh": {
+      "institution-part": {
+        "hc": "Sindh High Court",
+        "fshc": "Federal Shariat Court, Sindh"
+      }
+    },
+    "pk:sindh:karachi.south": {
+      "institution-part": {
+        "dsc": "District/Session Court, Karachi South"
+      }
+    },
+    "pk:sindh:karachi.west": {
+      "institution-part": {
+        "dsc": "District/Session Court, Karachi West"
+      }
+    },
+    "pk:sindh:karachi.east": {
+      "institution-part": {
+        "dsc": "District/Session Court, Karachi East"
+      }
+    },
+    "pk:sindh:karachi.central": {
+      "institution-part": {
+        "dsc": "District/Session Court, Karachi Central"
+      }
+    },
+    "pk:sindh:malir": {
+      "institution-part": {
+        "dsc": "District/Session Court, Malir"
+      }
+    },
+    "pk:sindh:matiari": {
+      "institution-part": {
+        "dsc": "District/Session Court, Matiari"
+      }
+    },
+    "pk:sindh:hayderabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Hayderabad"
+      }
+    },
+    "pk:sindh:thatta": {
+      "institution-part": {
+        "dsc": "District/Session Court, Thatta"
+      }
+    },
+    "pk:sindh:badin": {
+      "institution-part": {
+        "dsc": "District/Session Court, Badin"
+      }
+    },
+    "pk:sindh:dadu": {
+      "institution-part": {
+        "dsc": "District/Session Court, Dadu"
+      }
+    },
+    "pk:sindh:jamshoro": {
+      "institution-part": {
+        "dsc": "District/Session Court, Jamshoro"
+      }
+    },
+    "pk:sindh:tando.allahyar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Tando Allahyar"
+      }
+    },
+    "pk:sindh:tando.mohammad.khan": {
+      "institution-part": {
+        "dsc": "District/Session Court, Tando Mohammad Khan"
+      }
+    },
+    "pk:sindh:tharparkar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Tharparkar"
+      }
+    },
+    "pk:sindh:mirpurkhas": {
+      "institution-part": {
+        "dsc": "District/Session Court, Mirpurkhas"
+      }
+    },
+    "pk:sindh:sanghar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sanghar"
+      }
+    },
+    "pk:sindh:umarkot": {
+      "institution-part": {
+        "dsc": "District/Session Court, Umarkot"
+      }
+    },
+    "pk:sindh:naushahro.feroze": {
+      "institution-part": {
+        "dsc": "District/Session Court, Naushero Feroze"
+      }
+    },
+    "pk:sindh:shaheed.benazirabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Shaheed Benazirabad"
+      }
+    },
+    "pk:sindh:sukkur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sukkur"
+      }
+    },
+    "pk:sindh:khairpur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Khairpur"
+      }
+    },
+    "pk:sindh:ghotki": {
+      "institution-part": {
+        "dsc": "District/Session Court, Ghotki"
+      }
+    },
+    "pk:sindh:larkana": {
+      "institution-part": {
+        "dsc": "District/Session Court, Larkana"
+      }
+    },
+    "pk:sindh:shikarpur": {
+      "institution-part": {
+        "dsc": "District/Session Court, Shikarpur"
+      }
+    },
+    "pk:sindh:jacobabad": {
+      "institution-part": {
+        "dsc": "District/Session Court, Jacobabad"
+      }
+    },
+    "pk:sindh:kashmore": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kashmore"
+      }
+    },
+    "pk:sindh:kamber": {
+      "institution-part": {
+        "dsc": "District/Session Court, Kamber-Shahdadkot"
+      }
+    },
+    "pk:gilgit.baltistan": {
+      "institution-part": {
+        "gbsac": "Gilgit Baltistan Supreme Appellate Court",
+        "gbcc": "Gilgit Baltistan Chief Court"
+      }
+    },
+    "pk:gilgit.baltistan:ghanche": {
+      "institution-part": {
+        "dsc": "District/Session Court, Ghanche"
+      }
+    },
+    "pk:gilgit.baltistan:diamer": {
+      "institution-part": {
+        "dsc": "District/Session Court, Diamer"
+      }
+    },
+    "pk:gilgit.baltistan:astore": {
+      "institution-part": {
+        "dsc": "District/Session Court, Astore"
+      }
+    },
+    "pk:gilgit.baltistan:hunza nagar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Hunza Nagar"
+      }
+    },
+    "pk:gilgit.baltistan:ghizar": {
+      "institution-part": {
+        "dsc": "District/Session Court, Ghizar"
+      }
+    },
+    "pk:gilgit.baltistan:sakardu": {
+      "institution-part": {
+        "dsc": "District/Session Court, Sakardu"
+      }
+    },
+    "pk:islamabad": {
+      "institution-part": {
+        "hc": "Islamabad High Court",
+        "fshc": "Federal Shariat Court, Islamabad"
+      }
+    },
+    "pk:islamabad:east": {
+      "institution-part": {
+        "dsc": "District/Session Court, East Islamabad"
+      }
+    },
+    "pk:islamabad:west": {
+      "institution-part": {
+        "dsc": "District/Session Court, West Islamabad"
+      }
+    }
+  }
+}

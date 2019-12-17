@@ -1,0 +1,15 @@
+{
+  "filename": "auto-sv.json",
+  "name": "El Salvador",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SV": "El Salvador"
+      }
+    },
+    "sv": {
+      "institution-part": {}
+    }
+  }
+}

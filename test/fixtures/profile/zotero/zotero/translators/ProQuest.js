@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-05-08 19:05:28"
+	"lastUpdated": "2019-10-18 10:39:01"
 }
 
 /*
@@ -37,12 +37,12 @@ var isEbrary = false;
 //returns an array of values for a given field or array of fields
 //the values are in the same order as the field names
 function getTextValue(doc, fields) {
-	if(typeof(fields) != 'object') fields = [fields];
+	if (typeof(fields) != 'object') fields = [fields];
 
 	//localize fields
 	fields = fields.map(
 		function(field) {
-			if(fieldNames[language]) {
+			if (fieldNames[language]) {
 				return fieldNames[language][field] || field;
 			} else {
 				return field;
@@ -50,13 +50,13 @@ function getTextValue(doc, fields) {
 		});
 
 	var allValues = [], values;
-	for(var i=0, n=fields.length; i<n; i++) {
+	for (var i=0, n=fields.length; i<n; i++) {
 		values = ZU.xpath(doc,
 			'//div[@class="display_record_indexing_fieldname" and\
 				normalize-space(text())="' + fields[i] +
 			'"]/following-sibling::div[@class="display_record_indexing_data"][1]');
 
-		if(values.length) values = [values[0].textContent];
+		if (values.length) values = [values[0].textContent];
 
 		allValues = allValues.concat(values);
 	}
@@ -67,17 +67,17 @@ function getTextValue(doc, fields) {
 //initializes field map translations
 function initLang(doc, url) {
 	var lang = ZU.xpathText(doc, '//a[span[contains(@class,"uxf-globe")]]');
-	if(lang && lang.trim() != "English") {
+	if (lang && lang.trim() != "English") {
 		lang = lang.trim();
 
 		//if already initialized, don't need to do anything else
-		if(lang == language) return;
+		if (lang == language) return;
 
 		language = lang;
 
 		//build reverse field map
 		L = {};
-		for(var i in fieldNames[language]) {
+		for (var i in fieldNames[language]) {
 			L[fieldNames[language][i]] = i;
 		}
 
@@ -110,9 +110,10 @@ function getSearchResults(doc, checkOnly, extras) {
 	isEbrary = (results && results[0] && results[0].getElementsByClassName('ebraryitem').length > 0);
 	// if the first result is Ebrary, they all are - we're looking at the Ebrary results tab
 	
-	for(var i=0, n=results.length; i<n; i++) {
-		var title = results[i].querySelectorAll('.resultTitle, .previewTitle')[0];
-		if (!title || title.nodeName != 'A') continue;
+	for (var i=0, n=results.length; i<n; i++) {
+		var title = results[i].querySelectorAll('h3')[0];
+		//Z.debug(title)
+		if (!title || !attr(title, 'a', 'href')) continue;
 		
 		if (checkOnly) return true;
 		found = true;
@@ -126,7 +127,7 @@ function getSearchResults(doc, checkOnly, extras) {
 			};
 		}
 		
-		items[title.href] = item;
+		items[attr(title, 'a', 'href')] = item;
 		
 		if (isEbrary && Zotero.isBookmarklet) {
 			extras[title.href] = {
@@ -181,17 +182,17 @@ function doWeb(doc, url, noFollow) {
 			if (!items) return true;
 			
 			var articles = [];
-			for(var item in items) {
+			for (var item in items) {
 				articles.push(item);
 			}
 			
 			if (isEbrary) {
-				if(Zotero.isBookmarklet) {
+				if (Zotero.isBookmarklet) {
 					// The bookmarklet can't use the ebrary translator
 					
 					var refs = [];
 					
-					for(var i in items) {
+					for (var i in items) {
 						refs.push(resultData[i]);
 					}
 					
@@ -239,11 +240,11 @@ function scrape(doc, url, type) {
 	var label, value, enLabel;
 	var dates = [], place = {}, altKeywords = [];
 
-	for(var i=0, n=rows.length; i<n; i++) {
+	for (var i=0, n=rows.length; i<n; i++) {
 		label = rows[i].childNodes[0];
 		value = rows[i].childNodes[1];
 
-		if(!label || !value) continue;
+		if (!label || !value) continue;
 
 		label = label.textContent.trim();
 		value = value.textContent.trim();	//trimInternal?
@@ -251,9 +252,9 @@ function scrape(doc, url, type) {
 		//translate label
 		enLabel = L[label] || label;
 
-		switch(enLabel) {
+		switch (enLabel) {
 			case 'Title':
-				if(value == value.toUpperCase()) value = ZU.capitalizeTitle(value, true);
+				if (value == value.toUpperCase()) value = ZU.capitalizeTitle(value, true);
 				item.title = value;
 			break;
 			case 'Author':
@@ -267,7 +268,7 @@ function scrape(doc, url, type) {
 				value = value.replace(/^by\s+/i,'')	//sometimes the authors begin with "By"
 							.split(/\s*;\s*|\s+and\s+/i);
 
-				for(var j=0, m=value.length; j<m; j++) {
+				for (var j=0, m=value.length; j<m; j++) {
 					/**TODO: might have to detect proper creator type from item type*/
 					item.creators.push(
 						ZU.cleanAuthor(value[j], type, value[j].indexOf(',') != -1));
@@ -298,7 +299,7 @@ function scrape(doc, url, type) {
 				item.rights = value;
 			break;
 			case 'Language of publication':
-				if(item.language) break;
+				if (item.language) break;
 			case 'Language':
 				item.language = value;
 			break;
@@ -374,12 +375,12 @@ function scrape(doc, url, type) {
 		item.place = place.schoolLocation;
 	}
 	
-	else if(place.publicationPlace) {
+	else if (place.publicationPlace) {
 		item.place = place.publicationPlace;
-		if(place.publicationCountry) {
+		if (place.publicationCountry) {
 			item.place = item.place + ', ' + place.publicationCountry;
 		}
-	} 
+	}
 
 	item.date = dates.pop();
 
@@ -395,7 +396,7 @@ function scrape(doc, url, type) {
 	}
 
 	//sometimes number of pages ends up in pages
-	if(!item.numPages) item.numPages = item.pages;
+	if (!item.numPages) item.numPages = item.pages;
 	
 	//don't override the university with a publisher information for a thesis
 	if (item.itemType == "thesis" && item.university && item.publisher) {
@@ -403,24 +404,24 @@ function scrape(doc, url, type) {
 	}
 	
 	//lanuguage is sometimes given as full word and abbreviation
-	if(item.language) item.language = item.language.split(/\s*;\s*/)[0];
+	if (item.language) item.language = item.language.split(/\s*;\s*/)[0];
 
 	//parse some data from the byline in case we're missing publication title
 	// or the date is not complete
 	var byline = ZU.xpath(doc, '//span[contains(@class, "titleAuthorETC")][last()]');
 	//add publication title if we don't already have it
-	if(!item.publicationTitle
+	if (!item.publicationTitle
 		&& ZU.fieldIsValidForType('publicationTitle', item.itemType)) {
 		var pubTitle = ZU.xpathText(byline, './/a[@id="lateralSearch"]');
 		//remove date range
-		if(pubTitle) item.publicationTitle = pubTitle.replace(/\s*\(.+/, '');
+		if (pubTitle) item.publicationTitle = pubTitle.replace(/\s*\(.+/, '');
 	}
 
 	var date = ZU.xpathText(byline, './text()');
-	if(date) date = date.match(/]\s+(.+?):/);
-	if(date) date = date[1];
+	if (date) date = date.match(/]\s+(.+?):/);
+	if (date) date = date[1];
 	//add date if we only have a year and date is longer in the byline
-	if(date
+	if (date
 		&& (!item.date
 			|| (item.date.length <= 4 && date.length > item.date.length))) {
 		item.date = date;
@@ -429,15 +430,16 @@ function scrape(doc, url, type) {
 	item.abstractNote = ZU.xpath(doc, '//div[contains(@id, "abstractSummary_")]/p')
 		.map(function(p) { return ZU.trimInternal(p.textContent); }).join('\n');
 
-	if(!item.tags.length && altKeywords.length) {
+	if (!item.tags.length && altKeywords.length) {
 		item.tags = altKeywords.join(',').split(/\s*(?:,|;)\s*/);
 	}
 	
-	if(doc.getElementById('downloadPDFLink')) {
+	if (doc.getElementById('downloadPDFLink')) {
 		item.attachments.push({
 			title: 'Full Text PDF',
 			url: doc.getElementById('downloadPDFLink').href,
-			mimeType: 'application/pdf'
+			mimeType: 'application/pdf',
+			proxy: false
 		});
 	} else {
 		var fullText = ZU.xpath(doc, '//li[@id="tab-Fulltext-null"]/a')[0];
@@ -455,7 +457,7 @@ function scrape(doc, url, type) {
 
 function getItemType(types) {
 	var guessType, govdoc, govdocType;
-	for(var i=0, n=types.length; i<n; i++) {
+	for (var i=0, n=types.length; i<n; i++) {
 		//put the testString to lowercase and test for singular only for maxmial compatibility
 		//in most cases we just can return the type, but sometimes only save it as a guess and will use it only if we don't have anything better
 		var testString = types[i].toLowerCase();
@@ -509,7 +511,7 @@ function getItemType(types) {
 function scrapeEbraryResults(refs) {
 	// Since we can't chase URLs, let's get what we can from the page
 	
-	for(var i = 0; i < refs.length; i++) {
+	for (var i = 0; i < refs.length; i++) {
 		var ref = refs[i];
 		var hiddenData = ZU.xpathText(ref.html, './span');
 		var visibleData = Array.prototype.map.call(ref.html.getElementsByClassName('results_list_copy'), function(node) {
@@ -528,34 +530,34 @@ function scrapeEbraryResults(refs) {
 		item.title = ref.title;
 		item.url = ref.url;
 		
-		if(date) {
+		if (date) {
 			item.date = date[1];
 		}
 		
-		if(place) {
+		if (place) {
 			item.place = place[1].trim();
 		}
 		
 		item.publisher = visibleData[1].trim();
 		
 		// Push the authors in reverse to restore the original order
-		for(var j = visibleData.length - 1; j >= 2; j--) {
+		for (var j = visibleData.length - 1; j >= 2; j--) {
 			item.creators.push(ZU.cleanAuthor(visibleData[j], "author", true));
 		}
 		
-		if(isbn) {
+		if (isbn) {
 			item.ISBN = isbn[1];
 		}
 		
-		if(language) {
+		if (language) {
 			item.language = language[1];
 		}
 		
-		if(numPages) {
+		if (numPages) {
 			item.numPages = numPages[1];
 		}
 		
-		if(locNum) {
+		if (locNum) {
 			item.callNumber = locNum[1];
 		}
 		

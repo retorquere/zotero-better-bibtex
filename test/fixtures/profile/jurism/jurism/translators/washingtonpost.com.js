@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-18 17:39:48"
+	"lastUpdated": "2019-05-16 16:24:39"
 }
 
 /*
@@ -37,19 +37,21 @@
 
 
 function detectWeb(doc, url) {
-	if (ZU.xpathText(doc, '//div[@id="topper-headline-wrapper"]/h1')) {
-		if (url.indexOf('/blogs/')>-1) { 
+	if (ZU.xpathText(doc, '//div[@id="topper-headline-wrapper"]//h1')) {
+		if (url.includes('/blogs/')) {
 			return "blogPost";
-		} else {
+		}
+		else {
 			return "newspaperArticle";
 		}
 	}
-	if (url.indexOf('/archive/')>-1 || url.indexOf('/wp-dyn/content/')>-1) {
+	if (url.includes('/archive/') || url.includes('/wp-dyn/content/')) {
 		return "newspaperArticle";
 	}
 	if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
@@ -57,7 +59,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//div[contains(@class, "pb-feed-headline")]//a[not(contains(@href, "/video/"))]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -80,29 +82,31 @@ function doWeb(doc, url) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
+			return true;
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function scrape(doc, url) {
-	var type = (url.indexOf('/blogs/')>-1) ? 'blogPost' : 'newspaperArticle';
+	var type = url.includes('/blogs/') ? 'blogPost' : 'newspaperArticle';
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
 		item.itemType = type;
 		
-		//in the metadata there are only some facebook urls for the authors
+		// in the metadata there are only some facebook urls for the authors
 		item.creators = [];
-		var authors = ZU.xpath(doc, '//div/span[@itemprop="author"]//span[@itemprop="name"]');
-		for (var i=0; i<authors.length; i++) {
-			item.creators.push(ZU.cleanAuthor(authors[i].textContent, "author"));
+		var authors = doc.querySelectorAll('div.author-wrapper');
+		for (var i = 0; i < authors.length; i++) {
+			item.creators.push(ZU.cleanAuthor(authors[i].getAttribute('data-authorname'), "author"));
 		}
-		if (url.indexOf('/wp-dyn/content/')>-1) {
+		if (url.includes('/wp-dyn/content/')) {
 			authors = ZU.xpathText(doc, '//div[@id="byline"]');
 			if (authors) {
 				item.creators.push(ZU.cleanAuthor(authors.replace(/^By /, ''), "author"));
@@ -110,10 +114,10 @@ function scrape(doc, url) {
 		}
 		item.date = ZU.xpathText(doc, '//span[@itemprop="datePublished"]/@content') || ZU.xpathText(doc, '//meta[@name="DC.date.issued"]/@content');
 
-		//the automatic added tags here are usually not really helpful
+		// the automatic added tags here are usually not really helpful
 		item.tags = [];
 		item.language = "en-US";
-		if (type=='newspaperArticle') {
+		if (type == 'newspaperArticle') {
 			item.ISSN = "0190-8286";
 		}
 		item.section = ZU.xpathText(doc, '(//div[contains(@class, "headline-kicker")])[1]');
@@ -121,7 +125,7 @@ function scrape(doc, url) {
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.doWeb(doc, url);
 	});
 }

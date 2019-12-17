@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ug.json",
+  "name": "Uganda",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "UG": "Uganda"
+      }
+    },
+    "ug": {
+      "institution-part": {}
+    }
+  }
+}

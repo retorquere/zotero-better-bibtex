@@ -8,21 +8,43 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsb",
-	"lastUpdated": "2017-02-12 17:40:59"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2018-10-07 10:02:04"
 }
 
+/*
+	***** BEGIN LICENSE BLOCK *****
+	
+	Engineering Village Translator - Copyright © 2018 Sebastian Karcher 
+	This file is part of Zotero.
+	
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+	
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+	GNU Affero General Public License for more details.
+	
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero.  If not, see <http://www.gnu.org/licenses/>.
+	
+	***** END LICENSE BLOCK *****
+*/
+
 function detectWeb(doc, url) {
-	Z.monitorDOMChanges(doc.getElementById("resultsarea"), {childList: true});
-	var downloadLink = doc.getElementById('oneclickDL');
-	if(downloadLink && getDocIDs(downloadLink.href)) {
+	Z.monitorDOMChanges(doc.getElementById("ev-application"), {childList: true});
+	var printlink = doc.getElementById('printlink');
+	if (url.includes("/search/doc/") && printlink && getDocIDs(printlink.href)) {
 		return "journalArticle";
 	}
-	
-	if(getSearchResults(doc, true)) {
+	if ((url.includes("quick.url?") || url.includes("expert.url?") || url.includes("thesaurus.url?")) && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
+
 
 function getDocIDs(url) {
 	var m = url.match(/\bdocidlist=([^&#]+)/);
@@ -31,28 +53,22 @@ function getDocIDs(url) {
 	return decodeURIComponent(m[1]).split(',');
 }
 
+
 function getSearchResults(doc, checkOnly) {
-	var rows = doc.getElementsByClassName('result'),
+	var rows = doc.querySelectorAll('div[class*=result-row]'),
 		items = {},
 		found = false;
-	
 	for (var i=0; i<rows.length; i++) {
 		var checkbox = rows[i].querySelector('input[name="cbresult"]');
 		if (!checkbox) continue;
-		
 		var docid = checkbox.getAttribute('docid');
 		if (!docid) continue;
-		
-		var title = rows[i].querySelector('h3.resulttitle');
+		var title = rows[i].querySelector('h3.result-title');
 		if (!title) continue;
 		
 		if (checkOnly) return true;
 		found = true;
-		
-		items[docid] = {
-			title: ZU.trimInternal(title.textContent),
-			checked: checkbox.checked
-		}
+		items[docid] = ZU.trimInternal(title.textContent);
 	}
 	
 	return found ? items : false;
@@ -71,10 +87,11 @@ function doWeb(doc, url) {
 			fetchRIS(doc, ids);
 		});
 	} else {
-		var downloadLink = doc.getElementById('oneclickDL');
-		fetchRIS(doc, getDocIDs(downloadLink.href));
+		var printlink = doc.getElementById('printlink');
+		fetchRIS(doc, getDocIDs(printlink.href));
 	}
 }
+
 
 function fetchRIS(doc, docIDs) {
 	Z.debug(docIDs);
@@ -86,8 +103,6 @@ function fetchRIS(doc, docIDs) {
 		handleList[i] = i+1;
 	}
 	
-	// The database we're currently using. Compendex is 1
-	// Not tested with multi-database search
 	var db = doc.getElementsByName('database')[0];
 	if (db) db = db.value;
 	if (!db) db = "1";
@@ -102,7 +117,7 @@ function fetchRIS(doc, docIDs) {
 	// Content-length parameters in the body, but seems like we can skip that
 	// part
 	ZU.doPost(url, "", function(text) {
-		Z.debug(text);
+		// Z.debug(text);
 		
 		var translator = Zotero.loadTranslator("import");
 		// RIS
@@ -113,9 +128,10 @@ function fetchRIS(doc, docIDs) {
 			item.notes = [];
 			
 			item.complete();
-		})
+		});
 		translator.translate();
 	});
-}/** BEGIN TEST CASES **/
+}
+/** BEGIN TEST CASES **/
 var testCases = []
 /** END TEST CASES **/

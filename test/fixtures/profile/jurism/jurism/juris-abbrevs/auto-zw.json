@@ -1,0 +1,15 @@
+{
+  "filename": "auto-zw.json",
+  "name": "Zimbabwe",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ZW": "Zimbabwe"
+      }
+    },
+    "zw": {
+      "institution-part": {}
+    }
+  }
+}

@@ -9,13 +9,13 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-08-27 21:45:11"
+	"lastUpdated": "2019-06-15 19:04:11"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 	
-	J-Stage translator - Copyright © 2012 Sebastian Karcher 
+	J-Stage translator - Copyright © 2012 Sebastian Karcher
 	This file is part of Zotero.
 	
 	Zotero is free software: you can redistribute it and/or modify
@@ -35,19 +35,22 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.match(/\.jst\.go\.jp\/article\//)) {
+	if (url.includes("/article/")) {
 		return "journalArticle";
-	} else if (url.match(/\.jst\.go\.jp\/result\?/) || url.match(/\.jst\.go\.jp\/browse\//)) {
+	}
+	else if ((url.includes("/result/") || url.includes("/browse/"))
+			&& getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//div[contains(@class, "contents_detail")]/div/a|//h3[@class="mod-item-heading"]/a');
-	for (var i=0; i<rows.length; i++) {
+	var rows = doc.querySelectorAll('li>.searchlist-title>a, a.ci-article-name, a.feature-article-title');
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -62,16 +65,10 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
-			var articles = [];
-			for (var i in items) {
-				articles.push(i);
-			}
-			ZU.processDocuments(articles, scrape);
+			if (items) ZU.processDocuments(Object.keys(items), scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -79,29 +76,26 @@ function doWeb(doc, url) {
 
 // help function
 function scrape(doc, url) {
-	//get abstract and tags from article plage
-	//the xpaths aren't great , but seem reliable across pages
-	var abs = ZU.xpathText(doc, '//div[@class="mod-section"]/*[contains(@class, "normal")]');
-	var tags = ZU.xpathText(doc, '//p[contains(@class, "keywords")]');
-	if (tags){
-		tags = tags.replace(/Keywords:/, "").split(/\s*,\s*/);
-		for (var i=0; i<tags.length; i++) {
-			tags[i] = ZU.trimInternal(tags[i]);
-		}
+	// get abstract and tags from article plage
+	var abs = text("#article-overiew-abstract-wrap");
+	var tagNodes = doc.querySelectorAll("meta[name='citation_keywords']");
+	var tags = [];
+	for (let tagNode of tagNodes) {
+		tags.push(tagNode.content);
 	}
 	
-	//get BibTex Link
-	var bibtexurl = ZU.xpathText(doc, '//li/a[contains(text(), "BibTeX")]/@href');
+	// get BibTex Link
+	var bibtexurl = ZU.xpathText(doc, '//a[contains(text(), "BIB TEX")]/@href');
 	ZU.doGet(bibtexurl, function (text) {
 		var bibtex = text;
-		//Zotero.debug(bibtex)
+		// Zotero.debug(bibtex)
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
 		translator.setString(bibtex);
 		translator.setHandler("itemDone", function (obj, item) {
-			if (abs) item.abstractNote = abs;
+			if (abs) item.abstractNote = abs.replace(/^\s*(?:Abstract|抄録)\s*/, '');
 			if (tags) item.tags = tags;
-			for (var i=0; i<item.creators.length; i++) {
+			for (var i = 0; i < item.creators.length; i++) {
 				if (item.creators[i].lastName && item.creators[i].lastName == item.creators[i].lastName.toUpperCase()) {
 					item.creators[i].lastName = ZU.capitalizeTitle(item.creators[i].lastName.toLowerCase(), true);
 				}
@@ -121,12 +115,11 @@ function scrape(doc, url) {
 				mimeType: "text/html"
 			});
 			
-			var pdfurl = ZU.xpath(doc, '//li[@class="icon-pdf"]/a/@href');
-			if (pdfurl.length>0) {
-				pdfurl = "https://www.jstage.jst.go.jp" + pdfurl[1].textContent;
+			var pdfurl = attr('a.thirdlevel-pdf-btn', 'href') || attr('meta[name="citation_pdf_url"]', 'content');
+			if (pdfurl) {
 				item.attachments.push({
 					url: pdfurl,
-					title: "J-Stage - Full Text PDF",
+					title: "Full Text PDF",
 					mimeType: "application/pdf"
 				});
 			}
@@ -184,15 +177,23 @@ var testCases = [
 						"mimeType": "text/html"
 					},
 					{
-						"title": "J-Stage - Full Text PDF",
+						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
-					"global data sets",
-					"global estimation",
-					"soil erosion by water",
-					"the RUSLE"
+					{
+						"tag": "global data sets"
+					},
+					{
+						"tag": "global estimation"
+					},
+					{
+						"tag": "soil erosion by water"
+					},
+					{
+						"tag": "the RUSLE"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -201,7 +202,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.jstage.jst.go.jp/result?item1=4&word1=organic+agriculture+erosion",
+		"url": "https://www.jstage.jst.go.jp/result/global/-char/en?globalSearchKey=organic+agriculture+erosion",
 		"defer": true,
 		"items": "multiple"
 	},
@@ -245,11 +246,21 @@ var testCases = [
 					}
 				],
 				"tags": [
-					"CO2フラックス",
-					"キーワード: 分光日射計",
-					"植生指標",
-					"苫小牧フラックスリサーチサイト",
-					"葉面積指数"
+					{
+						"tag": "CO2フラックス"
+					},
+					{
+						"tag": "分光日射計"
+					},
+					{
+						"tag": "植生指標"
+					},
+					{
+						"tag": "苫小牧フラックスリサーチサイト"
+					},
+					{
+						"tag": "葉面積指数"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

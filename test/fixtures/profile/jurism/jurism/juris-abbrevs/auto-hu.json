@@ -1,0 +1,15 @@
+{
+  "filename": "auto-hu.json",
+  "name": "Hungary",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "HU": "Hungary"
+      }
+    },
+    "hu": {
+      "institution-part": {}
+    }
+  }
+}

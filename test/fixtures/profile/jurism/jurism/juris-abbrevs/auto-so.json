@@ -1,0 +1,15 @@
+{
+  "filename": "auto-so.json",
+  "name": "Somalia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SO": "Somalia"
+      }
+    },
+    "so": {
+      "institution-part": {}
+    }
+  }
+}

@@ -9,66 +9,72 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-06-17 21:34:51"
+	"lastUpdated": "2019-06-11 13:27:17"
 }
 
 /*
-Welt Online Translator
-Copyright (C) 2011 Martin Meyerhoff
+	***** BEGIN LICENSE BLOCK *****
 
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+	Copyright © 2011-2019 Martin Meyerhoff, Philipp Zumstein
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
+	This file is part of Zotero.
 
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <http://www.gnu.org/licenses/>.
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
 */
 
-/* 
-"Multiple" doesn't work on the search pages, because that's another host. However, every other page does it:
-http://www.welt.de/themen/Fukushima/
-http://www.welt.de/wirtschaft/
-http://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html
+/*
+  "Multiple" doesn't work on the search pages, because that's another host. However, every other page does it:
+  http://www.welt.de/themen/Fukushima/
+  http://www.welt.de/wirtschaft/
+  http://www.welt.de/wirtschaft/article12962920/Krankenkassen-werfen-Aerzten-Gewinnstreben-vor.html
 */
 
-function detectWeb(doc, url) {
-	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')=="article") {
+function detectWeb(doc, _url) {
+	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content') == "article") {
 		Zotero.debug("newspaperArticle");
 		return "newspaperArticle";
-	} else if (getSearchResults(doc, true)){ 
-		Zotero.debug("multiple");
-		return "multiple"; 
-	} 
+	}
+	else if (getSearchResults(doc, true)) {
+		return "multiple";
+	}
+	return false;
 }
 
 function scrape(doc, url) {
 	var data = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
 	var json = JSON.parse(data);
-	//Z.debug(json);
+	// Z.debug(json);
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
 		item.date = json.datePublished;
-		if (item.creators.length==0) {
+		if (item.creators.length == 0) {
 			item.creators.push(ZU.cleanAuthor(json.author.name, "author"));
 		}
 		if (json.headline) {
 			item.title = json.headline;
-			Z.debug(json.headline)
+			Z.debug(json.headline);
 		}
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = "newspaperArticle";
 		trans.doWeb(doc, url);
 	});
@@ -79,7 +85,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//h4/a[@data-qa="Teaser.Link"]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -94,16 +100,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }

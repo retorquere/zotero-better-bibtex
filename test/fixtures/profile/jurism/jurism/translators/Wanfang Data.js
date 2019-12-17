@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcs",
-	"lastUpdated": "2014-07-24 01:37:16"
+	"lastUpdated": "2019-06-10 22:46:01"
 }
 
 /*
@@ -54,15 +54,15 @@
 // #### Local utility functions ####
 // #################################
 
-//sets the rs cookie value to the provided ID and returns the old value
+// sets the rs cookie value to the provided ID and returns the old value
 function setCookie(doc, rsId) {
-	if(!rsId) return null;
+	if (!rsId) return null;
 
 	var matches = doc.cookie.match(/(?:$|; )rs=([^;]*)/);
 	var oldCookie = matches ? unescape(matches[1]) : null;
 
 	var domain = escape('wanfangdata.com.cn');
-	var id = escape( rsId );
+	var id = escape(rsId);
 
 	doc.cookie = 'rs=' + id + ';domain=' + domain;
 
@@ -79,32 +79,37 @@ function detectCode(url) {
 }
 
 function detectType(code) {
-	if (code == "Periodical" ||
-		code == "OAPaper") {
+	if (code == "Periodical"
+		|| code == "OAPaper") {
 		return "journalArticle";
-	} else if (code == "Thesis") {
+	}
+	else if (code == "Thesis") {
 		return "thesis";
-	} else if (code == "Conference") {
+	}
+	else if (code == "Conference") {
 		return "conferencePaper";
-	} else if (code == "NSTLHY") {
+	}
+	else if (code == "NSTLHY") {
 		return "conferencePaper";
-	} else if (code == "NSTLQK") {
+	}
+	else if (code == "NSTLQK") {
 		return "journalArticle";
-	} else {
+	}
+	else {
 		return false;
 	}
 }
 
 function getSearchResults(doc, checkOnly) {
-	var items = [], found = false
+	var items = [], found = false,
 		lis = ZU.xpath(doc, '//li[contains(@class,"title_li")]');
-	for(var i=0, n=lis.length; i<n; i++) {
+	for (var i = 0, n = lis.length; i < n; i++) {
 		var a = lis[i].getElementsByTagName("a")[1];
-		var title = ZU.trimInternal( ZU.cleanTags(a.textContent) );
-		var link = a.getAttribute("href").match(/\/([^\/]+)\.aspx/)[1];
+		var title = ZU.trimInternal(ZU.cleanTags(a.textContent));
+		var link = a.getAttribute("href").match(/\/([^/]+)\.aspx/)[1];
 		if (!link) continue;
 		
-		if(checkOnly) return true;
+		if (checkOnly) return true;
 		
 		items[link] = title;
 		found = true;
@@ -115,10 +120,10 @@ function getSearchResults(doc, checkOnly) {
 
 function getItemId(doc) {
 	var action = ZU.xpathText(doc, '//form[@id="aspnetForm"]/@action');
-	if(!action) return;
+	if (!action) return null;
 	
 	var id = action.match(/(?:\?|&)ID=([^&]+)/);
-	if(!id) return;
+	if (!id) return null;
 	
 	return id[1];
 }
@@ -133,37 +138,37 @@ function scrape(doc, id) {
 
 	var exportUrl = 'http://s.wanfangdata.com.cn/Export/Export.aspx?scheme=EndNote';
 
-	ZU.doGet(exportUrl, function(text) {
+	ZU.doGet(exportUrl, function (text) {
 		var matches = text.match(/<div\s+id=["']export_container["']>((?:.|[\r\n])+?)<\/div>/i);
-		if(!matches) return false;
+		if (!matches) return;
 
-		text = ZU.cleanTags( matches[1].replace(/[\r\n]/g,'') );
+		text = ZU.cleanTags(matches[1].replace(/[\r\n]/g, ''));
 
 		var translator = Zotero.loadTranslator('import');
 		translator.setTranslator('881f60f2-0802-411a-9228-ce5f47b64c7d');
 		translator.setString(text);
-		translator.setHandler('itemDone', function(obj, item) {
-			//author first and last names are mixed up
-			for(var i=0, n=item.creators.length; i<n; i++) {
-				if(!item.creators[i].firstName) continue;
+		translator.setHandler('itemDone', function (obj, item) {
+			// author first and last names are mixed up
+			for (var i = 0, n = item.creators.length; i < n; i++) {
+				if (!item.creators[i].firstName) continue;
 				var first = item.creators[i].lastName;
 				item.creators[i].lastName = item.creators[i].firstName;
 				item.creators[i].firstName = first;
 			}
 
-			//type is actually DOI
-			if(item.type) {
+			// type is actually DOI
+			if (item.type) {
 				item.DOI = item.type;
 				delete item.type;
 			}
 
-			//tags are messed up
+			// tags are messed up
 			item.tags = [];
 
 			item.complete();
 		});
 
-		translator.setHandler('done', function(obj, item) {
+		translator.setHandler('done', function () {
 			setCookie(doc, oldCookie);
 		});
 
@@ -176,13 +181,13 @@ function scrape(doc, id) {
 // #########################
 
 function detectWeb(doc, url) {
-	if (url.toLowerCase().indexOf('paper.aspx') != -1
+	if (url.toLowerCase().includes('paper.aspx')
 		&& getSearchResults(doc, true)
 	) {
 		return "multiple";
 	}
 	
-	pattern = /[ds]\.(?:g\.)?wanfangdata\.com\.cn/;
+	let pattern = /[ds]\.(?:g\.)?wanfangdata\.com\.cn/;
 	if (pattern.test(url) && getItemId(doc)) {
 		var code = detectCode(url);
 		return detectType(code);
@@ -196,22 +201,24 @@ function doWeb(doc, url) {
 		// search page
 		var items = getSearchResults(doc);
 
-		Zotero.selectItems(items, function(selectedItems) {
-			if (!selectedItems) return true;
+		Zotero.selectItems(items, function (selectedItems) {
+			if (!selectedItems) return;
 		
-			var urls = new Array();
-			for(var i in selectedItems) {
+			var urls = [];
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 
 			var ids = '|' + urls.join('|') + '|';
 			scrape(doc, ids);
 		});
-	} else {
+	}
+	else {
 		var id = getItemId(doc);
 		scrape(doc, id);
 	}
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{

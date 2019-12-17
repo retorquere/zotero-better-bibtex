@@ -523,7 +523,7 @@
       <else-if variable="locator-extra locator-date" match="any">
         <group delimiter=", ">
           <group delimiter=" ">
-            <text variable="locator-extra"/>
+            <number variable="locator-extra"/>
             <choose>
               <if is-numeric="locator-extra" match="none">
                 <date date-parts="year-month-day" form="text" variable="locator-date"/>
@@ -569,48 +569,31 @@
   <macro name="point-locators-subsequent">
     <group delimiter=" ">
       <choose>
-        <if type="bill gazette legislation">
-          <text macro="oscola-legal-locator"/>
-        </if>
-        <else-if type="legal_case">
+        <if locator="page" match="none">
           <choose>
-            <if jurisdiction="us">
-              <text macro="std-locator-non-page-label"/>
-            </if>
-            <else>
-              <text macro="oscola-legal-locator"/>
-            </else>
-          </choose>
-        </else-if>
-        <else>
-          <choose>
-            <if locator="page" match="none">
+            <if type="book">
               <choose>
-                <if type="book">
-                  <choose>
-                    <if variable="volume">
-                      <group delimiter=". ">
-                        <label form="short" text-case="lowercase" variable="volume"/>
-                        <group delimiter=", ">
-                          <number form="numeric" variable="volume"/>
-                          <label form="short" variable="locator"/> 
-                        </group>
-                      </group>
-                    </if>
-                    <else>
-                      <label form="short" variable="locator"/>
-                    </else>
-                  </choose>
+                <if variable="volume">
+                  <group delimiter=". ">
+                    <label form="short" text-case="lowercase" variable="volume"/>
+                    <group delimiter=", ">
+                      <number form="numeric" variable="volume"/>
+                      <label form="short" variable="locator"/> 
+                    </group>
+                  </group>
                 </if>
                 <else>
                   <label form="short" variable="locator"/>
                 </else>
               </choose>
             </if>
+            <else>
+              <label form="short" variable="locator"/>
+            </else>
           </choose>
-          <number label-form="short" variable="locator"/>
-        </else>
+        </if>
       </choose>
+      <number label-form="short" variable="locator"/>
     </group>
   </macro>
   <macro name="oscola-legal-locator">
@@ -712,7 +695,7 @@
       <if match="any" type="book chapter broadcast video" variable="locator-extra locator-date">
         <group delimiter=", ">
           <choose>
-            <if match="any" type="broadcast video" variable="locator-extra locator-date editor">
+            <if match="any" type="book broadcast video" variable="locator-extra locator-date editor">
               <group delimiter=" ">
                 <choose>
                   <if is-numeric="volume">
@@ -741,7 +724,7 @@
   </macro>
   <macro name="common-volume">
     <choose>
-      <if match="none" type="article-magazine paper-conference article-journal classic legal_case motion_picture video" variable="locator-extra locator-date editor">
+      <if match="none" type="book article-magazine paper-conference article-journal classic legal_case motion_picture video" variable="locator-extra locator-date editor">
         <group delimiter=" ">
           <label form="short" variable="volume"/>
           <number variable="volume"/>
@@ -888,24 +871,6 @@
       <number label-form="short" variable="locator"/>
     </group>
   </macro>
-  <macro name="std-patent-detail">
-    <group delimiter=", ">
-      <text variable="title"/>
-      <group delimiter=" ">
-        <text form="short" variable="jurisdiction"/>
-        <choose>
-          <if variable="genre">
-            <text variable="genre"/>
-            <text value="no."/>
-          </if>
-          <else>
-            <text value="Patent No."/>
-          </else>
-        </choose>
-        <number variable="number"/>
-      </group>
-    </group>
-  </macro>
   <macro name="us-code-detail">
     <group delimiter=" ">
       <number variable="volume"/>
@@ -929,7 +894,7 @@
             <text macro="title-to-container-title-context"/>
             <text macro="book-parts"/>
           </group>
-          <text macro="issue-context"/>
+          <text macro="issue-context"/>  <!-- articles, web pages -->
           <text macro="collection-title-podcast"/>
           <group delimiter=", ">
             <text macro="article-core"/>
@@ -967,14 +932,7 @@
       <if variable="locator">
         <group delimiter=" "> 
           <text term="ibid" text-case="lowercase"/>
-          <choose>
-            <if type="patent">
-              <text macro="std-locator-paragraph-bracket"/>
-            </if>
-            <else>
-              <text macro="point-locators-subsequent"/>
-            </else>
-          </choose>
+          <text macro="point-locators-subsequent"/>
         </group>
       </if>
       <else>
@@ -991,51 +949,15 @@
   <macro name="oscola-secondary-subsequent">
     <group delimiter=" ">
       <choose>
-        <if jurisdiction="us" match="all" type="gazette">
-          <choose>
-            <if variable="title">
-              <group delimiter=" ">
-                <text variable="title"/>
-                <text macro="us-code-detail"/>
-              </group>
-            </if>
-            <else>
-              <text macro="us-code-detail"/>
-            </else>
-          </choose>
-        </if>
-        <else-if jurisdiction="us" match="all" type="legislation">
-          <choose>
-            <if variable="title">
-              <group delimiter=" ">
-                <text variable="title"/>
-                <text macro="us-code-detail"/>
-              </group>
-            </if>
-            <else>
-              <text macro="us-code-detail"/>
-            </else>
-          </choose>
-        </else-if>
-        <else-if type="patent">
-          <text macro="std-patent-detail"/>
-        </else-if>
-        <else-if match="all" type="article-newspaper" variable="jurisdiction title">
+        <if match="all" type="article-newspaper" variable="jurisdiction title">
           <text font-style="italic" variable="title"/>
-        </else-if>
+        </if>
         <else>
           <text macro="oscola-secondary-subsequent-default"/>
         </else>
       </choose>
       <text prefix="(n " suffix=")" variable="first-reference-note-number"/>
-      <choose>
-        <if type="patent">
-          <text macro="std-locator-paragraph-bracket"/>
-        </if>
-        <else>
-          <text macro="point-locators-subsequent"/>
-        </else>
-      </choose>
+      <text macro="point-locators-subsequent"/>
     </group>
   </macro>
 
@@ -1089,7 +1011,14 @@
                   <text variable="hereinafter" font-style="italic" strip-periods="true"/>
                 </if>
                 <else>
-                  <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
+                  <choose>
+                    <if variable="title">
+                      <text macro="juris-title-short" font-style="italic" strip-periods="true"/>
+                    </if>
+                    <else>
+                      <text macro="juris-main-short"/>
+                    </else>
+                  </choose>
                 </else>
               </choose>
             </if>
@@ -1280,7 +1209,7 @@
       <choose>
         <if>
           <conditions match="all">
-            <condition match="any" type="legal_case legislation bill hearing report regulation"/>
+            <condition match="any" type="legal_case legislation bill hearing report regulation patent"/>
             <condition match="all" variable="jurisdiction"/>
           </conditions>
           <text macro="jurism" strip-periods="true"/>
@@ -1317,7 +1246,7 @@
       <choose>
         <if>
           <conditions match="all">
-            <condition match="any" type="legal_case legislation bill hearing report regulation"/>
+            <condition match="any" type="legal_case legislation bill hearing report regulation patent"/>
             <condition match="all" variable="jurisdiction"/>
           </conditions>
           <text macro="jurism" strip-periods="true"/>

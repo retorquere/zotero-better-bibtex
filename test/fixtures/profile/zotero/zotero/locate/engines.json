@@ -1,11 +1,11 @@
 [
 	{
-		"name": "CrossRef Lookup",
-		"alias": "CrossRef",
-		"icon": "file:///home/emile/.zotero/zotero/wb0qkxrt.BBTZ5TEMPLATE/zotero/locate/CrossRef%20Lookup.ico",
+		"_name": "CrossRef Lookup",
+		"_alias": "CrossRef",
+		"_description": "CrossRef Search Engine",
+		"_icon": "file:///home/emile/.zotero/zotero/wb0qkxrt.BBTZ5TEMPLATE/zotero/locate/CrossRef%20Lookup.ico",
+		"_hidden": false,
 		"_urlTemplate": "https://crossref.org/openurl?{z:openURL}&pid=zter:zter321",
-		"description": "CrossRef Search Engine",
-		"hidden": false,
 		"_urlParams": [],
 		"_urlNamespaces": {
 			"z": "http://www.zotero.org/namespaces/openSearch#",
@@ -14,12 +14,12 @@
 		"_iconSourceURI": "https://crossref.org/favicon.ico"
 	},
 	{
-		"name": "Google Scholar Search",
-		"alias": "Google Scholar",
-		"icon": "file:///home/emile/.zotero/zotero/wb0qkxrt.BBTZ5TEMPLATE/zotero/locate/Google%20Scholar%20Search.ico",
+		"_name": "Google Scholar Search",
+		"_alias": "Google Scholar",
+		"_description": "Google Scholar Search",
+		"_icon": "file:///home/emile/.zotero/zotero/wb0qkxrt.BBTZ5TEMPLATE/zotero/locate/Google%20Scholar%20Search.ico",
+		"_hidden": false,
 		"_urlTemplate": "https://scholar.google.com/scholar?as_q=&as_epq={z:title}&as_occt=title&as_sauthors={rft:aufirst?}+{rft:aulast?}&as_ylo={z:year?}&as_yhi={z:year?}&as_sdt=1.&as_sdtp=on&as_sdtf=&as_sdts=22&",
-		"description": "Google Scholar Search",
-		"hidden": false,
 		"_urlParams": [],
 		"_urlNamespaces": {
 			"rft": "info:ofi/fmt:kev:mtx:journal",

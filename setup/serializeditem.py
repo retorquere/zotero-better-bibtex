@@ -66,7 +66,7 @@ types = {
   'session': 'string',
   'system': 'string',
   'versionNumber': 'string',
-  'websiteTitle': 'string',
+#  'websiteTitle': 'string',
   'reporter': 'string',
   'genre': 'string',
   'institution': 'string',

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-no.json",
+  "name": "Norway",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "NO": "Norway"
+      }
+    },
+    "no": {
+      "institution-part": {}
+    }
+  }
+}

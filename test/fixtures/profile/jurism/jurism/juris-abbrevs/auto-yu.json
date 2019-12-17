@@ -1,0 +1,15 @@
+{
+  "filename": "auto-yu.json",
+  "name": "Yugoslavia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "YU": "Yugoslavia"
+      }
+    },
+    "yu": {
+      "institution-part": {}
+    }
+  }
+}

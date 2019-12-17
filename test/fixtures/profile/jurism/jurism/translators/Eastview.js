@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-06-23 16:36:26"
+	"lastUpdated": "2018-09-02 23:10:00"
 }
 
 /*
@@ -36,10 +36,29 @@
 */
 function detectWeb(doc, url) {
 	if (url.includes("/search/simple/articles?") || url.includes("/search/advanced/articles") || url.search(/browse\/(favorites|issue)/) != -1) {
-		if (ZU.xpath(doc, '//td[contains(@class, "title-cell")]/a').length) return "multiple";
+		Z.monitorDOMChanges(doc.getElementById("articleSearchContainer"), {
+			childList: true
+		});
+		if (getSearchResults(doc, true)) return "multiple";
 	} else {
 		return "newspaperArticle"
 	}
+}
+
+function getSearchResults(doc, checkOnly) {
+	var items = {};
+	var found = false;
+	var rows = ZU.xpath(doc, '//div[@id="articleSearchContainer"]//a[@class="Link" and contains(@href, "doc?")]');
+
+	for (var i = 0; i < rows.length; i++) {
+		var href = rows[i].href;
+		var title = ZU.trimInternal(rows[i].textContent);
+		if (!href || !title) continue;
+		if (checkOnly) return true;
+		found = true;
+		items[href] = title;
+	}
+	return found ? items : false;
 }
 
 var typeMap = {
@@ -78,13 +97,18 @@ var typeMap = {
 
 function permaLink(URL) {
 	var id = URL.match(/id=(\d+)/);
-	if (id) return "http://dlib.eastview.com/browse/doc/" + id[1];
-	else return URL
+	if (id) return "/browse/doc/" + id[1];
+	else return URL;
 }
 
+function pdfLink(URL) {
+	 var id = URL.match(/id=(\d+)/);
+	 if (id) return "/browse/pdf-download?articleid=" + id[1];
+	 else return URL;
+}
 
 function scrape(doc, url) {
-	Z.debug(url);
+	//Z.debug(url);
 	var item = new Zotero.Item("newspaperArticle");
 	var publication = ZU.xpathText(doc, '//a[@class="path" and contains(@href, "browse/publication")]');
 	item.publicationTitle = publication;
@@ -97,11 +121,11 @@ function scrape(doc, url) {
 	}
 	var database = ZU.xpathText(doc, '//a[@class="path" and contains(@href, "browse/udb")]');
 	if (database) item.libraryCatalog = database.replace(/\(.+\)/, "") + "(Eastview)";
-	if (doc.getElementById('metatable')) {
+	if (ZU.xpathText(doc, '//table[@class="table table-condensed Table Table-noTopBorder"]//td[contains(text(), "Article")]')) {
 		//we have the metadata in a table
-		var metatable = doc.getElementById('metatable');
-		var title = ZU.xpathText(metatable, './/td[@class="hdr" and contains(text(), "Article")]/following-sibling::td[@class="val"]');
-		var source = ZU.xpathText(metatable, './/td[@class="hdr" and contains(text(), "Source")]/following-sibling::td[@class="val"]');
+		var metatable = ZU.xpath(doc, '//table[tbody/tr/td[contains(text(), "Article")]]');
+		var title = ZU.xpathText(metatable, './/td[contains(text(), "Article")]/following-sibling::td');
+		var source = ZU.xpathText(metatable, './/td[contains(text(), "Source")]/following-sibling::td');
 		if (source) {
 			var date = source.match(/(January|February|March|April|May|Juni|July|August|September|October|November|December)\s+(\d{1,2},\s+)?\d{4}/);
 			if (date) item.date = ZU.trimInternal(date[0]);
@@ -113,120 +137,89 @@ function scrape(doc, url) {
 			}
 		}
 		if (!item.publicationTitle) {
-			item.publicationTitle = ZU.xpathText(metatable, './/td[@class="hdr" and text()="Title"]/following-sibling::td[@class="val"]');
+			item.publicationTitle = ZU.xpathText(metatable, './/td[text()="Title"]/following-sibling::td');
 
 		}
 		if (!item.pages) {
-			var pagesOnly = ZU.xpathText(metatable, './/td[@class="hdr" and contains(text(), "Page(s)")]/following-sibling::td[@class="val"]');
+			var pagesOnly = ZU.xpathText(metatable, './/td[contains(text(), "Page(s)")]/following-sibling::td');
 			item.pages = pagesOnly;
 		}
-		var author = ZU.xpathText(metatable, './/td[@class="hdr" and contains(text(), "Author(s)")]/following-sibling::td[@class="val"]');
+		var author = ZU.xpathText(metatable, './/td[contains(text(), "Author(s)")]/following-sibling::td');
 		if (author) {
 			//Z.debug(author)
 			authors = author.trim().split(/\s*,\s*/);
-			for (var i=0; i<authors.length; i++) {
+			for (var i = 0; i < authors.length; i++) {
 				item.creators.push(ZU.cleanAuthor(authors[i], "author"));
 			}
 		}
-		var place = ZU.xpathText(doc, '//table[@id="metatable"]//td[@class="hdr" and contains(text(), "Place of Publication")]/following-sibling::td');
+		var place = ZU.xpathText(metatable, './/td[contains(text(), "Place of Publication")]/following-sibling::td');
 		if (place) item.place = ZU.trimInternal(place);
 	} else {
-		var title = ZU.xpathText(doc, '//div[@class="ArticleTitle"]');
+		var title = ZU.xpathText(doc, '//div[@class="table-responsive"]/div[@class="change_font"]');
 		//the "old" page format. We have very little structure here, doing the best we can.
-		//Z.debug(title);
-		var header = ZU.xpathText(doc, '//div[@class="Article"]/ul');
-		Z.debug(header);
+		var header = ZU.xpathText(doc, '//div[@class="table-responsive"]/ul[1]');
+		//Z.debug(header);
 		var date = header.match(/Date:\s*(\d{2}-\d{2}-\d{2,4})/);
 		if (date) item.date = date[1];
 		if (!item.publicationTitle) {
+			//most of the time the publication title is in quotation marks
 			var publication = header.match(/\"(.+?)\"/);
 			if (publication) item.publicationTitle = publication[1];
+			//if all else fails we just take the top of the file
+			else {
+				item.publicationTitle = header.trim().match(/^.+/);
+			}
 		}
 	}
-
 	//see if we have a match for item type; default to newspaper otherwise.
 	var itemType = typeMap[item.publicationTitle];
 	if (itemType) item.itemType = itemType;
-	item.attachments.push({
-		url: url,
-		title: "Eastview Fulltext Snapshot",
-		mimeType: "text/html"
-	});
+	//Attach real PDF for PDFs:
+	if (doc.querySelectorAll('#pdfjsContainer').length) {
+		item.attachments.push({
+			url: pdfLink(url),
+			title: "Eastview Fulltext PDF",
+			mimeType: "application/pdf"
+		});
+	}
+	else {
+		item.attachments.push({
+			document: doc,
+			title: "Eastview Fulltext Snapshot",
+			mimeType: "text/html"
+		});
+	}
+
 	if (title && title == title.toUpperCase()) {
 		title = ZU.capitalizeTitle(title, true);
 	}
 	item.title = title;
+	//Z.debug(item)
 	//sometimes items actually don't have a title: use the publication title instead.
 	if (!item.title) item.title = item.publicationTitle;
 	item.complete();
-
 }
 
-/**
-* function to scrape directly from the search table. Not used at this point, but leaving in case we'll want to implement it
-function scrapeSearch(doc, url) {
-	//Z.debug(ZU.xpathText(doc, './td'))
-	var dataTags = new Object();
-	var newItem = new Zotero.Item("journalArticle");
-	
-	var title = ZU.xpathText(doc, './td[contains(@class, "title-cell")]/a');
-	if (title==title.toUpperCase()){
-		title = ZU.capitalizeTitle(title.toLowerCase(), true);
-	}
-	newItem.title=  title;
-	
-	var author = ZU.xpathText(doc, './td[contains(@class, "title-cell")]/following-sibling::td[1]');
-	if (author){
-		//Z.debug(author)
-		authors = author.replace(/—/, "").trim().split(/\s*,\s/);
-		for (var i in authors){
-			if (authors[i]) newItem.creators.push(ZU.cleanAuthor(authors[i], "author"))
-		}
-	}
-	
-	newItem.publication = ZU.xpathText(doc, './td[contains(@class, "source-cell")]');
-	newItem.date = ZU.xpathText(doc, './td[contains(@class, "source-cell")]/following-sibling::td[1]');
-	
-	var attachmentLink = ZU.xpathText(doc, './td[contains(@class, "title-cell")]/a/@href');
-	if (attachmentLink){
-		newItem.attachments.push({url:attachmentLink, title:title, mimeType:"text/html"})
-	}
-	newItem.complete();
-} */
-
-
 function doWeb(doc, url) {
-	var articles = new Array();
+	var articles = [];
 	var items = {};
 	if (detectWeb(doc, url) == "multiple") {
-		var titles = ZU.xpath(doc, '//td[contains(@class, "title-cell")]/a');
-		//var number = ZU.xpath(doc, '//td[contains(@class, "check-cell")]/following-sibling::td[1]');
-		for (var i = 0; i < titles.length; i++) {
-			items[titles[i].href] = titles[i].textContent.trim();
-		}
-		Zotero.selectItems(items, function(items) {
+		Zotero.selectItems(getSearchResults(doc, false), function(items) {
 			if (!items) {
 				return true;
 			}
+			var articles = [];
 			for (var i in items) {
-				/* For scraping search table
-				var xpath = '//tr[td[text()="' + i + '"]]'
-				var node = ZU.xpath(doc, xpath);
-				scrapeSearch(node, url); */
-				articles.push(permaLink(i))
+				articles.push(i);
 			}
-			ZU.processDocuments(articles, scrape)
+			ZU.processDocuments(articles, scrape);
 		});
 	} else {
-		if (url.search(/doc\/\d+/) != -1) {
-			scrape(doc, url);
-		}
-		//always scrape from the permalink page, which has extra publication info at the top
-		else {
-			ZU.processDocuments(permaLink(url), scrape);
-		}
+		scrape(doc, url);
 	}
-}/** BEGIN TEST CASES **/
+}
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
