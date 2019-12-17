@@ -1,0 +1,17 @@
+{
+  "filename": "auto-wbg.int.json",
+  "name": "World Bank Group",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "WBG.INT": "World Bank Group"
+      }
+    },
+    "wbg.int": {
+      "institution-part": {
+        "icsid": "International Centre for Settlement of Investment Disputes"
+      }
+    }
+  }
+}

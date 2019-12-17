@@ -1,0 +1,15 @@
+{
+  "filename": "auto-lv.json",
+  "name": "Latvia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "LV": "Latvia"
+      }
+    },
+    "lv": {
+      "institution-part": {}
+    }
+  }
+}

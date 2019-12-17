@@ -40,6 +40,14 @@
         <single>n.</single>
         <multiple>nn.</multiple>
       </term>
+      <term name="number">
+        <single>number</single>
+        <multiple>numbers</multiple>
+      </term>
+      <term name="number" form="short">
+        <single>no.</single>
+        <multiple>nos.</multiple>
+      </term>
       <term form="short" name="opus">op.</term>
       <term form="short" name="page">
         <single>p.</single>
@@ -89,25 +97,6 @@
       <date-part name="year"/>
     </date>
   </locale>
-  <macro name="std-authority-full">
-    <group delimiter=" ">
-      <choose>
-        <if subjurisdictions="2">
-          <text form="short" variable="jurisdiction"/>
-        </if>
-        <else>
-          <text form="short" variable="jurisdiction"/>
-          <text macro="std-authority-child"/>
-        </else>
-      </choose>
-    </group>
-  </macro>
-  <macro name="std-authority-child">
-    <names variable="authority">
-      <name/>
-      <institution institution-parts="short" use-first="1"/>
-    </names>
-  </macro>
   <macro name="std-locator-label">
     <group delimiter=" ">
       <label form="short" variable="locator"/>
@@ -151,25 +140,6 @@
       </choose>
     </group>
   </macro>
-  <macro name="std-patent-detail">
-    <group delimiter=", ">
-      <text variable="title"/>
-      <group delimiter=" ">
-        <text form="short" variable="jurisdiction"/>
-        <choose>
-          <if variable="genre">
-            <text variable="genre"/>
-            <text value="no."/>
-          </if>
-          <else>
-            <text value="Patent No."/>
-          </else>
-        </choose>
-        <number variable="number"/>
-      </group>
-    </group>
-  </macro>
-
   <macro name="std-inventor-label">
     <choose>
       <if is-plural="author">
@@ -1149,82 +1119,6 @@
       </choose>
     </group>
   </macro>
-  <macro name="jurisdictions-patent">
-    <choose>
-      <if jurisdiction="us">
-        <choose>
-          <if position="near-note">
-            <group delimiter=", ">
-              <text macro="std-patent-detail"/>
-              <group delimiter=" ">
-                <text term="at"/>
-                <text macro="std-locator-paragraph-bracket"/>
-              </group>
-            </group>
-          </if>
-          <else>
-            <group delimiter=" ">
-              <text macro="std-patent-first"/>
-              <text macro="std-locator-paragraph-bracket"/>
-            </group>
-          </else>
-        </choose>
-      </if>
-      <else>
-        <choose>
-          <if position="near-note">
-            <group delimiter=", ">
-              <text macro="std-patent-detail"/>
-              <group delimiter=" ">
-                <text term="at"/>
-                <text macro="std-locator-paragraph-bracket"/>
-              </group>
-            </group>
-          </if>
-          <else>
-            <group delimiter=", ">
-              <text macro="std-patent-first"/>
-              <group delimiter=" ">
-                <text term="at"/>
-                <text macro="std-locator-paragraph-bracket"/>
-              </group>
-            </group>
-          </else>
-        </choose>
-      </else>
-    </choose>
-  </macro>
-  <macro name="std-patent-first">
-    <group delimiter=", ">
-      <group delimiter="; ">
-        <group delimiter=" ">
-          <names variable="author">
-            <name/>
-          </names>
-          <text macro="std-inventor-label" prefix="(" suffix=")"/>
-        </group>
-        <group delimiter=" ">
-          <names variable="recipient">
-            <name/>
-          </names>
-          <text macro="std-assignee-label" prefix="(" suffix=")"/>
-        </group>
-      </group>
-      <group delimiter=", ">
-        <text macro="std-patent-detail"/>
-        <group delimiter=", " prefix="(" suffix=")">
-          <group delimiter=" ">
-            <text value="filed"/>
-            <date form="text" variable="submitted"/>
-          </group>
-          <group delimiter=" ">
-            <text value="issued"/>
-            <date form="text" variable="issued"/>
-          </group>
-        </group>
-      </group>
-    </group>
-  </macro>
   <macro name="us-default-chapter-to-book">
     <choose>
       <if type="chapter">
@@ -1314,14 +1208,7 @@
           <group>
             <text font-style="italic" term="ibid"/>
           </group>
-          <choose>
-            <if type="patent" match="any">
-              <text label-form="short" macro="std-locator-paragraph-bracket-at"/>
-            </if>
-            <else>
-              <text label-form="short" macro="std-locator-non-page-label-at"/>
-            </else>
-          </choose>
+          <text label-form="short" macro="std-locator-non-page-label-at"/>
         </group>
       </if>
       <else-if position="ibid">
@@ -1329,9 +1216,6 @@
       </else-if>
       <else-if type="treaty">
         <text macro="jurisdictions-treaty"/>
-      </else-if>
-      <else-if type="patent">
-        <text macro="jurisdictions-patent"/>
       </else-if>
       <else-if position="subsequent">
         <text macro="babyblue-secondary-subsequent"/>
@@ -1657,7 +1541,8 @@
     <choose>
       <if variable="jurisdiction">
         <group delimiter=" " prefix="(" suffix=")">
-          <text macro="std-authority-full"/>
+          <text variable="country" form="short"/>
+          <text variable="jurisdiction" form="short"/>
           <date date-parts="year-month-day" form="text" variable="original-date"/>
         </group>
       </if>
@@ -1912,8 +1797,9 @@
         <choose>
           <if>
             <conditions match="all">
-              <condition match="any" type="legal_case legislation bill hearing gazette report regulation"/>
+              <condition match="any" type="legal_case legislation bill hearing gazette report regulation patent"/>
               <condition match="all" variable="jurisdiction"/>
+			  <condition match="nand" position="subsequent" type="hearing"/>
             </conditions>
             <text macro="jurism"/>
           </if>
@@ -1933,7 +1819,7 @@
             <text macro="babyblue-secondary-first"/>
           </else>
         </choose>
-        <text macro="babyblue-hereinafter"/>
+        <!-- text macro="babyblue-hereinafter"/ -->
       </group>
     </layout>
   </citation>
@@ -1947,7 +1833,7 @@
       <choose>
         <if>
           <conditions match="all">
-            <condition match="any" type="legal_case legislation bill hearing gazette report regulation"/>
+            <condition match="any" type="legal_case legislation bill hearing gazette report regulation patent"/>
             <condition match="all" variable="jurisdiction"/>
           </conditions>
           <text macro="jurism"/>

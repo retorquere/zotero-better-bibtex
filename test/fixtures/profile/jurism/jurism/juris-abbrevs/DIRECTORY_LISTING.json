@@ -1,0 +1,158 @@
+[
+  {
+    "filename": "auto-at.json",
+    "name": "Abbreviations: Austria legal",
+    "version": "2019-12-12 23:38:40 UTC",
+    "jurisdiction": "at"
+  },
+  {
+    "filename": "auto-be.json",
+    "name": "Abbreviations: Belgium legal",
+    "version": 1,
+    "jurisdiction": "be",
+    "variants": {
+      "francais": 1
+    }
+  },
+  {
+    "filename": "auto-cz.json",
+    "name": "Abbreviations: Czechia legal",
+    "version": 2,
+    "jurisdiction": "cz"
+  },
+  {
+    "filename": "auto-fr.json",
+    "name": "Abbreviations: France legal",
+    "version": "2019-11-04 08:52:44 UTC",
+    "jurisdiction": "fr"
+  },
+  {
+    "filename": "auto-pl.json",
+    "name": "Abbreviations: Poland legal",
+    "version": 1,
+    "jurisdiction": "pl"
+  },
+  {
+    "filename": "auto-us.json",
+    "name": "Abbreviations: United States legal",
+    "version": "2019-08-24 06:14:05 UTC",
+    "jurisdiction": "us"
+  },
+  {
+    "filename": "auto-un.int.json",
+    "name": "Abbreviations: United Nations legal",
+    "version": 1,
+    "jurisdiction": "un.int"
+  },
+  {
+    "filename": "auto-jp.json",
+    "name": "Abbreviations: Japan legal",
+    "version": 1,
+    "jurisdiction": "jp",
+    "variants": {
+      "englished": 12
+    }
+  },
+  {
+    "filename": "auto-ke.json",
+    "name": "Abbreviations: Kenya legal",
+    "version": 2,
+    "jurisdiction": "ke"
+  },
+  {
+    "filename": "country-codes.json",
+    "name": "Abbreviations: Country codes (ISO)",
+    "version": 1
+  },
+  {
+    "filename": "primary-commonwealth.json",
+    "name": "Abbreviations: Primary legal sources for Commonwealth jurisdictions",
+    "version": 1,
+    "jurisdictions": []
+  },
+  {
+    "filename": "primary-us.json",
+    "name": "Abbreviations: Primary legal sources for US jurisdictions",
+    "version": 2,
+    "jurisdictions": []
+  },
+  {
+    "filename": "primary-international-bluebook.json",
+    "name": "Abbreviations: Primary legal sources with international scope (Bluebook styles)",
+    "version": 1,
+    "jurisdictions": []
+  },
+  {
+    "filename": "primary-international-commonwealth.json",
+    "name": "Abbreviations: Primary legal sources with international scope (Commonwealth styles)",
+    "version": 1,
+    "jurisdictions": []
+  },
+  {
+    "filename": "secondary-science.json",
+    "name": "Abbreviations: Scientific journals",
+    "version": 1
+  },
+  {
+    "filename": "secondary-commonwealth-commonwealth.json",
+    "name": "Abbreviations: Secondary materials for Commonwealth jurisdictions (Commonwealth styles)",
+    "version": 1,
+    "jurisdictions": []
+  },
+  {
+    "filename": "secondary-us-bluebook.json",
+    "name": "Abbreviations: Secondary materials for the US (Bluebook styles)",
+    "version": 1,
+    "jurisdictions": []
+  },
+  {
+    "filename": "primary-jurisdictions.json",
+    "name": "Jurisdiction codes (all legal styles)",
+    "version": 2,
+    "jurisdictions": []
+  },
+  {
+    "filename": "abbreviations-empty.json",
+    "name": "Abbreviations: EMPTY (importing with \"replace local list\" disables abbreviations)",
+    "version": 1
+  },
+  {
+    "filename": "auto-gb.json",
+    "name": "Abbreviations: United Kingdom legal",
+    "jurisdiction": "gb",
+    "version": "2019-08-23 09:55:46 UTC"
+  },
+  {
+    "filename": "auto-fi.json",
+    "name": "Abbreviations: Finland legal",
+    "version": "2019-09-26 23:53:39 UTC",
+    "jurisdiction": "fi"
+  },
+  {
+    "filename": "auto-pk.json",
+    "name": "Abbreviations: Pakistan legal",
+    "version": "2019-11-04 08:16:17 UTC",
+    "jurisdiction": "pk"
+  },
+  {
+    "filename": "auto-it.json",
+    "name": "Abbreviations: Italy legal",
+    "version": "2019-12-06 02:32:09 UTC",
+    "jurisdiction": "it"
+  },
+  {
+    "filename": "auto-eu.int.json",
+    "name": "Abbreviations: European Union legal",
+    "version": "2019-12-12 23:59:50 UTC",
+    "jurisdiction": "eu.int",
+    "variants": {
+      "de": "2019-12-12 23:59:50 UTC"
+    }
+  },
+  {
+    "filename": "auto-vn.json",
+    "name": "Abbreviations: Vietnam legal",
+    "version": "2019-12-13 00:01:28 UTC",
+    "jurisdiction": "vn"
+  }
+]

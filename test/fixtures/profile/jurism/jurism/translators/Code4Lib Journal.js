@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-03-05 07:15:21"
+	"lastUpdated": "2018-08-23 11:15:21"
 }
 
 // attr()/text() v2
@@ -17,7 +17,7 @@ function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelec
 
 
 function detectWeb(doc, url) {
-	if (getSearchResults(doc, true) {
+	if (getSearchResults(doc, true)) {
 		return "multiple";
 	} else if (text(doc, 'h1[class="articletitle"]')) {
 		return "journalArticle";

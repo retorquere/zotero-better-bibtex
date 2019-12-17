@@ -1,0 +1,15 @@
+{
+  "filename": "auto-je.json",
+  "name": "Jersey",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "JE": "Jersey"
+      }
+    },
+    "je": {
+      "institution-part": {}
+    }
+  }
+}

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-01-28 01:52:07"
+	"lastUpdated": "2019-03-30 15:18:21"
 }
 
 /*
@@ -39,44 +39,45 @@
 // attr()/text() v2
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
 
-
 function detectWeb(doc, url) {
-	if (url.indexOf('/publication/')>-1) {
-		var type = text(doc, 'strong.publication-meta-type');
+	if (url.includes('/publication/')) {
+		var type = text(doc, 'div.publication-meta strong');
 		if (!type) {
-			//for logged in users (yes, really...)
+			// for logged in users (yes, really...)
 			type = text(doc, 'b[data-reactid]');
 		}
 		type = type.replace('(PDF Available)', '').trim();
-		switch(type) {
-			case "Data"://until we have a data itemType
-			case "Article":
-				return "journalArticle";
-			case "Conference Paper":
-				return "conferencePaper";
-			case "Chapter":
-				return "bookSection";
-			case "Thesis":
-				return "thesis";
-			case "Research":
-				return "report";
-			case "Presentation":
-				return "presentation";
-			default:
-				Z.debug(type);
-				return "book";
+		switch (type) {
+		case "Data":// until we have a data itemType
+		case "Article":
+			return "journalArticle";
+		case "Conference Paper":
+			return "conferencePaper";
+		case "Chapter":
+			return "bookSection";
+		case "Thesis":
+			return "thesis";
+		case "Research":
+			return "report";
+		case "Presentation":
+			return "presentation";
+		default:
+			return "book";
 		}
-	} else if ((url.indexOf('/search?')>-1 || url.indexOf('/profile/')) && getSearchResults(doc, true)) {
+	} else if ((url.match('/search(\\?|/)?') || url.includes('/profile/') || url.includes('/scientific-contributions/')) && getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
-
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.querySelectorAll('a.publication-title, a.js-publication-title-link, a[itemprop="mainEntityOfPage"]');
-	for (var i=0; i<rows.length; i++) {
+	if (!rows.length) {
+		rows = ZU.xpath(doc, '//div[contains(@class, "nova-v-publication-item__stack-item")]//a[contains(@class,"nova-e-link")]');
+	}
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -86,7 +87,6 @@ function getSearchResults(doc, checkOnly) {
 	}
 	return found ? items : false;
 }
-
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
@@ -99,6 +99,7 @@ function doWeb(doc, url) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
+			return true;
 		});
 	} else {
 		scrape(doc, url);
@@ -106,34 +107,33 @@ function doWeb(doc, url) {
 }
 
 
-
 function scrape(doc, url) {
 	var type = detectWeb(doc, url);
 
 	var uid = attr(doc, 'meta[property="rg:id"]', 'content');
 	if (!uid) {
-		//trying to get the uid from URL; for logged in users
+		// trying to get the uid from URL; for logged in users
 		var uidURL = url.match(/publication\/(\d+)_/);
 		if (uidURL) uid = uidURL[1];
 	}
 	uid = uid.replace('PB:', '');
-	var risURL = "https://www.researchgate.net/publicliterature.PublicationHeaderDownloadCitation.downloadCitation.html?publicationUid=" + uid + "&fileType=RIS&citationAndAbstract=true";
+	var risURL = "https://www.researchgate.net/lite.publication.PublicationDownloadCitationModal.downloadCitation.html?fileType=RIS&citation=citationAndAbstract&publicationUid=" + uid;
 	var pdfURL = attr(doc, 'meta[property="citation_pdf_url"]', 'content');
 
-	ZU.doGet(risURL, function(text) {
-		//Z.debug(text);
-		//fix wrong itemType information in RIS
-		if (type=="bookSection") text = text.replace('TY  - BOOK', 'TY  - CHAP');
-		if (type=="conferencePaper") text = text.replace('TY  - BOOK', 'TY  - CONF');
-		if (type=="report") text = text.replace('TY  - BOOK', 'TY  - RPRT');
-		if (type=="presentation") text = text.replace('TY  - BOOK', 'TY  - SLIDE');
-		if (type=="journalArticle") text = text.replace('TY  - BOOK', 'TY  - JOUR');
-		if (type=="thesis") text = text.replace('TY  - BOOK', 'TY  - THES');
+	ZU.doGet(risURL, function (text) {
+		// Z.debug(text);
+		// fix wrong itemType information in RIS
+		if (type == "bookSection") text = text.replace('TY  - BOOK', 'TY  - CHAP');
+		if (type == "conferencePaper") text = text.replace('TY  - BOOK', 'TY  - CONF');
+		if (type == "report") text = text.replace('TY  - BOOK', 'TY  - RPRT');
+		if (type == "presentation") text = text.replace('TY  - BOOK', 'TY  - SLIDE');
+		if (type == "journalArticle") text = text.replace('TY  - BOOK', 'TY  - JOUR');
+		if (type == "thesis") text = text.replace('TY  - BOOK', 'TY  - THES');
 		
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(text);
-		translator.setHandler("itemDone", function(obj, item) {
+		translator.setHandler("itemDone", function (obj, item) {
 			if (pdfURL) {
 				item.attachments.push({
 					url: pdfURL,
@@ -156,7 +156,7 @@ function scrape(doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.researchgate.net/publication/318069783_Academic_social_networking_sites_comparative_analysis_of_ResearchGate_Academiaedu_Mendeley_and_Zotero",
+		"url": "https://www.researchgate.net/publication/318069783_Academic_social_networking_sites_Comparative_analysis_of_ResearchGate_Academiaedu_Mendeley_and_Zotero",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -171,6 +171,7 @@ var testCases = [
 				"date": "June 30, 2017",
 				"DOI": "10.1108/ILS-03-2017-0012",
 				"abstractNote": "Purpose\n\nThe purpose of the study is to compare four popular academic social networking sites (ASNSs) viz. ResearchGate, Academia.edu, Mendeley and Zotero.\n\nDesign/methodology/approach\n\nEvaluation method has been used with the help of checklist covering various features of ASNSs. A structured checklist has been prepared to compare four popular ASNSs, comprising 198 dichotomous questions divided into 12 broad categories.\n\nFindings\n\nThe study found that performance of ASNSs using the latest features and services is not up to the mark and none of the site rated as ‘Excellent’. The sites lack in incorporation of session filters, output features, privacy settings & text display, search and browsing fields. Availability of bibilographic features and general features are poor in these sites. Further, altmetrics and analytics features are not incorporated properly. User interface of the sites need to improve to draw researchers to use them. The study report reveals that ResearchGate scored the highest, 61.1 percent points, and was ranked ‘above average’, followed by Academia.edu with 48.0 percent and Mendeley with 43.9 percent are ranked ‘average’. However, the Zotero (38.9 percent) was ranked ‘below average’.\n\nPractical implications\n\nAccreditation agencies can identify suitable sites in the evaluation of institutions’ research output. Further, students and faculty members can choose the site suiting their needs. Library and information science professionals can utilize the checklist to impart training to the academic community which can help fostering research and development activities.\n\nOriginality/value\n\nThe study identifies features that ought to be available in a model ASNS. These features are categorized into 12 broad categories. The findings can also be used by developers of the sites to enhance functionalities. Institutions can choose suitable sites while collaborating with other institutions.",
+				"journalAbbreviation": "Information and Learning Science",
 				"libraryCatalog": "ResearchGate",
 				"pages": "298-316",
 				"publicationTitle": "Information and Learning Science",
@@ -370,6 +371,11 @@ var testCases = [
 	{
 		"type": "web",
 		"url": "https://www.researchgate.net/profile/Noga_Alon",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.researchgate.net/scientific-contributions/2109740616_Daniela_Hombach",
 		"items": "multiple"
 	}
 ]

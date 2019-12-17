@@ -1,0 +1,17 @@
+{
+  "filename": "auto-zz.json",
+  "name": "Atlantis",
+  "version": "2019-08-19 12:16:29 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ZZ": "Atlantis"
+      }
+    },
+    "zz": {
+      "institution-part": {
+        "sc": "Supreme Court"
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-br.json",
+  "name": "Brazil",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "BR": "Brazil"
+      }
+    },
+    "br": {
+      "institution-part": {}
+    }
+  }
+}

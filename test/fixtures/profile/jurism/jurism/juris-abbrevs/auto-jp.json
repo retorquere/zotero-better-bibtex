@@ -1,0 +1,420 @@
+{
+  "filename": "auto-jp.json",
+  "name": "Japan",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "JP": "Japan",
+        "JP:FUKUOKA": "福岡",
+        "JP:FUKUOKA:FUKUOKA": "福岡",
+        "JP:FUKUOKA:KAGOSHIMA": "鹿児島",
+        "JP:FUKUOKA:KUMAMOTO": "熊本",
+        "JP:FUKUOKA:MIYAZAKI": "宮崎",
+        "JP:FUKUOKA:NAGASAKI": "長崎",
+        "JP:FUKUOKA:NAHA": "那覇",
+        "JP:FUKUOKA:OITA": "大分",
+        "JP:FUKUOKA:SAGA": "佐賀",
+        "JP:HIROSHIMA": "広島",
+        "JP:HIROSHIMA:HIROSHIMA": "広島",
+        "JP:HIROSHIMA:MATSUE": "松江",
+        "JP:HIROSHIMA:OKAYAMA": "岡山",
+        "JP:HIROSHIMA:TOTTORI": "鳥取",
+        "JP:HIROSHIMA:YAMAGUCHI": "山口",
+        "JP:NAGOYA": "名古屋",
+        "JP:NAGOYA:FUKUI": "福井",
+        "JP:NAGOYA:GIFU": "岐阜",
+        "JP:NAGOYA:KANAZAWA": "金沢",
+        "JP:NAGOYA:NAGOYA": "名古屋",
+        "JP:NAGOYA:TOYAMA": "富山",
+        "JP:NAGOYA:TSU": "津",
+        "JP:OSAKA": "大阪",
+        "JP:OSAKA:KOBE": "神戸",
+        "JP:OSAKA:KYOTO": "京都",
+        "JP:OSAKA:NARA": "奈良",
+        "JP:OSAKA:OSAKA": "大阪",
+        "JP:OSAKA:OTSU": "大津",
+        "JP:OSAKA:WAKAYAMA": "和歌山",
+        "JP:SAPPORO": "札幌",
+        "JP:SAPPORO:ASAHIKAWA": "旭川",
+        "JP:SAPPORO:HAKODATE": "函館",
+        "JP:SAPPORO:KUSHIRO": "釧路",
+        "JP:SAPPORO:SAPPORO": "札幌",
+        "JP:SENDAI": "仙台",
+        "JP:SENDAI:AKITA": "秋田",
+        "JP:SENDAI:AOMORI": "青森",
+        "JP:SENDAI:FUKUSHIMA": "福島",
+        "JP:SENDAI:MORIOKA": "盛岡",
+        "JP:SENDAI:SENDAI": "仙台",
+        "JP:SENDAI:YAMAGATA": "山形",
+        "JP:TAKAMATSU": "高松",
+        "JP:TAKAMATSU:KOCHI": "高知",
+        "JP:TAKAMATSU:MATSUYAMA": "松山",
+        "JP:TAKAMATSU:TAKAMATSU": "高松",
+        "JP:TAKAMATSU:TOKUSHIMA": "徳島",
+        "JP:TOKYO": "東京",
+        "JP:TOKYO:CHIBA": "千葉",
+        "JP:TOKYO:KOFU": "甲府",
+        "JP:TOKYO:MAEBASHI": "前橋",
+        "JP:TOKYO:MITO": "水戸",
+        "JP:TOKYO:NAGANO": "長野",
+        "JP:TOKYO:NIIGATA": "新潟",
+        "JP:TOKYO:SAITAMA": "埼玉",
+        "JP:TOKYO:SHIZUOKA": "静岡",
+        "JP:TOKYO:TOKYO": "東京",
+        "JP:TOKYO:UTSUNOMIYA": "宇都宮",
+        "JP:TOKYO:YOKOHAMA": "横浜"
+      }
+    },
+    "jp": {
+      "institution-part": {
+        "chiteki.zaisan.koto.saibansho": "知的財産高等裁判所",
+        "saiko.saibansho": "最高裁判所",
+        "saiko.saibansho.dai": "最高裁判所大法廷",
+        "saiko.saibansho.ichi": "最高裁判所第一小法廷",
+        "saiko.saibansho.ni": "最高裁判所第二小法廷",
+        "saiko.saibansho.san": "最高裁判所第三小法廷"
+      }
+    },
+    "jp:fukuoka": {
+      "institution-part": {
+        "koto.saibansho": "福岡高等裁判所"
+      }
+    },
+    "jp:fukuoka:fukuoka": {
+      "institution-part": {
+        "chiho.saibansho": "福岡地方裁判所",
+        "katei.saibansho": "福岡福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:kagoshima": {
+      "institution-part": {
+        "chiho.saibansho": "鹿児島地方裁判所",
+        "katei.saibansho": "鹿児島福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:kumamoto": {
+      "institution-part": {
+        "chiho.saibansho": "熊本地方裁判所",
+        "katei.saibansho": "熊本福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:miyazaki": {
+      "institution-part": {
+        "chiho.saibansho": "宮崎地方裁判所",
+        "katei.saibansho": "宮崎福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:nagasaki": {
+      "institution-part": {
+        "chiho.saibansho": "長崎地方裁判所",
+        "katei.saibansho": "長崎福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:naha": {
+      "institution-part": {
+        "chiho.saibansho": "那覇地方裁判所",
+        "katei.saibansho": "那覇福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:oita": {
+      "institution-part": {
+        "chiho.saibansho": "大分地方裁判所",
+        "katei.saibansho": "大分福岡家庭裁判所"
+      }
+    },
+    "jp:fukuoka:saga": {
+      "institution-part": {
+        "chiho.saibansho": "佐賀地方裁判所",
+        "katei.saibansho": "佐賀福岡家庭裁判所"
+      }
+    },
+    "jp:hiroshima": {
+      "institution-part": {
+        "koto.saibansho": "広島高等裁判所"
+      }
+    },
+    "jp:hiroshima:hiroshima": {
+      "institution-part": {
+        "chiho.saibansho": "広島地方裁判所",
+        "katei.saibansho": "広島福岡家庭裁判所"
+      }
+    },
+    "jp:hiroshima:matsue": {
+      "institution-part": {
+        "chiho.saibansho": "松江地方裁判所",
+        "katei.saibansho": "松江福岡家庭裁判所"
+      }
+    },
+    "jp:hiroshima:okayama": {
+      "institution-part": {
+        "chiho.saibansho": "岡山地方裁判所",
+        "katei.saibansho": "岡山福岡家庭裁判所"
+      }
+    },
+    "jp:hiroshima:tottori": {
+      "institution-part": {
+        "chiho.saibansho": "鳥取地方裁判所",
+        "katei.saibansho": "鳥取福岡家庭裁判所"
+      }
+    },
+    "jp:hiroshima:yamaguchi": {
+      "institution-part": {
+        "chiho.saibansho": "山口地方裁判所",
+        "katei.saibansho": "山口福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya": {
+      "institution-part": {
+        "koto.saibansho": "名古屋高等裁判所"
+      }
+    },
+    "jp:nagoya:fukui": {
+      "institution-part": {
+        "chiho.saibansho": "福井地方裁判所",
+        "katei.saibansho": "福井福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya:gifu": {
+      "institution-part": {
+        "chiho.saibansho": "岐阜地方裁判所",
+        "katei.saibansho": "岐阜福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya:kanazawa": {
+      "institution-part": {
+        "chiho.saibansho": "金沢地方裁判所",
+        "katei.saibansho": "金沢福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya:nagoya": {
+      "institution-part": {
+        "chiho.saibansho": "名古屋地方裁判所",
+        "katei.saibansho": "名古屋福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya:toyama": {
+      "institution-part": {
+        "chiho.saibansho": "富山地方裁判所",
+        "katei.saibansho": "富山福岡家庭裁判所"
+      }
+    },
+    "jp:nagoya:tsu": {
+      "institution-part": {
+        "chiho.saibansho": "津地方裁判所",
+        "katei.saibansho": "津福岡家庭裁判所"
+      }
+    },
+    "jp:osaka": {
+      "institution-part": {
+        "koto.saibansho": "大阪高等裁判所"
+      }
+    },
+    "jp:osaka:kobe": {
+      "institution-part": {
+        "chiho.saibansho": "神戸地方裁判所",
+        "katei.saibansho": "神戸福岡家庭裁判所"
+      }
+    },
+    "jp:osaka:kyoto": {
+      "institution-part": {
+        "chiho.saibansho": "京都地方裁判所",
+        "katei.saibansho": "京都福岡家庭裁判所"
+      }
+    },
+    "jp:osaka:nara": {
+      "institution-part": {
+        "chiho.saibansho": "奈良地方裁判所",
+        "katei.saibansho": "奈良福岡家庭裁判所"
+      }
+    },
+    "jp:osaka:osaka": {
+      "institution-part": {
+        "chiho.saibansho": "大阪地方裁判所",
+        "katei.saibansho": "大阪福岡家庭裁判所"
+      }
+    },
+    "jp:osaka:otsu": {
+      "institution-part": {
+        "chiho.saibansho": "大津地方裁判所",
+        "katei.saibansho": "大津福岡家庭裁判所"
+      }
+    },
+    "jp:osaka:wakayama": {
+      "institution-part": {
+        "chiho.saibansho": "和歌山地方裁判所",
+        "katei.saibansho": "和歌山福岡家庭裁判所"
+      }
+    },
+    "jp:sapporo": {
+      "institution-part": {
+        "koto.saibansho": "札幌高等裁判所"
+      }
+    },
+    "jp:sapporo:asahikawa": {
+      "institution-part": {
+        "chiho.saibansho": "旭川地方裁判所",
+        "katei.saibansho": "旭川福岡家庭裁判所"
+      }
+    },
+    "jp:sapporo:hakodate": {
+      "institution-part": {
+        "chiho.saibansho": "函館地方裁判所",
+        "katei.saibansho": "函館福岡家庭裁判所"
+      }
+    },
+    "jp:sapporo:kushiro": {
+      "institution-part": {
+        "chiho.saibansho": "釧路地方裁判所",
+        "katei.saibansho": "釧路福岡家庭裁判所"
+      }
+    },
+    "jp:sapporo:sapporo": {
+      "institution-part": {
+        "chiho.saibansho": "札幌地方裁判所",
+        "katei.saibansho": "札幌福岡家庭裁判所"
+      }
+    },
+    "jp:sendai": {
+      "institution-part": {
+        "koto.saibansho": "仙台高等裁判所"
+      }
+    },
+    "jp:sendai:akita": {
+      "institution-part": {
+        "chiho.saibansho": "秋田地方裁判所",
+        "katei.saibansho": "秋田福岡家庭裁判所"
+      }
+    },
+    "jp:sendai:aomori": {
+      "institution-part": {
+        "chiho.saibansho": "青森地方裁判所",
+        "katei.saibansho": "青森福岡家庭裁判所"
+      }
+    },
+    "jp:sendai:fukushima": {
+      "institution-part": {
+        "chiho.saibansho": "福島地方裁判所",
+        "katei.saibansho": "福島福岡家庭裁判所"
+      }
+    },
+    "jp:sendai:morioka": {
+      "institution-part": {
+        "chiho.saibansho": "盛岡地方裁判所",
+        "katei.saibansho": "盛岡福岡家庭裁判所"
+      }
+    },
+    "jp:sendai:sendai": {
+      "institution-part": {
+        "chiho.saibansho": "仙台地方裁判所",
+        "katei.saibansho": "仙台福岡家庭裁判所"
+      }
+    },
+    "jp:sendai:yamagata": {
+      "institution-part": {
+        "chiho.saibansho": "山形地方裁判所",
+        "katei.saibansho": "山形福岡家庭裁判所"
+      }
+    },
+    "jp:takamatsu": {
+      "institution-part": {
+        "koto.saibansho": "高松高等裁判所"
+      }
+    },
+    "jp:takamatsu:kochi": {
+      "institution-part": {
+        "chiho.saibansho": "高知地方裁判所",
+        "katei.saibansho": "高知福岡家庭裁判所"
+      }
+    },
+    "jp:takamatsu:matsuyama": {
+      "institution-part": {
+        "chiho.saibansho": "松山地方裁判所",
+        "katei.saibansho": "松山福岡家庭裁判所"
+      }
+    },
+    "jp:takamatsu:takamatsu": {
+      "institution-part": {
+        "chiho.saibansho": "高松地方裁判所",
+        "katei.saibansho": "高松福岡家庭裁判所"
+      }
+    },
+    "jp:takamatsu:tokushima": {
+      "institution-part": {
+        "chiho.saibansho": "徳島地方裁判所",
+        "katei.saibansho": "徳島福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo": {
+      "institution-part": {
+        "koto.saibansho": "東京高等裁判所"
+      }
+    },
+    "jp:tokyo:chiba": {
+      "institution-part": {
+        "chiho.saibansho": "千葉地方裁判所",
+        "katei.saibansho": "千葉福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:kofu": {
+      "institution-part": {
+        "chiho.saibansho": "甲府地方裁判所",
+        "katei.saibansho": "甲府福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:maebashi": {
+      "institution-part": {
+        "chiho.saibansho": "前橋地方裁判所",
+        "katei.saibansho": "前橋福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:mito": {
+      "institution-part": {
+        "chiho.saibansho": "水戸地方裁判所",
+        "katei.saibansho": "水戸福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:nagano": {
+      "institution-part": {
+        "chiho.saibansho": "長野地方裁判所",
+        "katei.saibansho": "長野福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:niigata": {
+      "institution-part": {
+        "chiho.saibansho": "新潟地方裁判所",
+        "katei.saibansho": "新潟福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:saitama": {
+      "institution-part": {
+        "chiho.saibansho": "埼玉地方裁判所",
+        "katei.saibansho": "埼玉福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:shizuoka": {
+      "institution-part": {
+        "chiho.saibansho": "静岡地方裁判所",
+        "katei.saibansho": "静岡福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:tokyo": {
+      "institution-part": {
+        "chiho.saibansho": "東京地方裁判所",
+        "katei.saibansho": "東京福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:utsunomiya": {
+      "institution-part": {
+        "chiho.saibansho": "宇都宮地方裁判所",
+        "katei.saibansho": "宇都宮福岡家庭裁判所"
+      }
+    },
+    "jp:tokyo:yokohama": {
+      "institution-part": {
+        "chiho.saibansho": "横浜地方裁判所",
+        "katei.saibansho": "横浜福岡家庭裁判所"
+      }
+    }
+  }
+}

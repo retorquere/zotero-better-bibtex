@@ -2,14 +2,14 @@
 	"translatorID": "caa8f42c-9dbf-446e-963b-6ee18e3133d2",
 	"label": "Sveriges radio",
 	"creator": "Sebastian Berlin",
-	"target": "^https?://sverigesradio\\.se/sida/(artikel|sok).aspx",
+	"target": "^https?://sverigesradio\\.se/(sida/artikel\\.aspx|sok\\?)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-02-28 13:17:24"
+	"lastUpdated": "2019-01-15 13:24:45"
 }
 
 /*
@@ -43,7 +43,7 @@ function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelec
 function detectWeb(doc, url) {
 	if (url.includes('/sida/artikel')) {
 		return "newspaperArticle";
-	} else if (url.includes('/sida/sok') && getSearchResults(doc, true)) {
+	} else if (url.includes('/sok?') && getSearchResults(doc, true)) {
 		return "multiple";
 	}
 }
@@ -52,7 +52,7 @@ function detectWeb(doc, url) {
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = doc.querySelectorAll('ul, a.heading[href*="/sida/artikel.aspx"]');
+	var rows = doc.querySelectorAll('a.search-item');
 	for (let i=0; i<rows.length; i++) {
 		let href = rows[i].href;
 		let title = ZU.trimInternal(rows[i].textContent);
@@ -93,7 +93,7 @@ function scrape(doc, url) {
 
 		item.creators = [];
 		var nameNodes = ZU.xpath(doc, '//p[@class="byline"]/text()');
-		for(let node of nameNodes) {
+		for (let node of nameNodes) {
 			// Take the first two strings of non-spaces as the names. The byline
 			// can vary in format, including:
 			// First Last
@@ -104,7 +104,7 @@ function scrape(doc, url) {
 			var author = ZU.cleanAuthor(nameString, "author");
 			item.creators.push(author);
 		}
-		if(item.creators.length === 1 && item.creators[0].lastName === "Ekot") {
+		if (item.creators.length === 1 && item.creators[0].lastName === "Ekot") {
 			// Special case when only signed as "Ekot", i.e. no person
 			// specified as author.
 			item.creators[0].fieldMode = true;
@@ -118,9 +118,31 @@ function scrape(doc, url) {
 		item.title = titleParts[0];
 		item.section = titleParts[1];
 
-		var dateString = attr(doc, 'meta[name="displaydate"]', "content");
-		item.date = dateString.replace(/(\d{4})(\d{2})(\d{2})/, "$1-$2-$3");
-
+		// Date string is of the format:
+		// Publicerat onsdag 15 november 2017 kl 00.11
+		var dateString = ZU.xpathText(doc, '//div[@class="publication-metadata__item"]');
+		var dateParts =
+			dateString.match(/.*(\d{2}) (\w+) (\d{4}).*/);
+		if (dateParts) {
+			var year = dateParts[3];
+			var months = {
+				januari: "01",
+				februari: "02",
+				mars: "03",
+				april: "04",
+				maj: "05",
+				juni: "06",
+				juli: "07",
+				augusti: "08",
+				september: "09",
+				oktober: "10",
+				november: "11",
+				december: "12"
+			};
+			var month = months[dateParts[2]];
+			var day = dateParts[1];
+			item.date = year + "-" + month + "-" + day;
+		}
 		item.tags = [];
 
 		item.complete();
@@ -156,7 +178,7 @@ var testCases = [
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6821850",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6821850",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -188,7 +210,7 @@ var testCases = [
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6865752",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6865752",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -219,8 +241,8 @@ var testCases = [
 				"language": "sv",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
-				"section": "Kulturnytt",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=478&artikel=6891473",
+				"section": "Kulturnytt i P1",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=478&artikel=6891473",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -253,7 +275,7 @@ var testCases = [
 				"publicationTitle": "Sveriges Radio",
 				"section": "Nyheter (Ekot)",
 				"shortTitle": "HD",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6892065",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=83&artikel=6892065",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -285,7 +307,7 @@ var testCases = [
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "P4 Jämtland",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=78&artikel=6891577",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=78&artikel=6891577",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -322,7 +344,7 @@ var testCases = [
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "P4 Halland",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=128&artikel=6892091",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=128&artikel=6892091",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -336,7 +358,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
+		"url": "https://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -349,12 +371,12 @@ var testCases = [
 					}
 				],
 				"date": "2018-02-26",
-				"abstractNote": "A Siberian cold front has brought Sweden unusually cold temperatures for late February. It was -42 degrees C when Kristina Lindqvist left home for her ...",
+				"abstractNote": "A Siberian cold front has brought Sweden unusually cold temperatures for late February. It was -42C when Kristina Lindqvist left home for her job at the ...",
 				"language": "en",
 				"libraryCatalog": "sverigesradio.se",
 				"publicationTitle": "Sveriges Radio",
 				"section": "Radio Sweden",
-				"url": "http://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
+				"url": "https://sverigesradio.se/sida/artikel.aspx?programid=2054&artikel=6894423",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -368,7 +390,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://sverigesradio.se/sida/sok.aspx?q=choklad&programid=83&filter=false",
+		"url": "https://sverigesradio.se/sok?q=choklad&content=true",
 		"items": "multiple"
 	}
 ]

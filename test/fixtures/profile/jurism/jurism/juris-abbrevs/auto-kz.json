@@ -1,0 +1,15 @@
+{
+  "filename": "auto-kz.json",
+  "name": "Kazakhstan",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "KZ": "Kazakhstan"
+      }
+    },
+    "kz": {
+      "institution-part": {}
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "filename": "auto-kh.json",
+  "name": "Cambodia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "KH": "Cambodia"
+      }
+    },
+    "kh": {
+      "institution-part": {
+        "angchumnum.chumreas.visamanh": "អង្គជំនុំជម្រះវិសាមញ្ញ",
+        "krompreksa.tommnunh": "ក្រុមប្រឹក្សាធម្មនុញ្ញ",
+        "sala.outo": "សាលាឧទ្ធរណ៍",
+        "tolaka.kompoul": "តុលាការកំពូល"
+      }
+    }
+  }
+}

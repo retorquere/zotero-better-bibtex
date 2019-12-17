@@ -31,7 +31,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>Chicago format with full notes and bibliography</summary>
-    <updated>2017-10-12T12:00:00+00:00</updated>
+    <updated>2019-10-15T13:45:17+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -66,21 +66,21 @@
   </macro>
   <macro name="secondary-contributors-note">
     <choose>
-      <if type="chapter paper-conference" match="none">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="none">
         <text macro="editor-translator"/>
       </if>
     </choose>
   </macro>
   <macro name="container-contributors-note">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <text macro="editor-translator"/>
       </if>
     </choose>
   </macro>
   <macro name="secondary-contributors">
     <choose>
-      <if type="chapter paper-conference" match="none">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="none">
         <names variable="editor translator" delimiter=". ">
           <label form="verb" text-case="capitalize-first" suffix=" "/>
           <name and="text" delimiter=", "/>
@@ -90,7 +90,7 @@
   </macro>
   <macro name="container-contributors">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <group delimiter=", ">
           <choose>
             <if variable="author">
@@ -181,6 +181,11 @@
         <substitute>
           <text macro="editor"/>
           <text macro="translator"/>
+          <choose>
+            <if type="webpage post-weblog" match="any">
+              <text variable="container-title"/>
+            </if>
+          </choose>
         </substitute>
       </names>
       <text macro="recipient"/>
@@ -292,9 +297,6 @@
           <else-if type="manuscript speech" match="any">
             <text variable="genre" form="short"/>
           </else-if>
-          <else-if type="personal_communication">
-            <text macro="issued"/>
-          </else-if>
         </choose>
       </if>
       <else-if type="book graphic motion_picture song" match="any">
@@ -316,7 +318,7 @@
   </macro>
   <macro name="date-disambiguate">
     <choose>
-      <if disambiguate="true">
+      <if disambiguate="true" type="personal_communication" match="any">
         <text macro="issued"/>
       </if>
     </choose>
@@ -380,7 +382,7 @@
   <macro name="container-title-note">
     <group delimiter=" ">
       <choose>
-        <if type="chapter paper-conference" match="any">
+        <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
           <text term="in"/>
         </if>
       </choose>
@@ -400,7 +402,7 @@
   <macro name="container-title">
     <group delimiter=" ">
       <choose>
-        <if type="chapter paper-conference" match="any">
+        <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
           <text term="in" text-case="capitalize-first"/>
         </if>
       </choose>
@@ -658,7 +660,7 @@
           </group>
         </group>
       </else-if>
-      <else-if type="chapter paper-conference" match="any">
+      <else-if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <group delimiter=". ">
           <text macro="edition"/>
           <choose>
@@ -714,7 +716,14 @@
         <text variable="original-publisher-place"/>
         <text variable="original-publisher"/>
       </group>
-      <date variable="original-date" form="text" date-parts="year"/>
+      <choose>
+        <if is-uncertain-date="original-date">
+          <date variable="original-date" form="numeric" date-parts="year" prefix="[" suffix="?]"/>
+        </if>
+        <else>
+          <date variable="original-date" form="numeric" date-parts="year"/>
+        </else>
+      </choose>
     </group>
   </macro>
   <macro name="reprint-note">
@@ -940,7 +949,7 @@
   </macro>
   <macro name="locators-chapter">
     <choose>
-      <if type="chapter paper-conference" match="any">
+      <if type="chapter entry-dictionary entry-encyclopedia paper-conference" match="any">
         <choose>
           <if variable="author container-author" match="all"/>
           <else>
@@ -1013,7 +1022,7 @@
   </macro>
   <macro name="issue-note-join-with-space">
     <choose>
-      <if type="article-journal bill legislation legal_case manuscript thesis" variable="publisher-place publisher" match="any">
+      <if type="article-journal bill legislation legal_case manuscript thesis" variable="publisher-place event-place publisher" match="any">
         <!--Chicago doesn't use publisher/place for Newspapers and we want the date delimited by a comma-->
         <choose>
           <if type="article-newspaper" match="none">
@@ -1032,9 +1041,10 @@
   </macro>
   <macro name="issue-note-join-with-comma">
     <choose>
-      <if type="article-journal bill legislation legal_case manuscript thesis" variable="publisher-place publisher" match="none">
+      <if type="graphic map" match="any"/>
+      <else-if type="article-journal bill legislation legal_case manuscript thesis" variable="event-place publisher-place publisher" match="none">
         <text macro="issue-note"/>
-      </if>
+      </else-if>
       <else-if type="article-newspaper">
         <text macro="issue-note"/>
       </else-if>

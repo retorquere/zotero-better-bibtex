@@ -1,0 +1,15 @@
+{
+  "filename": "auto-za.json",
+  "name": "South Africa",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ZA": "South Africa"
+      }
+    },
+    "za": {
+      "institution-part": {}
+    }
+  }
+}

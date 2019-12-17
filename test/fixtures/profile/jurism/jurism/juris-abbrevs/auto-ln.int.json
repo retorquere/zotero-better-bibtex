@@ -1,0 +1,17 @@
+{
+  "filename": "auto-ln.int.json",
+  "name": "League of Nations",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "LN.INT": "League of Nations"
+      }
+    },
+    "ln.int": {
+      "institution-part": {
+        "pcij": "Permanent Court of International Justice"
+      }
+    }
+  }
+}

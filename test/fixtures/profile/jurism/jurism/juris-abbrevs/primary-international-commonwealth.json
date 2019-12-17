@@ -1,0 +1,98 @@
+{
+  "filename": "primary-international-commonwealth.json",
+  "name": "Abbreviations: Primary legal sources with international scope (Commonwealth styles)",
+  "version": 2,
+  "xdata": {
+    "coe.int": {
+      "classic": {},
+      "collection-title": {},
+      "container-phrase": {},
+      "container-title": {
+        "collection of decisions": "!authority>>>CD",
+        "decisions reports": "!authority>>>DR",
+        "european human rights reports": "EHRR",
+        "reports of judgments decisions series a": "!authority>>>ECHR Series A"
+      },
+      "hereinafter": {},
+      "institution-entire": {
+        "european court of human rights": "ECHR"
+      },
+      "institution-part": {
+        "european commission of human rights": "EComHR",
+        "european court of human rights": "ECtHR"
+      },
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {},
+      "title-phrase": {}
+    },
+    "coe.int;court.of.human.rights": {
+      "classic": {},
+      "collection-title": {},
+      "container-phrase": {},
+      "container-title": {
+        "ehrr": "!authority>>>EHRR",
+        "european human rights reports": "!authority>>>EHRR"
+      },
+      "hereinafter": {},
+      "institution-entire": {},
+      "institution-part": {},
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {},
+      "title-phrase": {}
+    },
+    "ec.lex": {
+      "classic": {},
+      "collection-title": {},
+      "container-title": {},
+      "hereinafter": {},
+      "institution-entire": {
+        "court of justice": "Court of Justice of the European Communities (including Court of First Instance Decisions)",
+        "court of justice of european communities": "Court of Justice of the European Communities (including Court of First Instance Decisions)"
+      },
+      "institution-part": {},
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {}
+    },
+    "eu.lex": {
+      "classic": {},
+      "collection-title": {},
+      "container-title": {},
+      "hereinafter": {},
+      "institution-entire": {
+        "european court of human rights": "ECHR"
+      },
+      "institution-part": {},
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {}
+    },
+    "un.org": {
+      "classic": {},
+      "collection-title": {},
+      "container-phrase": {},
+      "container-title": {
+        "united nations general assembly official record": "GAOR"
+      },
+      "hereinafter": {},
+      "institution-entire": {},
+      "institution-part": {
+        "general assembly": "UNGA",
+        "high court": "H.C."
+      },
+      "nickname": {},
+      "number": {},
+      "place": {},
+      "title": {
+        "resolution": "Res"
+      },
+      "title-phrase": {}
+    }
+  }
+}

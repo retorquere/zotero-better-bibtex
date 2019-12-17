@@ -9,84 +9,86 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsbv",
-	"lastUpdated": "2018-03-23 07:21:31"
+	"lastUpdated": "2019-08-11 10:33:35"
 }
 
 // attr()/text() v2
+// eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
 
 
-function detectWeb(doc, url) {
-	if(getSearchResults(doc, true)) {
+function detectWeb(doc, _url) {
+	if (getSearchResults(doc, true)) {
 		return (Zotero.isBookmarklet ? "server" : "multiple");
-	} else {
-		if (attr(doc, 'input[name*="ASIN"]', 'value')) {
-			if (Zotero.isBookmarklet) return "server";
-			
-			var storeID = attr(doc, 'input[name="storeID"]', 'value');
-			if (storeID) {
-				if (storeID.indexOf("books")>-1) {
-					return "book";
-				} else if (storeID=="music"|storeID=="dmusic"){
-					return "audioRecording";
-				} else if (storeID=="dvd"|storeID=="dvd-de"|storeID=="video"|storeID=="movies-tv"){
-					return "videoRecording";
-				} else if (storeID=="videogames"|storeID=="mobile-apps") {
-					return "computerProgram";
-				} else {
-					Z.debug("Items in this store will be ignored by Zotero: " + storeID);
-				}
-			} else {
-				//audio books are purchased as audible abo
-				if (text(doc, 'form[class="a-spacing-none"][action*="/audible/"]')) {
-					return "audioRecording";
-				}
-				var mainCategory = text(doc, '#wayfinding-breadcrumbs_container li a');
-				if (mainCategory && mainCategory.indexOf('Kindle')>-1) {
-					return "book";
-				} else {
-					Z.debug("Items in this category will be ignored by Zotero: " + mainCategory);
-				}
-				
+	}
+	else if (attr(doc, 'input[name*="ASIN"]', 'value')) {
+		if (Zotero.isBookmarklet) return "server";
+		
+		var productClass = attr(doc, 'div[id="dp"]', 'class');
+		if (!productClass) {
+			Z.debug("No product class found, try store ID instead.");
+			productClass = attr(doc, 'input[name="storeID"]', 'value');
+		}
+		// delete language code
+		productClass = productClass.replace(/[a-z][a-z]_[A-Z][A-Z]/, "").trim();
+		
+		if (productClass) {
+			if (productClass.includes("book")) { // also ebooks
+				return "book";
+			}
+			else if (productClass == "music" | productClass == "dmusic") {
+				return "audioRecording";
+			}
+			else if (productClass == "dvd" | productClass == "dvd-de" | productClass == "video" | productClass == "movies-tv") {
+				return "videoRecording";
+			}
+			else if (productClass == "videogames" | productClass == "mobile-apps") {
+				return "computerProgram";
+			}
+			else {
+				Z.debug("Unknown product class" + productClass + "will be ignored by Zotero");
+			}
+		}
+		else {
+			// audio books are purchased as audible abo
+			if (text(doc, 'form[class="a-spacing-none"][action*="/audible/"]')) {
+				return "audioRecording";
+			}
+			var mainCategory = text(doc, '#wayfinding-breadcrumbs_container li a');
+			if (mainCategory && mainCategory.includes('Kindle')) {
+				return "book";
+			}
+			else {
+				Z.debug("Items in this category will be ignored by Zotero: " + mainCategory);
 			}
 		}
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
-	//search results
-	var links = [],
-		container = doc.getElementById('searchTemplate');
-	if (container) {
-		
-		links = container.getElementsByClassName('s-access-detail-page');
-		if (!links.length) {
-			links = ZU.xpath(container, './/div[contains(@class,"results")]/div[starts-with(@id,"result_")]//h3/a');
-		}
-	}
+	// search results
+	var links = doc.querySelectorAll('div.s-result-list h2>a');
 	
-	if(!links.length) {
-		//wish lists
-		container = doc.getElementById('item-page-wrapper');
-		if(container) {
+	if (!links.length) {
+		// wish lists
+		var container = doc.getElementById('item-page-wrapper');
+		if (container) {
 			links = ZU.xpath(container, './/a[starts-with(@id, "itemName_")]');
 		}
 	}
 	
-	if(!links.length) {
-		//author pages
-		container = doc.getElementById('mainResults');
-		if(container) {
-			links = ZU.xpath(container, './/li[starts-with(@id, "result_")]//a[h2]');
-		}
+	if (!links.length) {
+		// author pages
+		links = ZU.xpath(doc, '//div[@id="searchWidget"]//a[span[contains(@class, "a-size-medium")]]');
 	}
 	
-	if(!links.length) return false;
+	if (!links.length) return false;
 	var availableItems = {}, found = false,
 		asinRe = /\/(?:dp|product)\/(?:[^?#]+)\//;
-	for(var i=0; i<links.length; i++) {
+	for (var i = 0; i < links.length; i++) {
 		var elmt = links[i];
-		if(asinRe.test(elmt.href)) {
+		if (asinRe.test(elmt.href)) {
 			if (checkOnly) return true;
 			availableItems[elmt.href] = elmt.textContent.trim();
 			found = true;
@@ -97,86 +99,90 @@ function getSearchResults(doc, checkOnly) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
-		Zotero.selectItems(getSearchResults(doc), function(items) {
-			if(!items) return true;
+	if (detectWeb(doc, url) == 'multiple') {
+		Zotero.selectItems(getSearchResults(doc), function (items) {
+			if (!items) return;
 			
 			var links = [];
-			for(var i in items) links.push(i);
+			for (var i in items) links.push(i);
 			Zotero.Utilities.processDocuments(links, scrape);
 		});
-
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function addLink(doc, item) {
-	item.attachments.push({title:"Amazon.com Link", snapshot:false, mimeType:"text/html", url:doc.location.href});
+	item.attachments.push({ title: "Amazon.com Link", snapshot: false, mimeType: "text/html", url: doc.location.href });
 }
 
 
 var CREATOR = {
-	"Actor":"castMember",
-	"Director":"director",
-	"Producer":"producer",
-	"Writer":"scriptwriter",
-	"Translator":"translator",
-	"Author":"author",
-	"Illustrator":"contributor",
-	"Editor": "editor"
+	Actor: "castMember",
+	Director: "director",
+	Producer: "producer",
+	Writer: "scriptwriter",
+	Translator: "translator",
+	Author: "author",
+	Illustrator: "contributor",
+	Editor: "editor"
 };
 
 var DATE = [
 	"Original Release Date",
-	"DVD Release Date"
+	"DVD Release Date",
+	"Erscheinungstermin",
+	"Date de sortie du DVD"
 ];
 
-//localization
+// localization
 var i15dFields = {
-	'ISBN' : ['ISBN-13', 'ISBN-10', 'ISBN', '条形码'],
-	'Publisher': ['Publisher', 'Verlag', '出版社'],
-	'Hardcover': ['Hardcover', 'Gebundene Ausgabe', '精装', 'ハードカバー', 'Relié', 'Copertina rigida', 'Tapa dura'],
-	'Paperback' : ['Paperback', 'Taschenbuch', '平装', 'ペーパーバック', 'Broché', 'Copertina flessibile', 'Tapa blanda'],
-	'Print Length' : ['Print Length', 'Seitenzahl der Print-Ausgabe', '紙の本の長さ', "Nombre de pages de l'édition imprimée", "Longueur d'impression", 'Poche', 'Broché', 'Lunghezza stampa', 'Longitud de impresión', 'Número de páginas'],//TODO: Chinese label
-	'Language' : ['Language', 'Sprache', '语种', '言語', 'Langue', 'Lingua', 'Idioma'],
-	'Author' : ['Author', '著', '作者'],
-	'Actor' : ['Actors', 'Actor', 'Darsteller', 'Acteurs', 'Attori', 'Attore', 'Actores', '出演'],
-	'Director' : ['Directors', 'Director', 'Regisseur', 'Regisseur(e)', 'Réalisateurs', 'Regista', 'Directores', '監督'],
-	'Producer' : ['Producers', 'Producer'],
-	'Run Time' : ['Run Time', 'Spieldauer', 'Durée', 'Durata', 'Duración', '時間'],
-	'Studio' : ['Studio', 'Estudio', '販売元'],
-	'Audio CD' : ['Audio CD', 'CD', 'CD de audio'],
-	'Label' : ['Label', 'Etichetta', 'Étiquette', 'Sello', '发行公司', 'レーベル'],
-	'Total Length' : ['Total Length', 'Gesamtlänge', 'Durée totale', 'Lunghezza totale', 'Duración total', '収録時間'],
-	'Translator' : ["Translator", "Übersetzer", "Traduttore", "Traductor", "翻訳"],
-	'Illustrator' : ["Illustrator", "Illustratore", "Ilustrador", "イラスト"],
-	'Writer' : ['Writers'],
-	'Editor' : ['Editor', 'Editora', 'Editeur', 'Éditeur', 'Editore']
+	ISBN: ['ISBN-13', 'ISBN-10', 'ISBN', '条形码'],
+	Publisher: ['Publisher', 'Verlag', '出版社'],
+	Hardcover: ['Hardcover', 'Gebundene Ausgabe', '精装', 'ハードカバー', 'Relié', 'Copertina rigida', 'Tapa dura'],
+	Paperback: ['Paperback', 'Taschenbuch', '平装', 'ペーパーバック', 'Broché', 'Copertina flessibile', 'Tapa blanda'],
+	'Print Length': ['Print Length', 'Seitenzahl der Print-Ausgabe', '紙の本の長さ', "Nombre de pages de l'édition imprimée", "Longueur d'impression", 'Poche', 'Broché', 'Lunghezza stampa', 'Longitud de impresión', 'Número de páginas'], // TODO: Chinese label
+	Language: ['Language', 'Sprache', '语种', '言語', 'Langue', 'Lingua', 'Idioma'],
+	Author: ['Author', '著', '作者'],
+	Actor: ['Actors', 'Actor', 'Darsteller', 'Acteurs', 'Attori', 'Attore', 'Actores', '出演'],
+	Director: ['Directors', 'Director', 'Regisseur', 'Regisseur(e)', 'Réalisateurs', 'Regista', 'Directores', '監督'],
+	Producer: ['Producers', 'Producer'],
+	'Run Time': ['Run Time', 'Spieldauer', 'Durée', 'Durata', 'Duración', '時間'],
+	Studio: ['Studio', 'Estudio', '販売元'],
+	'Audio CD': ['Audio CD', 'CD', 'CD de audio'],
+	Label: ['Label', 'Etichetta', 'Étiquette', 'Sello', '发行公司', 'レーベル'],
+	'Total Length': ['Total Length', 'Gesamtlänge', 'Durée totale', 'Lunghezza totale', 'Duración total', '収録時間'],
+	Translator: ["Translator", "Übersetzer", "Traduttore", "Traductor", "翻訳"],
+	Illustrator: ["Illustrator", "Illustratore", "Ilustrador", "イラスト"],
+	Writer: ['Writers'],
+	Editor: ['Editor', 'Editora', 'Editeur', 'Éditeur', 'Editore']
 };
 
 function getField(info, field) {
-	//returns the value for the key 'field' or any of its
-	//corresponding (language specific) keys of the array 'info'
+	// returns the value for the key 'field' or any of its
+	// corresponding (language specific) keys of the array 'info'
 	
-	if(!i15dFields[field]) return;
+	if (!i15dFields[field]) return false;
 	
-	for(var i=0; i<i15dFields[field].length; i++) {
-		if(info[i15dFields[field][i]] !== undefined) return info[i15dFields[field][i]];	
+	for (var i = 0; i < i15dFields[field].length; i++) {
+		if (info[i15dFields[field][i]] !== undefined) return info[i15dFields[field][i]];
 	}
+	return false;
 }
 
 function translateField(str) {
-	for(var f in i15dFields) {
-		if(i15dFields[f].indexOf(str) != -1) {
+	for (var f in i15dFields) {
+		if (i15dFields[f].includes(str)) {
 			return f;
 		}
 	}
+	return false;
 }
 
 
 function scrape(doc, url) {
-	var isAsian = url.search(/^https?:\/\/[^\/]+\.(?:jp|cn)[:\/]/) != -1;
+	var isAsian = url.search(/^https?:\/\/[^/]+\.(?:jp|cn)[:/]/) != -1;
 	// Scrape HTML for items without ISBNs, because Amazon doesn't provide an easy way for
 	// open source projects like us to use their API
 	Z.debug("Scraping from Page");
@@ -186,17 +192,18 @@ function scrape(doc, url) {
 		|| doc.getElementById('title_row')
 		|| doc.getElementById('productTitle')
 		|| doc.getElementById('ebooksProductTitle')
-		|| doc.getElementById('title_feature_div');
+		|| doc.getElementById('title_feature_div')
+		|| doc.getElementById('dmusicProductTitle_feature_div');
 	// get first non-empty text node (other text nodes are things like [Paperback] and dates)
 	item.title = ZU.trimInternal(
-			ZU.xpathText(title, '(.//text()[normalize-space(self::text())])[1]')
-		)
+		ZU.xpathText(title, '(.//text()[normalize-space(self::text())])[1]')
+	)
 		// though sometimes [Paperback] or [DVD] is mushed with the title...
-		.replace(/(?: [(\[].+[)\]])+$/, "");
+		.replace(/(?: [([].+[)\]])+$/, "");
 	
 	var baseNode = title.parentElement, bncl;
-	while(baseNode && (bncl = baseNode.classList) && 
-		!(// ways to identify a node encompasing title and authors
+	while (baseNode && (bncl = baseNode.classList)
+		&& !(// ways to identify a node encompasing title and authors
 			baseNode.id == 'booksTitle'
 			|| baseNode.id == 'ppd-center'
 			|| baseNode.id == 'title_feature_div'
@@ -209,55 +216,56 @@ function scrape(doc, url) {
 		baseNode = baseNode.parentElement;
 	}
 	
-	if(baseNode) {
+	if (baseNode) {
 		var authors = ZU.xpath(baseNode, './/span[@id="artistBlurb"]/a');
-		//if(!authors.length) authors = baseNode.getElementsByClassName('contributorNameID');
-		if(!authors.length) authors = ZU.xpath(baseNode, '(.//*[@id="byline"]/span[contains(@class, "author")] | .//*[@id="byline"]/span[contains(@class, "author")]/span)/a[contains(@class, "a-link-normal")][1]');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/span[@class="contributorNameTrigger"]/a[not(@href="#")]');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/span[contains(@class, "author")]/a|.//span[contains(@class, "author")]/span/a');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/a[following-sibling::*[1][@class="byLinePipe"]]');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/a[contains(@href, "field-author=")]');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
-		if(!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
-		for(var i=0; i<authors.length; i++) {
+		// if (!authors.length) authors = baseNode.getElementsByClassName('contributorNameID');
+		if (!authors.length) authors = ZU.xpath(baseNode, '(.//*[@id="byline"]/span[contains(@class, "author")] | .//*[@id="byline"]/span[contains(@class, "author")]/span)/a[contains(@class, "a-link-normal")][1]');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/span[@class="contributorNameTrigger"]/a[not(@href="#")]');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/span[contains(@class, "author")]/a|.//span[contains(@class, "author")]/span/a');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/a[following-sibling::*[1][@class="byLinePipe"]]');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/a[contains(@href, "field-author=")]');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
+		if (!authors.length) authors = ZU.xpath(baseNode, './/a[@id="ProductInfoArtistLink"]');
+		for (let i = 0; i < authors.length; i++) {
 			var role = ZU.xpathText(authors[i], '(.//following::text()[normalize-space(self::text())])[1]');
-			if(role) {
+			if (role) {
 				role = CREATOR[translateField(
 					role.replace(/^.*\(\s*|\s*\).*$/g, '')
 						.split(',')[0] // E.g. "Actor, Primary Contributor"
 						.trim()
 				)];
 			}
-			if(!role) role = 'author';
+			if (!role) role = 'author';
 			
 			var name = ZU.trimInternal(authors[i].textContent)
 				.replace(/\s*\([^)]+\)/, '');
 			
-			if(item.itemType == 'audioRecording') {
+			if (item.itemType == 'audioRecording') {
 				item.creators.push({
 					lastName: name,
 					creatorType: 'performer',
 					fieldMode: 1
 				});
-			} else {
+			}
+			else {
 				var invertName = isAsian && !(/[A-Za-z]/.test(name));
 				if (invertName) {
 					// Use last character as given name if there is no space
-					if (name.indexOf(' ') == -1) name = name.replace(/.$/, ' $&');
+					if (!name.includes(' ')) name = name.replace(/.$/, ' $&');
 					name = name.replace(/\s+/, ', '); // Surname comes first
 				}
-				item.creators.push(ZU.cleanAuthor(name, role, invertName));
+				item.creators.push(ZU.cleanAuthor(name, role, name.includes(',')));
 			}
 		}
 	}
 	
-	//Abstract
+	// Abstract
 	var abstractNode = doc.getElementById('postBodyPS');
 	if (abstractNode) {
 		item.abstractNote = abstractNode.textContent.trim();
 		if (!item.abstractNote) {
 			var iframe = abstractNode.getElementsByTagName('iframe')[0];
-			if(iframe) {
+			if (iframe) {
 				abstractNode = iframe.contentWindow.document.getElementById('iframeContent');
 				item.abstractNote = abstractNode.textContent.trim();
 			}
@@ -267,22 +275,23 @@ function scrape(doc, url) {
 	// Extract info into an array
 	var info = {},
 		els = ZU.xpath(doc, '//div[@class="content"]/ul/li[b]');
-	if(els.length) {
-		for(var i=0; i<els.length; i++) {
-			var el = els[i],
+	if (els.length) {
+		for (let i = 0; i < els.length; i++) {
+			let el = els[i],
 				key = ZU.xpathText(el, 'b[1]').trim();
-			if(key) {
-				info[key.replace(/\s*:$/, "")] = el.textContent.substr(key.length+1).trim();
+			if (key) {
+				info[key.replace(/\s*:$/, "")] = el.textContent.substr(key.length + 1).trim();
 			}
 		}
-	} else {
+	}
+	else {
 		// New design encountered 06/30/2013
 		els = ZU.xpath(doc, '//tr[td[@class="a-span3"]][td[@class="a-span9"]]');
-		for(var i=0; i<els.length; i++) {
-			var el = els[i],
+		for (let i = 0; i < els.length; i++) {
+			let el = els[i],
 				key = ZU.xpathText(el, 'td[@class="a-span3"]'),
 				value = ZU.xpathText(el, 'td[@class="a-span9"]');
-			if(key && value) info[key.trim()] = value.trim();
+			if (key && value) info[key.trim()] = value.trim();
 		}
 	}
 	
@@ -292,42 +301,42 @@ function scrape(doc, url) {
 	}
 	
 	// Date
-	for(var i=0; i<DATE.length; i++) {
+	for (let i = 0; i < DATE.length; i++) {
 		item.date = info[DATE[i]];
-		if(item.date) break;
+		if (item.date) break;
 	}
-	if(!item.date) {
-		for(var i in info) {
-			var m = /\(([^)]+ [0-9]{4})\)/.exec(info[i]);
-			if(m) item.date = m[1];
+	if (!item.date) {
+		for (let i in info) {
+			let m = /\(([^)]+ [0-9]{4})\)/.exec(info[i]);
+			if (m) item.date = m[1];
 		}
 	}
 	
 	// Books
 	var publisher = getField(info, 'Publisher') || getField(info, 'Editor');
-	if(publisher) {
+	if (publisher) {
 		var m = /([^;(]+)(?:;? *([^(]*))?(?:\(([^)]*)\))?/.exec(publisher);
 		item.publisher = m[1].trim();
-		if(m[2]) item.edition = m[2].trim().replace(/^(Auflage|Édition)\s?:/, '');
-		if(m[3] && m[3].search(/\b\d{4}\b/) != -1) item.date = m[3].trim(); // Looks like a date
+		if (m[2]) item.edition = m[2].trim().replace(/^(Auflage|Édition)\s?:/, '');
+		if (m[3] && m[3].search(/\b\d{4}\b/) != -1) item.date = m[3].trim(); // Looks like a date
 	}
 	var pages = getField(info, 'Hardcover') || getField(info, 'Paperback') || getField(info, 'Print Length');
-	if(pages) item.numPages = parseInt(pages, 10);
+	if (pages) item.numPages = parseInt(pages);
 	item.language = getField(info, 'Language');
-	//add publication place from ISBN translator, see at the end
+	// add publication place from ISBN translator, see at the end
 	
 	// Video
 	if (item.itemType == 'videoRecording') {
 		// This seems to only be worth it for videos
 		var clearedCreators = false;
-		for(var i in CREATOR) {
-			if(getField(info, i)) {
-				if(!clearedCreators) {
+		for (var i in CREATOR) {
+			if (getField(info, i)) {
+				if (!clearedCreators) {
 					item.creators = [];
 					clearedCreators = true;
 				}
 				var creators = getField(info, i).split(/ *, */);
-				for(var j=0; j<creators.length; j++) {
+				for (var j = 0; j < creators.length; j++) {
 					item.creators.push(ZU.cleanAuthor(creators[j], CREATOR[i]));
 				}
 			}
@@ -340,26 +349,27 @@ function scrape(doc, url) {
 	// Music
 	item.label = getField(info, 'Label');
 	var department = ZU.xpathText(doc, '//li[contains(@class, "nav-category-button")]/a');
-	if(getField(info, 'Audio CD')) {
+	if (getField(info, 'Audio CD')) {
 		item.audioRecordingFormat = "Audio CD";
-	} else if(department && department.trim() == "Amazon MP3 Store") {
+	}
+	else if (department && department.trim() == "Amazon MP3 Store") {
 		item.audioRecordingFormat = "MP3";
 	}
 	
 	addLink(doc, item);
 	
-	//we search for translators for a given ISBN
-	//and try to figure out the missing publication place
-	if(item.ISBN && !item.place) {
+	// we search for translators for a given ISBN
+	// and try to figure out the missing publication place
+	if (item.ISBN && !item.place) {
 		Z.debug("Searching for additional metadata by ISBN: " + item.ISBN);
 		var search = Zotero.loadTranslator("search");
-		search.setHandler("translators", function(obj, translators) {
+		search.setHandler("translators", function (obj, translators) {
 			search.setTranslator(translators);
-			search.setHandler("itemDone", function(obj, lookupItem) {
+			search.setHandler("itemDone", function (obj, lookupItem) {
 				Z.debug(lookupItem.libraryCatalog);
 				if (lookupItem.place) {
-					//e.g. [Paris]
-					item.place = lookupItem.place.replace("[","").replace("]","");
+					// e.g. [Paris]
+					item.place = lookupItem.place.replace("[", "").replace("]", "");
 				}
 				
 				if (!item.date && lookupItem.date) {
@@ -368,20 +378,19 @@ function scrape(doc, url) {
 			});
 			search.translate();
 		});
-		search.setHandler("error", function(error) {
+		search.setHandler("error", function (error) {
 			// we mostly need this handler to prevent the default one from kicking in
 			Z.debug("ISBN search for " + item.ISBN + " failed: " + error);
 		});
-		search.setHandler("done", function() {
+		search.setHandler("done", function () {
 			item.complete();
 		});
 		search.setSearch({ ISBN: item.ISBN });
 		search.getTranslators();
-		
-	} else {
+	}
+	else {
 		item.complete();
 	}
-	
 }
 
 
@@ -403,13 +412,13 @@ var testCases = [
 				],
 				"date": "April 1, 2010",
 				"ISBN": "9780810989894",
-				"abstractNote": "Now in paperback! Pass, and have it made. Fail, and suffer the consequences. A master of teen thrillers tests readers’ courage in an edge-of-your-seat novel that echoes the fears of exam-takers everywhere. Ann, a teenage girl living in the security-obsessed, elitist United States of the very near future, is threatened on her way home from school by a mysterious man on a black motorcycle. Soon she and a new friend are caught up in a vast conspiracy of greed involving the mega-wealthy owner of a school testing company. Students who pass his test have it made; those who don’t, disappear . . . or worse. Will Ann be next? For all those who suspect standardized tests are an evil conspiracy, here’s a thriller that really satisfies! Praise for Test “Fast-paced with short chapters that end in cliff-hangers . . . good read for moderately reluctant readers. Teens will be able to draw comparisons to contemporary society’s shift toward standardized testing and ecological concerns, and are sure to appreciate the spoofs on NCLB.” —School Library Journal “Part mystery, part action thriller, part romance . . . environmental and political overtones . . . fast pace and unique blend of genres holds attraction for younger teen readers.” —Booklist",
-				"edition": "Reprint edition",
+				"abstractNote": "Now in paperback! Pass, and have it made. Fail, and suffer the consequences. A master of teen thrillers tests readers’ courage in an edge-of-your-seat novel that echoes the fears of exam-takers everywhere. Ann, a teenage girl living in the security-obsessed, elitist United States of the very near future, is threatened on her way home from school by a mysterious man on a black motorcycle. Soon she and a new friend are caught up in a vast conspiracy of greed involving the mega-wealthy owner of a school testing company. Students who pass his test have it made; those who don’t, disappear . . . or worse. Will Ann be next? For all those who suspect standardized tests are an evil conspiracy, here’s a thriller that really satisfies! Praise for Test “Fast-paced with short chapters that end in cliff-hangers . . . good read for moderately reluctant readers. Teens will be able to draw comparisons to contemporary society’s shift toward standardized testing and ecological concerns, and are sure to appreciate the spoofs on NCLB.” ―School Library Journal “Part mystery, part action thriller, part romance . . . environmental and political overtones . . . fast pace and unique blend of genres holds attraction for younger teen readers.” ―Booklist",
+				"edition": "Reprint",
 				"language": "English",
 				"libraryCatalog": "Amazon",
 				"numPages": 320,
 				"place": "New York",
-				"publisher": "Harry N. Abrams",
+				"publisher": "Amulet Paperbacks",
 				"attachments": [
 					{
 						"title": "Amazon.com Link",
@@ -430,7 +439,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.com/Loveless-My-Bloody-Valentine/dp/B000002LRJ/ref=ntt_mus_ep_dpi_1",
+		"url": "https://www.amazon.com/Loveless-My-Bloody-Valentine/dp/B000002LRJ/ref=ntt_mus_ep_dpi_1",
 		"items": [
 			{
 				"itemType": "audioRecording",
@@ -438,7 +447,7 @@ var testCases = [
 				"creators": [],
 				"date": "November 5, 1991",
 				"audioRecordingFormat": "Audio CD",
-				"label": "Sire / London/Rhino",
+				"label": "Sire",
 				"libraryCatalog": "Amazon",
 				"attachments": [
 					{
@@ -460,7 +469,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.com/Adaptation-Superbit-Collection-Nicholas-Cage/dp/B00005JLRE/ref=sr_1_1?ie=UTF8&qid=1309683150&sr=8-1",
+		"url": "https://www.amazon.com/Adaptation-Superbit-Collection-Nicholas-Cage/dp/B00005JLRE/ref=sr_1_1?ie=UTF8&qid=1309683150&sr=8-1",
 		"items": [
 			{
 				"itemType": "videoRecording",
@@ -495,21 +504,6 @@ var testCases = [
 						"firstName": "Spike",
 						"lastName": "Jonze",
 						"creatorType": "director"
-					},
-					{
-						"firstName": "Ed",
-						"lastName": "Saxon",
-						"creatorType": "producer"
-					},
-					{
-						"firstName": "Jonathan",
-						"lastName": "Demme",
-						"creatorType": "producer"
-					},
-					{
-						"firstName": "Vincent",
-						"lastName": "Landay",
-						"creatorType": "producer"
 					}
 				],
 				"date": "May 20, 2003",
@@ -587,8 +581,8 @@ var testCases = [
 				],
 				"date": "1. Mai 1992",
 				"ISBN": "9783596105816",
-				"abstractNote": "Gleich bei seinem Erscheinen in den 40er Jahren löste Jorge Luis Borges’ erster Erzählband »Fiktionen« eine literarische Revolution aus. Erfundene Biographien, fiktive Bücher, irreale Zeitläufe und künstliche Realitäten verflocht Borges zu einem geheimnisvollen Labyrinth, das den Leser mit seinen Rätseln stets auf neue herausfordert. Zugleich begründete er mit seinen berühmten Erzählungen wie»›Die Bibliothek zu Babel«, «Die kreisförmigen Ruinen« oder»›Der Süden« den modernen »Magischen Realismus«.   »Obwohl sie sich im Stil derart unterscheiden, zeigen zwei Autoren uns ein Bild des nächsten Jahrtausends: Joyce und Borges.« Umberto Eco",
-				"edition": "13",
+				"abstractNote": "Gleich bei seinem Erscheinen in den 40er Jahren löste Jorge Luis Borges’ erster Erzählband »Fiktionen« eine literarische Revolution aus. Erfundene Biographien, fiktive Bücher, irreale Zeitläufe und künstliche Realitäten verflocht Borges zu einem geheimnisvollen Labyrinth, das den Leser mit seinen Rätseln stets auf neue herausfordert. Zugleich begründete er mit seinen berühmten Erzählungen wie»›Die Bibliothek zu Babel«, «Die kreisförmigen Ruinen« oder»›Der Süden« den modernen »Magischen Realismus«. »Obwohl sie sich im Stil derart unterscheiden, zeigen zwei Autoren uns ein Bild des nächsten Jahrtausends: Joyce und Borges.« Umberto Eco",
+				"edition": "14",
 				"language": "Deutsch",
 				"libraryCatalog": "Amazon",
 				"numPages": 192,
@@ -660,8 +654,8 @@ var testCases = [
 						"creatorType": "contributor"
 					},
 					{
-						"firstName": "A. Palme",
-						"lastName": "Sanavio",
+						"firstName": "A.",
+						"lastName": "Palme Larussa Sanavio",
 						"creatorType": "translator"
 					}
 				],
@@ -833,9 +827,9 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "August 2, 2012",
+				"date": "2012/8/2",
 				"ISBN": "9780099578079",
-				"edition": "Combined volume edition",
+				"edition": "Combined volume版",
 				"language": "英語",
 				"libraryCatalog": "Amazon",
 				"numPages": 1328,
@@ -861,49 +855,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.com/About-Nothing-Shakespeares-Globe-Theatre/dp/B00AJER4EM/ref=sr_1_1/175-9708720-8034706?ie=UTF8&qid=1409188213&sr=8-1&keywords=globe+shakespeare",
-		"items": [
-			{
-				"itemType": "videoRecording",
-				"title": "Much Ado About Nothing",
-				"creators": [
-					{
-						"firstName": "Charles",
-						"lastName": "Edwards",
-						"creatorType": "castMember"
-					},
-					{
-						"firstName": "Eve",
-						"lastName": "Best",
-						"creatorType": "castMember"
-					},
-					{
-						"firstName": "Shakespeare's Globe",
-						"lastName": "Theatre",
-						"creatorType": "director"
-					}
-				],
-				"date": "February 26, 2013",
-				"language": "English",
-				"libraryCatalog": "Amazon",
-				"runningTime": "166 minutes",
-				"studio": "Kultur",
-				"attachments": [
-					{
-						"title": "Amazon.com Link",
-						"snapshot": false,
-						"mimeType": "text/html"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "https://www.amazon.com/First-Quarto-Hamlet-Cambridge-Shakespeare/dp/0521653908/",
+		"url": "https://www.amazon.com/First-Quarto-Hamlet-Cambridge-Shakespeare-dp-0521418194/dp/0521418194/ref=mt_hardcover?_encoding=UTF8&me=&qid=",
 		"items": [
 			{
 				"itemType": "book",
@@ -920,13 +872,14 @@ var testCases = [
 						"creatorType": "editor"
 					}
 				],
-				"date": "April 13, 1999",
-				"ISBN": "9780521653909",
+				"date": "28. April 1998",
+				"ISBN": "9780521418195",
 				"abstractNote": "The first printed text of Shakespeare's Hamlet is about half the length of the more familiar second quarto and Folio versions. It reorders and combines key plot elements to present its own workable alternatives. This is the only modernized critical edition of the 1603 quarto in print. Kathleen Irace explains its possible origins, special features and surprisingly rich performance history, and while describing textual differences between it and other versions, offers alternatives that actors or directors might choose for specific productions.",
+				"edition": "First Edition",
 				"language": "English",
 				"libraryCatalog": "Amazon",
 				"numPages": 144,
-				"place": "Cambridge",
+				"place": "New York",
 				"publisher": "Cambridge University Press",
 				"attachments": [
 					{
@@ -955,7 +908,7 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "September 16, 1977",
+				"date": "1977/9/16",
 				"ISBN": "9784003314210",
 				"language": "日本語",
 				"libraryCatalog": "Amazon",
@@ -975,7 +928,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.amazon.com/gp/product/B00TWK3NFS",
+		"url": "https://www.amazon.com/gp/product/B00TWK3NFS",
 		"items": [
 			{
 				"itemType": "book",
@@ -989,12 +942,47 @@ var testCases = [
 				],
 				"date": "April 3, 2015",
 				"abstractNote": "Streamline KPIs to craft a simpler, more effective system of performance measurement Key Performance Indicators provides an in-depth look at how KPIs can be most effectively used to assess and drive organizational performance. Now in its third edition, this bestselling guide provides a model for simplifying KPIs and avoiding the pitfalls ready to trap the unprepared organization. New information includes guidance toward defining critical success factors, project leader essentials, new tools including worksheets and questionnaires, and real-world case studies that illustrate the practical application of the strategies presented. The book includes a variety of templates, checklists, and performance measures to help streamline processes, and is fully supported by the author’s website to provide even more in-depth information. Key Performance Indicators are a set of measures that focus on the factors most critical to an organization’s success. Most companies have too many, rendering the strategy ineffective due to overwhelming complexity. Key Performance Indicators guides readers toward simplification, paring down to the most fundamental issues to better define and measure progress toward goals. Readers will learn to:  separate out performance measures between those that can be tied to a team and result in a follow-up phone call (performance measures) and those that are a summation of a number of teams working together (result indicators) look for and eradicate those measures that have a damaging unintended consequence, a major darkside Sell a KPI project to the Board, the CEO, and the senior management team using best practice leading change techniques Develop and use KPIs effectively with a simple five stage  model Ascertain essential performance measures, and develop a reporting strategy   Learn the things that a KPI project leader needs to know  A KPI project is a chance at a legacy – the project leader, facilitator, or coordinator savvy enough to craft a winning strategy can affect the organization for years to come. KPI projects entail some risk, but this book works to minimize that risk by arming stakeholders with the tools and information they need up front. Key Performance Indicators helps leaders shape a performance measurement initiative that works.",
-				"edition": "3 edition",
+				"edition": "3",
 				"language": "English",
 				"libraryCatalog": "Amazon",
 				"numPages": 412,
 				"publisher": "Wiley",
 				"shortTitle": "Key Performance Indicators",
+				"attachments": [
+					{
+						"title": "Amazon.com Link",
+						"snapshot": false,
+						"mimeType": "text/html"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.amazon.com/Studies-Saiva-Siddhanta-Classic-Reprint-Nallasvami/dp/1333821387/ref=sr_1_1?keywords=saiva+siddhanta&s=gateway",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Studies in Saiva-Siddhanta",
+				"creators": [
+					{
+						"firstName": "J. M. Nallasvami",
+						"lastName": "Pillai",
+						"creatorType": "author"
+					}
+				],
+				"date": "24. April 2018",
+				"ISBN": "9781333821388",
+				"abstractNote": "Excerpt from Studies in Saiva-SiddhantaEuropean Sanskritist, unaware perhaps of the bearings of the expression, rendered the collocation Parama-hamsa' into 'great goose'. The strictly pedagogic purist may endeavour to justify such puerile versions on etymological grounds, but they stand Self-condemned as mal-interpretations reﬂecting anything but the sense and soul of the original. Such lapses into unwitting ignorance, need never be expected in any of the essays contained in the present collection, as our author is not only a sturdy and indefatigable researcher in Tamil philosophic literature illuminative Of the Agamic religion, but has also, in his quest after Truth, freely utilised the services of those Indigenous savam's, who represent the highest water-mark of Hindu traditional learning and spiritual associations at the present-day.About the PublisherForgotten Books publishes hundreds of thousands of rare and classic books. Find more at www.forgottenbooks.comThis book is a reproduction of an important historical work. Forgotten Books uses state-of-the-art technology to digitally reconstruct the work, preserving the original format whilst repairing imperfections present in the aged copy. In rare cases, an imperfection in the original, such as a blemish or missing page, may be replicated in our edition. We do, however, repair the vast majority of imperfections successfully; any imperfections that remain are intentionally left to preserve the state of such historical works.",
+				"language": "English",
+				"libraryCatalog": "Amazon",
+				"numPages": 398,
+				"place": "Place of publication not identified",
+				"publisher": "Forgotten Books",
 				"attachments": [
 					{
 						"title": "Amazon.com Link",

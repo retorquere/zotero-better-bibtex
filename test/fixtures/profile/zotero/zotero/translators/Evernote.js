@@ -11,7 +11,7 @@
 	},
 	"inRepository": false,
 	"translatorType": 2,
-	"lastUpdated":"2015-07-20 06:39:12"
+	"lastUpdated":"2019-10-11 07:30:00"
 }
 
 /*
@@ -34,47 +34,71 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 function doExport() {
 	Zotero.setCharacterSet("utf-8");
-
-	var evernoteString = "<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE en-export SYSTEM 'http://xml.evernote.com/pub/evernote-export.dtd'><en-export application='Zotero' version='"+Zotero.Utilities.getVersion()+"'>";
-
+	var evernoteString = "<?xml version='1.0' encoding='UTF-8'?>\n<!DOCTYPE en-export SYSTEM 'http://xml.evernote.com/pub/evernote-export.dtd'>\n<en-export application='Zotero' version='" + Zotero.Utilities.getVersion() + "'>\n";
 	var item;
-
-	while(item = Zotero.nextItem()) {
-
-		var itemString = "<note>";
-
-		itemString += "<title>"+item.title+"</title>";
-
-		itemString += "<content><![CDATA[<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE en-note SYSTEM 'http://xml.evernote.com/pub/enml2.dtd'>";
+	// eslint-disable-next-line no-cond-assign
+	while (item = Zotero.nextItem()) {
+		var itemString = "<note>\n";
+		var title = item.title || "[Untitled]";
+		// encode brackets <>
+		title = title.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		// title cannot be longer than 255
+		if (title.length > 252) {
+			title = title.substr(0, 252) + "...";
+		}
+		itemString += "    <title>" + title + "</title>\n";
+		itemString += "    <content>\n";
+		itemString += "        <![CDATA[<?xml version='1.0' encoding='UTF-8'?><!DOCTYPE en-note SYSTEM 'http://xml.evernote.com/pub/enml2.dtd'>\n";
+		itemString += "        <en-note>\n";
 
 		/** NOTES **/
-		if(item.notes && Zotero.getOption("exportNotes")) {
-			itemString += "<en-note>";
-			for(var i in item.notes) {
-				itemString += "<div>"+item.notes[i].note+"<br/></div>";
+		if (item.notes && item.notes.length > 0 && Zotero.getOption("exportNotes")) {
+			for (let i in item.notes) {
+				// delete all class and id attributes, because these will
+				// otherwise create an error when importing in Evernote
+				let noteContent = item.notes[i].note
+					.replace(/(<[^>]*) class="[^"]+"([^>]*>)/g, "$1$2")
+					.replace(/(<[^>]*) id="[^"]+"([^>]*>)/g, "$1$2");
+				// delete elements like html, body, head which might create
+				// another problem when importing in Evernote
+				noteContent = noteContent.replace(/<\/?(html|head|body)[^>]*>/g, '');
+				itemString += "            <div>" + noteContent + "<br/></div>\n";
 			}
-			itemString += "</en-note>]]>";
-		}		
+		}
+		itemString += "        </en-note>]]>\n";
+		itemString += "    </content>\n";
 
-		var dateToFormat = new String(item.date);
-		var evernoteDate = dateToFormat.replace(/-/g, "");
-
-		itemString += "</content><created>"+evernoteDate+"T000000Z</created>";	
+		var dateCreated = item.dateAdded.replace(/[-:]/g, "").replace(" ", "T") + "Z";
+		itemString += "    <created>" + dateCreated + "</created>\n";
+		var dateUpdated = item.dateModified.replace(/[-:]/g, "").replace(" ", "T") + "Z";
+		itemString += "    <updated>" + dateUpdated + "</updated>\n";
 
 		/** TAGS **/
-		for(var j in item.tags) {
-			itemString += "<tag>"+item.tags[j].tag+"</tag>";
+		for (var j in item.tags) {
+			let tag = item.tags[j].tag;
+			// comma is not allowed in tags
+			tag = tag.replace(/\s*,\s*/g, ' / ');
+			// encode brackets <>
+			tag = tag.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			// in Evernote tags must be smaller than 100 characters
+			if (tag.length > 95) {
+				tag = tag.substr(0, 95) + "...";
+			}
+			itemString += "    <tag>" + tag + "</tag>\n";
 		}
 
-		itemString += "<note-attributes><source>web.clip</source><source-url>"+item.url+"</source-url></note-attributes></note>";
+		itemString += "    <note-attributes>\n";
+		itemString += "        <source>web.clip</source>\n";
+		itemString += "        <source-url>" + item.url + "</source-url>\n";
+		itemString += "    </note-attributes>\n";
+		itemString += "</note>\n";
 
 		// replace "&" with "&amp;"
-		itemString = itemString.replace(/\&/g, "&amp;");
+		itemString = itemString.replace(/&/g, "&amp;");
 
 		evernoteString += itemString;
-
 	}
 
 	Zotero.write(evernoteString);
-	Zotero.write("</en-export>");
+	Zotero.write("</en-export>\n");
 }

@@ -32,7 +32,10 @@
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale>
-    <style-options name-as-sort-order="ko zh ja hu my km vi" name-never-short="my ko zh ja hu km vi"/>
+    <style-options
+        name-as-sort-order="ko zh ja hu my km vi"
+        name-never-short="my ko zh ja hu km vi"
+        jurisdiction-preference="englished"/>
     <terms>
       <term name="paragraph" form="static">[%s]</term>
     </terms>
@@ -1337,10 +1340,9 @@
         </else-if>
       </choose>
       <choose>
-        <if match="none" type="treaty book chapter article-journal report"/>
-        <else-if>
+        <if>
           <conditions match="all">
-            <condition match="any" type="article-journal"/>
+            <condition match="any" type="article-journal article-newspaper report webpage post-weblog"/>
             <condition match="none" variable="page"/>
           </conditions>
           <group delimiter=" ">
@@ -1352,9 +1354,9 @@
                 </group>
               </if>
             </choose>
-            <text variable="URL" prefix=""/>
+            <text variable="URL" form="short"/>
           </group>
-        </else-if>
+        </if>
       </choose>
     </group>
   </macro>
@@ -1369,24 +1371,23 @@
         </else-if>
       </choose>
       <choose>
-        <if variable="issued" match="none">
-          <group delimiter=" ">
-            <text term="accessed" text-case="capitalize-first"/>
-            <date variable="accessed" form="text"/>
-          </group>
-        </if>
-      </choose>
-      <choose>
-        <if match="none" type="treaty book chapter article-journal report">
-          <text variable="URL"/>
-        </if>
-        <else-if>
+        <if>
           <conditions match="all">
-            <condition match="any" type="article-journal"/>
+            <condition match="any" type="article-journal article-newspaper report webpage post-weblog"/>
             <condition match="none" variable="page"/>
           </conditions>
-          <text variable="URL" prefix=""/>
-        </else-if>
+          <group delimiter=" ">
+            <choose>
+              <if variable="issued" match="none">
+                <group delimiter=" ">
+                  <text term="accessed"/>
+                  <date variable="accessed" form="text"/>
+                </group>
+              </if>
+            </choose>
+            <text variable="URL"/>
+          </group>
+        </if>
       </choose>
     </group>
   </macro>
@@ -1422,7 +1423,6 @@
   <macro name="jurism">
    <choose>
       <if position="ibid-with-locator">
-
         <group delimiter=" ">
           <text term="ibid" font-style="italic"/>
           <group delimiter=" ">
@@ -1558,7 +1558,7 @@
                         <condition match="all" type="report"/>
                         <condition match="none" variable="title committee"/>
                       </conditions>
-                      <text macro="juris-main"/>
+                        <text macro="juris-main"/>
                     </if>
                     <else-if>
                       <conditions match="all">
@@ -1856,6 +1856,17 @@
             </group>
           </group>
         </else-if>
+          <else-if type="classic">
+            <group delimiter=", ">
+              <names variable="author">
+                <name/>
+                <substitute>
+                  <names variable="editor"/>
+                </substitute>
+              </names>
+              <text variable="title"/>
+            </group>
+          </else-if>
         <else>
           <group delimiter=", ">
             <group delimiter=": ">
@@ -1892,7 +1903,7 @@
       </choose>
     </layout>
   </citation>
-  <bibliography hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0">
+  <bibliography exclude-types="classic" hanging-indent="true" et-al-min="11" et-al-use-first="7" subsequent-author-substitute="&#8212;&#8212;&#8212;" entry-spacing="0">
     <sort>
       <key macro="category"/>
       <key macro="contributors-sort"/>

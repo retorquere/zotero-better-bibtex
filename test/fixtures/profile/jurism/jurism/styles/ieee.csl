@@ -4,8 +4,7 @@
     <title>IEEE</title>
     <id>http://www.zotero.org/styles/ieee</id>
     <link href="http://www.zotero.org/styles/ieee" rel="self"/>
-    <link href="http://www.ieee.org/documents/stylemanual.pdf" rel="documentation"/>
-    <link href="http://www.ieee.org/documents/auinfo07.pdf" rel="documentation"/>
+    <link href="https://www.ieee.org/content/dam/ieee-org/ieee/web/org/conferences/style_references_manual.pdf" rel="documentation"/>
     <author>
       <name>Michael Berkowitz</name>
       <email>mberkowi@gmu.edu</email>
@@ -25,10 +24,15 @@
     <contributor>
       <name>Sebastian Karcher</name>
     </contributor>
+    <contributor>
+      <name>Giuseppe Silano</name>
+      <email>g.silano89@gmail.com</email>
+      <uri>http://giuseppesilano.net</uri>
+    </contributor>
     <category citation-format="numeric"/>
     <category field="engineering"/>
     <category field="generic-base"/>
-    <updated>2012-10-18T22:38:43+00:00</updated>
+    <updated>2019-01-02T15:01:14+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -39,6 +43,13 @@
     </terms>
   </locale>
   <!-- Macros -->
+  <macro name="status">
+    <choose>
+      <if variable="page issue volume" match="none">
+        <text variable="status" text-case="capitalize-first" suffix="" font-weight="bold"/>
+      </if>
+    </choose>
+  </macro>
   <macro name="edition">
     <choose>
       <if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
@@ -64,7 +75,7 @@
           <date-part name="year" form="long"/>
         </date>
       </if>
-      <else-if type=" bill book chapter graphic legal_case legislation motion_picture paper-conference song thesis" match="any">
+      <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference song thesis" match="any">
         <date variable="issued">
           <date-part name="year" form="long"/>
         </date>
@@ -80,8 +91,9 @@
   </macro>
   <macro name="author">
     <names variable="author">
-      <name initialize-with=". " delimiter=", " and="text"/>
+      <name and="text" et-al-min="7" et-al-use-first="1" initialize-with=". "/>
       <label form="short" prefix=", " text-case="capitalize-first"/>
+      <et-al font-style="italic"/>
       <substitute>
         <names variable="editor"/>
         <names variable="translator"/>
@@ -123,7 +135,7 @@
   </macro>
   <macro name="publisher">
     <choose>
-      <if type=" bill book chapter graphic legal_case legislation motion_picture paper-conference song" match="any">
+      <if type="bill book chapter graphic legal_case legislation motion_picture paper-conference song" match="any">
         <group delimiter=": ">
           <text variable="publisher-place"/>
           <text variable="publisher"/>
@@ -238,6 +250,7 @@
             <text macro="locators"/>
             <text macro="page"/>
             <text macro="issued"/>
+            <text macro="status"/>
           </group>
         </if>
         <else-if type="paper-conference speech" match="any">
@@ -247,6 +260,7 @@
             <text macro="issued"/>
             <text macro="locators"/>
             <text macro="page"/>
+            <text macro="status"/>
           </group>
         </else-if>
         <else-if type="report">
@@ -277,9 +291,11 @@
           <text macro="access"/>
         </else-if>
         <else-if type="patent">
-          <text macro="title" suffix=", "/>
-          <text variable="number" prefix=" "/>
-          <text macro="issued"/>
+          <group delimiter=", ">
+            <text macro="title"/>
+            <text variable="number"/>
+            <text macro="issued"/>
+          </group>
         </else-if>
         <!-- Generic/Fallback Formats -->
         <else-if type="bill book graphic legal_case legislation motion_picture report song" match="any">

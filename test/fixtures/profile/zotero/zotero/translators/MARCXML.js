@@ -8,24 +8,47 @@
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 1,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2018-05-19 14:10:27"
+	"lastUpdated": "2019-07-11 13:12:18"
 }
+
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2012 Sebastian Karcher
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function detectImport() {
 	var line;
 	var i = 0;
 	while ((line = Zotero.read()) !== false) {
 		if (line !== "") {
-			if (line.match(/<(marc\:)?(collection|record) xmlns(\:marc)?=\"http:\/\/www\.loc\.gov\/MARC21\/slim\"/)) {
+			if (line.match(/xmlns(:marc)?="http:\/\/www\.loc\.gov\/MARC21\/slim"/)) {
 				return true;
-			} else {
-				if (i++ > 5) {
-					return false;
-				}
+			}
+			else if (i++ > 5) {
+				return false;
 			}
 		}
 	}
+	return false;
 }
 
 
@@ -35,46 +58,47 @@ function doImport() {
 	while ((line = Zotero.read()) !== false) {
 		text += line;
 	}
-	//call MARC translator
+	// call MARC translator
 	var translator = Zotero.loadTranslator("import");
 	translator.setTranslator("a6ee60df-1ddc-4aae-bb25-45e0537be973");
 	translator.getTranslatorObject(function (marc) {
-
 		var parser = new DOMParser();
 		var xml = parser.parseFromString(text, 'text/xml');
-		//define the marc namespace
+		// define the marc namespace
 		var ns = {
-			"marc": "http://www.loc.gov/MARC21/slim"
+			marc: "http://www.loc.gov/MARC21/slim"
 		};
 		var records = ZU.xpath(xml, '//marc:record', ns);
-		for (let i in records) {
-
-			//create one new item per record
+		for (let rec of records) {
+			// create one new item per record
 			var record = new marc.record();
 			var newItem = new Zotero.Item();
-			record.leader = ZU.xpathText(records[i], "./marc:leader", ns);
-			var fields = ZU.xpath(records[i], "./marc:datafield", ns);
-			for (let j in fields) {
-				//go through every datafield (corresponds to a MARC field)
-				var subfields = ZU.xpath(fields[j], "./marc:subfield", ns);
+			record.leader = ZU.xpathText(rec, "./marc:leader", ns);
+			var fields = ZU.xpath(rec, "./marc:datafield", ns);
+			for (let field of fields) {
+				// go through every datafield (corresponds to a MARC field)
+				var subfields = ZU.xpath(field, "./marc:subfield", ns);
 				var tag = "";
-				for (let k in subfields) {
-					//get the subfields and their codes...
-					var code = ZU.xpathText(subfields[k], "./@code", ns);
-					var sf = ZU.xpathText(subfields[k], "./text()", ns);
-					//delete non-sorting symbols
-					//e.g. &#152;Das&#156; Adam-Smith-Projekt
-					sf = sf.replace(/[\x80-\x9F]/g,"");
-					//concat all subfields in one datafield, with subfield delimiter and code between them
-					tag = tag + marc.subfieldDelimiter + code + sf;
+				for (let subfield of subfields) {
+					// get the subfields and their codes...
+					var code = ZU.xpathText(subfield, "./@code", ns);
+					var sf = ZU.xpathText(subfield, "./text()", ns);
+					// delete non-sorting symbols
+					// e.g. &#152;Das&#156; Adam-Smith-Projekt
+					if (sf) {
+						sf = sf.replace(/[\x80-\x9F]/g, "");
+						// concat all subfields in one datafield, with subfield delimiter and code between them
+						tag = tag + marc.subfieldDelimiter + code + sf;
+					}
 				}
-				record.addField(ZU.xpathText(fields[j], "./@tag", ns), ZU.xpathText(fields[j], "./@ind1", ns) + ZU.xpathText(fields[j], "./@ind2"), tag);
+				record.addField(ZU.xpathText(field, "./@tag", ns), ZU.xpathText(field, "./@ind1", ns) + ZU.xpathText(field, "./@ind2"), tag);
 			}
 			record.translate(newItem);
 			newItem.complete();
 		}
-	}); //get Translator end
+	}); // get Translator end
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -312,6 +336,33 @@ var testCases = [
 						"note": "Tagungsband zur 50. Jahrestagung der DGfE-Sektion Sonderpädagogik 2015 in Basel (Vorwort)"
 					}
 				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n           <marc:record xmlns:marc=\"http://www.loc.gov/MARC21/slim\">\n         \t<marc:leader>nm 22 uu 4500</marc:leader>\n         \t<marc:controlfield tag=\"008\">s ||||||||||||||||||||||</marc:controlfield>\n                 <marc:datafield tag=\"041\" ind1=\"0\" ind2=\"7\">\n         \t\t<marc:subfield code=\"a\"></marc:subfield>\n         \t        <marc:subfield code=\"2\">rfc3066</marc:subfield>\n         \t</marc:datafield>\n         \t<marc:datafield tag=\"245\" ind1=\"1\" ind2=\"0\">\n                 \t<marc:subfield code=\"a\">Adaptation: the Continuing Evolution of the New York Public Library&#8217;s Digital Design System</marc:subfield>\n         \t</marc:datafield>\n         \t<marc:datafield tag=\"260\" ind1=\"\" ind2=\"\">\n         \t\t<marc:subfield code=\"b\">The Code4Lib Journal</marc:subfield>\n         \t\t<marc:subfield code=\"c\">Fri, 17 Aug 2018 08:14:38 +0000</marc:subfield>\n         \t</marc:datafield>\n         \t<marc:datafield tag=\"520\" ind1=\"\" ind2=\"\">\n                         <marc:subfield code=\"a\">'A design system is crucial for sustaining both the continuity and the advancement of a website's design. But it's hard to create such a system when content, technology, and staff are constantly changing. This is the situation faced by the Digital team at the New York Public Library. When those are the conditions of the problem, the design system needs to be modular, distributed, and standardized, so that it can withstand constant change and provide a reliable foundation. NYPL's design system has gone through three major iterations, each a step towards the best way to manage design principles across an abundance of heterogeneous content and many contributors who brought different skills to the team and department at different times. Starting from an abstracted framework that provided a template for future systems, then a specific component system for a new project, and finally a system of interoperable components and layouts, NYPL's Digital team continues to grow and adapt its digital design resource.'</marc:subfield>\n         \t</marc:datafield>\n         \t<marc:datafield tag=\"650\" ind1=\"1\" ind2=\"\">\n                 <marc:subfield code=\"a\">Issue 41</marc:subfield>\n                 </marc:datafield>\n                 <marc:datafield tag=\"700\" ind1=\"1\" ind2=\"\">\n                 \t<marc:subfield code=\"a\">Jennifer L. Anderson &amp; Edwin Guzman</marc:subfield>\n         \t</marc:datafield>\n         \t<marc:datafield tag=\"856\" ind1=\"\" ind2=\"\">\n         \t\t<marc:subfield code=\"u\">https://journal.code4lib.org/articles/13657</marc:subfield>\n         \t</marc:datafield>\n           </marc:record>",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Adaptation: the Continuing Evolution of the New York Public Library’s Digital Design System",
+				"creators": [
+					{
+						"lastName": "Jennifer L. Anderson & Edwin Guzman",
+						"creatorType": "editor"
+					}
+				],
+				"date": "17",
+				"abstractNote": "'A design system is crucial for sustaining both the continuity and the advancement of a website's design. But it's hard to create such a system when content, technology, and staff are constantly changing. This is the situation faced by the Digital team at the New York Public Library. When those are the conditions of the problem, the design system needs to be modular, distributed, and standardized, so that it can withstand constant change and provide a reliable foundation. NYPL's design system has gone through three major iterations, each a step towards the best way to manage design principles across an abundance of heterogeneous content and many contributors who brought different skills to the team and department at different times. Starting from an abstracted framework that provided a template for future systems, then a specific component system for a new project, and finally a system of interoperable components and layouts, NYPL's Digital team continues to grow and adapt its digital design resource.'",
+				"publisher": "The Code4Lib Journal",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Issue 41"
+					}
+				],
+				"notes": [],
 				"seeAlso": []
 			}
 		]

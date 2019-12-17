@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-04 20:50:27"
+	"lastUpdated": "2019-06-10 23:05:56"
 }
 
 /**
@@ -32,8 +32,8 @@
 
 function getFieldValue(entry, name) {
 	var value = ZU.xpathText(entry,
-			'.//p/strong[normalize-space(text())="' + 
-			name + ':"]/following-sibling::node()', null, '');
+		'.//p/strong[normalize-space(text())="'
+		+ name + ':"]/following-sibling::node()', null, '');
 	return value ? value.trim() : '';
 }
 
@@ -41,7 +41,7 @@ function parseSource(sourceStr) {
 	sourceStr = sourceStr.trim();
 	var matches = sourceStr.match(
 		/^(.*[^.])\.?\s+(\d+\w?)(?:\((\d+)\))?:\s*(\w?\d+(?:-\w?\d+)?)(?:\.?\s+\[[^\]]+\])?\s*\.?$/);
-	if(matches) {
+	if (matches) {
 		return {
 			type: 'journalArticle',
 			publicationTitle: matches[1],
@@ -49,21 +49,22 @@ function parseSource(sourceStr) {
 			issue: matches[3],
 			pages: matches[4]
 		};
-	} else {
-		if(sourceStr.substr(0,3) == 'In:') {
-			//book section
+	}
+	else {
+		if (sourceStr.substr(0, 3) == 'In:') {
+			// book section
 			matches = sourceStr.match(/\d+-\d+/);
 			return {
 				type: 'bookSection',
 				pages: matches ? matches[0] : null
-			}
+			};
 		}
 
 		matches = sourceStr.match(/\.\s+(\d+)\s+p\./);
 		return {
 			type: 'book',
 			numPages: matches ? matches[1] : null
-		}
+		};
 	}
 }
 
@@ -84,20 +85,20 @@ function scrape(doc, url) {
 	item.url = url;
 
 	var authors = getFieldValue(entry, 'Author').split(/;\s+/);
-	for(var i=0, n=authors.length; i<n; i++) {
+	for (let i = 0, n = authors.length; i < n; i++) {
 		item.creators.push(
 			ZU.cleanAuthor(
 				ZU.capitalizeTitle(authors[i].replace(/;$/, '')),
 				'author', true));
 	}
 
-	var keywords = ZU.xpath(entry, './/p[@id="keywords"]/a')
- 	for (var i in keywords) {
-		item.tags.push(keywords[i].textContent.trim())
- 	}
+	var keywords = ZU.xpath(entry, './/p[@id="keywords"]/a');
+	for (let i in keywords) {
+		item.tags.push(keywords[i].textContent.trim());
+	}
 
-	var pdfUrl = ZU.xpathText(entry,'/html/head/meta[@name="citation_pdf_url"]/@content');
-	if(pdfUrl) {
+	var pdfUrl = ZU.xpathText(entry, '/html/head/meta[@name="citation_pdf_url"]/@content');
+	if (pdfUrl) {
 		item.attachments.push({
 			url: pdfUrl.trim(),
 			title: 'Full Text PDF',
@@ -109,15 +110,17 @@ function scrape(doc, url) {
 }
 
 function detectWeb(doc, url) {
-	if(url.match(/\/pubs\/\d+$/)) {
+	if (url.match(/\/pubs\/\d+$/)) {
 		var entry = doc.getElementById('publicationLayoutLeftSide');
-		if (!entry) return;
+		if (!entry) return false;
 		
 		var source = parseSource(getFieldValue(entry, 'Source'));
 		return source ? source.type : null;
-	} else if(url.indexOf('search.php') != -1 && getSearchResults(doc, true)) {
+	}
+	else if (url.includes('search.php') && getSearchResults(doc, true)) {
 		return 'multiple';
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
@@ -125,7 +128,7 @@ function getSearchResults(doc, checkOnly) {
 	if (checkOnly || !links.length) return !!links.length;
 	
 	var items = {};
-	for (var i=0; i<links.length; i++) {
+	for (var i = 0; i < links.length; i++) {
 		items[links[i].href] = ZU.trimInternal(links[i].textContent);
 	}
 	
@@ -133,18 +136,19 @@ function getSearchResults(doc, checkOnly) {
 }
 
 function doWeb(doc, url) {
-	if(detectWeb(doc, url) == 'multiple') {
-		Zotero.selectItems(getSearchResults(doc), function(selectedItems) {
-			if(!selectedItems) return true;
+	if (detectWeb(doc, url) == 'multiple') {
+		Zotero.selectItems(getSearchResults(doc), function (selectedItems) {
+			if (!selectedItems) return;
 
 			var urls = [];
-			for(var i in selectedItems) {
+			for (var i in selectedItems) {
 				urls.push(i);
 			}
 
 			ZU.processDocuments(urls, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }/** BEGIN TEST CASES **/

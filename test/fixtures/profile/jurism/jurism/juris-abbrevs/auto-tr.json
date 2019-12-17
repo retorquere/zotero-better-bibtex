@@ -1,0 +1,15 @@
+{
+  "filename": "auto-tr.json",
+  "name": "Turkey",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "TR": "Turkey"
+      }
+    },
+    "tr": {
+      "institution-part": {}
+    }
+  }
+}

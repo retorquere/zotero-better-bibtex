@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-02 15:26:57"
+	"lastUpdated": "2019-06-10 22:56:17"
 }
 
 /*
@@ -36,14 +36,16 @@
 */
 
 
-function detectWeb(doc, url) {
-	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content')=="article") {
-		if (ZU.xpathText(doc, '//meta[@name="tmgads.channel"]/@content')=='blogs'){
+function detectWeb(doc, _url) {
+	if (ZU.xpathText(doc, '//meta[@property="og:type"]/@content') == "article") {
+		if (ZU.xpathText(doc, '//meta[@name="tmgads.channel"]/@content') == 'blogs') {
 			return 'blogPost';
-		} else {
+		}
+		else {
 			return 'newspaperArticle';
 		}
 	}
+	return false;
 }
 
 
@@ -51,36 +53,36 @@ function scrape(doc, url) {
 	var type = detectWeb(doc, url);
 	var translator = Zotero.loadTranslator('web');
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 	
-	translator.setHandler('itemDone', function(obj, item) {
-		//set proper item type
+	translator.setHandler('itemDone', function (obj, item) {
+		// set proper item type
 		item.itemType = type;
-		//fix title
+		// fix title
 		item.title = item.title.replace(/\s*[-–][^-–]*Telegraph[^-]*$/, '');
 	
-		//fix newlines in abstract
+		// fix newlines in abstract
 		item.abstractNote = ZU.trimInternal(item.abstractNote);
 
-		//keywords
+		// keywords
 		var keywords = ZU.xpathText(doc, '//meta[@name="keywords"]/@content');
 		if (keywords && keywords.trim()) {
 			item.tags = keywords.split(/,\s*/);
 		}
 		
-		//the author extraction from EM contains also additional info/clutter about persons
-		//e.g. "Chief Political Correspondent"
-		//thus, we do here a different scraping method
+		// the author extraction from EM contains also additional info/clutter about persons
+		// e.g. "Chief Political Correspondent"
+		// thus, we do here a different scraping method
 		item.creators = [];
-		var authors = ZU.xpathText(doc, '//meta[@name="GSAAuthor"]/@content') ||
-					ZU.xpathText(doc, '//meta[@name="DCSext.author"]/@content');
+		var authors = ZU.xpathText(doc, '//meta[@name="GSAAuthor"]/@content')
+					|| ZU.xpathText(doc, '//meta[@name="DCSext.author"]/@content');
 		if (authors) {
-			authorsList = authors.split(';');
-			for (var i=0; i<authorsList.length; i++) {
-				//clean authors string
-				//e.g. "By Alex Spillius in Washington"
-				authorsList[i] = authorsList[i].replace(/^By /, '').replace(/ in .*/, '');
-				item.creators.push(ZU.cleanAuthor(authorsList[i], 'author'));
+			let authorsList = authors.split(';');
+			for (let author of authorsList) {
+				// clean authors string
+				// e.g. "By Alex Spillius in Washington"
+				author = author.replace(/^By /, '').replace(/ in .*/, '');
+				item.creators.push(ZU.cleanAuthor(author, 'author'));
 			}
 		}
 		
@@ -88,7 +90,7 @@ function scrape(doc, url) {
 			item.date = ZU.strToISO(item.date);
 		}
 		
-		if (item.itemType=="newspaperArticle") {
+		if (item.itemType == "newspaperArticle") {
 			item.ISSN = "0307-1235";
 		}
 		
@@ -97,14 +99,13 @@ function scrape(doc, url) {
 		item.complete();
 	});
 	
-	translator.getTranslatorObject(function(em) {
+	translator.getTranslatorObject(function (em) {
 		em.addCustomFields({
-			'DCSext.articleFirstPublished' : 'date'
+			'DCSext.articleFirstPublished': 'date'
 		});
 
 		em.doWeb(doc, url);
 	});
-	
 }
 
 

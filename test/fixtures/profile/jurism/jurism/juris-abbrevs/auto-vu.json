@@ -1,0 +1,15 @@
+{
+  "filename": "auto-vu.json",
+  "name": "Vanuatu",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "VU": "Vanuatu"
+      }
+    },
+    "vu": {
+      "institution-part": {}
+    }
+  }
+}

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<style xmlns="http://purl.org/net/xbiblio/csl" version="1.1mlz1" class="note">
+  <info>
+    <title>Finland</title>
+    <id>http://citationstylist.org/modules/juris-fi</id>
+    <link href="http://citationstylist/modules/juris-fi" rel="self"/>
+    <link href="http://juris-m.github.io" rel="documentation"/>
+    <author>
+      <name>Frank Bennett</name>
+      <email>bennett@nagoya-u.jp</email>
+    </author>
+    <category citation-format="note"/>
+    <category field="law"/>
+    <summary>Juris-M style module for Finland</summary>
+    <updated>2013-01-26T22:06:38+00:00</updated>
+    <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
+    <law-module types="legal_case"/>
+  </info>
+  <locale>
+    <court-class name="admin1" country="fi" courts="kho"/>
+    <court-class name="admin2" country="fi" courts="hao"/>
+    <court-class name="ord1" country="fi" courts="kko"/>
+    <court-class name="ord2" country="fi" courts="ho"/>
+    <court-class name="ord3" country="fi" courts="ko"/>
+    <court-class name="special" country="fi" courts="vako impeachment mao tt"/>
+  </locale>
+  <macro name="juris-pretitle">
+	<text value=""/>
+  </macro>
+  <macro name="juris-title">
+	<text value=""/>
+  </macro>
+  <macro name="juris-main">
+	<choose>
+	  <if type="legal_case">
+		<group delimiter=", ">
+		  <group delimiter=" ">
+			<names variable="authority">
+			  <name/>
+			  <institution institution-parts="short"/>
+			</names>
+			<names variable="authority" prefix="[" suffix="]">
+			  <name/>
+			  <institution form="short"/>
+			</names>
+			<choose>
+			  <if court-class="admin1 admin2 ord2 ord3" match="any">
+				<date variable="issued">
+				  <date-part name="day" form="numeric" suffix="."/>
+				  <date-part name="month" form="numeric" suffix="."/>
+				  <date-part name="year" form="numeric"/>
+				</date>
+			  </if>
+			</choose>
+			<number variable="number"/>
+		  </group>
+		  <text variable="document-name"/>
+		</group>
+	  </if>
+	</choose>
+  </macro>
+  <macro name="juris-tail">
+	<choose>
+	  <if type="legal_case">
+		<text variable="country" form="short" prefix="(" suffix=")"/>
+	  </if>
+	</choose>
+  </macro>
+  <macro name="juris-pretitle-short">
+	<text value=""/>
+  </macro>
+  <macro name="juris-title-short">
+	<text value=""/>
+  </macro>
+  <macro name="juris-main-short">
+	<choose>
+	  <if type="legal_case">
+		<group delimiter=" ">
+		  <names variable="authority">
+			<name/>
+			<institution form="short"/>
+		  </names>
+		  <choose>
+			<if court-class="admin">
+			  <date variable="issued">
+				<date-part name="day" form="numeric" suffix="."/>
+				<date-part name="month" form="numeric" suffix="."/>
+				<date-part name="year" form="numeric"/>
+			  </date>
+			</if>
+		  </choose>
+		  <number variable="number"/>
+		</group>
+	  </if>
+	</choose>
+  </macro>
+  <macro name="juris-tail-short">
+	<choose>
+	  <if type="legal_case">
+		<text variable="country" form="short" prefix="(" suffix=")"/>
+	  </if>
+	</choose>
+  </macro>
+  <macro name="juris-locator">
+    <choose>
+      <if type="legal_case">
+        <group delimiter=" ">
+          <choose>
+            <if locator="page" match="none">
+              <label variable="locator"/>
+            </if>
+          </choose>
+          <number variable="locator"/>
+        </group>
+      </if>
+      <else>
+        <group delimiter=" ">
+          <choose>
+            <if locator="page" match="none">
+              <label variable="locator"/>
+            </if>
+          </choose>
+          <number variable="locator"/>
+        </group>
+      </else>
+    </choose>
+  </macro>
+</style>

@@ -1,0 +1,125 @@
+{
+  "filename": "auto-ca.json",
+  "name": "Canada",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "CA": "Canada",
+        "CA:AB": "Alberta",
+        "CA:BC": "British Columbia",
+        "CA:MB": "Manitoba",
+        "CA:NB": "New Brunswick",
+        "CA:NL": "Newfoundland and Labrador",
+        "CA:NS": "Nova Scotia",
+        "CA:NT": "Northwest Territories",
+        "CA:NU": "Nunavut",
+        "CA:ON": "Ontario",
+        "CA:PE": "Prince Edward Island",
+        "CA:QC": "Quebec",
+        "CA:SK": "Saskatchewan",
+        "CA:YT": "Yukon"
+      }
+    },
+    "ca": {
+      "institution-part": {
+        "competition.tribunal": "Competition Tribunal",
+        "court.martial.appeal.court": "Court Martial Appeal Court",
+        "federal.court": "Federal Court",
+        "federal.court.appeal": "Federal Court of Appeal",
+        "human.rights.tribunal": "Human Rights Tribunal",
+        "supreme.court": "Supreme Court",
+        "tax.court": "Tax Court"
+      }
+    },
+    "ca:ab": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "court.queen.bench": "Court of Queen's Bench",
+        "provincial.court": "Provincial Court"
+      }
+    },
+    "ca:bc": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "provincial.court": "Provincial Court",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "ca:mb": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "court.queen.bench": "Court of Queen's Bench",
+        "provincial.court": "Provincial Court"
+      }
+    },
+    "ca:nb": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "court.queens.bench": "Supreme Court",
+        "provincial.court": "Provincial Court"
+      }
+    },
+    "ca:nl": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "provincial.court": "Provincial Court",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "ca:ns": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "provincial.court": "Provincial Court",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "ca:nt": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "supreme.court": "Supreme Court",
+        "territorial.court": "Territorial Court"
+      }
+    },
+    "ca:nu": {
+      "institution-part": {
+        "court.justice": "Court of Justice"
+      }
+    },
+    "ca:on": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "provincial.court": "Provincial Court",
+        "superior.court.justice": "Superior Court of Justice"
+      }
+    },
+    "ca:pe": {
+      "institution-part": {
+        "court.appeal.division.supreme.court": "Court of Appeal Division of Supreme Court",
+        "provincial.court": "Provincial Court",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "ca:qc": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "provincial.court": "Provincial Court",
+        "superior.court": "Superior Court"
+      }
+    },
+    "ca:sk": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "court.queens.bench": "Supreme Court",
+        "provincial.court": "Provincial Court"
+      }
+    },
+    "ca:yt": {
+      "institution-part": {
+        "court.appeal": "Court of Appeal",
+        "supreme.court": "Supreme Court",
+        "territorial.court": "Territorial Court"
+      }
+    }
+  }
+}

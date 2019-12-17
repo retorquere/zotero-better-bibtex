@@ -1,0 +1,15 @@
+{
+  "filename": "auto-mh.json",
+  "name": "Marshall Islands",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MH": "Marshall Islands"
+      }
+    },
+    "mh": {
+      "institution-part": {}
+    }
+  }
+}

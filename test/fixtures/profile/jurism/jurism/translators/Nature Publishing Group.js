@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-03-26 20:45:23"
+	"lastUpdated": "2018-10-12 15:27:55"
 }
 
 /**
@@ -48,26 +48,26 @@ function attachSupplementary(doc, item, next) {
 	//nature's new website
 	var attachAsLink = Z.getHiddenPref("supplementaryAsLink");
 	var suppDiv = doc.getElementById("supplementary-information");
-	if(suppDiv) {
+	if (suppDiv) {
 		var fileClasses = ZU.xpath(suppDiv, './/div[contains(@class, "supp-info")]/h2');
-		for(var i=0, n=fileClasses.length; i<n; i++) {
+		for (var i=0, n=fileClasses.length; i<n; i++) {
 			var type = fileClasses[i].classList.item(0);
-			if(type) type = suppTypeMap[type];
+			if (type) type = suppTypeMap[type];
 			
-			if(!fileClasses[i].nextElementSibling) continue;
+			if (!fileClasses[i].nextElementSibling) continue;
 			var dls = fileClasses[i].nextElementSibling.getElementsByTagName('dl');
-			for(var j=0, m=dls.length; j<m; j++) {
+			for (var j=0, m=dls.length; j<m; j++) {
 				var link = ZU.xpath(dls[j], './dt/a')[0];
-				if(!link) {
+				if (!link) {
 					continue;
 				}
 	
 				var title = dls[j].getElementsByTagName('dd')[0];
-				if(title) {
+				if (title) {
 					title = title.textContent.replace(
 						/^[\s\r\n]*(?:Th(?:is|e) )?file (?:contains|shows)\s+(\S+)/i,
 						function(m, firstWord) {	//fix capitalization of first word
-							if(firstWord.toLowerCase() == firstWord) {	//lower case word
+							if (firstWord.toLowerCase() == firstWord) {	//lower case word
 								return firstWord.charAt(0).toUpperCase() + firstWord.substr(1);
 							}
 							return firstWord;
@@ -80,15 +80,15 @@ function attachSupplementary(doc, item, next) {
 						+ ". " + (title || '');
 
 				//fallback if we fail miserably
-				if(!title) title = "Supplementary file";
+				if (!title) title = "Supplementary file";
 				
 				var attachment = {
 					title: title,
 					url: link.href
 				};
 				
-				if(type) attachment.mimeType = type;
-				if(attachAsLink || !type) {	//don't download unknown file types
+				if (type) attachment.mimeType = type;
+				if (attachAsLink || !type) {	//don't download unknown file types
 					attachment.snapshot = false;
 				}
 				
@@ -100,11 +100,11 @@ function attachSupplementary(doc, item, next) {
 	
 	//older websites, e.g. http://www.nature.com/onc/journal/v31/n6/full/onc2011282a.html
 	var suppLink = doc.getElementById('articlenav') || doc.getElementById('extranav');
-	if(suppLink) {
+	if (suppLink) {
 		suppLink = ZU.xpath(suppLink, './ul/li//a[text()="Supplementary info"]')[0]; //unfortunately, this is the best we can do
-		if(!suppLink) return;
+		if (!suppLink) return;
 		
-		if(attachAsLink) {	//we don't need to find links to individual files
+		if (attachAsLink) {	//we don't need to find links to individual files
 			item.attachments.push({
 				title: "Supplementary info",
 				url: suppLink.href,
@@ -114,16 +114,16 @@ function attachSupplementary(doc, item, next) {
 		} else {
 			ZU.processDocuments(suppLink.href, function(newDoc) {
 				var content = newDoc.getElementById('content');
-				if(content) {
+				if (content) {
 					var links = ZU.xpath(content, './div[@class="container-supplementary" or @id="general"]//a');
-					for(var i=0, n=links.length; i<n; i++) {
+					for (var i=0, n=links.length; i<n; i++) {
 						var title = ZU.trimInternal(links[i].textContent);
 						var type = title.match(/\((\w+)\s+\d+[^)]+\)\s*$/);
-						if(type) type = suppTypeMap[type[1]];
-						if(!type) {
+						if (type) type = suppTypeMap[type[1]];
+						if (!type) {
 							type = links[i].classList;
 							type = type.item(type.length-1);
-							if(type) type = suppTypeMap[type.replace(/^(?:i|all)-/, '')];
+							if (type) type = suppTypeMap[type.replace(/^(?:i|all)-/, '')];
 						}
 						
 						//clean up title a bit
@@ -147,8 +147,8 @@ function attachSupplementary(doc, item, next) {
 	
 	//e.g. http://www.nature.com/ng/journal/v38/n11/full/ng1901.html
 	var suppLink = ZU.xpath(doc, '(//a[text()="Supplementary info"])[last()]')[0];
-	if(suppLink) {
-		if(attachAsLink) {	//we don't need to find links to individual files
+	if (suppLink) {
+		if (attachAsLink) {	//we don't need to find links to individual files
 			item.attachments.push({
 				title: "Supplementary info",
 				url: suppLink.href,
@@ -160,14 +160,14 @@ function attachSupplementary(doc, item, next) {
 			ZU.processDocuments(suppLink.href, function(newDoc) {
 				var links = ZU.xpath(newDoc, './/p[@class="articletext"]');
 				Z.debug("Found " + links.length + " links");
-				for(var i=0, n=links.length; i<n; i++) {
+				for (var i=0, n=links.length; i<n; i++) {
 					var link = links[i].getElementsByTagName('a')[0];
-					if(!link) continue;
+					if (!link) continue;
 					
 					var title = ZU.trimInternal(link.textContent);
 					
 					var type = title.match(/\((\w+)\s+\d+[^)]+\)\s*$/);
-					if(type) type = suppTypeMap[type[1]];
+					if (type) type = suppTypeMap[type[1]];
 					
 					//clean up title a bit
 					title = title.replace(/\s*\([^()]+\)$/, '')
@@ -177,7 +177,7 @@ function attachSupplementary(doc, item, next) {
 					//can this be too long? I would probably make more sense to attach these as notes on the files
 					//how do we do that?
 					var desc = ZU.xpathText(links[i], './node()[last()][not(name())]');	//last text node
-					if(desc && (desc = ZU.trimInternal(desc))) {
+					if (desc && (desc = ZU.trimInternal(desc))) {
 						title += '. ' + desc;
 					}
 					
@@ -198,10 +198,10 @@ function attachSupplementary(doc, item, next) {
 
 //unescape Highwire's special html characters
 function unescape(str) {
-	if(!str || !str.includes('[')) return str;
+	if (!str || !str.includes('[')) return str;
 
 	return str.replace(/\|?\[([^\]]+)\]\|?/g, function(s, p1) {
-		if(ISO8879CharMap[p1] !== undefined) {
+		if (ISO8879CharMap[p1] !== undefined) {
 		  return ISO8879CharMap[p1];
 		} else {
 		  return s;
@@ -252,8 +252,8 @@ function getAbstract(doc) {
 	for (var i = 0, n = paragraphs.length; i < n; i++) {
 		//remove superscript references
 		p = ZU.xpathText(paragraphs[i], "./node()[not(self::sup and ./a)]", null, '');
-		if(p) p = ZU.trimInternal(p);
-		if(p) textArr.push(p);
+		if (p) p = ZU.trimInternal(p);
+		if (p) textArr.push(p);
 	}
 
 	return textArr.join("\n").trim() || null;
@@ -269,9 +269,12 @@ function getKeywords(doc) {
 }
 
 //get PDF url
-function getPdfUrl(url) {
+function getPdfUrl(doc, url) {
 	var m = url.match(/(^[^#?]+\/)(?:full|abs)(\/[^#?]+?\.)[a-zA-Z]+(?=$|\?|#)/);
 	if (m && m.length) return m[1] + 'pdf' + m[2] + 'pdf';
+	else {
+		return attr(doc, 'a[data-track-action="download pdf"]', 'href');
+	}
 }
 
 //add using embedded metadata
@@ -300,12 +303,12 @@ function scrapeEM(doc, url, next) {
 		//If we can find a publication year, that's better
 		var year = ZU.xpathText(doc,
 			'//dd[preceding-sibling::dt[1][text()="Year published:" or text()="Date published:"]]');
-		if(year && ( year = year.match(/\(\s*(.*?)\s*\)/) )) {
+		if (year && ( year = year.match(/\(\s*(.*?)\s*\)/) )) {
 			item.date = year[1];
-		} else if( (year = ZU.xpathText(doc,'//p[@id="cite"]')) &&
+		} else if ( (year = ZU.xpathText(doc,'//p[@id="cite"]')) &&
 			(year = year.match(/\((\d{4})\)/)) ) {
 			item.date = year[1];
-		} else if(
+		} else if (
 			(year = ZU.xpathText(doc, '//a[contains(@href,"publicationDate")]/@href')) &&
 			(year = year.match(/publicationDate=([^&]+)/)) &&
 			//check that we at least have a year
@@ -328,37 +331,41 @@ function scrapeEM(doc, url, next) {
 
 		if (item.notes) item.notes = [];
 		
-		if(item.ISSN && ZU.cleanISSN) {	//introduced in 3.0.12
+		if (item.ISSN && ZU.cleanISSN) {	//introduced in 3.0.12
 			var issn = ZU.cleanISSN(item.ISSN);
-			if(!issn) delete item.ISSN;
+			if (!issn) delete item.ISSN;
 			else item.ISSN = issn;
-		} else if(item.ISSN === "ERROR! NO ISSN") {
+		} else if (item.ISSN === "ERROR! NO ISSN") {
 			delete item.ISSN;
 		}
 
 		next(item);
 	});
-
-	translator.translate();
+	translator.getTranslatorObject(function(trans) {
+		// Make sure we always import as journal article (sometimes missing from EM)
+		// e.g. https://www.nature.com/articles/sdata201618
+		trans.itemType = "journalArticle";
+		trans.doWeb(doc, url);
+	});
 }
 
 function scrapeRIS(doc, url, next) {
 	var navBar = doc.getElementById('articlenav') || doc.getElementById('extranav');
 	var risURL;
-	if(navBar) {
+	if (navBar) {
 		risURL = doc.evaluate('//li[@class="export"]/a', navBar, null, XPathResult.ANY_TYPE, null).iterateNext();
-		if(!risURL) risURL = doc.evaluate('//a[normalize-space(text())="Export citation" and not(@href="#")]', navBar, null, XPathResult.ANY_TYPE, null).iterateNext();
+		if (!risURL) risURL = doc.evaluate('//a[normalize-space(text())="Export citation" and not(@href="#")]', navBar, null, XPathResult.ANY_TYPE, null).iterateNext();
 	}
 	
-	if(!risURL) risURL = doc.evaluate('//a[normalize-space(text())="RIS" and not(@href="#")]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(!risURL) risURL = doc.evaluate('//li[@class="download-citation"]/a', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(!risURL) risURL = doc.evaluate('//a[normalize-space(text())="Export citation" and not(@href="#")]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
-	if(!risURL) risURL = ZU.xpath(doc, '//ul[@data-component="article-info-list"]//a[@data-track-source="citation-download"]')[0];
-
-	if(risURL) {
+	if (!risURL) risURL = doc.evaluate('//a[normalize-space(text())="RIS" and not(@href="#")]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	if (!risURL) risURL = doc.evaluate('//li[@class="download-citation"]/a', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	if (!risURL) risURL = doc.evaluate('//a[normalize-space(text())="Export citation" and not(@href="#")]', doc, null, XPathResult.ANY_TYPE, null).iterateNext();
+	if (!risURL) risURL = ZU.xpath(doc, '//ul[@data-component="article-info-list"]//a[@data-track-source="citation-download"]')[0];
+	if (!risURL) risURL = doc.querySelector('a[data-track-action="download article citation"]');
+	if (risURL) {
 		risURL = risURL.href;
 		ZU.doGet(risURL, function(text) {
-			if(text.search(/^TY /m) != -1) {
+			if (text.search(/^TY /m) != -1) {
 				var translator = Zotero.loadTranslator('import');
 				translator.setTranslator('32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7');
 				translator.setString(text);
@@ -455,7 +462,7 @@ function getMultipleNodes(doc, url) {
 		}
 	}
 	
-	if(nodes.length) Z.debug("multiples found using: " + nodex);
+	if (nodes.length) Z.debug("multiples found using: " + nodex);
 	
 	return [nodes, titlex, linkx];
 }
@@ -489,8 +496,8 @@ function detectWeb(doc, url) {
 }
 
 function supplementItem(item, supp, prefer) {
-	for(var i in supp) {
-		if(!supp.hasOwnProperty(i)
+	for (var i in supp) {
+		if (!supp.hasOwnProperty(i)
 			|| (item.hasOwnProperty(i) && !prefer.includes(i))) {
 			continue;	//this also skips creators, tags, notes, and related
 		}
@@ -509,7 +516,7 @@ function runScrapers(scrapers, done) {
 
 	var run = function(item) {
 		items.push(item);
-		if(scrapers.length) {
+		if (scrapers.length) {
 			(scrapers.shift()).apply(null, args);
 		}
 	};
@@ -527,21 +534,21 @@ function runScrapers(scrapers, done) {
 function scrape(doc, url) {
 	runScrapers([scrapeEM, scrapeRIS], function(items) {
 		var item = items[0];
-		if(!item) {	//EM failed (unlikely)
+		if (!item) {	//EM failed (unlikely)
 			item = items[1];
-		} else if(items[1]) {
+		} else if (items[1]) {
 			var preferredRisFields = ['journalAbbreviation', 'date'];
 			//palgrave-macmillan journals
-			if(!isNature(url)) {
+			if (!isNature(url)) {
 				preferredRisFields.push('publisher'); //all others are going to be dropped since we only handle journalArticle
-				if(item.rights.includes('Nature Publishing Group')) {
+				if (item.rights.includes('Nature Publishing Group')) {
 					delete item.rights;
 				}
 			}
 			
 			item = supplementItem(item, items[1], preferredRisFields);
 			
-			if(items[1].tags.length) item.tags = items[1].tags;	//RIS doesn't seem to have tags, but we check just in case
+			if (items[1].tags.length) item.tags = items[1].tags;	//RIS doesn't seem to have tags, but we check just in case
 			
 			if (!item.creators.length) {
 				// E.g. http://www.nature.com/nprot/journal/v1/n1/full/nprot.2006.52.html
@@ -551,27 +558,27 @@ function scrape(doc, url) {
 				//but it does not (sometimes?) include accented letters
 				//We try to get best of both worlds by trying to re-split EM authors correctly
 				//hopefully the authors match up
-				for(var i=0, j=0, n=item.creators.length, m=items[1].creators.length; i<n && j<m; i++, j++) {
+				for (var i=0, j=0, n=item.creators.length, m=items[1].creators.length; i<n && j<m; i++, j++) {
 					//check if last names match, then we don't need to worry
 					var risLName = ZU.removeDiacritics(items[1].creators[j].lastName.toUpperCase());
 					
 					var emLName = ZU.removeDiacritics(item.creators[i].lastName.toUpperCase());
-					if(emLName == risLName) {
+					if (emLName == risLName) {
 						continue;
 					}
 	
 					var fullName = item.creators[i].firstName + ' ' + item.creators[i].lastName;
 					emLName = fullName.substring(fullName.length - risLName.length);
-					if(ZU.removeDiacritics(emLName.toUpperCase()) != risLName) {
+					if (ZU.removeDiacritics(emLName.toUpperCase()) != risLName) {
 						//corporate authors are sometimes skipped in RIS
-						if(i+1<n) {
+						if (i+1<n) {
 							var nextEMLName = item.creators[i+1].firstName + ' '
 								+ item.creators[i+1].lastName;
 							nextEMLName = ZU.removeDiacritics(
 								nextEMLName.substring(nextEMLName.length - risLName.length)
 									.toUpperCase()
 							);
-							if(nextEMLName == risLName) { //this is corporate author and it was skipped in RIS
+							if (nextEMLName == risLName) { //this is corporate author and it was skipped in RIS
 								item.creators[i].lastName = item.creators[i].firstName
 									+ ' ' + item.creators[i].lastName;
 								delete item.creators[i].firstName;
@@ -584,10 +591,10 @@ function scrape(doc, url) {
 						}
 						
 						//authors with same name are sometimes skipped in EM
-						if(j+1<m) {
+						if (j+1<m) {
 							var nextRisLName = ZU.removeDiacritics(items[1].creators[j+1].lastName.toUpperCase());
 							var resplitEmLName = ZU.removeDiacritics(fullName.substring(fullName.length - nextRisLName.length).toUpperCase());
-							if(resplitEmLName == nextRisLName) {
+							if (resplitEmLName == nextRisLName) {
 								item.creators.splice(i, 0, items[1].creators[j]); //insert missing author
 								Z.debug('It appears that "' + item.creators[i].lastName
 									+ '" was missing from EM.');
@@ -599,7 +606,7 @@ function scrape(doc, url) {
 						continue; //we failed
 					}
 	
-					if(items[1].creators[j].fieldMode !== 1) {
+					if (items[1].creators[j].fieldMode !== 1) {
 						item.creators[i].firstName = fullName.substring(0, fullName.length - emLName.length).trim();
 					} else {
 						delete item.creators[i].firstName;
@@ -613,7 +620,7 @@ function scrape(doc, url) {
 			}
 		}
 
-		if(!item) {
+		if (!item) {
 			Z.debug('Could not retrieve metadata.');
 			return;	//both translators failed
 		}
@@ -651,14 +658,19 @@ function scrape(doc, url) {
 			item.publicationTitle = 'Nature';// old articles mess this up
 		}
 		delete item.journalAbbreviation;
-		
-		if (!item.attachments) {
+		var hasPDF = false;
+		for (let attach of item.attachments){
+			if (attach.mimeType && attach.mimeType == "application/pdf") {
+				hasPDF = true;
+			}
+		}
+		if (!hasPDF) {
 			item.attachments = [{
 				document: doc,
 				title: 'Snapshot'
 			}];
-	
-			var pdf = getPdfUrl(url);
+			
+			var pdf = getPdfUrl(doc, url);
 			if (pdf) {
 				item.attachments.push({
 					url: pdf,
@@ -672,15 +684,15 @@ function scrape(doc, url) {
 		//GEO, GenBank, etc.
 		try {	//this shouldn't really fail, but... just in case
 			var accessionDiv = doc.getElementById('accessions');
-			if(accessionDiv) {
+			if (accessionDiv) {
 				var accessions = ZU.xpath(accessionDiv, './/div[@class="content"]//div[./h3]');
 				var repo, links;
-				for(var i=0, n=accessions.length; i<n; i++) {
+				for (var i=0, n=accessions.length; i<n; i++) {
 					repo = accessions[i].getElementsByTagName('h3')[0].textContent;
-					if(repo) repo += ' entry ';
+					if (repo) repo += ' entry ';
 					links = ZU.xpath(accessions[i], './ul[1]//a');
-					if(links.length) {
-						for(var j=0, m=links.length; j<m; j++) {
+					if (links.length) {
+						for (var j=0, m=links.length; j<m; j++) {
 							item.attachments.push({
 								title: repo + '(' + links[j].textContent + ')',
 								url: links[j].href,
@@ -698,7 +710,7 @@ function scrape(doc, url) {
 		
 		//attach supplementary data
 		var async;
-		if(Z.getHiddenPref && Z.getHiddenPref("attachSupplementary")) {
+		if (Z.getHiddenPref && Z.getHiddenPref("attachSupplementary")) {
 			try {	//don't fail if we can't attach supplementary data
 				async = attachSupplementary(doc, item, function(doc, item) {
 					item.complete();
@@ -706,9 +718,9 @@ function scrape(doc, url) {
 			} catch(e) {
 				Z.debug("Error attaching supplementary information.");
 				Z.debug(e);
-				if(async) item.complete();
+				if (async) item.complete();
 			}
-			if(!async) {
+			if (!async) {
 				item.complete();
 			}
 		} else {
@@ -852,7 +864,7 @@ var ISO8879CharMap = {
   "vartheta":"\u03D1", "Upsi":"\u03D2", "phis":"\u03D5", "straightphi":"\u03D5",
   "piv":"\u03D6", "varpi":"\u03D6", "b.Gammad":"\u03DC", "gammad":"\u03DD",
   "b.gammad":"\u03DD", "kappav":"\u03F0", "varkappa":"\u03F0", "rhov":"\u03F1",
-  "varrho":"\u03F1", "epsi":"\u03F5", "epsis":"\u03F5", 
+  "varrho":"\u03F1", "epsi":"\u03F5", "epsis":"\u03F5",
   "straightepsilon":"\u03F5", "bepsi":"\u03F6",
   "backepsilon":"\u03F6", "IOcy":"\u0401", "DJcy":"\u0402", "GJcy":"\u0403",
   "Jukcy":"\u0404", "DScy":"\u0405", "Iukcy":"\u0406", "YIcy":"\u0407",
@@ -885,7 +897,7 @@ var ISO8879CharMap = {
   "lsquor":"\u201A", "ldquo":"\u201C", "OpenCurlyDoubleQuote":"\u201C", "rdquo":"\u201D",
   "rdquor":"\u201D", "ldquor":"\u201E", "dagger":"\u2020", "Dagger":"\u2021",
   "ddagger":"\u2021", "bull":"\u2022", "bullet":"\u2022", "nldr":"\u2025",
-  "hellip":"\u2026", "mldr":"\u2026", 
+  "hellip":"\u2026", "mldr":"\u2026",
   "vprime":"\u2032", "bprime":"\u2035", "backprime":"\u2035", "caret":"\u2041",
   "hybull":"\u2043", "incare":"\u2105", "planck":"\u210F", "hbar":"\u210F",
   "hslash":"\u210F", "ell":"\u2113", "numero":"\u2116", "copysr":"\u2117",
@@ -939,16 +951,16 @@ var ISO8879CharMap = {
   "propto":"\u221D", "Proportional":"\u221D", "varpropto":"\u221D", "ang":"\u2220",
   "angle":"\u2220", "angmsd":"\u2221", "measuredangle":"\u2221", "mid":"\u2223",
   "smid":"\u2223", "VerticalBar":"\u2223",
-  "nmid":"\u2224", "nsmid":"\u2224", 
+  "nmid":"\u2224", "nsmid":"\u2224",
   "spar":"\u2225", "parallel":"\u2225", "DoubleVerticalBar":"\u2225",
-  "shortparallel":"\u2225", "npar":"\u2226", "nspar":"\u2226", 
-  "nparallel":"\u2226", "NotDoubleVerticalBar":"\u2226", 
+  "shortparallel":"\u2225", "npar":"\u2226", "nspar":"\u2226",
+  "nparallel":"\u2226", "NotDoubleVerticalBar":"\u2226",
   "thksim":"\u223C", "Tilde":"\u223C", "thicksim":"\u223C",
   "bsim":"\u223D", "backsim":"\u223D", "wreath":"\u2240", "VerticalTilde":"\u2240",
   "wr":"\u2240", "nsim":"\u2241", "NotTilde":"\u2241", "nsime":"\u2244",
   "nsimeq":"\u2244", "NotTildeEqual":"\u2244", "ncong":"\u2247", "NotTildeFullEqual":"\u2247",
   "asymp":"\u2248", "thkap":"\u2248", "TildeTilde":"\u2248",
-  "approx":"\u2248", 
+  "approx":"\u2248",
   "nap":"\u2249", "NotTildeTilde":"\u2249", "napprox":"\u2249", "ape":"\u224A",
   "approxeq":"\u224A", "bcong":"\u224C", "backcong":"\u224C", "bump":"\u224E",
   "HumpDownHump":"\u224E", "Bumpeq":"\u224E", "bumpe":"\u224F", "HumpEqual":"\u224F",
@@ -2268,8 +2280,8 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Maarten van de",
-						"lastName": "Guchte",
+						"firstName": "Maarten",
+						"lastName": "van de Guchte",
 						"creatorType": "author"
 					},
 					{
@@ -2288,8 +2300,8 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Johan van",
-						"lastName": "Hylckama-Vlieg",
+						"firstName": "Johan",
+						"lastName": "van Hylckama-Vlieg",
 						"creatorType": "author"
 					},
 					{
@@ -2328,8 +2340,8 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Karine Le",
-						"lastName": "Roux",
+						"firstName": "Karine",
+						"lastName": "Le Roux",
 						"creatorType": "author"
 					},
 					{
@@ -2343,8 +2355,8 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Raquel Melo",
-						"lastName": "Minardi",
+						"firstName": "Raquel",
+						"lastName": "Melo Minardi",
 						"creatorType": "author"
 					},
 					{
@@ -2580,7 +2592,7 @@ var testCases = [
 				"publicationTitle": "Nature Communications",
 				"rights": "2015 Nature Publishing Group",
 				"url": "https://www.nature.com/articles/ncomms7186",
-				"volume": "2",
+				"volume": "6",
 				"attachments": [
 					{
 						"title": "Full Text PDF",
@@ -2600,6 +2612,306 @@ var testCases = [
 		"type": "web",
 		"url": "https://www.nature.com/search?q=zotero",
 		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.nature.com/articles/sdata201618",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "The FAIR Guiding Principles for scientific data management and stewardship",
+				"creators": [
+					{
+						"firstName": "Mark D.",
+						"lastName": "Wilkinson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Michel",
+						"lastName": "Dumontier",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "IJsbrand Jan",
+						"lastName": "Aalbersberg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Gabrielle",
+						"lastName": "Appleton",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Myles",
+						"lastName": "Axton",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Arie",
+						"lastName": "Baak",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Niklas",
+						"lastName": "Blomberg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jan-Willem",
+						"lastName": "Boiten",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Luiz Bonino",
+						"lastName": "da Silva Santos",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Philip E.",
+						"lastName": "Bourne",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jildau",
+						"lastName": "Bouwman",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Anthony J.",
+						"lastName": "Brookes",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tim",
+						"lastName": "Clark",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Mercè",
+						"lastName": "Crosas",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ingrid",
+						"lastName": "Dillo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Olivier",
+						"lastName": "Dumon",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Scott",
+						"lastName": "Edmunds",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Chris T.",
+						"lastName": "Evelo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Richard",
+						"lastName": "Finkers",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alejandra",
+						"lastName": "Gonzalez-Beltran",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Alasdair J. G.",
+						"lastName": "Gray",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Paul",
+						"lastName": "Groth",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Carole",
+						"lastName": "Goble",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jeffrey S.",
+						"lastName": "Grethe",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jaap",
+						"lastName": "Heringa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Peter A. C.",
+						"lastName": "’t Hoen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rob",
+						"lastName": "Hooft",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tobias",
+						"lastName": "Kuhn",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ruben",
+						"lastName": "Kok",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Joost",
+						"lastName": "Kok",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Scott J.",
+						"lastName": "Lusher",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Maryann E.",
+						"lastName": "Martone",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Albert",
+						"lastName": "Mons",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Abel L.",
+						"lastName": "Packer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Bengt",
+						"lastName": "Persson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Philippe",
+						"lastName": "Rocca-Serra",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Marco",
+						"lastName": "Roos",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Rene",
+						"lastName": "van Schaik",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Susanna-Assunta",
+						"lastName": "Sansone",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Erik",
+						"lastName": "Schultes",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Thierry",
+						"lastName": "Sengstag",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Ted",
+						"lastName": "Slater",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "George",
+						"lastName": "Strawn",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Morris A.",
+						"lastName": "Swertz",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Mark",
+						"lastName": "Thompson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Johan",
+						"lastName": "van der Lei",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Erik",
+						"lastName": "van Mulligen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jan",
+						"lastName": "Velterop",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Andra",
+						"lastName": "Waagmeester",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Peter",
+						"lastName": "Wittenburg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Katherine",
+						"lastName": "Wolstencroft",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Jun",
+						"lastName": "Zhao",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Barend",
+						"lastName": "Mons",
+						"creatorType": "author"
+					}
+				],
+				"date": "2016-03-15",
+				"DOI": "10.1038/sdata.2016.18",
+				"ISSN": "2052-4463",
+				"abstractNote": "There is an urgent need to improve the infrastructure supporting the reuse of scholarly data. A diverse set of stakeholders—representing academia, industry, funding agencies, and scholarly publishers—have come together to design and jointly endorse a concise and measureable set of principles that we refer to as the FAIR Data Principles. The intent is that these may act as a guideline for those wishing to enhance the reusability of their data holdings. Distinct from peer initiatives that focus on the human scholar, the FAIR Principles put specific emphasis on enhancing the ability of machines to automatically find and use the data, in addition to supporting its reuse by individuals. This Comment is the first formal publication of the FAIR Principles, and includes the rationale behind them, and some exemplar implementations in the community.",
+				"language": "en",
+				"libraryCatalog": "www.nature.com",
+				"pages": "160018",
+				"publicationTitle": "Scientific Data",
+				"rights": "2016 Nature Publishing Group",
+				"url": "https://www.nature.com/articles/sdata201618",
+				"volume": "3",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
 	}
 ]
 /** END TEST CASES **/

@@ -2,14 +2,14 @@
 	"translatorID": "276cb34c-6861-4de7-a11d-c2e46fb8af28",
 	"label": "Semantic Scholar",
 	"creator": "Guy Aglionby",
-	"target": "^https?://(www[.])?semanticscholar\\.org/(search|paper|author)",
+	"target": "^https?://(www\\.semanticscholar\\.org/(search|paper|author)|pdfs\\.semanticscholar\\.org/)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-03-05 00:00:22"
+	"lastUpdated": "2019-07-07 21:59:05"
 }
 
 /*
@@ -37,20 +37,22 @@
 
 // See also https://github.com/zotero/translators/blob/master/BibTeX.js
 var bibtex2zoteroTypeMap = {
-	"inproceedings": "conferencePaper",
-	"conference"   : "conferencePaper",
-	"article"      : "journalArticle"
+	inproceedings: "conferencePaper",
+	conference: "conferencePaper",
+	article: "journalArticle"
 };
 
 function detectWeb(doc, url) {
 	if (url.includes('/search') || url.includes('/author/')) {
 		return 'multiple';
-	} else {
-		var citationElement = ZU.xpath(doc, '//cite[contains(@class,"formatted-citation--style-bibtex")]')[0];
-		if (citationElement) {
-			var type = citationElement.textContent.split("{")[0].replace("@", "");
-			return bibtex2zoteroTypeMap[type];
-		}
+	}
+	else if (url.includes('pdfs.semanticscholar.org')) {
+		return 'journalArticle';
+	}
+	else {
+		let citation = ZU.xpathText(doc, '//pre[@class="bibtex-citation"]');
+		let type = citation.split('{')[0].replace('@', '');
+		return bibtex2zoteroTypeMap[type];
 	}
 }
 
@@ -61,7 +63,14 @@ function doWeb(doc, url) {
 				ZU.processDocuments(Object.keys(selected), parseDocument);
 			}
 		});
-	} else {
+	}
+	else if (url.includes('pdfs.semanticscholar.org')) {
+		let urlComponents = url.split('/');
+		let paperId = urlComponents[3] + urlComponents[4].replace('.pdf', '');
+		const API_URL = 'https://api.semanticscholar.org/';
+		ZU.processDocuments(API_URL + paperId, parseDocument);
+	}
+	else {
 		parseDocument(doc, url);
 	}
 }
@@ -69,23 +78,16 @@ function doWeb(doc, url) {
 function getSearchResults(doc) {
 	var titles = ZU.xpath(doc, '//a[@data-selenium-selector="title-link"]');
 	var results = {};
-	titles.forEach(function(linkElement) {
+	titles.forEach(function (linkElement) {
 		results[linkElement.href] = linkElement.textContent;
 	});
 	return results;
 }
 
 function parseDocument(doc, url) {
-	var citationElement = ZU.xpath(doc, '//cite[contains(@class, "formatted-citation--style-bibtex")]');
+	let citation = ZU.xpathText(doc, '//pre[@class="bibtex-citation"]');
 	
-	if (!citationElement.length) {
-		return;
-	}
-	
-	var citation = citationElement[0].textContent;
-	citation = fixBibtex(citation);
-
-	var translator = Zotero.loadTranslator("import");
+	let translator = Zotero.loadTranslator("import");
 	translator.setTranslator("9cb70025-a888-4a29-a210-93ec52da40d4");
 	translator.setString(citation);
 	translator.setHandler("itemDone", function (obj, item) {
@@ -105,7 +107,7 @@ function parseDocument(doc, url) {
 			if (scripts[i].innerHTML.startsWith(DATA_INDICATOR)) {
 				let dataText = scripts[i].innerHTML.replace(DATA_INDICATOR, '').slice(0, -2);
 				dataText = decodeURIComponent(atob(dataText));
-				rawData = JSON.parse(dataText)[0].resultData.paper;
+				rawData = JSON.parse(dataText)[1].resultData.paper;
 				break;
 			}
 		}
@@ -120,13 +122,24 @@ function parseDocument(doc, url) {
 			item.issue = volumeAndIssue[1];
 		}
 		
-		if (rawData.hasPdf) {
-			let paperLink = rawData.links.filter(function(link) { return link.linkType === 's2'; })[0].url;
+		if (rawData.hasPdf && (rawData.primaryPaperLink.linkType === 's2'
+			|| rawData.primaryPaperLink.linkType == 'arxiv')) {
 			item.attachments.push({
-				url: paperLink,
+				url: rawData.primaryPaperLink.url,
 				title: "Full Text PDF",
 				mimeType: 'application/pdf'
 			});
+			if (rawData.primaryPaperLink.linkType == 'arxiv') {
+				let arxivId = rawData.primaryPaperLink.url.match(/\d{4}\.\d{5}/);
+				if (arxivId.length >= 1) {
+					if (item.extra) {
+						item.extra += '\narXiv: ' + arxivId[0];
+					}
+					else {
+						item.extra = 'arXiv: ' + arxivId[0];
+					}
+				}
+			}
 		}
 
 		if (rawData.paperAbstract && rawData.paperAbstract.text) {
@@ -137,8 +150,10 @@ function parseDocument(doc, url) {
 			item.DOI = rawData.doiInfo.doi;
 		}
 		
-		if (rawData.keyPhrases) {
-			item.tags = rawData.keyPhrases;
+		if (rawData.entities) {
+			for (let entity of rawData.entities) {
+				item.tags.push(entity.name);
+			}
 		}
 
 		item.complete();
@@ -153,12 +168,15 @@ function fixPageRange(pageRange) {
 		return pageRange;
 	}
 	
-	numbers = numbers.map(function(x) { return parseInt(x); });
+	numbers = numbers.map(function (x) {
+		return parseInt(x);
+	});
 	
 	// No change is needed if they're already correctly formatted
 	if (numbers[0] < numbers[1]) {
 		return pageRange;
-	} else {
+	}
+	else {
 		let digitsInSecond = Math.floor(Math.log10(numbers[1])) + 1;
 		let baseNumber = numbers[0];
 		let difference = 0;
@@ -171,7 +189,7 @@ function fixPageRange(pageRange) {
 		
 		// If the given pageRange doesn't make sense, just leave it as it has been given
 		// e.g. '95-10'
-		if(difference > numbers[1]) {
+		if (difference > numbers[1]) {
 			return pageRange;
 		}
 		
@@ -181,17 +199,11 @@ function fixPageRange(pageRange) {
 	}
 }
 
-function fixBibtex(bibtex) {
-	// There's this issue where some characters with umlauts have unbalanced
-	// braces in the Semantic Scholar BibTeX, which kills the Zotero translator.
-	return bibtex.replace(/{\\\"{([A-Za-z])}[^}]/g, '\{\\"$1\}');
-}
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/paper/TectoMT-Modular-NLP-Framework-Popel-Zabokrtsk%C3%BD/89fbfabca6b605e2b00a9d57880c241c17e84001",
-		"defer": true,
+		"url": "https://www.semanticscholar.org/paper/TectoMT%3A-Modular-NLP-Framework-Popel-Zabokrtsk%C3%BD/e1ea10a288632a4003a4221759bc7f7a2df36208",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -220,27 +232,50 @@ var testCases = [
 						"title": "Semantic Scholar Link",
 						"mimeType": "text/html",
 						"snapshot": false
-					},
-					{
-						"title": "TectoMT: Modular NLP Framework",
-						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
 					{
-						"tag": "Abokrtsk"
+						"tag": "Anaphora (linguistics)"
 					},
 					{
-						"tag": "Machine Translation"
+						"tag": "Language-independent specification"
 					},
 					{
-						"tag": "Pipeline"
+						"tag": "Machine translation"
 					},
 					{
-						"tag": "Tectomt"
+						"tag": "Multi-Purpose Viewer"
 					},
 					{
-						"tag": "Treex"
+						"tag": "Named-entity recognition"
+					},
+					{
+						"tag": "Natural language generation"
+					},
+					{
+						"tag": "Natural language processing"
+					},
+					{
+						"tag": "Open-source software"
+					},
+					{
+						"tag": "Parallel text"
+					},
+					{
+						"tag": "Parsing"
+					},
+					{
+						"tag": "Part-of-speech tagging"
+					},
+					{
+						"tag": "Sentence boundary disambiguation"
+					},
+					{
+						"tag": "Text corpus"
+					},
+					{
+						"tag": "Tokenization (data security)"
 					}
 				],
 				"notes": [],
@@ -250,12 +285,12 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/paper/The-spring-in-the-arch-of-the-human-foot-Ker-Bennett/d37500a6a58fd55f0998ad0394bf076484e08fe8",
+		"url": "https://www.semanticscholar.org/paper/The-spring-in-the-arch-of-the-human-foot-Ker-Bennett/8555e05e52e5c04017ca7a9c9da9ed9c39e4f9a0",
 		"defer": true,
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "The spring in the arch of the human foot.",
+				"title": "The spring in the arch of the human foot",
 				"creators": [
 					{
 						"firstName": "Robert F.",
@@ -268,24 +303,24 @@ var testCases = [
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Susan R. S.",
+						"firstName": "S. R.",
 						"lastName": "Bibby",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "Ralph C.",
+						"firstName": "Ralph Charles",
 						"lastName": "Kester",
 						"creatorType": "author"
 					},
 					{
-						"firstName": "R. McNeill",
+						"firstName": "R. McN",
 						"lastName": "Alexander",
 						"creatorType": "author"
 					}
 				],
 				"date": "1987",
-				"abstractNote": "Large mammals, including humans, save much of the energy needed for running by means of elastic structures in their legs and feet. Kinetic and potential energy removed from the body in the first half of the stance phase is stored briefly as elastic strain energy and then returned in the second half by elastic recoil. Thus the animal runs in an analogous fashion to a rubber ball bouncing along. Among the elastic structures involved, the tendons of distal leg muscles have been shown to be important. Here we show that the elastic properties of the arch of the human foot are also important.",
-				"issue": "7000",
+				"DOI": "10.1038/325147a0",
+				"abstractNote": "Large mammals, including humans, save much of the energy needed for running by means of elastic structures in their legs and feet1,2. Kinetic and potential energy removed from the body in the first half of the stance phase is stored briefly as elastic strain energy and then returned in the second half by elastic recoil. Thus the animal runs in an analogous fashion to a rubber ball bouncing along. Among the elastic structures involved, the tendons of distal leg muscles have been shown to be important2,3. Here we show that the elastic properties of the arch of the human foot are also important.",
 				"itemID": "Ker1987TheSI",
 				"libraryCatalog": "Semantic Scholar",
 				"pages": "147-149",
@@ -298,7 +333,11 @@ var testCases = [
 						"snapshot": false
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Tendon structure"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -306,11 +345,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/paper/Foundations-of-Statistical-Natural-Language-Proces-Manning-Sch%C3%BCtze/06fd7d924d499fbc62ccbcc2e458fb6c187bcf6f",
+		"url": "https://www.semanticscholar.org/paper/Foundations-of-Statistical-Natural-Language-Manning-Sch%C3%BCtze/06fd7d924d499fbc62ccbcc2e458fb6c187bcf6f",
 		"items": [
 			{
-				"itemType": "journalArticle",
-				"title": "Foundations of Statistical Natural Language Processing",
+				"itemType": "conferencePaper",
+				"title": "Foundations of statistical natural language processing",
 				"creators": [
 					{
 						"firstName": "Christopher D.",
@@ -319,18 +358,15 @@ var testCases = [
 					},
 					{
 						"firstName": "Hinrich",
-						"lastName": "Schüze",
+						"lastName": "Schütze",
 						"creatorType": "author"
 					}
 				],
-				"date": "2001",
+				"date": "1999",
 				"DOI": "10.1023/A:1011424425034",
-				"abstractNote": "In 1993, Eugene Charniak published a slim volume entitled Statistical Language Learning. At the time, empirical techniques to natural language processing were on the rise — in that year, Computational Linguistics published a special issue on such methods — and Charniak’s text was the first to treat the emerging field. Nowadays, the revolution has become the establishment; for instance, in 1998, nearly half the papers in Computational Linguistics concerned empirical methods (Hirschberg, 1998). Indeed, Christopher Manning and Hinrich Schütze’s new, by-no-means slim textbook on statistical NLP — strangely, the first since Charniak’s — begins, “The need for a thorough textbook for Statistical Natural Language Processing hardly needs to be argued for”. Indubitably so; the question is, is this it? Foundations of Statistical Natural Language Processing (henceforth FSNLP) is certainly ambitious in scope. True to its name, it contains a great deal of preparatory material, including: gentle introductions to probability and information theory; a chapter on linguistic concepts; and (a most welcome addition) discussion of the nitty-gritty of doing empirical work, ranging from lists of available corpora to indepth discussion of the critical issue of smoothing. Scattered throughout are also topics fundamental to doing good experimental work in general, such as hypothesis testing, cross-validation, and baselines. Along with these preliminaries, FSNLP covers traditional tools of the trade: Markov models, probabilistic grammars, supervised and unsupervised classification, and the vector-space model. Finally, several chapters are devoted to specific problems, among them lexicon acquisition, word sense disambiguation, parsing, machine translation, and information retrieval. (The companion website contains further useful material, including links to programs and a list of errata.) In short, this is a Big Book, and this fact alone already confers some benefits. For the researcher, FSNLP offers the convenience of one-stop shopping: at present, there is no other NLP reference in which standard empirical techniques, statistical tables, definitions of linguistics terms, and elements of information retrieval appear together; furthermore, the text also summarizes and critiques many individual research papers. Similarly, someone teaching a course on statistical NLP will appreciate the large number of topics FSNLP covers, allowing the tailoring of a syllabus to individual interests. And for those entering the field, the book records “folklore” knowledge that is typically acquired only by word of mouth",
-				"itemID": "Manning2001FoundationsOS",
+				"abstractNote": "Statistical approaches to processing natural language text have become dominant in recent years. This foundational text is the first comprehensive introduction to statistical natural language processing (NLP) to appear. The book contains all the theory and algorithms needed for building NLP tools. It provides broad but rigorous coverage of mathematical and linguistic foundations, as well as detailed discussion of statistical methods, allowing students and researchers to construct their own implementations. The book covers collocation finding, word sense disambiguation, probabilistic parsing, information retrieval, and other applications.",
+				"itemID": "Manning1999FoundationsOS",
 				"libraryCatalog": "Semantic Scholar",
-				"pages": "80-81",
-				"publicationTitle": "Information Retrieval",
-				"volume": "4",
 				"attachments": [
 					{
 						"title": "Semantic Scholar Link",
@@ -338,25 +374,40 @@ var testCases = [
 						"snapshot": false
 					},
 					{
-						"title": "Foundations of Statistical Natural Language Processing",
+						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					}
 				],
 				"tags": [
 					{
-						"tag": "CFG"
+						"tag": "Algorithm"
 					},
 					{
-						"tag": "F Measure"
+						"tag": "Data compression"
+					},
+					{
+						"tag": "Grams"
+					},
+					{
+						"tag": "Language model"
+					},
+					{
+						"tag": "Linear interpolation"
 					},
 					{
 						"tag": "N-gram"
 					},
 					{
-						"tag": "PCFG"
+						"tag": "Natural language processing"
 					},
 					{
-						"tag": "POS"
+						"tag": "Protologism"
+					},
+					{
+						"tag": "Smoothing"
+					},
+					{
+						"tag": "Stochastic grammar"
 					}
 				],
 				"notes": [],
@@ -366,11 +417,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/paper/Interleukin-7-mediates-the-homeostasis-of-na%C3%AFve-an-Schluns-Kieper/aee7b854bed51120fe356a5792dfb22fec7cf2ae",
+		"url": "https://www.semanticscholar.org/paper/Interleukin-7-mediates-the-homeostasis-of-na%C3%AFve-and-Schluns-Kieper/aee7b854bed51120fe356a5792dfb22fec7cf2ae",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Interleukin-7 mediates the homeostasis of naïe and memory CD8 T cells in vivo",
+				"title": "Interleukin-7 mediates the homeostasis of naïve and memory CD8 T cells in vivo",
 				"creators": [
 					{
 						"firstName": "Kimberly S.",
@@ -408,7 +459,26 @@ var testCases = [
 						"snapshot": false
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Chronic Lymphocytic Leukemia"
+					},
+					{
+						"tag": "Homeostasis"
+					},
+					{
+						"tag": "Interleukin-7"
+					},
+					{
+						"tag": "Leukemia, B-Cell"
+					},
+					{
+						"tag": "Memory Disorders"
+					},
+					{
+						"tag": "T-Lymphocyte"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -420,7 +490,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Primäre Ziliendyskinesie in Öterreich",
+				"title": "Primäre Ziliendyskinesie in Österreich",
 				"creators": [
 					{
 						"firstName": "Irena",
@@ -451,11 +521,16 @@ var testCases = [
 						"firstName": "Thomas",
 						"lastName": "Frischer",
 						"creatorType": "author"
+					},
+					{
+						"firstName": "ERS Taskforce on Primary Ciliary Dyskinesia in",
+						"lastName": "children",
+						"creatorType": "author"
 					}
 				],
 				"date": "2009",
 				"DOI": "10.1007/s00508-009-1197-4",
-				"abstractNote": "INTRODUCTION: Primary ciliary dyskinesia (PCD) is a rare hereditary recessive disease with symptoms of recurrent pneumonia, chronic bronchitis, bronchiectasis, and chronic sinusitis. Chronic rhinitis is often the presenting symptom in newborns and infants. Approximately half of the patients show visceral mirror image arrangements (situs inversus). In this study, we aimed 1) to determine the number of paediatric PCD patients in Austria, 2) to show the diagnostic and therapeutic modalities used in the clinical centres and 3) to describe symptoms of children with PCD. PATIENTS, MATERIAL AND METHODS: For the first two aims, we analysed data from a questionnaire survey of the European Respiratory Society (ERS) task force on Primary Ciliary Dyskinesia in children. All paediatric respiratory units in Austria received a questionnaire. Symptoms of PCD patients from Vienna Children's University Hospital (aim 3) were extracted from case histories. RESULTS: In 13 Austrian clinics 48 patients with PCD (36 aged from 0–19 years) were identified. The prevalence of reported cases (aged 0–19 yrs) in Austria was 1:48000. Median age at diagnosis was 4.8 years (IQR 0.3–8.2), lower in children with situs inversus compared to those without (3.1 vs. 8.1 yrs, p = 0.067). In 2005–2006, the saccharine test was still the most commonly used screening test for PCD in Austria (45%). Confirmation of the diagnosis was usually by electron microscopy (73%). All clinics treated exacerbations immediately with antibiotics, 73% prescribed airway clearance therapy routinely to all patients. Other therapies and diagnostic tests were applied very inconsistently across Austrian hospitals. All PCD patients from Vienna (n = 13) had increased upper and lower respiratory secretions, most had recurring airway infections (n = 12), bronchiectasis (n = 7) and bronchitis (n = 7). CONCLUSION: Diagnosis and therapy of PCD in Austria are inhomogeneous. Prospective studies are needed to learn more about the course of the disease and to evaluate benefits and harms of different treatment strategies. EINLEITUNG: Die primäre Ziliendyskinesie (Primary Ciliary Dykinesia, PCD) ist eine seltene, meist autosomal-rezessiv vererbte Erkrankung, mit den typischen Manifestationen rezidivierende Pneumonien, chronische Bronchitis, Bronchiektasien, chronische Sinusitis und, insbesondere bei Neugeborenen und Säuglingen, chronischer Rhinitis. Die Hälfte der Patienten haben einen Situs inversus. Die Ziele dieser Studie waren, 1) die Anzahl pädiatrischer PCD-Patienten in Österreich zu erfassen, 2) die diagnostischen und therapeutischen Modalitäten der behandelnden Zentren darzustellen und 3) die Symptomatik der Patienten zu beschreiben. PATIENTEN, MATERIAL UND METHODEN: Zur Beantwortung der ersten zwei Fragen analysierten wir die österreichischen Resultate einer Fragebogenuntersuchung der pädiatrischen PCD Taskforce der European Respiratory Society (ERS). Die klinischen Charakteristika der PCD-Patienten an der Universitätsklinik für Kinder- und Jugendheilkunde in Wien stellten wir anhand der Krankengeschichten zusammen. ERGEBNISSE: In 13 österreichischen Krankenhäusern wurden 48 Patienten identifiziert (36 im Alter von 0–19 Jahre). Dies ergibt für Österreich eine Prävalenz diagnostizierter PCD-Patienten (0–19 Jahre) von 1:48000. Das mediane Alter bei Diagnose war 4,8 Jahre (IQR 0,3–8,2 Jahre). Patienten mit Situs inversus wurden früher diagsnotiziert (3,1 Jahre versus 8,1 Jahre; p = 0,067). Das gebräuchlichste screening-Verfahren (2005–2006) war der Saccharintest (45%), zur Diagnosesicherung wurde meist die Elektronenmikroskopie eingesetzt (73%). Alle Kliniken behandelten Exazerbationen sofort antibiotisch, Atemphysiotherapie wurde in 73% der Zentren eingesetzt. Insgesamt waren Diagnostik und Therapie der PCD in Österreich uneinheitlich. Alle Patienten der Universitätsklinik Wien (n = 13) hatten eine verstärkte Sekretproduktion, die meisten rezidivierende Atemwegsinfekte (n = 12), Bronchiektasen (n = 7) und Bronchitis (n = 7). KONKLUSION: Diagnostik und Therapie der PCD in Österreich sind uneinheitlich. Prospektive Studien sind notwendig, den Verlauf der Erkrankung zu erforschen sowie Nutzen und Schaden unterschiedlicher Therapie-konzepte darzustellen.",
+				"abstractNote": "SummaryINTRODUCTION: Primary ciliary dyskinesia (PCD) is a rare hereditary recessive disease with symptoms of recurrent pneumonia, chronic bronchitis, bronchiectasis, and chronic sinusitis. Chronic rhinitis is often the presenting symptom in newborns and infants. Approximately half of the patients show visceral mirror image arrangements (situs inversus). In this study, we aimed 1) to determine the number of paediatric PCD patients in Austria, 2) to show the diagnostic and therapeutic modalities used in the clinical centres and 3) to describe symptoms of children with PCD. PATIENTS, MATERIAL AND METHODS: For the first two aims, we analysed data from a questionnaire survey of the European Respiratory Society (ERS) task force on Primary Ciliary Dyskinesia in children. All paediatric respiratory units in Austria received a questionnaire. Symptoms of PCD patients from Vienna Children's University Hospital (aim 3) were extracted from case histories. RESULTS: In 13 Austrian clinics 48 patients with PCD (36 aged from 0–19 years) were identified. The prevalence of reported cases (aged 0–19 yrs) in Austria was 1:48000. Median age at diagnosis was 4.8 years (IQR 0.3–8.2), lower in children with situs inversus compared to those without (3.1 vs. 8.1 yrs, p = 0.067). In 2005–2006, the saccharine test was still the most commonly used screening test for PCD in Austria (45%). Confirmation of the diagnosis was usually by electron microscopy (73%). All clinics treated exacerbations immediately with antibiotics, 73% prescribed airway clearance therapy routinely to all patients. Other therapies and diagnostic tests were applied very inconsistently across Austrian hospitals. All PCD patients from Vienna (n = 13) had increased upper and lower respiratory secretions, most had recurring airway infections (n = 12), bronchiectasis (n = 7) and bronchitis (n = 7). CONCLUSION: Diagnosis and therapy of PCD in Austria are inhomogeneous. Prospective studies are needed to learn more about the course of the disease and to evaluate benefits and harms of different treatment strategies.ZusammenfassungEINLEITUNG: Die primäre Ziliendyskinesie (Primary Ciliary Dykinesia, PCD) ist eine seltene, meist autosomal-rezessiv vererbte Erkrankung, mit den typischen Manifestationen rezidivierende Pneumonien, chronische Bronchitis, Bronchiektasien, chronische Sinusitis und, insbesondere bei Neugeborenen und Säuglingen, chronischer Rhinitis. Die Hälfte der Patienten haben einen Situs inversus. Die Ziele dieser Studie waren, 1) die Anzahl pädiatrischer PCD-Patienten in Österreich zu erfassen, 2) die diagnostischen und therapeutischen Modalitäten der behandelnden Zentren darzustellen und 3) die Symptomatik der Patienten zu beschreiben. PATIENTEN, MATERIAL UND METHODEN: Zur Beantwortung der ersten zwei Fragen analysierten wir die österreichischen Resultate einer Fragebogenuntersuchung der pädiatrischen PCD Taskforce der European Respiratory Society (ERS). Die klinischen Charakteristika der PCD-Patienten an der Universitätsklinik für Kinder- und Jugendheilkunde in Wien stellten wir anhand der Krankengeschichten zusammen. ERGEBNISSE: In 13 österreichischen Krankenhäusern wurden 48 Patienten identifiziert (36 im Alter von 0–19 Jahre). Dies ergibt für Österreich eine Prävalenz diagnostizierter PCD-Patienten (0–19 Jahre) von 1:48000. Das mediane Alter bei Diagnose war 4,8 Jahre (IQR 0,3–8,2 Jahre). Patienten mit Situs inversus wurden früher diagsnotiziert (3,1 Jahre versus 8,1 Jahre; p = 0,067). Das gebräuchlichste screening-Verfahren (2005–2006) war der Saccharintest (45%), zur Diagnosesicherung wurde meist die Elektronenmikroskopie eingesetzt (73%). Alle Kliniken behandelten Exazerbationen sofort antibiotisch, Atemphysiotherapie wurde in 73% der Zentren eingesetzt. Insgesamt waren Diagnostik und Therapie der PCD in Österreich uneinheitlich. Alle Patienten der Universitätsklinik Wien (n = 13) hatten eine verstärkte Sekretproduktion, die meisten rezidivierende Atemwegsinfekte (n = 12), Bronchiektasen (n = 7) und Bronchitis (n = 7). KONKLUSION: Diagnostik und Therapie der PCD in Österreich sind uneinheitlich. Prospektive Studien sind notwendig, den Verlauf der Erkrankung zu erforschen sowie Nutzen und Schaden unterschiedlicher Therapie-konzepte darzustellen.",
 				"itemID": "Lesic2009PrimreZI",
 				"libraryCatalog": "Semantic Scholar",
 				"pages": "616-622",
@@ -468,7 +543,62 @@ var testCases = [
 						"snapshot": false
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Addison Disease"
+					},
+					{
+						"tag": "Apoptosis"
+					},
+					{
+						"tag": "Bronchiectasis"
+					},
+					{
+						"tag": "Bronchitis, Chronic"
+					},
+					{
+						"tag": "Chronic sinusitis"
+					},
+					{
+						"tag": "Ciliary Motility Disorders"
+					},
+					{
+						"tag": "Dyskinesia, Drug-Induced"
+					},
+					{
+						"tag": "Epilepsy"
+					},
+					{
+						"tag": "Extraction"
+					},
+					{
+						"tag": "Infant, Newborn"
+					},
+					{
+						"tag": "Kartagener Syndrome"
+					},
+					{
+						"tag": "Neoplasms, Unknown Primary"
+					},
+					{
+						"tag": "Osteoarthritis, Spine"
+					},
+					{
+						"tag": "Physical medicine/manipulation"
+					},
+					{
+						"tag": "Recurrent pneumonia"
+					},
+					{
+						"tag": "Situs Inversus"
+					},
+					{
+						"tag": "Surgical Wound Infection"
+					},
+					{
+						"tag": "Urinary Calculi"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -476,121 +606,27 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/paper/The-German-hospital-malnutrition-study-Pirlich-Schuetz/b59a79b2194f5f6d82b06593c23f25f67fbef512",
+		"url": "https://www.semanticscholar.org/author/Jane-Holmes/3023517",
+		"items": "multiple"
+	},
+	{
+		"type": "web",
+		"url": "https://www.semanticscholar.org/paper/Superpower-Your-Browser-with-LibX-and-Zotero-Puckett/ac7caef334a4296503cc062529290d4c3ef6be32",
 		"items": [
 			{
-				"itemType": "journalArticle",
-				"title": "The German hospital malnutrition study.",
+				"itemType": "conferencePaper",
+				"title": "Superpower Your Browser with LibX and Zotero",
 				"creators": [
 					{
-						"firstName": "Matthias",
-						"lastName": "Pirlich",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Tatjana",
-						"lastName": "Schuetz",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Kristina",
-						"lastName": "Norman",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Sylvia",
-						"lastName": "Gastell",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Heinrich Josef",
-						"lastName": "Lüke",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Stephan",
-						"lastName": "Bischoff",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Ulrich",
-						"lastName": "Bolder",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "T. M.",
-						"lastName": "Frieling",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Helge",
-						"lastName": "Güdenzoph",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Kristian",
-						"lastName": "Hahn",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "K. W.",
-						"lastName": "Jauch",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Karin",
-						"lastName": "Schindler",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Jügen",
-						"lastName": "Stein",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Dorothee",
-						"lastName": "Volkert",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Arved",
-						"lastName": "Weimann",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Hansjög",
-						"lastName": "Werner",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Christiane",
-						"lastName": "Wolf",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Gudrun",
-						"lastName": "Zücher",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Peter",
-						"lastName": "Bauer",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Herbert",
-						"lastName": "Lochs",
+						"firstName": "J.",
+						"lastName": "Puckett",
 						"creatorType": "author"
 					}
 				],
-				"date": "2006",
-				"abstractNote": "BACKGROUND & AIMS\nMalnutrition is frequently observed in chronic and severe diseases and associated with impaired outcome. In Germany general data on prevalence and impact of hospital malnutrition are missing.\n\n\nMETHODS\nNutritional state was assessed by subjective global assessment (SGA) and by anthropometric measurements in 1,886 consecutively admitted patients in 13 hospitals (n=1,073, university hospitals; n=813, community or teaching hospitals). Risk factors for malnutrition and the impact of nutritional status on length of hospital stay were analyzed.\n\n\nRESULTS\nMalnutrition was diagnosed in 27.4% of patients according to SGA. A low arm muscle area and arm fat area were observed in 11.3% and 17.1%, respectively. Forty-three % of patients 70 years old were malnourished compared to only 7.8% of patients <30 years. The highest prevalence of malnutrition was observed in geriatric (56.2%), oncology (37.6%), and gastroenterology (32.6%) departments. Multivariate analysis revealed three independent risk factors: higher age, polypharmacy, and malignant disease (all P<0.01). Malnutrition was associated with an 43% increase of hospital stay (P<0.001).\n\n\nCONCLUSIONS\nIn German hospitals every fourth patient is malnourished. Malnutrition is associated with increased length of hospital stay. Higher age, malignant disease and major comorbidity were found to be the main contributors to malnutrition. Adequate nutritional support should be initiated in order to optimize the clinical outcome of these patients.",
-				"issue": "4",
-				"itemID": "Pirlich2006TheGH",
+				"date": "2010",
+				"abstractNote": "© 2010 Jason Puckett the providers of either program discontinued supporting them, another institution could simply download the source code and take over development. As Firefox plugins, both LibX and Zotero are self-updating. Firefox periodically checks for new versions of all its add-ons and prompts the user to update with a few clicks. This process is unlikely to confuse even users who have never installed software. (The Internet Explorer version of LibX must be updated manually by downloading a new version from the library’s Web site and running an executable fi le.) This allows the library to push out new search options, and Zotero’s developers to push updates ranging from new features to updated bibliographic styles. It also allows for far more frequent improvements to the software than most commercial programs provide.",
+				"itemID": "Puckett2010SuperpowerYB",
 				"libraryCatalog": "Semantic Scholar",
-				"pages": "563-572",
-				"publicationTitle": "Clinical nutrition",
-				"volume": "25",
 				"attachments": [
 					{
 						"title": "Semantic Scholar Link",
@@ -598,11 +634,18 @@ var testCases = [
 						"snapshot": false
 					},
 					{
-						"title": "The German hospital malnutrition study.",
+						"title": "Full Text PDF",
 						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "LibX"
+					},
+					{
+						"tag": "Zotero"
+					}
+				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -610,9 +653,78 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.semanticscholar.org/author/Josie-Holmes/27569076",
-		"items": "multiple"
+		"url": "https://www.semanticscholar.org/paper/Tracking-State-Changes-in-Procedural-Text%3A-A-and-Dalvi-Huang/5e9c9d0164ae041786f8fdc5726da12403e91a6c",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Tracking State Changes in Procedural Text: A Challenge Dataset and Models for Process Paragraph Comprehension",
+				"creators": [
+					{
+						"firstName": "Bhavana",
+						"lastName": "Dalvi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Lifu",
+						"lastName": "Huang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Niket",
+						"lastName": "Tandon",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Wen-tau",
+						"lastName": "Yih",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Peter",
+						"lastName": "Clark",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018",
+				"abstractNote": "We present a new dataset and models for comprehending paragraphs about processes (e.g., photosynthesis), an important genre of text describing a dynamic world. The new dataset, ProPara, is the first to contain natural (rather than machine-generated) text about a changing world along with a full annotation of entity states (location and existence) during those changes (81k datapoints). The end-task, tracking the location and existence of entities through the text, is challenging because the causal effects of actions are often implicit and need to be inferred. We find that previous models that have worked well on synthetic data achieve only mediocre performance on ProPara, and introduce two new neural models that exploit alternative mechanisms for state prediction, in particular using LSTM input encoding and span prediction. The new models improve accuracy by up to 19%. The dataset and models are available to the community at http://data.allenai.org/propara.",
+				"itemID": "Dalvi2018TrackingSC",
+				"libraryCatalog": "Semantic Scholar",
+				"proceedingsTitle": "NAACL-HLT",
+				"shortTitle": "Tracking State Changes in Procedural Text",
+				"attachments": [
+					{
+						"title": "Semantic Scholar Link",
+						"mimeType": "text/html",
+						"snapshot": false
+					},
+					{
+						"title": "Full Text PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Causal filter"
+					},
+					{
+						"tag": "Entity"
+					},
+					{
+						"tag": "List comprehension"
+					},
+					{
+						"tag": "Long short-term memory"
+					},
+					{
+						"tag": "Synthetic data"
+					}
+				],
+				"notes": [],
+				"seeAlso": [],
+				"publicationTitle": "ArXiv",
+				"volume": "abs/1805.06975"
+			}
+		]
 	}
 ]
 /** END TEST CASES **/
-

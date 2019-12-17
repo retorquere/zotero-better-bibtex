@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ma.json",
+  "name": "Morocco",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MA": "Morocco"
+      }
+    },
+    "ma": {
+      "institution-part": {}
+    }
+  }
+}

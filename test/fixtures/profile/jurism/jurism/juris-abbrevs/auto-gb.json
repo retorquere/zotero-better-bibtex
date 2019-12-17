@@ -1,0 +1,82 @@
+{
+  "filename": "auto-gb.json",
+  "name": "United Kingdom",
+  "version": "2019-08-23 09:55:46 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "GB": "United Kingdom",
+        "GB:BERMUDA": "Bermuda",
+        "GB:ENGLAND.AND.WALES": "England and Wales",
+        "GB:FALKLAND.ISLANDS": "Falkland Islands",
+        "GB:GIBRALTAR": "Gibraltar",
+        "GB:GUERNSEY": "Guernsey",
+        "GB:HONG.KONG": "Hong Kong",
+        "GB:ISLE.MAN": "Isle of Man",
+        "GB:MONTSERRAT": "Montserrat",
+        "GB:NORTHERN.IRELAND": "Northern Ireland",
+        "GB:PITCAIRN.ISLANDS": "Pitcairn Islands",
+        "GB:SCOTLAND": "Scotland",
+        "GB:TURKS.CAICOS.ISLANDS": "Turks and Caicos Islands"
+      }
+    },
+    "gb": {
+      "institution-part": {
+        "house.of.lords": "House of Lords",
+        "privy.council": "Privy Council",
+        "supreme.court": "Supreme Court"
+      }
+    },
+    "gb:bermuda": {
+      "institution-part": {}
+    },
+    "gb:england.and.wales": {
+      "institution-part": {
+        "ewca.civ": "Court of Appeal|Civil Division",
+        "ewhc.ch.bankruptcy": "High Court|Chancery Division|Bankruptcy and Companies Court",
+        "ewhc.ch.masters": "High Court|Chancery Division|Masters",
+        "ewhc.ch.patent": "High Court|Chancery Division|Patents Court",
+        "ewhc.family": "High Court|Family Division",
+        "ewhc.qb.admin": "High Court|Queen's Bench Division|Administrative Court",
+        "ewhc.qb.admiralty": "High Court|Queen's Bench Division|Admiralty Court",
+        "ewhc.qb.comm": "High Court|Queen's Bench Division|Commercial Court",
+        "ewhc.qb.mercantile": "High Court|Queen's Bench Division|Mercantile Court",
+        "ewhc.qb.tcc": "High Court|Queen's Bench Division|Technology and Construction Court",
+        "kb": "King's Bench"
+      },
+      "institution-entire": {
+        "ewca.civ": "EWCA"
+      }
+    },
+    "gb:falkland.islands": {
+      "institution-part": {}
+    },
+    "gb:gibraltar": {
+      "institution-part": {}
+    },
+    "gb:guernsey": {
+      "institution-part": {}
+    },
+    "gb:hong.kong": {
+      "institution-part": {}
+    },
+    "gb:isle.man": {
+      "institution-part": {}
+    },
+    "gb:montserrat": {
+      "institution-part": {}
+    },
+    "gb:northern.ireland": {
+      "institution-part": {}
+    },
+    "gb:pitcairn.islands": {
+      "institution-part": {}
+    },
+    "gb:scotland": {
+      "institution-part": {}
+    },
+    "gb:turks.caicos.islands": {
+      "institution-part": {}
+    }
+  }
+}
