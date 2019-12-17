@@ -111,4 +111,4 @@ def post_log():
   headers = [ f'--header "{h[0]}: {h[1]}"' for h in headers ]
   headers = ' '.join(headers)
   os.system(f'curl {bucket} {headers} --upload-file {logfile} &')
-  return True
+  raise ValueError('client did not start')
