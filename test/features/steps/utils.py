@@ -101,7 +101,7 @@ def nested_dict_iter(nested, root = []):
 
 def post_log():
   logid = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
-  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logfile}.log'
+  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logid}.log'
   logfile = shlex.quote(path.join(os.environ['HOME'], '.BBTZ5TEST.log'))
   headers = [
     ('x-amz-storage-class', 'STANDARD')
