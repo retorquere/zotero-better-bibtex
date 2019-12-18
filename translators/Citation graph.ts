@@ -14,11 +14,11 @@ function edge(source, target, bidi = false) {
   Zotero.write(`    source ${source}\n`)
   Zotero.write(`    target ${target}\n`)
   if (bidi) {
-    Zotero.write('graphics [\n')
-    Zotero.write('  fill  "#000000"\n')
-    Zotero.write('  sourceArrow "standard"\n')
-    Zotero.write('  targetArrow "standard"\n')
-    Zotero.write(']\n')
+    Zotero.write('    graphics [\n')
+    Zotero.write('      fill  "#000000"\n')
+    Zotero.write('      sourceArrow "standard"\n')
+    Zotero.write('      targetArrow "standard"\n')
+    Zotero.write('    ]\n')
   }
   Zotero.write('  ]\n')
 }
@@ -74,7 +74,7 @@ Translator.doExport = () => {
     items[_item.citekey] = items[_item.uri] = {
       id,
       uri: _item.uri,
-      relations: _item.relations || [],
+      relations: _item.relations?.['dc:relation'] || [],
       cites: [].concat.apply([],
         (_item.extra || '')
           .split('\n')
