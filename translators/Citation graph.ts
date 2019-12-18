@@ -42,35 +42,35 @@ Translator.doExport = () => {
 
   let _item
   let id = -1
+  const add = {
+    title: Zotero.getOption('Title'),
+    authors: Zotero.getOption('Authors'),
+    year: Zotero.getOption('Year'),
+  }
 
   while ((_item = Zotero.nextItem())) {
     if (['note', 'attachment'].includes(_item.itemType)) continue
 
     id += 1
 
-    /*
-    const label = []
+    const label = [ _item.citekey ]
 
-    if (_item.creators && _item.creators.length) {
-      const name = _item.creators[0].name || _item.creators[0].lastName
+    if (add.title && _item.title) {
+      label.push(`\u201C${_item.title.replace(/"/g, "'")}\u201D`)
+    }
+
+    if (add.authors && _item.creators && _item.creators.length) {
+      const name = _item.creators?.map(author => (author.name || author.lastName || '').replace(/"/g, "'")).filter(author => author).join(', ')
       if (name) label.push(name)
     }
 
-    if (_item.date) {
+    if (add.year && _item.date) {
       let date = Zotero.BetterBibTeX.parseDate(_item.date)
       if (date.from) date = date.from
       if (date.year) label.push(`(${date.year})`)
     }
 
-    if (label.length || _item.title) {
-      Zotero.write(`  ${_item.citekey} [`)
-      if (label.length) Zotero.write(`label=${JSON.stringify(label.join(' '))}`)
-      if (_item.title) Zotero.write(`xlabel=${JSON.stringify(_item.title)}`)
-      Zotero.write('];\n')
-    }
-    */
-
-    node(id, _item.citekey)
+    node(id, label.join(' '))
     items[_item.citekey] = items[_item.uri] = {
       id,
       uri: _item.uri,

@@ -3,11 +3,16 @@
   "label": "Citation graph",
   "description": "exports a citation graph in graphml format. Use gephi or yEd to clean up and visualize",
   "creator": "Emiliano heyns",
-  "target": "graphml",
+  "target": "gml",
   "minVersion": "4.0.27",
   "maxVersion": "",
   "translatorType": 2,
   "browserSupport": "gcsv",
   "inRepository": false,
+  "displayOptions": {
+    "Title": false,
+    "Authors": false,
+    "Year": false
+  },
   "priority": 100
 }
