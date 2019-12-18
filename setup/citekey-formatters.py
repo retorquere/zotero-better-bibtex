@@ -51,7 +51,10 @@ def walk(doc):
       signatures = doc['signatures']
       if len(signatures) != 1: raise ValueError('multiple sigs?')
 
-      name = doc_name[1:].replace('_', '.') # underscores in method names are periods in the formatter
+      if doc_name[0] == '_':
+        name = doc_name[1:].replace('_', '-') # underscores in filter names are dashes in the formatter
+      else:
+        name = doc_name[1:].replace('_', '.') # underscores in method names are periods in the formatter
       if signatures[0].get('parameters', False) and doc_name[0] == '$':
         parameters = [p['name'] for p in signatures[0]['parameters']]
         if 'n' in parameters: name += 'N'
