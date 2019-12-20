@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-07-01 18:02:27"
+	"lastUpdated": "2018-11-01 19:46:46"
 }
 
 /*
@@ -36,6 +36,11 @@
 
 	***** END LICENSE BLOCK *****
 */
+
+
+// attr()/text() v2
+function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null;}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null;}
+
 
 var HIGHWIRE_MAPPINGS = {
 	"citation_title":"title",
@@ -157,12 +162,18 @@ function getPrefixes(doc) {
 	}
 }
 
-function getContentText(doc, name, strict) {
-	var xpath = '/x:html/x:head/x:meta[' +
-		(strict?'@name':
-			'substring(@name, string-length(@name)-' + (name.length - 1) + ')') +
-		'="'+ name +'"]/';
-	return ZU.xpathText(doc, xpath + '@content | ' + xpath + '@contents', namespaces);
+// Boolean Parameters (default values false)
+//   * strict = false: compare only ending substring, e.g. bepress
+//   * strict = true: compare exactly
+//   * all = false: return only first match
+//   * all = true: concatenate all values
+function getContentText(doc, name, strict, all) {
+	let csspath = 'html>head>meta[name' + (strict ? '="' : '$="') + name + '"]';
+	if (all) {
+		return Array.from(doc.querySelectorAll(csspath)).map(obj => obj.content || obj.contents).join(', ');
+	} else {
+		return attr(doc, csspath, 'content') || attr(doc, csspath, 'contents');
+	}
 }
 
 function getContent(doc, name, strict) {
@@ -186,7 +197,9 @@ function fixCase(authorName) {
 function processFields(doc, item, fieldMap, strict) {
 	for(var metaName in fieldMap) {
 		var zoteroName = fieldMap[metaName];
-		var value = getContentText(doc, metaName, strict);
+		// only concatenate values for ISSN and ISBN; otherwise take the first
+		var allValues = (zoteroName == "ISSN" || zoteroName == "ISBN");
+		var value = getContentText(doc, metaName, strict, allValues);
 		if(value && value.trim()) {
 			item[zoteroName] = ZU.trimInternal(value);
 		}
@@ -256,7 +269,6 @@ function init(doc, url, callback, forceLoadRDF) {
 			//if(delimIndex === -1) continue;
 
 			var prefix = tag.substr(0, delimIndex).toLowerCase();
-
 			if(_prefixes[prefix]) {
 				var prop = tag.substr(delimIndex+1, 1).toLowerCase()+tag.substr(delimIndex+2);
 				//bib and bibo types are special, they use rdf:type to define type
@@ -314,6 +326,7 @@ function init(doc, url, callback, forceLoadRDF) {
 		translator.setTranslator("5e3ad958-ac79-463d-812b-a86a9235c28f");
 		translator.setHandler("itemDone", function(obj, newItem) {
 			_haveItem = true;
+			// Z.debug(newItem)
 			completeItem(doc, newItem);
 		});
 
@@ -370,17 +383,19 @@ function importRDF(doc, url) {
 function addHighwireMetadata(doc, newItem) {
 	// HighWire metadata
 	processFields(doc, newItem, HIGHWIRE_MAPPINGS);
-
-	var authorNodes = getContent(doc, 'citation_author')
-						.concat(getContent(doc, 'citation_authors'));
+	var authorNodes = getContent(doc, 'citation_author');
+	if (authorNodes.length == 0) {
+		authorNodes = getContent(doc, 'citation_authors');
+	}
 	//save rdfCreators for later
 	var rdfCreators = newItem.creators;
 	newItem.creators = [];
 	for(var i=0, n=authorNodes.length; i<n; i++) {
 		var authors = authorNodes[i].nodeValue.split(/\s*;\s*/);
-		if (authors.length == 1) {
-			/* If we get nothing when splitting by semicolon, and at least two words on
-			* either side of the comma when splitting by comma, we split by comma. */
+		if (authors.length == 1 && authorNodes.length == 1) {
+			/* If there is only one author node and 
+			 we get nothing when splitting by semicolon, and at least two words on
+			 either side of the comma when splitting by comma, we split by comma. */
 			var authorsByComma = authors[0].split(/\s*,\s*/);
 			if (authorsByComma.length > 1
 				&& authorsByComma[0].indexOf(" ") !== -1
@@ -452,10 +467,14 @@ function addHighwireMetadata(doc, newItem) {
 
 	//sometimes RDF has more info, let's not drop it
 	var rdfPages = (newItem.pages)? newItem.pages.split(/\s*-\s*/) : new Array();
-	var firstpage = getContentText(doc, 'citation_firstpage') ||
-					rdfPages[0];
-	var lastpage = getContentText(doc, 'citation_lastpage') ||
-					rdfPages[1];
+	var firstpage = getContentText(doc, 'citation_firstpage');
+	var lastpage = getContentText(doc, 'citation_lastpage');
+	if (firstpage && firstpage.includes("-")) {
+		firstpage = firstpage.split(/\s*-\s*/)[0];
+		lastpage = lastpage || firstpage.split(/\s*-\s*/)[1];
+	}
+	firstpage = firstpage || rdfPages[0];
+	var lastpage = lastpage || rdfPages[1];
 	if(firstpage && ( firstpage = firstpage.trim() )) {
 		newItem.pages = firstpage +
 			( ( lastpage && ( lastpage = lastpage.trim() ) )?'-' + lastpage : '' );
@@ -480,9 +499,9 @@ function addHighwireMetadata(doc, newItem) {
 	}
 
 	//prefer ISSN over eISSN
-	var issn = getContentText(doc, 'citation_issn') ||
-			getContentText(doc, 'citation_ISSN') ||
-			getContentText(doc, 'citation_eIssn');
+	var issn = getContentText(doc, 'citation_issn', null, true) ||
+			getContentText(doc, 'citation_ISSN', null, true) ||
+			getContentText(doc, 'citation_eIssn', null, true);
 
 	if(issn) newItem.ISSN = issn;
 
@@ -1016,6 +1035,7 @@ var testCases = [
 				],
 				"date": "2012",
 				"abstractNote": "This thesis examines decentralized meta-reasoning. For a single agent or multiple agents, it may not be enough for agents to compute correct decisions if they do not do so in a timely or resource efficient fashion. The utility of agent decisions typically increases with decision quality, but decreases with computation time. The reasoning about one's computation process is referred to as meta-reasoning. Aspects of meta-reasoning considered in this thesis include the reasoning about how to allocate computational resources, including when to stop one type of computation and begin another, and when to stop all computation and report an answer. Given a computational model, this translates into computing how to schedule the basic computations that solve a problem. This thesis constructs meta-reasoning strategies for the purposes of monitoring and control in multi-agent settings, specifically settings that can be modeled by the Decentralized Partially Observable Markov Decision Process (Dec-POMDP). It uses decision theory to optimize computation for efficiency in time and space in communicative and non-communicative decentralized settings. Whereas base-level reasoning describes the optimization of actual agent behaviors, the meta-reasoning strategies produced by this thesis dynamically optimize the computational resources which lead to the selection of base-level behaviors.",
+				"extra": "DOI: https://doi.org/10.7275/n8e9-xy93",
 				"language": "en",
 				"libraryCatalog": "scholarworks.umass.edu",
 				"university": "University of Massachusetts Amherst",
@@ -1068,7 +1088,7 @@ var testCases = [
 				"DOI": "10.1590/S0034-89102007000900015",
 				"ISSN": "0034-8910, 0034-8910, 1518-8787",
 				"abstractNote": "OBJETIVO: Descrever as impressões, experiências, conhecimentos, crenças e a receptividade de usuários de drogas injetáveis para participar das estratégias de testagem rápida para HIV. MÉTODOS: Estudo qualitativo exploratório foi conduzido entre usuários de drogas injetáveis, de dezembro de 2003 a fevereiro de 2004, em cinco cidades brasileiras, localizadas em quatro regiões do País. Um roteiro de entrevista semi-estruturado contendo questões fechadas e abertas foi usado para avaliar percepções desses usuários sobre procedimentos e formas alternativas de acesso e testagem. Foram realizadas 106 entrevistas, aproximadamente 26 por região. RESULTADOS: Características da população estudada, opiniões sobre o teste rápido e preferências por usar amostras de sangue ou saliva foram apresentadas junto com as vantagens e desvantagens associadas a cada opção. Os resultados mostraram a viabilidade do uso de testes rápidos entre usuários de drogas injetáveis e o interesse deles quanto à utilização destes métodos, especialmente se puderem ser equacionadas questões relacionadas à confidencialidade e confiabilidade dos testes. CONCLUSÕES: Os resultados indicam que os testes rápidos para HIV seriam bem recebidos por essa população. Esses testes podem ser considerados uma ferramenta valiosa, ao permitir que mais usuários de drogas injetáveis conheçam sua sorologia para o HIV e possam ser referidos para tratamento, como subsidiar a melhoria das estratégias de testagem entre usuários de drogas injetáveis.",
-				"journalAbbreviation": "Rev. Saúde Pública, Rev. saúde pública",
+				"journalAbbreviation": "Rev. Saúde Pública",
 				"language": "pt",
 				"libraryCatalog": "scielosp.org",
 				"pages": "94-100",
@@ -1140,37 +1160,6 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "https://www.salon.com/2012/10/10/junot_diaz_my_stories_come_from_trauma/",
-		"items": [
-			{
-				"itemType": "webpage",
-				"title": "Junot Díaz: My stories come from trauma",
-				"creators": [
-					{
-						"firstName": "Gregg",
-						"lastName": "Barrios",
-						"creatorType": "author"
-					}
-				],
-				"date": "2012-10-10 15:36:00",
-				"abstractNote": "The effervescent author of \"This is How You Lose Her\" explains the darkness coursing through his fiction",
-				"language": "en",
-				"shortTitle": "Junot Díaz",
-				"url": "https://www.salon.com/2012/10/10/junot_diaz_my_stories_come_from_trauma/",
-				"websiteTitle": "Salon",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
 		"url": "http://volokh.com/2013/12/22/northwestern-cant-quit-asa-boycott-member/",
 		"items": [
 			{
@@ -1189,42 +1178,6 @@ var testCases = [
 				"language": "en-US",
 				"url": "http://volokh.com/2013/12/22/northwestern-cant-quit-asa-boycott-member/",
 				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "web",
-		"url": "http://apps.who.int/iris/handle/10665/97603",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "WHO recommendations on postnatal care of the mother and newborn",
-				"creators": [
-					{
-						"firstName": "World Health",
-						"lastName": "Organization",
-						"creatorType": "author"
-					}
-				],
-				"date": "2014",
-				"ISBN": "9789241506649",
-				"abstractNote": "62 p.",
-				"language": "en",
-				"libraryCatalog": "apps.who.int",
-				"publisher": "World Health Organization",
-				"url": "http://www.who.int/iris/handle/10665/97603",
-				"attachments": [
-					{
-						"title": "Full Text PDF",
-						"mimeType": "application/pdf"
-					},
 					{
 						"title": "Snapshot"
 					}
@@ -1300,6 +1253,7 @@ var testCases = [
 				"issue": "1",
 				"language": "en",
 				"libraryCatalog": "olh.openlibhums.org",
+				"pages": "e1",
 				"publicationTitle": "Open Library of Humanities",
 				"rights": "Authors who publish with this journal agree to the following terms:    Authors retain copyright and grant the journal right of first publication with the work simultaneously licensed under a  Creative Commons Attribution License  that allows others to share the work with an acknowledgement of the work's authorship and initial publication in this journal.  Authors are able to enter into separate, additional contractual arrangements for the non-exclusive distribution of the journal's published version of the work (e.g., post it to an institutional repository or publish it in a book), with an acknowledgement of its initial publication in this journal.  Authors are permitted and encouraged to post their work online (e.g., in institutional repositories or on their website) prior to and during the submission process, as it can lead to productive exchanges, as well as earlier and greater citation of published work (See  The Effect of Open Access ).  All third-party images reproduced on this journal are shared under Educational Fair Use. For more information on  Educational Fair Use , please see  this useful checklist prepared by Columbia University Libraries .   All copyright  of third-party content posted here for research purposes belongs to its original owners.  Unless otherwise stated all references to characters and comic art presented on this journal are ©, ® or ™ of their respective owners. No challenge to any owner’s rights is intended or should be inferred.",
 				"url": "http://olh.openlibhums.org/article/10.16995/olh.46/",
@@ -1350,7 +1304,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A766397&dswid=2797",
+		"url": "http://www.diva-portal.org/smash/record.jsf?pid=diva2%3A766397&dswid=510",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -1418,12 +1372,12 @@ var testCases = [
 					}
 				],
 				"date": "2013",
-				"abstractNote": "Signaling data from the cellular networks can provide a means of analyzing the efficiency of a deployed transportation system and assisting in the formulation of transport models to predict its fut ...",
+				"abstractNote": "DiVA portal is a finding tool for research publications and student theses written at the following 47 universities and research institutions.",
 				"conferenceName": "Netmob 2013 - Third International Conference on the Analysis of Mobile Phone Datasets, May 1-3, 2013, MIT, Cambridge, MA, USA",
 				"language": "eng",
 				"libraryCatalog": "www.diva-portal.org",
 				"shortTitle": "Mobility modeling for transport efficiency",
-				"url": "http://www.diva-portal.org/smash/record.jsf?pid=diva2:766397",
+				"url": "http://urn.kb.se/resolve?urn=urn:nbn:se:liu:diva-112443",
 				"attachments": [
 					{
 						"title": "Full Text PDF",

@@ -1,0 +1,27 @@
+{
+  "filename": "auto-nl.json",
+  "name": "The Netherlands",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "NL": "The Netherlands",
+        "NL:ARUBA": "Aruba",
+        "NL:CURACAO": "Curaçao",
+        "NL:SINT.MAARTEN": "Sint Maarten"
+      }
+    },
+    "nl": {
+      "institution-part": {}
+    },
+    "nl:aruba": {
+      "institution-part": {}
+    },
+    "nl:curacao": {
+      "institution-part": {}
+    },
+    "nl:sint.maarten": {
+      "institution-part": {}
+    }
+  }
+}

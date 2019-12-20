@@ -1,0 +1,15 @@
+{
+  "filename": "auto-imf.int.json",
+  "name": "International Monetary Fund",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "IMF.INT": "International Monetary Fund"
+      }
+    },
+    "imf.int": {
+      "institution-part": {}
+    }
+  }
+}

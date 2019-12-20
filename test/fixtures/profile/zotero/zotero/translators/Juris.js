@@ -2,14 +2,14 @@
 	"translatorID": "bc2ec385-e60a-4899-96ae-d4f0d6574ad7",
 	"label": "Juris",
 	"creator": "Reto Mantz",
-	"target": "^https?://(www\\.)?juris\\.de/",
+	"target": "^https?://(www\\.|testsystem\\.)?juris\\.de/",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2018-05-11 09:59:19"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2018-08-27 10:42:50"
 }
 
 /*
@@ -33,7 +33,6 @@
 	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
 
 
-
 ***** END LICENSE BLOCK *****
 
 */
@@ -41,17 +40,22 @@
 
 // For testing one has to first open starting page with user name, e.g.
 // https://www.juris.de/jportal/?action=JLoginUser&username=UNI_MANNHEIM
-// and only the old interface is working in Scaffold, which can be switched to
-// by visiting the website
-// https://www.juris.de/jportal/portal/t/dfj/page/jurisw.psml?r3switch=set_portal
 
 
 // Array with the different - recognized - types
-var mappingClassNameToItemType = {
-	'URTEIL' : 'case',
-	'URT.' : 'case',
-	'BESCHLUSS' : 'case',
-	'BESCHL.' : 'case'
+var mappingItemTypes = {
+	MONOGRAPHIE: 'book',
+	SAMMELWERK: 'book',
+	AUFSATZ: 'journalArticle',
+	KONGRESSBERICHT: 'conferencePaper',
+	'KONGRESSVORTRAG, AUFSATZ': 'conferencePaper',
+	URTEIL: 'case',
+	'URT.': 'case',
+	BESCHLUSS: 'case',
+	'BESCHL.': 'case',
+	'ERLEDIGTES ANHÄNGIGES VERFAHREN': 'case',
+	GESETZ: 'statute',
+	SONSTIGES: 'journalArticle'
 };
 
 // most information in Juris is saved in tables where the description of the data is of class TD30 => gather this data
@@ -59,113 +63,210 @@ var scrapeData = {};
 
 function initData(doc) {
 	var nodes = doc.getElementsByClassName('TD30');
-	for (var i=0; i<nodes.length; i++) {
+	for (var i = 0; i < nodes.length; i++) {
 		var label = ZU.trimInternal(nodes[i].textContent);
-		label = label.substr(0, label.length-1);  // chop off ':', but .replace(/:$/, '') may be more reliable
+		label = label.substr(0, label.length - 1); // chop off ':', but .replace(/:$/, '') may be more reliable
 		var value = nodes[i].nextElementSibling;
 		if (label && value) {
 			scrapeData[label] = ZU.trimInternal(value.textContent);
 		}
 	}
-	if (scrapeData['Norm']) {
-		scrapeData['Normen'] = scrapeData['Norm'];
+	if (scrapeData.Norm) {
+		scrapeData.Normen = scrapeData.Norm;
 	}
 }
 	
-function detectWeb(doc, url) {
+function detectWeb(doc, _url) {
 	initData(doc);		// gather data
 	
-	if ((scrapeData['Beitragstyp'] || scrapeData['Dokumenttyp']) && scrapeData['Autor']) {
-		return 'journalArticle';
+	var type = scrapeData.Beitragstyp || scrapeData.Dokumenttyp;
+	if (type) {
+		type = type.toUpperCase();
+		if (mappingItemTypes[type]) {
+			return mappingItemTypes[type];
+		}
+		else {
+			Z.debug(type + " not yet suppported");
+		}
 	}
-	if (scrapeData['Dokumenttyp'] && mappingClassNameToItemType[scrapeData['Dokumenttyp'].toUpperCase()]=='case') {
-		return 'case';
+	if (scrapeData.Werk && scrapeData.Zitiervorschlag) {
+		if (scrapeData.Zitiervorschlag.includes('Handbuch')) {
+			return 'bookSection';
+		}
+		else {
+			return 'encyclopediaArticle'; // for articles in commentary
+		}
 	}
+	var coins = ZU.xpathText(doc, '//span[@class="Z3988"]/@title');
+	if (coins) {
+		if (coins.includes("rft.genre=article")) {
+			return 'journalArticle';
+		}
+	}
+	// Z.debug(scrapeData)
 	Z.monitorDOMChanges(ZU.xpath(doc, '//div[@id="container"]/div')[0]);
+	return false;
 }
 
 function addNote(originalNote, newNote) {
 	if (originalNote.length === 0) {
-		originalNote = "Additional Metadata: "+newNote;
+		originalNote = "<h2>Additional Metadata</h2>" + newNote;
 	}
-	else
-	{
+	else {
 		originalNote += newNote;
 	}
 	return originalNote;
 }
 
-function scrapeArticle(doc, url) {
-	var item = new Zotero.Item("journalArticle");
-	var note = "";
+function scrape(doc, url, itemType) {
+	var item = new Zotero.Item(itemType);
 	
 	// scrape authors
-	var myAuthorsString = scrapeData['Autor'];
-	
+	var myAuthorsString = scrapeData.Autor;
 	// example: "Michael Fricke, Martin Gerecke"
-	myAuthorsString = Zotero.Utilities.trimInternal(myAuthorsString);
-	var myAuthors = myAuthorsString.split(",");
-
-	for (var index = 0; index < myAuthors.length; ++index) {
-		var author = Zotero.Utilities.trimInternal(myAuthors[index]);
-		item.creators.push ( Zotero.Utilities.cleanAuthor(author, 'author', false) );
+	if (myAuthorsString) {
+		var myAuthors = ZU.trimInternal(myAuthorsString).split(",");
+		for (var index = 0; index < myAuthors.length; ++index) {
+			var author = ZU.trimInternal(myAuthors[index]);
+			item.creators.push(ZU.cleanAuthor(author, 'author', false));
+		}
 	}
 	
-	//scrape title
-	var myTitle = ZU.xpathText(doc, "//div[@class='docLayoutTitel']");
-	item.title = ZU.trimInternal(myTitle);
-	// sometimes the title contains the authors at the end after separate <br/> tags
-	// in this case, the div is structured differently
-	// example article: BB 2014, 3
-	var temp = ZU.xpath(doc, "//div[@class='docLayoutTitel']/h3/following-sibling::br");
-	if (temp.length>0) {	// yes, there is additional information, then grab from another source
-		item.title = ZU.xpathText(doc, "//div[@class='docLayoutTitel']/h3/a");
+	var editorString = scrapeData.Herausgeber || scrapeData.Gesamtherausgeber;
+	if (editorString) {
+		var editors = ZU.trimInternal(editorString).split("/");
+		for (let i = 0; i < editors.length; i++) {
+			item.creators.push(ZU.cleanAuthor(editors[i], 'editor', false));
+		}
 	}
 	
-	item.publicationTitle = ZU.xpathText(doc, '(//table//img[contains(@alt,"Abkürzung Fundstelle")]/@title)[1]');
-	//scrape src
-	//example 1: "AfP 2014, 293-299"
-	//example 2: "ZStW 125, 259-298 (2013)"
-	var mySrcString = scrapeData['Fundstelle'];
-
-	// match example 1
-	var matchSrc = mySrcString.match(/^([^,]+)\s(\d{4})\s*,\s*(\d+(?:-\d+)?)\s*$/);
-	if (matchSrc) {
-		item.journalAbbreviation = ZU.trimInternal(matchSrc[1]);
-		item.date = matchSrc[2];
-		item.pages = matchSrc[3];
+	// scrape title
+	item.title = ZU.xpathText(doc, "//div[@class='docLayoutTitel']/h3")
+		|| ZU.xpathText(doc, "//div[contains(@class, 'docLayoutTitel')]//strong")
+		|| ZU.xpathText(doc, "//div[contains(@class, 'docLayoutTitel')]")
+		|| ZU.xpathText(doc, "//div[contains(@class, 'docbar__title')]");
+	
+	item.date = scrapeData.Erscheinungsjahr || scrapeData.Stand;
+	item.edition = scrapeData.Ausgabe || scrapeData.Auflage;
+	var isbn = scrapeData.Bestellnummer;
+	if (isbn) {
+		item.ISBN = isbn.replace('ISBN', '').trim();
 	}
-	// match example 2
-	else if (matchSrc = mySrcString.match(/^([^,]+)\s(\d+)\s*,\s*(\d+(?:-\d+)?)\s*\((\d{4})\)\s*$/)) {
+	var pub = scrapeData.Verlag;
+	if (pub) {
+		// e.g. de Gruyter, Berlin
+		var pubLoc = pub.split(',');
+		if (pubLoc.length === 2) {
+			item.publisher = pubLoc[0];
+			item.place = pubLoc[1];
+		}
+		else {
+			item.publisher = pub;
+		}
+	}
+	
+	item.conferenceName = scrapeData.Kongress;
+	
+	item.publicLawNumber = scrapeData.FNA; // Fundstellennachweis A (?)
+	item.code = scrapeData['Amtliche Abkürzung'];
+	if (itemType === "statute" && scrapeData.Zitiervorschlag) {
+		// e.g. "Zitiervorschlag": "§ 154 VwGO in der Fassung vom 20.12.2001"
+		var m = scrapeData.Zitiervorschlag.match(/in der Fassung vom ([\d.]+)/);
+		if (m) {
+			item.dateEnacted = ZU.strToISO(m[1]);
+		}
+		m = scrapeData.Zitiervorschlag.match(/§ (.+?) /);
+		if (m) {
+			item.codeNumber = m[1];
+		}
+	}
+	
+	item.publicationTitle = ZU.xpathText(doc, '(//table//img[contains(@alt,"Abkürzung Fundstelle")]/@title)[1]')
+		|| scrapeData.Werk;
+	// scrape src
+	// example 1: "AfP 2014, 293-299"
+	// example 2: "ZStW 125, 259-298 (2013)"
+	var mySrcString = scrapeData.Fundstelle;
+
+	if (mySrcString) {
+		// match example 1
+		var matchSrc = mySrcString.match(/^([^,]+)\s(\d{4})\s*,\s*(\d+(?:-\d+)?)\s*$/);
+		if (matchSrc) {
 			item.journalAbbreviation = ZU.trimInternal(matchSrc[1]);
-			item.issue = matchSrc[2];
+			item.date = matchSrc[2];
 			item.pages = matchSrc[3];
-			item.date = matchSrc[4];
+		}
+		// match example 2
+		else {
+			matchSrc = mySrcString.match(/^([^,]+)\s(\d+)\s*,\s*(\d+(?:-\d+)?)\s*\((\d{4})\)\s*$/);
+			if (matchSrc) {
+				item.journalAbbreviation = ZU.trimInternal(matchSrc[1]);
+				item.issue = matchSrc[2];
+				item.pages = matchSrc[3];
+				item.date = matchSrc[4];
+			}
+		}
 	}
+	
+	finalize(doc, url, item);
+}
+
+function finalize(doc, url, item) {
+	var note = "";
 	
 	// regulations cited in the database for the article
-	var citedRegulations = scrapeData['Normen'];
+	var citedRegulations = scrapeData.Normen;
 	if (citedRegulations) {
 		note = addNote(note, "<h3>Normen</h3><p>" + ZU.trimInternal(citedRegulations) + "</p>");
 	}
+	var inofficialTitle = ZU.xpathText(doc, "//div[@class='docLayoutTitel']/div/dl/dd/p");
+	if (inofficialTitle) 	{
+		note = addNote(note, "<h3>Titel</h3><p>" + ZU.trimInternal(inofficialTitle) + "</p>");
+	}
+	// sources if available
+	if (ZU.xpathText(doc, "//h3[.='Fundstellen']")) {
+		var sources = ZU.xpathText(doc, "//td[@class='TableUnten']/div[2]/div[4]");
+		if (sources) {
+			note = addNote(note, "<h3>Fundstellen</h3><p>" + ZU.trimInternal(sources) + "</p>");
+		}
+	}
 	
 	if (note.length !== 0) {
-		item.notes.push( {note: note} );
-	}	
-	item.attachments = [{
-		title: "Snapshot",
-		document: doc
-	}];
+		item.notes.push({ note: note });
+	}
 	
+	// saving a snapshot is currently not working properly
+	// item.attachments = [{
+	//	title: "Snapshot",
+	//	document: doc
+	// }];
+	
+	var perma = ZU.xpathText(doc, '//span[contains(@class, "docLayoutPermalinkItemLink")]');
+	if (perma) {
+		item.attachments.push({
+			title: "Juris Permalink",
+			url: perma,
+			snapshot: false
+		});
+	}
+	
+	var pdfLink = ZU.xpathText(doc, '//a[contains(@class, "button--pdf")]/@href');
+	if (pdfLink) {
+		item.attachments.push({
+			title: "Fulltext PDF",
+			url: pdfLink,
+			mimeType: "application/pdf"
+		});
+	}
+
 	item.complete();
 }
 
 function scrapeCase(doc, url) {
 	var item = new Zotero.Item('case');
-	var note = "";
 	
 	// court
-	item.court = scrapeData['Gericht'];
+	item.court = scrapeData.Gericht;
 	// if there is additional information about the body inside the court (starting with a number), disregard it
 	// examples:	BGH 1. Zivilsenat, LG Köln 26. Zivilkammer
 	var m = item.court.match(/^[A-Za-zÖöÄäÜüß ]+/);
@@ -181,72 +282,45 @@ function scrapeCase(doc, url) {
 	}
 	
 	// date
-	var myDateString = scrapeData['Entscheidungsdatum'];
-	item.dateDecided = myDateString.replace(/(\d\d?)\.\s*(\d\d?)\.\s*(\d\d\d\d)/, "$3-$2-$1");
+	var myDateString = scrapeData.Entscheidungsdatum;
+	if (myDateString) {
+		item.dateDecided = myDateString.replace(/(\d\d?)\.\s*(\d\d?)\.\s*(\d\d\d\d)/, "$3-$2-$1");
+	}
 	
 	// docketNumber
-	item.docketNumber = scrapeData['Aktenzeichen'];
+	item.docketNumber = scrapeData.Aktenzeichen;
 	
 	// type of decision. Save this in item.extra according to citeproc-js
-	var decisionType = scrapeData['Dokumenttyp'];
+	var decisionType = scrapeData.Dokumenttyp;
 	if (/(Beschluss)|Beschl\./i.test(decisionType)) {
 		item.extra += "\ngenre: Beschl.";
 	}
-	else {
-		if (/(Urteil)|(Urt\.)/i.test(decisionType)) {
-			item.extra += "\ngenre: Urt.";
-		}
+	else if (/(Urteil)|(Urt\.)/i.test(decisionType)) {
+		item.extra += "\ngenre: Urt.";
 	}
 	
 	// name of decision (caseName) if availabe
 	// since the CSL stylesheet does not have a "caseName" property, but uses only "title" we have to use other field => item.history (=CSL.references)
 	// also, item.caseName and item.title are identical in Zotero. Therefore, we should not use item.caseName at all
 	
-	var caseName = scrapeData['Entscheidungsname'];
+	var caseName = scrapeData.Entscheidungsname;
 	item.title = item.court + ", " + myDateString + " - " + item.docketNumber;
 	if (caseName) {
 		item.shortTitle = caseName;
 		item.title += " - " + caseName;
 	}
 	
-	// regulations cited in the database for the case
-	var basedOnRegulations = scrapeData['Normen'];
-	if (basedOnRegulations) {
-		note = addNote(note, "<h3>Normen</h3><p>" + ZU.trimInternal(basedOnRegulations) + "</p>");
-	}
-	var inofficialTitle = ZU.xpathText(doc, "//div[@class='docLayoutTitel']/div/dl/dd/p");
-	if (inofficialTitle) 	{
-		note = addNote(note, "<h3>Titel</h3><p>" + ZU.trimInternal(inofficialTitle) + "</p>");
-	}
-	// sources if available
-	if (ZU.xpathText(doc, "//h3[.='Fundstellen']")) {
-		var sources = ZU.xpathText(doc, "//td[@class='TableUnten']/div[2]/div[4]");
-		if (sources) {
-			note = addNote(note, "<h3>Fundstellen</h3><p>" + ZU.trimInternal(sources) + "</p>");
-		}
-	}
-	
-	if (note.length != 0) {
-		item.notes.push( {note: note} );
-	}	
-		
-	
-	item.attachments = [{
-		title: "Snapshot",
-		document:doc
-	}];
-
-	item.complete();		
+	finalize(doc, url, item);
 }
 
 
-function doWeb (doc, url) {
+function doWeb(doc, url) {
 	var myType = detectWeb(doc, url);
-	if (myType == 'journalArticle') {
-		scrapeArticle(doc, url);
-	}
-	else if (myType == 'case') {
+	if (myType == 'case') {
 		scrapeCase(doc, url);
+	}
+	else {
+		scrape(doc, url, myType);
 	}
 }
 
@@ -254,11 +328,10 @@ function doWeb (doc, url) {
 var testCases = [
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/e44/page/jurisw.psml?doc.hl=1&doc.id=SBLU000136614&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3ASBLU000136614",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Der Schutz der äußeren Sicherheit Deutschlands durch das Strafrecht",
 				"creators": [
 					{
 						"firstName": "Nina",
@@ -266,34 +339,39 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2013",
-				"issue": "125",
-				"journalAbbreviation": "ZStW",
-				"libraryCatalog": "Juris",
-				"pages": "259-298",
-				"publicationTitle": "Zeitschrift für die gesamte Strafrechtswissenschaft",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>KrWaffKontrG, AWG, StGB</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>KrWaffKontrG, AWG, StGB</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"title": "Der Schutz der äußeren Sicherheit Deutschlands durch das Strafrecht",
+				"date": "2013",
+				"publicationTitle": "Zeitschrift für die gesamte Strafrechtswissenschaft",
+				"journalAbbreviation": "ZStW",
+				"issue": "125",
+				"pages": "259-298",
+				"libraryCatalog": "Juris"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/e4k/page/jurisw.psml?doc.hl=1&doc.id=SILU000241514&documentnumber=1&numberofresults=1&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3ASILU000241514",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Informantenschutz und Informantenhaftung",
 				"creators": [
 					{
 						"firstName": "Michael",
@@ -306,61 +384,71 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014",
-				"journalAbbreviation": "AfP",
-				"libraryCatalog": "Juris",
-				"pages": "293-299",
-				"publicationTitle": "Archiv für Presserecht",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>Art 5 GG, Art 10 MRK, § 53 Abs 1 Nr 5 StPO, § 97 Abs 5 StPO, § 383 Abs 1 Nr 5 ZPO ... mehr</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>Art 5 GG, Art 10 MRK, § 53 Abs 1 Nr 5 StPO, § 97 Abs 5 StPO, § 383 Abs 1 Nr 5 ZPO ... mehr</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"title": "Informantenschutz und Informantenhaftung",
+				"date": "2014",
+				"publicationTitle": "Archiv für Presserecht",
+				"journalAbbreviation": "AfP",
+				"pages": "293-299",
+				"libraryCatalog": "Juris"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/c5v/page/jurisw.psml?pid=Dokumentanzeige&showdoccase=1&js_peid=Trefferliste&documentnumber=1&numberofresults=1&fromdoctodoc=yes&doc.id=KORE316642014&doc.part=K&doc.price=0.0&doc.hl=1&doc.fopen=wf-#wf",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AKORE316642014",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "BGH, 15.05.2014 - I ZB 71/13 - Deus Ex",
 				"creators": [],
-				"dateDecided": "2014-05-15",
-				"court": "BGH",
-				"docketNumber": "I ZB 71/13",
-				"extra": "jurisdiction: de\ngenre: Beschl.",
-				"shortTitle": "Deus Ex",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 101 Abs 2 S 1 Nr 3 UrhG, § 101 Abs 9 S 1 UrhG, § 91 Abs 1 S 1 ZPO</p><h3>Titel</h3><p>Urheberrechtsverletzung im Internet: Erstattungsfähigkeit der Kosten des Verfahrens gegen einen Internet-Provider auf Auskunft über die Inhaber bestimmter IP-Adressen - Deus Ex</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 101 Abs 2 S 1 Nr 3 UrhG, § 101 Abs 9 S 1 UrhG, § 91 Abs 1 S 1 ZPO</p><h3>Titel</h3><p>Urheberrechtsverletzung im Internet: Erstattungsfähigkeit der Kosten des Verfahrens gegen einen Internet-Provider auf Auskunft über die Inhaber bestimmter IP-Adressen - Deus Ex</p><h3>Fundstellen</h3><p>NSW UrhG § 101 (BGH-intern) NSW ZPO § 91 (BGH-intern) EBE/BGH 2014, 359-360 (Leitsatz und Gründe) WRP 2014, 1468-1469 (Leitsatz und Gründe) Magazindienst 2014, 1101-1103 (Leitsatz und Gründe) GRUR 2014, 1239-1240 (Leitsatz und Gründe) K&R 2014, 798-799 (Leitsatz und Gründe) MMR 2014, 825-826 (Leitsatz und Gründe) CR 2014, 794-795 (Leitsatz und Gründe) ZUM 2014, 967-969 (Leitsatz und Gründe) NJW 2015, 70-71 (Leitsatz und Gründe) Rpfleger 2015, 116-118 (Leitsatz und Gründe)</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"court": "BGH",
+				"extra": "jurisdiction: de\ngenre: Beschl.",
+				"dateDecided": "2014-05-15",
+				"docketNumber": "I ZB 71/13",
+				"shortTitle": "Deus Ex",
+				"caseName": "BGH, 15.05.2014 - I ZB 71/13 - Deus Ex"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/h7p/page/jurisw.psml?doc.hl=1&doc.id=SBLU000100614&documentnumber=3&numberofresults=15000&showdoccase=1&doc.part=S&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3ASBLU000100614",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Die bauaufsichtliche Einführung der Eurocodes - ein Problem für das Vertragsrecht?",
 				"creators": [
 					{
 						"firstName": "Michael",
@@ -368,60 +456,70 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014",
-				"journalAbbreviation": "BauR",
-				"libraryCatalog": "Juris",
-				"pages": "431-442",
-				"publicationTitle": "Baurecht",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 69 BauO NW, § 633 BGB, VOB B</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 69 BauO NW, § 633 BGB, VOB B</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"title": "Die bauaufsichtliche Einführung der Eurocodes - ein Problem für das Vertragsrecht?",
+				"date": "2014",
+				"publicationTitle": "Baurecht",
+				"journalAbbreviation": "BauR",
+				"pages": "431-442",
+				"libraryCatalog": "Juris"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/cgn/page/jurisw.psml?doc.hl=1&doc.id=MWRE140003062&documentnumber=49&numberofresults=15000&showdoccase=1&doc.part=L&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AMWRE140003062",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "VG Frankfurt, 04.11.2014 - 6 L 544/14.A, 6 L 544/14.A (PKH)",
 				"creators": [],
-				"dateDecided": "2014-11-04",
-				"court": "VG Frankfurt",
-				"docketNumber": "6 L 544/14.A, 6 L 544/14.A (PKH)",
-				"extra": "jurisdiction: de\ngenre: Beschl.",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 71a Abs 1 AsylVfG 1992</p><h3>Titel</h3><p>Behandlung eines Asylantrages als Folgeantrag, der nach Ablehnung eines in einem EU-Mitgliedstaat (hier: Ungarn) gestellten Asylantrages abgelehnt worden war</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 71a Abs 1 AsylVfG 1992</p><h3>Titel</h3><p>Behandlung eines Asylantrages als Folgeantrag, der nach Ablehnung eines in einem EU-Mitgliedstaat (hier: Ungarn) gestellten Asylantrages abgelehnt worden war</p><h3>Fundstellen</h3><p>AuAS 2015, 8-9 (red. Leitsatz und Gründe)</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"court": "VG Frankfurt",
+				"extra": "jurisdiction: de\ngenre: Beschl.",
+				"dateDecided": "2014-11-04",
+				"docketNumber": "6 L 544/14.A, 6 L 544/14.A (PKH)",
+				"caseName": "VG Frankfurt, 04.11.2014 - 6 L 544/14.A, 6 L 544/14.A (PKH)"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/h5z/page/jurisw.psml?pid=Dokumentanzeige&showdoccase=1&js_peid=Trefferliste&documentnumber=1&numberofresults=15000&fromdoctodoc=yes&doc.id=jzs-B2-1422A-1283-1&doc.part=B&doc.price=0.0#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3Ajzs-B2-1422A-1283-1",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Maßnahmenpaket der Europäischen Kommission zum Gesellschaftsrecht und Corporate Governance",
 				"creators": [
 					{
 						"firstName": "Georg",
@@ -434,56 +532,66 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014",
-				"journalAbbreviation": "BB",
-				"libraryCatalog": "Juris",
-				"pages": "1283-1294",
-				"publicationTitle": "Betriebs-Berater",
+				"notes": [],
+				"tags": [],
+				"seeAlso": [],
 				"attachments": [
 					{
-						"title": "Snapshot"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
+				"title": "Maßnahmenpaket der Europäischen Kommission zum Gesellschaftsrecht und Corporate Governance",
+				"date": "2014",
+				"publicationTitle": "Betriebs-Berater",
+				"journalAbbreviation": "BB",
+				"pages": "1283-1294",
+				"libraryCatalog": "Juris"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/hdi/page/jurisw.psml?doc.hl=1&doc.id=JURE140017979&documentnumber=7&numberofresults=802&showdoccase=1&doc.part=L&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AJURE140017979",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "LG Köln, 22.10.2014 - 26 O 142/13",
 				"creators": [],
-				"dateDecided": "2014-10-22",
-				"court": "LG Köln",
-				"docketNumber": "26 O 142/13",
-				"extra": "jurisdiction: de\ngenre: Urt.",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 143 Abs 1 S 1 InsO, § 133 InsO</p><h3>Titel</h3><p>Anspruch des Insolvenzverwalters auf Rückgewähr der Leistungen nach Insolvenzanfechtung</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 143 Abs 1 S 1 InsO, § 133 InsO</p><h3>Titel</h3><p>Anspruch des Insolvenzverwalters auf Rückgewähr der Leistungen nach Insolvenzanfechtung</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"court": "LG Köln",
+				"extra": "jurisdiction: de\ngenre: Urt.",
+				"dateDecided": "2014-10-22",
+				"docketNumber": "26 O 142/13",
+				"caseName": "LG Köln, 22.10.2014 - 26 O 142/13"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/1rys/page/jurisw.psml?doc.hl=1&doc.id=jzs-B2-1401A-3-1&documentnumber=2&numberofresults=742&showdoccase=1&doc.part=B&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3Ajzs-B2-1401A-3-1",
 		"items": [
 			{
 				"itemType": "journalArticle",
-				"title": "Die Insolvenzanfechtung von (überhöhten) Gehältern und Vergütungen von Geschäftsleitern und Sanierungsberatern",
 				"creators": [
 					{
 						"firstName": "Christoph",
@@ -496,102 +604,123 @@ var testCases = [
 						"creatorType": "author"
 					}
 				],
-				"date": "2014",
-				"journalAbbreviation": "BB",
-				"libraryCatalog": "Juris",
-				"pages": "3-8",
-				"publicationTitle": "Betriebs-Berater",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [],
 				"notes": [],
-				"seeAlso": []
+				"tags": [],
+				"seeAlso": [],
+				"attachments": [
+					{
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"title": "Die Insolvenzanfechtung von (überhöhten) Gehältern und Vergütungen von Geschäftsleitern und Sanierungsberatern",
+				"date": "2014",
+				"publicationTitle": "Betriebs-Berater",
+				"journalAbbreviation": "BB",
+				"pages": "3-8",
+				"libraryCatalog": "Juris"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/5tw/page/jurisw.psml?doc.hl=1&doc.id=KORE310852014&documentnumber=1&numberofresults=2&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AKORE310852014",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "BGH, 08.01.2014 - I ZR 169/12 - BearShare",
 				"creators": [],
+				"notes": [
+					{
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 97 Abs 1 S 1 UrhG</p><h3>Titel</h3><p>Urheberrechtsverletzung durch Teilnahme an einer Internet-Musiktauschbörse; Haftung des Internetanschlussinhabers für Rechtsverletzungen volljähriger Familienangehöriger; tatsächliche Vermutung für eine Täterschaft des Anschlussinhabers und Umfang dessen sekundärer Darlegungslast - BearShare</p>"
+					}
+				],
+				"tags": [],
+				"seeAlso": [],
+				"attachments": [
+					{
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
+					}
+				],
+				"court": "BGH",
+				"extra": "jurisdiction: de\ngenre: Urt.",
 				"dateDecided": "2014-01-08",
-				"court": "BGH",
 				"docketNumber": "I ZR 169/12",
-				"extra": "jurisdiction: de\ngenre: Urt.",
 				"shortTitle": "BearShare",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [],
-				"notes": [
-					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 97 Abs 1 S 1 UrhG</p><h3>Titel</h3><p>Urheberrechtsverletzung durch Teilnahme an einer Internet-Musiktauschbörse; Haftung des Internetanschlussinhabers für Rechtsverletzungen volljähriger Familienangehöriger; tatsächliche Vermutung für eine Täterschaft des Anschlussinhabers und Umfang dessen sekundärer Darlegungslast - BearShare</p><h3>Fundstellen</h3><p>BGHZ 200, 76-86 (Leitsatz und Gründe) NSW UrhG § 97 (BGH-intern) WM 2014, 1143-1146 (Leitsatz und Gründe) WRP 2014, 851-854 (Leitsatz und Gründe) GRUR 2014, 657-660 (Leitsatz und Gründe) CR 2014, 472-475 (Leitsatz und Gründe) Magazindienst 2014, 642-647 (Leitsatz und Gründe) MDR 2014, 849-850 (Leitsatz und Gründe) K&R 2014, 513-516 (Leitsatz und Gründe) MMR 2014, 547-550 (Leitsatz und Gründe) NJW 2014, 2360-2362 (Leitsatz und Gründe) FamRZ 2014, 1291-1293 (Leitsatz und Gründe) VuR 2014, 316-318 (Leitsatz und Gründe) ZUM 2014, 707-710 (Leitsatz und Gründe) AfP 2014, 320-324 (Leitsatz und Gründe) VersR 2014, 1007-1009 (Leitsatz und Gründe) WuB IV A § 1004 BGB 1.14 (Leitsatz und Gründe)</p>"
-					}
-				],
-				"seeAlso": []
+				"caseName": "BGH, 08.01.2014 - I ZR 169/12 - BearShare"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/5tz/page/jurisw.psml?doc.hl=1&doc.id=KORE570922014&documentnumber=1&numberofresults=40&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AKORE570922014",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "EuGH, 27.03.2014 - C-314/12",
 				"creators": [],
-				"dateDecided": "2014-03-27",
+				"notes": [
+					{
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>EGRL 29/2001 Art 3 Abs 2, EGRL 29/2001 Art 5 Abs 1, EGRL 29/2001 Art 5 Abs 2 Buchst b, EGRL 29/2001 Art 8 Abs 2, EGRL 29/2001 Art 8 Abs 3 ... mehr</p><h3>Titel</h3><p>Auslegung der Urheberrechtsrichtlinie auf Vorabentscheidungsersuchen eines österreichischen Gerichts: Gerichtliche Anordnung einer unbestimmten Website-Zugangssperrung gegenüber einem Anbieter von Internetzugangsdiensten wegen Urheberrechtsverletzungen</p>"
+					}
+				],
+				"tags": [],
+				"seeAlso": [],
+				"attachments": [
+					{
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
+					}
+				],
 				"court": "EuGH",
-				"docketNumber": "C-314/12",
 				"extra": "jurisdiction: europa.eu\ngenre: Urt.",
-				"attachments": [
-					{
-						"title": "Snapshot"
-					}
-				],
-				"tags": [],
-				"notes": [
-					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>EGRL 29/2001 Art 3 Abs 2, EGRL 29/2001 Art 5 Abs 1, EGRL 29/2001 Art 5 Abs 2 Buchst b, EGRL 29/2001 Art 8 Abs 2, EGRL 29/2001 Art 8 Abs 3 ... mehr</p><h3>Titel</h3><p>Auslegung der Urheberrechtsrichtlinie auf Vorabentscheidungsersuchen eines österreichischen Gerichts: Gerichtliche Anordnung einer unbestimmten Website-Zugangssperrung gegenüber einem Anbieter von Internetzugangsdiensten wegen Urheberrechtsverletzungen</p><h3>Fundstellen</h3><p>ABl EU 2014, Nr C 151, 2-3 (Leitsatz) GRUR 2014, 468-472 (Leitsatz und Gründe) GRUR Int 2014, 469-474 (Leitsatz und Gründe) K&R 2014, 329-333 (Leitsatz und Gründe) WRP 2014, 540-544 (Leitsatz und Gründe) EuZW 2014, 388-391 (Leitsatz und Gründe) Medien und Recht 2014, 82-87 (red. Leitsatz und Gründe) NJW 2014, 1577-1580 (Leitsatz und Gründe) RIW 2014, 373-377 (red. Leitsatz und Gründe) ZUM 2014, 494-498 (Leitsatz und Gründe) MMR 2014, 397-399 (Leitsatz und Gründe) EuGRZ 2014, 301-306 (red. Leitsatz und Gründe) CR 2014, 469-472 (Leitsatz und Gründe) EWS 2014, 225-230 (Leitsatz und Gründe)</p>"
-					}
-				],
-				"seeAlso": []
+				"dateDecided": "2014-03-27",
+				"docketNumber": "C-314/12",
+				"caseName": "EuGH, 27.03.2014 - C-314/12"
 			}
 		]
 	},
 	{
 		"type": "web",
-		"url": "https://www.juris.de/jportal/portal/t/kli/page/jurisw.psml?doc.hl=1&doc.id=KORE307572013&documentnumber=2&numberofresults=12&showdoccase=1&doc.part=K&paramfromHL=true#focuspoint",
+		"url": "https://www.juris.de/r3/search?query=DOKNR%3AKORE307572013",
 		"items": [
 			{
 				"itemType": "case",
-				"caseName": "BGH, 15.11.2012 - I ZR 74/12 - Morpheus",
 				"creators": [],
-				"dateDecided": "2012-11-15",
-				"court": "BGH",
-				"docketNumber": "I ZR 74/12",
-				"extra": "jurisdiction: de\ngenre: Urt.",
-				"shortTitle": "Morpheus",
-				"attachments": [
+				"notes": [
 					{
-						"title": "Snapshot"
+						"note": "<h2>Additional Metadata</h2><h3>Normen</h3><p>§ 832 Abs 1 BGB, § 19a UrhG, § 78 Abs 1 Nr 1 UrhG, § 85 Abs 1 S 1 UrhG, § 97 UrhG</p><h3>Titel</h3><p>Urheberrechtsverletzung im Internet: Grenzen der Aufsichtspflicht von Eltern eines 13-jährigen Kindes hinsichtlich des Verbots der Teilnahme an Internet-Tauschbörsen - Morpheus</p>"
 					}
 				],
 				"tags": [],
-				"notes": [
+				"seeAlso": [],
+				"attachments": [
 					{
-						"note": "Additional Metadata: <h3>Normen</h3><p>§ 832 Abs 1 BGB, § 19a UrhG, § 78 Abs 1 Nr 1 UrhG, § 85 Abs 1 S 1 UrhG, § 97 UrhG</p><h3>Titel</h3><p>Urheberrechtsverletzung im Internet: Grenzen der Aufsichtspflicht von Eltern eines 13-jährigen Kindes hinsichtlich des Verbots der Teilnahme an Internet-Tauschbörsen - Morpheus</p><h3>Fundstellen</h3><p>Zitierungen: Entgegen OLG Köln, 23. Dezember 2009, 6 U 101/09, GRUR-RR 2010, 173; LG Hamburg, 25. Januar 2006, 308 O 58/06, MMR 2006, 700; LG Hamburg, 11. Mai 2006, 308 O 196/06; LG Hamburg, 2. August 2006, 308 O 509/09; LG München I, 19. Juni 2008, 7 O 16402/07, MMR 2008, 619 und LG Düsseldorf, 6. Juli 2011, 12 O 256/10, ZUM-RD 2011, 698; Bestätigung OLG Frankfurt, 20. Dezember 2007, 11 W 58/07, BB 2008, 229; LG Mannheim, 29. September 2006, 7 O 76/06, MMR 2007, 267; LG Mannheim, 29. September 2006, 7 O 62/06 und LG Mannheim, 30. Januar 2007, 2 O 71/06.(Rn.20)</p>"
+						"title": "Juris Permalink",
+						"snapshot": false
+					},
+					{
+						"title": "Fulltext PDF",
+						"mimeType": "application/pdf"
 					}
 				],
-				"seeAlso": []
+				"court": "BGH",
+				"extra": "jurisdiction: de\ngenre: Urt.",
+				"dateDecided": "2012-11-15",
+				"docketNumber": "I ZR 74/12",
+				"shortTitle": "Morpheus",
+				"caseName": "BGH, 15.11.2012 - I ZR 74/12 - Morpheus"
 			}
 		]
 	}

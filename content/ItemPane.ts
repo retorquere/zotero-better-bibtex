@@ -13,9 +13,10 @@ function display(itemID) {
 
   const citekey = KeyManager.get(itemID)
   field.value = citekey.citekey
-  let className = (field.className || '').trim().split(/\s+/).filter(c => c !== 'citekey-dynamic').join(' ')
-  if (!citekey.pinned) className = `${className} citekey-dynamic`.trim()
-  field.className = className
+
+  const pin = ' \uD83D\uDCCC'
+  const label = document.getElementById('better-bibtex-citekey-label')
+  label.value = label.value.replace(pin, '') + (citekey.pinned ? pin : '')
 }
 
 let observer = null

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-sk.json",
+  "name": "Slovakia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SK": "Slovakia"
+      }
+    },
+    "sk": {
+      "institution-part": {}
+    }
+  }
+}

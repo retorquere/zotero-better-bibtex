@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsib",
-	"lastUpdated": "2015-05-21 22:39:54"
+	"lastUpdated": "2018-12-26 11:18:52"
 }
 
 function detectWeb(doc, url) {
@@ -196,7 +196,8 @@ function downloadFunction(text, url, prefs) {
 							item.attachments.push({
 								url:realpdf,
 								title: "EBSCO Full Text",
-								mimeType:"application/pdf"
+								mimeType:"application/pdf",
+								proxy: false
 							});
 						} else {
 							Z.debug("Could not find a reference to PDF.");

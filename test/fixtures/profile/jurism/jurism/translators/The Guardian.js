@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-04-26 07:58:02"
+	"lastUpdated": "2018-08-11 14:15:22"
 }
 
 /*
@@ -97,7 +97,12 @@ function scrape(doc, url) {
 			}
 		}
 		item.language = "en-GB";
-		var serie = ZU.xpathText(doc, '(//a[contains(@class, "content__series-label__link")])[1]');
+		// og:url does not preserve https prefixes, so use canonical link until fixed
+		var canonical = doc.querySelector('link[rel="canonical"]');
+		if (canonical) {
+			item.url = canonical.href;
+		}
+		var serie = ZU.xpathText(doc, '(//a[contains(@class, "content__label__link")])[1]');
 		if (serie=="The Observer") {
 			item.publicationTitle = "The Observer";
 			item.ISSN = "0029-7712";
@@ -142,17 +147,25 @@ var testCases = [
 				"libraryCatalog": "www.theguardian.com",
 				"publicationTitle": "The Guardian",
 				"section": "World news",
-				"url": "http://www.theguardian.com/world/2013/mar/05/hugo-chavez-dies-cuba",
+				"url": "https://www.theguardian.com/world/2013/mar/05/hugo-chavez-dies-cuba",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Americas",
-					"Hugo Chávez",
-					"Venezuela",
-					"World news"
+					{
+						"tag": "Americas"
+					},
+					{
+						"tag": "Hugo Chávez"
+					},
+					{
+						"tag": "Venezuela"
+					},
+					{
+						"tag": "World news"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -196,24 +209,46 @@ var testCases = [
 				"publicationTitle": "The Guardian",
 				"section": "World news",
 				"shortTitle": "Revealed",
-				"url": "http://www.theguardian.com/world/2013/mar/06/pentagon-iraqi-torture-centres-link",
+				"url": "https://www.theguardian.com/world/2013/mar/06/pentagon-iraqi-torture-centres-link",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Americas",
-					"David Petraeus",
-					"El Salvador",
-					"Iraq",
-					"Middle East and North Africa",
-					"Nicaragua",
-					"Torture",
-					"US foreign policy",
-					"US military",
-					"US news",
-					"World news"
+					{
+						"tag": "Americas"
+					},
+					{
+						"tag": "David Petraeus"
+					},
+					{
+						"tag": "El Salvador"
+					},
+					{
+						"tag": "Iraq"
+					},
+					{
+						"tag": "Middle East and North Africa"
+					},
+					{
+						"tag": "Nicaragua"
+					},
+					{
+						"tag": "Torture"
+					},
+					{
+						"tag": "US foreign policy"
+					},
+					{
+						"tag": "US military"
+					},
+					{
+						"tag": "US news"
+					},
+					{
+						"tag": "World news"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -241,20 +276,34 @@ var testCases = [
 				"libraryCatalog": "www.theguardian.com",
 				"publicationTitle": "The Guardian",
 				"section": "World news",
-				"url": "http://www.theguardian.com/world/2013/feb/26/football-heaven-god-play",
+				"url": "https://www.theguardian.com/world/2013/feb/26/football-heaven-god-play",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Africa",
-					"Eric Cantona",
-					"Football",
-					"George Best",
-					"Religion",
-					"South Africa",
-					"World news"
+					{
+						"tag": "Africa"
+					},
+					{
+						"tag": "Eric Cantona"
+					},
+					{
+						"tag": "Football"
+					},
+					{
+						"tag": "George Best"
+					},
+					{
+						"tag": "Religion"
+					},
+					{
+						"tag": "South Africa"
+					},
+					{
+						"tag": "World news"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -283,20 +332,34 @@ var testCases = [
 				"publicationTitle": "The Guardian",
 				"section": "Media",
 				"shortTitle": "Peter Oborne",
-				"url": "http://www.theguardian.com/media/2015/feb/18/peter-oborne-daily-telegraph-newspaper-unprecedented",
+				"url": "https://www.theguardian.com/media/2015/feb/18/peter-oborne-daily-telegraph-newspaper-unprecedented",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Barclay Brothers",
-					"Daily Telegraph",
-					"Media",
-					"Murdoch MacLennan",
-					"National newspapers",
-					"Newspapers",
-					"Newspapers & magazines"
+					{
+						"tag": "Barclay Brothers"
+					},
+					{
+						"tag": "Daily Telegraph"
+					},
+					{
+						"tag": "Media"
+					},
+					{
+						"tag": "Murdoch MacLennan"
+					},
+					{
+						"tag": "National newspapers"
+					},
+					{
+						"tag": "Newspapers"
+					},
+					{
+						"tag": "Newspapers & magazines"
+					}
 				],
 				"notes": [],
 				"seeAlso": []
@@ -319,38 +382,132 @@ var testCases = [
 				"publicationTitle": "The Observer",
 				"section": "Books",
 				"shortTitle": "Christmas gifts 2011",
-				"url": "http://www.theguardian.com/books/2011/nov/27/christmas-gifts-2011-books-tree",
+				"url": "https://www.theguardian.com/books/2011/nov/27/christmas-gifts-2011-books-tree",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Alan Hollinghurst",
-					"Art and design",
-					"Best books of the year",
-					"Biography",
-					"Books",
-					"Business and finance",
-					"Caitlin Moran",
-					"Charles Dickens",
-					"Christopher Hitchens",
-					"Comics and graphic novels",
-					"Culture",
-					"Fiction",
-					"Food and drink",
-					"Health",
-					"History",
-					"Julian Barnes",
-					"Magazines",
-					"Magnum",
-					"Poetry",
-					"Private Eye",
-					"Robert Harris",
-					"Science and nature",
-					"Thrillers",
-					"Tina Fey",
-					"mind and body"
+					{
+						"tag": "Alan Hollinghurst"
+					},
+					{
+						"tag": "Art and design books"
+					},
+					{
+						"tag": "Best books of the year"
+					},
+					{
+						"tag": "Biography books"
+					},
+					{
+						"tag": "Books"
+					},
+					{
+						"tag": "Business and finance books"
+					},
+					{
+						"tag": "Caitlin Moran"
+					},
+					{
+						"tag": "Charles Dickens"
+					},
+					{
+						"tag": "Christopher Hitchens"
+					},
+					{
+						"tag": "Comics and graphic novels"
+					},
+					{
+						"tag": "Culture"
+					},
+					{
+						"tag": "Fiction"
+					},
+					{
+						"tag": "Food and drink books"
+					},
+					{
+						"tag": "Health"
+					},
+					{
+						"tag": "History books"
+					},
+					{
+						"tag": "Julian Barnes"
+					},
+					{
+						"tag": "Magazines"
+					},
+					{
+						"tag": "Magnum"
+					},
+					{
+						"tag": "Poetry"
+					},
+					{
+						"tag": "Private Eye"
+					},
+					{
+						"tag": "Robert Harris"
+					},
+					{
+						"tag": "Science and nature books"
+					},
+					{
+						"tag": "Thrillers"
+					},
+					{
+						"tag": "Tina Fey"
+					},
+					{
+						"tag": "mind and body books"
+					}
+				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.theguardian.com/books/2018/may/27/bullshit-jobs-a-theory-david-graeber-review-laboured-rant",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Bullshit Jobs: A Theory review – laboured rant about the world of work",
+				"creators": [
+					{
+						"firstName": "Andrew",
+						"lastName": "Anthony",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018-05-27T08:00:20.000Z",
+				"ISSN": "0029-7712",
+				"abstractNote": "David Graeber’s snarky study of the meaningless nature of modern employment adds little to our understanding of it",
+				"language": "en-GB",
+				"libraryCatalog": "www.theguardian.com",
+				"publicationTitle": "The Observer",
+				"section": "Books",
+				"shortTitle": "Bullshit Jobs",
+				"url": "https://www.theguardian.com/books/2018/may/27/bullshit-jobs-a-theory-david-graeber-review-laboured-rant",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [
+					{
+						"tag": "Books"
+					},
+					{
+						"tag": "Culture"
+					},
+					{
+						"tag": "Economics"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

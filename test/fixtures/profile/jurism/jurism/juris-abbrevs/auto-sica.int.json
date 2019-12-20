@@ -1,0 +1,17 @@
+{
+  "filename": "auto-sica.int.json",
+  "name": "Sistema de la Integración Centroamericana",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SICA.INT": "Sistema de la Integración Centroamericana"
+      }
+    },
+    "sica.int": {
+      "institution-part": {
+        "ccj": "Corte Centroamericana de Justicia"
+      }
+    }
+  }
+}

@@ -101,8 +101,8 @@ def nested_dict_iter(nested, root = []):
 
 def post_log():
   logid = os.environ.get('TRAVIS_JOB_NUMBER', 'travis')
-  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logfile}.log'
-  logfile = shlex.quote(path.join(os.environ['HOME'], '.BBTZ5TEST.log'))
+  bucket = f'http://better-bibtex-travis-logs.s3.amazonaws.com/travis/{logid}.log'
+  logfile = shlex.quote(os.path.join(os.environ['HOME'], '.BBTZ5TEST.log'))
   headers = [
     ('x-amz-storage-class', 'STANDARD')
     ('x-amz-acl', 'bucket-owner-full-control')
@@ -111,4 +111,4 @@ def post_log():
   headers = [ f'--header "{h[0]}: {h[1]}"' for h in headers ]
   headers = ' '.join(headers)
   os.system(f'curl {bucket} {headers} --upload-file {logfile} &')
-  return True
+  raise ValueError('client did not start')

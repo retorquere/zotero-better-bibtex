@@ -12,7 +12,7 @@
 	"inRepository": true,
 	"translatorType": 1,
 	"browserSupport": "gcsi",
-	"lastUpdated": "2018-01-01 10:43:28"
+	"lastUpdated": "2018-08-26 10:46:17"
 }
 
 /*
@@ -44,6 +44,7 @@ TEST DATA can be found here:
  - Single reference (162 KB) text: https://gist.github.com/zuphilip/02d6478ace4636e4e090e348443c551e
  - Larger project (1221 KB): https://gist.github.com/zuphilip/76ce89ebbdac0386507b36cff3fd499a
  - Other project (1,11 MB): https://gist.github.com/anonymous/10fc363b6d79dae897e296a4327aa707
+ - Citavi 6 project (935 KB): https://gist.github.com/zuphilip/00a4ec6df58ac24b68366e32531bae4b
 */
 
 
@@ -95,6 +96,7 @@ var typeMapping = {
 
 function doImport() {
 	var doc = Zotero.getXML();
+	var citaviVersion = ZU.xpathText(doc, '//CitaviExchangeData/@Version');
 	
 	//Groups will also be mapped to tags which can be assigned to
 	//items or notes.
@@ -240,11 +242,16 @@ function doImport() {
 		var onlyCallNumber = [];
 		for (var j=0; j<locations.length; j++) {
 			var address = ZU.xpathText(locations[j], 'Address');
+			if (address && citaviVersion[0] !== "5") {
+				var jsonAddress = JSON.parse(address);
+				// Z.debug(jsonAddress);
+				address = jsonAddress["UriString"];
+			}
 			var addressType = ZU.xpathText(locations[j], 'MirrorsReferencePropertyId');
 			if (address) {
 				if (addressType == "Doi" && !item.DOI) {
 					item.DOI = address;
-				} else if (addressType == "PubMedId" && item.extra.indexOf("PMID") == -1) {
+				} else if (addressType == "PubMedId" && ((item.extra && !item.extra.includes("PMID"))|| !item.extra)) {
 					addExtraLine(item, "PMID", address);
 				} else {
 					// distinguish between local paths and internet addresses
@@ -338,7 +345,8 @@ function doImport() {
 	//also the hierarchy number which we first calculate from the
 	//CategoryCategories list.
 	var categories = ZU.xpath(doc, '//Categories/Category');
-	var hierarchy = ZU.xpath(doc, '//CategoryCatgories/OnetoN');
+	//typo CategoryCatgories was fixed in Citavi 6
+	var hierarchy = ZU.xpath(doc, '//CategoryCatgories/OnetoN|//CategoryCategories/OnetoN');
 	var numbering = { "00000000-0000-0000-0000-000000000000" : "$" };
 	//we will have fixed prefix "$." for all collections (see below),
 	//such that only the substring starting form index 2 is relevant.
@@ -429,13 +437,13 @@ function attachPersons(doc, item, ids, type) {
 		var lastName = ZU.xpathText(author, 'LastName');
 		var firstName = ZU.xpathText(author, 'FirstName');
 		var middleName = ZU.xpathText(author, 'MiddleName');
-		if(firstName && lastName) {
+		if (firstName && lastName) {
 			if (middleName) {
 				firstName += ' ' + middleName;
 			}
 			item.creators.push({ lastName : lastName, firstName : firstName, creatorType : type });
 		}
-		if(!firstName && lastName) {
+		if (!firstName && lastName) {
 			item.creators.push({ lastName : lastName, creatorType : type , fieldMode : true});
 		}
 	}

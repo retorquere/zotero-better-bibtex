@@ -1,0 +1,420 @@
+{
+  "filename": "auto-jp-englished.json",
+  "name": "Japan",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "JP": "Japan",
+        "JP:FUKUOKA": "Fukuoka",
+        "JP:FUKUOKA:FUKUOKA": "Fukuoka",
+        "JP:FUKUOKA:KAGOSHIMA": "Kagoshima",
+        "JP:FUKUOKA:KUMAMOTO": "Kumamoto",
+        "JP:FUKUOKA:MIYAZAKI": "Miyazaki",
+        "JP:FUKUOKA:NAGASAKI": "Nagasaki",
+        "JP:FUKUOKA:NAHA": "Naha",
+        "JP:FUKUOKA:OITA": "Oita",
+        "JP:FUKUOKA:SAGA": "Saga",
+        "JP:HIROSHIMA": "Hiroshima",
+        "JP:HIROSHIMA:HIROSHIMA": "Hiroshima",
+        "JP:HIROSHIMA:MATSUE": "Matsue",
+        "JP:HIROSHIMA:OKAYAMA": "Okayama",
+        "JP:HIROSHIMA:TOTTORI": "Tottori",
+        "JP:HIROSHIMA:YAMAGUCHI": "Yamaguchi",
+        "JP:NAGOYA": "Nagoya",
+        "JP:NAGOYA:FUKUI": "Fukui",
+        "JP:NAGOYA:GIFU": "Gifu",
+        "JP:NAGOYA:KANAZAWA": "Kanazawa",
+        "JP:NAGOYA:NAGOYA": "Nagoya",
+        "JP:NAGOYA:TOYAMA": "Toyama",
+        "JP:NAGOYA:TSU": "Tsu",
+        "JP:OSAKA": "Osaka",
+        "JP:OSAKA:KOBE": "Kobe",
+        "JP:OSAKA:KYOTO": "Kyoto",
+        "JP:OSAKA:NARA": "Nara",
+        "JP:OSAKA:OSAKA": "Osaka",
+        "JP:OSAKA:OTSU": "Otsu",
+        "JP:OSAKA:WAKAYAMA": "Wakayama",
+        "JP:SAPPORO": "Sapporo",
+        "JP:SAPPORO:ASAHIKAWA": "Asahikawa",
+        "JP:SAPPORO:HAKODATE": "Hakodate",
+        "JP:SAPPORO:KUSHIRO": "Kushiro",
+        "JP:SAPPORO:SAPPORO": "Sapporo",
+        "JP:SENDAI": "Sendai",
+        "JP:SENDAI:AKITA": "Akita",
+        "JP:SENDAI:AOMORI": "Aomori",
+        "JP:SENDAI:FUKUSHIMA": "Fukushima",
+        "JP:SENDAI:MORIOKA": "Morioka",
+        "JP:SENDAI:SENDAI": "Sendai",
+        "JP:SENDAI:YAMAGATA": "Yamagata",
+        "JP:TAKAMATSU": "Takamatsu",
+        "JP:TAKAMATSU:KOCHI": "Kochi",
+        "JP:TAKAMATSU:MATSUYAMA": "Matsuyama",
+        "JP:TAKAMATSU:TAKAMATSU": "Takamatsu",
+        "JP:TAKAMATSU:TOKUSHIMA": "Tokushima",
+        "JP:TOKYO": "Tokyo",
+        "JP:TOKYO:CHIBA": "Chiba",
+        "JP:TOKYO:KOFU": "Kofu",
+        "JP:TOKYO:MAEBASHI": "Maebashi",
+        "JP:TOKYO:MITO": "Mito",
+        "JP:TOKYO:NAGANO": "Nagano",
+        "JP:TOKYO:NIIGATA": "Niigata",
+        "JP:TOKYO:SAITAMA": "Saitama",
+        "JP:TOKYO:SHIZUOKA": "Shizuoka",
+        "JP:TOKYO:TOKYO": "Tokyo",
+        "JP:TOKYO:UTSUNOMIYA": "Utsunomiya",
+        "JP:TOKYO:YOKOHAMA": "Yokohama"
+      }
+    },
+    "jp": {
+      "institution-part": {
+        "chiteki.zaisan.koto.saibansho": "Intellectual Property Appeals Court",
+        "saiko.saibansho": "Supreme Court",
+        "saiko.saibansho.dai": "Supreme Court Grand Bench",
+        "saiko.saibansho.ichi": "Supreme Court First Petty Bench",
+        "saiko.saibansho.ni": "Supreme Court Second Petty Bench",
+        "saiko.saibansho.san": "Supreme Court Third Petty Bench"
+      }
+    },
+    "jp:fukuoka": {
+      "institution-part": {
+        "koto.saibansho": "Fukuoka High Court"
+      }
+    },
+    "jp:fukuoka:fukuoka": {
+      "institution-part": {
+        "chiho.saibansho": "Fukuoka District Court",
+        "katei.saibansho": "Fukuoka Family Court"
+      }
+    },
+    "jp:fukuoka:kagoshima": {
+      "institution-part": {
+        "chiho.saibansho": "Kagoshima District Court",
+        "katei.saibansho": "Kagoshima Family Court"
+      }
+    },
+    "jp:fukuoka:kumamoto": {
+      "institution-part": {
+        "chiho.saibansho": "Kumamoto District Court",
+        "katei.saibansho": "Kumamoto Family Court"
+      }
+    },
+    "jp:fukuoka:miyazaki": {
+      "institution-part": {
+        "chiho.saibansho": "Miyazaki District Court",
+        "katei.saibansho": "Miyazaki Family Court"
+      }
+    },
+    "jp:fukuoka:nagasaki": {
+      "institution-part": {
+        "chiho.saibansho": "Nagasaki District Court",
+        "katei.saibansho": "Nagasaki Family Court"
+      }
+    },
+    "jp:fukuoka:naha": {
+      "institution-part": {
+        "chiho.saibansho": "Naha District Court",
+        "katei.saibansho": "Naha Family Court"
+      }
+    },
+    "jp:fukuoka:oita": {
+      "institution-part": {
+        "chiho.saibansho": "Oita District Court",
+        "katei.saibansho": "Oita Family Court"
+      }
+    },
+    "jp:fukuoka:saga": {
+      "institution-part": {
+        "chiho.saibansho": "Saga District Court",
+        "katei.saibansho": "Saga Family Court"
+      }
+    },
+    "jp:hiroshima": {
+      "institution-part": {
+        "koto.saibansho": "Hiroshima High Court"
+      }
+    },
+    "jp:hiroshima:hiroshima": {
+      "institution-part": {
+        "chiho.saibansho": "Hiroshima District Court",
+        "katei.saibansho": "Hiroshima Family Court"
+      }
+    },
+    "jp:hiroshima:matsue": {
+      "institution-part": {
+        "chiho.saibansho": "Matsue District Court",
+        "katei.saibansho": "Matsue Family Court"
+      }
+    },
+    "jp:hiroshima:okayama": {
+      "institution-part": {
+        "chiho.saibansho": "Okayama District Court",
+        "katei.saibansho": "Okayama Family Court"
+      }
+    },
+    "jp:hiroshima:tottori": {
+      "institution-part": {
+        "chiho.saibansho": "Tottori District Court",
+        "katei.saibansho": "Tottori Family Court"
+      }
+    },
+    "jp:hiroshima:yamaguchi": {
+      "institution-part": {
+        "chiho.saibansho": "Yamaguchi District Court",
+        "katei.saibansho": "Yamaguchi Family Court"
+      }
+    },
+    "jp:nagoya": {
+      "institution-part": {
+        "koto.saibansho": "Nagoya High Court"
+      }
+    },
+    "jp:nagoya:fukui": {
+      "institution-part": {
+        "chiho.saibansho": "Fukui District Court",
+        "katei.saibansho": "Fukui Family Court"
+      }
+    },
+    "jp:nagoya:gifu": {
+      "institution-part": {
+        "chiho.saibansho": "Gifu District Court",
+        "katei.saibansho": "Gifu Family Court"
+      }
+    },
+    "jp:nagoya:kanazawa": {
+      "institution-part": {
+        "chiho.saibansho": "Kanazawa District Court",
+        "katei.saibansho": "Kanazawa Family Court"
+      }
+    },
+    "jp:nagoya:nagoya": {
+      "institution-part": {
+        "chiho.saibansho": "Nagoya District Court",
+        "katei.saibansho": "Nagoya Family Court"
+      }
+    },
+    "jp:nagoya:toyama": {
+      "institution-part": {
+        "chiho.saibansho": "Toyama District Court",
+        "katei.saibansho": "Toyama Family Court"
+      }
+    },
+    "jp:nagoya:tsu": {
+      "institution-part": {
+        "chiho.saibansho": "Tsu District Court",
+        "katei.saibansho": "Tsu Family Court"
+      }
+    },
+    "jp:osaka": {
+      "institution-part": {
+        "koto.saibansho": "Osaka High Court"
+      }
+    },
+    "jp:osaka:kobe": {
+      "institution-part": {
+        "chiho.saibansho": "Kobe District Court",
+        "katei.saibansho": "Kobe Family Court"
+      }
+    },
+    "jp:osaka:kyoto": {
+      "institution-part": {
+        "chiho.saibansho": "Kyoto District Court",
+        "katei.saibansho": "Kyoto Family Court"
+      }
+    },
+    "jp:osaka:nara": {
+      "institution-part": {
+        "chiho.saibansho": "Nara District Court",
+        "katei.saibansho": "Nara Family Court"
+      }
+    },
+    "jp:osaka:osaka": {
+      "institution-part": {
+        "chiho.saibansho": "Osaka District Court",
+        "katei.saibansho": "Osaka Family Court"
+      }
+    },
+    "jp:osaka:otsu": {
+      "institution-part": {
+        "chiho.saibansho": "Otsu District Court",
+        "katei.saibansho": "Otsu Family Court"
+      }
+    },
+    "jp:osaka:wakayama": {
+      "institution-part": {
+        "chiho.saibansho": "Wakayama District Court",
+        "katei.saibansho": "Wakayama Family Court"
+      }
+    },
+    "jp:sapporo": {
+      "institution-part": {
+        "koto.saibansho": "Sapporo High Court"
+      }
+    },
+    "jp:sapporo:asahikawa": {
+      "institution-part": {
+        "chiho.saibansho": "Asahikawa District Court",
+        "katei.saibansho": "Asahikawa Family Court"
+      }
+    },
+    "jp:sapporo:hakodate": {
+      "institution-part": {
+        "chiho.saibansho": "Hakodate District Court",
+        "katei.saibansho": "Hakodate Family Court"
+      }
+    },
+    "jp:sapporo:kushiro": {
+      "institution-part": {
+        "chiho.saibansho": "Kushiro District Court",
+        "katei.saibansho": "Kushiro Family Court"
+      }
+    },
+    "jp:sapporo:sapporo": {
+      "institution-part": {
+        "chiho.saibansho": "Sapporo District Court",
+        "katei.saibansho": "Sapporo Family Court"
+      }
+    },
+    "jp:sendai": {
+      "institution-part": {
+        "koto.saibansho": "Sendai High Court"
+      }
+    },
+    "jp:sendai:akita": {
+      "institution-part": {
+        "chiho.saibansho": "Akita District Court",
+        "katei.saibansho": "Akita Family Court"
+      }
+    },
+    "jp:sendai:aomori": {
+      "institution-part": {
+        "chiho.saibansho": "Aomori District Court",
+        "katei.saibansho": "Aomori Family Court"
+      }
+    },
+    "jp:sendai:fukushima": {
+      "institution-part": {
+        "chiho.saibansho": "Fukushima District Court",
+        "katei.saibansho": "Fukushima Family Court"
+      }
+    },
+    "jp:sendai:morioka": {
+      "institution-part": {
+        "chiho.saibansho": "Morioka District Court",
+        "katei.saibansho": "Morioka Family Court"
+      }
+    },
+    "jp:sendai:sendai": {
+      "institution-part": {
+        "chiho.saibansho": "Sendai District Court",
+        "katei.saibansho": "Sendai Family Court"
+      }
+    },
+    "jp:sendai:yamagata": {
+      "institution-part": {
+        "chiho.saibansho": "Yamagata District Court",
+        "katei.saibansho": "Yamagata Family Court"
+      }
+    },
+    "jp:takamatsu": {
+      "institution-part": {
+        "koto.saibansho": "Takamatsu High Court"
+      }
+    },
+    "jp:takamatsu:kochi": {
+      "institution-part": {
+        "chiho.saibansho": "Kochi District Court",
+        "katei.saibansho": "Kochi Family Court"
+      }
+    },
+    "jp:takamatsu:matsuyama": {
+      "institution-part": {
+        "chiho.saibansho": "Matsuyama District Court",
+        "katei.saibansho": "Matsuyama Family Court"
+      }
+    },
+    "jp:takamatsu:takamatsu": {
+      "institution-part": {
+        "chiho.saibansho": "Takamatsu District Court",
+        "katei.saibansho": "Takamatsu Family Court"
+      }
+    },
+    "jp:takamatsu:tokushima": {
+      "institution-part": {
+        "chiho.saibansho": "Tokushima District Court",
+        "katei.saibansho": "Tokushima Family Court"
+      }
+    },
+    "jp:tokyo": {
+      "institution-part": {
+        "koto.saibansho": "Tokyo High Court"
+      }
+    },
+    "jp:tokyo:chiba": {
+      "institution-part": {
+        "chiho.saibansho": "Chiba District Court",
+        "katei.saibansho": "Chiba Family Court"
+      }
+    },
+    "jp:tokyo:kofu": {
+      "institution-part": {
+        "chiho.saibansho": "Kofu District Court",
+        "katei.saibansho": "Kofu Family Court"
+      }
+    },
+    "jp:tokyo:maebashi": {
+      "institution-part": {
+        "chiho.saibansho": "Maebashi District Court",
+        "katei.saibansho": "Maebashi Family Court"
+      }
+    },
+    "jp:tokyo:mito": {
+      "institution-part": {
+        "chiho.saibansho": "Mito District Court",
+        "katei.saibansho": "Mito Family Court"
+      }
+    },
+    "jp:tokyo:nagano": {
+      "institution-part": {
+        "chiho.saibansho": "Nagano District Court",
+        "katei.saibansho": "Nagano Family Court"
+      }
+    },
+    "jp:tokyo:niigata": {
+      "institution-part": {
+        "chiho.saibansho": "Niigata District Court",
+        "katei.saibansho": "Niigata Family Court"
+      }
+    },
+    "jp:tokyo:saitama": {
+      "institution-part": {
+        "chiho.saibansho": "Saitama District Court",
+        "katei.saibansho": "Saitama Family Court"
+      }
+    },
+    "jp:tokyo:shizuoka": {
+      "institution-part": {
+        "chiho.saibansho": "Shizuoka District Court",
+        "katei.saibansho": "Shizuoka Family Court"
+      }
+    },
+    "jp:tokyo:tokyo": {
+      "institution-part": {
+        "chiho.saibansho": "Tokyo District Court",
+        "katei.saibansho": "Tokyo Family Court"
+      }
+    },
+    "jp:tokyo:utsunomiya": {
+      "institution-part": {
+        "chiho.saibansho": "Utsunomiya District Court",
+        "katei.saibansho": "Utsunomiya Family Court"
+      }
+    },
+    "jp:tokyo:yokohama": {
+      "institution-part": {
+        "chiho.saibansho": "Yokohama District Court",
+        "katei.saibansho": "Yokohama Family Court"
+      }
+    }
+  }
+}

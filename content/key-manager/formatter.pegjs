@@ -88,7 +88,7 @@ flag
 filter
   = ':' text:default_filter  { return `chunk = chunk || ${JSON.stringify(text)}`; }
   / ':' f:function_filter   {
-      var _filter = '_' + f.name;
+      var _filter = '_' + f.name.replace(/-/g, '_');
       if (! options[_filter] ) error(`invalid filter "${f.name}" in pattern`);
 
       var params = ['chunk'].concat(f.params.map(function(p) { return JSON.stringify(p) }));
@@ -104,7 +104,7 @@ function_filter
       // handle here so the user gets feedback as the pattern is being typed
       return { name: name, params: language ? [ language[1] ] : [] };
     }
-  / name:[a-z]+ params:fparam*  {
+  / name:[-a-z]+ params:fparam*  {
       return { name: name.join(''), params: params }
     }
 

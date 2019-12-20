@@ -8,12 +8,15 @@ Background:
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
+@245 @246 @1353
 Scenario Outline: BibLaTeX Export
   And I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
      | file                                                                                           | references  |
+     | Treat ideographs as individual words for key generation #1353                                  | 1           |
+     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | URL-DOI exclusive export broken for item types with no dedicated DOI field #1331               | 1           |
      | Latex commands in extra-field treated differently #1207                                        | 1           |
      | preserve @strings between import-export #1162                                                  | 1           |
@@ -22,7 +25,6 @@ Scenario Outline: BibLaTeX Export
      | Error exporting duplicate eprinttype #1128                                                     | 1           |
      | Do not use more than three initials in case of authshort key #1079                             | 1           |
      | ADS exports dates like 1993-00-00 #1066                                                        | 1           |
-     | BBT export of square brackets in date #245 -- xref should not be escaped #246                  | 3           |
      | date ranges #747+#746                                                                          | 5           |
      | BibLaTeX Patent author handling, type #1060                                                    | 2           |
      | BetterBibLaTeX; Software field company is mapped to publisher instead of organization #1054    | 1           |
@@ -446,7 +448,7 @@ Scenario: automatic tags in export #1270
 # tests the cache
 @rbwl @zotero @nightly @timeout=3000
 Scenario: Really Big whopping library
-  When I restart Zotero with from "1287" + "export/*.json"
+  When I restart Zotero with "1287" + "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
 

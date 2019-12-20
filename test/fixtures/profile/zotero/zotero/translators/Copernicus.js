@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-11-09 14:16:59"
+	"lastUpdated": "2018-03-15 10:41:08"
 }
 
 /*
@@ -83,7 +83,7 @@ function scrape (doc, url){
 }
 
 function doWeb(doc, url) {
-	var arts = new Array();
+	var arts = [];
 	if (detectWeb(doc, url) == "multiple") {
 		var items = getSearchResults(doc);
 		Zotero.selectItems(items, function (items) {
@@ -96,7 +96,7 @@ function doWeb(doc, url) {
 			ZU.processDocuments(arts, scrape);
 		});
 	} else {
-		scrape(doc, url)
+		scrape(doc, url);
 	}
 }
 

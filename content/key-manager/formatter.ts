@@ -4,6 +4,7 @@ declare const Components: any
 
 const fold2ascii = require('fold-to-ascii')
 import PunyCode = require('punycode')
+import scripts = require('xregexp/tools/output/scripts')
 import { transliterate } from 'transliteration'
 
 import { flash } from '../flash'
@@ -14,6 +15,10 @@ import { kuroshiro } from './kuroshiro'
 
 const parser = require('./formatter.pegjs')
 import * as DateParser from '../dateparser'
+
+const script = {
+  han: new RegExp('([' + scripts.find(s => s.name === 'Han').bmp + '])', 'g'), // tslint:disable-line prefer-template
+}
 
 class PatternFormatter {
   public generate: Function
@@ -148,6 +153,7 @@ class PatternFormatter {
 
     if (!citekey.citekey) citekey.citekey = `zotero-${item.id}`
     if (citekey.citekey && this.fold) citekey.citekey = this.removeDiacritics(citekey.citekey)
+    citekey.citekey = citekey.citekey.replace(/[\s{},@]/g, '')
 
     return citekey
   }
@@ -528,6 +534,11 @@ class PatternFormatter {
     return value
   }
 
+  /** Treat ideaographs as individual words */
+  public _split_ideographs(value) {
+    return (value || '').replace(script.han, ' $1 ').trim()
+  }
+
   /** transliterates the citation keys and removes unsafe characters */
   public _clean(value) {
     if (!value) return ''
@@ -592,6 +603,7 @@ class PatternFormatter {
     if (!title) return null
 
     title = this.innerText(title)
+
     if (options.asciiOnly && kuroshiro.enabled) title = kuroshiro.convert(title, {to: 'romaji', mode: 'spaced'})
 
     // 551
@@ -599,7 +611,7 @@ class PatternFormatter {
 
     if (options.asciiOnly) words = words.map(word => word.replace(/[^ -~]/g, ''))
     words = words.filter(word => word)
-    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && PunyCode.ucs2.decode(word).length > 1)
+    if (options.skipWords) words = words.filter(word => !this.skipWords.has(word.toLowerCase()) && (PunyCode.ucs2.decode(word).length > 1) || word.match(script.han))
     if (words.length === 0) return null
     return words
   }

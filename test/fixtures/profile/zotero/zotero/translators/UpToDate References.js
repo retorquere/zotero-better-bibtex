@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcv",
-	"lastUpdated": "2014-06-12 18:56:25"
+	"lastUpdated": "2019-06-11 13:44:39"
 }
 
 /*
@@ -36,48 +36,49 @@
 	***** END LICENSE BLOCK *****
 */
 
-function detectWeb(doc, url) {
+function detectWeb(doc, _url) {
 	if (ZU.xpathText(doc, '//ol[@id="reference"]//a')) return "multiple";
 	else if (ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "TI")]')) return "journalArticle";
+	return false;
 }
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		items = {}
+		let items = {};
 		var titles = ZU.xpath(doc, '//ol[@id="reference"]//a');
 		for (var i in titles) {
-			items[titles[i].href] = titles[i].textContent
+			items[titles[i].href] = titles[i].textContent;
 		}
 		Zotero.selectItems(items, function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
-			ZU.processDocuments(articles, scrape)
+			ZU.processDocuments(articles, scrape);
 		});
-	} else scrape(doc, url)
+	}
+	else scrape(doc, url);
 }
 
 function scrape(doc, url) {
 	var PMID = ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "PMID")]/following-sibling::div');
 	if (PMID) PMID = PMID.trim();
-	Z.debug(PMID)
+	Z.debug(PMID);
 	if (!PMID) {
-		Z.debug("We don't have a PMID parsing item from page")
+		Z.debug("We don't have a PMID parsing item from page");
 		var item = new Zotero.Item("journalArticle");
 		item.title = ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "TI")]/following-sibling::div');
-		var authors = ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "AU")]/following-sibling::div')
+		var authors = ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "AU")]/following-sibling::div');
 		authors = authors.split(/\s*,\s*/);
 		for (var i in authors) {
-			var author = authors[i].match(/^([^\s]+)\s+(.+)/)
+			var author = authors[i].match(/^([^\s]+)\s+(.+)/);
 			item.creators.push({
-				"creatorType": "author",
-				"lastName": author[1],
-				"firstName": author[2]
-			})
+				creatorType: "author",
+				lastName: author[1],
+				firstName: author[2]
+			});
 		}
 		var citation = ZU.xpathText(doc, '//div[@class="abstractRow"]/div[@class="label" and contains(text(), "SO")]/following-sibling::div');
 		Z.debug(citation);
@@ -88,18 +89,19 @@ function scrape(doc, url) {
 		if (volume) item.volume = volume[1];
 		var issue = citation.match(/\((\d+)\)/);
 		if (issue) item.issue = issue[1];
-		var pages = citation.match(/\:([\d\-]+)/);
+		var pages = citation.match(/:([\d-]+)/);
 		if (pages) item.pages = pages[1];
 		item.attachments.push({
 			document: doc,
 			title: "UpToDate Record",
 			mimeType: "text/html"
-		})
+		});
 		item.complete();
-	} else {
-		var url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=" + PMID;
+	}
+	else {
+		url = "http://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&retmode=xml&id=" + PMID;
 		Zotero.Utilities.HTTP.doGet(url, function (text) {
-			// load translator for PubMed	
+			// load translator for PubMed
 			var translator = Zotero.loadTranslator("import");
 			translator.setTranslator("fcf41bed-0cbc-3704-85c7-8062a0068a7a");
 			translator.setString(text);
@@ -110,14 +112,14 @@ function scrape(doc, url) {
 					document: doc,
 					title: "UpToDate Record",
 					mimeType: "text/html"
-				})
-				item.complete()
+				});
+				item.complete();
 			});
 			translator.translate();
 		});
 	}
+}
 
-} 
 /** BEGIN TEST CASES **/
 var testCases = [
 	{

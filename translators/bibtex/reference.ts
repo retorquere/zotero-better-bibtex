@@ -351,17 +351,17 @@ export class Reference {
       delete this.item.extraFields.csl['volume-title']
     }
 
-    this.item.referenceType = this.item.cslType || this.item.itemType
-
+    this.item.referenceType = this.item.extraFields.tex.referencetype?.value || this.item.cslType || this.item.itemType
     // should be const referencetype: string | { type: string, subtype?: string }
     // https://github.com/Microsoft/TypeScript/issues/10422
-    const referencetype: any = this.typeMap.csl[this.item.cslType] || this.typeMap.zotero[this.item.itemType] || 'misc'
+    const referencetype: any = this.item.extraFields.tex.referencetype?.value || this.typeMap.csl[this.item.cslType] || this.typeMap.zotero[this.item.itemType] || 'misc'
     if (typeof referencetype === 'string') {
       this.referencetype = referencetype
     } else {
       this.add({ name: 'entrysubtype', value: referencetype.subtype })
       this.referencetype = referencetype.type
     }
+    delete this.item.extraFields.tex.referencetype
 
     if (Translator.preferences.jabrefFormat) {
       if (Translator.preferences.testing) {

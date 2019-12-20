@@ -2,14 +2,14 @@
 	"translatorID": "a41fc438-1644-4313-ad1e-0ed7d1977937",
 	"label": "Mongolia Court Judgments",
 	"creator": "Frank Bennett",
-	"target": "https?:\\/\\/(?:old|www|shine)\\.shuukh\\.mn\\/(eruu|irgen|zahirgaa)(anhan|davah|hyanalt)\\/?([0-9]+\\/)?(view|\\\\?)",
+	"target": "https?:\\/\\/(?:old|new|www|shine)\\.shuukh\\.mn\\/(eruu|irgen|zahirgaa)(anhan|davah|hyanalt)\\/?([0-9]+\\/)?(view|\\\\?)",
 	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2016-03-14 05:23:44"
+	"lastUpdated": "2019-11-19 09:16:15"
 }
 
 urlRegExp = new RegExp("https?://(?:old|www|shine)\\.shuukh\\.mn/(?:eruu|irgen|zahirgaa)(?:anhan|davah|hyanalt)/?(?:[0-9]+/)*(view|\\?)");
@@ -68,6 +68,13 @@ function combineNames(plaintiff, defendant, shorten) {
 function scrape (doc, url) {
 	var item = new Zotero.Item("case");
 	item.jurisdiction = 'mn';
+	item.dateDecided = getValue(doc, "Oгноо");
+	var tags = getValue(doc, "Маргааны төрөл");
+	if (tags) {
+		item["tags"] = tags.split(/,\s*/);
+	}
+	item.type = getValue(doc, "Шийдвэрийн төрөл");
+	item.abstractNote = getValue(doc, "Шийдвэрийн товч");
 	addJudges(doc, item, "Шүүгч");
 	var plaintiff = getValue(doc, "Нэхэмжлэгч");
 	var defendant = getValue(doc, "Хариуцагч");

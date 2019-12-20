@@ -1,0 +1,24 @@
+{
+  "filename": "auto-coe.int.json",
+  "name": "Council of Europe",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "COE.INT": "Council of Europe"
+      }
+    },
+    "coe.int": {
+      "institution-part": {
+        "commission.human.rights": "Commission on Human Rights",
+        "echr": "European Court of Human Rights",
+        "echr~section.1": "European Court of Human Rights|Section I",
+        "echr~section.2": "European Court of Human Rights|Section II",
+        "echr~section.3": "European Court of Human Rights|Section III",
+        "echr~section.4": "European Court of Human Rights|Section IV",
+        "echr~section.5": "European Court of Human Rights|Section V",
+        "echr~section.filtrage": "European Court of Human Rights|Filtering Section"
+      }
+    }
+  }
+}

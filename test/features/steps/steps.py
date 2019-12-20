@@ -22,7 +22,7 @@ def step_impl(context, pref, value):
     value = expand_scenario_variables(context, value)
   context.zotero.preferences[pref] = context.zotero.preferences.parse(value)
 
-@step(r'I restart Zotero with from "{db}" + "{source}"')
+@step(r'I restart Zotero with "{db}" + "{source}"')
 def step_impl(context, db, source):
   source = expand_scenario_variables(context, source)
   context.imported = source

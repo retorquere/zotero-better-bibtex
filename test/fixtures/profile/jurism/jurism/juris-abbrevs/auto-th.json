@@ -1,0 +1,15 @@
+{
+  "filename": "auto-th.json",
+  "name": "Thailand",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "TH": "Thailand"
+      }
+    },
+    "th": {
+      "institution-part": {}
+    }
+  }
+}

@@ -9,5 +9,10 @@
   "translatorType": 2,
   "browserSupport": "gcsv",
   "inRepository": false,
+  "displayOptions": {
+    "Title": false,
+    "Authors": false,
+    "Year": false
+  },
   "priority": 100
 }

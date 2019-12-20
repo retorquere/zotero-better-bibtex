@@ -9,14 +9,14 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-09-03 16:52:55"
+	"lastUpdated": "2019-10-22 09:40:59"
 }
 
 /*
 	***** BEGIN LICENSE BLOCK *****
 
 	Copyright © 2017 Philipp Zumstein
-	
+
 	This file is part of Zotero.
 
 	Zotero is free software: you can redistribute it and/or modify
@@ -37,22 +37,25 @@
 
 
 // attr()/text() v2
+// eslint-disable-next-line
 function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('wd=paperuri')>-1) {
+	if (url.includes('paperid=')) {
 		return "journalArticle";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = doc.querySelectorAll('h3>a[href*="wd=paperuri"]');
-	for (var i=0; i<rows.length; i++) {
+	var rows = doc.querySelectorAll('h3>a[href*="show?paperid="]');
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -68,7 +71,7 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
 			for (var i in items) {
@@ -76,31 +79,36 @@ function doWeb(doc, url) {
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 
-function scrape(doc, url) {
+function scrape(doc, _url) {
 	var dataUrl = attr(doc, 'i.reqdata', 'url');
 	var diversion = attr(doc, 'i.reqdata', 'diversion');
-	var sign = attr(doc, 'a.sc_q' , 'data-sign');
+	var sign = attr(doc, 'a.sc_q', 'data-sign');
 	var risUrl = "http://xueshu.baidu.com/u/citation?&url=" + encodeURIComponent(dataUrl) + "&sign=" + sign + "&diversion=" + diversion + "&t=ris";
+	var title = doc.title.replace('_百度学术', '');
 
-	ZU.doGet(risUrl, function(ris) {
-		//Z.debug(ris);
-		//delete parenthesis in pages information, e.g. SP  - 5-7(3)
+	var tags = [];
+	doc.querySelectorAll('p.kw_main span a').forEach(e => tags.push(ZU.trimInternal(e.textContent)));
+
+	ZU.doGet(risUrl, function (ris) {
+		// Z.debug({ ris });
+		// delete parenthesis in pages information, e.g. SP  - 5-7(3)
 		ris = ris.replace(/(SP\s+-\s\d+-\d+)\(\d+\)$/m, "$1");
-		
+
 		var translator = Zotero.loadTranslator("import");
 		translator.setTranslator("32d59d2d-b65a-4da4-b0a3-bdd3cfb979e7");
 		translator.setString(ris);
-		translator.setHandler("itemDone", function(obj, item) {
+		translator.setHandler("itemDone", function (obj, item) {
 			item.url = dataUrl;
 			var doiLink = attr(doc, 'a.dl_item[data-url*="doi.org/"]', 'data-url');
 			if (!item.DOI && doiLink) {
-				item.DOI = doiLink.substr(doiLink.indexOf('doi.org/')+8);
+				item.DOI = doiLink.substr(doiLink.indexOf('doi.org/') + 8);
 			}
 			if (!item.abstractNote) {
 				item.abstractNote = text(doc, 'div.sc_abstract') || text(doc, 'p.abstract');
@@ -109,12 +117,31 @@ function scrape(doc, url) {
 				title: "Snapshot",
 				document: doc
 			});
+			item.tags = tags;
+			if (!item.title) {
+				item.title = title;
+			}
+			if (!item.creators || item.creators.length == 0) {
+				item.creators = [];
+				doc.querySelectorAll('p.author_text a').forEach((e) => {
+					item.creators.push(ZU.cleanAuthor(e.textContent, 'author', true));
+				});
+			}
+			if (!item.publicationTitle) {
+				item.publicationTitle = attr(doc, 'a.journal_title', 'title');
+			}
+			if (!item.date) {
+				item.date = ZU.trimInternal(text(doc, 'div.year_wr p.kw_main'));
+			}
+			if (!item.DOI) {
+				item.DOI = ZU.trimInternal(text(doc, 'div.doi_wr p.kw_main'));
+			}
+
 			item.complete();
 		});
 		translator.translate();
 	});
 }
-
 
 /** BEGIN TEST CASES **/
 var testCases = [
@@ -133,7 +160,7 @@ var testCases = [
 					}
 				],
 				"date": "2011",
-				"abstractNote": "Purpose – The purpose of this paper is to highlight how the open-source bibliographic management program Zotero harnesses Web 2.0 features to make library...",
+				"abstractNote": "Purpose – The purpose of this paper is to highlight how the open-source bibliographic management program Zotero harnesses Web 2.0 features to make library resources more accessible to casual users without sacrificing advanced features. This reduces the barriers understanding library resources and provides additional functionality when organizing information resources. Design/methodology/approach – The paper reviews select aspects of the program to illustrate how it can be used by patrons and information professionals, and why information professionals should be aware of it. Findings – Zotero has some limitations, but succeeds in meeting the information management needs of a wide variety of users, particularly users who use online resources. Originality/value – This paper is of interest to information professionals seeking free software that can make managing bibliographic information easier for themselves and their patrons.",
 				"issue": "4",
 				"libraryCatalog": "Baidu Scholar",
 				"pages": "5-7",
@@ -146,9 +173,29 @@ var testCases = [
 						"title": "Snapshot"
 					}
 				],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "Citation management"
+					},
+					{
+						"tag": "Internet"
+					},
+					{
+						"tag": "Library services"
+					},
+					{
+						"tag": "Open source"
+					},
+					{
+						"tag": "Reference management"
+					},
+					{
+						"tag": "Technology"
+					}
+				],
 				"notes": [],
-				"seeAlso": []
+				"seeAlso": [],
+				"DOI": "10.1108/07419051111154758"
 			}
 		]
 	},
@@ -174,53 +221,15 @@ var testCases = [
 						"lastName": "Beuren",
 						"firstName": "Fernanda Hansch",
 						"creatorType": "author"
-					},
-					{
-						"lastName": "Scalvenzi",
-						"firstName": "Lisiane",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Miguel",
-						"firstName": "Paulo Augusto Cauchik",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Yamakawa",
-						"firstName": "Eduardo Kazumi",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Kubota",
-						"firstName": "Flávio Issao",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Beuren",
-						"firstName": "Fernanda Hansch",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Scalvenzi",
-						"firstName": "Lisiane",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "Miguel",
-						"firstName": "Paulo Augusto Cauchik",
-						"creatorType": "author"
 					}
 				],
 				"date": "2014",
 				"DOI": "10.1590/0103-37862014000200006",
-				"abstractNote": "A elaboração de uma revisão bibliográfica confiável, a partir de trabalhos relevantes publicados anteriormente, é fundamental para evidenciar a originalidade e a contribuição científica dos trabalhos de pesquisa. Devid...",
-				"issue": "2",
+				"abstractNote": "A elaboração de uma revisão bibliográfica confiável, a partir de trabalhos relevantes publicados anteriormente, é fundamental para evidenciar a originalidade e a contribuição científica dos trabalhos de pesquisa. Devido à grande quantidade de bases de dados e de publicações disponíveis, torna-se necessário utilizar ferramentas que auxiliem na gestão das referências bibliográficas de uma maneira fácil e padronizada. O objetivo deste artigo é examinar três de gerenciamento bibliográfico utilizados com frequência por pesquisadores acadêmicos, são eles: , e . Nesse sentido, buscou-se, em primeiro lugar, evidenciar seus principais benefícios e as possíveis dificuldades de utilização. Em segundo lugar, procurou-se comparar suas principais características por meio de uma pesquisa teórico-conceitual baseada em literatura especializada, o que permitiu utilizá-los e analisá-los de maneira crítica. Assim sendo, evidenciou-se as principais particularidades de cada e foi elaborado um quadro comparativo entre os mesmos. Considerando as características analisadas nos três , concluiu-se que todos, ao mesmo tempo em que facilitam o trabalho dos pesquisadores, possuem ferramentas que facilitam as buscas, a organização e a análise dos artigos.",
 				"libraryCatalog": "Baidu Scholar",
-				"pages": "167-176",
 				"publicationTitle": "Transinformação",
 				"shortTitle": "Comparativo dos softwares de gerenciamento de referências bibliográficas",
-				"url": "http://www.scielo.br/scielo.php?script=sci_arttext&pid=S0103-37862014000200167&lng=pt&nrm=is",
-				"volume": "26",
+				"url": "http://www.scielo.br/scielo.php?script=sci_arttext&amp;pid=S0103-37862014000200167&amp;lng=pt&amp;nrm=is",
 				"attachments": [
 					{
 						"title": "Snapshot"

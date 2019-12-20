@@ -1,0 +1,51 @@
+{
+  "filename": "auto-au.json",
+  "name": "Australia",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "AU": "Australia",
+        "AU:ACT": "Australian Capital Territory",
+        "AU:NORFOLK.ISLAND": "Norfolk Island",
+        "AU:NSW": "New South Wales",
+        "AU:NT": "Northern Territory",
+        "AU:QLD": "Queensland",
+        "AU:SA": "South Australia",
+        "AU:TAS": "Tasmania",
+        "AU:VIC": "Victoria",
+        "AU:WA": "Western Australia"
+      }
+    },
+    "au": {
+      "institution-part": {}
+    },
+    "au:act": {
+      "institution-part": {}
+    },
+    "au:norfolk.island": {
+      "institution-part": {}
+    },
+    "au:nsw": {
+      "institution-part": {}
+    },
+    "au:nt": {
+      "institution-part": {}
+    },
+    "au:qld": {
+      "institution-part": {}
+    },
+    "au:sa": {
+      "institution-part": {}
+    },
+    "au:tas": {
+      "institution-part": {}
+    },
+    "au:vic": {
+      "institution-part": {}
+    },
+    "au:wa": {
+      "institution-part": {}
+    }
+  }
+}

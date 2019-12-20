@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-18 11:06:53"
+	"lastUpdated": "2019-06-10 21:51:43"
 }
 
 /*
@@ -36,34 +36,35 @@
 */
 
 function detectWeb(doc, url) {
-	url = url.replace(/[\?#].+/, "");
-	if (/\d{8}$/.test(url)||/\d{7}\.(stm)$/.test(url)) {
+	url = url.replace(/[?#].+/, "");
+	if (/\d{8}$/.test(url) || /\d{7}\.(stm)$/.test(url)) {
 		var pageNode = doc.getElementById("page");
 		if (pageNode) {
-			//Z.debug(pageNode.className);
-			if (pageNode.className.indexOf("media-asset-page")>-1 || pageNode.className.indexOf("vxp-headlines")>-1) {
+			// Z.debug(pageNode.className);
+			if (pageNode.className.includes("media-asset-page") || pageNode.className.includes("vxp-headlines")) {
 				return "videoRecording";
 			}
 		}
 		return "newspaperArticle";
 	}
-	if(url.indexOf("/newsbeat/article") != -1){
+	if (url.includes("/newsbeat/article")) {
 		return "blogPost";
 	}
 	if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
-	var rows = ZU.xpath(doc, '//a[h3[@class="title-link__title"]]');
-	//for NewsBeat
-	if(!rows.length) {
-		var rows = ZU.xpath(doc, '//article/div/h1[@itemprop="headline"]/a');
+	var rows = ZU.xpath(doc, '//a[h3]');
+	// for NewsBeat
+	if (!rows.length) {
+		rows = ZU.xpath(doc, '//article/div/h1[@itemprop="headline"]/a');
 	}
-	for (var i = 0; i<rows.length; i++) {
+	for (let i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -78,21 +79,22 @@ function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
 			var articles = [];
-			for (var i in items) {
+			for (let i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
 
 function scrape(doc, url) {
-	url = url.replace(/[\?#].+/, "");
+	url = url.replace(/[?#].+/, "");
 	var itemType = detectWeb(doc, url);
 	
 	var translator = Zotero.loadTranslator('web');
@@ -101,26 +103,27 @@ function scrape(doc, url) {
 	translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
-		
-		//add date and time if missing by one of four attempts:
+		// add date and time if missing by one of four attempts:
 		// 1. look at the json-ld data
 		// 2. calculate it from the data-seconds attribute
 		// 3. extract it from a nonstandard meta field
 		// 4. for old pages, get from metadata
 		var jsonld = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
 		var data = JSON.parse(jsonld);
-		//Z.debug(data);
+		// Z.debug(data);
 		if (data && data.datePublished) {
 			item.date = data.datePublished;
-		} else {
+		}
+		else {
 			var seconds = ZU.xpathText(doc, '(//div[h1 or h2]//*[contains(@class, "date")]/@data-seconds)[1]');
 			if (!item.date && seconds) {
-				//Z.debug(seconds);
-				var date = new Date(1000*seconds);
+				// Z.debug(seconds);
+				var date = new Date(1000 * seconds);
 				item.date = date.toISOString();
-			} else {
+			}
+			else {
 				item.date = ZU.xpathText(doc, '//meta[@property="rnews:datePublished"]/@content');
-				if(!item.date) {
+				if (!item.date) {
 					item.date = ZU.xpathText(doc, '//p[@class="timestamp"]');
 					if (!item.date) {
 						item.date = ZU.xpathText(doc, '//meta[@name="OriginalPublicationDate"]/@content');
@@ -132,70 +135,73 @@ function scrape(doc, url) {
 		if (item.date) {
 			item.date = ZU.strToISO(item.date);
 		}
-		//delete wrongly attached creators like
-		//"firstName": "B. B. C.", "lastName": "News"
+		// delete wrongly attached creators like
+		// "firstName": "B. B. C.", "lastName": "News"
 		item.creators = [];
-		//add authors from byline__name but only if they
-		//are real authors and not just part of the webpage title
-		//like By BBC Trending, By News from Elsewhere... or By Who, What Why
+		// add authors from byline__name but only if they
+		// are real authors and not just part of the webpage title
+		// like By BBC Trending, By News from Elsewhere... or By Who, What Why
 		var authorString = ZU.xpathText(doc, '//span[@class="byline__name"]');
 		var webpageTitle = ZU.xpathText(doc, '//h1');
 		if (authorString) {
 			authorString = authorString.replace('By', '').replace('...', '');
-			var authors = authorString.split('&');
-			for (var i=0; i<authors.length; i++) {
-				if (webpageTitle.toLowerCase().indexOf(authors[i].trim().toLowerCase())>-1) {
+			let authors = authorString.split('&');
+			for (let i = 0; i < authors.length; i++) {
+				if (webpageTitle.toLowerCase().includes(authors[i].trim().toLowerCase())) {
 					continue;
 				}
 				item.creators.push(ZU.cleanAuthor(authors[i], "author"));
 			}
 		}
-		else
-		{
-			var authorString = ZU.xpathText(doc, '//p[@class="byline"]');
+		else {
+			authorString = ZU.xpathText(doc, '//p[@class="byline"]');
 			var title = ZU.xpathText(doc, '//em[@class="title"]');
 			if (authorString) {
 				authorString = authorString.replace(title, '').replace('By', '');
-				var authors = authorString.split('&');
-				for (var i=0; i<authors.length; i++) {
+				let authors = authorString.split('&');
+				for (let i = 0; i < authors.length; i++) {
 					item.creators.push(ZU.cleanAuthor(authors[i], "author"));
 				}
-			}	
+			}
 		}
 		
-		if (url.indexOf("/newsbeat/article") != -1) {
-  			item.blogTitle = "BBC Newsbeat";
+		if (url.includes("/newsbeat/article")) {
+			item.blogTitle = "BBC Newsbeat";
 		}
 
 		// description for old BBC pages
-		if(!item.abstractNote)
+		if (!item.abstractNote) {
 			item.abstractNote = ZU.xpathText(doc, '//meta[@name="Description"]/@content');
+		}
 
-		for (var i in item.tags)
-			item.tags[i] = item.tags[i].charAt(0).toUpperCase()+item.tags[i].substring(1);
+		for (let i in item.tags) {
+			item.tags[i] = item.tags[i].charAt(0).toUpperCase() + item.tags[i].substring(1);
+		}
 
-		item.language = "en-GB";
+		if (!item.language || item.language === "en") {
+			item.language = "en-GB";
+		}
 
-		if (url.substr(-4)==".stm") {
+		if (url.substr(-4) == ".stm") {
 			item.title = ZU.xpathText(doc, '//meta[@name="Headline"]/@content');
 		}
 
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = itemType;
 		trans.doWeb(doc, url);
-});
+	});
 }/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://www.bbc.com/news/magazine-15335899",
+		"url": "https://www.bbc.com/news/magazine-15335899",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
-				"title": "Spain's stolen babies and the families who lived a lie",
+				"title": "Spain's stolen babies",
 				"creators": [
 					{
 						"firstName": "Katya",
@@ -209,7 +215,7 @@ var testCases = [
 				"libraryCatalog": "www.bbc.com",
 				"publicationTitle": "BBC News",
 				"section": "Magazine",
-				"url": "http://www.bbc.com/news/magazine-15335899",
+				"url": "https://www.bbc.com/news/magazine-15335899",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -228,11 +234,11 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.bbc.com/news/blogs-news-from-elsewhere-37117404",
+		"url": "https://www.bbc.com/news/blogs-news-from-elsewhere-37117404",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
-				"title": "China staff fined for not liking boss's Weibo posts",
+				"title": "Fines for not liking boss's Weibo posts",
 				"creators": [],
 				"date": "2016-08-18",
 				"abstractNote": "Company in China punishes employees who don't comment on manager's social media posts.",
@@ -240,7 +246,7 @@ var testCases = [
 				"libraryCatalog": "www.bbc.com",
 				"publicationTitle": "BBC News",
 				"section": "News from Elsewhere",
-				"url": "http://www.bbc.com/news/blogs-news-from-elsewhere-37117404",
+				"url": "https://www.bbc.com/news/blogs-news-from-elsewhere-37117404",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -254,7 +260,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.bbc.com/news/magazine-36287752",
+		"url": "https://www.bbc.com/news/magazine-36287752",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -277,7 +283,7 @@ var testCases = [
 				"libraryCatalog": "www.bbc.com",
 				"publicationTitle": "BBC News",
 				"section": "Magazine",
-				"url": "http://www.bbc.com/news/magazine-36287752",
+				"url": "https://www.bbc.com/news/magazine-36287752",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -300,7 +306,7 @@ var testCases = [
 		"items": [
 			{
 				"itemType": "blogPost",
-				"title": "Will new music streaming service Tidal make the waves artists want?",
+				"title": "Will new music streaming service Tidal make the waves artists want? - BBC Newsbeat",
 				"creators": [
 					{
 						"firstName": "Chi Chi",
@@ -309,9 +315,10 @@ var testCases = [
 					}
 				],
 				"date": "2015-03-31",
-				"abstractNote": "Big names in the world of music made it known that they wanted a change when they all stood on stage on Monday and announced the relaunch of streaming service Tidal.",
+				"abstractNote": "Exclusive music news, big interviews, entertainment, social media trends and video from the news people at BBC Radio 1 and 1Xtra.",
 				"blogTitle": "BBC Newsbeat",
 				"language": "en-GB",
+				"shortTitle": "Will new music streaming service Tidal make the waves artists want?",
 				"url": "http://www.bbc.co.uk/newsbeat/article/32129457/will-new-music-streaming-service-tidal-make-the-waves-artists-want",
 				"attachments": [
 					{
@@ -326,7 +333,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.bbc.com/sport/olympics/37068610",
+		"url": "https://www.bbc.com/sport/olympics/37068610",
 		"items": [
 			{
 				"itemType": "newspaperArticle",
@@ -339,7 +346,7 @@ var testCases = [
 				"publicationTitle": "BBC Sport",
 				"section": "Olympics",
 				"shortTitle": "Rio Olympics 2016",
-				"url": "http://www.bbc.com/sport/olympics/37068610",
+				"url": "https://www.bbc.com/sport/olympics/37068610",
 				"attachments": [
 					{
 						"title": "Snapshot"
@@ -382,6 +389,38 @@ var testCases = [
 					"Uk",
 					"World"
 				],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://www.bbc.com/portuguese/internacional-48562081",
+		"items": [
+			{
+				"itemType": "newspaperArticle",
+				"title": "Como peixes e até camarões podem ser 'recrutados' como espiões",
+				"creators": [
+					{
+						"firstName": "Emma",
+						"lastName": "Woollacott",
+						"creatorType": "author"
+					}
+				],
+				"date": "2019-06-10",
+				"abstractNote": "Animais são usados ​​há muito tempo para fins militares, mas agora um projeto americano quer saber se as criaturas marinhas também podem agir como sensores.",
+				"language": "pt",
+				"libraryCatalog": "www.bbc.com",
+				"publicationTitle": "BBC News Brasil",
+				"section": "Internacional",
+				"url": "https://www.bbc.com/portuguese/internacional-48562081",
+				"attachments": [
+					{
+						"title": "Snapshot"
+					}
+				],
+				"tags": [],
 				"notes": [],
 				"seeAlso": []
 			}

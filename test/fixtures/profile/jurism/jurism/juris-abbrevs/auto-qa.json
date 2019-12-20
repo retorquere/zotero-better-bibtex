@@ -1,0 +1,15 @@
+{
+  "filename": "auto-qa.json",
+  "name": "Qatar",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "QA": "Qatar"
+      }
+    },
+    "qa": {
+      "institution-part": {}
+    }
+  }
+}

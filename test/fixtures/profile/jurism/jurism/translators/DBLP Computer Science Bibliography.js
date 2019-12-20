@@ -1,56 +1,84 @@
 {
 	"translatorID": "625c6435-e235-4402-a48f-3095a9c1a09c",
 	"label": "DBLP Computer Science Bibliography",
-	"creator": "Adam Crymble, Sebastian Karcher, Philipp Zumstein",
-	"target": "^https?://(www\\.)?(dblp(\\.org|\\.uni-trier\\.de/|\\.dagstuhl\\.de/)|informatik\\.uni-trier\\.de/\\~ley/)",
-	"minVersion": "1.0.0b4.r5",
+	"creator": "Sebastian Karcher, Philipp Zumstein",
+	"target": "^https?://(www\\.)?(dblp\\d?(\\.org|\\.uni-trier\\.de/|\\.dagstuhl\\.de/))",
+	"minVersion": "3.0",
 	"maxVersion": "",
 	"priority": 100,
 	"inRepository": true,
 	"translatorType": 4,
-	"browserSupport": "gcsv",
-	"lastUpdated": "2016-09-11 19:41:55"
+	"browserSupport": "gcsibv",
+	"lastUpdated": "2019-10-16 21:02:38"
 }
+
+/*
+	***** BEGIN LICENSE BLOCK *****
+
+	Copyright © 2011-2019 Sebastian Karcher, Philipp Zumstein
+
+	This file is part of Zotero.
+
+	Zotero is free software: you can redistribute it and/or modify
+	it under the terms of the GNU Affero General Public License as published by
+	the Free Software Foundation, either version 3 of the License, or
+	(at your option) any later version.
+
+	Zotero is distributed in the hope that it will be useful,
+	but WITHOUT ANY WARRANTY; without even the implied warranty of
+	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+	GNU Affero General Public License for more details.
+
+	You should have received a copy of the GNU Affero General Public License
+	along with Zotero. If not, see <http://www.gnu.org/licenses/>.
+
+	***** END LICENSE BLOCK *****
+*/
 
 function detectWeb(doc, url) {
-	if (url.indexOf('rec/bibtex') !== -1) {
-		if (url.indexOf('journals') !== -1) {
-			return "journalArticle";
-		} else if (url.indexOf('conf') !== -1) {
-			return "conferencePaper";
-		} else if (url.indexOf('series') !== -1 || url.indexOf('reference') !== -1) {
-			return "bookSection";
-		} else if (url.indexOf('books') !== -1) {
-			return "book";
-		} else if (url.indexOf('phd') !== -1) {
-			return "thesis";
-		} else { //generic fallback
+	if (url.includes('rec/bibtex') || url.includes('rec/html')) {
+		if (url.includes('journals')) {
 			return "journalArticle";
 		}
-	} else if ((url.match(/\/db\/(journals|conf|series|reference)/) || url.match(/\/pers\/(hd|ht|hy)/)) && !url.match(/index[\w-]*\.html/)) {
-		return "multiple"
+		else if (url.includes('conf')) {
+			return "conferencePaper";
+		}
+		else if (url.includes('series') || url.includes('reference')) {
+			return "bookSection";
+		}
+		else if (url.includes('books')) {
+			return "book";
+		}
+		else if (url.includes('phd')) {
+			return "thesis";
+		}
+		else { // generic fallback
+			return "journalArticle";
+		}
 	}
+	else if ((url.match(/\/db\/(journals|conf|series|reference)/) || url.match(/\/pers\/(hd|ht|hy)/)) && !url.match(/index[\w-]*\.html/) || url.includes("/search?q=")) {
+		return "multiple";
+	}
+	return false;
 }
 
 
-function scrape(doc, url) {
+function scrape(doc, _url) {
 	var xPathAllData = doc.evaluate('//pre', doc, null, XPathResult.ANY_TYPE, null);
-	var firstData = xPathAllData.iterateNext(); //only if exists
-	var firstDataText = firstData.textContent.replace(/ ee\s*=/, " url ="); //e.g. ee = {http://dx.doi.org/10.1007/978-3-319-00035-0_37},
-	Zotero.debug(firstDataText);
+	var firstData = xPathAllData.iterateNext(); // only if exists
+	var firstDataText = firstData.textContent.replace(/ ee\s*=/, " url ="); // e.g. ee = {http://dx.doi.org/10.1007/978-3-319-00035-0_37},
 
-	//conferencePapers and bookSections are linked in DBLP
-	//with the crossref field to the second BibTeX entry
-	//for the proceeding or book. In these cases the following
-	//lines (if-part) are handling the second entry and extracting
-	//relevant fields and save it (later) to the main entry.
-	var secondData;
-	if (secondData = xPathAllData.iterateNext()) {
+	// conferencePapers and bookSections are linked in DBLP
+	// with the crossref field to the second BibTeX entry
+	// for the proceeding or book. In these cases the following
+	// lines (if-part) are handling the second entry and extracting
+	// relevant fields and save it (later) to the main entry.
+	var secondData = xPathAllData.iterateNext();
+	if (secondData) {
 		var secondDataText = secondData.textContent;
-		Zotero.debug(secondDataText);
 
 		var trans = Zotero.loadTranslator('import');
-		trans.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4');//https://github.com/zotero/translators/blob/master/BibTeX.js
+		trans.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4');// https://github.com/zotero/translators/blob/master/BibTeX.js
 		trans.setString(secondDataText);
 
 		trans.setHandler('itemDone', function (obj, item) {
@@ -58,21 +86,21 @@ function scrape(doc, url) {
 		});
 
 		trans.translate();
-	} else { //if there are no secondData: scrape without additional data
+	}
+	else { // if there are no secondData: scrape without additional data
 		scrapeMainPart(firstDataText, null);
 	}
 }
 
 
 function scrapeMainPart(firstDataText, secondDataItem) {
-	//scrape from the firstDataText and if secondDataItem
-	//is not null, add/update these information
+	// scrape from the firstDataText and if secondDataItem
+	// is not null, add/update these information
 	var trans = Zotero.loadTranslator('import');
-	trans.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4');//https://github.com/zotero/translators/blob/master/BibTeX.js
+	trans.setTranslator('9cb70025-a888-4a29-a210-93ec52da40d4');// https://github.com/zotero/translators/blob/master/BibTeX.js
 	trans.setString(firstDataText);
 
 	trans.setHandler('itemDone', function (obj, item) {
-		Zotero.debug("item.itemType = " + item.itemType);
 		if (secondDataItem) {
 			if (secondDataItem.title && item.itemType == "conferencePaper") item.proceedingsTitle = secondDataItem.title;
 			if (secondDataItem.title && item.itemType == "bookSection") item.booktitle = secondDataItem.titel;
@@ -83,13 +111,13 @@ function scrapeMainPart(firstDataText, secondDataItem) {
 			if (secondDataItem.ISBN && !item.ISBN) item.ISBN = secondDataItem.ISBN;
 		}
 		
-		//Assume that the url contains an doi. If the item does not
-		//yet contain a doi, then save the doi and delete the url.
-		//If the item contains the doi corresponding to the url
-		//then just delete the url and keep the doi.
-		if(item.url && item.url.search(/^https?:\/\/(?:dx\.)?doi\.org\/10\./i) != -1) {
+		// Assume that the url contains an doi. If the item does not
+		// yet contain a doi, then save the doi and delete the url.
+		// If the item contains the doi corresponding to the url
+		// then just delete the url and keep the doi.
+		if (item.url && item.url.search(/^https?:\/\/(?:dx\.)?doi\.org\/10\./i) != -1) {
 			var doi = ZU.cleanDOI(item.url);
-			if(doi && (!item.DOI || item.DOI == doi)) {
+			if (doi && (!item.DOI || item.DOI == doi)) {
 				item.DOI = doi;
 				delete item.url;
 			}
@@ -99,38 +127,44 @@ function scrapeMainPart(firstDataText, secondDataItem) {
 	});
 
 	trans.translate();
-
 }
 
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
-		var items = new Object();
-		var articles = new Array();
-		var rows = ZU.xpath(doc, '//body/ul/li|//li[contains(@class, "entry")]')
-		for(var i=0; i<rows.length; i++) {
-			//Careful: If you get more than one node,
-			//ZU.xpathText will join the textContent of each with commas. 
-			var title = ZU.xpathText(rows[i], './b|./div/span[@class="title"]');
+		var items = {};
+		var articles = [];
+		var rows = ZU.xpath(doc, '//body/ul/li|//li[contains(@class, "entry")]');
+		for (let i = 0; i < rows.length; i++) {
+			// Careful: If you get more than one node,
+			// ZU.xpathText will join the textContent of each with commas.
+			var title = ZU.xpathText(rows[i], './b|./article/span[@class="title"]');
 			var link = ZU.xpathText(rows[i], './a[contains(@href, "rec/bibtex") and not(contains(@href, ".xml"))]/@href|./nav//div/a[contains(@href, "rec/bibtex") and not(contains(@href, ".xml"))]/@href');
 			items[link] = title;
 		}
 		Zotero.selectItems(items, function (items) {
 			if (!items) {
-				return true;
+				return;
 			}
-			for (var i in items) {
+			for (let i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else if (url.includes('rec/html')) {
+		ZU.processDocuments([url.replace('rec/html', 'rec/bibtex')], scrape);
+	}
+	else {
 		scrape(doc, url);
 	}
-} /** BEGIN TEST CASES **/
+}
+
+
+/** BEGIN TEST CASES **/
 var testCases = [
 	{
 		"type": "web",
-		"url": "http://dblp.org/rec/bibtex/journals/cssc/XuY12",
+		"url": "https://dblp.org/rec/bibtex/journals/cssc/XuY12",
 		"items": [
 			{
 				"itemType": "journalArticle",
@@ -164,7 +198,7 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://dblp.org/rec/bibtex/conf/ats/KochteZBIWHCP10",
+		"url": "https://dblp.org/rec/bibtex/conf/ats/KochteZBIWHCP10",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -228,22 +262,22 @@ var testCases = [
 	},
 	{
 		"type": "web",
-		"url": "http://www.informatik.uni-trier.de/~ley/db/journals/tois/tois25.html",
+		"url": "https://dblp1.uni-trier.de/db/journals/tois/tois25.html",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://dblp.uni-trier.de/db/journals/tods/tods31.html",
+		"url": "https://dblp.uni-trier.de/db/journals/tods/tods31.html",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://dblp.dagstuhl.de/pers/hd/k/Knuth:Donald_E=.html",
+		"url": "https://dblp.dagstuhl.de/pers/hd/k/Knuth:Donald_E=.html",
 		"items": "multiple"
 	},
 	{
 		"type": "web",
-		"url": "http://dblp.uni-trier.de/rec/bibtex/conf/approx/SchederT13",
+		"url": "https://dblp.uni-trier.de/rec/bibtex/conf/approx/SchederT13",
 		"items": [
 			{
 				"itemType": "conferencePaper",
@@ -296,6 +330,58 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
+	},
+	{
+		"type": "web",
+		"url": "https://dblp.org/rec/html/conf/iclr/DasMYTM19",
+		"items": [
+			{
+				"itemType": "conferencePaper",
+				"title": "Building Dynamic Knowledge Graphs from Text using Machine Reading Comprehension",
+				"creators": [
+					{
+						"firstName": "Rajarshi",
+						"lastName": "Das",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Tsendsuren",
+						"lastName": "Munkhdalai",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Xingdi",
+						"lastName": "Yuan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Adam",
+						"lastName": "Trischler",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Andrew",
+						"lastName": "McCallum",
+						"creatorType": "author"
+					}
+				],
+				"date": "2019",
+				"itemID": "DBLP:conf/iclr/DasMYTM19",
+				"libraryCatalog": "DBLP Computer Science Bibliography",
+				"proceedingsTitle": "7th International Conference on Learning Representations, ICLR 2019, New Orleans, LA, USA, May 6-9, 2019",
+				"publisher": "OpenReview.net",
+				"url": "https://openreview.net/forum?id=S1lhbnRqF7",
+				"attachments": [],
+				"tags": [],
+				"notes": [],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "web",
+		"url": "https://dblp.org/search?q=zotero",
+		"items": "multiple"
 	}
 ]
 /** END TEST CASES **/

@@ -1,0 +1,151 @@
+{
+  "filename": "auto-mn.json",
+  "name": "Mongolia",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MN": "Mongolia",
+        "MN:ARKHANGAI": "Архангай",
+        "MN:BAYAN.OLGII": "Баян-Өлгий",
+        "MN:BAYANKHONGOR": "Баянхонгор",
+        "MN:BULGAN": "Булган",
+        "MN:DARKHAN.UUL": "Дархан-Уул",
+        "MN:DORNOD": "Дорнод",
+        "MN:DORNOGOVI": "Дорноговь",
+        "MN:DUNDGOVI": "Дундговь",
+        "MN:GOVI.ALTAI": "Говь-Алтай",
+        "MN:GOVISUMBER": "Говьсүмбэр",
+        "MN:KHENTII": "Хэнтий",
+        "MN:KHOVD": "Ховд",
+        "MN:KHOVSGOL": "Хөвсгөл",
+        "MN:OMNOGOVI": "Өмнөговь",
+        "MN:ORKHON": "Орхон",
+        "MN:OVORKHANGAI": "Өвөрхангай",
+        "MN:SELENGE": "Сэлэнгэ",
+        "MN:SUKHBAATAR": "Сүхбаатар",
+        "MN:TOV": "Төв",
+        "MN:ULAANBAATAR": "Улаанбаатар",
+        "MN:UVS": "Увс",
+        "MN:ZAVKHAN": "Завхан"
+      }
+    },
+    "mn": {
+      "institution-part": {
+        "ulsyn.deed.shuukh": "Улсын дээд шүүх",
+        "ulsyn.undsen.khuuliin.tsets": "Улсын Үндсэн хуулийн цэц",
+        "zakhirgaanii.khergiin.davj.zaaldakh.shatnii.shuukh": "Захиргааны хэргийн давж заалдах шатны шүүх"
+      }
+    },
+    "mn:arkhangai": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:bayan.olgii": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:bayankhongor": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:bulgan": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:darkhan.uul": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:dornod": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:dornogovi": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:dundgovi": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:govi.altai": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:govisumber": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:khentii": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:khovd": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:khovsgol": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:omnogovi": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:orkhon": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:ovorkhangai": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:selenge": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:sukhbaatar": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:tov": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:ulaanbaatar": {
+      "institution-part": {
+        "niisleliin.shuukh": "Niisleliin Shuukh"
+      }
+    },
+    "mn:uvs": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    },
+    "mn:zavkhan": {
+      "institution-part": {
+        "aimgiin.shuukh": "Аймгийн шүүх"
+      }
+    }
+  }
+}

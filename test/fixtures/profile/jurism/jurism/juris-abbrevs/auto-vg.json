@@ -1,0 +1,15 @@
+{
+  "filename": "auto-vg.json",
+  "name": "British Virgin Islands",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "VG": "British Virgin Islands"
+      }
+    },
+    "vg": {
+      "institution-part": {}
+    }
+  }
+}

@@ -5,6 +5,7 @@
     <id>http://www.zotero.org/styles/nature</id>
     <link href="http://www.zotero.org/styles/nature" rel="self"/>
     <link href="http://www.nature.com/nature/authors/gta/index.html#a5.4" rel="documentation"/>
+    <link href="http://www.nature.com/srep/publish/guidelines#references" rel="documentation"/>
     <author>
       <name>Michael Berkowitz</name>
       <email>mberkowi@gmu.edu</email>
@@ -14,23 +15,14 @@
     <category field="generic-base"/>
     <issn>0028-0836</issn>
     <eissn>1476-4687</eissn>
-    <updated>2012-09-27T22:06:38+00:00</updated>
+    <updated>2018-10-24T14:53:43+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
-  <locale xml:lang="en">
-    <terms>
-      <term name="editor" form="short">
-        <single>ed.</single>
-        <multiple>eds</multiple>
-      </term>
-    </terms>
-  </locale>
   <macro name="title">
     <choose>
       <if type="bill book graphic legal_case legislation motion_picture report song" match="any">
         <text variable="title" font-style="italic"/>
       </if>
-      <else-if type="chapter" match="any"/>
       <else>
         <text variable="title"/>
       </else>
@@ -49,15 +41,23 @@
       <else-if variable="DOI">
         <text variable="DOI" prefix="doi:"/>
       </else-if>
-      <else-if variable="URL">
-        <text term="at"/>
-        <text variable="URL" prefix=" &lt;" suffix="&gt;"/>
+      <else-if type="webpage" variable="URL" match="all">
+        <text term="available at" text-case="capitalize-first" suffix=": "/>
+        <text variable="URL" suffix=". "/>
+        <group prefix="(" suffix=")" delimiter=": ">
+          <text term="accessed" text-case="capitalize-first"/>
+          <date variable="accessed">
+            <date-part name="day" suffix=" " form="ordinal"/>
+            <date-part name="month" suffix=" "/>
+            <date-part name="year"/>
+          </date>
+        </group>
       </else-if>
     </choose>
   </macro>
   <macro name="issuance">
     <choose>
-      <if type="bill book graphic legal_case legislation motion_picture report song chapter paper-conference" match="any">
+      <if type="bill book graphic legal_case legislation motion_picture report song thesis chapter paper-conference" match="any">
         <group delimiter=", " prefix="(" suffix=").">
           <text variable="publisher" form="long"/>
           <date variable="issued">
@@ -72,10 +72,21 @@
       </else>
     </choose>
   </macro>
+  <macro name="container-title">
+    <choose>
+      <if type="article-journal">
+        <text variable="container-title" font-style="italic" form="short"/>
+      </if>
+      <else>
+        <text variable="container-title" font-style="italic"/>
+      </else>
+    </choose>
+  </macro>
   <macro name="editor">
     <choose>
       <if type="chapter paper-conference" match="any">
         <names variable="editor" prefix="(" suffix=")">
+          <label form="short" suffix=" "/>
           <name and="symbol" delimiter-precedes-last="never" initialize-with=". " name-as-sort-order="all"/>
         </names>
       </if>
@@ -89,7 +100,7 @@
       <text variable="citation-number"/>
     </layout>
   </citation>
-  <bibliography et-al-min="6" et-al-use-first="1" second-field-align="flush" entry-spacing="0">
+  <bibliography et-al-min="6" et-al-use-first="1" second-field-align="flush" entry-spacing="0" line-spacing="2">
     <layout>
       <text variable="citation-number" suffix="."/>
       <group delimiter=" ">
@@ -97,14 +108,12 @@
         <text macro="title" suffix="."/>
         <choose>
           <if type="chapter paper-conference" match="any">
-            <text term="in" form="long" plural="false"/>
+            <text term="in"/>
           </if>
         </choose>
-        <text variable="container-title" font-style="italic" form="short"/>
+        <text macro="container-title"/>
         <text macro="editor"/>
-        <group font-weight="bold">
-          <text variable="volume" suffix=","/>
-        </group>
+        <text variable="volume" font-weight="bold" suffix=","/>
         <text variable="page"/>
         <text macro="issuance"/>
         <text macro="access"/>

@@ -1,207 +1,200 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
     "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "autoExportTooLong": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "suppressBraceProtection": false,
+      "suppressSentenceCase": false,
+      "suppressNoCase": false,
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": true,
+      "autoPin": false,
+      "kuroshiro": false,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "relativeFilePaths": false,
+      "sorted": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "platform": "",
+      "client": ""
+    },
     "options": {
       "exportFileData": false,
       "exportNotes": true,
       "keepUpdated": false
-    },
-    "preferences": {
-      "DOIandURL": "both",
-      "ascii": "",
-      "asciiBibLaTeX": false,
-      "asciiBibTeX": true,
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExport": "immediate",
-      "autoExportDelay": 1,
-      "autoExportIdleWait": 10,
-      "autoExportPrimeExportCacheBatch": 4,
-      "autoExportPrimeExportCacheDelay": 100,
-      "autoExportPrimeExportCacheThreshold": 0,
-      "autoExportTooLong": 10,
-      "autoPin": false,
-      "automaticTags": true,
-      "auxImport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "bibtexParticleNoOp": false,
-      "bibtexURL": "off",
-      "cacheFlushInterval": 5,
-      "citeCommand": "cite",
-      "citekeyFold": true,
-      "citekeyFormat": "[auth][year]",
-      "citeprocNoteCitekey": false,
-      "csquotes": "",
-      "exportBibTeXStrings": "off",
-      "git": "config",
-      "importBibTeXStrings": true,
-      "itemObserverDelay": 100,
-      "jabrefFormat": 0,
-      "keyConflictPolicy": "keep",
-      "keyScope": "library",
-      "kuroshiro": false,
-      "mapMath": "",
-      "mapText": "",
-      "mapUnicode": "conservative",
-      "newTranslatorsAskRestart": true,
-      "parseParticles": true,
-      "postscript": "",
-      "qualityReport": false,
-      "quickCopyMode": "latex",
-      "quickCopyPandocBrackets": false,
-      "rawLaTag": "#LaTeX",
-      "relativeFilePaths": false,
-      "scrubDatabase": false,
-      "skipFields": "",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "sorted": false,
-      "strings": "",
-      "suppressBraceProtection": false,
-      "suppressNoCase": false,
-      "suppressSentenceCase": false,
-      "suppressTitleCase": false,
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "warnBulkModify": 10
-    },
-    "release": {
-      "BetterBibTeX": "5.1.148.emile.limonia",
-      "Zotero": {
-        "appName": "Zotero",
-        "appVersion": "5.0.76",
-        "isJurisM": false,
-        "isZotero": true,
-        "locale": "en-US",
-        "oscpu": "Intel Mac OS X 10.15",
-        "platform": "MacIntel",
-        "version": "5.0.76"
-      }
     }
   },
+  "collections": {},
   "items": [
     {
-      "ISSN": "1612-4642",
-      "attachments": [],
-      "citationKey": "springerlink:10.1007/s10344-009-0327-7",
-      "citekey": "springerlink:10.1007/s10344-009-0327-7",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "Isabel",
-          "lastName": "Barrio"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Pelayo",
-          "lastName": "Acevedo"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Francisco",
-          "lastName": "Tortosa"
-        }
-      ],
-      "date": "2010",
-      "dateAdded": "2019-10-29T13:22:24Z",
-      "dateModified": "2019-10-29T13:22:24Z",
-      "extra": "Citation Key: springerlink:10.1007/s10344-009-0327-7\ntex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 C\u00c3\u00b3rdoba Spain\ntex.owner: tiago\ntex.publisher: Springer Berlin / Heidelberg\ntex.subdatabase: distance\ntex.timestamp: 2011.06.17",
-      "issue": "3",
-      "itemID": 106,
+      "version": 0,
       "itemType": "journalArticle",
-      "key": "HA37MYXR",
-      "libraryID": 1,
-      "notes": [
-        "<p>10.1007/s10344-009-0327-7</p>"
-      ],
+      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
+      "volume": "56",
+      "issue": "3",
       "pages": "335-340",
       "publicationTitle": "European Journal of Wildlife Research",
-      "relations": [],
+      "ISSN": "1612-4642",
+      "date": "2010",
+      "extra": "Citation Key: springerlink:10.1007/s10344-009-0327-7\ntex.affiliation: University of Cordoba Department of Zoology Campus de Rabanales Ed. Darwin 14071 CÃ³rdoba Spain\ntex.owner: tiago\ntex.publisher: Springer Berlin / Heidelberg\ntex.subdatabase: distance\ntex.timestamp: 2011.06.17",
+      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
+      "creators": [
+        {
+          "firstName": "Isabel",
+          "lastName": "Barrio",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Pelayo",
+          "lastName": "Acevedo",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Francisco",
+          "lastName": "Tortosa",
+          "creatorType": "author"
+        }
+      ],
       "tags": [
         {
           "tag": "Biomedical and Life Sciences"
         }
       ],
-      "title": "Assessment of methods for estimating wild rabbit population abundance in agricultural landscapes",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/HA37MYXR",
-      "url": "http://dx.doi.org/10.1007/s10344-009-0327-7",
-      "version": 0,
-      "volume": "56"
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-15T11:37:00Z",
+      "dateModified": "2019-12-15T11:37:00Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/DXP3IXV9",
+      "attachments": [],
+      "notes": [
+        "<p>10.1007/s10344-009-0327-7</p>"
+      ],
+      "itemID": 105,
+      "key": "DXP3IXV9",
+      "citekey": "springerlink:10.1007/s10344-009-0327-7",
+      "citationKey": "springerlink:10.1007/s10344-009-0327-7",
+      "libraryID": 1
     },
     {
-      "attachments": [
-        {
-          "dateAdded": "2019-10-29T13:22:24Z",
-          "dateModified": "2019-10-29T13:22:24Z",
-          "itemType": "attachment",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/32JQBXMZ/2.pdf",
-          "relations": [],
-          "tags": [],
-          "title": "2",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/32JQBXMZ"
-        },
-        {
-          "dateAdded": "2019-10-29T13:22:24Z",
-          "dateModified": "2019-10-29T13:22:25Z",
-          "itemType": "attachment",
-          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/SIEJEUIU/1.pdf",
-          "relations": [],
-          "tags": [],
-          "title": "stuff",
-          "uri": "http://zotero.org/users/local/6z7M0kXV/items/SIEJEUIU"
-        }
-      ],
-      "citationKey": "Afonso2011",
-      "citekey": "Afonso2011",
-      "collections": [],
+      "version": 0,
+      "itemType": "journalArticle",
+      "date": "2011",
+      "extra": "Citation Key: Afonso2011\ntex.location: Poster apresentado no Congresso da SPE\ntex.owner: tiago\ntex.referencetype: talk\ntex.timestamp: 2011.10.04",
+      "title": "Amostragem em duas fases adaptativa para estimar a abundância de populações raras",
       "creators": [
         {
-          "creatorType": "author",
           "firstName": "Anabela",
-          "lastName": "Afonso"
+          "lastName": "Afonso",
+          "creatorType": "author"
         },
         {
-          "creatorType": "author",
           "firstName": "Russell",
-          "lastName": "Alpizar-Jara"
+          "lastName": "Alpizar-Jara",
+          "creatorType": "author"
         }
       ],
-      "date": "2011",
-      "dateAdded": "2019-10-29T13:22:24Z",
-      "dateModified": "2019-10-29T13:22:24Z",
-      "extra": "Citation Key: Afonso2011\ntex.location: Poster apresentado no Congresso da SPE\ntex.owner: tiago\ntex.timestamp: 2011.10.04",
-      "itemID": 108,
-      "itemType": "journalArticle",
-      "key": "PLPM2HAU",
-      "libraryID": 1,
-      "notes": [],
-      "relations": [],
       "tags": [],
-      "title": "Amostragem em duas fases adaptativa para estimar a abund\u00e2ncia de popula\u00e7\u00f5es raras",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/PLPM2HAU",
-      "version": 0
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-15T11:37:00Z",
+      "dateModified": "2019-12-15T11:37:00Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/7NR7TBS3",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "2",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-12-15T11:37:00Z",
+          "dateModified": "2019-12-15T11:37:00Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/AIHRLS2S",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/AIHRLS2S/2.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "title": "stuff",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-12-15T11:37:00Z",
+          "dateModified": "2019-12-15T11:37:01Z",
+          "uri": "http://zotero.org/users/local/6z7M0kXV/items/RIUR67LQ",
+          "path": "/Users/emile/.BBTZ5TEST/zotero/storage/RIUR67LQ/1.pdf"
+        }
+      ],
+      "notes": [],
+      "itemID": 107,
+      "key": "7NR7TBS3",
+      "citekey": "Afonso2011",
+      "citationKey": "Afonso2011",
+      "libraryID": 1
     },
     {
-      "attachments": [],
-      "collections": [],
-      "dateAdded": "2019-10-29T13:22:25Z",
-      "dateModified": "2019-10-29T13:22:25Z",
-      "itemID": 111,
+      "version": 0,
       "itemType": "note",
-      "key": "T4YU9WGM",
-      "note": "Import errors found: <ul><li>Unexpected reference type &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>",
-      "notes": [],
-      "relations": [],
+      "note": "Import errors found: <ul><li>Don&#39;t know what Zotero type to make of &#39;talk&#39; for @Afonso2011, importing as journalArticle</li></ul>",
       "tags": [
         {
           "tag": "#Better BibTeX import error",
           "type": 1
         }
       ],
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/T4YU9WGM",
-      "version": 0
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-15T11:37:01Z",
+      "dateModified": "2019-12-15T11:37:01Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/IDW7PLL6",
+      "itemID": 110,
+      "key": "IDW7PLL6",
+      "attachments": [],
+      "notes": []
     }
   ]
 }

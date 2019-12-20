@@ -1,0 +1,373 @@
+{
+  "filename": "auto-ke.json",
+  "name": "Kenya",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "KE": "Kenya",
+        "KE:ELDORET": "Eldoret",
+        "KE:ELDORET:BOMET": "Bomet",
+        "KE:ELDORET:ELDORET": "Eldoret",
+        "KE:ELDORET:KABARNET": "Kabarnet",
+        "KE:ELDORET:KAPENGURIA": "Kapenguria",
+        "KE:ELDORET:TURKANA": "Turkana",
+        "KE:KISUMU": "Kisumu",
+        "KE:KISUMU:BUNGOMA": "Bungoma",
+        "KE:KISUMU:BUSIA": "Busia",
+        "KE:KISUMU:HOMABAY": "Homabay",
+        "KE:KISUMU:KAKAMEGA": "Kakamega",
+        "KE:KISUMU:KERICHO": "Kericho",
+        "KE:KISUMU:KISII": "Kisii",
+        "KE:KISUMU:KISUMU": "Kisumu",
+        "KE:KISUMU:KITALE": "Kitale",
+        "KE:KISUMU:MIGORI": "Migori",
+        "KE:KISUMU:NYAMIRA": "Nyamira",
+        "KE:KISUMU:SIAYA": "Siaya",
+        "KE:MOMBASA": "Mombasa",
+        "KE:MOMBASA:GARSEN": "Garsen",
+        "KE:MOMBASA:KWALE": "Kwale",
+        "KE:MOMBASA:MALINDI": "Malindi",
+        "KE:MOMBASA:MOMBASA": "Mombasa",
+        "KE:MOMBASA:VOI": "Voi",
+        "KE:NAIROBI": "Nairobi",
+        "KE:NAIROBI:GARISSA": "Garissa",
+        "KE:NAIROBI:KAJIADO": "Kajiado",
+        "KE:NAIROBI:KIAMBU": "Kiambu",
+        "KE:NAIROBI:KITUI": "Kitui",
+        "KE:NAIROBI:MACHAKOS": "Machakos",
+        "KE:NAIROBI:MAKUENI": "Makueni",
+        "KE:NAIROBI:NAIROBI": "Nairobi",
+        "KE:NAKURU": "Nakuru",
+        "KE:NAKURU:NAIVASHA": "Naivasha",
+        "KE:NAKURU:NAKURU": "Nakuru",
+        "KE:NAKURU:NAROK": "Narok",
+        "KE:NYERI": "Nyeri",
+        "KE:NYERI:CHUKA": "Chuka",
+        "KE:NYERI:EMBU": "Embu",
+        "KE:NYERI:KERUGOYA": "Kerugoya",
+        "KE:NYERI:MARSABIT": "Marsabit",
+        "KE:NYERI:MERU": "Meru",
+        "KE:NYERI:MURANG.A": "Murang’a",
+        "KE:NYERI:NANYUKI": "Nanyuki",
+        "KE:NYERI:NYAHURURU": "Nyahururu",
+        "KE:NYERI:NYERI": "Nyeri"
+      }
+    },
+    "ke": {
+      "institution-part": {
+        "sc": "Supreme Court"
+      }
+    },
+    "ke:eldoret": {
+      "institution-part": {
+        "ca": "Ct. App. Eldoret"
+      }
+    },
+    "ke:eldoret:bomet": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Bomet",
+        "elrc": "Emp. & Lab. Rel. Ct. Bomet",
+        "hc": "High Ct. Bomet"
+      }
+    },
+    "ke:eldoret:eldoret": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Eldoret",
+        "elrc": "Emp. & Lab. Rel. Ct. Eldoret",
+        "hc": "High Ct. Eldoret"
+      }
+    },
+    "ke:eldoret:kabarnet": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kabarnet",
+        "elrc": "Emp. & Lab. Rel. Ct. Kabarnet",
+        "hc": "High Ct. Kabarnet"
+      }
+    },
+    "ke:eldoret:kapenguria": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kapenguria",
+        "elrc": "Emp. & Lab. Rel. Ct. Kapenguria",
+        "hc": "High Ct. Kapenguria"
+      }
+    },
+    "ke:eldoret:turkana": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Turkana",
+        "elrc": "Emp. & Lab. Rel. Ct. Turkana",
+        "hc": "High Ct. Turkana"
+      }
+    },
+    "ke:kisumu": {
+      "institution-part": {
+        "ca": "Ct. App. Kisumu"
+      }
+    },
+    "ke:kisumu:bungoma": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Bungoma",
+        "elrc": "Emp. & Lab. Rel. Ct. Bungoma",
+        "hc": "High Ct. Bungoma"
+      }
+    },
+    "ke:kisumu:busia": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Busia",
+        "elrc": "Emp. & Lab. Rel. Ct. Busia",
+        "hc": "High Ct. Busia"
+      }
+    },
+    "ke:kisumu:homabay": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Homabay",
+        "elrc": "Emp. & Lab. Rel. Ct. Homabay",
+        "hc": "High Ct. Homabay"
+      }
+    },
+    "ke:kisumu:kakamega": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kakamega",
+        "elrc": "Emp. & Lab. Rel. Ct. Kakamega",
+        "hc": "High Ct. Kakamega"
+      }
+    },
+    "ke:kisumu:kericho": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kericho",
+        "elrc": "Emp. & Lab. Rel. Ct. Kericho",
+        "hc": "High Ct. Kericho"
+      }
+    },
+    "ke:kisumu:kisii": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kisii",
+        "elrc": "Emp. & Lab. Rel. Ct. Kisii",
+        "hc": "High Ct. Kisii"
+      }
+    },
+    "ke:kisumu:kisumu": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kisumu",
+        "elrc": "Emp. & Lab. Rel. Ct. Kisumu",
+        "hc": "High Ct. Kisumu"
+      }
+    },
+    "ke:kisumu:kitale": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kitale",
+        "elrc": "Emp. & Lab. Rel. Ct. Kitale",
+        "hc": "High Ct. Kitale"
+      }
+    },
+    "ke:kisumu:migori": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Migori",
+        "elrc": "Emp. & Lab. Rel. Ct. Migori",
+        "hc": "High Ct. Migori"
+      }
+    },
+    "ke:kisumu:nyamira": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nyamira",
+        "elrc": "Emp. & Lab. Rel. Ct. Nyamira",
+        "hc": "High Ct. Nyamira"
+      }
+    },
+    "ke:kisumu:siaya": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Siaya",
+        "elrc": "Emp. & Lab. Rel. Ct. Siaya",
+        "hc": "High Ct. Siaya"
+      }
+    },
+    "ke:mombasa": {
+      "institution-part": {
+        "ca": "Ct. App. Mombasa"
+      }
+    },
+    "ke:mombasa:garsen": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Garsen",
+        "elrc": "Emp. & Lab. Rel. Ct. Garsen",
+        "hc": "High Ct. Garsen"
+      }
+    },
+    "ke:mombasa:kwale": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kwale",
+        "elrc": "Emp. & Lab. Rel. Ct. Kwale",
+        "hc": "High Ct. Kwale"
+      }
+    },
+    "ke:mombasa:malindi": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Malindi",
+        "elrc": "Emp. & Lab. Rel. Ct. Malindi",
+        "hc": "High Ct. Malindi"
+      }
+    },
+    "ke:mombasa:mombasa": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Mombasa",
+        "elrc": "Emp. & Lab. Rel. Ct. Mombasa",
+        "hc": "High Ct. Mombasa"
+      }
+    },
+    "ke:mombasa:voi": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Voi",
+        "elrc": "Emp. & Lab. Rel. Ct. Voi",
+        "hc": "High Ct. Voi"
+      }
+    },
+    "ke:nairobi": {
+      "institution-part": {
+        "ca": "Ct. App. Nairobi"
+      }
+    },
+    "ke:nairobi:garissa": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Garissa",
+        "elrc": "Emp. & Lab. Rel. Ct. Garissa",
+        "hc": "High Ct. Garissa"
+      }
+    },
+    "ke:nairobi:kajiado": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kajiado",
+        "elrc": "Emp. & Lab. Rel. Ct. Kajiado",
+        "hc": "High Ct. Kajiado"
+      }
+    },
+    "ke:nairobi:kiambu": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kiambu",
+        "elrc": "Emp. & Lab. Rel. Ct. Kiambu",
+        "hc": "High Ct. Kiambu"
+      }
+    },
+    "ke:nairobi:kitui": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kitui",
+        "elrc": "Emp. & Lab. Rel. Ct. Kitui",
+        "hc": "High Ct. Kitui"
+      }
+    },
+    "ke:nairobi:machakos": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Machakos",
+        "elrc": "Emp. & Lab. Rel. Ct. Machakos",
+        "hc": "High Ct. Machakos"
+      }
+    },
+    "ke:nairobi:makueni": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Makueni",
+        "elrc": "Emp. & Lab. Rel. Ct. Makueni",
+        "hc": "High Ct. Makueni"
+      }
+    },
+    "ke:nairobi:nairobi": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nairobi",
+        "elrc": "Emp. & Lab. Rel. Ct. Nairobi",
+        "hc": "High Ct. Nairobi"
+      }
+    },
+    "ke:nakuru": {
+      "institution-part": {
+        "ca": "Ct. App. Nakuru"
+      }
+    },
+    "ke:nakuru:naivasha": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Naivasha",
+        "elrc": "Emp. & Lab. Rel. Ct. Naivasha",
+        "hc": "High Ct. Naivasha"
+      }
+    },
+    "ke:nakuru:nakuru": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nakuru",
+        "elrc": "Emp. & Lab. Rel. Ct. Nakuru",
+        "hc": "High Ct. Nakuru"
+      }
+    },
+    "ke:nakuru:narok": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Narok",
+        "elrc": "Emp. & Lab. Rel. Ct. Narok",
+        "hc": "High Ct. Narok"
+      }
+    },
+    "ke:nyeri": {
+      "institution-part": {
+        "ca": "Ct. App. Nyeri"
+      }
+    },
+    "ke:nyeri:chuka": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Chuka",
+        "elrc": "Emp. & Lab. Rel. Ct. Chuka",
+        "hc": "High Ct. Chuka"
+      }
+    },
+    "ke:nyeri:embu": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Embu",
+        "elrc": "Emp. & Lab. Rel. Ct. Embu",
+        "hc": "High Ct. Embu"
+      }
+    },
+    "ke:nyeri:kerugoya": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Kerugoya",
+        "elrc": "Emp. & Lab. Rel. Ct. Kerugoya",
+        "hc": "High Ct. Kerugoya"
+      }
+    },
+    "ke:nyeri:marsabit": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Marsabit",
+        "elrc": "Emp. & Lab. Rel. Ct. Marsabit",
+        "hc": "High Ct. Marsabit"
+      }
+    },
+    "ke:nyeri:meru": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Meru",
+        "elrc": "Emp. & Lab. Rel. Ct. Meru",
+        "hc": "High Ct. Meru"
+      }
+    },
+    "ke:nyeri:murang.a": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Murang’a",
+        "elrc": "Emp. & Lab. Rel. Ct. Murang’a",
+        "hc": "High Ct. Murang’a"
+      }
+    },
+    "ke:nyeri:nanyuki": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nanyuki",
+        "elrc": "Emp. & Lab. Rel. Ct. Nanyuki",
+        "hc": "High Ct. Nanyuki"
+      }
+    },
+    "ke:nyeri:nyahururu": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nyahururu",
+        "elrc": "Emp. & Lab. Rel. Ct. Nyahururu",
+        "hc": "High Ct. Nyahururu"
+      }
+    },
+    "ke:nyeri:nyeri": {
+      "institution-part": {
+        "elc": "Env. & Land Ct. Nyeri",
+        "elrc": "Emp. & Lab. Rel. Ct. Nyeri",
+        "hc": "High Ct. Nyeri"
+      }
+    }
+  }
+}

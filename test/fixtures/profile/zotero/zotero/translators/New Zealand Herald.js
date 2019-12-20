@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-22 10:37:29"
+	"lastUpdated": "2019-06-13 22:55:12"
 }
 
 /*
@@ -36,16 +36,14 @@
 */
 
 
-// attr()/text() v2
-function attr(docOrElem,selector,attr,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.getAttribute(attr):null}function text(docOrElem,selector,index){var elem=index?docOrElem.querySelectorAll(selector).item(index):docOrElem.querySelector(selector);return elem?elem.textContent:null}
-
-
 function detectWeb(doc, url) {
-	if (url.indexOf("/search")>-1 && getSearchResults(doc, true)){
+	if (url.includes("/search") && getSearchResults(doc, true)) {
 		return "multiple";
-	} else if (url.indexOf("/news/article.cfm")>-1){
+	}
+	else if (url.includes("/news/article.cfm")) {
 		return "newspaperArticle";
 	}
+	return false;
 }
 
 
@@ -53,7 +51,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = doc.querySelectorAll('article.result-item a[href*="/news/article.cfm"]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -68,16 +66,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -87,17 +85,17 @@ function scrape(doc, url) {
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
 		item.ISSN = "1170-0777";
-		//EM looks at byline for author which does not work well here;
-		//thus we delete this and do it here again properly
+		// EM looks at byline for author which does not work well here;
+		// thus we delete this and do it here again properly
 		item.creators = [];
 		var author = text(doc, '.byline.has-author .author');
 		if (!author) {
 			var firstElement = text(doc, '#article-content p.element');
-			if (firstElement && firstElement.indexOf('By')>-1) {
+			if (firstElement && firstElement.includes('By')) {
 				author = firstElement;
 			}
 		}
@@ -111,10 +109,10 @@ function scrape(doc, url) {
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = "newspaperArticle";
 		trans.addCustomFields({
-			'language': 'language',
+			language: 'language',
 			'article:section': 'section'
 		});
 		trans.doWeb(doc, url);

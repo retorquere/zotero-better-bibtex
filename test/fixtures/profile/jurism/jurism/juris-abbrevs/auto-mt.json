@@ -1,0 +1,15 @@
+{
+  "filename": "auto-mt.json",
+  "name": "Malta",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MT": "Malta"
+      }
+    },
+    "mt": {
+      "institution-part": {}
+    }
+  }
+}

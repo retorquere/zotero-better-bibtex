@@ -1,0 +1,17 @@
+{
+  "filename": "auto-eea.int.json",
+  "name": "European Economic Area",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "EEA.INT": "European Economic Area"
+      }
+    },
+    "eea.int": {
+      "institution-part": {
+        "efta": "Court Of Justice of the European Free Trade Agreement"
+      }
+    }
+  }
+}

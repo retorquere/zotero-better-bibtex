@@ -1,0 +1,21 @@
+{
+  "filename": "auto-arb.cls.json",
+  "name": "Arbitrations",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "ARB.CLS": "Arbitrations"
+      }
+    },
+    "arb.cls": {
+      "institution-part": {
+        "cietac": "China International Economic and Trade Arbitration Commission",
+        "crcica": "Cairo Regional Centre for International Commercial Arbitration",
+        "icc": "International Chamber of Commerce",
+        "lcia": "London Court of International Arbitration",
+        "scc": "Stockholm Chamber of Commerce"
+      }
+    }
+  }
+}

@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-05-23 21:42:48"
+	"lastUpdated": "2019-06-23 22:38:11"
 }
 
 /*
@@ -36,20 +36,23 @@
 */
 
 function detectWeb(doc, url) {
-	if (url.indexOf('blogs.wsj.com')>-1) {
+	if (url.includes('blogs.wsj.com')) {
 		return "blogPost";
-	} else if (url.indexOf('articles')>-1) {
+	}
+	else if (url.includes('articles')) {
 		return "newspaperArticle";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
 	}
+	return false;
 }
 
 function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//h3[contains(@class, "headline")]/a');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = rows[i].href;
 		var title = ZU.trimInternal(rows[i].textContent);
 		if (!href || !title) continue;
@@ -64,16 +67,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
-			}
+			if (!items) return;
+
 			var articles = [];
 			for (var i in items) {
 				articles.push(i);
 			}
 			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -87,18 +90,29 @@ function scrape(doc, url) {
 	translator.setHandler('itemDone', function (obj, item) {
 		item.ISSN = "0099-9660";
 		item.language = "en-US";
-		if (type=="newspaperArticle") {
+		if (type == "newspaperArticle") {
 			item.publicationTitle = "Wall Street Journal";
 		}
-		//Multiple authors are not seperated into multiple metadata fields
-		//and will therefore be extracted wrongly into one author. We 
-		//correct this by using the JSON-LD data.
+		// Multiple authors are not seperated into multiple metadata fields
+		// and will therefore be extracted wrongly into one author. We
+		// correct this by using the JSON-LD data.
 		var jsonld = ZU.xpathText(doc, '//script[@type="application/ld+json"]');
 		if (jsonld) {
+			var firstContext = jsonld.indexOf("@context");
+			if (firstContext > 0) {
+				var secondContext = jsonld.indexOf("@context", firstContext + 1);
+				// sometimes there is a second context at the end, which makes the
+				// json non-valid, therefore we delete that before
+				// e.g. https://www.wsj.com/articles/the-turnabout-on-religious-freedom-11561155218
+				if (secondContext > -1) {
+					Z.debug("Delete second context from JSON data");
+					jsonld = jsonld.substr(0, secondContext - 1).replace(/[, {"]*$/, '');
+				}
+			}
 			var data = JSON.parse(jsonld);
 			if (data.creator && data.creator.length) {
 				item.creators = [];
-				for (var i=0; i<data.creator.length; i++) {
+				for (var i = 0; i < data.creator.length; i++) {
 					item.creators.push(ZU.cleanAuthor(data.creator[i], "author"));
 				}
 			}
@@ -106,14 +120,15 @@ function scrape(doc, url) {
 		item.complete();
 	});
 	
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = type;
 		trans.addCustomFields({
- 			"article.published" : "date"
- 		});
+			"article.published": "date"
+		});
 		trans.doWeb(doc, url);
 	});
 }
+
 /** BEGIN TEST CASES **/
 var testCases = [
 	{
@@ -283,22 +298,49 @@ var testCases = [
 				"libraryCatalog": "www.wsj.com",
 				"publicationTitle": "Wall Street Journal",
 				"section": "World",
-				"url": "http://www.wsj.com/articles/american-detained-in-north-korea-to-face-trial-next-sunday-1410053845",
+				"url": "https://www.wsj.com/articles/american-detained-in-north-korea-to-face-trial-next-sunday-1410053845",
 				"attachments": [
 					{
 						"title": "Snapshot"
 					}
 				],
 				"tags": [
-					"Matthew Miller",
-					"american detained in north korea",
-					"american in north korea",
-					"courts",
-					"crime",
-					"general news",
-					"matthew miller",
-					"north korea",
-					"political"
+					{
+						"tag": "Matthew Miller"
+					},
+					{
+						"tag": "american detained in north korea"
+					},
+					{
+						"tag": "american in north korea"
+					},
+					{
+						"tag": "courts"
+					},
+					{
+						"tag": "crime"
+					},
+					{
+						"tag": "general news"
+					},
+					{
+						"tag": "matthew miller"
+					},
+					{
+						"tag": "north korea"
+					},
+					{
+						"tag": "oasn"
+					},
+					{
+						"tag": "onew"
+					},
+					{
+						"tag": "political"
+					},
+					{
+						"tag": "world news"
+					}
 				],
 				"notes": [],
 				"seeAlso": []

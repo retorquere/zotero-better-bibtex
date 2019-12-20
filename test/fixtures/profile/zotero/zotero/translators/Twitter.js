@@ -1,7 +1,7 @@
 {
 	"translatorID": "31659710-d04e-45d0-84ba-8e3f5afc4a54",
 	"label": "Twitter",
-	"creator": "Avram Lyon, Philipp Zumstein",
+	"creator": "Avram Lyon, Philipp Zumstein, Tomas Fiers",
 	"target": "^https?://([^/]+\\.)?twitter\\.com/",
 	"minVersion": "4.0",
 	"maxVersion": "",
@@ -9,10 +9,12 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-05-11 23:28:19"
+	"lastUpdated": "2019-11-10 14:10:48"
 }
 
 /*
+	***** BEGIN LICENSE BLOCK *****
+
    Twitter Translator
    Copyright (C) 2011 Avram Lyon, ajlyon@gmail.com
 
@@ -28,17 +30,23 @@
 
    You should have received a copy of the GNU General Public License
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+   	***** END LICENSE BLOCK *****
  */
 
 
-function detectWeb(doc, url) {
-	if(doc.getElementById('page-container')) {
-		Z.monitorDOMChanges(doc.getElementById('page-container'), {childList: true});
+function detectWeb(doc, _url) {
+	if (doc.getElementById('page-container')) {
+		Z.monitorDOMChanges(doc.getElementById('page-container'), { childList: true });
 	}
 	if (ZU.xpathText(doc, '//div[contains(@class,"permalink-tweet-container")]')) {
 		return "blogPost";
-	} else if (getSearchResults(doc, true)) {
+	}
+	else if (getSearchResults(doc, true)) {
 		return "multiple";
+	}
+	else {
+		return false;
 	}
 }
 
@@ -47,7 +55,7 @@ function getSearchResults(doc, checkOnly) {
 	var items = {};
 	var found = false;
 	var rows = ZU.xpath(doc, '//div[contains(@class, "content")]');
-	for (var i=0; i<rows.length; i++) {
+	for (var i = 0; i < rows.length; i++) {
 		var href = ZU.xpathText(rows[i], './/a[contains(@class, "js-permalink") and contains(@href, "/status/")]/@href');
 		var title = ZU.xpathText(rows[i], './div[contains(@class, "js-tweet-text-container")]');
 		if (!href || !title) continue;
@@ -62,16 +70,16 @@ function getSearchResults(doc, checkOnly) {
 function doWeb(doc, url) {
 	if (detectWeb(doc, url) == "multiple") {
 		Zotero.selectItems(getSearchResults(doc, false), function (items) {
-			if (!items) {
-				return true;
+			if (items) {
+				var articles = [];
+				for (var i in items) {
+					articles.push(i);
+				}
+				ZU.processDocuments(articles, scrape);
 			}
-			var articles = [];
-			for (var i in items) {
-				articles.push(i);
-			}
-			ZU.processDocuments(articles, scrape);
 		});
-	} else {
+	}
+	else {
 		scrape(doc, url);
 	}
 }
@@ -91,22 +99,25 @@ function scrape(doc, url) {
 	if (date) {
 		// e.g. 10:22 AM - 1 Feb 2018
 		var m = date.split('-');
+		// Support localization where am/pm are lowercase
+		m[0] = m[0].toUpperCase();
 		if (m.length == 2) {
 			// times with AM
 			if (m[0].includes("AM")) {
 				m[0] = m[0].replace("AM", "").trim();
-				if (m[0].indexOf(":")==1) m[0] = "0" + m[0];
+				if (m[0].indexOf(":") == 1) m[0] = "0" + m[0];
 				m[0] = m[0].replace("12:", "00:");
 			}
 			// times with PM
 			if (m[0].includes("PM")) {
-				m[0] = m[0].replace("PM", "").replace(/\d+:/, function(matched) {
-					return (parseInt(matched)+12) + ":";
+				m[0] = m[0].replace("PM", "").replace(/\d+:/, function (matched) {
+					return (parseInt(matched) + 12) + ":";
 				}).trim();
 				m[0] = m[0].replace("24:", "12:");
 			}
 			item.date = ZU.strToISO(m[1]) + "T" + m[0];
-		} else {
+		}
+		else {
 			item.date = date;
 		}
 	}
@@ -119,7 +130,7 @@ function scrape(doc, url) {
 		title: "Snapshot"
 	});
 	var urls = ZU.xpath(doc, '//div[contains(@class,"permalink-tweet-container")]//a[contains(@class, "twitter-timeline-link")]/@title');
-	for (var i=0; i<urls.length; i++) {
+	for (var i = 0; i < urls.length; i++) {
 		item.attachments.push({
 			url: urls[i].textContent,
 			title: urls[i].textContent,

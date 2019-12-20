@@ -20,7 +20,7 @@
     <category citation-format="note"/>
     <category field="generic-base"/>
     <summary>MHRA format with full notes and bibliography</summary>
-    <updated>2015-03-02T23:29:34+00:00</updated>
+    <updated>2019-04-27T18:37:59+00:00</updated>
     <rights license="http://creativecommons.org/licenses/by-sa/3.0/">This work is licensed under a Creative Commons Attribution-ShareAlike 3.0 License</rights>
   </info>
   <locale xml:lang="en">
@@ -177,15 +177,10 @@
   <macro name="locators-note">
     <choose>
       <if type="article-journal">
-        <choose>
-          <if variable="volume">
-            <!--testing for volume because issues w/o volume number have different format-->
-            <group delimiter=".">
-              <text variable="volume"/>
-              <text variable="issue"/>
-            </group>
-          </if>
-        </choose>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">
@@ -201,7 +196,10 @@
   <macro name="volume">
     <choose>
       <if type="article-journal">
-        <text variable="volume"/>
+        <group delimiter=".">
+          <text variable="volume"/>
+          <text variable="issue"/>
+        </group>
       </if>
       <else-if type="bill book chapter graphic legal_case legislation motion_picture paper-conference report song" match="any">
         <group delimiter=", ">
@@ -345,7 +343,7 @@
   </macro>
   <macro name="issued">
     <choose>
-      <if type="graphic report article-newspaper article-magazine personal_communication" match="any">
+      <if type="report article-newspaper article-magazine personal_communication" match="any">
         <date variable="issued">
           <date-part name="day" suffix=" "/>
           <date-part name="month" suffix=" "/>
@@ -432,6 +430,16 @@
       </else>
     </choose>
   </macro>
+  <macro name="artwork">
+    <choose>
+      <if type="graphic" match="any">
+        <group delimiter=", " prefix=", ">
+          <text variable="medium"/>
+          <text variable="dimensions"/>
+        </group>
+      </if>
+    </choose>
+  </macro>
   <citation et-al-min="4" et-al-use-first="1" disambiguate-add-names="true" disambiguate-add-givenname="true">
     <layout suffix="." delimiter="; ">
       <choose>
@@ -479,6 +487,7 @@
       </group>
       <text macro="issue-note"/>
       <text macro="locators-specific-note" prefix=", "/>
+      <text macro="artwork" prefix=", "/>
       <text macro="locators-newspaper" prefix=", "/>
       <text macro="pages"/>
       <text macro="access-note"/>

@@ -1,0 +1,21 @@
+{
+  "filename": "abbreviations-empty.json", 
+  "name": "Abbreviations: EMPTY (importing with \"replace local list\" disables abbreviations)", 
+  "version": 1, 
+  "xdata": {
+    "default": {
+      "classic": {}, 
+      "collection-title": {}, 
+      "container-phrase": {}, 
+      "container-title": {}, 
+      "hereinafter": {}, 
+      "institution-entire": {}, 
+      "institution-part": {}, 
+      "nickname": {}, 
+      "number": {}, 
+      "place": {}, 
+      "title": {}, 
+      "title-phrase": {}
+    }
+  }
+}

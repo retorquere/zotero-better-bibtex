@@ -1,0 +1,1263 @@
+{
+  "filename": "auto-be-francais.json",
+  "name": "België",
+  "version": "2019-08-19 06:21:43 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "BE": "Belgium",
+        "BE:ANTWERPEN": "Antwerp",
+        "BE:ANTWERPEN:ANTWERPEN": "Antwerp",
+        "BE:ANTWERPEN:ANTWERPEN:ARENDONK": "Arendonk",
+        "BE:ANTWERPEN:ANTWERPEN:BOOM": "Boom",
+        "BE:ANTWERPEN:ANTWERPEN:BRASSCHAAT": "Brasschaat",
+        "BE:ANTWERPEN:ANTWERPEN:GEEL": "Geel",
+        "BE:ANTWERPEN:ANTWERPEN:HEIST.OP.DEN.BERG": "Heist-op-den-Berg",
+        "BE:ANTWERPEN:ANTWERPEN:HERENTALS": "Herentals",
+        "BE:ANTWERPEN:ANTWERPEN:HOOGSTRATEN": "Hoogstraten",
+        "BE:ANTWERPEN:ANTWERPEN:KAPELLEN": "Kapellen",
+        "BE:ANTWERPEN:ANTWERPEN:KONTICH": "Kontich",
+        "BE:ANTWERPEN:ANTWERPEN:LIER": "Lier",
+        "BE:ANTWERPEN:ANTWERPEN:MECHELEN": "Mechelen",
+        "BE:ANTWERPEN:ANTWERPEN:MOL": "Mol",
+        "BE:ANTWERPEN:ANTWERPEN:SCHILDE": "Schilde",
+        "BE:ANTWERPEN:ANTWERPEN:TURNHOUT": "Turnhout",
+        "BE:ANTWERPEN:ANTWERPEN:WESTERLO": "Westerlo",
+        "BE:ANTWERPEN:ANTWERPEN:WILLEBROEK": "Willebroek",
+        "BE:ANTWERPEN:ANTWERPEN:ZANDHOVEN": "Zandhoven",
+        "BE:ANTWERPEN:LIMBURG": "Limburg",
+        "BE:ANTWERPEN:LIMBURG:BERINGEN": "Beringen",
+        "BE:ANTWERPEN:LIMBURG:BILZEN": "Bilzen",
+        "BE:ANTWERPEN:LIMBURG:BORGLOON": "Borgloon",
+        "BE:ANTWERPEN:LIMBURG:BREE": "Bree",
+        "BE:ANTWERPEN:LIMBURG:GENK": "Genk",
+        "BE:ANTWERPEN:LIMBURG:HASSELT": "Hasselt",
+        "BE:ANTWERPEN:LIMBURG:HOUTHALEN.HELCHTEREN": "Houthalen-Helchteren",
+        "BE:ANTWERPEN:LIMBURG:LIMBURG.AUBEL": "Limburg-Aubel",
+        "BE:ANTWERPEN:LIMBURG:MAASEIK": "Maaseik",
+        "BE:ANTWERPEN:LIMBURG:MAASMECHELEN": "Maasmechelen",
+        "BE:ANTWERPEN:LIMBURG:NEERPELT.LOMMEL": "Neerpelt-Lommel",
+        "BE:ANTWERPEN:LIMBURG:SINT.TRUIDEN": "Sint-Truiden",
+        "BE:ANTWERPEN:LIMBURG:TONGEREN": "Tongeren",
+        "BE:ANTWERPEN:LIMBURG:TONGEREN.VOEREN": "Tongeren-Voeren",
+        "BE:BERGEN": "Mons",
+        "BE:BERGEN:HENEGOUWEN": "Hainault",
+        "BE:BERGEN:HENEGOUWEN:AAT.LESSEN": "Aat-Lessen",
+        "BE:BERGEN:HENEGOUWEN:BEAUMONT.CHIMAY.MERBES.LE.CHATEAU": "Beaumont-Chimay-Merbes-le-Château",
+        "BE:BERGEN:HENEGOUWEN:BERGEN": "Bergen",
+        "BE:BERGEN:HENEGOUWEN:BINCHE": "Binche",
+        "BE:BERGEN:HENEGOUWEN:BOUSSU": "Boussu",
+        "BE:BERGEN:HENEGOUWEN:CHARLEROI": "Charleroi",
+        "BE:BERGEN:HENEGOUWEN:CHATELET": "Châtelet",
+        "BE:BERGEN:HENEGOUWEN:DOORNIK": "Doornik",
+        "BE:BERGEN:HENEGOUWEN:DOUR.COLFONTAINE": "Dour-Colfontaine",
+        "BE:BERGEN:HENEGOUWEN:ENGHIEN.LENS": "Enghien-Lens",
+        "BE:BERGEN:HENEGOUWEN:FONTAINE.L.EVEQUE": "Fontaine-l'Evêque",
+        "BE:BERGEN:HENEGOUWEN:LA.LOUVIÈRE": "La Louvière",
+        "BE:BERGEN:HENEGOUWEN:MOESKROEN": "Moeskroen",
+        "BE:BERGEN:HENEGOUWEN:MOESKROEN.KOMEN.WAASTEN": "Moeskroen-Komen-Waasten",
+        "BE:BERGEN:HENEGOUWEN:PERUWELZ.LEUZE.EN.HAINAUT": "Péruwelz-Leuze en Hainaut",
+        "BE:BERGEN:HENEGOUWEN:SENEFFE": "Seneffe",
+        "BE:BERGEN:HENEGOUWEN:THUIN": "Thuin",
+        "BE:BERGEN:HENEGOUWEN:ZINNIK": "Zinnik",
+        "BE:BRUSSEL": "Brussels",
+        "BE:BRUSSEL:BRUSSEL": "Brussels",
+        "BE:BRUSSEL:BRUSSEL:ANDERLECHT": "Anderlecht",
+        "BE:BRUSSEL:BRUSSEL:ELSENE": "Elsene",
+        "BE:BRUSSEL:BRUSSEL:ETTERBEEK": "Etterbeek",
+        "BE:BRUSSEL:BRUSSEL:JETTE": "Jette",
+        "BE:BRUSSEL:BRUSSEL:OUDERGHEM": "Ouderghem",
+        "BE:BRUSSEL:BRUSSEL:SCHAARBEEK": "Schaarbeek",
+        "BE:BRUSSEL:BRUSSEL:SINT.GILLIS": "Sint-Gillis",
+        "BE:BRUSSEL:BRUSSEL:SINT.JANS.MOLENBEEK": "Sint-Jans-Molenbeek",
+        "BE:BRUSSEL:BRUSSEL:SINT.JOOST.TEN.NODE": "Sint-Joost-ten-Node",
+        "BE:BRUSSEL:BRUSSEL:SINT.PIETERS.WOLUWE": "Sint-Pieters-Woluwe",
+        "BE:BRUSSEL:BRUSSEL:UKKEL": "Ukkel",
+        "BE:BRUSSEL:BRUSSEL:VORST": "Vorst",
+        "BE:BRUSSEL:VLAAMS.BRABANT": "Flemish-Brabant",
+        "BE:BRUSSEL:VLAAMS.BRABANT:AARSCHOT": "Aarschot",
+        "BE:BRUSSEL:VLAAMS.BRABANT:ASSE": "Asse",
+        "BE:BRUSSEL:VLAAMS.BRABANT:DIEST": "Diest",
+        "BE:BRUSSEL:VLAAMS.BRABANT:GRIMBERGEN": "Grimbergen",
+        "BE:BRUSSEL:VLAAMS.BRABANT:HAACHT": "Haacht",
+        "BE:BRUSSEL:VLAAMS.BRABANT:HALLE": "Halle",
+        "BE:BRUSSEL:VLAAMS.BRABANT:HERNE.SINT.PIETERS.LEEUW": "Herne-Sint-Pieters-Leeuw",
+        "BE:BRUSSEL:VLAAMS.BRABANT:KRAAINEM.SINT.GENESIUS.RODE": "Kraainem-Sint-Genesius-Rode",
+        "BE:BRUSSEL:VLAAMS.BRABANT:LANDEN.ZOUTLEEUW": "Landen-Zoutleeuw",
+        "BE:BRUSSEL:VLAAMS.BRABANT:LENNIK": "Lennik",
+        "BE:BRUSSEL:VLAAMS.BRABANT:LEUVEN": "Leuven",
+        "BE:BRUSSEL:VLAAMS.BRABANT:MEISE": "Meise",
+        "BE:BRUSSEL:VLAAMS.BRABANT:OVERIJSE.ZAVENTEM": "Overijse-Zaventem",
+        "BE:BRUSSEL:VLAAMS.BRABANT:TIENEN": "Tienen",
+        "BE:BRUSSEL:VLAAMS.BRABANT:VILVOORDE": "Vilvoorde",
+        "BE:BRUSSEL:WAALS.BRABANT": "Waals-Brabant",
+        "BE:BRUSSEL:WAALS.BRABANT:EIGENBRAKEL": "Eigenbrakel",
+        "BE:BRUSSEL:WAALS.BRABANT:GELDENAKEN.PERWIJS": "Geldenaken-Perwijs",
+        "BE:BRUSSEL:WAALS.BRABANT:NIJVEL": "Nijvel",
+        "BE:BRUSSEL:WAALS.BRABANT:TUBEKE": "Tubeke",
+        "BE:BRUSSEL:WAALS.BRABANT:WAVER": "Waver",
+        "BE:GENT": "Ghent",
+        "BE:GENT:OOST.VLAANDEREN": "East Flanders",
+        "BE:GENT:OOST.VLAANDEREN:AALST": "Aalst",
+        "BE:GENT:OOST.VLAANDEREN:BEVEREN": "Beveren",
+        "BE:GENT:OOST.VLAANDEREN:DEINZE": "Deinze",
+        "BE:GENT:OOST.VLAANDEREN:DENDERMONDE": "Dendermonde",
+        "BE:GENT:OOST.VLAANDEREN:DENDERMONDE.HAMME": "Dendermonde-Hamme",
+        "BE:GENT:OOST.VLAANDEREN:EEKLO": "Eeklo",
+        "BE:GENT:OOST.VLAANDEREN:GENT": "Ghent",
+        "BE:GENT:OOST.VLAANDEREN:GERAARDSBERGEN.BRAKEL": "Geraardsbergen-Brakel",
+        "BE:GENT:OOST.VLAANDEREN:LOKEREN": "Lokeren",
+        "BE:GENT:OOST.VLAANDEREN:MERELBEKE": "Merelbeke",
+        "BE:GENT:OOST.VLAANDEREN:NINOVE": "Ninove",
+        "BE:GENT:OOST.VLAANDEREN:OUDENAARDE": "Oudenaarde",
+        "BE:GENT:OOST.VLAANDEREN:OUDENAARDE.KRUISHOUTEM": "Oudenaarde-Kruishoutem",
+        "BE:GENT:OOST.VLAANDEREN:RONSE": "Ronse",
+        "BE:GENT:OOST.VLAANDEREN:SINT.NIKLAAS": "Sint-Niklaas",
+        "BE:GENT:OOST.VLAANDEREN:WETTEREN.ZELE": "Wetteren-Zele",
+        "BE:GENT:OOST.VLAANDEREN:ZELZATE": "Zelzate",
+        "BE:GENT:OOST.VLAANDEREN:ZOMERGEM": "Zomergem",
+        "BE:GENT:OOST.VLAANDEREN:ZOTTEGEM.HERZELE": "Zottegem-Herzele",
+        "BE:GENT:WEST.VLAANDEREN": "West Flanders",
+        "BE:GENT:WEST.VLAANDEREN:BRUGGE": "Brugge",
+        "BE:GENT:WEST.VLAANDEREN:DIKSMUIDE": "Diksmuide",
+        "BE:GENT:WEST.VLAANDEREN:HARELBEKE": "Harelbeke",
+        "BE:GENT:WEST.VLAANDEREN:IEPER": "Ieper",
+        "BE:GENT:WEST.VLAANDEREN:IEPER.POPERINGE": "Ieper-Poperinge",
+        "BE:GENT:WEST.VLAANDEREN:IZEGEM": "Izegem",
+        "BE:GENT:WEST.VLAANDEREN:KORTRIJK": "Kortrijk",
+        "BE:GENT:WEST.VLAANDEREN:MENEN": "Menen",
+        "BE:GENT:WEST.VLAANDEREN:OOSTENDE": "Oostende",
+        "BE:GENT:WEST.VLAANDEREN:ROESELARE": "Roeselare",
+        "BE:GENT:WEST.VLAANDEREN:TIELT": "Tielt",
+        "BE:GENT:WEST.VLAANDEREN:TORHOUT": "Torhout",
+        "BE:GENT:WEST.VLAANDEREN:VEURNE": "Veurne",
+        "BE:GENT:WEST.VLAANDEREN:VEURNE.NIEUWPOORT": "Veurne-Nieuwpoort",
+        "BE:GENT:WEST.VLAANDEREN:WAREGEM": "Waregem",
+        "BE:GENT:WEST.VLAANDEREN:WERVIK": "Wervik",
+        "BE:LUIK": "Liege",
+        "BE:LUIK:LUIK": "Liege",
+        "BE:LUIK:LUIK:BORGWORM": "Borgworm",
+        "BE:LUIK:LUIK:EUPEN": "Eupen",
+        "BE:LUIK:LUIK:EUPEN:SANKT.VITH": "Sankt-Vith",
+        "BE:LUIK:LUIK:FLERON": "Fléron",
+        "BE:LUIK:LUIK:GRACE.HOLLOGNE": "Grâce-Hollogne",
+        "BE:LUIK:LUIK:HAMOIR": "Hamoir",
+        "BE:LUIK:LUIK:HERSTAL": "Herstal",
+        "BE:LUIK:LUIK:HOEI": "Hoei",
+        "BE:LUIK:LUIK:HOEI.HANNUIT": "Hoei-Hannuit",
+        "BE:LUIK:LUIK:MALMEDY.SPA.STAVELOT": "Malmédy-Spa-Stavelot",
+        "BE:LUIK:LUIK:SAINT.NICOLAS.LEZ.LIEGE": "Saint-Nicolas-lez-Liège",
+        "BE:LUIK:LUIK:SERAING": "Seraing",
+        "BE:LUIK:LUIK:SPRIMONT": "Sprimont",
+        "BE:LUIK:LUIK:VERVIERS": "Verviers",
+        "BE:LUIK:LUIK:WEZET": "Wezet",
+        "BE:LUIK:LUXUMBURG": "Luxumbourg",
+        "BE:LUIK:LUXUMBURG:AARLEN": "Aarlen",
+        "BE:LUIK:LUXUMBURG:AARLEN.MESSANCY": "Aarlen-Messancy",
+        "BE:LUIK:LUXUMBURG:BASTENAKEN.NEUFCHATEAU": "Bastenaken-Neufchâteau",
+        "BE:LUIK:LUXUMBURG:MARCHE.EN.FAMENNE": "Marche-en-Famenne",
+        "BE:LUIK:LUXUMBURG:MARCHE.EN.FAMENNE.DURBUY": "Marche-en-Famenne-Durbuy",
+        "BE:LUIK:LUXUMBURG:NEUFCHATEAU": "Neufchâteau",
+        "BE:LUIK:LUXUMBURG:SAINT.HUBERT.BOUILLON.PALISEUL": "Saint-Hubert-Bouillon-Paliseul",
+        "BE:LUIK:LUXUMBURG:VIELSALM.LA.ROCHE.EN.ARDENNE.HOUFFALIZE": "Vielsalm-La Roche en Ardenne-Houffalize",
+        "BE:LUIK:LUXUMBURG:VIRTON.FLORENVILLE.ETALLE": "Virton-Florenville-Etalle",
+        "BE:LUIK:NAMEN": "Namen",
+        "BE:LUIK:NAMEN:ANDENNE": "Andenne",
+        "BE:LUIK:NAMEN:BEAURAING.DINANT.GEDINNE": "Beauraing-Dinant-Gedinne",
+        "BE:LUIK:NAMEN:CINEY.ROCHEFORT": "Ciney-Rochefort",
+        "BE:LUIK:NAMEN:DINANT": "Dinant",
+        "BE:LUIK:NAMEN:FOSSES.LA.VILLE": "Fosses-la-Ville",
+        "BE:LUIK:NAMEN:GEMBLOUX.EGHEZEE": "Gembloux-Eghezée",
+        "BE:LUIK:NAMEN:NAMEN": "Namen",
+        "BE:LUIK:NAMEN:PHILIPPEVILLE.COUVIN": "Philippeville-Couvin",
+        "BE:LUIK:NAMEN:WALCOURT.FLORENNES": "Walcourt-Florennes"
+      }
+    },
+    "be": {
+      "institution-part": {
+        "bma": "BMA",
+        "const": "GwH",
+        "cs": "RvS",
+        "educ": "R.Stvb",
+        "electionc": "R.Verkb.",
+        "envc": "MHHC",
+        "mc": "Kr.",
+        "migc": "RvV",
+        "milc": "Mil.Ger.",
+        "permitc": "RvVb",
+        "sc": "Cass."
+      }
+    },
+    "be:antwerpen": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen": {
+      "institution-part": {
+        "coass": "Assisen Anvers",
+        "dc": "Vred. Anvers",
+        "lca": "Arbh. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:arendonk": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:boom": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:brasschaat": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:geel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:heist.op.den.berg": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:herentals": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:hoogstraten": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:kapellen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:kontich": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:lier": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:mechelen": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:mol": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:schilde": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:turnhout": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:westerlo": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:willebroek": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:antwerpen:zandhoven": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg": {
+      "institution-part": {
+        "coass": "Assisen Anvers",
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:beringen": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:bilzen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:borgloon": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:bree": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:genk": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:hasselt": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:houthalen.helchteren": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:limburg.aubel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:maaseik": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:maasmechelen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:neerpelt.lommel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:sint.truiden": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:tongeren": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:antwerpen:limburg:tongeren.voeren": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lca": "Arbh. Anvers"
+      }
+    },
+    "be:bergen:henegouwen": {
+      "institution-part": {
+        "coass": "Assisen Anvers"
+      }
+    },
+    "be:bergen:henegouwen:aat.lessen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:beaumont.chimay.merbes.le.chateau": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:bergen": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:binche": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:boussu": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:charleroi": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:chatelet": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:doornik": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:dour.colfontaine": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:enghien.lens": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:fontaine.l.eveque": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:la.louvière": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:moeskroen": {
+      "institution-part": {
+        "lc": "Arbrb. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:moeskroen.komen.waasten": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:peruwelz.leuze.en.hainaut": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:seneffe": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:thuin": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:bergen:henegouwen:zinnik": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel": {
+      "institution-part": {
+        "cc.fr": "Kh. Brussel (Fr.) Bruxelles",
+        "cc.nl": "Kh. Brussel (Nl.) Bruxelles",
+        "coass": "Assisen Anvers",
+        "dc": "Vred. Anvers",
+        "lc.fr": "Arbrb. Brussel (Fr.) Bruxelles",
+        "lc.nl": "Arbrb. Brussel (Nl.) Bruxelles",
+        "lca": "Arbh. Anvers",
+        "pc.fr": "Pol. Brussel (Fr.) Bruxelles",
+        "pc.nl": "Pol. Brussel (Nl.) Bruxelles"
+      }
+    },
+    "be:brussel:brussel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:anderlecht": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:elsene": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:etterbeek": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:jette": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:ouderghem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:schaarbeek": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:sint.gillis": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:sint.jans.molenbeek": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:sint.joost.ten.node": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:sint.pieters.woluwe": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:ukkel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:brussel:vorst": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant": {
+      "institution-part": {
+        "coass": "Assisen Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:aarschot": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:asse": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:diest": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:grimbergen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:haacht": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:halle": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:herne.sint.pieters.leeuw": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:kraainem.sint.genesius.rode": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:landen.zoutleeuw": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:lennik": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:leuven": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:meise": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:overijse.zaventem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:tienen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:vlaams.brabant:vilvoorde": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:brussel:waals.brabant": {
+      "institution-part": {
+        "cfi": "Rb. Anvers",
+        "coass": "Assisen Anvers"
+      }
+    },
+    "be:brussel:waals.brabant:eigenbrakel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:waals.brabant:geldenaken.perwijs": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:waals.brabant:nijvel": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:brussel:waals.brabant:tubeke": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:brussel:waals.brabant:waver": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent": {
+      "institution-part": {
+        "ca": "Court of Appeal Gand"
+      }
+    },
+    "be:gent:oost.vlaanderen": {
+      "institution-part": {
+        "ca": "Court of Appeal Gand",
+        "coass": "Assisen Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:aalst": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:beveren": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:deinze": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:dendermonde": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:dendermonde.hamme": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:eeklo": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:gent": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:geraardsbergen.brakel": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:lokeren": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:merelbeke": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:ninove": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:oudenaarde": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:oudenaarde.kruishoutem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:ronse": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:sint.niklaas": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:wetteren.zele": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:zelzate": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:zomergem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:oost.vlaanderen:zottegem.herzele": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen": {
+      "institution-part": {
+        "ca": "Court of Appeal Gand",
+        "coass": "Assisen Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:brugge": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:diksmuide": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:harelbeke": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:ieper": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:ieper.poperinge": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:izegem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:kortrijk": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:menen": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:oostende": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:roeselare": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "lc": "Arbrb. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:tielt": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:torhout": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:veurne": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:veurne.nieuwpoort": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:waregem": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:gent:west.vlaanderen:wervik": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik": {
+      "institution-part": {
+        "ca": "Court of Appeal Gand"
+      }
+    },
+    "be:luik:luik": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "coass": "Assisen Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:luik:borgworm": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:eupen": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:luik:eupen:sankt.vith": {
+      "institution-part": {
+        "dc": "Vred. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:luik:luik:fleron": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:grace.hollogne": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:hamoir": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:herstal": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:hoei": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:luik:hoei.hannuit": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:malmedy.spa.stavelot": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:saint.nicolas.lez.liege": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:seraing": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:sprimont": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luik:verviers": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:luik:wezet": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg": {
+      "institution-part": {
+        "coass": "Assisen Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers"
+      }
+    },
+    "be:luik:luxumburg:aarlen": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:luik:luxumburg:aarlen.messancy": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg:bastenaken.neufchateau": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg:marche.en.famenne": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:luxumburg:marche.en.famenne.durbuy": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg:neufchateau": {
+      "institution-part": {
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers",
+        "pc": "Pol. Anvers"
+      }
+    },
+    "be:luik:luxumburg:saint.hubert.bouillon.paliseul": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg:vielsalm.la.roche.en.ardenne.houffalize": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:luxumburg:virton.florenville.etalle": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen": {
+      "institution-part": {
+        "coass": "Assisen Anvers",
+        "lc": "Arbrb. Anvers",
+        "lca": "Arbh. Anvers"
+      }
+    },
+    "be:luik:namen:andenne": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:beauraing.dinant.gedinne": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:ciney.rochefort": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:dinant": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cc": "Kh. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "lc": "Arbrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:namen:fosses.la.ville": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:gembloux.eghezee": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:namen": {
+      "institution-part": {
+        "br": "Beslagr. Anvers",
+        "cfi": "Rb. Anvers",
+        "corrc": "Corr. Anvers",
+        "dc": "Vred. Anvers",
+        "famc": "Famrb. Anvers",
+        "juvc": "Jeugdrb. Anvers",
+        "pc": "Pol. Anvers",
+        "pres": "Voorz. Anvers",
+        "sentc": "Surb. Anvers"
+      }
+    },
+    "be:luik:namen:philippeville.couvin": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    },
+    "be:luik:namen:walcourt.florennes": {
+      "institution-part": {
+        "dc": "Vred. Anvers"
+      }
+    }
+  }
+}

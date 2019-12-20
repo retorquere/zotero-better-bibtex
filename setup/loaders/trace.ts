@@ -37,7 +37,7 @@ Zotero.BBTTRacer = Zotero.BBTTRacer || {
 }
 
 function __njsTraceEntry__(call) {
-  const context = call.file + ': ' + call.name;
+  const context = JSON.stringify(call) // call.file + ': ' + call.name
   Zotero.BBTTRacer.enter()
   Zotero.debug(Zotero.BBTTRacer.prefix() + '->' + context + (call.args || ''))
   return { context: context, start: Date.now() };

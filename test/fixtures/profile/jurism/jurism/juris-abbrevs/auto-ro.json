@@ -1,0 +1,15 @@
+{
+  "filename": "auto-ro.json",
+  "name": "Romania",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "RO": "Romania"
+      }
+    },
+    "ro": {
+      "institution-part": {}
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "filename": "auto-mc.json",
+  "name": "Monaco",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "MC": "Monaco"
+      }
+    },
+    "mc": {
+      "institution-part": {}
+    }
+  }
+}

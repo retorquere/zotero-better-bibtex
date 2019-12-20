@@ -14,6 +14,12 @@ Scenario: Better BibTeX Import 2
 #  And the markdown citation for orre2008 should be ''
 #  And the markdown bibliography for orre2008 should be ''
 
+@1358
+Scenario: Import support for the online type in BBT #1358
+  When I import 1 references from "import/*.bib"
+  Then the library should match "import/*.json"
+  And an export using "Better BibLaTeX" should match "import/*.roundtrip.bib"
+
 @472
 Scenario: Math markup to unicode not always imported correctly #472
   When I import 3 references from "import/*.bib"
@@ -50,12 +56,12 @@ Scenario Outline: Better BibTeX Import
   Examples:
   | file                                                                        | references  |
   | Title of German entry converted to lowercase during import #1350            | 1           |
+  | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | Import location to event-place for conference papers                        | 1           |
   | Wrong ring-above import #1115                                               | 1           |
   | Spaces lost when expanding string variables during import #1081             | 1           |
   | Issues with round instead of curly braces do not import correctly #871      | 1           |
   | BibLaTeX Patent author handling, type #1060                                 | 2           |
-  | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | eprinttype field dropped on import #959                                     | 1           |
   | Better BibTeX.001                                                           | 2           |
   | BibTeX import; preamble with def create problems #732                       | 1           |

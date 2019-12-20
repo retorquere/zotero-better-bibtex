@@ -39,7 +39,7 @@
   "suppressSentenceCase": false,
   "suppressNoCase": false,
   "autoExportDelay": 1,
-  "itemObserverDelay": 100,
+  "itemObserverDelay": 5,
   "parseParticles": true,
   "citeprocNoteCitekey": false,
   "scrubDatabase": false,

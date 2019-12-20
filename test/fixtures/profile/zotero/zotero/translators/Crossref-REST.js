@@ -9,7 +9,7 @@
 	"priority": 90,
 	"inRepository": true,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2018-06-15 07:00:19"
+	"lastUpdated": "2018-06-16 12:00:00"
 }
 
 /*
@@ -72,6 +72,11 @@ function removeUnsupportedMarkup(text) {
 }
 
 function fixAuthorCapitalization(string) {
+	// Try to use capitalization function from Zotero Utilities,
+	// because the current one doesn't support unicode names.
+	// Can't fix this either because ZU.XRegExp.replace is
+	// malfunctioning when calling from translators.
+	if (ZU.capitalizeName) return ZU.capitalizeName(string);
 	if (typeof string === "string" && string.toUpperCase() === string) {
 		string = string.toLowerCase().replace(/\b[a-z]/g, function (m) {
 			return m[0].toUpperCase();
@@ -300,7 +305,7 @@ function doSearch(item) {
 	let query = null;
 	
 	if (item.DOI) {
-		if(Array.isArray(item.DOI)) {
+		if (Array.isArray(item.DOI)) {
 			query = '?filter=doi:' + item.DOI.map(x => ZU.cleanDOI(x)).filter(x => x).join(',doi:');
 		} else {
 			query = '?filter=doi:' + ZU.cleanDOI(item.DOI);
@@ -313,7 +318,7 @@ function doSearch(item) {
 	
 	query += '&select=' + selectedFields.join(',');
 	
-	if(Z.getHiddenPref('CrossrefREST.email')) {
+	if (Z.getHiddenPref('CrossrefREST.email')) {
 		query += '&mailto=' + Z.getHiddenPref('CrossrefREST.email');
 	}
 	

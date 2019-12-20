@@ -1,0 +1,17 @@
+{
+  "filename": "auto-sai.int.json",
+  "name": "Comunidad Andina",
+  "version": "2019-08-19 06:21:44 UTC",
+  "xdata": {
+    "default": {
+      "place": {
+        "SAI.INT": "Comunidad Andina"
+      }
+    },
+    "sai.int": {
+      "institution-part": {
+        "tjac": "Court of Justice of the Andean Community"
+      }
+    }
+  }
+}

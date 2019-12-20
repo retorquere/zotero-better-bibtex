@@ -9,7 +9,7 @@
 	"inRepository": true,
 	"translatorType": 4,
 	"browserSupport": "gcsibv",
-	"lastUpdated": "2017-07-10 15:33:23"
+	"lastUpdated": "2019-06-10 22:58:10"
 }
 
 /*
@@ -37,9 +37,10 @@
 
 
 function detectWeb(doc, url) {
-	if (url.indexOf('/edition/')>-1 || url.indexOf('/article/')>-1) {
+	if (url.includes('/edition/') || url.includes('/article/')) {
 		return "newspaperArticle";
 	}
+	return false;
 }
 
 
@@ -52,7 +53,7 @@ function scrape(doc, url) {
 	var translator = Zotero.loadTranslator('web');
 	// Embedded Metadata
 	translator.setTranslator('951c027d-74ac-47d4-a107-9c3069ab7b48');
-	//translator.setDocument(doc);
+	// translator.setDocument(doc);
 	
 	translator.setHandler('itemDone', function (obj, item) {
 		var date = ZU.xpathText(doc, '//time[contains(@class, "Dateline")]');
@@ -62,7 +63,8 @@ function scrape(doc, url) {
 		item.publicationTitle = ZU.xpathText(doc, '//p[contains(@class, "Meta-content")]/span[contains(@class, "Publication")]');
 		if (item.publicationTitle == "The Sunday Times") {
 			item.ISSN = "0956-1382";
-		} else {
+		}
+		else {
 			item.ISSN = "0140-0460";
 		}
 		item.url = ZU.xpathText(doc, '//link[@rel="canonical"]/@href') || url;
@@ -70,7 +72,7 @@ function scrape(doc, url) {
 		item.complete();
 	});
 
-	translator.getTranslatorObject(function(trans) {
+	translator.getTranslatorObject(function (trans) {
 		trans.itemType = "newspaperArticle";
 		trans.doWeb(doc, url);
 	});
