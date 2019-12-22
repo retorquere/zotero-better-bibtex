@@ -194,7 +194,7 @@ Scenario: BibTeX name escaping has a million inconsistencies #438
 Scenario: suppressBraceProtection does not work for BibTeX export (non-English items) #1194
   When I import 1 reference from "export/*.json"
   Then an export using "Better BibTeX" should match "export/*.sbp.bibtex"
-  When I set preference .suppressBraceProtection to false
+  When I set preference .exportBraceProtection to true
   Then an export using "Better BibTeX" should match "export/*.bibtex"
   And an export using "Better BibLaTeX" should match "export/*.biblatex"
 

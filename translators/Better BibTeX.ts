@@ -372,6 +372,7 @@ class ZoteroItem {
   }
 
   protected $title(value) {
+    debug('got title:', value, Translator.preferences)
     let title = this.bibtex.fields.title
     if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
     if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
@@ -889,6 +890,14 @@ Translator.doImport = async () => {
 
   if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
+  debug('parsing using', {
+    async: true,
+    caseProtection: Translator.preferences.importNoCase ? 'as-needed' : false,
+    errorHandler: (Translator.preferences.testing ? undefined : debug),
+    markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
+    sentenceCase: Translator.preferences.importSentenceCase,
+    verbatimFields: Translator.verbatimFields,
+  })
   const bib = await bibtexParser.parse(input, {
     async: true,
     caseProtection: Translator.preferences.importNoCase ? 'as-needed' : false,

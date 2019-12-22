@@ -55,6 +55,7 @@ Scenario Outline: Better BibTeX Import
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | Author splitter failure                                                     | 1           |
   | Title of German entry converted to lowercase during import #1350            | 4           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | Import location to event-place for conference papers                        | 1           |
@@ -67,7 +68,6 @@ Scenario Outline: Better BibTeX Import
   | BibTeX import; preamble with def create problems #732                       | 1           |
   | space after citekey creates confusion #716                                  | 2           |
   | Endnote should parse                                                        | 1           |
-  | Author splitter failure                                                     | 1           |
   | Literal names                                                               | 1           |
   | Better BibTeX.010                                                           | 1           |
   | Better BibTeX.008                                                           | 1           |
