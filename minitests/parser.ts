@@ -27,7 +27,7 @@ const strings = [
   {
     text: 'I like ISDN heaps better than dialup',
     options: { caseConversion: true },
-    preferences: { suppressTitleCase: true }
+    preferences: { exportTitleCase: false }
   }
 ]
 

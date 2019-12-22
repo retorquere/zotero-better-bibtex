@@ -24,6 +24,7 @@
       "citekeyFormat": "[authors2:postfix,_][year:postfix,_][Title:skipwords:nopunct:select,1:condense,_]",
       "csquotes": "",
       "exportBibTeXStrings": "off",
+      "exportTitleCase": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "change",
@@ -34,7 +35,6 @@
       "quickCopyPandocBrackets": false,
       "skipFields": "file,timestamp,annotation,note",
       "skipWords": "",
-      "suppressTitleCase": false,
       "warnBulkModify": 10
     },
     "release": {

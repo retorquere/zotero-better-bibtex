@@ -22,6 +22,24 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   constructor() {
     this.testing = Zotero.Prefs.get(this.key('testing'))
 
+    let old, key
+    if (typeof (old = Zotero.Prefs.get(key = this.key('suppressTitleCase'))) !== 'undefined') {
+      Zotero.Prefs.set(this.key('exportTitleCase'), !old)
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = this.key('suppressBraceProtection'))) !== 'undefined') {
+      Zotero.Prefs.set(this.key('exportBraceProtection'), !old)
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = this.key('suppressSentenceCase'))) !== 'undefined') {
+      Zotero.Prefs.set(this.key('importSentenceCase'), !old)
+      Zotero.Prefs.clear(key)
+    }
+    if (typeof (old = Zotero.Prefs.get(key = this.key('suppressNoCase'))) !== 'undefined') {
+      Zotero.Prefs.set(this.key('importNoCase'), !old)
+      Zotero.Prefs.clear(key)
+    }
+
     for (const [name, value] of Object.entries(defaults)) {
       // https://groups.google.com/forum/#!topic/zotero-dev/a1IPUJ2m_3s
       if (typeof this.get(name) === 'undefined') this.set(name, value);

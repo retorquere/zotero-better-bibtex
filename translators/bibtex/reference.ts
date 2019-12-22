@@ -914,7 +914,7 @@ export class Reference {
    */
   protected enc_literal(f, raw = false) {
     if (!f.value) return null
-    return this.enc_latex({...f, value: Translator.preferences.suppressBraceProtection ? f.value : new String(f.value)}, raw) // tslint:disable-line:no-construct
+    return this.enc_latex({...f, value: Translator.preferences.exportBraceProtection ? new String(f.value) : f.value}, raw) // tslint:disable-line:no-construct
   }
 
   /*
@@ -951,7 +951,7 @@ export class Reference {
       bibtex to back off from non-English titles is to wrap the whole
       thing in braces.
     */
-    if (caseConversion && Translator.BetterBibTeX && !this.english && !Translator.preferences.suppressBraceProtection) value = `{${value}}`
+    if (caseConversion && Translator.BetterBibTeX && !this.english && Translator.preferences.exportBraceProtection) value = `{${value}}`
 
     if (f.value instanceof String && !latex.raw) value = new String(`{${value}}`) // tslint:disable-line:no-construct
     return value
@@ -1209,7 +1209,7 @@ export class Reference {
         }
       }
 
-      if (this.has.title && !Translator.preferences.suppressTitleCase) {
+      if (this.has.title && Translator.preferences.exportTitleCase) {
         const titleCased = Zotero.BetterBibTeX.titleCase(this.has.title.value) === this.has.title.value
         if (this.has.title.value.match(/\s/)) {
           if (titleCased) report.push('? Title looks like it was stored in title-case in Zotero')

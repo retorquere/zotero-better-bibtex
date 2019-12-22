@@ -1,176 +1,175 @@
 {
-  "config": {
-    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON",
-    "preferences": {
-      "DOIandURL": "both",
-      "automaticTags": true,
-      "asciiBibLaTeX": false,
-      "ascii": "",
-      "asciiBibTeX": true,
-      "autoExport": "immediate",
-      "quickCopyMode": "latex",
-      "citeCommand": "cite",
-      "quickCopyPandocBrackets": false,
-      "citekeyFormat": "[auth][year]",
-      "citekeyFold": true,
-      "keyConflictPolicy": "keep",
-      "auxImport": false,
-      "keyScope": "library",
-      "exportBibTeXStrings": "off",
-      "importBibTeXStrings": true,
-      "bibtexParticleNoOp": false,
-      "skipFields": "",
-      "bibtexURL": "off",
-      "warnBulkModify": 10,
-      "autoExportTooLong": 10,
-      "postscript": "",
-      "strings": "",
-      "autoAbbrev": false,
-      "autoAbbrevStyle": "",
-      "autoExportIdleWait": 10,
-      "cacheFlushInterval": 5,
-      "csquotes": "",
-      "rawLaTag": "#LaTeX",
-      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
-      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
-      "jabrefFormat": 0,
-      "qualityReport": false,
-      "biblatexExtendedDateFormat": true,
-      "biblatexExtendedNameFormat": false,
-      "suppressTitleCase": false,
-      "suppressBraceProtection": false,
-      "suppressSentenceCase": false,
-      "suppressNoCase": false,
-      "autoExportDelay": 1,
-      "itemObserverDelay": 5,
-      "parseParticles": true,
-      "citeprocNoteCitekey": false,
-      "scrubDatabase": false,
-      "removeStock": false,
-      "ignorePostscriptErrors": true,
-      "debugLogDir": "",
-      "testing": true,
-      "autoPin": false,
-      "kuroshiro": false,
-      "autoExportPrimeExportCacheThreshold": 0,
-      "autoExportPrimeExportCacheBatch": 4,
-      "autoExportPrimeExportCacheDelay": 100,
-      "relativeFilePaths": false,
-      "sorted": false,
-      "git": "config",
-      "mapUnicode": "conservative",
-      "mapText": "",
-      "mapMath": "",
-      "newTranslatorsAskRestart": true,
-      "platform": "",
-      "client": ""
-    },
-    "options": {
-      "exportFileData": false,
-      "exportNotes": true,
-      "keepUpdated": false
-    }
-  },
   "collections": {
     "HXP5KVHJ": {
+      "collections": [],
       "id": 141,
-      "key": "HXP5KVHJ",
-      "parent": false,
-      "name": "Jabref groups import does not work #717.2.10",
       "items": [
         873,
         874,
         875
       ],
-      "collections": []
+      "key": "HXP5KVHJ",
+      "name": "Jabref groups import does not work #717.2.10",
+      "parent": false
+    }
+  },
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportTooLong": 10,
+      "autoPin": false,
+      "automaticTags": true,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
+      "client": "",
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "git": "config",
+      "ignorePostscriptErrors": true,
+      "importBibTeXStrings": true,
+      "importNoCase": true,
+      "importSentenceCase": true,
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
+      "parseParticles": true,
+      "platform": "",
+      "postscript": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "sorted": false,
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10
     }
   },
   "items": [
     {
-      "version": 0,
-      "itemType": "journalArticle",
-      "date": "2017",
-      "extra": "Citation Key: Doe-2017\ntex.owner: klein\ntex.timestamp: 2017.09.11",
-      "title": "The paper in subgroup",
-      "creators": [
-        {
-          "firstName": "John",
-          "lastName": "Doe",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
-      "collections": [
-        "HXP5KVHJ"
-      ],
-      "relations": [],
-      "dateAdded": "2019-12-22T01:25:27Z",
-      "dateModified": "2019-12-22T01:25:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3K9XRFA9",
       "attachments": [],
-      "notes": [],
-      "itemID": 873,
-      "key": "3K9XRFA9",
-      "citekey": "Doe-2017",
       "citationKey": "Doe-2017",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "journalArticle",
-      "extra": "Citation Key: Other-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
-      "title": "The article in my other subgroup",
-      "creators": [
-        {
-          "firstName": "I.",
-          "lastName": "Other",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
+      "citekey": "Doe-2017",
       "collections": [
         "HXP5KVHJ"
       ],
-      "relations": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "John",
+          "lastName": "Doe"
+        }
+      ],
+      "date": "2017",
       "dateAdded": "2019-12-22T01:25:27Z",
       "dateModified": "2019-12-22T01:25:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NTW9C6WH",
-      "attachments": [],
+      "extra": "Citation Key: Doe-2017\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "itemID": 873,
+      "itemType": "journalArticle",
+      "key": "3K9XRFA9",
+      "libraryID": 1,
       "notes": [],
-      "itemID": 874,
-      "key": "NTW9C6WH",
-      "citekey": "Other-",
+      "relations": [],
+      "tags": [],
+      "title": "The paper in subgroup",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/3K9XRFA9",
+      "version": 0
+    },
+    {
+      "attachments": [],
       "citationKey": "Other-",
-      "libraryID": 1
-    },
-    {
-      "version": 0,
-      "itemType": "journalArticle",
-      "extra": "Citation Key: Unkonw-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
-      "title": "the paper not in a group",
-      "creators": [
-        {
-          "firstName": "I",
-          "lastName": "Unkonw",
-          "creatorType": "author"
-        }
-      ],
-      "tags": [],
+      "citekey": "Other-",
       "collections": [
         "HXP5KVHJ"
       ],
-      "relations": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I.",
+          "lastName": "Other"
+        }
+      ],
       "dateAdded": "2019-12-22T01:25:27Z",
       "dateModified": "2019-12-22T01:25:27Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ES73MGNB",
-      "attachments": [],
+      "extra": "Citation Key: Other-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "itemID": 874,
+      "itemType": "journalArticle",
+      "key": "NTW9C6WH",
+      "libraryID": 1,
       "notes": [],
-      "itemID": 875,
-      "key": "ES73MGNB",
-      "citekey": "Unkonw-",
+      "relations": [],
+      "tags": [],
+      "title": "The article in my other subgroup",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/NTW9C6WH",
+      "version": 0
+    },
+    {
+      "attachments": [],
       "citationKey": "Unkonw-",
-      "libraryID": 1
+      "citekey": "Unkonw-",
+      "collections": [
+        "HXP5KVHJ"
+      ],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "I",
+          "lastName": "Unkonw"
+        }
+      ],
+      "dateAdded": "2019-12-22T01:25:27Z",
+      "dateModified": "2019-12-22T01:25:27Z",
+      "extra": "Citation Key: Unkonw-\ntex.owner: klein\ntex.timestamp: 2017.09.11",
+      "itemID": 875,
+      "itemType": "journalArticle",
+      "key": "ES73MGNB",
+      "libraryID": 1,
+      "notes": [],
+      "relations": [],
+      "tags": [],
+      "title": "the paper not in a group",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ES73MGNB",
+      "version": 0
     }
   ]
 }

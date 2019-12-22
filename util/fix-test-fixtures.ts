@@ -39,6 +39,19 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
       resave = 'skipFields'
     }
 
+    const invert = [
+      ['suppressTitleCase', 'exportTitleCase'],
+      ['suppressBraceProtection', 'exportBraceProtection' ],
+      ['suppressSentenceCase', 'importSentenceCase' ],
+      ['suppressNoCase', 'importNoCase' ],
+    ]
+    for (const [_old, _new] of invert) {
+      if (typeof data.config.preferences[_old] === 'undefined') continue
+      data.config.preferences[_new] = !data.config.preferences[_old]
+      delete data.config.preferences[_old]
+      resave = _old
+    }
+
     if (data.config.preferences.skipField) {
       delete data.config.preferences.skipField
       resave = 'skipField'

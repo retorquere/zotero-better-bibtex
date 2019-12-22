@@ -891,10 +891,10 @@ Translator.doImport = async () => {
 
   const bib = await bibtexParser.parse(input, {
     async: true,
-    caseProtection: Translator.preferences.suppressNoCase ? false : 'as-needed',
+    caseProtection: Translator.preferences.importNoCase ? 'as-needed' : false,
     errorHandler: (Translator.preferences.testing ? undefined : debug),
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
-    sentenceCase: !Translator.preferences.suppressSentenceCase,
+    sentenceCase: Translator.preferences.importSentenceCase,
     verbatimFields: Translator.verbatimFields,
   })
   const errors = bib.errors

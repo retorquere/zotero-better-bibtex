@@ -91,7 +91,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     let doc
 
     this.caseConversion = options.caseConversion
-    this.braceProtection = options.caseConversion && !Prefs.get('suppressBraceProtection')
+    this.braceProtection = options.caseConversion && Prefs.get('exportBraceProtection')
     this.sentenceStart = true
 
     // add enquote tags.
@@ -133,7 +133,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     doc = this.walk(htmlParser.parseFragment(this.html))
 
     if (options.caseConversion) {
-      if (!Prefs.get('suppressTitleCase')) {
+      if (Prefs.get('exportTitleCase')) {
         this.titleCased = ''
         this.collectText(doc)
         this.titleCased = titleCase(this.titleCased)
