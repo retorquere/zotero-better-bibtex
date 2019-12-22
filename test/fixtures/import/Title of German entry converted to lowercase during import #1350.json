@@ -43,7 +43,7 @@
       "suppressSentenceCase": false,
       "suppressNoCase": false,
       "autoExportDelay": 1,
-      "itemObserverDelay": 100,
+      "itemObserverDelay": 5,
       "parseParticles": true,
       "citeprocNoteCitekey": false,
       "scrubDatabase": false,
@@ -93,13 +93,125 @@
       "tags": [],
       "collections": [],
       "relations": [],
-      "dateAdded": "2019-12-04T21:45:09Z",
-      "dateModified": "2019-12-04T21:45:09Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/VF4T6CLP",
+      "dateAdded": "2019-12-22T01:56:11Z",
+      "dateModified": "2019-12-22T01:56:11Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/B59J8E99",
       "attachments": [],
       "notes": [],
-      "itemID": 99,
-      "key": "VF4T6CLP",
+      "itemID": 813,
+      "key": "B59J8E99",
+      "citekey": "schiffer2005a",
+      "citationKey": "schiffer2005a",
+      "libraryID": 1,
+      "publicationTitle": "Eine Auswahl von Techniken und Beispielen"
+    },
+    {
+      "version": 0,
+      "itemType": "bookSection",
+      "place": "Münster",
+      "publisher": "Aschendorff",
+      "pages": "153 - 163",
+      "date": "2007",
+      "extra": "Citation Key: albrecht2007a",
+      "title": "Evangelische publizistik",
+      "creators": [
+        {
+          "firstName": "C.",
+          "lastName": "Albrecht",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "J./Rüpke",
+          "lastName": "Malik",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "T.",
+          "lastName": "J./Wobbe",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-22T01:56:11Z",
+      "dateModified": "2019-12-22T01:56:11Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/QJKXRDC5",
+      "attachments": [],
+      "notes": [],
+      "itemID": 814,
+      "key": "QJKXRDC5",
+      "citekey": "albrecht2007a",
+      "citationKey": "albrecht2007a",
+      "libraryID": 1,
+      "publicationTitle": "Religion und medien: Vom kultbild zum internetritual"
+    },
+    {
+      "version": 0,
+      "itemType": "bookSection",
+      "place": "Paderborn",
+      "publisher": "Schöningh",
+      "pages": "93 - 108",
+      "date": "2008",
+      "extra": "Citation Key: gaertner2008a",
+      "title": "Die Rückkehr der Religionen in der politischen und medialen Öffent­ lichkeit",
+      "creators": [
+        {
+          "firstName": "C.",
+          "lastName": "Gärtner",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "K./Höhn",
+          "lastName": "Gabriel",
+          "creatorType": "editor"
+        },
+        {
+          "name": "H.-J.",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-22T01:56:12Z",
+      "dateModified": "2019-12-22T01:56:12Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/9LNB4D9S",
+      "attachments": [],
+      "notes": [],
+      "itemID": 815,
+      "key": "9LNB4D9S",
+      "citekey": "gaertner2008a",
+      "citationKey": "gaertner2008a",
+      "libraryID": 1,
+      "publicationTitle": "Religion heute – öffentlich und politisch: Provokationen, kontroversen, perspektiven"
+    },
+    {
+      "version": 0,
+      "itemType": "bookSection",
+      "place": "Würzburg",
+      "publisher": "Ergon",
+      "date": "2005",
+      "extra": "Citation Key: schiffer2005a",
+      "language": "german",
+      "title": "Die Darstellung des Islams in der Presse: Sprache, Bilder, Suggestionen",
+      "creators": [
+        {
+          "firstName": "S.",
+          "lastName": "Schiffer",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-22T01:56:12Z",
+      "dateModified": "2019-12-22T01:56:12Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/RAYHM6LP",
+      "attachments": [],
+      "notes": [],
+      "itemID": 816,
+      "key": "RAYHM6LP",
       "citekey": "schiffer2005a",
       "citationKey": "schiffer2005a",
       "libraryID": 1,

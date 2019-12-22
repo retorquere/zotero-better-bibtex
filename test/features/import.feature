@@ -55,7 +55,7 @@ Scenario Outline: Better BibTeX Import
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
-  | Title of German entry converted to lowercase during import #1350            | 1           |
+  | Title of German entry converted to lowercase during import #1350            | 4           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
   | Import location to event-place for conference papers                        | 1           |
   | Wrong ring-above import #1115                                               | 1           |
