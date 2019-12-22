@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^2.0.2",
+    "@retorquere/bibtex-parser": "^3.0.5",
     "@types/lokijs": "^1.5.2",
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
@@ -94,7 +94,7 @@
     "zotero-plugin": "^0.0.95"
   },
   "devDependencies": {
-    "@types/node": "^12.12.20",
+    "@types/node": "^12.12.21",
     "@types/webpack": "^4.41.0",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",
@@ -125,12 +125,12 @@
     "ts-loader": "^6.2.1",
     "ts-node": "^8.5.4",
     "typedoc": "^0.15.5",
-    "typescript": "^3.7.3",
+    "typescript": "^3.7.4",
     "uri-templates": "^0.2.0",
-    "webpack": "^4.41.3",
+    "webpack": "^4.41.4",
     "wrapper-webpack-plugin": "^2.1.0",
     "xml-parser": "^1.2.1",
-    "xmldom": "^0.1.27",
+    "xmldom": "^0.2.1",
     "xpath": "^0.0.27"
   },
   "repository": {

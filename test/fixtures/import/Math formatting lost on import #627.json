@@ -1,38 +1,120 @@
 {
-  "collections": {},
   "config": {
     "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
-    "label": "BetterBibTeX JSON"
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "both",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "autoExportTooLong": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "suppressTitleCase": false,
+      "suppressBraceProtection": false,
+      "suppressSentenceCase": false,
+      "suppressNoCase": false,
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": true,
+      "autoPin": false,
+      "kuroshiro": false,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "relativeFilePaths": false,
+      "sorted": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "platform": "",
+      "client": ""
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
   },
+  "collections": {},
   "items": [
     {
-      "DOI": "10.1103/physrevlett.109.156404",
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "J",
-          "lastName": "Bon\u010da"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M",
-          "lastName": "Mierzejewski"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L",
-          "lastName": "Vidmar"
-        }
-      ],
-      "date": "2012-10",
-      "extra": "Citation Key: Bonca:2012in",
-      "issue": "15",
-      "itemID": 0,
+      "version": 0,
       "itemType": "journalArticle",
+      "volume": "109",
+      "issue": "15",
       "pages": "156404",
       "publicationTitle": "Phys. Rev. Lett.",
-      "title": "Nonequilibrium Propagation and Decay of a Bound Pair in Driven t-J Models",
-      "volume": "109"
+      "date": "2012-10",
+      "extra": "Citation Key: Bonca:2012in",
+      "DOI": "10.1103/physrevlett.109.156404",
+      "title": "Nonequilibrium propagation and decay of a bound pair in driven <span class=\"nocase\">t</span>-J models",
+      "creators": [
+        {
+          "firstName": "J",
+          "lastName": "Bonča",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "M",
+          "lastName": "Mierzejewski",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "L",
+          "lastName": "Vidmar",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [],
+      "collections": [],
+      "relations": [],
+      "dateAdded": "2019-12-22T01:25:22Z",
+      "dateModified": "2019-12-22T01:25:22Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/YKTQK4IV",
+      "attachments": [],
+      "notes": [],
+      "itemID": 853,
+      "key": "YKTQK4IV",
+      "citekey": "Bonca:2012in",
+      "citationKey": "Bonca:2012in",
+      "libraryID": 1
     }
   ]
 }

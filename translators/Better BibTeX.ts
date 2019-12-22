@@ -640,17 +640,14 @@ class ZoteroItem {
   }
 
   protected $annotation(value) {
-    this.item.notes.push(Zotero.Utilities.text2html(value, false))
+    this.item.notes.push(value)
     return true
   }
   protected $comment(value) { return this.$annotation(value) }
   protected $annote(value) { return this.$annotation(value) }
   protected $review(value) { return this.$annotation(value) }
   protected $notes(value) { return this.$annotation(value) }
-  protected $note(value) {
-    this.item.notes.push(Zotero.Utilities.text2html(value, false))
-    return true
-  }
+  protected $note(value) { return this.$annotation(value) }
 
   protected $series(value) { return this.set('series', value) }
 
@@ -894,10 +891,10 @@ Translator.doImport = async () => {
 
   const bib = await bibtexParser.parse(input, {
     async: true,
+    caseProtection: Translator.preferences.suppressNoCase ? false : 'as-needed',
     errorHandler: (Translator.preferences.testing ? undefined : debug),
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
     sentenceCase: !Translator.preferences.suppressSentenceCase,
-    caseProtect: !Translator.preferences.suppressNoCase,
     verbatimFields: Translator.verbatimFields,
   })
   const errors = bib.errors
