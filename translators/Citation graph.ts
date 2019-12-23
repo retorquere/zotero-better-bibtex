@@ -47,16 +47,17 @@ Translator.doExport = () => {
       label.push(`\u201C${item.title.replace(/"/g, "'")}\u201D`)
     }
 
+    const author = []
     if (add.authors && item.creators && item.creators.length) {
-      const name = item.creators?.map(author => (author.name || author.lastName || '').replace(/"/g, "'")).filter(author => author).join(', ')
-      if (name) label.push(name)
+      const name = item.creators?.map(creator => (creator.name || creator.lastName || '').replace(/"/g, "'")).filter(creator => creator).join(', ')
+      if (name) author.push(name)
     }
-
     if (add.year && item.date) {
       let date = Zotero.BetterBibTeX.parseDate(item.date)
       if (date.from) date = date.from
-      if (date.year) label.push(`(${date.year})`)
+      if (date.year) author.push(`(${date.year})`)
     }
+    if (author.length) label.push(author.join(' '))
 
     item.label = label.join('\n')
 
