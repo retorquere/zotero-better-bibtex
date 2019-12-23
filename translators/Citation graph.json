@@ -3,7 +3,7 @@
   "label": "Citation graph",
   "description": "exports a citation graph in graphml format. Use gephi or yEd to clean up and visualize",
   "creator": "Emiliano heyns",
-  "target": "gml",
+  "target": "dot",
   "minVersion": "4.0.27",
   "maxVersion": "",
   "translatorType": 2,

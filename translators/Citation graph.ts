@@ -1,132 +1,101 @@
 declare const Translator: ITranslator
-
 declare const Zotero: any
 
-function node(id, label, style = null) {
-  Zotero.write('  node [\n')
-  Zotero.write(`    id ${id}\n`)
-  Zotero.write(`    label ${JSON.stringify(label)}\n`)
-  if (style) Zotero.write(`    graphics [ outlineStyle "${style}" ]\n`)
-  Zotero.write('  ]\n')
+function node(id, attributes = {}) {
+  let _node = JSON.stringify(id)
+  const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
+  if (attrs) _node += ` [${attrs}]`
+  Zotero.write(`  ${_node};\n`)
 }
-function edge(source, target, bidi = false) {
-  Zotero.write('  edge [\n')
-  Zotero.write(`    source ${source}\n`)
-  Zotero.write(`    target ${target}\n`)
-  if (bidi) {
-    Zotero.write('    graphics [\n')
-    Zotero.write('      fill  "#000000"\n')
-    Zotero.write('      sourceArrow "standard"\n')
-    Zotero.write('      targetArrow "standard"\n')
-    Zotero.write('    ]\n')
-  }
-  Zotero.write('  ]\n')
+
+function edge(source, target, attributes = {}) {
+  let _edge = `${JSON.stringify(source)} -> ${JSON.stringify(target)}`
+  const attrs = Object.entries(attributes).map(([key, value]) => `${key}=${JSON.stringify(value)}`).join(', ')
+  if (attrs) _edge += ` [${attrs}]`
+  Zotero.write(`  ${_edge};\n`)
 }
 
 type Item = {
-  id: number
-  uri: string
+  id: string
   cites: string[]
   relations: string[]
+  label: string
+  citekey: string
+  uri: string
 }
 
 Translator.doExport = () => {
-  Zotero.write('Creator "Zotero Better BibTeX"\n')
-  Zotero.write('Version "2.15"\n')
-  Zotero.write('graph [\n')
-  Zotero.write('  hierarchic 0\n')
-  Zotero.write('  label ""\n')
-  Zotero.write('  directed 1\n')
+  Zotero.write('digraph CitationGraph {\n')
+  Zotero.write('  concentrate=true;\n')
 
-  const items: Record<string, Item> = {}
-
-  let _item
-  let id = -1
   const add = {
     title: Zotero.getOption('Title'),
     authors: Zotero.getOption('Authors'),
     year: Zotero.getOption('Year'),
   }
 
-  while ((_item = Zotero.nextItem())) {
-    if (['note', 'attachment'].includes(_item.itemType)) continue
+  const items: Item[] = []
+  let item
+  while ((item = Zotero.nextItem())) {
+    if (['note', 'attachment'].includes(item.itemType)) continue
 
-    id += 1
+    item.id = 'node-' + item.uri.replace(/.*\//, '')
 
-    const label = [ _item.citekey ]
+    const label = [ item.citekey ]
 
-    if (add.title && _item.title) {
-      label.push(`\u201C${_item.title.replace(/"/g, "'")}\u201D`)
+    if (add.title && item.title) {
+      label.push(`\u201C${item.title.replace(/"/g, "'")}\u201D`)
     }
 
-    if (add.authors && _item.creators && _item.creators.length) {
-      const name = _item.creators?.map(author => (author.name || author.lastName || '').replace(/"/g, "'")).filter(author => author).join(', ')
+    if (add.authors && item.creators && item.creators.length) {
+      const name = item.creators?.map(author => (author.name || author.lastName || '').replace(/"/g, "'")).filter(author => author).join(', ')
       if (name) label.push(name)
     }
 
-    if (add.year && _item.date) {
-      let date = Zotero.BetterBibTeX.parseDate(_item.date)
+    if (add.year && item.date) {
+      let date = Zotero.BetterBibTeX.parseDate(item.date)
       if (date.from) date = date.from
       if (date.year) label.push(`(${date.year})`)
     }
 
-    node(id, label.join(' '))
-    items[_item.citekey] = items[_item.uri] = {
-      id,
-      uri: _item.uri,
-      relations: _item.relations?.['dc:relation'] || [],
-      cites: [].concat.apply([],
-        (_item.extra || '')
-          .split('\n')
-          .filter(line => line.startsWith('cites:'))
-          .map(line => line.replace(/^cites:/, '').trim())
-          .filter(keys => keys)
-          .map(keys => keys.split(/\s*,\s*/))
-        ),
-    }
+    item.label = label.join('\n')
+
+    item.relations = item.relations?.['dc:relation'] || []
+
+    item.cites = [].concat.apply([],
+      (item.extra || '')
+        .split('\n')
+        .filter(line => line.startsWith('cites:'))
+        .map(line => line.replace(/^cites:/, '').trim())
+        .filter(keys => keys)
+        .map(keys => keys.split(/\s*,\s*/))
+      )
+
+    items.push(item)
   }
 
-  const bidi: string[] = []
-  for (const item of Object.values(items)) {
-    for (const cited of item.cites) {
-      if (!items[cited]) {
-        id += 1
-        items[cited] = {
-          id,
-          uri: `http://${cited}`,
-          cites: [],
-          relations: [],
-        }
+  for (item of items) {
+    node(item.id, { label: item.label })
 
-        node(id, cited, 'dashed')
+    for (const uri of item.relations) {
+      const other = items.find(o => o.uri === uri)
+      if (other) {
+        edge(item.id, other.id)
+      } else {
+        edge(item.id, uri.replace(/.*\//, ''), { style: 'dashed', dir: 'both' })
       }
-
-      edge(item.id, items[cited].id)
-
     }
 
-    for (const other of item.relations) {
-      if (!items[other]) {
-        id += 1
-        items[other] = {
-          id,
-          uri: other,
-          cites: [],
-          relations: [],
-        }
+    for (const citekey of item.cites) {
+      const other = items.find(o => o.citekey === citekey)
 
-        node(id, '??', 'dashed')
+      if (other) {
+        edge(item.id, other.id)
+      } else {
+        edge(item.id, citekey, { style: 'dashed' })
       }
-
-      const rel = [item.uri, other].sort().join('\t')
-      if (!bidi.includes(rel)) bidi.push(rel)
     }
   }
 
-  for (const rel of bidi) {
-    const [from, to] = rel.split('\t')
-    edge(items[from].id, items[to].id, true)
-  }
-
-  Zotero.write(']\n')
+  Zotero.write('}')
 }
