@@ -41,7 +41,7 @@
       "git": "config",
       "importBibTeXStrings": true,
       "importCaseProtection": "off",
-      "importSentenceCase": true,
+      "importSentenceCase": "on+guess",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",

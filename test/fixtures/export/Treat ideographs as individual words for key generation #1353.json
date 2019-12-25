@@ -44,7 +44,7 @@
       "ignorePostscriptErrors": true,
       "importBibTeXStrings": false,
       "importCaseProtection": "off",
-      "importSentenceCase": true,
+      "importSentenceCase": "on+guess",
       "itemObserverDelay": 100,
       "jabrefFormat": 0,
       "keyConflictPolicy": "keep",
