@@ -40,9 +40,9 @@ titles that are already sentence cased and leave them as-is on import.
 
 Options:
 
-* no (import titles as-is)
-* yes
 * yes, but try to exclude already-sentence-cased titles
+* yes
+* no (import titles as-is)
 
 #### Insert case-protection for braces:
 
@@ -53,9 +53,9 @@ not all of them]({{ ref . ""support/faq#why-the-double-braces" }})) are converte
 
 Options:
 
-* no
-* yes
 * minimal
+* yes
+* no
 
 ### Export
 
