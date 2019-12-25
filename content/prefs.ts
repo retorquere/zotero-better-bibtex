@@ -32,11 +32,19 @@ export let Preferences = new class { // tslint:disable-line:variable-name
       Zotero.Prefs.clear(key)
     }
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressSentenceCase'))) !== 'undefined') {
-      Zotero.Prefs.set(this.key('importSentenceCase'), !old)
+      if (old) {
+        Zotero.Prefs.set(this.key('importSentenceCase'), 'off')
+      } else {
+        Zotero.Prefs.set(this.key('importSentenceCase'), 'on+guess')
+      }
       Zotero.Prefs.clear(key)
     }
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressNoCase'))) !== 'undefined') {
-      Zotero.Prefs.set(this.key('importNoCase'), !old)
+      if (old) {
+        Zotero.Prefs.set(this.key('importCaseProtection'), 'off')
+      } else {
+        Zotero.Prefs.set(this.key('importCaseProtection'), 'as-needed')
+      }
       Zotero.Prefs.clear(key)
     }
 

@@ -890,20 +890,13 @@ Translator.doImport = async () => {
 
   if (Translator.preferences.strings && Translator.preferences.importBibTeXStrings) input = `${Translator.preferences.strings}\n${input}`
 
-  debug('parsing using', {
-    async: true,
-    caseProtection: Translator.preferences.importNoCase ? 'as-needed' : false,
-    errorHandler: (Translator.preferences.testing ? undefined : debug),
-    markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
-    sentenceCase: Translator.preferences.importSentenceCase,
-    verbatimFields: Translator.verbatimFields,
-  })
   const bib = await bibtexParser.parse(input, {
     async: true,
-    caseProtection: Translator.preferences.importNoCase ? 'as-needed' : false,
+    caseProtection: (Translator.preferences.importCaseProtection as 'as-needed'), // we are actually sure it's a valid enum value; stupid workaround for TS2322: Type 'string' is not assignable to type 'boolean | "as-needed" | "strict"'.
     errorHandler: (Translator.preferences.testing ? undefined : debug),
     markup: (Translator.csquotes ? { enquote: Translator.csquotes } : {}),
-    sentenceCase: Translator.preferences.importSentenceCase,
+    sentenceCase: Translator.preferences.importSentenceCase !== 'off',
+    guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
     verbatimFields: Translator.verbatimFields,
   })
   const errors = bib.errors

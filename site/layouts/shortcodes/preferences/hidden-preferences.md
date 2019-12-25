@@ -69,18 +69,6 @@ Can be `off`, `config` or `always`
 
 #### ignorePostscriptErrors
 
-#### importNoCase
-
-On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {Braces}. There's plenty of bib(la)tex files
-out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
-Zotero supports it. If you turn this off, the markup is omitted during import.
-
-#### importSentenceCase
-
-Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
-during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect. You can suppress this, but you may then also want
-to disable exportTitleCase (which has its own problems, see the help entry for that option on this page).
-
 #### itemObserverDelay
 
 I've had reports where Zotero notifies extensions that references have changed, but if BBT then actually
