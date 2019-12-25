@@ -57,6 +57,18 @@ Options:
 * yes
 * minimal
 
+### Export
+
+#### Apply title-casing to titles
+
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
+
+#### Apply brace-protection to capitalized words
+
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
+
 #### Warn me when changing citation keys in bulk
 
 For those who are curious about what the `Clear/Generate BibTeX key` right-click options do, this will warn

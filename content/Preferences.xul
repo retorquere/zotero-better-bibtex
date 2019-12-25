@@ -17,17 +17,23 @@
   xmlns:bbt="http://retorque.re/zotero-better-bibtex/">
 
   <popupset>
-    <tooltip id="bibtex-url-warning">
+    <tooltip id="tooltip-bibtexURL">
       <description>&better-bibtex.Preferences.export.fields.doi-and-url.warning;</description>
     </tooltip>
-    <tooltip id="jabref-cache-warning">
+    <tooltip id="tooltip-jabrefFormat">
       <description>&better-bibtex.Preferences.export.jabrefFormat.4.warn;</description>
     </tooltip>
-    <tooltip id="sentenceCase-warning">
+    <tooltip id="tooltip-import-sentenceCase">
       <description>&better-bibtex.Preferences.advanced.import.sentenceCase.warning;</description>
     </tooltip>
-    <tooltip id="caseProtection-warning">
+    <tooltip id="tooltip-import-caseProtection">
       <description>&better-bibtex.Preferences.advanced.import.caseProtection.warning;</description>
+    </tooltip>
+    <tooltip id="tooltip-export-titleCase">
+      <description>&better-bibtex.Preferences.advanced.export.titleCase.warning;</description>
+    </tooltip>
+    <tooltip id="tooltip-export-braceProtection">
+      <description>&better-bibtex.Preferences.advanced.export.braceProtection.warning;</description>
     </tooltip>
   </popupset>
   <prefwindow id="zotero-prefs">
@@ -301,14 +307,14 @@
         <preference name="extensions.zotero.translators.better-bibtex.exportTitleCase" id="pref-better-bibtex-exportTitleCase" type="bool" default="true">
           <bbt:doc>
             If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-            casing, set this preference to `true` to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
+            casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
           </bbt:doc>
         </preference>
 
         <preference name="extensions.zotero.translators.better-bibtex.exportBraceProtection" id="pref-better-bibtex-exportBraceProtection" type="bool" default="true">
           <bbt:doc>
             If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-            casing, set this preference to `true` to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
+            casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
           </bbt:doc>
         </preference>
 
@@ -607,7 +613,7 @@
                       <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"/>
                     </menupopup>
                   </menulist>
-                  <image class="bibtex-url-warning" tooltip="bibtex-url-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                  <image tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                 </hbox>
               </hbox>
             </groupbox>
@@ -633,7 +639,7 @@
                           <menuitem label="&better-bibtex.Preferences.export.fields.doi-and-url.URL;" value="url"/>
                         </menupopup>
                       </menulist>
-                      <image class="bibtex-url-warning" tooltip="bibtex-url-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                      <image tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                     </hbox>
                   </row>
                   <row>
@@ -652,7 +658,7 @@
                           <menuitem label="&better-bibtex.Preferences.export.jabrefFormat.4;" value="4"/>
                         </menupopup>
                       </menulist>
-                      <image class="jabref-cache-warning" tooltip="jabref-cache-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                      <image tooltip="tooltip-jabrefFormat" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                     </hbox>
                   </row>
                 </rows>
@@ -752,7 +758,7 @@
                             <menuitem label="&better-bibtex.Preferences.export.bibtex.URLs.url;" value="url"/>
                           </menupopup>
                         </menulist>
-                        <image class="bibtex-url-warning" tooltip="bibtex-url-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                        <image tooltip="tooltip-bibtexURL" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                       </hbox>
                     </hbox>
                   </vbox>
@@ -855,7 +861,7 @@
                     <menuitem label="&better-bibtex.Preferences.advanced.import.sentenceCase.on_guess;" value="on+guess"/>
                   </menupopup>
                 </menulist>
-                <image class="bibtex-url-warning" tooltip="sentenceCase-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                <image tooltip="tooltip-import-sentenceCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
               </hbox>
 
               <hbox>
@@ -867,7 +873,18 @@
                     <menuitem label="&better-bibtex.Preferences.advanced.import.caseProtection.as_needed;" value="as-needed"/>
                   </menupopup>
                 </menulist>
-                <image class="bibtex-url-warning" tooltip="caseProtection-warning" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+                <image tooltip="tooltip-import-caseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+              </hbox>
+            </groupbox>
+            <groupbox>
+              <caption label="&better-bibtex.Preferences.advanced.export;"/>
+              <hbox>
+                <checkbox preference="pref-better-bibtex-exportTitleCase" label="&better-bibtex.Preferences.advanced.export.titleCase;"/>
+                <image tooltip="tooltip-export-titleCase" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
+              </hbox>
+              <hbox>
+                <checkbox preference="pref-better-bibtex-exportBraceProtection" label="&better-bibtex.Preferences.advanced.export.braceProtection;"/>
+                <image tooltip="tooltip-export-braceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
               </hbox>
             </groupbox>
 

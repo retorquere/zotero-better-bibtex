@@ -43,7 +43,8 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
       ['suppressTitleCase', 'exportTitleCase'],
       ['suppressBraceProtection', 'exportBraceProtection' ],
       ['suppressSentenceCase', 'importSentenceCase' ],
-      ['suppressNoCase', 'importNoCase' ],
+      ['suppressNoCase', 'importCaseProtection' ],
+      ['importNoCase', 'importCaseProtection' ],
     ]
     for (const [_old, _new] of invert) {
       if (typeof data.config.preferences[_old] === 'undefined') continue
