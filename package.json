@@ -51,7 +51,7 @@
     "test": "test"
   },
   "dependencies": {
-    "@retorquere/bibtex-parser": "^3.0.6",
+    "@retorquere/bibtex-parser": "^3.0.14",
     "@types/lokijs": "^1.5.2",
     "ajv": "^6.10.2",
     "ajv-keywords": "^3.4.1",
@@ -94,7 +94,7 @@
     "zotero-plugin": "^0.0.95"
   },
   "devDependencies": {
-    "@types/node": "^12.12.21",
+    "@types/node": "^13.1.0",
     "@types/webpack": "^4.41.0",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",

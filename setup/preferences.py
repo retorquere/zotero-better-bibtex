@@ -28,7 +28,6 @@ class Preferences:
     with open(os.path.join(root, 'locale/en-US/zotero-better-bibtex.dtd')) as dtd:
       for entity in etree.DTD(dtd).entities():
         pane = pane.replace(f'&{entity.name};', entity.content)
-    print(pane)
     self.pane = etree.fromstring(pane)
     self.ns = Munch()
     for name, url in self.pane.nsmap.items():

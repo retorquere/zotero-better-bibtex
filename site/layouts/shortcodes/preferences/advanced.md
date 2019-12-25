@@ -29,6 +29,8 @@ Options:
 * Assume single-word fields to be @string vars
 * Match against the @string vars below
 
+### Import
+
 #### Sentence-case titles on import:
 
 Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case. With this option on, BBT will try to sentence-case
