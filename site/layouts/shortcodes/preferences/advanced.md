@@ -49,7 +49,7 @@ Options:
 On import, BBT will add case-protection (<span class="nocase">...<span>) to titles that have words in {Braces}. There's plenty of bib(la)tex files
 out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and
 Zotero supports it. If you turn this off, the markup is omitted during import. In `strict` mode, all braces that bib(la)tex would interpret as case protection ([which is
-not all of them]({{ ref . ""support/faq#why-the-double-braces" }})) are converted to `span` elements. In `as-needed` mode, the number of `span` elements is minimized.
+not all of them]({{ ref . "support/faq#why-the-double-braces" }})) are converted to `span` elements. In `as-needed` mode, the number of `span` elements is minimized.
 
 Options:
 
