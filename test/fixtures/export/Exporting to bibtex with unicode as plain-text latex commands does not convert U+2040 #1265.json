@@ -39,7 +39,7 @@
       "exportTitleCase": true,
       "git": "config",
       "importBibTeXStrings": true,
-      "importCaseProtection": false,
+      "importCaseProtection": "off",
       "importSentenceCase": true,
       "itemObserverDelay": 100,
       "jabrefFormat": 0,

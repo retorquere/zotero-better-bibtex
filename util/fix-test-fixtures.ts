@@ -52,6 +52,10 @@ for (const lib of glob.sync('test/fixtures/*/*.json', { cwd: root, absolute: tru
       delete data.config.preferences[_old]
       resave = _old
     }
+    if (typeof data.config.preferences.importCaseProtection === 'boolean') {
+      data.config.preferences.importCaseProtection = data.config.preferences.importCaseProtection ? 'as-needed' : 'off'
+      resave = 'importCaseProtection'
+    }
 
     if (data.config.preferences.skipField) {
       delete data.config.preferences.skipField

@@ -69,7 +69,7 @@
       "git": "config",
       "ignorePostscriptErrors": true,
       "importBibTeXStrings": true,
-      "importCaseProtection": false,
+      "importCaseProtection": "off",
       "importSentenceCase": true,
       "itemObserverDelay": 5,
       "jabrefFormat": 0,
