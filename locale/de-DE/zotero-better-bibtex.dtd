@@ -100,8 +100,8 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Diese Einstellungen werden die Leistung beeinträchtigen und können zu einem Abbruch der Exporte führen. Behandeln Sie sie mit Vorsicht.">
 <!ENTITY better-bibtex.Preferences.advanced.import "Import">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "no (import titles as-is)">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "yes">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "nein (importiere Title wie sie sind)">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "ja">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
 
@@ -111,8 +111,8 @@ You can turn this off, but you may then also want to disable exportTitleCase (wh
 With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "no">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "yes">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "nein">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "ja">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
