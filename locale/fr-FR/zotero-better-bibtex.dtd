@@ -98,11 +98,11 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
-<!ENTITY better-bibtex.Preferences.advanced.import "Import">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Sentence-case titles on import:">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "no (import titles as-is)">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "yes">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "yes, but try to exclude already-sentence-cased titles">
+<!ENTITY better-bibtex.Preferences.advanced.import "Importation">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Titres avec casse de phrase lors de l'importation :">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
