@@ -114,14 +114,14 @@ Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase �
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "À l'importation, BBT protègera la casse (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) des mots entre {Braces} dans les titres.
 
-There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
+Beaucoup de fichiers bib(la)tex qui le font de façon un peu trop zélée et vous n'aimez peut-être pas le code HTML qui en résulte dans vos entrées, même si c'est ce que les accolades signifient en bib(la)tex, et Zotero fournit cette fonctionnalité.
 
-If you turn this off, the markup is omitted during import. In `strict` mode, all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements.
-In `minimal` mode, the number of `span` elements is minimized.">
+Si vous désactivez cette option, le balisage est omis lors de l'importation. En mode `strict`, tous les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont convertis en éléments `span`.
+En mode `minimal`, le nombre d'éléments `span` est minimisé.">
 
-<!ENTITY better-bibtex.Preferences.advanced.export "Export">
+<!ENTITY better-bibtex.Preferences.advanced.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Apply title-casing to titles">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "If you're dead-set on ignoring both BibTeX/BibLaTeX best practice (see the BBT FAQ) and the Zotero recommendations on title/sentence casing, you can turn this off to suppress title casing for English references">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Apply brace-protection to capitalized words">
