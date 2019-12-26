@@ -110,9 +110,9 @@ Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de 
 Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver exportTitleCase (qui a ses propres problèmes, voir l''aide pour cette option sur cette page).
 Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
 
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "no">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "yes">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Protéger la casse pour les accolades :">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
