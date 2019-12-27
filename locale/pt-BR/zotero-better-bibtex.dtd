@@ -107,7 +107,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
-You can turn this off, but you may then also want to disable exportTitleCase (which has its own problems, see the help entry for that option on this page).
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
 With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Insert case-protection for braces:">
@@ -118,7 +118,7 @@ With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt t
 
 There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
-If you turn this off, the markup is omitted during import. In `strict` mode, all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements.
+If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements.
 In `minimal` mode, the number of `span` elements is minimized.">
 
 <!ENTITY better-bibtex.Preferences.advanced.export "Export">
