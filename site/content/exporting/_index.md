@@ -49,15 +49,13 @@ The difference between lines with an `=` or an `:` is that the fields marked wit
 
 ### CSL fields
 
-The final way to add fields is by using CSL fields in the format `{:original-date: 1856}` or `Original Date: 1856` on a line of its own. These fields will not only be
-exported to Bib(La)TeX, but will also be [picked up](https://forums.zotero.org/discussion/3673/original-date-of-publication/) by the Zotero Bibliography manager, even
-though not all Zotero styles yet support this.
+The final way to add fields is by using [CSL fields](https://docs.citationstyles.org/en/stable/specification.html#appendix-iv-variables) in the
+format `{:original-date: 1856}` or `Original Date: 1856` on a line of its own. These fields will not only be exported to Bib(La)TeX, but will
+also be [picked up](https://forums.zotero.org/discussion/3673/original-date-of-publication/) by the Zotero Bibliography manager, even though not all Zotero styles yet support this.
 
 Note that the default biblatex styles do not seem to support origdate; you can find possible solutions for this at Stack
-Exchange
-[here](http://tex.stackexchange.com/questions/142999/the-proper-way-to-cite-the-earliest-publication-date-in-brackets-followed-by)
-and
-[here](http://tex.stackexchange.com/questions/55859/getting-origyear-to-work-in-biblatex).
+Exchange [here](http://tex.stackexchange.com/questions/142999/the-proper-way-to-cite-the-earliest-publication-date-in-brackets-followed-by)
+and [here](http://tex.stackexchange.com/questions/55859/getting-origyear-to-work-in-biblatex).
 
 ### Changing the exported reference type
 
