@@ -1,0 +1,281 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth:lower][year][shorttitle3_3]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "file, abstract, note",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "autoExportTooLong": 10,
+      "postscript": "if (Translator.BetterTeX) {\n  // the bib(la)tex fields are ordered according to this array.\n  // If a field is not in this list, it will show up at after the ordered fields.\n  // https://github.com/retorquere/zotero-better-bibtex/issues/512\n\n  const order = ['author', 'editor', 'title', 'shorttitle', 'booktitle', 'journaltitle', 'shortjournal', 'edition', 'volume', 'pages', 'publisher', 'address', 'institution', 'location', 'date', 'issn', 'doi', 'url', 'urldate']\n  for (const field of order.concat(Object.keys(reference.has).filter(other => !order.includes(other)))) {\n    const value = reference.has[field]\n    if (value) {\n      delete reference.has[field]\n      reference.has[field] = value\n    }\n  }\n}\n",
+      "strings": "",
+      "autoAbbrev": true,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": true,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "relativeFilePaths": false,
+      "sorted": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "platform": "win",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "version": 397,
+      "itemType": "journalArticle",
+      "title": "A Comprehensive Study of Security of Internet-of-Things",
+      "abstractNote": "Internet of Things (IoT), also referred to as the Internet of Objects, is envisioned as a transformative approach for providing numerous services. Compact smart devices constitute an essential part of IoT. They range widely in use, size, energy capacity, and computation power. However, the integration of these smart things into the standard Internet introduces several security challenges because the majority of Internet technologies and communication protocols were not designed to support IoT. Moreover, commercialization of IoT has led to public security concerns, including personal privacy issues, threat of cyber attacks, and organized crime. In order to provide a guideline for those who want to investigate IoT security and contribute to its improvement, this survey attempts to provide a comprehensive list of vulnerabilities and countermeasures against them on the edge-side layer of IoT, which consists of three levels: (i) edge nodes, (ii) communication, and (iii) edge computing. To achieve this goal, we first briefly describe three widely-known IoT reference models and define security in the context of IoT. Second, we discuss the possible applications of IoT and potential motivations of the attackers who target this new paradigm. Third, we discuss different attacks and threats. Fourth, we describe possible countermeasures against these attacks. Finally, we introduce two emerging security challenges not yet explained in detail in previous literature.",
+      "date": "October 2017",
+      "libraryCatalog": "IEEE Xplore",
+      "extra": "ZSCC: NoCitationData[s0]\nPublisher: IEEE",
+      "volume": "5",
+      "pages": "586-602",
+      "publicationTitle": "IEEE Transactions on Emerging Topics in Computing",
+      "DOI": "10.1109/TETC.2016.2606384",
+      "issue": "4",
+      "ISSN": "2376-4562",
+      "creators": [
+        {
+          "firstName": "Arsalan",
+          "lastName": "Mosenia",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Niraj K.",
+          "lastName": "Jha",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "security",
+          "type": 1
+        },
+        {
+          "tag": "Security",
+          "type": 1
+        },
+        {
+          "tag": "Internet of Things",
+          "type": 1
+        },
+        {
+          "tag": "Availability",
+          "type": 1
+        },
+        {
+          "tag": "Biological system modeling",
+          "type": 1
+        },
+        {
+          "tag": "compact smart devices",
+          "type": 1
+        },
+        {
+          "tag": "computation power",
+          "type": 1
+        },
+        {
+          "tag": "Computational modeling",
+          "type": 1
+        },
+        {
+          "tag": "confidentiality",
+          "type": 1
+        },
+        {
+          "tag": "countermeasures",
+          "type": 1
+        },
+        {
+          "tag": "cyber attacks",
+          "type": 1
+        },
+        {
+          "tag": "data privacy",
+          "type": 1
+        },
+        {
+          "tag": "edge computing",
+          "type": 1
+        },
+        {
+          "tag": "edge nodes",
+          "type": 1
+        },
+        {
+          "tag": "energy capacity",
+          "type": 1
+        },
+        {
+          "tag": "integrity",
+          "type": 1
+        },
+        {
+          "tag": "Internet",
+          "type": 1
+        },
+        {
+          "tag": "Internet of things",
+          "type": 1
+        },
+        {
+          "tag": "Internet technologies",
+          "type": 1
+        },
+        {
+          "tag": "Internet-of-Things",
+          "type": 1
+        },
+        {
+          "tag": "IoT reference models",
+          "type": 1
+        },
+        {
+          "tag": "IoT security",
+          "type": 1
+        },
+        {
+          "tag": "Monitoring",
+          "type": 1
+        },
+        {
+          "tag": "organized crime",
+          "type": 1
+        },
+        {
+          "tag": "personal privacy issues",
+          "type": 1
+        },
+        {
+          "tag": "privacy",
+          "type": 1
+        },
+        {
+          "tag": "public security concerns",
+          "type": 1
+        },
+        {
+          "tag": "security of data",
+          "type": 1
+        },
+        {
+          "tag": "Smart devices",
+          "type": 1
+        },
+        {
+          "tag": "smart things",
+          "type": 1
+        },
+        {
+          "tag": "vulnerabilities",
+          "type": 1
+        },
+        {
+          "tag": "Wireless sensor networks",
+          "type": 1
+        }
+      ],
+      "collections": [
+        "39GL4J5T"
+      ],
+      "relations": [],
+      "dateAdded": "2019-12-27T17:34:54Z",
+      "dateModified": "2019-12-27T19:07:50Z",
+      "uri": "http://zotero.org/users/6238049/items/URX7R3ZJ",
+      "attachments": [
+        {
+          "itemType": "attachment",
+          "title": "Mosenia_Jha_2017_A Comprehensive Study of Security of Internet-of-Things.pdf",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-12-27T17:34:56Z",
+          "dateModified": "2019-12-27T17:34:56Z",
+          "uri": "http://zotero.org/users/6238049/items/7AITI3L5",
+          "path": "C:\\Users\\jsun\\Zotero\\storage\\7AITI3L5\\Mosenia_Jha_2017_A Comprehensive Study of Security of Internet-of-Things.pdf"
+        },
+        {
+          "itemType": "attachment",
+          "title": "A Comprehensive Study of Security of Internet-of-Things",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-12-27T17:34:57Z",
+          "dateModified": "2019-12-27T17:34:57Z",
+          "uri": "http://zotero.org/users/6238049/items/5GC9G75H",
+          "path": "C:\\Users\\jsun\\Zotero\\storage\\5GC9G75H\\mohsennia2016.html"
+        },
+        {
+          "itemType": "attachment",
+          "title": "IEEE Xplore Abstract Record",
+          "tags": [],
+          "relations": [],
+          "dateAdded": "2019-12-27T17:35:01Z",
+          "dateModified": "2019-12-27T17:35:01Z",
+          "uri": "http://zotero.org/users/6238049/items/PBKV92G9",
+          "path": "C:\\Users\\jsun\\Zotero\\storage\\PBKV92G9\\7562568.html"
+        }
+      ],
+      "notes": [],
+      "itemID": 248,
+      "key": "URX7R3ZJ",
+      "citekey": "mosenia2017ComprehensiveStudySecurity",
+      "citationKey": "mosenia2017ComprehensiveStudySecurity",
+      "journalAbbreviation": "IEEE Trans. Emerg. Top. Comput.",
+      "libraryID": 1
+    }
+  ]
+}

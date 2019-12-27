@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import makedirs
+import cslmapping
 import preferences
 import translators
 import submodules
