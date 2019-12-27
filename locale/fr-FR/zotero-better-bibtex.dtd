@@ -103,23 +103,23 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on_guess "oui, mais en essayant d'exclure les titres déjà avec casse de phrase">
-<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Les références Bib(La)TeX devraient être stockées capitalisées (NdT : c.-à-d. avec l'initiale de chaque mot en capitale ; cette règle est conforme à la typographie en anglais mais pas française) ; les références Zotero devraient être saisies avec casse de phrase (NdT : c.-à-d. avec seule l'initiale de la phrase en capitale).
+<!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.warning "Bib(La)TeX references ought to be stored in Title Case; Zotero references are expected to be entered as sentence-case.
 
-Avec cette option activée, BBT essaiera d'appliquer la casse de phrase lors de l'importation. Le mécanisme sous-jacent utilise des heuristiques : aucun traitement de langage naturel n'est effectué, et les résultats ne sont pas parfaits.
+With this option on, BBT will try to sentence-case during import. This sentence-casing uses heuristics, no natural language processing is performed, and the results are not perfect.
 
-Vous pouvez désactiver cette option, mais vous pouvez aussi vouloir désactiver exportTitleCase (qui a ses propres problèmes, voir l''aide pour cette option sur cette page).
-Avec « oui, mais en essayant d'exclure les titres déjà avec casse de phrase », BBT tentera de détecter les titres déjà avec casse de phrase et ne les modifiera pas à l'importation.">
+You can turn this off, but you may then also want to disable `Apply title-casing to titles` (which has its own problems, see the help entry for that option on this page).
+With 'yes, but try to exclude already-sentence-cased titles', BBT will attempt to detect titles that are already sentence cased and leave them as-is on import.">
 
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection "Protéger la casse pour les accolades :">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.off "non">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.on "oui">
 <!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.as_needed "minimal">
-<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "À l'importation, BBT protègera la casse (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) des mots entre {Braces} dans les titres.
+<!ENTITY better-bibtex.Preferences.advanced.import.caseProtection.warning "On import, BBT will add case-protection (&lt;span class=&quot;nocase&quot;&gt;...&lt;span&gt;) to titles that have words in {Braces}.
 
-Beaucoup de fichiers bib(la)tex qui le font de façon un peu trop zélée et vous n'aimez peut-être pas le code HTML qui en résulte dans vos entrées, même si c'est ce que les accolades signifient en bib(la)tex, et Zotero fournit cette fonctionnalité.
+There's plenty of bib(la)tex files out there that do this a little overzealously, and you may not like the resulting HTML code in your items, even though this is what the braces mean in bib(la)tex, and Zotero supports it.
 
-Si vous désactivez cette option, le balisage est omis lors de l'importation. En mode `strict`, tous les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont convertis en éléments `span`.
-En mode `minimal`, le nombre d'éléments `span` est minimisé.">
+If you turn this off, the markup is omitted during import. When you select 'yes', all braces that bib(la)tex would interpret as case protection (which is not all of them) are converted to `span` elements.
+In `minimal` mode, the number of `span` elements is minimized.">
 
 <!ENTITY better-bibtex.Preferences.advanced.export "Exportation">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
