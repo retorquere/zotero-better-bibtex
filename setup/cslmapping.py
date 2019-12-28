@@ -7,6 +7,7 @@ import json
 
 root = os.path.join(os.path.dirname(__file__), '..')
 
+# https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json
 with urllib.request.urlopen('https://api.zotero.org/schema') as f:
   data = json.loads(f.read().decode())
   mapping = {
