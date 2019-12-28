@@ -42,7 +42,7 @@ def step_impl(context, db, source):
   # check import
   export_library(context, expected = source)
 
-@step(r'I restart Zotero with from "{db}"')
+@step(r'I restart Zotero with "{db}"')
 def step_impl(context, db):
   context.zotero.restart(timeout=context.timeout, db=db)
 

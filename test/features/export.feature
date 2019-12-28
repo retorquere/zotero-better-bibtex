@@ -455,7 +455,7 @@ Scenario: Really Big whopping library
 
 @1296 @zotero @nightly @timeout=300
 Scenario: Cache does not seem to fill #1296
-  When I restart Zotero with from "1296"
+  When I restart Zotero with "1296"
   And I empty the trash
 #  Then an export using "Better BibTeX" should match "export/*.bibtex"
 #  And an export using "Better BibTeX" should match "export/*.bibtex", but take no more than 150 seconds
