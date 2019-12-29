@@ -51,8 +51,8 @@ Translator.doImport = async () => {
     delete source.libraryID
     delete source.collections
 
-    const validFields = itemfields.valid[source.itemType]
-    if (!validFields) throw new Error(`unexpected item type '${source.itemType}'`)
+    if (!itemfields.valid.type[source.itemType]) throw new Error(`unexpected item type '${source.itemType}'`)
+    const validFields = itemfields.valid.field[source.itemType]
     for (const field of Object.keys(source)) {
       const valid = validFields[field]
       if (valid) continue

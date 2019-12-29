@@ -18,18 +18,24 @@ data = DefaultMunch.fromDict({
 }, None)
 
 print('Generating item field metadata...')
-Valid = DefaultMunch(None, {})
+ValidFields = DefaultMunch(None, {})
+ValidTypes = {}
 Alias = {}
 Itemfields = set()
 for client in data.keys():
   for spec in data[client].itemTypes:
-    if not Valid[spec.itemType]:
+    if spec.itemType in ValidTypes:
+      ValidTypes[spec.itemType] = 'true'
+    else:
+      ValidTypes[spec.itemType] = client
+
+    if not ValidFields[spec.itemType]:
       if spec.itemType == 'note':
-        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
+        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
       elif spec.itemType == 'attachment':
-        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
+        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
       else:
-        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
+        ValidFields[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
 
     for field in spec.fields:
       if field.baseField:
@@ -42,16 +48,16 @@ for client in data.keys():
 
       if spec.itemType not in ['note', 'attachment']: Itemfields.add(fieldName)
 
-      if Valid[spec.itemType][fieldName]:
-        Valid[spec.itemType][fieldName] = 'true'
+      if ValidFields[spec.itemType][fieldName]:
+        ValidFields[spec.itemType][fieldName] = 'true'
       else:
-        Valid[spec.itemType][fieldName] = client
+        ValidFields[spec.itemType][fieldName] = client
 
     if len(spec.get('creatorTypes', [])) > 0:
-      if Valid[spec.itemType]['creators']:
-        Valid[spec.itemType]['creators'] = 'true'
+      if ValidFields[spec.itemType]['creators']:
+        ValidFields[spec.itemType]['creators'] = 'true'
       else:
-        Valid[spec.itemType]['creators'] = client
+        ValidFields[spec.itemType]['creators'] = client
 
 for field, aliases in list(Alias.items()):
   Alias[field] = Munch(
@@ -76,14 +82,20 @@ def replace(indent, aliases):
 
 with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
   print('declare const Zotero: any\n', file=f)
-  print("const jurism = Zotero.Utilities.getVersion().includes('m')", file=f)
+  print("const jurism = Zotero.Utilities.getVersion().includes('m') // not great, but currently no other way to detect client type", file=f)
   print('const zotero = !jurism\n', file=f)
   print('export const valid = {', file=f)
-  for itemType, fields in sorted(Valid.items(), key=lambda x: x[0]):
-    print(f'  {itemType}: {{', file=f)
+  print('  type: {', file=f)
+  for itemType, client in sorted(ValidTypes.items(), key=lambda x: x[0]):
+    print(f'    {itemType}: {client},', file=f)
+  print('  },', file=f)
+  print('  field: {', file=f)
+  for itemType, fields in sorted(ValidFields.items(), key=lambda x: x[0]):
+    print(f'    {itemType}: {{', file=f)
     for field, client in sorted(fields.items(), key=lambda x: x[0]):
-      print(f'    {field}: {client},', file=f)
-    print('  },', file=f)
+      print(f'      {field}: {client},', file=f)
+    print('    },', file=f)
+  print('  },', file=f)
   print('}\n', file=f)
 
   print('function unalias(item) {', file=f)

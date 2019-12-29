@@ -8,7 +8,7 @@ import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 
 import * as bibtexParser from '@retorquere/bibtex-parser'
-import { valid as validFields } from '../gen/itemfields'
+import { valid } from '../gen/itemfields'
 import { arXiv } from '../content/arXiv'
 
 Reference.prototype.caseConversion = {
@@ -346,9 +346,8 @@ class ZoteroItem {
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
     if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
 
-    this.validFields = validFields[this.type]
-
-    if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.type}`)
+    if (!valid.type[this.type]) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.type}`)
+    this.validFields = valid.field[this.type]
 
     if (!Object.keys(this.bibtex.fields).length) {
       this.errors.push({ message: `No fields in ${this.bibtex.key ? '@' + this.bibtex.key : 'unnamed item'}` })
