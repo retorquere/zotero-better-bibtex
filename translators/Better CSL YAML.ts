@@ -160,7 +160,6 @@ Exporter.flush = items => `---\nreferences:\n${items.join('\n')}...\n`
 
 export function doExport() {
   Translator.init('export')
-
   Exporter.initialize()
   Exporter.doExport()
 }

@@ -62,7 +62,6 @@ Exporter.flush = items => `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]
 
 export function doExport() {
   Translator.init('export')
-
   Exporter.initialize()
   Exporter.doExport()
 }

@@ -166,6 +166,7 @@ const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 
 
 export function doExport() {
   Translator.init('export')
+  Reference.installPostscript()
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
@@ -877,7 +878,6 @@ class ZoteroItem {
 //   return true
 
 export async function doImport() {
-  Reference.installPostscript()
   Translator.init('import')
 
   let read
