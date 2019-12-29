@@ -332,7 +332,7 @@ class ZoteroItem {
   private type: string
   private hackyFields: string[] = []
   private eprint: { [key: string]: string } = {}
-  private validFields: Map<string, boolean>
+  private validFields: Record<string, boolean>
   private numberPrefix: string
   private english = 'English'
 
@@ -346,7 +346,7 @@ class ZoteroItem {
     if (this.type === 'book' && (this.bibtex.fields.title || []).length && (this.bibtex.fields.booktitle || []).length) this.type = 'bookSection'
     if (this.type === 'journalArticle' && (this.bibtex.fields.booktitle || []).length && this.bibtex.fields.booktitle[0].match(/proceeding/i)) this.type = 'conferencePaper'
 
-    this.validFields = validFields.get(this.type)
+    this.validFields = validFields[this.type]
 
     if (!this.validFields) this.error(`import error: unexpected item ${this.bibtex.key} of type ${this.type}`)
 
@@ -361,7 +361,7 @@ class ZoteroItem {
       this.import()
 
       if (Translator.preferences.testing) {
-        const err = Object.keys(this.item).filter(name => !this.validFields.get(name)).join(', ')
+        const err = Object.keys(this.item).filter(name => !this.validFields[name]).join(', ')
         if (err) this.error(`import error: unexpected fields on ${this.type} ${this.bibtex.key}: ${err}`)
       }
     }
@@ -395,7 +395,7 @@ class ZoteroItem {
   }
 
   protected $publisher(value) {
-    const field = ['publisher', 'institution'].find(f => this.validFields.get(f)) // difference between jurism and zotero
+    const field = ['publisher', 'institution'].find(f => this.validFields[f]) // difference between jurism and zotero
     if (!field) return false
 
     this.item[field] = [
@@ -455,7 +455,7 @@ class ZoteroItem {
 
   protected $pages(value) {
     for (const field of ['pages', 'numPages']) {
-      if (!this.validFields.get(field)) continue
+      if (!this.validFields[field]) continue
 
       this.set(field, value.replace(/\u2013/g, '-'))
       return true
@@ -579,7 +579,7 @@ class ZoteroItem {
 
   protected $number(value) {
     for (const field of ['seriesNumber', 'number', 'issue']) {
-      if (!this.validFields.get(field)) continue
+      if (!this.validFields[field]) continue
 
       this.set(field, value)
 
@@ -591,7 +591,7 @@ class ZoteroItem {
   protected $issue(value) { return this.$number(value) }
 
   protected $issn(value) {
-    if (!this.validFields.get('ISSN')) return false
+    if (!this.validFields.ISSN) return false
 
     return this.set('ISSN', value)
   }
@@ -625,7 +625,7 @@ class ZoteroItem {
       return typeof this.numberPrefix !== 'undefined'
     }
 
-    if (this.validFields.get('type')) {
+    if (this.validFields.type) {
       this.set('type', value)
       return true
     }
@@ -830,7 +830,7 @@ class ZoteroItem {
   */
 
   private set(field, value) {
-    if (!this.validFields.get(field)) return false
+    if (!this.validFields[field]) return false
 
     if (Translator.preferences.testing && (this.item[field] || typeof this.item[field] === 'number') && (value || typeof value === 'number') && this.item[field] !== value) {
       this.error(`import error: duplicate ${field} on ${this.type} ${this.bibtex.key} (old: ${this.item[field]}, new: ${value})`)

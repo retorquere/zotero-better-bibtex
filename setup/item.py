@@ -20,6 +20,7 @@ data = DefaultMunch.fromDict({
 
 valid = DefaultMunch(None, {})
 alias = {}
+itemfields = set()
 for client in data.keys():
   for spec in data[client].itemTypes:
     if not valid[spec.itemType]: valid[spec.itemType] = DefaultMunch(None, {})
@@ -31,6 +32,8 @@ for client in data.keys():
         fieldName = field.baseField
       else:
         fieldName = field.field
+
+      if spec.itemType not in ['note', 'attachment']: itemfields.add(fieldName)
 
       if valid[spec.itemType][fieldName]:
         valid[spec.itemType][fieldName] = 'true'
@@ -121,3 +124,34 @@ with open(os.path.join(root, 'gen', 'csl-mapping.json'), 'w') as f:
         del mapping[section][name]
 
   json.dump(mapping, f, indent='  ')
+
+with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as f:
+  fields = '\n'.join(f'    {field}: string' for field in sorted(itemfields))
+  print("import { Fields } from '../../content/extra'", file=f)
+  print(f'''declare global {{
+  interface ISerializedItem {{
+    // fields common to all items
+    itemID: string | number
+    itemType: string
+    dateAdded: string
+    dateModified: string
+    creators: {{ creatorType?: string, name?: string, firstName?: string, lastName?:string, fieldMode?: number }}[]
+    tags: Array<{{ tag: string, type?: number }}>
+    notes: string[]
+    attachments: {{ path: string, title?: string, mimeType?: string }}
+    raw: boolean
+
+{fields}
+
+    uri: string
+    referenceType: string
+    cslType: string
+    cslVolumeTitle: string
+    citekey: string
+    collections: string[]
+    extraFields: Fields
+    arXiv: {{ source?: string, id: string, category?: string }}
+    // Juris-M extras
+    multi: any
+  }}
+}}''', file=f)
