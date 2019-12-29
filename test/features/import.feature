@@ -49,12 +49,13 @@ Scenario Outline: Better BibTeX Import
   | Some bibtex entries quietly discarded on import from bib file #873          | 989         |
  # | Async import, large library #720                                            | 9057        |
 
-@test-cluster-1 @959 @1058 @871 @1081 @1115 @1350
+@test-cluster-1 @959 @1058 @871 @1081 @1115 @1350 @667
 Scenario Outline: Better BibTeX Import
   When I import <references> references from "import/<file>.bib"
   Then the library should match "import/*.json"
   Examples:
   | file                                                                        | references  |
+  | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Author splitter failure                                                     | 1           |
   | Title of German entry converted to lowercase during import #1350            | 4           |
   | Import Jabref fileDirectory, unexpected reference type #1058                | 3           |
@@ -73,7 +74,6 @@ Scenario Outline: Better BibTeX Import
   | Better BibTeX.008                                                           | 1           |
   | Biblatex Annotation Import Bug #613                                         | 1           |
   | Better BibLaTeX import improvements #549                                    | 9           |
-  | support Local-Zo-Url-x field from BibDesk2Zotero_attachments #667           | 1           |
   | Math formatting lost on import #627                                         | 1           |
   | zbb (quietly) chokes on this .bib #664                                      | 1           |
   | Failure to handle unparsed author names (92)                                | 1           |

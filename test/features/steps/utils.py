@@ -12,6 +12,9 @@ import urllib.request
 import psutil
 import shlex
 
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning, module='bs4', message='.*looks like a URL.*')
+
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
   if os.path.exists(os.path.join(d, 'behave.ini')):
