@@ -6,7 +6,6 @@ import * as path from 'path'
 // import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
-import TranslatorHeaderPlugin = require('./setup/plugins/translator-header')
 import { LogUsedFilesPlugin } from './setup/plugins/log-used'
 
 /*
@@ -19,7 +18,7 @@ class WebpackFixerPlugin {
 }
 */
 
-const translators = require('./gen/translators.json')
+import * as translators from './gen/translators.json'
 const _ = require('lodash')
 
 const common = {
@@ -119,14 +118,20 @@ if (!process.env.MINITESTS) {
     })
   )
 
-  for (const label of Object.keys(translators.byName)) {
+  for (const [label, header] of Object.entries(translators.byName)) {
+    const vars = ['Translator']
+      .concat((header.translatorType & 1) ? ['detectImport', 'doImport'] : [])
+      .concat((header.translatorType & 2) ? ['doExport'] : [])
+      .join(', ')
+
     config.push(
       _.merge({}, common, {
         plugins: [
           new CircularDependencyPlugin({ failOnError: true }),
-          new TranslatorHeaderPlugin(label),
-          new LogUsedFilesPlugin(label, 'translator')
-          // BailPlugin,
+          new webpack.DefinePlugin({
+            ZOTERO_TRANSLATOR_INFO: JSON.stringify(header),
+          }),
+          new LogUsedFilesPlugin(label, 'translator'),
         ],
         context: path.resolve(__dirname, './translators'),
         entry: { [label]: `./${label}.ts` },
@@ -136,6 +141,8 @@ if (!process.env.MINITESTS) {
           filename: '[name].js',
           devtoolLineToLine: true,
           pathinfo: true,
+          library: `var {${vars}}`,
+          libraryTarget: 'assign',
         },
       })
     )

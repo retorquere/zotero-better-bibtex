@@ -4,15 +4,12 @@ import json
 import os
 import glob
 from addict import Dict
-import datetime
 import re
 from Cheetah.Template import Template
 
 print('translators')
 
 root = os.path.join(os.path.dirname(__file__), '..')
-
-lastUpdated = datetime.datetime.now().isoformat().replace('T', ' ').split('.')[0]
 
 translators = Dict()
 variables = Dict()
@@ -27,7 +24,6 @@ for header in sorted(glob.glob(os.path.join(root, 'translators/*.json'))):
   with open(header) as f:
     header = Dict(json.load(f))
     print(f'  {header.label}')
-    header.lastUpdated = lastUpdated
 
     translators.byId[header.translatorID] = header
     translators.byName[header.label] = header
@@ -57,9 +53,17 @@ with open(os.path.join(root, 'gen/preferences/defaults.json')) as f:
 variables.labels = translators.byLabel.keys()
 
 template = """
+type ZoteroCollection = {
+  id: string
+  key: string
+  parent: string
+  name: string
+  items: string[]
+  collections: string[] | ZoteroCollection[]
+}
+
 interface ITranslator {
   preferences: {
-    testing: bool
   #for $pref, $type in $preferences.items()
     $pref: $type
   #end for
@@ -70,7 +74,6 @@ interface ITranslator {
   csquotes: { open: string, close: string }
 
   options: {
-    quickCopyMode?: string
     dropAttachments?: boolean
     exportPath?: string
     #for $key, $type in $displayOptions.items():
@@ -81,8 +84,6 @@ interface ITranslator {
   #for $label in $labels
   $label?: boolean
   #end for
-  TeX: boolean
-  CSL: boolean
 
   caching: boolean
   cache: {
@@ -108,7 +109,7 @@ interface ITranslator {
     }
   }
 
-  collections: any[]
+  collections: Record<string, ZoteroCollection>
   references: Array<{citekey: string, reference: string}>
 
   isJurisM: boolean
@@ -120,14 +121,9 @@ interface ITranslator {
     sep: string
   }
   debugEnabled: boolean
-  BetterBibTeX: boolean
-  BetterBibLaTeX: boolean
-  BetterTeX: boolean
+  BetterTeX?: boolean
+  BetterCSL?: boolean
 
-  doExport: () => void
-  detectImport: () => void
-  doImport: () => void
-  initialize: () => void
   stringCompare: (a: string, b: string) => number
 }
 """

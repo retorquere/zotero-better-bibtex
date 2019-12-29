@@ -1,8 +1,9 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
 
 import format = require('string-template')
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { Exporter } from './lib/exporter'
 
@@ -118,7 +119,9 @@ const Mode = { // tslint:disable-line:variable-name
   },
 }
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
+
   let item: ISerializedItem
   const items = []
   while ((item = Exporter.nextItem())) {

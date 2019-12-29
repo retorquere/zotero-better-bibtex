@@ -1,7 +1,9 @@
-declare const Translator: ITranslator
 declare const Zotero: any
 
 import YAML = require('js-yaml')
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { debug } from './lib/debug'
 import { CSLExporter as Exporter } from './csl/csl'
@@ -156,5 +158,9 @@ Exporter.serialize = csl => {
 
 Exporter.flush = items => `---\nreferences:\n${items.join('\n')}...\n`
 
-Translator.initialize = () => Exporter.initialize()
-Translator.doExport = () => Exporter.doExport()
+export function doExport() {
+  Translator.init('export')
+
+  Exporter.initialize()
+  Exporter.doExport()
+}

@@ -1,6 +1,7 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './lib/exporter'
@@ -203,11 +204,6 @@ Reference.prototype.typeMap = {
   },
 }
 
-Translator.initialize = () => {
-  Reference.installPostscript()
-  Translator.unicode = !Translator.preferences.asciiBibLaTeX
-}
-
 function looks_like_number(n) {
   if (n.match(/^(?=[MDCLXVI])M*(C[MD]|D?C*)(X[CL]|L?X*)(I[XV]|V?I*)$/)) return 'roman'
   if (n.match(/^[A-Z]?[0-9]+(\.[0-9]+)?$/i)) return 'arabic'
@@ -260,7 +256,10 @@ const patent = new class {
   }
 }
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
+  Translator.unicode = !Translator.preferences.asciiBibLaTeX
+  Reference.installPostscript()
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)

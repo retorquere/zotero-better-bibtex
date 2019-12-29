@@ -1,5 +1,6 @@
-declare const Translator: ITranslator
 declare const Zotero: any
+
+import { Translator } from '../lib/translator'
 
 import { Exporter } from '../lib/exporter'
 import { text2latex } from './unicode_translator'
@@ -765,7 +766,7 @@ export class Reference {
     try {
       cache = this.postscript(this, this.item, Translator, Zotero)
     } catch (err) {
-      if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.ignorePostscriptErrors')) throw err
+      if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
       debug('Reference.postscript failed:', err)
       cache = false
     }

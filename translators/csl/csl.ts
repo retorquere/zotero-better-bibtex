@@ -1,6 +1,6 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
+
+import { Translator } from '../lib/translator'
 
 import { debug } from '../lib/debug'
 import * as itemfields from '../../gen/itemfields'
@@ -167,7 +167,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       try {
         cache = this.postscript(csl, item, Translator, Zotero)
       } catch (err) {
-        if (Translator.preferences.testing && !Zotero.getHiddenPref('better-bibtex.ignorePostscriptErrors')) throw err
+        if (Translator.preferences.testing && !Translator.preferences.ignorePostscriptErrors) throw err
         cache = false
       }
 

@@ -1,5 +1,7 @@
-declare const Translator: ITranslator
 declare const Zotero: any
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 function node(id, attributes = {}) {
   let _node = JSON.stringify(id)
@@ -24,7 +26,9 @@ type Item = {
   uri: string
 }
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
+
   Zotero.write('digraph CitationGraph {\n')
   Zotero.write('  concentrate=true;\n')
 

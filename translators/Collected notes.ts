@@ -1,5 +1,7 @@
 declare const Zotero: any
-declare const Translator: ITranslator
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import * as escape from '../content/escape'
 import * as Extra from '../content/extra'
@@ -131,7 +133,9 @@ function _keep(item) {
   return false
 }
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
+
   // collect all notes
   const items = {}
   let z_item
@@ -143,7 +147,7 @@ Translator.doExport = () => {
   const filed = {}
   // expand collections
   for (const collection of Object.values(Translator.collections)) {
-    collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v)
+    // collection.collections = collection.collections.map(key => Translator.collections[key]).filter(v => v) // TODO: doesn't CTranslator laready do this?
     collection.items = collection.items.map(id => filed[id] = items[id]).filter(v => v)
   }
 

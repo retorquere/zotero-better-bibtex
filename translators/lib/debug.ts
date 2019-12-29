@@ -1,4 +1,4 @@
-declare const Translator: ITranslator
+import { Translator } from './translator'
 
 declare const Zotero: any
 

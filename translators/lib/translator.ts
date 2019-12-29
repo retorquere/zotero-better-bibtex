@@ -1,0 +1,279 @@
+declare const Zotero: any
+declare const ZOTERO_TRANSLATOR_INFO: any
+
+import * as preferences from '../../gen/preferences/defaults.json'
+
+type TranslatorMode = 'export' | 'import'
+
+export let Translator = new class implements ITranslator { // tslint:disable-line:variable-name
+  public preferences: {
+    DOIandURL: string
+    automaticTags: boolean
+    asciiBibLaTeX: boolean
+    ascii: string
+    asciiBibTeX: boolean
+    autoExport: string
+    quickCopyMode: string
+    citeCommand: string
+    quickCopyPandocBrackets: boolean
+    citekeyFormat: string
+    citekeyFold: boolean
+    keyConflictPolicy: string
+    auxImport: boolean
+    keyScope: string
+    exportBibTeXStrings: string
+    importBibTeXStrings: boolean
+    bibtexParticleNoOp: boolean
+    skipFields: string
+    bibtexURL: string
+    warnBulkModify: number
+    autoExportTooLong: number
+    postscript: string
+    strings: string
+    autoAbbrev: boolean
+    autoAbbrevStyle: string
+    autoExportIdleWait: number
+    cacheFlushInterval: number
+    csquotes: string
+    rawLaTag: string
+    skipWords: string
+    verbatimFields: string
+    jabrefFormat: number
+    qualityReport: boolean
+    biblatexExtendedDateFormat: boolean
+    biblatexExtendedNameFormat: boolean
+    exportTitleCase: boolean
+    exportBraceProtection: boolean
+    importSentenceCase: string
+    importCaseProtection: string
+    autoExportDelay: number
+    itemObserverDelay: number
+    parseParticles: boolean
+    citeprocNoteCitekey: boolean
+    scrubDatabase: boolean
+    removeStock: boolean
+    ignorePostscriptErrors: boolean
+    debugLogDir: string
+    testing: boolean
+    autoPin: boolean
+    kuroshiro: boolean
+    autoExportPrimeExportCacheThreshold: number
+    autoExportPrimeExportCacheBatch: number
+    autoExportPrimeExportCacheDelay: number
+    relativeFilePaths: boolean
+    sorted: boolean
+    git: string
+    mapUnicode: string
+    mapText: string
+    mapMath: string
+    newTranslatorsAskRestart: boolean
+    platform: string
+    client: string
+  }
+  public skipFields: string[]
+  public skipField: Record<string, boolean>
+  public verbatimFields?: string[]
+  public csquotes: { open: string, close: string }
+
+  public options: {
+    quickCopyMode?: string
+    dropAttachments?: boolean
+    exportPath?: string
+    exportNotes?: boolean
+    exportFileData?: boolean
+    useJournalAbbreviation?: boolean
+    keepUpdated?: boolean
+    Title?: boolean
+    Authors?: boolean
+    Year?: boolean
+  }
+
+  public BetterBibLaTeX?: boolean                   // tslint:disable-line:variable-name
+  public BetterBibTeX?: boolean                     // tslint:disable-line:variable-name
+  public BetterTeX: boolean                         // tslint:disable-line:variable-name
+  public BetterCSLJSON?: boolean                    // tslint:disable-line:variable-name
+  public BetterCSLYAML?: boolean                    // tslint:disable-line:variable-name
+  public BetterCSL?: boolean                        // tslint:disable-line:variable-name
+  public BetterBibTeXCitationKeyQuickCopy?: boolean // tslint:disable-line:variable-name
+  public BetterBibTeXJSON?: boolean                 // tslint:disable-line:variable-name
+  public Citationgraph?: boolean                    // tslint:disable-line:variable-name
+  public Collectednotes?: boolean                   // tslint:disable-line:variable-name
+  // public TeX: boolean
+  // public CSL: boolean
+
+  public caching: boolean
+  public cache: {
+    hits: number
+    misses: number
+  }
+
+  public header: {
+    translatorID: string
+    translatorType: number
+    label: string
+    description: string
+    creator: string
+    target: string
+    minVersion: string
+    maxVersion: string
+    priority: number
+    inRepository: boolean
+    lastUpdated: string
+    browserSupport: string
+
+    displayOptions: {
+      exportNotes: boolean
+      exportFileData: boolean
+      useJournalAbbreviation: boolean
+      keepUpdated: boolean
+      quickCopyMode: string
+      Title: boolean
+      Authors: boolean
+      Year: boolean
+    }
+
+    configOptions: {
+      getCollections: boolean
+      async: boolean
+    }
+  }
+
+  public collections: Record<string, ZoteroCollection>
+  public references: Array<{citekey: string, reference: string}>
+
+  public isJurisM: boolean
+  public isZotero: boolean
+  public unicode: boolean
+  public platform: string
+  public paths: {
+    caseSensitive: boolean
+    sep: string
+  }
+  public debugEnabled: boolean
+
+  public stringCompare: (a: string, b: string) => number
+
+  constructor() {
+    this.header = ZOTERO_TRANSLATOR_INFO
+
+    this[this.header.label.replace(/[^a-z]/ig, '')] = true
+    this.BetterTeX = this.BetterBibTeX || this.BetterBibLaTeX
+    this.BetterCSL = this.BetterCSLJSON || this.BetterCSLYAML
+    this.preferences = preferences
+    this.options = this.header.displayOptions
+
+    this.stringCompare = (new Intl.Collator('en')).compare
+
+    this.debugEnabled = Zotero.BetterBibTeX.debugEnabled()
+    this.unicode = true // set by Better BibTeX later
+
+    this.references = []
+  }
+
+  public init(mode: TranslatorMode) {
+    this.platform = Zotero.getHiddenPref('better-bibtex.platform')
+    this.isJurisM = Zotero.getHiddenPref('better-bibtex.client') === 'jurism'
+    this.isZotero = !this.isJurisM
+
+    this.paths = {
+      caseSensitive: this.platform !== 'mac' && this.platform !== 'win',
+      sep: this.platform === 'win' ? '\\' : '/',
+    }
+
+    for (const key in this.options) {
+      if (typeof this.options[key] === 'boolean') {
+        this.options[key] = !!Zotero.getOption(key)
+      } else {
+        this.options[key] = Zotero.getOption(key)
+      }
+    }
+
+    // special handling
+    if (mode === 'export') {
+      this.cache = {
+        hits: 0,
+        misses: 0,
+      }
+      this.options.exportPath = Zotero.getOption('exportPath')
+      if (this.options.exportPath && this.options.exportPath.endsWith(this.paths.sep)) this.options.exportPath = this.options.exportPath.slice(0, -1)
+    }
+
+    for (const pref of Object.keys(this.preferences)) {
+      let value
+
+      try {
+        value = Zotero.getOption(`preference_${pref}`)
+      } catch (err) {
+        value = undefined
+      }
+
+      if (typeof value === 'undefined') value = Zotero.getHiddenPref(`better-bibtex.${pref}`)
+
+      this.preferences[pref] = value
+    }
+
+    // special handling
+    this.skipFields = this.preferences.skipFields.toLowerCase().trim().split(/\s*,\s*/).filter(s => s)
+    this.skipField = this.skipFields.reduce((acc, field) => { acc[field] = true; return acc }, {})
+
+    this.verbatimFields = this.preferences.verbatimFields.toLowerCase().trim().split(/\s*,\s*/).filter(s => s)
+
+    if (!this.verbatimFields.length) this.verbatimFields = null
+    this.csquotes = this.preferences.csquotes ? { open: this.preferences.csquotes[0], close: this.preferences.csquotes[1] } : null
+
+    this.preferences.testing = Zotero.getHiddenPref('better-bibtex.testing')
+
+    Zotero.debug(`prefs loaded: ${JSON.stringify(this.preferences, null, 2)}`)
+    Zotero.debug(`options loaded: ${JSON.stringify(this.options, null, 2)}`)
+
+    if (mode === 'export') {
+      this.caching = !(
+        // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
+        this.options.exportFileData
+
+        // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
+        || (this.BetterTeX && this.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
+
+        // if you're looking at this.options.exportPath in the postscript you're probably outputting something different based on it
+        || ((this.preferences.postscript || '').indexOf('Translator.options.exportPath') >= 0)
+
+        // relative file paths are going to be different based on the file being exported to
+        || this.preferences.relativeFilePaths
+      )
+      Zotero.debug(`export caching: ${this.caching}`)
+    }
+
+    this.collections = {}
+    if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
+      let collection
+      while (collection = Zotero.nextCollection()) {
+        const children = collection.children || collection.descendents || []
+        const key = (collection.primary ? collection.primary : collection).key
+
+        this.collections[key] = {
+          id: collection.id,
+          key,
+          parent: collection.fields.parentKey,
+          name: collection.name,
+          items: collection.childItems,
+          collections: children.filter(coll => coll.type === 'collection').map(coll => coll.key),
+          // items: (item.itemID for item in children when item.type != 'collection')
+          // descendents: undefined
+          // children: undefined
+          // childCollections: undefined
+          // primary: undefined
+          // fields: undefined
+          // type: undefined
+          // level: undefined
+        }
+      }
+
+      for (collection of Object.values(this.collections)) {
+        if (collection.parent && !this.collections[collection.parent]) {
+          collection.parent = false
+          Zotero.debug(`BBT translator: collection with key ${collection.key} has non-existent parent ${collection.parent}, assuming root collection`)
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { Reference } from './bibtex/reference'
 import { Exporter } from './lib/exporter'
@@ -163,7 +164,8 @@ Reference.prototype.typeMap = {
 
 const months = [ 'jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec' ]
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
   Exporter.prepare_strings()
 
   // Zotero.write(`\n% ${Translator.header.label}\n`)
@@ -283,7 +285,7 @@ Translator.doExport = () => {
   Zotero.write('\n')
 }
 
-Translator.detectImport = async () => {
+export async function detectImport() {
   const input = Zotero.read(102400) // tslint:disable-line:no-magic-numbers
   const bib = await bibtexParser.chunker(input, { max_entries: 1, async: true })
   return bib.find(chunk => chunk.entry)
@@ -875,12 +877,11 @@ class ZoteroItem {
 //   @item.publicationTitle = value
 //   return true
 
-Translator.initialize = () => {
+export async function doImport() {
   Reference.installPostscript()
+  Translator.init('import')
   Translator.unicode = !Translator.preferences.asciiBibTeX
-}
 
-Translator.doImport = async () => {
   let read
   let input = ''
   while ((read = Zotero.read(0x100000)) !== false) { // tslint:disable-line:no-magic-numbers

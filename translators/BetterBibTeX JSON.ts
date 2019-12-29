@@ -1,13 +1,14 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
+
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { debug } from './lib/debug'
 import * as itemfields from '../gen/itemfields'
 
 const chunkSize = 0x100000
 
-Translator.detectImport = () => {
+export function detectImport() {
   let str
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
@@ -26,7 +27,9 @@ Translator.detectImport = () => {
   return true
 }
 
-Translator.doImport = async () => {
+export async function doImport() {
+  Translator.init('import')
+
   let str
   let json = ''
   while ((str = Zotero.read(chunkSize)) !== false) {
@@ -103,7 +106,9 @@ Translator.doImport = async () => {
   }
 }
 
-Translator.doExport = () => {
+export function doExport() {
+  Translator.init('export')
+
   let item
   const data = {
     config: {

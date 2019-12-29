@@ -254,10 +254,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       installed = null
     }
 
-    const translator = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
-    const [ , metadata, code ] = translator.match(/^([\s\S]+?}\n\n)([\s\S]+)/)
-    header = JSON.parse(metadata)
-    delete header.description // why did I have this?
+    header = JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.json`))
+    const code = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
 
     if (installed && installed.configOptions && installed.configOptions.hash === header.configOptions.hash) {
       log.debug('Translators.install:', header.label, 'not reinstalling', header.configOptions.hash)

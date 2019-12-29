@@ -1,4 +1,5 @@
-declare const Translator: ITranslator
+import { Translator } from './lib/translator'
+export { Translator }
 
 import { CSLExporter as Exporter } from './csl/csl'
 
@@ -59,5 +60,9 @@ Exporter.serialize = csl => JSON.stringify(csl)
 
 Exporter.flush = items => `[\n${(items.map(item => `  ${item}`)).join(',\n')}\n]\n`
 
-Translator.initialize = () => Exporter.initialize()
-Translator.doExport = () => Exporter.doExport()
+export function doExport() {
+  Translator.init('export')
+
+  Exporter.initialize()
+  Exporter.doExport()
+}

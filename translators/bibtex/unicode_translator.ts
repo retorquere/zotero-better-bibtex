@@ -1,7 +1,6 @@
-declare const Translator: ITranslator
-
 declare const Zotero: any
 
+import { Translator } from '../lib/translator'
 import { debug } from '../lib/debug'
 
 import HE = require('he')
