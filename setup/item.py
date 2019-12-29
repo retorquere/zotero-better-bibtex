@@ -33,9 +33,15 @@ for client in data.keys():
 
     for field in spec.fields:
       if field.baseField:
-        if not field.baseField in alias: alias[field.baseField] = set()
-        alias[field.baseField].add(field.field)
         fieldName = field.baseField
+
+        if not field.baseField in alias: alias[field.baseField] = []
+        fieldAlias = alias[field.baseField]
+        if any(a[1] == field.field for a in fieldAlias):
+          alias[field.baseField] = [(None, field.field)] + [a for a in fieldAlias if a[1] != field.field]
+        else:
+          fieldAlias.append((client, field.field))
+
       else:
         fieldName = field.field
 
@@ -63,17 +69,19 @@ with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
       print(f'    {field}: {client},', file=f)
     print('  },', file=f)
   print('}\n', file=f)
+
   print('function unalias(item) {', file=f)
-  print('  for (field in item) {', file=f)
-  print('    switch(field) {', file=f)
   for field, aliases in sorted(alias.items(), key=lambda x: x[0]):
-    for alias in sorted(aliases):
-      print(f"      case '{alias}':", file=f)
-      print(f'        item.{field} = item.{field} || item.{alias}', file=f)
-      print(f'        delete item.{alias}', file=f)
-      print(f'        break', file=f)
-  print('    }', file=f)
-  print('  }', file=f)
+    if not any(alias[0] for alias in aliases if alias[0] is not None):
+      print(f'  item.{field} = item.{field} || {" || ".join([a[1] for a in aliases])}', file=f)
+      for client, alias in aliases:
+        print(f'  delete item.{alias}', file=f)
+    else:
+      for client, alias in sorted(aliases, key=lambda x: x[1]):
+        if client:
+          print(f"  if ({client} && typeof item.{alias} !== 'undefined') {{ item.{field} = item.{alias}; delete item.{alias} }}", file=f)
+        else:
+          print(f"  if (typeof item.{alias} !== 'undefined') {{ item.{field} = item.{alias}; delete item.{alias} }}", file=f)
   print('}', file=f)
 
   print('''\n// import & export translators expect different creator formats... nice
