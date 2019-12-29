@@ -23,12 +23,18 @@ alias = {}
 itemfields = set()
 for client in data.keys():
   for spec in data[client].itemTypes:
-    if not valid[spec.itemType]: valid[spec.itemType] = DefaultMunch(None, {'itemType': 'true', 'tags': 'true'})
+    if not valid[spec.itemType]:
+      if spec.itemType == 'note':
+        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
+      elif spec.itemType == 'attachment':
+        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
+      else:
+        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
 
     for field in spec.fields:
       if field.baseField:
         if not field.baseField in alias: alias[field.baseField] = set()
-        alias[field.baseField].add(f'item.{field.field}')
+        alias[field.baseField].add(field.field)
         fieldName = field.baseField
       else:
         fieldName = field.field
@@ -58,8 +64,16 @@ with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
     print('  },', file=f)
   print('}\n', file=f)
   print('function unalias(item) {', file=f)
+  print('  for (field in item) {', file=f)
+  print('    switch(field) {', file=f)
   for field, aliases in sorted(alias.items(), key=lambda x: x[0]):
-    print(f'  item.{field} = item.{field} || {" || ".join(sorted(aliases))}', file=f)
+    for alias in sorted(aliases):
+      print(f"      case '{alias}':", file=f)
+      print(f'        item.{field} = item.{field} || item.{alias}', file=f)
+      print(f'        delete item.{alias}', file=f)
+      print(f'        break', file=f)
+  print('    }', file=f)
+  print('  }', file=f)
   print('}', file=f)
 
   print('''\n// import & export translators expect different creator formats... nice
