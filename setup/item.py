@@ -23,7 +23,7 @@ alias = {}
 itemfields = set()
 for client in data.keys():
   for spec in data[client].itemTypes:
-    if not valid[spec.itemType]: valid[spec.itemType] = DefaultMunch(None, {})
+    if not valid[spec.itemType]: valid[spec.itemType] = DefaultMunch(None, {'itemType': 'true', 'tags': 'true'})
 
     for field in spec.fields:
       if field.baseField:
