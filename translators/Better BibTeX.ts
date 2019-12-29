@@ -394,8 +394,8 @@ class ZoteroItem {
     return true
   }
 
-  protected $publisher(value) {
-    const field = ['publisher', 'institution'].find(f => this.validFields[f]) // difference between jurism and zotero
+  protected $publisher(value, field) {
+    field = [field].concat(['institution', 'publisher']).find(f => this.validFields[f]) // difference between jurism and zotero. Prepending 'field' makes the import prefer exact matches to the input
     if (!field) return false
 
     this.item[field] = [
@@ -406,8 +406,8 @@ class ZoteroItem {
 
     return true
   }
-  protected $institution(value) { return this.$publisher(value) }
-  protected $school(value) { return this.$publisher(value) }
+  protected $institution(value, field) { return this.$publisher(value, field) }
+  protected $school(value, field) { return this.$publisher(value, field) }
 
   protected $address(value) { return this.set('place', value) }
   protected $location(value) {
