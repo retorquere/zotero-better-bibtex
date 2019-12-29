@@ -15,7 +15,6 @@ import unicodeMapping = require('unicode2latex')
   Only testing ascii.text because that's the only place (so far)
   that these have turned up.
 */
-
 if (Translator.BetterBibTeX) {
   let m
   for (const tex of (Object.values(unicodeMapping.ascii) as Array<{text: string}>)) {
@@ -282,7 +281,7 @@ const htmlConverter = new class HTMLConverter {
         latex = latex.slice(0, latex.length - m[0].length) + m[1] + m[3] // tslint:disable-line no-magic-numbers
       }
 
-      const pkg = mapped[mode + 'package']
+      const pkg = mapped[mode + 'package'] || mapped.package
       if (pkg) this.packages[pkg] = true
     }
 

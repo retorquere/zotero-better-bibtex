@@ -153,6 +153,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
   public stringCompare: (a: string, b: string) => number
 
+  public initialized = false
+
   constructor() {
     this.header = ZOTERO_TRANSLATOR_INFO
 
@@ -165,7 +167,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.stringCompare = (new Intl.Collator('en')).compare
 
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled()
-    this.unicode = true // set by Better BibTeX later
 
     this.references = []
   }
@@ -227,6 +228,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     Zotero.debug(`options loaded: ${JSON.stringify(this.options, null, 2)}`)
 
     if (mode === 'export') {
+      this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
+
       this.caching = !(
         // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
         this.options.exportFileData
@@ -275,5 +278,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
         }
       }
     }
+
+    this.initialized = true
   }
 }

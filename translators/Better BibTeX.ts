@@ -373,7 +373,6 @@ class ZoteroItem {
   }
 
   protected $title(value) {
-    debug('got title:', value, Translator.preferences)
     let title = this.bibtex.fields.title
     if (this.bibtex.fields.titleaddon) title = title.concat(this.bibtex.fields.titleaddon)
     if (this.bibtex.fields.subtitle) title = title.concat(this.bibtex.fields.subtitle)
@@ -880,7 +879,6 @@ class ZoteroItem {
 export async function doImport() {
   Reference.installPostscript()
   Translator.init('import')
-  Translator.unicode = !Translator.preferences.asciiBibTeX
 
   let read
   let input = ''

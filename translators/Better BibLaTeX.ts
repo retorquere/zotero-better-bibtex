@@ -258,7 +258,6 @@ const patent = new class {
 
 export function doExport() {
   Translator.init('export')
-  Translator.unicode = !Translator.preferences.asciiBibLaTeX
   Reference.installPostscript()
   Exporter.prepare_strings()
 
