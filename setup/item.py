@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 
-print('Generating field mapping for CSL variables...')
 import os
 import urllib.request
 import json
@@ -18,52 +17,69 @@ data = DefaultMunch.fromDict({
   'jurism': load('https://raw.githubusercontent.com/Juris-M/zotero-schema/master/schema-jurism.json')
 }, None)
 
-valid = DefaultMunch(None, {})
-alias = {}
-itemfields = set()
+print('Generating item field metadata...')
+Valid = DefaultMunch(None, {})
+Alias = {}
+Itemfields = set()
 for client in data.keys():
   for spec in data[client].itemTypes:
-    if not valid[spec.itemType]:
+    if not Valid[spec.itemType]:
       if spec.itemType == 'note':
-        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
+        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags note id itemID dateAdded dateModified'.split(' ')})
       elif spec.itemType == 'attachment':
-        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
+        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType tags id itemID dateAdded dateModified'.split(' ')})
       else:
-        valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
+        Valid[spec.itemType] = DefaultMunch(None, {field: 'true' for field in 'itemType creators tags attachments notes seeAlso id itemID dateAdded dateModified multi'.split(' ')})
 
     for field in spec.fields:
       if field.baseField:
+        if not field.baseField in Alias: Alias[field.baseField] = Munch(zotero=set(), jurism=set())
+        Alias[field.baseField][client].add(field.field)
+
         fieldName = field.baseField
-
-        if not field.baseField in alias: alias[field.baseField] = []
-        fieldAlias = alias[field.baseField]
-        if any(a[1] == field.field for a in fieldAlias):
-          alias[field.baseField] = [(None, field.field)] + [a for a in fieldAlias if a[1] != field.field]
-        else:
-          fieldAlias.append((client, field.field))
-
       else:
         fieldName = field.field
 
-      if spec.itemType not in ['note', 'attachment']: itemfields.add(fieldName)
+      if spec.itemType not in ['note', 'attachment']: Itemfields.add(fieldName)
 
-      if valid[spec.itemType][fieldName]:
-        valid[spec.itemType][fieldName] = 'true'
+      if Valid[spec.itemType][fieldName]:
+        Valid[spec.itemType][fieldName] = 'true'
       else:
-        valid[spec.itemType][fieldName] = client
+        Valid[spec.itemType][fieldName] = client
+
     if len(spec.get('creatorTypes', [])) > 0:
-      if valid[spec.itemType]['creators']:
-        valid[spec.itemType]['creators'] = 'true'
+      if Valid[spec.itemType]['creators']:
+        Valid[spec.itemType]['creators'] = 'true'
       else:
-        valid[spec.itemType]['creators'] = client
+        Valid[spec.itemType]['creators'] = client
+
+for field, aliases in list(Alias.items()):
+  Alias[field] = Munch(
+    both = [alias for alias in aliases.zotero if alias in aliases.jurism],
+    zotero = [alias for alias in aliases.zotero if alias not in aliases.jurism],
+    jurism = [alias for alias in aliases.jurism if alias not in aliases.zotero]
+  )
+
+def replace(indent, aliases):
+  aliases = [f'item.{alias}' for alias in aliases]
+  replacement = ''
+
+  if len(aliases) > 1:
+    replacement += f"  {indent}if (v = ({' || '.join(aliases)})) item.{field} = v\n"
+  else:
+    replacement += f"  {indent}if ({aliases[0]}) item.{field} = {aliases[0]}\n"
+
+  for alias in aliases:
+    replacement += f'  {indent}delete {alias}\n'
+  replacement += '\n'
+  return replacement
 
 with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
-  print('// tslint:disable:one-line\n', file=f)
   print('declare const Zotero: any\n', file=f)
   print("const jurism = Zotero.Utilities.getVersion().includes('m')", file=f)
   print('const zotero = !jurism\n', file=f)
   print('export const valid = {', file=f)
-  for itemType, fields in sorted(valid.items(), key=lambda x: x[0]):
+  for itemType, fields in sorted(Valid.items(), key=lambda x: x[0]):
     print(f'  {itemType}: {{', file=f)
     for field, client in sorted(fields.items(), key=lambda x: x[0]):
       print(f'    {field}: {client},', file=f)
@@ -71,17 +87,19 @@ with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
   print('}\n', file=f)
 
   print('function unalias(item) {', file=f)
-  for field, aliases in sorted(alias.items(), key=lambda x: x[0]):
-    if not any(alias[0] for alias in aliases if alias[0] is not None):
-      print(f'  item.{field} = item.{field} || {" || ".join([a[1] for a in aliases])}', file=f)
-      for client, alias in aliases:
-        print(f'  delete item.{alias}', file=f)
-    else:
-      for client, alias in sorted(aliases, key=lambda x: x[1]):
-        if client:
-          print(f"  if ({client} && typeof item.{alias} !== 'undefined') {{ item.{field} = item.{alias}; delete item.{alias} }}", file=f)
+  unalias = '  let v\n\n'
+  for client in ['both', 'zotero', 'jurism']:
+    if client != 'both': unalias += f'  if ({client}) {{\n'
+
+    for field, aliases in Alias.items():
+      if len(aliases[client]) > 0:
+        if client == 'both':
+          unalias += replace('', aliases[client])
         else:
-          print(f"  if (typeof item.{alias} !== 'undefined') {{ item.{field} = item.{alias}; delete item.{alias} }}", file=f)
+          unalias += replace('  ', aliases[client])
+
+    if client != 'both': unalias = unalias.rstrip() + '\n  }\n\n'
+  print(unalias.rstrip(), file=f)
   print('}', file=f)
 
   print('''\n// import & export translators expect different creator formats... nice
@@ -127,6 +145,7 @@ export function simplifyForImport(item) {
   return item
 }''', file=f)
 
+print('Generating field mapping for CSL variables...')
 with open(os.path.join(root, 'gen', 'csl-mapping.json'), 'w') as f:
   schema = data.zotero
   mapping = Munch(
@@ -148,7 +167,7 @@ with open(os.path.join(root, 'gen', 'csl-mapping.json'), 'w') as f:
   json.dump(mapping, f, indent='  ')
 
 with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as f:
-  fields = '\n'.join(f'    {field}: string' for field in sorted(itemfields))
+  fields = '\n'.join(f'    {field}: string' for field in sorted(Itemfields))
   print("import { Fields } from '../../content/extra'", file=f)
   print(f'''declare global {{
   interface ISerializedItem {{
