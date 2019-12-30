@@ -257,7 +257,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     header = JSON.parse(Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.json`))
     const code = Zotero.File.getContentsFromURL(`resource://zotero-better-bibtex/${header.label}.js`)
 
-    if (installed && installed.configOptions && installed.configOptions.hash === header.configOptions.hash) {
+    if (installed?.configOptions?.hash === header.configOptions.hash) {
       log.debug('Translators.install:', header.label, 'not reinstalling', header.configOptions.hash)
       return false
 
