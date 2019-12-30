@@ -52,7 +52,7 @@ function expandWinVars(value) {
 }
 
 // https://searchfox.org/mozilla-central/source/toolkit/modules/subprocess/subprocess_win.jsm#135 doesn't seem to work on Windows.
-export async function pathSearch(bin) {
+export async function pathSearch(bin, installationDirectory: { mac?: string, win?: string } = {}) {
   const env = {
     path: [],
     pathext: [],
@@ -62,7 +62,10 @@ export async function pathSearch(bin) {
   if (Zotero.isWin) {
     env.sep = '\\'
 
-    env.path = getEnv('PATH').split(';').filter(p => p).map(expandWinVars)
+    env.path = []
+    if (installationDirectory.win) env.path.push(installationDirectory.win)
+    env.path = env.path.concat(getEnv('PATH').split(';').filter(p => p).map(expandWinVars))
+
     env.pathext = getEnv('PATHEXT').split(';').filter(pe => pe.length > 1 && pe.startsWith('.'))
     if (!env.pathext.length) {
       log.error('pathSearch: PATHEXT not set')
@@ -72,7 +75,11 @@ export async function pathSearch(bin) {
   } else {
     const ENV = Components.classes['@mozilla.org/process/environment;1'].getService(Components.interfaces.nsIEnvironment)
     env.sep = '/'
-    env.path = (ENV.get('PATH') || '').split(':').filter(p => p)
+
+    env.path = []
+    if (Zotero.isMac && installationDirectory.mac) env.path.push(installationDirectory.mac)
+    env.path = env.path.concat((ENV.get('PATH') || '').split(':').filter(p => p))
+
     env.pathext = ['']
 
   }

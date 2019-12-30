@@ -10,7 +10,7 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
   public texstudio: string
 
   public async init() {
-    this.texstudio = await pathSearch('texstudio')
+    this.texstudio = await pathSearch('texstudio', { mac: '/Applications/texstudio.app/Contents/MacOS' })
     this.enabled = !!this.texstudio
     if (this.enabled) {
       log.debug('TeXstudio: found at', this.texstudio)
