@@ -54,11 +54,13 @@ const htmlConverter = new class HTMLConverter {
 
     if (!this.mapping.initialized) {
       // translator is re-ran every time it's used, not cached ready-to-run, so safe to modify the mapping
+      debug('TODO: THIS WILL BE A PROBLEM FOR WORKERS')
       for (const c of Translator.preferences.ascii) {
         this.mapping[c] = unicodeMapping.ascii[c]
       }
 
       if (Translator.preferences.mapUnicode === 'conservative') {
+        debug('TODO: THIS TOO WILL BE A PROBLEM FOR WORKERS')
         for (const keep of Object.keys(switchMode).sort()) {
           const remove = switchMode[keep]
           const unicode = Translator.preferences[`map${keep[0].toUpperCase()}${keep.slice(1)}`]
