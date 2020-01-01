@@ -4,5 +4,6 @@ namespace BBTWorker {
     preferences: Record<string, any>
     options: Record<string, any>
     items: ISerializedItem[]
+    cslItems?: any[]
   }
 }
