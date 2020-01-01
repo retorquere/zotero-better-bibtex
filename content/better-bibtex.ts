@@ -258,13 +258,23 @@ function cacheSelector(itemID, options, prefs) {
 }
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
+
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
   titleCase(sandbox, text) { return titleCase(text) },
-  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  parseHTML(sandbox, text, options) {
+    options = {
+      ...options,
+      exportBraceProtection: Prefs.get('exportBraceProtection'),
+      csquotes: Prefs.get('csquotes'),
+      exportTitleCase: Prefs.get('exportTitleCase'),
+    }
+    return HTMLParser.parse(text.toString(), options)
+  },
   extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
 
@@ -321,7 +331,15 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 }
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  parseHTML(sandbox, text, options) {
+    options = {
+      ...options,
+      exportBraceProtection: Prefs.get('exportBraceProtection'),
+      csquotes: Prefs.get('csquotes'),
+      exportTitleCase: Prefs.get('exportTitleCase'),
+    }
+    return HTMLParser.parse(text.toString(), options)
+  },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
   parseDate(sandbox, date) { return DateParser.parse(date) },
 }
