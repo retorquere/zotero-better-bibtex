@@ -22,8 +22,13 @@ ValidFields = DefaultMunch(None, {})
 ValidTypes = {}
 Alias = {}
 Itemfields = set()
+ItemCreators = {}
 for client in data.keys():
+  ItemCreators[client] = {}
+
   for spec in data[client].itemTypes:
+    ItemCreators[client][spec.itemType] = [ct.creatorType for ct in spec.get('creatorTypes', [])]
+
     if spec.itemType in ValidTypes:
       ValidTypes[spec.itemType] = 'true'
     else:
@@ -208,3 +213,6 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
     multi: any
   }}
 }}''', file=f)
+
+with open(os.path.join(root, 'gen', 'item-creators.json'), 'w') as f:
+  json.dump(ItemCreators, f, indent='  ')

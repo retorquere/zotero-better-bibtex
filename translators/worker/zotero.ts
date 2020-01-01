@@ -7,25 +7,19 @@ import * as DateParser from '../../content/dateparser'
 import * as Extra from '../../content/extra'
 import { qualityReport } from '../../content/qr-check'
 import { titleCase } from '../../content/title-case'
+import * as itemCreators from '../../gen/item-creators.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-const params: Record<string, string | boolean> = (ctx.location.search || '')
+const params: { client: string, version: string, platform: string, translator: string } = (ctx.location.search || '')
   .replace(/^\?/, '') // remove leading question mark if present
   .split('&') // split into k-v pairs
   .filter(kv => kv) // there might be none
   .map(kv => kv.split('=').map(decodeURIComponent)) // decode k & v
   .reduce((acc, kv) => {
-    switch (kv.length) {
-      case 1:
-        acc[kv[0]] = true
-        break
-      case 2:
-        acc[kv[0]] = kv[1]
-        break
-    }
+    if (kv.length == 2) acc[kv[0]] = kv[1]
     return acc
-  }, {})
+  }, { client: '', version: '', platform: '', translator: '' })
 
 class WorkerZoteroBetterBibTeX {
   private timestamp: number
@@ -106,6 +100,52 @@ class WorkerZoteroUtilities {
 
   public getVersion() {
     return params.version
+  }
+
+  public strToISO(str) {
+    let date = DateParser.parse(str)
+    if (date.type === 'interval') date = date.from
+
+    if (!date.year) return false
+
+    let iso = `${date.year}`.padStart(4, '0') // tslint:disable-line:no-magic-numbers
+
+    if (typeof date.month === 'number') {
+      const month = `${date.month + 1}`.padStart(2, '0')
+      iso += `-${month}`
+      if (date.day) {
+        const day = `${date.day}`.padStart(2, '0')
+        iso += `-${day}`
+      }
+    }
+    return iso
+  }
+
+  public text2html(str: string, singleNewlineIsParagraph: boolean) {
+    str = str
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+
+    if (singleNewlineIsParagraph) {
+      // \n => <p>
+      str = `<p>${str.replace(/\n/g, '</p><p>').replace(/  /g, '&nbsp; ')}</p>`
+    } else {
+      // \n\n => <p>, \n => <br/>
+      str = `<p>${str.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br/>').replace(/  /g, '&nbsp; ')}</p>`
+    }
+
+    return str.replace(/<p>\s*<\/p>/g, '<p>&nbsp;</p>')
+  }
+
+  public getCreatorsForType(itemType) {
+    return itemCreators[(params.client as string)][itemType]
+  }
+
+  public itemToCSLJSON(item) {
+    return Zotero.config.cslItems[item.itemID]
   }
 }
 
