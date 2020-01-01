@@ -82,7 +82,7 @@ def replace(indent, aliases):
 
 with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
   print('declare const Zotero: any\n', file=f)
-  print("const jurism = Zotero.Utilities.getVersion().includes('m') // not great, but currently no other way to detect client type", file=f)
+  print("const jurism = Zotero.BetterBibTeX.client() === 'jurism'", file=f)
   print('const zotero = !jurism\n', file=f)
   print('export const valid = {', file=f)
   print('  type: {', file=f)
