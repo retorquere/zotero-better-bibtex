@@ -45,22 +45,22 @@ class WorkerZoteroBetterBibTeX {
     return true
   }
 
-  qrCheck(value, test, params = null) {
-    return qualityReport(value, test, params)
+  public qrCheck(value, test, options = null) {
+    return qualityReport(value, test, options)
   }
 
-  parseDate(date) {
+  public parseDate(date) {
     return DateParser.parse(date)
   }
-  isEDTF(date, minuteLevelPrecision = false) {
+  public isEDTF(date, minuteLevelPrecision = false) {
     return DateParser.isEDTF(date, minuteLevelPrecision)
   }
 
-  titleCase(text) {
+  public titleCase(text) {
     return titleCase(text)
   }
 
-  extractFields(sandbox, item) {
+  public extractFields(sandbox, item) {
     return Extra.get(item.extra)
   }
 
@@ -90,7 +90,7 @@ class WorkerZoteroBetterBibTeX {
     Zotero.debug(`+${diff} ${_msg}`)
   }
 
-  parseHTML(text, options) {
+  public parseHTML(text, options) {
     options = {
       ...options,
       exportBraceProtection: Zotero.getHiddenPref('exportBraceProtection'),
