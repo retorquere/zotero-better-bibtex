@@ -489,7 +489,7 @@ export function doExport() {
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
-    if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate), enc: 'date' })
+    if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
     ref.add({
       name: 'date',
