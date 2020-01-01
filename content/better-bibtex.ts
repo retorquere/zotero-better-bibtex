@@ -329,7 +329,10 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
     return true
   },
 }
+
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
+  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
+
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
   parseHTML(sandbox, text, options) {
     options = {

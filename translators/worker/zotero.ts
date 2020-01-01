@@ -151,3 +151,5 @@ export function onmessage(e: { data: BBTWorker.Config }) {
   }
   ctx.postMessage({ kind: 'export', output: Zotero.output })
 }
+
+ctx.importScripts(`resource://zotero-better-bibtex/${params.translator}.js`)
