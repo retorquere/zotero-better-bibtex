@@ -1,5 +1,8 @@
 declare const doExport: () => void
 
+importScripts('resource://gre/modules/osfile.jsm')
+declare const OS: any
+
 import XRegExp = require('xregexp')
 import stringify = require('json-stringify-safe')
 import { HTMLParser } from '../../content/markupparser'
@@ -11,15 +14,15 @@ import * as itemCreators from '../../gen/item-creators.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-const params: { client: string, version: string, platform: string, translator: string } = (ctx.location.search || '')
+const params: { client: string, version: string, platform: string, translator: string, output: string } = (ctx.location.search || '')
   .replace(/^\?/, '') // remove leading question mark if present
   .split('&') // split into k-v pairs
   .filter(kv => kv) // there might be none
   .map(kv => kv.split('=').map(decodeURIComponent)) // decode k & v
   .reduce((acc, kv) => {
-    if (kv.length == 2) acc[kv[0]] = kv[1]
+    if (kv.length === 2) acc[kv[0]] = kv[1]
     return acc
-  }, { client: '', version: '', platform: '', translator: '' })
+  }, { client: '', version: '', platform: '', translator: '', output: '' })
 
 class WorkerZoteroBetterBibTeX {
   private timestamp: number
@@ -93,14 +96,6 @@ class WorkerZoteroBetterBibTeX {
     }
     return HTMLParser.parse(text.toString(), options)
   }
-}
-
-class WorkerZoteroUtilities {
-  public XRegExp = XRegExp // tslint:disable-line:variable-name
-
-  public getVersion() {
-    return params.version
-  }
 
   public strToISO(str) {
     let date = DateParser.parse(str)
@@ -119,6 +114,14 @@ class WorkerZoteroUtilities {
       }
     }
     return iso
+  }
+}
+
+class WorkerZoteroUtilities {
+  public XRegExp = XRegExp // tslint:disable-line:variable-name
+
+  public getVersion() {
+    return params.version
   }
 
   public text2html(str: string, singleNewlineIsParagraph: boolean) {
@@ -152,6 +155,8 @@ class WorkerZoteroUtilities {
 class WorkerZotero {
   public config: BBTWorker.Config
   public output = ''
+  public file: any = null
+  private enc = new TextEncoder
 
   public Utilities = new WorkerZoteroUtilities // tslint:disable-line:variable-name
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // tslint:disable-line:variable-name
@@ -169,7 +174,11 @@ class WorkerZotero {
   }
 
   public write(str) {
-    this.output += str
+    if (this.file) {
+      Zotero.file.write(this.enc.encode(str).buffer)
+    } else {
+      this.output += str
+    }
   }
 
   public nextItem() {
@@ -183,8 +192,11 @@ export function onmessage(e: { data: BBTWorker.Config }) {
   Zotero.config = e.data
   Zotero.config.preferences.platform = params.platform
   Zotero.config.preferences.client = params.client
+
   try {
+    if (params.output) Zotero.file = OS.File.open(params.output, { write: true })
     doExport()
+    if (Zotero.file) Zotero.file.close()
   } catch (err) {
     ctx.postMessage({ kind: 'error', message: `${err}`, stack: err.stack })
     return
