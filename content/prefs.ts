@@ -15,7 +15,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
   public testing: boolean
   public client: 'zotero' | 'jurism'
-  public platform: 'win' | 'lin' | 'mac'
+  public platform: 'win' | 'lin' | 'mac' | 'unix'
 
   private prefix = 'translators.better-bibtex'
 
@@ -61,7 +61,7 @@ export let Preferences = new class { // tslint:disable-line:variable-name
 
     // no other way for translators to know this. Set after the defaults
     this.set('client', this.client = ZOTERO_CONFIG.GUID.replace(/@.*/, '').replace('-', ''))
-    this.set('platform', this.platform = Zotero.platform.toLowerCase().slice(0, 3)) // tslint:disable-line:no-magic-numbers
+    this.set('platform', this.platform = Zotero.isWin ? 'win' : (Zotero.isMac ? 'mac' : (Zotero.isLinux ? 'lin' : 'unix')))
   }
 
   public set(pref, value) {
@@ -82,6 +82,14 @@ export let Preferences = new class { // tslint:disable-line:variable-name
       log.error('Prefs.clear', pref, err)
     }
     return this.get(pref)
+  }
+
+  public all() {
+    const all = {...defaults}
+    for (const name of Object.keys(all)) {
+      all[name] = this.get(name)
+    }
+    return all
   }
 
   private key(pref) { return `${this.prefix}.${pref}` }

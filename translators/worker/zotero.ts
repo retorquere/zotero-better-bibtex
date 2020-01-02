@@ -98,22 +98,7 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public strToISO(str) {
-    let date = DateParser.parse(str)
-    if (date.type === 'interval') date = date.from
-
-    if (!date.year) return false
-
-    let iso = `${date.year}`.padStart(4, '0') // tslint:disable-line:no-magic-numbers
-
-    if (typeof date.month === 'number') {
-      const month = `${date.month + 1}`.padStart(2, '0')
-      iso += `-${month}`
-      if (date.day) {
-        const day = `${date.day}`.padStart(2, '0')
-        iso += `-${day}`
-      }
-    }
-    return iso
+    return DateParser.strToISO(str)
   }
 }
 

@@ -83,7 +83,7 @@ function stripTime(date) {
 }
 
 export function parse(value, toplevel = true) {
-  value = value.trim()
+  value = (value || '').trim()
 
   let parsed, m
 
@@ -359,4 +359,24 @@ export function isEDTF(value, minuteLevelPrecision = false) {
   value = upgrade_edtf(value)
 
   return testEDTF(value) || (minuteLevelPrecision && testEDTF(`${value}:00`))
+}
+
+export function strToISO(str) {
+  let date = parse(str)
+  if (date.type === 'interval') date = date.from
+
+  if (typeof date.year !== 'number') return ''
+
+  let iso = `${date.year}`.padStart(4, '0') // tslint:disable-line:no-magic-numbers
+
+  if (typeof date.month === 'number') {
+    const month = `${date.month}`.padStart(2, '0')
+    iso += `-${month}`
+    if (date.day) {
+      const day = `${date.day}`.padStart(2, '0')
+      iso += `-${day}`
+    }
+  }
+
+  return iso
 }
