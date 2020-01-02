@@ -1,5 +1,6 @@
 declare const Zotero: any
 declare const Services: any
+declare class ChromeWorker extends Worker { }
 
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
@@ -157,6 +158,78 @@ export let Translators = new class { // tslint:disable-line:variable-name
       await timeout(delay)
     }
     log.debug(':cache:prime:done', fold.end)
+  }
+
+  public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: { library?: any, items?: any, collection?: any }, path = null) {
+    await Zotero.BetterBibTeX.ready
+
+    const translator = this.byId[translatorID].label
+    const params = Object.entries({
+      client: Prefs.client,
+      version: Zotero.version,
+      platform: Prefs.platform,
+      translator,
+      output: path || '',
+    }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
+
+    const prefix = `{${translator}}`
+    const deferred = Zotero.Promise.defer()
+    const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+
+    worker.onmessage = function(e) { // tslint:disable-line:only-arrow-functions
+      switch (e.data?.kind) {
+        case 'error':
+          log.error(e.data)
+          Zotero.debug(`${prefix} ${e.data.message}`)
+          deferred.reject(e.data.message)
+          break
+        case 'debug':
+          Zotero.debug(`${prefix} ${e.data.message}`)
+          break
+        case 'output':
+          deferred.resolve(e.data.output)
+          break
+      }
+    }
+
+    worker.onerror = function(e) { // tslint:disable-line:only-arrow-functions
+      Zotero.debug(`${prefix} error: ${e.message}`)
+      deferred.reject(e.message)
+    }
+
+    scope = this.items(scope)
+
+    const getter = new Zotero.Translate.ItemGetter
+
+    if (scope.library) {
+      getter.setAll(scope.library, true)
+
+    } else if (scope.items) {
+      getter.setItems(scope.items)
+
+    } else if (scope.collection) {
+      getter.setCollection(scope.collection, true)
+
+    } else {
+      getter.setItems([])
+
+    }
+
+    const config: BBTWorker.Config = {
+      preferences: Prefs.all(),
+      options: displayOptions,
+      items: [],
+      collections: [],
+      cslItems: [],
+    }
+    let elt: any
+
+    while (elt = getter.nextItem()) { config.items.push(elt) }
+    if (this.byId[translatorID].configOptions?.getCollections) { while (elt = getter.nextCollection()) { config.collections.push(elt) } }
+    if (translator.includes('CSL')) config.cslItems = config.items.map(Zotero.Utilities.itemToCSLJSON)
+
+    worker.postMessage(config)
+    return deferred.promise
   }
 
   public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
