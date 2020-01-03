@@ -12,6 +12,35 @@ import * as fold from './fold.json'
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
 
+/*
+function types(obj, path = '', acc: Record<string, string> = {}) {
+  const prototype = Object.prototype.toString.call(obj)
+  switch (prototype) {
+    case '[object Function]':
+      acc[path] = 'function'
+      return acc
+    case '[object Array]':
+      acc[path] = 'array'
+      for (let i = 0; i < obj.length; i++) {
+        types(obj[i], `${path}[${i}]`, acc)
+      }
+      return acc
+    case '[object Date]':
+      acc[path] = 'date'
+      return acc
+    case '[object Object]':
+      acc[path] = 'object'
+      for (const [k, v] of Object.entries(obj)) {
+        types(v, `${path}.${k}`, acc)
+      }
+      return acc
+    default:
+      acc[path] = typeof(obj)
+      return acc
+  }
+}
+*/
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
@@ -214,7 +243,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const getter = new Zotero.Translate.ItemGetter
 
     if (scope.library) {
-      getter.setAll(scope.library, true)
+      await getter.setAll(scope.library, true)
 
     } else if (scope.items) {
       getter.setItems(scope.items)
@@ -236,17 +265,37 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     let elt: any
-    while (elt = getter.nextItem()) { config.items.push(elt) }
-    if (this.byId[translatorID].configOptions?.getCollections) { while (elt = getter.nextCollection()) { config.collections.push(elt) } }
+    while (elt = getter.nextItem()) {
+      if (elt.itemType === 'attachment') {
+        delete elt.saveFile
+      } else if (elt.attachments) {
+        for (const att of elt.attachments) {
+          delete att.saveFile
+        }
+      }
+      config.items.push(elt)
+    }
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }
+    if (this.byId[translatorID].configOptions?.getCollections) {
+      while (elt = getter.nextCollection()) {
+        config.collections.push(elt)
+      }
+    }
 
-    log.debug('starting worker export', prefix, 'for', config.items.length, 'items')
+    log.debug('starting worker export', prefix, 'for', config.items.length, 'items in', config.collections.length, 'collections, from', Object.keys(scope))
 
-    worker.postMessage(config)
+    try {
+      worker.postMessage(JSON.parse(JSON.stringify(config)))
+    } catch (err) {
+      worker.terminate()
+      log.error(err)
+      deferred.reject(err)
+    }
+
     return deferred.promise
   }
 
