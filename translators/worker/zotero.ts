@@ -14,7 +14,7 @@ import * as itemCreators from '../../gen/item-creators.json'
 
 const ctx: DedicatedWorkerGlobalScope = self as any
 
-const params: { client: string, version: string, platform: string, translator: string, output: string } = (ctx.location.search || '')
+export const params: { client: string, version: string, platform: string, translator: string, output: string } = (ctx.location.search || '')
   .replace(/^\?/, '') // remove leading question mark if present
   .split('&') // split into k-v pairs
   .filter(kv => kv) // there might be none
@@ -26,6 +26,10 @@ const params: { client: string, version: string, platform: string, translator: s
 
 class WorkerZoteroBetterBibTeX {
   private timestamp: number
+
+  public worker() {
+    return true
+  }
 
   public client() {
     return params.client
@@ -62,9 +66,8 @@ class WorkerZoteroBetterBibTeX {
   }
 
   public debug(...msg) {
-    let diff = null
     const now = Date.now()
-    if (this.timestamp) diff = now - this.timestamp
+    const diff = typeof this.timestamp === 'number' ? now - this.timestamp : ''
     this.timestamp = now
 
     let _msg = ''
@@ -137,14 +140,97 @@ class WorkerZoteroUtilities {
   }
 }
 
+function makeDirs(path) {
+  if (OS.File.exists(path) && !OS.File.stat(path).isDir) path = OS.Path.dirname(path)
+
+  const { absolute, components } = OS.Path.split(path)
+
+  if (!absolute) throw new Error(`Cannot make relative ${path}`)
+
+  let partial = components.shift()
+  for (const component of components) {
+    partial = OS.Path.join(partial, component)
+    if (OS.File.exists(partial)) {
+      if (!OS.File.stat(path).isDir) throw new Error(`${partial} exists, but is not a directory`)
+      break
+    }
+    OS.File.makeDir(partial)
+  }
+}
+
+function saveFile(path, overwrite) {
+  if (!Zotero.exportDirectory) return
+
+  let target = OS.Path.Normalize(OS.Path.join(Zotero.exportDirectory, path))
+  if (!target.startsWith(Zotero.exportDirectory)) throw new Error(`${path} looks like a relative path`)
+
+  if (this.linkMode === 'imported_file' || (this.linkMode === 'imported_url' && this.contentType !== 'text/html')) {
+    makeDirs(target)
+    OS.File.copy(this.localPath, target, { noOverwrite: !overwrite })
+
+  } else if (this.linkMode === 'imported_url') {
+    target = OS.Path.dirname(target)
+    if (!overwrite && OS.File.exists(target)) throw new Error(`${path} would overwite ${target}`)
+
+    OS.File.removeDir(target, { ignoreAbsent: true })
+    makeDirs(target)
+
+    const snapshot = OS.Path.dirname(this.localPath)
+    const iterator = new OS.File.DirectoryIterator(snapshot)
+    let entry
+    try {
+      while (entry = iterator.next()) {
+        if (entry.isDir) throw new Error(`Unexpected directory ${entry.path} in snapshot`)
+        OS.File.copy(OS.Path.join(snapshot, entry.name), OS.path.join(target, entry.name), { noOverwrite: !overwrite })
+      }
+    } finally {
+      iterator.close()
+    }
+  }
+}
+
+function patchAttachments(item) {
+  if (item.itemType === 'attachment') {
+    item.saveFile = saveFile.bind(item)
+    Zotero.debug('attachment')
+  } else if (item.attachments) {
+    item.attachments.map(patchAttachments)
+  }
+}
+
 class WorkerZotero {
   public config: BBTWorker.Config
-  public output = ''
-  public file: any = null
-  private enc = new TextEncoder
+  public output: string
+  public exportDirectory: string
 
   public Utilities = new WorkerZoteroUtilities // tslint:disable-line:variable-name
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // tslint:disable-line:variable-name
+
+  public init(config) {
+    this.config = config
+    this.config.preferences.platform = params.platform
+    this.config.preferences.client = params.client
+    this.output = ''
+
+    this.config.items.map(patchAttachments)
+
+    if (params.output) {
+      this.exportDirectory = OS.Path.normalize(OS.Path.dirname(params.output))
+      makeDirs(this.exportDirectory)
+    } else {
+      this.exportDirectory = ''
+    }
+  }
+  public done() {
+    if (params.output) {
+      Zotero.debug(`writing ${this.output.length} bytes to ${params.output}`)
+      const encoder = new TextEncoder()
+      const array = encoder.encode(this.output)
+      OS.File.writeAtomic(params.output, array, {tmpPath: params.output + '.tmp'})
+    } else {
+      Zotero.debug(`returning ${this.output.length} bytes to caller`)
+    }
+  }
 
   public getHiddenPref(pref) {
     return this.config.preferences[pref.replace(/^better-bibtex\./, '')]
@@ -159,11 +245,7 @@ class WorkerZotero {
   }
 
   public write(str) {
-    if (this.file) {
-      Zotero.file.write(this.enc.encode(str).buffer)
-    } else {
-      this.output += str
-    }
+    this.output += str
   }
 
   public nextItem() {
@@ -174,19 +256,20 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
 
 export function onmessage(e: { data: BBTWorker.Config }) {
-  Zotero.config = e.data
-  Zotero.config.preferences.platform = params.platform
-  Zotero.config.preferences.client = params.client
-
-  try {
-    if (params.output) Zotero.file = OS.File.open(params.output, { write: true })
+  Zotero.BetterBibTeX.debug('got message:', e)
+  if (e.data?.items) {
+    Zotero.init(e.data)
+    Zotero.BetterBibTeX.debug('starting export for', Zotero.config.items.length, 'items to', params.output || 'text' )
     doExport()
-    if (Zotero.file) Zotero.file.close()
+    Zotero.BetterBibTeX.debug('export done, writing')
+    Zotero.done()
+    Zotero.BetterBibTeX.debug('writing done, bye!')
+    ctx.postMessage({ kind: 'export', output: params.output ? '' : Zotero.output })
+  }
+  /*
   } catch (err) {
     ctx.postMessage({ kind: 'error', message: `${err}`, stack: err.stack })
     return
   }
-  ctx.postMessage({ kind: 'export', output: Zotero.output })
+  */
 }
-
-ctx.importScripts(`resource://zotero-better-bibtex/${params.translator}.js`)

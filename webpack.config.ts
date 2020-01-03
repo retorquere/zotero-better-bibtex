@@ -6,6 +6,7 @@ import * as path from 'path'
 // import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
+import WrapperPlugin = require('wrapper-webpack-plugin')
 // import { LogUsedFilesPlugin } from './setup/plugins/log-used'
 
 /*
@@ -154,6 +155,10 @@ if (!process.env.MINITESTS) {
       plugins: [
         new CircularDependencyPlugin({ failOnError: true }),
         // new LogUsedFilesPlugin(label, 'translator'),
+        new WrapperPlugin({
+          test: /\.js$/,
+          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);', // otherwise it would be contained in the webpack IIFE
+        })
       ],
       context: path.resolve(__dirname, './translators'),
       entry: { Zotero: './worker/zotero.ts' },
@@ -164,7 +169,7 @@ if (!process.env.MINITESTS) {
         filename: '[name].js',
         devtoolLineToLine: true,
         pathinfo: true,
-        library: 'var { Zotero, onmessage }',
+        library: 'var { Zotero, onmessage, params }',
         libraryTarget: 'assign',
       },
     })
