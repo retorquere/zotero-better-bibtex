@@ -258,6 +258,8 @@ function cacheSelector(itemID, options, prefs) {
 }
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+  worker(sandbox) { return false },
+
   client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
 
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },

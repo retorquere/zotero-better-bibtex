@@ -19,6 +19,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byLabel: any
   public itemType: { note: number, attachment: number }
 
+  private workers = 0
+
   constructor() {
     Object.assign(this, translatorMetadata)
   }
@@ -163,16 +165,21 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: { library?: any, items?: any, collection?: any }, path = null) {
     await Zotero.BetterBibTeX.ready
 
-    const translator = this.byId[translatorID].label
+    const translator = this.byId[translatorID]
+
+    const ext = '.' + translator.target
+    if (!path.endsWith(ext)) path += ext
+
     const params = Object.entries({
       client: Prefs.client,
       version: Zotero.version,
       platform: Prefs.platform,
-      translator,
+      translator: translator.label,
       output: path || '',
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
 
-    const prefix = `{${translator}}`
+    this.workers += 1
+    const prefix = `{${translator.label} worker ${this.workers}}`
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
@@ -180,21 +187,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
       switch (e.data?.kind) {
         case 'error':
           log.error(e.data)
-          Zotero.debug(`${prefix} ${e.data.message}`)
+          Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
+          worker.terminate()
           break
         case 'debug':
           Zotero.debug(`${prefix} ${e.data.message}`)
           break
         case 'output':
           deferred.resolve(e.data.output)
+          worker.terminate()
           break
+        default:
+          Zotero.debug(`??? ${prefix} ${JSON.stringify(e)}`)
       }
     }
 
     worker.onerror = function(e) { // tslint:disable-line:only-arrow-functions
-      Zotero.debug(`${prefix} error: ${e.message}`)
+      Zotero.debug(`${prefix} error: ${e}`)
       deferred.reject(e.message)
+      worker.terminate()
     }
 
     scope = this.items(scope)
@@ -211,7 +223,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       getter.setCollection(scope.collection, true)
 
     } else {
-      getter.setItems([])
+      throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
 
     }
 
@@ -220,13 +232,19 @@ export let Translators = new class { // tslint:disable-line:variable-name
       options: displayOptions,
       items: [],
       collections: [],
-      cslItems: [],
+      cslItems: {},
     }
-    let elt: any
 
+    let elt: any
     while (elt = getter.nextItem()) { config.items.push(elt) }
     if (this.byId[translatorID].configOptions?.getCollections) { while (elt = getter.nextCollection()) { config.collections.push(elt) } }
-    if (translator.includes('CSL')) config.cslItems = config.items.map(Zotero.Utilities.itemToCSLJSON)
+    if (translator.label.includes('CSL')) {
+      for (const item of config.items) {
+        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+      }
+    }
+
+    log.debug('starting worker export', prefix, 'for', config.items.length, 'items')
 
     worker.postMessage(config)
     return deferred.promise

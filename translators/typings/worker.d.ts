@@ -4,6 +4,6 @@ namespace BBTWorker {
     options: any,
     items: any[]
     collections: any[]
-    cslItems?: any[]
+    cslItems?: Record<number, any>
   }
 }
