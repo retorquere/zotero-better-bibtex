@@ -189,15 +189,6 @@ function saveFile(path, overwrite) {
   }
 }
 
-function patchAttachments(item) {
-  if (item.itemType === 'attachment') {
-    item.saveFile = saveFile.bind(item)
-    Zotero.debug('attachment')
-  } else if (item.attachments) {
-    item.attachments.map(patchAttachments)
-  }
-}
-
 class WorkerZotero {
   public config: BBTWorker.Config
   public output: string
@@ -212,7 +203,9 @@ class WorkerZotero {
     this.config.preferences.client = params.client
     this.output = ''
 
-    this.config.items.map(patchAttachments)
+    for (const item of this.config.items) {
+      this.patchAttachments(item)
+    }
 
     if (params.output) {
       this.exportDirectory = OS.Path.normalize(OS.Path.dirname(params.output))
@@ -251,6 +244,20 @@ class WorkerZotero {
   public nextItem() {
     return this.config.items.shift()
   }
+
+  public nextCollection() {
+    return this.config.collections.shift()
+  }
+
+  private patchAttachments(item) {
+    if (item.itemType === 'attachment') {
+      item.saveFile = saveFile.bind(item)
+    } else if (item.attachments) {
+      for (const att of item.attachments) {
+        att.saveFile = saveFile.bind(item)
+      }
+    }
+  }
 }
 
 export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
@@ -258,18 +265,16 @@ export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
 export function onmessage(e: { data: BBTWorker.Config }) {
   Zotero.BetterBibTeX.debug('got message:', e)
   if (e.data?.items) {
-    Zotero.init(e.data)
-    Zotero.BetterBibTeX.debug('starting export for', Zotero.config.items.length, 'items to', params.output || 'text' )
-    doExport()
-    Zotero.BetterBibTeX.debug('export done, writing')
-    Zotero.done()
-    Zotero.BetterBibTeX.debug('writing done, bye!')
-    ctx.postMessage({ kind: 'export', output: params.output ? '' : Zotero.output })
+    try {
+      Zotero.init(e.data)
+      Zotero.BetterBibTeX.debug('starting export for', { items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', params.output || 'text' )
+      doExport()
+      Zotero.BetterBibTeX.debug('export done, writing')
+      Zotero.done()
+      Zotero.BetterBibTeX.debug('writing done, bye!')
+      ctx.postMessage({ kind: 'export', output: params.output ? '' : Zotero.output })
+    } catch (err) {
+      ctx.postMessage({ kind: 'error', message: `${err}`, stack: err.stack })
+    }
   }
-  /*
-  } catch (err) {
-    ctx.postMessage({ kind: 'error', message: `${err}`, stack: err.stack })
-    return
-  }
-  */
 }
