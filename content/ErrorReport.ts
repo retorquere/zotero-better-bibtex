@@ -130,10 +130,10 @@ export = new class ErrorReport {
       debug: Zotero.Debug.getConsoleViewerOutput(),
     }
 
-    if (Zotero.BetterBibTeX.ready && this.params.items) {
+    if (Zotero.BetterBibTeX.ready && this.params.scope) {
       await Zotero.BetterBibTeX.ready
 
-      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true}, this.params.items)
+      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true}, this.params.scope)
     }
 
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info

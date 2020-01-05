@@ -17,8 +17,6 @@
       "autoExport": "immediate",
       "autoExportDelay": 1,
       "autoExportIdleWait": 10,
-      "autoExportPrimeExportCacheBatch": 10,
-      "autoExportPrimeExportCacheThreshold": 0,
       "autoPin": false,
       "auxImport": false,
       "biblatexExtendedDateFormat": true,

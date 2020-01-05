@@ -214,15 +214,22 @@ class WorkerZotero {
       this.exportDirectory = ''
     }
   }
+
   public done() {
     if (params.output) {
-      Zotero.debug(`writing ${this.output.length} bytes to ${params.output}`)
+      this.debug(`writing ${this.output.length} bytes to ${params.output}`)
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
       OS.File.writeAtomic(params.output, array, {tmpPath: params.output + '.tmp'})
     } else {
-      Zotero.debug(`returning ${this.output.length} bytes to caller`)
+      this.debug(`returning ${this.output.length} bytes to caller`)
     }
+    this.debug('writing done, bye!')
+    this.send({ kind: 'done', output: params.output ? true : this.output })
+  }
+
+  private send(message: BBTWorker.Message) {
+    ctx.postMessage(message)
   }
 
   public getHiddenPref(pref) {
@@ -234,7 +241,10 @@ class WorkerZotero {
   }
 
   public debug(message) {
-    ctx.postMessage({ kind: 'debug', message })
+    this.send({ kind: 'debug', message })
+  }
+  public logError(err) {
+    this.send({ kind: 'error', message: '' + err })
   }
 
   public write(str) {
@@ -263,18 +273,17 @@ class WorkerZotero {
 export const Zotero = new WorkerZotero // tslint:disable-line:variable-name
 
 export function onmessage(e: { data: BBTWorker.Config }) {
-  Zotero.BetterBibTeX.debug('got message:', e)
-  if (e.data?.items) {
+  if (e.data?.items && !Zotero.config) {
     try {
       Zotero.init(e.data)
       Zotero.BetterBibTeX.debug('starting export for', { items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', params.output || 'text' )
       doExport()
-      Zotero.BetterBibTeX.debug('export done, writing')
+      Zotero.debug('export done, writing')
       Zotero.done()
-      Zotero.BetterBibTeX.debug('writing done, bye!')
-      ctx.postMessage({ kind: 'export', output: params.output ? '' : Zotero.output })
     } catch (err) {
-      ctx.postMessage({ kind: 'error', message: `${err}`, stack: err.stack })
+      Zotero.logError(err)
     }
+  } else {
+    Zotero.BetterBibTeX.debug('unexpected message in worker:', e)
   }
 }

@@ -27,7 +27,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     skipFields: string
     bibtexURL: string
     warnBulkModify: number
-    autoExportTooLong: number
     postscript: string
     strings: string
     autoAbbrev: boolean
@@ -57,9 +56,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     testing: boolean
     autoPin: boolean
     kuroshiro: boolean
-    autoExportPrimeExportCacheThreshold: number
-    autoExportPrimeExportCacheBatch: number
-    autoExportPrimeExportCacheDelay: number
     relativeFilePaths: boolean
     sorted: boolean
     git: string
