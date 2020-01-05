@@ -1,6 +1,5 @@
 import parse5 = require('parse5/lib/parser')
 const htmlParser = new parse5({ sourceCodeLocationInfo: true })
-import { Preferences as Prefs } from './prefs'
 import { titleCase } from './title-case'
 import stringify = require('json-stringify-safe')
 // import * as log from './debug'
@@ -76,6 +75,15 @@ const ligatures = {
 // tslint:enable
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
+
+type HTMLParserOptions = {
+  html?: boolean,
+  caseConversion?: boolean
+  exportBraceProtection: boolean
+  csquotes: string,
+  exportTitleCase: boolean
+}
+
 export let HTMLParser = new class { // tslint:disable-line:variable-name
   private caseConversion: boolean
   private braceProtection: boolean
@@ -85,17 +93,17 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
   private html: string
   private ligatures = new RegExp(`[${Object.keys(ligatures).join('')}]`, 'g')
 
-  public parse(html, options: { html?: boolean, caseConversion?: boolean } = {}): IZoteroMarkupNode {
+  public parse(html, options: HTMLParserOptions): IZoteroMarkupNode {
     this.html = html
 
     let doc
 
     this.caseConversion = options.caseConversion
-    this.braceProtection = options.caseConversion && Prefs.get('exportBraceProtection')
+    this.braceProtection = options.caseConversion && options.exportBraceProtection
     this.sentenceStart = true
 
     // add enquote tags.
-    const csquotes = Prefs.get('csquotes')
+    const csquotes = options.csquotes
     if (csquotes) {
       const space = '\\s*'
       for (const close of [0, 1]) {
@@ -133,7 +141,7 @@ export let HTMLParser = new class { // tslint:disable-line:variable-name
     doc = this.walk(htmlParser.parseFragment(this.html))
 
     if (options.caseConversion) {
-      if (Prefs.get('exportTitleCase')) {
+      if (options.exportTitleCase) {
         this.titleCased = ''
         this.collectText(doc)
         this.titleCased = titleCase(this.titleCased)

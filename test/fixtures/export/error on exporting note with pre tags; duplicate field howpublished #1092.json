@@ -446,8 +446,6 @@
       "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
       "autoExport": "immediate",
       "autoExportIdleWait": 10,
-      "autoExportPrimeExportCacheBatch": 10,
-      "autoExportPrimeExportCacheThreshold": 0,
       "autoPin": false,
       "biblatexExtendedDateFormat": true,
       "biblatexExtendedNameFormat": false,

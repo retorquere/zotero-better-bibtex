@@ -6,7 +6,8 @@ import * as path from 'path'
 // import BailPlugin from 'zotero-plugin/plugin/bail'
 
 import CircularDependencyPlugin = require('circular-dependency-plugin')
-import { LogUsedFilesPlugin } from './setup/plugins/log-used'
+import WrapperPlugin = require('wrapper-webpack-plugin')
+// import { LogUsedFilesPlugin } from './setup/plugins/log-used'
 
 /*
 class WebpackFixerPlugin {
@@ -87,7 +88,7 @@ if (!process.env.MINITESTS) {
         // new webpack.NamedModulesPlugin(),
         new CircularDependencyPlugin({ failOnError: true }),
         // BailPlugin,
-        new LogUsedFilesPlugin('BetterBibTeX'),
+        // new LogUsedFilesPlugin('BetterBibTeX'),
       ],
 
       context: path.resolve(__dirname, './content'),
@@ -131,12 +132,13 @@ if (!process.env.MINITESTS) {
           new webpack.DefinePlugin({
             ZOTERO_TRANSLATOR_INFO: JSON.stringify(header),
           }),
-          new LogUsedFilesPlugin(label, 'translator'),
+          // new LogUsedFilesPlugin(label, 'translator'),
         ],
         context: path.resolve(__dirname, './translators'),
         entry: { [label]: `./${label}.ts` },
 
         output: {
+          jsonpFunction: `WebPacked${label.replace(/ /g, '')}`,
           path: path.resolve(__dirname, './build/resource'),
           filename: '[name].js',
           devtoolLineToLine: true,
@@ -147,6 +149,31 @@ if (!process.env.MINITESTS) {
       })
     )
   }
+
+  config.push(
+    _.merge({}, common, {
+      plugins: [
+        new CircularDependencyPlugin({ failOnError: true }),
+        // new LogUsedFilesPlugin(label, 'translator'),
+        new WrapperPlugin({
+          test: /\.js$/,
+          footer: '\nimportScripts(`resource://zotero-better-bibtex/${params.translator}.js`);', // otherwise it would be contained in the webpack IIFE
+        })
+      ],
+      context: path.resolve(__dirname, './translators'),
+      entry: { Zotero: './worker/zotero.ts' },
+
+      output: {
+        jsonpFunction: 'WebPackedZoteroShim',
+        path: path.resolve(__dirname, './build/resource/worker'),
+        filename: '[name].js',
+        devtoolLineToLine: true,
+        pathinfo: true,
+        library: 'var { Zotero, onmessage, params }',
+        libraryTarget: 'assign',
+      },
+    })
+  )
 }
 
 if (process.env.MINITESTS) {

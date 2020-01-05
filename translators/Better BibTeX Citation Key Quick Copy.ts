@@ -5,7 +5,7 @@ import format = require('string-template')
 import { Translator } from './lib/translator'
 export { Translator }
 
-import { Exporter } from './lib/exporter'
+import { Exporter } from './bibtex/exporter'
 
 function select_by_key(item) {
   const [ , kind, lib, key ] = item.uri.match(/^http:\/\/zotero\.org\/(users|groups)\/((?:local\/)?[^\/]+)\/items\/(.+)/)

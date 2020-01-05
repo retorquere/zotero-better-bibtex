@@ -1,16 +1,13 @@
 @export
 Feature: Export
 
-Background:
-  Given I set preference .autoExportPrimeExportCacheThreshold to 10
-
 @test-cluster-1
 @127 @201 @219 @253 @268 @288 @294 @302 @308 @309 @310 @326 @327
 @351 @376 @389 @bblt-0 @bblt @485 @515 @573 @590 @747 @edtf @689
 @biblatex @644 @889 @482 @979 @746 @1148 @1139 @1162 @1207 @1331
 @245 @246 @1353 @1370
 Scenario Outline: BibLaTeX Export
-  And I import <references> references from "export/<file>.json"
+  When I import <references> references from "export/<file>.json"
   Then an export using "Better BibLaTeX" should match "export/*.biblatex"
 
   Examples:
@@ -427,12 +424,11 @@ Scenario: auto-export
   Given I import 3 references with 2 attachments from "export/*.json" into a new collection
   And I set preference .autoExport to immediate
   And I set preference .jabrefFormat to 3
-  And I set preference .autoExportPrimeExportCacheThreshold to 1
   Then an auto-export to "/tmp/autoexport.bib" using "Better BibLaTeX" should match "export/*.before.biblatex"
   And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
   And I remove the selected item
-  And I wait 5 seconds
+  And I wait 10 seconds
   Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"
   And "/tmp/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 
