@@ -428,7 +428,7 @@ Scenario: auto-export
   And an auto-export of "/auto-export" to "/tmp/autoexport.coll.bib" using "Better BibLaTeX" should match "export/*.before.coll.biblatex"
   When I select the first item where publisher = "IEEE"
   And I remove the selected item
-  And I wait 5 seconds
+  And I wait 10 seconds
   Then "/tmp/autoexport.bib" should match "export/*.after.biblatex"
   And "/tmp/autoexport.coll.bib" should match "export/*.after.coll.biblatex"
 

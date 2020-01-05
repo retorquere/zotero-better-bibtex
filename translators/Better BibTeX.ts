@@ -4,7 +4,7 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 import { Reference } from './bibtex/reference'
-import { Exporter } from './lib/exporter'
+import { Exporter } from './bibtex/exporter'
 import { debug } from './lib/debug'
 import * as escape from '../content/escape'
 

@@ -373,7 +373,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
     const translator = Translators.byId[translatorID]
 
     if (translator) {
-      if (this._displayOptions && this.location) {
+      if (this.location) {
         if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
           this._displayOptions.exportPath = this.location.path
         } else {
@@ -381,11 +381,11 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         }
       }
 
-      let capture = this._displayOptions && this._displayOptions.keepUpdated
+      let capture = this._displayOptions?.keepUpdated
 
       if (capture) {
         // this should never occur -- keepUpdated should only be settable if you do a file export
-        if (!this.location || !this.location.path) {
+        if (! this.location?.path) {
           flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
           capture = false
         }
@@ -396,7 +396,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
           capture = false
         }
 
-        if (!this._export || !(['library', 'collection'].includes(this._export.type))) {
+        if (! ['library', 'collection'].includes(this._export?.type)) {
           flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
           capture = false
         }
@@ -415,7 +415,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
       }
 
       if (!this.noWait) {
-        const path = this._displayOptions?.exportFileData && this.location ? this.location.path : null
+        const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
         this._currentState = 'translate'
@@ -425,7 +425,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         log.debug('starting replacement web worker translator')
         Translators.exportItemsByWorker(translatorID, this._displayOptions, { ...this._export, getter: this._itemGetter }, path)
           .then(result => {
-            log.debug('worker translation complete, written to', this.location ? 'file' : 'string', 'result = ', typeof result, ('' + result).length)
+            log.debug('worker translation complete, written to', path ? path : 'string', 'result = ', typeof result, ('' + result).length)
             this.string = result
             this.complete(result)
           })

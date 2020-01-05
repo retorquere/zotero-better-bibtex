@@ -137,11 +137,10 @@ export function doExport() {
   Translator.init('export')
 
   // collect all notes
-  const items = {}
-  let z_item
-  while (z_item = Zotero.nextItem()) {
-    Object.assign(z_item, Extra.get(z_item.extra))
-    if (_keep(z_item)) items[z_item.itemID] = z_item
+  const items: Record<number, ISerializedItem> = {}
+  for (const item of Translator.items()) {
+    if (!_keep(item)) continue
+    items[item.itemID] = Object.assign(item, Extra.get(item.extra)) // tslint:disable-line:prefer-object-spread
   }
 
   const filed = {}
