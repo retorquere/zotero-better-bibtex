@@ -207,6 +207,8 @@ export = new class ErrorReport {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
 
+    info += `Total export workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}\n`
+
     return info
   }
 
