@@ -6,6 +6,7 @@ import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
+import * as Extra from './extra'
 
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
@@ -210,6 +211,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
+        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
+        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
+        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
+        // inside the translator
+        Object.assign(item, Extra.get(item.extra))
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }

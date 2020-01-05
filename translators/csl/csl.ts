@@ -100,7 +100,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra))
+      if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra)) // for the worker version, this has already be done so that itemToCSLJSON works
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()
