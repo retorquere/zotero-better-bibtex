@@ -1,0 +1,121 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": false,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "citep",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[zotero:clean]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "keep",
+      "auxImport": false,
+      "keyScope": "global",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "month",
+      "bibtexURL": "url",
+      "warnBulkModify": 10,
+      "autoExportTooLong": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "as-needed",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 5,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "scrubDatabase": false,
+      "removeStock": false,
+      "ignorePostscriptErrors": true,
+      "debugLogDir": "",
+      "testing": false,
+      "autoPin": false,
+      "kuroshiro": false,
+      "autoExportPrimeExportCacheThreshold": 0,
+      "autoExportPrimeExportCacheBatch": 4,
+      "autoExportPrimeExportCacheDelay": 100,
+      "relativeFilePaths": false,
+      "sorted": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": false,
+      "platform": "mac",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "version": 8948,
+      "itemType": "bookSection",
+      "publisher": "SAGE Publications",
+      "pages": "269-286",
+      "date": "1974",
+      "title": "Uses and gratifications: A paradigm outlined",
+      "creators": [
+        {
+          "firstName": "Karl Erik",
+          "lastName": "Rosengren",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "Jay G.",
+          "lastName": "Blumler",
+          "creatorType": "editor"
+        },
+        {
+          "firstName": "Elihu",
+          "lastName": "Katz",
+          "creatorType": "editor"
+        }
+      ],
+      "tags": [],
+      "collections": [
+        "UYWWSJED"
+      ],
+      "relations": [],
+      "dateAdded": "2019-12-25T21:35:41Z",
+      "dateModified": "2019-12-25T21:54:20Z",
+      "uri": "http://zotero.org/users/4747744/items/U8D54C2P",
+      "attachments": [],
+      "notes": [
+        "<p>In Valkenburg (2016):</p>\n<p>Uses-and-gratiﬁcations theory: Attempts to understand why and how people actively seek out speciﬁc media to satisfy speciﬁc needs</p>"
+      ],
+      "itemID": 5307,
+      "key": "U8D54C2P",
+      "citekey": "rosengren_uses_1974",
+      "citationKey": "rosengren_uses_1974",
+      "libraryID": 1,
+      "publicationTitle": "The uses of mass communications: Current perspectives on gratiﬁcations research"
+    }
+  ]
+}

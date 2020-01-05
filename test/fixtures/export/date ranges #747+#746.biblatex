@@ -1,3 +1,4 @@
+
 @inproceedings{Seeley1989,
   author = {Seeley, Donn},
   booktitle = {Proceedings of the {{Winter}} 1989 {{USENIX Conference}}},
@@ -52,7 +53,8 @@
   doi = {10.1109/FISTS.2011.5973643},
   eventtitle = {2011 {{IEEE Forum}} on {{Integrated}} and {{Sustainable Transportation Systems}}},
   keywords = {Data models,Detectors,Error analysis,fault detection,Fault detection,fault diagnosis,faulty traffic detector,FCD traffic speed,floating car data,ITS,loop-quality,microscopic traffic simulation,nonlinear regression model,regression analysis,road traffic,statistical test,traffic engineering computing,Training data,Vehicles},
-  pages = {103-108},
+  pages = {103--108},
   title = {Identifying Faulty Traffic Detectors with {{Floating Car Data}}}
 }
+
 
