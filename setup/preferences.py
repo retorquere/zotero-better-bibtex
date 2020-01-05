@@ -39,11 +39,13 @@ class Preferences:
     bbt = f'{{{self.ns.bbt}}}'
     prefix = 'extensions.zotero.translators.better-bibtex.'
 
-    for doc in self.pane.findall(f'.//{xul}prefpane/{bbt}doc'):
-      self.header = textwrap.dedent(doc.text)
+    #for doc in self.pane.findall(f'.//{xul}prefpane/{bbt}doc'):
+    #  self.header = textwrap.dedent(doc.text)
 
     for pref in self.pane.findall(f'.//{xul}prefpane/{xul}preferences/{xul}preference'):
-      doc = pref.find(f'.//{bbt}doc')
+      #doc = pref.find(f'.//{bbt}doc')
+      doc = pref.getnext()
+      if doc is not None and doc.tag != f'{bbt}doc': doc = None
       _id = pref.get('id')
       pref = Munch(
         name = pref.get('name').replace(prefix, ''),
@@ -63,9 +65,9 @@ class Preferences:
         pref.type = 'number'
         pref.default = int(pref.default)
 
-    # order matters -- forpreference last
-    for pref in self.pane.findall(f'.//*[@preference]') + self.pane.findall(f'.//*[@{bbt}forpreference]'):
-      _id = pref.get(f'{bbt}forpreference') or pref.get('preference')
+    # order matters -- bbt:preference last
+    for pref in self.pane.findall(f'.//*[@preference]') + self.pane.findall(f'.//*[@{bbt}preference]'):
+      _id = pref.get(f'{bbt}preference') or pref.get('preference')
       if pref.tag == f'{xul}label':
         label = pref.text
       else:
@@ -115,7 +117,7 @@ class Preferences:
     bbt = f'{{{self.ns.bbt}}}'
 
     doc = ''
-    pref = node.get('preference') or node.get(f'{bbt}forpreference')
+    pref = node.get('preference') or node.get(f'{bbt}preference')
     if pref is not None:
       doc += self.pref(self.preferences[pref])
 
