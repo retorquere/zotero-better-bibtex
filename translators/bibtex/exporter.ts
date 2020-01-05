@@ -1,6 +1,6 @@
 declare const Zotero: any
 
-import { Translator } from './translator'
+import { Translator } from '../lib/translator'
 
 import { JabRef } from '../bibtex/jabref' // not so nice... BibTeX-specific code
 import * as itemfields from '../../gen/itemfields'

@@ -20,7 +20,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byLabel: any
   public itemType: { note: number, attachment: number }
 
-  private workers = 0
+  public workers: { total: number, running: Set<number> } = {
+    total: 0,
+    running: new Set,
+  }
 
   constructor() {
     Object.assign(this, translatorMetadata)
@@ -115,9 +118,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     const translator = this.byId[translatorID]
 
-    const ext = '.' + translator.target
-    if (path && !path.endsWith(ext)) path += ext
-
     const params = Object.entries({
       client: Prefs.client,
       version: Zotero.version,
@@ -125,19 +125,23 @@ export let Translators = new class { // tslint:disable-line:variable-name
       translator: translator.label,
       output: path || '',
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
+    log.debug('worker params:', params, 'from', { path })
 
-    this.workers += 1
-    const prefix = `{${translator.label} worker ${this.workers}}`
+    this.workers.total += 1
+    const id = this.workers.total
+    this.workers.running.add(id)
+    const prefix = `{${translator.label} worker ${id}}`
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
-    worker.onmessage = function(e: { data: BBTWorker.Message }) { // tslint:disable-line:only-arrow-functions
+    worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
         case 'error':
           log.error(e.data)
           Zotero.debug(`${prefix} error: ${e.data.message}`)
           deferred.reject(e.data.message)
           worker.terminate()
+          this.workers.running.delete(id)
           break
 
         case 'debug':
@@ -147,6 +151,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
         case 'done':
           deferred.resolve(e.data.output)
           worker.terminate()
+          this.workers.running.delete(id)
           break
 
         default:
@@ -157,10 +162,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    worker.onerror = function(e) { // tslint:disable-line:only-arrow-functions
+    worker.onerror = e => {
       Zotero.debug(`${prefix} error: ${e}`)
       deferred.reject(e.message)
       worker.terminate()
+      this.workers.running.delete(id)
     }
 
     scope = this.exportScope(scope)
@@ -231,6 +237,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       worker.postMessage(JSON.parse(JSON.stringify(config)))
     } catch (err) {
       worker.terminate()
+      this.workers.running.delete(id)
       log.error(err)
       deferred.reject(err)
     }

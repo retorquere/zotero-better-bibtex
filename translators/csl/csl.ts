@@ -87,8 +87,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     let items = []
     const order = []
 
-    let item: ISerializedItem
-    while (item = Zotero.nextItem()) {
+    for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
       order.push({ id: item.citekey, index: items.length })

@@ -120,7 +120,7 @@ export = new class {
       let name = collection
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
-        if (collection.name === name) scope = { collection: collection.id }
+        if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
       log.debug('TestSupport.exportLibrary', { name, scope })
       if (!scope) throw new Error(`Collection '${name}' not found`)

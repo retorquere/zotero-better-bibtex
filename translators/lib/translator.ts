@@ -282,4 +282,14 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.initialized = true
     Zotero.debug('Translator init ready')
   }
+
+  public items(): ISerializedItem[] {
+    let item
+    const items: ISerializedItem[] = []
+    while (item = Zotero.nextItem()) {
+      items.push(item)
+    }
+    items.sort((a, b) => a.citekey.localeCompare(b.citekey))
+    return items
+  }
 }

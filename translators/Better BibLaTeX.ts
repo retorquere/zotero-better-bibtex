@@ -4,7 +4,7 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 import { Reference } from './bibtex/reference'
-import { Exporter } from './lib/exporter'
+import { Exporter } from './bibtex/exporter'
 
 Reference.prototype.fieldEncoding = {
   url: 'url',

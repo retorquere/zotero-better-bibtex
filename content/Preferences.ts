@@ -395,6 +395,7 @@ export = new class PrefPane {
     // no other way that I know of to know that I've just been selected
     if (pane && pane.selected) window.sizeToContent()
 
+    this.update()
     if (this.autoexport) this.autoexport.refresh()
   }
 
@@ -432,6 +433,7 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
+    document.getElementById('better-bibtex-preferences-worker-state').value = `Total workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}`
     window.sizeToContent()
   }
 

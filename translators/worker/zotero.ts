@@ -1,4 +1,5 @@
 declare const doExport: () => void
+declare const Translator: ITranslator
 
 importScripts('resource://gre/modules/osfile.jsm')
 declare const OS: any
@@ -193,6 +194,7 @@ class WorkerZotero {
   public config: BBTWorker.Config
   public output: string
   public exportDirectory: string
+  public exportFile: string
 
   public Utilities = new WorkerZoteroUtilities // tslint:disable-line:variable-name
   public BetterBibTeX = new WorkerZoteroBetterBibTeX // tslint:disable-line:variable-name
@@ -208,24 +210,34 @@ class WorkerZotero {
     }
 
     if (params.output) {
-      this.exportDirectory = OS.Path.normalize(OS.Path.dirname(params.output))
+      if (this.config.options.exportFiles) { // output path is a directory
+        this.exportDirectory = OS.Path.normalize(params.output)
+        if (!OS.File.exists(this.exportDirectory) || !OS.File.stat(this.exportDirectory).isDir) throw new Error(`exportFiles to non-existent directory ${params.output}`)
+        this.exportFile = OS.Path.join(this.exportDirectory, `${OS.Path.basename(this.exportDirectory)}.${Translator.header.target}`)
+      } else {
+        this.exportFile = OS.Path.normalize(params.output)
+        const ext = `.${Translator.header.target}`
+        if (!this.exportFile.endsWith(ext)) this.exportFile += ext
+        this.exportDirectory = OS.Path.dirname(this.exportFile)
+      }
       makeDirs(this.exportDirectory)
     } else {
+      this.exportFile = ''
       this.exportDirectory = ''
     }
   }
 
   public done() {
-    if (params.output) {
-      this.debug(`writing ${this.output.length} bytes to ${params.output}`)
+    if (this.exportFile) {
+      this.debug(`writing ${this.output.length} bytes to ${this.exportFile}`)
       const encoder = new TextEncoder()
       const array = encoder.encode(this.output)
-      OS.File.writeAtomic(params.output, array, {tmpPath: params.output + '.tmp'})
+      OS.File.writeAtomic(this.exportFile, array, {tmpPath: this.exportFile + '.tmp'})
     } else {
-      this.debug(`returning ${this.output.length} bytes to caller`)
+      this.debug(`returning ${this.output.length} bytes to caller:`)
     }
     this.debug('writing done, bye!')
-    this.send({ kind: 'done', output: params.output ? true : this.output })
+    this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
 
   private send(message: BBTWorker.Message) {
@@ -276,7 +288,7 @@ export function onmessage(e: { data: BBTWorker.Config }) {
   if (e.data?.items && !Zotero.config) {
     try {
       Zotero.init(e.data)
-      Zotero.BetterBibTeX.debug('starting export for', { items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', params.output || 'text' )
+      Zotero.BetterBibTeX.debug('starting export for', { params, items: Zotero.config.items.length, collections: Zotero.config.collections.length }, 'to', Zotero.exportFile || 'text' )
       doExport()
       Zotero.debug('export done, writing')
       Zotero.done()

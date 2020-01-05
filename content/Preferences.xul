@@ -860,7 +860,7 @@
               <label bbt:forpreference="pref-better-bibtex-warnBulkModify">&better-bibtex.Preferences.bulkWarning;</label>
               <textbox size="5" preference="pref-better-bibtex-warnBulkModify"/>
             </hbox>
-            <label id="better-bibtex-preferences-cache-stats"/>
+            <label id="better-bibtex-preferences-worker-state"/>
             <label height="20px;" style="margin-bottom: 0px"/>
           </tabpanel>
 
