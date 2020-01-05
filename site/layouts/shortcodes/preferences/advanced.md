@@ -75,10 +75,4 @@ For those who are curious about what the `Clear/Generate BibTeX key` right-click
 you if you are doing this on more than 10 (default) at the same time, to prevent your curiosity from changing
 all your citation keys at once.
 
-#### Warn me when auto-exports take longer than (seconds)
-
-If you have auto-export set up for a large library, Zotero might freeze for during exports. There is nothing I can do about this; caching helps,
-but all Zotero exports freeze Zotero while they are running. BBT will warn you if it sees a long-running auto-export to suggest running it only
-when Zotero goes idle.
-
 

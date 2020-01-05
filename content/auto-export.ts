@@ -224,16 +224,16 @@ const queue = new class {
     this.autoexports.update(ae)
 
     try {
-      let items
+      let scope
       switch (ae.type) {
         case 'collection':
-          items = { collection: ae.id }
+          scope = { type: 'collection', collection: ae.id }
           break
         case 'library':
-          items = { library: ae.id }
+          scope = { type: 'library', id: ae.id }
           break
         default:
-          items = null
+          scope = null
       }
 
       const repo = git.repo(ae.path)
@@ -264,7 +264,7 @@ const queue = new class {
 
       start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start')
-      await Translators.exportItemsByWorker(ae.translatorID, displayOptions, items, ae.path)
+      await Translators.exportItemsByWorker(ae.translatorID, displayOptions, scope, ae.path)
       elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       log.debug('AutoExport.queue.run: export took', elapsed, 'seconds', fold.end)
 

@@ -159,27 +159,27 @@ export = new class ZoteroPane {
   }
 
   public errorReport(includeReferences) {
-    let items = null
+    let scope = null
 
     switch (pane && includeReferences) {
       case 'collection': case 'library':
-        items = { collection: pane.getSelectedCollection() }
-        if (!items.collection) items = { library: pane.getSelectedLibraryID() }
+        scope = { type: 'collection', collection: pane.getSelectedCollection() }
+        if (!scope.collection) scope = { type: 'library', id: pane.getSelectedLibraryID() }
         break
 
       case 'items':
         try {
-          items = { items: pane.getSelectedItems() }
+          scope = { type: 'items', items: pane.getSelectedItems() }
         } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
           log.error('Could not get selected items:', err)
-          items = {}
+          scope = {}
         }
 
-        if (!items.items || !items.items.length) items = null
+        if (!scope.items || !scope.items.length) scope = null
         break
     }
 
-    const params = {wrappedJSObject: { items }}
+    const params = {wrappedJSObject: { scope }}
 
     const ww = Components.classes['@mozilla.org/embedcomp/window-watcher;1'].getService(Components.interfaces.nsIWindowWatcher)
     ww.openWindow(null, 'chrome://zotero-better-bibtex/content/ErrorReport.xul', 'better-bibtex-error-report', 'chrome,centerscreen,modal', params)

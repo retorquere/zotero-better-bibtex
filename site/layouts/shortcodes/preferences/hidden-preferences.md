@@ -13,27 +13,6 @@ setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
 
-#### autoExportPrimeExportCacheBatch
-
-If cache priming is kicked off (see `autoExportPrimeExportCacheThreshold`), the cache will be primed in batches of `autoExportPrimeExportCacheBatch`.
-The lower this number is, the longer the priming will take (there's a fixed per-prime overhead), but (since the priming uses exports under the hood)
-the larger it is, the longer the priming actions will lock the UI.
-
-#### autoExportPrimeExportCacheDelay
-
-Cache priming (see `autoExportPrimeExportCacheThreshold`), happens in a tight loop, which will still make Zotero sluggish while the priming runs.
-By default, BBT will wait a tenths of a second between prime batches; longer waits mean a more responsive Zotero during the priming,
-but the priming will take longer to complete.
-
-#### autoExportPrimeExportCacheThreshold
-
-If an auto-export is triggered and there are more than `autoExportPrimeExportCacheThreshold` un-cached entries,
-prime the cache before starting the auto-export. This makes the export take longer in total, but since exports
-in Zotero lock up the UI, priming helps making the actual export run as fast as possible. Really only
-useful for large exports, but what counts as large is system-dependent, so you can play with this value. The
-default of `0` disables priming. This is a temporary measure until https://groups.google.com/d/msg/zotero-dev/lHYEtdgPHCE/nDUyxpFmAgAJ
-is implemented in Zotero.
-
 #### autoPin
 
 When on, BBT will automatically pin the first citekey it generates for an item.

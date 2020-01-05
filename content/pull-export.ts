@@ -62,7 +62,7 @@ Zotero.Server.Endpoints['/better-bibtex/collection'] = class {
         }
       }
 
-      return [ OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { collection }) ]
+      return [ OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'collection', collection }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -84,7 +84,7 @@ Zotero.Server.Endpoints['/better-bibtex/library'] = class {
         return [NOT_FOUND, 'text/plain', `Could not export bibliography: library '${request.query['']}' does not exist`]
       }
 
-      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { library: libID }) ]
+      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'library', id: libID }) ]
 
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
@@ -104,7 +104,7 @@ Zotero.Server.Endpoints['/better-bibtex/select'] = class {
       const items = Zotero.getActiveZoteroPane().getSelectedItems()
       if (!items.length) return [NOT_FOUND, 'text/plain', 'Could not export bibliography: no selection' ]
 
-      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { items }) ]
+      return [OK, 'text/plain', await Translators.exportItems(getTranslatorId(translator), displayOptions(request), { type: 'items', items }) ]
     } catch (err) {
       return [SERVER_ERROR, 'text/plain', '' + err]
     }

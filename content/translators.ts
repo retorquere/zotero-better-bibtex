@@ -6,40 +6,11 @@ import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
-import { timeout } from './timeout'
 
-import * as fold from './fold.json'
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
 
-/*
-function types(obj, path = '', acc: Record<string, string> = {}) {
-  const prototype = Object.prototype.toString.call(obj)
-  switch (prototype) {
-    case '[object Function]':
-      acc[path] = 'function'
-      return acc
-    case '[object Array]':
-      acc[path] = 'array'
-      for (let i = 0; i < obj.length; i++) {
-        types(obj[i], `${path}[${i}]`, acc)
-      }
-      return acc
-    case '[object Date]':
-      acc[path] = 'date'
-      return acc
-    case '[object Object]':
-      acc[path] = 'object'
-      for (const [k, v] of Object.entries(obj)) {
-        types(v, `${path}.${k}`, acc)
-      }
-      return acc
-    default:
-      acc[path] = typeof(obj)
-      return acc
-  }
-}
-*/
+type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -138,66 +109,13 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async primeCache(translatorID: string, displayOptions: any, scope: any) {
-    scope = this.items(scope)
-
-    let reason: string = null
-    let uncached: any[] = []
-
-    const threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
-
-    if (!reason && !threshold) reason = 'priming threshold set to 0'
-    if (!reason && Prefs.get('jabrefFormat') === 4) reason = 'JabRef Format 4 cannot be cached' // tslint:disable-line:no-magic-numbers
-    if (!reason && displayOptions.exportFileData) reason = 'Cache disabled when exporting attachments'
-    if (!reason && Prefs.get('relativeFilePaths')) reason = 'Cache disabled when relativeFilePaths is on'
-    if (!reason) {
-      uncached = await this.uncached(translatorID, displayOptions, scope)
-      if (!uncached.length) {
-        reason = 'No uncached items found'
-      } else if (uncached.length < threshold) {
-        reason = `${uncached.length} uncached items found, but not priming for less than ${threshold}`
-      }
-    }
-    if (reason) {
-      log.debug(':cache:prime: not priming cache:', reason)
-      return
-    }
-
-    switch (typeof uncached[0]) {
-      case 'number':
-      case 'string':
-        uncached = await Zotero.Items.getAsync(uncached)
-    }
-
-    const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
-    const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
-    log.debug(fold.start, ':cache:prime:', uncached.length)
-
-    const debugEnabled = Zotero.Debug.enabled
-    while (uncached.length) {
-      log.debug(':cache:prime:remaining', uncached.length)
-
-      Zotero.Debug.enabled = false
-
-      const _batch = uncached.splice(0, batch)
-
-      await this.exportItems(translatorID, displayOptions, { items: _batch })
-
-      Zotero.Debug.enabled = debugEnabled
-
-      // give the UI a chance
-      await timeout(delay)
-    }
-    log.debug(':cache:prime:done', fold.end)
-  }
-
-  public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: { library?: any, items?: any, collection?: any }, path = null) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
     await Zotero.BetterBibTeX.ready
 
     const translator = this.byId[translatorID]
 
     const ext = '.' + translator.target
-    if (!path.endsWith(ext)) path += ext
+    if (path && !path.endsWith(ext)) path += ext
 
     const params = Object.entries({
       client: Prefs.client,
@@ -212,7 +130,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
 
-    worker.onmessage = function(e) { // tslint:disable-line:only-arrow-functions
+    worker.onmessage = function(e: { data: BBTWorker.Message }) { // tslint:disable-line:only-arrow-functions
       switch (e.data?.kind) {
         case 'error':
           log.error(e.data)
@@ -220,15 +138,21 @@ export let Translators = new class { // tslint:disable-line:variable-name
           deferred.reject(e.data.message)
           worker.terminate()
           break
+
         case 'debug':
           Zotero.debug(`${prefix} ${e.data.message}`)
           break
-        case 'output':
+
+        case 'done':
           deferred.resolve(e.data.output)
           worker.terminate()
           break
+
         default:
-          Zotero.debug(`??? ${prefix} ${JSON.stringify(e)}`)
+          if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
+            Zotero.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+          }
+          break
       }
     }
 
@@ -238,27 +162,36 @@ export let Translators = new class { // tslint:disable-line:variable-name
       worker.terminate()
     }
 
-    scope = this.items(scope)
+    scope = this.exportScope(scope)
 
-    const getter = new Zotero.Translate.ItemGetter
+    let getter
 
-    if (scope.library) {
-      await getter.setAll(scope.library, true)
-
-    } else if (scope.items) {
-      getter.setItems(scope.items)
-
-    } else if (scope.collection) {
-      getter.setCollection(scope.collection, true)
-
+    if (scope.getter?.nextItem) {
+      getter = scope.getter
     } else {
-      throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
+      getter = new Zotero.Translate.ItemGetter
 
+      switch (scope.type) {
+        case 'library':
+          await getter.setAll(scope.id, true)
+          break
+
+        case 'items':
+          getter.setItems(scope.items)
+          break
+
+        case 'collection':
+          getter.setCollection(scope.collection, true)
+          break
+
+        default:
+          throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
+      }
     }
 
     const config: BBTWorker.Config = {
       preferences: Prefs.all(),
-      options: displayOptions,
+      options: displayOptions || {},
       items: [],
       collections: [],
       cslItems: {},
@@ -299,7 +232,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
@@ -307,20 +240,23 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    items = this.items(items)
+    scope = this.exportScope(scope)
 
-    if (items.library) {
-      translation.setLibraryID(items.library)
+    switch (scope.type) {
+      case 'library':
+        translation.setLibraryID(scope.id)
+        break
 
-    } else if (items.items) {
-      translation.setItems(items.items)
+      case 'items':
+        translation.setItems(scope.items)
+        break
 
-    } else if (items.collection) {
-      translation.setCollection(items.collection)
+      case 'collection':
+        translation.setCollection(scope.collection)
+        break
 
-    } else {
-      log.debug(':cache:exportItems: nothing?')
-
+      default:
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
     translation.setTranslator(translatorID)
@@ -465,15 +401,29 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
-  private items(items) {
-    if (!items) {
-      return { library: Zotero.Libraries.userLibraryID }
+  private exportScope(scope: ExportScope): ExportScope {
+    if (!scope) scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+
+    if (scope.type === 'collection' && typeof scope.collection === 'number') {
+      return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
     }
 
-    if (typeof items.collection === 'number') {
-      return { collection: Zotero.Collections.get(items.collection) }
+    if (scope.getter && !scope.getter.nextItem) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+
+    switch (scope.type) {
+      case 'items':
+        if (! scope.items?.length ) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      case 'collection':
+        if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      case 'library':
+        if (typeof scope.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      default:
+        throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
     }
 
-    return items
+    return scope
   }
 }
