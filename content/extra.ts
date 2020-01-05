@@ -49,6 +49,9 @@ type GetOptions = {
 }
 
 const noPrefix = ['place', 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid']
+const casing = {
+  arxiv: 'arXiv',
+}
 
 export function get(extra: string, options?: GetOptions): { extra: string, extraFields: Fields } {
   if (!options) options = { citationKey: true , aliases: true, csl: true, tex: true }
@@ -127,8 +130,8 @@ export function set(extra, options: { citationKey?: string, aliases?: string[], 
   if (options.tex) {
     for (const name of Object.keys(options.tex).sort()) {
       const value = options.tex[name]
-      const prefix = noPrefix.includes(name.toLowerCase()) ? '' : 'tex.'
-      parsed.extra += `\n${prefix}${name}${value.raw ? '=' : ':'} ${value.value}`
+      const prefix = noPrefix.includes(name) ? '' : 'tex.'
+      parsed.extra += `\n${prefix}${casing[name] || name}${value.raw ? '=' : ':'} ${value.value}`
     }
   }
 
