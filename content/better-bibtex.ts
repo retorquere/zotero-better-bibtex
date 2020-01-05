@@ -258,13 +258,25 @@ function cacheSelector(itemID, options, prefs) {
 }
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
+  worker(sandbox) { return false },
+
+  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
+
   qrCheck(sandbox, value, test, params = null) { return qualityReport(value, test, params) },
 
   parseDate(sandbox, date) { return DateParser.parse(date) },
   isEDTF(sandbox, date, minuteLevelPrecision = false) { return DateParser.isEDTF(date, minuteLevelPrecision) },
 
   titleCase(sandbox, text) { return titleCase(text) },
-  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  parseHTML(sandbox, text, options) {
+    options = {
+      ...options,
+      exportBraceProtection: Prefs.get('exportBraceProtection'),
+      csquotes: Prefs.get('csquotes'),
+      exportTitleCase: Prefs.get('exportTitleCase'),
+    }
+    return HTMLParser.parse(text.toString(), options)
+  },
   extractFields(sandbox, item) { return Extra.get(item.extra) },
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
 
@@ -318,10 +330,27 @@ Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
 
     return true
   },
+
+  strToISO(sandbox, str) {
+    const date = DateParser.strToISO(str)
+    log.debug('strToISO', { str, date })
+    return date
+  },
 }
+
 Zotero.Translate.Import.prototype.Sandbox.BetterBibTeX = {
+  client(sandbox) { return Zotero.version.includes('m') ? 'jurism' : 'zotero' }, // not great, but currently no other way to detect client type
+
   debugEnabled(sandbox) { return Zotero.Debug.enabled },
-  parseHTML(sandbox, text, options) { return HTMLParser.parse(text.toString(), options) },
+  parseHTML(sandbox, text, options) {
+    options = {
+      ...options,
+      exportBraceProtection: Prefs.get('exportBraceProtection'),
+      csquotes: Prefs.get('csquotes'),
+      exportTitleCase: Prefs.get('exportTitleCase'),
+    }
+    return HTMLParser.parse(text.toString(), options)
+  },
   debug(sandbox, prefix, ...msg) { Logger.log(prefix, ...msg) },
   parseDate(sandbox, date) { return DateParser.parse(date) },
 }
@@ -341,54 +370,72 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
     /* requested translator */
     let translatorID = this.translator[0]
     if (translatorID.translatorID) translatorID = translatorID.translatorID
+    const translator = Translators.byId[translatorID]
 
-    if (this._displayOptions && this.location) {
-      if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
-        this._displayOptions.exportPath = this.location.path
-      } else {
-        this._displayOptions.exportPath = this.location.parent.path
+    if (translator) {
+      if (this.location) {
+        if (this._displayOptions.exportFileData) { // when exporting file data, the user was asked to pick a directory rather than a file
+          this._displayOptions.exportPath = this.location.path
+        } else {
+          this._displayOptions.exportPath = this.location.parent.path
+        }
+      }
+
+      let capture = this._displayOptions?.keepUpdated
+
+      if (capture) {
+        // this should never occur -- keepUpdated should only be settable if you do a file export
+        if (! this.location?.path) {
+          flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
+          capture = false
+        }
+
+        // this should never occur -- the JS in exportOptions.ts should prevent it
+        if (this._displayOptions.exportFileData) {
+          flash('Auto-export not registered', 'Auto-export does not support file data export -- please report this, you should not have seen this message')
+          capture = false
+        }
+
+        if (! ['library', 'collection'].includes(this._export?.type)) {
+          flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
+          capture = false
+        }
+      }
+
+      if (capture) {
+        AutoExport.add({
+          type: this._export.type,
+          id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
+          path: this.location.path,
+          status: 'done',
+          translatorID,
+          exportNotes: this._displayOptions.exportNotes,
+          useJournalAbbreviation: this._displayOptions.useJournalAbbreviation,
+        })
+      }
+
+      if (!this.noWait) {
+        const path = this.location?.path
+
+        // fake out the stuff that complete expects to be set by .translate
+        this._currentState = 'translate'
+        this.saveQueue = []
+        this._savingAttachments = []
+
+        log.debug('starting replacement web worker translator')
+        Translators.exportItemsByWorker(translatorID, this._displayOptions, { ...this._export, getter: this._itemGetter }, path)
+          .then(result => {
+            log.debug('worker translation complete, written to', path ? path : 'string', 'result = ', typeof result, ('' + result).length)
+            this.string = result
+            this.complete(result)
+          })
+          .catch(err => {
+            log.debug('worker translation failed, error:', err)
+            this.complete(null, err)
+          })
+        return
       }
     }
-
-    let capture = this._displayOptions && this._displayOptions.keepUpdated
-
-    if (capture) {
-      // this should never occur -- keepUpdated should only be settable if you do a file export
-      if (!this.location || !this.location.path) {
-        flash('Auto-export not registered', 'Auto-export only supported for exports to file -- please report this, you should not have seen this message')
-        capture = false
-      }
-
-      // this should never occur -- keepUpdated should only be set by BBT translators
-      if (!Translators.byId[translatorID]) {
-        flash('Auto-export not registered', 'Auto-export only supported for Better BibTeX translators -- please report this, you should not have seen this message')
-        capture = false
-      }
-
-      // this should never occur -- the JS in exportOptions.ts should prevent it
-      if (this._displayOptions.exportFileData) {
-        flash('Auto-export not registered', 'Auto-export does not support file data export -- please report this, you should not have seen this message')
-        capture = false
-      }
-
-      if (!this._export || !(['library', 'collection'].includes(this._export.type))) {
-        flash('Auto-export not registered', 'Auto-export only supported for groups, collections and libraries')
-        capture = false
-      }
-    }
-
-    if (capture) {
-      AutoExport.add({
-        type: this._export.type,
-        id: this._export.type === 'library' ? this._export.id : this._export.collection.id,
-        path: this.location.path,
-        status: 'done',
-        translatorID,
-        exportNotes: this._displayOptions.exportNotes,
-        useJournalAbbreviation: this._displayOptions.useJournalAbbreviation,
-      })
-    }
-
   } catch (err) {
     log.error('Zotero.Translate.Export::translate error:', err)
   }

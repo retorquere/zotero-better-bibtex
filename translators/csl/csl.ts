@@ -87,8 +87,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
     let items = []
     const order = []
 
-    let item: ISerializedItem
-    while (item = Zotero.nextItem()) {
+    for (const item of Translator.items()) {
       if (item.itemType === 'note' || item.itemType === 'attachment') continue
 
       order.push({ id: item.citekey, index: items.length })
@@ -100,7 +99,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       }
 
       itemfields.simplifyForExport(item)
-      Object.assign(item, Extra.get(item.extra))
+      if (!Zotero.BetterBibTeX.worker()) Object.assign(item, Extra.get(item.extra)) // for the worker version, this has already be done so that itemToCSLJSON works
 
       if (item.accessDate) { // WTH is Juris-M doing with those dates?
         item.accessDate = item.accessDate.replace(/T?[0-9]{2}:[0-9]{2}:[0-9]{2}.*/, '').trim()

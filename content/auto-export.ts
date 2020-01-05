@@ -12,7 +12,6 @@ import { Translators } from './translators'
 import { Preferences as Prefs } from './prefs'
 import * as ini from 'ini'
 import { pathSearch } from './path-search'
-import { flash } from './flash'
 import Loki = require('lokijs')
 import * as fold from './fold.json'
 
@@ -151,7 +150,6 @@ const queue = new class {
   private paused: Set<number>
   private autoexports: any
   private debounce_delay: number
-  private sorry = true
   private started = false
 
   constructor() {
@@ -226,16 +224,16 @@ const queue = new class {
     this.autoexports.update(ae)
 
     try {
-      let items
+      let scope
       switch (ae.type) {
         case 'collection':
-          items = { collection: ae.id }
+          scope = { type: 'collection', collection: ae.id }
           break
         case 'library':
-          items = { library: ae.id }
+          scope = { type: 'library', id: ae.id }
           break
         default:
-          items = null
+          scope = null
       }
 
       const repo = git.repo(ae.path)
@@ -261,43 +259,15 @@ const queue = new class {
 
       let start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start priming')
-      await Translators.primeCache(ae.translatorID, displayOptions, items)
       let elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       log.debug('AutoExport.queue.run: priming took', elapsed, 'seconds', fold.end)
 
       start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start')
-      await Translators.exportItems(ae.translatorID, displayOptions, items, ae.path)
+      await Translators.exportItemsByWorker(ae.translatorID, displayOptions, scope, ae.path)
       elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       log.debug('AutoExport.queue.run: export took', elapsed, 'seconds', fold.end)
 
-      if (elapsed > Prefs.get('autoExportTooLong')) {
-        const title = Zotero.BetterBibTeX.getString('AutoExport.too-long.title')
-        let body = Zotero.BetterBibTeX.getString('AutoExport.too-long.body', {
-          translator: Translators.byId[ae.translatorID].label,
-          path: ae.path,
-          seconds: Math.round(elapsed),
-        })
-        let linger = 10
-
-        if (!Prefs.get('autoExportPrimeExportCacheThreshold')) {
-          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.primeEnabled')
-          Prefs.set('autoExportPrimeExportCacheThreshold', 20) // tslint:disable-line no-magic-numbers
-
-        } else if (Prefs.get('autoExport') === 'immediate') {
-          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.suggestIdle')
-
-        } else if (this.sorry) {
-          body += ' ' + Zotero.BetterBibTeX.getString('AutoExport.too-long.sorry')
-          this.sorry = false
-
-        } else {
-          linger = 5 // tslint:disable-line:no-magic-numbers
-
-        }
-
-        flash(title, body, linger)
-      }
       await repo.push(Zotero.BetterBibTeX.getString('Preferences.auto-export.git.message', { type: Translators.byId[ae.translatorID].label.replace('Better ', '') }))
 
       ae.error = ''

@@ -4,7 +4,7 @@ import { Translator } from './lib/translator'
 export { Translator }
 
 import { Reference } from './bibtex/reference'
-import { Exporter } from './lib/exporter'
+import { Exporter } from './bibtex/exporter'
 
 Reference.prototype.fieldEncoding = {
   url: 'url',
@@ -489,7 +489,7 @@ export function doExport() {
 
     ref.add({ name: 'eventtitle', value: item.meetingName })
 
-    if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.Utilities.strToISO(item.accessDate), enc: 'date' })
+    if (item.accessDate && item.url) ref.add({ name: 'urldate', value: Zotero.BetterBibTeX.strToISO(item.accessDate), enc: 'date' })
 
     ref.add({
       name: 'date',

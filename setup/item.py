@@ -22,8 +22,13 @@ ValidFields = DefaultMunch(None, {})
 ValidTypes = {}
 Alias = {}
 Itemfields = set()
+ItemCreators = {}
 for client in data.keys():
+  ItemCreators[client] = {}
+
   for spec in data[client].itemTypes:
+    ItemCreators[client][spec.itemType] = [ct.creatorType for ct in spec.get('creatorTypes', [])]
+
     if spec.itemType in ValidTypes:
       ValidTypes[spec.itemType] = 'true'
     else:
@@ -82,7 +87,7 @@ def replace(indent, aliases):
 
 with open(os.path.join(root, 'gen', 'itemfields.ts'), 'w') as f:
   print('declare const Zotero: any\n', file=f)
-  print("const jurism = Zotero.Utilities.getVersion().includes('m') // not great, but currently no other way to detect client type", file=f)
+  print("const jurism = Zotero.BetterBibTeX.client() === 'jurism'", file=f)
   print('const zotero = !jurism\n', file=f)
   print('export const valid = {', file=f)
   print('  type: {', file=f)
@@ -196,6 +201,7 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
 
 {fields}
 
+    relations: {{ 'dc:relation': string[] }}
     uri: string
     referenceType: string
     cslType: string
@@ -208,3 +214,6 @@ with open(os.path.join(root, 'gen', 'typings', 'serialized-item.d.ts'), 'w') as 
     multi: any
   }}
 }}''', file=f)
+
+with open(os.path.join(root, 'gen', 'item-creators.json'), 'w') as f:
+  json.dump(ItemCreators, f, indent='  ')

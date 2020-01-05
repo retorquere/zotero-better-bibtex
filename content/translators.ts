@@ -1,15 +1,17 @@
 declare const Zotero: any
 declare const Services: any
+declare class ChromeWorker extends Worker { }
 
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
 import { DB as Cache } from './db/cache'
 import { DB } from './db/main'
-import { timeout } from './timeout'
+import * as Extra from './extra'
 
-import * as fold from './fold.json'
 import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
 import * as translatorMetadata from '../gen/translators.json'
+
+type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
 
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
@@ -17,6 +19,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
   public byName: any
   public byLabel: any
   public itemType: { note: number, attachment: number }
+
+  public workers: { total: number, running: Set<number> } = {
+    total: 0,
+    running: new Set,
+  }
 
   constructor() {
     Object.assign(this, translatorMetadata)
@@ -106,60 +113,139 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async primeCache(translatorID: string, displayOptions: any, scope: any) {
-    scope = this.items(scope)
+  public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
+    await Zotero.BetterBibTeX.ready
 
-    let reason: string = null
-    let uncached: any[] = []
+    const translator = this.byId[translatorID]
 
-    const threshold: number = Prefs.get('autoExportPrimeExportCacheThreshold') || 0
+    const params = Object.entries({
+      client: Prefs.client,
+      version: Zotero.version,
+      platform: Prefs.platform,
+      translator: translator.label,
+      output: path || '',
+    }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
+    log.debug('worker params:', params, 'from', { path })
 
-    if (!reason && !threshold) reason = 'priming threshold set to 0'
-    if (!reason && Prefs.get('jabrefFormat') === 4) reason = 'JabRef Format 4 cannot be cached' // tslint:disable-line:no-magic-numbers
-    if (!reason && displayOptions.exportFileData) reason = 'Cache disabled when exporting attachments'
-    if (!reason && Prefs.get('relativeFilePaths')) reason = 'Cache disabled when relativeFilePaths is on'
-    if (!reason) {
-      uncached = await this.uncached(translatorID, displayOptions, scope)
-      if (!uncached.length) {
-        reason = 'No uncached items found'
-      } else if (uncached.length < threshold) {
-        reason = `${uncached.length} uncached items found, but not priming for less than ${threshold}`
+    this.workers.total += 1
+    const id = this.workers.total
+    this.workers.running.add(id)
+    const prefix = `{${translator.label} worker ${id}}`
+    const deferred = Zotero.Promise.defer()
+    const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+
+    worker.onmessage = (e: { data: BBTWorker.Message }) => {
+      switch (e.data?.kind) {
+        case 'error':
+          log.error(e.data)
+          Zotero.debug(`${prefix} error: ${e.data.message}`)
+          deferred.reject(e.data.message)
+          worker.terminate()
+          this.workers.running.delete(id)
+          break
+
+        case 'debug':
+          Zotero.debug(`${prefix} ${e.data.message}`)
+          break
+
+        case 'done':
+          deferred.resolve(e.data.output)
+          worker.terminate()
+          this.workers.running.delete(id)
+          break
+
+        default:
+          if (JSON.stringify(e) !== '{"isTrusted":true}') { // why are we getting this?
+            Zotero.debug(`unexpected message in host from ${prefix} ${JSON.stringify(e)}`)
+          }
+          break
       }
     }
-    if (reason) {
-      log.debug(':cache:prime: not priming cache:', reason)
-      return
+
+    worker.onerror = e => {
+      Zotero.debug(`${prefix} error: ${e}`)
+      deferred.reject(e.message)
+      worker.terminate()
+      this.workers.running.delete(id)
     }
 
-    switch (typeof uncached[0]) {
-      case 'number':
-      case 'string':
-        uncached = await Zotero.Items.getAsync(uncached)
+    scope = this.exportScope(scope)
+
+    let getter
+
+    if (scope.getter?.nextItem) {
+      getter = scope.getter
+    } else {
+      getter = new Zotero.Translate.ItemGetter
+
+      switch (scope.type) {
+        case 'library':
+          await getter.setAll(scope.id, true)
+          break
+
+        case 'items':
+          getter.setItems(scope.items)
+          break
+
+        case 'collection':
+          getter.setCollection(scope.collection, true)
+          break
+
+        default:
+          throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
+      }
     }
 
-    const batch = Math.max(Prefs.get('autoExportPrimeExportCacheBatch') || 0, 1)
-    const delay = Math.max(Prefs.get('autoExportPrimeExportCacheDelay') || 0, 1)
-    log.debug(fold.start, ':cache:prime:', uncached.length)
-
-    const debugEnabled = Zotero.Debug.enabled
-    while (uncached.length) {
-      log.debug(':cache:prime:remaining', uncached.length)
-
-      Zotero.Debug.enabled = false
-
-      const _batch = uncached.splice(0, batch)
-
-      await this.exportItems(translatorID, displayOptions, { items: _batch })
-
-      Zotero.Debug.enabled = debugEnabled
-
-      // give the UI a chance
-      await timeout(delay)
+    const config: BBTWorker.Config = {
+      preferences: Prefs.all(),
+      options: displayOptions || {},
+      items: [],
+      collections: [],
+      cslItems: {},
     }
-    log.debug(':cache:prime:done', fold.end)
+
+    let elt: any
+    while (elt = getter.nextItem()) {
+      if (elt.itemType === 'attachment') {
+        delete elt.saveFile
+      } else if (elt.attachments) {
+        for (const att of elt.attachments) {
+          delete att.saveFile
+        }
+      }
+      config.items.push(elt)
+    }
+    if (translator.label.includes('CSL')) {
+      for (const item of config.items) {
+        // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
+        // fetches the version we create here *before* the translator starts, changes to the 'item' inside the translator are essentially ignored.
+        // There's no way around this until Zotero makes export translators async; we prep the itemToCSLJSON versions here so they can be "made" synchronously
+        // inside the translator
+        Object.assign(item, Extra.get(item.extra))
+        config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
+      }
+    }
+    if (this.byId[translatorID].configOptions?.getCollections) {
+      while (elt = getter.nextCollection()) {
+        config.collections.push(elt)
+      }
+    }
+
+    log.debug('starting worker export', prefix, 'for', config.items.length, 'items in', config.collections.length, 'collections, from', Object.keys(scope))
+
+    try {
+      worker.postMessage(JSON.parse(JSON.stringify(config)))
+    } catch (err) {
+      worker.terminate()
+      this.workers.running.delete(id)
+      log.error(err)
+      deferred.reject(err)
+    }
+
+    return deferred.promise
   }
 
-  public async exportItems(translatorID: string, displayOptions: any, items: { library?: any, items?: any, collection?: any }, path = null) {
+  public async exportItems(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
     await Zotero.BetterBibTeX.ready
 
     const start = Date.now()
@@ -167,20 +253,23 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const deferred = Zotero.Promise.defer()
     const translation = new Zotero.Translate.Export()
 
-    items = this.items(items)
+    scope = this.exportScope(scope)
 
-    if (items.library) {
-      translation.setLibraryID(items.library)
+    switch (scope.type) {
+      case 'library':
+        translation.setLibraryID(scope.id)
+        break
 
-    } else if (items.items) {
-      translation.setItems(items.items)
+      case 'items':
+        translation.setItems(scope.items)
+        break
 
-    } else if (items.collection) {
-      translation.setCollection(items.collection)
+      case 'collection':
+        translation.setCollection(scope.collection)
+        break
 
-    } else {
-      log.debug(':cache:exportItems: nothing?')
-
+      default:
+        throw new Error(`Unexpected scope: ${Object.keys(scope)}`)
     }
 
     translation.setTranslator(translatorID)
@@ -325,15 +414,29 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return (await Zotero.DB.queryAsync(sql)).map(item => parseInt(item.itemID)).filter(itemID => !cached.has(itemID))
   }
 
-  private items(items) {
-    if (!items) {
-      return { library: Zotero.Libraries.userLibraryID }
+  private exportScope(scope: ExportScope): ExportScope {
+    if (!scope) scope = { type: 'library', id: Zotero.Libraries.userLibraryID }
+
+    if (scope.type === 'collection' && typeof scope.collection === 'number') {
+      return { type: 'collection', collection: Zotero.Collections.get(scope.collection) }
     }
 
-    if (typeof items.collection === 'number') {
-      return { collection: Zotero.Collections.get(items.collection) }
+    if (scope.getter && !scope.getter.nextItem) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+
+    switch (scope.type) {
+      case 'items':
+        if (! scope.items?.length ) throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      case 'collection':
+        if (typeof scope.collection?.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      case 'library':
+        if (typeof scope.id !== 'number') throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
+        break
+      default:
+        throw new Error(`invalid scope: ${JSON.stringify(scope)}`)
     }
 
-    return items
+    return scope
   }
 }

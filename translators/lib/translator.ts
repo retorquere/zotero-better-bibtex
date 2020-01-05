@@ -27,7 +27,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     skipFields: string
     bibtexURL: string
     warnBulkModify: number
-    autoExportTooLong: number
     postscript: string
     strings: string
     autoAbbrev: boolean
@@ -57,9 +56,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     testing: boolean
     autoPin: boolean
     kuroshiro: boolean
-    autoExportPrimeExportCacheThreshold: number
-    autoExportPrimeExportCacheBatch: number
-    autoExportPrimeExportCacheDelay: number
     relativeFilePaths: boolean
     sorted: boolean
     git: string
@@ -231,8 +227,11 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
       this.caching = !(
+        // maybe later as a cache fill option?
+        Zotero.BetterBibTeX.worker()
+
         // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-        this.options.exportFileData
+        || this.options.exportFileData
 
         // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
         || (this.BetterTeX && this.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers
@@ -248,6 +247,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
 
     this.collections = {}
     if (mode === 'export' && this.header.configOptions?.getCollections && Zotero.nextCollection) {
+      Zotero.debug('getting collections')
       let collection
       while (collection = Zotero.nextCollection()) {
         const children = collection.children || collection.descendents || []
@@ -280,5 +280,16 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     }
 
     this.initialized = true
+    Zotero.debug('Translator init ready')
+  }
+
+  public items(): ISerializedItem[] {
+    let item
+    const items: ISerializedItem[] = []
+    while (item = Zotero.nextItem()) {
+      items.push(item)
+    }
+    items.sort((a, b) => a.citekey.localeCompare(b.citekey))
+    return items
   }
 }

@@ -2,7 +2,7 @@ declare const Zotero: any
 
 import { Translator } from '../lib/translator'
 
-import { Exporter } from '../lib/exporter'
+import { Exporter } from './exporter'
 import { text2latex } from './unicode_translator'
 import { debug } from '../lib/debug'
 import { datefield } from './datefield'

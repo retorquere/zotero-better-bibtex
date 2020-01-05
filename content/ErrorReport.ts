@@ -130,10 +130,10 @@ export = new class ErrorReport {
       debug: Zotero.Debug.getConsoleViewerOutput(),
     }
 
-    if (Zotero.BetterBibTeX.ready && this.params.items) {
+    if (Zotero.BetterBibTeX.ready && this.params.scope) {
       await Zotero.BetterBibTeX.ready
 
-      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true}, this.params.items)
+      this.errorlog.references = await Translators.exportItems(Translators.byLabel.BetterBibTeXJSON.translatorID, {exportNotes: true, dropAttachments: true}, this.params.scope)
     }
 
     document.getElementById('better-bibtex-error-context').value = this.errorlog.info
@@ -206,6 +206,8 @@ export = new class ErrorReport {
     for (const key of ['export.quickCopy.setting']) {
       info += `  Zotero: ${key} = ${JSON.stringify(Zotero.Prefs.get(key))}\n`
     }
+
+    info += `Total export workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}\n`
 
     return info
   }

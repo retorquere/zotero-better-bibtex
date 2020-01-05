@@ -39,11 +39,8 @@ export function doExport() {
   }
 
   const items: Item[] = []
-  let item
-  while ((item = Zotero.nextItem())) {
+  for (const item of Translator.items()) {
     if (['note', 'attachment'].includes(item.itemType)) continue
-
-    item.id = 'node-' + item.uri.replace(/.*\//, '')
 
     const label = [ item.citekey ]
 
@@ -63,23 +60,24 @@ export function doExport() {
     }
     if (author.length) label.push(author.join(' '))
 
-    item.label = label.join('\n')
-
-    item.relations = item.relations?.['dc:relation'] || []
-
-    item.cites = [].concat.apply([],
-      (item.extra || '')
-        .split('\n')
-        .filter(line => line.startsWith('cites:'))
-        .map(line => line.replace(/^cites:/, '').trim())
-        .filter(keys => keys)
-        .map(keys => keys.split(/\s*,\s*/))
-      )
-
-    items.push(item)
+    items.push({
+      id: 'node-' + item.uri.replace(/.*\//, ''),
+      label: label.join('\n'),
+      relations: (item.relations?.['dc:relation'] || []),
+      cites: [].concat.apply([],
+        (item.extra || '')
+          .split('\n')
+          .filter(line => line.startsWith('cites:'))
+          .map(line => line.replace(/^cites:/, '').trim())
+          .filter(keys => keys)
+          .map(keys => keys.split(/\s*,\s*/))
+        ),
+      citekey: item.citekey,
+      uri: item.uri,
+    })
   }
 
-  for (item of items) {
+  for (const item of items) {
     node(item.id, { label: item.label })
 
     for (const uri of item.relations) {

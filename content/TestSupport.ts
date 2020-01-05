@@ -114,20 +114,20 @@ export = new class {
   }
 
   public async exportLibrary(translatorID, displayOptions, path, collection) {
-    let items
+    let scope
     log.debug('TestSupport.exportLibrary', { translatorID, displayOptions, path, collection })
     if (collection) {
       let name = collection
       if (name[0] === '/') name = name.substring(1) // don't do full path parsing right now
       for (collection of Zotero.Collections.getByLibrary(Zotero.Libraries.userLibraryID)) {
-        if (collection.name === name) items = { collection: collection.id }
+        if (collection.name === name) scope = { type: 'collection', collection: collection.id }
       }
-      log.debug('TestSupport.exportLibrary', { name, items })
-      if (!items) throw new Error(`Collection '${name}' not found`)
+      log.debug('TestSupport.exportLibrary', { name, scope })
+      if (!scope) throw new Error(`Collection '${name}' not found`)
     } else {
-      items = null
+      scope = null
     }
-    return await Translators.exportItems(translatorID, displayOptions, items, path)
+    return await Translators.exportItems(translatorID, displayOptions, scope, path)
   }
 
   public async select(ids) {
