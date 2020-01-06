@@ -53,6 +53,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     if (reinit) {
       let restart = false
+      log.debug('new translators:', { ask: Prefs.get('newTranslatorsAskRestart'), testing: Prefs.testing })
       if (Prefs.get('newTranslatorsAskRestart') && !Prefs.testing) {
         const dontAskAgain = { value: false }
         const ps = Services.prompt

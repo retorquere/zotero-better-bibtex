@@ -54,6 +54,7 @@
   "mapText": "",
   "mapMath": "",
   "newTranslatorsAskRestart": true,
+  "workers": true,
   "platform": "",
   "client": ""
 }

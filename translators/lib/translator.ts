@@ -56,6 +56,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     testing: boolean
     autoPin: boolean
     kuroshiro: boolean
+    workers: boolean
     relativeFilePaths: boolean
     git: string
     mapUnicode: string
