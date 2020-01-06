@@ -1,9 +1,4 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-#### Deterministically order references and fields; primarily for version control.
-
-When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
-some kind of version control. Comes at performance and memory consumption cost.
-
 #### postscript
 
 Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).
@@ -12,22 +7,22 @@ Snippet of javascript to run [after each reference generation]({{ ref . "scripti
 
 If you have externally maintained @string vars paste them here and they will be resolved for subsequent imports
 
-### @string definitions
+### Export
 
-#### Expand the @string vars below during imports
+#### Deterministically order references and fields; primarily for version control.
 
-When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
+When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
+some kind of version control. Comes at performance and memory consumption cost.
 
-#### If a field could be a @string var, export it without braces
+#### Apply title-casing to titles
 
-When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
-when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
 
-Options:
+#### Apply brace-protection to capitalized words
 
-* No
-* Assume single-word fields to be @string vars
-* Match against the @string vars below
+If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
+casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
 
 ### Import
 
@@ -57,17 +52,24 @@ Options:
 * yes
 * no
 
-### Export
+### @string definitions
 
-#### Apply title-casing to titles
+#### Expand the @string vars below during imports
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-casing, you can turn this off to suppress [title casing for English references]({{ ref . "support/faq#bbt-is-changing-the-capitalization-of-my-titles-why" }}).
+When enabled, BBT will prepend the @strings section below to all Bib(La)TeX imports and will expand the strings during export.
 
-#### Apply brace-protection to capitalized words
+#### If a field could be a @string var, export it without braces
 
-If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
-casing, you can turn this off to suppress [automatic brace-protection for words with uppercase letters]({{ ref . "support/faq#why-the-double-braces" }}).
+When enabled, BBT will try to retain @string vars its exports unsurrounded by braces; when set to 'detect', single-word strings will be assumed to be externally-defined @string vars,
+when set to 'match', only @strings declared in the @strings section of the preferences will be preserved. If you don't know what this means, leave it off.
+
+Options:
+
+* No
+* Assume single-word fields to be @string vars
+* Match against the @string vars below
+
+### Citation keys
 
 #### Warn me when changing citation keys in bulk
 
