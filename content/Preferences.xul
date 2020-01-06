@@ -359,12 +359,6 @@
           to those attachments. Caching is disabled when this option is on, so it affects performance.
         </bbt:doc>
 
-        <preference name="extensions.zotero.translators.better-bibtex.sorted" id="pref-better-bibtex-sorted" type="bool" default="false"/>
-        <bbt:doc>
-          When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
-          some kind of version control. Comes at performance and memory consumption cost.
-        </bbt:doc>
-
         <preference name="extensions.zotero.translators.better-bibtex.git" type="string" default="config"/>
         <bbt:doc>
           Can be `off`, `config` or `always`

@@ -1,26 +1,27 @@
 
+@article{searle_how_1964,
+  title = {How to Derive "{{Ought}}" from "{{Is}}"},
+  author = {Searle, John R.},
+  date = {1964},
+  journaltitle = {The Philosophical Review},
+  volume = {73},
+  pages = {43--58},
+  issn = {00318108},
+  doi = {10.2307/2183201},
+  langid = {english},
+  number = {1}
+}
+
 @article{tusseau_critique_2009,
+  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \mkbibquote{notion fonctionnelle}},
+  shorttitle = {Critique d'une métanotion fonctionnelle},
   author = {Tusseau, Guillaume},
   date = {2009},
   journaltitle = {Revue française de droit administratif},
-  langid = {french},
-  number = {4},
-  pages = {641--656},
   shortjournal = {RFDA},
-  shorttitle = {Critique d'une métanotion fonctionnelle},
-  title = {Critique d'une métanotion fonctionnelle. La notion (trop) fonctionnelle de \mkbibquote{notion fonctionnelle}}
+  pages = {641--656},
+  langid = {french},
+  number = {4}
 }
 
-@article{searle_how_1964,
-  author = {Searle, John R.},
-  date = {1964},
-  doi = {10.2307/2183201},
-  issn = {00318108},
-  journaltitle = {The Philosophical Review},
-  langid = {english},
-  number = {1},
-  pages = {43--58},
-  title = {How to Derive "{{Ought}}" from "{{Is}}"},
-  volume = {73}
-}
 

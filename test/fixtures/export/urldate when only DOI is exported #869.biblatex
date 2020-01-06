@@ -1,10 +1,13 @@
+
 @article{Almog1984,
+  title = {Semantical Anthropology},
   author = {Almog, Joseph},
   date = {1984-09-01},
-  doi = {10.1111/j.1475-4975.1984.tb00073.x},
   journaltitle = {Midwest Studies In Philosophy},
-  number = {1},
+  volume = {9},
   pages = {478--489},
-  title = {Semantical Anthropology},
-  volume = {9}
+  doi = {10.1111/j.1475-4975.1984.tb00073.x},
+  number = {1}
 }
+
+

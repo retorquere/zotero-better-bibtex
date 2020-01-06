@@ -1,15 +1,17 @@
+
 @mvbook{Landafshits.V7,
   author = {Ландау, Л. Д. and Лифшиц, Е. М.},
-  date = {2007},
-  edition = {5},
-  isbn = {5-9221-0122-6},
-  langid = {russian},
-  location = {{М.}},
-  pagetotal = {259},
-  publisher = {{Физматлит}},
-  series = {Теоретическая физика},
   title = {Теория упругости},
+  edition = {5},
+  series = {Теоретическая физика},
+  publisher = {{Физматлит}},
   volume = {7},
+  pagetotal = {259},
+  isbn = {5-9221-0122-6},
+  date = {2007},
+  location = {{М.}},
+  langid = {russian},
   volumes = {10}
 }
+
 

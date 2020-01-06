@@ -200,7 +200,6 @@ Scenario: suppressBraceProtection does not work for BibTeX export (non-English i
 @test-cluster-1
 @708 @957
 Scenario: Citekey generation failure #708 and sort references on export #957
-  Given I set preference .sorted to true
   When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
   And I import 6 references from "export/*.json"
   And I set preference .citekeyFormat to [auth:lower]_[veryshorttitle:lower]_[year]

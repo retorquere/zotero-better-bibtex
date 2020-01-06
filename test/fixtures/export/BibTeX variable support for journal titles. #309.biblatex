@@ -1,10 +1,12 @@
+
 @article{blahut_capacity,
+  title = {Computation of Channel Capacity and Rate-Distortion Functions},
   author = {Blahut, Richard E},
   date = {1972},
   journaltitle = IEEE_J_IT,
-  number = {4},
+  volume = {18},
   pages = {460--473},
-  title = {Computation of Channel Capacity and Rate-Distortion Functions},
-  volume = {18}
+  number = {4}
 }
+
 

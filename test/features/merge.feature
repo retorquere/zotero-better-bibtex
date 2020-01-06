@@ -1,4 +1,4 @@
-@export
+@merge
 Feature: Export
 
 @1221 @retries=10

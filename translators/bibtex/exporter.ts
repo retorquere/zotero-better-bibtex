@@ -46,7 +46,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     this.postfix = this.postfix || (new Postfix(Translator.preferences.qualityReport))
 
     let item
-    while (item = Zotero.nextItem()) {
+    while (item = Translator.nextItem()) {
       if (['note', 'attachment'].includes(item.itemType)) continue
 
       if (!item.citekey) {
@@ -60,12 +60,7 @@ export let Exporter = new class { // tslint:disable-line:variable-name
       Translator.cache[cached ? 'hits' : 'misses'] += 1
 
       if (cached) {
-        if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
-          Translator.references.push({ citekey: item.citekey, reference: cached.reference })
-        } else {
-          Zotero.write(cached.reference)
-        }
-
+        Zotero.write(cached.reference)
         this.postfix.add(cached)
         continue
       }
@@ -96,15 +91,8 @@ export let Exporter = new class { // tslint:disable-line:variable-name
     return null
   }
 
-  // TODO: move to bibtex-exporters
   public complete() {
-    if (Translator.preferences.sorted && (Translator.BetterBibTeX || Translator.BetterBibLaTeX)) {
-      Translator.references.sort((a, b) => Translator.stringCompare(a.citekey, b.citekey))
-      Zotero.write(Translator.references.map(ref => ref.reference).join(''))
-    }
-
     this.jabref.exportGroups()
-
     Zotero.write(this.postfix.toString())
   }
 }
