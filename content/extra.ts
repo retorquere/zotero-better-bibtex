@@ -48,6 +48,11 @@ type GetOptions = {
   tex?: boolean | Record<string, TeXString>
 }
 
+const noPrefix = ['place', 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'googlebooksid']
+const casing = {
+  arxiv: 'arXiv',
+}
+
 export function get(extra: string, options?: GetOptions): { extra: string, extraFields: Fields } {
   if (!options) options = { citationKey: true , aliases: true, csl: true, tex: true }
 
@@ -101,7 +106,7 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       return false
     }
 
-    if (!tex && ['place', 'lccn', 'mr', 'zbl', 'arxiv', 'jstor', 'hdl', 'google-books-id'].includes(name)) {
+    if (!tex && noPrefix.includes(name.replace(/-/g, ''))) {
       extraFields.tex[name.replace(/-/g, '')] = { value }
       return false
     }
@@ -125,7 +130,8 @@ export function set(extra, options: { citationKey?: string, aliases?: string[], 
   if (options.tex) {
     for (const name of Object.keys(options.tex).sort()) {
       const value = options.tex[name]
-      parsed.extra += `\ntex.${name}${value.raw ? '=' : ':'} ${value}`
+      const prefix = noPrefix.includes(name) ? '' : 'tex.'
+      parsed.extra += `\n${prefix}${casing[name] || name}${value.raw ? '=' : ':'} ${value.value}`
     }
   }
 
