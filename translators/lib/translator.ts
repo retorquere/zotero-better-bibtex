@@ -287,7 +287,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       while (item = Zotero.nextItem()) {
         this.sortedItems.push(item)
       }
-      this.sortedItems.sort((a, b) => a.citekey.localeCompare(b.citekey, undefined, { sensitivity: 'base' }))
+      // fallback to itemType.itemID for notes and attachments
+      this.sortedItems.sort((a, b) => (a.citekey || `{${a.itemType}:${a.itemID}}`).localeCompare((b.citekey || `{${b.itemType}:${b.itemID}}`), undefined, { sensitivity: 'base' }))
     }
     return this.sortedItems
   }
