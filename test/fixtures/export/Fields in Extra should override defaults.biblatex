@@ -1,12 +1,14 @@
+
 @online{simonite2013declinewikipediaeven,
-  abstract = {The community that built the largest encyclopedia in history is shrinking, even as more people and Internet services depend on it than ever. Can it be revived, or is this the end of the Web’s idealistic era?},
+  title = {The Decline of {{Wikipedia}}: Even as More People than Ever Rely on It, Fewer People Create It},
+  shorttitle = {The Decline of {{Wikipedia}}},
   author = {Simonite, Tom},
   date = {2013-10-22},
   journaltitle = {MIT Technology Review},
-  shorttitle = {The Decline of {{Wikipedia}}},
-  title = {The Decline of {{Wikipedia}}: Even as More People than Ever Rely on It, Fewer People Create It},
-  titleaddon = {MIT Technology Review},
   url = {http://www.technologyreview.com/featuredstory/520446/the-decline-of-wikipedia/},
-  urldate = {2013-10-26}
+  urldate = {2013-10-26},
+  abstract = {The community that built the largest encyclopedia in history is shrinking, even as more people and Internet services depend on it than ever. Can it be revived, or is this the end of the Web’s idealistic era?},
+  titleaddon = {MIT Technology Review}
 }
+
 

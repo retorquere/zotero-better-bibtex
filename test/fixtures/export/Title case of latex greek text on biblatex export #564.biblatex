@@ -1,5 +1,13 @@
 
 @article{dalrimple_use_2006,
+  title = {The {{Use}} of Καί in {{Revelation}} 11,1 and the {{Implications}} for the {{Identification}} of the {{Temple}}, the {{Altar}}, and the {{Worshippers}}},
+  author = {Dalrimple, Rob},
+  date = {2006},
+  journaltitle = {Biblica},
+  shortjournal = {Biblica},
+  volume = {87},
+  pages = {387--394},
+  issn = {0006-0887},
   abstract = {In this article it is argued that the καί in Rev 11,1b, which introduces 'the altar' and 'the worshippers', is epexegetical and best rendered 'that is'. Consequently, the designations 'the altar' and 'the worshippers' serve to clarify precisely who are the recipients of God's sovereign protection — entailed in the act of 'measuring the temple of God'. It is further contended that these designations serve to distinguish between two groups within the community of the righteous: i.e., those who are martyred ('the altar') and those who simply remain faithful to the end ('the worshippers').},
   annotation = {389 The phrase, the 'temple of God', which occurs eleven times in the NT(24), connotes a spiritual application in in every instance except one. The only occasion in which the phrase refers to the physical temple in Jerusalem is in Matt 26,61. However, the use of this phrase in Matthew, instead of weakening the case for a spiritual understanding throughout the NT, strengthens it."
 
@@ -83,18 +91,18 @@ Ephesians 2:19-22
 1 Peter 2:5 
 
 5 like living stones, let yourselves be built[a] into a spiritual house, to be a holy priesthood, to offer spiritual sacrifices acceptable to God through Jesus Christ.},
-  author = {Dalrimple, Rob},
-  date = {2006},
-  issn = {0006-0887},
-  journaltitle = {Biblica},
-  number = {3},
-  pages = {387--394},
-  shortjournal = {Biblica},
-  title = {The {{Use}} of Καί in {{Revelation}} 11,1 and the {{Implications}} for the {{Identification}} of the {{Temple}}, the {{Altar}}, and the {{Worshippers}}},
-  volume = {87}
+  number = {3}
 }
 
 @article{dalrymple_use_2006,
+  title = {The {{Use}} of {{καί}} in {{Revelation}} 11,1 and the {{Implications}} for the {{Identification}} of the {{Temple}}, the {{Altar}}, and the {{Worshippers}}},
+  author = {Dalrymple, Rob},
+  date = {2006},
+  journaltitle = {Biblica},
+  shortjournal = {Biblica},
+  volume = {87},
+  pages = {387--394},
+  issn = {0006-0887},
   abstract = {In this article it is argued that the καί in Rev 11,1b, which introduces 'the altar' and 'the worshippers', is epexegetical and best rendered 'that is'. Consequently, the designations 'the altar' and 'the worshippers' serve to clarify precisely who are the recipients of God's sovereign protection — entailed in the act of 'measuring the temple of God'. It is further contended that these designations serve to distinguish between two groups within the community of the righteous: i.e., those who are martyred ('the altar') and those who simply remain faithful to the end ('the worshippers').},
   annotation = {389 The phrase, the 'temple of God', which occurs eleven times in the NT(24), connotes a spiritual application in in every instance except one. The only occasion in which the phrase refers to the physical temple in Jerusalem is in Matt 26,61. However, the use of this phrase in Matthew, instead of weakening the case for a spiritual understanding throughout the NT, strengthens it."
 
@@ -178,15 +186,7 @@ Ephesians 2:19-22
 1 Peter 2:5 
 
 5 like living stones, let yourselves be built[a] into a spiritual house, to be a holy priesthood, to offer spiritual sacrifices acceptable to God through Jesus Christ.},
-  author = {Dalrymple, Rob},
-  date = {2006},
-  issn = {0006-0887},
-  journaltitle = {Biblica},
-  number = {3},
-  pages = {387--394},
-  shortjournal = {Biblica},
-  title = {The {{Use}} of {{καί}} in {{Revelation}} 11,1 and the {{Implications}} for the {{Identification}} of the {{Temple}}, the {{Altar}}, and the {{Worshippers}}},
-  volume = {87}
+  number = {3}
 }
 
 

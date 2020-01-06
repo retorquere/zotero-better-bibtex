@@ -1,22 +1,25 @@
+
 @book{macedo_catalogo_1799,
+  title = {Catalogo dos livros, que se haõ de ler para a continuaçaõ do diccionario da lingua Portugueza: mandado publicar pela Academia Real das Sciencias de Lisboa},
+  shorttitle = {Catalogo dos livros, que se haõ de ler...},
   author = {Macedo, Agostinho José da Costa de},
   date = {1799},
+  publisher = {{Na Typographia da Mesma Academia}},
+  location = {{Lisboa}},
   keywords = {Literary Criticism / European / Spanish & Portuguese,Portuguese literature},
   langid = {portuguese},
-  location = {{Lisboa}},
-  pagetotal = {182},
-  publisher = {{Na Typographia da Mesma Academia}},
-  shorttitle = {Catalogo dos livros, que se haõ de ler...},
-  title = {Catalogo dos livros, que se haõ de ler para a continuaçaõ do diccionario da lingua Portugueza: mandado publicar pela Academia Real das Sciencias de Lisboa}
+  pagetotal = {182}
 }
 
 @thesis{oliveira_memoriam_2007,
+  title = {In Memoriam, Na Cidade},
   author = {Oliveira, Maria Manuel Lobo Pinto de},
   date = {2007},
   institution = {{Universidade do Minho}},
   location = {{Guimarães, Portugal}},
-  title = {In Memoriam, Na Cidade},
-  type = {Tese de Doutoramento em Arquitectura},
   url = {http://repositorium.sdum.uminho.pt/handle/1822/6877},
-  urldate = {2015-03-24}
+  urldate = {2015-03-24},
+  type = {Tese de Doutoramento em Arquitectura}
 }
+
+

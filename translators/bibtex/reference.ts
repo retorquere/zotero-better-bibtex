@@ -260,6 +260,32 @@ const Language = new class { // tslint:disable-line:variable-name
  * @param {Object} @item the current Zotero item being converted
  */
 
+const fieldOrder = [
+  'ids',
+  'title',
+  'shorttitle',
+  'booktitle',
+  'author',
+  'editor',
+  'date',
+  'origdate',
+  'year',
+  'month',
+  'journaltitle',
+  'shortjournal',
+  'edition',
+  'volume',
+  'pages',
+  'publisher',
+  'address',
+  'institution',
+  'location',
+  'issn',
+  'doi',
+  'url',
+  'urldate',
+].reduce((acc, field, idx, fields) => { acc[field] = idx + 1; return acc }, {})
+
 /*
  * The fields are objects with the following keys:
  *   * name: name of the Bib(La)TeX field
@@ -403,7 +429,7 @@ export class Reference {
       .replace(/\u2053/g, '~')
       .replace(/[\u2014\u2015]/g, '---') // em-dash
       .replace(/[\u2012\u2013]/g, '--') // en-dash
-      // .replace(/([0-9])\s-\s([0-9])/g, '$1--$2') // treat space-hyphen-space like an en-dash when it's between numbers
+      .split(',').map(range => range.replace(/^(\s*[0-9]+)\s*-\s*([0-9]+\s*)$/g, '$1--$2')).join(',') // treat space-hyphen-space like an en-dash when it's between numbers
   }
 
   /*
@@ -762,6 +788,21 @@ export class Reference {
       this.add({ name: annotation, value: notes, html: true })
     }
 
+    // sort before postscript so the postscript can affect field order
+    const keys = Object.keys(this.has).sort((a, b) => {
+      const fa = fieldOrder[a]
+      const fb = fieldOrder[b]
+
+      if (fa && fb) return fa - fb
+      if (fa) return -1
+      if (fb) return 1
+      return a.localeCompare(b)
+    })
+    for (const field of keys) {
+      const value = this.has[field]
+      delete this.has[field]
+      this.has[field] = value
+    }
     let cache
     try {
       cache = this.postscript(this, this.item, Translator, Zotero)
@@ -792,8 +833,6 @@ export class Reference {
     if (!Object.keys(this.has).length) this.add({name: 'type', value: this.referencetype})
 
     const fields = Object.values(this.has).map(field => `  ${field.name} = ${field.bibtex}`)
-    // sort fields for stable tests
-    if (Translator.preferences.testing || Translator.preferences.sorted) fields.sort()
 
     let ref = `@${this.referencetype}{${this.item.citekey},\n`
     ref += fields.join(',\n')
@@ -801,11 +840,7 @@ export class Reference {
     ref += this.qualityReport()
     ref += '\n'
 
-    if (Translator.preferences.sorted) {
-      Translator.references.push({ citekey: this.item.citekey, reference: ref })
-    } else {
-      Zotero.write(ref)
-    }
+    Zotero.write(ref)
 
     this.metadata.DeclarePrefChars = Exporter.unique_chars(this.metadata.DeclarePrefChars)
 
@@ -964,8 +999,7 @@ export class Reference {
       .filter(tag => Translator.preferences.automaticTags || (tag.type !== 1))
     if (tags.length === 0) return null
 
-    // sort tags for stable tests
-    if (Translator.preferences.testing || Translator.preferences.sorted) tags.sort((a, b) => Translator.stringCompare(a.tag, b.tag))
+    tags.sort((a, b) => Translator.stringCompare(a.tag, b.tag))
 
     for (const tag of tags) {
       if (Translator.BetterBibTeX) {

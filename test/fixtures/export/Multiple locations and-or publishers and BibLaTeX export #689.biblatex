@@ -1,11 +1,14 @@
+
 @book{risi_geometry_2007,
+  title = {Geometry and {{Monadology}}: {{Leibniz}}'s {{Analysis Situs}} and {{Philosophy}} of {{Space}}},
+  shorttitle = {Geometry and {{Monadology}}},
   author = {de Risi, Vincenzo},
   date = {2007},
+  publisher = {{Birkhäuser}},
+  location = {{Basel and Boston and Berlin}},
   isbn = {978-3-7643-7986-5},
   langid = {english},
-  location = {{Basel and Boston and Berlin}},
-  pagetotal = {676},
-  publisher = {{Birkhäuser}},
-  shorttitle = {Geometry and {{Monadology}}},
-  title = {Geometry and {{Monadology}}: {{Leibniz}}'s {{Analysis Situs}} and {{Philosophy}} of {{Space}}}
+  pagetotal = {676}
 }
+
+

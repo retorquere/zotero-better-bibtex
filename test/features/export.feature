@@ -122,13 +122,14 @@ Scenario Outline: BibLaTeX Export
 
 @441 @439 @bbt @300 @565 @551 @558 @747 @892 @899 @901 @976 @977
 @978 @746 @1069 @1092 @1091 @1110 @1112 @1118 @1147 @1188 @1217 @1218
-@1227 @1265 @980
+@1227 @1265 @980 @1375
 Scenario Outline: BibTeX Export
   Given I import <references> references from "export/<file>.json"
   Then an export using "Better BibTeX" should match "export/*.bibtex"
 
   Examples:
      | file                                                                               | references |
+     | Book chapter citation using p. instead of pp. #1375                                | 1          |
      | braces after textemdash followed by unicode #980                                   | 1          |
      | Exporting to bibtex with unicode as plain-text latex commands does not convert U+2040 #1265 | 1 |
      | Open date range crashes citekey generator #1227                                    | 1          |
@@ -199,7 +200,6 @@ Scenario: suppressBraceProtection does not work for BibTeX export (non-English i
 @test-cluster-1
 @708 @957
 Scenario: Citekey generation failure #708 and sort references on export #957
-  Given I set preference .sorted to true
   When I set preference .citekeyFormat to [auth.etal][shortyear:prefix,.][0][Title:fold:nopunct:skipwords:select,1,1:abbr:lower:alphanum:prefix,.]
   And I import 6 references from "export/*.json"
   And I set preference .citekeyFormat to [auth:lower]_[veryshorttitle:lower]_[year]

@@ -88,14 +88,14 @@
     "string-template": "^1.0.0",
     "transliteration": "^2.1.8",
     "tslint": "^5.20.1",
-    "unicode2latex": "^1.0.33",
+    "unicode2latex": "^1.0.34",
     "webpack-cli": "^3.3.10",
     "xregexp": "^4.2.4",
     "zotero-plugin": "^0.0.96"
   },
   "devDependencies": {
-    "@types/node": "^13.1.1",
-    "@types/webpack": "^4.41.0",
+    "@types/node": "^13.1.4",
+    "@types/webpack": "^4.41.1",
     "archiver": "^3.1.1",
     "bluebird": "^3.7.2",
     "circular-dependency-plugin": "^5.2.0",

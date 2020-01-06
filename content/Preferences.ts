@@ -358,9 +358,6 @@ export = new class PrefPane {
     this.keyformat = document.getElementById('id-better-bibtex-preferences-citekeyFormat')
     this.keyformat.disabled = false
 
-    // no other way that I know of to know that I've just been selected
-    this.timer = window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
-
     document.getElementById('better-bibtex-abbrev-style').setAttribute('collapsed', Prefs.client !== 'jurism')
     document.getElementById('better-bibtex-abbrev-style-label').setAttribute('collapsed', Prefs.client !== 'jurism')
     document.getElementById('better-bibtex-abbrev-style-separator').setAttribute('collapsed', Prefs.client !== 'jurism')
@@ -384,16 +381,27 @@ export = new class PrefPane {
     }
 
     window.sizeToContent()
+
+    // no other way that I know of to know that I've just been selected
+    this.timer = this.timer || window.setInterval(this.refresh.bind(this), 500) as any // tslint:disable-line:no-magic-numbers
   }
 
   private refresh() {
     const pane = document.getElementById('zotero-prefpane-better-bibtex')
 
     // unloaded
-    if (!pane && this.timer) return window.clearInterval(this.timer)
+    if (!pane) {
+      if (this.timer) {
+        window.clearInterval(this.timer)
+        this.timer = null
+      }
+      return
+    }
 
     // no other way that I know of to know that I've just been selected
-    if (pane && pane.selected) window.sizeToContent()
+    // and if I just alway do sizeToContent regardless of what's selected,
+    // it makes the zotero panes too big.
+    if (pane.selected) window.sizeToContent()
 
     this.update()
     if (this.autoexport) this.autoexport.refresh()
@@ -433,7 +441,10 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
-    document.getElementById('better-bibtex-preferences-worker-state').value = `Total workers started: ${Translators.workers.total}, currently running: ${Translators.workers.running.size}`
+    document.getElementById('better-bibtex-preferences-worker-state').value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.workers ? 'status' : 'disabled'}`, {
+      total: Translators.workers.total,
+      running: Translators.workers.running.size,
+    })
     window.sizeToContent()
   }
 

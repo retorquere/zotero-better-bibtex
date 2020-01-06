@@ -49,12 +49,12 @@
   "autoPin": false,
   "kuroshiro": false,
   "relativeFilePaths": false,
-  "sorted": false,
   "git": "config",
   "mapUnicode": "conservative",
   "mapText": "",
   "mapMath": "",
   "newTranslatorsAskRestart": true,
+  "workers": true,
   "platform": "",
   "client": ""
 }

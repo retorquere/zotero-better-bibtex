@@ -264,7 +264,7 @@ const queue = new class {
 
       start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start')
-      await Translators.exportItemsByWorker(ae.translatorID, displayOptions, scope, ae.path)
+      await Translators.exportItems(ae.translatorID, displayOptions, scope, ae.path)
       elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       log.debug('AutoExport.queue.run: export took', elapsed, 'seconds', fold.end)
 
