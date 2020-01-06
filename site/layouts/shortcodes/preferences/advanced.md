@@ -9,11 +9,6 @@ If you have externally maintained @string vars paste them here and they will be 
 
 ### Export
 
-#### Deterministically order references and fields; primarily for version control.
-
-When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
-some kind of version control. Comes at performance and memory consumption cost.
-
 #### Apply title-casing to titles
 
 If you're dead-set on ignoring both BibTeX/BibLaTeX best practice and the Zotero recommendations on title/sentence
