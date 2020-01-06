@@ -110,7 +110,6 @@ interface ITranslator {
   }
 
   collections: Record<string, ZoteroCollection>
-  references: Array<{citekey: string, reference: string}>
 
   isJurisM: boolean
   isZotero: boolean

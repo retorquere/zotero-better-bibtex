@@ -1,9 +1,12 @@
+
 @book{Medvedev2002,
+  title = {Ядерный загар},
   author = {Медведев, Григорий},
   date = {2002},
+  publisher = {{МК-Периодика}},
   keywords = {Chernobyl Nuclear Accident; Chornobylʹ; Ukraine; 1986,Nuclear industry,Nuclear reactor accidents,Radioactive wastes},
   langid = {russian},
-  pagetotal = {520},
-  publisher = {{МК-Периодика}},
-  title = {Ядерный загар}
+  pagetotal = {520}
 }
+
+

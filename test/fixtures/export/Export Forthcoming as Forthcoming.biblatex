@@ -1,12 +1,13 @@
 
 @incollection{BartoliniForthcoming,
-  author = {Bartolini, Stefano and Bilancini, Ennio and Sarracino, Francesco},
-  booktitle = {Policies for {{Happiness}}},
-  location = {{Oxford}},
-  publisher = {{Oxford University Press}},
   title = {Social {{Capital Predicts Happiness}}: {{World}}-{{Wide Evidence From Time Series}}},
+  booktitle = {Policies for {{Happiness}}},
+  author = {Bartolini, Stefano and Bilancini, Ennio and Sarracino, Francesco},
+  year = {Forthcoming},
+  publisher = {{Oxford University Press}},
+  location = {{Oxford}},
   url = {http://www.econ-pol.unisi.it/bartolini/papers/BARTOLINI-BILANCINI-SARRACINO.pdf},
-  urldate = {2015-02-07},
-  year = {Forthcoming}
+  urldate = {2015-02-07}
 }
+
 

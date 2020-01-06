@@ -1,9 +1,4 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-#### Deterministically order references and fields; primarily for version control.
-
-When on, BBT will deterministically order references on export. This is primarily interesting if you keep the exported file under
-some kind of version control. Comes at performance and memory consumption cost.
-
 #### postscript
 
 Snippet of javascript to run [after each reference generation]({{ ref . "scripting" }}).

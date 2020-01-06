@@ -1,32 +1,35 @@
+
 @mvbook{descartes_oeuvres_1897,
-  author = {Descartes, René},
-  date = {1897/1913},
-  editor = {Adam, Charles and Tannery, Paul},
-  langid = {french},
-  location = {{Paris}},
-  publisher = {{Cerf}},
   title = {Œuvres de Descartes},
+  author = {Descartes, René},
+  editor = {Adam, Charles and Tannery, Paul},
+  date = {1897/1913},
+  publisher = {{Cerf}},
+  location = {{Paris}},
+  langid = {french},
   volumes = {13}
 }
 
 @mvbook{descartes_oeuvres_1897-1,
-  author = {Descartes, René},
-  date = {1897/1913},
-  editor = {Adam, Charles and Tannery, Paul},
-  langid = {french},
-  location = {{Paris}},
-  publisher = {{Cerf}},
   title = {Œuvres de Descartes},
+  author = {Descartes, René},
+  editor = {Adam, Charles and Tannery, Paul},
+  date = {1897/1913},
+  publisher = {{Cerf}},
+  location = {{Paris}},
+  langid = {french},
   volumes = {13}
 }
 
 @mvbook{descartes_oeuvres_1897-2,
-  author = {Descartes, René},
-  date = {1897/1913},
-  editor = {Adam, Charles and Tannery, Paul},
-  langid = {french},
-  location = {{Paris}},
-  publisher = {{Cerf}},
   title = {Œuvres de Descartes},
+  author = {Descartes, René},
+  editor = {Adam, Charles and Tannery, Paul},
+  date = {1897/1913},
+  publisher = {{Cerf}},
+  location = {{Paris}},
+  langid = {french},
   volumes = {13}
 }
+
+

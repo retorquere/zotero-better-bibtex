@@ -1,9 +1,12 @@
+
 @inproceedings{EmmerJaens14a,
-  author = {Emmert, Thomas and Jaensch, Stefan and Sovardi, Carlo and Polifke, Wolfgang},
-  booktitle = {7th {{Forum Acusticum}}},
-  date = {2014-09},
-  keywords = {NonPerRev},
-  location = {{Krakow}},
   title = {{{taX}} - a {{Flexible Tool}} for {{Low}}-{{Order Duct Acoustic Simulation}} in {{Time}} and {{Frequency Domain}}},
-  url = {http://www.fa2014.agh.edu.pl/fa2014_cd/}
+  booktitle = {7th {{Forum Acusticum}}},
+  author = {Emmert, Thomas and Jaensch, Stefan and Sovardi, Carlo and Polifke, Wolfgang},
+  date = {2014-09},
+  location = {{Krakow}},
+  url = {http://www.fa2014.agh.edu.pl/fa2014_cd/},
+  keywords = {NonPerRev}
 }
+
+

@@ -113,8 +113,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: any, scope: ExportScope, path = null) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: any, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
+
+    options.preferences = options.preferences || {}
 
     const translator = this.byId[translatorID]
 
@@ -123,9 +125,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       version: Zotero.version,
       platform: Prefs.platform,
       translator: translator.label,
-      output: path || '',
+      output: options.path || '',
     }).map(([k, v]) => `${encodeURI(k)}=${encodeURI(v)}`).join('&')
-    log.debug('worker params:', params, 'from', { path })
 
     this.workers.total += 1
     const id = this.workers.total
@@ -169,7 +170,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
       this.workers.running.delete(id)
     }
 
-    scope = this.exportScope(scope)
+    const scope = this.exportScope(options.scope)
 
     let getter
 
@@ -197,7 +198,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     const config: BBTWorker.Config = {
-      preferences: Prefs.all(),
+      preferences: { ...Prefs.all(), ...options.preferences },
       options: displayOptions || {},
       items: [],
       collections: [],

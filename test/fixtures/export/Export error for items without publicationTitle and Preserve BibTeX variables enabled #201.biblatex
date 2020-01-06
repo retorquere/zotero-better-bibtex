@@ -1,7 +1,9 @@
+
 @book{Blandford2006,
+  title = {Applications of {{Classical Physics}}},
   author = {Blandford, Roger D. and Thorne, Kip S.},
   date = {2006},
-  publisher = {{Caltech}},
-  title = {Applications of {{Classical Physics}}}
+  publisher = {{Caltech}}
 }
+
 

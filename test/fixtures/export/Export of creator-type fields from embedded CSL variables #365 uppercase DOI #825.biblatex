@@ -1,65 +1,36 @@
 
-@movie{Doe2015,
-  date = {2015},
-  editor = {Doe, John and Roe, Rob},
-  editortype = {director},
-  location = {{US/GB}},
-  publisher = {{The Distributor}},
-  title = {A Film}
-}
-
 @report{Author2015,
+  title = {A Report},
   author = {Author, Ann},
-  date = {2015},
   editor = {Editrix, Emma and Editor, Ed},
+  date = {2015},
   institution = {{Institution}},
   location = {{Place}},
   note = {\{:X-genre: xxx\}},
   number = {77},
-  title = {A Report},
   type = {working paper}
 }
 
-@video{Kubrick1964,
-  date = {1964},
-  editor = {Kubrick, Stanley},
-  editortype = {director},
-  shorttitle = {Dr. {{Strangelove}}},
-  title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb}
+@inreference{Blair2004,
+  title = {Frithuswith ({\emph{d.}} 727)},
+  booktitle = {Oxford Dictionary of National Biography},
+  author = {Blair, John},
+  editor = {Matthew, H.C.G. and Harrison, Brian Howard},
+  date = {2004},
+  publisher = {{Oxford University Press}},
+  location = {{Oxford}},
+  doi = {10.1093/ref:odnb/10183},
+  url = {http://www.oxforddnb.com/view/article/10183},
+  urldate = {2014-06-13}
 }
 
-@video{friends:leia:tv,
-  booktitle = {Friends},
-  date = {1996-09-16},
-  editor = {Mancuso, Gail},
-  editora = {Curtis, Michael and Malins, Gregory S.},
-  editoratype = {scriptwriter},
-  editortype = {director},
-  journaltitle = {Friends},
-  langid = {american},
-  location = {{US}},
-  number = {1},
-  publisher = {{NBC}},
-  title = {The One with the {{Princess Leia}} Fantasy},
-  volume = {3}
-}
-
-@video{friends:leia:dvd,
-  booktitle = {Friends},
-  date = {2003},
-  editor = {Mancuso, Gail},
-  editora = {Curtis, Michael and Malins, Gregory S.},
-  editoratype = {scriptwriter},
-  editortype = {director},
-  journaltitle = {Friends},
-  langid = {american},
-  location = {{US}},
-  number = {1},
-  origdate = {1996-09-16},
-  origpublisher = {{NBC}},
-  publisher = {{Warner Home Video}},
-  title = {The One with the {{Princess Leia}} Fantasy},
-  volume = {3}
+@movie{Doe2015,
+  title = {A Film},
+  editor = {Doe, John and Roe, Rob},
+  date = {2015},
+  publisher = {{The Distributor}},
+  location = {{US/GB}},
+  editortype = {director}
 }
 
 @inreference{emptybook,
@@ -67,17 +38,46 @@
   note = {\{:X-genre: xxx\}}
 }
 
-@inreference{Blair2004,
-  author = {Blair, John},
-  booktitle = {Oxford Dictionary of National Biography},
-  date = {2004},
-  doi = {10.1093/ref:odnb/10183},
-  editor = {Matthew, H.C.G. and Harrison, Brian Howard},
-  location = {{Oxford}},
-  publisher = {{Oxford University Press}},
-  title = {Frithuswith ({\emph{d.}} 727)},
-  url = {http://www.oxforddnb.com/view/article/10183},
-  urldate = {2014-06-13}
+@video{friends:leia:dvd,
+  title = {The One with the {{Princess Leia}} Fantasy},
+  booktitle = {Friends},
+  editor = {Mancuso, Gail},
+  date = {2003},
+  origdate = {1996-09-16},
+  journaltitle = {Friends},
+  volume = {3},
+  publisher = {{Warner Home Video}},
+  location = {{US}},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
+  editortype = {director},
+  langid = {american},
+  number = {1},
+  origpublisher = {{NBC}}
+}
+
+@video{friends:leia:tv,
+  title = {The One with the {{Princess Leia}} Fantasy},
+  booktitle = {Friends},
+  editor = {Mancuso, Gail},
+  date = {1996-09-16},
+  journaltitle = {Friends},
+  volume = {3},
+  publisher = {{NBC}},
+  location = {{US}},
+  editora = {Curtis, Michael and Malins, Gregory S.},
+  editoratype = {scriptwriter},
+  editortype = {director},
+  langid = {american},
+  number = {1}
+}
+
+@video{Kubrick1964,
+  title = {Dr. {{Strangelove}} or: How {{I}} Learned to Stop Worrying and Love the Bomb},
+  shorttitle = {Dr. {{Strangelove}}},
+  editor = {Kubrick, Stanley},
+  date = {1964},
+  editortype = {director}
 }
 
 

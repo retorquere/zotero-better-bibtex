@@ -1,14 +1,16 @@
+
 @article{VlcekVacha2014HistoryLatin,
+  title = {The History of {{Latin}} Terminology of Human Skeletal Muscles (from {{Vesalius}} to the Present)},
   author = {Vlček, Martin and Vácha, Marek},
   date = {2014-05-15},
+  journaltitle = {Surgical and Radiologic Anatomy},
+  shortjournal = {Surg Radiol Anat},
+  issn = {1279-8517},
   doi = {10.1007/s00276-014-1305-7},
+  url = {http://link.springer.com/10.1007/s00276-014-1305-7},
   eprint = {24828123},
   eprinttype = {pmid},
-  issn = {1279-8517},
-  journaltitle = {Surgical and Radiologic Anatomy},
-  langid = {english},
-  shortjournal = {Surg Radiol Anat},
-  title = {The History of {{Latin}} Terminology of Human Skeletal Muscles (from {{Vesalius}} to the Present)},
-  url = {http://link.springer.com/10.1007/s00276-014-1305-7}
+  langid = {english}
 }
+
 

@@ -1,35 +1,52 @@
 
 @booklet{clark_mesopotamia:_1957,
-  abstract = {Example from CMoS, 16e, 14.249},
+  title = {Mesopotamia: Between Two Rivers},
   author = {Clark, Hazel V.},
   date = {1957},
-  location = {{Mesopotamia, OH}},
   publisher = {{Trumbull County Historical Society}},
-  title = {Mesopotamia: Between Two Rivers}
+  location = {{Mesopotamia, OH}},
+  abstract = {Example from CMoS, 16e, 14.249}
 }
 
-@data{noauthor_object_nodate,
-  abstract = {Example from CMoS, 16e, 14.272},
-  journaltitle = {NASA/IPAC Extragalactic Database},
-  title = {Object Name {{IRAS F00400}}+4059},
-  url = {http://nedwww.ipac.caltech.edu/},
-  urldate = {2009-10-06}
+@review{kamp_deconstructing_2006,
+  title = {Deconstructing Dinner},
+  author = {Kamp, David},
+  date = {2006-04-23},
+  url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.},
+  abstract = {Example from CMoS, 16e, 14.125},
+  editora = {Pollan, Michael},
+  editoratype = {collaborator},
+  langid = {american}
 }
 
 @audio{mozart_sonatas_1960,
-  abstract = {Example from CMoS, 16e, 14.269
-“Prepared from the autographs and earliest printed sources by Nathan
-Broder”},
+  title = {Sonatas and Fantasies for the Piano},
   author = {Mozart, Wolfgang Amadeus},
+  editor = {Broder, Nathan},
   date = {1960},
   edition = {Rev. ed.},
-  editor = {Broder, Nathan},
-  location = {{Bryn Mawr, PA}},
   publisher = {{Theodore Presser}},
-  title = {Sonatas and Fantasies for the Piano}
+  location = {{Bryn Mawr, PA}},
+  abstract = {Example from CMoS, 16e, 14.269
+“Prepared from the autographs and earliest printed sources by Nathan
+Broder”}
+}
+
+@data{noauthor_object_nodate,
+  title = {Object Name {{IRAS F00400}}+4059},
+  journaltitle = {NASA/IPAC Extragalactic Database},
+  url = {http://nedwww.ipac.caltech.edu/},
+  urldate = {2009-10-06},
+  abstract = {Example from CMoS, 16e, 14.272}
 }
 
 @review{ratliff_mystery_1999,
+  title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
+  author = {Ratliff, Ben},
+  date = {1999-04},
+  journaltitle = {Lingua Franca},
+  volume = {9},
+  pages = {B13--B14},
   abstract = {Example from CMoS, 16e, 14.215
 “ed. and trans. John Charles Chasteen”},
   annotation = {biblatex-chicago example, adapted from \href{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}{http://mirrors.ctan.org/macros/latex/contrib/biblatex-contrib/biblatex-chicago/doc/examples/dates-test.bib}
@@ -41,26 +58,9 @@ Original annotation:
 ~
 
 Example from CMoS, 16e, 14.125},
-  author = {Ratliff, Ben},
-  date = {1999-04},
   editora = {{Hermano Vianna}},
   editoratype = {collaborator},
-  journaltitle = {Lingua Franca},
-  langid = {american},
-  pages = {B13--B14},
-  title = {The Mystery of Samba: {{Popular}} Music and National Identity in {{Brazil}}},
-  volume = {9}
-}
-
-@review{kamp_deconstructing_2006,
-  abstract = {Example from CMoS, 16e, 14.125},
-  author = {Kamp, David},
-  date = {2006-04-23},
-  editora = {Pollan, Michael},
-  editoratype = {collaborator},
-  langid = {american},
-  title = {Deconstructing Dinner},
-  url = {http://www.nytimes.com/2006/04/23/books/review/23kamp.html.}
+  langid = {american}
 }
 
 

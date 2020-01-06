@@ -1,12 +1,16 @@
 
 @inproceedings{Hulse2009,
-  author = {Hulse, Jason Van and Khoshgoftaar, Taghi M. and Napolitano, Amri and Wald, Randall},
-  biburl = {http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp},
+  title = {Feature {{Selection}} with {{High}}-{{Dimensional Imbalanced Data}}.},
   booktitle = {{{ICDM Workshops}}},
-  crossref = {conf/icdm/2009w},
-  date = {2010-01-27},
-  description = {dblp},
+  author = {Hulse, Jason Van and Khoshgoftaar, Taghi M. and Napolitano, Amri and Wald, Randall},
   editor = {Saygin, Yücel and Yu, Jeffrey Xu and Kargupta, Hillol and Wang, Wei and Ranka, Sanjay and Yu, Philip S. and Wu, Xindong},
+  date = {2010-01-27},
+  pages = {507--514},
+  publisher = {{IEEE Computer Society}},
+  url = {http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.htmlHulseKNW09},
+  biburl = {http://www.bibsonomy.org/bibtex/2c97a29e90fbd958a0990360f70252458/dblp},
+  crossref = {conf/icdm/2009w},
+  description = {dblp},
   ee = {http://doi.ieeecomputersociety.org/10.1109/ICDMW.2009.35},
   file = {files/Hulse2009/Hulse2009.pdf},
   groups = {selekcja},
@@ -14,10 +18,7 @@
   intrahash = {c97a29e90fbd958a0990360f70252458},
   isbn = {978-0-7695-3902-7},
   keywords = {dblp},
-  owner = {sstudent},
-  pages = {507--514},
-  publisher = {{IEEE Computer Society}},
-  title = {Feature {{Selection}} with {{High}}-{{Dimensional Imbalanced Data}}.},
-  url = {http://dblp.uni-trier.de/db/conf/icdm/icdmw2009.htmlHulseKNW09}
+  owner = {sstudent}
 }
+
 

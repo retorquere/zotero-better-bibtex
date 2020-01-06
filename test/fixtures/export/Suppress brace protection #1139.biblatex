@@ -1,12 +1,15 @@
+
 @collection{Kreinath2011,
-  abstract = {The Anthropology of Islam Reader brings together a rich variety of ethnographic work, offering an insight into various forms of Islam as practiced in different geographic, social, and cultural contexts. Topics explored include Ramadan and the Hajj, the Feast of Sacrifice, and the representation of Islam. An extensive introduction and bibliography helps students develop their understanding of the variety of methodological and theoretical approaches involved in the anthropological study of Islam. In his selections, Jens Kreinath highlights the diversity of practices and themes that were formative for this field of study, making this essential reading for students of Islam at undergraduate and graduate level.},
-  booktitle = {The Anthropology of Islam Reader},
-  date = 2011,
+  title = {The Anthropology of Islam Reader},
   editor = {Kreinath, Jens},
+  publisher = {Routledge},
+  location = {London ; New York},
+  abstract = {The Anthropology of Islam Reader brings together a rich variety of ethnographic work, offering an insight into various forms of Islam as practiced in different geographic, social, and cultural contexts. Topics explored include Ramadan and the Hajj, the Feast of Sacrifice, and the representation of Islam. An extensive introduction and bibliography helps students develop their understanding of the variety of methodological and theoretical approaches involved in the anthropological study of Islam. In his selections, Jens Kreinath highlights the diversity of practices and themes that were formative for this field of study, making this essential reading for students of Islam at undergraduate and graduate level.},
   isbn = {978-0-415-78025-4},
   langid = {english},
-  location = {London ; New York},
-  publisher = {Routledge},
   shorttitle = {The Anthropology of Islam Reader},
-  title = {The Anthropology of Islam Reader}
+  booktitle = {The Anthropology of Islam Reader},
+  date = 2011
 }
+
+

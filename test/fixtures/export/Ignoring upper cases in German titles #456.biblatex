@@ -1,25 +1,28 @@
+
 @incollection{Kaufmann1990,
-  author = {Kaufmann, Franz-Xaver},
+  title = {Sozialpolitik und Bevölkerungsprozeß},
   booktitle = {Sozialpolitik und Sozialstaat: Soziologische Analysen},
-  date = {2002},
+  author = {Kaufmann, Franz-Xaver},
   editor = {Kauffmann, Franz-Xaver},
-  langid = {german},
+  date = {2002},
   origdate = {1990},
   pages = {145--160},
   publisher = {{VS Verlag für Sozialwissenschaften}},
-  title = {Sozialpolitik und Bevölkerungsprozeß},
-  url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7}
+  url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_7},
+  langid = {german}
 }
 
 @incollection{Kaufmann1997,
-  author = {Kaufmann, Franz-Xaver},
+  title = {Schwindet die integrative Funktion des Sozialstaates?},
   booktitle = {Sozialpolitik und Sozialstaat: Soziologische Analysen},
-  date = {2002},
+  author = {Kaufmann, Franz-Xaver},
   editor = {Kauffmann, Franz-Xaver},
-  langid = {german},
+  date = {2002},
   origdate = {1997},
   pages = {241--260},
   publisher = {{VS Verlag für Sozialwissenschaften}},
-  title = {Schwindet die integrative Funktion des Sozialstaates?},
-  url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11}
+  url = {http://link.springer.com/chapter/10.1007/978-3-322-99962-7_11},
+  langid = {german}
 }
+
+
