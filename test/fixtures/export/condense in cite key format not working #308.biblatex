@@ -1,3 +1,4 @@
+
 @inproceedings{de_kort2007digital,
   author = {de Kort, Y.A.W. and IJsselsteijn, W.A. and Poels, K.},
   booktitle = {Proceedings of the 10th {{Annual International Workshop}} on {{Presence}}},
@@ -5,9 +6,10 @@
   doi = {http://alexandria.tue.nl/campusonly/Metis215145.pdf},
   location = {{Barcelona}},
   options = {useprefix=true},
-  pages = {195 - 203},
+  pages = {195--203},
   publisher = {{Starlab}},
   title = {Digital Games as Social Presence Technology: Development of the Social Presence in Gaming Questionnaire ({{SPGQ}})},
   url = {http://repository.tue.nl/663080}
 }
+
 
