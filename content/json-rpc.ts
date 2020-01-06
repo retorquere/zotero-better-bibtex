@@ -64,6 +64,17 @@ class Item {
       }
     })
   }
+
+  public async attachments(citekey) {
+    const key = KeyManager.keys.findOne({ citekey: citekey.replace(/^@/, '') })
+    if (!key) throw { code: INVALID_PARAMETERS, message: `${citekey} not found` }
+    const item = await getItemsAsync(key.itemID)
+
+    return (await getItemsAsync(item.getAttachments())).map(att => ({
+      open: `zotero://open-pdf/${Zotero.API.getLibraryPrefix(item.libraryID || Zotero.Libraries.userLibraryID)}/items/${att.key}`,
+      path: att.getFilePath(),
+    }))
+  }
 }
 
 const api = new class API {
@@ -90,7 +101,11 @@ const api = new class API {
       return {jsonrpc: '2.0', result: await method.call(null, request.params), id: request.id || null}
     } catch (err) {
       log.error('JSON-RPC:', err)
-      return {jsonrpc: '2.0', error: {code: INTERNAL_ERROR, message: `${err}`}, id: null}
+      if (err.code) {
+        return {jsonrpc: '2.0', error: { code: err.code, message: err.message }, id: null}
+      } else {
+        return {jsonrpc: '2.0', error: { code: INTERNAL_ERROR, message: `${err}` }, id: null}
+      }
     }
   }
 
