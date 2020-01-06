@@ -98,7 +98,7 @@ https://github.com/retorquere/zotero-better-bibtex/issue">
 
 <!ENTITY better-bibtex.Preferences.advanced "Avancé">
 <!ENTITY better-bibtex.Preferences.advanced.warning "Les paramètres ci-dessous ont un impact sur les performances et peuvent faire échouer les exportations. Procéder avec attention.">
-<!ENTITY better-bibtex.Preferences.advanced.import "Importation">
+<!ENTITY better-bibtex.Preferences.advanced.tab.import "Import">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase "Titres avec casse de phrase lors de l'importation :">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.off "non (importer les titres tels quels)">
 <!ENTITY better-bibtex.Preferences.advanced.import.sentenceCase.on "oui">
@@ -121,11 +121,13 @@ Beaucoup de fichiers bib(la)tex le font de façon un peu trop zélée et vous n'
 Si vous désactivez cette option, le balisage est omis lors de l'importation. Lorsque vous sélectionnez « oui », toutes les accolades que bib(la)tex interpréterait comme une protection de casse (ce qui n'est pas le cas de toutes) sont converties en éléments `span`.
 En mode « minimal », le nombre d'éléments `span` est minimisé.">
 
-<!ENTITY better-bibtex.Preferences.advanced.export "Exportation">
+<!ENTITY better-bibtex.Preferences.advanced.tab.export "Export">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase "Appliquer la capitalisation aux titres">
 <!ENTITY better-bibtex.Preferences.advanced.export.titleCase.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur la casse des titres/phrases, vous pouvez désactiver cette option pour supprimer la capitalisation des références en anglais">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection "Appliquer la protection des accolades aux mots capitalisés">
 <!ENTITY better-bibtex.Preferences.advanced.export.braceProtection.warning "Si vous n'êtes pas prêt à ignorer à la fois les meilleures pratiques BibTeX/BibLaTeX (voir la FAQ BBT) et les recommandations de Zotero sur le tire/phrase, vous pouvez désactiver cette option pour supprimer la protection automatique des accolades pour les mots avec des lettres majuscules">
+
+<!ENTITY better-bibtex.Preferences.advanced.tab.citekeys "Citation keys">
 
 <!ENTITY better-bibtex.Preferences.export.qualityReport "Inclure des commentaires à propos de problèmes potentiels avec les références ">
 <!ENTITY better-bibtex.Preferences.export.automaticTags "Inclure les tags automatiques dans l'export">
@@ -162,9 +164,9 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex.Preferences.export.fields.sorted "Ordonner de façon déterministe les références et champs, principalement pour le contrôle de version.">
 <!ENTITY better-bibtex.Preferences.export.fields.skip "Champs à exclure de l'exportation (séparés par des virgules) :">
 <!ENTITY better-bibtex.Preferences.export.journal-abbrev "Abréviations de journaux">
-<!ENTITY better-bibtex.Preferences.tab.postscript "Postscript">
-<!ENTITY better-bibtex.Preferences.tab.postscript.warn "L'utilisation de 'Translator.options.exportPath' dans les PostScripts désactive le cache. Les exportations seront sensiblement plus lentes.">
-<!ENTITY better-bibtex.Preferences.tab.strings "Définitions des @string">
+<!ENTITY better-bibtex.Preferences.advanced.tab.postscript "postscript">
+<!ENTITY better-bibtex.Preferences.postscript.warn "Use of 'Translator.options.exportPath' in postscripts disables the cache. Exports will be substantially slower.">
+<!ENTITY better-bibtex.Preferences.advanced.tab.strings "@string definitions">
 <!ENTITY better-bibtex.Preferences.prefpane.better-bibtex "Better BibTeX">
 <!ENTITY better-bibtex.Preferences.rescan-citekeys "Réanalyse des clés de citation verrouillées">
 <!ENTITY better-bibtex.Preferences.resetCache "Réinitialiser le cache">
