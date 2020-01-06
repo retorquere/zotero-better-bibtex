@@ -1,13 +1,16 @@
-@mastersthesis{Woller2011DetMultiple,
-  author = {Wøller, Sune Brøndum},
-  date = {2011},
-  langid = {norsk},
-  title = {Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler}
-}
 
 @phdthesis{Woller2011CTRDet,
+  title = {CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler},
   author = {Wøller, Sune Brøndum},
   date = {2011},
-  langid = {norsk},
-  title = {CTR Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler}
+  langid = {norsk}
 }
+
+@mastersthesis{Woller2011DetMultiple,
+  title = {Det multiple arkæologiske objekt. Et studie af materialitet og arkæologiske tekstiler},
+  author = {Wøller, Sune Brøndum},
+  date = {2011},
+  langid = {norsk}
+}
+
+

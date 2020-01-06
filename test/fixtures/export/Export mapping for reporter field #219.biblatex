@@ -1,14 +1,15 @@
 
 @jurisdiction{kartinyeri,
+  title = {Kartinyeri v {{Commonwealth}}},
+  shorttitle = {Kartinyeri},
   author = {Kaetinyeri v Commonwealth},
   date = {1998-04-01},
-  institution = {{HCA}},
   journaltitle = {CLR},
-  keywords = {au},
+  volume = {195},
   pages = {337},
-  shorttitle = {Kartinyeri},
-  title = {Kartinyeri v {{Commonwealth}}},
-  translator = {Kartinyeri},
-  volume = {195}
+  institution = {{HCA}},
+  keywords = {au},
+  translator = {Kartinyeri}
 }
+
 

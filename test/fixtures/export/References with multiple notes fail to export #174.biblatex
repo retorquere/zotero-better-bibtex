@@ -1,10 +1,12 @@
-@misc{Torre2008,
-  annotation = {note 1
 
-note 2},
+@misc{Torre2008,
+  title = {{{XYZZY}}},
   author = {Torre, Joe and Verducci, Tom},
   date = {2008},
   publisher = {{Doubleday}},
-  title = {{{XYZZY}}}
+  annotation = {note 1
+
+note 2}
 }
+
 

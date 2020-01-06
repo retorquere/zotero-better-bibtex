@@ -1,60 +1,60 @@
 
-@inproceedings{Seeley1989,
-  author = {Seeley, Donn},
-  booktitle = {Proceedings of the {{Winter}} 1989 {{USENIX Conference}}},
-  date = {1989-01-30/1989-02-03},
-  location = {{San Diego, California, USA}},
-  pages = {287--304},
-  publisher = {{USENIX}},
-  title = {A Tour of the Worm}
+@article{Adams2015,
+  title = {746: {{The}} Physical Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
+  author = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},
+  date = {2015-06-22/2015-06-26},
+  journaltitle = {Bulletin of Volcanology},
+  volume = {62},
+  pages = {493--518},
+  file = {files/Adams2015/Adams_Huaynaputina.pdf},
+  keywords = {breadcrust,plinian,Vulcanian eruptions}
 }
 
 @article{Adams2017,
+  title = {747: {{The}} Physical Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
   author = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},
   date = {2017-06-18/2017-06-23},
+  journaltitle = {Bulletin of Volcanology},
+  volume = {62},
+  pages = {493--518},
   file = {files/Adams2017/Adams_Huaynaputina.pdf},
-  journaltitle = {Bulletin of Volcanology},
-  keywords = {breadcrust,plinian,Vulcanian eruptions},
-  pages = {493--518},
-  title = {747: {{The}} Physical Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
-  volume = {62}
-}
-
-@article{Adams2015,
-  author = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},
-  date = {2015-06-22/2015-06-26},
-  file = {files/Adams2015/Adams_Huaynaputina.pdf},
-  journaltitle = {Bulletin of Volcanology},
-  keywords = {breadcrust,plinian,Vulcanian eruptions},
-  pages = {493--518},
-  title = {746: {{The}} Physical Volcanology of the 1600 Eruption of {{Huaynaputina}}, Southern {{Peru}}},
-  volume = {62}
-}
-
-@inproceedings{Winograd1986,
-  abstract = {In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.},
-  author = {Winograd, Terry},
-  booktitle = {Proceedings of the 1986 {{ACM Conference}} on {{Computer}}-Supported {{Cooperative Work}} ({{CSCW}} '86)},
-  date = {1986-12-03/1986-12-05},
-  doi = {10.1145/637069.637096},
-  location = {{Austin, TX}},
-  pages = {203--220},
-  publisher = {{ACM}},
-  title = {A Language/Action Perspective on the Design of Cooperative Work},
-  url = {http://doi.acm.org/10.1145/637069.637096},
-  urldate = {2017-10-20}
+  keywords = {breadcrust,plinian,Vulcanian eruptions}
 }
 
 @inproceedings{P.Widhalm2011,
-  abstract = {Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.},
-  author = {{P. Widhalm} and {H. Koller} and {W. Ponweiser}},
+  title = {Identifying Faulty Traffic Detectors with {{Floating Car Data}}},
   booktitle = {2011 {{IEEE Forum}} on {{Integrated}} and {{Sustainable Transportation Systems}}},
+  author = {{P. Widhalm} and {H. Koller} and {W. Ponweiser}},
   date = {2011-06-29/2011-07-01},
-  doi = {10.1109/FISTS.2011.5973643},
-  eventtitle = {2011 {{IEEE Forum}} on {{Integrated}} and {{Sustainable Transportation Systems}}},
-  keywords = {Data models,Detectors,Error analysis,fault detection,Fault detection,fault diagnosis,faulty traffic detector,FCD traffic speed,floating car data,ITS,loop-quality,microscopic traffic simulation,nonlinear regression model,regression analysis,road traffic,statistical test,traffic engineering computing,Training data,Vehicles},
   pages = {103--108},
-  title = {Identifying Faulty Traffic Detectors with {{Floating Car Data}}}
+  doi = {10.1109/FISTS.2011.5973643},
+  abstract = {Virtually all ITS applications rely on accurate traffic data. Identification of faulty detectors is thus vital for their reliability and efficiency. Most existing approaches solely use current and historical data of single or adjacent detectors and are based on empirical thresholds. We present a method for fault detection using Floating-Car Data (FCD) as independent source of information which allows to distinguish changed traffic conditions from sensor faults. Fault detection is based on residuals of a nonlinear regression model fitted to detector readings and FCD traffic speeds. Instead of applying rule-of-thumb thresholds we employ a statistical test, where thresholds result naturally from historical data, sample sizes and required fault detection accuracy. We provide a theoretical framework for fault detectability analysis and empirically evaluate the fault detection capability of our approach using data obtained from a microscopic traffic simulation.},
+  eventtitle = {2011 {{IEEE Forum}} on {{Integrated}} and {{Sustainable Transportation Systems}}},
+  keywords = {Data models,Detectors,Error analysis,fault detection,Fault detection,fault diagnosis,faulty traffic detector,FCD traffic speed,floating car data,ITS,loop-quality,microscopic traffic simulation,nonlinear regression model,regression analysis,road traffic,statistical test,traffic engineering computing,Training data,Vehicles}
+}
+
+@inproceedings{Seeley1989,
+  title = {A Tour of the Worm},
+  booktitle = {Proceedings of the {{Winter}} 1989 {{USENIX Conference}}},
+  author = {Seeley, Donn},
+  date = {1989-01-30/1989-02-03},
+  pages = {287--304},
+  publisher = {{USENIX}},
+  location = {{San Diego, California, USA}}
+}
+
+@inproceedings{Winograd1986,
+  title = {A Language/Action Perspective on the Design of Cooperative Work},
+  booktitle = {Proceedings of the 1986 {{ACM Conference}} on {{Computer}}-Supported {{Cooperative Work}} ({{CSCW}} '86)},
+  author = {Winograd, Terry},
+  date = {1986-12-03/1986-12-05},
+  pages = {203--220},
+  publisher = {{ACM}},
+  location = {{Austin, TX}},
+  doi = {10.1145/637069.637096},
+  url = {http://doi.acm.org/10.1145/637069.637096},
+  urldate = {2017-10-20},
+  abstract = {In designing computer-based systems, we work within a perspective that shapes the design questions that will be asked and the kinds of solutions that are sought. This paper introduces a perspective based on language as action, and explores its consequences for practical system design. The language/action perspective is contrasted to a number of other currently prominent perspectives, and is illustrated with an extended example based on studies of nursing work in a hospital ward. We show how it leads to particular analyses of that work, which reveal potentials for creating new designs that can make the work (and the workers) more effective.}
 }
 
 

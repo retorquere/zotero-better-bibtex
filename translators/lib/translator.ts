@@ -56,8 +56,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     testing: boolean
     autoPin: boolean
     kuroshiro: boolean
+    workers: boolean
     relativeFilePaths: boolean
-    sorted: boolean
     git: string
     mapUnicode: string
     mapText: string
@@ -135,7 +135,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   }
 
   public collections: Record<string, ZoteroCollection>
-  public references: Array<{citekey: string, reference: string}>
+  private sortedItems: ISerializedItem[]
 
   public isJurisM: boolean
   public isZotero: boolean
@@ -163,8 +163,6 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     this.stringCompare = (new Intl.Collator('en')).compare
 
     this.debugEnabled = Zotero.BetterBibTeX.debugEnabled()
-
-    this.references = []
   }
 
   public init(mode: TranslatorMode) {
@@ -284,12 +282,19 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
   }
 
   public items(): ISerializedItem[] {
-    let item
-    const items: ISerializedItem[] = []
-    while (item = Zotero.nextItem()) {
-      items.push(item)
+    if (!this.sortedItems) {
+      this.sortedItems = []
+      let item
+      while (item = Zotero.nextItem()) {
+        this.sortedItems.push(item)
+      }
+      // fallback to itemType.itemID for notes and attachments
+      this.sortedItems.sort((a, b) => (a.citekey || `{${a.itemType}:${a.itemID}}`).localeCompare((b.citekey || `{${b.itemType}:${b.itemID}}`), undefined, { sensitivity: 'base' }))
     }
-    items.sort((a, b) => a.citekey.localeCompare(b.citekey))
-    return items
+    return this.sortedItems
+  }
+
+  public nextItem() {
+    return this.items().shift()
   }
 }

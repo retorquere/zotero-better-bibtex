@@ -114,4 +114,10 @@ list of words to skip in title when generating citation keys
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
 
+#### workers
+
+BBT can now perform its exports in a separate thread, and should no longer block Zotero's UI pretty much regardless of how large your library is.
+While it's been tested and seems to work well, I still consider it to be experimental at this stage. You can turn it off and get the old (blocking) behavior back. Zotero needs
+to be restarted for changes to this preference to take effect.
+
 

@@ -414,7 +414,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         })
       }
 
-      if (!this.noWait) {
+      if (!this.noWait && Prefs.workers) {
         const path = this.location?.path
 
         // fake out the stuff that complete expects to be set by .translate
@@ -423,7 +423,7 @@ $patch$(Zotero.Translate.Export.prototype, 'translate', original => function Zot
         this._savingAttachments = []
 
         log.debug('starting replacement web worker translator')
-        Translators.exportItemsByWorker(translatorID, this._displayOptions, { ...this._export, getter: this._itemGetter }, path)
+        Translators.exportItemsByWorker(translatorID, this._displayOptions, { scope: { ...this._export, getter: this._itemGetter }, path })
           .then(result => {
             log.debug('worker translation complete, written to', path ? path : 'string', 'result = ', typeof result, ('' + result).length)
             this.string = result

@@ -1,28 +1,30 @@
-@book{Plato1902,
-  author = {{Plato}},
-  date = {1902},
-  editor = {Burnet, John},
-  langid = {british},
-  location = {{Oxford}},
-  maintitle = {Opera},
-  publisher = {{Clarendon Press}},
-  series = {Oxford Classical Texts {{CSL}}-{{VAR}}},
-  title = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
-  volume = {4}
-}
 
 @incollection{Plato1901,
-  author = {{Plato}},
+  title = {Republic},
   booktitle = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
-  date = {1901},
+  author = {{Plato}},
   editor = {Burnet, John},
-  langid = {british},
-  location = {{Oxford}},
-  maintitle = {Opera},
+  date = {1901},
+  volume = {4},
   pages = {327--621},
   publisher = {{Clarendon Press}},
-  series = {Oxford Classical Texts},
-  title = {Republic},
-  volume = {4}
+  location = {{Oxford}},
+  langid = {british},
+  maintitle = {Opera},
+  series = {Oxford Classical Texts}
 }
+
+@book{Plato1902,
+  title = {Clitophon, {{Republic}}, {{Timaeus}}, {{Critias}}},
+  author = {{Plato}},
+  editor = {Burnet, John},
+  date = {1902},
+  volume = {4},
+  publisher = {{Clarendon Press}},
+  location = {{Oxford}},
+  langid = {british},
+  maintitle = {Opera},
+  series = {Oxford Classical Texts {{CSL}}-{{VAR}}}
+}
+
 

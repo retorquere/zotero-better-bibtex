@@ -52,7 +52,7 @@ function keySort(a, b) {
 }
 
 function sortObject(obj) {
-  if (!Array.isArray(obj) && obj && typeof obj === 'object') {
+  if (obj && !Array.isArray(obj) && typeof obj === 'object') {
     for (const field of Object.keys(obj).sort(keySort)) {
       const value = obj[field]
       delete obj[field]
@@ -84,7 +84,7 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
   public postscript(reference, item, _translator, _zotero) {} // tslint:disable-line:no-empty
 
   public doExport() {
-    let items = []
+    const items = []
     const order = []
 
     for (const item of Translator.items()) {
@@ -173,17 +173,12 @@ export let CSLExporter = new class { // tslint:disable-line:variable-name
       for (const field of Translator.skipFields) {
         delete csl[field]
       }
-      if (Translator.preferences.testing || Translator.preferences.sorted) csl = sortObject(csl)
+      csl = sortObject(csl)
       csl = this.serialize(csl)
 
       if (typeof cache !== 'boolean' || cache) Zotero.BetterBibTeX.cacheStore(item.itemID, Translator.options, Translator.preferences, csl)
 
       items.push(csl)
-    }
-
-    if (Translator.preferences.testing || Translator.preferences.sorted) {
-      order.sort((a, b) => a.id.localeCompare(b.id, undefined, { sensitivity: 'base' }))
-      items = order.map(i => items[i.index])
     }
 
     Zotero.write(this.flush(items))

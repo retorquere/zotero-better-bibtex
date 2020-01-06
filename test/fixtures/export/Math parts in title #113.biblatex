@@ -1,10 +1,11 @@
 
 @online{stackexchange_integers_14,
-  date = {2014-10},
-  presort = {z},
-  shorttitle = {Do integers modulo $n$ minus $\frac n 2$ (i.e. signed integers) still form a commutative ring?},
   title = {Do integers modulo $n$ minus $\frac n 2$ (i.e. signed integers) still form a commutative ring? - Mathematics Stack Exchange},
+  shorttitle = {Do integers modulo $n$ minus $\frac n 2$ (i.e. signed integers) still form a commutative ring?},
+  date = {2014-10},
   url = {http://math.stackexchange.com/q/978420},
-  urldate = {2014-10-26}
+  urldate = {2014-10-26},
+  presort = {z}
 }
+
 

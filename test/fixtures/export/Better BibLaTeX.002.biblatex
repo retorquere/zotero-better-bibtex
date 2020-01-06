@@ -1,18 +1,19 @@
 
 @book{Abramowitz1964,
+  title = {Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables},
   author = {Abramowitz, Milton and Stegun, Irene A.},
   date = {1964},
   edition = {ninth Dover printing, tenth GPO printing},
-  location = {{New York}},
   publisher = {{Dover}},
-  title = {Handbook of Mathematical Functions with Formulas, Graphs, and Mathematical Tables}
+  location = {{New York}}
 }
 
 @book{Torre2008,
+  title = {The {{Yankee}} Years},
   author = {Torre, Joe and Verducci, Tom},
   date = {2008},
-  isbn = {0-385-52740-3},
   publisher = {{Doubleday}},
-  title = {The {{Yankee}} Years}
+  isbn = {0-385-52740-3}
 }
+
 

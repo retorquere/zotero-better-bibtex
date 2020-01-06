@@ -128,6 +128,7 @@ class Zotero:
       atexit.register(self.shutdown)
 
     self.testing = userdata.get('testing', 'true') == 'true'
+    self.workers = userdata.get('workers', 'true') == 'true'
 
     self.preferences = Preferences(self)
     self.redir = '>'
@@ -441,6 +442,7 @@ class Zotero:
       profile.firefox.add_extension(xpi)
 
     profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.testing', self.testing)
+    profile.firefox.set_preference('extensions.zotero.translators.better-bibtex.workers', self.workers)
     profile.firefox.set_preference('extensions.zotero.debug-bridge.password', self.password)
     profile.firefox.set_preference('dom.max_chrome_script_run_time', self.config.timeout)
     utils.print(f'dom.max_chrome_script_run_time={self.config.timeout}')

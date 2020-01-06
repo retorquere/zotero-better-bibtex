@@ -1,14 +1,15 @@
 
 @inproceedings{author:06,
+  title = {Some Publication Title},
   author = {Author, First and Author, Second},
-  crossref = {conference:06},
   pages = {330---331},
-  title = {Some Publication Title}
+  crossref = {conference:06}
 }
 
 @collection{conference:06,
-  date = {2006-10},
+  title = {Proceedings of the {{Xth}} Conference on {{XYZ}}},
   editor = {Editor, First and Editor, Second},
-  title = {Proceedings of the {{Xth}} Conference on {{XYZ}}}
+  date = {2006-10}
 }
+
 

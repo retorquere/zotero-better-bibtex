@@ -1,36 +1,37 @@
 
-@book{latour_ny_2008,
-  author = {Latour, Bruno},
-  date = {2008},
-  langid = {danish},
-  location = {{København}},
-  origdate = {2005},
-  origlocation = {{origlocation}},
-  origpublisher = {{origpublisher}},
-  origtitle = {origtitle},
-  publisher = {{Akademisk Forlag}},
-  shorttitle = {En ny sociologi},
-  title = {En ny sociologi for et nyt samfund. Introduktion til Aktør-Netværk-Teori}
-}
-
 @book{kelsen_democratie_2004,
+  title = {La démocratie. Sa nature, sa valeur},
+  author = {Kelsen, Hans},
+  date = {2004},
+  origdate = {1929},
+  edition = {2},
+  publisher = {{Dalloz}},
+  location = {{Paris}},
   abstract = {Préface de Ph. Raynaud.
 Trad. de : "Vom Wesen und Wert der Demokratie" - Tübingen : J.C.B.  Mohr, 1929.
 Fac-sim. de la 2e éd., Paris : Sirey : 1932.},
-  author = {Kelsen, Hans},
-  date = {2004},
-  edition = {2},
   isbn = {2-247-04268-6},
   langid = {french},
-  location = {{Paris}},
-  origdate = {1929},
   origlocation = {{Tübingen}},
   origpublisher = {{J.C.B. Mohr}},
   origtitle = {Vom Wesen und Wert der Demokratie},
   pagetotal = {x+121},
-  publisher = {{Dalloz}},
   series = {Bibliothèque Dalloz},
-  title = {La démocratie. Sa nature, sa valeur},
   translator = {Eisenmann, Charles}
 }
+
+@book{latour_ny_2008,
+  title = {En ny sociologi for et nyt samfund. Introduktion til Aktør-Netværk-Teori},
+  shorttitle = {En ny sociologi},
+  author = {Latour, Bruno},
+  date = {2008},
+  origdate = {2005},
+  publisher = {{Akademisk Forlag}},
+  location = {{København}},
+  langid = {danish},
+  origlocation = {{origlocation}},
+  origpublisher = {{origpublisher}},
+  origtitle = {origtitle}
+}
+
 
