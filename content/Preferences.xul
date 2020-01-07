@@ -761,6 +761,7 @@
                     <checkbox preference="pref-better-bibtex-exportBraceProtection" label="&better-bibtex.Preferences.advanced.export.braceProtection;"/>
                     <image tooltip="tooltip-export-braceProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
+                  <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
                 </tabpanel>
 
                 <tabpanel orient="vertical">
@@ -787,7 +788,6 @@
                     </menulist>
                     <image tooltip="tooltip-import-caseProtection" src="chrome://zotero-better-bibtex/skin/attention.svg" width="16" height="16"/>
                   </hbox>
-                  <button label="&better-bibtex.Preferences.resetCache;" oncommand="Zotero.BetterBibTeX.Preferences.cacheReset()"/>
                 </tabpanel>
 
                 <tabpanel orient="vertical">
