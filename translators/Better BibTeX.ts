@@ -782,7 +782,7 @@ class ZoteroItem {
 
     if (Translator.preferences.rawImports) {
       if (!this.item.tags) this.item.tags = []
-      this.item.tags.push(Translator.preferences.rawLaTag)
+      this.item.tags.push({ tag: Translator.preferences.rawLaTag, type: 1 })
     }
 
     if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`

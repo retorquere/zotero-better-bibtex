@@ -120,16 +120,21 @@
           "creatorType": "translator"
         }
       ],
-      "tags": [],
+      "tags": [
+        {
+          "tag": "#LaTeX",
+          "type": 1
+        }
+      ],
       "collections": [],
       "relations": [],
-      "dateAdded": "2020-01-07T19:23:05Z",
-      "dateModified": "2020-01-07T19:23:05Z",
-      "uri": "http://zotero.org/users/local/6z7M0kXV/items/ABN9SAJ9",
+      "dateAdded": "2020-01-07T21:07:55Z",
+      "dateModified": "2020-01-07T21:07:55Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/SNAZ8MMJ",
       "attachments": [],
       "notes": [],
       "itemID": 99,
-      "key": "ABN9SAJ9",
+      "key": "SNAZ8MMJ",
       "citekey": "MittelbachLaTeXCompanion2006",
       "citationKey": "MittelbachLaTeXCompanion2006",
       "libraryID": 1
