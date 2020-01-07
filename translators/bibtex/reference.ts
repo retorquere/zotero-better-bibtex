@@ -996,7 +996,7 @@ export class Reference {
   protected enc_tags(f) {
     const tags = f.value
       .map(tag => (typeof tag === 'string' ? { tag } : tag))
-      .filter(tag => Translator.preferences.automaticTags || (tag.type !== 1))
+      .filter(tag => (Translator.preferences.automaticTags || (tag.type !== 1)) && tag.tag !== Translator.preferences.rawLaTag)
     if (tags.length === 0) return null
 
     tags.sort((a, b) => Translator.stringCompare(a.tag, b.tag))

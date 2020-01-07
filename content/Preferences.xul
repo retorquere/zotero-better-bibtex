@@ -224,6 +224,11 @@
           If you set this to `*`, all items will be assumed to have raw LaTeX.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.rawImports" type="bool" default="false"/>
+        <bbt:doc>
+          When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.
+        </bbt:doc>
+
         <preference name="extensions.zotero.translators.better-bibtex.skipWords" type="string" default="
           a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,
           by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,

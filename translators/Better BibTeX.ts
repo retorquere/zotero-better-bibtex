@@ -780,6 +780,11 @@ class ZoteroItem {
       }
     }
 
+    if (Translator.preferences.rawImports) {
+      if (!this.item.tags) this.item.tags = []
+      this.item.tags.push(Translator.preferences.rawLaTag)
+    }
+
     if (this.numberPrefix && this.item.number && !this.item.number.toLowerCase().startsWith(this.numberPrefix.toLowerCase())) this.item.number = `${this.numberPrefix}${this.item.number}`
 
     if (this.bibtex.key) this.hackyFields.push(`Citation Key: ${this.bibtex.key}`) // Endnote has no citation keys in their bibtex
@@ -896,6 +901,7 @@ export async function doImport() {
     sentenceCase: Translator.preferences.importSentenceCase !== 'off',
     guessAlreadySentenceCased: Translator.preferences.importSentenceCase === 'on+guess',
     verbatimFields: Translator.verbatimFields,
+    raw: Translator.preferences.rawImports,
   })
   const errors = bib.errors
 

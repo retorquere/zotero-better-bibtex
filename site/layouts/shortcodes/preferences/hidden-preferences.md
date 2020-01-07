@@ -90,6 +90,10 @@ Name particle handling. Only turn on when requested and we're talking about it o
 
 #### platform
 
+#### rawImports
+
+When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.
+
 #### rawLaTag
 
 When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
