@@ -410,7 +410,7 @@ export function doExport() {
     }
 
     let main
-    if (item.multi?._keys && (main = item.multi.main?.title || item.language)) {
+    if (item.multi?._keys?.title && (main = item.multi.main?.title || item.language)) {
       const languages = Object.keys(item.multi._keys.title).filter(lang => lang !== main)
       main += '-'
       languages.sort((a, b) => {
