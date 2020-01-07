@@ -256,7 +256,7 @@ class WorkerZotero {
     this.send({ kind: 'debug', message })
   }
   public logError(err) {
-    this.send({ kind: 'error', message: '' + err })
+    this.send({ kind: 'error', message: `${err}\n${err.stack}` })
   }
 
   public write(str) {
