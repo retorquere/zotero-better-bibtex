@@ -35,6 +35,7 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     cacheFlushInterval: number
     csquotes: string
     rawLaTag: string
+    rawImports: boolean
     skipWords: string
     verbatimFields: string
     jabrefFormat: number
