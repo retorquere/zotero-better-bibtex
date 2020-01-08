@@ -578,18 +578,23 @@ class ZoteroItem {
   protected $urldate(value) { return this.set('accessDate', value) }
   protected $lastchecked(value) { return this.$urldate(value) }
 
-  protected $number(value) {
-    for (const field of ['seriesNumber', 'number', 'issue']) {
-      if (!this.validFields[field]) continue
-
-      this.set(field, value)
-
+  protected $number(value, field) {
+    if (this.bibtex.fields.number && this.validFields.number && this.bibtex.fields.issue && this.validFields.issue) {
+      this.set('issue', this.bibtex.fields.issue)
+      this.set('number', this.bibtex.fields.number)
       return true
+    }
+
+    for (const name of [field].concat(['seriesNumber', 'number', 'issue'])) {
+      if (this.validFields[name]) {
+        this.set(name, value)
+        return true
+      }
     }
 
     return false
   }
-  protected $issue(value) { return this.$number(value) }
+  protected $issue(value, field) { return this.$number(value, field) }
 
   protected $issn(value) {
     if (!this.validFields.ISSN) return false
