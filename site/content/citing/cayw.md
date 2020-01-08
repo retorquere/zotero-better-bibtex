@@ -9,7 +9,7 @@ tags:
   - cite as you write
 ---
 
-**PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; `curl` and other programmatic such as from editors access will work.**
+**PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; `curl` and other programmatic access such as from editors access will work.**
 
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration! 
 
