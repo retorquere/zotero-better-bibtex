@@ -22,10 +22,9 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
   public async push(citation?: string) {
     if (!this.enabled) throw new Error('texstudio was not found')
 
-    const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
-
     if (!citation) {
       try {
+        const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
         const items = pane.getSelectedItems()
         log.debug('TeXstudio:', items)
         citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
