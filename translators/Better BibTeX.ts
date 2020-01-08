@@ -780,7 +780,7 @@ class ZoteroItem {
       }
     }
 
-    if (Translator.preferences.rawImports) {
+    if (Translator.preferences.rawImports && Translator.preferences.rawLaTag !== '*') {
       if (!this.item.tags) this.item.tags = []
       this.item.tags.push({ tag: Translator.preferences.rawLaTag, type: 1 })
     }
