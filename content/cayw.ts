@@ -4,6 +4,7 @@ declare const Zotero: any
 
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
+import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
@@ -348,6 +349,11 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
           const win = windows.getNext().QueryInterface(Components.interfaces.nsIDOMChromeWindow)
           win.minimize()
         }
+      }
+
+      if (options.texstudio) {
+        if (!TeXstudio.enabled) return [this.SERVER_ERROR, 'application/text', 'TeXstudio not found']
+        TeXstudio.push(citation)
       }
 
       if (options.clipboard) toClipboard(citation)

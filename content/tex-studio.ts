@@ -19,21 +19,22 @@ export let TeXstudio = new class { // tslint:disable-line:variable-name
     }
   }
 
-  public async push() {
+  public async push(citation?: string) {
     if (!this.enabled) throw new Error('texstudio was not found')
 
     const pane = Zotero.getActiveZoteroPane() // can Zotero 5 have more than one pane at all?
 
-    let items
-    try {
-      items = pane.getSelectedItems()
-      log.debug('TeXstudio:', items)
-    } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
-      log.error('TeXstudio: Could not get selected items:', err)
-      return
+    if (!citation) {
+      try {
+        const items = pane.getSelectedItems()
+        log.debug('TeXstudio:', items)
+        citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
+      } catch (err) { // zoteroPane.getSelectedItems() doesn't test whether there's a selection and errors out if not
+        log.error('TeXstudio: Could not get selected items:', err)
+        return
+      }
     }
 
-    const citation = items.map(item => KeyManager.get(item.id).citekey).filter(citekey => citekey).join(',')
     if (!citation) {
       log.debug('TeXstudio: no items to cite')
       return
