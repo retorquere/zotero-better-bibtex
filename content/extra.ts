@@ -86,6 +86,10 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }
+    if (tex && options.aliases && name === 'ids') {
+      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+      return false
+    }
 
     if (!tex && options.csl) {
       let cslName = name.replace(/ +/g, '-')
@@ -124,7 +128,7 @@ export function set(extra, options: { citationKey?: string, aliases?: string[], 
 
   if (options.aliases && options.aliases.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\nCitation Key Alias: ${aliases}`
+    parsed.extra += `\ntex.ids : ${aliases}`
   }
 
   if (options.tex) {
