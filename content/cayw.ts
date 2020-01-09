@@ -4,6 +4,7 @@ declare const Zotero: any
 
 import { KeyManager } from './key-manager'
 import { Formatter } from './cayw/formatter'
+import { TeXstudio } from './tex-studio'
 import * as escape from './escape'
 
 Components.utils.import('resource://gre/modules/XPCOMUtils.jsm')
@@ -296,7 +297,7 @@ export async function pick(options) {
   await Zotero.Integration.execCommand('BetterBibTeX', 'addEditCitation', doc.id)
 
   const picked = doc.citation()
-  const citation = picked.length ? await Formatter[options.format || 'playground'](doc.citation(), options) : ''
+  const citation = picked.length ? await Formatter[options.format || 'playground'](picked, options) : ''
   Application.closeDocument(doc)
 
   if (options.select && picked.length) {
@@ -306,6 +307,25 @@ export async function pick(options) {
   }
 
   return citation
+}
+
+async function selected(options) {
+  const pane = Zotero.getActiveZoteroPane()
+  const items = pane.getSelectedItems()
+  const picked = items.map(item => ({
+    id: item.id,
+    locator: '',
+    suppressAuthor: false,
+    prefix: '',
+    suffix: '',
+    label: '',
+    citekey: KeyManager.get(item.id).citekey,
+
+    uri: undefined,
+    itemType: undefined,
+    title: item.getField('title'),
+  }))
+  return picked.length ? await Formatter[options.format || 'playground'](picked, options) : ''
 }
 
 function toClipboard(text) {
@@ -339,7 +359,7 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
     if (options.probe) return [this.OK, 'text/plain', (!Zotero.BetterBibTeX.ready || Zotero.BetterBibTeX.ready.isPending()) ? 'starting' : 'ready' ]
 
     try {
-      const citation = await pick(options)
+      const citation = options.selected ? (await selected(options)) : (await pick(options))
 
       if (options.minimize) {
         const wm = Components.classes['@mozilla.org/appshell/window-mediator;1'].getService(Components.interfaces.nsIWindowMediator)
@@ -348,6 +368,11 @@ Zotero.Server.Endpoints['/better-bibtex/cayw'] = class {
           const win = windows.getNext().QueryInterface(Components.interfaces.nsIDOMChromeWindow)
           win.minimize()
         }
+      }
+
+      if (options.texstudio) {
+        if (!TeXstudio.enabled) return [this.SERVER_ERROR, 'application/text', 'TeXstudio not found']
+        TeXstudio.push(citation)
       }
 
       if (options.clipboard) toClipboard(citation)
