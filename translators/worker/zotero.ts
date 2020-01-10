@@ -62,7 +62,7 @@ class WorkerZoteroBetterBibTeX {
     return titleCase(text)
   }
 
-  public extractFields(sandbox, item) {
+  public extractFields(item) {
     return Extra.get(item.extra)
   }
 
