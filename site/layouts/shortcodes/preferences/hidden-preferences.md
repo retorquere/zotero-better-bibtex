@@ -42,6 +42,12 @@ will be replaced with a `\\enquote{...}` construct.
 
 #### debugLogDir
 
+#### extraMergeCSL
+
+#### extraMergeCitekeys
+
+#### extraMergeTeX
+
 #### git
 
 Can be `off`, `config` or `always`

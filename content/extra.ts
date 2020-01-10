@@ -77,17 +77,21 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
     name = name.toLowerCase().trim()
     value = value.trim()
 
-    if (!tex && options.citationKey && ['citation key', 'bibtex'].includes(name)) {
+    if (options.citationKey && !tex && options.citationKey && ['citation key', 'bibtex'].includes(name)) {
       extraFields.citationKey = value
       return false
     }
 
-    if (!tex && options.aliases && name === 'citation key alias') {
+    if (options.aliases && !tex && options.aliases && name === 'citation key alias') {
+      extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
+      return false
+    }
+    if (options.aliases && tex && options.aliases && name === 'ids') {
       extraFields.aliases = value.split(/s*,\s*/).filter(alias => alias)
       return false
     }
 
-    if (!tex && options.csl) {
+    if (options.csl && !tex && options.csl) {
       let cslName = name.replace(/ +/g, '-')
       const cslType = cslVariables[cslName] || cslVariables[cslName = cslName.toUpperCase()]
       if (cslType) {
@@ -101,12 +105,12 @@ export function get(extra: string, options?: GetOptions): { extra: string, extra
       }
     }
 
-    if (tex && options.tex && !name.includes(' ')) {
+    if (options.tex && tex && options.tex && !name.includes(' ')) {
       extraFields.tex[name] = { value, raw }
       return false
     }
 
-    if (!tex && noPrefix.includes(name.replace(/-/g, ''))) {
+    if (options.tex && !tex && noPrefix.includes(name.replace(/-/g, ''))) {
       extraFields.tex[name.replace(/-/g, '')] = { value }
       return false
     }
@@ -124,7 +128,7 @@ export function set(extra, options: { citationKey?: string, aliases?: string[], 
 
   if (options.aliases && options.aliases.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\nCitation Key Alias: ${aliases}`
+    parsed.extra += `\ntex.ids: ${aliases}`
   }
 
   if (options.tex) {

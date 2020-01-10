@@ -117,10 +117,26 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
     for (const item of await getItemsAsync(ids)) {
       if (item.isNote() || item.isAttachment()) continue
 
-      const parsed = Extra.get(item.getField('extra'), { citationKey: true })
-      if (parsed.extraFields.citationKey) continue
+      const extra = item.getField('extra')
+
+      let citekey = Extra.get(extra, { citationKey: true }).extraFields.citationKey
+      if (citekey) continue // pinned, leave it alone
 
       this.update(item)
+
+      // remove the new citekey from the aliases if present
+      citekey = this.get(item.id).citekey
+      const aliases = Extra.get(extra, { aliases: true })
+      if (aliases.extraFields.aliases.includes(citekey)) {
+        aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citekey)
+
+        if (aliases.extraFields.aliases.length) {
+          item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
+        } else {
+          item.setField('extra', aliases.extra)
+        }
+      }
+
       if (manual) updates.push(item)
     }
 

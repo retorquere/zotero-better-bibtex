@@ -136,10 +136,10 @@ En mode « minimal », le nombre d'éléments `span` est minimisé.">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.3 "Oui, pour JabRef 3">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4 "Oui, pour JabRef 4">
 <!ENTITY better-bibtex.Preferences.export.jabrefFormat.4.warn "L'exportation au format JabRef 4 désactive le cache. Les exportations seront sensiblement plus lentes.">
-<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les commandes LaTeX en texte brut">
+<!ENTITY better-bibtex.Preferences.export.biblatex.ascii "Exporter les caractères Unicode en commandes LaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex "BibLaTeX">
 <!ENTITY better-bibtex.Preferences.export.biblatex.extendedNameFormat "Utiliser le format de nom étendu BibLaTeX (nécessite BibLaTeX 3.5)">
-<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exporter les commandes LaTeX en texte brut (recommandé)">
+<!ENTITY better-bibtex.Preferences.export.bibtex.ascii "Exporter les caractères Unicode en commandes LaTeX (recommandé)">
 <!ENTITY better-bibtex.Preferences.export.bibtex "BibTeX">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs "Ajouter les URLs à l'exportation :">
 <!ENTITY better-bibtex.Preferences.export.bibtex.URLs.note "Oui, dans un champ 'note'">

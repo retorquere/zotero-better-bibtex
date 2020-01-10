@@ -9,7 +9,7 @@ tags:
   - cite as you write
 ---
 
-**PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; `curl` and other programmatic such as from editors access will work.**
+**PSA: as of Zotero 5.0.71, access to the CAYW URL will no longer work from the browser for security reasons; `curl` and other programmatic access such as from editors access will work.**
 
 Good news for TeXnicians and those down with Mark (aka Markdown, RST, whatnot): this is the time to go pester the author of your favorite editor for Zotero integration! 
 
@@ -72,7 +72,9 @@ the following URL parameters:
 | `probe`   | If set to any non-empty value, returns `ready`. You can use this to test whether BBT CAYW picking is live; it will not pop up the picker |
 | `format`  | Set the output format |
 | `clipboard` | Any non-empty value will copy the results to the clipboard |
-| `minimize` | Any non-empty value minimize all Firefox windows after a pick |
+| `minimize` | Any non-empty value will minimize Zotero windows after a pick |
+| `texstudio` | Any non-empty value will try to push the pick to TeXstudio |
+| `selected` | Any non-empty value will use the current selection in Zotero rather than popping up the pick window |
 
 
 The following formats are available:
@@ -148,8 +150,7 @@ In your call to the CAYW URL, you can override the abbreviations by adding them 
 The `clipboard` option can be used as a workaround for editors that haven't gotten around to integrating this yet. If
 you use this option you will probably want to bind to a hotkey, either system-wide (which is going to be platform-dependent, I know
 [AutoHotKey](http://www.autohotkey.com) works for windows, for OSX [Karabiner](https://pqrs.org/osx/karabiner/) ought to
-do the job, and for Linux you could give [IronAHK](https://github.com/polyethene/IronAHK) or
-[autokey](https://code.google.com/p/autokey/) a shot).
+do the job, and for Linux [xbindkeys](https://unix.stackexchange.com/questions/44672/assign-shortcut-key-to-run-a-script) could do the job.
 
 For example, if you call up http://127.0.0.1:23119/better-bibtex/cayw?format=mmd&clipboard=yes, the Zotero citation picker will pop up. If you then select two references that happen to have cite keys `adams2001` and `brigge2002`, then
 
