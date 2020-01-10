@@ -1,0 +1,119 @@
+{
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "preferences": {
+      "DOIandURL": "doi",
+      "automaticTags": true,
+      "asciiBibLaTeX": false,
+      "ascii": "",
+      "asciiBibTeX": true,
+      "autoExport": "immediate",
+      "quickCopyMode": "latex",
+      "citeCommand": "cite",
+      "quickCopyPandocBrackets": false,
+      "citekeyFormat": "[auth][shorttitle][year]",
+      "citekeyFold": true,
+      "keyConflictPolicy": "change",
+      "auxImport": false,
+      "keyScope": "library",
+      "exportBibTeXStrings": "off",
+      "importBibTeXStrings": true,
+      "bibtexParticleNoOp": false,
+      "skipFields": "abstract, copyright, googlebooks",
+      "bibtexURL": "off",
+      "warnBulkModify": 10,
+      "postscript": "",
+      "strings": "",
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "http://www.zotero.org/styles/cell",
+      "autoExportIdleWait": 10,
+      "cacheFlushInterval": 5,
+      "csquotes": "",
+      "rawLaTag": "#LaTeX",
+      "rawImports": false,
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "jabrefFormat": 0,
+      "qualityReport": true,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "exportTitleCase": true,
+      "exportBraceProtection": true,
+      "importSentenceCase": "on+guess",
+      "importCaseProtection": "off",
+      "autoExportDelay": 1,
+      "itemObserverDelay": 100,
+      "parseParticles": true,
+      "citeprocNoteCitekey": false,
+      "extraMergeTeX": true,
+      "extraMergeCSL": true,
+      "extraMergeCitekeys": true,
+      "scrubDatabase": false,
+      "removeStock": true,
+      "ignorePostscriptErrors": false,
+      "debugLogDir": "",
+      "testing": true,
+      "autoPin": true,
+      "kuroshiro": true,
+      "relativeFilePaths": false,
+      "git": "config",
+      "mapUnicode": "conservative",
+      "mapText": "",
+      "mapMath": "",
+      "newTranslatorsAskRestart": true,
+      "workers": false,
+      "platform": "mac",
+      "client": "zotero"
+    },
+    "options": {
+      "exportFileData": false,
+      "exportNotes": false,
+      "keepUpdated": false,
+      "exportPath": "/Users/emile/github/better-bibtex"
+    }
+  },
+  "collections": {},
+  "items": [
+    {
+      "version": 0,
+      "itemType": "webpage",
+      "url": "http://www.ncbi.nlm.nih.gov/pubmed/4027280",
+      "date": "xx 1985",
+      "extra": "Citation Key: HopfieldTank85",
+      "title": "{`Neural'} computation of decisions in optimization problems.",
+      "creators": [
+        {
+          "firstName": "J. J.",
+          "lastName": "Hopfield",
+          "creatorType": "author"
+        },
+        {
+          "firstName": "D. W.",
+          "lastName": "Tank",
+          "creatorType": "author"
+        }
+      ],
+      "tags": [
+        {
+          "tag": "#LaTeX"
+        }
+      ],
+      "collections": [
+        "NF94GG4I"
+      ],
+      "relations": [],
+      "dateAdded": "2019-12-17T13:10:25Z",
+      "dateModified": "2020-01-10T21:27:53Z",
+      "uri": "http://zotero.org/users/local/6z7M0kXV/items/UZ6S3RFJ",
+      "attachments": [],
+      "notes": [],
+      "itemID": 788,
+      "key": "UZ6S3RFJ",
+      "citekey": "HopfieldTank85",
+      "citationKey": "HopfieldTank85",
+      "libraryID": 1,
+      "publicationTitle": "Biological Cybernetics"
+    }
+  ]
+}
