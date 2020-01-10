@@ -128,7 +128,7 @@ export function set(extra, options: { citationKey?: string, aliases?: string[], 
 
   if (options.aliases && options.aliases.length) {
     const aliases = Array.from(new Set(options.aliases)).sort().join(', ')
-    parsed.extra += `\ntex.ids : ${aliases}`
+    parsed.extra += `\ntex.ids: ${aliases}`
   }
 
   if (options.tex) {
