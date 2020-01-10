@@ -1,0 +1,275 @@
+{
+  "collections": {},
+  "config": {
+    "id": "36a3b0b5-bad0-4a04-b79b-441c7cef77db",
+    "label": "BetterBibTeX JSON",
+    "options": {
+      "exportFileData": false,
+      "exportNotes": true,
+      "keepUpdated": false
+    },
+    "preferences": {
+      "DOIandURL": "both",
+      "ascii": "",
+      "asciiBibLaTeX": false,
+      "asciiBibTeX": true,
+      "autoAbbrev": false,
+      "autoAbbrevStyle": "",
+      "autoExport": "immediate",
+      "autoExportDelay": 1,
+      "autoExportIdleWait": 10,
+      "autoPin": false,
+      "automaticTags": true,
+      "auxImport": false,
+      "biblatexExtendedDateFormat": true,
+      "biblatexExtendedNameFormat": false,
+      "bibtexParticleNoOp": false,
+      "bibtexURL": "off",
+      "cacheFlushInterval": 5,
+      "citeCommand": "cite",
+      "citekeyFold": true,
+      "citekeyFormat": "[auth][year]",
+      "citeprocNoteCitekey": false,
+      "client": "zotero",
+      "csquotes": "",
+      "debugLogDir": "",
+      "exportBibTeXStrings": "off",
+      "exportBraceProtection": true,
+      "exportTitleCase": true,
+      "git": "config",
+      "ignorePostscriptErrors": true,
+      "importBibTeXStrings": true,
+      "importCaseProtection": "as-needed",
+      "importSentenceCase": "on+guess",
+      "itemObserverDelay": 5,
+      "jabrefFormat": 0,
+      "keyConflictPolicy": "keep",
+      "keyScope": "library",
+      "kuroshiro": false,
+      "mapMath": "",
+      "mapText": "",
+      "mapUnicode": "conservative",
+      "newTranslatorsAskRestart": true,
+      "parseParticles": true,
+      "platform": "win",
+      "postscript": "",
+      "qualityReport": false,
+      "quickCopyMode": "latex",
+      "quickCopyPandocBrackets": false,
+      "rawLaTag": "#LaTeX",
+      "relativeFilePaths": false,
+      "removeStock": false,
+      "scrubDatabase": false,
+      "skipFields": "",
+      "skipWords": "a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum",
+      "strings": "",
+      "verbatimFields": "url,doi,file,eprint,verba,verbb,verbc",
+      "warnBulkModify": 10
+    }
+  },
+  "items": [
+    {
+      "DOI": "10.1038/nature24290",
+      "ISSN": "0028-0836, 1476-4687",
+      "accessDate": "2020-01-09T18:12:24Z",
+      "attachments": [],
+      "citationKey": "Troja2017",
+      "citekey": "Troja2017",
+      "collections": [],
+      "creators": [
+        {
+          "creatorType": "author",
+          "firstName": "E.",
+          "lastName": "Troja"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "L.",
+          "lastName": "Piro"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "H.",
+          "lastName": "van Eerten"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. T.",
+          "lastName": "Wollaeger"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M.",
+          "lastName": "Im"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "O. D.",
+          "lastName": "Fox"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "N. R.",
+          "lastName": "Butler"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S. B.",
+          "lastName": "Cenko"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "T.",
+          "lastName": "Sakamoto"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C. L.",
+          "lastName": "Fryer"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "Ricci"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Lien"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R. E.",
+          "lastName": "Ryan"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "O.",
+          "lastName": "Korobkin"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.-K.",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. M.",
+          "lastName": "Burgess"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "W. H.",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A. M.",
+          "lastName": "Watson"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.",
+          "lastName": "Choi"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Covino"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "P.",
+          "lastName": "D\u2019Avanzo"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C. J.",
+          "lastName": "Fontes"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J. Becerra",
+          "lastName": "Gonz\u00e1lez"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "H. G.",
+          "lastName": "Khandrika"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "J.",
+          "lastName": "Kim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.-L.",
+          "lastName": "Kim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "C.-U.",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "H. M.",
+          "lastName": "Lee"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "A.",
+          "lastName": "Kutyrev"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "G.",
+          "lastName": "Lim"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "R.",
+          "lastName": "S\u00e1nchez-Ram\u00edrez"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "S.",
+          "lastName": "Veilleux"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "M. H.",
+          "lastName": "Wieringa"
+        },
+        {
+          "creatorType": "author",
+          "firstName": "Y.",
+          "lastName": "Yoon"
+        }
+      ],
+      "date": "11/2017",
+      "dateAdded": "2020-01-09T18:11:24Z",
+      "dateModified": "2020-01-09T18:25:34Z",
+      "issue": "7678",
+      "itemID": 13,
+      "itemType": "journalArticle",
+      "journalAbbreviation": "Nature",
+      "key": "4CVWPLVV",
+      "language": "en",
+      "libraryCatalog": "DOI.org (Crossref)",
+      "libraryID": 1,
+      "notes": [],
+      "pages": "71-74",
+      "publicationTitle": "Nature",
+      "relations": [],
+      "tags": [],
+      "title": "The X-ray counterpart to the gravitational-wave event GW170817",
+      "uri": "http://zotero.org/users/local/oIZgFgeZ/items/4CVWPLVV",
+      "url": "http://www.nature.com/articles/nature24290",
+      "version": 0,
+      "extra": "tex.ids: Troja2017\narXiv: 1710.05433",
+      "volume": "551"
+    }
+  ]
+}

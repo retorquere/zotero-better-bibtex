@@ -9,6 +9,7 @@ import shutil
 import subprocess
 import sys
 import tarfile
+from pygit2 import Repository
 
 import pathlib
 for d in pathlib.Path(__file__).resolve().parents:
@@ -27,6 +28,7 @@ parser.add_argument('--jurism', action='store_true')
 parser.add_argument('--beta', action='store_true')
 parser.add_argument('--keep', action='store_true')
 parser.add_argument('--no-workers', action='store_true')
+parser.add_argument('--this', action='store_true')
 
 args, unknownargs = parser.parse_known_args()
 sys.argv = sys.argv[:1] + unknownargs
@@ -36,6 +38,12 @@ if args.no_workers:
   sys.argv.extend(['--define', 'workers=false'])
 else:
   sys.argv.extend(['--define', 'workers=true'])
+
+if args.this:
+  repo = Repository('.')
+  branch = repo.head.name.split('/')[-1]
+  assert re.match(r'^gh-[0-9]+$', branch)
+  sys.argv.extend(['--tags', branch.replace('gh-', '@') ])
 
 ## exclude @nightly by default
 if os.environ.get('TRAVIS_BRANCH', 'master') != 'master' and os.path.exists(os.path.join(ROOT, '.nightly.json')):

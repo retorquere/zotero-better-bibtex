@@ -321,6 +321,10 @@
           (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
         </bbt:doc>
 
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeTeX" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCSL" type="bool" default="true"/>
+        <preference name="extensions.zotero.translators.better-bibtex.extraMergeCitekeys" type="bool" default="true"/>
+
         <!-- mainly for testing -->
         <preference name="extensions.zotero.translators.better-bibtex.scrubDatabase" type="bool" default="false"/>
         <preference name="extensions.zotero.translators.better-bibtex.removeStock" type="bool" default="false"/>

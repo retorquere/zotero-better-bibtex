@@ -95,38 +95,56 @@ if (Prefs.get('citeprocNoteCitekey')) {
 // https://github.com/retorquere/zotero-better-bibtex/issues/1221
 $patch$(Zotero.Items, 'merge', original => async function Zotero_Items_merge(item, otherItems) {
   try {
-    const extra = Extra.get(item.getField('extra'), { aliases: true, tex: true, csl: true })
+    const merge = {
+      citekeys: Prefs.get('extraMergeCitekeys'),
+      tex: Prefs.get('extraMergeTeX'),
+      csl: Prefs.get('extraMergeCSL'),
+    }
+
+    const extra = Extra.get(item.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, csl: merge.csl })
 
     // get citekeys of other items
-    const otherIDs = otherItems.map(i => parseInt(i.id))
-    extra.extraFields.aliases = extra.extraFields.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map(i => i.citekey))
+    if (merge.citekeys) {
+      const otherIDs = otherItems.map(i => parseInt(i.id))
+      extra.extraFields.aliases = extra.extraFields.aliases.concat(KeyManager.keys.find({ itemID: { $in: otherIDs }}).map(i => i.citekey))
+    }
 
     // add any aliases they were already holding
     for (const i of otherItems) {
-      const otherExtra = Extra.get(i.getField('extra'), { aliases: true, tex: true, csl: true })
+      const otherExtra = Extra.get(i.getField('extra'), { aliases: merge.citekeys, tex: merge.tex, csl: merge.csl })
 
-      extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
+      if (merge.citekeys) extra.extraFields.aliases = extra.extraFields.aliases.concat(otherExtra.extraFields.aliases)
 
-      for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
-        if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
+      if (merge.tex) {
+        for (const [name, value] of Object.entries(otherExtra.extraFields.tex)) {
+          if (!extra.extraFields.tex[name]) extra.extraFields.tex[name] = value
+        }
       }
 
-      for (const [name, value] of Object.entries(otherExtra.extraFields.csl)) {
-        const existing = extra.extraFields.csl[name]
-        if (!existing) {
-          extra.extraFields.csl[name] = value
-        } else if (Array.isArray(existing) && Array.isArray(value)) {
-          for (const creator in value) {
-            if (!existing.includes(creator)) existing.push(creator)
+      if (merge.csl) {
+        for (const [name, value] of Object.entries(otherExtra.extraFields.csl)) {
+          const existing = extra.extraFields.csl[name]
+          if (!existing) {
+            extra.extraFields.csl[name] = value
+          } else if (Array.isArray(existing) && Array.isArray(value)) {
+            for (const creator in value) {
+              if (!existing.includes(creator)) existing.push(creator)
+            }
           }
         }
       }
     }
 
-    const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
-    extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
+    if (merge.citekeys) {
+      const citekey = KeyManager.keys.findOne({ itemID: item.id }).citekey
+      extra.extraFields.aliases = extra.extraFields.aliases.filter(alias => alias && alias !== citekey)
+    }
 
-    item.setField('extra', Extra.set(extra.extra, { aliases: extra.extraFields.aliases, tex: extra.extraFields.tex, csl: extra.extraFields.csl }))
+    item.setField('extra', Extra.set(extra.extra, {
+      aliases: merge.citekeys ? extra.extraFields.aliases : undefined,
+      tex: merge.tex ? extra.extraFields.tex : undefined,
+      csl: merge.csl ? extra.extraFields.csl : undefined,
+    }))
 
   } catch (err) {
     log.error('Zotero.Items.merge:', err)

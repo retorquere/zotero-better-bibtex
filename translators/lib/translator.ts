@@ -14,6 +14,9 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
     asciiBibTeX: boolean
     autoExport: string
     quickCopyMode: string
+    extraMergeTeX: boolean
+    extraMergeCSL: boolean
+    extraMergeCitekeys: boolean
     citeCommand: string
     quickCopyPandocBrackets: boolean
     citekeyFormat: string
