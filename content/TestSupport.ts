@@ -159,12 +159,17 @@ export = new class {
 
   public async find(query) {
     if (!Object.keys(query).length) throw new Error(`empty query ${JSON.stringify(query)}`)
+
+    let ids: number[] = []
+
+    if (query.is) ids = ids.concat(KeyManager.keys.find({ citekey: query.is }).map(item => item.itemID))
+
     const s = new Zotero.Search()
     for (const [mode, text] of Object.entries(query)) {
       if (!['is', 'contains'].includes(mode)) throw new Error(`unsupported search mode ${mode}`)
       s.addCondition('field', mode, text)
     }
-    const ids = await s.search()
+    ids = ids.concat(await s.search())
     if (!ids || ids.length !== 1) throw new Error(`No item found matching '${JSON.stringify(query)}'`)
 
     return ids[0]
@@ -232,7 +237,7 @@ export = new class {
       Components.classes['@mozilla.org/moz/jssubscript-loader;1'].getService(Components.interfaces.mozIJSSubScriptLoader).loadSubScript('chrome://zotero/content/duplicatesMerge.js')
     }
 
-    selected.sort((a, b) => a.getField('title').localeCompare(b.getField('title')))
+    selected.sort((a, b) => ids.indexOf(a.id) - ids.indexOf(b.id))
     Zotero_Duplicates_Pane.setItems(selected)
     await timeout(1500) // tslint:disable-line:no-magic-numbers
 

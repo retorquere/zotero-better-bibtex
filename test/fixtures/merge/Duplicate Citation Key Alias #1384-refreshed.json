@@ -71,213 +71,10 @@
     {
       "DOI": "10.1038/nature24290",
       "ISSN": "0028-0836, 1476-4687",
-      "abstractNote": "A long-standing paradigm in astrophysics is that collisions- or mergers- of two neutron stars (NSs) form highly relativistic and collimated outflows (jets) powering gamma-ray bursts (GRBs) of short (< 2 s) duration. However, the observational support for this model is only indirect. A hitherto outstanding prediction is that gravitational wave (GW) events from such mergers should be associated with GRBs, and that a majority of these GRBs should be off-axis, that is, they should point away from the Earth. Here we report the discovery of the X-ray counterpart associated with the GW event GW170817. While the electromagnetic counterpart at optical and infrared frequencies is dominated by the radioactive glow from freshly synthesized r-process material in the merger ejecta, known as kilonova, observations at X-ray and, later, radio frequencies exhibit the behavior of a short GRB viewed off-axis. Our detection of X-ray emission at a location coincident with the kilonova transient provides the missing observational link between short GRBs and GWs from NS mergers, and gives independent confirmation of the collimated nature of the GRB emission.",
-      "accessDate": "2020-01-09T18:11:24Z",
+      "accessDate": "2020-01-09T18:12:24Z",
       "attachments": [],
       "citationKey": "Troja2017",
       "citekey": "Troja2017",
-      "collections": [],
-      "creators": [
-        {
-          "creatorType": "author",
-          "firstName": "E.",
-          "lastName": "Troja"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "L.",
-          "lastName": "Piro"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "H.",
-          "lastName": "van Eerten"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R. T.",
-          "lastName": "Wollaeger"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M.",
-          "lastName": "Im"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "O. D.",
-          "lastName": "Fox"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "N. R.",
-          "lastName": "Butler"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S. B.",
-          "lastName": "Cenko"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "T.",
-          "lastName": "Sakamoto"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C. L.",
-          "lastName": "Fryer"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R.",
-          "lastName": "Ricci"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Lien"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R. E.",
-          "lastName": "Ryan Jr."
-        },
-        {
-          "creatorType": "author",
-          "firstName": "O.",
-          "lastName": "Korobkin"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.-K.",
-          "lastName": "Lee"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J. M.",
-          "lastName": "Burgess"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "W. H.",
-          "lastName": "Lee"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A. M.",
-          "lastName": "Watson"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.",
-          "lastName": "Choi"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Covino"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "P. D'",
-          "lastName": "Avanzo"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C. J.",
-          "lastName": "Fontes"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J. Becerra",
-          "lastName": "Gonzalez"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "H. G.",
-          "lastName": "Khandrika"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "J.",
-          "lastName": "Kim"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.-L.",
-          "lastName": "Kim"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "C.-U.",
-          "lastName": "Lee"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "H. M.",
-          "lastName": "Lee"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "A.",
-          "lastName": "Kutyrev"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "G.",
-          "lastName": "Lim"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "R. Sanchez",
-          "lastName": "Ramirez"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "S.",
-          "lastName": "Veilleux"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "M. H.",
-          "lastName": "Wieringa"
-        },
-        {
-          "creatorType": "author",
-          "firstName": "Y.",
-          "lastName": "Yoon"
-        }
-      ],
-      "date": "11/2017",
-      "dateAdded": "2020-01-09T18:11:24Z",
-      "dateModified": "2020-01-09T18:11:24Z",
-      "extra": "arXiv: 1710.05433",
-      "issue": "7678",
-      "itemID": 11,
-      "itemType": "journalArticle",
-      "journalAbbreviation": "Nature",
-      "key": "TRTMMU8L",
-      "libraryCatalog": "arXiv.org",
-      "libraryID": 1,
-      "notes": [],
-      "pages": "71-74",
-      "publicationTitle": "Nature",
-      "relations": [],
-      "tags": [],
-      "title": "The X-ray counterpart to the gravitational wave event GW 170817",
-      "uri": "http://zotero.org/users/local/oIZgFgeZ/items/TRTMMU8L",
-      "url": "http://arxiv.org/abs/1710.05433",
-      "version": 0,
-      "volume": "551"
-    },
-    {
-      "DOI": "10.1038/nature24290",
-      "ISSN": "0028-0836, 1476-4687",
-      "accessDate": "2020-01-09T18:12:24Z",
-      "attachments": [],
-      "citationKey": "Troja2017a",
-      "citekey": "Troja2017a",
       "collections": [],
       "creators": [
         {
@@ -452,8 +249,8 @@
         }
       ],
       "date": "11/2017",
-      "dateAdded": "2020-01-09T18:12:24Z",
-      "dateModified": "2020-01-09T18:12:24Z",
+      "dateAdded": "2020-01-09T18:11:24Z",
+      "dateModified": "2020-01-09T18:25:34Z",
       "issue": "7678",
       "itemID": 13,
       "itemType": "journalArticle",
@@ -471,6 +268,7 @@
       "uri": "http://zotero.org/users/local/oIZgFgeZ/items/4CVWPLVV",
       "url": "http://www.nature.com/articles/nature24290",
       "version": 0,
+      "extra": "arXiv: 1710.05433",
       "volume": "551"
     }
   ]

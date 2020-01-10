@@ -129,8 +129,9 @@ export let KeyManager = new class { // tslint:disable-line:variable-name
       const aliases = Extra.get(extra, { aliases: true })
       if (aliases.extraFields.aliases.includes(citekey)) {
         aliases.extraFields.aliases = aliases.extraFields.aliases.filter(alias => alias !== citekey)
+
         if (aliases.extraFields.aliases.length) {
-          item.setField('extra', Extra.set(extra, { aliases: aliases.extraFields.aliases }))
+          item.setField('extra', Extra.set(aliases.extra, { aliases: aliases.extraFields.aliases }))
         } else {
           item.setField('extra', aliases.extra)
         }
