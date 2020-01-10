@@ -46,7 +46,7 @@ Or any other of the plethora of choices that are available today that will "clou
 
 ### git support
 
-BBT auto-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found [here](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta) -- note these instructions are for Overleaf V1 projects, not V2 projects, which will get git support only late 2018), but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/projects/2).
+BBT auto-export works nicely with git services (such as Overleaf, which is where I use it myself; the instructions for setting up Overleaf for git can be found [here](https://www.overleaf.com/blog/195-new-collaborate-online-and-offline-with-overleaf-and-git-beta), but any git service (gitlab, github, etc) should work exactly the same. I'm toying with various online services [here](https://github.com/retorquere/zotero-better-bibtex/projects/2).
 
 **Note that this is more for the technically inclined,** you will need to be comfortable with the command line to set this up. I can't think of a real benefit to using git over cloud-sync unless, like me, you like to keep a backup history in git.
 
