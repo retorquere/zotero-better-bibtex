@@ -13,6 +13,8 @@ import * as translatorMetadata from '../gen/translators.json'
 
 type ExportScope = { type: 'items', items: any[], getter?: any } | { type: 'library', id: number, getter?: any } | { type: 'collection', collection: any, getter?: any }
 
+function sleep(timeout) { return new Promise(resolve => setTimeout(resolve, timeout)) }
+
 // export singleton: https://k94n.com/es6-modules-single-instance-pattern
 export let Translators = new class { // tslint:disable-line:variable-name
   public byId: any
@@ -116,6 +118,11 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
   public async exportItemsByWorker(translatorID: string, displayOptions: any, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
+
+    const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
+    while (this.workers.running.size > workers) {
+      await sleep(5000) // tslint:disable-line:no-magic-numbers
+    }
 
     options.preferences = options.preferences || {}
 

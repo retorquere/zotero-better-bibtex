@@ -441,7 +441,7 @@ export = new class PrefPane {
       document.getElementById(`id-better-bibtex-preferences-${row}`).setAttribute('hidden', quickCopyMode !== enabledFor)
     }
 
-    document.getElementById('better-bibtex-preferences-worker-state').value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.workers ? 'status' : 'disabled'}`, {
+    document.getElementById('better-bibtex-preferences-worker-state').value = Zotero.BetterBibTeX.getString(`BetterBibTeX.workers.${Prefs.get('workers') ? 'status' : 'disabled'}`, {
       total: Translators.workers.total,
       running: Translators.workers.running.size,
     })

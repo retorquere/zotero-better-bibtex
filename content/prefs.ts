@@ -14,7 +14,6 @@ const supported = Object.keys(defaults)
 export let Preferences = new class { // tslint:disable-line:variable-name
   public branch: any
   public testing: boolean
-  public workers: boolean
   public client: 'zotero' | 'jurism'
   public platform: 'win' | 'lin' | 'mac' | 'unix'
 
@@ -22,8 +21,6 @@ export let Preferences = new class { // tslint:disable-line:variable-name
 
   constructor() {
     this.testing = Zotero.Prefs.get(this.key('testing'))
-    this.workers = Zotero.Prefs.get(this.key('workers'))
-    log.debug('starting state:', { testing: this.testing, workers: this.workers })
 
     let old, key
     if (typeof (old = Zotero.Prefs.get(key = this.key('suppressTitleCase'))) !== 'undefined') {
