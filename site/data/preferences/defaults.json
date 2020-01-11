@@ -58,7 +58,7 @@
   "mapText": "",
   "mapMath": "",
   "newTranslatorsAskRestart": true,
-  "workers": 4,
+  "workers": 1,
   "platform": "",
   "client": ""
 }
