@@ -141,13 +141,14 @@ class Preferences:
 
   def pref(self, pref):
     if pref.name in self.printed: return ''
+    if not 'description' in pref: return ''
+
     self.printed.append(pref.name)
 
     if 'label' in pref:
-      label = pref.label
+      doc = f'#### {pref.label}\n\n'
     else:
-      label = pref.name
-    doc = f'#### {label}\n\n'
+      doc = f'### {pref.name}\n\n' # hidden pref
 
     dflt = pref.default
     if 'options' in pref:
@@ -156,9 +157,9 @@ class Preferences:
       dflt = 'yes' if dflt else 'no'
     elif pref.type == 'string' and dflt == '':
       dflt = '<not set>'
-    doc + f'default: `{dflt}`\n\n'
+    doc += f'default: `{dflt}`\n\n'
 
-    if 'description' in pref: doc += pref.description + '\n\n'
+    doc += pref.description + '\n\n'
 
     if 'options' in pref:
       doc += 'Options:\n\n'
