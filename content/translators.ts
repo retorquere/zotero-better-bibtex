@@ -140,6 +140,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
 
     const translator = this.byId[translatorID]
 
+    const cache = Cache.getCollection(translator.label)
+
     const params = Object.entries({
       client: Prefs.client,
       version: Zotero.version,
@@ -189,8 +191,7 @@ export let Translators = new class { // tslint:disable-line:variable-name
           log.debug(prefix, 'caught cache for', itemID)
           if (!metadata) metadata = {}
 
-          const collection = Cache.getCollection(translator.label)
-          if (!collection) {
+          if (!cache) {
             const msg = `worker.cacheStore: cache ${translator.label} not found`
             log.error(msg)
             deferred.reject(msg)
@@ -199,15 +200,15 @@ export let Translators = new class { // tslint:disable-line:variable-name
           }
 
           const selector = cacheSelector(itemID, config.options, config.preferences)
-          let cached = collection.findOne(selector)
+          let cached = cache.findOne(selector)
 
           if (cached) {
             cached.reference = reference
             cached.metadata = metadata
-            cached = collection.update(cached)
+            cached = cache.update(cached)
 
           } else {
-            collection.insert({...selector, reference, metadata})
+            cache.insert({...selector, reference, metadata})
           }
           break
 
@@ -278,7 +279,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     // pre-fetch cache
-    const cache = Cache.getCollection(translator.label)
     if (cache) {
       const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
 
@@ -302,7 +302,12 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    log.debug('starting worker export', prefix, 'for', config.items.length, 'items in', config.collections.length, 'collections, from', Object.keys(scope))
+    log.debug('starting worker export', prefix,
+      'for', config.items.length, 'items in',
+      config.collections.length, 'collections, from',
+      Object.keys(scope),
+      Object.keys(config.cache).length, 'cached'
+    )
 
     try {
       worker.postMessage(JSON.parse(JSON.stringify(config)))
