@@ -229,11 +229,8 @@ export let Translator = new class implements ITranslator { // tslint:disable-lin
       this.unicode = (this.BetterBibTeX && !Translator.preferences.asciiBibTeX) || (this.BetterBibLaTeX && !Translator.preferences.asciiBibLaTeX)
 
       this.caching = !(
-        // maybe later as a cache fill option?
-        Zotero.BetterBibTeX.worker()
-
         // when exporting file data you get relative paths, when not, you get absolute paths, only one version can go into the cache
-        || this.options.exportFileData
+        this.options.exportFileData
 
         // jabref 4 stores collection info inside the reference, and collection info depends on which part of your library you're exporting
         || (this.BetterTeX && this.preferences.jabrefFormat === 4) // tslint:disable-line:no-magic-numbers

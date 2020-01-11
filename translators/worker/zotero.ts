@@ -40,10 +40,14 @@ class WorkerZoteroBetterBibTeX {
     return true
   }
 
-  public cacheFetch() {
-    return null
+  public cacheFetch(itemID: number) {
+    const cached = Zotero.config.cache[itemID]
+    Zotero.debug(`cache ${cached ? 'hit' : 'miss'} for ${itemID}`)
+    return cached
   }
-  public cacheStore() {
+
+  public cacheStore(itemID: number, options: any, prefs: any, reference: string, metadata: any) {
+    Zotero.send({ kind: 'cache', itemID, reference, metadata })
     return true
   }
 
@@ -240,7 +244,7 @@ class WorkerZotero {
     this.send({ kind: 'done', output: this.exportFile ? true : this.output })
   }
 
-  private send(message: BBTWorker.Message) {
+  public send(message: BBTWorker.Message) {
     ctx.postMessage(message)
   }
 

@@ -18,7 +18,7 @@ log.debug('Loading Better BibTeX')
 
 import { Translators } from './translators'
 import { DB } from './db/main'
-import { DB as Cache } from './db/cache'
+import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { upgrade as dbUpgrade } from './db/upgrade'
 import { Serializer } from './serializer'
 import { JournalAbbrev } from './journal-abbrev'
@@ -29,12 +29,7 @@ import format = require('string-template')
 
 import { patch as $patch$ } from './monkey-patch'
 
-import * as prefOverrides from '../gen/preferences/auto-export-overrides.json'
-
-/*
-  UNINSTALL
-*/
-
+// UNINSTALL
 AddonManager.addAddonListener({
   onUninstalling(addon, needsRestart) {
     if (addon.id !== 'better-bibtex@iris-advies.com') return null
@@ -261,19 +256,6 @@ import { qualityReport } from './qr-check'
 import { titleCase } from './title-case'
 import { HTMLParser } from './markupparser'
 import { Logger } from './logger'
-
-function cacheSelector(itemID, options, prefs) {
-  const selector = {
-    itemID,
-
-    exportNotes: !!options.exportNotes,
-    useJournalAbbreviation: !!options.useJournalAbbreviation,
-  }
-  for (const pref of prefOverrides) {
-    selector[pref] = prefs[pref]
-  }
-  return selector
-}
 
 Zotero.Translate.Export.prototype.Sandbox.BetterBibTeX = {
   worker(sandbox) { return false },

@@ -4,7 +4,7 @@ declare class ChromeWorker extends Worker { }
 
 import { Preferences as Prefs } from './prefs'
 import * as log from './debug'
-import { DB as Cache } from './db/cache'
+import { DB as Cache, selector as cacheSelector } from './db/cache'
 import { DB } from './db/main'
 import * as Extra from './extra'
 
@@ -116,8 +116,10 @@ export let Translators = new class { // tslint:disable-line:variable-name
     return translation.newItems
   }
 
-  public async exportItemsByWorker(translatorID: string, displayOptions: any, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
+  public async exportItemsByWorker(translatorID: string, displayOptions: object, options: { scope?: ExportScope, path?: string, preferences?: Record<string, boolean | number | string> }) {
     await Zotero.BetterBibTeX.ready
+
+    log.debug('exportItemsByWorker:', displayOptions)
 
     const workers = Math.max(Prefs.get('workers'), 1) // if you're here, at least one worker must be available
     while (this.workers.running.size > workers) {
@@ -125,6 +127,16 @@ export let Translators = new class { // tslint:disable-line:variable-name
     }
 
     options.preferences = options.preferences || {}
+    displayOptions = displayOptions || {}
+
+    // undo override smuggling so I can pre-fetch the cache
+    const override = 'preference_'
+    for (const [pref, value] of Object.entries(displayOptions)) {
+      if (pref.startsWith(override)) {
+        options.preferences[pref.replace(override, '')] = (value as number) // number could actually be string or bool but it's just here to quiet typescript
+        delete displayOptions[pref]
+      }
+    }
 
     const translator = this.byId[translatorID]
 
@@ -142,6 +154,15 @@ export let Translators = new class { // tslint:disable-line:variable-name
     const prefix = `{${translator.label} worker ${id}}`
     const deferred = Zotero.Promise.defer()
     const worker = new ChromeWorker(`resource://zotero-better-bibtex/worker/Zotero.js?${params}`)
+
+    const config: BBTWorker.Config = {
+      preferences: { ...Prefs.all(), ...options.preferences },
+      options: displayOptions || {},
+      items: [],
+      collections: [],
+      cslItems: {},
+      cache: {},
+    }
 
     worker.onmessage = (e: { data: BBTWorker.Message }) => {
       switch (e.data?.kind) {
@@ -161,6 +182,33 @@ export let Translators = new class { // tslint:disable-line:variable-name
           deferred.resolve(e.data.output)
           worker.terminate()
           this.workers.running.delete(id)
+          break
+
+        case 'cache':
+          let { itemID, reference, metadata } = e.data
+          log.debug(prefix, 'caught cache for', itemID)
+          if (!metadata) metadata = {}
+
+          const collection = Cache.getCollection(translator.label)
+          if (!collection) {
+            const msg = `worker.cacheStore: cache ${translator.label} not found`
+            log.error(msg)
+            deferred.reject(msg)
+            worker.terminate()
+            this.workers.running.delete(id)
+          }
+
+          const selector = cacheSelector(itemID, config.options, config.preferences)
+          let cached = collection.findOne(selector)
+
+          if (cached) {
+            cached.reference = reference
+            cached.metadata = metadata
+            cached = collection.update(cached)
+
+          } else {
+            collection.insert({...selector, reference, metadata})
+          }
           break
 
         default:
@@ -205,14 +253,6 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
     }
 
-    const config: BBTWorker.Config = {
-      preferences: { ...Prefs.all(), ...options.preferences },
-      options: displayOptions || {},
-      items: [],
-      collections: [],
-      cslItems: {},
-    }
-
     let elt: any
     while (elt = getter.nextItem()) {
       if (elt.itemType === 'attachment') {
@@ -224,6 +264,8 @@ export let Translators = new class { // tslint:disable-line:variable-name
       }
       config.items.push(elt)
     }
+
+    // pre-fetch CSL serializations
     if (translator.label.includes('CSL')) {
       for (const item of config.items) {
         // this should done in the translator, but since itemToCSLJSON in the worker version doesn't actually execute itemToCSLJSON but just
@@ -234,6 +276,26 @@ export let Translators = new class { // tslint:disable-line:variable-name
         config.cslItems[item.itemID] = Zotero.Utilities.itemToCSLJSON(item)
       }
     }
+
+    // pre-fetch cache
+    const cache = Cache.getCollection(translator.label)
+    if (cache) {
+      const query = cacheSelector(config.items.map(item => item.itemID), displayOptions, config.preferences)
+
+      // not safe in async!
+      const cloneObjects = cache.cloneObjects
+      cache.cloneObjects = false
+      // uncloned is safe because it gets serialized in the transfer
+      config.cache = cache.find(query).reduce((acc, cached) => {
+        // direct-DB access for speed...
+        cached.meta.updated = (new Date).getTime() // touches the cache object so it isn't reaped too early
+        acc[cached.itemID] = cached
+        return acc
+      }, {})
+      cache.cloneObjects = cloneObjects
+      cache.dirty = true
+    }
+
     if (this.byId[translatorID].configOptions?.getCollections) {
       while (elt = getter.nextCollection()) {
         config.collections.push(elt)

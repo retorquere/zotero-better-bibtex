@@ -253,10 +253,6 @@ const queue = new class {
       if (Prefs.get('jabrefFormat') === 4) displayOptions.preference_jabrefFormat = 0 // tslint:disable-line:no-magic-numbers
       */
 
-      for (const pref of prefOverrides) {
-        displayOptions[`preference_${pref}`] = ae[pref]
-      }
-
       let start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start priming')
       let elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
@@ -264,7 +260,12 @@ const queue = new class {
 
       start = Date.now()
       log.debug(fold.start, 'AutoExport.queue.run: start')
+
+      for (const pref of prefOverrides) {
+        displayOptions[`preference_${pref}`] = ae[pref]
+      }
       await Translators.exportItems(ae.translatorID, displayOptions, scope, ae.path)
+
       elapsed = (Date.now() - start) / 1000 // tslint:disable-line no-magic-numbers
       log.debug('AutoExport.queue.run: export took', elapsed, 'seconds', fold.end)
 
