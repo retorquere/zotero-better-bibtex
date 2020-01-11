@@ -1,44 +1,44 @@
 {{/* DO NOT EDIT. This shortcode is created automatically from Preferences.xul */}}
-#### ascii
+### ascii
 
 default: `<not set>`
 
 If you have unicode turned on you can still selectively replace some characters to plain-text commands; any characters entered here will always
 be replaced by their LaTeX-command counterparts.
 
-#### autoExportDelay
+### autoExportDelay
 
 default: `1`
 
 If you have auto-exports set up, BBT will wait this many seconds before actually kicking off the exports to buffer multiple changes in quick succession
 setting off an unreasonable number of auto-exports. Minimum is 1 second. Changes to this preference take effect after restarting Zotero.
 
-#### autoExportIdleWait
+### autoExportIdleWait
 
 default: `10`
 
 Number of seconds to wait after your system goes idle before kicking off auto-exports.
 
-#### autoPin
+### autoPin
 
 default: `no`
 
 When on, BBT will automatically pin the first citekey it generates for an item.
 
-#### biblatexExtendedDateFormat
+### biblatexExtendedDateFormat
 
 default: `yes`
 
 Support for EDTF dates in biblatex
 
-#### cacheFlushInterval
+### cacheFlushInterval
 
 default: `5`
 
 How often the Better BibTeX database should be saved to disk. Defaults to once every 5 seconds. Note that
 your database is always saved when your computer goes idle, or when you exit Zotero.
 
-#### citeprocNoteCitekey
+### citeprocNoteCitekey
 
 default: `no`
 
@@ -47,44 +47,20 @@ This setting only takes effect during startup, so if you change it, you will hav
 Please disable it when done). You will want to use a custom CSL style
 (such as [this](https://raw.githubusercontent.com/retorquere/zotero-better-bibtex/master/better-bibtex-citekeys.csl)) to make this work.
 
-#### client
-
-default: `<not set>`
-
-#### csquotes
+### csquotes
 
 default: `<not set>`
 
 if you set `csquotes` to a string of character pairs, each pair will be assumed to be the open and close parts of a pair and
 will be replaced with a `\\enquote{...}` construct.
 
-#### debugLogDir
-
-default: `<not set>`
-
-#### extraMergeCSL
-
-default: `yes`
-
-#### extraMergeCitekeys
-
-default: `yes`
-
-#### extraMergeTeX
-
-default: `yes`
-
-#### git
+### git
 
 default: `config`
 
 Can be `off`, `config` or `always`
 
-#### ignorePostscriptErrors
-
-default: `yes`
-
-#### itemObserverDelay
+### itemObserverDelay
 
 default: `5`
 
@@ -92,27 +68,27 @@ I've had reports where Zotero notifies extensions that references have changed, 
 retrieves those same references, Zotero complains they "haven't been saved yet". Super. This preference sets
 the number of microseconds BBT should wait after being notified before acting on the changed references.
 
-#### kuroshiro
+### kuroshiro
 
 default: `no`
 
 When on, BBT will load kuroshiro for romajization in citekeys. This uses a lot of memory, easily 100MB. If you don't have Japanese titles/names, keep this off.
 
-#### mapMath
+### mapMath
 
 default: `<not set>`
 
 Any characters entered here will prefer a math-mode LaTeX-command counterpart over a math-mode,
 if a math-mode command is available. Only useful when `mapUnicode` is `conservative`.
 
-#### mapText
+### mapText
 
 default: `<not set>`
 
 Any characters entered here will prefer a text-mode LaTeX-command counterpart over a math-mode, if a text-mode command is available.
 Only useful when `mapUnicode` is `conservative`. Characters specified in `mapMath` take presedence over characters specified in `mapText`.
 
-#### mapUnicode
+### mapUnicode
 
 default: `conservative`
 
@@ -123,7 +99,7 @@ When a unicode character can be exported as either a math-mode or text-mode comm
 * `text`: if both a math-mode and a text-mode mapping is available, prefer text.
 * `math`: if both a math-mode and a text-mode mapping is available, prefer math.
 
-#### newTranslatorsAskRestart
+### newTranslatorsAskRestart
 
 default: `yes`
 
@@ -132,61 +108,45 @@ New translators installed in Zotero are not immediately usuable for drag-and-dro
 or whether you want to reinstall when it is more convenient to you. You will be asked this whenever the BBT translators update,
 but you can disable this by checking "Do not ask again" in that dialog.
 
-#### parseParticles
+### parseParticles
 
 default: `yes`
 
 Name particle handling. Only turn on when requested and we're talking about it on github.
 
-#### platform
-
-default: `<not set>`
-
-#### rawImports
+### rawImports
 
 default: `no`
 
 When you set this on, BBT will import bib files leaving any LaTeX commands as-is, and add the #LaTeX tag for raw re-exports.
 
-#### rawLaTag
+### rawLaTag
 
 default: `#LaTeX`
 
 When an item has this tag, all its fields will be assumed to hold raw LaTeX and will undergo no further transformation.
 If you set this to `*`, all items will be assumed to have raw LaTeX.
 
-#### relativeFilePaths
+### relativeFilePaths
 
 default: `no`
 
 When exporting a Bib(La)TeX file, if the attachments are stored anywhere under the directory the bibliography is exported to, use relative paths
 to those attachments. Caching is disabled when this option is on, so it affects performance.
 
-#### removeStock
-
-default: `no`
-
-#### scrubDatabase
-
-default: `no`
-
-#### skipWords
+### skipWords
 
 default: `a,ab,aboard,about,above,across,after,against,al,along,amid,among,an,and,anti,around,as,at,before,behind,below,beneath,beside,besides,between,beyond,but,by,d,da,das,de,del,dell,dello,dei,degli,della,dell,delle,dem,den,der,des,despite,die,do,down,du,during,ein,eine,einem,einen,einer,eines,el,en,et,except,for,from,gli,i,il,in,inside,into,is,l,la,las,le,les,like,lo,los,near,nor,of,off,on,onto,or,over,past,per,plus,round,save,since,so,some,sur,than,the,through,to,toward,towards,un,una,unas,under,underneath,une,unlike,uno,unos,until,up,upon,versus,via,von,while,with,within,without,yet,zu,zum`
 
 list of words to skip in title when generating citation keys
 
-#### testing
-
-default: `no`
-
-#### verbatimFields
+### verbatimFields
 
 default: `url,doi,file,eprint,verba,verbb,verbc`
 
 list of fields to treat as verbatim during import. If you're importing e.g. Mendeley-generated BibTeX, try removing `file` from this list before import.
 
-#### workers
+### workers
 
 default: `4`
 
