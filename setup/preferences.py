@@ -156,7 +156,7 @@ class Preferences:
       dflt = 'yes' if dflt else 'no'
     elif pref.type == 'string' and dflt == '':
       dflt = '<not set>'
-    doc + f'default: `{dflt}`\n\n'
+    doc += f'default: `{dflt}`\n\n'
 
     if 'description' in pref: doc += pref.description + '\n\n'
 
