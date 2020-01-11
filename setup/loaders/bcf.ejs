@@ -17,7 +17,7 @@ const required = [
           <%_ if (typeof field == 'string') { -%>
             if (!ref.has.<%= field -%>) report.push("Missing required field '<%= field -%>'")
           <%_ } else if (field.or) { -%>
-            if (!(<%- field.or.map(field => "this.has." + field).join(' || ') -%>)) report.push("At least one of <%- field.or.map(f => "'" + f + "'").join(' / ') -%> must be present")
+            if (!(<%- field.or.map(field => "ref.has." + field).join(' || ') -%>)) report.push("At least one of <%- field.or.map(f => "'" + f + "'").join(' / ') -%> must be present")
           <%_ } else if (field.xor) { -%>
             if (!ref.has.<%= field.xor[0] -%> === !ref.has.<%= field.xor[1] -%>) report.push("Exactly one of <%- field.xor.map(f => "'" + f + "'").join(' / ') -%> must be present")
           <%_ } -%>
