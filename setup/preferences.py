@@ -215,6 +215,6 @@ class Preferences:
       print('}', file=f)
 
     with open(os.path.join(root, 'gen', 'preferences.ts'), 'w') as f:
-      print(template('preferences/preferences.ts.mako').render(preferences=preferences), file=f)
+      print(template('preferences/preferences.ts.mako').render(preferences=preferences).strip(), file=f)
 
 Preferences()

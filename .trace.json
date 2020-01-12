@@ -12,6 +12,7 @@
   ],
   "gh-1389": [
     "content/translators.ts",
-    "translators/Better BibTeX.ts"
+    "translators/**/*.ts",
+    "!translators/worker/zotero.ts"
   ]
 }
