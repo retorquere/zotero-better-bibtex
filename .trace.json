@@ -9,5 +9,9 @@
     "!content/events.ts",
     "!content/db/loki.ts",
     "!translators/**/*.ts"
+  ],
+  "gh-1389": [
+    "content/translators.ts",
+    "translators/Better BibTeX.ts"
   ]
 }
